@@ -1,0 +1,37 @@
+{
+  "schemaVersion": "1.1.0",
+  "game": "worldprint",
+  "date": "2026-05-24",
+  "contentVersion": "2026.06.19-ed1",
+  "roundIds": [
+    "worldprint-tuberculosis-incidence",
+    "worldprint-electricity-access",
+    "worldprint-agriculture-value-added",
+    "worldprint-population-density",
+    "worldprint-arable-land"
+  ],
+  "indicatorIds": [
+    "tuberculosis-incidence",
+    "electricity-access",
+    "agriculture-value-added",
+    "population-density",
+    "arable-land"
+  ],
+  "categoryMix": {
+    "health": 1,
+    "energy": 1,
+    "economy": 1,
+    "settlement": 1,
+    "land": 1
+  },
+  "mapDifficultyMix": {
+    "expert": 1,
+    "intro": 1,
+    "standard": 3
+  },
+  "generatedAt": "2026-06-19T17:09:23.329107+00:00",
+  "generatorVersion": "daily-manifest-v1",
+  "varietyNotes": [
+    "Selected with category, difficulty, and same-day correlation safeguards."
+  ]
+}

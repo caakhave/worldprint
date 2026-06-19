@@ -1,0 +1,36 @@
+{
+  "schemaVersion": "1.1.0",
+  "game": "worldprint",
+  "date": "2026-07-31",
+  "contentVersion": "2026.06.19-ed1",
+  "roundIds": [
+    "worldprint-cereal-yield",
+    "worldprint-arable-land",
+    "worldprint-basic-sanitation",
+    "worldprint-clean-fuels-access",
+    "worldprint-employment-agriculture"
+  ],
+  "indicatorIds": [
+    "cereal-yield",
+    "arable-land",
+    "basic-sanitation",
+    "clean-fuels-access",
+    "employment-agriculture"
+  ],
+  "categoryMix": {
+    "agriculture": 1,
+    "land": 1,
+    "health": 1,
+    "energy": 1,
+    "labor": 1
+  },
+  "mapDifficultyMix": {
+    "expert": 1,
+    "standard": 4
+  },
+  "generatedAt": "2026-06-19T17:09:23.340234+00:00",
+  "generatorVersion": "daily-manifest-v1",
+  "varietyNotes": [
+    "Selected with category, difficulty, and same-day correlation safeguards."
+  ]
+}

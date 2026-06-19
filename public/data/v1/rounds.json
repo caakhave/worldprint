@@ -1,0 +1,4636 @@
+{
+  "schemaVersion": "1.1.0",
+  "contentVersion": "2026.06.19-ed1",
+  "rounds": [
+    {
+      "id": "worldprint-adolescent-fertility",
+      "correctIndicatorId": "adolescent-fertility",
+      "category": "demography",
+      "difficulty": "expert",
+      "choices": {
+        "explorer": [
+          {
+            "indicatorId": "population-density",
+            "label": "Population density"
+          },
+          {
+            "indicatorId": "adolescent-fertility",
+            "label": "Adolescent fertility"
+          },
+          {
+            "indicatorId": "out-of-pocket-health",
+            "label": "Out-of-pocket health spending"
+          }
+        ],
+        "analyst": [
+          {
+            "indicatorId": "older-adults-share",
+            "label": "Population ages 65+"
+          },
+          {
+            "indicatorId": "adolescent-fertility",
+            "label": "Adolescent fertility"
+          },
+          {
+            "indicatorId": "age-dependency",
+            "label": "Age dependency ratio"
+          },
+          {
+            "indicatorId": "fertility-rate",
+            "label": "Fertility rate"
+          }
+        ],
+        "cartographer": [
+          {
+            "indicatorId": "older-adults-share",
+            "label": "Population ages 65+"
+          },
+          {
+            "indicatorId": "birth-rate",
+            "label": "Birth rate"
+          },
+          {
+            "indicatorId": "fertility-rate",
+            "label": "Fertility rate"
+          },
+          {
+            "indicatorId": "adolescent-fertility",
+            "label": "Adolescent fertility"
+          },
+          {
+            "indicatorId": "children-share",
+            "label": "Population ages 0-14"
+          },
+          {
+            "indicatorId": "age-dependency",
+            "label": "Age dependency ratio"
+          }
+        ]
+      },
+      "acceptedAliases": [
+        "adolescent fertility",
+        "adolescent fertility rate (births per 1,000 women ages 15-19)",
+        "births per 1,000 women ages 15-19",
+        "sp.ado.tfrt",
+        "teen births",
+        "teenage birth rate"
+      ],
+      "patternNotes": [
+        "The darkest countries include Central African Republic, Equatorial Guinea, Mozambique, while the lightest include Korea, Dem. People's Rep., Korea, Rep., Denmark; that contrast is the fastest way to read the adolescent fertility pattern.",
+        "Age structure often makes the map readable before labels do.",
+        "Compare high-growth and older-population regions."
+      ],
+      "avoidSameDayIndicatorIds": [],
+      "editorialStatus": "daily_eligible",
+      "ambiguityRisk": "medium",
+      "eligibility": {
+        "daily": true,
+        "practice": true,
+        "challenge": true,
+        "expertOnly": false
+      },
+      "reviewStatus": "approved"
+    },
+    {
+      "id": "worldprint-adult-mortality-female",
+      "correctIndicatorId": "adult-mortality-female",
+      "category": "health",
+      "difficulty": "expert",
+      "choices": {
+        "explorer": [
+          {
+            "indicatorId": "forest-area",
+            "label": "Forest area"
+          },
+          {
+            "indicatorId": "adult-mortality-female",
+            "label": "Female adult mortality"
+          },
+          {
+            "indicatorId": "death-rate",
+            "label": "Death rate"
+          }
+        ],
+        "analyst": [
+          {
+            "indicatorId": "tuberculosis-incidence",
+            "label": "Tuberculosis incidence"
+          },
+          {
+            "indicatorId": "adult-mortality-female",
+            "label": "Female adult mortality"
+          },
+          {
+            "indicatorId": "basic-sanitation",
+            "label": "Basic sanitation access"
+          },
+          {
+            "indicatorId": "safe-drinking-water",
+            "label": "Basic drinking water access"
+          }
+        ],
+        "cartographer": [
+          {
+            "indicatorId": "tuberculosis-incidence",
+            "label": "Tuberculosis incidence"
+          },
+          {
+            "indicatorId": "gdp-per-capita-ppp",
+            "label": "GDP per capita, PPP"
+          },
+          {
+            "indicatorId": "adult-mortality-female",
+            "label": "Female adult mortality"
+          },
+          {
+            "indicatorId": "adolescent-fertility",
+            "label": "Adolescent fertility"
+          },
+          {
+            "indicatorId": "safe-drinking-water",
+            "label": "Basic drinking water access"
+          },
+          {
+            "indicatorId": "basic-sanitation",
+            "label": "Basic sanitation access"
+          }
+        ]
+      },
+      "acceptedAliases": [
+        "adult mortality female",
+        "deaths per 1,000 female adults",
+        "female adult mortality",
+        "female mortality",
+        "mortality rate, adult, female (per 1,000 female adults)",
+        "sp.dyn.amrt.fe"
+      ],
+      "patternNotes": [
+        "The darkest countries include Lesotho, Nigeria, Central African Republic, while the lightest include United Arab Emirates, Korea, Rep., Kuwait; that contrast is the fastest way to read the female adult mortality pattern.",
+        "Health maps often separate income, public-health capacity, and conflict exposure.",
+        "Check both high-income and low-income anchors."
+      ],
+      "avoidSameDayIndicatorIds": [
+        "life-expectancy",
+        "adult-mortality-male",
+        "infant-mortality",
+        "under-five-mortality"
+      ],
+      "editorialStatus": "expert_only",
+      "ambiguityRisk": "high",
+      "eligibility": {
+        "daily": false,
+        "practice": true,
+        "challenge": true,
+        "expertOnly": true
+      },
+      "reviewStatus": "approved"
+    },
+    {
+      "id": "worldprint-adult-mortality-male",
+      "correctIndicatorId": "adult-mortality-male",
+      "category": "health",
+      "difficulty": "expert",
+      "choices": {
+        "explorer": [
+          {
+            "indicatorId": "death-rate",
+            "label": "Death rate"
+          },
+          {
+            "indicatorId": "adult-mortality-male",
+            "label": "Male adult mortality"
+          },
+          {
+            "indicatorId": "forest-area",
+            "label": "Forest area"
+          }
+        ],
+        "analyst": [
+          {
+            "indicatorId": "adult-mortality-male",
+            "label": "Male adult mortality"
+          },
+          {
+            "indicatorId": "tuberculosis-incidence",
+            "label": "Tuberculosis incidence"
+          },
+          {
+            "indicatorId": "safe-drinking-water",
+            "label": "Basic drinking water access"
+          },
+          {
+            "indicatorId": "basic-sanitation",
+            "label": "Basic sanitation access"
+          }
+        ],
+        "cartographer": [
+          {
+            "indicatorId": "adult-mortality-male",
+            "label": "Male adult mortality"
+          },
+          {
+            "indicatorId": "tuberculosis-incidence",
+            "label": "Tuberculosis incidence"
+          },
+          {
+            "indicatorId": "safe-drinking-water",
+            "label": "Basic drinking water access"
+          },
+          {
+            "indicatorId": "basic-sanitation",
+            "label": "Basic sanitation access"
+          },
+          {
+            "indicatorId": "infant-mortality",
+            "label": "Infant mortality"
+          },
+          {
+            "indicatorId": "under-five-mortality",
+            "label": "Under-5 mortality"
+          }
+        ]
+      },
+      "acceptedAliases": [
+        "adult mortality male",
+        "deaths per 1,000 male adults",
+        "male adult mortality",
+        "male mortality",
+        "mortality rate, adult, male (per 1,000 male adults)",
+        "sp.dyn.amrt.ma"
+      ],
+      "patternNotes": [
+        "The darkest countries include Lesotho, Central African Republic, Chad, while the lightest include United Arab Emirates, Qatar, Sweden; that contrast is the fastest way to read the male adult mortality pattern.",
+        "Health maps often separate income, public-health capacity, and conflict exposure.",
+        "Check both high-income and low-income anchors."
+      ],
+      "avoidSameDayIndicatorIds": [
+        "adult-mortality-female",
+        "life-expectancy"
+      ],
+      "editorialStatus": "expert_only",
+      "ambiguityRisk": "high",
+      "eligibility": {
+        "daily": false,
+        "practice": true,
+        "challenge": true,
+        "expertOnly": true
+      },
+      "reviewStatus": "approved"
+    },
+    {
+      "id": "worldprint-age-dependency",
+      "correctIndicatorId": "age-dependency",
+      "category": "demography",
+      "difficulty": "standard",
+      "choices": {
+        "explorer": [
+          {
+            "indicatorId": "population-density",
+            "label": "Population density"
+          },
+          {
+            "indicatorId": "age-dependency",
+            "label": "Age dependency ratio"
+          },
+          {
+            "indicatorId": "health-expenditure",
+            "label": "Health expenditure"
+          }
+        ],
+        "analyst": [
+          {
+            "indicatorId": "age-dependency",
+            "label": "Age dependency ratio"
+          },
+          {
+            "indicatorId": "adolescent-fertility",
+            "label": "Adolescent fertility"
+          },
+          {
+            "indicatorId": "fertility-rate",
+            "label": "Fertility rate"
+          },
+          {
+            "indicatorId": "basic-sanitation",
+            "label": "Basic sanitation access"
+          }
+        ],
+        "cartographer": [
+          {
+            "indicatorId": "age-dependency",
+            "label": "Age dependency ratio"
+          },
+          {
+            "indicatorId": "birth-rate",
+            "label": "Birth rate"
+          },
+          {
+            "indicatorId": "older-adults-share",
+            "label": "Population ages 65+"
+          },
+          {
+            "indicatorId": "fertility-rate",
+            "label": "Fertility rate"
+          },
+          {
+            "indicatorId": "children-share",
+            "label": "Population ages 0-14"
+          },
+          {
+            "indicatorId": "adolescent-fertility",
+            "label": "Adolescent fertility"
+          }
+        ]
+      },
+      "acceptedAliases": [
+        "age dependency",
+        "age dependency ratio",
+        "age dependency ratio (% of working-age population)",
+        "dependency ratio",
+        "dependents per 100 working-age people",
+        "dependents per working age",
+        "sp.pop.dpnd"
+      ],
+      "patternNotes": [
+        "The darkest countries include Central African Republic, Niger, Somalia, Fed. Rep., while the lightest include Qatar, United Arab Emirates, Kuwait; that contrast is the fastest way to read the age dependency ratio pattern.",
+        "Age structure often makes the map readable before labels do.",
+        "Compare high-growth and older-population regions."
+      ],
+      "avoidSameDayIndicatorIds": [],
+      "editorialStatus": "daily_eligible",
+      "ambiguityRisk": "medium",
+      "eligibility": {
+        "daily": true,
+        "practice": true,
+        "challenge": true,
+        "expertOnly": false
+      },
+      "reviewStatus": "approved"
+    },
+    {
+      "id": "worldprint-agricultural-land",
+      "correctIndicatorId": "agricultural-land",
+      "category": "land",
+      "difficulty": "standard",
+      "choices": {
+        "explorer": [
+          {
+            "indicatorId": "pm25-exposure",
+            "label": "PM2.5 exposure"
+          },
+          {
+            "indicatorId": "population-density",
+            "label": "Population density"
+          },
+          {
+            "indicatorId": "agricultural-land",
+            "label": "Agricultural land"
+          }
+        ],
+        "analyst": [
+          {
+            "indicatorId": "forest-area",
+            "label": "Forest area"
+          },
+          {
+            "indicatorId": "arable-land",
+            "label": "Arable land"
+          },
+          {
+            "indicatorId": "co2-per-capita",
+            "label": "CO2 emissions per capita"
+          },
+          {
+            "indicatorId": "agricultural-land",
+            "label": "Agricultural land"
+          }
+        ],
+        "cartographer": [
+          {
+            "indicatorId": "cereal-yield",
+            "label": "Cereal yield"
+          },
+          {
+            "indicatorId": "agricultural-land",
+            "label": "Agricultural land"
+          },
+          {
+            "indicatorId": "forest-area",
+            "label": "Forest area"
+          },
+          {
+            "indicatorId": "population-density",
+            "label": "Population density"
+          },
+          {
+            "indicatorId": "arable-land",
+            "label": "Arable land"
+          },
+          {
+            "indicatorId": "co2-per-capita",
+            "label": "CO2 emissions per capita"
+          }
+        ]
+      },
+      "acceptedAliases": [
+        "ag.lnd.agri.zs",
+        "agricultural land",
+        "agricultural land (% of land area)",
+        "agriculture land share",
+        "farm land",
+        "percent of land area"
+      ],
+      "patternNotes": [
+        "The darkest countries include Cote d'Ivoire, Turkmenistan, Burundi, while the lightest include Suriname, Greenland, Bahamas, The; that contrast is the fastest way to read the agricultural land pattern.",
+        "Land-use maps are strongest when you compare deserts, forests, and farming belts.",
+        "Large countries can hide very different land-use shares."
+      ],
+      "avoidSameDayIndicatorIds": [],
+      "editorialStatus": "practice_eligible",
+      "ambiguityRisk": "medium",
+      "eligibility": {
+        "daily": false,
+        "practice": true,
+        "challenge": true,
+        "expertOnly": false
+      },
+      "reviewStatus": "approved"
+    },
+    {
+      "id": "worldprint-agriculture-value-added",
+      "correctIndicatorId": "agriculture-value-added",
+      "category": "economy",
+      "difficulty": "standard",
+      "choices": {
+        "explorer": [
+          {
+            "indicatorId": "population-density",
+            "label": "Population density"
+          },
+          {
+            "indicatorId": "unemployment",
+            "label": "Unemployment"
+          },
+          {
+            "indicatorId": "agriculture-value-added",
+            "label": "Agriculture value added"
+          }
+        ],
+        "analyst": [
+          {
+            "indicatorId": "agriculture-value-added",
+            "label": "Agriculture value added"
+          },
+          {
+            "indicatorId": "trade-share",
+            "label": "Trade"
+          },
+          {
+            "indicatorId": "current-account",
+            "label": "Current account balance"
+          },
+          {
+            "indicatorId": "inflation",
+            "label": "Inflation"
+          }
+        ],
+        "cartographer": [
+          {
+            "indicatorId": "trade-share",
+            "label": "Trade"
+          },
+          {
+            "indicatorId": "exports-share",
+            "label": "Exports"
+          },
+          {
+            "indicatorId": "employment-agriculture",
+            "label": "Employment in agriculture"
+          },
+          {
+            "indicatorId": "gdp-per-capita-ppp",
+            "label": "GDP per capita, PPP"
+          },
+          {
+            "indicatorId": "inflation",
+            "label": "Inflation"
+          },
+          {
+            "indicatorId": "agriculture-value-added",
+            "label": "Agriculture value added"
+          }
+        ]
+      },
+      "acceptedAliases": [
+        "agriculture share of gdp",
+        "agriculture value added",
+        "agriculture, forestry, and fishing, value added (% of gdp)",
+        "farming economy share",
+        "nv.agr.totl.zs",
+        "percent of gdp"
+      ],
+      "patternNotes": [
+        "The darkest countries include Guinea-Bissau, Chad, Burundi, while the lightest include Luxembourg, Qatar, Kuwait; that contrast is the fastest way to read the agriculture value added pattern.",
+        "Economic-share maps are not the same as raw totals.",
+        "Small open economies can dominate percentage maps."
+      ],
+      "avoidSameDayIndicatorIds": [],
+      "editorialStatus": "daily_eligible",
+      "ambiguityRisk": "medium",
+      "eligibility": {
+        "daily": true,
+        "practice": true,
+        "challenge": true,
+        "expertOnly": false
+      },
+      "reviewStatus": "approved"
+    },
+    {
+      "id": "worldprint-arable-land",
+      "correctIndicatorId": "arable-land",
+      "category": "land",
+      "difficulty": "standard",
+      "choices": {
+        "explorer": [
+          {
+            "indicatorId": "arable-land",
+            "label": "Arable land"
+          },
+          {
+            "indicatorId": "cereal-yield",
+            "label": "Cereal yield"
+          },
+          {
+            "indicatorId": "pm25-exposure",
+            "label": "PM2.5 exposure"
+          }
+        ],
+        "analyst": [
+          {
+            "indicatorId": "agricultural-land",
+            "label": "Agricultural land"
+          },
+          {
+            "indicatorId": "population-density",
+            "label": "Population density"
+          },
+          {
+            "indicatorId": "co2-per-capita",
+            "label": "CO2 emissions per capita"
+          },
+          {
+            "indicatorId": "arable-land",
+            "label": "Arable land"
+          }
+        ],
+        "cartographer": [
+          {
+            "indicatorId": "co2-per-capita",
+            "label": "CO2 emissions per capita"
+          },
+          {
+            "indicatorId": "arable-land",
+            "label": "Arable land"
+          },
+          {
+            "indicatorId": "agricultural-land",
+            "label": "Agricultural land"
+          },
+          {
+            "indicatorId": "ghg-per-capita",
+            "label": "Greenhouse gas emissions per capita"
+          },
+          {
+            "indicatorId": "forest-area",
+            "label": "Forest area"
+          },
+          {
+            "indicatorId": "population-density",
+            "label": "Population density"
+          }
+        ]
+      },
+      "acceptedAliases": [
+        "ag.lnd.arbl.zs",
+        "arable land",
+        "arable land (% of land area)",
+        "arable land share",
+        "cropland share",
+        "percent of land area"
+      ],
+      "patternNotes": [
+        "The darkest countries include Bangladesh, Denmark, Ukraine, while the lightest include Djibouti, Oman, New Caledonia; that contrast is the fastest way to read the arable land pattern.",
+        "Land-use maps are strongest when you compare deserts, forests, and farming belts.",
+        "Large countries can hide very different land-use shares."
+      ],
+      "avoidSameDayIndicatorIds": [],
+      "editorialStatus": "daily_eligible",
+      "ambiguityRisk": "medium",
+      "eligibility": {
+        "daily": true,
+        "practice": true,
+        "challenge": true,
+        "expertOnly": false
+      },
+      "reviewStatus": "approved"
+    },
+    {
+      "id": "worldprint-basic-sanitation",
+      "correctIndicatorId": "basic-sanitation",
+      "category": "health",
+      "difficulty": "standard",
+      "choices": {
+        "explorer": [
+          {
+            "indicatorId": "forest-area",
+            "label": "Forest area"
+          },
+          {
+            "indicatorId": "death-rate",
+            "label": "Death rate"
+          },
+          {
+            "indicatorId": "basic-sanitation",
+            "label": "Basic sanitation access"
+          }
+        ],
+        "analyst": [
+          {
+            "indicatorId": "basic-sanitation",
+            "label": "Basic sanitation access"
+          },
+          {
+            "indicatorId": "under-five-mortality",
+            "label": "Under-5 mortality"
+          },
+          {
+            "indicatorId": "tuberculosis-incidence",
+            "label": "Tuberculosis incidence"
+          },
+          {
+            "indicatorId": "life-expectancy",
+            "label": "Life expectancy"
+          }
+        ],
+        "cartographer": [
+          {
+            "indicatorId": "adult-mortality-female",
+            "label": "Female adult mortality"
+          },
+          {
+            "indicatorId": "life-expectancy",
+            "label": "Life expectancy"
+          },
+          {
+            "indicatorId": "under-five-mortality",
+            "label": "Under-5 mortality"
+          },
+          {
+            "indicatorId": "infant-mortality",
+            "label": "Infant mortality"
+          },
+          {
+            "indicatorId": "basic-sanitation",
+            "label": "Basic sanitation access"
+          },
+          {
+            "indicatorId": "safe-drinking-water",
+            "label": "Basic drinking water access"
+          }
+        ]
+      },
+      "acceptedAliases": [
+        "basic sanitation",
+        "basic sanitation access",
+        "improved sanitation",
+        "people using at least basic sanitation services (% of population)",
+        "percent of population",
+        "sanitation access",
+        "sh.sta.bass.zs"
+      ],
+      "patternNotes": [
+        "The darkest countries include Puerto Rico (US), New Zealand, New Caledonia, while the lightest include Ethiopia, Chad, Central African Republic; that contrast is the fastest way to read the basic sanitation access pattern.",
+        "Health maps often separate income, public-health capacity, and conflict exposure.",
+        "Check both high-income and low-income anchors."
+      ],
+      "avoidSameDayIndicatorIds": [
+        "internet-users"
+      ],
+      "editorialStatus": "daily_eligible",
+      "ambiguityRisk": "medium",
+      "eligibility": {
+        "daily": true,
+        "practice": true,
+        "challenge": true,
+        "expertOnly": false
+      },
+      "reviewStatus": "approved"
+    },
+    {
+      "id": "worldprint-birth-rate",
+      "correctIndicatorId": "birth-rate",
+      "category": "demography",
+      "difficulty": "intro",
+      "choices": {
+        "explorer": [
+          {
+            "indicatorId": "birth-rate",
+            "label": "Birth rate"
+          },
+          {
+            "indicatorId": "population-density",
+            "label": "Population density"
+          },
+          {
+            "indicatorId": "health-expenditure",
+            "label": "Health expenditure"
+          }
+        ],
+        "analyst": [
+          {
+            "indicatorId": "adolescent-fertility",
+            "label": "Adolescent fertility"
+          },
+          {
+            "indicatorId": "birth-rate",
+            "label": "Birth rate"
+          },
+          {
+            "indicatorId": "life-expectancy",
+            "label": "Life expectancy"
+          },
+          {
+            "indicatorId": "age-dependency",
+            "label": "Age dependency ratio"
+          }
+        ],
+        "cartographer": [
+          {
+            "indicatorId": "age-dependency",
+            "label": "Age dependency ratio"
+          },
+          {
+            "indicatorId": "safe-drinking-water",
+            "label": "Basic drinking water access"
+          },
+          {
+            "indicatorId": "adolescent-fertility",
+            "label": "Adolescent fertility"
+          },
+          {
+            "indicatorId": "birth-rate",
+            "label": "Birth rate"
+          },
+          {
+            "indicatorId": "fertility-rate",
+            "label": "Fertility rate"
+          },
+          {
+            "indicatorId": "life-expectancy",
+            "label": "Life expectancy"
+          }
+        ]
+      },
+      "acceptedAliases": [
+        "birth rate",
+        "birth rate, crude (per 1,000 people)",
+        "births per 1,000 people",
+        "births per 1000",
+        "crude birth rate",
+        "sp.dyn.cbrt.in"
+      ],
+      "patternNotes": [
+        "The darkest countries include Central African Republic, Chad, Somalia, Fed. Rep., while the lightest include Korea, Rep., Ukraine, Japan; that contrast is the fastest way to read the birth rate pattern.",
+        "Age structure often makes the map readable before labels do.",
+        "Compare high-growth and older-population regions."
+      ],
+      "avoidSameDayIndicatorIds": [
+        "children-share",
+        "fertility-rate",
+        "under-five-mortality",
+        "older-adults-share",
+        "infant-mortality"
+      ],
+      "editorialStatus": "practice_eligible",
+      "ambiguityRisk": "high",
+      "eligibility": {
+        "daily": false,
+        "practice": true,
+        "challenge": true,
+        "expertOnly": false
+      },
+      "reviewStatus": "approved"
+    },
+    {
+      "id": "worldprint-cereal-yield",
+      "correctIndicatorId": "cereal-yield",
+      "category": "agriculture",
+      "difficulty": "expert",
+      "choices": {
+        "explorer": [
+          {
+            "indicatorId": "cereal-yield",
+            "label": "Cereal yield"
+          },
+          {
+            "indicatorId": "fdi-inflows",
+            "label": "Foreign direct investment inflows"
+          },
+          {
+            "indicatorId": "female-labor-force",
+            "label": "Female labor force participation"
+          }
+        ],
+        "analyst": [
+          {
+            "indicatorId": "cereal-yield",
+            "label": "Cereal yield"
+          },
+          {
+            "indicatorId": "agriculture-value-added",
+            "label": "Agriculture value added"
+          },
+          {
+            "indicatorId": "current-account",
+            "label": "Current account balance"
+          },
+          {
+            "indicatorId": "employment-agriculture",
+            "label": "Employment in agriculture"
+          }
+        ],
+        "cartographer": [
+          {
+            "indicatorId": "current-account",
+            "label": "Current account balance"
+          },
+          {
+            "indicatorId": "cereal-yield",
+            "label": "Cereal yield"
+          },
+          {
+            "indicatorId": "employment-agriculture",
+            "label": "Employment in agriculture"
+          },
+          {
+            "indicatorId": "agriculture-value-added",
+            "label": "Agriculture value added"
+          },
+          {
+            "indicatorId": "employment-services",
+            "label": "Employment in services"
+          },
+          {
+            "indicatorId": "inflation",
+            "label": "Inflation"
+          }
+        ]
+      },
+      "acceptedAliases": [
+        "ag.yld.crel.kg",
+        "cereal yield",
+        "cereal yield (kg per hectare)",
+        "crop yield",
+        "grain yield",
+        "kilograms per hectare"
+      ],
+      "patternNotes": [
+        "The darkest countries include Oman, United Arab Emirates, Qatar, while the lightest include Namibia, Sudan, Niger; that contrast is the fastest way to read the cereal yield pattern.",
+        "Agriculture maps reward separating productivity, land share, and workforce dependence.",
+        "Compare farming belts with arid, forested, and highly urban economies."
+      ],
+      "avoidSameDayIndicatorIds": [],
+      "editorialStatus": "daily_eligible",
+      "ambiguityRisk": "low",
+      "eligibility": {
+        "daily": true,
+        "practice": true,
+        "challenge": true,
+        "expertOnly": false
+      },
+      "reviewStatus": "approved"
+    },
+    {
+      "id": "worldprint-children-share",
+      "correctIndicatorId": "children-share",
+      "category": "demography",
+      "difficulty": "intro",
+      "choices": {
+        "explorer": [
+          {
+            "indicatorId": "health-expenditure",
+            "label": "Health expenditure"
+          },
+          {
+            "indicatorId": "children-share",
+            "label": "Population ages 0-14"
+          },
+          {
+            "indicatorId": "population-density",
+            "label": "Population density"
+          }
+        ],
+        "analyst": [
+          {
+            "indicatorId": "age-dependency",
+            "label": "Age dependency ratio"
+          },
+          {
+            "indicatorId": "safe-drinking-water",
+            "label": "Basic drinking water access"
+          },
+          {
+            "indicatorId": "children-share",
+            "label": "Population ages 0-14"
+          },
+          {
+            "indicatorId": "life-expectancy",
+            "label": "Life expectancy"
+          }
+        ],
+        "cartographer": [
+          {
+            "indicatorId": "adolescent-fertility",
+            "label": "Adolescent fertility"
+          },
+          {
+            "indicatorId": "safe-drinking-water",
+            "label": "Basic drinking water access"
+          },
+          {
+            "indicatorId": "life-expectancy",
+            "label": "Life expectancy"
+          },
+          {
+            "indicatorId": "age-dependency",
+            "label": "Age dependency ratio"
+          },
+          {
+            "indicatorId": "children-share",
+            "label": "Population ages 0-14"
+          },
+          {
+            "indicatorId": "fertility-rate",
+            "label": "Fertility rate"
+          }
+        ]
+      },
+      "acceptedAliases": [
+        "children share",
+        "percent of population",
+        "population ages 0-14",
+        "population ages 0-14 (% of total population)",
+        "sp.pop.0014.to.zs",
+        "young population"
+      ],
+      "patternNotes": [
+        "The darkest countries include Central African Republic, Niger, Somalia, Fed. Rep., while the lightest include Korea, Rep., Japan, Puerto Rico (US); that contrast is the fastest way to read the population ages 0-14 pattern.",
+        "Age structure often makes the map readable before labels do.",
+        "Compare high-growth and older-population regions."
+      ],
+      "avoidSameDayIndicatorIds": [
+        "birth-rate",
+        "fertility-rate",
+        "under-five-mortality",
+        "older-adults-share"
+      ],
+      "editorialStatus": "practice_eligible",
+      "ambiguityRisk": "high",
+      "eligibility": {
+        "daily": false,
+        "practice": true,
+        "challenge": true,
+        "expertOnly": false
+      },
+      "reviewStatus": "approved"
+    },
+    {
+      "id": "worldprint-clean-fuels-access",
+      "correctIndicatorId": "clean-fuels-access",
+      "category": "energy",
+      "difficulty": "standard",
+      "choices": {
+        "explorer": [
+          {
+            "indicatorId": "mobile-subscriptions",
+            "label": "Mobile subscriptions"
+          },
+          {
+            "indicatorId": "forest-area",
+            "label": "Forest area"
+          },
+          {
+            "indicatorId": "clean-fuels-access",
+            "label": "Clean cooking fuels access"
+          }
+        ],
+        "analyst": [
+          {
+            "indicatorId": "electricity-access",
+            "label": "Electricity access"
+          },
+          {
+            "indicatorId": "renewable-energy-consumption",
+            "label": "Renewable energy consumption"
+          },
+          {
+            "indicatorId": "clean-fuels-access",
+            "label": "Clean cooking fuels access"
+          },
+          {
+            "indicatorId": "co2-per-capita",
+            "label": "CO2 emissions per capita"
+          }
+        ],
+        "cartographer": [
+          {
+            "indicatorId": "electricity-access",
+            "label": "Electricity access"
+          },
+          {
+            "indicatorId": "fixed-broadband",
+            "label": "Fixed broadband"
+          },
+          {
+            "indicatorId": "renewable-energy-consumption",
+            "label": "Renewable energy consumption"
+          },
+          {
+            "indicatorId": "clean-fuels-access",
+            "label": "Clean cooking fuels access"
+          },
+          {
+            "indicatorId": "co2-per-capita",
+            "label": "CO2 emissions per capita"
+          },
+          {
+            "indicatorId": "secure-internet-servers",
+            "label": "Secure internet servers"
+          }
+        ]
+      },
+      "acceptedAliases": [
+        "access to clean fuels and technologies for cooking (% of population)",
+        "clean cooking access",
+        "clean cooking fuels",
+        "clean cooking fuels access",
+        "clean fuels access",
+        "eg.cft.accs.zs",
+        "percent of population"
+      ],
+      "patternNotes": [
+        "The darkest countries include United States, Uruguay, Trinidad and Tobago, while the lightest include South Sudan, Burundi, Guinea-Bissau; that contrast is the fastest way to read the clean cooking fuels access pattern.",
+        "Energy maps often separate access, consumption, and production mix.",
+        "Look for hydro, fossil-fuel, and low-access signals."
+      ],
+      "avoidSameDayIndicatorIds": [
+        "gdp-per-capita-ppp",
+        "gdp-per-capita",
+        "internet-users"
+      ],
+      "editorialStatus": "daily_eligible",
+      "ambiguityRisk": "medium",
+      "eligibility": {
+        "daily": true,
+        "practice": true,
+        "challenge": true,
+        "expertOnly": false
+      },
+      "reviewStatus": "approved"
+    },
+    {
+      "id": "worldprint-co2-per-capita",
+      "correctIndicatorId": "co2-per-capita",
+      "category": "environment",
+      "difficulty": "standard",
+      "choices": {
+        "explorer": [
+          {
+            "indicatorId": "co2-per-capita",
+            "label": "CO2 emissions per capita"
+          },
+          {
+            "indicatorId": "health-expenditure",
+            "label": "Health expenditure"
+          },
+          {
+            "indicatorId": "arable-land",
+            "label": "Arable land"
+          }
+        ],
+        "analyst": [
+          {
+            "indicatorId": "under-five-mortality",
+            "label": "Under-5 mortality"
+          },
+          {
+            "indicatorId": "basic-sanitation",
+            "label": "Basic sanitation access"
+          },
+          {
+            "indicatorId": "co2-per-capita",
+            "label": "CO2 emissions per capita"
+          },
+          {
+            "indicatorId": "pm25-exposure",
+            "label": "PM2.5 exposure"
+          }
+        ],
+        "cartographer": [
+          {
+            "indicatorId": "pm25-exposure",
+            "label": "PM2.5 exposure"
+          },
+          {
+            "indicatorId": "ghg-per-capita",
+            "label": "Greenhouse gas emissions per capita"
+          },
+          {
+            "indicatorId": "basic-sanitation",
+            "label": "Basic sanitation access"
+          },
+          {
+            "indicatorId": "co2-per-capita",
+            "label": "CO2 emissions per capita"
+          },
+          {
+            "indicatorId": "infant-mortality",
+            "label": "Infant mortality"
+          },
+          {
+            "indicatorId": "clean-fuels-access",
+            "label": "Clean cooking fuels access"
+          }
+        ]
+      },
+      "acceptedAliases": [
+        "carbon dioxide (co2) emissions excluding lulucf per capita (t co2e/capita)",
+        "carbon dioxide emissions per capita",
+        "co2 emissions per capita",
+        "co2 per capita",
+        "emissions per person",
+        "en.ghg.co2.pc.ce.ar5",
+        "metric tons co2e per capita"
+      ],
+      "patternNotes": [
+        "The darkest countries include Qatar, Kuwait, Brunei Darussalam, while the lightest include Somalia, Fed. Rep., Congo, Dem. Rep., Central African Republic; that contrast is the fastest way to read the co2 emissions per capita pattern.",
+        "Environment maps reward separating land cover, exposure, and emissions intensity.",
+        "Check both forested and arid or industrialized outliers."
+      ],
+      "avoidSameDayIndicatorIds": [
+        "ghg-per-capita"
+      ],
+      "editorialStatus": "daily_eligible",
+      "ambiguityRisk": "medium",
+      "eligibility": {
+        "daily": true,
+        "practice": true,
+        "challenge": true,
+        "expertOnly": false
+      },
+      "reviewStatus": "approved"
+    },
+    {
+      "id": "worldprint-current-account",
+      "correctIndicatorId": "current-account",
+      "category": "economy",
+      "difficulty": "expert",
+      "choices": {
+        "explorer": [
+          {
+            "indicatorId": "current-account",
+            "label": "Current account balance"
+          },
+          {
+            "indicatorId": "education-spending",
+            "label": "Education spending"
+          },
+          {
+            "indicatorId": "female-labor-force",
+            "label": "Female labor force participation"
+          }
+        ],
+        "analyst": [
+          {
+            "indicatorId": "inflation",
+            "label": "Inflation"
+          },
+          {
+            "indicatorId": "current-account",
+            "label": "Current account balance"
+          },
+          {
+            "indicatorId": "fdi-inflows",
+            "label": "Foreign direct investment inflows"
+          },
+          {
+            "indicatorId": "agriculture-value-added",
+            "label": "Agriculture value added"
+          }
+        ],
+        "cartographer": [
+          {
+            "indicatorId": "current-account",
+            "label": "Current account balance"
+          },
+          {
+            "indicatorId": "inflation",
+            "label": "Inflation"
+          },
+          {
+            "indicatorId": "exports-share",
+            "label": "Exports"
+          },
+          {
+            "indicatorId": "agriculture-value-added",
+            "label": "Agriculture value added"
+          },
+          {
+            "indicatorId": "trade-share",
+            "label": "Trade"
+          },
+          {
+            "indicatorId": "fdi-inflows",
+            "label": "Foreign direct investment inflows"
+          }
+        ]
+      },
+      "acceptedAliases": [
+        "bn.cab.xoka.gd.zs",
+        "current account",
+        "current account balance",
+        "current account balance (% of gdp)",
+        "external balance",
+        "percent of gdp"
+      ],
+      "patternNotes": [
+        "The darkest countries include Kuwait, Ireland, Qatar, while the lightest include Timor-Leste, West Bank and Gaza, Bhutan; that contrast is the fastest way to read the current account balance pattern.",
+        "Economic-share maps are not the same as raw totals.",
+        "Small open economies can dominate percentage maps."
+      ],
+      "avoidSameDayIndicatorIds": [],
+      "editorialStatus": "expert_only",
+      "ambiguityRisk": "medium",
+      "eligibility": {
+        "daily": false,
+        "practice": true,
+        "challenge": true,
+        "expertOnly": true
+      },
+      "reviewStatus": "approved"
+    },
+    {
+      "id": "worldprint-death-rate",
+      "correctIndicatorId": "death-rate",
+      "category": "demography",
+      "difficulty": "expert",
+      "choices": {
+        "explorer": [
+          {
+            "indicatorId": "out-of-pocket-health",
+            "label": "Out-of-pocket health spending"
+          },
+          {
+            "indicatorId": "death-rate",
+            "label": "Death rate"
+          },
+          {
+            "indicatorId": "education-spending",
+            "label": "Education spending"
+          }
+        ],
+        "analyst": [
+          {
+            "indicatorId": "death-rate",
+            "label": "Death rate"
+          },
+          {
+            "indicatorId": "older-adults-share",
+            "label": "Population ages 65+"
+          },
+          {
+            "indicatorId": "adolescent-fertility",
+            "label": "Adolescent fertility"
+          },
+          {
+            "indicatorId": "fertility-rate",
+            "label": "Fertility rate"
+          }
+        ],
+        "cartographer": [
+          {
+            "indicatorId": "birth-rate",
+            "label": "Birth rate"
+          },
+          {
+            "indicatorId": "children-share",
+            "label": "Population ages 0-14"
+          },
+          {
+            "indicatorId": "death-rate",
+            "label": "Death rate"
+          },
+          {
+            "indicatorId": "older-adults-share",
+            "label": "Population ages 65+"
+          },
+          {
+            "indicatorId": "adolescent-fertility",
+            "label": "Adolescent fertility"
+          },
+          {
+            "indicatorId": "fertility-rate",
+            "label": "Fertility rate"
+          }
+        ]
+      },
+      "acceptedAliases": [
+        "crude death rate",
+        "death rate",
+        "death rate, crude (per 1,000 people)",
+        "deaths per 1,000 people",
+        "deaths per 1000",
+        "sp.dyn.cdrt.in"
+      ],
+      "patternNotes": [
+        "The darkest countries include Bulgaria, Serbia, Latvia, while the lightest include United Arab Emirates, Qatar, Kuwait; that contrast is the fastest way to read the death rate pattern.",
+        "Age structure often makes the map readable before labels do.",
+        "Compare high-growth and older-population regions."
+      ],
+      "avoidSameDayIndicatorIds": [],
+      "editorialStatus": "practice_eligible",
+      "ambiguityRisk": "medium",
+      "eligibility": {
+        "daily": false,
+        "practice": true,
+        "challenge": true,
+        "expertOnly": false
+      },
+      "reviewStatus": "approved"
+    },
+    {
+      "id": "worldprint-education-spending",
+      "correctIndicatorId": "education-spending",
+      "category": "education",
+      "difficulty": "expert",
+      "choices": {
+        "explorer": [
+          {
+            "indicatorId": "death-rate",
+            "label": "Death rate"
+          },
+          {
+            "indicatorId": "education-spending",
+            "label": "Education spending"
+          },
+          {
+            "indicatorId": "mobile-subscriptions",
+            "label": "Mobile subscriptions"
+          }
+        ],
+        "analyst": [
+          {
+            "indicatorId": "education-spending",
+            "label": "Education spending"
+          },
+          {
+            "indicatorId": "secondary-enrollment",
+            "label": "Secondary enrollment"
+          },
+          {
+            "indicatorId": "adolescent-fertility",
+            "label": "Adolescent fertility"
+          },
+          {
+            "indicatorId": "tertiary-enrollment",
+            "label": "Tertiary enrollment"
+          }
+        ],
+        "cartographer": [
+          {
+            "indicatorId": "education-spending",
+            "label": "Education spending"
+          },
+          {
+            "indicatorId": "adolescent-fertility",
+            "label": "Adolescent fertility"
+          },
+          {
+            "indicatorId": "secondary-enrollment",
+            "label": "Secondary enrollment"
+          },
+          {
+            "indicatorId": "tertiary-enrollment",
+            "label": "Tertiary enrollment"
+          },
+          {
+            "indicatorId": "fixed-broadband",
+            "label": "Fixed broadband"
+          },
+          {
+            "indicatorId": "secure-internet-servers",
+            "label": "Secure internet servers"
+          }
+        ]
+      },
+      "acceptedAliases": [
+        "education expenditure",
+        "education spending",
+        "government expenditure on education",
+        "government expenditure on education, total (% of gdp)",
+        "percent of gdp",
+        "se.xpd.totl.gd.zs"
+      ],
+      "patternNotes": [
+        "The darkest countries include Vanuatu, Namibia, Solomon Islands, while the lightest include Somalia, Fed. Rep., Nigeria, Papua New Guinea; that contrast is the fastest way to read the education spending pattern.",
+        "Education indicators can be shaped by enrollment systems and data coverage.",
+        "Compare youth-heavy countries with higher-income service economies."
+      ],
+      "avoidSameDayIndicatorIds": [],
+      "editorialStatus": "expert_only",
+      "ambiguityRisk": "medium",
+      "eligibility": {
+        "daily": false,
+        "practice": true,
+        "challenge": true,
+        "expertOnly": true
+      },
+      "reviewStatus": "approved"
+    },
+    {
+      "id": "worldprint-electricity-access",
+      "correctIndicatorId": "electricity-access",
+      "category": "energy",
+      "difficulty": "intro",
+      "choices": {
+        "explorer": [
+          {
+            "indicatorId": "mobile-subscriptions",
+            "label": "Mobile subscriptions"
+          },
+          {
+            "indicatorId": "electricity-access",
+            "label": "Electricity access"
+          },
+          {
+            "indicatorId": "forest-area",
+            "label": "Forest area"
+          }
+        ],
+        "analyst": [
+          {
+            "indicatorId": "electricity-access",
+            "label": "Electricity access"
+          },
+          {
+            "indicatorId": "renewable-energy-consumption",
+            "label": "Renewable energy consumption"
+          },
+          {
+            "indicatorId": "clean-fuels-access",
+            "label": "Clean cooking fuels access"
+          },
+          {
+            "indicatorId": "gdp-per-capita",
+            "label": "GDP per capita"
+          }
+        ],
+        "cartographer": [
+          {
+            "indicatorId": "clean-fuels-access",
+            "label": "Clean cooking fuels access"
+          },
+          {
+            "indicatorId": "electricity-access",
+            "label": "Electricity access"
+          },
+          {
+            "indicatorId": "renewable-energy-consumption",
+            "label": "Renewable energy consumption"
+          },
+          {
+            "indicatorId": "gdp-per-capita-ppp",
+            "label": "GDP per capita, PPP"
+          },
+          {
+            "indicatorId": "internet-users",
+            "label": "Internet users"
+          },
+          {
+            "indicatorId": "gdp-per-capita",
+            "label": "GDP per capita"
+          }
+        ]
+      },
+      "acceptedAliases": [
+        "access to electricity",
+        "access to electricity (% of population)",
+        "eg.elc.accs.zs",
+        "electric power access",
+        "electricity access",
+        "percent of population"
+      ],
+      "patternNotes": [
+        "The darkest countries include Venezuela, RB, Uzbekistan, United States, while the lightest include South Sudan, Burundi, Chad; that contrast is the fastest way to read the electricity access pattern.",
+        "Energy maps often separate access, consumption, and production mix.",
+        "Look for hydro, fossil-fuel, and low-access signals."
+      ],
+      "avoidSameDayIndicatorIds": [
+        "safe-drinking-water"
+      ],
+      "editorialStatus": "daily_eligible",
+      "ambiguityRisk": "medium",
+      "eligibility": {
+        "daily": true,
+        "practice": true,
+        "challenge": true,
+        "expertOnly": false
+      },
+      "reviewStatus": "approved"
+    },
+    {
+      "id": "worldprint-employment-agriculture",
+      "correctIndicatorId": "employment-agriculture",
+      "category": "labor",
+      "difficulty": "standard",
+      "choices": {
+        "explorer": [
+          {
+            "indicatorId": "population-density",
+            "label": "Population density"
+          },
+          {
+            "indicatorId": "fdi-inflows",
+            "label": "Foreign direct investment inflows"
+          },
+          {
+            "indicatorId": "employment-agriculture",
+            "label": "Employment in agriculture"
+          }
+        ],
+        "analyst": [
+          {
+            "indicatorId": "employment-agriculture",
+            "label": "Employment in agriculture"
+          },
+          {
+            "indicatorId": "gdp-per-capita",
+            "label": "GDP per capita"
+          },
+          {
+            "indicatorId": "labor-force-participation",
+            "label": "Labor force participation"
+          },
+          {
+            "indicatorId": "agriculture-value-added",
+            "label": "Agriculture value added"
+          }
+        ],
+        "cartographer": [
+          {
+            "indicatorId": "employment-agriculture",
+            "label": "Employment in agriculture"
+          },
+          {
+            "indicatorId": "gdp-per-capita",
+            "label": "GDP per capita"
+          },
+          {
+            "indicatorId": "gdp-per-capita-ppp",
+            "label": "GDP per capita, PPP"
+          },
+          {
+            "indicatorId": "agriculture-value-added",
+            "label": "Agriculture value added"
+          },
+          {
+            "indicatorId": "female-labor-force",
+            "label": "Female labor force participation"
+          },
+          {
+            "indicatorId": "labor-force-participation",
+            "label": "Labor force participation"
+          }
+        ]
+      },
+      "acceptedAliases": [
+        "agricultural employment",
+        "employment in agriculture",
+        "employment in agriculture (% of total employment) (modeled ilo estimate)",
+        "farm employment",
+        "percent of total employment",
+        "sl.agr.empl.zs"
+      ],
+      "patternNotes": [
+        "The darkest countries include Burundi, Mozambique, Niger, while the lightest include Israel, Bahamas, The, United Kingdom; that contrast is the fastest way to read the employment in agriculture pattern.",
+        "Labor maps often reveal sector structure and gender participation differences.",
+        "Compare agriculture-heavy and service-heavy economies."
+      ],
+      "avoidSameDayIndicatorIds": [
+        "employment-services",
+        "vulnerable-employment",
+        "self-employed"
+      ],
+      "editorialStatus": "daily_eligible",
+      "ambiguityRisk": "medium",
+      "eligibility": {
+        "daily": true,
+        "practice": true,
+        "challenge": true,
+        "expertOnly": false
+      },
+      "reviewStatus": "approved"
+    },
+    {
+      "id": "worldprint-employment-services",
+      "correctIndicatorId": "employment-services",
+      "category": "labor",
+      "difficulty": "standard",
+      "choices": {
+        "explorer": [
+          {
+            "indicatorId": "employment-services",
+            "label": "Employment in services"
+          },
+          {
+            "indicatorId": "fdi-inflows",
+            "label": "Foreign direct investment inflows"
+          },
+          {
+            "indicatorId": "population-density",
+            "label": "Population density"
+          }
+        ],
+        "analyst": [
+          {
+            "indicatorId": "employment-services",
+            "label": "Employment in services"
+          },
+          {
+            "indicatorId": "labor-force-participation",
+            "label": "Labor force participation"
+          },
+          {
+            "indicatorId": "unemployment",
+            "label": "Unemployment"
+          },
+          {
+            "indicatorId": "agriculture-value-added",
+            "label": "Agriculture value added"
+          }
+        ],
+        "cartographer": [
+          {
+            "indicatorId": "gdp-per-capita",
+            "label": "GDP per capita"
+          },
+          {
+            "indicatorId": "gdp-per-capita-ppp",
+            "label": "GDP per capita, PPP"
+          },
+          {
+            "indicatorId": "employment-services",
+            "label": "Employment in services"
+          },
+          {
+            "indicatorId": "unemployment",
+            "label": "Unemployment"
+          },
+          {
+            "indicatorId": "labor-force-participation",
+            "label": "Labor force participation"
+          },
+          {
+            "indicatorId": "agriculture-value-added",
+            "label": "Agriculture value added"
+          }
+        ]
+      },
+      "acceptedAliases": [
+        "employment in services",
+        "employment in services (% of total employment) (modeled ilo estimate)",
+        "percent of total employment",
+        "service sector jobs",
+        "services employment",
+        "sl.srv.empl.zs"
+      ],
+      "patternNotes": [
+        "The darkest countries include Djibouti, Luxembourg, Netherlands, while the lightest include Burundi, Niger, Chad; that contrast is the fastest way to read the employment in services pattern.",
+        "Labor maps often reveal sector structure and gender participation differences.",
+        "Compare agriculture-heavy and service-heavy economies."
+      ],
+      "avoidSameDayIndicatorIds": [
+        "employment-agriculture"
+      ],
+      "editorialStatus": "practice_eligible",
+      "ambiguityRisk": "high",
+      "eligibility": {
+        "daily": false,
+        "practice": true,
+        "challenge": true,
+        "expertOnly": false
+      },
+      "reviewStatus": "approved"
+    },
+    {
+      "id": "worldprint-exports-share",
+      "correctIndicatorId": "exports-share",
+      "category": "economy",
+      "difficulty": "standard",
+      "choices": {
+        "explorer": [
+          {
+            "indicatorId": "exports-share",
+            "label": "Exports"
+          },
+          {
+            "indicatorId": "arable-land",
+            "label": "Arable land"
+          },
+          {
+            "indicatorId": "labor-force-participation",
+            "label": "Labor force participation"
+          }
+        ],
+        "analyst": [
+          {
+            "indicatorId": "current-account",
+            "label": "Current account balance"
+          },
+          {
+            "indicatorId": "exports-share",
+            "label": "Exports"
+          },
+          {
+            "indicatorId": "agriculture-value-added",
+            "label": "Agriculture value added"
+          },
+          {
+            "indicatorId": "inflation",
+            "label": "Inflation"
+          }
+        ],
+        "cartographer": [
+          {
+            "indicatorId": "imports-share",
+            "label": "Imports"
+          },
+          {
+            "indicatorId": "inflation",
+            "label": "Inflation"
+          },
+          {
+            "indicatorId": "exports-share",
+            "label": "Exports"
+          },
+          {
+            "indicatorId": "agriculture-value-added",
+            "label": "Agriculture value added"
+          },
+          {
+            "indicatorId": "current-account",
+            "label": "Current account balance"
+          },
+          {
+            "indicatorId": "trade-share",
+            "label": "Trade"
+          }
+        ]
+      },
+      "acceptedAliases": [
+        "exports",
+        "exports as share of gdp",
+        "exports of goods and services (% of gdp)",
+        "exports percent gdp",
+        "exports share",
+        "ne.exp.gnfs.zs",
+        "percent of gdp"
+      ],
+      "patternNotes": [
+        "The darkest countries include Luxembourg, Ireland, Djibouti, while the lightest include Sudan, Haiti, Ethiopia; that contrast is the fastest way to read the exports pattern.",
+        "Economic-share maps are not the same as raw totals.",
+        "Small open economies can dominate percentage maps."
+      ],
+      "avoidSameDayIndicatorIds": [
+        "trade-share"
+      ],
+      "editorialStatus": "expert_only",
+      "ambiguityRisk": "high",
+      "eligibility": {
+        "daily": false,
+        "practice": true,
+        "challenge": true,
+        "expertOnly": true
+      },
+      "reviewStatus": "approved"
+    },
+    {
+      "id": "worldprint-fdi-inflows",
+      "correctIndicatorId": "fdi-inflows",
+      "category": "economy",
+      "difficulty": "expert",
+      "choices": {
+        "explorer": [
+          {
+            "indicatorId": "fdi-inflows",
+            "label": "Foreign direct investment inflows"
+          },
+          {
+            "indicatorId": "gdp-per-capita",
+            "label": "GDP per capita"
+          },
+          {
+            "indicatorId": "female-labor-force",
+            "label": "Female labor force participation"
+          }
+        ],
+        "analyst": [
+          {
+            "indicatorId": "inflation",
+            "label": "Inflation"
+          },
+          {
+            "indicatorId": "trade-share",
+            "label": "Trade"
+          },
+          {
+            "indicatorId": "current-account",
+            "label": "Current account balance"
+          },
+          {
+            "indicatorId": "fdi-inflows",
+            "label": "Foreign direct investment inflows"
+          }
+        ],
+        "cartographer": [
+          {
+            "indicatorId": "imports-share",
+            "label": "Imports"
+          },
+          {
+            "indicatorId": "exports-share",
+            "label": "Exports"
+          },
+          {
+            "indicatorId": "agriculture-value-added",
+            "label": "Agriculture value added"
+          },
+          {
+            "indicatorId": "fdi-inflows",
+            "label": "Foreign direct investment inflows"
+          },
+          {
+            "indicatorId": "trade-share",
+            "label": "Trade"
+          },
+          {
+            "indicatorId": "current-account",
+            "label": "Current account balance"
+          }
+        ]
+      },
+      "acceptedAliases": [
+        "bx.klt.dinv.wd.gd.zs",
+        "direct investment inflows",
+        "fdi inflows",
+        "foreign direct investment",
+        "foreign direct investment inflows",
+        "foreign direct investment, net inflows (% of gdp)",
+        "percent of gdp"
+      ],
+      "patternNotes": [
+        "The darkest countries include Luxembourg, Guyana, Mozambique, while the lightest include Cyprus, Hungary, Switzerland; that contrast is the fastest way to read the foreign direct investment inflows pattern.",
+        "Economic-share maps are not the same as raw totals.",
+        "Small open economies can dominate percentage maps."
+      ],
+      "avoidSameDayIndicatorIds": [],
+      "editorialStatus": "expert_only",
+      "ambiguityRisk": "medium",
+      "eligibility": {
+        "daily": false,
+        "practice": true,
+        "challenge": true,
+        "expertOnly": true
+      },
+      "reviewStatus": "approved"
+    },
+    {
+      "id": "worldprint-female-labor-force",
+      "correctIndicatorId": "female-labor-force",
+      "category": "labor",
+      "difficulty": "expert",
+      "choices": {
+        "explorer": [
+          {
+            "indicatorId": "cereal-yield",
+            "label": "Cereal yield"
+          },
+          {
+            "indicatorId": "fdi-inflows",
+            "label": "Foreign direct investment inflows"
+          },
+          {
+            "indicatorId": "female-labor-force",
+            "label": "Female labor force participation"
+          }
+        ],
+        "analyst": [
+          {
+            "indicatorId": "employment-agriculture",
+            "label": "Employment in agriculture"
+          },
+          {
+            "indicatorId": "unemployment",
+            "label": "Unemployment"
+          },
+          {
+            "indicatorId": "female-labor-force",
+            "label": "Female labor force participation"
+          },
+          {
+            "indicatorId": "labor-force-participation",
+            "label": "Labor force participation"
+          }
+        ],
+        "cartographer": [
+          {
+            "indicatorId": "employment-services",
+            "label": "Employment in services"
+          },
+          {
+            "indicatorId": "labor-force-participation",
+            "label": "Labor force participation"
+          },
+          {
+            "indicatorId": "agriculture-value-added",
+            "label": "Agriculture value added"
+          },
+          {
+            "indicatorId": "unemployment",
+            "label": "Unemployment"
+          },
+          {
+            "indicatorId": "employment-agriculture",
+            "label": "Employment in agriculture"
+          },
+          {
+            "indicatorId": "female-labor-force",
+            "label": "Female labor force participation"
+          }
+        ]
+      },
+      "acceptedAliases": [
+        "female labor force participation",
+        "female workforce participation",
+        "labor force participation rate, female (% of female population ages 15+) (modeled ilo estimate)",
+        "percent of female population ages 15+",
+        "sl.tlf.cact.fe.zs",
+        "women labor participation"
+      ],
+      "patternNotes": [
+        "The darkest countries include Madagascar, Solomon Islands, Nigeria, while the lightest include Yemen, Rep., Afghanistan, Iraq; that contrast is the fastest way to read the female labor force participation pattern.",
+        "Labor maps often reveal sector structure and gender participation differences.",
+        "Compare agriculture-heavy and service-heavy economies."
+      ],
+      "avoidSameDayIndicatorIds": [],
+      "editorialStatus": "expert_only",
+      "ambiguityRisk": "medium",
+      "eligibility": {
+        "daily": false,
+        "practice": true,
+        "challenge": true,
+        "expertOnly": true
+      },
+      "reviewStatus": "approved"
+    },
+    {
+      "id": "worldprint-fertility-rate",
+      "correctIndicatorId": "fertility-rate",
+      "category": "demography",
+      "difficulty": "standard",
+      "choices": {
+        "explorer": [
+          {
+            "indicatorId": "population-density",
+            "label": "Population density"
+          },
+          {
+            "indicatorId": "fertility-rate",
+            "label": "Fertility rate"
+          },
+          {
+            "indicatorId": "health-expenditure",
+            "label": "Health expenditure"
+          }
+        ],
+        "analyst": [
+          {
+            "indicatorId": "fertility-rate",
+            "label": "Fertility rate"
+          },
+          {
+            "indicatorId": "older-adults-share",
+            "label": "Population ages 65+"
+          },
+          {
+            "indicatorId": "age-dependency",
+            "label": "Age dependency ratio"
+          },
+          {
+            "indicatorId": "adolescent-fertility",
+            "label": "Adolescent fertility"
+          }
+        ],
+        "cartographer": [
+          {
+            "indicatorId": "adolescent-fertility",
+            "label": "Adolescent fertility"
+          },
+          {
+            "indicatorId": "older-adults-share",
+            "label": "Population ages 65+"
+          },
+          {
+            "indicatorId": "fertility-rate",
+            "label": "Fertility rate"
+          },
+          {
+            "indicatorId": "age-dependency",
+            "label": "Age dependency ratio"
+          },
+          {
+            "indicatorId": "birth-rate",
+            "label": "Birth rate"
+          },
+          {
+            "indicatorId": "children-share",
+            "label": "Population ages 0-14"
+          }
+        ]
+      },
+      "acceptedAliases": [
+        "births per woman",
+        "fertility rate",
+        "fertility rate, total (births per woman)",
+        "sp.dyn.tfrt.in",
+        "total fertility"
+      ],
+      "patternNotes": [
+        "The darkest countries include Chad, Somalia, Fed. Rep., Congo, Dem. Rep., while the lightest include Korea, Rep., Puerto Rico (US), Ukraine; that contrast is the fastest way to read the fertility rate pattern.",
+        "Age structure often makes the map readable before labels do.",
+        "Compare high-growth and older-population regions."
+      ],
+      "avoidSameDayIndicatorIds": [
+        "birth-rate",
+        "children-share"
+      ],
+      "editorialStatus": "daily_eligible",
+      "ambiguityRisk": "medium",
+      "eligibility": {
+        "daily": true,
+        "practice": true,
+        "challenge": true,
+        "expertOnly": false
+      },
+      "reviewStatus": "approved"
+    },
+    {
+      "id": "worldprint-fixed-broadband",
+      "correctIndicatorId": "fixed-broadband",
+      "category": "connectivity",
+      "difficulty": "expert",
+      "choices": {
+        "explorer": [
+          {
+            "indicatorId": "renewable-electricity",
+            "label": "Renewable electricity"
+          },
+          {
+            "indicatorId": "education-spending",
+            "label": "Education spending"
+          },
+          {
+            "indicatorId": "fixed-broadband",
+            "label": "Fixed broadband"
+          }
+        ],
+        "analyst": [
+          {
+            "indicatorId": "internet-users",
+            "label": "Internet users"
+          },
+          {
+            "indicatorId": "fixed-broadband",
+            "label": "Fixed broadband"
+          },
+          {
+            "indicatorId": "tertiary-enrollment",
+            "label": "Tertiary enrollment"
+          },
+          {
+            "indicatorId": "secure-internet-servers",
+            "label": "Secure internet servers"
+          }
+        ],
+        "cartographer": [
+          {
+            "indicatorId": "mobile-subscriptions",
+            "label": "Mobile subscriptions"
+          },
+          {
+            "indicatorId": "fixed-broadband",
+            "label": "Fixed broadband"
+          },
+          {
+            "indicatorId": "secure-internet-servers",
+            "label": "Secure internet servers"
+          },
+          {
+            "indicatorId": "internet-users",
+            "label": "Internet users"
+          },
+          {
+            "indicatorId": "clean-fuels-access",
+            "label": "Clean cooking fuels access"
+          },
+          {
+            "indicatorId": "gdp-per-capita-ppp",
+            "label": "GDP per capita, PPP"
+          }
+        ]
+      },
+      "acceptedAliases": [
+        "broadband subscriptions",
+        "fixed broadband",
+        "fixed broadband subscriptions (per 100 people)",
+        "it.net.bbnd.p2",
+        "subscriptions per 100 people",
+        "wired broadband"
+      ],
+      "patternNotes": [
+        "The darkest countries include France, Korea, Rep., China, while the lightest include Chad, Timor-Leste, Congo, Dem. Rep.; that contrast is the fastest way to read the fixed broadband pattern.",
+        "Connectivity maps often expose infrastructure, income, and island-state outliers.",
+        "Small high-income countries can be powerful probes."
+      ],
+      "avoidSameDayIndicatorIds": [],
+      "editorialStatus": "expert_only",
+      "ambiguityRisk": "medium",
+      "eligibility": {
+        "daily": false,
+        "practice": true,
+        "challenge": true,
+        "expertOnly": true
+      },
+      "reviewStatus": "approved"
+    },
+    {
+      "id": "worldprint-forest-area",
+      "correctIndicatorId": "forest-area",
+      "category": "environment",
+      "difficulty": "intro",
+      "choices": {
+        "explorer": [
+          {
+            "indicatorId": "forest-area",
+            "label": "Forest area"
+          },
+          {
+            "indicatorId": "electricity-access",
+            "label": "Electricity access"
+          },
+          {
+            "indicatorId": "life-expectancy",
+            "label": "Life expectancy"
+          }
+        ],
+        "analyst": [
+          {
+            "indicatorId": "agricultural-land",
+            "label": "Agricultural land"
+          },
+          {
+            "indicatorId": "forest-area",
+            "label": "Forest area"
+          },
+          {
+            "indicatorId": "pm25-exposure",
+            "label": "PM2.5 exposure"
+          },
+          {
+            "indicatorId": "co2-per-capita",
+            "label": "CO2 emissions per capita"
+          }
+        ],
+        "cartographer": [
+          {
+            "indicatorId": "ghg-per-capita",
+            "label": "Greenhouse gas emissions per capita"
+          },
+          {
+            "indicatorId": "co2-per-capita",
+            "label": "CO2 emissions per capita"
+          },
+          {
+            "indicatorId": "pm25-exposure",
+            "label": "PM2.5 exposure"
+          },
+          {
+            "indicatorId": "agricultural-land",
+            "label": "Agricultural land"
+          },
+          {
+            "indicatorId": "renewable-electricity",
+            "label": "Renewable electricity"
+          },
+          {
+            "indicatorId": "forest-area",
+            "label": "Forest area"
+          }
+        ]
+      },
+      "acceptedAliases": [
+        "ag.lnd.frst.zs",
+        "forest area",
+        "forest area (% of land area)",
+        "forest cover",
+        "forest percentage",
+        "percent of land area"
+      ],
+      "patternNotes": [
+        "The darkest countries include Suriname, Gabon, Solomon Islands, while the lightest include Qatar, Greenland, Oman; that contrast is the fastest way to read the forest area pattern.",
+        "Environment maps reward separating land cover, exposure, and emissions intensity.",
+        "Check both forested and arid or industrialized outliers."
+      ],
+      "avoidSameDayIndicatorIds": [],
+      "editorialStatus": "daily_eligible",
+      "ambiguityRisk": "low",
+      "eligibility": {
+        "daily": true,
+        "practice": true,
+        "challenge": true,
+        "expertOnly": false
+      },
+      "reviewStatus": "approved"
+    },
+    {
+      "id": "worldprint-gdp-per-capita",
+      "correctIndicatorId": "gdp-per-capita",
+      "category": "development",
+      "difficulty": "intro",
+      "choices": {
+        "explorer": [
+          {
+            "indicatorId": "gdp-per-capita",
+            "label": "GDP per capita"
+          },
+          {
+            "indicatorId": "fdi-inflows",
+            "label": "Foreign direct investment inflows"
+          },
+          {
+            "indicatorId": "health-expenditure",
+            "label": "Health expenditure"
+          }
+        ],
+        "analyst": [
+          {
+            "indicatorId": "safe-drinking-water",
+            "label": "Basic drinking water access"
+          },
+          {
+            "indicatorId": "under-five-mortality",
+            "label": "Under-5 mortality"
+          },
+          {
+            "indicatorId": "gdp-per-capita",
+            "label": "GDP per capita"
+          },
+          {
+            "indicatorId": "agriculture-value-added",
+            "label": "Agriculture value added"
+          }
+        ],
+        "cartographer": [
+          {
+            "indicatorId": "gdp-per-capita-ppp",
+            "label": "GDP per capita, PPP"
+          },
+          {
+            "indicatorId": "safe-drinking-water",
+            "label": "Basic drinking water access"
+          },
+          {
+            "indicatorId": "life-expectancy",
+            "label": "Life expectancy"
+          },
+          {
+            "indicatorId": "gdp-per-capita",
+            "label": "GDP per capita"
+          },
+          {
+            "indicatorId": "internet-users",
+            "label": "Internet users"
+          },
+          {
+            "indicatorId": "under-five-mortality",
+            "label": "Under-5 mortality"
+          }
+        ]
+      },
+      "acceptedAliases": [
+        "current us dollars",
+        "gdp per capita",
+        "gdp per capita (current us$)",
+        "gross domestic product per capita",
+        "income per person",
+        "ny.gdp.pcap.cd"
+      ],
+      "patternNotes": [
+        "The darkest countries include Luxembourg, Ireland, Switzerland, while the lightest include Burundi, Central African Republic, Malawi; that contrast is the fastest way to read the gdp per capita pattern.",
+        "Per-person development maps are shaped by income, resource rents, and city-state scale.",
+        "Check high-income small states and large emerging economies."
+      ],
+      "avoidSameDayIndicatorIds": [
+        "gdp-per-capita-ppp",
+        "clean-fuels-access"
+      ],
+      "editorialStatus": "daily_eligible",
+      "ambiguityRisk": "medium",
+      "eligibility": {
+        "daily": true,
+        "practice": true,
+        "challenge": true,
+        "expertOnly": false
+      },
+      "reviewStatus": "approved"
+    },
+    {
+      "id": "worldprint-gdp-per-capita-ppp",
+      "correctIndicatorId": "gdp-per-capita-ppp",
+      "category": "development",
+      "difficulty": "standard",
+      "choices": {
+        "explorer": [
+          {
+            "indicatorId": "health-expenditure",
+            "label": "Health expenditure"
+          },
+          {
+            "indicatorId": "gdp-per-capita-ppp",
+            "label": "GDP per capita, PPP"
+          },
+          {
+            "indicatorId": "fdi-inflows",
+            "label": "Foreign direct investment inflows"
+          }
+        ],
+        "analyst": [
+          {
+            "indicatorId": "gdp-per-capita-ppp",
+            "label": "GDP per capita, PPP"
+          },
+          {
+            "indicatorId": "tuberculosis-incidence",
+            "label": "Tuberculosis incidence"
+          },
+          {
+            "indicatorId": "agriculture-value-added",
+            "label": "Agriculture value added"
+          },
+          {
+            "indicatorId": "under-five-mortality",
+            "label": "Under-5 mortality"
+          }
+        ],
+        "cartographer": [
+          {
+            "indicatorId": "under-five-mortality",
+            "label": "Under-5 mortality"
+          },
+          {
+            "indicatorId": "gdp-per-capita",
+            "label": "GDP per capita"
+          },
+          {
+            "indicatorId": "infant-mortality",
+            "label": "Infant mortality"
+          },
+          {
+            "indicatorId": "agriculture-value-added",
+            "label": "Agriculture value added"
+          },
+          {
+            "indicatorId": "basic-sanitation",
+            "label": "Basic sanitation access"
+          },
+          {
+            "indicatorId": "gdp-per-capita-ppp",
+            "label": "GDP per capita, PPP"
+          }
+        ]
+      },
+      "acceptedAliases": [
+        "current international dollars",
+        "gdp per capita ppp",
+        "gdp per capita, ppp",
+        "gdp per capita, ppp (current international $)",
+        "ny.gdp.pcap.pp.cd",
+        "ppp income per person",
+        "purchasing power gdp"
+      ],
+      "patternNotes": [
+        "The darkest countries include Luxembourg, Ireland, Qatar, while the lightest include Burundi, Central African Republic, Somalia, Fed. Rep.; that contrast is the fastest way to read the gdp per capita, ppp pattern.",
+        "Per-person development maps are shaped by income, resource rents, and city-state scale.",
+        "Check high-income small states and large emerging economies."
+      ],
+      "avoidSameDayIndicatorIds": [
+        "gdp-per-capita",
+        "clean-fuels-access"
+      ],
+      "editorialStatus": "practice_eligible",
+      "ambiguityRisk": "high",
+      "eligibility": {
+        "daily": false,
+        "practice": true,
+        "challenge": true,
+        "expertOnly": false
+      },
+      "reviewStatus": "approved"
+    },
+    {
+      "id": "worldprint-ghg-per-capita",
+      "correctIndicatorId": "ghg-per-capita",
+      "category": "environment",
+      "difficulty": "expert",
+      "choices": {
+        "explorer": [
+          {
+            "indicatorId": "out-of-pocket-health",
+            "label": "Out-of-pocket health spending"
+          },
+          {
+            "indicatorId": "ghg-per-capita",
+            "label": "Greenhouse gas emissions per capita"
+          },
+          {
+            "indicatorId": "arable-land",
+            "label": "Arable land"
+          }
+        ],
+        "analyst": [
+          {
+            "indicatorId": "under-five-mortality",
+            "label": "Under-5 mortality"
+          },
+          {
+            "indicatorId": "renewable-energy-consumption",
+            "label": "Renewable energy consumption"
+          },
+          {
+            "indicatorId": "pm25-exposure",
+            "label": "PM2.5 exposure"
+          },
+          {
+            "indicatorId": "ghg-per-capita",
+            "label": "Greenhouse gas emissions per capita"
+          }
+        ],
+        "cartographer": [
+          {
+            "indicatorId": "infant-mortality",
+            "label": "Infant mortality"
+          },
+          {
+            "indicatorId": "pm25-exposure",
+            "label": "PM2.5 exposure"
+          },
+          {
+            "indicatorId": "basic-sanitation",
+            "label": "Basic sanitation access"
+          },
+          {
+            "indicatorId": "co2-per-capita",
+            "label": "CO2 emissions per capita"
+          },
+          {
+            "indicatorId": "ghg-per-capita",
+            "label": "Greenhouse gas emissions per capita"
+          },
+          {
+            "indicatorId": "clean-fuels-access",
+            "label": "Clean cooking fuels access"
+          }
+        ]
+      },
+      "acceptedAliases": [
+        "climate emissions per person",
+        "en.ghg.all.pc.ce.ar5",
+        "ghg per capita",
+        "greenhouse gas emissions per capita",
+        "metric tons co2e per capita",
+        "total greenhouse gas emissions excluding lulucf per capita (t co2e/capita)"
+      ],
+      "patternNotes": [
+        "The darkest countries include Qatar, Kuwait, Mongolia, while the lightest include Congo, Dem. Rep., Rwanda, Burundi; that contrast is the fastest way to read the greenhouse gas emissions per capita pattern.",
+        "Environment maps reward separating land cover, exposure, and emissions intensity.",
+        "Check both forested and arid or industrialized outliers."
+      ],
+      "avoidSameDayIndicatorIds": [
+        "co2-per-capita"
+      ],
+      "editorialStatus": "expert_only",
+      "ambiguityRisk": "high",
+      "eligibility": {
+        "daily": false,
+        "practice": true,
+        "challenge": true,
+        "expertOnly": true
+      },
+      "reviewStatus": "approved"
+    },
+    {
+      "id": "worldprint-health-expenditure",
+      "correctIndicatorId": "health-expenditure",
+      "category": "health",
+      "difficulty": "standard",
+      "choices": {
+        "explorer": [
+          {
+            "indicatorId": "age-dependency",
+            "label": "Age dependency ratio"
+          },
+          {
+            "indicatorId": "forest-area",
+            "label": "Forest area"
+          },
+          {
+            "indicatorId": "health-expenditure",
+            "label": "Health expenditure"
+          }
+        ],
+        "analyst": [
+          {
+            "indicatorId": "health-expenditure",
+            "label": "Health expenditure"
+          },
+          {
+            "indicatorId": "basic-sanitation",
+            "label": "Basic sanitation access"
+          },
+          {
+            "indicatorId": "tuberculosis-incidence",
+            "label": "Tuberculosis incidence"
+          },
+          {
+            "indicatorId": "under-five-mortality",
+            "label": "Under-5 mortality"
+          }
+        ],
+        "cartographer": [
+          {
+            "indicatorId": "life-expectancy",
+            "label": "Life expectancy"
+          },
+          {
+            "indicatorId": "infant-mortality",
+            "label": "Infant mortality"
+          },
+          {
+            "indicatorId": "under-five-mortality",
+            "label": "Under-5 mortality"
+          },
+          {
+            "indicatorId": "basic-sanitation",
+            "label": "Basic sanitation access"
+          },
+          {
+            "indicatorId": "tuberculosis-incidence",
+            "label": "Tuberculosis incidence"
+          },
+          {
+            "indicatorId": "health-expenditure",
+            "label": "Health expenditure"
+          }
+        ]
+      },
+      "acceptedAliases": [
+        "current health expenditure",
+        "current health expenditure (% of gdp)",
+        "health expenditure",
+        "health spending",
+        "percent of gdp",
+        "sh.xpd.chex.gd.zs"
+      ],
+      "patternNotes": [
+        "The darkest countries include United States, Afghanistan, Liberia, while the lightest include Lao PDR, Bangladesh, Brunei Darussalam; that contrast is the fastest way to read the health expenditure pattern.",
+        "Health maps often separate income, public-health capacity, and conflict exposure.",
+        "Check both high-income and low-income anchors."
+      ],
+      "avoidSameDayIndicatorIds": [],
+      "editorialStatus": "daily_eligible",
+      "ambiguityRisk": "low",
+      "eligibility": {
+        "daily": true,
+        "practice": true,
+        "challenge": true,
+        "expertOnly": false
+      },
+      "reviewStatus": "approved"
+    },
+    {
+      "id": "worldprint-imports-share",
+      "correctIndicatorId": "imports-share",
+      "category": "economy",
+      "difficulty": "standard",
+      "choices": {
+        "explorer": [
+          {
+            "indicatorId": "gdp-per-capita",
+            "label": "GDP per capita"
+          },
+          {
+            "indicatorId": "labor-force-participation",
+            "label": "Labor force participation"
+          },
+          {
+            "indicatorId": "imports-share",
+            "label": "Imports"
+          }
+        ],
+        "analyst": [
+          {
+            "indicatorId": "inflation",
+            "label": "Inflation"
+          },
+          {
+            "indicatorId": "imports-share",
+            "label": "Imports"
+          },
+          {
+            "indicatorId": "agriculture-value-added",
+            "label": "Agriculture value added"
+          },
+          {
+            "indicatorId": "fdi-inflows",
+            "label": "Foreign direct investment inflows"
+          }
+        ],
+        "cartographer": [
+          {
+            "indicatorId": "exports-share",
+            "label": "Exports"
+          },
+          {
+            "indicatorId": "agriculture-value-added",
+            "label": "Agriculture value added"
+          },
+          {
+            "indicatorId": "fdi-inflows",
+            "label": "Foreign direct investment inflows"
+          },
+          {
+            "indicatorId": "inflation",
+            "label": "Inflation"
+          },
+          {
+            "indicatorId": "imports-share",
+            "label": "Imports"
+          },
+          {
+            "indicatorId": "trade-share",
+            "label": "Trade"
+          }
+        ]
+      },
+      "acceptedAliases": [
+        "imports",
+        "imports as share of gdp",
+        "imports of goods and services (% of gdp)",
+        "imports percent gdp",
+        "imports share",
+        "ne.imp.gnfs.zs",
+        "percent of gdp"
+      ],
+      "patternNotes": [
+        "The darkest countries include Luxembourg, Djibouti, Ireland, while the lightest include Sudan, Venezuela, RB, Turkmenistan; that contrast is the fastest way to read the imports pattern.",
+        "Economic-share maps are not the same as raw totals.",
+        "Small open economies can dominate percentage maps."
+      ],
+      "avoidSameDayIndicatorIds": [
+        "trade-share"
+      ],
+      "editorialStatus": "expert_only",
+      "ambiguityRisk": "high",
+      "eligibility": {
+        "daily": false,
+        "practice": true,
+        "challenge": true,
+        "expertOnly": true
+      },
+      "reviewStatus": "approved"
+    },
+    {
+      "id": "worldprint-infant-mortality",
+      "correctIndicatorId": "infant-mortality",
+      "category": "health",
+      "difficulty": "standard",
+      "choices": {
+        "explorer": [
+          {
+            "indicatorId": "death-rate",
+            "label": "Death rate"
+          },
+          {
+            "indicatorId": "forest-area",
+            "label": "Forest area"
+          },
+          {
+            "indicatorId": "infant-mortality",
+            "label": "Infant mortality"
+          }
+        ],
+        "analyst": [
+          {
+            "indicatorId": "safe-drinking-water",
+            "label": "Basic drinking water access"
+          },
+          {
+            "indicatorId": "tuberculosis-incidence",
+            "label": "Tuberculosis incidence"
+          },
+          {
+            "indicatorId": "infant-mortality",
+            "label": "Infant mortality"
+          },
+          {
+            "indicatorId": "basic-sanitation",
+            "label": "Basic sanitation access"
+          }
+        ],
+        "cartographer": [
+          {
+            "indicatorId": "basic-sanitation",
+            "label": "Basic sanitation access"
+          },
+          {
+            "indicatorId": "adult-mortality-male",
+            "label": "Male adult mortality"
+          },
+          {
+            "indicatorId": "safe-drinking-water",
+            "label": "Basic drinking water access"
+          },
+          {
+            "indicatorId": "infant-mortality",
+            "label": "Infant mortality"
+          },
+          {
+            "indicatorId": "under-five-mortality",
+            "label": "Under-5 mortality"
+          },
+          {
+            "indicatorId": "tuberculosis-incidence",
+            "label": "Tuberculosis incidence"
+          }
+        ]
+      },
+      "acceptedAliases": [
+        "deaths per 1,000 live births",
+        "deaths under age one",
+        "infant deaths",
+        "infant mortality",
+        "mortality rate, infant (per 1,000 live births)",
+        "sp.dyn.imrt.in"
+      ],
+      "patternNotes": [
+        "The darkest countries include South Sudan, Nigeria, Niger, while the lightest include Estonia, Belarus, Japan; that contrast is the fastest way to read the infant mortality pattern.",
+        "Health maps often separate income, public-health capacity, and conflict exposure.",
+        "Check both high-income and low-income anchors."
+      ],
+      "avoidSameDayIndicatorIds": [
+        "under-five-mortality",
+        "life-expectancy",
+        "adult-mortality-female",
+        "birth-rate"
+      ],
+      "editorialStatus": "practice_eligible",
+      "ambiguityRisk": "high",
+      "eligibility": {
+        "daily": false,
+        "practice": true,
+        "challenge": true,
+        "expertOnly": false
+      },
+      "reviewStatus": "approved"
+    },
+    {
+      "id": "worldprint-inflation",
+      "correctIndicatorId": "inflation",
+      "category": "economy",
+      "difficulty": "expert",
+      "choices": {
+        "explorer": [
+          {
+            "indicatorId": "death-rate",
+            "label": "Death rate"
+          },
+          {
+            "indicatorId": "female-labor-force",
+            "label": "Female labor force participation"
+          },
+          {
+            "indicatorId": "inflation",
+            "label": "Inflation"
+          }
+        ],
+        "analyst": [
+          {
+            "indicatorId": "inflation",
+            "label": "Inflation"
+          },
+          {
+            "indicatorId": "current-account",
+            "label": "Current account balance"
+          },
+          {
+            "indicatorId": "trade-share",
+            "label": "Trade"
+          },
+          {
+            "indicatorId": "agriculture-value-added",
+            "label": "Agriculture value added"
+          }
+        ],
+        "cartographer": [
+          {
+            "indicatorId": "trade-share",
+            "label": "Trade"
+          },
+          {
+            "indicatorId": "inflation",
+            "label": "Inflation"
+          },
+          {
+            "indicatorId": "exports-share",
+            "label": "Exports"
+          },
+          {
+            "indicatorId": "agriculture-value-added",
+            "label": "Agriculture value added"
+          },
+          {
+            "indicatorId": "current-account",
+            "label": "Current account balance"
+          },
+          {
+            "indicatorId": "imports-share",
+            "label": "Imports"
+          }
+        ]
+      },
+      "acceptedAliases": [
+        "annual percent change",
+        "consumer price inflation",
+        "cpi inflation",
+        "fp.cpi.totl.zg",
+        "inflation",
+        "inflation, consumer prices (annual %)"
+      ],
+      "patternNotes": [
+        "The darkest countries include Argentina, South Sudan, Turkiye, while the lightest include Iraq, Afghanistan, Sri Lanka; that contrast is the fastest way to read the inflation pattern.",
+        "Economic-share maps are not the same as raw totals.",
+        "Small open economies can dominate percentage maps."
+      ],
+      "avoidSameDayIndicatorIds": [],
+      "editorialStatus": "expert_only",
+      "ambiguityRisk": "medium",
+      "eligibility": {
+        "daily": false,
+        "practice": true,
+        "challenge": true,
+        "expertOnly": true
+      },
+      "reviewStatus": "approved"
+    },
+    {
+      "id": "worldprint-internet-users",
+      "correctIndicatorId": "internet-users",
+      "category": "connectivity",
+      "difficulty": "intro",
+      "choices": {
+        "explorer": [
+          {
+            "indicatorId": "forest-area",
+            "label": "Forest area"
+          },
+          {
+            "indicatorId": "renewable-electricity",
+            "label": "Renewable electricity"
+          },
+          {
+            "indicatorId": "internet-users",
+            "label": "Internet users"
+          }
+        ],
+        "analyst": [
+          {
+            "indicatorId": "internet-users",
+            "label": "Internet users"
+          },
+          {
+            "indicatorId": "fixed-broadband",
+            "label": "Fixed broadband"
+          },
+          {
+            "indicatorId": "secure-internet-servers",
+            "label": "Secure internet servers"
+          },
+          {
+            "indicatorId": "electricity-access",
+            "label": "Electricity access"
+          }
+        ],
+        "cartographer": [
+          {
+            "indicatorId": "internet-users",
+            "label": "Internet users"
+          },
+          {
+            "indicatorId": "gdp-per-capita",
+            "label": "GDP per capita"
+          },
+          {
+            "indicatorId": "secure-internet-servers",
+            "label": "Secure internet servers"
+          },
+          {
+            "indicatorId": "fixed-broadband",
+            "label": "Fixed broadband"
+          },
+          {
+            "indicatorId": "electricity-access",
+            "label": "Electricity access"
+          },
+          {
+            "indicatorId": "gdp-per-capita-ppp",
+            "label": "GDP per capita, PPP"
+          }
+        ]
+      },
+      "acceptedAliases": [
+        "individuals using the internet (% of population)",
+        "internet use",
+        "internet users",
+        "it.net.user.zs",
+        "people online",
+        "percent of population"
+      ],
+      "patternNotes": [
+        "The darkest countries include Saudi Arabia, United Arab Emirates, Denmark, while the lightest include Burundi, Uganda, Chad; that contrast is the fastest way to read the internet users pattern.",
+        "Connectivity maps often expose infrastructure, income, and island-state outliers.",
+        "Small high-income countries can be powerful probes."
+      ],
+      "avoidSameDayIndicatorIds": [
+        "clean-fuels-access",
+        "basic-sanitation"
+      ],
+      "editorialStatus": "daily_eligible",
+      "ambiguityRisk": "medium",
+      "eligibility": {
+        "daily": true,
+        "practice": true,
+        "challenge": true,
+        "expertOnly": false
+      },
+      "reviewStatus": "approved"
+    },
+    {
+      "id": "worldprint-labor-force-participation",
+      "correctIndicatorId": "labor-force-participation",
+      "category": "labor",
+      "difficulty": "standard",
+      "choices": {
+        "explorer": [
+          {
+            "indicatorId": "trade-share",
+            "label": "Trade"
+          },
+          {
+            "indicatorId": "gdp-per-capita",
+            "label": "GDP per capita"
+          },
+          {
+            "indicatorId": "labor-force-participation",
+            "label": "Labor force participation"
+          }
+        ],
+        "analyst": [
+          {
+            "indicatorId": "female-labor-force",
+            "label": "Female labor force participation"
+          },
+          {
+            "indicatorId": "employment-agriculture",
+            "label": "Employment in agriculture"
+          },
+          {
+            "indicatorId": "unemployment",
+            "label": "Unemployment"
+          },
+          {
+            "indicatorId": "labor-force-participation",
+            "label": "Labor force participation"
+          }
+        ],
+        "cartographer": [
+          {
+            "indicatorId": "labor-force-participation",
+            "label": "Labor force participation"
+          },
+          {
+            "indicatorId": "unemployment",
+            "label": "Unemployment"
+          },
+          {
+            "indicatorId": "agriculture-value-added",
+            "label": "Agriculture value added"
+          },
+          {
+            "indicatorId": "female-labor-force",
+            "label": "Female labor force participation"
+          },
+          {
+            "indicatorId": "employment-services",
+            "label": "Employment in services"
+          },
+          {
+            "indicatorId": "employment-agriculture",
+            "label": "Employment in agriculture"
+          }
+        ]
+      },
+      "acceptedAliases": [
+        "labor force participation",
+        "labor force participation rate, total (% of total population ages 15+) (modeled ilo estimate)",
+        "labor participation",
+        "percent ages 15+",
+        "sl.tlf.cact.zs",
+        "workforce participation"
+      ],
+      "patternNotes": [
+        "The darkest countries include Qatar, Madagascar, Solomon Islands, while the lightest include Djibouti, Yemen, Rep., Somalia, Fed. Rep.; that contrast is the fastest way to read the labor force participation pattern.",
+        "Labor maps often reveal sector structure and gender participation differences.",
+        "Compare agriculture-heavy and service-heavy economies."
+      ],
+      "avoidSameDayIndicatorIds": [],
+      "editorialStatus": "practice_eligible",
+      "ambiguityRisk": "medium",
+      "eligibility": {
+        "daily": false,
+        "practice": true,
+        "challenge": true,
+        "expertOnly": false
+      },
+      "reviewStatus": "approved"
+    },
+    {
+      "id": "worldprint-life-expectancy",
+      "correctIndicatorId": "life-expectancy",
+      "category": "health",
+      "difficulty": "intro",
+      "choices": {
+        "explorer": [
+          {
+            "indicatorId": "life-expectancy",
+            "label": "Life expectancy"
+          },
+          {
+            "indicatorId": "death-rate",
+            "label": "Death rate"
+          },
+          {
+            "indicatorId": "forest-area",
+            "label": "Forest area"
+          }
+        ],
+        "analyst": [
+          {
+            "indicatorId": "safe-drinking-water",
+            "label": "Basic drinking water access"
+          },
+          {
+            "indicatorId": "life-expectancy",
+            "label": "Life expectancy"
+          },
+          {
+            "indicatorId": "tuberculosis-incidence",
+            "label": "Tuberculosis incidence"
+          },
+          {
+            "indicatorId": "basic-sanitation",
+            "label": "Basic sanitation access"
+          }
+        ],
+        "cartographer": [
+          {
+            "indicatorId": "gdp-per-capita",
+            "label": "GDP per capita"
+          },
+          {
+            "indicatorId": "basic-sanitation",
+            "label": "Basic sanitation access"
+          },
+          {
+            "indicatorId": "life-expectancy",
+            "label": "Life expectancy"
+          },
+          {
+            "indicatorId": "birth-rate",
+            "label": "Birth rate"
+          },
+          {
+            "indicatorId": "tuberculosis-incidence",
+            "label": "Tuberculosis incidence"
+          },
+          {
+            "indicatorId": "safe-drinking-water",
+            "label": "Basic drinking water access"
+          }
+        ]
+      },
+      "acceptedAliases": [
+        "life expectancy",
+        "life expectancy at birth",
+        "life expectancy at birth, total (years)",
+        "longevity",
+        "sp.dyn.le00.in",
+        "years"
+      ],
+      "patternNotes": [
+        "The darkest countries include Kuwait, Switzerland, Sweden, while the lightest include Nigeria, Chad, Central African Republic; that contrast is the fastest way to read the life expectancy pattern.",
+        "Health maps often separate income, public-health capacity, and conflict exposure.",
+        "Check both high-income and low-income anchors."
+      ],
+      "avoidSameDayIndicatorIds": [
+        "adult-mortality-female",
+        "under-five-mortality",
+        "infant-mortality",
+        "adult-mortality-male"
+      ],
+      "editorialStatus": "daily_eligible",
+      "ambiguityRisk": "medium",
+      "eligibility": {
+        "daily": true,
+        "practice": true,
+        "challenge": true,
+        "expertOnly": false
+      },
+      "reviewStatus": "approved"
+    },
+    {
+      "id": "worldprint-mobile-subscriptions",
+      "correctIndicatorId": "mobile-subscriptions",
+      "category": "connectivity",
+      "difficulty": "standard",
+      "choices": {
+        "explorer": [
+          {
+            "indicatorId": "renewable-electricity",
+            "label": "Renewable electricity"
+          },
+          {
+            "indicatorId": "education-spending",
+            "label": "Education spending"
+          },
+          {
+            "indicatorId": "mobile-subscriptions",
+            "label": "Mobile subscriptions"
+          }
+        ],
+        "analyst": [
+          {
+            "indicatorId": "internet-users",
+            "label": "Internet users"
+          },
+          {
+            "indicatorId": "fixed-broadband",
+            "label": "Fixed broadband"
+          },
+          {
+            "indicatorId": "secure-internet-servers",
+            "label": "Secure internet servers"
+          },
+          {
+            "indicatorId": "mobile-subscriptions",
+            "label": "Mobile subscriptions"
+          }
+        ],
+        "cartographer": [
+          {
+            "indicatorId": "secure-internet-servers",
+            "label": "Secure internet servers"
+          },
+          {
+            "indicatorId": "gdp-per-capita-ppp",
+            "label": "GDP per capita, PPP"
+          },
+          {
+            "indicatorId": "internet-users",
+            "label": "Internet users"
+          },
+          {
+            "indicatorId": "mobile-subscriptions",
+            "label": "Mobile subscriptions"
+          },
+          {
+            "indicatorId": "fixed-broadband",
+            "label": "Fixed broadband"
+          },
+          {
+            "indicatorId": "secondary-enrollment",
+            "label": "Secondary enrollment"
+          }
+        ]
+      },
+      "acceptedAliases": [
+        "cellular subscriptions",
+        "it.cel.sets.p2",
+        "mobile cellular subscriptions (per 100 people)",
+        "mobile phones per 100",
+        "mobile subscriptions",
+        "subscriptions per 100 people"
+      ],
+      "patternNotes": [
+        "The darkest countries include Fiji, Montenegro, United Arab Emirates, while the lightest include Papua New Guinea, Mozambique, Congo, Dem. Rep.; that contrast is the fastest way to read the mobile subscriptions pattern.",
+        "Connectivity maps often expose infrastructure, income, and island-state outliers.",
+        "Small high-income countries can be powerful probes."
+      ],
+      "avoidSameDayIndicatorIds": [],
+      "editorialStatus": "daily_eligible",
+      "ambiguityRisk": "low",
+      "eligibility": {
+        "daily": true,
+        "practice": true,
+        "challenge": true,
+        "expertOnly": false
+      },
+      "reviewStatus": "approved"
+    },
+    {
+      "id": "worldprint-older-adults-share",
+      "correctIndicatorId": "older-adults-share",
+      "category": "demography",
+      "difficulty": "intro",
+      "choices": {
+        "explorer": [
+          {
+            "indicatorId": "older-adults-share",
+            "label": "Population ages 65+"
+          },
+          {
+            "indicatorId": "education-spending",
+            "label": "Education spending"
+          },
+          {
+            "indicatorId": "population-density",
+            "label": "Population density"
+          }
+        ],
+        "analyst": [
+          {
+            "indicatorId": "fertility-rate",
+            "label": "Fertility rate"
+          },
+          {
+            "indicatorId": "adolescent-fertility",
+            "label": "Adolescent fertility"
+          },
+          {
+            "indicatorId": "death-rate",
+            "label": "Death rate"
+          },
+          {
+            "indicatorId": "older-adults-share",
+            "label": "Population ages 65+"
+          }
+        ],
+        "cartographer": [
+          {
+            "indicatorId": "fertility-rate",
+            "label": "Fertility rate"
+          },
+          {
+            "indicatorId": "under-five-mortality",
+            "label": "Under-5 mortality"
+          },
+          {
+            "indicatorId": "adolescent-fertility",
+            "label": "Adolescent fertility"
+          },
+          {
+            "indicatorId": "death-rate",
+            "label": "Death rate"
+          },
+          {
+            "indicatorId": "age-dependency",
+            "label": "Age dependency ratio"
+          },
+          {
+            "indicatorId": "older-adults-share",
+            "label": "Population ages 65+"
+          }
+        ]
+      },
+      "acceptedAliases": [
+        "elderly population",
+        "older adults share",
+        "percent of population",
+        "population 65 and older",
+        "population ages 65 and above (% of total population)",
+        "population ages 65+",
+        "sp.pop.65up.to.zs"
+      ],
+      "patternNotes": [
+        "The darkest countries include Japan, Puerto Rico (US), Italy, while the lightest include Qatar, United Arab Emirates, Zambia; that contrast is the fastest way to read the population ages 65+ pattern.",
+        "Age structure often makes the map readable before labels do.",
+        "Compare high-growth and older-population regions."
+      ],
+      "avoidSameDayIndicatorIds": [
+        "birth-rate",
+        "children-share"
+      ],
+      "editorialStatus": "daily_eligible",
+      "ambiguityRisk": "medium",
+      "eligibility": {
+        "daily": true,
+        "practice": true,
+        "challenge": true,
+        "expertOnly": false
+      },
+      "reviewStatus": "approved"
+    },
+    {
+      "id": "worldprint-out-of-pocket-health",
+      "correctIndicatorId": "out-of-pocket-health",
+      "category": "health",
+      "difficulty": "expert",
+      "choices": {
+        "explorer": [
+          {
+            "indicatorId": "out-of-pocket-health",
+            "label": "Out-of-pocket health spending"
+          },
+          {
+            "indicatorId": "death-rate",
+            "label": "Death rate"
+          },
+          {
+            "indicatorId": "forest-area",
+            "label": "Forest area"
+          }
+        ],
+        "analyst": [
+          {
+            "indicatorId": "out-of-pocket-health",
+            "label": "Out-of-pocket health spending"
+          },
+          {
+            "indicatorId": "under-five-mortality",
+            "label": "Under-5 mortality"
+          },
+          {
+            "indicatorId": "tuberculosis-incidence",
+            "label": "Tuberculosis incidence"
+          },
+          {
+            "indicatorId": "basic-sanitation",
+            "label": "Basic sanitation access"
+          }
+        ],
+        "cartographer": [
+          {
+            "indicatorId": "infant-mortality",
+            "label": "Infant mortality"
+          },
+          {
+            "indicatorId": "out-of-pocket-health",
+            "label": "Out-of-pocket health spending"
+          },
+          {
+            "indicatorId": "tuberculosis-incidence",
+            "label": "Tuberculosis incidence"
+          },
+          {
+            "indicatorId": "basic-sanitation",
+            "label": "Basic sanitation access"
+          },
+          {
+            "indicatorId": "under-five-mortality",
+            "label": "Under-5 mortality"
+          },
+          {
+            "indicatorId": "life-expectancy",
+            "label": "Life expectancy"
+          }
+        ]
+      },
+      "acceptedAliases": [
+        "household health spending",
+        "out of pocket health",
+        "out-of-pocket expenditure (% of current health expenditure)",
+        "out-of-pocket health spending",
+        "percent of current health expenditure",
+        "private health payments",
+        "sh.xpd.oopc.ch.zs"
+      ],
+      "patternNotes": [
+        "The darkest countries include Armenia, Bangladesh, Turkmenistan, while the lightest include Solomon Islands, Rwanda, Botswana; that contrast is the fastest way to read the out-of-pocket health spending pattern.",
+        "Health maps often separate income, public-health capacity, and conflict exposure.",
+        "Check both high-income and low-income anchors."
+      ],
+      "avoidSameDayIndicatorIds": [],
+      "editorialStatus": "expert_only",
+      "ambiguityRisk": "medium",
+      "eligibility": {
+        "daily": false,
+        "practice": true,
+        "challenge": true,
+        "expertOnly": true
+      },
+      "reviewStatus": "approved"
+    },
+    {
+      "id": "worldprint-pm25-exposure",
+      "correctIndicatorId": "pm25-exposure",
+      "category": "environment",
+      "difficulty": "standard",
+      "choices": {
+        "explorer": [
+          {
+            "indicatorId": "pm25-exposure",
+            "label": "PM2.5 exposure"
+          },
+          {
+            "indicatorId": "renewable-electricity",
+            "label": "Renewable electricity"
+          },
+          {
+            "indicatorId": "arable-land",
+            "label": "Arable land"
+          }
+        ],
+        "analyst": [
+          {
+            "indicatorId": "clean-fuels-access",
+            "label": "Clean cooking fuels access"
+          },
+          {
+            "indicatorId": "pm25-exposure",
+            "label": "PM2.5 exposure"
+          },
+          {
+            "indicatorId": "under-five-mortality",
+            "label": "Under-5 mortality"
+          },
+          {
+            "indicatorId": "co2-per-capita",
+            "label": "CO2 emissions per capita"
+          }
+        ],
+        "cartographer": [
+          {
+            "indicatorId": "under-five-mortality",
+            "label": "Under-5 mortality"
+          },
+          {
+            "indicatorId": "co2-per-capita",
+            "label": "CO2 emissions per capita"
+          },
+          {
+            "indicatorId": "ghg-per-capita",
+            "label": "Greenhouse gas emissions per capita"
+          },
+          {
+            "indicatorId": "infant-mortality",
+            "label": "Infant mortality"
+          },
+          {
+            "indicatorId": "pm25-exposure",
+            "label": "PM2.5 exposure"
+          },
+          {
+            "indicatorId": "forest-area",
+            "label": "Forest area"
+          }
+        ]
+      },
+      "acceptedAliases": [
+        "air pollution exposure",
+        "en.atm.pm25.mc.m3",
+        "fine particle exposure",
+        "micrograms per cubic meter",
+        "pm2.5 air pollution, mean annual exposure (micrograms per cubic meter)",
+        "pm2.5 exposure"
+      ],
+      "patternNotes": [
+        "The darkest countries include Niger, Qatar, Mauritania, while the lightest include Finland, Iceland, Sweden; that contrast is the fastest way to read the pm2.5 exposure pattern.",
+        "Environment maps reward separating land cover, exposure, and emissions intensity.",
+        "Check both forested and arid or industrialized outliers."
+      ],
+      "avoidSameDayIndicatorIds": [],
+      "editorialStatus": "daily_eligible",
+      "ambiguityRisk": "low",
+      "eligibility": {
+        "daily": true,
+        "practice": true,
+        "challenge": true,
+        "expertOnly": false
+      },
+      "reviewStatus": "approved"
+    },
+    {
+      "id": "worldprint-population-density",
+      "correctIndicatorId": "population-density",
+      "category": "settlement",
+      "difficulty": "standard",
+      "choices": {
+        "explorer": [
+          {
+            "indicatorId": "population-density",
+            "label": "Population density"
+          },
+          {
+            "indicatorId": "age-dependency",
+            "label": "Age dependency ratio"
+          },
+          {
+            "indicatorId": "gdp-per-capita",
+            "label": "GDP per capita"
+          }
+        ],
+        "analyst": [
+          {
+            "indicatorId": "urban-population",
+            "label": "Urban population"
+          },
+          {
+            "indicatorId": "arable-land",
+            "label": "Arable land"
+          },
+          {
+            "indicatorId": "agricultural-land",
+            "label": "Agricultural land"
+          },
+          {
+            "indicatorId": "population-density",
+            "label": "Population density"
+          }
+        ],
+        "cartographer": [
+          {
+            "indicatorId": "population-density",
+            "label": "Population density"
+          },
+          {
+            "indicatorId": "adolescent-fertility",
+            "label": "Adolescent fertility"
+          },
+          {
+            "indicatorId": "fertility-rate",
+            "label": "Fertility rate"
+          },
+          {
+            "indicatorId": "urban-population",
+            "label": "Urban population"
+          },
+          {
+            "indicatorId": "arable-land",
+            "label": "Arable land"
+          },
+          {
+            "indicatorId": "agricultural-land",
+            "label": "Agricultural land"
+          }
+        ]
+      },
+      "acceptedAliases": [
+        "density",
+        "en.pop.dnst",
+        "people per sq. km of land area",
+        "people per square kilometer",
+        "population density",
+        "population density (people per sq. km of land area)"
+      ],
+      "patternNotes": [
+        "The darkest countries include Bangladesh, West Bank and Gaza, Rwanda, while the lightest include Greenland, Mongolia, Australia; that contrast is the fastest way to read the population density pattern.",
+        "Settlement maps reward checking dense city-states and large rural countries.",
+        "Urban and rural shares are mirror-image clues."
+      ],
+      "avoidSameDayIndicatorIds": [],
+      "editorialStatus": "daily_eligible",
+      "ambiguityRisk": "low",
+      "eligibility": {
+        "daily": true,
+        "practice": true,
+        "challenge": true,
+        "expertOnly": false
+      },
+      "reviewStatus": "approved"
+    },
+    {
+      "id": "worldprint-renewable-electricity",
+      "correctIndicatorId": "renewable-electricity",
+      "category": "energy",
+      "difficulty": "standard",
+      "choices": {
+        "explorer": [
+          {
+            "indicatorId": "renewable-electricity",
+            "label": "Renewable electricity"
+          },
+          {
+            "indicatorId": "pm25-exposure",
+            "label": "PM2.5 exposure"
+          },
+          {
+            "indicatorId": "mobile-subscriptions",
+            "label": "Mobile subscriptions"
+          }
+        ],
+        "analyst": [
+          {
+            "indicatorId": "electricity-access",
+            "label": "Electricity access"
+          },
+          {
+            "indicatorId": "renewable-electricity",
+            "label": "Renewable electricity"
+          },
+          {
+            "indicatorId": "renewable-energy-consumption",
+            "label": "Renewable energy consumption"
+          },
+          {
+            "indicatorId": "clean-fuels-access",
+            "label": "Clean cooking fuels access"
+          }
+        ],
+        "cartographer": [
+          {
+            "indicatorId": "co2-per-capita",
+            "label": "CO2 emissions per capita"
+          },
+          {
+            "indicatorId": "electricity-access",
+            "label": "Electricity access"
+          },
+          {
+            "indicatorId": "renewable-electricity",
+            "label": "Renewable electricity"
+          },
+          {
+            "indicatorId": "clean-fuels-access",
+            "label": "Clean cooking fuels access"
+          },
+          {
+            "indicatorId": "renewable-energy-consumption",
+            "label": "Renewable energy consumption"
+          },
+          {
+            "indicatorId": "ghg-per-capita",
+            "label": "Greenhouse gas emissions per capita"
+          }
+        ]
+      },
+      "acceptedAliases": [
+        "eg.elc.rnew.zs",
+        "electricity from renewables",
+        "percent of total electricity output",
+        "renewable electricity",
+        "renewable electricity output (% of total electricity output)",
+        "renewable power share"
+      ],
+      "patternNotes": [
+        "The darkest countries include Bhutan, Lesotho, Costa Rica, while the lightest include Turkmenistan, Brunei Darussalam, Libya; that contrast is the fastest way to read the renewable electricity pattern.",
+        "Energy maps often separate access, consumption, and production mix.",
+        "Look for hydro, fossil-fuel, and low-access signals."
+      ],
+      "avoidSameDayIndicatorIds": [],
+      "editorialStatus": "daily_eligible",
+      "ambiguityRisk": "medium",
+      "eligibility": {
+        "daily": true,
+        "practice": true,
+        "challenge": true,
+        "expertOnly": false
+      },
+      "reviewStatus": "approved"
+    },
+    {
+      "id": "worldprint-renewable-energy-consumption",
+      "correctIndicatorId": "renewable-energy-consumption",
+      "category": "energy",
+      "difficulty": "expert",
+      "choices": {
+        "explorer": [
+          {
+            "indicatorId": "secure-internet-servers",
+            "label": "Secure internet servers"
+          },
+          {
+            "indicatorId": "renewable-energy-consumption",
+            "label": "Renewable energy consumption"
+          },
+          {
+            "indicatorId": "pm25-exposure",
+            "label": "PM2.5 exposure"
+          }
+        ],
+        "analyst": [
+          {
+            "indicatorId": "renewable-energy-consumption",
+            "label": "Renewable energy consumption"
+          },
+          {
+            "indicatorId": "clean-fuels-access",
+            "label": "Clean cooking fuels access"
+          },
+          {
+            "indicatorId": "renewable-electricity",
+            "label": "Renewable electricity"
+          },
+          {
+            "indicatorId": "electricity-access",
+            "label": "Electricity access"
+          }
+        ],
+        "cartographer": [
+          {
+            "indicatorId": "co2-per-capita",
+            "label": "CO2 emissions per capita"
+          },
+          {
+            "indicatorId": "clean-fuels-access",
+            "label": "Clean cooking fuels access"
+          },
+          {
+            "indicatorId": "renewable-electricity",
+            "label": "Renewable electricity"
+          },
+          {
+            "indicatorId": "electricity-access",
+            "label": "Electricity access"
+          },
+          {
+            "indicatorId": "renewable-energy-consumption",
+            "label": "Renewable energy consumption"
+          },
+          {
+            "indicatorId": "internet-users",
+            "label": "Internet users"
+          }
+        ]
+      },
+      "acceptedAliases": [
+        "eg.fec.rnew.zs",
+        "percent of final energy consumption",
+        "renewable energy consumption",
+        "renewable energy consumption (% of total final energy consumption)",
+        "renewable energy share",
+        "renewables in final energy"
+      ],
+      "patternNotes": [
+        "The darkest countries include Congo, Dem. Rep., Somalia, Fed. Rep., Liberia, while the lightest include Brunei Darussalam, Qatar, Algeria; that contrast is the fastest way to read the renewable energy consumption pattern.",
+        "Energy maps often separate access, consumption, and production mix.",
+        "Look for hydro, fossil-fuel, and low-access signals."
+      ],
+      "avoidSameDayIndicatorIds": [],
+      "editorialStatus": "expert_only",
+      "ambiguityRisk": "medium",
+      "eligibility": {
+        "daily": false,
+        "practice": true,
+        "challenge": true,
+        "expertOnly": true
+      },
+      "reviewStatus": "approved"
+    },
+    {
+      "id": "worldprint-safe-drinking-water",
+      "correctIndicatorId": "safe-drinking-water",
+      "category": "health",
+      "difficulty": "intro",
+      "choices": {
+        "explorer": [
+          {
+            "indicatorId": "death-rate",
+            "label": "Death rate"
+          },
+          {
+            "indicatorId": "forest-area",
+            "label": "Forest area"
+          },
+          {
+            "indicatorId": "safe-drinking-water",
+            "label": "Basic drinking water access"
+          }
+        ],
+        "analyst": [
+          {
+            "indicatorId": "under-five-mortality",
+            "label": "Under-5 mortality"
+          },
+          {
+            "indicatorId": "safe-drinking-water",
+            "label": "Basic drinking water access"
+          },
+          {
+            "indicatorId": "life-expectancy",
+            "label": "Life expectancy"
+          },
+          {
+            "indicatorId": "tuberculosis-incidence",
+            "label": "Tuberculosis incidence"
+          }
+        ],
+        "cartographer": [
+          {
+            "indicatorId": "under-five-mortality",
+            "label": "Under-5 mortality"
+          },
+          {
+            "indicatorId": "adult-mortality-female",
+            "label": "Female adult mortality"
+          },
+          {
+            "indicatorId": "basic-sanitation",
+            "label": "Basic sanitation access"
+          },
+          {
+            "indicatorId": "infant-mortality",
+            "label": "Infant mortality"
+          },
+          {
+            "indicatorId": "safe-drinking-water",
+            "label": "Basic drinking water access"
+          },
+          {
+            "indicatorId": "life-expectancy",
+            "label": "Life expectancy"
+          }
+        ]
+      },
+      "acceptedAliases": [
+        "basic drinking water",
+        "basic drinking water access",
+        "drinking water access",
+        "people using at least basic drinking water services (% of population)",
+        "percent of population",
+        "sh.h2o.basw.zs",
+        "water access"
+      ],
+      "patternNotes": [
+        "The darkest countries include Thailand, Puerto Rico (US), New Zealand, while the lightest include Congo, Dem. Rep., Central African Republic, South Sudan; that contrast is the fastest way to read the basic drinking water access pattern.",
+        "Health maps often separate income, public-health capacity, and conflict exposure.",
+        "Check both high-income and low-income anchors."
+      ],
+      "avoidSameDayIndicatorIds": [
+        "electricity-access"
+      ],
+      "editorialStatus": "daily_eligible",
+      "ambiguityRisk": "medium",
+      "eligibility": {
+        "daily": true,
+        "practice": true,
+        "challenge": true,
+        "expertOnly": false
+      },
+      "reviewStatus": "approved"
+    },
+    {
+      "id": "worldprint-secondary-enrollment",
+      "correctIndicatorId": "secondary-enrollment",
+      "category": "education",
+      "difficulty": "standard",
+      "choices": {
+        "explorer": [
+          {
+            "indicatorId": "secondary-enrollment",
+            "label": "Secondary enrollment"
+          },
+          {
+            "indicatorId": "mobile-subscriptions",
+            "label": "Mobile subscriptions"
+          },
+          {
+            "indicatorId": "death-rate",
+            "label": "Death rate"
+          }
+        ],
+        "analyst": [
+          {
+            "indicatorId": "education-spending",
+            "label": "Education spending"
+          },
+          {
+            "indicatorId": "fertility-rate",
+            "label": "Fertility rate"
+          },
+          {
+            "indicatorId": "secondary-enrollment",
+            "label": "Secondary enrollment"
+          },
+          {
+            "indicatorId": "tertiary-enrollment",
+            "label": "Tertiary enrollment"
+          }
+        ],
+        "cartographer": [
+          {
+            "indicatorId": "fertility-rate",
+            "label": "Fertility rate"
+          },
+          {
+            "indicatorId": "education-spending",
+            "label": "Education spending"
+          },
+          {
+            "indicatorId": "gdp-per-capita-ppp",
+            "label": "GDP per capita, PPP"
+          },
+          {
+            "indicatorId": "secondary-enrollment",
+            "label": "Secondary enrollment"
+          },
+          {
+            "indicatorId": "tertiary-enrollment",
+            "label": "Tertiary enrollment"
+          },
+          {
+            "indicatorId": "internet-users",
+            "label": "Internet users"
+          }
+        ]
+      },
+      "acceptedAliases": [
+        "gross enrollment ratio",
+        "high school enrollment",
+        "school enrollment, secondary (% gross)",
+        "se.sec.enrr",
+        "secondary enrollment",
+        "secondary school enrollment"
+      ],
+      "patternNotes": [
+        "The darkest countries include Belgium, Finland, Netherlands, while the lightest include Somalia, Fed. Rep., Niger, Chad; that contrast is the fastest way to read the secondary enrollment pattern.",
+        "Education indicators can be shaped by enrollment systems and data coverage.",
+        "Compare youth-heavy countries with higher-income service economies."
+      ],
+      "avoidSameDayIndicatorIds": [],
+      "editorialStatus": "daily_eligible",
+      "ambiguityRisk": "low",
+      "eligibility": {
+        "daily": true,
+        "practice": true,
+        "challenge": true,
+        "expertOnly": false
+      },
+      "reviewStatus": "approved"
+    },
+    {
+      "id": "worldprint-secure-internet-servers",
+      "correctIndicatorId": "secure-internet-servers",
+      "category": "connectivity",
+      "difficulty": "expert",
+      "choices": {
+        "explorer": [
+          {
+            "indicatorId": "education-spending",
+            "label": "Education spending"
+          },
+          {
+            "indicatorId": "secure-internet-servers",
+            "label": "Secure internet servers"
+          },
+          {
+            "indicatorId": "renewable-electricity",
+            "label": "Renewable electricity"
+          }
+        ],
+        "analyst": [
+          {
+            "indicatorId": "tertiary-enrollment",
+            "label": "Tertiary enrollment"
+          },
+          {
+            "indicatorId": "internet-users",
+            "label": "Internet users"
+          },
+          {
+            "indicatorId": "secure-internet-servers",
+            "label": "Secure internet servers"
+          },
+          {
+            "indicatorId": "fixed-broadband",
+            "label": "Fixed broadband"
+          }
+        ],
+        "cartographer": [
+          {
+            "indicatorId": "fixed-broadband",
+            "label": "Fixed broadband"
+          },
+          {
+            "indicatorId": "secure-internet-servers",
+            "label": "Secure internet servers"
+          },
+          {
+            "indicatorId": "internet-users",
+            "label": "Internet users"
+          },
+          {
+            "indicatorId": "gdp-per-capita-ppp",
+            "label": "GDP per capita, PPP"
+          },
+          {
+            "indicatorId": "mobile-subscriptions",
+            "label": "Mobile subscriptions"
+          },
+          {
+            "indicatorId": "clean-fuels-access",
+            "label": "Clean cooking fuels access"
+          }
+        ]
+      },
+      "acceptedAliases": [
+        "internet servers",
+        "it.net.secr.p6",
+        "secure internet servers",
+        "secure internet servers (per 1 million people)",
+        "secure servers",
+        "servers per 1 million people"
+      ],
+      "patternNotes": [
+        "The darkest countries include Belize, Denmark, Cyprus, while the lightest include Chad, Central African Republic, Eritrea; that contrast is the fastest way to read the secure internet servers pattern.",
+        "Connectivity maps often expose infrastructure, income, and island-state outliers.",
+        "Small high-income countries can be powerful probes."
+      ],
+      "avoidSameDayIndicatorIds": [],
+      "editorialStatus": "expert_only",
+      "ambiguityRisk": "medium",
+      "eligibility": {
+        "daily": false,
+        "practice": true,
+        "challenge": true,
+        "expertOnly": true
+      },
+      "reviewStatus": "approved"
+    },
+    {
+      "id": "worldprint-tertiary-enrollment",
+      "correctIndicatorId": "tertiary-enrollment",
+      "category": "education",
+      "difficulty": "expert",
+      "choices": {
+        "explorer": [
+          {
+            "indicatorId": "death-rate",
+            "label": "Death rate"
+          },
+          {
+            "indicatorId": "tertiary-enrollment",
+            "label": "Tertiary enrollment"
+          },
+          {
+            "indicatorId": "mobile-subscriptions",
+            "label": "Mobile subscriptions"
+          }
+        ],
+        "analyst": [
+          {
+            "indicatorId": "secondary-enrollment",
+            "label": "Secondary enrollment"
+          },
+          {
+            "indicatorId": "adolescent-fertility",
+            "label": "Adolescent fertility"
+          },
+          {
+            "indicatorId": "tertiary-enrollment",
+            "label": "Tertiary enrollment"
+          },
+          {
+            "indicatorId": "education-spending",
+            "label": "Education spending"
+          }
+        ],
+        "cartographer": [
+          {
+            "indicatorId": "tertiary-enrollment",
+            "label": "Tertiary enrollment"
+          },
+          {
+            "indicatorId": "education-spending",
+            "label": "Education spending"
+          },
+          {
+            "indicatorId": "adolescent-fertility",
+            "label": "Adolescent fertility"
+          },
+          {
+            "indicatorId": "fixed-broadband",
+            "label": "Fixed broadband"
+          },
+          {
+            "indicatorId": "secure-internet-servers",
+            "label": "Secure internet servers"
+          },
+          {
+            "indicatorId": "secondary-enrollment",
+            "label": "Secondary enrollment"
+          }
+        ]
+      },
+      "acceptedAliases": [
+        "gross enrollment ratio",
+        "higher education enrollment",
+        "school enrollment, tertiary (% gross)",
+        "se.ter.enrr",
+        "tertiary enrollment",
+        "university enrollment"
+      ],
+      "patternNotes": [
+        "The darkest countries include Australia, Puerto Rico (US), Turkiye, while the lightest include Malawi, Chad, Niger; that contrast is the fastest way to read the tertiary enrollment pattern.",
+        "Education indicators can be shaped by enrollment systems and data coverage.",
+        "Compare youth-heavy countries with higher-income service economies."
+      ],
+      "avoidSameDayIndicatorIds": [],
+      "editorialStatus": "expert_only",
+      "ambiguityRisk": "medium",
+      "eligibility": {
+        "daily": false,
+        "practice": true,
+        "challenge": true,
+        "expertOnly": true
+      },
+      "reviewStatus": "approved"
+    },
+    {
+      "id": "worldprint-trade-share",
+      "correctIndicatorId": "trade-share",
+      "category": "economy",
+      "difficulty": "standard",
+      "choices": {
+        "explorer": [
+          {
+            "indicatorId": "gdp-per-capita",
+            "label": "GDP per capita"
+          },
+          {
+            "indicatorId": "labor-force-participation",
+            "label": "Labor force participation"
+          },
+          {
+            "indicatorId": "trade-share",
+            "label": "Trade"
+          }
+        ],
+        "analyst": [
+          {
+            "indicatorId": "inflation",
+            "label": "Inflation"
+          },
+          {
+            "indicatorId": "trade-share",
+            "label": "Trade"
+          },
+          {
+            "indicatorId": "agriculture-value-added",
+            "label": "Agriculture value added"
+          },
+          {
+            "indicatorId": "current-account",
+            "label": "Current account balance"
+          }
+        ],
+        "cartographer": [
+          {
+            "indicatorId": "trade-share",
+            "label": "Trade"
+          },
+          {
+            "indicatorId": "exports-share",
+            "label": "Exports"
+          },
+          {
+            "indicatorId": "fdi-inflows",
+            "label": "Foreign direct investment inflows"
+          },
+          {
+            "indicatorId": "imports-share",
+            "label": "Imports"
+          },
+          {
+            "indicatorId": "inflation",
+            "label": "Inflation"
+          },
+          {
+            "indicatorId": "agriculture-value-added",
+            "label": "Agriculture value added"
+          }
+        ]
+      },
+      "acceptedAliases": [
+        "imports and exports",
+        "ne.trd.gnfs.zs",
+        "percent of gdp",
+        "trade",
+        "trade (% of gdp)",
+        "trade as share of gdp",
+        "trade share"
+      ],
+      "patternNotes": [
+        "The darkest countries include Luxembourg, Ireland, Djibouti, while the lightest include Sudan, Ethiopia, Haiti; that contrast is the fastest way to read the trade pattern.",
+        "Economic-share maps are not the same as raw totals.",
+        "Small open economies can dominate percentage maps."
+      ],
+      "avoidSameDayIndicatorIds": [
+        "exports-share",
+        "imports-share"
+      ],
+      "editorialStatus": "daily_eligible",
+      "ambiguityRisk": "medium",
+      "eligibility": {
+        "daily": true,
+        "practice": true,
+        "challenge": true,
+        "expertOnly": false
+      },
+      "reviewStatus": "approved"
+    },
+    {
+      "id": "worldprint-tuberculosis-incidence",
+      "correctIndicatorId": "tuberculosis-incidence",
+      "category": "health",
+      "difficulty": "expert",
+      "choices": {
+        "explorer": [
+          {
+            "indicatorId": "tuberculosis-incidence",
+            "label": "Tuberculosis incidence"
+          },
+          {
+            "indicatorId": "forest-area",
+            "label": "Forest area"
+          },
+          {
+            "indicatorId": "death-rate",
+            "label": "Death rate"
+          }
+        ],
+        "analyst": [
+          {
+            "indicatorId": "life-expectancy",
+            "label": "Life expectancy"
+          },
+          {
+            "indicatorId": "under-five-mortality",
+            "label": "Under-5 mortality"
+          },
+          {
+            "indicatorId": "basic-sanitation",
+            "label": "Basic sanitation access"
+          },
+          {
+            "indicatorId": "tuberculosis-incidence",
+            "label": "Tuberculosis incidence"
+          }
+        ],
+        "cartographer": [
+          {
+            "indicatorId": "adult-mortality-male",
+            "label": "Male adult mortality"
+          },
+          {
+            "indicatorId": "adult-mortality-female",
+            "label": "Female adult mortality"
+          },
+          {
+            "indicatorId": "tuberculosis-incidence",
+            "label": "Tuberculosis incidence"
+          },
+          {
+            "indicatorId": "basic-sanitation",
+            "label": "Basic sanitation access"
+          },
+          {
+            "indicatorId": "under-five-mortality",
+            "label": "Under-5 mortality"
+          },
+          {
+            "indicatorId": "infant-mortality",
+            "label": "Infant mortality"
+          }
+        ]
+      },
+      "acceptedAliases": [
+        "cases per 100,000 people",
+        "incidence of tuberculosis (per 100,000 people)",
+        "sh.tbs.incd",
+        "tb incidence",
+        "tuberculosis cases",
+        "tuberculosis incidence"
+      ],
+      "patternNotes": [
+        "The darkest countries include Papua New Guinea, Philippines, Lesotho, while the lightest include West Bank and Gaza, Puerto Rico (US), United Arab Emirates; that contrast is the fastest way to read the tuberculosis incidence pattern.",
+        "Health maps often separate income, public-health capacity, and conflict exposure.",
+        "Check both high-income and low-income anchors."
+      ],
+      "avoidSameDayIndicatorIds": [],
+      "editorialStatus": "daily_eligible",
+      "ambiguityRisk": "medium",
+      "eligibility": {
+        "daily": true,
+        "practice": true,
+        "challenge": true,
+        "expertOnly": false
+      },
+      "reviewStatus": "approved"
+    },
+    {
+      "id": "worldprint-under-five-mortality",
+      "correctIndicatorId": "under-five-mortality",
+      "category": "health",
+      "difficulty": "standard",
+      "choices": {
+        "explorer": [
+          {
+            "indicatorId": "forest-area",
+            "label": "Forest area"
+          },
+          {
+            "indicatorId": "under-five-mortality",
+            "label": "Under-5 mortality"
+          },
+          {
+            "indicatorId": "death-rate",
+            "label": "Death rate"
+          }
+        ],
+        "analyst": [
+          {
+            "indicatorId": "basic-sanitation",
+            "label": "Basic sanitation access"
+          },
+          {
+            "indicatorId": "safe-drinking-water",
+            "label": "Basic drinking water access"
+          },
+          {
+            "indicatorId": "tuberculosis-incidence",
+            "label": "Tuberculosis incidence"
+          },
+          {
+            "indicatorId": "under-five-mortality",
+            "label": "Under-5 mortality"
+          }
+        ],
+        "cartographer": [
+          {
+            "indicatorId": "adult-mortality-male",
+            "label": "Male adult mortality"
+          },
+          {
+            "indicatorId": "tuberculosis-incidence",
+            "label": "Tuberculosis incidence"
+          },
+          {
+            "indicatorId": "under-five-mortality",
+            "label": "Under-5 mortality"
+          },
+          {
+            "indicatorId": "basic-sanitation",
+            "label": "Basic sanitation access"
+          },
+          {
+            "indicatorId": "infant-mortality",
+            "label": "Infant mortality"
+          },
+          {
+            "indicatorId": "safe-drinking-water",
+            "label": "Basic drinking water access"
+          }
+        ]
+      },
+      "acceptedAliases": [
+        "child mortality",
+        "deaths per 1,000 live births",
+        "mortality rate, under-5 (per 1,000 live births)",
+        "sh.dyn.mort",
+        "under five mortality",
+        "under-5 deaths",
+        "under-5 mortality"
+      ],
+      "patternNotes": [
+        "The darkest countries include Nigeria, Niger, Somalia, Fed. Rep., while the lightest include Estonia, Luxembourg, Belarus; that contrast is the fastest way to read the under-5 mortality pattern.",
+        "Health maps often separate income, public-health capacity, and conflict exposure.",
+        "Check both high-income and low-income anchors."
+      ],
+      "avoidSameDayIndicatorIds": [
+        "infant-mortality",
+        "life-expectancy",
+        "adult-mortality-female",
+        "birth-rate",
+        "children-share"
+      ],
+      "editorialStatus": "daily_eligible",
+      "ambiguityRisk": "medium",
+      "eligibility": {
+        "daily": true,
+        "practice": true,
+        "challenge": true,
+        "expertOnly": false
+      },
+      "reviewStatus": "approved"
+    },
+    {
+      "id": "worldprint-unemployment",
+      "correctIndicatorId": "unemployment",
+      "category": "labor",
+      "difficulty": "standard",
+      "choices": {
+        "explorer": [
+          {
+            "indicatorId": "unemployment",
+            "label": "Unemployment"
+          },
+          {
+            "indicatorId": "gdp-per-capita",
+            "label": "GDP per capita"
+          },
+          {
+            "indicatorId": "trade-share",
+            "label": "Trade"
+          }
+        ],
+        "analyst": [
+          {
+            "indicatorId": "unemployment",
+            "label": "Unemployment"
+          },
+          {
+            "indicatorId": "female-labor-force",
+            "label": "Female labor force participation"
+          },
+          {
+            "indicatorId": "employment-agriculture",
+            "label": "Employment in agriculture"
+          },
+          {
+            "indicatorId": "labor-force-participation",
+            "label": "Labor force participation"
+          }
+        ],
+        "cartographer": [
+          {
+            "indicatorId": "female-labor-force",
+            "label": "Female labor force participation"
+          },
+          {
+            "indicatorId": "employment-services",
+            "label": "Employment in services"
+          },
+          {
+            "indicatorId": "agriculture-value-added",
+            "label": "Agriculture value added"
+          },
+          {
+            "indicatorId": "labor-force-participation",
+            "label": "Labor force participation"
+          },
+          {
+            "indicatorId": "unemployment",
+            "label": "Unemployment"
+          },
+          {
+            "indicatorId": "employment-agriculture",
+            "label": "Employment in agriculture"
+          }
+        ]
+      },
+      "acceptedAliases": [
+        "percent of labor force",
+        "sl.uem.totl.zs",
+        "total unemployment",
+        "unemployment",
+        "unemployment rate",
+        "unemployment, total (% of total labor force) (modeled ilo estimate)"
+      ],
+      "patternNotes": [
+        "The darkest countries include Eswatini, South Africa, Djibouti, while the lightest include Qatar, Cambodia, Niger; that contrast is the fastest way to read the unemployment pattern.",
+        "Labor maps often reveal sector structure and gender participation differences.",
+        "Compare agriculture-heavy and service-heavy economies."
+      ],
+      "avoidSameDayIndicatorIds": [],
+      "editorialStatus": "daily_eligible",
+      "ambiguityRisk": "low",
+      "eligibility": {
+        "daily": true,
+        "practice": true,
+        "challenge": true,
+        "expertOnly": false
+      },
+      "reviewStatus": "approved"
+    },
+    {
+      "id": "worldprint-urban-population",
+      "correctIndicatorId": "urban-population",
+      "category": "settlement",
+      "difficulty": "intro",
+      "choices": {
+        "explorer": [
+          {
+            "indicatorId": "death-rate",
+            "label": "Death rate"
+          },
+          {
+            "indicatorId": "arable-land",
+            "label": "Arable land"
+          },
+          {
+            "indicatorId": "urban-population",
+            "label": "Urban population"
+          }
+        ],
+        "analyst": [
+          {
+            "indicatorId": "gdp-per-capita",
+            "label": "GDP per capita"
+          },
+          {
+            "indicatorId": "fertility-rate",
+            "label": "Fertility rate"
+          },
+          {
+            "indicatorId": "urban-population",
+            "label": "Urban population"
+          },
+          {
+            "indicatorId": "older-adults-share",
+            "label": "Population ages 65+"
+          }
+        ],
+        "cartographer": [
+          {
+            "indicatorId": "gdp-per-capita",
+            "label": "GDP per capita"
+          },
+          {
+            "indicatorId": "children-share",
+            "label": "Population ages 0-14"
+          },
+          {
+            "indicatorId": "gdp-per-capita-ppp",
+            "label": "GDP per capita, PPP"
+          },
+          {
+            "indicatorId": "urban-population",
+            "label": "Urban population"
+          },
+          {
+            "indicatorId": "birth-rate",
+            "label": "Birth rate"
+          },
+          {
+            "indicatorId": "fertility-rate",
+            "label": "Fertility rate"
+          }
+        ]
+      },
+      "acceptedAliases": [
+        "percent of population",
+        "sp.urb.totl.in.zs",
+        "urban population",
+        "urban population (% of total population)",
+        "urban share",
+        "urbanization"
+      ],
+      "patternNotes": [
+        "The darkest countries include Kuwait, Qatar, Netherlands, while the lightest include Papua New Guinea, Malawi, Niger; that contrast is the fastest way to read the urban population pattern.",
+        "Settlement maps reward checking dense city-states and large rural countries.",
+        "Urban and rural shares are mirror-image clues."
+      ],
+      "avoidSameDayIndicatorIds": [
+        "rural-population"
+      ],
+      "editorialStatus": "daily_eligible",
+      "ambiguityRisk": "medium",
+      "eligibility": {
+        "daily": true,
+        "practice": true,
+        "challenge": true,
+        "expertOnly": false
+      },
+      "reviewStatus": "approved"
+    }
+  ]
+}

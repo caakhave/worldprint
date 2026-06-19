@@ -1,0 +1,37 @@
+{
+  "schemaVersion": "1.1.0",
+  "game": "worldprint",
+  "date": "2026-09-07",
+  "contentVersion": "2026.06.19-ed1",
+  "roundIds": [
+    "worldprint-cereal-yield",
+    "worldprint-fertility-rate",
+    "worldprint-arable-land",
+    "worldprint-secondary-enrollment",
+    "worldprint-urban-population"
+  ],
+  "indicatorIds": [
+    "cereal-yield",
+    "fertility-rate",
+    "arable-land",
+    "secondary-enrollment",
+    "urban-population"
+  ],
+  "categoryMix": {
+    "agriculture": 1,
+    "demography": 1,
+    "land": 1,
+    "education": 1,
+    "settlement": 1
+  },
+  "mapDifficultyMix": {
+    "expert": 1,
+    "standard": 3,
+    "intro": 1
+  },
+  "generatedAt": "2026-06-19T17:09:23.344522+00:00",
+  "generatorVersion": "daily-manifest-v1",
+  "varietyNotes": [
+    "Selected with category, difficulty, and same-day correlation safeguards."
+  ]
+}

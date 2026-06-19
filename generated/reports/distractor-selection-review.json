@@ -1,0 +1,2462 @@
+{
+  "schemaVersion": "1.1.0",
+  "contentVersion": "2026.06.19-ed1",
+  "generatedAt": "2026-06-19T17:09:23.351508+00:00",
+  "rows": [
+    {
+      "roundId": "worldprint-adolescent-fertility",
+      "correctIndicatorId": "adolescent-fertility",
+      "tier": "explorer",
+      "selectedDistractorIds": [
+        "population-density",
+        "out-of-pocket-health"
+      ],
+      "rejectedCandidates": [],
+      "fairnessWarningLevel": "ok"
+    },
+    {
+      "roundId": "worldprint-adolescent-fertility",
+      "correctIndicatorId": "adolescent-fertility",
+      "tier": "analyst",
+      "selectedDistractorIds": [
+        "age-dependency",
+        "fertility-rate",
+        "older-adults-share"
+      ],
+      "rejectedCandidates": [],
+      "fairnessWarningLevel": "ok"
+    },
+    {
+      "roundId": "worldprint-adolescent-fertility",
+      "correctIndicatorId": "adolescent-fertility",
+      "tier": "cartographer",
+      "selectedDistractorIds": [
+        "fertility-rate",
+        "birth-rate",
+        "children-share",
+        "age-dependency",
+        "older-adults-share"
+      ],
+      "rejectedCandidates": [],
+      "fairnessWarningLevel": "ok"
+    },
+    {
+      "roundId": "worldprint-adult-mortality-female",
+      "correctIndicatorId": "adult-mortality-female",
+      "tier": "explorer",
+      "selectedDistractorIds": [
+        "death-rate",
+        "forest-area"
+      ],
+      "rejectedCandidates": [],
+      "fairnessWarningLevel": "ok"
+    },
+    {
+      "roundId": "worldprint-adult-mortality-female",
+      "correctIndicatorId": "adult-mortality-female",
+      "tier": "analyst",
+      "selectedDistractorIds": [
+        "tuberculosis-incidence",
+        "basic-sanitation",
+        "safe-drinking-water"
+      ],
+      "rejectedCandidates": [],
+      "fairnessWarningLevel": "ok"
+    },
+    {
+      "roundId": "worldprint-adult-mortality-female",
+      "correctIndicatorId": "adult-mortality-female",
+      "tier": "cartographer",
+      "selectedDistractorIds": [
+        "basic-sanitation",
+        "tuberculosis-incidence",
+        "safe-drinking-water",
+        "adolescent-fertility",
+        "gdp-per-capita-ppp"
+      ],
+      "rejectedCandidates": [
+        {
+          "indicatorId": "adult-mortality-male",
+          "reason": "high_correlation_or_visual_similarity",
+          "warningLevel": "high"
+        },
+        {
+          "indicatorId": "under-five-mortality",
+          "reason": "high_correlation_or_visual_similarity",
+          "warningLevel": "high"
+        },
+        {
+          "indicatorId": "infant-mortality",
+          "reason": "high_correlation_or_visual_similarity",
+          "warningLevel": "high"
+        },
+        {
+          "indicatorId": "life-expectancy",
+          "reason": "high_correlation_or_visual_similarity",
+          "warningLevel": "high"
+        }
+      ],
+      "fairnessWarningLevel": "review"
+    },
+    {
+      "roundId": "worldprint-adult-mortality-male",
+      "correctIndicatorId": "adult-mortality-male",
+      "tier": "explorer",
+      "selectedDistractorIds": [
+        "death-rate",
+        "forest-area"
+      ],
+      "rejectedCandidates": [],
+      "fairnessWarningLevel": "ok"
+    },
+    {
+      "roundId": "worldprint-adult-mortality-male",
+      "correctIndicatorId": "adult-mortality-male",
+      "tier": "analyst",
+      "selectedDistractorIds": [
+        "basic-sanitation",
+        "tuberculosis-incidence",
+        "safe-drinking-water"
+      ],
+      "rejectedCandidates": [],
+      "fairnessWarningLevel": "ok"
+    },
+    {
+      "roundId": "worldprint-adult-mortality-male",
+      "correctIndicatorId": "adult-mortality-male",
+      "tier": "cartographer",
+      "selectedDistractorIds": [
+        "under-five-mortality",
+        "basic-sanitation",
+        "infant-mortality",
+        "tuberculosis-incidence",
+        "safe-drinking-water"
+      ],
+      "rejectedCandidates": [
+        {
+          "indicatorId": "adult-mortality-female",
+          "reason": "high_correlation_or_visual_similarity",
+          "warningLevel": "high"
+        },
+        {
+          "indicatorId": "life-expectancy",
+          "reason": "high_correlation_or_visual_similarity",
+          "warningLevel": "high"
+        }
+      ],
+      "fairnessWarningLevel": "review"
+    },
+    {
+      "roundId": "worldprint-age-dependency",
+      "correctIndicatorId": "age-dependency",
+      "tier": "explorer",
+      "selectedDistractorIds": [
+        "health-expenditure",
+        "population-density"
+      ],
+      "rejectedCandidates": [],
+      "fairnessWarningLevel": "ok"
+    },
+    {
+      "roundId": "worldprint-age-dependency",
+      "correctIndicatorId": "age-dependency",
+      "tier": "analyst",
+      "selectedDistractorIds": [
+        "fertility-rate",
+        "adolescent-fertility",
+        "basic-sanitation"
+      ],
+      "rejectedCandidates": [
+        {
+          "indicatorId": "birth-rate",
+          "reason": "high_ambiguity_distractor",
+          "warningLevel": "review"
+        },
+        {
+          "indicatorId": "children-share",
+          "reason": "high_ambiguity_distractor",
+          "warningLevel": "review"
+        }
+      ],
+      "fairnessWarningLevel": "review"
+    },
+    {
+      "roundId": "worldprint-age-dependency",
+      "correctIndicatorId": "age-dependency",
+      "tier": "cartographer",
+      "selectedDistractorIds": [
+        "fertility-rate",
+        "birth-rate",
+        "children-share",
+        "adolescent-fertility",
+        "older-adults-share"
+      ],
+      "rejectedCandidates": [],
+      "fairnessWarningLevel": "ok"
+    },
+    {
+      "roundId": "worldprint-agricultural-land",
+      "correctIndicatorId": "agricultural-land",
+      "tier": "explorer",
+      "selectedDistractorIds": [
+        "pm25-exposure",
+        "population-density"
+      ],
+      "rejectedCandidates": [],
+      "fairnessWarningLevel": "ok"
+    },
+    {
+      "roundId": "worldprint-agricultural-land",
+      "correctIndicatorId": "agricultural-land",
+      "tier": "analyst",
+      "selectedDistractorIds": [
+        "arable-land",
+        "forest-area",
+        "co2-per-capita"
+      ],
+      "rejectedCandidates": [],
+      "fairnessWarningLevel": "ok"
+    },
+    {
+      "roundId": "worldprint-agricultural-land",
+      "correctIndicatorId": "agricultural-land",
+      "tier": "cartographer",
+      "selectedDistractorIds": [
+        "arable-land",
+        "forest-area",
+        "population-density",
+        "co2-per-capita",
+        "cereal-yield"
+      ],
+      "rejectedCandidates": [],
+      "fairnessWarningLevel": "ok"
+    },
+    {
+      "roundId": "worldprint-agriculture-value-added",
+      "correctIndicatorId": "agriculture-value-added",
+      "tier": "explorer",
+      "selectedDistractorIds": [
+        "unemployment",
+        "population-density"
+      ],
+      "rejectedCandidates": [],
+      "fairnessWarningLevel": "ok"
+    },
+    {
+      "roundId": "worldprint-agriculture-value-added",
+      "correctIndicatorId": "agriculture-value-added",
+      "tier": "analyst",
+      "selectedDistractorIds": [
+        "trade-share",
+        "inflation",
+        "current-account"
+      ],
+      "rejectedCandidates": [
+        {
+          "indicatorId": "exports-share",
+          "reason": "high_ambiguity_distractor",
+          "warningLevel": "review"
+        },
+        {
+          "indicatorId": "gdp-per-capita-ppp",
+          "reason": "high_ambiguity_distractor",
+          "warningLevel": "ok"
+        },
+        {
+          "indicatorId": "employment-services",
+          "reason": "high_ambiguity_distractor",
+          "warningLevel": "ok"
+        },
+        {
+          "indicatorId": "imports-share",
+          "reason": "high_ambiguity_distractor",
+          "warningLevel": "review"
+        }
+      ],
+      "fairnessWarningLevel": "review"
+    },
+    {
+      "roundId": "worldprint-agriculture-value-added",
+      "correctIndicatorId": "agriculture-value-added",
+      "tier": "cartographer",
+      "selectedDistractorIds": [
+        "exports-share",
+        "trade-share",
+        "gdp-per-capita-ppp",
+        "employment-agriculture",
+        "inflation"
+      ],
+      "rejectedCandidates": [],
+      "fairnessWarningLevel": "ok"
+    },
+    {
+      "roundId": "worldprint-arable-land",
+      "correctIndicatorId": "arable-land",
+      "tier": "explorer",
+      "selectedDistractorIds": [
+        "pm25-exposure",
+        "cereal-yield"
+      ],
+      "rejectedCandidates": [],
+      "fairnessWarningLevel": "ok"
+    },
+    {
+      "roundId": "worldprint-arable-land",
+      "correctIndicatorId": "arable-land",
+      "tier": "analyst",
+      "selectedDistractorIds": [
+        "agricultural-land",
+        "population-density",
+        "co2-per-capita"
+      ],
+      "rejectedCandidates": [],
+      "fairnessWarningLevel": "ok"
+    },
+    {
+      "roundId": "worldprint-arable-land",
+      "correctIndicatorId": "arable-land",
+      "tier": "cartographer",
+      "selectedDistractorIds": [
+        "agricultural-land",
+        "population-density",
+        "ghg-per-capita",
+        "co2-per-capita",
+        "forest-area"
+      ],
+      "rejectedCandidates": [],
+      "fairnessWarningLevel": "ok"
+    },
+    {
+      "roundId": "worldprint-basic-sanitation",
+      "correctIndicatorId": "basic-sanitation",
+      "tier": "explorer",
+      "selectedDistractorIds": [
+        "forest-area",
+        "death-rate"
+      ],
+      "rejectedCandidates": [],
+      "fairnessWarningLevel": "ok"
+    },
+    {
+      "roundId": "worldprint-basic-sanitation",
+      "correctIndicatorId": "basic-sanitation",
+      "tier": "analyst",
+      "selectedDistractorIds": [
+        "under-five-mortality",
+        "tuberculosis-incidence",
+        "life-expectancy"
+      ],
+      "rejectedCandidates": [
+        {
+          "indicatorId": "infant-mortality",
+          "reason": "high_ambiguity_distractor",
+          "warningLevel": "review"
+        },
+        {
+          "indicatorId": "adult-mortality-female",
+          "reason": "high_ambiguity_distractor",
+          "warningLevel": "review"
+        },
+        {
+          "indicatorId": "adult-mortality-male",
+          "reason": "high_ambiguity_distractor",
+          "warningLevel": "review"
+        }
+      ],
+      "fairnessWarningLevel": "review"
+    },
+    {
+      "roundId": "worldprint-basic-sanitation",
+      "correctIndicatorId": "basic-sanitation",
+      "tier": "cartographer",
+      "selectedDistractorIds": [
+        "infant-mortality",
+        "under-five-mortality",
+        "safe-drinking-water",
+        "adult-mortality-female",
+        "life-expectancy"
+      ],
+      "rejectedCandidates": [],
+      "fairnessWarningLevel": "ok"
+    },
+    {
+      "roundId": "worldprint-birth-rate",
+      "correctIndicatorId": "birth-rate",
+      "tier": "explorer",
+      "selectedDistractorIds": [
+        "population-density",
+        "health-expenditure"
+      ],
+      "rejectedCandidates": [],
+      "fairnessWarningLevel": "ok"
+    },
+    {
+      "roundId": "worldprint-birth-rate",
+      "correctIndicatorId": "birth-rate",
+      "tier": "analyst",
+      "selectedDistractorIds": [
+        "age-dependency",
+        "adolescent-fertility",
+        "life-expectancy"
+      ],
+      "rejectedCandidates": [
+        {
+          "indicatorId": "older-adults-share",
+          "reason": "high_correlation_or_visual_similarity",
+          "warningLevel": "high"
+        }
+      ],
+      "fairnessWarningLevel": "review"
+    },
+    {
+      "roundId": "worldprint-birth-rate",
+      "correctIndicatorId": "birth-rate",
+      "tier": "cartographer",
+      "selectedDistractorIds": [
+        "age-dependency",
+        "adolescent-fertility",
+        "fertility-rate",
+        "life-expectancy",
+        "safe-drinking-water"
+      ],
+      "rejectedCandidates": [
+        {
+          "indicatorId": "older-adults-share",
+          "reason": "high_correlation_or_visual_similarity",
+          "warningLevel": "high"
+        },
+        {
+          "indicatorId": "children-share",
+          "reason": "high_correlation_or_visual_similarity",
+          "warningLevel": "high"
+        }
+      ],
+      "fairnessWarningLevel": "review"
+    },
+    {
+      "roundId": "worldprint-cereal-yield",
+      "correctIndicatorId": "cereal-yield",
+      "tier": "explorer",
+      "selectedDistractorIds": [
+        "fdi-inflows",
+        "female-labor-force"
+      ],
+      "rejectedCandidates": [],
+      "fairnessWarningLevel": "ok"
+    },
+    {
+      "roundId": "worldprint-cereal-yield",
+      "correctIndicatorId": "cereal-yield",
+      "tier": "analyst",
+      "selectedDistractorIds": [
+        "employment-agriculture",
+        "agriculture-value-added",
+        "current-account"
+      ],
+      "rejectedCandidates": [],
+      "fairnessWarningLevel": "ok"
+    },
+    {
+      "roundId": "worldprint-cereal-yield",
+      "correctIndicatorId": "cereal-yield",
+      "tier": "cartographer",
+      "selectedDistractorIds": [
+        "employment-agriculture",
+        "agriculture-value-added",
+        "employment-services",
+        "current-account",
+        "inflation"
+      ],
+      "rejectedCandidates": [],
+      "fairnessWarningLevel": "ok"
+    },
+    {
+      "roundId": "worldprint-children-share",
+      "correctIndicatorId": "children-share",
+      "tier": "explorer",
+      "selectedDistractorIds": [
+        "population-density",
+        "health-expenditure"
+      ],
+      "rejectedCandidates": [],
+      "fairnessWarningLevel": "ok"
+    },
+    {
+      "roundId": "worldprint-children-share",
+      "correctIndicatorId": "children-share",
+      "tier": "analyst",
+      "selectedDistractorIds": [
+        "age-dependency",
+        "life-expectancy",
+        "safe-drinking-water"
+      ],
+      "rejectedCandidates": [
+        {
+          "indicatorId": "older-adults-share",
+          "reason": "high_correlation_or_visual_similarity",
+          "warningLevel": "high"
+        }
+      ],
+      "fairnessWarningLevel": "review"
+    },
+    {
+      "roundId": "worldprint-children-share",
+      "correctIndicatorId": "children-share",
+      "tier": "cartographer",
+      "selectedDistractorIds": [
+        "adolescent-fertility",
+        "fertility-rate",
+        "age-dependency",
+        "life-expectancy",
+        "safe-drinking-water"
+      ],
+      "rejectedCandidates": [
+        {
+          "indicatorId": "older-adults-share",
+          "reason": "high_correlation_or_visual_similarity",
+          "warningLevel": "high"
+        },
+        {
+          "indicatorId": "birth-rate",
+          "reason": "high_correlation_or_visual_similarity",
+          "warningLevel": "high"
+        }
+      ],
+      "fairnessWarningLevel": "review"
+    },
+    {
+      "roundId": "worldprint-clean-fuels-access",
+      "correctIndicatorId": "clean-fuels-access",
+      "tier": "explorer",
+      "selectedDistractorIds": [
+        "forest-area",
+        "mobile-subscriptions"
+      ],
+      "rejectedCandidates": [],
+      "fairnessWarningLevel": "ok"
+    },
+    {
+      "roundId": "worldprint-clean-fuels-access",
+      "correctIndicatorId": "clean-fuels-access",
+      "tier": "analyst",
+      "selectedDistractorIds": [
+        "renewable-energy-consumption",
+        "electricity-access",
+        "co2-per-capita"
+      ],
+      "rejectedCandidates": [],
+      "fairnessWarningLevel": "ok"
+    },
+    {
+      "roundId": "worldprint-clean-fuels-access",
+      "correctIndicatorId": "clean-fuels-access",
+      "tier": "cartographer",
+      "selectedDistractorIds": [
+        "electricity-access",
+        "renewable-energy-consumption",
+        "co2-per-capita",
+        "fixed-broadband",
+        "secure-internet-servers"
+      ],
+      "rejectedCandidates": [
+        {
+          "indicatorId": "gdp-per-capita-ppp",
+          "reason": "high_correlation_or_visual_similarity",
+          "warningLevel": "high"
+        },
+        {
+          "indicatorId": "internet-users",
+          "reason": "high_correlation_or_visual_similarity",
+          "warningLevel": "high"
+        },
+        {
+          "indicatorId": "gdp-per-capita",
+          "reason": "high_correlation_or_visual_similarity",
+          "warningLevel": "high"
+        }
+      ],
+      "fairnessWarningLevel": "review"
+    },
+    {
+      "roundId": "worldprint-co2-per-capita",
+      "correctIndicatorId": "co2-per-capita",
+      "tier": "explorer",
+      "selectedDistractorIds": [
+        "arable-land",
+        "health-expenditure"
+      ],
+      "rejectedCandidates": [],
+      "fairnessWarningLevel": "ok"
+    },
+    {
+      "roundId": "worldprint-co2-per-capita",
+      "correctIndicatorId": "co2-per-capita",
+      "tier": "analyst",
+      "selectedDistractorIds": [
+        "pm25-exposure",
+        "under-five-mortality",
+        "basic-sanitation"
+      ],
+      "rejectedCandidates": [
+        {
+          "indicatorId": "infant-mortality",
+          "reason": "high_ambiguity_distractor",
+          "warningLevel": "review"
+        },
+        {
+          "indicatorId": "adult-mortality-female",
+          "reason": "high_ambiguity_distractor",
+          "warningLevel": "review"
+        }
+      ],
+      "fairnessWarningLevel": "review"
+    },
+    {
+      "roundId": "worldprint-co2-per-capita",
+      "correctIndicatorId": "co2-per-capita",
+      "tier": "cartographer",
+      "selectedDistractorIds": [
+        "ghg-per-capita",
+        "pm25-exposure",
+        "clean-fuels-access",
+        "basic-sanitation",
+        "infant-mortality"
+      ],
+      "rejectedCandidates": [],
+      "fairnessWarningLevel": "ok"
+    },
+    {
+      "roundId": "worldprint-current-account",
+      "correctIndicatorId": "current-account",
+      "tier": "explorer",
+      "selectedDistractorIds": [
+        "female-labor-force",
+        "education-spending"
+      ],
+      "rejectedCandidates": [
+        {
+          "indicatorId": "employment-services",
+          "reason": "high_ambiguity_distractor",
+          "warningLevel": "ok"
+        },
+        {
+          "indicatorId": "gdp-per-capita-ppp",
+          "reason": "high_ambiguity_distractor",
+          "warningLevel": "ok"
+        }
+      ],
+      "fairnessWarningLevel": "review"
+    },
+    {
+      "roundId": "worldprint-current-account",
+      "correctIndicatorId": "current-account",
+      "tier": "analyst",
+      "selectedDistractorIds": [
+        "fdi-inflows",
+        "inflation",
+        "agriculture-value-added"
+      ],
+      "rejectedCandidates": [],
+      "fairnessWarningLevel": "ok"
+    },
+    {
+      "roundId": "worldprint-current-account",
+      "correctIndicatorId": "current-account",
+      "tier": "cartographer",
+      "selectedDistractorIds": [
+        "agriculture-value-added",
+        "exports-share",
+        "fdi-inflows",
+        "inflation",
+        "trade-share"
+      ],
+      "rejectedCandidates": [],
+      "fairnessWarningLevel": "ok"
+    },
+    {
+      "roundId": "worldprint-death-rate",
+      "correctIndicatorId": "death-rate",
+      "tier": "explorer",
+      "selectedDistractorIds": [
+        "education-spending",
+        "out-of-pocket-health"
+      ],
+      "rejectedCandidates": [
+        {
+          "indicatorId": "adult-mortality-female",
+          "reason": "high_ambiguity_distractor",
+          "warningLevel": "ok"
+        }
+      ],
+      "fairnessWarningLevel": "review"
+    },
+    {
+      "roundId": "worldprint-death-rate",
+      "correctIndicatorId": "death-rate",
+      "tier": "analyst",
+      "selectedDistractorIds": [
+        "older-adults-share",
+        "fertility-rate",
+        "adolescent-fertility"
+      ],
+      "rejectedCandidates": [],
+      "fairnessWarningLevel": "ok"
+    },
+    {
+      "roundId": "worldprint-death-rate",
+      "correctIndicatorId": "death-rate",
+      "tier": "cartographer",
+      "selectedDistractorIds": [
+        "older-adults-share",
+        "children-share",
+        "birth-rate",
+        "fertility-rate",
+        "adolescent-fertility"
+      ],
+      "rejectedCandidates": [],
+      "fairnessWarningLevel": "ok"
+    },
+    {
+      "roundId": "worldprint-education-spending",
+      "correctIndicatorId": "education-spending",
+      "tier": "explorer",
+      "selectedDistractorIds": [
+        "death-rate",
+        "mobile-subscriptions"
+      ],
+      "rejectedCandidates": [],
+      "fairnessWarningLevel": "ok"
+    },
+    {
+      "roundId": "worldprint-education-spending",
+      "correctIndicatorId": "education-spending",
+      "tier": "analyst",
+      "selectedDistractorIds": [
+        "secondary-enrollment",
+        "tertiary-enrollment",
+        "adolescent-fertility"
+      ],
+      "rejectedCandidates": [],
+      "fairnessWarningLevel": "ok"
+    },
+    {
+      "roundId": "worldprint-education-spending",
+      "correctIndicatorId": "education-spending",
+      "tier": "cartographer",
+      "selectedDistractorIds": [
+        "secondary-enrollment",
+        "tertiary-enrollment",
+        "adolescent-fertility",
+        "secure-internet-servers",
+        "fixed-broadband"
+      ],
+      "rejectedCandidates": [],
+      "fairnessWarningLevel": "ok"
+    },
+    {
+      "roundId": "worldprint-electricity-access",
+      "correctIndicatorId": "electricity-access",
+      "tier": "explorer",
+      "selectedDistractorIds": [
+        "forest-area",
+        "mobile-subscriptions"
+      ],
+      "rejectedCandidates": [],
+      "fairnessWarningLevel": "ok"
+    },
+    {
+      "roundId": "worldprint-electricity-access",
+      "correctIndicatorId": "electricity-access",
+      "tier": "analyst",
+      "selectedDistractorIds": [
+        "clean-fuels-access",
+        "renewable-energy-consumption",
+        "gdp-per-capita"
+      ],
+      "rejectedCandidates": [],
+      "fairnessWarningLevel": "ok"
+    },
+    {
+      "roundId": "worldprint-electricity-access",
+      "correctIndicatorId": "electricity-access",
+      "tier": "cartographer",
+      "selectedDistractorIds": [
+        "clean-fuels-access",
+        "renewable-energy-consumption",
+        "internet-users",
+        "gdp-per-capita",
+        "gdp-per-capita-ppp"
+      ],
+      "rejectedCandidates": [],
+      "fairnessWarningLevel": "ok"
+    },
+    {
+      "roundId": "worldprint-employment-agriculture",
+      "correctIndicatorId": "employment-agriculture",
+      "tier": "explorer",
+      "selectedDistractorIds": [
+        "fdi-inflows",
+        "population-density"
+      ],
+      "rejectedCandidates": [
+        {
+          "indicatorId": "imports-share",
+          "reason": "high_ambiguity_distractor",
+          "warningLevel": "ok"
+        },
+        {
+          "indicatorId": "exports-share",
+          "reason": "high_ambiguity_distractor",
+          "warningLevel": "ok"
+        }
+      ],
+      "fairnessWarningLevel": "review"
+    },
+    {
+      "roundId": "worldprint-employment-agriculture",
+      "correctIndicatorId": "employment-agriculture",
+      "tier": "analyst",
+      "selectedDistractorIds": [
+        "gdp-per-capita",
+        "agriculture-value-added",
+        "labor-force-participation"
+      ],
+      "rejectedCandidates": [
+        {
+          "indicatorId": "employment-services",
+          "reason": "high_correlation_or_visual_similarity",
+          "warningLevel": "high"
+        },
+        {
+          "indicatorId": "gdp-per-capita-ppp",
+          "reason": "high_ambiguity_distractor",
+          "warningLevel": "ok"
+        }
+      ],
+      "fairnessWarningLevel": "review"
+    },
+    {
+      "roundId": "worldprint-employment-agriculture",
+      "correctIndicatorId": "employment-agriculture",
+      "tier": "cartographer",
+      "selectedDistractorIds": [
+        "gdp-per-capita-ppp",
+        "agriculture-value-added",
+        "gdp-per-capita",
+        "labor-force-participation",
+        "female-labor-force"
+      ],
+      "rejectedCandidates": [
+        {
+          "indicatorId": "employment-services",
+          "reason": "high_correlation_or_visual_similarity",
+          "warningLevel": "high"
+        }
+      ],
+      "fairnessWarningLevel": "review"
+    },
+    {
+      "roundId": "worldprint-employment-services",
+      "correctIndicatorId": "employment-services",
+      "tier": "explorer",
+      "selectedDistractorIds": [
+        "fdi-inflows",
+        "population-density"
+      ],
+      "rejectedCandidates": [
+        {
+          "indicatorId": "imports-share",
+          "reason": "high_ambiguity_distractor",
+          "warningLevel": "ok"
+        },
+        {
+          "indicatorId": "exports-share",
+          "reason": "high_ambiguity_distractor",
+          "warningLevel": "ok"
+        }
+      ],
+      "fairnessWarningLevel": "review"
+    },
+    {
+      "roundId": "worldprint-employment-services",
+      "correctIndicatorId": "employment-services",
+      "tier": "analyst",
+      "selectedDistractorIds": [
+        "agriculture-value-added",
+        "unemployment",
+        "labor-force-participation"
+      ],
+      "rejectedCandidates": [
+        {
+          "indicatorId": "employment-agriculture",
+          "reason": "high_correlation_or_visual_similarity",
+          "warningLevel": "high"
+        },
+        {
+          "indicatorId": "gdp-per-capita-ppp",
+          "reason": "high_ambiguity_distractor",
+          "warningLevel": "ok"
+        }
+      ],
+      "fairnessWarningLevel": "review"
+    },
+    {
+      "roundId": "worldprint-employment-services",
+      "correctIndicatorId": "employment-services",
+      "tier": "cartographer",
+      "selectedDistractorIds": [
+        "agriculture-value-added",
+        "gdp-per-capita-ppp",
+        "gdp-per-capita",
+        "unemployment",
+        "labor-force-participation"
+      ],
+      "rejectedCandidates": [
+        {
+          "indicatorId": "employment-agriculture",
+          "reason": "high_correlation_or_visual_similarity",
+          "warningLevel": "high"
+        }
+      ],
+      "fairnessWarningLevel": "review"
+    },
+    {
+      "roundId": "worldprint-exports-share",
+      "correctIndicatorId": "exports-share",
+      "tier": "explorer",
+      "selectedDistractorIds": [
+        "labor-force-participation",
+        "arable-land"
+      ],
+      "rejectedCandidates": [
+        {
+          "indicatorId": "employment-services",
+          "reason": "high_ambiguity_distractor",
+          "warningLevel": "ok"
+        },
+        {
+          "indicatorId": "gdp-per-capita-ppp",
+          "reason": "high_ambiguity_distractor",
+          "warningLevel": "ok"
+        }
+      ],
+      "fairnessWarningLevel": "review"
+    },
+    {
+      "roundId": "worldprint-exports-share",
+      "correctIndicatorId": "exports-share",
+      "tier": "analyst",
+      "selectedDistractorIds": [
+        "agriculture-value-added",
+        "inflation",
+        "current-account"
+      ],
+      "rejectedCandidates": [
+        {
+          "indicatorId": "imports-share",
+          "reason": "high_ambiguity_distractor",
+          "warningLevel": "review"
+        },
+        {
+          "indicatorId": "trade-share",
+          "reason": "high_correlation_or_visual_similarity",
+          "warningLevel": "high"
+        }
+      ],
+      "fairnessWarningLevel": "review"
+    },
+    {
+      "roundId": "worldprint-exports-share",
+      "correctIndicatorId": "exports-share",
+      "tier": "cartographer",
+      "selectedDistractorIds": [
+        "imports-share",
+        "trade-share",
+        "agriculture-value-added",
+        "inflation",
+        "current-account"
+      ],
+      "rejectedCandidates": [],
+      "fairnessWarningLevel": "ok"
+    },
+    {
+      "roundId": "worldprint-fdi-inflows",
+      "correctIndicatorId": "fdi-inflows",
+      "tier": "explorer",
+      "selectedDistractorIds": [
+        "female-labor-force",
+        "gdp-per-capita"
+      ],
+      "rejectedCandidates": [
+        {
+          "indicatorId": "employment-services",
+          "reason": "high_ambiguity_distractor",
+          "warningLevel": "ok"
+        },
+        {
+          "indicatorId": "gdp-per-capita-ppp",
+          "reason": "high_ambiguity_distractor",
+          "warningLevel": "ok"
+        }
+      ],
+      "fairnessWarningLevel": "review"
+    },
+    {
+      "roundId": "worldprint-fdi-inflows",
+      "correctIndicatorId": "fdi-inflows",
+      "tier": "analyst",
+      "selectedDistractorIds": [
+        "current-account",
+        "trade-share",
+        "inflation"
+      ],
+      "rejectedCandidates": [
+        {
+          "indicatorId": "imports-share",
+          "reason": "high_ambiguity_distractor",
+          "warningLevel": "review"
+        },
+        {
+          "indicatorId": "exports-share",
+          "reason": "high_ambiguity_distractor",
+          "warningLevel": "review"
+        }
+      ],
+      "fairnessWarningLevel": "review"
+    },
+    {
+      "roundId": "worldprint-fdi-inflows",
+      "correctIndicatorId": "fdi-inflows",
+      "tier": "cartographer",
+      "selectedDistractorIds": [
+        "current-account",
+        "imports-share",
+        "trade-share",
+        "exports-share",
+        "agriculture-value-added"
+      ],
+      "rejectedCandidates": [],
+      "fairnessWarningLevel": "ok"
+    },
+    {
+      "roundId": "worldprint-female-labor-force",
+      "correctIndicatorId": "female-labor-force",
+      "tier": "explorer",
+      "selectedDistractorIds": [
+        "fdi-inflows",
+        "cereal-yield"
+      ],
+      "rejectedCandidates": [],
+      "fairnessWarningLevel": "ok"
+    },
+    {
+      "roundId": "worldprint-female-labor-force",
+      "correctIndicatorId": "female-labor-force",
+      "tier": "analyst",
+      "selectedDistractorIds": [
+        "labor-force-participation",
+        "unemployment",
+        "employment-agriculture"
+      ],
+      "rejectedCandidates": [],
+      "fairnessWarningLevel": "ok"
+    },
+    {
+      "roundId": "worldprint-female-labor-force",
+      "correctIndicatorId": "female-labor-force",
+      "tier": "cartographer",
+      "selectedDistractorIds": [
+        "labor-force-participation",
+        "unemployment",
+        "employment-agriculture",
+        "employment-services",
+        "agriculture-value-added"
+      ],
+      "rejectedCandidates": [],
+      "fairnessWarningLevel": "ok"
+    },
+    {
+      "roundId": "worldprint-fertility-rate",
+      "correctIndicatorId": "fertility-rate",
+      "tier": "explorer",
+      "selectedDistractorIds": [
+        "population-density",
+        "health-expenditure"
+      ],
+      "rejectedCandidates": [],
+      "fairnessWarningLevel": "ok"
+    },
+    {
+      "roundId": "worldprint-fertility-rate",
+      "correctIndicatorId": "fertility-rate",
+      "tier": "analyst",
+      "selectedDistractorIds": [
+        "older-adults-share",
+        "age-dependency",
+        "adolescent-fertility"
+      ],
+      "rejectedCandidates": [],
+      "fairnessWarningLevel": "ok"
+    },
+    {
+      "roundId": "worldprint-fertility-rate",
+      "correctIndicatorId": "fertility-rate",
+      "tier": "cartographer",
+      "selectedDistractorIds": [
+        "age-dependency",
+        "older-adults-share",
+        "adolescent-fertility",
+        "children-share",
+        "birth-rate"
+      ],
+      "rejectedCandidates": [],
+      "fairnessWarningLevel": "ok"
+    },
+    {
+      "roundId": "worldprint-fixed-broadband",
+      "correctIndicatorId": "fixed-broadband",
+      "tier": "explorer",
+      "selectedDistractorIds": [
+        "renewable-electricity",
+        "education-spending"
+      ],
+      "rejectedCandidates": [],
+      "fairnessWarningLevel": "ok"
+    },
+    {
+      "roundId": "worldprint-fixed-broadband",
+      "correctIndicatorId": "fixed-broadband",
+      "tier": "analyst",
+      "selectedDistractorIds": [
+        "secure-internet-servers",
+        "internet-users",
+        "tertiary-enrollment"
+      ],
+      "rejectedCandidates": [],
+      "fairnessWarningLevel": "ok"
+    },
+    {
+      "roundId": "worldprint-fixed-broadband",
+      "correctIndicatorId": "fixed-broadband",
+      "tier": "cartographer",
+      "selectedDistractorIds": [
+        "secure-internet-servers",
+        "internet-users",
+        "gdp-per-capita-ppp",
+        "clean-fuels-access",
+        "mobile-subscriptions"
+      ],
+      "rejectedCandidates": [],
+      "fairnessWarningLevel": "ok"
+    },
+    {
+      "roundId": "worldprint-forest-area",
+      "correctIndicatorId": "forest-area",
+      "tier": "explorer",
+      "selectedDistractorIds": [
+        "electricity-access",
+        "life-expectancy"
+      ],
+      "rejectedCandidates": [],
+      "fairnessWarningLevel": "ok"
+    },
+    {
+      "roundId": "worldprint-forest-area",
+      "correctIndicatorId": "forest-area",
+      "tier": "analyst",
+      "selectedDistractorIds": [
+        "pm25-exposure",
+        "agricultural-land",
+        "co2-per-capita"
+      ],
+      "rejectedCandidates": [],
+      "fairnessWarningLevel": "ok"
+    },
+    {
+      "roundId": "worldprint-forest-area",
+      "correctIndicatorId": "forest-area",
+      "tier": "cartographer",
+      "selectedDistractorIds": [
+        "pm25-exposure",
+        "co2-per-capita",
+        "agricultural-land",
+        "ghg-per-capita",
+        "renewable-electricity"
+      ],
+      "rejectedCandidates": [],
+      "fairnessWarningLevel": "ok"
+    },
+    {
+      "roundId": "worldprint-gdp-per-capita",
+      "correctIndicatorId": "gdp-per-capita",
+      "tier": "explorer",
+      "selectedDistractorIds": [
+        "fdi-inflows",
+        "health-expenditure"
+      ],
+      "rejectedCandidates": [
+        {
+          "indicatorId": "imports-share",
+          "reason": "high_ambiguity_distractor",
+          "warningLevel": "ok"
+        }
+      ],
+      "fairnessWarningLevel": "review"
+    },
+    {
+      "roundId": "worldprint-gdp-per-capita",
+      "correctIndicatorId": "gdp-per-capita",
+      "tier": "analyst",
+      "selectedDistractorIds": [
+        "under-five-mortality",
+        "safe-drinking-water",
+        "agriculture-value-added"
+      ],
+      "rejectedCandidates": [
+        {
+          "indicatorId": "infant-mortality",
+          "reason": "high_ambiguity_distractor",
+          "warningLevel": "ok"
+        }
+      ],
+      "fairnessWarningLevel": "review"
+    },
+    {
+      "roundId": "worldprint-gdp-per-capita",
+      "correctIndicatorId": "gdp-per-capita",
+      "tier": "cartographer",
+      "selectedDistractorIds": [
+        "gdp-per-capita-ppp",
+        "life-expectancy",
+        "safe-drinking-water",
+        "internet-users",
+        "under-five-mortality"
+      ],
+      "rejectedCandidates": [],
+      "fairnessWarningLevel": "ok"
+    },
+    {
+      "roundId": "worldprint-gdp-per-capita-ppp",
+      "correctIndicatorId": "gdp-per-capita-ppp",
+      "tier": "explorer",
+      "selectedDistractorIds": [
+        "fdi-inflows",
+        "health-expenditure"
+      ],
+      "rejectedCandidates": [
+        {
+          "indicatorId": "imports-share",
+          "reason": "high_ambiguity_distractor",
+          "warningLevel": "ok"
+        }
+      ],
+      "fairnessWarningLevel": "review"
+    },
+    {
+      "roundId": "worldprint-gdp-per-capita-ppp",
+      "correctIndicatorId": "gdp-per-capita-ppp",
+      "tier": "analyst",
+      "selectedDistractorIds": [
+        "agriculture-value-added",
+        "under-five-mortality",
+        "tuberculosis-incidence"
+      ],
+      "rejectedCandidates": [
+        {
+          "indicatorId": "infant-mortality",
+          "reason": "high_ambiguity_distractor",
+          "warningLevel": "ok"
+        },
+        {
+          "indicatorId": "adult-mortality-female",
+          "reason": "high_ambiguity_distractor",
+          "warningLevel": "ok"
+        }
+      ],
+      "fairnessWarningLevel": "review"
+    },
+    {
+      "roundId": "worldprint-gdp-per-capita-ppp",
+      "correctIndicatorId": "gdp-per-capita-ppp",
+      "tier": "cartographer",
+      "selectedDistractorIds": [
+        "gdp-per-capita",
+        "infant-mortality",
+        "under-five-mortality",
+        "agriculture-value-added",
+        "basic-sanitation"
+      ],
+      "rejectedCandidates": [],
+      "fairnessWarningLevel": "ok"
+    },
+    {
+      "roundId": "worldprint-ghg-per-capita",
+      "correctIndicatorId": "ghg-per-capita",
+      "tier": "explorer",
+      "selectedDistractorIds": [
+        "out-of-pocket-health",
+        "arable-land"
+      ],
+      "rejectedCandidates": [],
+      "fairnessWarningLevel": "ok"
+    },
+    {
+      "roundId": "worldprint-ghg-per-capita",
+      "correctIndicatorId": "ghg-per-capita",
+      "tier": "analyst",
+      "selectedDistractorIds": [
+        "pm25-exposure",
+        "under-five-mortality",
+        "renewable-energy-consumption"
+      ],
+      "rejectedCandidates": [
+        {
+          "indicatorId": "adult-mortality-female",
+          "reason": "high_ambiguity_distractor",
+          "warningLevel": "review"
+        },
+        {
+          "indicatorId": "infant-mortality",
+          "reason": "high_ambiguity_distractor",
+          "warningLevel": "review"
+        }
+      ],
+      "fairnessWarningLevel": "review"
+    },
+    {
+      "roundId": "worldprint-ghg-per-capita",
+      "correctIndicatorId": "ghg-per-capita",
+      "tier": "cartographer",
+      "selectedDistractorIds": [
+        "co2-per-capita",
+        "pm25-exposure",
+        "clean-fuels-access",
+        "basic-sanitation",
+        "infant-mortality"
+      ],
+      "rejectedCandidates": [],
+      "fairnessWarningLevel": "ok"
+    },
+    {
+      "roundId": "worldprint-health-expenditure",
+      "correctIndicatorId": "health-expenditure",
+      "tier": "explorer",
+      "selectedDistractorIds": [
+        "age-dependency",
+        "forest-area"
+      ],
+      "rejectedCandidates": [],
+      "fairnessWarningLevel": "ok"
+    },
+    {
+      "roundId": "worldprint-health-expenditure",
+      "correctIndicatorId": "health-expenditure",
+      "tier": "analyst",
+      "selectedDistractorIds": [
+        "under-five-mortality",
+        "tuberculosis-incidence",
+        "basic-sanitation"
+      ],
+      "rejectedCandidates": [
+        {
+          "indicatorId": "infant-mortality",
+          "reason": "high_ambiguity_distractor",
+          "warningLevel": "review"
+        }
+      ],
+      "fairnessWarningLevel": "review"
+    },
+    {
+      "roundId": "worldprint-health-expenditure",
+      "correctIndicatorId": "health-expenditure",
+      "tier": "cartographer",
+      "selectedDistractorIds": [
+        "under-five-mortality",
+        "infant-mortality",
+        "tuberculosis-incidence",
+        "life-expectancy",
+        "basic-sanitation"
+      ],
+      "rejectedCandidates": [],
+      "fairnessWarningLevel": "ok"
+    },
+    {
+      "roundId": "worldprint-imports-share",
+      "correctIndicatorId": "imports-share",
+      "tier": "explorer",
+      "selectedDistractorIds": [
+        "labor-force-participation",
+        "gdp-per-capita"
+      ],
+      "rejectedCandidates": [
+        {
+          "indicatorId": "employment-services",
+          "reason": "high_ambiguity_distractor",
+          "warningLevel": "ok"
+        },
+        {
+          "indicatorId": "gdp-per-capita-ppp",
+          "reason": "high_ambiguity_distractor",
+          "warningLevel": "ok"
+        }
+      ],
+      "fairnessWarningLevel": "review"
+    },
+    {
+      "roundId": "worldprint-imports-share",
+      "correctIndicatorId": "imports-share",
+      "tier": "analyst",
+      "selectedDistractorIds": [
+        "agriculture-value-added",
+        "inflation",
+        "fdi-inflows"
+      ],
+      "rejectedCandidates": [
+        {
+          "indicatorId": "exports-share",
+          "reason": "high_ambiguity_distractor",
+          "warningLevel": "review"
+        },
+        {
+          "indicatorId": "trade-share",
+          "reason": "high_correlation_or_visual_similarity",
+          "warningLevel": "high"
+        }
+      ],
+      "fairnessWarningLevel": "review"
+    },
+    {
+      "roundId": "worldprint-imports-share",
+      "correctIndicatorId": "imports-share",
+      "tier": "cartographer",
+      "selectedDistractorIds": [
+        "exports-share",
+        "trade-share",
+        "agriculture-value-added",
+        "inflation",
+        "fdi-inflows"
+      ],
+      "rejectedCandidates": [],
+      "fairnessWarningLevel": "ok"
+    },
+    {
+      "roundId": "worldprint-infant-mortality",
+      "correctIndicatorId": "infant-mortality",
+      "tier": "explorer",
+      "selectedDistractorIds": [
+        "forest-area",
+        "death-rate"
+      ],
+      "rejectedCandidates": [],
+      "fairnessWarningLevel": "ok"
+    },
+    {
+      "roundId": "worldprint-infant-mortality",
+      "correctIndicatorId": "infant-mortality",
+      "tier": "analyst",
+      "selectedDistractorIds": [
+        "basic-sanitation",
+        "safe-drinking-water",
+        "tuberculosis-incidence"
+      ],
+      "rejectedCandidates": [],
+      "fairnessWarningLevel": "ok"
+    },
+    {
+      "roundId": "worldprint-infant-mortality",
+      "correctIndicatorId": "infant-mortality",
+      "tier": "cartographer",
+      "selectedDistractorIds": [
+        "basic-sanitation",
+        "safe-drinking-water",
+        "adult-mortality-male",
+        "tuberculosis-incidence",
+        "under-five-mortality"
+      ],
+      "rejectedCandidates": [
+        {
+          "indicatorId": "life-expectancy",
+          "reason": "high_correlation_or_visual_similarity",
+          "warningLevel": "high"
+        },
+        {
+          "indicatorId": "adult-mortality-female",
+          "reason": "high_correlation_or_visual_similarity",
+          "warningLevel": "high"
+        }
+      ],
+      "fairnessWarningLevel": "review"
+    },
+    {
+      "roundId": "worldprint-inflation",
+      "correctIndicatorId": "inflation",
+      "tier": "explorer",
+      "selectedDistractorIds": [
+        "female-labor-force",
+        "death-rate"
+      ],
+      "rejectedCandidates": [
+        {
+          "indicatorId": "employment-services",
+          "reason": "high_ambiguity_distractor",
+          "warningLevel": "ok"
+        },
+        {
+          "indicatorId": "gdp-per-capita-ppp",
+          "reason": "high_ambiguity_distractor",
+          "warningLevel": "ok"
+        }
+      ],
+      "fairnessWarningLevel": "review"
+    },
+    {
+      "roundId": "worldprint-inflation",
+      "correctIndicatorId": "inflation",
+      "tier": "analyst",
+      "selectedDistractorIds": [
+        "agriculture-value-added",
+        "current-account",
+        "trade-share"
+      ],
+      "rejectedCandidates": [
+        {
+          "indicatorId": "exports-share",
+          "reason": "high_ambiguity_distractor",
+          "warningLevel": "review"
+        }
+      ],
+      "fairnessWarningLevel": "review"
+    },
+    {
+      "roundId": "worldprint-inflation",
+      "correctIndicatorId": "inflation",
+      "tier": "cartographer",
+      "selectedDistractorIds": [
+        "agriculture-value-added",
+        "exports-share",
+        "trade-share",
+        "current-account",
+        "imports-share"
+      ],
+      "rejectedCandidates": [],
+      "fairnessWarningLevel": "ok"
+    },
+    {
+      "roundId": "worldprint-internet-users",
+      "correctIndicatorId": "internet-users",
+      "tier": "explorer",
+      "selectedDistractorIds": [
+        "renewable-electricity",
+        "forest-area"
+      ],
+      "rejectedCandidates": [],
+      "fairnessWarningLevel": "ok"
+    },
+    {
+      "roundId": "worldprint-internet-users",
+      "correctIndicatorId": "internet-users",
+      "tier": "analyst",
+      "selectedDistractorIds": [
+        "secure-internet-servers",
+        "fixed-broadband",
+        "electricity-access"
+      ],
+      "rejectedCandidates": [],
+      "fairnessWarningLevel": "ok"
+    },
+    {
+      "roundId": "worldprint-internet-users",
+      "correctIndicatorId": "internet-users",
+      "tier": "cartographer",
+      "selectedDistractorIds": [
+        "fixed-broadband",
+        "secure-internet-servers",
+        "electricity-access",
+        "gdp-per-capita",
+        "gdp-per-capita-ppp"
+      ],
+      "rejectedCandidates": [
+        {
+          "indicatorId": "clean-fuels-access",
+          "reason": "high_correlation_or_visual_similarity",
+          "warningLevel": "high"
+        }
+      ],
+      "fairnessWarningLevel": "review"
+    },
+    {
+      "roundId": "worldprint-labor-force-participation",
+      "correctIndicatorId": "labor-force-participation",
+      "tier": "explorer",
+      "selectedDistractorIds": [
+        "trade-share",
+        "gdp-per-capita"
+      ],
+      "rejectedCandidates": [
+        {
+          "indicatorId": "exports-share",
+          "reason": "high_ambiguity_distractor",
+          "warningLevel": "ok"
+        },
+        {
+          "indicatorId": "gdp-per-capita-ppp",
+          "reason": "high_ambiguity_distractor",
+          "warningLevel": "ok"
+        },
+        {
+          "indicatorId": "imports-share",
+          "reason": "high_ambiguity_distractor",
+          "warningLevel": "ok"
+        }
+      ],
+      "fairnessWarningLevel": "review"
+    },
+    {
+      "roundId": "worldprint-labor-force-participation",
+      "correctIndicatorId": "labor-force-participation",
+      "tier": "analyst",
+      "selectedDistractorIds": [
+        "unemployment",
+        "female-labor-force",
+        "employment-agriculture"
+      ],
+      "rejectedCandidates": [],
+      "fairnessWarningLevel": "ok"
+    },
+    {
+      "roundId": "worldprint-labor-force-participation",
+      "correctIndicatorId": "labor-force-participation",
+      "tier": "cartographer",
+      "selectedDistractorIds": [
+        "female-labor-force",
+        "unemployment",
+        "employment-agriculture",
+        "employment-services",
+        "agriculture-value-added"
+      ],
+      "rejectedCandidates": [],
+      "fairnessWarningLevel": "ok"
+    },
+    {
+      "roundId": "worldprint-life-expectancy",
+      "correctIndicatorId": "life-expectancy",
+      "tier": "explorer",
+      "selectedDistractorIds": [
+        "forest-area",
+        "death-rate"
+      ],
+      "rejectedCandidates": [],
+      "fairnessWarningLevel": "ok"
+    },
+    {
+      "roundId": "worldprint-life-expectancy",
+      "correctIndicatorId": "life-expectancy",
+      "tier": "analyst",
+      "selectedDistractorIds": [
+        "safe-drinking-water",
+        "tuberculosis-incidence",
+        "basic-sanitation"
+      ],
+      "rejectedCandidates": [
+        {
+          "indicatorId": "infant-mortality",
+          "reason": "high_correlation_or_visual_similarity",
+          "warningLevel": "high"
+        },
+        {
+          "indicatorId": "under-five-mortality",
+          "reason": "high_correlation_or_visual_similarity",
+          "warningLevel": "high"
+        }
+      ],
+      "fairnessWarningLevel": "review"
+    },
+    {
+      "roundId": "worldprint-life-expectancy",
+      "correctIndicatorId": "life-expectancy",
+      "tier": "cartographer",
+      "selectedDistractorIds": [
+        "safe-drinking-water",
+        "basic-sanitation",
+        "tuberculosis-incidence",
+        "birth-rate",
+        "gdp-per-capita"
+      ],
+      "rejectedCandidates": [
+        {
+          "indicatorId": "infant-mortality",
+          "reason": "high_correlation_or_visual_similarity",
+          "warningLevel": "high"
+        },
+        {
+          "indicatorId": "under-five-mortality",
+          "reason": "high_correlation_or_visual_similarity",
+          "warningLevel": "high"
+        },
+        {
+          "indicatorId": "adult-mortality-male",
+          "reason": "high_correlation_or_visual_similarity",
+          "warningLevel": "high"
+        },
+        {
+          "indicatorId": "adult-mortality-female",
+          "reason": "high_correlation_or_visual_similarity",
+          "warningLevel": "high"
+        }
+      ],
+      "fairnessWarningLevel": "review"
+    },
+    {
+      "roundId": "worldprint-mobile-subscriptions",
+      "correctIndicatorId": "mobile-subscriptions",
+      "tier": "explorer",
+      "selectedDistractorIds": [
+        "renewable-electricity",
+        "education-spending"
+      ],
+      "rejectedCandidates": [],
+      "fairnessWarningLevel": "ok"
+    },
+    {
+      "roundId": "worldprint-mobile-subscriptions",
+      "correctIndicatorId": "mobile-subscriptions",
+      "tier": "analyst",
+      "selectedDistractorIds": [
+        "secure-internet-servers",
+        "internet-users",
+        "fixed-broadband"
+      ],
+      "rejectedCandidates": [],
+      "fairnessWarningLevel": "ok"
+    },
+    {
+      "roundId": "worldprint-mobile-subscriptions",
+      "correctIndicatorId": "mobile-subscriptions",
+      "tier": "cartographer",
+      "selectedDistractorIds": [
+        "secure-internet-servers",
+        "internet-users",
+        "fixed-broadband",
+        "gdp-per-capita-ppp",
+        "secondary-enrollment"
+      ],
+      "rejectedCandidates": [],
+      "fairnessWarningLevel": "ok"
+    },
+    {
+      "roundId": "worldprint-older-adults-share",
+      "correctIndicatorId": "older-adults-share",
+      "tier": "explorer",
+      "selectedDistractorIds": [
+        "population-density",
+        "education-spending"
+      ],
+      "rejectedCandidates": [],
+      "fairnessWarningLevel": "ok"
+    },
+    {
+      "roundId": "worldprint-older-adults-share",
+      "correctIndicatorId": "older-adults-share",
+      "tier": "analyst",
+      "selectedDistractorIds": [
+        "fertility-rate",
+        "adolescent-fertility",
+        "death-rate"
+      ],
+      "rejectedCandidates": [
+        {
+          "indicatorId": "children-share",
+          "reason": "high_correlation_or_visual_similarity",
+          "warningLevel": "high"
+        },
+        {
+          "indicatorId": "birth-rate",
+          "reason": "high_correlation_or_visual_similarity",
+          "warningLevel": "high"
+        }
+      ],
+      "fairnessWarningLevel": "review"
+    },
+    {
+      "roundId": "worldprint-older-adults-share",
+      "correctIndicatorId": "older-adults-share",
+      "tier": "cartographer",
+      "selectedDistractorIds": [
+        "fertility-rate",
+        "adolescent-fertility",
+        "death-rate",
+        "age-dependency",
+        "under-five-mortality"
+      ],
+      "rejectedCandidates": [
+        {
+          "indicatorId": "birth-rate",
+          "reason": "high_correlation_or_visual_similarity",
+          "warningLevel": "high"
+        },
+        {
+          "indicatorId": "children-share",
+          "reason": "high_correlation_or_visual_similarity",
+          "warningLevel": "high"
+        }
+      ],
+      "fairnessWarningLevel": "review"
+    },
+    {
+      "roundId": "worldprint-out-of-pocket-health",
+      "correctIndicatorId": "out-of-pocket-health",
+      "tier": "explorer",
+      "selectedDistractorIds": [
+        "death-rate",
+        "forest-area"
+      ],
+      "rejectedCandidates": [
+        {
+          "indicatorId": "ghg-per-capita",
+          "reason": "high_ambiguity_distractor",
+          "warningLevel": "review"
+        }
+      ],
+      "fairnessWarningLevel": "review"
+    },
+    {
+      "roundId": "worldprint-out-of-pocket-health",
+      "correctIndicatorId": "out-of-pocket-health",
+      "tier": "analyst",
+      "selectedDistractorIds": [
+        "under-five-mortality",
+        "tuberculosis-incidence",
+        "basic-sanitation"
+      ],
+      "rejectedCandidates": [
+        {
+          "indicatorId": "infant-mortality",
+          "reason": "high_ambiguity_distractor",
+          "warningLevel": "review"
+        },
+        {
+          "indicatorId": "adult-mortality-female",
+          "reason": "high_ambiguity_distractor",
+          "warningLevel": "review"
+        }
+      ],
+      "fairnessWarningLevel": "review"
+    },
+    {
+      "roundId": "worldprint-out-of-pocket-health",
+      "correctIndicatorId": "out-of-pocket-health",
+      "tier": "cartographer",
+      "selectedDistractorIds": [
+        "under-five-mortality",
+        "infant-mortality",
+        "life-expectancy",
+        "tuberculosis-incidence",
+        "basic-sanitation"
+      ],
+      "rejectedCandidates": [],
+      "fairnessWarningLevel": "ok"
+    },
+    {
+      "roundId": "worldprint-pm25-exposure",
+      "correctIndicatorId": "pm25-exposure",
+      "tier": "explorer",
+      "selectedDistractorIds": [
+        "arable-land",
+        "renewable-electricity"
+      ],
+      "rejectedCandidates": [],
+      "fairnessWarningLevel": "ok"
+    },
+    {
+      "roundId": "worldprint-pm25-exposure",
+      "correctIndicatorId": "pm25-exposure",
+      "tier": "analyst",
+      "selectedDistractorIds": [
+        "co2-per-capita",
+        "clean-fuels-access",
+        "under-five-mortality"
+      ],
+      "rejectedCandidates": [
+        {
+          "indicatorId": "ghg-per-capita",
+          "reason": "high_ambiguity_distractor",
+          "warningLevel": "review"
+        }
+      ],
+      "fairnessWarningLevel": "review"
+    },
+    {
+      "roundId": "worldprint-pm25-exposure",
+      "correctIndicatorId": "pm25-exposure",
+      "tier": "cartographer",
+      "selectedDistractorIds": [
+        "co2-per-capita",
+        "ghg-per-capita",
+        "forest-area",
+        "under-five-mortality",
+        "infant-mortality"
+      ],
+      "rejectedCandidates": [],
+      "fairnessWarningLevel": "ok"
+    },
+    {
+      "roundId": "worldprint-population-density",
+      "correctIndicatorId": "population-density",
+      "tier": "explorer",
+      "selectedDistractorIds": [
+        "age-dependency",
+        "gdp-per-capita"
+      ],
+      "rejectedCandidates": [
+        {
+          "indicatorId": "gdp-per-capita-ppp",
+          "reason": "high_ambiguity_distractor",
+          "warningLevel": "ok"
+        }
+      ],
+      "fairnessWarningLevel": "review"
+    },
+    {
+      "roundId": "worldprint-population-density",
+      "correctIndicatorId": "population-density",
+      "tier": "analyst",
+      "selectedDistractorIds": [
+        "arable-land",
+        "agricultural-land",
+        "urban-population"
+      ],
+      "rejectedCandidates": [],
+      "fairnessWarningLevel": "ok"
+    },
+    {
+      "roundId": "worldprint-population-density",
+      "correctIndicatorId": "population-density",
+      "tier": "cartographer",
+      "selectedDistractorIds": [
+        "arable-land",
+        "urban-population",
+        "agricultural-land",
+        "fertility-rate",
+        "adolescent-fertility"
+      ],
+      "rejectedCandidates": [],
+      "fairnessWarningLevel": "ok"
+    },
+    {
+      "roundId": "worldprint-renewable-electricity",
+      "correctIndicatorId": "renewable-electricity",
+      "tier": "explorer",
+      "selectedDistractorIds": [
+        "mobile-subscriptions",
+        "pm25-exposure"
+      ],
+      "rejectedCandidates": [
+        {
+          "indicatorId": "gdp-per-capita-ppp",
+          "reason": "high_ambiguity_distractor",
+          "warningLevel": "ok"
+        }
+      ],
+      "fairnessWarningLevel": "review"
+    },
+    {
+      "roundId": "worldprint-renewable-electricity",
+      "correctIndicatorId": "renewable-electricity",
+      "tier": "analyst",
+      "selectedDistractorIds": [
+        "renewable-energy-consumption",
+        "clean-fuels-access",
+        "electricity-access"
+      ],
+      "rejectedCandidates": [],
+      "fairnessWarningLevel": "ok"
+    },
+    {
+      "roundId": "worldprint-renewable-electricity",
+      "correctIndicatorId": "renewable-electricity",
+      "tier": "cartographer",
+      "selectedDistractorIds": [
+        "renewable-energy-consumption",
+        "clean-fuels-access",
+        "electricity-access",
+        "co2-per-capita",
+        "ghg-per-capita"
+      ],
+      "rejectedCandidates": [],
+      "fairnessWarningLevel": "ok"
+    },
+    {
+      "roundId": "worldprint-renewable-energy-consumption",
+      "correctIndicatorId": "renewable-energy-consumption",
+      "tier": "explorer",
+      "selectedDistractorIds": [
+        "pm25-exposure",
+        "secure-internet-servers"
+      ],
+      "rejectedCandidates": [],
+      "fairnessWarningLevel": "ok"
+    },
+    {
+      "roundId": "worldprint-renewable-energy-consumption",
+      "correctIndicatorId": "renewable-energy-consumption",
+      "tier": "analyst",
+      "selectedDistractorIds": [
+        "clean-fuels-access",
+        "electricity-access",
+        "renewable-electricity"
+      ],
+      "rejectedCandidates": [],
+      "fairnessWarningLevel": "ok"
+    },
+    {
+      "roundId": "worldprint-renewable-energy-consumption",
+      "correctIndicatorId": "renewable-energy-consumption",
+      "tier": "cartographer",
+      "selectedDistractorIds": [
+        "clean-fuels-access",
+        "electricity-access",
+        "renewable-electricity",
+        "co2-per-capita",
+        "internet-users"
+      ],
+      "rejectedCandidates": [],
+      "fairnessWarningLevel": "ok"
+    },
+    {
+      "roundId": "worldprint-safe-drinking-water",
+      "correctIndicatorId": "safe-drinking-water",
+      "tier": "explorer",
+      "selectedDistractorIds": [
+        "forest-area",
+        "death-rate"
+      ],
+      "rejectedCandidates": [],
+      "fairnessWarningLevel": "ok"
+    },
+    {
+      "roundId": "worldprint-safe-drinking-water",
+      "correctIndicatorId": "safe-drinking-water",
+      "tier": "analyst",
+      "selectedDistractorIds": [
+        "under-five-mortality",
+        "life-expectancy",
+        "tuberculosis-incidence"
+      ],
+      "rejectedCandidates": [
+        {
+          "indicatorId": "infant-mortality",
+          "reason": "high_ambiguity_distractor",
+          "warningLevel": "review"
+        },
+        {
+          "indicatorId": "adult-mortality-female",
+          "reason": "high_ambiguity_distractor",
+          "warningLevel": "review"
+        },
+        {
+          "indicatorId": "adult-mortality-male",
+          "reason": "high_ambiguity_distractor",
+          "warningLevel": "review"
+        }
+      ],
+      "fairnessWarningLevel": "review"
+    },
+    {
+      "roundId": "worldprint-safe-drinking-water",
+      "correctIndicatorId": "safe-drinking-water",
+      "tier": "cartographer",
+      "selectedDistractorIds": [
+        "life-expectancy",
+        "basic-sanitation",
+        "under-five-mortality",
+        "infant-mortality",
+        "adult-mortality-female"
+      ],
+      "rejectedCandidates": [],
+      "fairnessWarningLevel": "ok"
+    },
+    {
+      "roundId": "worldprint-secondary-enrollment",
+      "correctIndicatorId": "secondary-enrollment",
+      "tier": "explorer",
+      "selectedDistractorIds": [
+        "death-rate",
+        "mobile-subscriptions"
+      ],
+      "rejectedCandidates": [],
+      "fairnessWarningLevel": "ok"
+    },
+    {
+      "roundId": "worldprint-secondary-enrollment",
+      "correctIndicatorId": "secondary-enrollment",
+      "tier": "analyst",
+      "selectedDistractorIds": [
+        "tertiary-enrollment",
+        "fertility-rate",
+        "education-spending"
+      ],
+      "rejectedCandidates": [],
+      "fairnessWarningLevel": "ok"
+    },
+    {
+      "roundId": "worldprint-secondary-enrollment",
+      "correctIndicatorId": "secondary-enrollment",
+      "tier": "cartographer",
+      "selectedDistractorIds": [
+        "tertiary-enrollment",
+        "education-spending",
+        "internet-users",
+        "gdp-per-capita-ppp",
+        "fertility-rate"
+      ],
+      "rejectedCandidates": [],
+      "fairnessWarningLevel": "ok"
+    },
+    {
+      "roundId": "worldprint-secure-internet-servers",
+      "correctIndicatorId": "secure-internet-servers",
+      "tier": "explorer",
+      "selectedDistractorIds": [
+        "renewable-electricity",
+        "education-spending"
+      ],
+      "rejectedCandidates": [],
+      "fairnessWarningLevel": "ok"
+    },
+    {
+      "roundId": "worldprint-secure-internet-servers",
+      "correctIndicatorId": "secure-internet-servers",
+      "tier": "analyst",
+      "selectedDistractorIds": [
+        "fixed-broadband",
+        "internet-users",
+        "tertiary-enrollment"
+      ],
+      "rejectedCandidates": [],
+      "fairnessWarningLevel": "ok"
+    },
+    {
+      "roundId": "worldprint-secure-internet-servers",
+      "correctIndicatorId": "secure-internet-servers",
+      "tier": "cartographer",
+      "selectedDistractorIds": [
+        "fixed-broadband",
+        "internet-users",
+        "mobile-subscriptions",
+        "gdp-per-capita-ppp",
+        "clean-fuels-access"
+      ],
+      "rejectedCandidates": [],
+      "fairnessWarningLevel": "ok"
+    },
+    {
+      "roundId": "worldprint-tertiary-enrollment",
+      "correctIndicatorId": "tertiary-enrollment",
+      "tier": "explorer",
+      "selectedDistractorIds": [
+        "death-rate",
+        "mobile-subscriptions"
+      ],
+      "rejectedCandidates": [],
+      "fairnessWarningLevel": "ok"
+    },
+    {
+      "roundId": "worldprint-tertiary-enrollment",
+      "correctIndicatorId": "tertiary-enrollment",
+      "tier": "analyst",
+      "selectedDistractorIds": [
+        "secondary-enrollment",
+        "adolescent-fertility",
+        "education-spending"
+      ],
+      "rejectedCandidates": [],
+      "fairnessWarningLevel": "ok"
+    },
+    {
+      "roundId": "worldprint-tertiary-enrollment",
+      "correctIndicatorId": "tertiary-enrollment",
+      "tier": "cartographer",
+      "selectedDistractorIds": [
+        "secondary-enrollment",
+        "education-spending",
+        "secure-internet-servers",
+        "fixed-broadband",
+        "adolescent-fertility"
+      ],
+      "rejectedCandidates": [],
+      "fairnessWarningLevel": "ok"
+    },
+    {
+      "roundId": "worldprint-trade-share",
+      "correctIndicatorId": "trade-share",
+      "tier": "explorer",
+      "selectedDistractorIds": [
+        "labor-force-participation",
+        "gdp-per-capita"
+      ],
+      "rejectedCandidates": [
+        {
+          "indicatorId": "employment-services",
+          "reason": "high_ambiguity_distractor",
+          "warningLevel": "ok"
+        },
+        {
+          "indicatorId": "gdp-per-capita-ppp",
+          "reason": "high_ambiguity_distractor",
+          "warningLevel": "ok"
+        }
+      ],
+      "fairnessWarningLevel": "review"
+    },
+    {
+      "roundId": "worldprint-trade-share",
+      "correctIndicatorId": "trade-share",
+      "tier": "analyst",
+      "selectedDistractorIds": [
+        "agriculture-value-added",
+        "inflation",
+        "current-account"
+      ],
+      "rejectedCandidates": [
+        {
+          "indicatorId": "imports-share",
+          "reason": "high_correlation_or_visual_similarity",
+          "warningLevel": "high"
+        },
+        {
+          "indicatorId": "exports-share",
+          "reason": "high_correlation_or_visual_similarity",
+          "warningLevel": "high"
+        },
+        {
+          "indicatorId": "gdp-per-capita-ppp",
+          "reason": "high_ambiguity_distractor",
+          "warningLevel": "ok"
+        }
+      ],
+      "fairnessWarningLevel": "review"
+    },
+    {
+      "roundId": "worldprint-trade-share",
+      "correctIndicatorId": "trade-share",
+      "tier": "cartographer",
+      "selectedDistractorIds": [
+        "imports-share",
+        "exports-share",
+        "agriculture-value-added",
+        "inflation",
+        "fdi-inflows"
+      ],
+      "rejectedCandidates": [],
+      "fairnessWarningLevel": "ok"
+    },
+    {
+      "roundId": "worldprint-tuberculosis-incidence",
+      "correctIndicatorId": "tuberculosis-incidence",
+      "tier": "explorer",
+      "selectedDistractorIds": [
+        "death-rate",
+        "forest-area"
+      ],
+      "rejectedCandidates": [],
+      "fairnessWarningLevel": "ok"
+    },
+    {
+      "roundId": "worldprint-tuberculosis-incidence",
+      "correctIndicatorId": "tuberculosis-incidence",
+      "tier": "analyst",
+      "selectedDistractorIds": [
+        "basic-sanitation",
+        "under-five-mortality",
+        "life-expectancy"
+      ],
+      "rejectedCandidates": [
+        {
+          "indicatorId": "adult-mortality-female",
+          "reason": "high_ambiguity_distractor",
+          "warningLevel": "review"
+        },
+        {
+          "indicatorId": "adult-mortality-male",
+          "reason": "high_ambiguity_distractor",
+          "warningLevel": "review"
+        }
+      ],
+      "fairnessWarningLevel": "review"
+    },
+    {
+      "roundId": "worldprint-tuberculosis-incidence",
+      "correctIndicatorId": "tuberculosis-incidence",
+      "tier": "cartographer",
+      "selectedDistractorIds": [
+        "adult-mortality-female",
+        "infant-mortality",
+        "under-five-mortality",
+        "adult-mortality-male",
+        "basic-sanitation"
+      ],
+      "rejectedCandidates": [],
+      "fairnessWarningLevel": "ok"
+    },
+    {
+      "roundId": "worldprint-under-five-mortality",
+      "correctIndicatorId": "under-five-mortality",
+      "tier": "explorer",
+      "selectedDistractorIds": [
+        "forest-area",
+        "death-rate"
+      ],
+      "rejectedCandidates": [],
+      "fairnessWarningLevel": "ok"
+    },
+    {
+      "roundId": "worldprint-under-five-mortality",
+      "correctIndicatorId": "under-five-mortality",
+      "tier": "analyst",
+      "selectedDistractorIds": [
+        "basic-sanitation",
+        "safe-drinking-water",
+        "tuberculosis-incidence"
+      ],
+      "rejectedCandidates": [],
+      "fairnessWarningLevel": "ok"
+    },
+    {
+      "roundId": "worldprint-under-five-mortality",
+      "correctIndicatorId": "under-five-mortality",
+      "tier": "cartographer",
+      "selectedDistractorIds": [
+        "basic-sanitation",
+        "safe-drinking-water",
+        "adult-mortality-male",
+        "tuberculosis-incidence",
+        "infant-mortality"
+      ],
+      "rejectedCandidates": [
+        {
+          "indicatorId": "life-expectancy",
+          "reason": "high_correlation_or_visual_similarity",
+          "warningLevel": "high"
+        },
+        {
+          "indicatorId": "adult-mortality-female",
+          "reason": "high_correlation_or_visual_similarity",
+          "warningLevel": "high"
+        }
+      ],
+      "fairnessWarningLevel": "review"
+    },
+    {
+      "roundId": "worldprint-unemployment",
+      "correctIndicatorId": "unemployment",
+      "tier": "explorer",
+      "selectedDistractorIds": [
+        "trade-share",
+        "gdp-per-capita"
+      ],
+      "rejectedCandidates": [
+        {
+          "indicatorId": "gdp-per-capita-ppp",
+          "reason": "high_ambiguity_distractor",
+          "warningLevel": "ok"
+        },
+        {
+          "indicatorId": "imports-share",
+          "reason": "high_ambiguity_distractor",
+          "warningLevel": "ok"
+        },
+        {
+          "indicatorId": "exports-share",
+          "reason": "high_ambiguity_distractor",
+          "warningLevel": "ok"
+        }
+      ],
+      "fairnessWarningLevel": "review"
+    },
+    {
+      "roundId": "worldprint-unemployment",
+      "correctIndicatorId": "unemployment",
+      "tier": "analyst",
+      "selectedDistractorIds": [
+        "labor-force-participation",
+        "female-labor-force",
+        "employment-agriculture"
+      ],
+      "rejectedCandidates": [
+        {
+          "indicatorId": "employment-services",
+          "reason": "high_ambiguity_distractor",
+          "warningLevel": "review"
+        }
+      ],
+      "fairnessWarningLevel": "review"
+    },
+    {
+      "roundId": "worldprint-unemployment",
+      "correctIndicatorId": "unemployment",
+      "tier": "cartographer",
+      "selectedDistractorIds": [
+        "labor-force-participation",
+        "female-labor-force",
+        "employment-services",
+        "employment-agriculture",
+        "agriculture-value-added"
+      ],
+      "rejectedCandidates": [],
+      "fairnessWarningLevel": "ok"
+    },
+    {
+      "roundId": "worldprint-urban-population",
+      "correctIndicatorId": "urban-population",
+      "tier": "explorer",
+      "selectedDistractorIds": [
+        "arable-land",
+        "death-rate"
+      ],
+      "rejectedCandidates": [],
+      "fairnessWarningLevel": "ok"
+    },
+    {
+      "roundId": "worldprint-urban-population",
+      "correctIndicatorId": "urban-population",
+      "tier": "analyst",
+      "selectedDistractorIds": [
+        "gdp-per-capita",
+        "fertility-rate",
+        "older-adults-share"
+      ],
+      "rejectedCandidates": [
+        {
+          "indicatorId": "children-share",
+          "reason": "high_ambiguity_distractor",
+          "warningLevel": "review"
+        },
+        {
+          "indicatorId": "birth-rate",
+          "reason": "high_ambiguity_distractor",
+          "warningLevel": "ok"
+        },
+        {
+          "indicatorId": "gdp-per-capita-ppp",
+          "reason": "high_ambiguity_distractor",
+          "warningLevel": "ok"
+        }
+      ],
+      "fairnessWarningLevel": "review"
+    },
+    {
+      "roundId": "worldprint-urban-population",
+      "correctIndicatorId": "urban-population",
+      "tier": "cartographer",
+      "selectedDistractorIds": [
+        "gdp-per-capita",
+        "gdp-per-capita-ppp",
+        "children-share",
+        "birth-rate",
+        "fertility-rate"
+      ],
+      "rejectedCandidates": [],
+      "fairnessWarningLevel": "ok"
+    }
+  ]
+}

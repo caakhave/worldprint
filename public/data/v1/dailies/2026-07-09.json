@@ -1,0 +1,35 @@
+{
+  "schemaVersion": "1.1.0",
+  "game": "worldprint",
+  "date": "2026-07-09",
+  "contentVersion": "2026.06.19-ed1",
+  "roundIds": [
+    "worldprint-tuberculosis-incidence",
+    "worldprint-pm25-exposure",
+    "worldprint-health-expenditure",
+    "worldprint-employment-agriculture",
+    "worldprint-renewable-electricity"
+  ],
+  "indicatorIds": [
+    "tuberculosis-incidence",
+    "pm25-exposure",
+    "health-expenditure",
+    "employment-agriculture",
+    "renewable-electricity"
+  ],
+  "categoryMix": {
+    "health": 2,
+    "environment": 1,
+    "labor": 1,
+    "energy": 1
+  },
+  "mapDifficultyMix": {
+    "expert": 1,
+    "standard": 4
+  },
+  "generatedAt": "2026-06-19T17:09:23.337594+00:00",
+  "generatorVersion": "daily-manifest-v1",
+  "varietyNotes": [
+    "Selected with category, difficulty, and same-day correlation safeguards."
+  ]
+}

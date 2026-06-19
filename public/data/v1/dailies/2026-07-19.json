@@ -1,0 +1,36 @@
+{
+  "schemaVersion": "1.1.0",
+  "game": "worldprint",
+  "date": "2026-07-19",
+  "contentVersion": "2026.06.19-ed1",
+  "roundIds": [
+    "worldprint-adolescent-fertility",
+    "worldprint-pm25-exposure",
+    "worldprint-co2-per-capita",
+    "worldprint-health-expenditure",
+    "worldprint-gdp-per-capita"
+  ],
+  "indicatorIds": [
+    "adolescent-fertility",
+    "pm25-exposure",
+    "co2-per-capita",
+    "health-expenditure",
+    "gdp-per-capita"
+  ],
+  "categoryMix": {
+    "demography": 1,
+    "environment": 2,
+    "health": 1,
+    "development": 1
+  },
+  "mapDifficultyMix": {
+    "expert": 1,
+    "standard": 3,
+    "intro": 1
+  },
+  "generatedAt": "2026-06-19T17:09:23.338688+00:00",
+  "generatorVersion": "daily-manifest-v1",
+  "varietyNotes": [
+    "Selected with category, difficulty, and same-day correlation safeguards."
+  ]
+}

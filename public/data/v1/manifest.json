@@ -1,0 +1,2488 @@
+{
+  "schemaVersion": "1.1.0",
+  "contentVersion": "2026.06.19-ed1",
+  "generatedAt": "2026-06-19T17:09:23.352763+00:00",
+  "map": {
+    "path": "/maps/world-110m.v1.geojson",
+    "checksum": "45a57b90afa231ae0ba96bcb672dbf21d5a8e455256505b781684d9270718100"
+  },
+  "entityRegistry": {
+    "path": "/data/v1/entity-registry.json"
+  },
+  "sources": {
+    "path": "/data/v1/sources.json"
+  },
+  "indicators": [
+    {
+      "id": "fertility-rate",
+      "providerCode": "SP.DYN.TFRT.IN",
+      "title": "Fertility rate, total (births per woman)",
+      "shortTitle": "Fertility rate",
+      "category": "demography",
+      "difficulty": "standard",
+      "year": 2024,
+      "coverage": 169,
+      "path": "/data/v1/indicators/fertility-rate.json",
+      "reviewStatus": "approved",
+      "shortHook": "Where families are still growing fast.",
+      "editorialReview": {
+        "status": "daily_eligible",
+        "reviewedAt": "2026-06-19",
+        "reviewedBy": "Codex editorial QA",
+        "qualityScore": 5,
+        "funScore": 4,
+        "fairnessScore": 4,
+        "ambiguityRisk": "medium",
+        "dailyEligible": true,
+        "practiceEligible": true,
+        "challengeEligible": true,
+        "expertOnly": false,
+        "reviewNotes": [
+          "Iconic demographic-transition map.",
+          "Close demographic distractors are acceptable only at hard tiers."
+        ],
+        "acceptableCloseDistractorIds": [
+          "birth-rate",
+          "children-share"
+        ]
+      }
+    },
+    {
+      "id": "adolescent-fertility",
+      "providerCode": "SP.ADO.TFRT",
+      "title": "Adolescent fertility rate (births per 1,000 women ages 15-19)",
+      "shortTitle": "Adolescent fertility",
+      "category": "demography",
+      "difficulty": "expert",
+      "year": 2024,
+      "coverage": 169,
+      "path": "/data/v1/indicators/adolescent-fertility.json",
+      "reviewStatus": "approved",
+      "shortHook": "A youth-pattern map with a sharper social signal.",
+      "editorialReview": {
+        "status": "daily_eligible",
+        "reviewedAt": "2026-06-19",
+        "reviewedBy": "Codex editorial QA",
+        "qualityScore": 4,
+        "funScore": 4,
+        "fairnessScore": 4,
+        "ambiguityRisk": "medium",
+        "dailyEligible": true,
+        "practiceEligible": true,
+        "challengeEligible": true,
+        "expertOnly": false,
+        "reviewNotes": [
+          "Strong regional signal and a sharper story than general birth rates.",
+          "Avoid pairing with birth-rate or children-share outside Cartographer."
+        ],
+        "acceptableCloseDistractorIds": []
+      }
+    },
+    {
+      "id": "birth-rate",
+      "providerCode": "SP.DYN.CBRT.IN",
+      "title": "Birth rate, crude (per 1,000 people)",
+      "shortTitle": "Birth rate",
+      "category": "demography",
+      "difficulty": "intro",
+      "year": 2024,
+      "coverage": 169,
+      "path": "/data/v1/indicators/birth-rate.json",
+      "reviewStatus": "approved",
+      "shortHook": "The broadest signal of where populations are adding children.",
+      "editorialReview": {
+        "status": "practice_eligible",
+        "reviewedAt": "2026-06-19",
+        "reviewedBy": "Codex editorial QA",
+        "qualityScore": 3,
+        "funScore": 3,
+        "fairnessScore": 3,
+        "ambiguityRisk": "high",
+        "dailyEligible": false,
+        "practiceEligible": true,
+        "challengeEligible": true,
+        "expertOnly": false,
+        "reviewNotes": [
+          "Too close to fertility rate and children-share for Daily.",
+          "Still useful as a Practice comparison map for demographic transition."
+        ],
+        "acceptableCloseDistractorIds": []
+      }
+    },
+    {
+      "id": "death-rate",
+      "providerCode": "SP.DYN.CDRT.IN",
+      "title": "Death rate, crude (per 1,000 people)",
+      "shortTitle": "Death rate",
+      "category": "demography",
+      "difficulty": "expert",
+      "year": 2024,
+      "coverage": 169,
+      "path": "/data/v1/indicators/death-rate.json",
+      "reviewStatus": "approved",
+      "shortHook": "A deceptively hard age-structure clue.",
+      "editorialReview": {
+        "status": "practice_eligible",
+        "reviewedAt": "2026-06-19",
+        "reviewedBy": "Codex editorial QA",
+        "qualityScore": 3,
+        "funScore": 3,
+        "fairnessScore": 3,
+        "ambiguityRisk": "medium",
+        "dailyEligible": false,
+        "practiceEligible": true,
+        "challengeEligible": true,
+        "expertOnly": false,
+        "reviewNotes": [
+          "Crude death rate is easy to misread because age structure dominates.",
+          "Good lesson map, not a default Daily map yet."
+        ],
+        "acceptableCloseDistractorIds": []
+      }
+    },
+    {
+      "id": "life-expectancy",
+      "providerCode": "SP.DYN.LE00.IN",
+      "title": "Life expectancy at birth, total (years)",
+      "shortTitle": "Life expectancy",
+      "category": "health",
+      "difficulty": "intro",
+      "year": 2024,
+      "coverage": 169,
+      "path": "/data/v1/indicators/life-expectancy.json",
+      "reviewStatus": "approved",
+      "shortHook": "A familiar health map with strong regional anchors.",
+      "editorialReview": {
+        "status": "daily_eligible",
+        "reviewedAt": "2026-06-19",
+        "reviewedBy": "Codex editorial QA",
+        "qualityScore": 5,
+        "funScore": 4,
+        "fairnessScore": 4,
+        "ambiguityRisk": "medium",
+        "dailyEligible": true,
+        "practiceEligible": true,
+        "challengeEligible": true,
+        "expertOnly": false,
+        "reviewNotes": [
+          "Classic health map with fair global anchors.",
+          "Avoid pairing with adult mortality as an easy-tier distractor."
+        ],
+        "acceptableCloseDistractorIds": []
+      }
+    },
+    {
+      "id": "infant-mortality",
+      "providerCode": "SP.DYN.IMRT.IN",
+      "title": "Mortality rate, infant (per 1,000 live births)",
+      "shortTitle": "Infant mortality",
+      "category": "health",
+      "difficulty": "standard",
+      "year": 2024,
+      "coverage": 166,
+      "path": "/data/v1/indicators/infant-mortality.json",
+      "reviewStatus": "approved",
+      "shortHook": "A child-health map with unmistakable low and high anchors.",
+      "editorialReview": {
+        "status": "practice_eligible",
+        "reviewedAt": "2026-06-19",
+        "reviewedBy": "Codex editorial QA",
+        "qualityScore": 4,
+        "funScore": 3,
+        "fairnessScore": 3,
+        "ambiguityRisk": "high",
+        "dailyEligible": false,
+        "practiceEligible": true,
+        "challengeEligible": true,
+        "expertOnly": false,
+        "reviewNotes": [
+          "Almost identical to under-5 mortality.",
+          "Practice only so players can learn the distinction."
+        ],
+        "acceptableCloseDistractorIds": []
+      }
+    },
+    {
+      "id": "under-five-mortality",
+      "providerCode": "SH.DYN.MORT",
+      "title": "Mortality rate, under-5 (per 1,000 live births)",
+      "shortTitle": "Under-5 mortality",
+      "category": "health",
+      "difficulty": "standard",
+      "year": 2024,
+      "coverage": 166,
+      "path": "/data/v1/indicators/under-five-mortality.json",
+      "reviewStatus": "approved",
+      "shortHook": "A stark map of child survival.",
+      "editorialReview": {
+        "status": "daily_eligible",
+        "reviewedAt": "2026-06-19",
+        "reviewedBy": "Codex editorial QA",
+        "qualityScore": 5,
+        "funScore": 4,
+        "fairnessScore": 4,
+        "ambiguityRisk": "medium",
+        "dailyEligible": true,
+        "practiceEligible": true,
+        "challengeEligible": true,
+        "expertOnly": false,
+        "reviewNotes": [
+          "Strong child-survival map and clearer than infant mortality for Daily.",
+          "Infant mortality is acceptable only as a hard-tier close distractor."
+        ],
+        "acceptableCloseDistractorIds": [
+          "infant-mortality"
+        ]
+      }
+    },
+    {
+      "id": "adult-mortality-male",
+      "providerCode": "SP.DYN.AMRT.MA",
+      "title": "Mortality rate, adult, male (per 1,000 male adults)",
+      "shortTitle": "Male adult mortality",
+      "category": "health",
+      "difficulty": "expert",
+      "year": 2024,
+      "coverage": 149,
+      "path": "/data/v1/indicators/adult-mortality-male.json",
+      "reviewStatus": "approved",
+      "shortHook": "A mortality map with conflict, health, and risk-behavior clues.",
+      "editorialReview": {
+        "status": "expert_only",
+        "reviewedAt": "2026-06-19",
+        "reviewedBy": "Codex editorial QA",
+        "qualityScore": 3,
+        "funScore": 4,
+        "fairnessScore": 3,
+        "ambiguityRisk": "high",
+        "dailyEligible": false,
+        "practiceEligible": true,
+        "challengeEligible": true,
+        "expertOnly": true,
+        "reviewNotes": [
+          "Distinctive enough for expert play because male risk patterns matter.",
+          "Too correlated with other mortality maps for default Daily."
+        ],
+        "acceptableCloseDistractorIds": []
+      }
+    },
+    {
+      "id": "adult-mortality-female",
+      "providerCode": "SP.DYN.AMRT.FE",
+      "title": "Mortality rate, adult, female (per 1,000 female adults)",
+      "shortTitle": "Female adult mortality",
+      "category": "health",
+      "difficulty": "expert",
+      "year": 2024,
+      "coverage": 149,
+      "path": "/data/v1/indicators/adult-mortality-female.json",
+      "reviewStatus": "approved",
+      "shortHook": "A parallel mortality map where gender differences matter.",
+      "editorialReview": {
+        "status": "expert_only",
+        "reviewedAt": "2026-06-19",
+        "reviewedBy": "Codex editorial QA",
+        "qualityScore": 3,
+        "funScore": 3,
+        "fairnessScore": 3,
+        "ambiguityRisk": "high",
+        "dailyEligible": false,
+        "practiceEligible": true,
+        "challengeEligible": true,
+        "expertOnly": true,
+        "reviewNotes": [
+          "Very close to life expectancy and male adult mortality.",
+          "Playable only as an expert mortality puzzle."
+        ],
+        "acceptableCloseDistractorIds": []
+      }
+    },
+    {
+      "id": "children-share",
+      "providerCode": "SP.POP.0014.TO.ZS",
+      "title": "Population ages 0-14 (% of total population)",
+      "shortTitle": "Population ages 0-14",
+      "category": "demography",
+      "difficulty": "intro",
+      "year": 2024,
+      "coverage": 169,
+      "path": "/data/v1/indicators/children-share.json",
+      "reviewStatus": "approved",
+      "shortHook": "The young-population map.",
+      "editorialReview": {
+        "status": "practice_eligible",
+        "reviewedAt": "2026-06-19",
+        "reviewedBy": "Codex editorial QA",
+        "qualityScore": 3,
+        "funScore": 3,
+        "fairnessScore": 3,
+        "ambiguityRisk": "high",
+        "dailyEligible": false,
+        "practiceEligible": true,
+        "challengeEligible": true,
+        "expertOnly": false,
+        "reviewNotes": [
+          "Too correlated with birth and fertility maps for default Daily.",
+          "Useful Practice anchor for age-structure learning."
+        ],
+        "acceptableCloseDistractorIds": []
+      }
+    },
+    {
+      "id": "older-adults-share",
+      "providerCode": "SP.POP.65UP.TO.ZS",
+      "title": "Population ages 65 and above (% of total population)",
+      "shortTitle": "Population ages 65+",
+      "category": "demography",
+      "difficulty": "intro",
+      "year": 2024,
+      "coverage": 169,
+      "path": "/data/v1/indicators/older-adults-share.json",
+      "reviewStatus": "approved",
+      "shortHook": "The aging map.",
+      "editorialReview": {
+        "status": "daily_eligible",
+        "reviewedAt": "2026-06-19",
+        "reviewedBy": "Codex editorial QA",
+        "qualityScore": 5,
+        "funScore": 4,
+        "fairnessScore": 4,
+        "ambiguityRisk": "medium",
+        "dailyEligible": true,
+        "practiceEligible": true,
+        "challengeEligible": true,
+        "expertOnly": false,
+        "reviewNotes": [
+          "Readable aging map and strong contrast to youth-heavy regions.",
+          "Do not pair with birth-rate as a low-tier distractor."
+        ],
+        "acceptableCloseDistractorIds": []
+      }
+    },
+    {
+      "id": "age-dependency",
+      "providerCode": "SP.POP.DPND",
+      "title": "Age dependency ratio (% of working-age population)",
+      "shortTitle": "Age dependency ratio",
+      "category": "demography",
+      "difficulty": "standard",
+      "year": 2024,
+      "coverage": 169,
+      "path": "/data/v1/indicators/age-dependency.json",
+      "reviewStatus": "approved",
+      "shortHook": "A map of who supports whom.",
+      "editorialReview": {
+        "status": "daily_eligible",
+        "reviewedAt": "2026-06-19",
+        "reviewedBy": "Codex editorial QA",
+        "qualityScore": 4,
+        "funScore": 4,
+        "fairnessScore": 4,
+        "ambiguityRisk": "medium",
+        "dailyEligible": true,
+        "practiceEligible": true,
+        "challengeEligible": true,
+        "expertOnly": false,
+        "reviewNotes": [
+          "Good synthesis of youth and aging pressure.",
+          "Fair when distractors avoid pure fertility lookalikes."
+        ],
+        "acceptableCloseDistractorIds": []
+      }
+    },
+    {
+      "id": "rural-population",
+      "providerCode": "SP.RUR.TOTL.ZS",
+      "title": "Rural population (% of total population)",
+      "shortTitle": "Rural population",
+      "category": "settlement",
+      "difficulty": "intro",
+      "year": 2024,
+      "coverage": 169,
+      "path": "/data/v1/indicators/rural-population.json",
+      "reviewStatus": "approved",
+      "shortHook": "The inverse of the urban world.",
+      "editorialReview": {
+        "status": "retired",
+        "reviewedAt": "2026-06-19",
+        "reviewedBy": "Codex editorial QA",
+        "qualityScore": 2,
+        "funScore": 2,
+        "fairnessScore": 2,
+        "ambiguityRisk": "high",
+        "dailyEligible": false,
+        "practiceEligible": false,
+        "challengeEligible": false,
+        "expertOnly": false,
+        "reviewNotes": [
+          "Exact inverse of urban population creates filler rather than a new puzzle.",
+          "Retired in favor of urban population."
+        ],
+        "acceptableCloseDistractorIds": []
+      }
+    },
+    {
+      "id": "urban-population",
+      "providerCode": "SP.URB.TOTL.IN.ZS",
+      "title": "Urban population (% of total population)",
+      "shortTitle": "Urban population",
+      "category": "settlement",
+      "difficulty": "intro",
+      "year": 2024,
+      "coverage": 169,
+      "path": "/data/v1/indicators/urban-population.json",
+      "reviewStatus": "approved",
+      "shortHook": "The city-share map.",
+      "editorialReview": {
+        "status": "daily_eligible",
+        "reviewedAt": "2026-06-19",
+        "reviewedBy": "Codex editorial QA",
+        "qualityScore": 5,
+        "funScore": 4,
+        "fairnessScore": 4,
+        "ambiguityRisk": "medium",
+        "dailyEligible": true,
+        "practiceEligible": true,
+        "challengeEligible": true,
+        "expertOnly": false,
+        "reviewNotes": [
+          "Core settlement geography map.",
+          "Retire rural inverse to keep this version from feeling duplicated."
+        ],
+        "acceptableCloseDistractorIds": []
+      }
+    },
+    {
+      "id": "population-density",
+      "providerCode": "EN.POP.DNST",
+      "title": "Population density (people per sq. km of land area)",
+      "shortTitle": "Population density",
+      "category": "settlement",
+      "difficulty": "standard",
+      "year": 2023,
+      "coverage": 169,
+      "path": "/data/v1/indicators/population-density.json",
+      "reviewStatus": "approved",
+      "shortHook": "A map where small crowded places shout.",
+      "editorialReview": {
+        "status": "daily_eligible",
+        "reviewedAt": "2026-06-19",
+        "reviewedBy": "Codex editorial QA",
+        "qualityScore": 5,
+        "funScore": 5,
+        "fairnessScore": 5,
+        "ambiguityRisk": "low",
+        "dailyEligible": true,
+        "practiceEligible": true,
+        "challengeEligible": true,
+        "expertOnly": false,
+        "reviewNotes": [
+          "Highly map-native and strategically probeable.",
+          "Small crowded countries make this satisfying."
+        ],
+        "acceptableCloseDistractorIds": []
+      }
+    },
+    {
+      "id": "primary-enrollment",
+      "providerCode": "SE.PRM.ENRR",
+      "title": "School enrollment, primary (% gross)",
+      "shortTitle": "Primary enrollment",
+      "category": "education",
+      "difficulty": "standard",
+      "year": 2023,
+      "coverage": 136,
+      "path": "/data/v1/indicators/primary-enrollment.json",
+      "reviewStatus": "approved",
+      "shortHook": "A schooling map with a surprisingly noisy edge.",
+      "editorialReview": {
+        "status": "needs_review",
+        "reviewedAt": "2026-06-19",
+        "reviewedBy": "Codex editorial QA",
+        "qualityScore": 2,
+        "funScore": 2,
+        "fairnessScore": 2,
+        "ambiguityRisk": "medium",
+        "dailyEligible": false,
+        "practiceEligible": false,
+        "challengeEligible": false,
+        "expertOnly": false,
+        "reviewNotes": [
+          "Gross enrollment can exceed intuitive school attendance readings.",
+          "Coverage is thinner and map pattern needs editorial review."
+        ],
+        "acceptableCloseDistractorIds": []
+      }
+    },
+    {
+      "id": "secondary-enrollment",
+      "providerCode": "SE.SEC.ENRR",
+      "title": "School enrollment, secondary (% gross)",
+      "shortTitle": "Secondary enrollment",
+      "category": "education",
+      "difficulty": "standard",
+      "year": 2023,
+      "coverage": 121,
+      "path": "/data/v1/indicators/secondary-enrollment.json",
+      "reviewStatus": "approved",
+      "shortHook": "The stronger education access map.",
+      "editorialReview": {
+        "status": "daily_eligible",
+        "reviewedAt": "2026-06-19",
+        "reviewedBy": "Codex editorial QA",
+        "qualityScore": 4,
+        "funScore": 4,
+        "fairnessScore": 4,
+        "ambiguityRisk": "low",
+        "dailyEligible": true,
+        "practiceEligible": true,
+        "challengeEligible": true,
+        "expertOnly": false,
+        "reviewNotes": [
+          "Stronger education signal than primary enrollment.",
+          "Coverage is just adequate, so keep missing-data caveat visible."
+        ],
+        "acceptableCloseDistractorIds": []
+      }
+    },
+    {
+      "id": "tertiary-enrollment",
+      "providerCode": "SE.TER.ENRR",
+      "title": "School enrollment, tertiary (% gross)",
+      "shortTitle": "Tertiary enrollment",
+      "category": "education",
+      "difficulty": "expert",
+      "year": 2015,
+      "coverage": 126,
+      "path": "/data/v1/indicators/tertiary-enrollment.json",
+      "reviewStatus": "approved",
+      "shortHook": "A higher-education map with rich-country and city-state clues.",
+      "editorialReview": {
+        "status": "expert_only",
+        "reviewedAt": "2026-06-19",
+        "reviewedBy": "Codex editorial QA",
+        "qualityScore": 3,
+        "funScore": 4,
+        "fairnessScore": 3,
+        "ambiguityRisk": "medium",
+        "dailyEligible": false,
+        "practiceEligible": true,
+        "challengeEligible": true,
+        "expertOnly": true,
+        "reviewNotes": [
+          "Interesting higher-education map but uses an older selected year.",
+          "Expert-only until year freshness improves."
+        ],
+        "acceptableCloseDistractorIds": []
+      }
+    },
+    {
+      "id": "education-spending",
+      "providerCode": "SE.XPD.TOTL.GD.ZS",
+      "title": "Government expenditure on education, total (% of GDP)",
+      "shortTitle": "Education spending",
+      "category": "education",
+      "difficulty": "expert",
+      "year": 2022,
+      "coverage": 130,
+      "path": "/data/v1/indicators/education-spending.json",
+      "reviewStatus": "approved",
+      "shortHook": "A budget-priority map, not a wealth map.",
+      "editorialReview": {
+        "status": "expert_only",
+        "reviewedAt": "2026-06-19",
+        "reviewedBy": "Codex editorial QA",
+        "qualityScore": 3,
+        "funScore": 3,
+        "fairnessScore": 3,
+        "ambiguityRisk": "medium",
+        "dailyEligible": false,
+        "practiceEligible": true,
+        "challengeEligible": true,
+        "expertOnly": true,
+        "reviewNotes": [
+          "Budget-share map can surprise players but does not equal quality.",
+          "Needs careful caveat in reveal."
+        ],
+        "acceptableCloseDistractorIds": []
+      }
+    },
+    {
+      "id": "health-expenditure",
+      "providerCode": "SH.XPD.CHEX.GD.ZS",
+      "title": "Current health expenditure (% of GDP)",
+      "shortTitle": "Health expenditure",
+      "category": "health",
+      "difficulty": "standard",
+      "year": 2023,
+      "coverage": 164,
+      "path": "/data/v1/indicators/health-expenditure.json",
+      "reviewStatus": "approved",
+      "shortHook": "A health-system spending map.",
+      "editorialReview": {
+        "status": "daily_eligible",
+        "reviewedAt": "2026-06-19",
+        "reviewedBy": "Codex editorial QA",
+        "qualityScore": 4,
+        "funScore": 4,
+        "fairnessScore": 5,
+        "ambiguityRisk": "low",
+        "dailyEligible": true,
+        "practiceEligible": true,
+        "challengeEligible": true,
+        "expertOnly": false,
+        "reviewNotes": [
+          "Good non-obvious health-system spending puzzle.",
+          "Reveal caveat prevents reading it as health quality."
+        ],
+        "acceptableCloseDistractorIds": []
+      }
+    },
+    {
+      "id": "out-of-pocket-health",
+      "providerCode": "SH.XPD.OOPC.CH.ZS",
+      "title": "Out-of-pocket expenditure (% of current health expenditure)",
+      "shortTitle": "Out-of-pocket health spending",
+      "category": "health",
+      "difficulty": "expert",
+      "year": 2023,
+      "coverage": 164,
+      "path": "/data/v1/indicators/out-of-pocket-health.json",
+      "reviewStatus": "approved",
+      "shortHook": "A map of who pays at the clinic.",
+      "editorialReview": {
+        "status": "expert_only",
+        "reviewedAt": "2026-06-19",
+        "reviewedBy": "Codex editorial QA",
+        "qualityScore": 3,
+        "funScore": 4,
+        "fairnessScore": 3,
+        "ambiguityRisk": "medium",
+        "dailyEligible": false,
+        "practiceEligible": true,
+        "challengeEligible": true,
+        "expertOnly": true,
+        "reviewNotes": [
+          "Interesting health-finance map but not intuitive enough for default Daily.",
+          "Keep for expert players who enjoy system-design clues."
+        ],
+        "acceptableCloseDistractorIds": []
+      }
+    },
+    {
+      "id": "safe-drinking-water",
+      "providerCode": "SH.H2O.BASW.ZS",
+      "title": "People using at least basic drinking water services (% of population)",
+      "shortTitle": "Basic drinking water access",
+      "category": "health",
+      "difficulty": "intro",
+      "year": 2024,
+      "coverage": 162,
+      "path": "/data/v1/indicators/safe-drinking-water.json",
+      "reviewStatus": "approved",
+      "shortHook": "A basic-infrastructure map with clear missing edges.",
+      "editorialReview": {
+        "status": "daily_eligible",
+        "reviewedAt": "2026-06-19",
+        "reviewedBy": "Codex editorial QA",
+        "qualityScore": 4,
+        "funScore": 4,
+        "fairnessScore": 4,
+        "ambiguityRisk": "medium",
+        "dailyEligible": true,
+        "practiceEligible": true,
+        "challengeEligible": true,
+        "expertOnly": false,
+        "reviewNotes": [
+          "Clear basic-infrastructure story.",
+          "Avoid same-day pairing with electricity and sanitation when possible."
+        ],
+        "acceptableCloseDistractorIds": []
+      }
+    },
+    {
+      "id": "basic-sanitation",
+      "providerCode": "SH.STA.BASS.ZS",
+      "title": "People using at least basic sanitation services (% of population)",
+      "shortTitle": "Basic sanitation access",
+      "category": "health",
+      "difficulty": "standard",
+      "year": 2024,
+      "coverage": 156,
+      "path": "/data/v1/indicators/basic-sanitation.json",
+      "reviewStatus": "approved",
+      "shortHook": "A public-health infrastructure map.",
+      "editorialReview": {
+        "status": "daily_eligible",
+        "reviewedAt": "2026-06-19",
+        "reviewedBy": "Codex editorial QA",
+        "qualityScore": 4,
+        "funScore": 4,
+        "fairnessScore": 4,
+        "ambiguityRisk": "medium",
+        "dailyEligible": true,
+        "practiceEligible": true,
+        "challengeEligible": true,
+        "expertOnly": false,
+        "reviewNotes": [
+          "Readable infrastructure map with clear development signal.",
+          "Do not pair closely with clean fuels, water access, or electricity on easier tiers."
+        ],
+        "acceptableCloseDistractorIds": []
+      }
+    },
+    {
+      "id": "tuberculosis-incidence",
+      "providerCode": "SH.TBS.INCD",
+      "title": "Incidence of tuberculosis (per 100,000 people)",
+      "shortTitle": "Tuberculosis incidence",
+      "category": "health",
+      "difficulty": "expert",
+      "year": 2024,
+      "coverage": 168,
+      "path": "/data/v1/indicators/tuberculosis-incidence.json",
+      "reviewStatus": "approved",
+      "shortHook": "A disease-burden map with distinctive regional pockets.",
+      "editorialReview": {
+        "status": "daily_eligible",
+        "reviewedAt": "2026-06-19",
+        "reviewedBy": "Codex editorial QA",
+        "qualityScore": 4,
+        "funScore": 4,
+        "fairnessScore": 4,
+        "ambiguityRisk": "medium",
+        "dailyEligible": true,
+        "practiceEligible": true,
+        "challengeEligible": true,
+        "expertOnly": false,
+        "reviewNotes": [
+          "Distinct disease-burden map that is not just GDP.",
+          "Good expert-style Daily with clear source/year."
+        ],
+        "acceptableCloseDistractorIds": []
+      }
+    },
+    {
+      "id": "internet-users",
+      "providerCode": "IT.NET.USER.ZS",
+      "title": "Individuals using the Internet (% of population)",
+      "shortTitle": "Internet users",
+      "category": "connectivity",
+      "difficulty": "intro",
+      "year": 2024,
+      "coverage": 154,
+      "path": "/data/v1/indicators/internet-users.json",
+      "reviewStatus": "approved",
+      "shortHook": "The online-population map.",
+      "editorialReview": {
+        "status": "daily_eligible",
+        "reviewedAt": "2026-06-19",
+        "reviewedBy": "Codex editorial QA",
+        "qualityScore": 5,
+        "funScore": 4,
+        "fairnessScore": 4,
+        "ambiguityRisk": "medium",
+        "dailyEligible": true,
+        "practiceEligible": true,
+        "challengeEligible": true,
+        "expertOnly": false,
+        "reviewNotes": [
+          "Readable connectivity map with strong regional anchors.",
+          "High development correlation means income-style distractors need restraint."
+        ],
+        "acceptableCloseDistractorIds": []
+      }
+    },
+    {
+      "id": "mobile-subscriptions",
+      "providerCode": "IT.CEL.SETS.P2",
+      "title": "Mobile cellular subscriptions (per 100 people)",
+      "shortTitle": "Mobile subscriptions",
+      "category": "connectivity",
+      "difficulty": "standard",
+      "year": 2024,
+      "coverage": 134,
+      "path": "/data/v1/indicators/mobile-subscriptions.json",
+      "reviewStatus": "approved",
+      "shortHook": "A connectivity map where values can exceed 100.",
+      "editorialReview": {
+        "status": "daily_eligible",
+        "reviewedAt": "2026-06-19",
+        "reviewedBy": "Codex editorial QA",
+        "qualityScore": 4,
+        "funScore": 4,
+        "fairnessScore": 5,
+        "ambiguityRisk": "low",
+        "dailyEligible": true,
+        "practiceEligible": true,
+        "challengeEligible": true,
+        "expertOnly": false,
+        "reviewNotes": [
+          "Interesting because values can exceed 100 subscriptions per 100 people.",
+          "Distinct from internet users and fixed broadband."
+        ],
+        "acceptableCloseDistractorIds": []
+      }
+    },
+    {
+      "id": "fixed-broadband",
+      "providerCode": "IT.NET.BBND.P2",
+      "title": "Fixed broadband subscriptions (per 100 people)",
+      "shortTitle": "Fixed broadband",
+      "category": "connectivity",
+      "difficulty": "expert",
+      "year": 2024,
+      "coverage": 134,
+      "path": "/data/v1/indicators/fixed-broadband.json",
+      "reviewStatus": "approved",
+      "shortHook": "A wired-connectivity map.",
+      "editorialReview": {
+        "status": "expert_only",
+        "reviewedAt": "2026-06-19",
+        "reviewedBy": "Codex editorial QA",
+        "qualityScore": 3,
+        "funScore": 3,
+        "fairnessScore": 3,
+        "ambiguityRisk": "medium",
+        "dailyEligible": false,
+        "practiceEligible": true,
+        "challengeEligible": true,
+        "expertOnly": true,
+        "reviewNotes": [
+          "Useful contrast with mobile-first connectivity.",
+          "Coverage and infrastructure nuance make it expert-only."
+        ],
+        "acceptableCloseDistractorIds": []
+      }
+    },
+    {
+      "id": "secure-internet-servers",
+      "providerCode": "IT.NET.SECR.P6",
+      "title": "Secure Internet servers (per 1 million people)",
+      "shortTitle": "Secure internet servers",
+      "category": "connectivity",
+      "difficulty": "expert",
+      "year": 2024,
+      "coverage": 169,
+      "path": "/data/v1/indicators/secure-internet-servers.json",
+      "reviewStatus": "approved",
+      "shortHook": "A digital-infrastructure outlier map.",
+      "editorialReview": {
+        "status": "expert_only",
+        "reviewedAt": "2026-06-19",
+        "reviewedBy": "Codex editorial QA",
+        "qualityScore": 3,
+        "funScore": 4,
+        "fairnessScore": 3,
+        "ambiguityRisk": "medium",
+        "dailyEligible": false,
+        "practiceEligible": true,
+        "challengeEligible": true,
+        "expertOnly": true,
+        "reviewNotes": [
+          "Good outlier map for hosting and finance hubs.",
+          "Too technical for default Daily."
+        ],
+        "acceptableCloseDistractorIds": []
+      }
+    },
+    {
+      "id": "electricity-access",
+      "providerCode": "EG.ELC.ACCS.ZS",
+      "title": "Access to electricity (% of population)",
+      "shortTitle": "Electricity access",
+      "category": "energy",
+      "difficulty": "intro",
+      "year": 2023,
+      "coverage": 169,
+      "path": "/data/v1/indicators/electricity-access.json",
+      "reviewStatus": "approved",
+      "shortHook": "A foundational infrastructure map.",
+      "editorialReview": {
+        "status": "daily_eligible",
+        "reviewedAt": "2026-06-19",
+        "reviewedBy": "Codex editorial QA",
+        "qualityScore": 5,
+        "funScore": 4,
+        "fairnessScore": 4,
+        "ambiguityRisk": "medium",
+        "dailyEligible": true,
+        "practiceEligible": true,
+        "challengeEligible": true,
+        "expertOnly": false,
+        "reviewNotes": [
+          "Clear infrastructure map with strong geographic anchors.",
+          "Avoid same-day pairing with water access and sanitation."
+        ],
+        "acceptableCloseDistractorIds": []
+      }
+    },
+    {
+      "id": "clean-fuels-access",
+      "providerCode": "EG.CFT.ACCS.ZS",
+      "title": "Access to clean fuels and technologies for cooking (% of population)",
+      "shortTitle": "Clean cooking fuels access",
+      "category": "energy",
+      "difficulty": "standard",
+      "year": 2023,
+      "coverage": 162,
+      "path": "/data/v1/indicators/clean-fuels-access.json",
+      "reviewStatus": "approved",
+      "shortHook": "A household-energy map.",
+      "editorialReview": {
+        "status": "daily_eligible",
+        "reviewedAt": "2026-06-19",
+        "reviewedBy": "Codex editorial QA",
+        "qualityScore": 4,
+        "funScore": 4,
+        "fairnessScore": 4,
+        "ambiguityRisk": "medium",
+        "dailyEligible": true,
+        "practiceEligible": true,
+        "challengeEligible": true,
+        "expertOnly": false,
+        "reviewNotes": [
+          "A household-energy map with a real public-health story.",
+          "High income correlation requires careful distractors."
+        ],
+        "acceptableCloseDistractorIds": []
+      }
+    },
+    {
+      "id": "renewable-energy-consumption",
+      "providerCode": "EG.FEC.RNEW.ZS",
+      "title": "Renewable energy consumption (% of total final energy consumption)",
+      "shortTitle": "Renewable energy consumption",
+      "category": "energy",
+      "difficulty": "expert",
+      "year": 2021,
+      "coverage": 169,
+      "path": "/data/v1/indicators/renewable-energy-consumption.json",
+      "reviewStatus": "approved",
+      "shortHook": "A map where low-income biomass and modern renewables can both matter.",
+      "editorialReview": {
+        "status": "expert_only",
+        "reviewedAt": "2026-06-19",
+        "reviewedBy": "Codex editorial QA",
+        "qualityScore": 3,
+        "funScore": 4,
+        "fairnessScore": 3,
+        "ambiguityRisk": "medium",
+        "dailyEligible": false,
+        "practiceEligible": true,
+        "challengeEligible": true,
+        "expertOnly": true,
+        "reviewNotes": [
+          "Traditional biomass caveat makes the map counterintuitive.",
+          "Expert-only until the reveal copy can carry the nuance."
+        ],
+        "acceptableCloseDistractorIds": []
+      }
+    },
+    {
+      "id": "renewable-electricity",
+      "providerCode": "EG.ELC.RNEW.ZS",
+      "title": "Renewable electricity output (% of total electricity output)",
+      "shortTitle": "Renewable electricity",
+      "category": "energy",
+      "difficulty": "standard",
+      "year": 2021,
+      "coverage": 165,
+      "path": "/data/v1/indicators/renewable-electricity.json",
+      "reviewStatus": "approved",
+      "shortHook": "The hydro-and-grid mix map.",
+      "editorialReview": {
+        "status": "daily_eligible",
+        "reviewedAt": "2026-06-19",
+        "reviewedBy": "Codex editorial QA",
+        "qualityScore": 4,
+        "funScore": 5,
+        "fairnessScore": 4,
+        "ambiguityRisk": "medium",
+        "dailyEligible": true,
+        "practiceEligible": true,
+        "challengeEligible": true,
+        "expertOnly": false,
+        "reviewNotes": [
+          "Good hydro/grid-mix geography puzzle.",
+          "Keep distinct from total renewable energy consumption."
+        ],
+        "acceptableCloseDistractorIds": []
+      }
+    },
+    {
+      "id": "co2-per-capita",
+      "providerCode": "EN.GHG.CO2.PC.CE.AR5",
+      "title": "Carbon dioxide (CO2) emissions excluding LULUCF per capita (t CO2e/capita)",
+      "shortTitle": "CO2 emissions per capita",
+      "category": "environment",
+      "difficulty": "standard",
+      "year": 2024,
+      "coverage": 165,
+      "path": "/data/v1/indicators/co2-per-capita.json",
+      "reviewStatus": "approved",
+      "shortHook": "The per-person carbon map.",
+      "editorialReview": {
+        "status": "daily_eligible",
+        "reviewedAt": "2026-06-19",
+        "reviewedBy": "Codex editorial QA",
+        "qualityScore": 4,
+        "funScore": 5,
+        "fairnessScore": 4,
+        "ambiguityRisk": "medium",
+        "dailyEligible": true,
+        "practiceEligible": true,
+        "challengeEligible": true,
+        "expertOnly": false,
+        "reviewNotes": [
+          "High-interest climate map with resource-economy outliers.",
+          "GHG per capita is acceptable only as a hard-tier close distractor."
+        ],
+        "acceptableCloseDistractorIds": [
+          "ghg-per-capita"
+        ]
+      }
+    },
+    {
+      "id": "ghg-per-capita",
+      "providerCode": "EN.GHG.ALL.PC.CE.AR5",
+      "title": "Total greenhouse gas emissions excluding LULUCF per capita (t CO2e/capita)",
+      "shortTitle": "Greenhouse gas emissions per capita",
+      "category": "environment",
+      "difficulty": "expert",
+      "year": 2024,
+      "coverage": 165,
+      "path": "/data/v1/indicators/ghg-per-capita.json",
+      "reviewStatus": "approved",
+      "shortHook": "A broader climate footprint map.",
+      "editorialReview": {
+        "status": "expert_only",
+        "reviewedAt": "2026-06-19",
+        "reviewedBy": "Codex editorial QA",
+        "qualityScore": 3,
+        "funScore": 4,
+        "fairnessScore": 3,
+        "ambiguityRisk": "high",
+        "dailyEligible": false,
+        "practiceEligible": true,
+        "challengeEligible": true,
+        "expertOnly": true,
+        "reviewNotes": [
+          "Interesting broader climate footprint map.",
+          "Too close to CO2 per capita for Daily without a very deliberate hard-tier setup."
+        ],
+        "acceptableCloseDistractorIds": []
+      }
+    },
+    {
+      "id": "pm25-exposure",
+      "providerCode": "EN.ATM.PM25.MC.M3",
+      "title": "PM2.5 air pollution, mean annual exposure (micrograms per cubic meter)",
+      "shortTitle": "PM2.5 exposure",
+      "category": "environment",
+      "difficulty": "standard",
+      "year": 2020,
+      "coverage": 168,
+      "path": "/data/v1/indicators/pm25-exposure.json",
+      "reviewStatus": "approved",
+      "shortHook": "A dirty-air exposure map.",
+      "editorialReview": {
+        "status": "daily_eligible",
+        "reviewedAt": "2026-06-19",
+        "reviewedBy": "Codex editorial QA",
+        "qualityScore": 5,
+        "funScore": 5,
+        "fairnessScore": 5,
+        "ambiguityRisk": "low",
+        "dailyEligible": true,
+        "practiceEligible": true,
+        "challengeEligible": true,
+        "expertOnly": false,
+        "reviewNotes": [
+          "Strong air-pollution geography with recognizable regional belts.",
+          "One of the cleanest Daily environmental maps."
+        ],
+        "acceptableCloseDistractorIds": []
+      }
+    },
+    {
+      "id": "forest-area",
+      "providerCode": "AG.LND.FRST.ZS",
+      "title": "Forest area (% of land area)",
+      "shortTitle": "Forest area",
+      "category": "environment",
+      "difficulty": "intro",
+      "year": 2023,
+      "coverage": 169,
+      "path": "/data/v1/indicators/forest-area.json",
+      "reviewStatus": "approved",
+      "shortHook": "The forest-cover map.",
+      "editorialReview": {
+        "status": "daily_eligible",
+        "reviewedAt": "2026-06-19",
+        "reviewedBy": "Codex editorial QA",
+        "qualityScore": 5,
+        "funScore": 5,
+        "fairnessScore": 5,
+        "ambiguityRisk": "low",
+        "dailyEligible": true,
+        "practiceEligible": true,
+        "challengeEligible": true,
+        "expertOnly": false,
+        "reviewNotes": [
+          "Excellent map-led geography puzzle.",
+          "Strong contrast among humid tropics, boreal regions, islands, and arid states."
+        ],
+        "acceptableCloseDistractorIds": []
+      }
+    },
+    {
+      "id": "arable-land",
+      "providerCode": "AG.LND.ARBL.ZS",
+      "title": "Arable land (% of land area)",
+      "shortTitle": "Arable land",
+      "category": "land",
+      "difficulty": "standard",
+      "year": 2023,
+      "coverage": 168,
+      "path": "/data/v1/indicators/arable-land.json",
+      "reviewStatus": "approved",
+      "shortHook": "The crop-ready land map.",
+      "editorialReview": {
+        "status": "daily_eligible",
+        "reviewedAt": "2026-06-19",
+        "reviewedBy": "Codex editorial QA",
+        "qualityScore": 4,
+        "funScore": 4,
+        "fairnessScore": 4,
+        "ambiguityRisk": "medium",
+        "dailyEligible": true,
+        "practiceEligible": true,
+        "challengeEligible": true,
+        "expertOnly": false,
+        "reviewNotes": [
+          "Good physical-geography and farming-belt reasoning.",
+          "Works best with probes in deserts, dense deltas, and temperate crop regions."
+        ],
+        "acceptableCloseDistractorIds": []
+      }
+    },
+    {
+      "id": "agricultural-land",
+      "providerCode": "AG.LND.AGRI.ZS",
+      "title": "Agricultural land (% of land area)",
+      "shortTitle": "Agricultural land",
+      "category": "land",
+      "difficulty": "standard",
+      "year": 2023,
+      "coverage": 169,
+      "path": "/data/v1/indicators/agricultural-land.json",
+      "reviewStatus": "approved",
+      "shortHook": "A wider farming-and-pasture map.",
+      "editorialReview": {
+        "status": "practice_eligible",
+        "reviewedAt": "2026-06-19",
+        "reviewedBy": "Codex editorial QA",
+        "qualityScore": 3,
+        "funScore": 3,
+        "fairnessScore": 4,
+        "ambiguityRisk": "medium",
+        "dailyEligible": false,
+        "practiceEligible": true,
+        "challengeEligible": true,
+        "expertOnly": false,
+        "reviewNotes": [
+          "Useful land-use practice map.",
+          "Less Daily-worthy than arable land or forest area because pasture broadens the definition."
+        ],
+        "acceptableCloseDistractorIds": []
+      }
+    },
+    {
+      "id": "cereal-yield",
+      "providerCode": "AG.YLD.CREL.KG",
+      "title": "Cereal yield (kg per hectare)",
+      "shortTitle": "Cereal yield",
+      "category": "agriculture",
+      "difficulty": "expert",
+      "year": 2023,
+      "coverage": 167,
+      "path": "/data/v1/indicators/cereal-yield.json",
+      "reviewStatus": "approved",
+      "shortHook": "A farm-productivity map.",
+      "editorialReview": {
+        "status": "daily_eligible",
+        "reviewedAt": "2026-06-19",
+        "reviewedBy": "Codex editorial QA",
+        "qualityScore": 4,
+        "funScore": 4,
+        "fairnessScore": 5,
+        "ambiguityRisk": "low",
+        "dailyEligible": true,
+        "practiceEligible": true,
+        "challengeEligible": true,
+        "expertOnly": false,
+        "reviewNotes": [
+          "Distinctive agricultural productivity pattern.",
+          "Excellent expert-style Daily when reveal explains crop mix caveat."
+        ],
+        "acceptableCloseDistractorIds": []
+      }
+    },
+    {
+      "id": "agriculture-value-added",
+      "providerCode": "NV.AGR.TOTL.ZS",
+      "title": "Agriculture, forestry, and fishing, value added (% of GDP)",
+      "shortTitle": "Agriculture value added",
+      "category": "economy",
+      "difficulty": "standard",
+      "year": 2024,
+      "coverage": 149,
+      "path": "/data/v1/indicators/agriculture-value-added.json",
+      "reviewStatus": "approved",
+      "shortHook": "An economy-structure map.",
+      "editorialReview": {
+        "status": "daily_eligible",
+        "reviewedAt": "2026-06-19",
+        "reviewedBy": "Codex editorial QA",
+        "qualityScore": 4,
+        "funScore": 4,
+        "fairnessScore": 4,
+        "ambiguityRisk": "medium",
+        "dailyEligible": true,
+        "practiceEligible": true,
+        "challengeEligible": true,
+        "expertOnly": false,
+        "reviewNotes": [
+          "Strong economy-structure map that is not a raw-total GDP quiz.",
+          "Avoid unfair pairing with agricultural employment."
+        ],
+        "acceptableCloseDistractorIds": []
+      }
+    },
+    {
+      "id": "gdp-per-capita",
+      "providerCode": "NY.GDP.PCAP.CD",
+      "title": "GDP per capita (current US$)",
+      "shortTitle": "GDP per capita",
+      "category": "development",
+      "difficulty": "intro",
+      "year": 2024,
+      "coverage": 159,
+      "path": "/data/v1/indicators/gdp-per-capita.json",
+      "reviewStatus": "approved",
+      "shortHook": "The familiar income-per-person map.",
+      "editorialReview": {
+        "status": "daily_eligible",
+        "reviewedAt": "2026-06-19",
+        "reviewedBy": "Codex editorial QA",
+        "qualityScore": 4,
+        "funScore": 4,
+        "fairnessScore": 4,
+        "ambiguityRisk": "medium",
+        "dailyEligible": true,
+        "practiceEligible": true,
+        "challengeEligible": true,
+        "expertOnly": false,
+        "reviewNotes": [
+          "Familiar baseline map and useful anchor for other reveals.",
+          "Do not pair with PPP outside hard tiers."
+        ],
+        "acceptableCloseDistractorIds": [
+          "gdp-per-capita-ppp"
+        ]
+      }
+    },
+    {
+      "id": "gdp-per-capita-ppp",
+      "providerCode": "NY.GDP.PCAP.PP.CD",
+      "title": "GDP per capita, PPP (current international $)",
+      "shortTitle": "GDP per capita, PPP",
+      "category": "development",
+      "difficulty": "standard",
+      "year": 2024,
+      "coverage": 157,
+      "path": "/data/v1/indicators/gdp-per-capita-ppp.json",
+      "reviewStatus": "approved",
+      "shortHook": "Income per person adjusted for local prices.",
+      "editorialReview": {
+        "status": "practice_eligible",
+        "reviewedAt": "2026-06-19",
+        "reviewedBy": "Codex editorial QA",
+        "qualityScore": 3,
+        "funScore": 3,
+        "fairnessScore": 3,
+        "ambiguityRisk": "high",
+        "dailyEligible": false,
+        "practiceEligible": true,
+        "challengeEligible": true,
+        "expertOnly": false,
+        "reviewNotes": [
+          "Too close to nominal GDP per capita for default Daily.",
+          "Good Practice comparison for purchasing-power nuance."
+        ],
+        "acceptableCloseDistractorIds": []
+      }
+    },
+    {
+      "id": "inflation",
+      "providerCode": "FP.CPI.TOTL.ZG",
+      "title": "Inflation, consumer prices (annual %)",
+      "shortTitle": "Inflation",
+      "category": "economy",
+      "difficulty": "expert",
+      "year": 2024,
+      "coverage": 151,
+      "path": "/data/v1/indicators/inflation.json",
+      "reviewStatus": "approved",
+      "shortHook": "A volatile economy map.",
+      "editorialReview": {
+        "status": "expert_only",
+        "reviewedAt": "2026-06-19",
+        "reviewedBy": "Codex editorial QA",
+        "qualityScore": 3,
+        "funScore": 4,
+        "fairnessScore": 3,
+        "ambiguityRisk": "medium",
+        "dailyEligible": false,
+        "practiceEligible": true,
+        "challengeEligible": true,
+        "expertOnly": true,
+        "reviewNotes": [
+          "Volatile macro stress map can be fun but one-year shocks dominate.",
+          "Expert-only until editorial notes are more country-specific."
+        ],
+        "acceptableCloseDistractorIds": []
+      }
+    },
+    {
+      "id": "unemployment",
+      "providerCode": "SL.UEM.TOTL.ZS",
+      "title": "Unemployment, total (% of total labor force) (modeled ILO estimate)",
+      "shortTitle": "Unemployment",
+      "category": "labor",
+      "difficulty": "standard",
+      "year": 2025,
+      "coverage": 163,
+      "path": "/data/v1/indicators/unemployment.json",
+      "reviewStatus": "approved",
+      "shortHook": "A labor-market map that is not just poverty.",
+      "editorialReview": {
+        "status": "daily_eligible",
+        "reviewedAt": "2026-06-19",
+        "reviewedBy": "Codex editorial QA",
+        "qualityScore": 4,
+        "funScore": 4,
+        "fairnessScore": 4,
+        "ambiguityRisk": "low",
+        "dailyEligible": true,
+        "practiceEligible": true,
+        "challengeEligible": true,
+        "expertOnly": false,
+        "reviewNotes": [
+          "Readable labor-market map with non-obvious regional pockets.",
+          "Definition caveat helps distinguish it from poverty or non-work."
+        ],
+        "acceptableCloseDistractorIds": []
+      }
+    },
+    {
+      "id": "labor-force-participation",
+      "providerCode": "SL.TLF.CACT.ZS",
+      "title": "Labor force participation rate, total (% of total population ages 15+) (modeled ILO estimate)",
+      "shortTitle": "Labor force participation",
+      "category": "labor",
+      "difficulty": "standard",
+      "year": 2025,
+      "coverage": 163,
+      "path": "/data/v1/indicators/labor-force-participation.json",
+      "reviewStatus": "approved",
+      "shortHook": "A map of who is counted in the labor force.",
+      "editorialReview": {
+        "status": "practice_eligible",
+        "reviewedAt": "2026-06-19",
+        "reviewedBy": "Codex editorial QA",
+        "qualityScore": 3,
+        "funScore": 3,
+        "fairnessScore": 4,
+        "ambiguityRisk": "medium",
+        "dailyEligible": false,
+        "practiceEligible": true,
+        "challengeEligible": true,
+        "expertOnly": false,
+        "reviewNotes": [
+          "Useful labor concept but less visually memorable than unemployment or agricultural employment.",
+          "Practice-only for now."
+        ],
+        "acceptableCloseDistractorIds": []
+      }
+    },
+    {
+      "id": "female-labor-force",
+      "providerCode": "SL.TLF.CACT.FE.ZS",
+      "title": "Labor force participation rate, female (% of female population ages 15+) (modeled ILO estimate)",
+      "shortTitle": "Female labor force participation",
+      "category": "labor",
+      "difficulty": "expert",
+      "year": 2025,
+      "coverage": 163,
+      "path": "/data/v1/indicators/female-labor-force.json",
+      "reviewStatus": "approved",
+      "shortHook": "A gendered work map.",
+      "editorialReview": {
+        "status": "expert_only",
+        "reviewedAt": "2026-06-19",
+        "reviewedBy": "Codex editorial QA",
+        "qualityScore": 4,
+        "funScore": 4,
+        "fairnessScore": 3,
+        "ambiguityRisk": "medium",
+        "dailyEligible": false,
+        "practiceEligible": true,
+        "challengeEligible": true,
+        "expertOnly": true,
+        "reviewNotes": [
+          "Valuable gendered labor map.",
+          "Needs expert context because social norms and measurement vary."
+        ],
+        "acceptableCloseDistractorIds": []
+      }
+    },
+    {
+      "id": "employment-agriculture",
+      "providerCode": "SL.AGR.EMPL.ZS",
+      "title": "Employment in agriculture (% of total employment) (modeled ILO estimate)",
+      "shortTitle": "Employment in agriculture",
+      "category": "labor",
+      "difficulty": "standard",
+      "year": 2025,
+      "coverage": 163,
+      "path": "/data/v1/indicators/employment-agriculture.json",
+      "reviewStatus": "approved",
+      "shortHook": "The farming-workforce map.",
+      "editorialReview": {
+        "status": "daily_eligible",
+        "reviewedAt": "2026-06-19",
+        "reviewedBy": "Codex editorial QA",
+        "qualityScore": 4,
+        "funScore": 4,
+        "fairnessScore": 4,
+        "ambiguityRisk": "medium",
+        "dailyEligible": true,
+        "practiceEligible": true,
+        "challengeEligible": true,
+        "expertOnly": false,
+        "reviewNotes": [
+          "Strong work-structure map that rewards reasoning about sector mix.",
+          "Do not pair with employment-services on easier tiers."
+        ],
+        "acceptableCloseDistractorIds": []
+      }
+    },
+    {
+      "id": "employment-services",
+      "providerCode": "SL.SRV.EMPL.ZS",
+      "title": "Employment in services (% of total employment) (modeled ILO estimate)",
+      "shortTitle": "Employment in services",
+      "category": "labor",
+      "difficulty": "standard",
+      "year": 2025,
+      "coverage": 163,
+      "path": "/data/v1/indicators/employment-services.json",
+      "reviewStatus": "approved",
+      "shortHook": "The service-economy workforce map.",
+      "editorialReview": {
+        "status": "practice_eligible",
+        "reviewedAt": "2026-06-19",
+        "reviewedBy": "Codex editorial QA",
+        "qualityScore": 3,
+        "funScore": 3,
+        "fairnessScore": 3,
+        "ambiguityRisk": "high",
+        "dailyEligible": false,
+        "practiceEligible": true,
+        "challengeEligible": true,
+        "expertOnly": false,
+        "reviewNotes": [
+          "Nearly inverse of agricultural employment.",
+          "Useful in Practice, not Daily."
+        ],
+        "acceptableCloseDistractorIds": []
+      }
+    },
+    {
+      "id": "vulnerable-employment",
+      "providerCode": "SL.EMP.VULN.ZS",
+      "title": "Vulnerable employment, total (% of total employment) (modeled ILO estimate)",
+      "shortTitle": "Vulnerable employment",
+      "category": "labor",
+      "difficulty": "expert",
+      "year": 2025,
+      "coverage": 163,
+      "path": "/data/v1/indicators/vulnerable-employment.json",
+      "reviewStatus": "approved",
+      "shortHook": "A labor-security map.",
+      "editorialReview": {
+        "status": "retired",
+        "reviewedAt": "2026-06-19",
+        "reviewedBy": "Codex editorial QA",
+        "qualityScore": 2,
+        "funScore": 2,
+        "fairnessScore": 2,
+        "ambiguityRisk": "high",
+        "dailyEligible": false,
+        "practiceEligible": false,
+        "challengeEligible": false,
+        "expertOnly": false,
+        "reviewNotes": [
+          "Near-identical to self-employed workers and hard to explain quickly.",
+          "Retired until the labor catalog is hand-curated."
+        ],
+        "acceptableCloseDistractorIds": []
+      }
+    },
+    {
+      "id": "self-employed",
+      "providerCode": "SL.EMP.SELF.ZS",
+      "title": "Self-employed, total (% of total employment) (modeled ILO estimate)",
+      "shortTitle": "Self-employed workers",
+      "category": "labor",
+      "difficulty": "standard",
+      "year": 2025,
+      "coverage": 163,
+      "path": "/data/v1/indicators/self-employed.json",
+      "reviewStatus": "approved",
+      "shortHook": "A work-structure map.",
+      "editorialReview": {
+        "status": "needs_review",
+        "reviewedAt": "2026-06-19",
+        "reviewedBy": "Codex editorial QA",
+        "qualityScore": 2,
+        "funScore": 2,
+        "fairnessScore": 2,
+        "ambiguityRisk": "high",
+        "dailyEligible": false,
+        "practiceEligible": false,
+        "challengeEligible": false,
+        "expertOnly": false,
+        "reviewNotes": [
+          "Near-identical to vulnerable employment.",
+          "Needs editorial decision before returning to playable catalog."
+        ],
+        "acceptableCloseDistractorIds": []
+      }
+    },
+    {
+      "id": "trade-share",
+      "providerCode": "NE.TRD.GNFS.ZS",
+      "title": "Trade (% of GDP)",
+      "shortTitle": "Trade",
+      "category": "economy",
+      "difficulty": "standard",
+      "year": 2024,
+      "coverage": 141,
+      "path": "/data/v1/indicators/trade-share.json",
+      "reviewStatus": "approved",
+      "shortHook": "The open-economy map.",
+      "editorialReview": {
+        "status": "daily_eligible",
+        "reviewedAt": "2026-06-19",
+        "reviewedBy": "Codex editorial QA",
+        "qualityScore": 4,
+        "funScore": 4,
+        "fairnessScore": 4,
+        "ambiguityRisk": "medium",
+        "dailyEligible": true,
+        "practiceEligible": true,
+        "challengeEligible": true,
+        "expertOnly": false,
+        "reviewNotes": [
+          "Good open-economy map with small-state and port-economy clues.",
+          "Exports/imports only acceptable as hard-tier close distractors."
+        ],
+        "acceptableCloseDistractorIds": [
+          "exports-share",
+          "imports-share"
+        ]
+      }
+    },
+    {
+      "id": "exports-share",
+      "providerCode": "NE.EXP.GNFS.ZS",
+      "title": "Exports of goods and services (% of GDP)",
+      "shortTitle": "Exports",
+      "category": "economy",
+      "difficulty": "standard",
+      "year": 2024,
+      "coverage": 141,
+      "path": "/data/v1/indicators/exports-share.json",
+      "reviewStatus": "approved",
+      "shortHook": "A map of economies selling outward.",
+      "editorialReview": {
+        "status": "expert_only",
+        "reviewedAt": "2026-06-19",
+        "reviewedBy": "Codex editorial QA",
+        "qualityScore": 3,
+        "funScore": 3,
+        "fairnessScore": 3,
+        "ambiguityRisk": "high",
+        "dailyEligible": false,
+        "practiceEligible": true,
+        "challengeEligible": true,
+        "expertOnly": true,
+        "reviewNotes": [
+          "Close to trade share and imports share.",
+          "Playable only as a hard open-economy distinction."
+        ],
+        "acceptableCloseDistractorIds": []
+      }
+    },
+    {
+      "id": "imports-share",
+      "providerCode": "NE.IMP.GNFS.ZS",
+      "title": "Imports of goods and services (% of GDP)",
+      "shortTitle": "Imports",
+      "category": "economy",
+      "difficulty": "standard",
+      "year": 2024,
+      "coverage": 141,
+      "path": "/data/v1/indicators/imports-share.json",
+      "reviewStatus": "approved",
+      "shortHook": "A map of economies buying from abroad.",
+      "editorialReview": {
+        "status": "expert_only",
+        "reviewedAt": "2026-06-19",
+        "reviewedBy": "Codex editorial QA",
+        "qualityScore": 3,
+        "funScore": 3,
+        "fairnessScore": 3,
+        "ambiguityRisk": "high",
+        "dailyEligible": false,
+        "practiceEligible": true,
+        "challengeEligible": true,
+        "expertOnly": true,
+        "reviewNotes": [
+          "Close to trade and exports share.",
+          "Keep as Expert Practice until open-economy distractors are hand-tuned."
+        ],
+        "acceptableCloseDistractorIds": []
+      }
+    },
+    {
+      "id": "fdi-inflows",
+      "providerCode": "BX.KLT.DINV.WD.GD.ZS",
+      "title": "Foreign direct investment, net inflows (% of GDP)",
+      "shortTitle": "Foreign direct investment inflows",
+      "category": "economy",
+      "difficulty": "expert",
+      "year": 2024,
+      "coverage": 156,
+      "path": "/data/v1/indicators/fdi-inflows.json",
+      "reviewStatus": "approved",
+      "shortHook": "A volatile investment-flow map.",
+      "editorialReview": {
+        "status": "expert_only",
+        "reviewedAt": "2026-06-19",
+        "reviewedBy": "Codex editorial QA",
+        "qualityScore": 3,
+        "funScore": 3,
+        "fairnessScore": 3,
+        "ambiguityRisk": "medium",
+        "dailyEligible": false,
+        "practiceEligible": true,
+        "challengeEligible": true,
+        "expertOnly": true,
+        "reviewNotes": [
+          "Volatile but interesting for finance/resource-flow players.",
+          "Too one-year-spiky for default Daily."
+        ],
+        "acceptableCloseDistractorIds": []
+      }
+    },
+    {
+      "id": "current-account",
+      "providerCode": "BN.CAB.XOKA.GD.ZS",
+      "title": "Current account balance (% of GDP)",
+      "shortTitle": "Current account balance",
+      "category": "economy",
+      "difficulty": "expert",
+      "year": 2024,
+      "coverage": 139,
+      "path": "/data/v1/indicators/current-account.json",
+      "reviewStatus": "approved",
+      "shortHook": "A surplus-and-deficit map.",
+      "editorialReview": {
+        "status": "expert_only",
+        "reviewedAt": "2026-06-19",
+        "reviewedBy": "Codex editorial QA",
+        "qualityScore": 3,
+        "funScore": 3,
+        "fairnessScore": 3,
+        "ambiguityRisk": "medium",
+        "dailyEligible": false,
+        "practiceEligible": true,
+        "challengeEligible": true,
+        "expertOnly": true,
+        "reviewNotes": [
+          "Interesting for macro nerds but too abstract for default Daily.",
+          "Keep in Expert Practice only."
+        ],
+        "acceptableCloseDistractorIds": []
+      }
+    },
+    {
+      "id": "tax-revenue",
+      "providerCode": "GC.TAX.TOTL.GD.ZS",
+      "title": "Tax revenue (% of GDP)",
+      "shortTitle": "Tax revenue",
+      "category": "economy",
+      "difficulty": "expert",
+      "year": 2020,
+      "coverage": 120,
+      "path": "/data/v1/indicators/tax-revenue.json",
+      "reviewStatus": "approved",
+      "shortHook": "A fiscal-capacity map.",
+      "editorialReview": {
+        "status": "needs_review",
+        "reviewedAt": "2026-06-19",
+        "reviewedBy": "Codex editorial QA",
+        "qualityScore": 2,
+        "funScore": 2,
+        "fairnessScore": 2,
+        "ambiguityRisk": "medium",
+        "dailyEligible": false,
+        "practiceEligible": false,
+        "challengeEligible": false,
+        "expertOnly": false,
+        "reviewNotes": [
+          "Coverage is exactly at the floor and reference year is older than most catalog items.",
+          "Hold until fiscal-capacity copy and data caveat are reviewed."
+        ],
+        "acceptableCloseDistractorIds": []
+      }
+    }
+  ],
+  "rounds": [
+    {
+      "id": "worldprint-adolescent-fertility",
+      "correctIndicatorId": "adolescent-fertility",
+      "category": "demography",
+      "difficulty": "expert",
+      "editorialStatus": "daily_eligible",
+      "ambiguityRisk": "medium",
+      "eligibility": {
+        "daily": true,
+        "practice": true,
+        "challenge": true,
+        "expertOnly": false
+      }
+    },
+    {
+      "id": "worldprint-adult-mortality-female",
+      "correctIndicatorId": "adult-mortality-female",
+      "category": "health",
+      "difficulty": "expert",
+      "editorialStatus": "expert_only",
+      "ambiguityRisk": "high",
+      "eligibility": {
+        "daily": false,
+        "practice": true,
+        "challenge": true,
+        "expertOnly": true
+      }
+    },
+    {
+      "id": "worldprint-adult-mortality-male",
+      "correctIndicatorId": "adult-mortality-male",
+      "category": "health",
+      "difficulty": "expert",
+      "editorialStatus": "expert_only",
+      "ambiguityRisk": "high",
+      "eligibility": {
+        "daily": false,
+        "practice": true,
+        "challenge": true,
+        "expertOnly": true
+      }
+    },
+    {
+      "id": "worldprint-age-dependency",
+      "correctIndicatorId": "age-dependency",
+      "category": "demography",
+      "difficulty": "standard",
+      "editorialStatus": "daily_eligible",
+      "ambiguityRisk": "medium",
+      "eligibility": {
+        "daily": true,
+        "practice": true,
+        "challenge": true,
+        "expertOnly": false
+      }
+    },
+    {
+      "id": "worldprint-agricultural-land",
+      "correctIndicatorId": "agricultural-land",
+      "category": "land",
+      "difficulty": "standard",
+      "editorialStatus": "practice_eligible",
+      "ambiguityRisk": "medium",
+      "eligibility": {
+        "daily": false,
+        "practice": true,
+        "challenge": true,
+        "expertOnly": false
+      }
+    },
+    {
+      "id": "worldprint-agriculture-value-added",
+      "correctIndicatorId": "agriculture-value-added",
+      "category": "economy",
+      "difficulty": "standard",
+      "editorialStatus": "daily_eligible",
+      "ambiguityRisk": "medium",
+      "eligibility": {
+        "daily": true,
+        "practice": true,
+        "challenge": true,
+        "expertOnly": false
+      }
+    },
+    {
+      "id": "worldprint-arable-land",
+      "correctIndicatorId": "arable-land",
+      "category": "land",
+      "difficulty": "standard",
+      "editorialStatus": "daily_eligible",
+      "ambiguityRisk": "medium",
+      "eligibility": {
+        "daily": true,
+        "practice": true,
+        "challenge": true,
+        "expertOnly": false
+      }
+    },
+    {
+      "id": "worldprint-basic-sanitation",
+      "correctIndicatorId": "basic-sanitation",
+      "category": "health",
+      "difficulty": "standard",
+      "editorialStatus": "daily_eligible",
+      "ambiguityRisk": "medium",
+      "eligibility": {
+        "daily": true,
+        "practice": true,
+        "challenge": true,
+        "expertOnly": false
+      }
+    },
+    {
+      "id": "worldprint-birth-rate",
+      "correctIndicatorId": "birth-rate",
+      "category": "demography",
+      "difficulty": "intro",
+      "editorialStatus": "practice_eligible",
+      "ambiguityRisk": "high",
+      "eligibility": {
+        "daily": false,
+        "practice": true,
+        "challenge": true,
+        "expertOnly": false
+      }
+    },
+    {
+      "id": "worldprint-cereal-yield",
+      "correctIndicatorId": "cereal-yield",
+      "category": "agriculture",
+      "difficulty": "expert",
+      "editorialStatus": "daily_eligible",
+      "ambiguityRisk": "low",
+      "eligibility": {
+        "daily": true,
+        "practice": true,
+        "challenge": true,
+        "expertOnly": false
+      }
+    },
+    {
+      "id": "worldprint-children-share",
+      "correctIndicatorId": "children-share",
+      "category": "demography",
+      "difficulty": "intro",
+      "editorialStatus": "practice_eligible",
+      "ambiguityRisk": "high",
+      "eligibility": {
+        "daily": false,
+        "practice": true,
+        "challenge": true,
+        "expertOnly": false
+      }
+    },
+    {
+      "id": "worldprint-clean-fuels-access",
+      "correctIndicatorId": "clean-fuels-access",
+      "category": "energy",
+      "difficulty": "standard",
+      "editorialStatus": "daily_eligible",
+      "ambiguityRisk": "medium",
+      "eligibility": {
+        "daily": true,
+        "practice": true,
+        "challenge": true,
+        "expertOnly": false
+      }
+    },
+    {
+      "id": "worldprint-co2-per-capita",
+      "correctIndicatorId": "co2-per-capita",
+      "category": "environment",
+      "difficulty": "standard",
+      "editorialStatus": "daily_eligible",
+      "ambiguityRisk": "medium",
+      "eligibility": {
+        "daily": true,
+        "practice": true,
+        "challenge": true,
+        "expertOnly": false
+      }
+    },
+    {
+      "id": "worldprint-current-account",
+      "correctIndicatorId": "current-account",
+      "category": "economy",
+      "difficulty": "expert",
+      "editorialStatus": "expert_only",
+      "ambiguityRisk": "medium",
+      "eligibility": {
+        "daily": false,
+        "practice": true,
+        "challenge": true,
+        "expertOnly": true
+      }
+    },
+    {
+      "id": "worldprint-death-rate",
+      "correctIndicatorId": "death-rate",
+      "category": "demography",
+      "difficulty": "expert",
+      "editorialStatus": "practice_eligible",
+      "ambiguityRisk": "medium",
+      "eligibility": {
+        "daily": false,
+        "practice": true,
+        "challenge": true,
+        "expertOnly": false
+      }
+    },
+    {
+      "id": "worldprint-education-spending",
+      "correctIndicatorId": "education-spending",
+      "category": "education",
+      "difficulty": "expert",
+      "editorialStatus": "expert_only",
+      "ambiguityRisk": "medium",
+      "eligibility": {
+        "daily": false,
+        "practice": true,
+        "challenge": true,
+        "expertOnly": true
+      }
+    },
+    {
+      "id": "worldprint-electricity-access",
+      "correctIndicatorId": "electricity-access",
+      "category": "energy",
+      "difficulty": "intro",
+      "editorialStatus": "daily_eligible",
+      "ambiguityRisk": "medium",
+      "eligibility": {
+        "daily": true,
+        "practice": true,
+        "challenge": true,
+        "expertOnly": false
+      }
+    },
+    {
+      "id": "worldprint-employment-agriculture",
+      "correctIndicatorId": "employment-agriculture",
+      "category": "labor",
+      "difficulty": "standard",
+      "editorialStatus": "daily_eligible",
+      "ambiguityRisk": "medium",
+      "eligibility": {
+        "daily": true,
+        "practice": true,
+        "challenge": true,
+        "expertOnly": false
+      }
+    },
+    {
+      "id": "worldprint-employment-services",
+      "correctIndicatorId": "employment-services",
+      "category": "labor",
+      "difficulty": "standard",
+      "editorialStatus": "practice_eligible",
+      "ambiguityRisk": "high",
+      "eligibility": {
+        "daily": false,
+        "practice": true,
+        "challenge": true,
+        "expertOnly": false
+      }
+    },
+    {
+      "id": "worldprint-exports-share",
+      "correctIndicatorId": "exports-share",
+      "category": "economy",
+      "difficulty": "standard",
+      "editorialStatus": "expert_only",
+      "ambiguityRisk": "high",
+      "eligibility": {
+        "daily": false,
+        "practice": true,
+        "challenge": true,
+        "expertOnly": true
+      }
+    },
+    {
+      "id": "worldprint-fdi-inflows",
+      "correctIndicatorId": "fdi-inflows",
+      "category": "economy",
+      "difficulty": "expert",
+      "editorialStatus": "expert_only",
+      "ambiguityRisk": "medium",
+      "eligibility": {
+        "daily": false,
+        "practice": true,
+        "challenge": true,
+        "expertOnly": true
+      }
+    },
+    {
+      "id": "worldprint-female-labor-force",
+      "correctIndicatorId": "female-labor-force",
+      "category": "labor",
+      "difficulty": "expert",
+      "editorialStatus": "expert_only",
+      "ambiguityRisk": "medium",
+      "eligibility": {
+        "daily": false,
+        "practice": true,
+        "challenge": true,
+        "expertOnly": true
+      }
+    },
+    {
+      "id": "worldprint-fertility-rate",
+      "correctIndicatorId": "fertility-rate",
+      "category": "demography",
+      "difficulty": "standard",
+      "editorialStatus": "daily_eligible",
+      "ambiguityRisk": "medium",
+      "eligibility": {
+        "daily": true,
+        "practice": true,
+        "challenge": true,
+        "expertOnly": false
+      }
+    },
+    {
+      "id": "worldprint-fixed-broadband",
+      "correctIndicatorId": "fixed-broadband",
+      "category": "connectivity",
+      "difficulty": "expert",
+      "editorialStatus": "expert_only",
+      "ambiguityRisk": "medium",
+      "eligibility": {
+        "daily": false,
+        "practice": true,
+        "challenge": true,
+        "expertOnly": true
+      }
+    },
+    {
+      "id": "worldprint-forest-area",
+      "correctIndicatorId": "forest-area",
+      "category": "environment",
+      "difficulty": "intro",
+      "editorialStatus": "daily_eligible",
+      "ambiguityRisk": "low",
+      "eligibility": {
+        "daily": true,
+        "practice": true,
+        "challenge": true,
+        "expertOnly": false
+      }
+    },
+    {
+      "id": "worldprint-gdp-per-capita",
+      "correctIndicatorId": "gdp-per-capita",
+      "category": "development",
+      "difficulty": "intro",
+      "editorialStatus": "daily_eligible",
+      "ambiguityRisk": "medium",
+      "eligibility": {
+        "daily": true,
+        "practice": true,
+        "challenge": true,
+        "expertOnly": false
+      }
+    },
+    {
+      "id": "worldprint-gdp-per-capita-ppp",
+      "correctIndicatorId": "gdp-per-capita-ppp",
+      "category": "development",
+      "difficulty": "standard",
+      "editorialStatus": "practice_eligible",
+      "ambiguityRisk": "high",
+      "eligibility": {
+        "daily": false,
+        "practice": true,
+        "challenge": true,
+        "expertOnly": false
+      }
+    },
+    {
+      "id": "worldprint-ghg-per-capita",
+      "correctIndicatorId": "ghg-per-capita",
+      "category": "environment",
+      "difficulty": "expert",
+      "editorialStatus": "expert_only",
+      "ambiguityRisk": "high",
+      "eligibility": {
+        "daily": false,
+        "practice": true,
+        "challenge": true,
+        "expertOnly": true
+      }
+    },
+    {
+      "id": "worldprint-health-expenditure",
+      "correctIndicatorId": "health-expenditure",
+      "category": "health",
+      "difficulty": "standard",
+      "editorialStatus": "daily_eligible",
+      "ambiguityRisk": "low",
+      "eligibility": {
+        "daily": true,
+        "practice": true,
+        "challenge": true,
+        "expertOnly": false
+      }
+    },
+    {
+      "id": "worldprint-imports-share",
+      "correctIndicatorId": "imports-share",
+      "category": "economy",
+      "difficulty": "standard",
+      "editorialStatus": "expert_only",
+      "ambiguityRisk": "high",
+      "eligibility": {
+        "daily": false,
+        "practice": true,
+        "challenge": true,
+        "expertOnly": true
+      }
+    },
+    {
+      "id": "worldprint-infant-mortality",
+      "correctIndicatorId": "infant-mortality",
+      "category": "health",
+      "difficulty": "standard",
+      "editorialStatus": "practice_eligible",
+      "ambiguityRisk": "high",
+      "eligibility": {
+        "daily": false,
+        "practice": true,
+        "challenge": true,
+        "expertOnly": false
+      }
+    },
+    {
+      "id": "worldprint-inflation",
+      "correctIndicatorId": "inflation",
+      "category": "economy",
+      "difficulty": "expert",
+      "editorialStatus": "expert_only",
+      "ambiguityRisk": "medium",
+      "eligibility": {
+        "daily": false,
+        "practice": true,
+        "challenge": true,
+        "expertOnly": true
+      }
+    },
+    {
+      "id": "worldprint-internet-users",
+      "correctIndicatorId": "internet-users",
+      "category": "connectivity",
+      "difficulty": "intro",
+      "editorialStatus": "daily_eligible",
+      "ambiguityRisk": "medium",
+      "eligibility": {
+        "daily": true,
+        "practice": true,
+        "challenge": true,
+        "expertOnly": false
+      }
+    },
+    {
+      "id": "worldprint-labor-force-participation",
+      "correctIndicatorId": "labor-force-participation",
+      "category": "labor",
+      "difficulty": "standard",
+      "editorialStatus": "practice_eligible",
+      "ambiguityRisk": "medium",
+      "eligibility": {
+        "daily": false,
+        "practice": true,
+        "challenge": true,
+        "expertOnly": false
+      }
+    },
+    {
+      "id": "worldprint-life-expectancy",
+      "correctIndicatorId": "life-expectancy",
+      "category": "health",
+      "difficulty": "intro",
+      "editorialStatus": "daily_eligible",
+      "ambiguityRisk": "medium",
+      "eligibility": {
+        "daily": true,
+        "practice": true,
+        "challenge": true,
+        "expertOnly": false
+      }
+    },
+    {
+      "id": "worldprint-mobile-subscriptions",
+      "correctIndicatorId": "mobile-subscriptions",
+      "category": "connectivity",
+      "difficulty": "standard",
+      "editorialStatus": "daily_eligible",
+      "ambiguityRisk": "low",
+      "eligibility": {
+        "daily": true,
+        "practice": true,
+        "challenge": true,
+        "expertOnly": false
+      }
+    },
+    {
+      "id": "worldprint-older-adults-share",
+      "correctIndicatorId": "older-adults-share",
+      "category": "demography",
+      "difficulty": "intro",
+      "editorialStatus": "daily_eligible",
+      "ambiguityRisk": "medium",
+      "eligibility": {
+        "daily": true,
+        "practice": true,
+        "challenge": true,
+        "expertOnly": false
+      }
+    },
+    {
+      "id": "worldprint-out-of-pocket-health",
+      "correctIndicatorId": "out-of-pocket-health",
+      "category": "health",
+      "difficulty": "expert",
+      "editorialStatus": "expert_only",
+      "ambiguityRisk": "medium",
+      "eligibility": {
+        "daily": false,
+        "practice": true,
+        "challenge": true,
+        "expertOnly": true
+      }
+    },
+    {
+      "id": "worldprint-pm25-exposure",
+      "correctIndicatorId": "pm25-exposure",
+      "category": "environment",
+      "difficulty": "standard",
+      "editorialStatus": "daily_eligible",
+      "ambiguityRisk": "low",
+      "eligibility": {
+        "daily": true,
+        "practice": true,
+        "challenge": true,
+        "expertOnly": false
+      }
+    },
+    {
+      "id": "worldprint-population-density",
+      "correctIndicatorId": "population-density",
+      "category": "settlement",
+      "difficulty": "standard",
+      "editorialStatus": "daily_eligible",
+      "ambiguityRisk": "low",
+      "eligibility": {
+        "daily": true,
+        "practice": true,
+        "challenge": true,
+        "expertOnly": false
+      }
+    },
+    {
+      "id": "worldprint-renewable-electricity",
+      "correctIndicatorId": "renewable-electricity",
+      "category": "energy",
+      "difficulty": "standard",
+      "editorialStatus": "daily_eligible",
+      "ambiguityRisk": "medium",
+      "eligibility": {
+        "daily": true,
+        "practice": true,
+        "challenge": true,
+        "expertOnly": false
+      }
+    },
+    {
+      "id": "worldprint-renewable-energy-consumption",
+      "correctIndicatorId": "renewable-energy-consumption",
+      "category": "energy",
+      "difficulty": "expert",
+      "editorialStatus": "expert_only",
+      "ambiguityRisk": "medium",
+      "eligibility": {
+        "daily": false,
+        "practice": true,
+        "challenge": true,
+        "expertOnly": true
+      }
+    },
+    {
+      "id": "worldprint-safe-drinking-water",
+      "correctIndicatorId": "safe-drinking-water",
+      "category": "health",
+      "difficulty": "intro",
+      "editorialStatus": "daily_eligible",
+      "ambiguityRisk": "medium",
+      "eligibility": {
+        "daily": true,
+        "practice": true,
+        "challenge": true,
+        "expertOnly": false
+      }
+    },
+    {
+      "id": "worldprint-secondary-enrollment",
+      "correctIndicatorId": "secondary-enrollment",
+      "category": "education",
+      "difficulty": "standard",
+      "editorialStatus": "daily_eligible",
+      "ambiguityRisk": "low",
+      "eligibility": {
+        "daily": true,
+        "practice": true,
+        "challenge": true,
+        "expertOnly": false
+      }
+    },
+    {
+      "id": "worldprint-secure-internet-servers",
+      "correctIndicatorId": "secure-internet-servers",
+      "category": "connectivity",
+      "difficulty": "expert",
+      "editorialStatus": "expert_only",
+      "ambiguityRisk": "medium",
+      "eligibility": {
+        "daily": false,
+        "practice": true,
+        "challenge": true,
+        "expertOnly": true
+      }
+    },
+    {
+      "id": "worldprint-tertiary-enrollment",
+      "correctIndicatorId": "tertiary-enrollment",
+      "category": "education",
+      "difficulty": "expert",
+      "editorialStatus": "expert_only",
+      "ambiguityRisk": "medium",
+      "eligibility": {
+        "daily": false,
+        "practice": true,
+        "challenge": true,
+        "expertOnly": true
+      }
+    },
+    {
+      "id": "worldprint-trade-share",
+      "correctIndicatorId": "trade-share",
+      "category": "economy",
+      "difficulty": "standard",
+      "editorialStatus": "daily_eligible",
+      "ambiguityRisk": "medium",
+      "eligibility": {
+        "daily": true,
+        "practice": true,
+        "challenge": true,
+        "expertOnly": false
+      }
+    },
+    {
+      "id": "worldprint-tuberculosis-incidence",
+      "correctIndicatorId": "tuberculosis-incidence",
+      "category": "health",
+      "difficulty": "expert",
+      "editorialStatus": "daily_eligible",
+      "ambiguityRisk": "medium",
+      "eligibility": {
+        "daily": true,
+        "practice": true,
+        "challenge": true,
+        "expertOnly": false
+      }
+    },
+    {
+      "id": "worldprint-under-five-mortality",
+      "correctIndicatorId": "under-five-mortality",
+      "category": "health",
+      "difficulty": "standard",
+      "editorialStatus": "daily_eligible",
+      "ambiguityRisk": "medium",
+      "eligibility": {
+        "daily": true,
+        "practice": true,
+        "challenge": true,
+        "expertOnly": false
+      }
+    },
+    {
+      "id": "worldprint-unemployment",
+      "correctIndicatorId": "unemployment",
+      "category": "labor",
+      "difficulty": "standard",
+      "editorialStatus": "daily_eligible",
+      "ambiguityRisk": "low",
+      "eligibility": {
+        "daily": true,
+        "practice": true,
+        "challenge": true,
+        "expertOnly": false
+      }
+    },
+    {
+      "id": "worldprint-urban-population",
+      "correctIndicatorId": "urban-population",
+      "category": "settlement",
+      "difficulty": "intro",
+      "editorialStatus": "daily_eligible",
+      "ambiguityRisk": "medium",
+      "eligibility": {
+        "daily": true,
+        "practice": true,
+        "challenge": true,
+        "expertOnly": false
+      }
+    }
+  ],
+  "dailies": {
+    "path": "/data/v1/dailies/index.json",
+    "start": "2026-05-20",
+    "end": "2026-09-17",
+    "count": 121,
+    "generatorVersion": "daily-manifest-v1"
+  }
+}

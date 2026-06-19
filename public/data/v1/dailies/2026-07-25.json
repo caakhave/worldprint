@@ -1,0 +1,36 @@
+{
+  "schemaVersion": "1.1.0",
+  "game": "worldprint",
+  "date": "2026-07-25",
+  "contentVersion": "2026.06.19-ed1",
+  "roundIds": [
+    "worldprint-tuberculosis-incidence",
+    "worldprint-age-dependency",
+    "worldprint-clean-fuels-access",
+    "worldprint-safe-drinking-water",
+    "worldprint-urban-population"
+  ],
+  "indicatorIds": [
+    "tuberculosis-incidence",
+    "age-dependency",
+    "clean-fuels-access",
+    "safe-drinking-water",
+    "urban-population"
+  ],
+  "categoryMix": {
+    "health": 2,
+    "demography": 1,
+    "energy": 1,
+    "settlement": 1
+  },
+  "mapDifficultyMix": {
+    "expert": 1,
+    "standard": 2,
+    "intro": 2
+  },
+  "generatedAt": "2026-06-19T17:09:23.339365+00:00",
+  "generatorVersion": "daily-manifest-v1",
+  "varietyNotes": [
+    "Selected with category, difficulty, and same-day correlation safeguards."
+  ]
+}

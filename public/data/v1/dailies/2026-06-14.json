@@ -1,0 +1,35 @@
+{
+  "schemaVersion": "1.1.0",
+  "game": "worldprint",
+  "date": "2026-06-14",
+  "contentVersion": "2026.06.19-ed1",
+  "roundIds": [
+    "worldprint-tuberculosis-incidence",
+    "worldprint-population-density",
+    "worldprint-employment-agriculture",
+    "worldprint-health-expenditure",
+    "worldprint-adolescent-fertility"
+  ],
+  "indicatorIds": [
+    "tuberculosis-incidence",
+    "population-density",
+    "employment-agriculture",
+    "health-expenditure",
+    "adolescent-fertility"
+  ],
+  "categoryMix": {
+    "health": 2,
+    "settlement": 1,
+    "labor": 1,
+    "demography": 1
+  },
+  "mapDifficultyMix": {
+    "expert": 2,
+    "standard": 3
+  },
+  "generatedAt": "2026-06-19T17:09:23.332163+00:00",
+  "generatorVersion": "daily-manifest-v1",
+  "varietyNotes": [
+    "Selected with category, difficulty, and same-day correlation safeguards."
+  ]
+}

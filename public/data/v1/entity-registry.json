@@ -1,0 +1,2646 @@
+{
+  "schemaVersion": "1.1.0",
+  "contentVersion": "2026.06.19-ed1",
+  "entities": [
+    {
+      "mapId": "FJI",
+      "iso3": "FJI",
+      "name": "Fiji",
+      "admin": "Fiji",
+      "naturalEarth": {
+        "adm0A3": "FJI",
+        "isoA3": "FJI",
+        "wbA3": "FJI",
+        "sovereignt": "Fiji",
+        "type": "Sovereign country"
+      },
+      "reviewStatus": "reviewed",
+      "reviewReason": "matched to World Bank country code"
+    },
+    {
+      "mapId": "TZA",
+      "iso3": "TZA",
+      "name": "Tanzania",
+      "admin": "United Republic of Tanzania",
+      "naturalEarth": {
+        "adm0A3": "TZA",
+        "isoA3": "TZA",
+        "wbA3": "TZA",
+        "sovereignt": "United Republic of Tanzania",
+        "type": "Sovereign country"
+      },
+      "reviewStatus": "reviewed",
+      "reviewReason": "matched to World Bank country code"
+    },
+    {
+      "mapId": "SAH",
+      "iso3": null,
+      "name": "Western Sahara",
+      "admin": "Western Sahara",
+      "naturalEarth": {
+        "adm0A3": "SAH",
+        "isoA3": "ESH",
+        "wbA3": "-99",
+        "sovereignt": "Western Sahara",
+        "type": "Indeterminate"
+      },
+      "reviewStatus": "reviewed",
+      "reviewReason": "Natural Earth entity has no non-aggregate World Bank match in this milestone"
+    },
+    {
+      "mapId": "CAN",
+      "iso3": "CAN",
+      "name": "Canada",
+      "admin": "Canada",
+      "naturalEarth": {
+        "adm0A3": "CAN",
+        "isoA3": "CAN",
+        "wbA3": "CAN",
+        "sovereignt": "Canada",
+        "type": "Sovereign country"
+      },
+      "reviewStatus": "reviewed",
+      "reviewReason": "matched to World Bank country code"
+    },
+    {
+      "mapId": "USA",
+      "iso3": "USA",
+      "name": "United States",
+      "admin": "United States of America",
+      "naturalEarth": {
+        "adm0A3": "USA",
+        "isoA3": "USA",
+        "wbA3": "USA",
+        "sovereignt": "United States of America",
+        "type": "Country"
+      },
+      "reviewStatus": "reviewed",
+      "reviewReason": "matched to World Bank country code"
+    },
+    {
+      "mapId": "KAZ",
+      "iso3": "KAZ",
+      "name": "Kazakhstan",
+      "admin": "Kazakhstan",
+      "naturalEarth": {
+        "adm0A3": "KAZ",
+        "isoA3": "KAZ",
+        "wbA3": "KAZ",
+        "sovereignt": "Kazakhstan",
+        "type": "Sovereignty"
+      },
+      "reviewStatus": "reviewed",
+      "reviewReason": "matched to World Bank country code"
+    },
+    {
+      "mapId": "UZB",
+      "iso3": "UZB",
+      "name": "Uzbekistan",
+      "admin": "Uzbekistan",
+      "naturalEarth": {
+        "adm0A3": "UZB",
+        "isoA3": "UZB",
+        "wbA3": "UZB",
+        "sovereignt": "Uzbekistan",
+        "type": "Sovereign country"
+      },
+      "reviewStatus": "reviewed",
+      "reviewReason": "matched to World Bank country code"
+    },
+    {
+      "mapId": "PNG",
+      "iso3": "PNG",
+      "name": "Papua New Guinea",
+      "admin": "Papua New Guinea",
+      "naturalEarth": {
+        "adm0A3": "PNG",
+        "isoA3": "PNG",
+        "wbA3": "PNG",
+        "sovereignt": "Papua New Guinea",
+        "type": "Sovereign country"
+      },
+      "reviewStatus": "reviewed",
+      "reviewReason": "matched to World Bank country code"
+    },
+    {
+      "mapId": "IDN",
+      "iso3": "IDN",
+      "name": "Indonesia",
+      "admin": "Indonesia",
+      "naturalEarth": {
+        "adm0A3": "IDN",
+        "isoA3": "IDN",
+        "wbA3": "IDN",
+        "sovereignt": "Indonesia",
+        "type": "Sovereign country"
+      },
+      "reviewStatus": "reviewed",
+      "reviewReason": "matched to World Bank country code"
+    },
+    {
+      "mapId": "ARG",
+      "iso3": "ARG",
+      "name": "Argentina",
+      "admin": "Argentina",
+      "naturalEarth": {
+        "adm0A3": "ARG",
+        "isoA3": "ARG",
+        "wbA3": "ARG",
+        "sovereignt": "Argentina",
+        "type": "Sovereign country"
+      },
+      "reviewStatus": "reviewed",
+      "reviewReason": "matched to World Bank country code"
+    },
+    {
+      "mapId": "CHL",
+      "iso3": "CHL",
+      "name": "Chile",
+      "admin": "Chile",
+      "naturalEarth": {
+        "adm0A3": "CHL",
+        "isoA3": "CHL",
+        "wbA3": "CHL",
+        "sovereignt": "Chile",
+        "type": "Sovereign country"
+      },
+      "reviewStatus": "reviewed",
+      "reviewReason": "matched to World Bank country code"
+    },
+    {
+      "mapId": "COD",
+      "iso3": "COD",
+      "name": "Democratic Republic of the Congo",
+      "admin": "Democratic Republic of the Congo",
+      "naturalEarth": {
+        "adm0A3": "COD",
+        "isoA3": "COD",
+        "wbA3": "ZAR",
+        "sovereignt": "Democratic Republic of the Congo",
+        "type": "Sovereign country"
+      },
+      "reviewStatus": "reviewed",
+      "reviewReason": "matched to World Bank country code"
+    },
+    {
+      "mapId": "SOM",
+      "iso3": "SOM",
+      "name": "Somalia",
+      "admin": "Somalia",
+      "naturalEarth": {
+        "adm0A3": "SOM",
+        "isoA3": "SOM",
+        "wbA3": "SOM",
+        "sovereignt": "Somalia",
+        "type": "Sovereign country"
+      },
+      "reviewStatus": "reviewed",
+      "reviewReason": "matched to World Bank country code"
+    },
+    {
+      "mapId": "KEN",
+      "iso3": "KEN",
+      "name": "Kenya",
+      "admin": "Kenya",
+      "naturalEarth": {
+        "adm0A3": "KEN",
+        "isoA3": "KEN",
+        "wbA3": "KEN",
+        "sovereignt": "Kenya",
+        "type": "Sovereign country"
+      },
+      "reviewStatus": "reviewed",
+      "reviewReason": "matched to World Bank country code"
+    },
+    {
+      "mapId": "SDN",
+      "iso3": "SDN",
+      "name": "Sudan",
+      "admin": "Sudan",
+      "naturalEarth": {
+        "adm0A3": "SDN",
+        "isoA3": "SDN",
+        "wbA3": "SDN",
+        "sovereignt": "Sudan",
+        "type": "Sovereign country"
+      },
+      "reviewStatus": "reviewed",
+      "reviewReason": "matched to World Bank country code"
+    },
+    {
+      "mapId": "TCD",
+      "iso3": "TCD",
+      "name": "Chad",
+      "admin": "Chad",
+      "naturalEarth": {
+        "adm0A3": "TCD",
+        "isoA3": "TCD",
+        "wbA3": "TCD",
+        "sovereignt": "Chad",
+        "type": "Sovereign country"
+      },
+      "reviewStatus": "reviewed",
+      "reviewReason": "matched to World Bank country code"
+    },
+    {
+      "mapId": "HTI",
+      "iso3": "HTI",
+      "name": "Haiti",
+      "admin": "Haiti",
+      "naturalEarth": {
+        "adm0A3": "HTI",
+        "isoA3": "HTI",
+        "wbA3": "HTI",
+        "sovereignt": "Haiti",
+        "type": "Sovereign country"
+      },
+      "reviewStatus": "reviewed",
+      "reviewReason": "matched to World Bank country code"
+    },
+    {
+      "mapId": "DOM",
+      "iso3": "DOM",
+      "name": "Dominican Republic",
+      "admin": "Dominican Republic",
+      "naturalEarth": {
+        "adm0A3": "DOM",
+        "isoA3": "DOM",
+        "wbA3": "DOM",
+        "sovereignt": "Dominican Republic",
+        "type": "Sovereign country"
+      },
+      "reviewStatus": "reviewed",
+      "reviewReason": "matched to World Bank country code"
+    },
+    {
+      "mapId": "RUS",
+      "iso3": "RUS",
+      "name": "Russian Federation",
+      "admin": "Russia",
+      "naturalEarth": {
+        "adm0A3": "RUS",
+        "isoA3": "RUS",
+        "wbA3": "RUS",
+        "sovereignt": "Russia",
+        "type": "Sovereign country"
+      },
+      "reviewStatus": "reviewed",
+      "reviewReason": "matched to World Bank country code"
+    },
+    {
+      "mapId": "BHS",
+      "iso3": "BHS",
+      "name": "Bahamas",
+      "admin": "The Bahamas",
+      "naturalEarth": {
+        "adm0A3": "BHS",
+        "isoA3": "BHS",
+        "wbA3": "BHS",
+        "sovereignt": "The Bahamas",
+        "type": "Sovereign country"
+      },
+      "reviewStatus": "reviewed",
+      "reviewReason": "matched to World Bank country code"
+    },
+    {
+      "mapId": "FLK",
+      "iso3": null,
+      "name": "Falkland Islands / Malvinas",
+      "admin": "Falkland Islands",
+      "naturalEarth": {
+        "adm0A3": "FLK",
+        "isoA3": "FLK",
+        "wbA3": "-99",
+        "sovereignt": "United Kingdom",
+        "type": "Disputed"
+      },
+      "reviewStatus": "reviewed",
+      "reviewReason": "Natural Earth entity has no non-aggregate World Bank match in this milestone"
+    },
+    {
+      "mapId": "NOR",
+      "iso3": "NOR",
+      "name": "Norway",
+      "admin": "Norway",
+      "naturalEarth": {
+        "adm0A3": "NOR",
+        "isoA3": "-99",
+        "wbA3": "-99",
+        "sovereignt": "Norway",
+        "type": "Sovereign country"
+      },
+      "reviewStatus": "reviewed",
+      "reviewReason": "matched to World Bank country code"
+    },
+    {
+      "mapId": "GRL",
+      "iso3": "GRL",
+      "name": "Greenland",
+      "admin": "Greenland",
+      "naturalEarth": {
+        "adm0A3": "GRL",
+        "isoA3": "GRL",
+        "wbA3": "GRL",
+        "sovereignt": "Denmark",
+        "type": "Country"
+      },
+      "reviewStatus": "reviewed",
+      "reviewReason": "matched to World Bank country code"
+    },
+    {
+      "mapId": "ATF",
+      "iso3": null,
+      "name": "French Southern and Antarctic Lands",
+      "admin": "French Southern and Antarctic Lands",
+      "naturalEarth": {
+        "adm0A3": "ATF",
+        "isoA3": "ATF",
+        "wbA3": "-99",
+        "sovereignt": "France",
+        "type": "Dependency"
+      },
+      "reviewStatus": "reviewed",
+      "reviewReason": "Natural Earth entity has no non-aggregate World Bank match in this milestone"
+    },
+    {
+      "mapId": "TLS",
+      "iso3": "TLS",
+      "name": "Timor-Leste",
+      "admin": "East Timor",
+      "naturalEarth": {
+        "adm0A3": "TLS",
+        "isoA3": "TLS",
+        "wbA3": "TMP",
+        "sovereignt": "East Timor",
+        "type": "Sovereign country"
+      },
+      "reviewStatus": "reviewed",
+      "reviewReason": "matched to World Bank country code"
+    },
+    {
+      "mapId": "ZAF",
+      "iso3": "ZAF",
+      "name": "South Africa",
+      "admin": "South Africa",
+      "naturalEarth": {
+        "adm0A3": "ZAF",
+        "isoA3": "ZAF",
+        "wbA3": "ZAF",
+        "sovereignt": "South Africa",
+        "type": "Sovereign country"
+      },
+      "reviewStatus": "reviewed",
+      "reviewReason": "matched to World Bank country code"
+    },
+    {
+      "mapId": "LSO",
+      "iso3": "LSO",
+      "name": "Lesotho",
+      "admin": "Lesotho",
+      "naturalEarth": {
+        "adm0A3": "LSO",
+        "isoA3": "LSO",
+        "wbA3": "LSO",
+        "sovereignt": "Lesotho",
+        "type": "Sovereign country"
+      },
+      "reviewStatus": "reviewed",
+      "reviewReason": "matched to World Bank country code"
+    },
+    {
+      "mapId": "MEX",
+      "iso3": "MEX",
+      "name": "Mexico",
+      "admin": "Mexico",
+      "naturalEarth": {
+        "adm0A3": "MEX",
+        "isoA3": "MEX",
+        "wbA3": "MEX",
+        "sovereignt": "Mexico",
+        "type": "Sovereign country"
+      },
+      "reviewStatus": "reviewed",
+      "reviewReason": "matched to World Bank country code"
+    },
+    {
+      "mapId": "URY",
+      "iso3": "URY",
+      "name": "Uruguay",
+      "admin": "Uruguay",
+      "naturalEarth": {
+        "adm0A3": "URY",
+        "isoA3": "URY",
+        "wbA3": "URY",
+        "sovereignt": "Uruguay",
+        "type": "Sovereign country"
+      },
+      "reviewStatus": "reviewed",
+      "reviewReason": "matched to World Bank country code"
+    },
+    {
+      "mapId": "BRA",
+      "iso3": "BRA",
+      "name": "Brazil",
+      "admin": "Brazil",
+      "naturalEarth": {
+        "adm0A3": "BRA",
+        "isoA3": "BRA",
+        "wbA3": "BRA",
+        "sovereignt": "Brazil",
+        "type": "Sovereign country"
+      },
+      "reviewStatus": "reviewed",
+      "reviewReason": "matched to World Bank country code"
+    },
+    {
+      "mapId": "BOL",
+      "iso3": "BOL",
+      "name": "Bolivia",
+      "admin": "Bolivia",
+      "naturalEarth": {
+        "adm0A3": "BOL",
+        "isoA3": "BOL",
+        "wbA3": "BOL",
+        "sovereignt": "Bolivia",
+        "type": "Sovereign country"
+      },
+      "reviewStatus": "reviewed",
+      "reviewReason": "matched to World Bank country code"
+    },
+    {
+      "mapId": "PER",
+      "iso3": "PER",
+      "name": "Peru",
+      "admin": "Peru",
+      "naturalEarth": {
+        "adm0A3": "PER",
+        "isoA3": "PER",
+        "wbA3": "PER",
+        "sovereignt": "Peru",
+        "type": "Sovereign country"
+      },
+      "reviewStatus": "reviewed",
+      "reviewReason": "matched to World Bank country code"
+    },
+    {
+      "mapId": "COL",
+      "iso3": "COL",
+      "name": "Colombia",
+      "admin": "Colombia",
+      "naturalEarth": {
+        "adm0A3": "COL",
+        "isoA3": "COL",
+        "wbA3": "COL",
+        "sovereignt": "Colombia",
+        "type": "Sovereign country"
+      },
+      "reviewStatus": "reviewed",
+      "reviewReason": "matched to World Bank country code"
+    },
+    {
+      "mapId": "PAN",
+      "iso3": "PAN",
+      "name": "Panama",
+      "admin": "Panama",
+      "naturalEarth": {
+        "adm0A3": "PAN",
+        "isoA3": "PAN",
+        "wbA3": "PAN",
+        "sovereignt": "Panama",
+        "type": "Sovereign country"
+      },
+      "reviewStatus": "reviewed",
+      "reviewReason": "matched to World Bank country code"
+    },
+    {
+      "mapId": "CRI",
+      "iso3": "CRI",
+      "name": "Costa Rica",
+      "admin": "Costa Rica",
+      "naturalEarth": {
+        "adm0A3": "CRI",
+        "isoA3": "CRI",
+        "wbA3": "CRI",
+        "sovereignt": "Costa Rica",
+        "type": "Sovereign country"
+      },
+      "reviewStatus": "reviewed",
+      "reviewReason": "matched to World Bank country code"
+    },
+    {
+      "mapId": "NIC",
+      "iso3": "NIC",
+      "name": "Nicaragua",
+      "admin": "Nicaragua",
+      "naturalEarth": {
+        "adm0A3": "NIC",
+        "isoA3": "NIC",
+        "wbA3": "NIC",
+        "sovereignt": "Nicaragua",
+        "type": "Sovereign country"
+      },
+      "reviewStatus": "reviewed",
+      "reviewReason": "matched to World Bank country code"
+    },
+    {
+      "mapId": "HND",
+      "iso3": "HND",
+      "name": "Honduras",
+      "admin": "Honduras",
+      "naturalEarth": {
+        "adm0A3": "HND",
+        "isoA3": "HND",
+        "wbA3": "HND",
+        "sovereignt": "Honduras",
+        "type": "Sovereign country"
+      },
+      "reviewStatus": "reviewed",
+      "reviewReason": "matched to World Bank country code"
+    },
+    {
+      "mapId": "SLV",
+      "iso3": "SLV",
+      "name": "El Salvador",
+      "admin": "El Salvador",
+      "naturalEarth": {
+        "adm0A3": "SLV",
+        "isoA3": "SLV",
+        "wbA3": "SLV",
+        "sovereignt": "El Salvador",
+        "type": "Sovereign country"
+      },
+      "reviewStatus": "reviewed",
+      "reviewReason": "matched to World Bank country code"
+    },
+    {
+      "mapId": "GTM",
+      "iso3": "GTM",
+      "name": "Guatemala",
+      "admin": "Guatemala",
+      "naturalEarth": {
+        "adm0A3": "GTM",
+        "isoA3": "GTM",
+        "wbA3": "GTM",
+        "sovereignt": "Guatemala",
+        "type": "Sovereign country"
+      },
+      "reviewStatus": "reviewed",
+      "reviewReason": "matched to World Bank country code"
+    },
+    {
+      "mapId": "BLZ",
+      "iso3": "BLZ",
+      "name": "Belize",
+      "admin": "Belize",
+      "naturalEarth": {
+        "adm0A3": "BLZ",
+        "isoA3": "BLZ",
+        "wbA3": "BLZ",
+        "sovereignt": "Belize",
+        "type": "Sovereign country"
+      },
+      "reviewStatus": "reviewed",
+      "reviewReason": "matched to World Bank country code"
+    },
+    {
+      "mapId": "VEN",
+      "iso3": "VEN",
+      "name": "Venezuela",
+      "admin": "Venezuela",
+      "naturalEarth": {
+        "adm0A3": "VEN",
+        "isoA3": "VEN",
+        "wbA3": "VEN",
+        "sovereignt": "Venezuela",
+        "type": "Sovereign country"
+      },
+      "reviewStatus": "reviewed",
+      "reviewReason": "matched to World Bank country code"
+    },
+    {
+      "mapId": "GUY",
+      "iso3": "GUY",
+      "name": "Guyana",
+      "admin": "Guyana",
+      "naturalEarth": {
+        "adm0A3": "GUY",
+        "isoA3": "GUY",
+        "wbA3": "GUY",
+        "sovereignt": "Guyana",
+        "type": "Sovereign country"
+      },
+      "reviewStatus": "reviewed",
+      "reviewReason": "matched to World Bank country code"
+    },
+    {
+      "mapId": "SUR",
+      "iso3": "SUR",
+      "name": "Suriname",
+      "admin": "Suriname",
+      "naturalEarth": {
+        "adm0A3": "SUR",
+        "isoA3": "SUR",
+        "wbA3": "SUR",
+        "sovereignt": "Suriname",
+        "type": "Sovereign country"
+      },
+      "reviewStatus": "reviewed",
+      "reviewReason": "matched to World Bank country code"
+    },
+    {
+      "mapId": "FRA",
+      "iso3": "FRA",
+      "name": "France",
+      "admin": "France",
+      "naturalEarth": {
+        "adm0A3": "FRA",
+        "isoA3": "-99",
+        "wbA3": "FRA",
+        "sovereignt": "France",
+        "type": "Country"
+      },
+      "reviewStatus": "reviewed",
+      "reviewReason": "matched to World Bank country code"
+    },
+    {
+      "mapId": "ECU",
+      "iso3": "ECU",
+      "name": "Ecuador",
+      "admin": "Ecuador",
+      "naturalEarth": {
+        "adm0A3": "ECU",
+        "isoA3": "ECU",
+        "wbA3": "ECU",
+        "sovereignt": "Ecuador",
+        "type": "Sovereign country"
+      },
+      "reviewStatus": "reviewed",
+      "reviewReason": "matched to World Bank country code"
+    },
+    {
+      "mapId": "PRI",
+      "iso3": "PRI",
+      "name": "Puerto Rico",
+      "admin": "Puerto Rico",
+      "naturalEarth": {
+        "adm0A3": "PRI",
+        "isoA3": "PRI",
+        "wbA3": "PRI",
+        "sovereignt": "United States of America",
+        "type": "Dependency"
+      },
+      "reviewStatus": "reviewed",
+      "reviewReason": "matched to World Bank country code"
+    },
+    {
+      "mapId": "JAM",
+      "iso3": "JAM",
+      "name": "Jamaica",
+      "admin": "Jamaica",
+      "naturalEarth": {
+        "adm0A3": "JAM",
+        "isoA3": "JAM",
+        "wbA3": "JAM",
+        "sovereignt": "Jamaica",
+        "type": "Sovereign country"
+      },
+      "reviewStatus": "reviewed",
+      "reviewReason": "matched to World Bank country code"
+    },
+    {
+      "mapId": "CUB",
+      "iso3": "CUB",
+      "name": "Cuba",
+      "admin": "Cuba",
+      "naturalEarth": {
+        "adm0A3": "CUB",
+        "isoA3": "CUB",
+        "wbA3": "CUB",
+        "sovereignt": "Cuba",
+        "type": "Sovereignty"
+      },
+      "reviewStatus": "reviewed",
+      "reviewReason": "matched to World Bank country code"
+    },
+    {
+      "mapId": "ZWE",
+      "iso3": "ZWE",
+      "name": "Zimbabwe",
+      "admin": "Zimbabwe",
+      "naturalEarth": {
+        "adm0A3": "ZWE",
+        "isoA3": "ZWE",
+        "wbA3": "ZWE",
+        "sovereignt": "Zimbabwe",
+        "type": "Sovereign country"
+      },
+      "reviewStatus": "reviewed",
+      "reviewReason": "matched to World Bank country code"
+    },
+    {
+      "mapId": "BWA",
+      "iso3": "BWA",
+      "name": "Botswana",
+      "admin": "Botswana",
+      "naturalEarth": {
+        "adm0A3": "BWA",
+        "isoA3": "BWA",
+        "wbA3": "BWA",
+        "sovereignt": "Botswana",
+        "type": "Sovereign country"
+      },
+      "reviewStatus": "reviewed",
+      "reviewReason": "matched to World Bank country code"
+    },
+    {
+      "mapId": "NAM",
+      "iso3": "NAM",
+      "name": "Namibia",
+      "admin": "Namibia",
+      "naturalEarth": {
+        "adm0A3": "NAM",
+        "isoA3": "NAM",
+        "wbA3": "NAM",
+        "sovereignt": "Namibia",
+        "type": "Sovereign country"
+      },
+      "reviewStatus": "reviewed",
+      "reviewReason": "matched to World Bank country code"
+    },
+    {
+      "mapId": "SEN",
+      "iso3": "SEN",
+      "name": "Senegal",
+      "admin": "Senegal",
+      "naturalEarth": {
+        "adm0A3": "SEN",
+        "isoA3": "SEN",
+        "wbA3": "SEN",
+        "sovereignt": "Senegal",
+        "type": "Sovereign country"
+      },
+      "reviewStatus": "reviewed",
+      "reviewReason": "matched to World Bank country code"
+    },
+    {
+      "mapId": "MLI",
+      "iso3": "MLI",
+      "name": "Mali",
+      "admin": "Mali",
+      "naturalEarth": {
+        "adm0A3": "MLI",
+        "isoA3": "MLI",
+        "wbA3": "MLI",
+        "sovereignt": "Mali",
+        "type": "Sovereign country"
+      },
+      "reviewStatus": "reviewed",
+      "reviewReason": "matched to World Bank country code"
+    },
+    {
+      "mapId": "MRT",
+      "iso3": "MRT",
+      "name": "Mauritania",
+      "admin": "Mauritania",
+      "naturalEarth": {
+        "adm0A3": "MRT",
+        "isoA3": "MRT",
+        "wbA3": "MRT",
+        "sovereignt": "Mauritania",
+        "type": "Sovereign country"
+      },
+      "reviewStatus": "reviewed",
+      "reviewReason": "matched to World Bank country code"
+    },
+    {
+      "mapId": "BEN",
+      "iso3": "BEN",
+      "name": "Benin",
+      "admin": "Benin",
+      "naturalEarth": {
+        "adm0A3": "BEN",
+        "isoA3": "BEN",
+        "wbA3": "BEN",
+        "sovereignt": "Benin",
+        "type": "Sovereign country"
+      },
+      "reviewStatus": "reviewed",
+      "reviewReason": "matched to World Bank country code"
+    },
+    {
+      "mapId": "NER",
+      "iso3": "NER",
+      "name": "Niger",
+      "admin": "Niger",
+      "naturalEarth": {
+        "adm0A3": "NER",
+        "isoA3": "NER",
+        "wbA3": "NER",
+        "sovereignt": "Niger",
+        "type": "Sovereign country"
+      },
+      "reviewStatus": "reviewed",
+      "reviewReason": "matched to World Bank country code"
+    },
+    {
+      "mapId": "NGA",
+      "iso3": "NGA",
+      "name": "Nigeria",
+      "admin": "Nigeria",
+      "naturalEarth": {
+        "adm0A3": "NGA",
+        "isoA3": "NGA",
+        "wbA3": "NGA",
+        "sovereignt": "Nigeria",
+        "type": "Sovereign country"
+      },
+      "reviewStatus": "reviewed",
+      "reviewReason": "matched to World Bank country code"
+    },
+    {
+      "mapId": "CMR",
+      "iso3": "CMR",
+      "name": "Cameroon",
+      "admin": "Cameroon",
+      "naturalEarth": {
+        "adm0A3": "CMR",
+        "isoA3": "CMR",
+        "wbA3": "CMR",
+        "sovereignt": "Cameroon",
+        "type": "Sovereign country"
+      },
+      "reviewStatus": "reviewed",
+      "reviewReason": "matched to World Bank country code"
+    },
+    {
+      "mapId": "TGO",
+      "iso3": "TGO",
+      "name": "Togo",
+      "admin": "Togo",
+      "naturalEarth": {
+        "adm0A3": "TGO",
+        "isoA3": "TGO",
+        "wbA3": "TGO",
+        "sovereignt": "Togo",
+        "type": "Sovereign country"
+      },
+      "reviewStatus": "reviewed",
+      "reviewReason": "matched to World Bank country code"
+    },
+    {
+      "mapId": "GHA",
+      "iso3": "GHA",
+      "name": "Ghana",
+      "admin": "Ghana",
+      "naturalEarth": {
+        "adm0A3": "GHA",
+        "isoA3": "GHA",
+        "wbA3": "GHA",
+        "sovereignt": "Ghana",
+        "type": "Sovereign country"
+      },
+      "reviewStatus": "reviewed",
+      "reviewReason": "matched to World Bank country code"
+    },
+    {
+      "mapId": "CIV",
+      "iso3": "CIV",
+      "name": "Côte d'Ivoire",
+      "admin": "Ivory Coast",
+      "naturalEarth": {
+        "adm0A3": "CIV",
+        "isoA3": "CIV",
+        "wbA3": "CIV",
+        "sovereignt": "Ivory Coast",
+        "type": "Sovereign country"
+      },
+      "reviewStatus": "reviewed",
+      "reviewReason": "matched to World Bank country code"
+    },
+    {
+      "mapId": "GIN",
+      "iso3": "GIN",
+      "name": "Guinea",
+      "admin": "Guinea",
+      "naturalEarth": {
+        "adm0A3": "GIN",
+        "isoA3": "GIN",
+        "wbA3": "GIN",
+        "sovereignt": "Guinea",
+        "type": "Sovereign country"
+      },
+      "reviewStatus": "reviewed",
+      "reviewReason": "matched to World Bank country code"
+    },
+    {
+      "mapId": "GNB",
+      "iso3": "GNB",
+      "name": "Guinea-Bissau",
+      "admin": "Guinea-Bissau",
+      "naturalEarth": {
+        "adm0A3": "GNB",
+        "isoA3": "GNB",
+        "wbA3": "GNB",
+        "sovereignt": "Guinea-Bissau",
+        "type": "Sovereign country"
+      },
+      "reviewStatus": "reviewed",
+      "reviewReason": "matched to World Bank country code"
+    },
+    {
+      "mapId": "LBR",
+      "iso3": "LBR",
+      "name": "Liberia",
+      "admin": "Liberia",
+      "naturalEarth": {
+        "adm0A3": "LBR",
+        "isoA3": "LBR",
+        "wbA3": "LBR",
+        "sovereignt": "Liberia",
+        "type": "Sovereign country"
+      },
+      "reviewStatus": "reviewed",
+      "reviewReason": "matched to World Bank country code"
+    },
+    {
+      "mapId": "SLE",
+      "iso3": "SLE",
+      "name": "Sierra Leone",
+      "admin": "Sierra Leone",
+      "naturalEarth": {
+        "adm0A3": "SLE",
+        "isoA3": "SLE",
+        "wbA3": "SLE",
+        "sovereignt": "Sierra Leone",
+        "type": "Sovereign country"
+      },
+      "reviewStatus": "reviewed",
+      "reviewReason": "matched to World Bank country code"
+    },
+    {
+      "mapId": "BFA",
+      "iso3": "BFA",
+      "name": "Burkina Faso",
+      "admin": "Burkina Faso",
+      "naturalEarth": {
+        "adm0A3": "BFA",
+        "isoA3": "BFA",
+        "wbA3": "BFA",
+        "sovereignt": "Burkina Faso",
+        "type": "Sovereign country"
+      },
+      "reviewStatus": "reviewed",
+      "reviewReason": "matched to World Bank country code"
+    },
+    {
+      "mapId": "CAF",
+      "iso3": "CAF",
+      "name": "Central African Republic",
+      "admin": "Central African Republic",
+      "naturalEarth": {
+        "adm0A3": "CAF",
+        "isoA3": "CAF",
+        "wbA3": "CAF",
+        "sovereignt": "Central African Republic",
+        "type": "Sovereign country"
+      },
+      "reviewStatus": "reviewed",
+      "reviewReason": "matched to World Bank country code"
+    },
+    {
+      "mapId": "COG",
+      "iso3": "COG",
+      "name": "Republic of the Congo",
+      "admin": "Republic of the Congo",
+      "naturalEarth": {
+        "adm0A3": "COG",
+        "isoA3": "COG",
+        "wbA3": "COG",
+        "sovereignt": "Republic of the Congo",
+        "type": "Sovereign country"
+      },
+      "reviewStatus": "reviewed",
+      "reviewReason": "matched to World Bank country code"
+    },
+    {
+      "mapId": "GAB",
+      "iso3": "GAB",
+      "name": "Gabon",
+      "admin": "Gabon",
+      "naturalEarth": {
+        "adm0A3": "GAB",
+        "isoA3": "GAB",
+        "wbA3": "GAB",
+        "sovereignt": "Gabon",
+        "type": "Sovereign country"
+      },
+      "reviewStatus": "reviewed",
+      "reviewReason": "matched to World Bank country code"
+    },
+    {
+      "mapId": "GNQ",
+      "iso3": "GNQ",
+      "name": "Equatorial Guinea",
+      "admin": "Equatorial Guinea",
+      "naturalEarth": {
+        "adm0A3": "GNQ",
+        "isoA3": "GNQ",
+        "wbA3": "GNQ",
+        "sovereignt": "Equatorial Guinea",
+        "type": "Sovereign country"
+      },
+      "reviewStatus": "reviewed",
+      "reviewReason": "matched to World Bank country code"
+    },
+    {
+      "mapId": "ZMB",
+      "iso3": "ZMB",
+      "name": "Zambia",
+      "admin": "Zambia",
+      "naturalEarth": {
+        "adm0A3": "ZMB",
+        "isoA3": "ZMB",
+        "wbA3": "ZMB",
+        "sovereignt": "Zambia",
+        "type": "Sovereign country"
+      },
+      "reviewStatus": "reviewed",
+      "reviewReason": "matched to World Bank country code"
+    },
+    {
+      "mapId": "MWI",
+      "iso3": "MWI",
+      "name": "Malawi",
+      "admin": "Malawi",
+      "naturalEarth": {
+        "adm0A3": "MWI",
+        "isoA3": "MWI",
+        "wbA3": "MWI",
+        "sovereignt": "Malawi",
+        "type": "Sovereign country"
+      },
+      "reviewStatus": "reviewed",
+      "reviewReason": "matched to World Bank country code"
+    },
+    {
+      "mapId": "MOZ",
+      "iso3": "MOZ",
+      "name": "Mozambique",
+      "admin": "Mozambique",
+      "naturalEarth": {
+        "adm0A3": "MOZ",
+        "isoA3": "MOZ",
+        "wbA3": "MOZ",
+        "sovereignt": "Mozambique",
+        "type": "Sovereign country"
+      },
+      "reviewStatus": "reviewed",
+      "reviewReason": "matched to World Bank country code"
+    },
+    {
+      "mapId": "SWZ",
+      "iso3": "SWZ",
+      "name": "Kingdom of eSwatini",
+      "admin": "eSwatini",
+      "naturalEarth": {
+        "adm0A3": "SWZ",
+        "isoA3": "SWZ",
+        "wbA3": "SWZ",
+        "sovereignt": "eSwatini",
+        "type": "Sovereign country"
+      },
+      "reviewStatus": "reviewed",
+      "reviewReason": "matched to World Bank country code"
+    },
+    {
+      "mapId": "AGO",
+      "iso3": "AGO",
+      "name": "Angola",
+      "admin": "Angola",
+      "naturalEarth": {
+        "adm0A3": "AGO",
+        "isoA3": "AGO",
+        "wbA3": "AGO",
+        "sovereignt": "Angola",
+        "type": "Sovereign country"
+      },
+      "reviewStatus": "reviewed",
+      "reviewReason": "matched to World Bank country code"
+    },
+    {
+      "mapId": "BDI",
+      "iso3": "BDI",
+      "name": "Burundi",
+      "admin": "Burundi",
+      "naturalEarth": {
+        "adm0A3": "BDI",
+        "isoA3": "BDI",
+        "wbA3": "BDI",
+        "sovereignt": "Burundi",
+        "type": "Sovereign country"
+      },
+      "reviewStatus": "reviewed",
+      "reviewReason": "matched to World Bank country code"
+    },
+    {
+      "mapId": "ISR",
+      "iso3": "ISR",
+      "name": "Israel",
+      "admin": "Israel",
+      "naturalEarth": {
+        "adm0A3": "ISR",
+        "isoA3": "ISR",
+        "wbA3": "ISR",
+        "sovereignt": "Israel",
+        "type": "Disputed"
+      },
+      "reviewStatus": "reviewed",
+      "reviewReason": "matched to World Bank country code"
+    },
+    {
+      "mapId": "LBN",
+      "iso3": "LBN",
+      "name": "Lebanon",
+      "admin": "Lebanon",
+      "naturalEarth": {
+        "adm0A3": "LBN",
+        "isoA3": "LBN",
+        "wbA3": "LBN",
+        "sovereignt": "Lebanon",
+        "type": "Sovereign country"
+      },
+      "reviewStatus": "reviewed",
+      "reviewReason": "matched to World Bank country code"
+    },
+    {
+      "mapId": "MDG",
+      "iso3": "MDG",
+      "name": "Madagascar",
+      "admin": "Madagascar",
+      "naturalEarth": {
+        "adm0A3": "MDG",
+        "isoA3": "MDG",
+        "wbA3": "MDG",
+        "sovereignt": "Madagascar",
+        "type": "Sovereign country"
+      },
+      "reviewStatus": "reviewed",
+      "reviewReason": "matched to World Bank country code"
+    },
+    {
+      "mapId": "PSE",
+      "iso3": "PSE",
+      "name": "Palestine",
+      "admin": "Palestine",
+      "naturalEarth": {
+        "adm0A3": "PSX",
+        "isoA3": "PSE",
+        "wbA3": "WBG",
+        "sovereignt": "Israel",
+        "type": "Indeterminate"
+      },
+      "reviewStatus": "reviewed",
+      "reviewReason": "matched to World Bank country code"
+    },
+    {
+      "mapId": "GMB",
+      "iso3": "GMB",
+      "name": "The Gambia",
+      "admin": "Gambia",
+      "naturalEarth": {
+        "adm0A3": "GMB",
+        "isoA3": "GMB",
+        "wbA3": "GMB",
+        "sovereignt": "Gambia",
+        "type": "Sovereign country"
+      },
+      "reviewStatus": "reviewed",
+      "reviewReason": "matched to World Bank country code"
+    },
+    {
+      "mapId": "TUN",
+      "iso3": "TUN",
+      "name": "Tunisia",
+      "admin": "Tunisia",
+      "naturalEarth": {
+        "adm0A3": "TUN",
+        "isoA3": "TUN",
+        "wbA3": "TUN",
+        "sovereignt": "Tunisia",
+        "type": "Sovereign country"
+      },
+      "reviewStatus": "reviewed",
+      "reviewReason": "matched to World Bank country code"
+    },
+    {
+      "mapId": "DZA",
+      "iso3": "DZA",
+      "name": "Algeria",
+      "admin": "Algeria",
+      "naturalEarth": {
+        "adm0A3": "DZA",
+        "isoA3": "DZA",
+        "wbA3": "DZA",
+        "sovereignt": "Algeria",
+        "type": "Sovereign country"
+      },
+      "reviewStatus": "reviewed",
+      "reviewReason": "matched to World Bank country code"
+    },
+    {
+      "mapId": "JOR",
+      "iso3": "JOR",
+      "name": "Jordan",
+      "admin": "Jordan",
+      "naturalEarth": {
+        "adm0A3": "JOR",
+        "isoA3": "JOR",
+        "wbA3": "JOR",
+        "sovereignt": "Jordan",
+        "type": "Sovereign country"
+      },
+      "reviewStatus": "reviewed",
+      "reviewReason": "matched to World Bank country code"
+    },
+    {
+      "mapId": "ARE",
+      "iso3": "ARE",
+      "name": "United Arab Emirates",
+      "admin": "United Arab Emirates",
+      "naturalEarth": {
+        "adm0A3": "ARE",
+        "isoA3": "ARE",
+        "wbA3": "ARE",
+        "sovereignt": "United Arab Emirates",
+        "type": "Sovereign country"
+      },
+      "reviewStatus": "reviewed",
+      "reviewReason": "matched to World Bank country code"
+    },
+    {
+      "mapId": "QAT",
+      "iso3": "QAT",
+      "name": "Qatar",
+      "admin": "Qatar",
+      "naturalEarth": {
+        "adm0A3": "QAT",
+        "isoA3": "QAT",
+        "wbA3": "QAT",
+        "sovereignt": "Qatar",
+        "type": "Sovereign country"
+      },
+      "reviewStatus": "reviewed",
+      "reviewReason": "matched to World Bank country code"
+    },
+    {
+      "mapId": "KWT",
+      "iso3": "KWT",
+      "name": "Kuwait",
+      "admin": "Kuwait",
+      "naturalEarth": {
+        "adm0A3": "KWT",
+        "isoA3": "KWT",
+        "wbA3": "KWT",
+        "sovereignt": "Kuwait",
+        "type": "Sovereign country"
+      },
+      "reviewStatus": "reviewed",
+      "reviewReason": "matched to World Bank country code"
+    },
+    {
+      "mapId": "IRQ",
+      "iso3": "IRQ",
+      "name": "Iraq",
+      "admin": "Iraq",
+      "naturalEarth": {
+        "adm0A3": "IRQ",
+        "isoA3": "IRQ",
+        "wbA3": "IRQ",
+        "sovereignt": "Iraq",
+        "type": "Sovereign country"
+      },
+      "reviewStatus": "reviewed",
+      "reviewReason": "matched to World Bank country code"
+    },
+    {
+      "mapId": "OMN",
+      "iso3": "OMN",
+      "name": "Oman",
+      "admin": "Oman",
+      "naturalEarth": {
+        "adm0A3": "OMN",
+        "isoA3": "OMN",
+        "wbA3": "OMN",
+        "sovereignt": "Oman",
+        "type": "Sovereign country"
+      },
+      "reviewStatus": "reviewed",
+      "reviewReason": "matched to World Bank country code"
+    },
+    {
+      "mapId": "VUT",
+      "iso3": "VUT",
+      "name": "Vanuatu",
+      "admin": "Vanuatu",
+      "naturalEarth": {
+        "adm0A3": "VUT",
+        "isoA3": "VUT",
+        "wbA3": "VUT",
+        "sovereignt": "Vanuatu",
+        "type": "Sovereign country"
+      },
+      "reviewStatus": "reviewed",
+      "reviewReason": "matched to World Bank country code"
+    },
+    {
+      "mapId": "KHM",
+      "iso3": "KHM",
+      "name": "Cambodia",
+      "admin": "Cambodia",
+      "naturalEarth": {
+        "adm0A3": "KHM",
+        "isoA3": "KHM",
+        "wbA3": "KHM",
+        "sovereignt": "Cambodia",
+        "type": "Sovereign country"
+      },
+      "reviewStatus": "reviewed",
+      "reviewReason": "matched to World Bank country code"
+    },
+    {
+      "mapId": "THA",
+      "iso3": "THA",
+      "name": "Thailand",
+      "admin": "Thailand",
+      "naturalEarth": {
+        "adm0A3": "THA",
+        "isoA3": "THA",
+        "wbA3": "THA",
+        "sovereignt": "Thailand",
+        "type": "Sovereign country"
+      },
+      "reviewStatus": "reviewed",
+      "reviewReason": "matched to World Bank country code"
+    },
+    {
+      "mapId": "LAO",
+      "iso3": "LAO",
+      "name": "Lao PDR",
+      "admin": "Laos",
+      "naturalEarth": {
+        "adm0A3": "LAO",
+        "isoA3": "LAO",
+        "wbA3": "LAO",
+        "sovereignt": "Laos",
+        "type": "Sovereign country"
+      },
+      "reviewStatus": "reviewed",
+      "reviewReason": "matched to World Bank country code"
+    },
+    {
+      "mapId": "MMR",
+      "iso3": "MMR",
+      "name": "Myanmar",
+      "admin": "Myanmar",
+      "naturalEarth": {
+        "adm0A3": "MMR",
+        "isoA3": "MMR",
+        "wbA3": "MMR",
+        "sovereignt": "Myanmar",
+        "type": "Sovereign country"
+      },
+      "reviewStatus": "reviewed",
+      "reviewReason": "matched to World Bank country code"
+    },
+    {
+      "mapId": "VNM",
+      "iso3": "VNM",
+      "name": "Vietnam",
+      "admin": "Vietnam",
+      "naturalEarth": {
+        "adm0A3": "VNM",
+        "isoA3": "VNM",
+        "wbA3": "VNM",
+        "sovereignt": "Vietnam",
+        "type": "Sovereign country"
+      },
+      "reviewStatus": "reviewed",
+      "reviewReason": "matched to World Bank country code"
+    },
+    {
+      "mapId": "PRK",
+      "iso3": "PRK",
+      "name": "Dem. Rep. Korea",
+      "admin": "North Korea",
+      "naturalEarth": {
+        "adm0A3": "PRK",
+        "isoA3": "PRK",
+        "wbA3": "PRK",
+        "sovereignt": "North Korea",
+        "type": "Sovereign country"
+      },
+      "reviewStatus": "reviewed",
+      "reviewReason": "matched to World Bank country code"
+    },
+    {
+      "mapId": "KOR",
+      "iso3": "KOR",
+      "name": "Republic of Korea",
+      "admin": "South Korea",
+      "naturalEarth": {
+        "adm0A3": "KOR",
+        "isoA3": "KOR",
+        "wbA3": "KOR",
+        "sovereignt": "South Korea",
+        "type": "Sovereign country"
+      },
+      "reviewStatus": "reviewed",
+      "reviewReason": "matched to World Bank country code"
+    },
+    {
+      "mapId": "MNG",
+      "iso3": "MNG",
+      "name": "Mongolia",
+      "admin": "Mongolia",
+      "naturalEarth": {
+        "adm0A3": "MNG",
+        "isoA3": "MNG",
+        "wbA3": "MNG",
+        "sovereignt": "Mongolia",
+        "type": "Sovereign country"
+      },
+      "reviewStatus": "reviewed",
+      "reviewReason": "matched to World Bank country code"
+    },
+    {
+      "mapId": "IND",
+      "iso3": "IND",
+      "name": "India",
+      "admin": "India",
+      "naturalEarth": {
+        "adm0A3": "IND",
+        "isoA3": "IND",
+        "wbA3": "IND",
+        "sovereignt": "India",
+        "type": "Sovereign country"
+      },
+      "reviewStatus": "reviewed",
+      "reviewReason": "matched to World Bank country code"
+    },
+    {
+      "mapId": "BGD",
+      "iso3": "BGD",
+      "name": "Bangladesh",
+      "admin": "Bangladesh",
+      "naturalEarth": {
+        "adm0A3": "BGD",
+        "isoA3": "BGD",
+        "wbA3": "BGD",
+        "sovereignt": "Bangladesh",
+        "type": "Sovereign country"
+      },
+      "reviewStatus": "reviewed",
+      "reviewReason": "matched to World Bank country code"
+    },
+    {
+      "mapId": "BTN",
+      "iso3": "BTN",
+      "name": "Bhutan",
+      "admin": "Bhutan",
+      "naturalEarth": {
+        "adm0A3": "BTN",
+        "isoA3": "BTN",
+        "wbA3": "BTN",
+        "sovereignt": "Bhutan",
+        "type": "Sovereign country"
+      },
+      "reviewStatus": "reviewed",
+      "reviewReason": "matched to World Bank country code"
+    },
+    {
+      "mapId": "NPL",
+      "iso3": "NPL",
+      "name": "Nepal",
+      "admin": "Nepal",
+      "naturalEarth": {
+        "adm0A3": "NPL",
+        "isoA3": "NPL",
+        "wbA3": "NPL",
+        "sovereignt": "Nepal",
+        "type": "Sovereign country"
+      },
+      "reviewStatus": "reviewed",
+      "reviewReason": "matched to World Bank country code"
+    },
+    {
+      "mapId": "PAK",
+      "iso3": "PAK",
+      "name": "Pakistan",
+      "admin": "Pakistan",
+      "naturalEarth": {
+        "adm0A3": "PAK",
+        "isoA3": "PAK",
+        "wbA3": "PAK",
+        "sovereignt": "Pakistan",
+        "type": "Sovereign country"
+      },
+      "reviewStatus": "reviewed",
+      "reviewReason": "matched to World Bank country code"
+    },
+    {
+      "mapId": "AFG",
+      "iso3": "AFG",
+      "name": "Afghanistan",
+      "admin": "Afghanistan",
+      "naturalEarth": {
+        "adm0A3": "AFG",
+        "isoA3": "AFG",
+        "wbA3": "AFG",
+        "sovereignt": "Afghanistan",
+        "type": "Sovereign country"
+      },
+      "reviewStatus": "reviewed",
+      "reviewReason": "matched to World Bank country code"
+    },
+    {
+      "mapId": "TJK",
+      "iso3": "TJK",
+      "name": "Tajikistan",
+      "admin": "Tajikistan",
+      "naturalEarth": {
+        "adm0A3": "TJK",
+        "isoA3": "TJK",
+        "wbA3": "TJK",
+        "sovereignt": "Tajikistan",
+        "type": "Sovereign country"
+      },
+      "reviewStatus": "reviewed",
+      "reviewReason": "matched to World Bank country code"
+    },
+    {
+      "mapId": "KGZ",
+      "iso3": "KGZ",
+      "name": "Kyrgyzstan",
+      "admin": "Kyrgyzstan",
+      "naturalEarth": {
+        "adm0A3": "KGZ",
+        "isoA3": "KGZ",
+        "wbA3": "KGZ",
+        "sovereignt": "Kyrgyzstan",
+        "type": "Sovereign country"
+      },
+      "reviewStatus": "reviewed",
+      "reviewReason": "matched to World Bank country code"
+    },
+    {
+      "mapId": "TKM",
+      "iso3": "TKM",
+      "name": "Turkmenistan",
+      "admin": "Turkmenistan",
+      "naturalEarth": {
+        "adm0A3": "TKM",
+        "isoA3": "TKM",
+        "wbA3": "TKM",
+        "sovereignt": "Turkmenistan",
+        "type": "Sovereign country"
+      },
+      "reviewStatus": "reviewed",
+      "reviewReason": "matched to World Bank country code"
+    },
+    {
+      "mapId": "IRN",
+      "iso3": "IRN",
+      "name": "Iran",
+      "admin": "Iran",
+      "naturalEarth": {
+        "adm0A3": "IRN",
+        "isoA3": "IRN",
+        "wbA3": "IRN",
+        "sovereignt": "Iran",
+        "type": "Sovereign country"
+      },
+      "reviewStatus": "reviewed",
+      "reviewReason": "matched to World Bank country code"
+    },
+    {
+      "mapId": "SYR",
+      "iso3": "SYR",
+      "name": "Syria",
+      "admin": "Syria",
+      "naturalEarth": {
+        "adm0A3": "SYR",
+        "isoA3": "SYR",
+        "wbA3": "SYR",
+        "sovereignt": "Syria",
+        "type": "Sovereign country"
+      },
+      "reviewStatus": "reviewed",
+      "reviewReason": "matched to World Bank country code"
+    },
+    {
+      "mapId": "ARM",
+      "iso3": "ARM",
+      "name": "Armenia",
+      "admin": "Armenia",
+      "naturalEarth": {
+        "adm0A3": "ARM",
+        "isoA3": "ARM",
+        "wbA3": "ARM",
+        "sovereignt": "Armenia",
+        "type": "Sovereign country"
+      },
+      "reviewStatus": "reviewed",
+      "reviewReason": "matched to World Bank country code"
+    },
+    {
+      "mapId": "SWE",
+      "iso3": "SWE",
+      "name": "Sweden",
+      "admin": "Sweden",
+      "naturalEarth": {
+        "adm0A3": "SWE",
+        "isoA3": "SWE",
+        "wbA3": "SWE",
+        "sovereignt": "Sweden",
+        "type": "Sovereign country"
+      },
+      "reviewStatus": "reviewed",
+      "reviewReason": "matched to World Bank country code"
+    },
+    {
+      "mapId": "BLR",
+      "iso3": "BLR",
+      "name": "Belarus",
+      "admin": "Belarus",
+      "naturalEarth": {
+        "adm0A3": "BLR",
+        "isoA3": "BLR",
+        "wbA3": "BLR",
+        "sovereignt": "Belarus",
+        "type": "Sovereign country"
+      },
+      "reviewStatus": "reviewed",
+      "reviewReason": "matched to World Bank country code"
+    },
+    {
+      "mapId": "UKR",
+      "iso3": "UKR",
+      "name": "Ukraine",
+      "admin": "Ukraine",
+      "naturalEarth": {
+        "adm0A3": "UKR",
+        "isoA3": "UKR",
+        "wbA3": "UKR",
+        "sovereignt": "Ukraine",
+        "type": "Sovereign country"
+      },
+      "reviewStatus": "reviewed",
+      "reviewReason": "matched to World Bank country code"
+    },
+    {
+      "mapId": "POL",
+      "iso3": "POL",
+      "name": "Poland",
+      "admin": "Poland",
+      "naturalEarth": {
+        "adm0A3": "POL",
+        "isoA3": "POL",
+        "wbA3": "POL",
+        "sovereignt": "Poland",
+        "type": "Sovereign country"
+      },
+      "reviewStatus": "reviewed",
+      "reviewReason": "matched to World Bank country code"
+    },
+    {
+      "mapId": "AUT",
+      "iso3": "AUT",
+      "name": "Austria",
+      "admin": "Austria",
+      "naturalEarth": {
+        "adm0A3": "AUT",
+        "isoA3": "AUT",
+        "wbA3": "AUT",
+        "sovereignt": "Austria",
+        "type": "Sovereign country"
+      },
+      "reviewStatus": "reviewed",
+      "reviewReason": "matched to World Bank country code"
+    },
+    {
+      "mapId": "HUN",
+      "iso3": "HUN",
+      "name": "Hungary",
+      "admin": "Hungary",
+      "naturalEarth": {
+        "adm0A3": "HUN",
+        "isoA3": "HUN",
+        "wbA3": "HUN",
+        "sovereignt": "Hungary",
+        "type": "Sovereign country"
+      },
+      "reviewStatus": "reviewed",
+      "reviewReason": "matched to World Bank country code"
+    },
+    {
+      "mapId": "MDA",
+      "iso3": "MDA",
+      "name": "Moldova",
+      "admin": "Moldova",
+      "naturalEarth": {
+        "adm0A3": "MDA",
+        "isoA3": "MDA",
+        "wbA3": "MDA",
+        "sovereignt": "Moldova",
+        "type": "Sovereign country"
+      },
+      "reviewStatus": "reviewed",
+      "reviewReason": "matched to World Bank country code"
+    },
+    {
+      "mapId": "ROU",
+      "iso3": "ROU",
+      "name": "Romania",
+      "admin": "Romania",
+      "naturalEarth": {
+        "adm0A3": "ROU",
+        "isoA3": "ROU",
+        "wbA3": "ROM",
+        "sovereignt": "Romania",
+        "type": "Sovereign country"
+      },
+      "reviewStatus": "reviewed",
+      "reviewReason": "matched to World Bank country code"
+    },
+    {
+      "mapId": "LTU",
+      "iso3": "LTU",
+      "name": "Lithuania",
+      "admin": "Lithuania",
+      "naturalEarth": {
+        "adm0A3": "LTU",
+        "isoA3": "LTU",
+        "wbA3": "LTU",
+        "sovereignt": "Lithuania",
+        "type": "Sovereign country"
+      },
+      "reviewStatus": "reviewed",
+      "reviewReason": "matched to World Bank country code"
+    },
+    {
+      "mapId": "LVA",
+      "iso3": "LVA",
+      "name": "Latvia",
+      "admin": "Latvia",
+      "naturalEarth": {
+        "adm0A3": "LVA",
+        "isoA3": "LVA",
+        "wbA3": "LVA",
+        "sovereignt": "Latvia",
+        "type": "Sovereign country"
+      },
+      "reviewStatus": "reviewed",
+      "reviewReason": "matched to World Bank country code"
+    },
+    {
+      "mapId": "EST",
+      "iso3": "EST",
+      "name": "Estonia",
+      "admin": "Estonia",
+      "naturalEarth": {
+        "adm0A3": "EST",
+        "isoA3": "EST",
+        "wbA3": "EST",
+        "sovereignt": "Estonia",
+        "type": "Sovereign country"
+      },
+      "reviewStatus": "reviewed",
+      "reviewReason": "matched to World Bank country code"
+    },
+    {
+      "mapId": "DEU",
+      "iso3": "DEU",
+      "name": "Germany",
+      "admin": "Germany",
+      "naturalEarth": {
+        "adm0A3": "DEU",
+        "isoA3": "DEU",
+        "wbA3": "DEU",
+        "sovereignt": "Germany",
+        "type": "Sovereign country"
+      },
+      "reviewStatus": "reviewed",
+      "reviewReason": "matched to World Bank country code"
+    },
+    {
+      "mapId": "BGR",
+      "iso3": "BGR",
+      "name": "Bulgaria",
+      "admin": "Bulgaria",
+      "naturalEarth": {
+        "adm0A3": "BGR",
+        "isoA3": "BGR",
+        "wbA3": "BGR",
+        "sovereignt": "Bulgaria",
+        "type": "Sovereign country"
+      },
+      "reviewStatus": "reviewed",
+      "reviewReason": "matched to World Bank country code"
+    },
+    {
+      "mapId": "GRC",
+      "iso3": "GRC",
+      "name": "Greece",
+      "admin": "Greece",
+      "naturalEarth": {
+        "adm0A3": "GRC",
+        "isoA3": "GRC",
+        "wbA3": "GRC",
+        "sovereignt": "Greece",
+        "type": "Sovereign country"
+      },
+      "reviewStatus": "reviewed",
+      "reviewReason": "matched to World Bank country code"
+    },
+    {
+      "mapId": "TUR",
+      "iso3": "TUR",
+      "name": "Turkey",
+      "admin": "Turkey",
+      "naturalEarth": {
+        "adm0A3": "TUR",
+        "isoA3": "TUR",
+        "wbA3": "TUR",
+        "sovereignt": "Turkey",
+        "type": "Sovereign country"
+      },
+      "reviewStatus": "reviewed",
+      "reviewReason": "matched to World Bank country code"
+    },
+    {
+      "mapId": "ALB",
+      "iso3": "ALB",
+      "name": "Albania",
+      "admin": "Albania",
+      "naturalEarth": {
+        "adm0A3": "ALB",
+        "isoA3": "ALB",
+        "wbA3": "ALB",
+        "sovereignt": "Albania",
+        "type": "Sovereign country"
+      },
+      "reviewStatus": "reviewed",
+      "reviewReason": "matched to World Bank country code"
+    },
+    {
+      "mapId": "HRV",
+      "iso3": "HRV",
+      "name": "Croatia",
+      "admin": "Croatia",
+      "naturalEarth": {
+        "adm0A3": "HRV",
+        "isoA3": "HRV",
+        "wbA3": "HRV",
+        "sovereignt": "Croatia",
+        "type": "Sovereign country"
+      },
+      "reviewStatus": "reviewed",
+      "reviewReason": "matched to World Bank country code"
+    },
+    {
+      "mapId": "CHE",
+      "iso3": "CHE",
+      "name": "Switzerland",
+      "admin": "Switzerland",
+      "naturalEarth": {
+        "adm0A3": "CHE",
+        "isoA3": "CHE",
+        "wbA3": "CHE",
+        "sovereignt": "Switzerland",
+        "type": "Sovereign country"
+      },
+      "reviewStatus": "reviewed",
+      "reviewReason": "matched to World Bank country code"
+    },
+    {
+      "mapId": "LUX",
+      "iso3": "LUX",
+      "name": "Luxembourg",
+      "admin": "Luxembourg",
+      "naturalEarth": {
+        "adm0A3": "LUX",
+        "isoA3": "LUX",
+        "wbA3": "LUX",
+        "sovereignt": "Luxembourg",
+        "type": "Sovereign country"
+      },
+      "reviewStatus": "reviewed",
+      "reviewReason": "matched to World Bank country code"
+    },
+    {
+      "mapId": "BEL",
+      "iso3": "BEL",
+      "name": "Belgium",
+      "admin": "Belgium",
+      "naturalEarth": {
+        "adm0A3": "BEL",
+        "isoA3": "BEL",
+        "wbA3": "BEL",
+        "sovereignt": "Belgium",
+        "type": "Sovereign country"
+      },
+      "reviewStatus": "reviewed",
+      "reviewReason": "matched to World Bank country code"
+    },
+    {
+      "mapId": "NLD",
+      "iso3": "NLD",
+      "name": "Netherlands",
+      "admin": "Netherlands",
+      "naturalEarth": {
+        "adm0A3": "NLD",
+        "isoA3": "NLD",
+        "wbA3": "NLD",
+        "sovereignt": "Netherlands",
+        "type": "Country"
+      },
+      "reviewStatus": "reviewed",
+      "reviewReason": "matched to World Bank country code"
+    },
+    {
+      "mapId": "PRT",
+      "iso3": "PRT",
+      "name": "Portugal",
+      "admin": "Portugal",
+      "naturalEarth": {
+        "adm0A3": "PRT",
+        "isoA3": "PRT",
+        "wbA3": "PRT",
+        "sovereignt": "Portugal",
+        "type": "Sovereign country"
+      },
+      "reviewStatus": "reviewed",
+      "reviewReason": "matched to World Bank country code"
+    },
+    {
+      "mapId": "ESP",
+      "iso3": "ESP",
+      "name": "Spain",
+      "admin": "Spain",
+      "naturalEarth": {
+        "adm0A3": "ESP",
+        "isoA3": "ESP",
+        "wbA3": "ESP",
+        "sovereignt": "Spain",
+        "type": "Sovereign country"
+      },
+      "reviewStatus": "reviewed",
+      "reviewReason": "matched to World Bank country code"
+    },
+    {
+      "mapId": "IRL",
+      "iso3": "IRL",
+      "name": "Ireland",
+      "admin": "Ireland",
+      "naturalEarth": {
+        "adm0A3": "IRL",
+        "isoA3": "IRL",
+        "wbA3": "IRL",
+        "sovereignt": "Ireland",
+        "type": "Sovereign country"
+      },
+      "reviewStatus": "reviewed",
+      "reviewReason": "matched to World Bank country code"
+    },
+    {
+      "mapId": "NCL",
+      "iso3": "NCL",
+      "name": "New Caledonia",
+      "admin": "New Caledonia",
+      "naturalEarth": {
+        "adm0A3": "NCL",
+        "isoA3": "NCL",
+        "wbA3": "NCL",
+        "sovereignt": "France",
+        "type": "Dependency"
+      },
+      "reviewStatus": "reviewed",
+      "reviewReason": "matched to World Bank country code"
+    },
+    {
+      "mapId": "SLB",
+      "iso3": "SLB",
+      "name": "Solomon Islands",
+      "admin": "Solomon Islands",
+      "naturalEarth": {
+        "adm0A3": "SLB",
+        "isoA3": "SLB",
+        "wbA3": "SLB",
+        "sovereignt": "Solomon Islands",
+        "type": "Sovereign country"
+      },
+      "reviewStatus": "reviewed",
+      "reviewReason": "matched to World Bank country code"
+    },
+    {
+      "mapId": "NZL",
+      "iso3": "NZL",
+      "name": "New Zealand",
+      "admin": "New Zealand",
+      "naturalEarth": {
+        "adm0A3": "NZL",
+        "isoA3": "NZL",
+        "wbA3": "NZL",
+        "sovereignt": "New Zealand",
+        "type": "Country"
+      },
+      "reviewStatus": "reviewed",
+      "reviewReason": "matched to World Bank country code"
+    },
+    {
+      "mapId": "AUS",
+      "iso3": "AUS",
+      "name": "Australia",
+      "admin": "Australia",
+      "naturalEarth": {
+        "adm0A3": "AUS",
+        "isoA3": "AUS",
+        "wbA3": "AUS",
+        "sovereignt": "Australia",
+        "type": "Country"
+      },
+      "reviewStatus": "reviewed",
+      "reviewReason": "matched to World Bank country code"
+    },
+    {
+      "mapId": "LKA",
+      "iso3": "LKA",
+      "name": "Sri Lanka",
+      "admin": "Sri Lanka",
+      "naturalEarth": {
+        "adm0A3": "LKA",
+        "isoA3": "LKA",
+        "wbA3": "LKA",
+        "sovereignt": "Sri Lanka",
+        "type": "Sovereign country"
+      },
+      "reviewStatus": "reviewed",
+      "reviewReason": "matched to World Bank country code"
+    },
+    {
+      "mapId": "CHN",
+      "iso3": "CHN",
+      "name": "China",
+      "admin": "China",
+      "naturalEarth": {
+        "adm0A3": "CHN",
+        "isoA3": "CHN",
+        "wbA3": "CHN",
+        "sovereignt": "China",
+        "type": "Country"
+      },
+      "reviewStatus": "reviewed",
+      "reviewReason": "matched to World Bank country code"
+    },
+    {
+      "mapId": "TWN",
+      "iso3": null,
+      "name": "Taiwan",
+      "admin": "Taiwan",
+      "naturalEarth": {
+        "adm0A3": "TWN",
+        "isoA3": "TWN",
+        "wbA3": "-99",
+        "sovereignt": "Taiwan",
+        "type": "Sovereign country"
+      },
+      "reviewStatus": "reviewed",
+      "reviewReason": "Natural Earth entity has no non-aggregate World Bank match in this milestone"
+    },
+    {
+      "mapId": "ITA",
+      "iso3": "ITA",
+      "name": "Italy",
+      "admin": "Italy",
+      "naturalEarth": {
+        "adm0A3": "ITA",
+        "isoA3": "ITA",
+        "wbA3": "ITA",
+        "sovereignt": "Italy",
+        "type": "Sovereign country"
+      },
+      "reviewStatus": "reviewed",
+      "reviewReason": "matched to World Bank country code"
+    },
+    {
+      "mapId": "DNK",
+      "iso3": "DNK",
+      "name": "Denmark",
+      "admin": "Denmark",
+      "naturalEarth": {
+        "adm0A3": "DNK",
+        "isoA3": "DNK",
+        "wbA3": "DNK",
+        "sovereignt": "Denmark",
+        "type": "Country"
+      },
+      "reviewStatus": "reviewed",
+      "reviewReason": "matched to World Bank country code"
+    },
+    {
+      "mapId": "GBR",
+      "iso3": "GBR",
+      "name": "United Kingdom",
+      "admin": "United Kingdom",
+      "naturalEarth": {
+        "adm0A3": "GBR",
+        "isoA3": "GBR",
+        "wbA3": "GBR",
+        "sovereignt": "United Kingdom",
+        "type": "Country"
+      },
+      "reviewStatus": "reviewed",
+      "reviewReason": "matched to World Bank country code"
+    },
+    {
+      "mapId": "ISL",
+      "iso3": "ISL",
+      "name": "Iceland",
+      "admin": "Iceland",
+      "naturalEarth": {
+        "adm0A3": "ISL",
+        "isoA3": "ISL",
+        "wbA3": "ISL",
+        "sovereignt": "Iceland",
+        "type": "Sovereign country"
+      },
+      "reviewStatus": "reviewed",
+      "reviewReason": "matched to World Bank country code"
+    },
+    {
+      "mapId": "AZE",
+      "iso3": "AZE",
+      "name": "Azerbaijan",
+      "admin": "Azerbaijan",
+      "naturalEarth": {
+        "adm0A3": "AZE",
+        "isoA3": "AZE",
+        "wbA3": "AZE",
+        "sovereignt": "Azerbaijan",
+        "type": "Sovereign country"
+      },
+      "reviewStatus": "reviewed",
+      "reviewReason": "matched to World Bank country code"
+    },
+    {
+      "mapId": "GEO",
+      "iso3": "GEO",
+      "name": "Georgia",
+      "admin": "Georgia",
+      "naturalEarth": {
+        "adm0A3": "GEO",
+        "isoA3": "GEO",
+        "wbA3": "GEO",
+        "sovereignt": "Georgia",
+        "type": "Sovereign country"
+      },
+      "reviewStatus": "reviewed",
+      "reviewReason": "matched to World Bank country code"
+    },
+    {
+      "mapId": "PHL",
+      "iso3": "PHL",
+      "name": "Philippines",
+      "admin": "Philippines",
+      "naturalEarth": {
+        "adm0A3": "PHL",
+        "isoA3": "PHL",
+        "wbA3": "PHL",
+        "sovereignt": "Philippines",
+        "type": "Sovereign country"
+      },
+      "reviewStatus": "reviewed",
+      "reviewReason": "matched to World Bank country code"
+    },
+    {
+      "mapId": "MYS",
+      "iso3": "MYS",
+      "name": "Malaysia",
+      "admin": "Malaysia",
+      "naturalEarth": {
+        "adm0A3": "MYS",
+        "isoA3": "MYS",
+        "wbA3": "MYS",
+        "sovereignt": "Malaysia",
+        "type": "Sovereign country"
+      },
+      "reviewStatus": "reviewed",
+      "reviewReason": "matched to World Bank country code"
+    },
+    {
+      "mapId": "BRN",
+      "iso3": "BRN",
+      "name": "Brunei Darussalam",
+      "admin": "Brunei",
+      "naturalEarth": {
+        "adm0A3": "BRN",
+        "isoA3": "BRN",
+        "wbA3": "BRN",
+        "sovereignt": "Brunei",
+        "type": "Sovereign country"
+      },
+      "reviewStatus": "reviewed",
+      "reviewReason": "matched to World Bank country code"
+    },
+    {
+      "mapId": "SVN",
+      "iso3": "SVN",
+      "name": "Slovenia",
+      "admin": "Slovenia",
+      "naturalEarth": {
+        "adm0A3": "SVN",
+        "isoA3": "SVN",
+        "wbA3": "SVN",
+        "sovereignt": "Slovenia",
+        "type": "Sovereign country"
+      },
+      "reviewStatus": "reviewed",
+      "reviewReason": "matched to World Bank country code"
+    },
+    {
+      "mapId": "FIN",
+      "iso3": "FIN",
+      "name": "Finland",
+      "admin": "Finland",
+      "naturalEarth": {
+        "adm0A3": "FIN",
+        "isoA3": "FIN",
+        "wbA3": "FIN",
+        "sovereignt": "Finland",
+        "type": "Country"
+      },
+      "reviewStatus": "reviewed",
+      "reviewReason": "matched to World Bank country code"
+    },
+    {
+      "mapId": "SVK",
+      "iso3": "SVK",
+      "name": "Slovakia",
+      "admin": "Slovakia",
+      "naturalEarth": {
+        "adm0A3": "SVK",
+        "isoA3": "SVK",
+        "wbA3": "SVK",
+        "sovereignt": "Slovakia",
+        "type": "Sovereign country"
+      },
+      "reviewStatus": "reviewed",
+      "reviewReason": "matched to World Bank country code"
+    },
+    {
+      "mapId": "CZE",
+      "iso3": "CZE",
+      "name": "Czech Republic",
+      "admin": "Czechia",
+      "naturalEarth": {
+        "adm0A3": "CZE",
+        "isoA3": "CZE",
+        "wbA3": "CZE",
+        "sovereignt": "Czechia",
+        "type": "Sovereign country"
+      },
+      "reviewStatus": "reviewed",
+      "reviewReason": "matched to World Bank country code"
+    },
+    {
+      "mapId": "ERI",
+      "iso3": "ERI",
+      "name": "Eritrea",
+      "admin": "Eritrea",
+      "naturalEarth": {
+        "adm0A3": "ERI",
+        "isoA3": "ERI",
+        "wbA3": "ERI",
+        "sovereignt": "Eritrea",
+        "type": "Sovereign country"
+      },
+      "reviewStatus": "reviewed",
+      "reviewReason": "matched to World Bank country code"
+    },
+    {
+      "mapId": "JPN",
+      "iso3": "JPN",
+      "name": "Japan",
+      "admin": "Japan",
+      "naturalEarth": {
+        "adm0A3": "JPN",
+        "isoA3": "JPN",
+        "wbA3": "JPN",
+        "sovereignt": "Japan",
+        "type": "Sovereign country"
+      },
+      "reviewStatus": "reviewed",
+      "reviewReason": "matched to World Bank country code"
+    },
+    {
+      "mapId": "PRY",
+      "iso3": "PRY",
+      "name": "Paraguay",
+      "admin": "Paraguay",
+      "naturalEarth": {
+        "adm0A3": "PRY",
+        "isoA3": "PRY",
+        "wbA3": "PRY",
+        "sovereignt": "Paraguay",
+        "type": "Sovereign country"
+      },
+      "reviewStatus": "reviewed",
+      "reviewReason": "matched to World Bank country code"
+    },
+    {
+      "mapId": "YEM",
+      "iso3": "YEM",
+      "name": "Yemen",
+      "admin": "Yemen",
+      "naturalEarth": {
+        "adm0A3": "YEM",
+        "isoA3": "YEM",
+        "wbA3": "YEM",
+        "sovereignt": "Yemen",
+        "type": "Sovereign country"
+      },
+      "reviewStatus": "reviewed",
+      "reviewReason": "matched to World Bank country code"
+    },
+    {
+      "mapId": "SAU",
+      "iso3": "SAU",
+      "name": "Saudi Arabia",
+      "admin": "Saudi Arabia",
+      "naturalEarth": {
+        "adm0A3": "SAU",
+        "isoA3": "SAU",
+        "wbA3": "SAU",
+        "sovereignt": "Saudi Arabia",
+        "type": "Sovereign country"
+      },
+      "reviewStatus": "reviewed",
+      "reviewReason": "matched to World Bank country code"
+    },
+    {
+      "mapId": "CYN",
+      "iso3": null,
+      "name": "Northern Cyprus",
+      "admin": "Northern Cyprus",
+      "naturalEarth": {
+        "adm0A3": "CYN",
+        "isoA3": "-99",
+        "wbA3": "-99",
+        "sovereignt": "Northern Cyprus",
+        "type": "Sovereign country"
+      },
+      "reviewStatus": "reviewed",
+      "reviewReason": "Natural Earth entity has no non-aggregate World Bank match in this milestone"
+    },
+    {
+      "mapId": "CYP",
+      "iso3": "CYP",
+      "name": "Cyprus",
+      "admin": "Cyprus",
+      "naturalEarth": {
+        "adm0A3": "CYP",
+        "isoA3": "CYP",
+        "wbA3": "CYP",
+        "sovereignt": "Cyprus",
+        "type": "Sovereign country"
+      },
+      "reviewStatus": "reviewed",
+      "reviewReason": "matched to World Bank country code"
+    },
+    {
+      "mapId": "MAR",
+      "iso3": "MAR",
+      "name": "Morocco",
+      "admin": "Morocco",
+      "naturalEarth": {
+        "adm0A3": "MAR",
+        "isoA3": "MAR",
+        "wbA3": "MAR",
+        "sovereignt": "Morocco",
+        "type": "Sovereign country"
+      },
+      "reviewStatus": "reviewed",
+      "reviewReason": "matched to World Bank country code"
+    },
+    {
+      "mapId": "EGY",
+      "iso3": "EGY",
+      "name": "Egypt",
+      "admin": "Egypt",
+      "naturalEarth": {
+        "adm0A3": "EGY",
+        "isoA3": "EGY",
+        "wbA3": "EGY",
+        "sovereignt": "Egypt",
+        "type": "Sovereign country"
+      },
+      "reviewStatus": "reviewed",
+      "reviewReason": "matched to World Bank country code"
+    },
+    {
+      "mapId": "LBY",
+      "iso3": "LBY",
+      "name": "Libya",
+      "admin": "Libya",
+      "naturalEarth": {
+        "adm0A3": "LBY",
+        "isoA3": "LBY",
+        "wbA3": "LBY",
+        "sovereignt": "Libya",
+        "type": "Sovereign country"
+      },
+      "reviewStatus": "reviewed",
+      "reviewReason": "matched to World Bank country code"
+    },
+    {
+      "mapId": "ETH",
+      "iso3": "ETH",
+      "name": "Ethiopia",
+      "admin": "Ethiopia",
+      "naturalEarth": {
+        "adm0A3": "ETH",
+        "isoA3": "ETH",
+        "wbA3": "ETH",
+        "sovereignt": "Ethiopia",
+        "type": "Sovereign country"
+      },
+      "reviewStatus": "reviewed",
+      "reviewReason": "matched to World Bank country code"
+    },
+    {
+      "mapId": "DJI",
+      "iso3": "DJI",
+      "name": "Djibouti",
+      "admin": "Djibouti",
+      "naturalEarth": {
+        "adm0A3": "DJI",
+        "isoA3": "DJI",
+        "wbA3": "DJI",
+        "sovereignt": "Djibouti",
+        "type": "Sovereign country"
+      },
+      "reviewStatus": "reviewed",
+      "reviewReason": "matched to World Bank country code"
+    },
+    {
+      "mapId": "SOL",
+      "iso3": null,
+      "name": "Somaliland",
+      "admin": "Somaliland",
+      "naturalEarth": {
+        "adm0A3": "SOL",
+        "isoA3": "-99",
+        "wbA3": "-99",
+        "sovereignt": "Somaliland",
+        "type": "Sovereign country"
+      },
+      "reviewStatus": "reviewed",
+      "reviewReason": "Natural Earth entity has no non-aggregate World Bank match in this milestone"
+    },
+    {
+      "mapId": "UGA",
+      "iso3": "UGA",
+      "name": "Uganda",
+      "admin": "Uganda",
+      "naturalEarth": {
+        "adm0A3": "UGA",
+        "isoA3": "UGA",
+        "wbA3": "UGA",
+        "sovereignt": "Uganda",
+        "type": "Sovereign country"
+      },
+      "reviewStatus": "reviewed",
+      "reviewReason": "matched to World Bank country code"
+    },
+    {
+      "mapId": "RWA",
+      "iso3": "RWA",
+      "name": "Rwanda",
+      "admin": "Rwanda",
+      "naturalEarth": {
+        "adm0A3": "RWA",
+        "isoA3": "RWA",
+        "wbA3": "RWA",
+        "sovereignt": "Rwanda",
+        "type": "Sovereign country"
+      },
+      "reviewStatus": "reviewed",
+      "reviewReason": "matched to World Bank country code"
+    },
+    {
+      "mapId": "BIH",
+      "iso3": "BIH",
+      "name": "Bosnia and Herzegovina",
+      "admin": "Bosnia and Herzegovina",
+      "naturalEarth": {
+        "adm0A3": "BIH",
+        "isoA3": "BIH",
+        "wbA3": "BIH",
+        "sovereignt": "Bosnia and Herzegovina",
+        "type": "Sovereign country"
+      },
+      "reviewStatus": "reviewed",
+      "reviewReason": "matched to World Bank country code"
+    },
+    {
+      "mapId": "MKD",
+      "iso3": "MKD",
+      "name": "North Macedonia",
+      "admin": "North Macedonia",
+      "naturalEarth": {
+        "adm0A3": "MKD",
+        "isoA3": "MKD",
+        "wbA3": "MKD",
+        "sovereignt": "North Macedonia",
+        "type": "Sovereign country"
+      },
+      "reviewStatus": "reviewed",
+      "reviewReason": "matched to World Bank country code"
+    },
+    {
+      "mapId": "SRB",
+      "iso3": "SRB",
+      "name": "Serbia",
+      "admin": "Republic of Serbia",
+      "naturalEarth": {
+        "adm0A3": "SRB",
+        "isoA3": "SRB",
+        "wbA3": "SRB",
+        "sovereignt": "Republic of Serbia",
+        "type": "Sovereign country"
+      },
+      "reviewStatus": "reviewed",
+      "reviewReason": "matched to World Bank country code"
+    },
+    {
+      "mapId": "MNE",
+      "iso3": "MNE",
+      "name": "Montenegro",
+      "admin": "Montenegro",
+      "naturalEarth": {
+        "adm0A3": "MNE",
+        "isoA3": "MNE",
+        "wbA3": "MNE",
+        "sovereignt": "Montenegro",
+        "type": "Sovereign country"
+      },
+      "reviewStatus": "reviewed",
+      "reviewReason": "matched to World Bank country code"
+    },
+    {
+      "mapId": "KOS",
+      "iso3": null,
+      "name": "Kosovo",
+      "admin": "Kosovo",
+      "naturalEarth": {
+        "adm0A3": "KOS",
+        "isoA3": "-99",
+        "wbA3": "KSV",
+        "sovereignt": "Kosovo",
+        "type": "Disputed"
+      },
+      "reviewStatus": "reviewed",
+      "reviewReason": "Natural Earth entity has no non-aggregate World Bank match in this milestone"
+    },
+    {
+      "mapId": "TTO",
+      "iso3": "TTO",
+      "name": "Trinidad and Tobago",
+      "admin": "Trinidad and Tobago",
+      "naturalEarth": {
+        "adm0A3": "TTO",
+        "isoA3": "TTO",
+        "wbA3": "TTO",
+        "sovereignt": "Trinidad and Tobago",
+        "type": "Sovereign country"
+      },
+      "reviewStatus": "reviewed",
+      "reviewReason": "matched to World Bank country code"
+    },
+    {
+      "mapId": "SSD",
+      "iso3": "SSD",
+      "name": "South Sudan",
+      "admin": "South Sudan",
+      "naturalEarth": {
+        "adm0A3": "SDS",
+        "isoA3": "SSD",
+        "wbA3": "SSD",
+        "sovereignt": "South Sudan",
+        "type": "Sovereign country"
+      },
+      "reviewStatus": "reviewed",
+      "reviewReason": "matched to World Bank country code"
+    }
+  ]
+}

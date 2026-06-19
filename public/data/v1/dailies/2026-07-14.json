@@ -1,0 +1,37 @@
+{
+  "schemaVersion": "1.1.0",
+  "game": "worldprint",
+  "date": "2026-07-14",
+  "contentVersion": "2026.06.19-ed1",
+  "roundIds": [
+    "worldprint-cereal-yield",
+    "worldprint-internet-users",
+    "worldprint-age-dependency",
+    "worldprint-life-expectancy",
+    "worldprint-co2-per-capita"
+  ],
+  "indicatorIds": [
+    "cereal-yield",
+    "internet-users",
+    "age-dependency",
+    "life-expectancy",
+    "co2-per-capita"
+  ],
+  "categoryMix": {
+    "agriculture": 1,
+    "connectivity": 1,
+    "demography": 1,
+    "health": 1,
+    "environment": 1
+  },
+  "mapDifficultyMix": {
+    "expert": 1,
+    "intro": 2,
+    "standard": 2
+  },
+  "generatedAt": "2026-06-19T17:09:23.338146+00:00",
+  "generatorVersion": "daily-manifest-v1",
+  "varietyNotes": [
+    "Selected with category, difficulty, and same-day correlation safeguards."
+  ]
+}

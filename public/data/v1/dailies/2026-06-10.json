@@ -1,0 +1,37 @@
+{
+  "schemaVersion": "1.1.0",
+  "game": "worldprint",
+  "date": "2026-06-10",
+  "contentVersion": "2026.06.19-ed1",
+  "roundIds": [
+    "worldprint-tuberculosis-incidence",
+    "worldprint-age-dependency",
+    "worldprint-forest-area",
+    "worldprint-employment-agriculture",
+    "worldprint-arable-land"
+  ],
+  "indicatorIds": [
+    "tuberculosis-incidence",
+    "age-dependency",
+    "forest-area",
+    "employment-agriculture",
+    "arable-land"
+  ],
+  "categoryMix": {
+    "health": 1,
+    "demography": 1,
+    "environment": 1,
+    "labor": 1,
+    "land": 1
+  },
+  "mapDifficultyMix": {
+    "expert": 1,
+    "standard": 3,
+    "intro": 1
+  },
+  "generatedAt": "2026-06-19T17:09:23.331465+00:00",
+  "generatorVersion": "daily-manifest-v1",
+  "varietyNotes": [
+    "Selected with category, difficulty, and same-day correlation safeguards."
+  ]
+}

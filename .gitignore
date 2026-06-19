@@ -1,0 +1,14 @@
+.next/
+out/
+node_modules/
+.pnpm-store/
+coverage/
+test-results/
+playwright-report/
+output/
+tsconfig.tsbuildinfo
+.env*
+!.env.example
+tools/data_pipeline/.venv/
+tools/data_pipeline/__pycache__/
+generated/raw/

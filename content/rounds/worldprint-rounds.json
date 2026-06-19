@@ -1,0 +1,147 @@
+{
+  "schemaVersion": "1.0.0",
+  "contentVersion": "2026.06.18",
+  "rounds": [
+    {
+      "id": "fertility-rate",
+      "correctIndicatorId": "fertility-rate",
+      "category": "demography",
+      "explorerChoices": ["fertility-rate", "life-expectancy", "internet-users"],
+      "analystChoices": ["fertility-rate", "children-share", "older-adults-share", "life-expectancy"],
+      "cartographerChoices": ["fertility-rate", "children-share", "older-adults-share", "urban-population", "life-expectancy", "unemployment"],
+      "acceptedAliases": ["fertility rate", "births per woman", "total fertility", "children per woman"],
+      "patternNotes": []
+    },
+    {
+      "id": "life-expectancy",
+      "correctIndicatorId": "life-expectancy",
+      "category": "health",
+      "explorerChoices": ["life-expectancy", "fertility-rate", "gdp-per-capita"],
+      "analystChoices": ["life-expectancy", "health-expenditure", "older-adults-share", "gdp-per-capita"],
+      "cartographerChoices": ["life-expectancy", "health-expenditure", "fertility-rate", "children-share", "older-adults-share", "internet-users"],
+      "acceptedAliases": ["life expectancy", "life expectancy at birth", "average life expectancy", "longevity"],
+      "patternNotes": []
+    },
+    {
+      "id": "urban-population",
+      "correctIndicatorId": "urban-population",
+      "category": "settlement",
+      "explorerChoices": ["urban-population", "forest-area", "arable-land"],
+      "analystChoices": ["urban-population", "internet-users", "gdp-per-capita", "forest-area"],
+      "cartographerChoices": ["urban-population", "internet-users", "trade-share", "gdp-per-capita", "arable-land", "forest-area"],
+      "acceptedAliases": ["urban population", "urban population share", "percent urban", "urbanization"],
+      "patternNotes": []
+    },
+    {
+      "id": "internet-users",
+      "correctIndicatorId": "internet-users",
+      "category": "connectivity",
+      "explorerChoices": ["internet-users", "trade-share", "life-expectancy"],
+      "analystChoices": ["internet-users", "urban-population", "gdp-per-capita", "life-expectancy"],
+      "cartographerChoices": ["internet-users", "urban-population", "gdp-per-capita", "trade-share", "life-expectancy", "renewable-electricity"],
+      "acceptedAliases": ["internet users", "internet use", "individuals using the internet", "people online"],
+      "patternNotes": []
+    },
+    {
+      "id": "forest-area",
+      "correctIndicatorId": "forest-area",
+      "category": "environment",
+      "explorerChoices": ["forest-area", "arable-land", "urban-population"],
+      "analystChoices": ["forest-area", "arable-land", "renewable-electricity", "co2-per-capita"],
+      "cartographerChoices": ["forest-area", "arable-land", "renewable-electricity", "co2-per-capita", "urban-population", "trade-share"],
+      "acceptedAliases": ["forest area", "forest cover", "forest percentage", "land area covered by forest"],
+      "patternNotes": []
+    },
+    {
+      "id": "gdp-per-capita",
+      "correctIndicatorId": "gdp-per-capita",
+      "category": "development",
+      "explorerChoices": ["gdp-per-capita", "internet-users", "fertility-rate"],
+      "analystChoices": ["gdp-per-capita", "internet-users", "trade-share", "health-expenditure"],
+      "cartographerChoices": ["gdp-per-capita", "internet-users", "health-expenditure", "trade-share", "co2-per-capita", "life-expectancy"],
+      "acceptedAliases": ["gdp per capita", "income per person", "gross domestic product per capita", "gdp/person"],
+      "patternNotes": []
+    },
+    {
+      "id": "children-share",
+      "correctIndicatorId": "children-share",
+      "category": "demography",
+      "explorerChoices": ["children-share", "older-adults-share", "fertility-rate"],
+      "analystChoices": ["children-share", "fertility-rate", "older-adults-share", "life-expectancy"],
+      "cartographerChoices": ["children-share", "fertility-rate", "older-adults-share", "life-expectancy", "urban-population", "unemployment"],
+      "acceptedAliases": ["children share", "population ages 0-14", "young population share", "children as percent of population"],
+      "patternNotes": []
+    },
+    {
+      "id": "older-adults-share",
+      "correctIndicatorId": "older-adults-share",
+      "category": "demography",
+      "explorerChoices": ["older-adults-share", "children-share", "life-expectancy"],
+      "analystChoices": ["older-adults-share", "life-expectancy", "children-share", "fertility-rate"],
+      "cartographerChoices": ["older-adults-share", "life-expectancy", "children-share", "fertility-rate", "health-expenditure", "internet-users"],
+      "acceptedAliases": ["older adults share", "population 65 and older", "elderly population share", "65 plus population"],
+      "patternNotes": []
+    },
+    {
+      "id": "health-expenditure",
+      "correctIndicatorId": "health-expenditure",
+      "category": "health",
+      "explorerChoices": ["health-expenditure", "life-expectancy", "gdp-per-capita"],
+      "analystChoices": ["health-expenditure", "gdp-per-capita", "life-expectancy", "older-adults-share"],
+      "cartographerChoices": ["health-expenditure", "gdp-per-capita", "life-expectancy", "older-adults-share", "unemployment", "trade-share"],
+      "acceptedAliases": ["health expenditure", "health spending", "current health expenditure", "health expenditure as share of gdp"],
+      "patternNotes": []
+    },
+    {
+      "id": "unemployment",
+      "correctIndicatorId": "unemployment",
+      "category": "labor",
+      "explorerChoices": ["unemployment", "trade-share", "children-share"],
+      "analystChoices": ["unemployment", "trade-share", "urban-population", "health-expenditure"],
+      "cartographerChoices": ["unemployment", "trade-share", "urban-population", "children-share", "gdp-per-capita", "internet-users"],
+      "acceptedAliases": ["unemployment", "unemployment rate", "total unemployment", "labor force unemployment"],
+      "patternNotes": []
+    },
+    {
+      "id": "trade-share",
+      "correctIndicatorId": "trade-share",
+      "category": "economy",
+      "explorerChoices": ["trade-share", "gdp-per-capita", "internet-users"],
+      "analystChoices": ["trade-share", "gdp-per-capita", "urban-population", "unemployment"],
+      "cartographerChoices": ["trade-share", "gdp-per-capita", "internet-users", "urban-population", "health-expenditure", "co2-per-capita"],
+      "acceptedAliases": ["trade share", "trade as share of gdp", "imports and exports", "trade percent of gdp"],
+      "patternNotes": []
+    },
+    {
+      "id": "arable-land",
+      "correctIndicatorId": "arable-land",
+      "category": "land",
+      "explorerChoices": ["arable-land", "forest-area", "urban-population"],
+      "analystChoices": ["arable-land", "forest-area", "renewable-electricity", "urban-population"],
+      "cartographerChoices": ["arable-land", "forest-area", "renewable-electricity", "urban-population", "co2-per-capita", "trade-share"],
+      "acceptedAliases": ["arable land", "arable land share", "cropland share", "arable land percent"],
+      "patternNotes": []
+    },
+    {
+      "id": "renewable-electricity",
+      "correctIndicatorId": "renewable-electricity",
+      "category": "energy",
+      "explorerChoices": ["renewable-electricity", "co2-per-capita", "forest-area"],
+      "analystChoices": ["renewable-electricity", "co2-per-capita", "forest-area", "arable-land"],
+      "cartographerChoices": ["renewable-electricity", "co2-per-capita", "forest-area", "arable-land", "trade-share", "urban-population"],
+      "acceptedAliases": ["renewable electricity", "renewable electricity output", "renewable power share", "electricity from renewables"],
+      "patternNotes": []
+    },
+    {
+      "id": "co2-per-capita",
+      "correctIndicatorId": "co2-per-capita",
+      "category": "environment",
+      "explorerChoices": ["co2-per-capita", "renewable-electricity", "gdp-per-capita"],
+      "analystChoices": ["co2-per-capita", "renewable-electricity", "gdp-per-capita", "trade-share"],
+      "cartographerChoices": ["co2-per-capita", "renewable-electricity", "gdp-per-capita", "trade-share", "urban-population", "forest-area"],
+      "acceptedAliases": ["co2 per capita", "carbon dioxide emissions per capita", "emissions per person", "co2 emissions per person"],
+      "patternNotes": []
+    }
+  ]
+}
+

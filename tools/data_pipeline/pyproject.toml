@@ -1,0 +1,10 @@
+[project]
+name = "worldprint-data-pipeline"
+version = "0.1.0"
+description = "Static data generator for WORLDPRINT."
+requires-python = ">=3.12"
+dependencies = []
+
+[tool.uv]
+package = false
+

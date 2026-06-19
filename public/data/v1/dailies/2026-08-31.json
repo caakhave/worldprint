@@ -1,0 +1,37 @@
+{
+  "schemaVersion": "1.1.0",
+  "game": "worldprint",
+  "date": "2026-08-31",
+  "contentVersion": "2026.06.19-ed1",
+  "roundIds": [
+    "worldprint-cereal-yield",
+    "worldprint-pm25-exposure",
+    "worldprint-population-density",
+    "worldprint-internet-users",
+    "worldprint-employment-agriculture"
+  ],
+  "indicatorIds": [
+    "cereal-yield",
+    "pm25-exposure",
+    "population-density",
+    "internet-users",
+    "employment-agriculture"
+  ],
+  "categoryMix": {
+    "agriculture": 1,
+    "environment": 1,
+    "settlement": 1,
+    "connectivity": 1,
+    "labor": 1
+  },
+  "mapDifficultyMix": {
+    "expert": 1,
+    "standard": 3,
+    "intro": 1
+  },
+  "generatedAt": "2026-06-19T17:09:23.343779+00:00",
+  "generatorVersion": "daily-manifest-v1",
+  "varietyNotes": [
+    "Selected with category, difficulty, and same-day correlation safeguards."
+  ]
+}

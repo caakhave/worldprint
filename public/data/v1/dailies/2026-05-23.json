@@ -1,0 +1,36 @@
+{
+  "schemaVersion": "1.1.0",
+  "game": "worldprint",
+  "date": "2026-05-23",
+  "contentVersion": "2026.06.19-ed1",
+  "roundIds": [
+    "worldprint-tuberculosis-incidence",
+    "worldprint-agriculture-value-added",
+    "worldprint-co2-per-capita",
+    "worldprint-unemployment",
+    "worldprint-mobile-subscriptions"
+  ],
+  "indicatorIds": [
+    "tuberculosis-incidence",
+    "agriculture-value-added",
+    "co2-per-capita",
+    "unemployment",
+    "mobile-subscriptions"
+  ],
+  "categoryMix": {
+    "health": 1,
+    "economy": 1,
+    "environment": 1,
+    "labor": 1,
+    "connectivity": 1
+  },
+  "mapDifficultyMix": {
+    "expert": 1,
+    "standard": 4
+  },
+  "generatedAt": "2026-06-19T17:09:23.328989+00:00",
+  "generatorVersion": "daily-manifest-v1",
+  "varietyNotes": [
+    "Selected with category, difficulty, and same-day correlation safeguards."
+  ]
+}
