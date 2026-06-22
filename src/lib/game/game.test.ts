@@ -293,7 +293,9 @@ describe("streaks and sharing", () => {
       ]
     });
     const text = buildShareText({ ...run, status: "complete" });
-    expect(text).toContain("WORLDPRINT");
+    expect(text).toContain("Can You Geo?");
+    expect(text).toContain("Mystery Map");
+    expect(text).not.toContain("WORLDPRINT");
     expect(containsSpoiler(text, ["fertility", "life expectancy", "World Bank"])).toBe(false);
   });
 

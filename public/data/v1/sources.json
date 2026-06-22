@@ -1,14 +1,14 @@
 {
   "schemaVersion": "1.1.0",
-  "contentVersion": "2026.06.19-ed1",
-  "generatedAt": "2026-06-19T17:09:23.352449+00:00",
+  "contentVersion": "2026.06.22-exp2-qa1",
+  "generatedAt": "2026-06-22T18:07:37.479526+00:00",
   "sources": [
     {
       "id": "natural-earth-admin0-110m",
       "provider": "Natural Earth",
       "dataset": "Admin 0 countries, 1:110m",
       "version": "5.1.1 preferred; fallback records exact fetched URL",
-      "retrievalDate": "2026-06-19",
+      "retrievalDate": "2026-06-22",
       "license": "Public domain",
       "attribution": "Made with Natural Earth.",
       "commercialUse": "Permitted under Natural Earth public-domain terms.",
@@ -21,8 +21,8 @@
       "id": "world-bank-wdi",
       "provider": "World Bank",
       "dataset": "World Development Indicators via Indicators API",
-      "version": "2026.06.19-ed1",
-      "retrievalDate": "2026-06-19",
+      "version": "2026.06.22-exp2-qa1",
+      "retrievalDate": "2026-06-22",
       "license": "Creative Commons Attribution 4.0 International unless specifically labeled otherwise by World Bank metadata.",
       "attribution": "The World Bank",
       "commercialUse": "Generally permitted under CC BY 4.0; metadata must be reviewed for third-party exceptions.",
@@ -422,6 +422,783 @@
           "sourceReference": "https://api.worldbank.org/v2/indicator/GC.TAX.TOTL.GD.ZS?format=json&per_page=1",
           "valuesReference": "https://api.worldbank.org/v2/country/all/indicator/GC.TAX.TOTL.GD.ZS?format=json&per_page=20000&page=1&date=2015%3A2025",
           "checksum": "5bea44611f3140568594b5374e6db689695e3b00a7d76edc5dc500f15552259a"
+        },
+        {
+          "id": "population-growth",
+          "providerCode": "SP.POP.GROW",
+          "sourceReference": "https://api.worldbank.org/v2/indicator/SP.POP.GROW?format=json&per_page=1",
+          "valuesReference": "https://api.worldbank.org/v2/country/all/indicator/SP.POP.GROW?format=json&per_page=20000&page=1&date=2015%3A2025",
+          "checksum": "09d778a759dd8b1fef103de6b05a6a91f337b7cd09fef22aae8338bdab90e406"
+        },
+        {
+          "id": "maternal-mortality",
+          "providerCode": "SH.STA.MMRT",
+          "sourceReference": "https://api.worldbank.org/v2/indicator/SH.STA.MMRT?format=json&per_page=1",
+          "valuesReference": "https://api.worldbank.org/v2/country/all/indicator/SH.STA.MMRT?format=json&per_page=20000&page=1&date=2015%3A2025",
+          "checksum": "32c77c0f480b8873a4502b9b27a3802b8a1c7485786ab577e9c1ecf386d5e3aa"
+        },
+        {
+          "id": "undernourishment",
+          "providerCode": "SN.ITK.DEFC.ZS",
+          "sourceReference": "https://api.worldbank.org/v2/indicator/SN.ITK.DEFC.ZS?format=json&per_page=1",
+          "valuesReference": "https://api.worldbank.org/v2/country/all/indicator/SN.ITK.DEFC.ZS?format=json&per_page=20000&page=1&date=2015%3A2025",
+          "checksum": "c688d506ad460ca9ae7fd3c64d9672b550301ef0c9d510b15b6349a4d6a9d91e"
+        },
+        {
+          "id": "measles-immunization",
+          "providerCode": "SH.IMM.MEAS",
+          "sourceReference": "https://api.worldbank.org/v2/indicator/SH.IMM.MEAS?format=json&per_page=1",
+          "valuesReference": "https://api.worldbank.org/v2/country/all/indicator/SH.IMM.MEAS?format=json&per_page=20000&page=1&date=2015%3A2025",
+          "checksum": "dec055e946404953c5fefa707b96977566cec52ebd268563899fe1837b53f50e"
+        },
+        {
+          "id": "dpt-immunization",
+          "providerCode": "SH.IMM.IDPT",
+          "sourceReference": "https://api.worldbank.org/v2/indicator/SH.IMM.IDPT?format=json&per_page=1",
+          "valuesReference": "https://api.worldbank.org/v2/country/all/indicator/SH.IMM.IDPT?format=json&per_page=20000&page=1&date=2015%3A2025",
+          "checksum": "77a4309c93189c04d802bd8ce614ce373c01b0eab4438e8b1d4b6e2d53d9de0d"
+        },
+        {
+          "id": "physicians",
+          "providerCode": "SH.MED.PHYS.ZS",
+          "sourceReference": "https://api.worldbank.org/v2/indicator/SH.MED.PHYS.ZS?format=json&per_page=1",
+          "valuesReference": "https://api.worldbank.org/v2/country/all/indicator/SH.MED.PHYS.ZS?format=json&per_page=20000&page=1&date=2015%3A2025",
+          "checksum": "4acafe82fe294bd6e374f91f97452bd17264bfae5dc349736ce77d1f4cdd3d17"
+        },
+        {
+          "id": "hospital-beds",
+          "providerCode": "SH.MED.BEDS.ZS",
+          "sourceReference": "https://api.worldbank.org/v2/indicator/SH.MED.BEDS.ZS?format=json&per_page=1",
+          "valuesReference": "https://api.worldbank.org/v2/country/all/indicator/SH.MED.BEDS.ZS?format=json&per_page=20000&page=1&date=2015%3A2025",
+          "checksum": "3e733605fe7e8094788b8ebe820f8c6caa27b2233282d3bc51f2f63696e5dd0b"
+        },
+        {
+          "id": "industry-share",
+          "providerCode": "NV.IND.TOTL.ZS",
+          "sourceReference": "https://api.worldbank.org/v2/indicator/NV.IND.TOTL.ZS?format=json&per_page=1",
+          "valuesReference": "https://api.worldbank.org/v2/country/all/indicator/NV.IND.TOTL.ZS?format=json&per_page=20000&page=1&date=2015%3A2025",
+          "checksum": "1bcdd145678b97881b75613aadfefe0a35389e0be082e862c0cbe0d545bec956"
+        },
+        {
+          "id": "services-share",
+          "providerCode": "NV.SRV.TOTL.ZS",
+          "sourceReference": "https://api.worldbank.org/v2/indicator/NV.SRV.TOTL.ZS?format=json&per_page=1",
+          "valuesReference": "https://api.worldbank.org/v2/country/all/indicator/NV.SRV.TOTL.ZS?format=json&per_page=20000&page=1&date=2015%3A2025",
+          "checksum": "3fadd1c10693b12843702d32c331ff0502d3334979411d9ae2a1d21de75ea65d"
+        },
+        {
+          "id": "manufacturing-share",
+          "providerCode": "NV.IND.MANF.ZS",
+          "sourceReference": "https://api.worldbank.org/v2/indicator/NV.IND.MANF.ZS?format=json&per_page=1",
+          "valuesReference": "https://api.worldbank.org/v2/country/all/indicator/NV.IND.MANF.ZS?format=json&per_page=20000&page=1&date=2015%3A2025",
+          "checksum": "8488a063354e798ad4070934c6582adce584a8845d72da743acc48a6be07aaf8"
+        },
+        {
+          "id": "gdp-growth",
+          "providerCode": "NY.GDP.MKTP.KD.ZG",
+          "sourceReference": "https://api.worldbank.org/v2/indicator/NY.GDP.MKTP.KD.ZG?format=json&per_page=1",
+          "valuesReference": "https://api.worldbank.org/v2/country/all/indicator/NY.GDP.MKTP.KD.ZG?format=json&per_page=20000&page=1&date=2015%3A2025",
+          "checksum": "57623b8d8005347fe830593a13a7c31b0f9fecc0ce4c1c1cda0db6065e0d4a6f"
+        },
+        {
+          "id": "gni-per-capita",
+          "providerCode": "NY.GNP.PCAP.CD",
+          "sourceReference": "https://api.worldbank.org/v2/indicator/NY.GNP.PCAP.CD?format=json&per_page=1",
+          "valuesReference": "https://api.worldbank.org/v2/country/all/indicator/NY.GNP.PCAP.CD?format=json&per_page=20000&page=1&date=2015%3A2025",
+          "checksum": "c0237ee10082d041db15e92ef3bf3159e31818f1e28f0a3aa8de7b304b6060d9"
+        },
+        {
+          "id": "gni-per-capita-ppp",
+          "providerCode": "NY.GNP.PCAP.PP.CD",
+          "sourceReference": "https://api.worldbank.org/v2/indicator/NY.GNP.PCAP.PP.CD?format=json&per_page=1",
+          "valuesReference": "https://api.worldbank.org/v2/country/all/indicator/NY.GNP.PCAP.PP.CD?format=json&per_page=20000&page=1&date=2015%3A2025",
+          "checksum": "fd50c5c6c273d8ae5a6533dfd9d0fd61dae95ac834316cb05f5a72a2cfe977b5"
+        },
+        {
+          "id": "remittances",
+          "providerCode": "BX.TRF.PWKR.DT.GD.ZS",
+          "sourceReference": "https://api.worldbank.org/v2/indicator/BX.TRF.PWKR.DT.GD.ZS?format=json&per_page=1",
+          "valuesReference": "https://api.worldbank.org/v2/country/all/indicator/BX.TRF.PWKR.DT.GD.ZS?format=json&per_page=20000&page=1&date=2015%3A2025",
+          "checksum": "2e83b76b14a68bdca40870151b2e078b25f194ea01c894d91f2028784f4d411a"
+        },
+        {
+          "id": "military-spending",
+          "providerCode": "MS.MIL.XPND.GD.ZS",
+          "sourceReference": "https://api.worldbank.org/v2/indicator/MS.MIL.XPND.GD.ZS?format=json&per_page=1",
+          "valuesReference": "https://api.worldbank.org/v2/country/all/indicator/MS.MIL.XPND.GD.ZS?format=json&per_page=20000&page=1&date=2015%3A2025",
+          "checksum": "c08ab07ae174a7f009e7a9f9b27a3e235bdabb03fc2602969493b969a860361c"
+        },
+        {
+          "id": "high-tech-exports",
+          "providerCode": "TX.VAL.TECH.MF.ZS",
+          "sourceReference": "https://api.worldbank.org/v2/indicator/TX.VAL.TECH.MF.ZS?format=json&per_page=1",
+          "valuesReference": "https://api.worldbank.org/v2/country/all/indicator/TX.VAL.TECH.MF.ZS?format=json&per_page=20000&page=1&date=2015%3A2025",
+          "checksum": "b14632e2df6bdf0644814f4dd04e548a04c9ab140e777e3edd8d3ebb318db61c"
+        },
+        {
+          "id": "women-parliament",
+          "providerCode": "SG.GEN.PARL.ZS",
+          "sourceReference": "https://api.worldbank.org/v2/indicator/SG.GEN.PARL.ZS?format=json&per_page=1",
+          "valuesReference": "https://api.worldbank.org/v2/country/all/indicator/SG.GEN.PARL.ZS?format=json&per_page=20000&page=1&date=2015%3A2025",
+          "checksum": "c82ccd1f16b236341748fb07710267bf0412be9c39b85faa67b4364c5e6b66e5"
+        },
+        {
+          "id": "migrant-stock",
+          "providerCode": "SM.POP.TOTL.ZS",
+          "sourceReference": "https://api.worldbank.org/v2/indicator/SM.POP.TOTL.ZS?format=json&per_page=1",
+          "valuesReference": "https://api.worldbank.org/v2/country/all/indicator/SM.POP.TOTL.ZS?format=json&per_page=20000&page=1&date=2015%3A2025",
+          "checksum": "128cc7673b919d7799fc84a45c696121cfa1ed81e15d46b55d93b974e820884f"
+        },
+        {
+          "id": "net-migration",
+          "providerCode": "SM.POP.NETM",
+          "sourceReference": "https://api.worldbank.org/v2/indicator/SM.POP.NETM?format=json&per_page=1",
+          "valuesReference": "https://api.worldbank.org/v2/country/all/indicator/SM.POP.NETM?format=json&per_page=20000&page=1&date=2015%3A2025",
+          "checksum": "14c3482cd0b7f0f75f5bef3676f9c960d3f6db7fcf6809333b1e618ab39c8f20"
+        },
+        {
+          "id": "tourism-arrivals",
+          "providerCode": "ST.INT.ARVL",
+          "sourceReference": "https://api.worldbank.org/v2/indicator/ST.INT.ARVL?format=json&per_page=1",
+          "valuesReference": "https://api.worldbank.org/v2/country/all/indicator/ST.INT.ARVL?format=json&per_page=20000&page=1&date=2015%3A2025",
+          "checksum": "bec541475cb97d03eac8526b464afa5dba3ce147d5156ac3923f9bcb4f61963b"
+        },
+        {
+          "id": "tourism-receipts-share",
+          "providerCode": "ST.INT.RCPT.XP.ZS",
+          "sourceReference": "https://api.worldbank.org/v2/indicator/ST.INT.RCPT.XP.ZS?format=json&per_page=1",
+          "valuesReference": "https://api.worldbank.org/v2/country/all/indicator/ST.INT.RCPT.XP.ZS?format=json&per_page=20000&page=1&date=2015%3A2025",
+          "checksum": "5d686e7e8609d15e6dc5cfb23c9ff73bd6d7d31279f2d8818c84e0c9737ff08b"
+        },
+        {
+          "id": "electric-power-use",
+          "providerCode": "EG.USE.ELEC.KH.PC",
+          "sourceReference": "https://api.worldbank.org/v2/indicator/EG.USE.ELEC.KH.PC?format=json&per_page=1",
+          "valuesReference": "https://api.worldbank.org/v2/country/all/indicator/EG.USE.ELEC.KH.PC?format=json&per_page=20000&page=1&date=2015%3A2025",
+          "checksum": "15c90e06848979a742687e95a8b332c1cf11e7537683b08c8e365a469ecbdf8b"
+        },
+        {
+          "id": "energy-use",
+          "providerCode": "EG.USE.PCAP.KG.OE",
+          "sourceReference": "https://api.worldbank.org/v2/indicator/EG.USE.PCAP.KG.OE?format=json&per_page=1",
+          "valuesReference": "https://api.worldbank.org/v2/country/all/indicator/EG.USE.PCAP.KG.OE?format=json&per_page=20000&page=1&date=2015%3A2025",
+          "checksum": "4d1157a8c621e92e0565f1b31aa84bdd637572989b85db1bdbd74ba3447ead30"
+        },
+        {
+          "id": "fossil-fuel-energy-share",
+          "providerCode": "EG.USE.COMM.FO.ZS",
+          "sourceReference": "https://api.worldbank.org/v2/indicator/EG.USE.COMM.FO.ZS?format=json&per_page=1",
+          "valuesReference": "https://api.worldbank.org/v2/country/all/indicator/EG.USE.COMM.FO.ZS?format=json&per_page=20000&page=1&date=2015%3A2025",
+          "checksum": "4d619a7b1f33bd95bf1e9618936af757a40a6868335e4b5d3029eddb4e1caba2"
+        },
+        {
+          "id": "protected-land",
+          "providerCode": "ER.LND.PTLD.ZS",
+          "sourceReference": "https://api.worldbank.org/v2/indicator/ER.LND.PTLD.ZS?format=json&per_page=1",
+          "valuesReference": "https://api.worldbank.org/v2/country/all/indicator/ER.LND.PTLD.ZS?format=json&per_page=20000&page=1&date=2015%3A2025",
+          "checksum": "f2a9f24a55421e3104853100b73d7eacd82cd78bb3b353e511efe6d870350616"
+        },
+        {
+          "id": "protected-seas",
+          "providerCode": "ER.MRN.PTMR.ZS",
+          "sourceReference": "https://api.worldbank.org/v2/indicator/ER.MRN.PTMR.ZS?format=json&per_page=1",
+          "valuesReference": "https://api.worldbank.org/v2/country/all/indicator/ER.MRN.PTMR.ZS?format=json&per_page=20000&page=1&date=2015%3A2025",
+          "checksum": "236adb166cf47c4a81be6d8e2cc081faeec6686843a621de9bcd069126d6b162"
+        },
+        {
+          "id": "freshwater-per-capita",
+          "providerCode": "ER.H2O.INTR.PC",
+          "sourceReference": "https://api.worldbank.org/v2/indicator/ER.H2O.INTR.PC?format=json&per_page=1",
+          "valuesReference": "https://api.worldbank.org/v2/country/all/indicator/ER.H2O.INTR.PC?format=json&per_page=20000&page=1&date=2015%3A2025",
+          "checksum": "26cc3e56ebf74cab03f4cd9c232b70d8fa50cb42d21127638db862bc7dd7a094"
+        },
+        {
+          "id": "freshwater-withdrawal",
+          "providerCode": "ER.H2O.FWTL.ZS",
+          "sourceReference": "https://api.worldbank.org/v2/indicator/ER.H2O.FWTL.ZS?format=json&per_page=1",
+          "valuesReference": "https://api.worldbank.org/v2/country/all/indicator/ER.H2O.FWTL.ZS?format=json&per_page=20000&page=1&date=2015%3A2025",
+          "checksum": "255756ca2baa4fa931333c37aae24f2a28514f560ad4ca8bfc81f3f3291933b4"
+        },
+        {
+          "id": "low-elevation-coastal-population",
+          "providerCode": "EN.POP.EL5M.ZS",
+          "sourceReference": "https://api.worldbank.org/v2/indicator/EN.POP.EL5M.ZS?format=json&per_page=1",
+          "valuesReference": "https://api.worldbank.org/v2/country/all/indicator/EN.POP.EL5M.ZS?format=json&per_page=20000&page=1&date=2015%3A2025",
+          "checksum": "f135fb13c2bbfaad8d05af14f03d710a6f3e66d81283ca31fd200e4d712178bd"
+        },
+        {
+          "id": "fertilizer-use",
+          "providerCode": "AG.CON.FERT.ZS",
+          "sourceReference": "https://api.worldbank.org/v2/indicator/AG.CON.FERT.ZS?format=json&per_page=1",
+          "valuesReference": "https://api.worldbank.org/v2/country/all/indicator/AG.CON.FERT.ZS?format=json&per_page=20000&page=1&date=2015%3A2025",
+          "checksum": "1db0330fae7097483c17bf702c04b43fc3fb21c19e938c7dcdd5625537e805ec"
+        },
+        {
+          "id": "food-production-index",
+          "providerCode": "AG.PRD.FOOD.XD",
+          "sourceReference": "https://api.worldbank.org/v2/indicator/AG.PRD.FOOD.XD?format=json&per_page=1",
+          "valuesReference": "https://api.worldbank.org/v2/country/all/indicator/AG.PRD.FOOD.XD?format=json&per_page=20000&page=1&date=2015%3A2025",
+          "checksum": "27ae7da0d3b388b6e4df349cc143041df77e3416fc9d9370bbe80bcb0d0347b0"
+        },
+        {
+          "id": "crop-production-index",
+          "providerCode": "AG.PRD.CROP.XD",
+          "sourceReference": "https://api.worldbank.org/v2/indicator/AG.PRD.CROP.XD?format=json&per_page=1",
+          "valuesReference": "https://api.worldbank.org/v2/country/all/indicator/AG.PRD.CROP.XD?format=json&per_page=20000&page=1&date=2015%3A2025",
+          "checksum": "b6fd20c51cf1cbc29a0088e951d7ce9615ba97e1da1d60ecc584f36975fc62bd"
+        },
+        {
+          "id": "health-spending-per-person",
+          "providerCode": "SH.XPD.CHEX.PC.CD",
+          "sourceReference": "https://api.worldbank.org/v2/indicator/SH.XPD.CHEX.PC.CD?format=json&per_page=1",
+          "valuesReference": "https://api.worldbank.org/v2/country/all/indicator/SH.XPD.CHEX.PC.CD?format=json&per_page=20000&page=1&date=2015%3A2025",
+          "checksum": "51ee3bb118606c9ec990bcdf4654b0039c5aa4aa8775ab04dad7820aab911ee5"
+        },
+        {
+          "id": "government-health-spending-share",
+          "providerCode": "SH.XPD.GHED.CH.ZS",
+          "sourceReference": "https://api.worldbank.org/v2/indicator/SH.XPD.GHED.CH.ZS?format=json&per_page=1",
+          "valuesReference": "https://api.worldbank.org/v2/country/all/indicator/SH.XPD.GHED.CH.ZS?format=json&per_page=20000&page=1&date=2015%3A2025",
+          "checksum": "c771a88f19b2d51f110ab8905af1b6f550da715510510bb4817b0245e2a93527"
+        },
+        {
+          "id": "private-health-spending-share",
+          "providerCode": "SH.XPD.PVTD.CH.ZS",
+          "sourceReference": "https://api.worldbank.org/v2/indicator/SH.XPD.PVTD.CH.ZS?format=json&per_page=1",
+          "valuesReference": "https://api.worldbank.org/v2/country/all/indicator/SH.XPD.PVTD.CH.ZS?format=json&per_page=20000&page=1&date=2015%3A2025",
+          "checksum": "5a8f30d73996c224ee1112f21b907c4291823b056bcaa95d53fc29cf15371cab"
+        },
+        {
+          "id": "safely-managed-sanitation",
+          "providerCode": "SH.STA.SMSS.ZS",
+          "sourceReference": "https://api.worldbank.org/v2/indicator/SH.STA.SMSS.ZS?format=json&per_page=1",
+          "valuesReference": "https://api.worldbank.org/v2/country/all/indicator/SH.STA.SMSS.ZS?format=json&per_page=20000&page=1&date=2015%3A2025",
+          "checksum": "4fc82f81ff4d7785fb2f4b45cca838c550a643f88b1a12847b671767513573c5"
+        },
+        {
+          "id": "safely-managed-drinking-water",
+          "providerCode": "SH.H2O.SMDW.ZS",
+          "sourceReference": "https://api.worldbank.org/v2/indicator/SH.H2O.SMDW.ZS?format=json&per_page=1",
+          "valuesReference": "https://api.worldbank.org/v2/country/all/indicator/SH.H2O.SMDW.ZS?format=json&per_page=20000&page=1&date=2015%3A2025",
+          "checksum": "84422ee69b0335a7d3c13861467b49d09100914115460e27a27700789f18f973"
+        },
+        {
+          "id": "open-defecation",
+          "providerCode": "SH.STA.ODFC.ZS",
+          "sourceReference": "https://api.worldbank.org/v2/indicator/SH.STA.ODFC.ZS?format=json&per_page=1",
+          "valuesReference": "https://api.worldbank.org/v2/country/all/indicator/SH.STA.ODFC.ZS?format=json&per_page=20000&page=1&date=2015%3A2025",
+          "checksum": "773fb1cc5157f04dcf386673cc107adc9581cf5520a9c397faf29a41fb262461"
+        },
+        {
+          "id": "nurses-midwives",
+          "providerCode": "SH.MED.NUMW.P3",
+          "sourceReference": "https://api.worldbank.org/v2/indicator/SH.MED.NUMW.P3?format=json&per_page=1",
+          "valuesReference": "https://api.worldbank.org/v2/country/all/indicator/SH.MED.NUMW.P3?format=json&per_page=20000&page=1&date=2015%3A2025",
+          "checksum": "8d1bbb989ca8a9408b284dc365fadbaacc4d309bb6e6053ddf142f8fd035f6c7"
+        },
+        {
+          "id": "neonatal-mortality",
+          "providerCode": "SH.DYN.NMRT",
+          "sourceReference": "https://api.worldbank.org/v2/indicator/SH.DYN.NMRT?format=json&per_page=1",
+          "valuesReference": "https://api.worldbank.org/v2/country/all/indicator/SH.DYN.NMRT?format=json&per_page=20000&page=1&date=2015%3A2025",
+          "checksum": "1561e816058a31f36cdfd74d37df6c4ef4073130f06a1bf40d3301f33dbd4e33"
+        },
+        {
+          "id": "communicable-death-share",
+          "providerCode": "SH.DTH.COMM.ZS",
+          "sourceReference": "https://api.worldbank.org/v2/indicator/SH.DTH.COMM.ZS?format=json&per_page=1",
+          "valuesReference": "https://api.worldbank.org/v2/country/all/indicator/SH.DTH.COMM.ZS?format=json&per_page=20000&page=1&date=2015%3A2025",
+          "checksum": "4ee73f17983ef0193655e7af23de17f253ec06bcb71c91daea01b5f68045ab18"
+        },
+        {
+          "id": "noncommunicable-death-share",
+          "providerCode": "SH.DTH.NCOM.ZS",
+          "sourceReference": "https://api.worldbank.org/v2/indicator/SH.DTH.NCOM.ZS?format=json&per_page=1",
+          "valuesReference": "https://api.worldbank.org/v2/country/all/indicator/SH.DTH.NCOM.ZS?format=json&per_page=20000&page=1&date=2015%3A2025",
+          "checksum": "0f5cdb37396442bc5d586766f4ff9b003119ac45c8debb6d3c69ff0f235b3e44"
+        },
+        {
+          "id": "hepatitis-b-immunization",
+          "providerCode": "SH.IMM.HEPB",
+          "sourceReference": "https://api.worldbank.org/v2/indicator/SH.IMM.HEPB?format=json&per_page=1",
+          "valuesReference": "https://api.worldbank.org/v2/country/all/indicator/SH.IMM.HEPB?format=json&per_page=20000&page=1&date=2015%3A2025",
+          "checksum": "656f2816fea266f20c4d7af60d4b568bb06fa152a1ba786afc3ee756ed4d41d0"
+        },
+        {
+          "id": "net-primary-enrollment",
+          "providerCode": "SE.PRM.NENR",
+          "sourceReference": "https://api.worldbank.org/v2/indicator/SE.PRM.NENR?format=json&per_page=1",
+          "valuesReference": "https://api.worldbank.org/v2/country/all/indicator/SE.PRM.NENR?format=json&per_page=20000&page=1&date=2015%3A2025",
+          "checksum": "d952acfc1e46270f3829354c6edccbd3af4ece233f160485ef59ff2b03ee8916"
+        },
+        {
+          "id": "preprimary-enrollment",
+          "providerCode": "SE.PRE.ENRR",
+          "sourceReference": "https://api.worldbank.org/v2/indicator/SE.PRE.ENRR?format=json&per_page=1",
+          "valuesReference": "https://api.worldbank.org/v2/country/all/indicator/SE.PRE.ENRR?format=json&per_page=20000&page=1&date=2015%3A2025",
+          "checksum": "a388e868acfba7f8d5d31b3b25de38343cd60a78530d43848c2f839f7da6955e"
+        },
+        {
+          "id": "primary-private-enrollment",
+          "providerCode": "SE.PRM.PRIV.ZS",
+          "sourceReference": "https://api.worldbank.org/v2/indicator/SE.PRM.PRIV.ZS?format=json&per_page=1",
+          "valuesReference": "https://api.worldbank.org/v2/country/all/indicator/SE.PRM.PRIV.ZS?format=json&per_page=20000&page=1&date=2015%3A2025",
+          "checksum": "fb397f6558694453a6471a658c71f512c9db7fcf58d60b967a3d73f5905c922a"
+        },
+        {
+          "id": "primary-gender-parity",
+          "providerCode": "SE.ENR.PRIM.FM.ZS",
+          "sourceReference": "https://api.worldbank.org/v2/indicator/SE.ENR.PRIM.FM.ZS?format=json&per_page=1",
+          "valuesReference": "https://api.worldbank.org/v2/country/all/indicator/SE.ENR.PRIM.FM.ZS?format=json&per_page=20000&page=1&date=2015%3A2025",
+          "checksum": "dd865bbdd824f54782e119922959314cf16c2dddac71cc344fae3c0c058a5ee6"
+        },
+        {
+          "id": "tertiary-gender-parity",
+          "providerCode": "SE.ENR.TERT.FM.ZS",
+          "sourceReference": "https://api.worldbank.org/v2/indicator/SE.ENR.TERT.FM.ZS?format=json&per_page=1",
+          "valuesReference": "https://api.worldbank.org/v2/country/all/indicator/SE.ENR.TERT.FM.ZS?format=json&per_page=20000&page=1&date=2015%3A2025",
+          "checksum": "6cc0582a33d7564f45ae5e3de18e3e38cf64a39fbeff6986f71e99e102e25024"
+        },
+        {
+          "id": "permanent-cropland",
+          "providerCode": "AG.LND.CROP.ZS",
+          "sourceReference": "https://api.worldbank.org/v2/indicator/AG.LND.CROP.ZS?format=json&per_page=1",
+          "valuesReference": "https://api.worldbank.org/v2/country/all/indicator/AG.LND.CROP.ZS?format=json&per_page=20000&page=1&date=2015%3A2025",
+          "checksum": "5096211b79af15572b748763b0ff3167ae88be1e6cc88994052054894d97237e"
+        },
+        {
+          "id": "arable-land-per-person",
+          "providerCode": "AG.LND.ARBL.HA.PC",
+          "sourceReference": "https://api.worldbank.org/v2/indicator/AG.LND.ARBL.HA.PC?format=json&per_page=1",
+          "valuesReference": "https://api.worldbank.org/v2/country/all/indicator/AG.LND.ARBL.HA.PC?format=json&per_page=20000&page=1&date=2015%3A2025",
+          "checksum": "fe44d5d15d17cc38c3a745016687929541335a3d507e8dc6915e0d4e0b7f79fa"
+        },
+        {
+          "id": "livestock-production-index",
+          "providerCode": "AG.PRD.LVSK.XD",
+          "sourceReference": "https://api.worldbank.org/v2/indicator/AG.PRD.LVSK.XD?format=json&per_page=1",
+          "valuesReference": "https://api.worldbank.org/v2/country/all/indicator/AG.PRD.LVSK.XD?format=json&per_page=20000&page=1&date=2015%3A2025",
+          "checksum": "c61668d3c95a0a4477964913573131a8094b5482d069e88f52ad81fe87ffb45b"
+        },
+        {
+          "id": "agriculture-value-per-worker",
+          "providerCode": "NV.AGR.EMPL.KD",
+          "sourceReference": "https://api.worldbank.org/v2/indicator/NV.AGR.EMPL.KD?format=json&per_page=1",
+          "valuesReference": "https://api.worldbank.org/v2/country/all/indicator/NV.AGR.EMPL.KD?format=json&per_page=20000&page=1&date=2015%3A2025",
+          "checksum": "d4aba43b4dd45ed069ccf6bff7e7e03a0fec3e53415a05da3ff1bbf6b4bfc0ac"
+        },
+        {
+          "id": "agriculture-growth",
+          "providerCode": "NV.AGR.TOTL.KD.ZG",
+          "sourceReference": "https://api.worldbank.org/v2/indicator/NV.AGR.TOTL.KD.ZG?format=json&per_page=1",
+          "valuesReference": "https://api.worldbank.org/v2/country/all/indicator/NV.AGR.TOTL.KD.ZG?format=json&per_page=20000&page=1&date=2015%3A2025",
+          "checksum": "cece38b3d20f389fe809f8441ed8854f3d57fb04b87d539081f3206e2db05ff8"
+        },
+        {
+          "id": "net-forest-depletion",
+          "providerCode": "NY.ADJ.DFOR.GN.ZS",
+          "sourceReference": "https://api.worldbank.org/v2/indicator/NY.ADJ.DFOR.GN.ZS?format=json&per_page=1",
+          "valuesReference": "https://api.worldbank.org/v2/country/all/indicator/NY.ADJ.DFOR.GN.ZS?format=json&per_page=20000&page=1&date=2015%3A2025",
+          "checksum": "b059d01995904ddca1deea7d737f7c8afd284115b127a5cde3a9f3d167a640b2"
+        },
+        {
+          "id": "forest-rents",
+          "providerCode": "NY.GDP.FRST.RT.ZS",
+          "sourceReference": "https://api.worldbank.org/v2/indicator/NY.GDP.FRST.RT.ZS?format=json&per_page=1",
+          "valuesReference": "https://api.worldbank.org/v2/country/all/indicator/NY.GDP.FRST.RT.ZS?format=json&per_page=20000&page=1&date=2015%3A2025",
+          "checksum": "f702a9e66c607c28128d1afb121f29ee7baa2622c4469f594259f9e009aeb6e5"
+        },
+        {
+          "id": "agricultural-raw-material-exports",
+          "providerCode": "TX.VAL.AGRI.ZS.UN",
+          "sourceReference": "https://api.worldbank.org/v2/indicator/TX.VAL.AGRI.ZS.UN?format=json&per_page=1",
+          "valuesReference": "https://api.worldbank.org/v2/country/all/indicator/TX.VAL.AGRI.ZS.UN?format=json&per_page=20000&page=1&date=2015%3A2025",
+          "checksum": "34e1cb5fe3545903200b5f1072a1ba6de1fd202ff345a2a1e805b7ac17cdd82e"
+        },
+        {
+          "id": "agricultural-raw-material-imports",
+          "providerCode": "TM.VAL.AGRI.ZS.UN",
+          "sourceReference": "https://api.worldbank.org/v2/indicator/TM.VAL.AGRI.ZS.UN?format=json&per_page=1",
+          "valuesReference": "https://api.worldbank.org/v2/country/all/indicator/TM.VAL.AGRI.ZS.UN?format=json&per_page=20000&page=1&date=2015%3A2025",
+          "checksum": "25c9dca3c9104d1527a81b6806ce49ac694faed7114d6cbba3f51914e238934e"
+        },
+        {
+          "id": "precipitation-depth",
+          "providerCode": "AG.LND.PRCP.MM",
+          "sourceReference": "https://api.worldbank.org/v2/indicator/AG.LND.PRCP.MM?format=json&per_page=1",
+          "valuesReference": "https://api.worldbank.org/v2/country/all/indicator/AG.LND.PRCP.MM?format=json&per_page=20000&page=1&date=2015%3A2025",
+          "checksum": "b80e84eeba6a70baaa9c88c58dd86d75f0cb01022c9028d9524b2971a0d886bb"
+        },
+        {
+          "id": "water-stress",
+          "providerCode": "ER.H2O.FWST.ZS",
+          "sourceReference": "https://api.worldbank.org/v2/indicator/ER.H2O.FWST.ZS?format=json&per_page=1",
+          "valuesReference": "https://api.worldbank.org/v2/country/all/indicator/ER.H2O.FWST.ZS?format=json&per_page=20000&page=1&date=2015%3A2025",
+          "checksum": "6d44ddb799f21d2f9836ad40188f0a9927c58659cbeadd24f7f36cb3630f3273"
+        },
+        {
+          "id": "agricultural-water-withdrawals",
+          "providerCode": "ER.H2O.FWAG.ZS",
+          "sourceReference": "https://api.worldbank.org/v2/indicator/ER.H2O.FWAG.ZS?format=json&per_page=1",
+          "valuesReference": "https://api.worldbank.org/v2/country/all/indicator/ER.H2O.FWAG.ZS?format=json&per_page=20000&page=1&date=2015%3A2025",
+          "checksum": "f5581ea6048e26ea0873b885b699a37bea78f1fa241bf52e92373ef1d01cc804"
+        },
+        {
+          "id": "industrial-water-withdrawals",
+          "providerCode": "ER.H2O.FWIN.ZS",
+          "sourceReference": "https://api.worldbank.org/v2/indicator/ER.H2O.FWIN.ZS?format=json&per_page=1",
+          "valuesReference": "https://api.worldbank.org/v2/country/all/indicator/ER.H2O.FWIN.ZS?format=json&per_page=20000&page=1&date=2015%3A2025",
+          "checksum": "b2cb62b4abc564b39250e9d9ab6365490679ceb7581b8055b8d674dfe5bb6db4"
+        },
+        {
+          "id": "domestic-water-withdrawals",
+          "providerCode": "ER.H2O.FWDM.ZS",
+          "sourceReference": "https://api.worldbank.org/v2/indicator/ER.H2O.FWDM.ZS?format=json&per_page=1",
+          "valuesReference": "https://api.worldbank.org/v2/country/all/indicator/ER.H2O.FWDM.ZS?format=json&per_page=20000&page=1&date=2015%3A2025",
+          "checksum": "947516ba01a810f49086497c37c8f338290bf99c26df8c29af5e96fdadc7f146"
+        },
+        {
+          "id": "water-productivity",
+          "providerCode": "ER.GDP.FWTL.M3.KD",
+          "sourceReference": "https://api.worldbank.org/v2/indicator/ER.GDP.FWTL.M3.KD?format=json&per_page=1",
+          "valuesReference": "https://api.worldbank.org/v2/country/all/indicator/ER.GDP.FWTL.M3.KD?format=json&per_page=20000&page=1&date=2015%3A2025",
+          "checksum": "03c0fbae0af5c20c89f7c8e12de1e626f846bee20c6a5fc3b72185b18e2e3a04"
+        },
+        {
+          "id": "total-protected-areas",
+          "providerCode": "ER.PTD.TOTL.ZS",
+          "sourceReference": "https://api.worldbank.org/v2/indicator/ER.PTD.TOTL.ZS?format=json&per_page=1",
+          "valuesReference": "https://api.worldbank.org/v2/country/all/indicator/ER.PTD.TOTL.ZS?format=json&per_page=20000&page=1&date=2015%3A2025",
+          "checksum": "dcde13adb82a0fd2f546695519416bd2954f8d89843c59dac9583f2e1fb039ab"
+        },
+        {
+          "id": "pm25-guideline-exposure",
+          "providerCode": "EN.ATM.PM25.MC.ZS",
+          "sourceReference": "https://api.worldbank.org/v2/indicator/EN.ATM.PM25.MC.ZS?format=json&per_page=1",
+          "valuesReference": "https://api.worldbank.org/v2/country/all/indicator/EN.ATM.PM25.MC.ZS?format=json&per_page=20000&page=1&date=2015%3A2025",
+          "checksum": "02bfdf0fa625616a10b04463b3421ab35d9412de56a41419900514a6a4282e02"
+        },
+        {
+          "id": "carbon-intensity-gdp",
+          "providerCode": "EN.GHG.CO2.RT.GDP.KD",
+          "sourceReference": "https://api.worldbank.org/v2/indicator/EN.GHG.CO2.RT.GDP.KD?format=json&per_page=1",
+          "valuesReference": "https://api.worldbank.org/v2/country/all/indicator/EN.GHG.CO2.RT.GDP.KD?format=json&per_page=20000&page=1&date=2015%3A2025",
+          "checksum": "3e016c885794fb041423a74fe9eb12e367073b8643a6c557cee34d6cb461b441"
+        },
+        {
+          "id": "natural-resource-rents",
+          "providerCode": "NY.GDP.TOTL.RT.ZS",
+          "sourceReference": "https://api.worldbank.org/v2/indicator/NY.GDP.TOTL.RT.ZS?format=json&per_page=1",
+          "valuesReference": "https://api.worldbank.org/v2/country/all/indicator/NY.GDP.TOTL.RT.ZS?format=json&per_page=20000&page=1&date=2015%3A2025",
+          "checksum": "4e4f3f71759df89afa08700ffbe6aa8601d7f7dfec8756513d9f800229d0f696"
+        },
+        {
+          "id": "natural-resource-depletion",
+          "providerCode": "NY.ADJ.DRES.GN.ZS",
+          "sourceReference": "https://api.worldbank.org/v2/indicator/NY.ADJ.DRES.GN.ZS?format=json&per_page=1",
+          "valuesReference": "https://api.worldbank.org/v2/country/all/indicator/NY.ADJ.DRES.GN.ZS?format=json&per_page=20000&page=1&date=2015%3A2025",
+          "checksum": "b532672db13a50fe47fdefd78e20a93f74c406d1423fcddebc2d8580febeaec6"
+        },
+        {
+          "id": "particulate-damage-share",
+          "providerCode": "NY.ADJ.DPEM.GN.ZS",
+          "sourceReference": "https://api.worldbank.org/v2/indicator/NY.ADJ.DPEM.GN.ZS?format=json&per_page=1",
+          "valuesReference": "https://api.worldbank.org/v2/country/all/indicator/NY.ADJ.DPEM.GN.ZS?format=json&per_page=20000&page=1&date=2015%3A2025",
+          "checksum": "4f81284623ee10058813d7a0f9026cc51e5550429d2d39682986cc3e8cd39de3"
+        },
+        {
+          "id": "hydro-electricity-share",
+          "providerCode": "EG.ELC.HYRO.ZS",
+          "sourceReference": "https://api.worldbank.org/v2/indicator/EG.ELC.HYRO.ZS?format=json&per_page=1",
+          "valuesReference": "https://api.worldbank.org/v2/country/all/indicator/EG.ELC.HYRO.ZS?format=json&per_page=20000&page=1&date=2015%3A2025",
+          "checksum": "092849388b92b34fd9b3374fcc71885ceaa40a3e3d07740ab32dab77329e5f4a"
+        },
+        {
+          "id": "coal-electricity-share",
+          "providerCode": "EG.ELC.COAL.ZS",
+          "sourceReference": "https://api.worldbank.org/v2/indicator/EG.ELC.COAL.ZS?format=json&per_page=1",
+          "valuesReference": "https://api.worldbank.org/v2/country/all/indicator/EG.ELC.COAL.ZS?format=json&per_page=20000&page=1&date=2015%3A2025",
+          "checksum": "4c531f35d0552d0e2d96a148ded25fd409c46b915bd04dd3b2413403596130f9"
+        },
+        {
+          "id": "natural-gas-electricity-share",
+          "providerCode": "EG.ELC.NGAS.ZS",
+          "sourceReference": "https://api.worldbank.org/v2/indicator/EG.ELC.NGAS.ZS?format=json&per_page=1",
+          "valuesReference": "https://api.worldbank.org/v2/country/all/indicator/EG.ELC.NGAS.ZS?format=json&per_page=20000&page=1&date=2015%3A2025",
+          "checksum": "fb0ef52c3f9daf6a49107dbbabf597cba1d09d3fc8081b300cbc159c46675b2e"
+        },
+        {
+          "id": "oil-electricity-share",
+          "providerCode": "EG.ELC.PETR.ZS",
+          "sourceReference": "https://api.worldbank.org/v2/indicator/EG.ELC.PETR.ZS?format=json&per_page=1",
+          "valuesReference": "https://api.worldbank.org/v2/country/all/indicator/EG.ELC.PETR.ZS?format=json&per_page=20000&page=1&date=2015%3A2025",
+          "checksum": "d6d12822e08356eb26ca572fe2ad58c3777f86e81449f1f5c552dcc1895fea43"
+        },
+        {
+          "id": "nuclear-electricity-share",
+          "providerCode": "EG.ELC.NUCL.ZS",
+          "sourceReference": "https://api.worldbank.org/v2/indicator/EG.ELC.NUCL.ZS?format=json&per_page=1",
+          "valuesReference": "https://api.worldbank.org/v2/country/all/indicator/EG.ELC.NUCL.ZS?format=json&per_page=20000&page=1&date=2015%3A2025",
+          "checksum": "a781fe4487b463ae2073822762cb024f233b8498db55b11b6eb45bce0f7ce5f7"
+        },
+        {
+          "id": "fossil-electricity-share",
+          "providerCode": "EG.ELC.FOSL.ZS",
+          "sourceReference": "https://api.worldbank.org/v2/indicator/EG.ELC.FOSL.ZS?format=json&per_page=1",
+          "valuesReference": "https://api.worldbank.org/v2/country/all/indicator/EG.ELC.FOSL.ZS?format=json&per_page=20000&page=1&date=2015%3A2025",
+          "checksum": "887cd6f362d22cefc1c2f0c8f75887fbcc0f2d600f290679cad55166e67f3b98"
+        },
+        {
+          "id": "nonhydro-renewable-electricity",
+          "providerCode": "EG.ELC.RNWX.ZS",
+          "sourceReference": "https://api.worldbank.org/v2/indicator/EG.ELC.RNWX.ZS?format=json&per_page=1",
+          "valuesReference": "https://api.worldbank.org/v2/country/all/indicator/EG.ELC.RNWX.ZS?format=json&per_page=20000&page=1&date=2015%3A2025",
+          "checksum": "233fb13cf363f420b077532e9fc2315528ec2caefcedff7140c4ca9a6214fbbb"
+        },
+        {
+          "id": "rural-electricity-access",
+          "providerCode": "EG.ELC.ACCS.RU.ZS",
+          "sourceReference": "https://api.worldbank.org/v2/indicator/EG.ELC.ACCS.RU.ZS?format=json&per_page=1",
+          "valuesReference": "https://api.worldbank.org/v2/country/all/indicator/EG.ELC.ACCS.RU.ZS?format=json&per_page=20000&page=1&date=2015%3A2025",
+          "checksum": "af72dd1f7e2b8f97d401c98eedfa709ee2aab5e990d9fc4576b55185447fbcef"
+        },
+        {
+          "id": "rural-clean-cooking-access",
+          "providerCode": "EG.CFT.ACCS.RU.ZS",
+          "sourceReference": "https://api.worldbank.org/v2/indicator/EG.CFT.ACCS.RU.ZS?format=json&per_page=1",
+          "valuesReference": "https://api.worldbank.org/v2/country/all/indicator/EG.CFT.ACCS.RU.ZS?format=json&per_page=20000&page=1&date=2015%3A2025",
+          "checksum": "7c0986a9d4edecd39e9e959cc9309056dc1ddc00209d8dc2772cc00106c46d6d"
+        },
+        {
+          "id": "gdp-per-capita-growth",
+          "providerCode": "NY.GDP.PCAP.KD.ZG",
+          "sourceReference": "https://api.worldbank.org/v2/indicator/NY.GDP.PCAP.KD.ZG?format=json&per_page=1",
+          "valuesReference": "https://api.worldbank.org/v2/country/all/indicator/NY.GDP.PCAP.KD.ZG?format=json&per_page=20000&page=1&date=2015%3A2025",
+          "checksum": "80368ff2220d9259fbf03bd4dbec3054e3c6bf5c8dbf18740c161d34f054ba53"
+        },
+        {
+          "id": "government-consumption",
+          "providerCode": "NE.CON.GOVT.ZS",
+          "sourceReference": "https://api.worldbank.org/v2/indicator/NE.CON.GOVT.ZS?format=json&per_page=1",
+          "valuesReference": "https://api.worldbank.org/v2/country/all/indicator/NE.CON.GOVT.ZS?format=json&per_page=20000&page=1&date=2015%3A2025",
+          "checksum": "37d20942ee5536b9d2fd32e06460db74264ee03d7f32273d48fa6d1e154d0b38"
+        },
+        {
+          "id": "household-consumption",
+          "providerCode": "NE.CON.PRVT.ZS",
+          "sourceReference": "https://api.worldbank.org/v2/indicator/NE.CON.PRVT.ZS?format=json&per_page=1",
+          "valuesReference": "https://api.worldbank.org/v2/country/all/indicator/NE.CON.PRVT.ZS?format=json&per_page=20000&page=1&date=2015%3A2025",
+          "checksum": "56d32c54b2a59dbaa9368055f81a5dac4d7899568e3029df57d4da806a1a6859"
+        },
+        {
+          "id": "gross-capital-formation",
+          "providerCode": "NE.GDI.TOTL.ZS",
+          "sourceReference": "https://api.worldbank.org/v2/indicator/NE.GDI.TOTL.ZS?format=json&per_page=1",
+          "valuesReference": "https://api.worldbank.org/v2/country/all/indicator/NE.GDI.TOTL.ZS?format=json&per_page=20000&page=1&date=2015%3A2025",
+          "checksum": "ed509848bd55256dea996523e97c225468a1e04a2d3e9ee7d4266ab9ca9fd563"
+        },
+        {
+          "id": "fixed-capital-formation",
+          "providerCode": "NE.GDI.FTOT.ZS",
+          "sourceReference": "https://api.worldbank.org/v2/indicator/NE.GDI.FTOT.ZS?format=json&per_page=1",
+          "valuesReference": "https://api.worldbank.org/v2/country/all/indicator/NE.GDI.FTOT.ZS?format=json&per_page=20000&page=1&date=2015%3A2025",
+          "checksum": "ab0633fd25f3e83bd01dfccad6691335f47d1a7e09a107f874861b8c14be520c"
+        },
+        {
+          "id": "gross-savings-gdp",
+          "providerCode": "NY.GNS.ICTR.ZS",
+          "sourceReference": "https://api.worldbank.org/v2/indicator/NY.GNS.ICTR.ZS?format=json&per_page=1",
+          "valuesReference": "https://api.worldbank.org/v2/country/all/indicator/NY.GNS.ICTR.ZS?format=json&per_page=20000&page=1&date=2015%3A2025",
+          "checksum": "5588fd20116f0b69e806b18ca93a1df42d57136c848be3021dca6d1b786703c2"
+        },
+        {
+          "id": "domestic-savings",
+          "providerCode": "NY.GDS.TOTL.ZS",
+          "sourceReference": "https://api.worldbank.org/v2/indicator/NY.GDS.TOTL.ZS?format=json&per_page=1",
+          "valuesReference": "https://api.worldbank.org/v2/country/all/indicator/NY.GDS.TOTL.ZS?format=json&per_page=20000&page=1&date=2015%3A2025",
+          "checksum": "68377a0715f98dc9aa657fa29bb7cb85b0e1b012dc69e9e4eb3ec4d2377159d6"
+        },
+        {
+          "id": "revenue-excluding-grants",
+          "providerCode": "GC.REV.XGRT.GD.ZS",
+          "sourceReference": "https://api.worldbank.org/v2/indicator/GC.REV.XGRT.GD.ZS?format=json&per_page=1",
+          "valuesReference": "https://api.worldbank.org/v2/country/all/indicator/GC.REV.XGRT.GD.ZS?format=json&per_page=20000&page=1&date=2015%3A2025",
+          "checksum": "3b4d47601c5d75660dd5e79a6c46bbdadecb5317b7648a48c7b2d3f5a0fa912e"
+        },
+        {
+          "id": "government-expense",
+          "providerCode": "GC.XPN.TOTL.GD.ZS",
+          "sourceReference": "https://api.worldbank.org/v2/indicator/GC.XPN.TOTL.GD.ZS?format=json&per_page=1",
+          "valuesReference": "https://api.worldbank.org/v2/country/all/indicator/GC.XPN.TOTL.GD.ZS?format=json&per_page=20000&page=1&date=2015%3A2025",
+          "checksum": "f758b8fd58e9fade44db9f248fdb0b1b313fa06d13d69e6bd6d2c859e12298a1"
+        },
+        {
+          "id": "fdi-outflows",
+          "providerCode": "BM.KLT.DINV.WD.GD.ZS",
+          "sourceReference": "https://api.worldbank.org/v2/indicator/BM.KLT.DINV.WD.GD.ZS?format=json&per_page=1",
+          "valuesReference": "https://api.worldbank.org/v2/country/all/indicator/BM.KLT.DINV.WD.GD.ZS?format=json&per_page=20000&page=1&date=2015%3A2025",
+          "checksum": "4e31c7f358e52a7db1c7c8bdfbcdbf1ffc771073e44079953dd140617142dc11"
+        },
+        {
+          "id": "domestic-credit-private-sector",
+          "providerCode": "FD.AST.PRVT.GD.ZS",
+          "sourceReference": "https://api.worldbank.org/v2/indicator/FD.AST.PRVT.GD.ZS?format=json&per_page=1",
+          "valuesReference": "https://api.worldbank.org/v2/country/all/indicator/FD.AST.PRVT.GD.ZS?format=json&per_page=20000&page=1&date=2015%3A2025",
+          "checksum": "691c9f95e297776b968fcf2c34e941fa4f179b0f3f3be47dc6d7775cfcf4e33f"
+        },
+        {
+          "id": "account-ownership",
+          "providerCode": "FX.OWN.TOTL.ZS",
+          "sourceReference": "https://api.worldbank.org/v2/indicator/FX.OWN.TOTL.ZS?format=json&per_page=1",
+          "valuesReference": "https://api.worldbank.org/v2/country/all/indicator/FX.OWN.TOTL.ZS?format=json&per_page=20000&page=1&date=2015%3A2025",
+          "checksum": "050a67757e3500fe93a919c4b1a548c0fe14567d0ac481e5b0b51789b3f4ef45"
+        },
+        {
+          "id": "male-labor-force",
+          "providerCode": "SL.TLF.CACT.MA.ZS",
+          "sourceReference": "https://api.worldbank.org/v2/indicator/SL.TLF.CACT.MA.ZS?format=json&per_page=1",
+          "valuesReference": "https://api.worldbank.org/v2/country/all/indicator/SL.TLF.CACT.MA.ZS?format=json&per_page=20000&page=1&date=2015%3A2025",
+          "checksum": "099d8b9ebd8d71c33ca49f3fcaa5fdb1b36406519f628b502f24a3fad1f3ac25"
+        },
+        {
+          "id": "labor-force-gender-ratio",
+          "providerCode": "SL.TLF.CACT.FM.ZS",
+          "sourceReference": "https://api.worldbank.org/v2/indicator/SL.TLF.CACT.FM.ZS?format=json&per_page=1",
+          "valuesReference": "https://api.worldbank.org/v2/country/all/indicator/SL.TLF.CACT.FM.ZS?format=json&per_page=20000&page=1&date=2015%3A2025",
+          "checksum": "9f65d8b39c586847b2441612a10e89e8df6a035dd012720d1a88d621478b5068"
+        },
+        {
+          "id": "youth-labor-force",
+          "providerCode": "SL.TLF.ACTI.1524.ZS",
+          "sourceReference": "https://api.worldbank.org/v2/indicator/SL.TLF.ACTI.1524.ZS?format=json&per_page=1",
+          "valuesReference": "https://api.worldbank.org/v2/country/all/indicator/SL.TLF.ACTI.1524.ZS?format=json&per_page=20000&page=1&date=2015%3A2025",
+          "checksum": "88ae613ce72d3a1dd4921773a2a6572458fc594bd6084ef2214a5d649a83eb96"
+        },
+        {
+          "id": "youth-unemployment",
+          "providerCode": "SL.UEM.1524.ZS",
+          "sourceReference": "https://api.worldbank.org/v2/indicator/SL.UEM.1524.ZS?format=json&per_page=1",
+          "valuesReference": "https://api.worldbank.org/v2/country/all/indicator/SL.UEM.1524.ZS?format=json&per_page=20000&page=1&date=2015%3A2025",
+          "checksum": "f4121fb0193072d544ad10735194adb8f674c334245a62652f145454746616a6"
+        },
+        {
+          "id": "male-unemployment",
+          "providerCode": "SL.UEM.TOTL.MA.ZS",
+          "sourceReference": "https://api.worldbank.org/v2/indicator/SL.UEM.TOTL.MA.ZS?format=json&per_page=1",
+          "valuesReference": "https://api.worldbank.org/v2/country/all/indicator/SL.UEM.TOTL.MA.ZS?format=json&per_page=20000&page=1&date=2015%3A2025",
+          "checksum": "94377236f233c96a111690cfc7404c6a613338348f83cb3c5bd0cd6245ff5ddc"
+        },
+        {
+          "id": "female-unemployment",
+          "providerCode": "SL.UEM.TOTL.FE.ZS",
+          "sourceReference": "https://api.worldbank.org/v2/indicator/SL.UEM.TOTL.FE.ZS?format=json&per_page=1",
+          "valuesReference": "https://api.worldbank.org/v2/country/all/indicator/SL.UEM.TOTL.FE.ZS?format=json&per_page=20000&page=1&date=2015%3A2025",
+          "checksum": "468f034a4cf3f85f77f21ff20861fbfcd1c360304366da01b6e303d9b116ab77"
+        },
+        {
+          "id": "employment-population-ratio",
+          "providerCode": "SL.EMP.TOTL.SP.ZS",
+          "sourceReference": "https://api.worldbank.org/v2/indicator/SL.EMP.TOTL.SP.ZS?format=json&per_page=1",
+          "valuesReference": "https://api.worldbank.org/v2/country/all/indicator/SL.EMP.TOTL.SP.ZS?format=json&per_page=20000&page=1&date=2015%3A2025",
+          "checksum": "728f90e7cc3441443bfba54121b7fbb7ea83aadeb095efa880f1f4bcda2abaa8"
+        },
+        {
+          "id": "wage-salaried-workers",
+          "providerCode": "SL.EMP.WORK.ZS",
+          "sourceReference": "https://api.worldbank.org/v2/indicator/SL.EMP.WORK.ZS?format=json&per_page=1",
+          "valuesReference": "https://api.worldbank.org/v2/country/all/indicator/SL.EMP.WORK.ZS?format=json&per_page=20000&page=1&date=2015%3A2025",
+          "checksum": "b16a0253ee2f0b777ce33398cea656080d6951b884a3ef9478b82198b84ab2dc"
+        },
+        {
+          "id": "employers-share",
+          "providerCode": "SL.EMP.MPYR.ZS",
+          "sourceReference": "https://api.worldbank.org/v2/indicator/SL.EMP.MPYR.ZS?format=json&per_page=1",
+          "valuesReference": "https://api.worldbank.org/v2/country/all/indicator/SL.EMP.MPYR.ZS?format=json&per_page=20000&page=1&date=2015%3A2025",
+          "checksum": "62dad90627fb1db1d3632ff1345eb63ef5cddbce048fdcf5e760e3324c64fc62"
+        },
+        {
+          "id": "employment-industry",
+          "providerCode": "SL.IND.EMPL.ZS",
+          "sourceReference": "https://api.worldbank.org/v2/indicator/SL.IND.EMPL.ZS?format=json&per_page=1",
+          "valuesReference": "https://api.worldbank.org/v2/country/all/indicator/SL.IND.EMPL.ZS?format=json&per_page=20000&page=1&date=2015%3A2025",
+          "checksum": "de5b004d1f84b9383b44087c5bc4c7ae0c92052dc42e64f7c807487de18e434d"
+        },
+        {
+          "id": "fixed-telephone-subscriptions",
+          "providerCode": "IT.MLT.MAIN.P2",
+          "sourceReference": "https://api.worldbank.org/v2/indicator/IT.MLT.MAIN.P2?format=json&per_page=1",
+          "valuesReference": "https://api.worldbank.org/v2/country/all/indicator/IT.MLT.MAIN.P2?format=json&per_page=20000&page=1&date=2015%3A2025",
+          "checksum": "c05b7d9bce1118a9d17262a9d39d56170dae5acdb2f91b19c45c4bb9b01c5b82"
+        },
+        {
+          "id": "bank-branches",
+          "providerCode": "FB.CBK.BRCH.P5",
+          "sourceReference": "https://api.worldbank.org/v2/indicator/FB.CBK.BRCH.P5?format=json&per_page=1",
+          "valuesReference": "https://api.worldbank.org/v2/country/all/indicator/FB.CBK.BRCH.P5?format=json&per_page=20000&page=1&date=2015%3A2025",
+          "checksum": "c7b7e8bd88f93c5148f9db1dfc5d0bc2fb7d2667541f6145f3d4ac671f5a5f71"
+        },
+        {
+          "id": "logistics-overall",
+          "providerCode": "LP.LPI.OVRL.XQ",
+          "sourceReference": "https://api.worldbank.org/v2/indicator/LP.LPI.OVRL.XQ?format=json&per_page=1",
+          "valuesReference": "https://api.worldbank.org/v2/country/all/indicator/LP.LPI.OVRL.XQ?format=json&per_page=20000&page=1&date=2015%3A2025",
+          "checksum": "0f921bd213e9414a1a85262112e9654ec22f468d2be2f7f1dde5c8b3f46d4657"
+        },
+        {
+          "id": "logistics-infrastructure",
+          "providerCode": "LP.LPI.INFR.XQ",
+          "sourceReference": "https://api.worldbank.org/v2/indicator/LP.LPI.INFR.XQ?format=json&per_page=1",
+          "valuesReference": "https://api.worldbank.org/v2/country/all/indicator/LP.LPI.INFR.XQ?format=json&per_page=20000&page=1&date=2015%3A2025",
+          "checksum": "0251fde46971b60a2baac7d80d16322ca267bea795b629ad78c1934f67f77dd9"
+        },
+        {
+          "id": "largest-city-share",
+          "providerCode": "EN.URB.LCTY.UR.ZS",
+          "sourceReference": "https://api.worldbank.org/v2/indicator/EN.URB.LCTY.UR.ZS?format=json&per_page=1",
+          "valuesReference": "https://api.worldbank.org/v2/country/all/indicator/EN.URB.LCTY.UR.ZS?format=json&per_page=20000&page=1&date=2015%3A2025",
+          "checksum": "bc15986f95d577aaf0214439692fbb3e45a6bf0e9304acb5055300847f8fa978"
+        },
+        {
+          "id": "urban-slum-population",
+          "providerCode": "EN.POP.SLUM.UR.ZS",
+          "sourceReference": "https://api.worldbank.org/v2/indicator/EN.POP.SLUM.UR.ZS?format=json&per_page=1",
+          "valuesReference": "https://api.worldbank.org/v2/country/all/indicator/EN.POP.SLUM.UR.ZS?format=json&per_page=20000&page=1&date=2015%3A2025",
+          "checksum": "8e06948a282c8a2c807a86218a0ad926f57f091f8eaf6f9624d11ee1c4ca9221"
+        },
+        {
+          "id": "urban-population-growth",
+          "providerCode": "SP.URB.GROW",
+          "sourceReference": "https://api.worldbank.org/v2/indicator/SP.URB.GROW?format=json&per_page=1",
+          "valuesReference": "https://api.worldbank.org/v2/country/all/indicator/SP.URB.GROW?format=json&per_page=20000&page=1&date=2015%3A2025",
+          "checksum": "fc37a7144a4e5f5bdfc62f4f372e029a6bb756c110d307da49c4084bcac6f04a"
+        },
+        {
+          "id": "tourism-expenditures-share",
+          "providerCode": "ST.INT.XPND.MP.ZS",
+          "sourceReference": "https://api.worldbank.org/v2/indicator/ST.INT.XPND.MP.ZS?format=json&per_page=1",
+          "valuesReference": "https://api.worldbank.org/v2/country/all/indicator/ST.INT.XPND.MP.ZS?format=json&per_page=20000&page=1&date=2015%3A2025",
+          "checksum": "25accd1ed0c663a413a378f49af27e96281cda6e7bc8b9022ebe6990f704b08d"
+        },
+        {
+          "id": "low-elevation-land-share",
+          "providerCode": "AG.LND.EL5M.ZS",
+          "sourceReference": "https://api.worldbank.org/v2/indicator/AG.LND.EL5M.ZS?format=json&per_page=1",
+          "valuesReference": "https://api.worldbank.org/v2/country/all/indicator/AG.LND.EL5M.ZS?format=json&per_page=20000&page=1&date=2015%3A2025",
+          "checksum": "e5b7a558c38fae3e1d466aec906a80619a9b3cb9c65de8c854db840610b4280a"
+        },
+        {
+          "id": "women-business-law",
+          "providerCode": "GD_WBL_OVL_LAW",
+          "sourceReference": "https://api.worldbank.org/v2/indicator/GD_WBL_OVL_LAW?format=json&per_page=1",
+          "valuesReference": "https://api.worldbank.org/v2/country/all/indicator/GD_WBL_OVL_LAW?format=json&per_page=20000&page=1&date=2015%3A2025",
+          "checksum": "d53e4eeb766b89e3269062b87f591c9245d8a7c9aa685cbf7f4cc1687ea7e8d4"
+        },
+        {
+          "id": "statistical-data-infrastructure",
+          "providerCode": "IQ.SPI.PIL5",
+          "sourceReference": "https://api.worldbank.org/v2/indicator/IQ.SPI.PIL5?format=json&per_page=1",
+          "valuesReference": "https://api.worldbank.org/v2/country/all/indicator/IQ.SPI.PIL5?format=json&per_page=20000&page=1&date=2015%3A2025",
+          "checksum": "dccce09c5bb1b18cdca06e4d91ec6ae6a88c9823b3af72e2e86b107edec3b29a"
         }
       ]
     }

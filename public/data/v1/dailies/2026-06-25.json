@@ -2,33 +2,32 @@
   "schemaVersion": "1.1.0",
   "game": "worldprint",
   "date": "2026-06-25",
-  "contentVersion": "2026.06.19-ed1",
+  "contentVersion": "2026.06.22-exp2-qa1",
   "roundIds": [
+    "worldprint-tuberculosis-incidence",
+    "worldprint-arable-land",
+    "worldprint-under-five-mortality",
     "worldprint-adolescent-fertility",
-    "worldprint-unemployment",
-    "worldprint-internet-users",
-    "worldprint-older-adults-share",
-    "worldprint-secondary-enrollment"
+    "worldprint-energy-use"
   ],
   "indicatorIds": [
+    "tuberculosis-incidence",
+    "arable-land",
+    "under-five-mortality",
     "adolescent-fertility",
-    "unemployment",
-    "internet-users",
-    "older-adults-share",
-    "secondary-enrollment"
+    "energy-use"
   ],
   "categoryMix": {
-    "demography": 2,
-    "labor": 1,
-    "connectivity": 1,
-    "education": 1
+    "health": 2,
+    "land": 1,
+    "demography": 1,
+    "energy": 1
   },
   "mapDifficultyMix": {
-    "expert": 1,
-    "standard": 2,
-    "intro": 2
+    "expert": 2,
+    "standard": 3
   },
-  "generatedAt": "2026-06-19T17:09:23.333350+00:00",
+  "generatedAt": "2026-06-22T18:07:37.460505+00:00",
   "generatorVersion": "daily-manifest-v1",
   "varietyNotes": [
     "Selected with category, difficulty, and same-day correlation safeguards."

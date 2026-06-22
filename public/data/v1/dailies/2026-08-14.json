@@ -2,34 +2,33 @@
   "schemaVersion": "1.1.0",
   "game": "worldprint",
   "date": "2026-08-14",
-  "contentVersion": "2026.06.19-ed1",
+  "contentVersion": "2026.06.22-exp2-qa1",
   "roundIds": [
-    "worldprint-tuberculosis-incidence",
-    "worldprint-co2-per-capita",
-    "worldprint-gdp-per-capita",
+    "worldprint-adolescent-fertility",
+    "worldprint-freshwater-per-capita",
     "worldprint-internet-users",
-    "worldprint-agriculture-value-added"
+    "worldprint-forest-area",
+    "worldprint-employment-agriculture"
   ],
   "indicatorIds": [
-    "tuberculosis-incidence",
-    "co2-per-capita",
-    "gdp-per-capita",
+    "adolescent-fertility",
+    "freshwater-per-capita",
     "internet-users",
-    "agriculture-value-added"
+    "forest-area",
+    "employment-agriculture"
   ],
   "categoryMix": {
-    "health": 1,
-    "environment": 1,
-    "development": 1,
+    "demography": 1,
+    "environment": 2,
     "connectivity": 1,
-    "economy": 1
+    "labor": 1
   },
   "mapDifficultyMix": {
     "expert": 1,
     "standard": 2,
     "intro": 2
   },
-  "generatedAt": "2026-06-19T17:09:23.341948+00:00",
+  "generatedAt": "2026-06-22T18:07:37.466725+00:00",
   "generatorVersion": "daily-manifest-v1",
   "varietyNotes": [
     "Selected with category, difficulty, and same-day correlation safeguards."

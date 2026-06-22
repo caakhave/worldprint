@@ -24,7 +24,7 @@ function ArchiveCard({ entry, todayKey, completion }: { entry: DailyIndexEntry; 
     <article className="archive-card" data-today={isToday ? "true" : "false"} data-completed={completion ? "true" : "false"}>
       <div className="archive-card-heading">
         <div>
-          <span>{isToday ? "Today" : `Daily #${challengeNumber(entry.date)}`}</span>
+          <span>{isToday ? "Today" : `Mystery Map Daily #${challengeNumber(entry.date)}`}</span>
           <h2>{entry.date}</h2>
         </div>
         <strong>{entry.roundCount} maps</strong>
@@ -89,7 +89,7 @@ export function ArchiveClient() {
       <section className="archive-page page-shell">
         <div className="empty-state surface">
           <h1>Loading archive</h1>
-          <p>Reading generated Daily manifests.</p>
+        <p>Reading generated Mystery Map Daily manifests.</p>
         </div>
       </section>
     );
@@ -98,8 +98,8 @@ export function ArchiveClient() {
   return (
     <section className="archive-page page-shell">
       <div className="archive-hero">
-        <p className="eyebrow">WORLDPRINT Archive</p>
-        <h1 className="page-title">Recent Daily games, frozen at build time.</h1>
+        <p className="eyebrow">Mystery Map Archive</p>
+        <h1 className="page-title">Recent Daily Mystery Maps, frozen at build time.</h1>
         <p className="lead">
           Browse generated Dailies from {index.range.start} to {index.range.end}. Results are local to this browser; there is no account
           sync or leaderboard in this slice.
@@ -109,7 +109,7 @@ export function ArchiveClient() {
         <strong>Archive plays do not change today&apos;s streak.</strong>
         <span>Today&apos;s Daily still updates the live streak; past and future archive plays save only local history.</span>
       </div>
-      <div className="archive-grid" aria-label="Worldprint Daily archive">
+      <div className="archive-grid" aria-label="Mystery Map Daily archive">
         {entries.map((entry) => (
           <ArchiveCard key={entry.date} entry={entry} todayKey={todayKey} completion={completionForDate(store, entry.date)} />
         ))}

@@ -208,12 +208,12 @@
     "valuesReference": "https://api.worldbank.org/v2/country/all/indicator/SP.POP.0014.TO.ZS?format=json&per_page=20000&page=1&date=2015%3A2025",
     "license": "Creative Commons Attribution 4.0 International unless specifically labeled otherwise by World Bank metadata",
     "licenseReference": "https://www.worldbank.org/en/about/legal/terms-of-use-for-datasets",
-    "retrievedAt": "2026-06-19T17:08:58.218216+00:00",
+    "retrievedAt": "2026-06-22T18:05:37.810437+00:00",
     "checksum": "d231b68c52f9ef69148efdcc45c0a677249b6499e5cf22af16657e4415c0224b",
     "sourceOrganization": "United Nations Population Division. World Population Prospects., United Nations Population Division, uri: https://population.un.org/wpp/, publisher: United Nations Population Division"
   },
   "reviewStatus": "approved",
-  "contentVersion": "2026.06.19-ed1",
+  "contentVersion": "2026.06.22-exp2-qa1",
   "editorial": {
     "shortHook": "The young-population map.",
     "patternNote": "The darkest countries include Central African Republic, Niger, Somalia, Fed. Rep., while the lightest include Korea, Rep., Japan, Puerto Rico (US); that contrast is the fastest way to read the population ages 0-14 pattern.",
@@ -254,7 +254,7 @@
   },
   "editorialReview": {
     "status": "practice_eligible",
-    "reviewedAt": "2026-06-19",
+    "reviewedAt": "2026-06-22",
     "reviewedBy": "Codex editorial QA",
     "qualityScore": 3,
     "funScore": 3,

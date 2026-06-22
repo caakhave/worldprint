@@ -208,12 +208,12 @@
     "valuesReference": "https://api.worldbank.org/v2/country/all/indicator/EG.FEC.RNEW.ZS?format=json&per_page=20000&page=1&date=2015%3A2025",
     "license": "Creative Commons Attribution 4.0 International unless specifically labeled otherwise by World Bank metadata",
     "licenseReference": "https://www.worldbank.org/en/about/legal/terms-of-use-for-datasets",
-    "retrievedAt": "2026-06-19T17:09:09.426776+00:00",
+    "retrievedAt": "2026-06-22T18:05:50.187277+00:00",
     "checksum": "d0b95f6f575657f1203103b711849689f6cd8a43fbc31f72481912a4f2feccb1",
     "sourceOrganization": "IEA Energy Statistics Data Browser, International Energy Agency (IEA), uri: https://www.iea.org/data-and-statistics/data-tools/energy-statistics-data-browser, publisher: International Energy Agency (IEA), date accessed: 2025-03-25"
   },
   "reviewStatus": "approved",
-  "contentVersion": "2026.06.19-ed1",
+  "contentVersion": "2026.06.22-exp2-qa1",
   "editorial": {
     "shortHook": "A map where low-income biomass and modern renewables can both matter.",
     "patternNote": "The darkest countries include Congo, Dem. Rep., Somalia, Fed. Rep., Liberia, while the lightest include Brunei Darussalam, Qatar, Algeria; that contrast is the fastest way to read the renewable energy consumption pattern.",
@@ -238,12 +238,12 @@
         "reason": "Internet users overlaps with part of the visible pattern, but the full country spread does not match."
       },
       {
-        "confusedWithIndicatorCode": "EN.GHG.CO2.PC.CE.AR5",
-        "reason": "CO2 emissions per capita can tempt players because it shares a strong country ranking with this map, but its unit and definition point to a different story."
+        "confusedWithIndicatorCode": "NY.GDP.FRST.RT.ZS",
+        "reason": "Forest rents can tempt players because it shares a strong country ranking with this map, but its unit and definition point to a different story."
       },
       {
-        "confusedWithIndicatorCode": "SH.STA.BASS.ZS",
-        "reason": "Basic sanitation access overlaps with part of the visible pattern, but the full country spread does not match."
+        "confusedWithIndicatorCode": "EN.GHG.CO2.PC.CE.AR5",
+        "reason": "CO2 emissions per capita can tempt players because it shares a strong country ranking with this map, but its unit and definition point to a different story."
       }
     ],
     "difficultyReason": "Expert difficulty: the map can be mistaken for adjacent indicators unless players probe a high, low, and middle country.",
@@ -255,7 +255,7 @@
   },
   "editorialReview": {
     "status": "expert_only",
-    "reviewedAt": "2026-06-19",
+    "reviewedAt": "2026-06-22",
     "reviewedBy": "Codex editorial QA",
     "qualityScore": 3,
     "funScore": 4,

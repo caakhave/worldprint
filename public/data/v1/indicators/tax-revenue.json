@@ -159,12 +159,12 @@
     "valuesReference": "https://api.worldbank.org/v2/country/all/indicator/GC.TAX.TOTL.GD.ZS?format=json&per_page=20000&page=1&date=2015%3A2025",
     "license": "Creative Commons Attribution 4.0 International unless specifically labeled otherwise by World Bank metadata",
     "licenseReference": "https://www.worldbank.org/en/about/legal/terms-of-use-for-datasets",
-    "retrievedAt": "2026-06-19T17:09:22.257183+00:00",
+    "retrievedAt": "2026-06-22T18:06:06.482339+00:00",
     "checksum": "5bea44611f3140568594b5374e6db689695e3b00a7d76edc5dc500f15552259a",
     "sourceOrganization": "Government Finance Statistics Yearbook and data files, International Monetary Fund (IMF)"
   },
   "reviewStatus": "approved",
-  "contentVersion": "2026.06.19-ed1",
+  "contentVersion": "2026.06.22-exp2-qa1",
   "editorial": {
     "shortHook": "A fiscal-capacity map.",
     "patternNote": "The darkest countries include Lesotho, Denmark, Namibia, while the lightest include United Arab Emirates, Somalia, Fed. Rep., Ethiopia; that contrast is the fastest way to read the tax revenue pattern.",
@@ -185,16 +185,16 @@
     ],
     "commonConfusions": [
       {
-        "confusedWithIndicatorCode": "SE.SEC.ENRR",
-        "reason": "Secondary enrollment overlaps with part of the visible pattern, but the full country spread does not match."
+        "confusedWithIndicatorCode": "GC.REV.XGRT.GD.ZS",
+        "reason": "Government revenue excluding grants can tempt players because it shares a strong country ranking with this map, but its unit and definition point to a different story."
       },
       {
-        "confusedWithIndicatorCode": "SE.XPD.TOTL.GD.ZS",
-        "reason": "Education spending overlaps with part of the visible pattern, but the full country spread does not match."
+        "confusedWithIndicatorCode": "GC.XPN.TOTL.GD.ZS",
+        "reason": "Government expense can tempt players because it shares a strong country ranking with this map, but its unit and definition point to a different story."
       },
       {
-        "confusedWithIndicatorCode": "SP.POP.65UP.TO.ZS",
-        "reason": "Population ages 65+ overlaps with part of the visible pattern, but the full country spread does not match."
+        "confusedWithIndicatorCode": "NE.CON.GOVT.ZS",
+        "reason": "Government consumption lives in the same category, so it can feel plausible until the high and low countries are checked."
       }
     ],
     "difficultyReason": "Expert difficulty: the map can be mistaken for adjacent indicators unless players probe a high, low, and middle country.",
@@ -206,7 +206,7 @@
   },
   "editorialReview": {
     "status": "needs_review",
-    "reviewedAt": "2026-06-19",
+    "reviewedAt": "2026-06-22",
     "reviewedBy": "Codex editorial QA",
     "qualityScore": 2,
     "funScore": 2,

@@ -2,34 +2,33 @@
   "schemaVersion": "1.1.0",
   "game": "worldprint",
   "date": "2026-07-14",
-  "contentVersion": "2026.06.19-ed1",
+  "contentVersion": "2026.06.22-exp2-qa1",
   "roundIds": [
-    "worldprint-cereal-yield",
-    "worldprint-internet-users",
-    "worldprint-age-dependency",
-    "worldprint-life-expectancy",
-    "worldprint-co2-per-capita"
+    "worldprint-arable-land-per-person",
+    "worldprint-protected-land",
+    "worldprint-forest-area",
+    "worldprint-agriculture-value-added",
+    "worldprint-coal-electricity-share"
   ],
   "indicatorIds": [
-    "cereal-yield",
-    "internet-users",
-    "age-dependency",
-    "life-expectancy",
-    "co2-per-capita"
+    "arable-land-per-person",
+    "protected-land",
+    "forest-area",
+    "agriculture-value-added",
+    "coal-electricity-share"
   ],
   "categoryMix": {
-    "agriculture": 1,
-    "connectivity": 1,
-    "demography": 1,
-    "health": 1,
-    "environment": 1
+    "land": 1,
+    "environment": 2,
+    "economy": 1,
+    "energy": 1
   },
   "mapDifficultyMix": {
     "expert": 1,
-    "intro": 2,
-    "standard": 2
+    "standard": 3,
+    "intro": 1
   },
-  "generatedAt": "2026-06-19T17:09:23.338146+00:00",
+  "generatedAt": "2026-06-22T18:07:37.463162+00:00",
   "generatorVersion": "daily-manifest-v1",
   "varietyNotes": [
     "Selected with category, difficulty, and same-day correlation safeguards."

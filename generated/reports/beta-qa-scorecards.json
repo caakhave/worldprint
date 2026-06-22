@@ -1,0 +1,834 @@
+{
+  "schemaVersion": "1.0.0",
+  "contentVersion": "2026.06.22-exp2-qa1",
+  "generatedAt": "2026-06-22T21:38:47.108Z",
+  "sampleIndicatorIds": [
+    "older-adults-share",
+    "life-expectancy",
+    "agricultural-land",
+    "freshwater-per-capita",
+    "trade-share",
+    "energy-use",
+    "secondary-enrollment",
+    "internet-users",
+    "employment-services",
+    "migrant-stock",
+    "adult-mortality-female",
+    "exports-share",
+    "ghg-per-capita",
+    "fixed-broadband",
+    "gni-per-capita-ppp"
+  ],
+  "scorecards": [
+    {
+      "order": 1,
+      "indicatorId": "older-adults-share",
+      "roundId": "worldprint-older-adults-share",
+      "title": "Population ages 65 and above (% of total population)",
+      "shortTitle": "Population ages 65+",
+      "worldBankCode": "SP.POP.65UP.TO.ZS",
+      "editorialStatus": "daily_eligible",
+      "editorialStatusLabel": "Daily-ready",
+      "category": "demography",
+      "mapDifficulty": "intro",
+      "palette": "teal",
+      "paletteLabel": "Teal",
+      "latestYear": 2024,
+      "countryCoverage": 169,
+      "mappedCountryCount": 169,
+      "missingDataNotes": "No missing mapped countries in the selected reference year.",
+      "unit": "percent of population",
+      "unitClarity": {
+        "score": 4,
+        "note": "Clear enough for play: percent of population."
+      },
+      "mapReadability": {
+        "score": 4,
+        "note": "Strong visual pattern for a country-level choropleth."
+      },
+      "answerChoiceFairness": {
+        "fairnessWarningLevel": "review",
+        "note": "Review tier-level distractors: children-share (high_correlation_or_visual_similarity); birth-rate (high_correlation_or_visual_similarity); birth-rate (high_correlation_or_visual_similarity); children-share (high_correlation_or_visual_similarity)"
+      },
+      "distractorAmbiguity": {
+        "ambiguityRisk": "medium",
+        "topCorrelation": {
+          "indicatorId": "birth-rate",
+          "title": "Birth rate",
+          "warningLevel": "high",
+          "pearson": -0.8077198466044255,
+          "spearman": -0.9029980763228376,
+          "visualSimilarity": 0.07692307692307693,
+          "overlapCount": 169
+        }
+      },
+      "difficultyFit": {
+        "note": "Daily fit: strong enough for ordinary Daily with balanced distractors."
+      },
+      "revealCopyQuality": {
+        "note": "Pass: reveal has pattern explanation and why-it-matters copy."
+      },
+      "commonConfusionRisk": "SP.DYN.CBRT.IN: Birth rate can tempt players because it shares a strong country ranking with this map, but its unit and definition point to a different story.; SP.POP.0014.TO.ZS: Population ages 0-14 can tempt players because it shares a strong country ranking with this map, but its unit and definition point to a different story.; SP.DYN.TFRT.IN: Fertility rate can tempt players because it shares a strong country ranking with this map, but its unit and definition point to a different story.",
+      "mobileReadability": "Pass in smoke review: broad coverage and strong map-interest score should survive mobile scale.",
+      "decision": "needs_tweak",
+      "decisionLabel": "Needs tweak",
+      "recommendedFix": "Keep close lookalikes out of Explorer/Analyst, avoid same-day pairing with correlated maps, and ask beta testers what they confused it with."
+    },
+    {
+      "order": 2,
+      "indicatorId": "life-expectancy",
+      "roundId": "worldprint-life-expectancy",
+      "title": "Life expectancy at birth, total (years)",
+      "shortTitle": "Life expectancy",
+      "worldBankCode": "SP.DYN.LE00.IN",
+      "editorialStatus": "daily_eligible",
+      "editorialStatusLabel": "Daily-ready",
+      "category": "health",
+      "mapDifficulty": "intro",
+      "palette": "rose",
+      "paletteLabel": "Rose",
+      "latestYear": 2024,
+      "countryCoverage": 169,
+      "mappedCountryCount": 169,
+      "missingDataNotes": "No missing mapped countries in the selected reference year.",
+      "unit": "years",
+      "unitClarity": {
+        "score": 4,
+        "note": "Clear enough for play: years."
+      },
+      "mapReadability": {
+        "score": 4,
+        "note": "Strong visual pattern for a country-level choropleth."
+      },
+      "answerChoiceFairness": {
+        "fairnessWarningLevel": "review",
+        "note": "Review tier-level distractors: infant-mortality (high_correlation_or_visual_similarity); neonatal-mortality (high_correlation_or_visual_similarity); under-five-mortality (high_correlation_or_visual_similarity)"
+      },
+      "distractorAmbiguity": {
+        "ambiguityRisk": "medium",
+        "topCorrelation": {
+          "indicatorId": "adult-mortality-female",
+          "title": "Female adult mortality",
+          "warningLevel": "high",
+          "pearson": -0.9556297947301015,
+          "spearman": -0.9767386178124433,
+          "visualSimilarity": 0.09395973154362416,
+          "overlapCount": 149
+        }
+      },
+      "difficultyFit": {
+        "note": "Daily fit: strong enough for ordinary Daily with balanced distractors."
+      },
+      "revealCopyQuality": {
+        "note": "Pass: reveal has pattern explanation and why-it-matters copy."
+      },
+      "commonConfusionRisk": "SP.DYN.AMRT.FE: Female adult mortality can tempt players because it shares a strong country ranking with this map, but its unit and definition point to a different story.; SH.DYN.MORT: Under-5 mortality can tempt players because it shares a strong country ranking with this map, but its unit and definition point to a different story.; SP.DYN.IMRT.IN: Infant mortality can tempt players because it shares a strong country ranking with this map, but its unit and definition point to a different story.",
+      "mobileReadability": "Pass in smoke review: broad coverage and strong map-interest score should survive mobile scale.",
+      "decision": "needs_tweak",
+      "decisionLabel": "Needs tweak",
+      "recommendedFix": "Keep close lookalikes out of Explorer/Analyst, avoid same-day pairing with correlated maps, and ask beta testers what they confused it with."
+    },
+    {
+      "order": 3,
+      "indicatorId": "agricultural-land",
+      "roundId": "worldprint-agricultural-land",
+      "title": "Agricultural land (% of land area)",
+      "shortTitle": "Agricultural land",
+      "worldBankCode": "AG.LND.AGRI.ZS",
+      "editorialStatus": "practice_eligible",
+      "editorialStatusLabel": "Practice-only",
+      "category": "land",
+      "mapDifficulty": "standard",
+      "palette": "green",
+      "paletteLabel": "Green",
+      "latestYear": 2023,
+      "countryCoverage": 169,
+      "mappedCountryCount": 169,
+      "missingDataNotes": "No missing mapped countries in the selected reference year.",
+      "unit": "percent of land area",
+      "unitClarity": {
+        "score": 4,
+        "note": "Clear enough for play: percent of land area."
+      },
+      "mapReadability": {
+        "score": 4,
+        "note": "Strong visual pattern for a country-level choropleth."
+      },
+      "answerChoiceFairness": {
+        "fairnessWarningLevel": "ok",
+        "note": "Generated distractor selection has no tier-level fairness warning."
+      },
+      "distractorAmbiguity": {
+        "ambiguityRisk": "medium",
+        "topCorrelation": {
+          "indicatorId": "arable-land",
+          "title": "Arable land",
+          "warningLevel": "review",
+          "pearson": 0.5429521442814951,
+          "spearman": 0.5658100536036972,
+          "visualSimilarity": 0.2857142857142857,
+          "overlapCount": 168
+        }
+      },
+      "difficultyFit": {
+        "note": "Practice fit: useful learning map, but not strong enough for default Daily."
+      },
+      "revealCopyQuality": {
+        "note": "Pass: reveal has pattern explanation and why-it-matters copy."
+      },
+      "commonConfusionRisk": "AG.LND.ARBL.ZS: Arable land lives in the same category, so it can feel plausible until the high and low countries are checked.; AG.LND.FRST.ZS: Forest area overlaps with part of the visible pattern, but the full country spread does not match.; ER.H2O.INTR.PC: Freshwater per person overlaps with part of the visible pattern, but the full country spread does not match.",
+      "mobileReadability": "Pass in smoke review: broad coverage and strong map-interest score should survive mobile scale.",
+      "decision": "pass",
+      "decisionLabel": "Pass",
+      "recommendedFix": "No immediate fix; include in outside beta and collect confusion notes."
+    },
+    {
+      "order": 4,
+      "indicatorId": "freshwater-per-capita",
+      "roundId": "worldprint-freshwater-per-capita",
+      "title": "Renewable internal freshwater resources per capita (cubic meters)",
+      "shortTitle": "Freshwater per person",
+      "worldBankCode": "ER.H2O.INTR.PC",
+      "editorialStatus": "daily_eligible",
+      "editorialStatusLabel": "Daily-ready",
+      "category": "environment",
+      "mapDifficulty": "standard",
+      "palette": "aqua",
+      "paletteLabel": "Aqua",
+      "latestYear": 2022,
+      "countryCoverage": 164,
+      "mappedCountryCount": 169,
+      "missingDataNotes": "5 of 169 mapped countries are missing (3%). Missing countries use the hatch pattern.",
+      "unit": "cubic meters per person",
+      "unitClarity": {
+        "score": 5,
+        "note": "Clear enough for play: cubic meters per person."
+      },
+      "mapReadability": {
+        "score": 4,
+        "note": "Strong visual pattern for a country-level choropleth."
+      },
+      "answerChoiceFairness": {
+        "fairnessWarningLevel": "ok",
+        "note": "Generated distractor selection has no tier-level fairness warning."
+      },
+      "distractorAmbiguity": {
+        "ambiguityRisk": "medium",
+        "topCorrelation": {
+          "indicatorId": "freshwater-withdrawal",
+          "title": "Freshwater withdrawal",
+          "warningLevel": "review",
+          "pearson": -0.057432877747762436,
+          "spearman": -0.7813606000234383,
+          "visualSimilarity": 0.09375,
+          "overlapCount": 160
+        }
+      },
+      "difficultyFit": {
+        "note": "Daily fit: strong enough for ordinary Daily with balanced distractors."
+      },
+      "revealCopyQuality": {
+        "note": "Pass: reveal has pattern explanation and why-it-matters copy."
+      },
+      "commonConfusionRisk": "ER.H2O.FWTL.ZS: Freshwater withdrawal can tempt players because it shares a strong country ranking with this map, but its unit and definition point to a different story.; AG.LND.FRST.ZS: Forest area can tempt players because it shares a strong country ranking with this map, but its unit and definition point to a different story.; AG.LND.PRCP.MM: Average precipitation can tempt players because it shares a strong country ranking with this map, but its unit and definition point to a different story.",
+      "mobileReadability": "Pass in smoke review: broad coverage and strong map-interest score should survive mobile scale.",
+      "decision": "pass",
+      "decisionLabel": "Pass",
+      "recommendedFix": "No immediate fix; include in outside beta and collect confusion notes."
+    },
+    {
+      "order": 5,
+      "indicatorId": "trade-share",
+      "roundId": "worldprint-trade-share",
+      "title": "Trade (% of GDP)",
+      "shortTitle": "Trade",
+      "worldBankCode": "NE.TRD.GNFS.ZS",
+      "editorialStatus": "daily_eligible",
+      "editorialStatusLabel": "Daily-ready",
+      "category": "economy",
+      "mapDifficulty": "standard",
+      "palette": "gold",
+      "paletteLabel": "Gold",
+      "latestYear": 2024,
+      "countryCoverage": 141,
+      "mappedCountryCount": 169,
+      "missingDataNotes": "28 of 169 mapped countries are missing (17%). Missing countries use the hatch pattern.",
+      "unit": "percent of GDP",
+      "unitClarity": {
+        "score": 4,
+        "note": "Clear enough for play: percent of GDP."
+      },
+      "mapReadability": {
+        "score": 4,
+        "note": "Strong visual pattern for a country-level choropleth."
+      },
+      "answerChoiceFairness": {
+        "fairnessWarningLevel": "review",
+        "note": "Review tier-level distractors: services-share (high_ambiguity_distractor); imports-share (high_correlation_or_visual_similarity); exports-share (high_correlation_or_visual_similarity)"
+      },
+      "distractorAmbiguity": {
+        "ambiguityRisk": "medium",
+        "topCorrelation": {
+          "indicatorId": "exports-share",
+          "title": "Exports",
+          "warningLevel": "high",
+          "pearson": 0.962879940605117,
+          "spearman": 0.9377113746307633,
+          "visualSimilarity": 0.5815602836879432,
+          "overlapCount": 141
+        }
+      },
+      "difficultyFit": {
+        "note": "Daily fit: strong enough for ordinary Daily with balanced distractors."
+      },
+      "revealCopyQuality": {
+        "note": "Pass: reveal has pattern explanation and why-it-matters copy."
+      },
+      "commonConfusionRisk": "NE.EXP.GNFS.ZS: Exports can tempt players because it shares a strong country ranking with this map, but its unit and definition point to a different story.; NE.IMP.GNFS.ZS: Imports can tempt players because it shares a strong country ranking with this map, but its unit and definition point to a different story.; ER.GDP.FWTL.M3.KD: Water productivity overlaps with part of the visible pattern, but the full country spread does not match.",
+      "mobileReadability": "Needs real-device spot check: coverage is acceptable, but missing-data density or subtle regional contrast may matter on small screens.",
+      "decision": "needs_tweak",
+      "decisionLabel": "Needs tweak",
+      "recommendedFix": "Keep close lookalikes out of Explorer/Analyst, avoid same-day pairing with correlated maps, and ask beta testers what they confused it with."
+    },
+    {
+      "order": 6,
+      "indicatorId": "energy-use",
+      "roundId": "worldprint-energy-use",
+      "title": "Energy use (kg of oil equivalent per capita)",
+      "shortTitle": "Energy use",
+      "worldBankCode": "EG.USE.PCAP.KG.OE",
+      "editorialStatus": "daily_eligible",
+      "editorialStatusLabel": "Daily-ready",
+      "category": "energy",
+      "mapDifficulty": "standard",
+      "palette": "orange",
+      "paletteLabel": "Orange",
+      "latestYear": 2023,
+      "countryCoverage": 142,
+      "mappedCountryCount": 169,
+      "missingDataNotes": "27 of 169 mapped countries are missing (16%). Missing countries use the hatch pattern.",
+      "unit": "kg of oil equivalent per person",
+      "unitClarity": {
+        "score": 5,
+        "note": "Clear enough for play: kg of oil equivalent per person."
+      },
+      "mapReadability": {
+        "score": 4,
+        "note": "Strong visual pattern for a country-level choropleth."
+      },
+      "answerChoiceFairness": {
+        "fairnessWarningLevel": "review",
+        "note": "Review tier-level distractors: electric-power-use (high_correlation_or_visual_similarity); gni-per-capita-ppp (high_correlation_or_visual_similarity)"
+      },
+      "distractorAmbiguity": {
+        "ambiguityRisk": "medium",
+        "topCorrelation": {
+          "indicatorId": "electric-power-use",
+          "title": "Electric power use",
+          "warningLevel": "high",
+          "pearson": 0.8641453299185242,
+          "spearman": 0.9538507641594246,
+          "visualSimilarity": 0.6170212765957447,
+          "overlapCount": 141
+        }
+      },
+      "difficultyFit": {
+        "note": "Daily fit: strong enough for ordinary Daily with balanced distractors."
+      },
+      "revealCopyQuality": {
+        "note": "Pass: reveal has pattern explanation and why-it-matters copy."
+      },
+      "commonConfusionRisk": "EG.USE.ELEC.KH.PC: Electric power use can tempt players because it shares a strong country ranking with this map, but its unit and definition point to a different story.; EN.GHG.CO2.PC.CE.AR5: CO2 emissions per capita can tempt players because it shares a strong country ranking with this map, but its unit and definition point to a different story.; EN.GHG.ALL.PC.CE.AR5: Greenhouse gas emissions per capita can tempt players because it shares a strong country ranking with this map, but its unit and definition point to a different story.",
+      "mobileReadability": "Needs real-device spot check: coverage is acceptable, but missing-data density or subtle regional contrast may matter on small screens.",
+      "decision": "needs_tweak",
+      "decisionLabel": "Needs tweak",
+      "recommendedFix": "Keep close lookalikes out of Explorer/Analyst, avoid same-day pairing with correlated maps, and ask beta testers what they confused it with."
+    },
+    {
+      "order": 7,
+      "indicatorId": "secondary-enrollment",
+      "roundId": "worldprint-secondary-enrollment",
+      "title": "School enrollment, secondary (% gross)",
+      "shortTitle": "Secondary enrollment",
+      "worldBankCode": "SE.SEC.ENRR",
+      "editorialStatus": "daily_eligible",
+      "editorialStatusLabel": "Daily-ready",
+      "category": "education",
+      "mapDifficulty": "standard",
+      "palette": "violet",
+      "paletteLabel": "Violet",
+      "latestYear": 2023,
+      "countryCoverage": 121,
+      "mappedCountryCount": 169,
+      "missingDataNotes": "48 of 169 mapped countries are missing (28%). Missing countries use the hatch pattern.",
+      "unit": "gross enrollment ratio",
+      "unitClarity": {
+        "score": 4,
+        "note": "Clear enough for play: gross enrollment ratio."
+      },
+      "mapReadability": {
+        "score": 4,
+        "note": "Strong visual pattern for a country-level choropleth."
+      },
+      "answerChoiceFairness": {
+        "fairnessWarningLevel": "ok",
+        "note": "Generated distractor selection has no tier-level fairness warning."
+      },
+      "distractorAmbiguity": {
+        "ambiguityRisk": "low",
+        "topCorrelation": {
+          "indicatorId": "particulate-damage-share",
+          "title": "Particulate emission damage",
+          "warningLevel": "ok",
+          "pearson": -0.7339741120753939,
+          "spearman": -0.8379488844090615,
+          "visualSimilarity": 0.09821428571428571,
+          "overlapCount": 112
+        }
+      },
+      "difficultyFit": {
+        "note": "Daily fit: strong enough for ordinary Daily with balanced distractors."
+      },
+      "revealCopyQuality": {
+        "note": "Pass: reveal has pattern explanation and why-it-matters copy."
+      },
+      "commonConfusionRisk": "NY.ADJ.DPEM.GN.ZS: Particulate emission damage can tempt players because it shares a strong country ranking with this map, but its unit and definition point to a different story.; SH.XPD.CHEX.PC.CD: Health spending per person can tempt players because it shares a strong country ranking with this map, but its unit and definition point to a different story.; IT.NET.USER.ZS: Internet users can tempt players because it shares a strong country ranking with this map, but its unit and definition point to a different story.",
+      "mobileReadability": "Needs careful mobile review: lower coverage can make the hatch pattern visually busy.",
+      "decision": "pass",
+      "decisionLabel": "Pass",
+      "recommendedFix": "No immediate fix; include in outside beta and collect confusion notes."
+    },
+    {
+      "order": 8,
+      "indicatorId": "internet-users",
+      "roundId": "worldprint-internet-users",
+      "title": "Individuals using the Internet (% of population)",
+      "shortTitle": "Internet users",
+      "worldBankCode": "IT.NET.USER.ZS",
+      "editorialStatus": "daily_eligible",
+      "editorialStatusLabel": "Daily-ready",
+      "category": "connectivity",
+      "mapDifficulty": "intro",
+      "palette": "electric",
+      "paletteLabel": "Electric blue",
+      "latestYear": 2024,
+      "countryCoverage": 154,
+      "mappedCountryCount": 169,
+      "missingDataNotes": "15 of 169 mapped countries are missing (9%). Missing countries use the hatch pattern.",
+      "unit": "percent of population",
+      "unitClarity": {
+        "score": 4,
+        "note": "Clear enough for play: percent of population."
+      },
+      "mapReadability": {
+        "score": 4,
+        "note": "Strong visual pattern for a country-level choropleth."
+      },
+      "answerChoiceFairness": {
+        "fairnessWarningLevel": "ok",
+        "note": "Generated distractor selection has no tier-level fairness warning."
+      },
+      "distractorAmbiguity": {
+        "ambiguityRisk": "medium",
+        "topCorrelation": {
+          "indicatorId": "clean-fuels-access",
+          "title": "Clean cooking fuels access",
+          "warningLevel": "high",
+          "pearson": 0.9083667192675625,
+          "spearman": 0.8602319098923972,
+          "visualSimilarity": 0.40397350993377484,
+          "overlapCount": 151
+        }
+      },
+      "difficultyFit": {
+        "note": "Daily fit: strong enough for ordinary Daily with balanced distractors."
+      },
+      "revealCopyQuality": {
+        "note": "Pass: reveal has pattern explanation and why-it-matters copy."
+      },
+      "commonConfusionRisk": "EG.CFT.ACCS.ZS: Clean cooking fuels access can tempt players because it shares a strong country ranking with this map, but its unit and definition point to a different story.; SH.STA.BASS.ZS: Basic sanitation access can tempt players because it shares a strong country ranking with this map, but its unit and definition point to a different story.; NY.GNP.PCAP.PP.CD: GNI per capita, PPP can tempt players because it shares a strong country ranking with this map, but its unit and definition point to a different story.",
+      "mobileReadability": "Needs real-device spot check: coverage is acceptable, but missing-data density or subtle regional contrast may matter on small screens.",
+      "decision": "needs_tweak",
+      "decisionLabel": "Needs tweak",
+      "recommendedFix": "Keep close lookalikes out of Explorer/Analyst, avoid same-day pairing with correlated maps, and ask beta testers what they confused it with."
+    },
+    {
+      "order": 9,
+      "indicatorId": "employment-services",
+      "roundId": "worldprint-employment-services",
+      "title": "Employment in services (% of total employment) (modeled ILO estimate)",
+      "shortTitle": "Employment in services",
+      "worldBankCode": "SL.SRV.EMPL.ZS",
+      "editorialStatus": "practice_eligible",
+      "editorialStatusLabel": "Practice-only",
+      "category": "labor",
+      "mapDifficulty": "standard",
+      "palette": "steel",
+      "paletteLabel": "Steel",
+      "latestYear": 2025,
+      "countryCoverage": 163,
+      "mappedCountryCount": 169,
+      "missingDataNotes": "6 of 169 mapped countries are missing (4%). Missing countries use the hatch pattern.",
+      "unit": "percent of total employment",
+      "unitClarity": {
+        "score": 4,
+        "note": "Clear enough for play: percent of total employment."
+      },
+      "mapReadability": {
+        "score": 4,
+        "note": "Strong visual pattern for a country-level choropleth."
+      },
+      "answerChoiceFairness": {
+        "fairnessWarningLevel": "review",
+        "note": "Review tier-level distractors: wage-salaried-workers (high_ambiguity_distractor); employment-agriculture (high_correlation_or_visual_similarity); services-share (high_ambiguity_distractor); employment-population-ratio (high_ambiguity_distractor); employment-agriculture (high_correlation_or_visual_similarity)"
+      },
+      "distractorAmbiguity": {
+        "ambiguityRisk": "high",
+        "topCorrelation": {
+          "indicatorId": "employment-agriculture",
+          "title": "Employment in agriculture",
+          "warningLevel": "high",
+          "pearson": -0.9375640644228916,
+          "spearman": -0.9393375119845268,
+          "visualSimilarity": 0.06134969325153374,
+          "overlapCount": 163
+        }
+      },
+      "difficultyFit": {
+        "note": "Practice fit: useful learning map, but not strong enough for default Daily."
+      },
+      "revealCopyQuality": {
+        "note": "Pass: reveal has pattern explanation and why-it-matters copy."
+      },
+      "commonConfusionRisk": "SL.AGR.EMPL.ZS: Employment in agriculture can tempt players because it shares a strong country ranking with this map, but its unit and definition point to a different story.; NV.AGR.EMPL.KD: Agriculture value per worker can tempt players because it shares a strong country ranking with this map, but its unit and definition point to a different story.; NY.GNP.PCAP.CD: GNI per capita can tempt players because it shares a strong country ranking with this map, but its unit and definition point to a different story.",
+      "mobileReadability": "Pass in smoke review: broad coverage and strong map-interest score should survive mobile scale.",
+      "decision": "needs_tweak",
+      "decisionLabel": "Needs tweak",
+      "recommendedFix": "Keep close lookalikes out of Explorer/Analyst, avoid same-day pairing with correlated maps, and ask beta testers what they confused it with."
+    },
+    {
+      "order": 10,
+      "indicatorId": "migrant-stock",
+      "roundId": "worldprint-migrant-stock",
+      "title": "International migrant stock (% of population)",
+      "shortTitle": "International migrant stock",
+      "worldBankCode": "SM.POP.TOTL.ZS",
+      "editorialStatus": "daily_eligible",
+      "editorialStatusLabel": "Daily-ready",
+      "category": "demography",
+      "mapDifficulty": "standard",
+      "palette": "coral",
+      "paletteLabel": "Coral",
+      "latestYear": 2024,
+      "countryCoverage": 169,
+      "mappedCountryCount": 169,
+      "missingDataNotes": "No missing mapped countries in the selected reference year.",
+      "unit": "percent of population",
+      "unitClarity": {
+        "score": 4,
+        "note": "Clear enough for play: percent of population."
+      },
+      "mapReadability": {
+        "score": 5,
+        "note": "Strong visual pattern for a country-level choropleth."
+      },
+      "answerChoiceFairness": {
+        "fairnessWarningLevel": "review",
+        "note": "Review tier-level distractors: None flagged."
+      },
+      "distractorAmbiguity": {
+        "ambiguityRisk": "medium",
+        "topCorrelation": {
+          "indicatorId": "co2-per-capita",
+          "title": "CO2 emissions per capita",
+          "warningLevel": "review",
+          "pearson": 0.7285740539732549,
+          "spearman": 0.6010599207936547,
+          "visualSimilarity": 0.2727272727272727,
+          "overlapCount": 165
+        }
+      },
+      "difficultyFit": {
+        "note": "Daily fit: strong enough for ordinary Daily with balanced distractors."
+      },
+      "revealCopyQuality": {
+        "note": "Pass: reveal has pattern explanation and why-it-matters copy."
+      },
+      "commonConfusionRisk": "EN.GHG.CO2.PC.CE.AR5: CO2 emissions per capita overlaps with part of the visible pattern, but the full country spread does not match.; SH.H2O.SMDW.ZS: Safely managed drinking water can tempt players because it shares a strong country ranking with this map, but its unit and definition point to a different story.; NY.GDP.PCAP.CD: GDP per capita can tempt players because it shares a strong country ranking with this map, but its unit and definition point to a different story.",
+      "mobileReadability": "Pass in smoke review: broad coverage and strong map-interest score should survive mobile scale.",
+      "decision": "needs_tweak",
+      "decisionLabel": "Needs tweak",
+      "recommendedFix": "No immediate fix; include in outside beta and collect confusion notes."
+    },
+    {
+      "order": 11,
+      "indicatorId": "adult-mortality-female",
+      "roundId": "worldprint-adult-mortality-female",
+      "title": "Mortality rate, adult, female (per 1,000 female adults)",
+      "shortTitle": "Female adult mortality",
+      "worldBankCode": "SP.DYN.AMRT.FE",
+      "editorialStatus": "expert_only",
+      "editorialStatusLabel": "Expert-only",
+      "category": "health",
+      "mapDifficulty": "expert",
+      "palette": "rose",
+      "paletteLabel": "Rose",
+      "latestYear": 2024,
+      "countryCoverage": 149,
+      "mappedCountryCount": 169,
+      "missingDataNotes": "20 of 169 mapped countries are missing (12%). Missing countries use the hatch pattern.",
+      "unit": "deaths per 1,000 female adults",
+      "unitClarity": {
+        "score": 5,
+        "note": "Clear enough for play: deaths per 1,000 female adults."
+      },
+      "mapReadability": {
+        "score": 4,
+        "note": "Strong visual pattern for a country-level choropleth."
+      },
+      "answerChoiceFairness": {
+        "fairnessWarningLevel": "review",
+        "note": "Review tier-level distractors: adult-mortality-male (high_correlation_or_visual_similarity); under-five-mortality (high_correlation_or_visual_similarity); infant-mortality (high_correlation_or_visual_similarity); maternal-mortality (high_correlation_or_visual_similarity)"
+      },
+      "distractorAmbiguity": {
+        "ambiguityRisk": "high",
+        "topCorrelation": {
+          "indicatorId": "life-expectancy",
+          "title": "Life expectancy",
+          "warningLevel": "high",
+          "pearson": -0.9556297947301015,
+          "spearman": -0.9767386178124433,
+          "visualSimilarity": 0.09395973154362416,
+          "overlapCount": 149
+        }
+      },
+      "difficultyFit": {
+        "note": "Expert-only fit: subtle or correlated enough to keep out of ordinary Daily."
+      },
+      "revealCopyQuality": {
+        "note": "Pass: reveal has pattern explanation and why-it-matters copy."
+      },
+      "commonConfusionRisk": "SP.DYN.LE00.IN: Life expectancy can tempt players because it shares a strong country ranking with this map, but its unit and definition point to a different story.; SP.DYN.AMRT.MA: Male adult mortality can tempt players because it shares a strong country ranking with this map, but its unit and definition point to a different story.; SH.STA.MMRT: Maternal mortality can tempt players because it shares a strong country ranking with this map, but its unit and definition point to a different story.",
+      "mobileReadability": "Needs real-device spot check: coverage is acceptable, but missing-data density or subtle regional contrast may matter on small screens.",
+      "decision": "needs_tweak",
+      "decisionLabel": "Needs tweak",
+      "recommendedFix": "Keep close lookalikes out of Explorer/Analyst, avoid same-day pairing with correlated maps, and ask beta testers what they confused it with."
+    },
+    {
+      "order": 12,
+      "indicatorId": "exports-share",
+      "roundId": "worldprint-exports-share",
+      "title": "Exports of goods and services (% of GDP)",
+      "shortTitle": "Exports",
+      "worldBankCode": "NE.EXP.GNFS.ZS",
+      "editorialStatus": "expert_only",
+      "editorialStatusLabel": "Expert-only",
+      "category": "economy",
+      "mapDifficulty": "standard",
+      "palette": "gold",
+      "paletteLabel": "Gold",
+      "latestYear": 2024,
+      "countryCoverage": 141,
+      "mappedCountryCount": 169,
+      "missingDataNotes": "28 of 169 mapped countries are missing (17%). Missing countries use the hatch pattern.",
+      "unit": "percent of GDP",
+      "unitClarity": {
+        "score": 4,
+        "note": "Clear enough for play: percent of GDP."
+      },
+      "mapReadability": {
+        "score": 4,
+        "note": "Strong visual pattern for a country-level choropleth."
+      },
+      "answerChoiceFairness": {
+        "fairnessWarningLevel": "review",
+        "note": "Review tier-level distractors: imports-share (high_ambiguity_distractor)"
+      },
+      "distractorAmbiguity": {
+        "ambiguityRisk": "high",
+        "topCorrelation": {
+          "indicatorId": "trade-share",
+          "title": "Trade",
+          "warningLevel": "high",
+          "pearson": 0.962879940605117,
+          "spearman": 0.9377113746307633,
+          "visualSimilarity": 0.5815602836879432,
+          "overlapCount": 141
+        }
+      },
+      "difficultyFit": {
+        "note": "Expert-only fit: subtle or correlated enough to keep out of ordinary Daily."
+      },
+      "revealCopyQuality": {
+        "note": "Pass: reveal has pattern explanation and why-it-matters copy."
+      },
+      "commonConfusionRisk": "NE.TRD.GNFS.ZS: Trade can tempt players because it shares a strong country ranking with this map, but its unit and definition point to a different story.; NE.IMP.GNFS.ZS: Imports can tempt players because it shares a strong country ranking with this map, but its unit and definition point to a different story.; ER.GDP.FWTL.M3.KD: Water productivity overlaps with part of the visible pattern, but the full country spread does not match.",
+      "mobileReadability": "Needs real-device spot check: coverage is acceptable, but missing-data density or subtle regional contrast may matter on small screens.",
+      "decision": "needs_tweak",
+      "decisionLabel": "Needs tweak",
+      "recommendedFix": "Keep close lookalikes out of Explorer/Analyst, avoid same-day pairing with correlated maps, and ask beta testers what they confused it with."
+    },
+    {
+      "order": 13,
+      "indicatorId": "ghg-per-capita",
+      "roundId": "worldprint-ghg-per-capita",
+      "title": "Total greenhouse gas emissions excluding LULUCF per capita (t CO2e/capita)",
+      "shortTitle": "Greenhouse gas emissions per capita",
+      "worldBankCode": "EN.GHG.ALL.PC.CE.AR5",
+      "editorialStatus": "expert_only",
+      "editorialStatusLabel": "Expert-only",
+      "category": "environment",
+      "mapDifficulty": "expert",
+      "palette": "aqua",
+      "paletteLabel": "Aqua",
+      "latestYear": 2024,
+      "countryCoverage": 165,
+      "mappedCountryCount": 169,
+      "missingDataNotes": "4 of 169 mapped countries are missing (2%). Missing countries use the hatch pattern.",
+      "unit": "metric tons CO2e per capita",
+      "unitClarity": {
+        "score": 5,
+        "note": "Clear enough for play: metric tons CO2e per capita."
+      },
+      "mapReadability": {
+        "score": 4,
+        "note": "Strong visual pattern for a country-level choropleth."
+      },
+      "answerChoiceFairness": {
+        "fairnessWarningLevel": "review",
+        "note": "Review tier-level distractors: adult-mortality-female (high_ambiguity_distractor); energy-use (high_correlation_or_visual_similarity)"
+      },
+      "distractorAmbiguity": {
+        "ambiguityRisk": "high",
+        "topCorrelation": {
+          "indicatorId": "co2-per-capita",
+          "title": "CO2 emissions per capita",
+          "warningLevel": "high",
+          "pearson": 0.9586628292183192,
+          "spearman": 0.9489648171399567,
+          "visualSimilarity": 0.6545454545454545,
+          "overlapCount": 165
+        }
+      },
+      "difficultyFit": {
+        "note": "Expert-only fit: subtle or correlated enough to keep out of ordinary Daily."
+      },
+      "revealCopyQuality": {
+        "note": "Pass: reveal has pattern explanation and why-it-matters copy."
+      },
+      "commonConfusionRisk": "EN.GHG.CO2.PC.CE.AR5: CO2 emissions per capita can tempt players because it shares a strong country ranking with this map, but its unit and definition point to a different story.; EG.USE.PCAP.KG.OE: Energy use can tempt players because it shares a strong country ranking with this map, but its unit and definition point to a different story.; EG.USE.ELEC.KH.PC: Electric power use can tempt players because it shares a strong country ranking with this map, but its unit and definition point to a different story.",
+      "mobileReadability": "Pass in smoke review: broad coverage and strong map-interest score should survive mobile scale.",
+      "decision": "needs_tweak",
+      "decisionLabel": "Needs tweak",
+      "recommendedFix": "Keep close lookalikes out of Explorer/Analyst, avoid same-day pairing with correlated maps, and ask beta testers what they confused it with."
+    },
+    {
+      "order": 14,
+      "indicatorId": "fixed-broadband",
+      "roundId": "worldprint-fixed-broadband",
+      "title": "Fixed broadband subscriptions (per 100 people)",
+      "shortTitle": "Fixed broadband",
+      "worldBankCode": "IT.NET.BBND.P2",
+      "editorialStatus": "expert_only",
+      "editorialStatusLabel": "Expert-only",
+      "category": "connectivity",
+      "mapDifficulty": "expert",
+      "palette": "electric",
+      "paletteLabel": "Electric blue",
+      "latestYear": 2024,
+      "countryCoverage": 134,
+      "mappedCountryCount": 169,
+      "missingDataNotes": "35 of 169 mapped countries are missing (21%). Missing countries use the hatch pattern.",
+      "unit": "subscriptions per 100 people",
+      "unitClarity": {
+        "score": 5,
+        "note": "Clear enough for play: subscriptions per 100 people."
+      },
+      "mapReadability": {
+        "score": 4,
+        "note": "Strong visual pattern for a country-level choropleth."
+      },
+      "answerChoiceFairness": {
+        "fairnessWarningLevel": "review",
+        "note": "Review tier-level distractors: bank-branches (high_ambiguity_distractor)"
+      },
+      "distractorAmbiguity": {
+        "ambiguityRisk": "medium",
+        "topCorrelation": {
+          "indicatorId": "health-spending-per-person",
+          "title": "Health spending per person",
+          "warningLevel": "high",
+          "pearson": 0.7040825548256717,
+          "spearman": 0.9067634655420913,
+          "visualSimilarity": 0.4351145038167939,
+          "overlapCount": 131
+        }
+      },
+      "difficultyFit": {
+        "note": "Expert-only fit: subtle or correlated enough to keep out of ordinary Daily."
+      },
+      "revealCopyQuality": {
+        "note": "Pass: reveal has pattern explanation and why-it-matters copy."
+      },
+      "commonConfusionRisk": "SH.XPD.CHEX.PC.CD: Health spending per person can tempt players because it shares a strong country ranking with this map, but its unit and definition point to a different story.; NY.GNP.PCAP.PP.CD: GNI per capita, PPP can tempt players because it shares a strong country ranking with this map, but its unit and definition point to a different story.; NY.GDP.PCAP.PP.CD: GDP per capita, PPP can tempt players because it shares a strong country ranking with this map, but its unit and definition point to a different story.",
+      "mobileReadability": "Needs careful mobile review: lower coverage can make the hatch pattern visually busy.",
+      "decision": "needs_tweak",
+      "decisionLabel": "Needs tweak",
+      "recommendedFix": "Keep close lookalikes out of Explorer/Analyst, avoid same-day pairing with correlated maps, and ask beta testers what they confused it with."
+    },
+    {
+      "order": 15,
+      "indicatorId": "gni-per-capita-ppp",
+      "roundId": "worldprint-gni-per-capita-ppp",
+      "title": "GNI per capita, PPP (current international $)",
+      "shortTitle": "GNI per capita, PPP",
+      "worldBankCode": "NY.GNP.PCAP.PP.CD",
+      "editorialStatus": "practice_eligible",
+      "editorialStatusLabel": "Practice-only",
+      "category": "development",
+      "mapDifficulty": "standard",
+      "palette": "indigo",
+      "paletteLabel": "Indigo",
+      "latestYear": 2024,
+      "countryCoverage": 157,
+      "mappedCountryCount": 169,
+      "missingDataNotes": "12 of 169 mapped countries are missing (7%). Missing countries use the hatch pattern.",
+      "unit": "current international dollars",
+      "unitClarity": {
+        "score": 3,
+        "note": "Needs wording review: current international dollars."
+      },
+      "mapReadability": {
+        "score": 4,
+        "note": "Strong visual pattern for a country-level choropleth."
+      },
+      "answerChoiceFairness": {
+        "fairnessWarningLevel": "review",
+        "note": "Review tier-level distractors: gdp-per-capita (high_correlation_or_visual_similarity)"
+      },
+      "distractorAmbiguity": {
+        "ambiguityRisk": "high",
+        "topCorrelation": {
+          "indicatorId": "gdp-per-capita-ppp",
+          "title": "GDP per capita, PPP",
+          "warningLevel": "high",
+          "pearson": 0.9850414126196095,
+          "spearman": 0.9971881737420847,
+          "visualSimilarity": 0.8980891719745223,
+          "overlapCount": 157
+        }
+      },
+      "difficultyFit": {
+        "note": "Practice fit: useful learning map, but not strong enough for default Daily."
+      },
+      "revealCopyQuality": {
+        "note": "Pass: reveal has pattern explanation and why-it-matters copy."
+      },
+      "commonConfusionRisk": "NY.GDP.PCAP.PP.CD: GDP per capita, PPP can tempt players because it shares a strong country ranking with this map, but its unit and definition point to a different story.; NY.GNP.PCAP.CD: GNI per capita can tempt players because it shares a strong country ranking with this map, but its unit and definition point to a different story.; NY.GDP.PCAP.CD: GDP per capita can tempt players because it shares a strong country ranking with this map, but its unit and definition point to a different story.",
+      "mobileReadability": "Pass in smoke review: broad coverage and strong map-interest score should survive mobile scale.",
+      "decision": "needs_tweak",
+      "decisionLabel": "Needs tweak",
+      "recommendedFix": "Keep close lookalikes out of Explorer/Analyst, avoid same-day pairing with correlated maps, and ask beta testers what they confused it with."
+    }
+  ]
+}

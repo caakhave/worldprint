@@ -1,0 +1,36 @@
+{
+  "schemaVersion": "1.1.0",
+  "game": "worldprint",
+  "date": "2026-09-18",
+  "contentVersion": "2026.06.22-exp2-qa1",
+  "roundIds": [
+    "worldprint-adolescent-fertility",
+    "worldprint-energy-use",
+    "worldprint-arable-land",
+    "worldprint-age-dependency",
+    "worldprint-internet-users"
+  ],
+  "indicatorIds": [
+    "adolescent-fertility",
+    "energy-use",
+    "arable-land",
+    "age-dependency",
+    "internet-users"
+  ],
+  "categoryMix": {
+    "demography": 2,
+    "energy": 1,
+    "land": 1,
+    "connectivity": 1
+  },
+  "mapDifficultyMix": {
+    "expert": 1,
+    "standard": 3,
+    "intro": 1
+  },
+  "generatedAt": "2026-06-22T18:07:37.470946+00:00",
+  "generatorVersion": "daily-manifest-v1",
+  "varietyNotes": [
+    "Selected with category, difficulty, and same-day correlation safeguards."
+  ]
+}

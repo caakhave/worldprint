@@ -1,18 +1,230 @@
-# WORLDPRINT Status
+# Can You Geo? Status
 
-Last updated: 2026-06-19 America/Mexico_City.
+Last updated: 2026-06-22 America/Mexico_City.
 
 ## Current Milestone
 
-Editorial QA + Indicator Approval Pass v1 - complete.
+Can You Geo? Branding Overhaul v1 - complete.
+
+## Public Brand And Compatibility
+
+- Public suite brand: Can You Geo?
+- Current playable game mode: Mystery Map.
+- Brand line: A new way to play the planet.
+- Primary tagline: Read the world.
+- Domain target: `canyougeo.com`.
+- Legacy `worldprint` identifiers intentionally remain in technical URLs, generated data, challenge payloads, localStorage, route component names, and report filenames so existing Daily archives, challenge links, and saved browser state keep working.
+- Compatibility routes kept: `/play/worldprint`, `/play/worldprint/YYYY-MM-DD`, `/archive/worldprint`, `/challenge/worldprint/?c=...`, `/beta/worldprint`, and `/internal/worldprint-review`.
+- No alias routes were added in this pass; preserving static export and content-version locked links was prioritized over route churn.
 
 ## Current App Snapshot
 
-- Routes: `/`, `/play/worldprint`, `/play/worldprint/YYYY-MM-DD` for generated Daily manifests, `/archive/worldprint`, `/challenge/worldprint?c=...`, `/how-to-play`, `/sources`, `/about`, and the unlinked internal QA route `/internal/worldprint-review`.
+- Routes: `/`, `/play/worldprint`, `/play/worldprint/YYYY-MM-DD` for generated Mystery Map Daily manifests, `/archive/worldprint`, `/challenge/worldprint/?c=...`, `/how-to-play`, `/sources`, `/about`, and the unlinked internal QA route `/internal/worldprint-review`.
+- Unlisted testing route: `/beta/worldprint`.
 - Static delivery: Next.js App Router with `output: 'export'`; gameplay uses same-origin static JSON and SVG/GeoJSON artifacts.
-- Data: `public/data/v1` contains the manifest, round definitions, approved indicator manifest, source registry, entity registry, 56 World Bank indicator artifacts, generated editorial review data, and generated Daily manifests under `public/data/v1/dailies`. `public/maps/world-110m.v1.geojson` is the Natural Earth basemap artifact.
+- Data: `public/data/v1` contains the manifest, round definitions, source-valid indicator manifest, source registry, entity registry, 167 source-valid World Bank indicator artifacts from a 198-candidate bank, 125 playable maps, 50 Daily-ready maps, generated editorial review data for all 198 candidates, and generated Daily manifests under `public/data/v1/dailies`. `public/maps/world-110m.v1.geojson` is the Natural Earth basemap artifact.
 - Game rules: Explorer has 3 broad choices, 3 investigations, hover names, and unit clue; Analyst is recommended with 4 plausible choices, 3 investigations, and unit clue; Cartographer has 6 close choices, 1 investigation, and no unit clue; Atlas Master has catalog search, 1 investigation, and no unit clue.
-- Data build flow: `pnpm data:build` runs `tools/data_pipeline/build.py`, regenerates static data, and writes validation/distractor reports under `generated/reports`.
+- Data build flow: `pnpm data:build` runs `tools/data_pipeline/build.py`, regenerates static data, and writes validation, intake, scorecard, status-diff, and distractor reports under `generated/reports`.
+
+## Completed In Can You Geo? Branding Overhaul v1
+
+- Rebranded public product UI from the old WORLDPRINT working title to Can You Geo?.
+- Set Mystery Map as the name of the current playable mode.
+- Updated root metadata, Open Graph, Twitter metadata, brand mark, landing copy, play/setup copy, archive copy, challenge copy, beta copy, sources/about/how-to-play copy, and spoiler-free share headings.
+- Kept the legacy `worldprint` namespace in routes, challenge payloads, generated round IDs, static data filenames, localStorage, and internal component names for compatibility.
+- Kept all existing legacy routes working; no alias routes were added in this pass.
+- Regenerated external beta and focused beta QA reports with Can You Geo? headings.
+- Added regression coverage for Can You Geo? landing text, Mystery Map CTA/start labels, archive labels, beta-page copy, and challenge share text.
+
+## Validation Results For Can You Geo? Branding Overhaul v1
+
+- `pnpm beta:external` passed and regenerated `generated/reports/external-beta-test-packs.*` plus `generated/reports/external-beta-challenge-links.*`.
+- `pnpm beta:qa` passed and regenerated `generated/reports/beta-qa-sample.*` plus `generated/reports/beta-qa-scorecards.*`.
+- `pnpm quality` passed: ESLint, TypeScript, Vitest (11 files / 63 tests), and `next build` static export. Build exported 132 static pages.
+- Initial sandbox `pnpm test:e2e` failed because the dev server bind to `::1:3000` was denied. The first approved run exposed stale selectors after the public copy rename. After selector fixes, the final approved `pnpm test:e2e` run passed: 39 passed, 1 expected desktop skip, 47.5s.
+- Deterministic screenshots were updated under `output/playwright/desktop` and `output/playwright/mobile`, including landing, play setup, dated Daily, archive, beta, sources, challenge intro/complete, and palette examples.
+- `pnpm static:preview` is serving `out/` at `http://localhost:3001`.
+- `curl -I http://localhost:3001/` returned `HTTP/1.1 200 OK`.
+- `curl -I http://localhost:3001/play/worldprint/` returned `HTTP/1.1 200 OK`.
+- `curl -I http://localhost:3001/play/worldprint/2026-06-18/` returned `HTTP/1.1 200 OK`.
+- `curl -I http://localhost:3001/archive/worldprint/` returned `HTTP/1.1 200 OK`.
+- `curl -I http://localhost:3001/challenge/worldprint/` returned `HTTP/1.1 200 OK`.
+- `curl -I http://localhost:3001/beta/worldprint/` returned `HTTP/1.1 200 OK`.
+- `curl -I http://localhost:3001/internal/worldprint-review/` returned `HTTP/1.1 200 OK`.
+- `curl -I http://localhost:3001/sources/` returned `HTTP/1.1 200 OK`.
+- After restoring the dev route-types import in `next-env.d.ts`, `pnpm typecheck` passed.
+
+## Completed In External Beta Readability Testing Prep v1
+
+- Added unlisted static beta route `/beta/worldprint` with no main-nav link.
+- Added deterministic external beta packs at `generated/reports/external-beta-test-packs.md` / `.json`.
+- Added spoiler-free static Challenge links at `generated/reports/external-beta-challenge-links.md` / `.json`.
+- Added `docs/EXTERNAL_BETA.md` with purpose, selected packs, exact maps, feedback questions, interpretation guidance, and next decision gate.
+- Added `pnpm beta:external` to regenerate external beta pack/link reports.
+- Added beta page tests, challenge-link load tests, mobile overflow coverage, axe coverage, and deterministic screenshots.
+- Test packs: Intro Pack, Daily-Ready Stress Pack, Ambiguity / Edge Pack, and optional Expert Pack.
+- The Daily-Ready Stress Pack includes all seven Batch 2 maps kept Daily-ready.
+- The Ambiguity / Edge Pack focuses on high-risk demotions and lookalike/correlation concerns.
+- The page states current reality clearly: 125 playable maps, 50 Daily-ready maps, open beta, no login, and no payment.
+
+## Validation Results For External Beta Readability Testing Prep v1
+
+- `pnpm beta:external` passed and regenerated `generated/reports/external-beta-test-packs.*` plus `generated/reports/external-beta-challenge-links.*`.
+- `pnpm quality` passed: ESLint, TypeScript, Vitest (11 files / 63 tests), and `next build` static export. Build exported 132 static pages, including `/beta/worldprint`.
+- `pnpm test:e2e` failed inside the sandbox because the dev server bind to `::1:3000` was denied. After approval and selector fixes for the new beta checks, the final approved run passed: 35 passed, 1 expected desktop skip, 43.0s.
+- Deterministic screenshots were updated under `output/playwright/desktop` and `output/playwright/mobile`, including `beta-worldprint.png`, `beta-intro-pack-challenge-intro.png`, `beta-daily-ready-stress-challenge-intro.png`, `beta-ambiguity-edge-challenge-intro.png`, and `beta-intro-pack-complete.png`.
+- `pnpm static:preview` is serving `out/` at `http://localhost:3001`.
+- `curl -I http://localhost:3001/` returned `HTTP/1.1 200 OK`.
+- `curl -I http://localhost:3001/play/worldprint/` returned `HTTP/1.1 200 OK`.
+- `curl -I http://localhost:3001/beta/worldprint/` returned `HTTP/1.1 200 OK`.
+- `curl -I http://localhost:3001/challenge/worldprint/` returned `HTTP/1.1 200 OK`.
+- `curl -I http://localhost:3001/sources/` returned `HTTP/1.1 200 OK`.
+
+## Completed In Batch 2 Editorial QA + Beta Map Triage
+
+- Bumped the content version to `2026.06.22-exp2-qa1`.
+- Reviewed all 52 Batch 2 maps that were promoted in `2026.06.22-exp2`.
+- Added `generated/reports/batch-2-promoted-map-list.md` / `.json` with every promoted Batch 2 map, World Bank code, topic, palette, status, year, coverage, and scorecard summary.
+- Added `generated/reports/batch-2-editorial-qa.md` / `.json` with scorecards for all 52 promoted maps.
+- Kept 7 Batch 2 promotions Daily-ready: account ownership, arable land per person, coal electricity share, open defecation, permanent cropland, average precipitation, and protected land and seas.
+- Demoted or held 23 promoted maps: 5 Daily maps moved to Practice, 9 maps moved to Expert-only, 4 maps moved to Needs-review, and 5 maps retired.
+- Reviewed the 27 source-valid Batch 2 Needs-review maps in `generated/reports/batch-2-needs-review-triage.md` / `.json`.
+- Promoted only two Needs-review maps, employment in industry and urban slum population, both to Practice.
+- Post-QA content outcome: 198 candidates, 167 source-valid artifacts, 31 draft-held/data-failed candidates, 125 playable rounds, and 50 Daily-ready rounds.
+- Daily manifests remain generated for 121 dates from 2026-05-23 through 2026-09-20 and use only Daily-ready source-valid playable rounds.
+- Browser smoke passed 15 exact Challenge-link checks on static preview, with artifacts under `output/playwright/batch-2-editorial-qa`.
+- Batch 3 target categories from triage: education, technology/connectivity, migration/tourism, governance/development, and carefully framed settlement maps.
+
+## Validation Results For Batch 2 Editorial QA + Beta Map Triage
+
+- `pnpm data:build` failed inside the sandbox with DNS restrictions, then passed with network approval: content version `2026.06.22-exp2-qa1`, output `public/data/v1`, report `generated/reports/validation-report.md`, elapsed 126.1s.
+- `pnpm beta:qa` passed and regenerated `generated/reports/beta-qa-sample.*` plus `generated/reports/beta-qa-scorecards.*`.
+- `pnpm quality` passed: ESLint, TypeScript, Vitest (11 files / 62 tests), and `next build` static export. Build exported 131 static pages, including `/internal/worldprint-review`.
+- `pnpm test:e2e` failed inside the sandbox because the dev server bind to `::1:3000` was denied, then passed with approval: 31 passed, 1 expected desktop skip, 41.0s.
+- Targeted Batch 2 Challenge smoke passed: 15 exact challenge-link checks, 12 desktop screenshots, 3 mobile screenshots, artifact `output/playwright/batch-2-editorial-qa/smoke-results.json`.
+- `pnpm static:preview` is serving `out/` at `http://localhost:3001`.
+- `curl -I http://localhost:3001/` returned `HTTP/1.1 200 OK`.
+- `curl -I http://localhost:3001/play/worldprint/` returned `HTTP/1.1 200 OK`.
+- `curl -I http://localhost:3001/archive/worldprint/` returned `HTTP/1.1 200 OK`.
+- `curl -I http://localhost:3001/internal/worldprint-review/` returned `HTTP/1.1 200 OK`.
+- `curl -I http://localhost:3001/sources/` returned `HTTP/1.1 200 OK`.
+
+## Completed In WORLDPRINT More Candidate Indicators Batch 2
+
+- Added 98 verified World Bank intake candidates through `content/candidates/worldprint-candidate-intake.json`.
+- Bumped content version to `2026.06.22-exp2`.
+- Raised the source gate target to support up to 150 approved indicators, then regenerated the static content bank.
+- Final content outcome: 198 candidates, 167 source-valid artifacts, 31 draft-held/data-failed candidates, 132 playable rounds, and 59 Daily-ready rounds.
+- Batch 2 outcome: 79 source-valid artifacts, 19 draft-held/data-failed candidates, and 52 promoted playable maps.
+- Batch 2 promoted status mix: 16 Daily-eligible, 18 Practice-eligible, and 18 Expert-only maps.
+- Batch 2 kept 27 source-valid maps in Needs-review instead of auto-approving weak or ambiguous maps.
+- Regenerated 121 Daily manifests for 2026-05-23 through 2026-09-20 using only Daily-eligible source-valid rounds.
+- Added persistent Batch 2 reports at `generated/reports/candidate-batch-2-summary.md` and `.json`.
+- Regenerated focused beta QA reports for `2026.06.22-exp2`.
+
+## Validation Results For More Candidate Indicators Batch 2
+
+- `pnpm data:build` failed inside the sandbox with DNS restrictions, then passed with network approval: content version `2026.06.22-exp2`, output `public/data/v1`, report `generated/reports/validation-report.md`, elapsed 121.0s.
+- `pnpm beta:qa` passed and regenerated `generated/reports/beta-qa-sample.*` plus `generated/reports/beta-qa-scorecards.*`.
+- `pnpm quality` passed after fixing the new Batch 2 content-count assertion: ESLint, TypeScript, Vitest (11 files / 62 tests), and `next build` static export. Build exported 131 static pages, including `/internal/worldprint-review`.
+- `pnpm test:e2e` first failed inside the sandbox because the dev server bind to `::1:3000` was denied. One approved rerun was interrupted after Playwright workers wedged; the next approved rerun exposed stale Practice filter counts and a real mobile reveal overflow. After fixing those, the final approved run passed: 31 passed, 1 expected desktop skip, 41.2s.
+- `pnpm static:preview` is serving `out/` at `http://localhost:3001`.
+- `curl -I http://localhost:3001/` returned `HTTP/1.1 200 OK`.
+- `curl -I http://localhost:3001/play/worldprint/` returned `HTTP/1.1 200 OK`.
+- `curl -I http://localhost:3001/archive/worldprint/` returned `HTTP/1.1 200 OK`.
+- `curl -I http://localhost:3001/internal/worldprint-review/` returned `HTTP/1.1 200 OK`.
+- `curl -I http://localhost:3001/sources/` returned `HTTP/1.1 200 OK`.
+
+## Completed In Focused Beta QA + Launch Readiness Pass v1
+
+- Added deterministic beta QA reporting with `pnpm beta:qa`.
+- Added `generated/reports/beta-qa-sample.md` / `.json` for a 15-map sample covering Daily-ready, Practice-only, Expert-only, category, palette, and ambiguity requirements.
+- Added `generated/reports/beta-qa-scorecards.md` / `.json` with unit clarity, map readability, answer fairness, distractor ambiguity, difficulty fit, reveal copy, mobile readability, decision, and recommended fix fields.
+- Added `docs/BETA_QA.md` with honest content counts, sample summary, top issues, flow review, launch readiness assessment, and beta/free-tier recommendation.
+- Cleaned public copy so the play setup says playable and Daily-ready maps instead of source-valid approved indicators. Current copy shows `125 playable maps` and `50 Daily-ready maps`.
+- Changed score-cost wording from `paid investigations` to `point-cost investigations`.
+- Changed Atlas Master copy from `Search approved indicators` to `Search playable map catalog`.
+- Updated `/sources` to distinguish candidate, source-valid, playable, and Daily-ready counts with human-readable editorial status labels.
+- Updated screenshots to include active Practice plus the existing landing, play setup, archive, challenge, reveal, and palette examples.
+
+## Focused Beta QA Result
+
+- QA sample size: 15 maps.
+- Sample editorial mix: 8 Daily-ready, 3 Practice-only, 4 Expert-only.
+- Palette coverage: Teal, Rose, Green, Aqua, Gold, Orange, Violet, Electric blue, Steel, Coral, and Indigo.
+- Scorecard decisions: 3 Pass, 12 Needs tweak, 0 Hold.
+- Top readiness risk: correlated or lookalike maps, not core UI breakage.
+- Access recommendation: keep today's open beta unenforced, keep Daily as 5 maps, use a future 3-map no-account demo, and start future free accounts at 3 maps/day until the playable catalog grows.
+
+## Completed In WORLDPRINT Content Scale Pipeline v2
+
+- Added `content/candidates/worldprint-candidate-intake.json` as the future 50-100 indicator batch intake point.
+- Intake candidates are validated, duplicate-checked, fetched, source-scored, and scorecarded. If an intake row has no curated editorial review, the pipeline default-holds it as `needs_review` with no Daily, Practice, or Challenge eligibility.
+- Added generated candidate intake reports at `generated/reports/candidate-intake-report.md` and `.json`.
+- Added generated scorecards for every candidate at `generated/reports/candidate-scorecards.md` and `.json`.
+- Scorecards now cover source validation, coverage, data freshness, unit clarity, map interest, ambiguity/correlation, data-gate reasons, current editorial status, and a non-binding editorial action recommendation.
+- Added build-to-build status diffs at `generated/reports/content-status-diff.md` and `.json`, comparing candidate counts, approval status, editorial status, coverage, and selected year.
+- Preserved curated editorial review as the source of truth. The scorecard pipeline recommends review actions but does not auto-promote maps into play.
+- Updated `/internal/worldprint-review` so editors can see generated scorecard totals, component scores, and recommendations beside manual quality/fun/fairness scores.
+- Updated `/sources` to explain scorecards and status diffs without exposing internal reports as player-facing controls.
+- Added tests that assert every candidate has a generated scorecard and that scorecard summary counts match the editorial registry.
+
+## Content Scale Pipeline v2 Result
+
+- Candidate bank: 198.
+- Source-valid approved artifacts: 167.
+- Draft-held/data-failed candidates: 31.
+- Playable generated rounds: 125.
+- Daily-eligible source-valid rounds: 50.
+- Intake candidates currently loaded: 98. Batch 2 remains in the intake file so future report diffs can distinguish built-in curated candidates from the latest growth batch.
+- Candidate scorecard recommendation counts: 31 `hold_for_data`, 37 `keep_daily_eligible`, 23 `keep_expert_only`, 34 `keep_needs_review`, 19 `keep_practice_eligible`, 8 `keep_retired`, 45 `review_ambiguity`, and 1 `review_for_demotion`.
+
+## Validation Results For Content Scale Pipeline v2
+
+- `python3 -m py_compile tools/data_pipeline/build.py` passed.
+- `pnpm data:build` first failed inside the sandbox with DNS restrictions, then passed with network approval: content version `2026.06.22-exp1`, output `public/data/v1`, final report `generated/reports/validation-report.md`, elapsed 55.1s.
+- `pnpm quality` passed: ESLint, TypeScript, Vitest (10 files / 54 tests), and `next build` static export. Build exported 131 static pages, including `/internal/worldprint-review`.
+- `command -v npx >/dev/null 2>&1 && echo npx-ok` returned `npx-ok` before browser tests.
+- `pnpm test:e2e` first failed inside the sandbox because the dev server bind to `::1:3000` was denied, then passed with approval: 31 passed, 1 expected desktop skip, 34.0s.
+- `curl -I http://localhost:3001/play/worldprint/` returned `HTTP/1.1 200 OK`.
+- `curl -I http://localhost:3001/sources/` returned `HTTP/1.1 200 OK`.
+- `curl -I http://localhost:3001/internal/worldprint-review/` returned `HTTP/1.1 200 OK`.
+- `curl -I http://localhost:3001/data/v1/dailies/2026-05-20.json` returned `HTTP/1.1 404 Not Found`, confirming stale pre-2026-05-23 Daily JSON remains removed from the static export.
+
+## Completed In WORLDPRINT Content Expansion to 100 Candidates v1
+
+- Added 44 requested World Bank candidate indicators to `tools/data_pipeline/build.py`, bringing the curated candidate bank from 56 to 100.
+- Regenerated content version `2026.06.22-exp1` with schema version `1.1.0`.
+- Final source-data gate result: 88 source-valid indicator artifacts, 12 draft-held candidates, and 80 playable generated rounds.
+- Final source-valid editorial status counts: 43 Daily-eligible, 13 Practice-eligible, 24 Expert-only, 5 Needs-review, and 3 Retired.
+- Candidate-level editorial status counts before the data gate: 46 Daily-eligible, 17 Practice-eligible, 27 Expert-only, 6 Needs-review, and 4 Retired.
+- New candidate source-valid outcomes: 15 Daily-eligible, 5 Practice-eligible, 9 Expert-only, 2 Needs-review, and 1 Retired, yielding 29 new playable rounds.
+- Draft-held new candidates: contraceptive use, modern contraceptive use, skilled birth attendance, child stunting, child wasting, child overweight, adult literacy, youth literacy, primary pupil-teacher ratio, research and development spending, refugees hosted, and external debt burden.
+- Regenerated 121 Daily manifests for 2026-05-23 through 2026-09-20 using only the 43 source-valid Daily-eligible rounds.
+- Expanded `/internal/worldprint-review` so it shows all 100 candidates, including draft-held rows with coverage/source failures, instead of only showing approved artifacts.
+- Updated `/sources` to distinguish the 100-candidate bank, 88 source-valid artifacts, 12 draft-held candidates, and 80 playable generated rounds.
+- Added per-indicator progress output to `pnpm data:build` so future 100+ indicator refreshes reveal slow source calls instead of appearing hung.
+- Added generated-output cleanup for `public/data/v1/indicators/*.json` and `public/data/v1/dailies/*.json` so successful rebuilds do not leave stale content-version files behind.
+
+## Content Scale Position
+
+- 198 candidate indicators and 125 playable maps are a stronger early-beta pool, but still not a durable paid content pool. Batch 2 proves the same scaling math: 19 of 98 intake candidates failed the source-data gate, and 52 of the new source-valid candidates initially became playable before QA trimmed the pool.
+- A healthy v1 content pool should target 150-250 source-valid playable indicators, with at least 60-80 Daily-eligible maps so repeated Daily play does not feel samey.
+- A stronger paid product should grow toward 500+ playable indicators over time, with many more candidates allowed to sit in Expert-only, Needs-review, Retired, seasonal, or future content-pack states.
+- The long-term 1,000+ candidate goal should be treated as a cross-game catalog goal across WORLDPRINT and sibling games, not as 1,000 Daily maps. The pipeline needs better ingestion, data freshness scoring, ambiguity/correlation scoring, and content-pack versioning before that scale is safe.
+
+## Validation Results For Content Expansion to 100 Candidates v1
+
+- `pnpm data:build` initially failed inside the sandbox with DNS restrictions, then passed with network approval: content version `2026.06.22-exp1`, output `public/data/v1`, report `generated/reports/validation-report.md`, final elapsed 57.7s.
+- `pnpm quality` passed: ESLint, TypeScript, Vitest (10 files / 53 tests), and `next build` static export. Build exported 131 static pages, including `/internal/worldprint-review`.
+- `pnpm test:e2e` initially failed inside the sandbox because the dev server bind to `::1:3000` was denied, then passed with approval: 31 passed, 1 expected desktop skip, 33.5s.
+- Targeted screenshot rerun passed after updating a stale Practice button selector: 2 passed, 16.4s.
+- `pnpm static:preview` served `out/` at `http://localhost:3001`.
+- `curl -I http://localhost:3001/play/worldprint/` returned `HTTP/1.1 200 OK`.
+- `curl -I http://localhost:3001/archive/worldprint/` returned `HTTP/1.1 200 OK`.
+- `curl -I http://localhost:3001/internal/worldprint-review/` returned `HTTP/1.1 200 OK`.
+- `curl -I http://localhost:3001/sources/` returned `HTTP/1.1 200 OK`.
+- `curl -I http://localhost:3001/data/v1/dailies/2026-05-20.json` returned `HTTP/1.1 404 Not Found`, confirming stale pre-2026-05-23 Daily JSON was removed from the static export.
 
 ## Audit Findings For Editorial QA + Indicator Approval Pass v1
 
@@ -310,4 +522,4 @@ Editorial QA + Indicator Approval Pass v1 - complete.
 
 ## Next Action
 
-Recommended next task: WORLDPRINT External Beta Prep v1, or HUMAN CENTER Data Feasibility Spike.
+Recommended next task: Can You Geo? Landing Polish v1, External Beta Feedback Review, or Deployment Prep.

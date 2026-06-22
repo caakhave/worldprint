@@ -12,8 +12,8 @@ export default function AboutPage() {
         <p className="eyebrow">Mission</p>
         <h1 className="page-title">A game about seeing what maps are saying.</h1>
         <p className="lead">
-          WORLDPRINT is built for players who already know the capitals and want a sharper daily geography challenge. The goal is to
-          make real-world patterns legible without turning the reveal into a lecture.
+          Can You Geo? is built for players who already know the capitals and want sharper daily geography games. Mystery Map makes
+          real-world patterns legible without turning the reveal into a lecture.
         </p>
       </div>
       <div className="about-grid">
@@ -31,12 +31,12 @@ export default function AboutPage() {
         <article className="about-card">
           <h2>What comes next</h2>
           <p>
-            HUMAN CENTER is the next intended full game. It can reuse the basemap, entity registry, source registry, persistence, and
+            Human Center is the next intended full game. It can reuse the basemap, entity registry, source registry, persistence, and
             accessible controls without requiring a premature mini-game framework.
           </p>
           <p>
-            WORLDPRINT stays first: richer archives, better editorial review, and cleaner challenge sharing should come before any
-            account or paid layer.
+            Mystery Map stays first: richer archives, better editorial review, and cleaner challenge sharing should come before any
+            account or paid layer. The legacy internal content namespace stays stable where compatibility requires it.
           </p>
         </article>
       </div>

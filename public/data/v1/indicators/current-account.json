@@ -178,12 +178,12 @@
     "valuesReference": "https://api.worldbank.org/v2/country/all/indicator/BN.CAB.XOKA.GD.ZS?format=json&per_page=20000&page=1&date=2015%3A2025",
     "license": "Creative Commons Attribution 4.0 International unless specifically labeled otherwise by World Bank metadata",
     "licenseReference": "https://www.worldbank.org/en/about/legal/terms-of-use-for-datasets",
-    "retrievedAt": "2026-06-19T17:09:21.721188+00:00",
+    "retrievedAt": "2026-06-22T18:06:05.875817+00:00",
     "checksum": "ef872336f619985ab09ba0c0a110142fad38beb4deecbe48ec9d7325500492ea",
     "sourceOrganization": "Balance of Payments Statistics Yearbook and data files, International Monetary Fund (IMF);\nWorld Development Indicators Database, World Bank (WB);\nNational Accounts data files, Organisation for Economic Co-operation and Development (OECD)"
   },
   "reviewStatus": "approved",
-  "contentVersion": "2026.06.19-ed1",
+  "contentVersion": "2026.06.22-exp2-qa1",
   "editorial": {
     "shortHook": "A surplus-and-deficit map.",
     "patternNote": "The darkest countries include Kuwait, Ireland, Qatar, while the lightest include Timor-Leste, West Bank and Gaza, Bhutan; that contrast is the fastest way to read the current account balance pattern.",
@@ -204,16 +204,16 @@
     ],
     "commonConfusions": [
       {
-        "confusedWithIndicatorCode": "NY.GDP.PCAP.PP.CD",
-        "reason": "GDP per capita, PPP overlaps with part of the visible pattern, but the full country spread does not match."
+        "confusedWithIndicatorCode": "NY.GDS.TOTL.ZS",
+        "reason": "Domestic savings lives in the same category, so it can feel plausible until the high and low countries are checked."
       },
       {
-        "confusedWithIndicatorCode": "EN.GHG.CO2.PC.CE.AR5",
-        "reason": "CO2 emissions per capita overlaps with part of the visible pattern, but the full country spread does not match."
+        "confusedWithIndicatorCode": "NY.GNS.ICTR.ZS",
+        "reason": "Gross savings lives in the same category, so it can feel plausible until the high and low countries are checked."
       },
       {
-        "confusedWithIndicatorCode": "NV.AGR.TOTL.ZS",
-        "reason": "Agriculture value added lives in the same category, so it can feel plausible until the high and low countries are checked."
+        "confusedWithIndicatorCode": "NY.GNP.PCAP.PP.CD",
+        "reason": "GNI per capita, PPP overlaps with part of the visible pattern, but the full country spread does not match."
       }
     ],
     "difficultyReason": "Expert difficulty: the map can be mistaken for adjacent indicators unless players probe a high, low, and middle country.",
@@ -224,7 +224,7 @@
   },
   "editorialReview": {
     "status": "expert_only",
-    "reviewedAt": "2026-06-19",
+    "reviewedAt": "2026-06-22",
     "reviewedBy": "Codex editorial QA",
     "qualityScore": 3,
     "funScore": 3,

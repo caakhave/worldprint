@@ -202,12 +202,12 @@
     "valuesReference": "https://api.worldbank.org/v2/country/all/indicator/SL.UEM.TOTL.ZS?format=json&per_page=20000&page=1&date=2015%3A2025",
     "license": "Creative Commons Attribution 4.0 International unless specifically labeled otherwise by World Bank metadata",
     "licenseReference": "https://www.worldbank.org/en/about/legal/terms-of-use-for-datasets",
-    "retrievedAt": "2026-06-19T17:09:16.088894+00:00",
+    "retrievedAt": "2026-06-22T18:05:58.708393+00:00",
     "checksum": "0d6474beb89c8e21eb19c4adf092c0861d1704b99555e96d7327b753d7df1c8a",
     "sourceOrganization": "ILO Modelled Estimates database (ILOEST), International Labour Organization (ILO), uri: https://ilostat.ilo.org/data/bulk/, publisher: ILOSTAT, type: external database, date accessed: January 17, 2026"
   },
   "reviewStatus": "approved",
-  "contentVersion": "2026.06.19-ed1",
+  "contentVersion": "2026.06.22-exp2-qa1",
   "editorial": {
     "shortHook": "A labor-market map that is not just poverty.",
     "patternNote": "The darkest countries include Eswatini, South Africa, Djibouti, while the lightest include Qatar, Cambodia, Niger; that contrast is the fastest way to read the unemployment pattern.",
@@ -228,16 +228,16 @@
     ],
     "commonConfusions": [
       {
-        "confusedWithIndicatorCode": "SL.TLF.CACT.ZS",
-        "reason": "Labor force participation lives in the same category, so it can feel plausible until the high and low countries are checked."
+        "confusedWithIndicatorCode": "SL.UEM.TOTL.MA.ZS",
+        "reason": "Male unemployment can tempt players because it shares a strong country ranking with this map, but its unit and definition point to a different story."
       },
       {
-        "confusedWithIndicatorCode": "SL.TLF.CACT.FE.ZS",
-        "reason": "Female labor force participation lives in the same category, so it can feel plausible until the high and low countries are checked."
+        "confusedWithIndicatorCode": "SL.UEM.TOTL.FE.ZS",
+        "reason": "Female unemployment can tempt players because it shares a strong country ranking with this map, but its unit and definition point to a different story."
       },
       {
-        "confusedWithIndicatorCode": "GC.TAX.TOTL.GD.ZS",
-        "reason": "Tax revenue overlaps with part of the visible pattern, but the full country spread does not match."
+        "confusedWithIndicatorCode": "SL.UEM.1524.ZS",
+        "reason": "Youth unemployment can tempt players because it shares a strong country ranking with this map, but its unit and definition point to a different story."
       }
     ],
     "difficultyReason": "Standard difficulty: the map has readable regional structure, but the best answer still depends on checking the unit and country anchors.",
@@ -248,7 +248,7 @@
   },
   "editorialReview": {
     "status": "daily_eligible",
-    "reviewedAt": "2026-06-19",
+    "reviewedAt": "2026-06-22",
     "reviewedBy": "Codex editorial QA",
     "qualityScore": 4,
     "funScore": 4,

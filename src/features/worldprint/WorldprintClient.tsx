@@ -3,6 +3,7 @@
 import { Compass, Copy, Lightbulb, Search, Share2, Shuffle } from "lucide-react";
 import { useSearchParams } from "next/navigation";
 import { useCallback, useEffect, useMemo, useState } from "react";
+import { EntryAtlasVisual } from "@/features/worldprint/EntryAtlasVisual";
 import { TierSelector } from "@/features/worldprint/TierSelector";
 import {
   loadEntityRegistry,
@@ -118,7 +119,7 @@ export function WorldprintClient({ dateOverride, entryMode = "standard" }: World
   const [masterGuess, setMasterGuess] = useState("");
   const [shareStatus, setShareStatus] = useState("");
   const [practiceCategory, setPracticeCategory] = useState("");
-  const [practiceDifficulty, setPracticeDifficulty] = useState<IndicatorDifficulty | "">("");
+  const [practiceDifficulty, setPracticeDifficulty] = useState<IndicatorDifficulty>("intro");
   const [practiceSalt, setPracticeSalt] = useState("starter");
   const [practiceSetRoundIds, setPracticeSetRoundIds] = useState<string[]>([]);
   const [practiceSetStatus, setPracticeSetStatus] = useState<"idle" | "ready">("idle");
@@ -155,7 +156,7 @@ export function WorldprintClient({ dateOverride, entryMode = "standard" }: World
         countryNames: countryNameByIso3(registry.value.entities)
       });
     }
-    loadAll().catch((error: unknown) => setLoadError(error instanceof Error ? error.message : "Could not load WORLDPRINT data"));
+    loadAll().catch((error: unknown) => setLoadError(error instanceof Error ? error.message : "Could not load Mystery Map data"));
     return () => {
       cancelled = true;
     };
@@ -229,7 +230,7 @@ export function WorldprintClient({ dateOverride, entryMode = "standard" }: World
   const practiceFilters = useMemo(
     () => ({
       category: practiceCategory || undefined,
-      difficulty: practiceDifficulty || undefined
+      difficulty: practiceDifficulty
     }),
     [practiceCategory, practiceDifficulty]
   );
@@ -331,7 +332,7 @@ export function WorldprintClient({ dateOverride, entryMode = "standard" }: World
     return (
       <section className="game-shell page-shell">
         <div className="empty-state surface">
-          <h1>WORLDPRINT data did not load</h1>
+          <h1>Mystery Map data did not load</h1>
           <p>{loadError}</p>
         </div>
       </section>
@@ -342,7 +343,7 @@ export function WorldprintClient({ dateOverride, entryMode = "standard" }: World
     return (
       <section className="game-shell page-shell">
         <div className="empty-state surface">
-          <h1>Loading WORLDPRINT</h1>
+          <h1>Loading Mystery Map</h1>
           <p>Preparing today&apos;s source-backed map set.</p>
         </div>
       </section>
@@ -355,7 +356,7 @@ export function WorldprintClient({ dateOverride, entryMode = "standard" }: World
         <section className="game-shell page-shell">
           <div className="empty-state surface challenge-state">
             <p className="eyebrow">Challenge unavailable</p>
-            <h1>This WORLDPRINT challenge cannot be opened.</h1>
+            <h1>This Can You Geo? challenge cannot be opened.</h1>
             <p>{challengeResult.message}</p>
           </div>
         </section>
@@ -406,10 +407,10 @@ export function WorldprintClient({ dateOverride, entryMode = "standard" }: World
       return (
         <section className="game-entry page-shell">
           <div className="entry-copy">
-            <p className="eyebrow">WORLDPRINT Challenge</p>
+            <p className="eyebrow">Can You Geo? Challenge</p>
             <h1 className="page-title">Play the exact same maps.</h1>
             <p className="lead">
-              This link locks the content version, skill tier, and round IDs. Challenge plays do not affect today&apos;s Daily streak.
+              This Mystery Map link locks the content version, skill tier, and round IDs. Challenge plays do not affect today&apos;s Daily streak.
             </p>
             <div className="entry-facts" aria-label="Challenge facts">
               <span>{challengeResult.payload.roundIds.length} maps</span>
@@ -439,7 +440,7 @@ export function WorldprintClient({ dateOverride, entryMode = "standard" }: World
         <div className="empty-state surface">
           <p className="eyebrow">Archive unavailable</p>
           <h1>No generated Daily exists for {todayKey}.</h1>
-          <p>WORLDPRINT archives are static. Choose a date from the generated archive index.</p>
+          <p>Mystery Map archives are static. Choose a date from the generated archive index.</p>
         </div>
       </section>
     );
@@ -451,30 +452,46 @@ export function WorldprintClient({ dateOverride, entryMode = "standard" }: World
       ? activeDateRun.status === "complete"
         ? isArchiveDate
           ? "Review archive result"
-          : "View completed Daily"
+          : "View completed Mystery Map"
         : isArchiveDate
-          ? "Continue archive Daily"
-          : "Continue today's Daily"
+          ? "Continue archived Mystery Map"
+          : "Continue today's Mystery Map"
       : isArchiveDate
-        ? `Start ${todayKey} Daily`
-        : "Start today's Daily";
+        ? `Start ${todayKey} Mystery Map`
+        : "Start today's Mystery Map";
     const selectedCount = selectedPracticeRounds.length;
     const categoryMix = summarizeMix(selectedPracticeRounds.map((round) => round.category));
     const difficultyMix = summarizeMix(selectedPracticeRounds.map((round) => DIFFICULTY_LABELS[round.difficulty]));
     const setCode = practiceSetCode(practiceSetRoundIds);
-    const setReadyLabel = selectedCount > 0 ? "Practice set ready" : practiceMatches.length > 0 ? "Build a practice set" : "No maps match these filters";
+    const selectedDifficultyLabel = DIFFICULTY_LABELS[practiceDifficulty];
+    const setReadyLabel = selectedCount > 0 ? "Practice set ready" : practiceMatches.length > 0 ? `${selectedDifficultyLabel} practice pool` : "No maps match these filters";
+    const dailyReadyCount = data.rounds.filter((round) => round.eligibility.daily).length;
     return (
       <section className="game-entry page-shell">
         <div className="entry-copy">
-          <p className="eyebrow">{isArchiveDate ? `WORLDPRINT Archive — ${todayKey}` : `WORLDPRINT Daily #${challengeNumber(todayKey)}`}</p>
+          <EntryAtlasVisual />
+          <p className="eyebrow">{isArchiveDate ? `Mystery Map Archive — ${todayKey}` : `Mystery Map Daily #${challengeNumber(todayKey)}`}</p>
           <h1 className="page-title">What does this map measure?</h1>
           <p className="lead">
-            Five unlabeled maps, one hidden indicator each. Investigate countries when you need evidence, but every clue spends score.
+            {isArchiveDate
+              ? "This archive Daily is open in the public build: five unlabeled maps, one hidden indicator each."
+              : "Today's open beta runs the full 5-map Daily: five unlabeled maps, one hidden indicator each."}{" "}
+            Investigate countries when you need evidence, but every clue spends score.
           </p>
           <div className="entry-facts" aria-label="Daily facts">
-            <span>No account required</span>
-            <span>{isArchiveDate ? "Archive plays do not change today's streak" : "Resets at UTC midnight"}</span>
-            <span>{data.manifest.indicators.length} approved indicators</span>
+            <span>{isArchiveDate ? "Open beta archive access" : "Open beta: no account required"}</span>
+            <span>{isArchiveDate ? "Archive plays do not change today's streak" : "5-map Daily open now"}</span>
+            <span>{data.rounds.length} playable maps</span>
+            <span>{dailyReadyCount} Daily-ready maps</span>
+          </div>
+          <div className="entry-access-note" aria-label="Access model">
+            <span>Access model</span>
+            <p>
+              {isArchiveDate
+                ? "Archive access is open in this public build while account limits are not enforced."
+                : "Today's public build is open while account limits are not enforced."}{" "}
+              Future plan: try 3 maps instantly, free-account limited Daily Mystery Map play, and paid full atlas access.
+            </p>
           </div>
           {data.dailyManifestIssue ? <p className="archive-note">{data.dailyManifestIssue}</p> : null}
         </div>
@@ -482,25 +499,33 @@ export function WorldprintClient({ dateOverride, entryMode = "standard" }: World
           <div className="setup-section">
             <div className="setup-heading">
               <p className="setup-kicker">Choose how you play</p>
-              <p>Skill tier controls answer choices, clue allowance, investigations, scoring pressure, and Atlas Master search.</p>
+              <p>Pick how much help you want. This changes answer choices, clue costs, investigations, and Atlas Master search.</p>
             </div>
             <TierSelector value={selectedTier} onChange={updateTier} />
           </div>
           {!isArchiveDate ? (
+            <div className="button-row entry-primary-actions">
+              <button className="button" type="button" onClick={() => void startRun("daily")}>
+                <Compass size={18} aria-hidden="true" />
+                {dailyLabel}
+              </button>
+            </div>
+          ) : null}
+          {!isArchiveDate ? (
           <div className="practice-panel" aria-label="Practice filters">
             <div>
-              <p className="setup-kicker">Choose what you practice</p>
-              <h2>Practice preview</h2>
+              <p className="setup-kicker">Optional practice</p>
+              <h2>Warm up with 3 {selectedDifficultyLabel} maps.</h2>
               <p>
-                Map difficulty filters the data maps in Practice. Skill tier controls how much help the game gives you. Practice uses
-                normal scoring rules but does not affect the Daily streak.
+                Today&apos;s Mystery Map starts its own 5-map set. Practice is the open 3-map warm-up in this build; filters only shape Practice and never change your Daily
+                streak.
               </p>
             </div>
             <div className="practice-filters">
               <label htmlFor="practice-category">
-                Category
+                Topic
                 <select id="practice-category" value={practiceCategory} onChange={(event) => setPracticeCategory(event.target.value)}>
-                  <option value="">All categories</option>
+                  <option value="">Any topic</option>
                   {practiceCategories.map((category) => (
                     <option key={category} value={category}>
                       {category}
@@ -513,9 +538,8 @@ export function WorldprintClient({ dateOverride, entryMode = "standard" }: World
                 <select
                   id="practice-difficulty"
                   value={practiceDifficulty}
-                  onChange={(event) => setPracticeDifficulty(event.target.value as IndicatorDifficulty | "")}
+                  onChange={(event) => setPracticeDifficulty(event.target.value as IndicatorDifficulty)}
                 >
-                  <option value="">All difficulties</option>
                   <option value="intro">Intro</option>
                   <option value="standard">Standard</option>
                   <option value="expert">Expert</option>
@@ -523,7 +547,7 @@ export function WorldprintClient({ dateOverride, entryMode = "standard" }: World
               </label>
             </div>
             <p className="practice-helper">
-              Daily is curated automatically. These filters only shape the 3-map Practice preview.
+              Intro is the default. Standard and Expert raise the map difficulty; Expert also unlocks expert-only practice maps.
             </p>
             <div className="practice-set-card" data-status={selectedCount > 0 ? practiceSetStatus : "empty"} aria-live="polite">
               <span>{setReadyLabel}</span>
@@ -531,7 +555,7 @@ export function WorldprintClient({ dateOverride, entryMode = "standard" }: World
                 {selectedCount > 0
                   ? `${pluralize(selectedCount, "map")} selected from ${pluralize(practiceMatches.length, "matching map")}`
                   : practiceMatches.length > 0
-                    ? "Choose filters, then build a random practice set."
+                    ? `Build a random ${selectedDifficultyLabel} practice set.`
                     : "No maps match these filters."}
               </strong>
               {selectedCount > 0 ? (
@@ -551,28 +575,28 @@ export function WorldprintClient({ dateOverride, entryMode = "standard" }: World
             <div className="practice-actions">
               <button className="button-secondary" type="button" disabled={practiceMatches.length === 0} onClick={buildPracticeSet}>
                 <Shuffle size={17} aria-hidden="true" />
-                {practiceSetStatus === "ready" ? "Reroll practice set" : "Build random practice set"}
+                {practiceSetStatus === "ready" ? "Reroll practice set" : "Build practice set"}
+              </button>
+              <button className="button-secondary practice-start-button" type="button" disabled={selectedPracticeRounds.length === 0} onClick={() => void startRun("practice")}>
+                {selectedPracticeRounds.length > 0 ? `Start this ${selectedPracticeRounds.length}-map practice set` : "Start this 3-map practice set"}
               </button>
             </div>
           </div>
           ) : (
             <div className="archive-banner">
-              <p className="setup-kicker">Archive play</p>
+          <p className="setup-kicker">Mystery Map Archive</p>
               <h2>{todayKey}</h2>
-              <p>This generated Daily uses frozen round IDs from the archive manifest. Archive plays save local history but do not change today&apos;s streak.</p>
+              <p>This generated Mystery Map Daily uses frozen round IDs from the archive manifest. Archive plays save local history but do not change today&apos;s streak.</p>
             </div>
           )}
+          {isArchiveDate ? (
           <div className="button-row">
             <button className="button" type="button" onClick={() => void startRun(isArchiveDate ? "archive" : "daily")}>
               <Compass size={18} aria-hidden="true" />
               {dailyLabel}
             </button>
-            {!isArchiveDate ? (
-            <button className="button-secondary practice-start-button" type="button" disabled={selectedPracticeRounds.length === 0} onClick={() => void startRun("practice")}>
-              {selectedPracticeRounds.length > 0 ? `Start this ${selectedPracticeRounds.length}-map practice set` : "Start this 3-map practice set"}
-            </button>
-            ) : null}
           </div>
+          ) : null}
         </div>
       </section>
     );
@@ -657,12 +681,12 @@ export function WorldprintClient({ dateOverride, entryMode = "standard" }: World
           <span>{config.label}</span>
           <span>
             {run.mode === "daily"
-              ? `Daily #${challengeNumber(run.dateKey)}`
-              : run.mode === "archive"
-                ? `Archive ${run.dateKey}`
-                : run.mode === "challenge"
-                  ? "Challenge"
-                  : "Practice"}
+                  ? `Mystery Map Daily #${challengeNumber(run.dateKey)}`
+                : run.mode === "archive"
+                  ? `Mystery Map Archive ${run.dateKey}`
+                  : run.mode === "challenge"
+                  ? "Mystery Map Challenge"
+                  : "Mystery Map Practice"}
           </span>
         </div>
         <h1 id="active-map-title">What does this map measure?</h1>
@@ -714,7 +738,7 @@ export function WorldprintClient({ dateOverride, entryMode = "standard" }: World
                     ? "Already revealed countries do not spend points again."
                     : selectedCountryHasData
                       ? investigationPenalty === null
-                        ? "No paid investigations remaining in this tier."
+                        ? "No point-cost investigations remaining in this tier."
                         : `Reveal cost: ${investigationPenalty} points.`
                       : "Reveal cost: 0 points."}
                 </small>
@@ -739,7 +763,7 @@ export function WorldprintClient({ dateOverride, entryMode = "standard" }: World
           </button>
           <p className="cost-note">
             {investigationPenalty === null
-              ? "No paid investigations remaining for new countries with data."
+              ? "No point-cost investigations remaining for new countries with data."
               : `Next new valid country costs ${investigationPenalty} points.`}
           </p>
           <div className="inspection-readout" aria-live="polite">
@@ -782,7 +806,7 @@ export function WorldprintClient({ dateOverride, entryMode = "standard" }: World
                 if (!correct) setMasterGuess("");
               }}
             >
-              <label htmlFor="master-search">Search approved indicators</label>
+              <label htmlFor="master-search">Search playable map catalog</label>
               <input
                 id="master-search"
                 list="indicator-catalog"
@@ -1091,12 +1115,12 @@ function CompletionSummary({
 
   const summaryLabel =
     run.mode === "daily"
-      ? `Daily #${challengeNumber(run.dateKey)}`
+      ? `Mystery Map Daily #${challengeNumber(run.dateKey)}`
       : run.mode === "archive"
-        ? `Archive — ${run.dateKey}`
+        ? `Mystery Map Archive — ${run.dateKey}`
         : run.mode === "challenge"
-          ? "Challenge complete"
-          : "Practice complete";
+          ? "Mystery Map Challenge complete"
+          : "Mystery Map Practice complete";
   const challengeButtonLabel =
     run.mode === "practice"
       ? "Challenge a friend with this practice set"
@@ -1131,7 +1155,7 @@ function CompletionSummary({
             {challengeButtonLabel}
           </button>
           <button className="button-secondary" type="button" onClick={onBack}>
-            Back to Worldprint
+            Back to Mystery Map
           </button>
         </div>
         <div className="status-live" role="status" aria-live="polite">

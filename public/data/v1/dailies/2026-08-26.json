@@ -2,34 +2,31 @@
   "schemaVersion": "1.1.0",
   "game": "worldprint",
   "date": "2026-08-26",
-  "contentVersion": "2026.06.19-ed1",
+  "contentVersion": "2026.06.22-exp2-qa1",
   "roundIds": [
     "worldprint-adolescent-fertility",
-    "worldprint-co2-per-capita",
-    "worldprint-urban-population",
-    "worldprint-electricity-access",
-    "worldprint-under-five-mortality"
+    "worldprint-measles-immunization",
+    "worldprint-under-five-mortality",
+    "worldprint-electric-power-use",
+    "worldprint-fertility-rate"
   ],
   "indicatorIds": [
     "adolescent-fertility",
-    "co2-per-capita",
-    "urban-population",
-    "electricity-access",
-    "under-five-mortality"
+    "measles-immunization",
+    "under-five-mortality",
+    "electric-power-use",
+    "fertility-rate"
   ],
   "categoryMix": {
-    "demography": 1,
-    "environment": 1,
-    "settlement": 1,
-    "energy": 1,
-    "health": 1
+    "demography": 2,
+    "health": 2,
+    "energy": 1
   },
   "mapDifficultyMix": {
     "expert": 1,
-    "standard": 2,
-    "intro": 2
+    "standard": 4
   },
-  "generatedAt": "2026-06-19T17:09:23.343215+00:00",
+  "generatedAt": "2026-06-22T18:07:37.468116+00:00",
   "generatorVersion": "daily-manifest-v1",
   "varietyNotes": [
     "Selected with category, difficulty, and same-day correlation safeguards."

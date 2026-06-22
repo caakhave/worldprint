@@ -2,33 +2,34 @@
   "schemaVersion": "1.1.0",
   "game": "worldprint",
   "date": "2026-06-11",
-  "contentVersion": "2026.06.19-ed1",
+  "contentVersion": "2026.06.22-exp2-qa1",
   "roundIds": [
     "worldprint-cereal-yield",
-    "worldprint-life-expectancy",
+    "worldprint-agriculture-value-added",
+    "worldprint-mobile-subscriptions",
     "worldprint-fertility-rate",
-    "worldprint-secondary-enrollment",
-    "worldprint-health-expenditure"
+    "worldprint-safe-drinking-water"
   ],
   "indicatorIds": [
     "cereal-yield",
-    "life-expectancy",
+    "agriculture-value-added",
+    "mobile-subscriptions",
     "fertility-rate",
-    "secondary-enrollment",
-    "health-expenditure"
+    "safe-drinking-water"
   ],
   "categoryMix": {
     "agriculture": 1,
-    "health": 2,
+    "economy": 1,
+    "connectivity": 1,
     "demography": 1,
-    "education": 1
+    "health": 1
   },
   "mapDifficultyMix": {
     "expert": 1,
-    "intro": 1,
-    "standard": 3
+    "standard": 3,
+    "intro": 1
   },
-  "generatedAt": "2026-06-19T17:09:23.331573+00:00",
+  "generatedAt": "2026-06-22T18:07:37.458022+00:00",
   "generatorVersion": "daily-manifest-v1",
   "varietyNotes": [
     "Selected with category, difficulty, and same-day correlation safeguards."

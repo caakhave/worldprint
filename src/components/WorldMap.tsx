@@ -6,7 +6,7 @@ import { useCallback, useMemo, useRef, useState, type PointerEvent, type WheelEv
 import type { IndicatorArtifact, MapFeature, MapFeatureCollection } from "@/lib/content/schemas";
 import { valueClass } from "@/lib/geo/bins";
 import { DEFAULT_MAP_VIEW, isDefaultMapView, panMapView, zoomMapView, type MapViewTransform } from "@/lib/geo/mapView";
-import { valueClassColor } from "@/lib/geo/palette";
+import { MISSING_DATA_FILL, paletteForIndicator, valueClassColor } from "@/lib/geo/palette";
 
 type WorldMapProps = {
   map: MapFeatureCollection;
@@ -43,6 +43,7 @@ export function WorldMap({
   const graticulePath = path(geoGraticule10() as never);
   const investigated = new Set(investigatedIso3);
   const isZoomed = !isDefaultMapView(view);
+  const palette = paletteForIndicator(indicator);
 
   const svgPoint = useCallback((clientX: number, clientY: number) => {
     const rect = svgRef.current?.getBoundingClientRect();
@@ -124,7 +125,7 @@ export function WorldMap({
   }
 
   return (
-    <div className="map-frame" data-zoomable={zoomable ? "true" : "false"} data-zoomed={isZoomed ? "true" : "false"}>
+    <div className="map-frame" data-palette={palette.name} data-zoomable={zoomable ? "true" : "false"} data-zoomed={isZoomed ? "true" : "false"}>
       <svg
         ref={svgRef}
         className="world-map"
@@ -140,7 +141,7 @@ export function WorldMap({
       >
         <defs>
           <pattern id="missing-hatch" patternUnits="userSpaceOnUse" width="8" height="8" patternTransform="rotate(35)">
-            <rect width="8" height="8" fill="#123f43" />
+            <rect width="8" height="8" fill={MISSING_DATA_FILL} />
             <line x1="0" x2="0" y1="0" y2="8" stroke="#f4f0e5" strokeOpacity="0.38" strokeWidth="2" />
           </pattern>
         </defs>
@@ -169,7 +170,7 @@ export function WorldMap({
                   data-investigated={isInvestigated ? "true" : "false"}
                   data-selected={isSelected ? "true" : "false"}
                   data-hovered={isHovered ? "true" : "false"}
-                  style={klass === null ? undefined : { fill: valueClassColor(klass) }}
+                  style={klass === null ? undefined : { fill: valueClassColor(klass, indicator) }}
                   vectorEffect="non-scaling-stroke"
                   tabIndex={-1}
                   role="presentation"

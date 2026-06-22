@@ -202,12 +202,12 @@
     "valuesReference": "https://api.worldbank.org/v2/country/all/indicator/SL.EMP.VULN.ZS?format=json&per_page=20000&page=1&date=2015%3A2025",
     "license": "Creative Commons Attribution 4.0 International unless specifically labeled otherwise by World Bank metadata",
     "licenseReference": "https://www.worldbank.org/en/about/legal/terms-of-use-for-datasets",
-    "retrievedAt": "2026-06-19T17:09:18.766872+00:00",
+    "retrievedAt": "2026-06-22T18:06:02.341865+00:00",
     "checksum": "ba1ef1d17ab39a7e8fc0b1ee118d7b084bf1bd980dc65c471e5b353a5253a752",
     "sourceOrganization": "ILO Modelled Estimates database (ILOEST), International Labour Organization (ILO), uri: https://ilostat.ilo.org/data/bulk/, publisher: ILOSTAT, type: estimates based on external database;\nStaff estimates, World Bank (WB)"
   },
   "reviewStatus": "approved",
-  "contentVersion": "2026.06.19-ed1",
+  "contentVersion": "2026.06.22-exp2-qa1",
   "editorial": {
     "shortHook": "A labor-security map.",
     "patternNote": "The darkest countries include Chad, Sierra Leone, Madagascar, while the lightest include Qatar, United Arab Emirates, Saudi Arabia; that contrast is the fastest way to read the vulnerable employment pattern.",
@@ -228,16 +228,16 @@
     ],
     "commonConfusions": [
       {
+        "confusedWithIndicatorCode": "SL.EMP.WORK.ZS",
+        "reason": "Wage and salaried workers can tempt players because it shares a strong country ranking with this map, but its unit and definition point to a different story."
+      },
+      {
         "confusedWithIndicatorCode": "SL.EMP.SELF.ZS",
         "reason": "Self-employed workers can tempt players because it shares a strong country ranking with this map, but its unit and definition point to a different story."
       },
       {
         "confusedWithIndicatorCode": "SL.AGR.EMPL.ZS",
         "reason": "Employment in agriculture can tempt players because it shares a strong country ranking with this map, but its unit and definition point to a different story."
-      },
-      {
-        "confusedWithIndicatorCode": "NY.GDP.PCAP.PP.CD",
-        "reason": "GDP per capita, PPP can tempt players because it shares a strong country ranking with this map, but its unit and definition point to a different story."
       }
     ],
     "difficultyReason": "Expert difficulty: the map can be mistaken for adjacent indicators unless players probe a high, low, and middle country.",
@@ -248,7 +248,7 @@
   },
   "editorialReview": {
     "status": "retired",
-    "reviewedAt": "2026-06-19",
+    "reviewedAt": "2026-06-22",
     "reviewedBy": "Codex editorial QA",
     "qualityScore": 2,
     "funScore": 2,

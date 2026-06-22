@@ -9,10 +9,10 @@ export function scoreCell(score: number): string {
 }
 
 function runHeading(run: RunState): string {
-  if (run.mode === "daily") return `WORLDPRINT Daily #${challengeNumber(run.dateKey)} — ${run.dateKey}`;
-  if (run.mode === "archive") return `WORLDPRINT Archive — ${run.dateKey}`;
-  if (run.mode === "challenge") return "WORLDPRINT Challenge";
-  return "WORLDPRINT Practice";
+  if (run.mode === "daily") return `Can You Geo? Daily #${challengeNumber(run.dateKey)}\nMystery Map`;
+  if (run.mode === "archive") return `Can You Geo? Archive\nMystery Map · ${run.dateKey}`;
+  if (run.mode === "challenge") return "Can You Geo? Challenge\nMystery Map";
+  return "Can You Geo? Practice\nMystery Map";
 }
 
 export function buildShareText(run: RunState, options: { challengeUrl?: string } = {}): string {

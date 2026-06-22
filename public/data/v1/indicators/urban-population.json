@@ -208,12 +208,12 @@
     "valuesReference": "https://api.worldbank.org/v2/country/all/indicator/SP.URB.TOTL.IN.ZS?format=json&per_page=20000&page=1&date=2015%3A2025",
     "license": "Creative Commons Attribution 4.0 International unless specifically labeled otherwise by World Bank metadata",
     "licenseReference": "https://www.worldbank.org/en/about/legal/terms-of-use-for-datasets",
-    "retrievedAt": "2026-06-19T17:09:00.352946+00:00",
+    "retrievedAt": "2026-06-22T18:05:40.224459+00:00",
     "checksum": "d87b10af83bd2292c8d544c18499ff5ce9c5a131a358157221df9378c18d05c9",
     "sourceOrganization": "World Urbanization Prospects, United Nations (UN), uri: https://population.un.org/wup/, note: United Nations Population Division's World Urbanization Prospects, National definitions, publisher: UN Population Division"
   },
   "reviewStatus": "approved",
-  "contentVersion": "2026.06.19-ed1",
+  "contentVersion": "2026.06.22-exp2-qa1",
   "editorial": {
     "shortHook": "The city-share map.",
     "patternNote": "The darkest countries include Kuwait, Qatar, Netherlands, while the lightest include Papua New Guinea, Malawi, Niger; that contrast is the fastest way to read the urban population pattern.",
@@ -254,7 +254,7 @@
   },
   "editorialReview": {
     "status": "daily_eligible",
-    "reviewedAt": "2026-06-19",
+    "reviewedAt": "2026-06-22",
     "reviewedBy": "Codex editorial QA",
     "qualityScore": 5,
     "funScore": 4,

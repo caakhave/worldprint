@@ -1,6 +1,16 @@
-# WORLDPRINT Product
+# Can You Geo? Product
 
-WORLDPRINT is the first game in a premium geography suite built around reading real world patterns instead of recalling capitals.
+Can You Geo? is a premium geography-game suite built around reading real world patterns instead of recalling capitals.
+
+Public brand: **Can You Geo?**
+
+Brand line: **A new way to play the planet.**
+
+Primary tagline: **Read the world.**
+
+Positioning: **Geography games for people who already know the capitals.**
+
+Current playable mode: **Mystery Map**. The legacy `worldprint` namespace remains in technical routes, generated data, challenge payloads, and localStorage so existing archive pages, challenge links, static exports, and saved browser state keep working.
 
 ## Audience
 
@@ -11,20 +21,29 @@ WORLDPRINT is the first game in a premium geography suite built around reading r
 
 ## Promise
 
-WORLDPRINT asks players to identify the hidden world-data pattern in an unlabeled choropleth map. Every playable round is source-backed, uses one reference year, and reveals what the pattern teaches.
+Mystery Map asks players to identify the hidden world-data pattern in an unlabeled choropleth map. Every playable round is source-backed, uses one reference year, and reveals what the pattern teaches.
 
 ## Suite Direction
 
-- WORLDPRINT: identify a hidden world-data pattern. Playable in this vertical slice.
-- HUMAN CENTER: place the population-weighted center of a country. Coming next.
-- ATLAS ANOMALY: find the one wrong or impossible thing on a map. Planned.
-- RAINDROP: determine where water falling at a point ultimately drains. Planned.
+- Mystery Map: identify a hidden world-data pattern. Playable in this vertical slice.
+- Human Center: place the population-weighted center of a country. Coming next.
+- Atlas Anomaly: find the one wrong or impossible thing on a map. Planned.
+- Raindrop: determine where water falling at a point ultimately drains. Planned.
 
-## Free And Plus Direction
+## Access Direction
 
-The first slice is account-free. A future Plus product may add archive access, deeper modes, category filters, and learning tools. It must not sell answers, streak protection, or pay-to-win advantages.
+The current public build is an open beta with no account required and no access limits enforced. Daily remains a five-map game, and Practice is a three-map warm-up.
+
+The intended long-term model is simple freemium:
+
+- Open demo: 3 no-account maps so visitors can taste the game before giving an email.
+- Future free account: limited Daily play, likely 3 maps/day while the full Daily remains a five-map format.
+- Future paid account: full atlas access across Daily, Practice, Archive, Challenges, advanced tiers, larger map pools, and deeper learning tools.
+
+Focused beta recommendation: keep the current build open and unenforced, keep the full Daily at five maps, use three maps for the future no-account demo, and start future free-account Daily allowance at three maps/day until outside testing proves the current 125 playable maps and 50 Daily-ready maps can sustain a broader free Daily.
+
+Stripe, authentication, billing, and access enforcement are not implemented in this slice. Paid access must not sell answers, streak protection, or pay-to-win advantages.
 
 ## Non-Goals For This Slice
 
 No accounts, payments, backend gameplay API, runtime map tiles, leaderboards, AI-generated live questions, advertising, push notifications, native app, or generalized mini-game plugin framework.
-

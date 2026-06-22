@@ -15,42 +15,56 @@ import {
   type SourceRegistry,
   type MapFeatureCollection
 } from "@/lib/content/schemas";
+import { z } from "zod";
 
 async function fetchJson(url: string): Promise<unknown> {
-  const response = await fetch(url, { cache: "force-cache" });
+  const response = await fetch(url, { cache: "no-cache" });
   if (!response.ok) {
     throw new Error(`Could not load ${url}: ${response.status}`);
   }
   return response.json();
 }
 
+function formatPath(path: PropertyKey[]) {
+  return path.length ? path.map(String).join(".") : "root";
+}
+
+function parseContent<T>(schema: z.ZodType<T>, value: unknown, label: string): T {
+  const result = schema.safeParse(value);
+  if (result.success) return result.data;
+
+  const issues = result.error.issues.slice(0, 5).map((issue) => `${formatPath(issue.path)}: ${issue.message}`);
+  const suffix = result.error.issues.length > issues.length ? `; plus ${result.error.issues.length - issues.length} more issue(s)` : "";
+  throw new Error(`${label} is not compatible with this app build. ${issues.join("; ")}${suffix}`);
+}
+
 export async function loadManifest(): Promise<Manifest> {
-  return ManifestSchema.parse(await fetchJson("/data/v1/manifest.json"));
+  return parseContent(ManifestSchema, await fetchJson("/data/v1/manifest.json"), "Manifest");
 }
 
 export async function loadRounds(): Promise<RoundsArtifact> {
-  return RoundsArtifactSchema.parse(await fetchJson("/data/v1/rounds.json"));
+  return parseContent(RoundsArtifactSchema, await fetchJson("/data/v1/rounds.json"), "Round definitions");
 }
 
 export async function loadDailyIndex(path = "/data/v1/dailies/index.json"): Promise<DailyIndex> {
-  return DailyIndexSchema.parse(await fetchJson(path));
+  return parseContent(DailyIndexSchema, await fetchJson(path), "Daily index");
 }
 
 export async function loadDailyManifest(dateKey: string): Promise<DailyManifest | null> {
-  const response = await fetch(`/data/v1/dailies/${dateKey}.json`, { cache: "force-cache" });
+  const response = await fetch(`/data/v1/dailies/${dateKey}.json`, { cache: "no-cache" });
   if (response.status === 404) return null;
   if (!response.ok) {
     throw new Error(`Could not load Daily manifest ${dateKey}: ${response.status}`);
   }
-  return DailyManifestSchema.parse(await response.json());
+  return parseContent(DailyManifestSchema, await response.json(), `Daily manifest ${dateKey}`);
 }
 
 export async function loadEntityRegistry(path = "/data/v1/entity-registry.json"): Promise<EntityRegistry> {
-  return EntityRegistrySchema.parse(await fetchJson(path));
+  return parseContent(EntityRegistrySchema, await fetchJson(path), "Entity registry");
 }
 
 export async function loadIndicator(path: string): Promise<IndicatorArtifact> {
-  return IndicatorArtifactSchema.parse(await fetchJson(path));
+  return parseContent(IndicatorArtifactSchema, await fetchJson(path), "Indicator artifact");
 }
 
 export async function loadMap(path: string): Promise<MapFeatureCollection> {
@@ -58,5 +72,5 @@ export async function loadMap(path: string): Promise<MapFeatureCollection> {
 }
 
 export async function loadSources(path = "/data/v1/sources.json"): Promise<SourceRegistry> {
-  return SourceRegistrySchema.parse(await fetchJson(path));
+  return parseContent(SourceRegistrySchema, await fetchJson(path), "Source registry");
 }

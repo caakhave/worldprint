@@ -205,12 +205,12 @@
     "valuesReference": "https://api.worldbank.org/v2/country/all/indicator/SP.DYN.IMRT.IN?format=json&per_page=20000&page=1&date=2015%3A2025",
     "license": "Creative Commons Attribution 4.0 International unless specifically labeled otherwise by World Bank metadata",
     "licenseReference": "https://www.worldbank.org/en/about/legal/terms-of-use-for-datasets",
-    "retrievedAt": "2026-06-19T17:08:56.145395+00:00",
+    "retrievedAt": "2026-06-22T18:05:35.398567+00:00",
     "checksum": "8d370fda730067ead5760b0394584507f4302f46fb1d72e41c806fa8522faae7",
     "sourceOrganization": "UN Inter-agency Group for Child Mortality Estimation, UN Children's Fund (UNICEF), uri: www.childmortality.org;\nWorld Health Organization (WHO), uri: www.childmortality.org, note: UN Inter-agency Group for Child Mortality Estimation;\nWorld Bank (WB), uri: www.childmortality.org, note: UN Inter-agency Group for Child Mortality Estimation;\nUnited Nations (UN), uri: www.childmortality.org, note: UN Inter-agency Group for Child Mortality Estimation, publisher: UN Population Division"
   },
   "reviewStatus": "approved",
-  "contentVersion": "2026.06.19-ed1",
+  "contentVersion": "2026.06.22-exp2-qa1",
   "editorial": {
     "shortHook": "A child-health map with unmistakable low and high anchors.",
     "patternNote": "The darkest countries include South Sudan, Nigeria, Niger, while the lightest include Estonia, Belarus, Japan; that contrast is the fastest way to read the infant mortality pattern.",
@@ -235,12 +235,12 @@
         "reason": "Under-5 mortality can tempt players because it shares a strong country ranking with this map, but its unit and definition point to a different story."
       },
       {
-        "confusedWithIndicatorCode": "SP.DYN.LE00.IN",
-        "reason": "Life expectancy can tempt players because it shares a strong country ranking with this map, but its unit and definition point to a different story."
+        "confusedWithIndicatorCode": "SH.DYN.NMRT",
+        "reason": "Neonatal mortality can tempt players because it shares a strong country ranking with this map, but its unit and definition point to a different story."
       },
       {
-        "confusedWithIndicatorCode": "SP.DYN.AMRT.FE",
-        "reason": "Female adult mortality can tempt players because it shares a strong country ranking with this map, but its unit and definition point to a different story."
+        "confusedWithIndicatorCode": "SP.DYN.LE00.IN",
+        "reason": "Life expectancy can tempt players because it shares a strong country ranking with this map, but its unit and definition point to a different story."
       }
     ],
     "difficultyReason": "Standard difficulty: the map has readable regional structure, but the best answer still depends on checking the unit and country anchors.",
@@ -251,7 +251,7 @@
   },
   "editorialReview": {
     "status": "practice_eligible",
-    "reviewedAt": "2026-06-19",
+    "reviewedAt": "2026-06-22",
     "reviewedBy": "Codex editorial QA",
     "qualityScore": 4,
     "funScore": 3,

@@ -1,0 +1,931 @@
+{
+  "schemaVersion": "1.0.0",
+  "generatedAt": "2026-06-22T21:38:47.090Z",
+  "contentVersion": "2026.06.22-exp2-qa1",
+  "localBaseUrl": "http://localhost:3001",
+  "contentCounts": {
+    "candidateCount": 198,
+    "sourceValidCount": 167,
+    "draftHeldCount": 31,
+    "playableCount": 125,
+    "dailyReadyCount": 50
+  },
+  "challengeLinkNotes": [
+    "Challenge links use the existing static-safe /challenge/worldprint/?c=... route.",
+    "Each challenge preserves exact selected round IDs and contentVersion.",
+    "Visible URLs do not expose answer titles or World Bank codes; the encoded payload is still treated as a convenience link, not a secret.",
+    "Current challenge schema allows 1-5 maps, so larger beta packs are split into Part A / Part B links."
+  ],
+  "packs": [
+    {
+      "id": "intro-pack",
+      "name": "Intro Pack",
+      "purpose": "First-session readability check. These maps should teach the basic Mystery Map loop quickly without needing domain expertise.",
+      "estimatedMinutes": "8-10 minutes",
+      "tier": "analyst",
+      "audience": "First-time players",
+      "mapCount": 5,
+      "challengeCount": 1,
+      "watchFor": [
+        "Do players understand the hidden-indicator task within 30 seconds?",
+        "Do country investigations feel useful before answering?",
+        "Do these maps make the game feel learnable rather than arbitrary?"
+      ],
+      "maps": [
+        {
+          "order": 1,
+          "indicatorId": "life-expectancy",
+          "roundId": "worldprint-life-expectancy",
+          "worldBankCode": "SP.DYN.LE00.IN",
+          "title": "Life expectancy at birth, total (years)",
+          "shortTitle": "Life expectancy",
+          "category": "health",
+          "editorialStatus": "daily_eligible",
+          "editorialStatusLabel": "Daily-ready",
+          "expectedDifficulty": "intro",
+          "latestYear": 2024,
+          "coverage": 169,
+          "scorecardSummary": {
+            "overall": 3.75,
+            "coverage": 4,
+            "freshness": 5,
+            "unitClarity": 4,
+            "mapInterest": 4,
+            "ambiguityCorrelation": 2,
+            "recommendation": null
+          }
+        },
+        {
+          "order": 2,
+          "indicatorId": "internet-users",
+          "roundId": "worldprint-internet-users",
+          "worldBankCode": "IT.NET.USER.ZS",
+          "title": "Individuals using the Internet (% of population)",
+          "shortTitle": "Internet users",
+          "category": "connectivity",
+          "editorialStatus": "daily_eligible",
+          "editorialStatusLabel": "Daily-ready",
+          "expectedDifficulty": "intro",
+          "latestYear": 2024,
+          "coverage": 154,
+          "scorecardSummary": {
+            "overall": 3.95,
+            "coverage": 4,
+            "freshness": 5,
+            "unitClarity": 4,
+            "mapInterest": 4,
+            "ambiguityCorrelation": 3,
+            "recommendation": null
+          }
+        },
+        {
+          "order": 3,
+          "indicatorId": "electricity-access",
+          "roundId": "worldprint-electricity-access",
+          "worldBankCode": "EG.ELC.ACCS.ZS",
+          "title": "Access to electricity (% of population)",
+          "shortTitle": "Electricity access",
+          "category": "energy",
+          "editorialStatus": "daily_eligible",
+          "editorialStatusLabel": "Daily-ready",
+          "expectedDifficulty": "intro",
+          "latestYear": 2023,
+          "coverage": 169,
+          "scorecardSummary": {
+            "overall": 3.6,
+            "coverage": 4,
+            "freshness": 4,
+            "unitClarity": 4,
+            "mapInterest": 4,
+            "ambiguityCorrelation": 2,
+            "recommendation": null
+          }
+        },
+        {
+          "order": 4,
+          "indicatorId": "safe-drinking-water",
+          "roundId": "worldprint-safe-drinking-water",
+          "worldBankCode": "SH.H2O.BASW.ZS",
+          "title": "People using at least basic drinking water services (% of population)",
+          "shortTitle": "Basic drinking water access",
+          "category": "health",
+          "editorialStatus": "daily_eligible",
+          "editorialStatusLabel": "Daily-ready",
+          "expectedDifficulty": "intro",
+          "latestYear": 2024,
+          "coverage": 162,
+          "scorecardSummary": {
+            "overall": 3.95,
+            "coverage": 4,
+            "freshness": 5,
+            "unitClarity": 4,
+            "mapInterest": 4,
+            "ambiguityCorrelation": 3,
+            "recommendation": null
+          }
+        },
+        {
+          "order": 5,
+          "indicatorId": "population-density",
+          "roundId": "worldprint-population-density",
+          "worldBankCode": "EN.POP.DNST",
+          "title": "Population density (people per sq. km of land area)",
+          "shortTitle": "Population density",
+          "category": "settlement",
+          "editorialStatus": "daily_eligible",
+          "editorialStatusLabel": "Daily-ready",
+          "expectedDifficulty": "standard",
+          "latestYear": 2023,
+          "coverage": 169,
+          "scorecardSummary": {
+            "overall": 4.45,
+            "coverage": 4,
+            "freshness": 4,
+            "unitClarity": 4,
+            "mapInterest": 5,
+            "ambiguityCorrelation": 5,
+            "recommendation": null
+          }
+        }
+      ],
+      "challenges": [
+        {
+          "id": "intro-pack",
+          "label": "Intro Pack",
+          "tier": "analyst",
+          "kind": "practice",
+          "roundIds": [
+            "worldprint-life-expectancy",
+            "worldprint-internet-users",
+            "worldprint-electricity-access",
+            "worldprint-safe-drinking-water",
+            "worldprint-population-density"
+          ],
+          "indicatorIds": [
+            "life-expectancy",
+            "internet-users",
+            "electricity-access",
+            "safe-drinking-water",
+            "population-density"
+          ],
+          "code": "eyJzY2hlbWFWZXJzaW9uIjoiMSIsImdhbWUiOiJ3b3JsZHByaW50Iiwia2luZCI6InByYWN0aWNlIiwiY29udGVudFZlcnNpb24iOiIyMDI2LjA2LjIyLWV4cDItcWExIiwidGllciI6ImFuYWx5c3QiLCJyb3VuZElkcyI6WyJ3b3JsZHByaW50LWxpZmUtZXhwZWN0YW5jeSIsIndvcmxkcHJpbnQtaW50ZXJuZXQtdXNlcnMiLCJ3b3JsZHByaW50LWVsZWN0cmljaXR5LWFjY2VzcyIsIndvcmxkcHJpbnQtc2FmZS1kcmlua2luZy13YXRlciIsIndvcmxkcHJpbnQtcG9wdWxhdGlvbi1kZW5zaXR5Il0sImNoZWNrc3VtIjoiMDd0NDZxbiJ9",
+          "path": "/challenge/worldprint/?c=eyJzY2hlbWFWZXJzaW9uIjoiMSIsImdhbWUiOiJ3b3JsZHByaW50Iiwia2luZCI6InByYWN0aWNlIiwiY29udGVudFZlcnNpb24iOiIyMDI2LjA2LjIyLWV4cDItcWExIiwidGllciI6ImFuYWx5c3QiLCJyb3VuZElkcyI6WyJ3b3JsZHByaW50LWxpZmUtZXhwZWN0YW5jeSIsIndvcmxkcHJpbnQtaW50ZXJuZXQtdXNlcnMiLCJ3b3JsZHByaW50LWVsZWN0cmljaXR5LWFjY2VzcyIsIndvcmxkcHJpbnQtc2FmZS1kcmlua2luZy13YXRlciIsIndvcmxkcHJpbnQtcG9wdWxhdGlvbi1kZW5zaXR5Il0sImNoZWNrc3VtIjoiMDd0NDZxbiJ9",
+          "localUrl": "http://localhost:3001/challenge/worldprint/?c=eyJzY2hlbWFWZXJzaW9uIjoiMSIsImdhbWUiOiJ3b3JsZHByaW50Iiwia2luZCI6InByYWN0aWNlIiwiY29udGVudFZlcnNpb24iOiIyMDI2LjA2LjIyLWV4cDItcWExIiwidGllciI6ImFuYWx5c3QiLCJyb3VuZElkcyI6WyJ3b3JsZHByaW50LWxpZmUtZXhwZWN0YW5jeSIsIndvcmxkcHJpbnQtaW50ZXJuZXQtdXNlcnMiLCJ3b3JsZHByaW50LWVsZWN0cmljaXR5LWFjY2VzcyIsIndvcmxkcHJpbnQtc2FmZS1kcmlua2luZy13YXRlciIsIndvcmxkcHJpbnQtcG9wdWxhdGlvbi1kZW5zaXR5Il0sImNoZWNrc3VtIjoiMDd0NDZxbiJ9",
+          "deploymentNote": "Replace http://localhost:3001 with the deployed site origin after static deployment."
+        }
+      ]
+    },
+    {
+      "id": "daily-ready-stress-pack",
+      "name": "Daily-Ready Stress Pack",
+      "purpose": "Stress-test whether the current Daily-ready catalog feels fair enough for shared public play.",
+      "estimatedMinutes": "16-20 minutes",
+      "tier": "analyst",
+      "audience": "Players after one warm-up run",
+      "mapCount": 10,
+      "challengeCount": 2,
+      "watchFor": [
+        "Do the seven kept Batch 2 Daily maps feel worthy of the main Daily?",
+        "Which maps feel broad and interesting enough to share?",
+        "Do any answer choices feel like close lookalikes even when the map is readable?"
+      ],
+      "maps": [
+        {
+          "order": 1,
+          "indicatorId": "account-ownership",
+          "roundId": "worldprint-account-ownership",
+          "worldBankCode": "FX.OWN.TOTL.ZS",
+          "title": "Account ownership at a financial institution or with a mobile-money-service provider (% of population ages 15+)",
+          "shortTitle": "Account ownership",
+          "category": "development",
+          "editorialStatus": "daily_eligible",
+          "editorialStatusLabel": "Daily-ready",
+          "expectedDifficulty": "standard",
+          "latestYear": 2024,
+          "coverage": 132,
+          "scorecardSummary": {
+            "overall": 3.75,
+            "coverage": 3,
+            "freshness": 5,
+            "unitClarity": 4,
+            "mapInterest": 4,
+            "ambiguityCorrelation": 3,
+            "recommendation": null
+          }
+        },
+        {
+          "order": 2,
+          "indicatorId": "arable-land-per-person",
+          "roundId": "worldprint-arable-land-per-person",
+          "worldBankCode": "AG.LND.ARBL.HA.PC",
+          "title": "Arable land (hectares per person)",
+          "shortTitle": "Arable land per person",
+          "category": "land",
+          "editorialStatus": "daily_eligible",
+          "editorialStatusLabel": "Daily-ready",
+          "expectedDifficulty": "expert",
+          "latestYear": 2023,
+          "coverage": 168,
+          "scorecardSummary": {
+            "overall": 4,
+            "coverage": 4,
+            "freshness": 4,
+            "unitClarity": 5,
+            "mapInterest": 4,
+            "ambiguityCorrelation": 3,
+            "recommendation": null
+          }
+        },
+        {
+          "order": 3,
+          "indicatorId": "coal-electricity-share",
+          "roundId": "worldprint-coal-electricity-share",
+          "worldBankCode": "EG.ELC.COAL.ZS",
+          "title": "Electricity production from coal sources (% of total)",
+          "shortTitle": "Coal electricity share",
+          "category": "energy",
+          "editorialStatus": "daily_eligible",
+          "editorialStatusLabel": "Daily-ready",
+          "expectedDifficulty": "standard",
+          "latestYear": 2021,
+          "coverage": 169,
+          "scorecardSummary": {
+            "overall": 3.65,
+            "coverage": 4,
+            "freshness": 3,
+            "unitClarity": 4,
+            "mapInterest": 4,
+            "ambiguityCorrelation": 3,
+            "recommendation": null
+          }
+        },
+        {
+          "order": 4,
+          "indicatorId": "open-defecation",
+          "roundId": "worldprint-open-defecation",
+          "worldBankCode": "SH.STA.ODFC.ZS",
+          "title": "People practicing open defecation (% of population)",
+          "shortTitle": "Open defecation",
+          "category": "health",
+          "editorialStatus": "daily_eligible",
+          "editorialStatusLabel": "Daily-ready",
+          "expectedDifficulty": "standard",
+          "latestYear": 2024,
+          "coverage": 150,
+          "scorecardSummary": {
+            "overall": 3.95,
+            "coverage": 4,
+            "freshness": 5,
+            "unitClarity": 4,
+            "mapInterest": 4,
+            "ambiguityCorrelation": 3,
+            "recommendation": null
+          }
+        },
+        {
+          "order": 5,
+          "indicatorId": "permanent-cropland",
+          "roundId": "worldprint-permanent-cropland",
+          "worldBankCode": "AG.LND.CROP.ZS",
+          "title": "Permanent cropland (% of land area)",
+          "shortTitle": "Permanent cropland",
+          "category": "land",
+          "editorialStatus": "daily_eligible",
+          "editorialStatusLabel": "Daily-ready",
+          "expectedDifficulty": "standard",
+          "latestYear": 2023,
+          "coverage": 167,
+          "scorecardSummary": {
+            "overall": 3.8,
+            "coverage": 4,
+            "freshness": 4,
+            "unitClarity": 4,
+            "mapInterest": 4,
+            "ambiguityCorrelation": 3,
+            "recommendation": null
+          }
+        },
+        {
+          "order": 6,
+          "indicatorId": "precipitation-depth",
+          "roundId": "worldprint-precipitation-depth",
+          "worldBankCode": "AG.LND.PRCP.MM",
+          "title": "Average precipitation in depth (mm per year)",
+          "shortTitle": "Average precipitation",
+          "category": "environment",
+          "editorialStatus": "daily_eligible",
+          "editorialStatusLabel": "Daily-ready",
+          "expectedDifficulty": "standard",
+          "latestYear": 2022,
+          "coverage": 163,
+          "scorecardSummary": {
+            "overall": 3.8,
+            "coverage": 4,
+            "freshness": 4,
+            "unitClarity": 4,
+            "mapInterest": 4,
+            "ambiguityCorrelation": 3,
+            "recommendation": null
+          }
+        },
+        {
+          "order": 7,
+          "indicatorId": "total-protected-areas",
+          "roundId": "worldprint-total-protected-areas",
+          "worldBankCode": "ER.PTD.TOTL.ZS",
+          "title": "Terrestrial and marine protected areas (% of total territorial area)",
+          "shortTitle": "Protected land and seas",
+          "category": "environment",
+          "editorialStatus": "daily_eligible",
+          "editorialStatusLabel": "Daily-ready",
+          "expectedDifficulty": "standard",
+          "latestYear": 2025,
+          "coverage": 169,
+          "scorecardSummary": {
+            "overall": 3.95,
+            "coverage": 4,
+            "freshness": 5,
+            "unitClarity": 4,
+            "mapInterest": 4,
+            "ambiguityCorrelation": 3,
+            "recommendation": null
+          }
+        },
+        {
+          "order": 8,
+          "indicatorId": "freshwater-per-capita",
+          "roundId": "worldprint-freshwater-per-capita",
+          "worldBankCode": "ER.H2O.INTR.PC",
+          "title": "Renewable internal freshwater resources per capita (cubic meters)",
+          "shortTitle": "Freshwater per person",
+          "category": "environment",
+          "editorialStatus": "daily_eligible",
+          "editorialStatusLabel": "Daily-ready",
+          "expectedDifficulty": "standard",
+          "latestYear": 2022,
+          "coverage": 164,
+          "scorecardSummary": {
+            "overall": 4,
+            "coverage": 4,
+            "freshness": 4,
+            "unitClarity": 5,
+            "mapInterest": 4,
+            "ambiguityCorrelation": 3,
+            "recommendation": null
+          }
+        },
+        {
+          "order": 9,
+          "indicatorId": "secondary-enrollment",
+          "roundId": "worldprint-secondary-enrollment",
+          "worldBankCode": "SE.SEC.ENRR",
+          "title": "School enrollment, secondary (% gross)",
+          "shortTitle": "Secondary enrollment",
+          "category": "education",
+          "editorialStatus": "daily_eligible",
+          "editorialStatusLabel": "Daily-ready",
+          "expectedDifficulty": "standard",
+          "latestYear": 2023,
+          "coverage": 121,
+          "scorecardSummary": {
+            "overall": 4,
+            "coverage": 3,
+            "freshness": 4,
+            "unitClarity": 4,
+            "mapInterest": 4,
+            "ambiguityCorrelation": 5,
+            "recommendation": null
+          }
+        },
+        {
+          "order": 10,
+          "indicatorId": "life-expectancy",
+          "roundId": "worldprint-life-expectancy",
+          "worldBankCode": "SP.DYN.LE00.IN",
+          "title": "Life expectancy at birth, total (years)",
+          "shortTitle": "Life expectancy",
+          "category": "health",
+          "editorialStatus": "daily_eligible",
+          "editorialStatusLabel": "Daily-ready",
+          "expectedDifficulty": "intro",
+          "latestYear": 2024,
+          "coverage": 169,
+          "scorecardSummary": {
+            "overall": 3.75,
+            "coverage": 4,
+            "freshness": 5,
+            "unitClarity": 4,
+            "mapInterest": 4,
+            "ambiguityCorrelation": 2,
+            "recommendation": null
+          }
+        }
+      ],
+      "challenges": [
+        {
+          "id": "daily-ready-stress-a",
+          "label": "Daily-Ready Stress Pack A",
+          "tier": "analyst",
+          "kind": "practice",
+          "roundIds": [
+            "worldprint-account-ownership",
+            "worldprint-arable-land-per-person",
+            "worldprint-coal-electricity-share",
+            "worldprint-open-defecation",
+            "worldprint-permanent-cropland"
+          ],
+          "indicatorIds": [
+            "account-ownership",
+            "arable-land-per-person",
+            "coal-electricity-share",
+            "open-defecation",
+            "permanent-cropland"
+          ],
+          "code": "eyJzY2hlbWFWZXJzaW9uIjoiMSIsImdhbWUiOiJ3b3JsZHByaW50Iiwia2luZCI6InByYWN0aWNlIiwiY29udGVudFZlcnNpb24iOiIyMDI2LjA2LjIyLWV4cDItcWExIiwidGllciI6ImFuYWx5c3QiLCJyb3VuZElkcyI6WyJ3b3JsZHByaW50LWFjY291bnQtb3duZXJzaGlwIiwid29ybGRwcmludC1hcmFibGUtbGFuZC1wZXItcGVyc29uIiwid29ybGRwcmludC1jb2FsLWVsZWN0cmljaXR5LXNoYXJlIiwid29ybGRwcmludC1vcGVuLWRlZmVjYXRpb24iLCJ3b3JsZHByaW50LXBlcm1hbmVudC1jcm9wbGFuZCJdLCJjaGVja3N1bSI6IjBvOHgyOWEifQ",
+          "path": "/challenge/worldprint/?c=eyJzY2hlbWFWZXJzaW9uIjoiMSIsImdhbWUiOiJ3b3JsZHByaW50Iiwia2luZCI6InByYWN0aWNlIiwiY29udGVudFZlcnNpb24iOiIyMDI2LjA2LjIyLWV4cDItcWExIiwidGllciI6ImFuYWx5c3QiLCJyb3VuZElkcyI6WyJ3b3JsZHByaW50LWFjY291bnQtb3duZXJzaGlwIiwid29ybGRwcmludC1hcmFibGUtbGFuZC1wZXItcGVyc29uIiwid29ybGRwcmludC1jb2FsLWVsZWN0cmljaXR5LXNoYXJlIiwid29ybGRwcmludC1vcGVuLWRlZmVjYXRpb24iLCJ3b3JsZHByaW50LXBlcm1hbmVudC1jcm9wbGFuZCJdLCJjaGVja3N1bSI6IjBvOHgyOWEifQ",
+          "localUrl": "http://localhost:3001/challenge/worldprint/?c=eyJzY2hlbWFWZXJzaW9uIjoiMSIsImdhbWUiOiJ3b3JsZHByaW50Iiwia2luZCI6InByYWN0aWNlIiwiY29udGVudFZlcnNpb24iOiIyMDI2LjA2LjIyLWV4cDItcWExIiwidGllciI6ImFuYWx5c3QiLCJyb3VuZElkcyI6WyJ3b3JsZHByaW50LWFjY291bnQtb3duZXJzaGlwIiwid29ybGRwcmludC1hcmFibGUtbGFuZC1wZXItcGVyc29uIiwid29ybGRwcmludC1jb2FsLWVsZWN0cmljaXR5LXNoYXJlIiwid29ybGRwcmludC1vcGVuLWRlZmVjYXRpb24iLCJ3b3JsZHByaW50LXBlcm1hbmVudC1jcm9wbGFuZCJdLCJjaGVja3N1bSI6IjBvOHgyOWEifQ",
+          "deploymentNote": "Replace http://localhost:3001 with the deployed site origin after static deployment."
+        },
+        {
+          "id": "daily-ready-stress-b",
+          "label": "Daily-Ready Stress Pack B",
+          "tier": "analyst",
+          "kind": "practice",
+          "roundIds": [
+            "worldprint-precipitation-depth",
+            "worldprint-total-protected-areas",
+            "worldprint-freshwater-per-capita",
+            "worldprint-secondary-enrollment",
+            "worldprint-life-expectancy"
+          ],
+          "indicatorIds": [
+            "precipitation-depth",
+            "total-protected-areas",
+            "freshwater-per-capita",
+            "secondary-enrollment",
+            "life-expectancy"
+          ],
+          "code": "eyJzY2hlbWFWZXJzaW9uIjoiMSIsImdhbWUiOiJ3b3JsZHByaW50Iiwia2luZCI6InByYWN0aWNlIiwiY29udGVudFZlcnNpb24iOiIyMDI2LjA2LjIyLWV4cDItcWExIiwidGllciI6ImFuYWx5c3QiLCJyb3VuZElkcyI6WyJ3b3JsZHByaW50LXByZWNpcGl0YXRpb24tZGVwdGgiLCJ3b3JsZHByaW50LXRvdGFsLXByb3RlY3RlZC1hcmVhcyIsIndvcmxkcHJpbnQtZnJlc2h3YXRlci1wZXItY2FwaXRhIiwid29ybGRwcmludC1zZWNvbmRhcnktZW5yb2xsbWVudCIsIndvcmxkcHJpbnQtbGlmZS1leHBlY3RhbmN5Il0sImNoZWNrc3VtIjoiMWJjcDRmNSJ9",
+          "path": "/challenge/worldprint/?c=eyJzY2hlbWFWZXJzaW9uIjoiMSIsImdhbWUiOiJ3b3JsZHByaW50Iiwia2luZCI6InByYWN0aWNlIiwiY29udGVudFZlcnNpb24iOiIyMDI2LjA2LjIyLWV4cDItcWExIiwidGllciI6ImFuYWx5c3QiLCJyb3VuZElkcyI6WyJ3b3JsZHByaW50LXByZWNpcGl0YXRpb24tZGVwdGgiLCJ3b3JsZHByaW50LXRvdGFsLXByb3RlY3RlZC1hcmVhcyIsIndvcmxkcHJpbnQtZnJlc2h3YXRlci1wZXItY2FwaXRhIiwid29ybGRwcmludC1zZWNvbmRhcnktZW5yb2xsbWVudCIsIndvcmxkcHJpbnQtbGlmZS1leHBlY3RhbmN5Il0sImNoZWNrc3VtIjoiMWJjcDRmNSJ9",
+          "localUrl": "http://localhost:3001/challenge/worldprint/?c=eyJzY2hlbWFWZXJzaW9uIjoiMSIsImdhbWUiOiJ3b3JsZHByaW50Iiwia2luZCI6InByYWN0aWNlIiwiY29udGVudFZlcnNpb24iOiIyMDI2LjA2LjIyLWV4cDItcWExIiwidGllciI6ImFuYWx5c3QiLCJyb3VuZElkcyI6WyJ3b3JsZHByaW50LXByZWNpcGl0YXRpb24tZGVwdGgiLCJ3b3JsZHByaW50LXRvdGFsLXByb3RlY3RlZC1hcmVhcyIsIndvcmxkcHJpbnQtZnJlc2h3YXRlci1wZXItY2FwaXRhIiwid29ybGRwcmludC1zZWNvbmRhcnktZW5yb2xsbWVudCIsIndvcmxkcHJpbnQtbGlmZS1leHBlY3RhbmN5Il0sImNoZWNrc3VtIjoiMWJjcDRmNSJ9",
+          "deploymentNote": "Replace http://localhost:3001 with the deployed site origin after static deployment."
+        }
+      ]
+    },
+    {
+      "id": "ambiguity-edge-pack",
+      "name": "Ambiguity / Edge Pack",
+      "purpose": "Confirm whether recent demotions were correct and identify lookalike or correlation confusion before broader beta.",
+      "estimatedMinutes": "16-20 minutes",
+      "tier": "analyst",
+      "audience": "Players who already understand the rules",
+      "mapCount": 10,
+      "challengeCount": 2,
+      "watchFor": [
+        "Which maps feel unfair or too close to other known indicators?",
+        "Do technical units make sense after the reveal?",
+        "Should any Practice/Expert maps be promoted, held, or retired after human testing?"
+      ],
+      "maps": [
+        {
+          "order": 1,
+          "indicatorId": "agricultural-water-withdrawals",
+          "roundId": "worldprint-agricultural-water-withdrawals",
+          "worldBankCode": "ER.H2O.FWAG.ZS",
+          "title": "Annual freshwater withdrawals, agriculture (% of total freshwater withdrawal)",
+          "shortTitle": "Agricultural water withdrawals",
+          "category": "environment",
+          "editorialStatus": "practice_eligible",
+          "editorialStatusLabel": "Practice-only",
+          "expectedDifficulty": "standard",
+          "latestYear": 2022,
+          "coverage": 161,
+          "scorecardSummary": {
+            "overall": 3.8,
+            "coverage": 4,
+            "freshness": 4,
+            "unitClarity": 4,
+            "mapInterest": 4,
+            "ambiguityCorrelation": 3,
+            "recommendation": null
+          }
+        },
+        {
+          "order": 2,
+          "indicatorId": "labor-force-gender-ratio",
+          "roundId": "worldprint-labor-force-gender-ratio",
+          "worldBankCode": "SL.TLF.CACT.FM.ZS",
+          "title": "Ratio of female to male labor force participation rate (%) (modeled ILO estimate)",
+          "shortTitle": "Female-to-male labor force ratio",
+          "category": "labor",
+          "editorialStatus": "practice_eligible",
+          "editorialStatusLabel": "Practice-only",
+          "expectedDifficulty": "expert",
+          "latestYear": 2025,
+          "coverage": 163,
+          "scorecardSummary": {
+            "overall": 3.95,
+            "coverage": 4,
+            "freshness": 5,
+            "unitClarity": 4,
+            "mapInterest": 4,
+            "ambiguityCorrelation": 3,
+            "recommendation": null
+          }
+        },
+        {
+          "order": 3,
+          "indicatorId": "natural-resource-rents",
+          "roundId": "worldprint-natural-resource-rents",
+          "worldBankCode": "NY.GDP.TOTL.RT.ZS",
+          "title": "Total natural resources rents (% of GDP)",
+          "shortTitle": "Natural resource rents",
+          "category": "economy",
+          "editorialStatus": "practice_eligible",
+          "editorialStatusLabel": "Practice-only",
+          "expectedDifficulty": "standard",
+          "latestYear": 2021,
+          "coverage": 159,
+          "scorecardSummary": {
+            "overall": 3.65,
+            "coverage": 4,
+            "freshness": 3,
+            "unitClarity": 4,
+            "mapInterest": 4,
+            "ambiguityCorrelation": 3,
+            "recommendation": null
+          }
+        },
+        {
+          "order": 4,
+          "indicatorId": "urban-population-growth",
+          "roundId": "worldprint-urban-population-growth",
+          "worldBankCode": "SP.URB.GROW",
+          "title": "Urban population growth (annual %)",
+          "shortTitle": "Urban population growth",
+          "category": "settlement",
+          "editorialStatus": "practice_eligible",
+          "editorialStatusLabel": "Practice-only",
+          "expectedDifficulty": "standard",
+          "latestYear": 2024,
+          "coverage": 169,
+          "scorecardSummary": {
+            "overall": 3.95,
+            "coverage": 4,
+            "freshness": 5,
+            "unitClarity": 4,
+            "mapInterest": 4,
+            "ambiguityCorrelation": 3,
+            "recommendation": null
+          }
+        },
+        {
+          "order": 5,
+          "indicatorId": "youth-unemployment",
+          "roundId": "worldprint-youth-unemployment",
+          "worldBankCode": "SL.UEM.1524.ZS",
+          "title": "Unemployment, youth total (% of total labor force ages 15-24) (modeled ILO estimate)",
+          "shortTitle": "Youth unemployment",
+          "category": "labor",
+          "editorialStatus": "practice_eligible",
+          "editorialStatusLabel": "Practice-only",
+          "expectedDifficulty": "standard",
+          "latestYear": 2025,
+          "coverage": 163,
+          "scorecardSummary": {
+            "overall": 3.95,
+            "coverage": 4,
+            "freshness": 5,
+            "unitClarity": 4,
+            "mapInterest": 4,
+            "ambiguityCorrelation": 3,
+            "recommendation": null
+          }
+        },
+        {
+          "order": 6,
+          "indicatorId": "carbon-intensity-gdp",
+          "roundId": "worldprint-carbon-intensity-gdp",
+          "worldBankCode": "EN.GHG.CO2.RT.GDP.KD",
+          "title": "Carbon intensity of GDP (kg CO2e per constant 2015 US$ of GDP)",
+          "shortTitle": "Carbon intensity of GDP",
+          "category": "environment",
+          "editorialStatus": "expert_only",
+          "editorialStatusLabel": "Expert-only",
+          "expectedDifficulty": "expert",
+          "latestYear": 2024,
+          "coverage": 156,
+          "scorecardSummary": {
+            "overall": 3.95,
+            "coverage": 4,
+            "freshness": 5,
+            "unitClarity": 4,
+            "mapInterest": 4,
+            "ambiguityCorrelation": 3,
+            "recommendation": null
+          }
+        },
+        {
+          "order": 7,
+          "indicatorId": "employers-share",
+          "roundId": "worldprint-employers-share",
+          "worldBankCode": "SL.EMP.MPYR.ZS",
+          "title": "Employers, total (% of total employment) (modeled ILO estimate)",
+          "shortTitle": "Employers share",
+          "category": "labor",
+          "editorialStatus": "expert_only",
+          "editorialStatusLabel": "Expert-only",
+          "expectedDifficulty": "expert",
+          "latestYear": 2025,
+          "coverage": 163,
+          "scorecardSummary": {
+            "overall": 3.95,
+            "coverage": 4,
+            "freshness": 5,
+            "unitClarity": 4,
+            "mapInterest": 4,
+            "ambiguityCorrelation": 3,
+            "recommendation": null
+          }
+        },
+        {
+          "order": 8,
+          "indicatorId": "water-stress",
+          "roundId": "worldprint-water-stress",
+          "worldBankCode": "ER.H2O.FWST.ZS",
+          "title": "Level of water stress: freshwater withdrawal as a proportion of available freshwater resources",
+          "shortTitle": "Water stress",
+          "category": "environment",
+          "editorialStatus": "expert_only",
+          "editorialStatusLabel": "Expert-only",
+          "expectedDifficulty": "expert",
+          "latestYear": 2022,
+          "coverage": 161,
+          "scorecardSummary": {
+            "overall": 3.8,
+            "coverage": 4,
+            "freshness": 4,
+            "unitClarity": 4,
+            "mapInterest": 4,
+            "ambiguityCorrelation": 3,
+            "recommendation": null
+          }
+        },
+        {
+          "order": 9,
+          "indicatorId": "women-business-law",
+          "roundId": "worldprint-women-business-law",
+          "worldBankCode": "GD_WBL_OVL_LAW",
+          "title": "WBL: Legal Framework Index (scale 0-100)",
+          "shortTitle": "Women, Business and the Law index",
+          "category": "development",
+          "editorialStatus": "expert_only",
+          "editorialStatusLabel": "Expert-only",
+          "expectedDifficulty": "expert",
+          "latestYear": 2025,
+          "coverage": 164,
+          "scorecardSummary": {
+            "overall": 3.75,
+            "coverage": 4,
+            "freshness": 5,
+            "unitClarity": 3,
+            "mapInterest": 4,
+            "ambiguityCorrelation": 3,
+            "recommendation": null
+          }
+        },
+        {
+          "order": 10,
+          "indicatorId": "neonatal-mortality",
+          "roundId": "worldprint-neonatal-mortality",
+          "worldBankCode": "SH.DYN.NMRT",
+          "title": "Mortality rate, neonatal (per 1,000 live births)",
+          "shortTitle": "Neonatal mortality",
+          "category": "health",
+          "editorialStatus": "expert_only",
+          "editorialStatusLabel": "Expert-only",
+          "expectedDifficulty": "standard",
+          "latestYear": 2024,
+          "coverage": 166,
+          "scorecardSummary": {
+            "overall": 3.95,
+            "coverage": 4,
+            "freshness": 5,
+            "unitClarity": 5,
+            "mapInterest": 4,
+            "ambiguityCorrelation": 2,
+            "recommendation": null
+          }
+        }
+      ],
+      "challenges": [
+        {
+          "id": "ambiguity-edge-a",
+          "label": "Ambiguity / Edge Pack A",
+          "tier": "analyst",
+          "kind": "practice",
+          "roundIds": [
+            "worldprint-agricultural-water-withdrawals",
+            "worldprint-labor-force-gender-ratio",
+            "worldprint-natural-resource-rents",
+            "worldprint-urban-population-growth",
+            "worldprint-youth-unemployment"
+          ],
+          "indicatorIds": [
+            "agricultural-water-withdrawals",
+            "labor-force-gender-ratio",
+            "natural-resource-rents",
+            "urban-population-growth",
+            "youth-unemployment"
+          ],
+          "code": "eyJzY2hlbWFWZXJzaW9uIjoiMSIsImdhbWUiOiJ3b3JsZHByaW50Iiwia2luZCI6InByYWN0aWNlIiwiY29udGVudFZlcnNpb24iOiIyMDI2LjA2LjIyLWV4cDItcWExIiwidGllciI6ImFuYWx5c3QiLCJyb3VuZElkcyI6WyJ3b3JsZHByaW50LWFncmljdWx0dXJhbC13YXRlci13aXRoZHJhd2FscyIsIndvcmxkcHJpbnQtbGFib3ItZm9yY2UtZ2VuZGVyLXJhdGlvIiwid29ybGRwcmludC1uYXR1cmFsLXJlc291cmNlLXJlbnRzIiwid29ybGRwcmludC11cmJhbi1wb3B1bGF0aW9uLWdyb3d0aCIsIndvcmxkcHJpbnQteW91dGgtdW5lbXBsb3ltZW50Il0sImNoZWNrc3VtIjoiMWYzMTBidSJ9",
+          "path": "/challenge/worldprint/?c=eyJzY2hlbWFWZXJzaW9uIjoiMSIsImdhbWUiOiJ3b3JsZHByaW50Iiwia2luZCI6InByYWN0aWNlIiwiY29udGVudFZlcnNpb24iOiIyMDI2LjA2LjIyLWV4cDItcWExIiwidGllciI6ImFuYWx5c3QiLCJyb3VuZElkcyI6WyJ3b3JsZHByaW50LWFncmljdWx0dXJhbC13YXRlci13aXRoZHJhd2FscyIsIndvcmxkcHJpbnQtbGFib3ItZm9yY2UtZ2VuZGVyLXJhdGlvIiwid29ybGRwcmludC1uYXR1cmFsLXJlc291cmNlLXJlbnRzIiwid29ybGRwcmludC11cmJhbi1wb3B1bGF0aW9uLWdyb3d0aCIsIndvcmxkcHJpbnQteW91dGgtdW5lbXBsb3ltZW50Il0sImNoZWNrc3VtIjoiMWYzMTBidSJ9",
+          "localUrl": "http://localhost:3001/challenge/worldprint/?c=eyJzY2hlbWFWZXJzaW9uIjoiMSIsImdhbWUiOiJ3b3JsZHByaW50Iiwia2luZCI6InByYWN0aWNlIiwiY29udGVudFZlcnNpb24iOiIyMDI2LjA2LjIyLWV4cDItcWExIiwidGllciI6ImFuYWx5c3QiLCJyb3VuZElkcyI6WyJ3b3JsZHByaW50LWFncmljdWx0dXJhbC13YXRlci13aXRoZHJhd2FscyIsIndvcmxkcHJpbnQtbGFib3ItZm9yY2UtZ2VuZGVyLXJhdGlvIiwid29ybGRwcmludC1uYXR1cmFsLXJlc291cmNlLXJlbnRzIiwid29ybGRwcmludC11cmJhbi1wb3B1bGF0aW9uLWdyb3d0aCIsIndvcmxkcHJpbnQteW91dGgtdW5lbXBsb3ltZW50Il0sImNoZWNrc3VtIjoiMWYzMTBidSJ9",
+          "deploymentNote": "Replace http://localhost:3001 with the deployed site origin after static deployment."
+        },
+        {
+          "id": "ambiguity-edge-b",
+          "label": "Ambiguity / Edge Pack B",
+          "tier": "analyst",
+          "kind": "practice",
+          "roundIds": [
+            "worldprint-carbon-intensity-gdp",
+            "worldprint-employers-share",
+            "worldprint-water-stress",
+            "worldprint-women-business-law",
+            "worldprint-neonatal-mortality"
+          ],
+          "indicatorIds": [
+            "carbon-intensity-gdp",
+            "employers-share",
+            "water-stress",
+            "women-business-law",
+            "neonatal-mortality"
+          ],
+          "code": "eyJzY2hlbWFWZXJzaW9uIjoiMSIsImdhbWUiOiJ3b3JsZHByaW50Iiwia2luZCI6InByYWN0aWNlIiwiY29udGVudFZlcnNpb24iOiIyMDI2LjA2LjIyLWV4cDItcWExIiwidGllciI6ImFuYWx5c3QiLCJyb3VuZElkcyI6WyJ3b3JsZHByaW50LWNhcmJvbi1pbnRlbnNpdHktZ2RwIiwid29ybGRwcmludC1lbXBsb3llcnMtc2hhcmUiLCJ3b3JsZHByaW50LXdhdGVyLXN0cmVzcyIsIndvcmxkcHJpbnQtd29tZW4tYnVzaW5lc3MtbGF3Iiwid29ybGRwcmludC1uZW9uYXRhbC1tb3J0YWxpdHkiXSwiY2hlY2tzdW0iOiIxNTh4cHFwIn0",
+          "path": "/challenge/worldprint/?c=eyJzY2hlbWFWZXJzaW9uIjoiMSIsImdhbWUiOiJ3b3JsZHByaW50Iiwia2luZCI6InByYWN0aWNlIiwiY29udGVudFZlcnNpb24iOiIyMDI2LjA2LjIyLWV4cDItcWExIiwidGllciI6ImFuYWx5c3QiLCJyb3VuZElkcyI6WyJ3b3JsZHByaW50LWNhcmJvbi1pbnRlbnNpdHktZ2RwIiwid29ybGRwcmludC1lbXBsb3llcnMtc2hhcmUiLCJ3b3JsZHByaW50LXdhdGVyLXN0cmVzcyIsIndvcmxkcHJpbnQtd29tZW4tYnVzaW5lc3MtbGF3Iiwid29ybGRwcmludC1uZW9uYXRhbC1tb3J0YWxpdHkiXSwiY2hlY2tzdW0iOiIxNTh4cHFwIn0",
+          "localUrl": "http://localhost:3001/challenge/worldprint/?c=eyJzY2hlbWFWZXJzaW9uIjoiMSIsImdhbWUiOiJ3b3JsZHByaW50Iiwia2luZCI6InByYWN0aWNlIiwiY29udGVudFZlcnNpb24iOiIyMDI2LjA2LjIyLWV4cDItcWExIiwidGllciI6ImFuYWx5c3QiLCJyb3VuZElkcyI6WyJ3b3JsZHByaW50LWNhcmJvbi1pbnRlbnNpdHktZ2RwIiwid29ybGRwcmludC1lbXBsb3llcnMtc2hhcmUiLCJ3b3JsZHByaW50LXdhdGVyLXN0cmVzcyIsIndvcmxkcHJpbnQtd29tZW4tYnVzaW5lc3MtbGF3Iiwid29ybGRwcmludC1uZW9uYXRhbC1tb3J0YWxpdHkiXSwiY2hlY2tzdW0iOiIxNTh4cHFwIn0",
+          "deploymentNote": "Replace http://localhost:3001 with the deployed site origin after static deployment."
+        }
+      ]
+    },
+    {
+      "id": "expert-pack",
+      "name": "Expert Pack",
+      "purpose": "Optional technical set for geography and data players who want subtle, advanced maps.",
+      "estimatedMinutes": "8-12 minutes",
+      "tier": "cartographer",
+      "audience": "Experienced geography/data players",
+      "mapCount": 5,
+      "challengeCount": 1,
+      "watchFor": [
+        "Do advanced players enjoy harder units and closer choices?",
+        "Does Cartographer pressure feel exciting or merely punishing?",
+        "Which maps should stay Expert-only?"
+      ],
+      "maps": [
+        {
+          "order": 1,
+          "indicatorId": "fixed-broadband",
+          "roundId": "worldprint-fixed-broadband",
+          "worldBankCode": "IT.NET.BBND.P2",
+          "title": "Fixed broadband subscriptions (per 100 people)",
+          "shortTitle": "Fixed broadband",
+          "category": "connectivity",
+          "editorialStatus": "expert_only",
+          "editorialStatusLabel": "Expert-only",
+          "expectedDifficulty": "expert",
+          "latestYear": 2024,
+          "coverage": 134,
+          "scorecardSummary": {
+            "overall": 3.95,
+            "coverage": 3,
+            "freshness": 5,
+            "unitClarity": 5,
+            "mapInterest": 4,
+            "ambiguityCorrelation": 3,
+            "recommendation": null
+          }
+        },
+        {
+          "order": 2,
+          "indicatorId": "ghg-per-capita",
+          "roundId": "worldprint-ghg-per-capita",
+          "worldBankCode": "EN.GHG.ALL.PC.CE.AR5",
+          "title": "Total greenhouse gas emissions excluding LULUCF per capita (t CO2e/capita)",
+          "shortTitle": "Greenhouse gas emissions per capita",
+          "category": "environment",
+          "editorialStatus": "expert_only",
+          "editorialStatusLabel": "Expert-only",
+          "expectedDifficulty": "expert",
+          "latestYear": 2024,
+          "coverage": 165,
+          "scorecardSummary": {
+            "overall": 3.95,
+            "coverage": 4,
+            "freshness": 5,
+            "unitClarity": 5,
+            "mapInterest": 4,
+            "ambiguityCorrelation": 2,
+            "recommendation": null
+          }
+        },
+        {
+          "order": 3,
+          "indicatorId": "bank-branches",
+          "roundId": "worldprint-bank-branches",
+          "worldBankCode": "FB.CBK.BRCH.P5",
+          "title": "Commercial bank branches (per 100,000 adults)",
+          "shortTitle": "Commercial bank branches",
+          "category": "connectivity",
+          "editorialStatus": "expert_only",
+          "editorialStatusLabel": "Expert-only",
+          "expectedDifficulty": "expert",
+          "latestYear": 2022,
+          "coverage": 138,
+          "scorecardSummary": {
+            "overall": 3.6,
+            "coverage": 3,
+            "freshness": 4,
+            "unitClarity": 5,
+            "mapInterest": 4,
+            "ambiguityCorrelation": 2,
+            "recommendation": null
+          }
+        },
+        {
+          "order": 4,
+          "indicatorId": "private-health-spending-share",
+          "roundId": "worldprint-private-health-spending-share",
+          "worldBankCode": "SH.XPD.PVTD.CH.ZS",
+          "title": "Domestic private health expenditure (% of current health expenditure)",
+          "shortTitle": "Private health spending share",
+          "category": "health",
+          "editorialStatus": "expert_only",
+          "editorialStatusLabel": "Expert-only",
+          "expectedDifficulty": "expert",
+          "latestYear": 2023,
+          "coverage": 164,
+          "scorecardSummary": {
+            "overall": 3.6,
+            "coverage": 4,
+            "freshness": 4,
+            "unitClarity": 4,
+            "mapInterest": 4,
+            "ambiguityCorrelation": 2,
+            "recommendation": null
+          }
+        },
+        {
+          "order": 5,
+          "indicatorId": "water-productivity",
+          "roundId": "worldprint-water-productivity",
+          "worldBankCode": "ER.GDP.FWTL.M3.KD",
+          "title": "Water productivity, total (constant 2015 US$ GDP per cubic meter of total freshwater withdrawal)",
+          "shortTitle": "Water productivity",
+          "category": "environment",
+          "editorialStatus": "expert_only",
+          "editorialStatusLabel": "Expert-only",
+          "expectedDifficulty": "expert",
+          "latestYear": 2022,
+          "coverage": 158,
+          "scorecardSummary": {
+            "overall": 3.8,
+            "coverage": 4,
+            "freshness": 4,
+            "unitClarity": 4,
+            "mapInterest": 4,
+            "ambiguityCorrelation": 3,
+            "recommendation": null
+          }
+        }
+      ],
+      "challenges": [
+        {
+          "id": "expert-pack",
+          "label": "Expert Pack",
+          "tier": "cartographer",
+          "kind": "practice",
+          "roundIds": [
+            "worldprint-fixed-broadband",
+            "worldprint-ghg-per-capita",
+            "worldprint-bank-branches",
+            "worldprint-private-health-spending-share",
+            "worldprint-water-productivity"
+          ],
+          "indicatorIds": [
+            "fixed-broadband",
+            "ghg-per-capita",
+            "bank-branches",
+            "private-health-spending-share",
+            "water-productivity"
+          ],
+          "code": "eyJzY2hlbWFWZXJzaW9uIjoiMSIsImdhbWUiOiJ3b3JsZHByaW50Iiwia2luZCI6InByYWN0aWNlIiwiY29udGVudFZlcnNpb24iOiIyMDI2LjA2LjIyLWV4cDItcWExIiwidGllciI6ImNhcnRvZ3JhcGhlciIsInJvdW5kSWRzIjpbIndvcmxkcHJpbnQtZml4ZWQtYnJvYWRiYW5kIiwid29ybGRwcmludC1naGctcGVyLWNhcGl0YSIsIndvcmxkcHJpbnQtYmFuay1icmFuY2hlcyIsIndvcmxkcHJpbnQtcHJpdmF0ZS1oZWFsdGgtc3BlbmRpbmctc2hhcmUiLCJ3b3JsZHByaW50LXdhdGVyLXByb2R1Y3Rpdml0eSJdLCJjaGVja3N1bSI6IjA0YmcxdzcifQ",
+          "path": "/challenge/worldprint/?c=eyJzY2hlbWFWZXJzaW9uIjoiMSIsImdhbWUiOiJ3b3JsZHByaW50Iiwia2luZCI6InByYWN0aWNlIiwiY29udGVudFZlcnNpb24iOiIyMDI2LjA2LjIyLWV4cDItcWExIiwidGllciI6ImNhcnRvZ3JhcGhlciIsInJvdW5kSWRzIjpbIndvcmxkcHJpbnQtZml4ZWQtYnJvYWRiYW5kIiwid29ybGRwcmludC1naGctcGVyLWNhcGl0YSIsIndvcmxkcHJpbnQtYmFuay1icmFuY2hlcyIsIndvcmxkcHJpbnQtcHJpdmF0ZS1oZWFsdGgtc3BlbmRpbmctc2hhcmUiLCJ3b3JsZHByaW50LXdhdGVyLXByb2R1Y3Rpdml0eSJdLCJjaGVja3N1bSI6IjA0YmcxdzcifQ",
+          "localUrl": "http://localhost:3001/challenge/worldprint/?c=eyJzY2hlbWFWZXJzaW9uIjoiMSIsImdhbWUiOiJ3b3JsZHByaW50Iiwia2luZCI6InByYWN0aWNlIiwiY29udGVudFZlcnNpb24iOiIyMDI2LjA2LjIyLWV4cDItcWExIiwidGllciI6ImNhcnRvZ3JhcGhlciIsInJvdW5kSWRzIjpbIndvcmxkcHJpbnQtZml4ZWQtYnJvYWRiYW5kIiwid29ybGRwcmludC1naGctcGVyLWNhcGl0YSIsIndvcmxkcHJpbnQtYmFuay1icmFuY2hlcyIsIndvcmxkcHJpbnQtcHJpdmF0ZS1oZWFsdGgtc3BlbmRpbmctc2hhcmUiLCJ3b3JsZHByaW50LXdhdGVyLXByb2R1Y3Rpdml0eSJdLCJjaGVja3N1bSI6IjA0YmcxdzcifQ",
+          "deploymentNote": "Replace http://localhost:3001 with the deployed site origin after static deployment."
+        }
+      ]
+    }
+  ]
+}

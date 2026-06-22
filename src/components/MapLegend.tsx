@@ -1,18 +1,20 @@
 import type { IndicatorArtifact } from "@/lib/content/schemas";
 import { legendRanges } from "@/lib/geo/bins";
 import { formatValue } from "@/lib/geo/format";
-import { valueClassColor } from "@/lib/geo/palette";
+import { paletteForIndicator, valueClassColor } from "@/lib/geo/palette";
 
 type MapLegendProps = {
   indicator: IndicatorArtifact;
 };
 
 export function MapLegend({ indicator }: MapLegendProps) {
+  const palette = paletteForIndicator(indicator);
+
   return (
-    <div className="map-legend" aria-label={`Legend for ${indicator.shortTitle}`}>
+    <div className="map-legend" data-palette={palette.name} aria-label={`Legend for ${indicator.shortTitle}`}>
       <div className="legend-caption">
         <span>Low</span>
-        <strong>Darker means larger</strong>
+        <strong>{palette.label} scale · darker means larger</strong>
         <span>High</span>
       </div>
       <ol className="legend-list">
@@ -21,7 +23,7 @@ export function MapLegend({ indicator }: MapLegendProps) {
             <span
               className="legend-swatch"
               data-value-class={range.index}
-              style={{ backgroundColor: valueClassColor(range.index) }}
+              style={{ backgroundColor: valueClassColor(range.index, indicator) }}
               aria-hidden="true"
             />
             <span>

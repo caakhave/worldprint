@@ -208,12 +208,12 @@
     "valuesReference": "https://api.worldbank.org/v2/country/all/indicator/SP.ADO.TFRT?format=json&per_page=20000&page=1&date=2015%3A2025",
     "license": "Creative Commons Attribution 4.0 International unless specifically labeled otherwise by World Bank metadata",
     "licenseReference": "https://www.worldbank.org/en/about/legal/terms-of-use-for-datasets",
-    "retrievedAt": "2026-06-19T17:08:54.148935+00:00",
+    "retrievedAt": "2026-06-22T18:05:33.149300+00:00",
     "checksum": "887895264d9bed7170c20a1a9eca1c8bc90b3b6c3686017eb3294b86584551d5",
     "sourceOrganization": "World Population Prospects, United Nations (UN), publisher: UN Population Division"
   },
   "reviewStatus": "approved",
-  "contentVersion": "2026.06.19-ed1",
+  "contentVersion": "2026.06.22-exp2-qa1",
   "editorial": {
     "shortHook": "A youth-pattern map with a sharper social signal.",
     "patternNote": "The darkest countries include Central African Republic, Equatorial Guinea, Mozambique, while the lightest include Korea, Dem. People's Rep., Korea, Rep., Denmark; that contrast is the fastest way to read the adolescent fertility pattern.",
@@ -238,12 +238,12 @@
         "reason": "Birth rate can tempt players because it shares a strong country ranking with this map, but its unit and definition point to a different story."
       },
       {
-        "confusedWithIndicatorCode": "SH.DYN.MORT",
-        "reason": "Under-5 mortality can tempt players because it shares a strong country ranking with this map, but its unit and definition point to a different story."
+        "confusedWithIndicatorCode": "SH.H2O.SMDW.ZS",
+        "reason": "Safely managed drinking water can tempt players because it shares a strong country ranking with this map, but its unit and definition point to a different story."
       },
       {
-        "confusedWithIndicatorCode": "SP.DYN.IMRT.IN",
-        "reason": "Infant mortality can tempt players because it shares a strong country ranking with this map, but its unit and definition point to a different story."
+        "confusedWithIndicatorCode": "SH.DYN.MORT",
+        "reason": "Under-5 mortality can tempt players because it shares a strong country ranking with this map, but its unit and definition point to a different story."
       }
     ],
     "difficultyReason": "Expert difficulty: the map can be mistaken for adjacent indicators unless players probe a high, low, and middle country.",
@@ -254,7 +254,7 @@
   },
   "editorialReview": {
     "status": "daily_eligible",
-    "reviewedAt": "2026-06-19",
+    "reviewedAt": "2026-06-22",
     "reviewedBy": "Codex editorial QA",
     "qualityScore": 4,
     "funScore": 4,

@@ -2,34 +2,33 @@
   "schemaVersion": "1.1.0",
   "game": "worldprint",
   "date": "2026-08-31",
-  "contentVersion": "2026.06.19-ed1",
+  "contentVersion": "2026.06.22-exp2-qa1",
   "roundIds": [
-    "worldprint-cereal-yield",
-    "worldprint-pm25-exposure",
-    "worldprint-population-density",
-    "worldprint-internet-users",
-    "worldprint-employment-agriculture"
+    "worldprint-tuberculosis-incidence",
+    "worldprint-coal-electricity-share",
+    "worldprint-permanent-cropland",
+    "worldprint-manufacturing-share",
+    "worldprint-precipitation-depth"
   ],
   "indicatorIds": [
-    "cereal-yield",
-    "pm25-exposure",
-    "population-density",
-    "internet-users",
-    "employment-agriculture"
+    "tuberculosis-incidence",
+    "coal-electricity-share",
+    "permanent-cropland",
+    "manufacturing-share",
+    "precipitation-depth"
   ],
   "categoryMix": {
-    "agriculture": 1,
-    "environment": 1,
-    "settlement": 1,
-    "connectivity": 1,
-    "labor": 1
+    "health": 1,
+    "energy": 1,
+    "land": 1,
+    "economy": 1,
+    "environment": 1
   },
   "mapDifficultyMix": {
     "expert": 1,
-    "standard": 3,
-    "intro": 1
+    "standard": 4
   },
-  "generatedAt": "2026-06-19T17:09:23.343779+00:00",
+  "generatedAt": "2026-06-22T18:07:37.468704+00:00",
   "generatorVersion": "daily-manifest-v1",
   "varietyNotes": [
     "Selected with category, difficulty, and same-day correlation safeguards."

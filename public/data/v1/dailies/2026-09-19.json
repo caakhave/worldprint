@@ -1,0 +1,35 @@
+{
+  "schemaVersion": "1.1.0",
+  "game": "worldprint",
+  "date": "2026-09-19",
+  "contentVersion": "2026.06.22-exp2-qa1",
+  "roundIds": [
+    "worldprint-arable-land-per-person",
+    "worldprint-fertility-rate",
+    "worldprint-manufacturing-share",
+    "worldprint-agriculture-value-added",
+    "worldprint-renewable-electricity"
+  ],
+  "indicatorIds": [
+    "arable-land-per-person",
+    "fertility-rate",
+    "manufacturing-share",
+    "agriculture-value-added",
+    "renewable-electricity"
+  ],
+  "categoryMix": {
+    "land": 1,
+    "demography": 1,
+    "economy": 2,
+    "energy": 1
+  },
+  "mapDifficultyMix": {
+    "expert": 1,
+    "standard": 4
+  },
+  "generatedAt": "2026-06-22T18:07:37.471143+00:00",
+  "generatorVersion": "daily-manifest-v1",
+  "varietyNotes": [
+    "Selected with category, difficulty, and same-day correlation safeguards."
+  ]
+}

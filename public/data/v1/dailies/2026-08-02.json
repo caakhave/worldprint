@@ -2,32 +2,32 @@
   "schemaVersion": "1.1.0",
   "game": "worldprint",
   "date": "2026-08-02",
-  "contentVersion": "2026.06.19-ed1",
+  "contentVersion": "2026.06.22-exp2-qa1",
   "roundIds": [
-    "worldprint-tuberculosis-incidence",
+    "worldprint-adolescent-fertility",
     "worldprint-agriculture-value-added",
-    "worldprint-trade-share",
-    "worldprint-health-expenditure",
-    "worldprint-urban-population"
+    "worldprint-under-five-mortality",
+    "worldprint-co2-per-capita",
+    "worldprint-population-growth"
   ],
   "indicatorIds": [
-    "tuberculosis-incidence",
+    "adolescent-fertility",
     "agriculture-value-added",
-    "trade-share",
-    "health-expenditure",
-    "urban-population"
+    "under-five-mortality",
+    "co2-per-capita",
+    "population-growth"
   ],
   "categoryMix": {
-    "health": 2,
-    "economy": 2,
-    "settlement": 1
+    "demography": 2,
+    "economy": 1,
+    "health": 1,
+    "environment": 1
   },
   "mapDifficultyMix": {
     "expert": 1,
-    "standard": 3,
-    "intro": 1
+    "standard": 4
   },
-  "generatedAt": "2026-06-19T17:09:23.340611+00:00",
+  "generatedAt": "2026-06-22T18:07:37.465315+00:00",
   "generatorVersion": "daily-manifest-v1",
   "varietyNotes": [
     "Selected with category, difficulty, and same-day correlation safeguards."

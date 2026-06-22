@@ -2,33 +2,33 @@
   "schemaVersion": "1.1.0",
   "game": "worldprint",
   "date": "2026-08-06",
-  "contentVersion": "2026.06.19-ed1",
+  "contentVersion": "2026.06.22-exp2-qa1",
   "roundIds": [
-    "worldprint-tuberculosis-incidence",
-    "worldprint-renewable-electricity",
-    "worldprint-older-adults-share",
-    "worldprint-pm25-exposure",
-    "worldprint-forest-area"
+    "worldprint-cereal-yield",
+    "worldprint-internet-users",
+    "worldprint-open-defecation",
+    "worldprint-undernourishment",
+    "worldprint-energy-use"
   ],
   "indicatorIds": [
-    "tuberculosis-incidence",
-    "renewable-electricity",
-    "older-adults-share",
-    "pm25-exposure",
-    "forest-area"
+    "cereal-yield",
+    "internet-users",
+    "open-defecation",
+    "undernourishment",
+    "energy-use"
   ],
   "categoryMix": {
-    "health": 1,
-    "energy": 1,
-    "demography": 1,
-    "environment": 2
+    "agriculture": 1,
+    "connectivity": 1,
+    "health": 2,
+    "energy": 1
   },
   "mapDifficultyMix": {
     "expert": 1,
-    "standard": 2,
-    "intro": 2
+    "intro": 1,
+    "standard": 3
   },
-  "generatedAt": "2026-06-19T17:09:23.341065+00:00",
+  "generatedAt": "2026-06-22T18:07:37.465815+00:00",
   "generatorVersion": "daily-manifest-v1",
   "varietyNotes": [
     "Selected with category, difficulty, and same-day correlation safeguards."

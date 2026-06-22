@@ -208,12 +208,12 @@
     "valuesReference": "https://api.worldbank.org/v2/country/all/indicator/AG.LND.FRST.ZS?format=json&per_page=20000&page=1&date=2015%3A2025",
     "license": "Creative Commons Attribution 4.0 International unless specifically labeled otherwise by World Bank metadata",
     "licenseReference": "https://www.worldbank.org/en/about/legal/terms-of-use-for-datasets",
-    "retrievedAt": "2026-06-19T17:09:11.937768+00:00",
+    "retrievedAt": "2026-06-22T18:05:53.271233+00:00",
     "checksum": "26ac325f2b04677f4bf1c08cb62210524c05c5a649e819791c9956b5e00194a4",
     "sourceOrganization": "FAOSTAT, Food and Agriculture Organization of the United Nations (FAO), uri: https://www.fao.org/faostat/en/#data/RL, publisher: Food and Agriculture Organization of the United Nations (FAO)"
   },
   "reviewStatus": "approved",
-  "contentVersion": "2026.06.19-ed1",
+  "contentVersion": "2026.06.22-exp2-qa1",
   "editorial": {
     "shortHook": "The forest-cover map.",
     "patternNote": "The darkest countries include Suriname, Gabon, Solomon Islands, while the lightest include Qatar, Greenland, Oman; that contrast is the fastest way to read the forest area pattern.",
@@ -234,16 +234,16 @@
     ],
     "commonConfusions": [
       {
-        "confusedWithIndicatorCode": "AG.LND.AGRI.ZS",
-        "reason": "Agricultural land overlaps with part of the visible pattern, but the full country spread does not match."
+        "confusedWithIndicatorCode": "ER.H2O.INTR.PC",
+        "reason": "Freshwater per person can tempt players because it shares a strong country ranking with this map, but its unit and definition point to a different story."
       },
       {
-        "confusedWithIndicatorCode": "EN.ATM.PM25.MC.M3",
-        "reason": "PM2.5 exposure lives in the same category, so it can feel plausible until the high and low countries are checked."
+        "confusedWithIndicatorCode": "AG.LND.PRCP.MM",
+        "reason": "Average precipitation can tempt players because it shares a strong country ranking with this map, but its unit and definition point to a different story."
       },
       {
-        "confusedWithIndicatorCode": "SL.TLF.CACT.FE.ZS",
-        "reason": "Female labor force participation overlaps with part of the visible pattern, but the full country spread does not match."
+        "confusedWithIndicatorCode": "ER.H2O.FWTL.ZS",
+        "reason": "Freshwater withdrawal lives in the same category, so it can feel plausible until the high and low countries are checked."
       }
     ],
     "difficultyReason": "Intro difficulty: the map has broad, recognizable regional anchors and a player-facing unit that is easy to reason about.",
@@ -254,7 +254,7 @@
   },
   "editorialReview": {
     "status": "daily_eligible",
-    "reviewedAt": "2026-06-19",
+    "reviewedAt": "2026-06-22",
     "reviewedBy": "Codex editorial QA",
     "qualityScore": 5,
     "funScore": 5,

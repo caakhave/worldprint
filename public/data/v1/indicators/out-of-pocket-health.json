@@ -203,12 +203,12 @@
     "valuesReference": "https://api.worldbank.org/v2/country/all/indicator/SH.XPD.OOPC.CH.ZS?format=json&per_page=20000&page=1&date=2015%3A2025",
     "license": "Creative Commons Attribution 4.0 International unless specifically labeled otherwise by World Bank metadata",
     "licenseReference": "https://www.worldbank.org/en/about/legal/terms-of-use-for-datasets",
-    "retrievedAt": "2026-06-19T17:09:04.139102+00:00",
+    "retrievedAt": "2026-06-22T18:05:44.183594+00:00",
     "checksum": "228e41d0b5e2b71baf744bb09e03bea9d9e389f4742a889c61b36704cc74adbc",
     "sourceOrganization": "Global Health Expenditure Database, updated December 12th, 2025, World Health Organization (WHO), uri: http://apps.who.int/nha/database"
   },
   "reviewStatus": "approved",
-  "contentVersion": "2026.06.19-ed1",
+  "contentVersion": "2026.06.22-exp2-qa1",
   "editorial": {
     "shortHook": "A map of who pays at the clinic.",
     "patternNote": "The darkest countries include Armenia, Bangladesh, Turkmenistan, while the lightest include Solomon Islands, Rwanda, Botswana; that contrast is the fastest way to read the out-of-pocket health spending pattern.",
@@ -229,16 +229,16 @@
     ],
     "commonConfusions": [
       {
-        "confusedWithIndicatorCode": "NV.AGR.TOTL.ZS",
-        "reason": "Agriculture value added overlaps with part of the visible pattern, but the full country spread does not match."
+        "confusedWithIndicatorCode": "SH.XPD.PVTD.CH.ZS",
+        "reason": "Private health spending share can tempt players because it shares a strong country ranking with this map, but its unit and definition point to a different story."
       },
       {
-        "confusedWithIndicatorCode": "SE.SEC.ENRR",
-        "reason": "Secondary enrollment overlaps with part of the visible pattern, but the full country spread does not match."
+        "confusedWithIndicatorCode": "SH.XPD.GHED.CH.ZS",
+        "reason": "Government health spending share can tempt players because it shares a strong country ranking with this map, but its unit and definition point to a different story."
       },
       {
-        "confusedWithIndicatorCode": "EN.ATM.PM25.MC.M3",
-        "reason": "PM2.5 exposure overlaps with part of the visible pattern, but the full country spread does not match."
+        "confusedWithIndicatorCode": "NE.CON.GOVT.ZS",
+        "reason": "Government consumption overlaps with part of the visible pattern, but the full country spread does not match."
       }
     ],
     "difficultyReason": "Expert difficulty: the map can be mistaken for adjacent indicators unless players probe a high, low, and middle country.",
@@ -249,7 +249,7 @@
   },
   "editorialReview": {
     "status": "expert_only",
-    "reviewedAt": "2026-06-19",
+    "reviewedAt": "2026-06-22",
     "reviewedBy": "Codex editorial QA",
     "qualityScore": 3,
     "funScore": 4,

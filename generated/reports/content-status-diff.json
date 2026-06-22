@@ -1,0 +1,31 @@
+{
+  "schemaVersion": "1.1.0",
+  "contentVersion": "2026.06.22-exp2-qa1",
+  "generatedAt": "2026-06-22T18:07:37.455175+00:00",
+  "baselineContentVersion": "2026.06.22-exp2-qa1",
+  "summaryDelta": {
+    "candidateCount": 0,
+    "approvedCount": 0,
+    "draftCount": 0,
+    "statusCounts": {
+      "daily_eligible": 0,
+      "expert_only": 0,
+      "needs_review": 0,
+      "practice_eligible": 0,
+      "retired": 0
+    },
+    "approvedStatusCounts": {
+      "daily_eligible": 0,
+      "expert_only": 0,
+      "needs_review": 0,
+      "practice_eligible": 0,
+      "retired": 0
+    }
+  },
+  "addedCandidates": [],
+  "removedCandidates": [],
+  "approvalStatusChanges": [],
+  "editorialStatusChanges": [],
+  "coverageChanges": [],
+  "yearChanges": []
+}

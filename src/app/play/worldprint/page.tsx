@@ -3,7 +3,7 @@ import type { Metadata } from "next";
 import { WorldprintClient } from "@/features/worldprint/WorldprintClient";
 
 export const metadata: Metadata = {
-  title: "Play Worldprint"
+  title: "Play Mystery Map"
 };
 
 export default function PlayWorldprintPage() {
@@ -12,7 +12,7 @@ export default function PlayWorldprintPage() {
       fallback={
         <section className="game-shell page-shell">
           <div className="empty-state surface">
-            <h1>Loading WORLDPRINT</h1>
+            <h1>Loading Mystery Map</h1>
             <p>Preparing the static challenge.</p>
           </div>
         </section>
@@ -22,4 +22,3 @@ export default function PlayWorldprintPage() {
     </Suspense>
   );
 }
-

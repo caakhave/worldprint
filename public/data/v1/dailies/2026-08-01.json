@@ -2,33 +2,33 @@
   "schemaVersion": "1.1.0",
   "game": "worldprint",
   "date": "2026-08-01",
-  "contentVersion": "2026.06.19-ed1",
+  "contentVersion": "2026.06.22-exp2-qa1",
   "roundIds": [
-    "worldprint-cereal-yield",
-    "worldprint-unemployment",
-    "worldprint-renewable-electricity",
-    "worldprint-basic-sanitation",
-    "worldprint-trade-share"
+    "worldprint-adolescent-fertility",
+    "worldprint-industry-share",
+    "worldprint-electricity-access",
+    "worldprint-population-growth",
+    "worldprint-internet-users"
   ],
   "indicatorIds": [
-    "cereal-yield",
-    "unemployment",
-    "renewable-electricity",
-    "basic-sanitation",
-    "trade-share"
+    "adolescent-fertility",
+    "industry-share",
+    "electricity-access",
+    "population-growth",
+    "internet-users"
   ],
   "categoryMix": {
-    "agriculture": 1,
-    "labor": 1,
+    "demography": 2,
+    "economy": 1,
     "energy": 1,
-    "health": 1,
-    "economy": 1
+    "connectivity": 1
   },
   "mapDifficultyMix": {
     "expert": 1,
-    "standard": 4
+    "standard": 2,
+    "intro": 2
   },
-  "generatedAt": "2026-06-19T17:09:23.340448+00:00",
+  "generatedAt": "2026-06-22T18:07:37.465207+00:00",
   "generatorVersion": "daily-manifest-v1",
   "varietyNotes": [
     "Selected with category, difficulty, and same-day correlation safeguards."

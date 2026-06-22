@@ -18,10 +18,10 @@ from pathlib import Path
 from typing import Any
 
 ROOT = Path(__file__).resolve().parents[2]
-CONTENT_VERSION = "2026.06.19-ed1"
+CONTENT_VERSION = "2026.06.22-exp2-qa1"
 SCHEMA_VERSION = "1.1.0"
 MIN_MAPPED_COVERAGE = 120
-TARGET_APPROVED_INDICATORS = 40
+TARGET_APPROVED_INDICATORS = 150
 HIGH_CORRELATION_THRESHOLD = 0.9
 VISUAL_SIMILARITY_THRESHOLD = 0.86
 
@@ -36,6 +36,7 @@ WORLD_BANK_TERMS = "https://www.worldbank.org/en/about/legal/terms-of-use-for-da
 
 ROUND_SOURCE = ROOT / "content/rounds/worldprint-rounds.json"
 EDITORIAL_REVIEW_SOURCE = ROOT / "content/editorial/worldprint-indicator-review.json"
+CANDIDATE_INTAKE_SOURCE = ROOT / "content/candidates/worldprint-candidate-intake.json"
 MAP_OUT = ROOT / "public/maps/world-110m.v1.geojson"
 DATA_OUT = ROOT / "public/data/v1"
 INDICATOR_OUT = DATA_OUT / "indicators"
@@ -48,6 +49,7 @@ DAILY_GENERATOR_VERSION = "daily-manifest-v1"
 EDITORIAL_STATUSES = {"daily_eligible", "practice_eligible", "expert_only", "needs_review", "retired"}
 AMBIGUITY_RISKS = {"low", "medium", "high"}
 MIN_DAILY_ELIGIBLE_ROUNDS = 20
+PLAYABLE_STATUSES = {"daily_eligible", "practice_eligible", "expert_only"}
 
 
 @dataclass(frozen=True)
@@ -176,12 +178,242 @@ INDICATORS = [
     indicator("fdi-inflows", "BX.KLT.DINV.WD.GD.ZS", "economy", "Foreign direct investment inflows", "percent of GDP", 1, "expert", "A volatile investment-flow map.", "FDI inflows can highlight finance hubs, resource projects, and one-year investment spikes.", ("foreign direct investment", "fdi inflows", "direct investment inflows"), suffix="% of GDP", caveat="FDI as a GDP share can swing sharply in small economies."),
     indicator("current-account", "BN.CAB.XOKA.GD.ZS", "economy", "Current account balance", "percent of GDP", 1, "expert", "A surplus-and-deficit map.", "Current account balance shows whether countries are net lenders or borrowers with the rest of the world.", ("current account", "current account balance", "external balance"), suffix="% of GDP"),
     indicator("tax-revenue", "GC.TAX.TOTL.GD.ZS", "economy", "Tax revenue", "percent of GDP", 1, "expert", "A fiscal-capacity map.", "Tax revenue as a GDP share shows how much public revenue governments raise domestically.", ("tax revenue", "tax revenue share", "taxes as share of gdp"), suffix="% of GDP", caveat="Coverage is thinner than core World Bank demographic indicators."),
+    indicator("population-growth", "SP.POP.GROW", "demography", "Population growth", "annual percent change", 1, "standard", "The momentum map after births, deaths, and migration all combine.", "Population growth helps players separate fast-growing societies from aging, shrinking, or migration-shaped countries.", ("population growth", "annual population growth", "population change"), suffix="%"),
+    indicator("contraceptive-use", "SP.DYN.CONU.ZS", "health", "Contraceptive use", "percent of married women ages 15-49", 1, "expert", "A family-planning map with strong health-system and social clues.", "Contraceptive prevalence helps explain fertility differences without being identical to the fertility map.", ("contraceptive use", "contraceptive prevalence", "family planning use"), suffix="%", caveat="The World Bank series is generally measured among married women and can be missing where surveys are sparse."),
+    indicator("modern-contraceptive-use", "SP.DYN.CONM.ZS", "health", "Modern contraceptive use", "percent of married women ages 15-49", 1, "expert", "A narrower family-planning map than overall contraceptive use.", "Modern-method use can distinguish health access and method mix, but it is close to the broader contraceptive-use map.", ("modern contraceptive use", "modern family planning", "modern contraceptive prevalence"), suffix="%", caveat="This overlaps strongly with overall contraceptive prevalence and needs careful manual comparison."),
+    indicator("maternal-mortality", "SH.STA.MMRT", "health", "Maternal mortality", "deaths per 100,000 live births", 0, "standard", "A stark map of childbirth risk.", "Maternal mortality condenses health-system access, emergency care, and broader development into a readable but serious signal.", ("maternal mortality", "maternal deaths", "pregnancy deaths"), suffix=" per 100k"),
+    indicator("skilled-birth-attendance", "SH.STA.BRTC.ZS", "health", "Skilled birth attendance", "percent of births", 1, "standard", "The safer-delivery access map.", "Skilled birth attendance helps players read health-system reach in a way mortality rates do not directly show.", ("skilled birth attendance", "births attended by skilled staff", "skilled health staff births"), suffix="%"),
+    indicator("undernourishment", "SN.ITK.DEFC.ZS", "health", "Undernourishment", "percent of population", 1, "standard", "A food-security map where missing and extreme values matter.", "Undernourishment shows where basic food intake remains a national development and resilience issue.", ("undernourishment", "hunger prevalence", "food insecurity"), suffix="%", caveat="Some countries report modeled or capped values; use the reveal copy to explain extremes and missing data."),
+    indicator("child-stunting", "SH.STA.STNT.ZS", "health", "Child stunting", "percent of children under 5", 1, "standard", "A long-run child nutrition map.", "Stunting captures chronic nutrition and health conditions that income maps can miss.", ("child stunting", "stunting under 5", "low height for age"), suffix="%"),
+    indicator("child-wasting", "SH.STA.WAST.ZS", "health", "Child wasting", "percent of children under 5", 1, "expert", "An acute child-nutrition map with thinner coverage.", "Wasting can show recent or acute nutrition stress, but its country coverage and survey timing need careful review.", ("child wasting", "wasting under 5", "low weight for height"), suffix="%", caveat="Survey years can differ across countries, making this harder than broad health indicators."),
+    indicator("child-overweight", "SH.STA.OWGH.ZS", "health", "Child overweight", "percent of children under 5", 1, "expert", "A nutrition-transition map with surprising outliers.", "Child overweight is useful because it does not follow the same pattern as hunger or child mortality.", ("child overweight", "overweight under 5", "childhood overweight"), suffix="%"),
+    indicator("measles-immunization", "SH.IMM.MEAS", "health", "Measles immunization", "percent of children ages 12-23 months", 1, "standard", "A vaccine-coverage map with conflict and health-capacity clues.", "Measles immunization is a concrete signal of routine health-system reach.", ("measles immunization", "measles vaccine", "measles vaccination"), suffix="%"),
+    indicator("dpt-immunization", "SH.IMM.IDPT", "health", "DPT immunization", "percent of children ages 12-23 months", 1, "standard", "A routine childhood-vaccine map.", "DPT immunization gives another view of routine health coverage, though it can resemble measles immunization.", ("dpt immunization", "dpt vaccine", "dpt vaccination"), suffix="%"),
+    indicator("physicians", "SH.MED.PHYS.ZS", "health", "Physicians", "physicians per 1,000 people", 1, "standard", "The doctor-density map.", "Physicians per person can expose health workforce capacity more directly than health spending.", ("physicians", "doctors per 1000", "physician density"), suffix=" per 1k"),
+    indicator("hospital-beds", "SH.MED.BEDS.ZS", "health", "Hospital beds", "beds per 1,000 people", 1, "expert", "A health-capacity map with post-Soviet and rich-country clues.", "Hospital beds reveal infrastructure choices that do not always match doctor density or spending.", ("hospital beds", "beds per 1000", "hospital bed density"), suffix=" per 1k"),
+    indicator("adult-literacy", "SE.ADT.LITR.ZS", "education", "Adult literacy", "percent ages 15+", 1, "intro", "The basic-literacy map.", "Adult literacy offers a familiar education signal, but it can be held back by older survey years.", ("adult literacy", "literacy rate", "adult literacy rate"), suffix="%", caveat="Literacy surveys can be older or missing in higher-income countries where the rate is near universal."),
+    indicator("youth-literacy", "SE.ADT.1524.LT.ZS", "education", "Youth literacy", "percent ages 15-24", 1, "standard", "A newer-generation literacy map.", "Youth literacy can reveal recent education gains that adult literacy still hides.", ("youth literacy", "young adult literacy", "literacy ages 15-24"), suffix="%", caveat="Very high values across many countries can make some rounds subtle."),
+    indicator("pupil-teacher-ratio", "SE.PRM.ENRL.TC.ZS", "education", "Primary pupil-teacher ratio", "pupils per teacher", 1, "expert", "A classroom-crowding map.", "Pupil-teacher ratios help distinguish education-system capacity from enrollment alone.", ("pupil teacher ratio", "primary pupils per teacher", "classroom crowding"), suffix=" pupils/teacher"),
+    indicator("industry-share", "NV.IND.TOTL.ZS", "economy", "Industry value added", "percent of GDP", 1, "standard", "The industry-structure map.", "Industry's GDP share helps separate manufacturing, extraction, and service-heavy economies.", ("industry share", "industry value added", "industry percent gdp"), suffix="% of GDP"),
+    indicator("services-share", "NV.SRV.TOTL.ZS", "economy", "Services value added", "percent of GDP", 1, "standard", "The service-economy map.", "Services value added shows how much national output comes from trade, finance, government, tourism, and other services.", ("services share", "services value added", "service sector gdp"), suffix="% of GDP"),
+    indicator("manufacturing-share", "NV.IND.MANF.ZS", "economy", "Manufacturing value added", "percent of GDP", 1, "standard", "A manufacturing-specific economy map.", "Manufacturing share is more specific than total industry and helps players find factory-heavy economies.", ("manufacturing share", "manufacturing value added", "manufacturing percent gdp"), suffix="% of GDP"),
+    indicator("gdp-growth", "NY.GDP.MKTP.KD.ZG", "economy", "GDP growth", "annual percent change", 1, "expert", "A one-year macro momentum map.", "GDP growth can reveal rebounds, shocks, and fast expansions, but it is much more volatile than income level.", ("gdp growth", "economic growth", "annual gdp growth"), suffix="%", caveat="One-year growth can be distorted by rebounds, recessions, or small-country volatility."),
+    indicator("gni-per-capita", "NY.GNP.PCAP.CD", "development", "GNI per capita", "current US dollars", 0, "standard", "Income per person through national income.", "GNI per capita is a useful comparison to GDP per person because cross-border income flows can change the map.", ("gni per capita", "gross national income per person", "income per person gni"), prefix="$"),
+    indicator("gni-per-capita-ppp", "NY.GNP.PCAP.PP.CD", "development", "GNI per capita, PPP", "current international dollars", 0, "standard", "National income adjusted for local prices.", "PPP-adjusted GNI helps players separate exchange-rate effects from local purchasing power.", ("gni per capita ppp", "ppp national income per person", "cost adjusted gni"), prefix="$"),
+    indicator("remittances", "BX.TRF.PWKR.DT.GD.ZS", "economy", "Remittances received", "percent of GDP", 1, "expert", "A migration-money map where small economies stand out.", "Remittances as a GDP share reveal countries where money sent home is a major economic channel.", ("remittances", "personal remittances received", "worker remittances"), suffix="% of GDP", caveat="Small economies can have very high percentages from diaspora flows."),
+    indicator("military-spending", "MS.MIL.XPND.GD.ZS", "economy", "Military spending", "percent of GDP", 1, "expert", "A security-priority map, not a raw military-size map.", "Military spending as a GDP share highlights security burden and policy priority rather than total armed strength.", ("military spending", "military expenditure", "defense spending"), suffix="% of GDP"),
+    indicator("research-development-spending", "GB.XPD.RSDV.GD.ZS", "development", "Research and development spending", "percent of GDP", 1, "expert", "An innovation-investment map.", "R&D spending can separate advanced industrial and knowledge economies from countries with similar income levels.", ("research and development spending", "r&d spending", "research spending"), suffix="% of GDP", caveat="Coverage is thinner and often missing for smaller economies."),
+    indicator("high-tech-exports", "TX.VAL.TECH.MF.ZS", "economy", "High-tech exports", "percent of manufactured exports", 1, "expert", "A manufacturing-composition map with export-hub outliers.", "High-tech export share is useful for spotting electronics, pharmaceutical, and advanced-manufacturing patterns.", ("high tech exports", "high technology exports", "advanced exports"), suffix="%"),
+    indicator("women-parliament", "SG.GEN.PARL.ZS", "development", "Women in parliament", "percent of parliamentary seats", 1, "standard", "A political-representation map with non-obvious leaders.", "Women's parliamentary representation adds a governance and society signal that is not just income.", ("women in parliament", "female seats in parliament", "women parliamentary seats"), suffix="%"),
+    indicator("migrant-stock", "SM.POP.TOTL.ZS", "demography", "International migrant stock", "percent of population", 1, "standard", "The migrant-share map where Gulf states and small countries pop.", "Migrant stock as a population share helps players see where migration has reshaped resident populations.", ("international migrant stock", "migrant stock", "migrants share"), suffix="%"),
+    indicator("refugees-hosted", "SM.POP.REFG", "demography", "Refugees hosted", "people", 0, "expert", "A raw-count displacement map dominated by a few hosts.", "Refugees hosted is important, but raw counts can be harder to compare fairly than rates.", ("refugees hosted", "refugee population by country", "hosted refugees"), caveat="This is a raw count, so large countries and crisis-neighboring countries can dominate the map."),
+    indicator("net-migration", "SM.POP.NETM", "demography", "Net migration", "people", 0, "expert", "A volatile migration-balance map.", "Net migration shows whether migration adds or subtracts population, but the time window and signs need careful interpretation.", ("net migration", "migration balance", "net migrants"), caveat="Positive and negative raw values can be difficult to read on a single choropleth scale."),
+    indicator("tourism-arrivals", "ST.INT.ARVL", "economy", "Tourism arrivals", "international arrivals", 0, "standard", "A travel-flow map where small and famous destinations stand out.", "Tourism arrivals show global travel geography, transport access, and destination pull.", ("tourism arrivals", "international tourist arrivals", "visitor arrivals"), caveat="Raw arrivals favor large or famous destinations and do not adjust for population."),
+    indicator("tourism-receipts-share", "ST.INT.RCPT.XP.ZS", "economy", "Tourism receipts", "percent of total exports", 1, "expert", "A tourism-dependence map, not a visitor-count map.", "Tourism receipts as an export share reveals economies where visitors are central to external income.", ("tourism receipts share", "tourism exports", "international tourism receipts"), suffix="% of exports"),
+    indicator("electric-power-use", "EG.USE.ELEC.KH.PC", "energy", "Electric power use", "kWh per person", 0, "standard", "The electricity-consumption map.", "Electric power use per person separates basic access from heavy consumption and industrial demand.", ("electric power use", "electricity use per person", "kwh per person"), suffix=" kWh/person"),
+    indicator("energy-use", "EG.USE.PCAP.KG.OE", "energy", "Energy use", "kg of oil equivalent per person", 0, "standard", "The total-energy-consumption map.", "Energy use per person captures transport, heat, industry, and electricity together.", ("energy use", "energy use per person", "kg oil equivalent per capita"), suffix=" kg oe/person"),
+    indicator("fossil-fuel-energy-share", "EG.USE.COMM.FO.ZS", "energy", "Fossil-fuel energy share", "percent of total energy use", 1, "expert", "The fossil-dependence map.", "Fossil-fuel energy share helps players separate clean electricity stories from total energy systems.", ("fossil fuel energy share", "fossil fuels share", "fossil fuel use"), suffix="%"),
+    indicator("protected-land", "ER.LND.PTLD.ZS", "environment", "Protected land", "percent of land area", 1, "standard", "A conservation-designation map.", "Protected land share shows where terrestrial conservation designations cover a larger part of the country.", ("protected land", "terrestrial protected areas", "protected areas land"), suffix="%"),
+    indicator("protected-seas", "ER.MRN.PTMR.ZS", "environment", "Protected seas", "percent of territorial waters", 1, "expert", "A marine-conservation map with island and coastal surprises.", "Protected seas can reveal marine policy and island-state geography that land maps miss.", ("protected seas", "marine protected areas", "protected marine areas"), suffix="%"),
+    indicator("freshwater-per-capita", "ER.H2O.INTR.PC", "environment", "Freshwater per person", "cubic meters per person", 0, "standard", "A water-abundance map shaped by rivers, rainfall, and population.", "Freshwater per person helps distinguish water-rich countries from densely populated or arid countries.", ("freshwater per capita", "renewable freshwater per person", "internal freshwater resources"), suffix=" m3/person"),
+    indicator("freshwater-withdrawal", "ER.H2O.FWTL.ZS", "environment", "Freshwater withdrawal", "percent of internal resources", 1, "expert", "A water-pressure map where arid countries can dominate.", "Freshwater withdrawal pressure shows where demand strains renewable water resources.", ("freshwater withdrawal", "water withdrawal pressure", "freshwater withdrawals percent resources"), suffix="%", caveat="Very arid countries can exceed 100 percent depending on withdrawals and resource accounting."),
+    indicator("low-elevation-coastal-population", "EN.POP.EL5M.ZS", "settlement", "Low-elevation coastal population", "percent of population", 1, "expert", "The coastal-exposure map.", "This indicator shows where people live close to sea level, connecting settlement geography to climate exposure.", ("low elevation coastal population", "coastal population below 5m", "sea level exposure"), suffix="%"),
+    indicator("fertilizer-use", "AG.CON.FERT.ZS", "agriculture", "Fertilizer consumption", "percent of fertilizer production", 1, "expert", "A tricky agriculture-input map with a unit trap.", "Fertilizer consumption can hint at intensive agriculture, but this series is not kilograms per hectare.", ("fertilizer use", "fertilizer consumption", "fertilizer consumption percent production"), suffix="%", caveat="The selected World Bank code is consumption as a share of fertilizer production, not fertilizer applied per hectare."),
+    indicator("food-production-index", "AG.PRD.FOOD.XD", "agriculture", "Food production index", "index, 2014-2016 = 100", 1, "standard", "A food-output trend map.", "The food production index shows relative production change against a base period rather than raw farm output.", ("food production index", "food output index", "food production"), suffix=" index"),
+    indicator("crop-production-index", "AG.PRD.CROP.XD", "agriculture", "Crop production index", "index, 2014-2016 = 100", 1, "standard", "A crop-output trend map close to the food index.", "Crop production can be useful, but it overlaps with food production enough to require editorial restraint.", ("crop production index", "crop output index", "crop production"), suffix=" index"),
+    indicator("external-debt-burden", "DT.DOD.DECT.GN.ZS", "economy", "External debt burden", "percent of GNI", 1, "expert", "A debt-pressure map for external borrowing.", "External debt as a share of GNI can reveal financial exposure that income-per-person maps hide.", ("external debt burden", "external debt stocks", "external debt percent gni"), suffix="% of GNI", caveat="Debt stocks can be volatile and are not available for every high-income economy."),
 ]
+
+
+def unique_text(values: list[str]) -> tuple[str, ...]:
+    seen: set[str] = set()
+    out: list[str] = []
+    for value in values:
+        normalized = value.strip()
+        key = normalized.lower()
+        if normalized and key not in seen:
+            seen.add(key)
+            out.append(normalized)
+    return tuple(out)
+
+
+def intake_default_hook(short_title: str) -> str:
+    return f"A candidate map for {short_title.lower()}."
+
+
+def intake_default_why(short_title: str) -> str:
+    return (
+        f"{short_title} may add useful WORLDPRINT variety once source coverage, unit clarity, "
+        "map interest, and distractor ambiguity are reviewed."
+    )
+
+
+def intake_indicator_from_row(row: dict[str, Any], index: int) -> tuple[IndicatorSpec | None, list[str]]:
+    errors: list[str] = []
+    indicator_id = row.get("id")
+    provider_code = row.get("providerCode") or row.get("code")
+    category = row.get("category")
+    short_title = row.get("shortTitle") or row.get("title")
+    unit = row.get("unit")
+    difficulty = row.get("difficulty", "standard")
+    digits = row.get("maximumFractionDigits", row.get("digits", 1))
+
+    required = {
+        "id": indicator_id,
+        "providerCode": provider_code,
+        "category": category,
+        "shortTitle": short_title,
+        "unit": unit,
+    }
+    for key, value in required.items():
+        if not isinstance(value, str) or not value.strip():
+            errors.append(f"candidate intake row {index}: {key} is required")
+    if isinstance(category, str) and category not in CATEGORY_SIGNALS:
+        errors.append(f"candidate intake row {index}: unknown category {category}")
+    if difficulty not in DIFFICULTY_ORDER:
+        errors.append(f"candidate intake row {index}: difficulty must be intro, standard, or expert")
+    if not isinstance(digits, int) or digits < 0 or digits > 4:
+        errors.append(f"candidate intake row {index}: maximumFractionDigits must be an integer from 0 to 4")
+
+    aliases_raw = row.get("aliases", [])
+    if aliases_raw is None:
+        aliases_raw = []
+    if not isinstance(aliases_raw, list) or not all(isinstance(alias, str) for alias in aliases_raw):
+        errors.append(f"candidate intake row {index}: aliases must be a list of strings")
+        aliases_raw = []
+
+    signals_raw = row.get("regionalSignals", [])
+    if signals_raw is None:
+        signals_raw = []
+    if not isinstance(signals_raw, list) or not all(isinstance(signal, str) for signal in signals_raw):
+        errors.append(f"candidate intake row {index}: regionalSignals must be a list of strings")
+        signals_raw = []
+
+    if errors:
+        return None, errors
+
+    title = str(short_title).strip()
+    code = str(provider_code).strip()
+    aliases = unique_text([*aliases_raw, title, code, slug(title).replace("-", " ")])
+    return (
+        indicator(
+            str(indicator_id).strip(),
+            code,
+            str(category).strip(),
+            title,
+            str(unit).strip(),
+            digits,
+            str(difficulty).strip(),
+            str(row.get("shortHook") or intake_default_hook(title)).strip(),
+            str(row.get("whyItMatters") or intake_default_why(title)).strip(),
+            aliases,
+            prefix=row.get("prefix") if isinstance(row.get("prefix"), str) else None,
+            suffix=row.get("suffix") if isinstance(row.get("suffix"), str) else None,
+            caveat=row.get("dataCaveat") if isinstance(row.get("dataCaveat"), str) else None,
+            signals=unique_text(signals_raw),
+        ),
+        [],
+    )
+
+
+def load_indicator_specs() -> tuple[list[IndicatorSpec], dict[str, Any]]:
+    report: dict[str, Any] = {
+        "schemaVersion": SCHEMA_VERSION,
+        "contentVersion": CONTENT_VERSION,
+        "generatedAt": datetime.now(timezone.utc).isoformat(),
+        "intakeSource": str(CANDIDATE_INTAKE_SOURCE.relative_to(ROOT)),
+        "builtInSpecCount": len(INDICATORS),
+        "intakeCandidateCount": 0,
+        "totalCandidateCount": len(INDICATORS),
+        "loadedCandidateIds": [],
+        "warnings": [],
+        "errors": [],
+        "batchInstructions": [
+            "Add future World Bank candidates to content/candidates/worldprint-candidate-intake.json.",
+            "Use id, providerCode, category, shortTitle, unit, maximumFractionDigits, difficulty, and optional editorial helper fields.",
+            "Run pnpm data:build; the source gate and generated scorecards will show which candidates deserve manual editorial review.",
+        ],
+    }
+    if not CANDIDATE_INTAKE_SOURCE.exists():
+        report["warnings"].append("Candidate intake file is missing; using built-in curated indicators only.")
+        return list(INDICATORS), report
+
+    raw = json.loads(CANDIDATE_INTAKE_SOURCE.read_text(encoding="utf-8"))
+    rows = raw.get("candidates", [])
+    if not isinstance(rows, list):
+        raise RuntimeError("candidate intake file must contain a candidates array")
+
+    intake_specs: list[IndicatorSpec] = []
+    errors: list[str] = []
+    for index, row in enumerate(rows, start=1):
+        if not isinstance(row, dict):
+            errors.append(f"candidate intake row {index}: row must be an object")
+            continue
+        spec, row_errors = intake_indicator_from_row(row, index)
+        errors.extend(row_errors)
+        if spec:
+            intake_specs.append(spec)
+
+    specs = [*INDICATORS, *intake_specs]
+    duplicate_ids = sorted({spec.id for spec in specs if sum(1 for item in specs if item.id == spec.id) > 1})
+    duplicate_codes = sorted({spec.provider_code for spec in specs if sum(1 for item in specs if item.provider_code == spec.provider_code) > 1})
+    errors.extend([f"duplicate indicator id in candidate bank: {indicator_id}" for indicator_id in duplicate_ids])
+    errors.extend([f"duplicate provider code in candidate bank: {provider_code}" for provider_code in duplicate_codes])
+    report["intakeCandidateCount"] = len(intake_specs)
+    report["totalCandidateCount"] = len(specs)
+    report["loadedCandidateIds"] = [spec.id for spec in intake_specs]
+    report["errors"] = errors
+    if errors:
+        raise RuntimeError("Candidate intake failed validation:\n" + "\n".join(errors))
+    return specs, report
+
+
+def write_candidate_intake_report(report: dict[str, Any]) -> None:
+    warning_lines = [f"- {warning}" for warning in report.get("warnings", [])] or ["- None."]
+    error_lines = [f"- {error}" for error in report.get("errors", [])] or ["- None."]
+    lines = [
+        "# WORLDPRINT Candidate Intake Report",
+        "",
+        f"Generated: {report['generatedAt']}",
+        f"Content version: {CONTENT_VERSION}",
+        "",
+        f"- Built-in curated candidates: {report['builtInSpecCount']}",
+        f"- Intake candidates loaded: {report['intakeCandidateCount']}",
+        f"- Total candidate bank: {report['totalCandidateCount']}",
+        f"- Intake source: `{report['intakeSource']}`",
+        "",
+        "## Future Batch Workflow",
+        "",
+        "1. Add 50-100 World Bank rows to the intake JSON instead of editing the Python candidate list.",
+        "2. Run `pnpm data:build` to fetch source data, apply the source gate, and emit scorecards.",
+        "3. Review `generated/reports/candidate-scorecards.md` before changing curated editorial statuses.",
+        "4. Only promote strong maps in `content/editorial/worldprint-indicator-review.json`; weak maps can remain draft-held, Needs-review, Expert-only, or Retired.",
+        "",
+        "## Intake Fields",
+        "",
+        "`id`, `providerCode`, `category`, `shortTitle`, `unit`, `maximumFractionDigits`, and `difficulty` are the key fields. Optional fields include `aliases`, `prefix`, `suffix`, `dataCaveat`, `shortHook`, `whyItMatters`, and `regionalSignals`.",
+        "",
+        "## Warnings",
+        "",
+        *warning_lines,
+        "",
+        "## Errors",
+        "",
+        *error_lines,
+    ]
+    (REPORT_OUT / "candidate-intake-report.md").write_text("\n".join(lines) + "\n", encoding="utf-8")
+    write_json(REPORT_OUT / "candidate-intake-report.json", report)
 
 
 def ensure_dirs() -> None:
     for path in [MAP_OUT.parent, DATA_OUT, INDICATOR_OUT, DAILY_OUT, REPORT_OUT]:
         path.mkdir(parents=True, exist_ok=True)
+
+
+def clear_generated_json_outputs() -> None:
+    for directory in [INDICATOR_OUT, DAILY_OUT]:
+        for json_file in directory.glob("*.json"):
+            json_file.unlink()
 
 
 def sha256_bytes(data: bytes) -> str:
@@ -596,7 +828,8 @@ def review_booleans(status: str) -> dict[str, bool]:
     return {"dailyEligible": False, "practiceEligible": False, "challengeEligible": False, "expertOnly": False}
 
 
-def load_editorial_reviews(specs_by_id: dict[str, IndicatorSpec]) -> dict[str, dict[str, Any]]:
+def load_editorial_reviews(specs_by_id: dict[str, IndicatorSpec], default_review_ids: set[str] | None = None) -> dict[str, dict[str, Any]]:
+    default_review_ids = default_review_ids or set()
     if not EDITORIAL_REVIEW_SOURCE.exists():
         raise RuntimeError(f"Missing editorial review manifest: {EDITORIAL_REVIEW_SOURCE}")
     raw = json.loads(EDITORIAL_REVIEW_SOURCE.read_text(encoding="utf-8"))
@@ -640,6 +873,22 @@ def load_editorial_reviews(specs_by_id: dict[str, IndicatorSpec]) -> dict[str, d
             **booleans,
             "reviewNotes": review_notes or [],
             "acceptableCloseDistractorIds": row.get("acceptableCloseDistractorIds", []),
+        }
+    missing_reviews = sorted(set(specs_by_id) - set(reviews))
+    for indicator_id in [missing_id for missing_id in missing_reviews if missing_id in default_review_ids]:
+        reviews[indicator_id] = {
+            "status": "needs_review",
+            "reviewedAt": raw.get("reviewedAt"),
+            "reviewedBy": "pipeline-default-needs-review",
+            "qualityScore": 2,
+            "funScore": 2,
+            "fairnessScore": 2,
+            "ambiguityRisk": "medium",
+            **review_booleans("needs_review"),
+            "reviewNotes": [
+                "Loaded from the candidate intake queue and default-held as Needs review until a human editor classifies it."
+            ],
+            "acceptableCloseDistractorIds": [],
         }
     missing_reviews = sorted(set(specs_by_id) - set(reviews))
     if missing_reviews:
@@ -1429,29 +1678,424 @@ def approved_indicator_manifest(indicators: dict[str, dict[str, Any]]) -> dict[s
     }
 
 
-def editorial_review_registry(indicators: dict[str, dict[str, Any]]) -> dict[str, Any]:
+def editorial_review_registry(
+    indicators: dict[str, dict[str, Any]],
+    indicator_reports: list[dict[str, Any]],
+    specs_by_id: dict[str, IndicatorSpec],
+    editorial_reviews: dict[str, dict[str, Any]],
+) -> dict[str, Any]:
+    report_by_id = {report["id"]: report for report in indicator_reports}
+    row_ids = sorted(set(specs_by_id) | set(report_by_id) | set(indicators))
     approved = [indicator for indicator in indicators.values() if indicator.get("reviewStatus") == "approved"]
-    approved.sort(key=lambda indicator: indicator["id"])
     return {
         "schemaVersion": SCHEMA_VERSION,
         "contentVersion": CONTENT_VERSION,
         "generatedAt": datetime.now(timezone.utc).isoformat(),
-        "statusCounts": dict(sorted(count_mix([indicator["editorialReview"]["status"] for indicator in approved]).items())),
+        "candidateCount": len(row_ids),
+        "approvedCount": len(approved),
+        "draftCount": len([row_id for row_id in row_ids if indicators.get(row_id, {}).get("reviewStatus") != "approved"]),
+        "statusCounts": dict(sorted(count_mix([editorial_reviews[row_id]["status"] for row_id in row_ids if row_id in editorial_reviews]).items())),
+        "approvedStatusCounts": dict(sorted(count_mix([indicator["editorialReview"]["status"] for indicator in approved]).items())),
         "indicators": [
             {
-                "id": indicator["id"],
-                "providerCode": indicator["providerCode"],
-                "shortTitle": indicator["shortTitle"],
-                "category": indicator["category"],
-                "difficulty": indicator["difficulty"],
-                "year": indicator["year"],
-                "coverage": indicator["stats"]["coverage"],
-                "sourceReference": indicator["source"]["sourceReference"],
-                "editorialReview": indicator["editorialReview"],
+                "id": row_id,
+                "providerCode": specs_by_id[row_id].provider_code,
+                "shortTitle": indicators.get(row_id, {}).get("shortTitle", specs_by_id[row_id].short_title),
+                "category": specs_by_id[row_id].category,
+                "difficulty": specs_by_id[row_id].difficulty,
+                "year": report_by_id.get(row_id, {}).get("selectedYear", indicators.get(row_id, {}).get("year", "n/a")),
+                "coverage": report_by_id.get(row_id, {}).get("coverage", indicators.get(row_id, {}).get("stats", {}).get("coverage", 0)),
+                "sourceReference": indicators.get(row_id, {}).get("source", {}).get("sourceReference")
+                or report_by_id.get(row_id, {}).get("metadataUrl", "unavailable"),
+                "approvalStatus": indicators.get(row_id, {}).get("reviewStatus", "draft"),
+                "dataWarnings": report_by_id.get(row_id, {}).get("warnings", []),
+                "dataFailures": report_by_id.get(row_id, {}).get("failures", []),
+                "editorialReview": editorial_reviews[row_id],
             }
-            for indicator in approved
+            for row_id in row_ids
         ],
     }
+
+
+def read_json_if_exists(path: Path) -> Any | None:
+    if not path.exists():
+        return None
+    return json.loads(path.read_text(encoding="utf-8"))
+
+
+def score_coverage(coverage: int) -> int:
+    if coverage >= 170:
+        return 5
+    if coverage >= 150:
+        return 4
+    if coverage >= MIN_MAPPED_COVERAGE:
+        return 3
+    if coverage >= 90:
+        return 2
+    if coverage > 0:
+        return 1
+    return 0
+
+
+def score_freshness(year: Any) -> int:
+    if not isinstance(year, int) or year <= 0:
+        return 0
+    if year >= 2024:
+        return 5
+    if year >= 2022:
+        return 4
+    if year >= 2020:
+        return 3
+    if year >= 2018:
+        return 2
+    if year >= 2015:
+        return 1
+    return 0
+
+
+def score_unit_clarity(spec: IndicatorSpec, report: dict[str, Any]) -> int:
+    unit_text = " ".join([spec.unit, spec.prefix or "", spec.suffix or "", spec.data_caveat or ""]).lower()
+    score = 3
+    if any(token in unit_text for token in ["percent", "%", "share", "ratio", "rate", "years", "per ", " per-"]):
+        score += 1
+    if any(token in unit_text for token in ["per capita", "per person", "per 1,000", "per 100", "per 100,000", "per 1m"]):
+        score += 1
+    if any(token in unit_text for token in ["index", "international dollars", "current us dollars"]):
+        score = min(score, 4)
+    raw_count_terms = ["people", "arrivals", "population", "servers"]
+    if any(token in unit_text for token in raw_count_terms) and "per " not in unit_text and "%" not in unit_text and "percent" not in unit_text:
+        score -= 2
+    if any(token in unit_text for token in ["raw count", "unit trap", "volatile", "negative", "not fertilizer applied"]):
+        score -= 1
+    if report.get("reviewStatus") != "approved":
+        score = min(score, 2)
+    return max(0, min(5, score))
+
+
+def score_map_interest(artifact: dict[str, Any] | None, report: dict[str, Any], review: dict[str, Any]) -> int:
+    if not artifact or artifact.get("reviewStatus") != "approved":
+        return min(2, score_coverage(int(report.get("coverage") or 0)))
+    stats = artifact.get("stats", {})
+    coverage = int(stats.get("coverage") or 0)
+    value_min = stats.get("min")
+    value_max = stats.get("max")
+    median = stats.get("median")
+    score = 2 + min(2, score_coverage(coverage) // 2)
+    if isinstance(value_min, (int, float)) and isinstance(value_max, (int, float)) and isinstance(median, (int, float)):
+        relative_range = (value_max - value_min) / max(abs(median), 1)
+        if relative_range >= 1:
+            score += 1
+        elif relative_range < 0.08:
+            score -= 2
+        elif relative_range < 0.25:
+            score -= 1
+    warnings = " ".join(report.get("warnings", [])).lower()
+    if "near-uniform" in warnings or "low uniqueness" in warnings:
+        score = min(score, 2)
+    fun_score = review.get("funScore")
+    if isinstance(fun_score, int):
+        score = round((score + fun_score) / 2)
+    return max(0, min(5, int(score)))
+
+
+def top_similarity_for(indicator_id: str, similarities: dict[str, list[dict[str, Any]]]) -> dict[str, Any] | None:
+    entries = similarities.get(indicator_id) or []
+    return entries[0] if entries else None
+
+
+def score_ambiguity(review: dict[str, Any], top_similarity: dict[str, Any] | None, approval_status: str) -> int:
+    score = {"low": 5, "medium": 3, "high": 2}.get(review.get("ambiguityRisk"), 2)
+    if top_similarity:
+        correlation = max(abs(top_similarity.get("pearson") or 0), abs(top_similarity.get("spearman") or 0))
+        visual = top_similarity.get("visualSimilarity") or 0
+        if correlation >= 0.95 or visual >= 0.9:
+            score = min(score, 2)
+        elif correlation >= HIGH_CORRELATION_THRESHOLD or visual >= VISUAL_SIMILARITY_THRESHOLD:
+            score = min(score, 3)
+    if approval_status != "approved":
+        score = min(score, 2)
+    return max(0, min(5, score))
+
+
+def scorecard_recommendation(
+    approval_status: str,
+    current_status: str,
+    scores: dict[str, int | float],
+    report: dict[str, Any],
+    review: dict[str, Any],
+) -> dict[str, Any]:
+    reasons: list[str] = []
+    overall = float(scores["overall"])
+    if approval_status != "approved":
+        reasons.extend(report.get("failures") or ["Candidate did not pass the source-data gate."])
+        return {
+            "recommendedAction": "hold_for_data",
+            "recommendedEditorialStatus": current_status,
+            "reason": reasons,
+        }
+    if current_status == "retired":
+        return {
+            "recommendedAction": "keep_retired",
+            "recommendedEditorialStatus": "retired",
+            "reason": ["Curated editorial status is Retired; keep out of playable generation unless a human reopens it."],
+        }
+    if current_status == "needs_review":
+        return {
+            "recommendedAction": "keep_needs_review",
+            "recommendedEditorialStatus": "needs_review",
+            "reason": ["Curated editorial status still requires human review before play."],
+        }
+    if overall >= 4.1 and scores["unitClarity"] >= 4 and scores["ambiguityCorrelation"] >= 4 and review.get("fairnessScore", 0) >= 4:
+        if current_status != "daily_eligible":
+            reasons.append("Strong automated scorecard; human editor should consider promoting after playtest.")
+            return {
+                "recommendedAction": "review_for_daily_promotion",
+                "recommendedEditorialStatus": "daily_eligible",
+                "reason": reasons,
+            }
+    if overall < 3.0 or scores["unitClarity"] <= 2:
+        reasons.append("Weak scorecard component; keep out of broad Daily use until manually reviewed.")
+        fallback_status = "expert_only" if current_status == "daily_eligible" else current_status
+        return {
+            "recommendedAction": "review_for_demotion",
+            "recommendedEditorialStatus": fallback_status,
+            "reason": reasons,
+        }
+    if scores["ambiguityCorrelation"] <= 2:
+        reasons.append("High correlation or visual-similarity risk; review distractor placement and Daily same-day pairing.")
+        return {
+            "recommendedAction": "review_ambiguity",
+            "recommendedEditorialStatus": current_status,
+            "reason": reasons,
+        }
+    return {
+        "recommendedAction": f"keep_{current_status}",
+        "recommendedEditorialStatus": current_status,
+        "reason": ["Automated scorecard supports the current curated editorial status."],
+    }
+
+
+def build_candidate_scorecards(
+    indicators: dict[str, dict[str, Any]],
+    indicator_reports: list[dict[str, Any]],
+    specs_by_id: dict[str, IndicatorSpec],
+    editorial_reviews: dict[str, dict[str, Any]],
+    similarities: dict[str, list[dict[str, Any]]],
+) -> dict[str, Any]:
+    reports_by_id = {report["id"]: report for report in indicator_reports}
+    scorecards: list[dict[str, Any]] = []
+    for indicator_id in sorted(specs_by_id):
+        spec = specs_by_id[indicator_id]
+        artifact = indicators.get(indicator_id)
+        report = reports_by_id.get(indicator_id, {})
+        review = editorial_reviews[indicator_id]
+        approval_status = artifact.get("reviewStatus", "draft") if artifact else report.get("reviewStatus", "draft")
+        coverage = int(report.get("coverage") or artifact.get("stats", {}).get("coverage", 0) if artifact else report.get("coverage") or 0)
+        selected_year = report.get("selectedYear", artifact.get("year") if artifact else "n/a")
+        top_similarity = top_similarity_for(indicator_id, similarities)
+        scores = {
+            "coverage": score_coverage(coverage),
+            "freshness": score_freshness(selected_year),
+            "unitClarity": score_unit_clarity(spec, report),
+            "mapInterest": score_map_interest(artifact, report, review),
+            "ambiguityCorrelation": score_ambiguity(review, top_similarity, approval_status),
+        }
+        scores["overall"] = round(
+            (
+                scores["coverage"] * 0.2
+                + scores["freshness"] * 0.15
+                + scores["unitClarity"] * 0.2
+                + scores["mapInterest"] * 0.25
+                + scores["ambiguityCorrelation"] * 0.2
+            ),
+            2,
+        )
+        recommendation = scorecard_recommendation(approval_status, review["status"], scores, report, review)
+        data_reasons = report.get("failures") or report.get("warnings") or ["Source data passed the coverage gate."]
+        scorecards.append(
+            {
+                "id": indicator_id,
+                "providerCode": spec.provider_code,
+                "shortTitle": artifact.get("shortTitle", spec.short_title) if artifact else spec.short_title,
+                "category": spec.category,
+                "difficulty": spec.difficulty,
+                "source": {
+                    "selectedYear": selected_year,
+                    "coverage": coverage,
+                    "approvalStatus": approval_status,
+                },
+                "dataGate": {
+                    "status": "passed" if approval_status == "approved" else "held",
+                    "reasons": data_reasons,
+                },
+                "editorial": {
+                    "currentStatus": review["status"],
+                    "dailyEligible": review["dailyEligible"],
+                    "practiceEligible": review["practiceEligible"],
+                    "challengeEligible": review["challengeEligible"],
+                    "expertOnly": review["expertOnly"],
+                    "ambiguityRisk": review["ambiguityRisk"],
+                    "qualityScore": review["qualityScore"],
+                    "funScore": review["funScore"],
+                    "fairnessScore": review["fairnessScore"],
+                },
+                "scores": scores,
+                "topCorrelation": None
+                if not top_similarity
+                else {
+                    "indicatorId": top_similarity["otherIndicatorId"],
+                    "title": top_similarity["title"],
+                    "warningLevel": top_similarity["warningLevel"],
+                    "pearson": top_similarity["pearson"],
+                    "spearman": top_similarity["spearman"],
+                    "visualSimilarity": top_similarity["visualSimilarity"],
+                    "overlapCount": top_similarity["overlapCount"],
+                },
+                "statusRecommendation": recommendation,
+            }
+        )
+
+    summary = {
+        "candidateCount": len(scorecards),
+        "sourceValidCount": sum(1 for row in scorecards if row["source"]["approvalStatus"] == "approved"),
+        "draftHeldCount": sum(1 for row in scorecards if row["source"]["approvalStatus"] != "approved"),
+        "playableCount": sum(
+            1
+            for row in scorecards
+            if row["source"]["approvalStatus"] == "approved" and row["editorial"]["currentStatus"] in PLAYABLE_STATUSES
+        ),
+        "dailyEligibleCount": sum(
+            1
+            for row in scorecards
+            if row["source"]["approvalStatus"] == "approved" and row["editorial"]["dailyEligible"]
+        ),
+        "recommendationCounts": dict(sorted(count_mix([row["statusRecommendation"]["recommendedAction"] for row in scorecards]).items())),
+        "dataGateCounts": dict(sorted(count_mix([row["dataGate"]["status"] for row in scorecards]).items())),
+    }
+    return {
+        "schemaVersion": SCHEMA_VERSION,
+        "contentVersion": CONTENT_VERSION,
+        "generatedAt": datetime.now(timezone.utc).isoformat(),
+        "summary": summary,
+        "scorecards": scorecards,
+    }
+
+
+def write_candidate_scorecards(scorecard_report: dict[str, Any]) -> None:
+    summary = scorecard_report["summary"]
+    lines = [
+        "# WORLDPRINT Candidate Scorecards",
+        "",
+        f"Generated: {scorecard_report['generatedAt']}",
+        f"Content version: {CONTENT_VERSION}",
+        "",
+        f"- Candidate count: {summary['candidateCount']}",
+        f"- Source-valid count: {summary['sourceValidCount']}",
+        f"- Draft-held/data-failed count: {summary['draftHeldCount']}",
+        f"- Playable count: {summary['playableCount']}",
+        f"- Daily-eligible count: {summary['dailyEligibleCount']}",
+        "",
+        "Scores are automated triage signals from 0-5. They do not auto-approve indicators; curated editorial status remains the source of truth.",
+        "",
+        "## All Candidates",
+        "",
+        "| Indicator | Gate | Editorial status | Coverage | Fresh | Unit | Interest | Ambiguity | Overall | Recommendation |",
+        "| --- | --- | --- | ---: | ---: | ---: | ---: | ---: | ---: | --- |",
+    ]
+    for row in scorecard_report["scorecards"]:
+        scores = row["scores"]
+        lines.append(
+            f"| {row['shortTitle']} (`{row['providerCode']}`) | {row['dataGate']['status']} | {row['editorial']['currentStatus']} | "
+            f"{scores['coverage']} | {scores['freshness']} | {scores['unitClarity']} | {scores['mapInterest']} | "
+            f"{scores['ambiguityCorrelation']} | {scores['overall']} | {row['statusRecommendation']['recommendedAction']} |"
+        )
+    held = [row for row in scorecard_report["scorecards"] if row["dataGate"]["status"] != "passed"]
+    lines.extend(["", "## Draft-Held Or Data-Failed Candidates", ""])
+    if held:
+        for row in held:
+            lines.append(f"- `{row['id']}` (`{row['providerCode']}`): {' '.join(row['dataGate']['reasons'])}")
+    else:
+        lines.append("- None.")
+    (REPORT_OUT / "candidate-scorecards.md").write_text("\n".join(lines) + "\n", encoding="utf-8")
+    write_json(REPORT_OUT / "candidate-scorecards.json", scorecard_report)
+
+
+def status_count_delta(previous: dict[str, int] | None, current: dict[str, int] | None) -> dict[str, int]:
+    previous = previous or {}
+    current = current or {}
+    keys = sorted(set(previous) | set(current))
+    return {key: current.get(key, 0) - previous.get(key, 0) for key in keys}
+
+
+def write_status_diff_report(previous: dict[str, Any] | None, current: dict[str, Any]) -> None:
+    previous_rows = {row["id"]: row for row in previous.get("indicators", [])} if previous else {}
+    current_rows = {row["id"]: row for row in current.get("indicators", [])}
+    added = sorted(set(current_rows) - set(previous_rows))
+    removed = sorted(set(previous_rows) - set(current_rows))
+    approval_changes: list[dict[str, Any]] = []
+    editorial_changes: list[dict[str, Any]] = []
+    coverage_changes: list[dict[str, Any]] = []
+    year_changes: list[dict[str, Any]] = []
+    for indicator_id in sorted(set(previous_rows) & set(current_rows)):
+        old = previous_rows[indicator_id]
+        new = current_rows[indicator_id]
+        if old.get("approvalStatus") != new.get("approvalStatus"):
+            approval_changes.append({"id": indicator_id, "from": old.get("approvalStatus"), "to": new.get("approvalStatus")})
+        old_status = (old.get("editorialReview") or {}).get("status")
+        new_status = (new.get("editorialReview") or {}).get("status")
+        if old_status != new_status:
+            editorial_changes.append({"id": indicator_id, "from": old_status, "to": new_status})
+        if old.get("coverage") != new.get("coverage"):
+            coverage_changes.append({"id": indicator_id, "from": old.get("coverage"), "to": new.get("coverage")})
+        if old.get("year") != new.get("year"):
+            year_changes.append({"id": indicator_id, "from": old.get("year"), "to": new.get("year")})
+
+    report = {
+        "schemaVersion": SCHEMA_VERSION,
+        "contentVersion": CONTENT_VERSION,
+        "generatedAt": datetime.now(timezone.utc).isoformat(),
+        "baselineContentVersion": previous.get("contentVersion") if previous else None,
+        "summaryDelta": {
+            "candidateCount": current.get("candidateCount", 0) - (previous.get("candidateCount", 0) if previous else 0),
+            "approvedCount": current.get("approvedCount", 0) - (previous.get("approvedCount", 0) if previous else 0),
+            "draftCount": current.get("draftCount", 0) - (previous.get("draftCount", 0) if previous else 0),
+            "statusCounts": status_count_delta(previous.get("statusCounts") if previous else None, current.get("statusCounts")),
+            "approvedStatusCounts": status_count_delta(
+                previous.get("approvedStatusCounts") if previous else None,
+                current.get("approvedStatusCounts"),
+            ),
+        },
+        "addedCandidates": added,
+        "removedCandidates": removed,
+        "approvalStatusChanges": approval_changes,
+        "editorialStatusChanges": editorial_changes,
+        "coverageChanges": coverage_changes,
+        "yearChanges": year_changes,
+    }
+    lines = [
+        "# WORLDPRINT Content Status Diff",
+        "",
+        f"Generated: {report['generatedAt']}",
+        f"Current content version: {CONTENT_VERSION}",
+        f"Baseline content version: {report['baselineContentVersion'] or 'none'}",
+        "",
+        "## Summary Delta",
+        "",
+        f"- Candidate count: {report['summaryDelta']['candidateCount']:+d}",
+        f"- Source-valid approved count: {report['summaryDelta']['approvedCount']:+d}",
+        f"- Draft-held count: {report['summaryDelta']['draftCount']:+d}",
+        "",
+        "## Candidate Changes",
+        "",
+        f"- Added: {', '.join(added) if added else 'none'}",
+        f"- Removed: {', '.join(removed) if removed else 'none'}",
+        f"- Approval status changes: {len(approval_changes)}",
+        f"- Editorial status changes: {len(editorial_changes)}",
+        f"- Coverage changes: {len(coverage_changes)}",
+        f"- Year changes: {len(year_changes)}",
+    ]
+    (REPORT_OUT / "content-status-diff.md").write_text("\n".join(lines) + "\n", encoding="utf-8")
+    write_json(REPORT_OUT / "content-status-diff.json", report)
 
 
 def write_distractor_review(
@@ -1709,6 +2353,10 @@ def main() -> int:
     indicator_reports: list[dict[str, Any]] = []
 
     try:
+        previous_editorial_registry = read_json_if_exists(DATA_OUT / "editorial-review.json")
+        indicator_specs, candidate_intake_report = load_indicator_specs()
+        write_candidate_intake_report(candidate_intake_report)
+
         countries, country_checksums = load_country_metadata()
         map_artifact, registry, natural_earth_info = load_natural_earth(countries)
         mapped_iso3 = {entity["iso3"] for entity in registry if entity["iso3"]}
@@ -1718,10 +2366,11 @@ def main() -> int:
         write_json(DATA_OUT / "entity-registry.json", {"schemaVersion": SCHEMA_VERSION, "contentVersion": CONTENT_VERSION, "entities": registry})
 
         indicators: dict[str, dict[str, Any]] = {}
-        specs_by_id = {spec.id: spec for spec in INDICATORS}
-        editorial_reviews = load_editorial_reviews(specs_by_id)
-        for spec in INDICATORS:
+        specs_by_id = {spec.id: spec for spec in indicator_specs}
+        editorial_reviews = load_editorial_reviews(specs_by_id, set(candidate_intake_report.get("loadedCandidateIds", [])))
+        for index, spec in enumerate(indicator_specs, start=1):
             try:
+                print(f"[{index}/{len(indicator_specs)}] Fetching {spec.id} ({spec.provider_code})", flush=True)
                 artifact, report, indicator_warnings, indicator_failures = build_indicator(spec, countries, mapped_iso3)
                 indicators[spec.id] = artifact
                 indicator_reports.append(report)
@@ -1774,6 +2423,10 @@ def main() -> int:
         warnings.extend(review_warnings)
         failures.extend(review_failures)
 
+        scorecard_report = build_candidate_scorecards(indicators, indicator_reports, specs_by_id, editorial_reviews, similarities)
+        write_candidate_scorecards(scorecard_report)
+
+        clear_generated_json_outputs()
         for artifact in approved_indicators.values():
             write_json(INDICATOR_OUT / f"{artifact['id']}.json", artifact)
 
@@ -1782,7 +2435,9 @@ def main() -> int:
         failures.extend(round_failures)
         write_json(DATA_OUT / "rounds.json", {"schemaVersion": SCHEMA_VERSION, "contentVersion": CONTENT_VERSION, "rounds": compiled_rounds})
         write_json(DATA_OUT / "approved-indicators.json", approved_indicator_manifest(indicators))
-        write_json(DATA_OUT / "editorial-review.json", editorial_review_registry(indicators))
+        current_editorial_registry = editorial_review_registry(indicators, indicator_reports, specs_by_id, editorial_reviews)
+        write_json(DATA_OUT / "editorial-review.json", current_editorial_registry)
+        write_status_diff_report(previous_editorial_registry, current_editorial_registry)
         daily_index = write_daily_manifests(compiled_rounds)
         write_distractor_review(indicators, similarities, indicator_reports)
         write_distractor_selection_review(selection_reviews, indicators)

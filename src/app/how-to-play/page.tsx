@@ -15,7 +15,7 @@ export default function HowToPlayPage() {
           <h1 className="page-title">Read the pattern before the answer reads you.</h1>
         </div>
         <p className="lead">
-          WORLDPRINT is not about naming capitals. It is about reading a silent map, choosing the right evidence, and spotting the
+          Mystery Map is not about naming capitals. It is about reading a silent map, choosing the right evidence, and spotting the
           hidden world-data signal.
         </p>
       </div>
@@ -77,11 +77,11 @@ export default function HowToPlayPage() {
 
       <div className="how-cta surface">
         <div>
-          <p className="eyebrow">Ready</p>
-          <h2>Five maps. One hidden pattern each.</h2>
+          <p className="eyebrow">Open beta</p>
+          <h2>Five-map Daily now. Three-map practice when you want a taste.</h2>
         </div>
         <Link className="button" href="/play/worldprint">
-          Play today&apos;s Worldprint
+          Play today&apos;s Mystery Map
         </Link>
       </div>
     </section>

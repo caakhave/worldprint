@@ -188,12 +188,12 @@
     "valuesReference": "https://api.worldbank.org/v2/country/all/indicator/SP.DYN.AMRT.FE?format=json&per_page=20000&page=1&date=2015%3A2025",
     "license": "Creative Commons Attribution 4.0 International unless specifically labeled otherwise by World Bank metadata",
     "licenseReference": "https://www.worldbank.org/en/about/legal/terms-of-use-for-datasets",
-    "retrievedAt": "2026-06-19T17:08:57.691081+00:00",
+    "retrievedAt": "2026-06-22T18:05:37.278858+00:00",
     "checksum": "0eb8a16f2428d185f08539411f6d4fdfd1f45aa5014681cff09635a010cd07c4",
     "sourceOrganization": "World Population Prospects, United Nations (UN), publisher: UN Population Division;\nHuman Mortality Database, Max Planck Institute for Demographic Research, uri: www.mortality.org;\nUniversity of California, Berkeley, uri: www.mortality.org, note: Human Mortality Database;\nFrench Institute for Demographic Studies, uri: www.mortality.org, note: Human Mortality Database"
   },
   "reviewStatus": "approved",
-  "contentVersion": "2026.06.19-ed1",
+  "contentVersion": "2026.06.22-exp2-qa1",
   "editorial": {
     "shortHook": "A parallel mortality map where gender differences matter.",
     "patternNote": "The darkest countries include Lesotho, Nigeria, Central African Republic, while the lightest include United Arab Emirates, Korea, Rep., Kuwait; that contrast is the fastest way to read the female adult mortality pattern.",
@@ -222,8 +222,8 @@
         "reason": "Male adult mortality can tempt players because it shares a strong country ranking with this map, but its unit and definition point to a different story."
       },
       {
-        "confusedWithIndicatorCode": "SP.DYN.IMRT.IN",
-        "reason": "Infant mortality can tempt players because it shares a strong country ranking with this map, but its unit and definition point to a different story."
+        "confusedWithIndicatorCode": "SH.STA.MMRT",
+        "reason": "Maternal mortality can tempt players because it shares a strong country ranking with this map, but its unit and definition point to a different story."
       }
     ],
     "difficultyReason": "Expert difficulty: the map can be mistaken for adjacent indicators unless players probe a high, low, and middle country.",
@@ -234,7 +234,7 @@
   },
   "editorialReview": {
     "status": "expert_only",
-    "reviewedAt": "2026-06-19",
+    "reviewedAt": "2026-06-22",
     "reviewedBy": "Codex editorial QA",
     "qualityScore": 3,
     "funScore": 3,

@@ -173,12 +173,12 @@
     "valuesReference": "https://api.worldbank.org/v2/country/all/indicator/IT.CEL.SETS.P2?format=json&per_page=20000&page=1&date=2015%3A2025",
     "license": "Creative Commons Attribution 4.0 International unless specifically labeled otherwise by World Bank metadata",
     "licenseReference": "https://www.worldbank.org/en/about/legal/terms-of-use-for-datasets",
-    "retrievedAt": "2026-06-19T17:09:06.674572+00:00",
+    "retrievedAt": "2026-06-22T18:05:47.286362+00:00",
     "checksum": "8bf23315055d8a36ae213b6a13c940ab6088ae2ecd89308d4c2b62e993829642",
     "sourceOrganization": "World Telecommunication/ICT Indicators Database, International Telecommunication Union (ITU)"
   },
   "reviewStatus": "approved",
-  "contentVersion": "2026.06.19-ed1",
+  "contentVersion": "2026.06.22-exp2-qa1",
   "editorial": {
     "shortHook": "A connectivity map where values can exceed 100.",
     "patternNote": "The darkest countries include Fiji, Montenegro, United Arab Emirates, while the lightest include Papua New Guinea, Mozambique, Congo, Dem. Rep.; that contrast is the fastest way to read the mobile subscriptions pattern.",
@@ -199,16 +199,16 @@
     ],
     "commonConfusions": [
       {
+        "confusedWithIndicatorCode": "EG.USE.PCAP.KG.OE",
+        "reason": "Energy use overlaps with part of the visible pattern, but the full country spread does not match."
+      },
+      {
         "confusedWithIndicatorCode": "EN.GHG.CO2.PC.CE.AR5",
         "reason": "CO2 emissions per capita overlaps with part of the visible pattern, but the full country spread does not match."
       },
       {
-        "confusedWithIndicatorCode": "SP.DYN.IMRT.IN",
-        "reason": "Infant mortality overlaps with part of the visible pattern, but the full country spread does not match."
-      },
-      {
-        "confusedWithIndicatorCode": "SH.DYN.MORT",
-        "reason": "Under-5 mortality overlaps with part of the visible pattern, but the full country spread does not match."
+        "confusedWithIndicatorCode": "SH.DYN.NMRT",
+        "reason": "Neonatal mortality overlaps with part of the visible pattern, but the full country spread does not match."
       }
     ],
     "difficultyReason": "Standard difficulty: the map has readable regional structure, but the best answer still depends on checking the unit and country anchors.",
@@ -220,7 +220,7 @@
   },
   "editorialReview": {
     "status": "daily_eligible",
-    "reviewedAt": "2026-06-19",
+    "reviewedAt": "2026-06-22",
     "reviewedBy": "Codex editorial QA",
     "qualityScore": 4,
     "funScore": 4,

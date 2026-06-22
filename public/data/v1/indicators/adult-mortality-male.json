@@ -188,12 +188,12 @@
     "valuesReference": "https://api.worldbank.org/v2/country/all/indicator/SP.DYN.AMRT.MA?format=json&per_page=20000&page=1&date=2015%3A2025",
     "license": "Creative Commons Attribution 4.0 International unless specifically labeled otherwise by World Bank metadata",
     "licenseReference": "https://www.worldbank.org/en/about/legal/terms-of-use-for-datasets",
-    "retrievedAt": "2026-06-19T17:08:57.213991+00:00",
+    "retrievedAt": "2026-06-22T18:05:36.710353+00:00",
     "checksum": "dcfffc3b3db94fcb45669f51c06616116fcead171e827804a7cf3c40d18f254a",
     "sourceOrganization": "World Population Prospects, United Nations (UN), publisher: UN Population Division;\nHuman Mortality Database, Max Planck Institute for Demographic Research, uri: www.mortality.org;\nUniversity of California, Berkeley, uri: www.mortality.org, note: Human Mortality Database;\nFrench Institute for Demographic Studies, uri: www.mortality.org, note: Human Mortality Database"
   },
   "reviewStatus": "approved",
-  "contentVersion": "2026.06.19-ed1",
+  "contentVersion": "2026.06.22-exp2-qa1",
   "editorial": {
     "shortHook": "A mortality map with conflict, health, and risk-behavior clues.",
     "patternNote": "The darkest countries include Lesotho, Central African Republic, Chad, while the lightest include United Arab Emirates, Qatar, Sweden; that contrast is the fastest way to read the male adult mortality pattern.",
@@ -234,7 +234,7 @@
   },
   "editorialReview": {
     "status": "expert_only",
-    "reviewedAt": "2026-06-19",
+    "reviewedAt": "2026-06-22",
     "reviewedBy": "Codex editorial QA",
     "qualityScore": 3,
     "funScore": 4,

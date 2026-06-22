@@ -193,12 +193,12 @@
     "valuesReference": "https://api.worldbank.org/v2/country/all/indicator/IT.NET.USER.ZS?format=json&per_page=20000&page=1&date=2015%3A2025",
     "license": "Creative Commons Attribution 4.0 International unless specifically labeled otherwise by World Bank metadata",
     "licenseReference": "https://www.worldbank.org/en/about/legal/terms-of-use-for-datasets",
-    "retrievedAt": "2026-06-19T17:09:06.204522+00:00",
+    "retrievedAt": "2026-06-22T18:05:46.670000+00:00",
     "checksum": "5026824fbe6ed293217fb8eec3ee95d7e9d30701b688dd013ac76de93bf1ed1b",
     "sourceOrganization": "World Telecommunication/ICT Indicators Database, International Telecommunication Union (ITU), uri: https://datahub.itu.int/"
   },
   "reviewStatus": "approved",
-  "contentVersion": "2026.06.19-ed1",
+  "contentVersion": "2026.06.22-exp2-qa1",
   "editorial": {
     "shortHook": "The online-population map.",
     "patternNote": "The darkest countries include Saudi Arabia, United Arab Emirates, Denmark, while the lightest include Burundi, Uganda, Chad; that contrast is the fastest way to read the internet users pattern.",
@@ -227,8 +227,8 @@
         "reason": "Basic sanitation access can tempt players because it shares a strong country ranking with this map, but its unit and definition point to a different story."
       },
       {
-        "confusedWithIndicatorCode": "NY.GDP.PCAP.PP.CD",
-        "reason": "GDP per capita, PPP can tempt players because it shares a strong country ranking with this map, but its unit and definition point to a different story."
+        "confusedWithIndicatorCode": "NY.GNP.PCAP.PP.CD",
+        "reason": "GNI per capita, PPP can tempt players because it shares a strong country ranking with this map, but its unit and definition point to a different story."
       }
     ],
     "difficultyReason": "Intro difficulty: the map has broad, recognizable regional anchors and a player-facing unit that is easy to reason about.",
@@ -239,7 +239,7 @@
   },
   "editorialReview": {
     "status": "daily_eligible",
-    "reviewedAt": "2026-06-19",
+    "reviewedAt": "2026-06-22",
     "reviewedBy": "Codex editorial QA",
     "qualityScore": 5,
     "funScore": 4,

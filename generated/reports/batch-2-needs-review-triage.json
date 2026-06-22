@@ -1,0 +1,1645 @@
+{
+  "schemaVersion": "1.0.0",
+  "generatedAt": "2026-06-22T17:52:30.728Z",
+  "contentVersion": "2026.06.22-exp2-qa1",
+  "reviewedSourceValidNeedsReviewCount": 27,
+  "promoted": [
+    {
+      "id": "employment-industry",
+      "to": "practice_eligible",
+      "reason": "Fresh, readable sector-structure map; promote only to Practice."
+    },
+    {
+      "id": "urban-slum-population",
+      "to": "practice_eligible",
+      "reason": "Strong settlement/development map, but sensitive topic needs Practice-first framing."
+    }
+  ],
+  "remainNeedsReview": [
+    {
+      "id": "domestic-credit-private-sector",
+      "reason": "No QA demotion needed in this pass.",
+      "topRisk": "ok vs logistics-infrastructure"
+    },
+    {
+      "id": "forest-rents",
+      "reason": "No QA demotion needed in this pass.",
+      "topRisk": "review vs net-forest-depletion"
+    },
+    {
+      "id": "fossil-electricity-share",
+      "reason": "No QA demotion needed in this pass.",
+      "topRisk": "high vs renewable-electricity"
+    },
+    {
+      "id": "government-consumption",
+      "reason": "No QA demotion needed in this pass.",
+      "topRisk": "ok vs education-spending"
+    },
+    {
+      "id": "government-expense",
+      "reason": "No QA demotion needed in this pass.",
+      "topRisk": "high vs revenue-excluding-grants"
+    },
+    {
+      "id": "gross-capital-formation",
+      "reason": "No QA demotion needed in this pass.",
+      "topRisk": "review vs fixed-capital-formation"
+    },
+    {
+      "id": "household-consumption",
+      "reason": "No QA demotion needed in this pass.",
+      "topRisk": "review vs domestic-savings"
+    },
+    {
+      "id": "logistics-overall",
+      "reason": "No QA demotion needed in this pass.",
+      "topRisk": "high vs logistics-infrastructure"
+    },
+    {
+      "id": "male-labor-force",
+      "reason": "No QA demotion needed in this pass.",
+      "topRisk": "review vs employment-population-ratio"
+    },
+    {
+      "id": "male-unemployment",
+      "reason": "No QA demotion needed in this pass.",
+      "topRisk": "high vs unemployment"
+    },
+    {
+      "id": "natural-resource-depletion",
+      "reason": "No QA demotion needed in this pass.",
+      "topRisk": "high vs natural-resource-rents"
+    },
+    {
+      "id": "net-forest-depletion",
+      "reason": "No QA demotion needed in this pass.",
+      "topRisk": "review vs forest-rents"
+    },
+    {
+      "id": "net-primary-enrollment",
+      "reason": "No QA demotion needed in this pass.",
+      "topRisk": "review vs secondary-enrollment"
+    },
+    {
+      "id": "nuclear-electricity-share",
+      "reason": "No QA demotion needed in this pass.",
+      "topRisk": "ok vs tourism-arrivals"
+    },
+    {
+      "id": "oil-electricity-share",
+      "reason": "No QA demotion needed in this pass.",
+      "topRisk": "ok vs secondary-enrollment"
+    },
+    {
+      "id": "particulate-damage-share",
+      "reason": "No QA demotion needed in this pass.",
+      "topRisk": "high vs gni-per-capita"
+    },
+    {
+      "id": "pm25-guideline-exposure",
+      "reason": "No QA demotion needed in this pass.",
+      "topRisk": "review vs pm25-exposure"
+    },
+    {
+      "id": "preprimary-enrollment",
+      "reason": "No QA demotion needed in this pass.",
+      "topRisk": "ok vs particulate-damage-share"
+    },
+    {
+      "id": "primary-gender-parity",
+      "reason": "No QA demotion needed in this pass.",
+      "topRisk": "ok vs infant-mortality"
+    },
+    {
+      "id": "primary-private-enrollment",
+      "reason": "No QA demotion needed in this pass.",
+      "topRisk": "ok vs hospital-beds"
+    },
+    {
+      "id": "revenue-excluding-grants",
+      "reason": "No QA demotion needed in this pass.",
+      "topRisk": "high vs government-expense"
+    },
+    {
+      "id": "rural-electricity-access",
+      "reason": "No QA demotion needed in this pass.",
+      "topRisk": "high vs electricity-access"
+    },
+    {
+      "id": "statistical-data-infrastructure",
+      "reason": "No QA demotion needed in this pass.",
+      "topRisk": "ok vs undernourishment"
+    },
+    {
+      "id": "tertiary-gender-parity",
+      "reason": "No QA demotion needed in this pass.",
+      "topRisk": "ok vs agriculture-value-added"
+    },
+    {
+      "id": "tourism-expenditures-share",
+      "reason": "No QA demotion needed in this pass.",
+      "topRisk": "ok vs water-stress"
+    }
+  ],
+  "recommendedRetireLater": [
+    "fossil-electricity-share",
+    "male-unemployment",
+    "rural-electricity-access",
+    "logistics-overall"
+  ],
+  "batch3TargetCategories": [
+    "Education: current net/completion/gender-parity candidates are sparse, stale, or visually weak; find broader, fresher education indicators.",
+    "Technology/connectivity: roads and broadband tariff failed; add broad, current digital-infrastructure measures with coverage over 140 countries.",
+    "Migration/tourism: keep looking for rate-based, source-valid maps that are less raw-count driven.",
+    "Governance/development: WGI rank endpoints failed in this pipeline; use supported indicators or alternate source handling before adding governance maps.",
+    "Settlement: urban slum population looks promising, but needs careful framing before Daily."
+  ],
+  "rows": [
+    {
+      "id": "domestic-credit-private-sector",
+      "roundId": null,
+      "providerCode": "FD.AST.PRVT.GD.ZS",
+      "title": "Domestic credit to private sector by banks (% of GDP)",
+      "shortTitle": "Private-sector bank credit",
+      "category": "economy",
+      "palette": "gold",
+      "paletteLabel": "Gold",
+      "batch2Promoted": false,
+      "originalBatch2Status": "needs_review",
+      "currentStatus": "needs_review",
+      "recommendedStatus": "needs_review",
+      "finalDecision": "move to Needs-review",
+      "latestYear": 2024,
+      "coverage": 130,
+      "mapDifficulty": "expert",
+      "scorecardSummary": {
+        "overall": 3.5,
+        "coverage": 3,
+        "freshness": 5,
+        "unitClarity": 4,
+        "mapInterest": 3,
+        "ambiguityCorrelation": 3,
+        "automatedRecommendation": "keep_needs_review"
+      },
+      "qa": {
+        "missingDataRisk": "medium",
+        "unitClarity": "clear",
+        "patternReadability": "weak or subtle",
+        "mapVisualInterest": "limited",
+        "answerChoiceFairness": "ok",
+        "distractorAmbiguity": "medium",
+        "correlationLookalikeRisk": "ok vs logistics-infrastructure",
+        "paletteReadability": "compatible with dark atlas UI",
+        "mobileReadability": "medium",
+        "revealQuality": "needs_tweak",
+        "revealQualityNote": "Generated reveal copy still reads generic and needs human writing before Daily.",
+        "commonConfusionRisk": [
+          {
+            "code": "LP.LPI.INFR.XQ",
+            "reason": "Logistics infrastructure quality overlaps with part of the visible pattern, but the full country spread does not match."
+          },
+          {
+            "code": "SP.DYN.LE00.IN",
+            "reason": "Life expectancy can tempt players because it shares a strong country ranking with this map, but its unit and definition point to a different story."
+          },
+          {
+            "code": "SH.XPD.CHEX.PC.CD",
+            "reason": "Health spending per person overlaps with part of the visible pattern, but the full country spread does not match."
+          }
+        ],
+        "reason": "No QA demotion needed in this pass."
+      }
+    },
+    {
+      "id": "employment-industry",
+      "roundId": "worldprint-employment-industry",
+      "providerCode": "SL.IND.EMPL.ZS",
+      "title": "Employment in industry (% of total employment) (modeled ILO estimate)",
+      "shortTitle": "Employment in industry",
+      "category": "labor",
+      "palette": "steel",
+      "paletteLabel": "Steel",
+      "batch2Promoted": false,
+      "originalBatch2Status": "needs_review",
+      "currentStatus": "practice_eligible",
+      "recommendedStatus": "practice_eligible",
+      "finalDecision": "promote to Practice",
+      "latestYear": 2025,
+      "coverage": 163,
+      "mapDifficulty": "standard",
+      "scorecardSummary": {
+        "overall": 3.95,
+        "coverage": 4,
+        "freshness": 5,
+        "unitClarity": 4,
+        "mapInterest": 4,
+        "ambiguityCorrelation": 3,
+        "automatedRecommendation": "keep_practice_eligible"
+      },
+      "qa": {
+        "missingDataRisk": "low",
+        "unitClarity": "clear",
+        "patternReadability": "readable",
+        "mapVisualInterest": "good",
+        "answerChoiceFairness": "review",
+        "distractorAmbiguity": "medium",
+        "correlationLookalikeRisk": "ok vs clean-fuels-access",
+        "paletteReadability": "compatible with dark atlas UI",
+        "mobileReadability": "low",
+        "revealQuality": "needs_tweak",
+        "revealQualityNote": "Generated reveal copy still reads generic and needs human writing before Daily.",
+        "commonConfusionRisk": [
+          {
+            "code": "EG.CFT.ACCS.ZS",
+            "reason": "Clean cooking fuels access overlaps with part of the visible pattern, but the full country spread does not match."
+          },
+          {
+            "code": "SH.STA.BASS.ZS",
+            "reason": "Basic sanitation access overlaps with part of the visible pattern, but the full country spread does not match."
+          },
+          {
+            "code": "SL.AGR.EMPL.ZS",
+            "reason": "Employment in agriculture lives in the same category, so it can feel plausible until the high and low countries are checked."
+          }
+        ],
+        "reason": "Fresh, readable sector-structure map; promote only to Practice."
+      }
+    },
+    {
+      "id": "forest-rents",
+      "roundId": null,
+      "providerCode": "NY.GDP.FRST.RT.ZS",
+      "title": "Forest rents (% of GDP)",
+      "shortTitle": "Forest rents",
+      "category": "economy",
+      "palette": "gold",
+      "paletteLabel": "Gold",
+      "batch2Promoted": false,
+      "originalBatch2Status": "needs_review",
+      "currentStatus": "needs_review",
+      "recommendedStatus": "needs_review",
+      "finalDecision": "move to Needs-review",
+      "latestYear": 2021,
+      "coverage": 159,
+      "mapDifficulty": "expert",
+      "scorecardSummary": {
+        "overall": 3.65,
+        "coverage": 4,
+        "freshness": 3,
+        "unitClarity": 4,
+        "mapInterest": 4,
+        "ambiguityCorrelation": 3,
+        "automatedRecommendation": "keep_needs_review"
+      },
+      "qa": {
+        "missingDataRisk": "low",
+        "unitClarity": "clear",
+        "patternReadability": "readable",
+        "mapVisualInterest": "good",
+        "answerChoiceFairness": "ok",
+        "distractorAmbiguity": "medium",
+        "correlationLookalikeRisk": "review vs net-forest-depletion",
+        "paletteReadability": "compatible with dark atlas UI",
+        "mobileReadability": "low",
+        "revealQuality": "needs_tweak",
+        "revealQualityNote": "Generated reveal copy still reads generic and needs human writing before Daily.",
+        "commonConfusionRisk": [
+          {
+            "code": "NY.ADJ.DFOR.GN.ZS",
+            "reason": "Net forest depletion overlaps with part of the visible pattern, but the full country spread does not match."
+          },
+          {
+            "code": "EG.ELC.ACCS.RU.ZS",
+            "reason": "Rural electricity access can tempt players because it shares a strong country ranking with this map, but its unit and definition point to a different story."
+          },
+          {
+            "code": "EG.ELC.ACCS.ZS",
+            "reason": "Electricity access can tempt players because it shares a strong country ranking with this map, but its unit and definition point to a different story."
+          }
+        ],
+        "reason": "No QA demotion needed in this pass."
+      }
+    },
+    {
+      "id": "fossil-electricity-share",
+      "roundId": null,
+      "providerCode": "EG.ELC.FOSL.ZS",
+      "title": "Electricity production from oil, gas and coal sources (% of total)",
+      "shortTitle": "Fossil electricity share",
+      "category": "energy",
+      "palette": "orange",
+      "paletteLabel": "Orange",
+      "batch2Promoted": false,
+      "originalBatch2Status": "needs_review",
+      "currentStatus": "needs_review",
+      "recommendedStatus": "needs_review",
+      "finalDecision": "move to Needs-review",
+      "latestYear": 2022,
+      "coverage": 141,
+      "mapDifficulty": "standard",
+      "scorecardSummary": {
+        "overall": 3.35,
+        "coverage": 3,
+        "freshness": 4,
+        "unitClarity": 4,
+        "mapInterest": 3,
+        "ambiguityCorrelation": 3,
+        "automatedRecommendation": "keep_needs_review"
+      },
+      "qa": {
+        "missingDataRisk": "medium",
+        "unitClarity": "clear",
+        "patternReadability": "weak or subtle",
+        "mapVisualInterest": "limited",
+        "answerChoiceFairness": "ok",
+        "distractorAmbiguity": "medium",
+        "correlationLookalikeRisk": "high vs renewable-electricity",
+        "paletteReadability": "compatible with dark atlas UI",
+        "mobileReadability": "medium",
+        "revealQuality": "needs_tweak",
+        "revealQualityNote": "Generated reveal copy still reads generic and needs human writing before Daily.",
+        "commonConfusionRisk": [
+          {
+            "code": "EG.ELC.RNEW.ZS",
+            "reason": "Renewable electricity can tempt players because it shares a strong country ranking with this map, but its unit and definition point to a different story."
+          },
+          {
+            "code": "EG.ELC.HYRO.ZS",
+            "reason": "Hydroelectricity share can tempt players because it shares a strong country ranking with this map, but its unit and definition point to a different story."
+          },
+          {
+            "code": "EG.ELC.NGAS.ZS",
+            "reason": "Natural gas electricity share lives in the same category, so it can feel plausible until the high and low countries are checked."
+          }
+        ],
+        "reason": "No QA demotion needed in this pass."
+      }
+    },
+    {
+      "id": "government-consumption",
+      "roundId": null,
+      "providerCode": "NE.CON.GOVT.ZS",
+      "title": "General government final consumption expenditure (% of GDP)",
+      "shortTitle": "Government consumption",
+      "category": "economy",
+      "palette": "gold",
+      "paletteLabel": "Gold",
+      "batch2Promoted": false,
+      "originalBatch2Status": "needs_review",
+      "currentStatus": "needs_review",
+      "recommendedStatus": "needs_review",
+      "finalDecision": "move to Needs-review",
+      "latestYear": 2023,
+      "coverage": 145,
+      "mapDifficulty": "expert",
+      "scorecardSummary": {
+        "overall": 3.35,
+        "coverage": 3,
+        "freshness": 4,
+        "unitClarity": 4,
+        "mapInterest": 3,
+        "ambiguityCorrelation": 3,
+        "automatedRecommendation": "keep_needs_review"
+      },
+      "qa": {
+        "missingDataRisk": "low",
+        "unitClarity": "clear",
+        "patternReadability": "weak or subtle",
+        "mapVisualInterest": "limited",
+        "answerChoiceFairness": "ok",
+        "distractorAmbiguity": "medium",
+        "correlationLookalikeRisk": "ok vs education-spending",
+        "paletteReadability": "compatible with dark atlas UI",
+        "mobileReadability": "medium",
+        "revealQuality": "needs_tweak",
+        "revealQualityNote": "Generated reveal copy still reads generic and needs human writing before Daily.",
+        "commonConfusionRisk": [
+          {
+            "code": "SE.XPD.TOTL.GD.ZS",
+            "reason": "Education spending can tempt players because it shares a strong country ranking with this map, but its unit and definition point to a different story."
+          },
+          {
+            "code": "GC.XPN.TOTL.GD.ZS",
+            "reason": "Government expense can tempt players because it shares a strong country ranking with this map, but its unit and definition point to a different story."
+          },
+          {
+            "code": "GC.REV.XGRT.GD.ZS",
+            "reason": "Government revenue excluding grants lives in the same category, so it can feel plausible until the high and low countries are checked."
+          }
+        ],
+        "reason": "No QA demotion needed in this pass."
+      }
+    },
+    {
+      "id": "government-expense",
+      "roundId": null,
+      "providerCode": "GC.XPN.TOTL.GD.ZS",
+      "title": "Expense (% of GDP)",
+      "shortTitle": "Government expense",
+      "category": "economy",
+      "palette": "gold",
+      "paletteLabel": "Gold",
+      "batch2Promoted": false,
+      "originalBatch2Status": "needs_review",
+      "currentStatus": "needs_review",
+      "recommendedStatus": "needs_review",
+      "finalDecision": "move to Needs-review",
+      "latestYear": 2020,
+      "coverage": 120,
+      "mapDifficulty": "expert",
+      "scorecardSummary": {
+        "overall": 3.2,
+        "coverage": 3,
+        "freshness": 3,
+        "unitClarity": 4,
+        "mapInterest": 3,
+        "ambiguityCorrelation": 3,
+        "automatedRecommendation": "keep_needs_review"
+      },
+      "qa": {
+        "missingDataRisk": "high",
+        "unitClarity": "clear",
+        "patternReadability": "weak or subtle",
+        "mapVisualInterest": "limited",
+        "answerChoiceFairness": "ok",
+        "distractorAmbiguity": "medium",
+        "correlationLookalikeRisk": "high vs revenue-excluding-grants",
+        "paletteReadability": "compatible with dark atlas UI",
+        "mobileReadability": "medium",
+        "revealQuality": "needs_tweak",
+        "revealQualityNote": "Generated reveal copy still reads generic and needs human writing before Daily.",
+        "commonConfusionRisk": [
+          {
+            "code": "GC.REV.XGRT.GD.ZS",
+            "reason": "Government revenue excluding grants can tempt players because it shares a strong country ranking with this map, but its unit and definition point to a different story."
+          },
+          {
+            "code": "GC.TAX.TOTL.GD.ZS",
+            "reason": "Tax revenue can tempt players because it shares a strong country ranking with this map, but its unit and definition point to a different story."
+          },
+          {
+            "code": "SP.POP.65UP.TO.ZS",
+            "reason": "Population ages 65+ can tempt players because it shares a strong country ranking with this map, but its unit and definition point to a different story."
+          }
+        ],
+        "reason": "No QA demotion needed in this pass."
+      }
+    },
+    {
+      "id": "gross-capital-formation",
+      "roundId": null,
+      "providerCode": "NE.GDI.TOTL.ZS",
+      "title": "Gross capital formation (% of GDP)",
+      "shortTitle": "Gross capital formation",
+      "category": "economy",
+      "palette": "gold",
+      "paletteLabel": "Gold",
+      "batch2Promoted": false,
+      "originalBatch2Status": "needs_review",
+      "currentStatus": "needs_review",
+      "recommendedStatus": "needs_review",
+      "finalDecision": "move to Needs-review",
+      "latestYear": 2024,
+      "coverage": 139,
+      "mapDifficulty": "standard",
+      "scorecardSummary": {
+        "overall": 3.5,
+        "coverage": 3,
+        "freshness": 5,
+        "unitClarity": 4,
+        "mapInterest": 3,
+        "ambiguityCorrelation": 3,
+        "automatedRecommendation": "keep_needs_review"
+      },
+      "qa": {
+        "missingDataRisk": "medium",
+        "unitClarity": "clear",
+        "patternReadability": "weak or subtle",
+        "mapVisualInterest": "limited",
+        "answerChoiceFairness": "ok",
+        "distractorAmbiguity": "medium",
+        "correlationLookalikeRisk": "review vs fixed-capital-formation",
+        "paletteReadability": "compatible with dark atlas UI",
+        "mobileReadability": "medium",
+        "revealQuality": "needs_tweak",
+        "revealQualityNote": "Generated reveal copy still reads generic and needs human writing before Daily.",
+        "commonConfusionRisk": [
+          {
+            "code": "NE.GDI.FTOT.ZS",
+            "reason": "Fixed capital formation can tempt players because it shares a strong country ranking with this map, but its unit and definition point to a different story."
+          },
+          {
+            "code": "NY.GNS.ICTR.ZS",
+            "reason": "Gross savings can tempt players because it shares a strong country ranking with this map, but its unit and definition point to a different story."
+          },
+          {
+            "code": "NY.GDS.TOTL.ZS",
+            "reason": "Domestic savings lives in the same category, so it can feel plausible until the high and low countries are checked."
+          }
+        ],
+        "reason": "No QA demotion needed in this pass."
+      }
+    },
+    {
+      "id": "household-consumption",
+      "roundId": null,
+      "providerCode": "NE.CON.PRVT.ZS",
+      "title": "Households and NPISHs final consumption expenditure (% of GDP)",
+      "shortTitle": "Household consumption",
+      "category": "economy",
+      "palette": "gold",
+      "paletteLabel": "Gold",
+      "batch2Promoted": false,
+      "originalBatch2Status": "needs_review",
+      "currentStatus": "needs_review",
+      "recommendedStatus": "needs_review",
+      "finalDecision": "move to Needs-review",
+      "latestYear": 2023,
+      "coverage": 144,
+      "mapDifficulty": "standard",
+      "scorecardSummary": {
+        "overall": 3.35,
+        "coverage": 3,
+        "freshness": 4,
+        "unitClarity": 4,
+        "mapInterest": 3,
+        "ambiguityCorrelation": 3,
+        "automatedRecommendation": "keep_needs_review"
+      },
+      "qa": {
+        "missingDataRisk": "medium",
+        "unitClarity": "clear",
+        "patternReadability": "weak or subtle",
+        "mapVisualInterest": "limited",
+        "answerChoiceFairness": "ok",
+        "distractorAmbiguity": "medium",
+        "correlationLookalikeRisk": "review vs domestic-savings",
+        "paletteReadability": "compatible with dark atlas UI",
+        "mobileReadability": "medium",
+        "revealQuality": "needs_tweak",
+        "revealQualityNote": "Generated reveal copy still reads generic and needs human writing before Daily.",
+        "commonConfusionRisk": [
+          {
+            "code": "NY.GDS.TOTL.ZS",
+            "reason": "Domestic savings can tempt players because it shares a strong country ranking with this map, but its unit and definition point to a different story."
+          },
+          {
+            "code": "EN.GHG.ALL.PC.CE.AR5",
+            "reason": "Greenhouse gas emissions per capita can tempt players because it shares a strong country ranking with this map, but its unit and definition point to a different story."
+          },
+          {
+            "code": "EG.USE.PCAP.KG.OE",
+            "reason": "Energy use can tempt players because it shares a strong country ranking with this map, but its unit and definition point to a different story."
+          }
+        ],
+        "reason": "No QA demotion needed in this pass."
+      }
+    },
+    {
+      "id": "logistics-overall",
+      "roundId": null,
+      "providerCode": "LP.LPI.OVRL.XQ",
+      "title": "Logistics performance index: Overall (1=low to 5=high)",
+      "shortTitle": "Logistics performance",
+      "category": "connectivity",
+      "palette": "electric",
+      "paletteLabel": "Electric blue",
+      "batch2Promoted": false,
+      "originalBatch2Status": "needs_review",
+      "currentStatus": "needs_review",
+      "recommendedStatus": "needs_review",
+      "finalDecision": "move to Needs-review",
+      "latestYear": 2022,
+      "coverage": 131,
+      "mapDifficulty": "expert",
+      "scorecardSummary": {
+        "overall": 2.7,
+        "coverage": 3,
+        "freshness": 4,
+        "unitClarity": 3,
+        "mapInterest": 2,
+        "ambiguityCorrelation": 2,
+        "automatedRecommendation": "keep_needs_review"
+      },
+      "qa": {
+        "missingDataRisk": "medium",
+        "unitClarity": "needs wording review",
+        "patternReadability": "weak or subtle",
+        "mapVisualInterest": "limited",
+        "answerChoiceFairness": "ok",
+        "distractorAmbiguity": "medium",
+        "correlationLookalikeRisk": "high vs logistics-infrastructure",
+        "paletteReadability": "compatible with dark atlas UI",
+        "mobileReadability": "high",
+        "revealQuality": "needs_tweak",
+        "revealQualityNote": "Generated reveal copy still reads generic and needs human writing before Daily.",
+        "commonConfusionRisk": [
+          {
+            "code": "LP.LPI.INFR.XQ",
+            "reason": "Logistics infrastructure quality can tempt players because it shares a strong country ranking with this map, but its unit and definition point to a different story."
+          },
+          {
+            "code": "SH.XPD.CHEX.PC.CD",
+            "reason": "Health spending per person can tempt players because it shares a strong country ranking with this map, but its unit and definition point to a different story."
+          },
+          {
+            "code": "NY.GNP.PCAP.PP.CD",
+            "reason": "GNI per capita, PPP can tempt players because it shares a strong country ranking with this map, but its unit and definition point to a different story."
+          }
+        ],
+        "reason": "No QA demotion needed in this pass."
+      }
+    },
+    {
+      "id": "male-labor-force",
+      "roundId": null,
+      "providerCode": "SL.TLF.CACT.MA.ZS",
+      "title": "Labor force participation rate, male (% of male population ages 15+) (modeled ILO estimate)",
+      "shortTitle": "Male labor force participation",
+      "category": "labor",
+      "palette": "steel",
+      "paletteLabel": "Steel",
+      "batch2Promoted": false,
+      "originalBatch2Status": "needs_review",
+      "currentStatus": "needs_review",
+      "recommendedStatus": "needs_review",
+      "finalDecision": "move to Needs-review",
+      "latestYear": 2025,
+      "coverage": 163,
+      "mapDifficulty": "standard",
+      "scorecardSummary": {
+        "overall": 3.7,
+        "coverage": 4,
+        "freshness": 5,
+        "unitClarity": 4,
+        "mapInterest": 3,
+        "ambiguityCorrelation": 3,
+        "automatedRecommendation": "keep_needs_review"
+      },
+      "qa": {
+        "missingDataRisk": "low",
+        "unitClarity": "clear",
+        "patternReadability": "weak or subtle",
+        "mapVisualInterest": "limited",
+        "answerChoiceFairness": "ok",
+        "distractorAmbiguity": "medium",
+        "correlationLookalikeRisk": "review vs employment-population-ratio",
+        "paletteReadability": "compatible with dark atlas UI",
+        "mobileReadability": "medium",
+        "revealQuality": "needs_tweak",
+        "revealQualityNote": "Generated reveal copy still reads generic and needs human writing before Daily.",
+        "commonConfusionRisk": [
+          {
+            "code": "SL.EMP.TOTL.SP.ZS",
+            "reason": "Employment-to-population ratio can tempt players because it shares a strong country ranking with this map, but its unit and definition point to a different story."
+          },
+          {
+            "code": "SL.TLF.CACT.ZS",
+            "reason": "Labor force participation can tempt players because it shares a strong country ranking with this map, but its unit and definition point to a different story."
+          },
+          {
+            "code": "SL.TLF.ACTI.1524.ZS",
+            "reason": "Youth labor force participation lives in the same category, so it can feel plausible until the high and low countries are checked."
+          }
+        ],
+        "reason": "No QA demotion needed in this pass."
+      }
+    },
+    {
+      "id": "male-unemployment",
+      "roundId": null,
+      "providerCode": "SL.UEM.TOTL.MA.ZS",
+      "title": "Unemployment, male (% of male labor force) (modeled ILO estimate)",
+      "shortTitle": "Male unemployment",
+      "category": "labor",
+      "palette": "steel",
+      "paletteLabel": "Steel",
+      "batch2Promoted": false,
+      "originalBatch2Status": "needs_review",
+      "currentStatus": "needs_review",
+      "recommendedStatus": "needs_review",
+      "finalDecision": "move to Needs-review",
+      "latestYear": 2025,
+      "coverage": 163,
+      "mapDifficulty": "standard",
+      "scorecardSummary": {
+        "overall": 3.75,
+        "coverage": 4,
+        "freshness": 5,
+        "unitClarity": 4,
+        "mapInterest": 4,
+        "ambiguityCorrelation": 2,
+        "automatedRecommendation": "keep_needs_review"
+      },
+      "qa": {
+        "missingDataRisk": "low",
+        "unitClarity": "clear",
+        "patternReadability": "readable",
+        "mapVisualInterest": "good",
+        "answerChoiceFairness": "ok",
+        "distractorAmbiguity": "medium",
+        "correlationLookalikeRisk": "high vs unemployment",
+        "paletteReadability": "compatible with dark atlas UI",
+        "mobileReadability": "low",
+        "revealQuality": "needs_tweak",
+        "revealQualityNote": "Generated reveal copy still reads generic and needs human writing before Daily.",
+        "commonConfusionRisk": [
+          {
+            "code": "SL.UEM.TOTL.ZS",
+            "reason": "Unemployment can tempt players because it shares a strong country ranking with this map, but its unit and definition point to a different story."
+          },
+          {
+            "code": "SL.UEM.1524.ZS",
+            "reason": "Youth unemployment can tempt players because it shares a strong country ranking with this map, but its unit and definition point to a different story."
+          },
+          {
+            "code": "SL.UEM.TOTL.FE.ZS",
+            "reason": "Female unemployment can tempt players because it shares a strong country ranking with this map, but its unit and definition point to a different story."
+          }
+        ],
+        "reason": "No QA demotion needed in this pass."
+      }
+    },
+    {
+      "id": "natural-resource-depletion",
+      "roundId": null,
+      "providerCode": "NY.ADJ.DRES.GN.ZS",
+      "title": "Adjusted savings: natural resources depletion (% of GNI)",
+      "shortTitle": "Natural resource depletion",
+      "category": "environment",
+      "palette": "aqua",
+      "paletteLabel": "Aqua",
+      "batch2Promoted": false,
+      "originalBatch2Status": "needs_review",
+      "currentStatus": "needs_review",
+      "recommendedStatus": "needs_review",
+      "finalDecision": "move to Needs-review",
+      "latestYear": 2021,
+      "coverage": 152,
+      "mapDifficulty": "expert",
+      "scorecardSummary": {
+        "overall": 3.65,
+        "coverage": 4,
+        "freshness": 3,
+        "unitClarity": 4,
+        "mapInterest": 4,
+        "ambiguityCorrelation": 3,
+        "automatedRecommendation": "keep_needs_review"
+      },
+      "qa": {
+        "missingDataRisk": "low",
+        "unitClarity": "clear",
+        "patternReadability": "readable",
+        "mapVisualInterest": "good",
+        "answerChoiceFairness": "ok",
+        "distractorAmbiguity": "medium",
+        "correlationLookalikeRisk": "high vs natural-resource-rents",
+        "paletteReadability": "compatible with dark atlas UI",
+        "mobileReadability": "low",
+        "revealQuality": "needs_tweak",
+        "revealQualityNote": "Generated reveal copy still reads generic and needs human writing before Daily.",
+        "commonConfusionRisk": [
+          {
+            "code": "NY.GDP.TOTL.RT.ZS",
+            "reason": "Natural resource rents can tempt players because it shares a strong country ranking with this map, but its unit and definition point to a different story."
+          },
+          {
+            "code": "NV.SRV.TOTL.ZS",
+            "reason": "Services value added overlaps with part of the visible pattern, but the full country spread does not match."
+          },
+          {
+            "code": "SP.POP.65UP.TO.ZS",
+            "reason": "Population ages 65+ overlaps with part of the visible pattern, but the full country spread does not match."
+          }
+        ],
+        "reason": "No QA demotion needed in this pass."
+      }
+    },
+    {
+      "id": "net-forest-depletion",
+      "roundId": null,
+      "providerCode": "NY.ADJ.DFOR.GN.ZS",
+      "title": "Adjusted savings: net forest depletion (% of GNI)",
+      "shortTitle": "Net forest depletion",
+      "category": "environment",
+      "palette": "aqua",
+      "paletteLabel": "Aqua",
+      "batch2Promoted": false,
+      "originalBatch2Status": "needs_review",
+      "currentStatus": "needs_review",
+      "recommendedStatus": "needs_review",
+      "finalDecision": "move to Needs-review",
+      "latestYear": 2021,
+      "coverage": 152,
+      "mapDifficulty": "expert",
+      "scorecardSummary": {
+        "overall": 3.65,
+        "coverage": 4,
+        "freshness": 3,
+        "unitClarity": 4,
+        "mapInterest": 4,
+        "ambiguityCorrelation": 3,
+        "automatedRecommendation": "keep_needs_review"
+      },
+      "qa": {
+        "missingDataRisk": "low",
+        "unitClarity": "clear",
+        "patternReadability": "readable",
+        "mapVisualInterest": "good",
+        "answerChoiceFairness": "ok",
+        "distractorAmbiguity": "medium",
+        "correlationLookalikeRisk": "review vs forest-rents",
+        "paletteReadability": "compatible with dark atlas UI",
+        "mobileReadability": "low",
+        "revealQuality": "needs_tweak",
+        "revealQualityNote": "Generated reveal copy still reads generic and needs human writing before Daily.",
+        "commonConfusionRisk": [
+          {
+            "code": "NY.GDP.FRST.RT.ZS",
+            "reason": "Forest rents overlaps with part of the visible pattern, but the full country spread does not match."
+          },
+          {
+            "code": "EG.ELC.ACCS.ZS",
+            "reason": "Electricity access overlaps with part of the visible pattern, but the full country spread does not match."
+          },
+          {
+            "code": "EG.ELC.ACCS.RU.ZS",
+            "reason": "Rural electricity access overlaps with part of the visible pattern, but the full country spread does not match."
+          }
+        ],
+        "reason": "No QA demotion needed in this pass."
+      }
+    },
+    {
+      "id": "net-primary-enrollment",
+      "roundId": null,
+      "providerCode": "SE.PRM.NENR",
+      "title": "School enrollment, primary (% net)",
+      "shortTitle": "Net primary enrollment",
+      "category": "education",
+      "palette": "violet",
+      "paletteLabel": "Violet",
+      "batch2Promoted": false,
+      "originalBatch2Status": "needs_review",
+      "currentStatus": "needs_review",
+      "recommendedStatus": "needs_review",
+      "finalDecision": "move to Needs-review",
+      "latestYear": 2017,
+      "coverage": 120,
+      "mapDifficulty": "standard",
+      "scorecardSummary": {
+        "overall": 2.65,
+        "coverage": 3,
+        "freshness": 1,
+        "unitClarity": 4,
+        "mapInterest": 2,
+        "ambiguityCorrelation": 3,
+        "automatedRecommendation": "keep_needs_review"
+      },
+      "qa": {
+        "missingDataRisk": "high",
+        "unitClarity": "clear",
+        "patternReadability": "weak or subtle",
+        "mapVisualInterest": "limited",
+        "answerChoiceFairness": "ok",
+        "distractorAmbiguity": "medium",
+        "correlationLookalikeRisk": "review vs secondary-enrollment",
+        "paletteReadability": "compatible with dark atlas UI",
+        "mobileReadability": "medium",
+        "revealQuality": "needs_tweak",
+        "revealQualityNote": "Generated reveal copy still reads generic and needs human writing before Daily.",
+        "commonConfusionRisk": [
+          {
+            "code": "SE.SEC.ENRR",
+            "reason": "Secondary enrollment lives in the same category, so it can feel plausible until the high and low countries are checked."
+          },
+          {
+            "code": "SP.DYN.IMRT.IN",
+            "reason": "Infant mortality overlaps with part of the visible pattern, but the full country spread does not match."
+          },
+          {
+            "code": "SH.DYN.MORT",
+            "reason": "Under-5 mortality overlaps with part of the visible pattern, but the full country spread does not match."
+          }
+        ],
+        "reason": "No QA demotion needed in this pass."
+      }
+    },
+    {
+      "id": "nuclear-electricity-share",
+      "roundId": null,
+      "providerCode": "EG.ELC.NUCL.ZS",
+      "title": "Electricity production from nuclear sources (% of total)",
+      "shortTitle": "Nuclear electricity share",
+      "category": "energy",
+      "palette": "orange",
+      "paletteLabel": "Orange",
+      "batch2Promoted": false,
+      "originalBatch2Status": "needs_review",
+      "currentStatus": "needs_review",
+      "recommendedStatus": "needs_review",
+      "finalDecision": "move to Needs-review",
+      "latestYear": 2021,
+      "coverage": 169,
+      "mapDifficulty": "expert",
+      "scorecardSummary": {
+        "overall": 3.15,
+        "coverage": 4,
+        "freshness": 3,
+        "unitClarity": 4,
+        "mapInterest": 2,
+        "ambiguityCorrelation": 3,
+        "automatedRecommendation": "keep_needs_review"
+      },
+      "qa": {
+        "missingDataRisk": "low",
+        "unitClarity": "clear",
+        "patternReadability": "weak or subtle",
+        "mapVisualInterest": "limited",
+        "answerChoiceFairness": "ok",
+        "distractorAmbiguity": "medium",
+        "correlationLookalikeRisk": "ok vs tourism-arrivals",
+        "paletteReadability": "compatible with dark atlas UI",
+        "mobileReadability": "high",
+        "revealQuality": "needs_tweak",
+        "revealQualityNote": "Generated reveal copy still reads generic and needs human writing before Daily.",
+        "commonConfusionRisk": [
+          {
+            "code": "ST.INT.ARVL",
+            "reason": "Tourism arrivals overlaps with part of the visible pattern, but the full country spread does not match."
+          },
+          {
+            "code": "IT.NET.SECR.P6",
+            "reason": "Secure internet servers overlaps with part of the visible pattern, but the full country spread does not match."
+          },
+          {
+            "code": "SP.POP.65UP.TO.ZS",
+            "reason": "Population ages 65+ overlaps with part of the visible pattern, but the full country spread does not match."
+          }
+        ],
+        "reason": "No QA demotion needed in this pass."
+      }
+    },
+    {
+      "id": "oil-electricity-share",
+      "roundId": null,
+      "providerCode": "EG.ELC.PETR.ZS",
+      "title": "Electricity production from oil sources (% of total)",
+      "shortTitle": "Oil electricity share",
+      "category": "energy",
+      "palette": "orange",
+      "paletteLabel": "Orange",
+      "batch2Promoted": false,
+      "originalBatch2Status": "needs_review",
+      "currentStatus": "needs_review",
+      "recommendedStatus": "needs_review",
+      "finalDecision": "move to Needs-review",
+      "latestYear": 2023,
+      "coverage": 129,
+      "mapDifficulty": "expert",
+      "scorecardSummary": {
+        "overall": 3.35,
+        "coverage": 3,
+        "freshness": 4,
+        "unitClarity": 4,
+        "mapInterest": 3,
+        "ambiguityCorrelation": 3,
+        "automatedRecommendation": "keep_needs_review"
+      },
+      "qa": {
+        "missingDataRisk": "medium",
+        "unitClarity": "clear",
+        "patternReadability": "weak or subtle",
+        "mapVisualInterest": "limited",
+        "answerChoiceFairness": "ok",
+        "distractorAmbiguity": "medium",
+        "correlationLookalikeRisk": "ok vs secondary-enrollment",
+        "paletteReadability": "compatible with dark atlas UI",
+        "mobileReadability": "medium",
+        "revealQuality": "needs_tweak",
+        "revealQualityNote": "Generated reveal copy still reads generic and needs human writing before Daily.",
+        "commonConfusionRisk": [
+          {
+            "code": "SE.SEC.ENRR",
+            "reason": "Secondary enrollment overlaps with part of the visible pattern, but the full country spread does not match."
+          },
+          {
+            "code": "SH.STA.ODFC.ZS",
+            "reason": "Open defecation overlaps with part of the visible pattern, but the full country spread does not match."
+          },
+          {
+            "code": "NY.ADJ.DPEM.GN.ZS",
+            "reason": "Particulate emission damage overlaps with part of the visible pattern, but the full country spread does not match."
+          }
+        ],
+        "reason": "No QA demotion needed in this pass."
+      }
+    },
+    {
+      "id": "particulate-damage-share",
+      "roundId": null,
+      "providerCode": "NY.ADJ.DPEM.GN.ZS",
+      "title": "Adjusted savings: particulate emission damage (% of GNI)",
+      "shortTitle": "Particulate emission damage",
+      "category": "environment",
+      "palette": "aqua",
+      "paletteLabel": "Aqua",
+      "batch2Promoted": false,
+      "originalBatch2Status": "needs_review",
+      "currentStatus": "needs_review",
+      "recommendedStatus": "needs_review",
+      "finalDecision": "move to Needs-review",
+      "latestYear": 2021,
+      "coverage": 149,
+      "mapDifficulty": "expert",
+      "scorecardSummary": {
+        "overall": 3.2,
+        "coverage": 3,
+        "freshness": 3,
+        "unitClarity": 4,
+        "mapInterest": 3,
+        "ambiguityCorrelation": 3,
+        "automatedRecommendation": "keep_needs_review"
+      },
+      "qa": {
+        "missingDataRisk": "low",
+        "unitClarity": "clear",
+        "patternReadability": "weak or subtle",
+        "mapVisualInterest": "limited",
+        "answerChoiceFairness": "ok",
+        "distractorAmbiguity": "medium",
+        "correlationLookalikeRisk": "high vs gni-per-capita",
+        "paletteReadability": "compatible with dark atlas UI",
+        "mobileReadability": "medium",
+        "revealQuality": "needs_tweak",
+        "revealQualityNote": "Generated reveal copy still reads generic and needs human writing before Daily.",
+        "commonConfusionRisk": [
+          {
+            "code": "NY.GNP.PCAP.CD",
+            "reason": "GNI per capita can tempt players because it shares a strong country ranking with this map, but its unit and definition point to a different story."
+          },
+          {
+            "code": "NY.GDP.PCAP.CD",
+            "reason": "GDP per capita can tempt players because it shares a strong country ranking with this map, but its unit and definition point to a different story."
+          },
+          {
+            "code": "SH.XPD.CHEX.PC.CD",
+            "reason": "Health spending per person can tempt players because it shares a strong country ranking with this map, but its unit and definition point to a different story."
+          }
+        ],
+        "reason": "No QA demotion needed in this pass."
+      }
+    },
+    {
+      "id": "pm25-guideline-exposure",
+      "roundId": null,
+      "providerCode": "EN.ATM.PM25.MC.ZS",
+      "title": "PM2.5 air pollution, population exposed to levels exceeding WHO guideline value (% of total)",
+      "shortTitle": "Population above PM2.5 guideline",
+      "category": "environment",
+      "palette": "aqua",
+      "paletteLabel": "Aqua",
+      "batch2Promoted": false,
+      "originalBatch2Status": "needs_review",
+      "currentStatus": "needs_review",
+      "recommendedStatus": "needs_review",
+      "finalDecision": "move to Needs-review",
+      "latestYear": 2017,
+      "coverage": 168,
+      "mapDifficulty": "expert",
+      "scorecardSummary": {
+        "overall": 3.35,
+        "coverage": 4,
+        "freshness": 1,
+        "unitClarity": 4,
+        "mapInterest": 4,
+        "ambiguityCorrelation": 3,
+        "automatedRecommendation": "keep_needs_review"
+      },
+      "qa": {
+        "missingDataRisk": "medium",
+        "unitClarity": "clear",
+        "patternReadability": "readable",
+        "mapVisualInterest": "good",
+        "answerChoiceFairness": "ok",
+        "distractorAmbiguity": "medium",
+        "correlationLookalikeRisk": "review vs pm25-exposure",
+        "paletteReadability": "compatible with dark atlas UI",
+        "mobileReadability": "low",
+        "revealQuality": "needs_tweak",
+        "revealQualityNote": "Generated reveal copy still reads generic and needs human writing before Daily.",
+        "commonConfusionRisk": [
+          {
+            "code": "EN.ATM.PM25.MC.M3",
+            "reason": "PM2.5 exposure can tempt players because it shares a strong country ranking with this map, but its unit and definition point to a different story."
+          },
+          {
+            "code": "NY.ADJ.DPEM.GN.ZS",
+            "reason": "Particulate emission damage can tempt players because it shares a strong country ranking with this map, but its unit and definition point to a different story."
+          },
+          {
+            "code": "SH.XPD.CHEX.PC.CD",
+            "reason": "Health spending per person can tempt players because it shares a strong country ranking with this map, but its unit and definition point to a different story."
+          }
+        ],
+        "reason": "No QA demotion needed in this pass."
+      }
+    },
+    {
+      "id": "preprimary-enrollment",
+      "roundId": null,
+      "providerCode": "SE.PRE.ENRR",
+      "title": "School enrollment, preprimary (% gross)",
+      "shortTitle": "Preprimary enrollment",
+      "category": "education",
+      "palette": "violet",
+      "paletteLabel": "Violet",
+      "batch2Promoted": false,
+      "originalBatch2Status": "needs_review",
+      "currentStatus": "needs_review",
+      "recommendedStatus": "needs_review",
+      "finalDecision": "move to Needs-review",
+      "latestYear": 2019,
+      "coverage": 123,
+      "mapDifficulty": "standard",
+      "scorecardSummary": {
+        "overall": 3.05,
+        "coverage": 3,
+        "freshness": 2,
+        "unitClarity": 4,
+        "mapInterest": 3,
+        "ambiguityCorrelation": 3,
+        "automatedRecommendation": "keep_needs_review"
+      },
+      "qa": {
+        "missingDataRisk": "high",
+        "unitClarity": "clear",
+        "patternReadability": "weak or subtle",
+        "mapVisualInterest": "limited",
+        "answerChoiceFairness": "ok",
+        "distractorAmbiguity": "medium",
+        "correlationLookalikeRisk": "ok vs particulate-damage-share",
+        "paletteReadability": "compatible with dark atlas UI",
+        "mobileReadability": "medium",
+        "revealQuality": "needs_tweak",
+        "revealQualityNote": "Generated reveal copy still reads generic and needs human writing before Daily.",
+        "commonConfusionRisk": [
+          {
+            "code": "NY.ADJ.DPEM.GN.ZS",
+            "reason": "Particulate emission damage can tempt players because it shares a strong country ranking with this map, but its unit and definition point to a different story."
+          },
+          {
+            "code": "SE.SEC.ENRR",
+            "reason": "Secondary enrollment can tempt players because it shares a strong country ranking with this map, but its unit and definition point to a different story."
+          },
+          {
+            "code": "SP.DYN.LE00.IN",
+            "reason": "Life expectancy can tempt players because it shares a strong country ranking with this map, but its unit and definition point to a different story."
+          }
+        ],
+        "reason": "No QA demotion needed in this pass."
+      }
+    },
+    {
+      "id": "primary-gender-parity",
+      "roundId": null,
+      "providerCode": "SE.ENR.PRIM.FM.ZS",
+      "title": "School enrollment, primary (gross), gender parity index (GPI)",
+      "shortTitle": "Primary enrollment gender parity",
+      "category": "education",
+      "palette": "violet",
+      "paletteLabel": "Violet",
+      "batch2Promoted": false,
+      "originalBatch2Status": "needs_review",
+      "currentStatus": "needs_review",
+      "recommendedStatus": "needs_review",
+      "finalDecision": "move to Needs-review",
+      "latestYear": 2019,
+      "coverage": 129,
+      "mapDifficulty": "expert",
+      "scorecardSummary": {
+        "overall": 2.8,
+        "coverage": 3,
+        "freshness": 2,
+        "unitClarity": 4,
+        "mapInterest": 2,
+        "ambiguityCorrelation": 3,
+        "automatedRecommendation": "keep_needs_review"
+      },
+      "qa": {
+        "missingDataRisk": "medium",
+        "unitClarity": "clear",
+        "patternReadability": "weak or subtle",
+        "mapVisualInterest": "limited",
+        "answerChoiceFairness": "ok",
+        "distractorAmbiguity": "medium",
+        "correlationLookalikeRisk": "ok vs infant-mortality",
+        "paletteReadability": "compatible with dark atlas UI",
+        "mobileReadability": "medium",
+        "revealQuality": "needs_tweak",
+        "revealQualityNote": "Generated reveal copy still reads generic and needs human writing before Daily.",
+        "commonConfusionRisk": [
+          {
+            "code": "SP.DYN.IMRT.IN",
+            "reason": "Infant mortality overlaps with part of the visible pattern, but the full country spread does not match."
+          },
+          {
+            "code": "EG.USE.ELEC.KH.PC",
+            "reason": "Electric power use overlaps with part of the visible pattern, but the full country spread does not match."
+          },
+          {
+            "code": "SH.DYN.NMRT",
+            "reason": "Neonatal mortality overlaps with part of the visible pattern, but the full country spread does not match."
+          }
+        ],
+        "reason": "No QA demotion needed in this pass."
+      }
+    },
+    {
+      "id": "primary-private-enrollment",
+      "roundId": null,
+      "providerCode": "SE.PRM.PRIV.ZS",
+      "title": "School enrollment, primary, private (% of total primary)",
+      "shortTitle": "Private primary enrollment",
+      "category": "education",
+      "palette": "violet",
+      "paletteLabel": "Violet",
+      "batch2Promoted": false,
+      "originalBatch2Status": "needs_review",
+      "currentStatus": "needs_review",
+      "recommendedStatus": "needs_review",
+      "finalDecision": "move to Needs-review",
+      "latestYear": 2020,
+      "coverage": 120,
+      "mapDifficulty": "expert",
+      "scorecardSummary": {
+        "overall": 3.2,
+        "coverage": 3,
+        "freshness": 3,
+        "unitClarity": 4,
+        "mapInterest": 3,
+        "ambiguityCorrelation": 3,
+        "automatedRecommendation": "keep_needs_review"
+      },
+      "qa": {
+        "missingDataRisk": "high",
+        "unitClarity": "clear",
+        "patternReadability": "weak or subtle",
+        "mapVisualInterest": "limited",
+        "answerChoiceFairness": "ok",
+        "distractorAmbiguity": "medium",
+        "correlationLookalikeRisk": "ok vs hospital-beds",
+        "paletteReadability": "compatible with dark atlas UI",
+        "mobileReadability": "medium",
+        "revealQuality": "needs_tweak",
+        "revealQualityNote": "Generated reveal copy still reads generic and needs human writing before Daily.",
+        "commonConfusionRisk": [
+          {
+            "code": "SH.MED.BEDS.ZS",
+            "reason": "Hospital beds overlaps with part of the visible pattern, but the full country spread does not match."
+          },
+          {
+            "code": "SP.POP.65UP.TO.ZS",
+            "reason": "Population ages 65+ overlaps with part of the visible pattern, but the full country spread does not match."
+          },
+          {
+            "code": "SN.ITK.DEFC.ZS",
+            "reason": "Undernourishment overlaps with part of the visible pattern, but the full country spread does not match."
+          }
+        ],
+        "reason": "No QA demotion needed in this pass."
+      }
+    },
+    {
+      "id": "revenue-excluding-grants",
+      "roundId": null,
+      "providerCode": "GC.REV.XGRT.GD.ZS",
+      "title": "Revenue, excluding grants (% of GDP)",
+      "shortTitle": "Government revenue excluding grants",
+      "category": "economy",
+      "palette": "gold",
+      "paletteLabel": "Gold",
+      "batch2Promoted": false,
+      "originalBatch2Status": "needs_review",
+      "currentStatus": "needs_review",
+      "recommendedStatus": "needs_review",
+      "finalDecision": "move to Needs-review",
+      "latestYear": 2020,
+      "coverage": 120,
+      "mapDifficulty": "expert",
+      "scorecardSummary": {
+        "overall": 3.2,
+        "coverage": 3,
+        "freshness": 3,
+        "unitClarity": 4,
+        "mapInterest": 3,
+        "ambiguityCorrelation": 3,
+        "automatedRecommendation": "keep_needs_review"
+      },
+      "qa": {
+        "missingDataRisk": "high",
+        "unitClarity": "clear",
+        "patternReadability": "weak or subtle",
+        "mapVisualInterest": "limited",
+        "answerChoiceFairness": "ok",
+        "distractorAmbiguity": "medium",
+        "correlationLookalikeRisk": "high vs government-expense",
+        "paletteReadability": "compatible with dark atlas UI",
+        "mobileReadability": "medium",
+        "revealQuality": "needs_tweak",
+        "revealQualityNote": "Generated reveal copy still reads generic and needs human writing before Daily.",
+        "commonConfusionRisk": [
+          {
+            "code": "GC.XPN.TOTL.GD.ZS",
+            "reason": "Government expense can tempt players because it shares a strong country ranking with this map, but its unit and definition point to a different story."
+          },
+          {
+            "code": "GC.TAX.TOTL.GD.ZS",
+            "reason": "Tax revenue can tempt players because it shares a strong country ranking with this map, but its unit and definition point to a different story."
+          },
+          {
+            "code": "SP.POP.65UP.TO.ZS",
+            "reason": "Population ages 65+ can tempt players because it shares a strong country ranking with this map, but its unit and definition point to a different story."
+          }
+        ],
+        "reason": "No QA demotion needed in this pass."
+      }
+    },
+    {
+      "id": "rural-electricity-access",
+      "roundId": null,
+      "providerCode": "EG.ELC.ACCS.RU.ZS",
+      "title": "Access to electricity, rural (% of rural population)",
+      "shortTitle": "Rural electricity access",
+      "category": "energy",
+      "palette": "orange",
+      "paletteLabel": "Orange",
+      "batch2Promoted": false,
+      "originalBatch2Status": "needs_review",
+      "currentStatus": "needs_review",
+      "recommendedStatus": "needs_review",
+      "finalDecision": "move to Needs-review",
+      "latestYear": 2023,
+      "coverage": 165,
+      "mapDifficulty": "standard",
+      "scorecardSummary": {
+        "overall": 3.35,
+        "coverage": 4,
+        "freshness": 4,
+        "unitClarity": 4,
+        "mapInterest": 3,
+        "ambiguityCorrelation": 2,
+        "automatedRecommendation": "keep_needs_review"
+      },
+      "qa": {
+        "missingDataRisk": "low",
+        "unitClarity": "clear",
+        "patternReadability": "weak or subtle",
+        "mapVisualInterest": "limited",
+        "answerChoiceFairness": "ok",
+        "distractorAmbiguity": "medium",
+        "correlationLookalikeRisk": "high vs electricity-access",
+        "paletteReadability": "compatible with dark atlas UI",
+        "mobileReadability": "medium",
+        "revealQuality": "needs_tweak",
+        "revealQualityNote": "Generated reveal copy still reads generic and needs human writing before Daily.",
+        "commonConfusionRisk": [
+          {
+            "code": "EG.ELC.ACCS.ZS",
+            "reason": "Electricity access can tempt players because it shares a strong country ranking with this map, but its unit and definition point to a different story."
+          },
+          {
+            "code": "SH.STA.BASS.ZS",
+            "reason": "Basic sanitation access can tempt players because it shares a strong country ranking with this map, but its unit and definition point to a different story."
+          },
+          {
+            "code": "SH.H2O.BASW.ZS",
+            "reason": "Basic drinking water access can tempt players because it shares a strong country ranking with this map, but its unit and definition point to a different story."
+          }
+        ],
+        "reason": "No QA demotion needed in this pass."
+      }
+    },
+    {
+      "id": "statistical-data-infrastructure",
+      "roundId": null,
+      "providerCode": "IQ.SPI.PIL5",
+      "title": "Statistical performance indicators (SPI): Pillar 5 data infrastructure score (scale 0-100)",
+      "shortTitle": "Statistical data infrastructure",
+      "category": "development",
+      "palette": "indigo",
+      "paletteLabel": "Indigo",
+      "batch2Promoted": false,
+      "originalBatch2Status": "needs_review",
+      "currentStatus": "needs_review",
+      "recommendedStatus": "needs_review",
+      "finalDecision": "move to Needs-review",
+      "latestYear": 2024,
+      "coverage": 164,
+      "mapDifficulty": "expert",
+      "scorecardSummary": {
+        "overall": 3.75,
+        "coverage": 4,
+        "freshness": 5,
+        "unitClarity": 3,
+        "mapInterest": 4,
+        "ambiguityCorrelation": 3,
+        "automatedRecommendation": "keep_needs_review"
+      },
+      "qa": {
+        "missingDataRisk": "low",
+        "unitClarity": "needs wording review",
+        "patternReadability": "readable",
+        "mapVisualInterest": "good",
+        "answerChoiceFairness": "ok",
+        "distractorAmbiguity": "medium",
+        "correlationLookalikeRisk": "ok vs undernourishment",
+        "paletteReadability": "compatible with dark atlas UI",
+        "mobileReadability": "low",
+        "revealQuality": "needs_tweak",
+        "revealQualityNote": "Generated reveal copy still reads generic and needs human writing before Daily.",
+        "commonConfusionRisk": [
+          {
+            "code": "SN.ITK.DEFC.ZS",
+            "reason": "Undernourishment can tempt players because it shares a strong country ranking with this map, but its unit and definition point to a different story."
+          },
+          {
+            "code": "SH.MED.NUMW.P3",
+            "reason": "Nurses and midwives can tempt players because it shares a strong country ranking with this map, but its unit and definition point to a different story."
+          },
+          {
+            "code": "IT.NET.SECR.P6",
+            "reason": "Secure internet servers can tempt players because it shares a strong country ranking with this map, but its unit and definition point to a different story."
+          }
+        ],
+        "reason": "No QA demotion needed in this pass."
+      }
+    },
+    {
+      "id": "tertiary-gender-parity",
+      "roundId": null,
+      "providerCode": "SE.ENR.TERT.FM.ZS",
+      "title": "School enrollment, tertiary (gross), gender parity index (GPI)",
+      "shortTitle": "Tertiary enrollment gender parity",
+      "category": "education",
+      "palette": "violet",
+      "paletteLabel": "Violet",
+      "batch2Promoted": false,
+      "originalBatch2Status": "needs_review",
+      "currentStatus": "needs_review",
+      "recommendedStatus": "needs_review",
+      "finalDecision": "move to Needs-review",
+      "latestYear": 2015,
+      "coverage": 125,
+      "mapDifficulty": "expert",
+      "scorecardSummary": {
+        "overall": 2.9,
+        "coverage": 3,
+        "freshness": 1,
+        "unitClarity": 4,
+        "mapInterest": 3,
+        "ambiguityCorrelation": 3,
+        "automatedRecommendation": "keep_needs_review"
+      },
+      "qa": {
+        "missingDataRisk": "medium",
+        "unitClarity": "clear",
+        "patternReadability": "weak or subtle",
+        "mapVisualInterest": "limited",
+        "answerChoiceFairness": "ok",
+        "distractorAmbiguity": "medium",
+        "correlationLookalikeRisk": "ok vs agriculture-value-added",
+        "paletteReadability": "compatible with dark atlas UI",
+        "mobileReadability": "medium",
+        "revealQuality": "needs_tweak",
+        "revealQualityNote": "Generated reveal copy still reads generic and needs human writing before Daily.",
+        "commonConfusionRisk": [
+          {
+            "code": "NV.AGR.TOTL.ZS",
+            "reason": "Agriculture value added overlaps with part of the visible pattern, but the full country spread does not match."
+          },
+          {
+            "code": "SL.EMP.VULN.ZS",
+            "reason": "Vulnerable employment overlaps with part of the visible pattern, but the full country spread does not match."
+          },
+          {
+            "code": "SL.EMP.WORK.ZS",
+            "reason": "Wage and salaried workers overlaps with part of the visible pattern, but the full country spread does not match."
+          }
+        ],
+        "reason": "No QA demotion needed in this pass."
+      }
+    },
+    {
+      "id": "tourism-expenditures-share",
+      "roundId": null,
+      "providerCode": "ST.INT.XPND.MP.ZS",
+      "title": "International tourism, expenditures (% of total imports)",
+      "shortTitle": "Tourism expenditures",
+      "category": "economy",
+      "palette": "coral",
+      "paletteLabel": "Coral",
+      "batch2Promoted": false,
+      "originalBatch2Status": "needs_review",
+      "currentStatus": "needs_review",
+      "recommendedStatus": "needs_review",
+      "finalDecision": "move to Needs-review",
+      "latestYear": 2019,
+      "coverage": 128,
+      "mapDifficulty": "expert",
+      "scorecardSummary": {
+        "overall": 3.05,
+        "coverage": 3,
+        "freshness": 2,
+        "unitClarity": 4,
+        "mapInterest": 3,
+        "ambiguityCorrelation": 3,
+        "automatedRecommendation": "keep_needs_review"
+      },
+      "qa": {
+        "missingDataRisk": "medium",
+        "unitClarity": "clear",
+        "patternReadability": "weak or subtle",
+        "mapVisualInterest": "limited",
+        "answerChoiceFairness": "ok",
+        "distractorAmbiguity": "medium",
+        "correlationLookalikeRisk": "ok vs water-stress",
+        "paletteReadability": "compatible with dark atlas UI",
+        "mobileReadability": "medium",
+        "revealQuality": "needs_tweak",
+        "revealQualityNote": "Generated reveal copy still reads generic and needs human writing before Daily.",
+        "commonConfusionRisk": [
+          {
+            "code": "ER.H2O.FWST.ZS",
+            "reason": "Water stress overlaps with part of the visible pattern, but the full country spread does not match."
+          },
+          {
+            "code": "SE.ENR.TERT.FM.ZS",
+            "reason": "Tertiary enrollment gender parity overlaps with part of the visible pattern, but the full country spread does not match."
+          },
+          {
+            "code": "EN.GHG.ALL.PC.CE.AR5",
+            "reason": "Greenhouse gas emissions per capita overlaps with part of the visible pattern, but the full country spread does not match."
+          }
+        ],
+        "reason": "No QA demotion needed in this pass."
+      }
+    },
+    {
+      "id": "urban-slum-population",
+      "roundId": "worldprint-urban-slum-population",
+      "providerCode": "EN.POP.SLUM.UR.ZS",
+      "title": "Population living in slums (% of urban population)",
+      "shortTitle": "Urban slum population",
+      "category": "settlement",
+      "palette": "aqua",
+      "paletteLabel": "Aqua",
+      "batch2Promoted": false,
+      "originalBatch2Status": "needs_review",
+      "currentStatus": "practice_eligible",
+      "recommendedStatus": "practice_eligible",
+      "finalDecision": "promote to Practice",
+      "latestYear": 2022,
+      "coverage": 151,
+      "mapDifficulty": "expert",
+      "scorecardSummary": {
+        "overall": 3.8,
+        "coverage": 4,
+        "freshness": 4,
+        "unitClarity": 4,
+        "mapInterest": 4,
+        "ambiguityCorrelation": 3,
+        "automatedRecommendation": "keep_practice_eligible"
+      },
+      "qa": {
+        "missingDataRisk": "low",
+        "unitClarity": "clear",
+        "patternReadability": "readable",
+        "mapVisualInterest": "good",
+        "answerChoiceFairness": "review",
+        "distractorAmbiguity": "medium",
+        "correlationLookalikeRisk": "ok vs safely-managed-drinking-water",
+        "paletteReadability": "compatible with dark atlas UI",
+        "mobileReadability": "low",
+        "revealQuality": "needs_tweak",
+        "revealQualityNote": "Generated reveal copy still reads generic and needs human writing before Daily.",
+        "commonConfusionRisk": [
+          {
+            "code": "SH.H2O.SMDW.ZS",
+            "reason": "Safely managed drinking water can tempt players because it shares a strong country ranking with this map, but its unit and definition point to a different story."
+          },
+          {
+            "code": "SH.XPD.CHEX.PC.CD",
+            "reason": "Health spending per person can tempt players because it shares a strong country ranking with this map, but its unit and definition point to a different story."
+          },
+          {
+            "code": "EG.USE.ELEC.KH.PC",
+            "reason": "Electric power use can tempt players because it shares a strong country ranking with this map, but its unit and definition point to a different story."
+          }
+        ],
+        "reason": "Strong settlement/development map, but sensitive topic needs Practice-first framing."
+      }
+    }
+  ]
+}

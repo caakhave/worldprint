@@ -1,4 +1,6 @@
-# WORLDPRINT Architecture
+# Can You Geo? Architecture
+
+Can You Geo? is the public product brand. Mystery Map is the current playable mode. The `worldprint` module and data namespace remain as legacy technical identifiers for static export compatibility, content-version locked Challenge links, and localStorage continuity.
 
 ## Static-First Shape
 
@@ -12,7 +14,7 @@ No route handlers, server actions, dynamic rendering, databases, user accounts, 
 - `src/lib/content`: Zod schemas for indicators, rounds, manifests, source registries, and content validation.
 - `src/lib/geo`: entity registry helpers, quantile/classification logic, correlation utilities, value formatting, and D3 projection helpers.
 - `src/lib/persistence`: versioned localStorage model, validation, migration, and recovery.
-- `src/features/worldprint`: UI orchestration for the WORLDPRINT game loop.
+- `src/features/worldprint`: UI orchestration for the Mystery Map game loop under the legacy `worldprint` namespace.
 - `src/components`: shared shell, brand, controls, map, and disclosure components.
 - `tools/data_pipeline`: offline generation of source-backed static artifacts.
 
@@ -36,4 +38,4 @@ A single versioned localStorage key stores onboarding, selected tier, active/com
 
 ## Future Suite Support
 
-HUMAN CENTER can reuse entity registry, basemap rendering, source registry, persistence, route shell, accessible controls, and quality tooling. It should add population-weighted center calculations in its own feature module when real data and validation are ready. This is intentionally not a premature plugin framework.
+Human Center can reuse entity registry, basemap rendering, source registry, persistence, route shell, accessible controls, and quality tooling. It should add population-weighted center calculations in its own feature module when real data and validation are ready. This is intentionally not a premature plugin framework.

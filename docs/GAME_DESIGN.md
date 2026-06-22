@@ -1,17 +1,19 @@
-# WORLDPRINT Game Design
+# Can You Geo? Mystery Map Game Design
+
+Can You Geo? is the public suite brand. Mystery Map is the current playable mode. The old `worldprint` name remains only as a compatibility namespace in routes, content artifacts, and saved state.
 
 ## Core Prompt
 
 `What does this map measure?`
 
-The map is intentionally unlabeled. Darker means a larger numerical value, not a better value. A neutral sequential palette is used across content categories.
+The map is intentionally unlabeled. Darker means a larger numerical value, not a better value. Choropleth palettes vary by topic so different categories feel distinct while keeping the same low-to-high reading rule.
 
 ## Tiers
 
 - Explorer: three broad choices, country names on pointer interaction, up to three investigations, unit clue available, lower penalties.
 - Analyst: default tier, four plausible choices, up to three investigations, unit clue available.
 - Cartographer: six close choices, one investigation, no unit clue.
-- Atlas Master: no visible choices, explicit search/autocomplete over approved indicators, one investigation, no unit clue.
+- Atlas Master: no visible choices, explicit search/autocomplete over the playable map catalog, one investigation, no unit clue.
 
 ## Scoring
 
@@ -48,18 +50,20 @@ Share text is spoiler-free and includes challenge number, tier, per-round cells,
 Example:
 
 ```text
-WORLDPRINT #184 · Analyst
+Can You Geo? Daily #184
+Mystery Map
 🟩 900
 🟨 550
 🟩 1000
 🟥 100
 🟩 800
-3350 / 5000 🌍
+3350 / 5000
+Read the world.
 ```
 
 ## Future Calibration Questions
 
 - Whether raw scores are comparable across tiers.
 - Whether archive/category modes should score differently from Daily.
-- How Plus can deepen learning without selling answer advantage.
+- How future paid access can deepen learning without selling answer advantage.
 - How to incorporate mixed-suite Daily tours after more modes exist.

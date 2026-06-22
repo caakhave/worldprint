@@ -2,32 +2,33 @@
   "schemaVersion": "1.1.0",
   "game": "worldprint",
   "date": "2026-05-27",
-  "contentVersion": "2026.06.19-ed1",
+  "contentVersion": "2026.06.22-exp2-qa1",
   "roundIds": [
-    "worldprint-tuberculosis-incidence",
+    "worldprint-cereal-yield",
+    "worldprint-maternal-mortality",
+    "worldprint-coal-electricity-share",
     "worldprint-agriculture-value-added",
-    "worldprint-trade-share",
-    "worldprint-age-dependency",
-    "worldprint-population-density"
+    "worldprint-unemployment"
   ],
   "indicatorIds": [
-    "tuberculosis-incidence",
+    "cereal-yield",
+    "maternal-mortality",
+    "coal-electricity-share",
     "agriculture-value-added",
-    "trade-share",
-    "age-dependency",
-    "population-density"
+    "unemployment"
   ],
   "categoryMix": {
+    "agriculture": 1,
     "health": 1,
-    "economy": 2,
-    "demography": 1,
-    "settlement": 1
+    "energy": 1,
+    "economy": 1,
+    "labor": 1
   },
   "mapDifficultyMix": {
     "expert": 1,
     "standard": 4
   },
-  "generatedAt": "2026-06-19T17:09:23.329917+00:00",
+  "generatedAt": "2026-06-22T18:07:37.456099+00:00",
   "generatorVersion": "daily-manifest-v1",
   "varietyNotes": [
     "Selected with category, difficulty, and same-day correlation safeguards."

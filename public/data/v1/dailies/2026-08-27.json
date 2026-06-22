@@ -2,33 +2,33 @@
   "schemaVersion": "1.1.0",
   "game": "worldprint",
   "date": "2026-08-27",
-  "contentVersion": "2026.06.19-ed1",
+  "contentVersion": "2026.06.22-exp2-qa1",
   "roundIds": [
-    "worldprint-adolescent-fertility",
-    "worldprint-age-dependency",
-    "worldprint-pm25-exposure",
-    "worldprint-under-five-mortality",
-    "worldprint-gdp-per-capita"
+    "worldprint-arable-land-per-person",
+    "worldprint-food-production-index",
+    "worldprint-population-density",
+    "worldprint-measles-immunization",
+    "worldprint-total-protected-areas"
   ],
   "indicatorIds": [
-    "adolescent-fertility",
-    "age-dependency",
-    "pm25-exposure",
-    "under-five-mortality",
-    "gdp-per-capita"
+    "arable-land-per-person",
+    "food-production-index",
+    "population-density",
+    "measles-immunization",
+    "total-protected-areas"
   ],
   "categoryMix": {
-    "demography": 2,
-    "environment": 1,
+    "land": 1,
+    "agriculture": 1,
+    "settlement": 1,
     "health": 1,
-    "development": 1
+    "environment": 1
   },
   "mapDifficultyMix": {
     "expert": 1,
-    "standard": 3,
-    "intro": 1
+    "standard": 4
   },
-  "generatedAt": "2026-06-19T17:09:23.343321+00:00",
+  "generatedAt": "2026-06-22T18:07:37.468230+00:00",
   "generatorVersion": "daily-manifest-v1",
   "varietyNotes": [
     "Selected with category, difficulty, and same-day correlation safeguards."

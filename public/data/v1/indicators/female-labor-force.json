@@ -202,12 +202,12 @@
     "valuesReference": "https://api.worldbank.org/v2/country/all/indicator/SL.TLF.CACT.FE.ZS?format=json&per_page=20000&page=1&date=2015%3A2025",
     "license": "Creative Commons Attribution 4.0 International unless specifically labeled otherwise by World Bank metadata",
     "licenseReference": "https://www.worldbank.org/en/about/legal/terms-of-use-for-datasets",
-    "retrievedAt": "2026-06-19T17:09:17.121551+00:00",
+    "retrievedAt": "2026-06-22T18:06:00.153009+00:00",
     "checksum": "437a63bf9ac1a7838576d1542f52546f157ddea3e97f3909538f7210d0a7b2bf",
     "sourceOrganization": "ILO Modelled Estimates database (ILOEST), International Labour Organization (ILO), uri: https://ilostat.ilo.org/data/bulk/, publisher: ILOSTAT, type: external database, date accessed: January 17, 2026"
   },
   "reviewStatus": "approved",
-  "contentVersion": "2026.06.19-ed1",
+  "contentVersion": "2026.06.22-exp2-qa1",
   "editorial": {
     "shortHook": "A gendered work map.",
     "patternNote": "The darkest countries include Madagascar, Solomon Islands, Nigeria, while the lightest include Yemen, Rep., Afghanistan, Iraq; that contrast is the fastest way to read the female labor force participation pattern.",
@@ -228,16 +228,16 @@
     ],
     "commonConfusions": [
       {
+        "confusedWithIndicatorCode": "SL.TLF.CACT.FM.ZS",
+        "reason": "Female-to-male labor force ratio can tempt players because it shares a strong country ranking with this map, but its unit and definition point to a different story."
+      },
+      {
         "confusedWithIndicatorCode": "SL.TLF.CACT.ZS",
         "reason": "Labor force participation can tempt players because it shares a strong country ranking with this map, but its unit and definition point to a different story."
       },
       {
-        "confusedWithIndicatorCode": "SL.UEM.TOTL.ZS",
-        "reason": "Unemployment lives in the same category, so it can feel plausible until the high and low countries are checked."
-      },
-      {
-        "confusedWithIndicatorCode": "EG.FEC.RNEW.ZS",
-        "reason": "Renewable energy consumption overlaps with part of the visible pattern, but the full country spread does not match."
+        "confusedWithIndicatorCode": "SL.EMP.TOTL.SP.ZS",
+        "reason": "Employment-to-population ratio can tempt players because it shares a strong country ranking with this map, but its unit and definition point to a different story."
       }
     ],
     "difficultyReason": "Expert difficulty: the map can be mistaken for adjacent indicators unless players probe a high, low, and middle country.",
@@ -248,7 +248,7 @@
   },
   "editorialReview": {
     "status": "expert_only",
-    "reviewedAt": "2026-06-19",
+    "reviewedAt": "2026-06-22",
     "reviewedBy": "Codex editorial QA",
     "qualityScore": 4,
     "funScore": 4,

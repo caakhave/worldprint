@@ -1,0 +1,722 @@
+{
+  "schemaVersion": "1.0.0",
+  "generatedAt": "2026-06-22T17:08:36.719Z",
+  "contentVersion": "2026.06.22-exp2",
+  "batchName": "WORLDPRINT More Candidate Indicators Batch 2",
+  "intakePath": "content/candidates/worldprint-candidate-intake.json",
+  "officialCodeVerification": {
+    "source": "World Bank Indicators API/catalog check during intake prep",
+    "verifiedCandidateCodes": 98,
+    "duplicateExistingProviderCodes": 0
+  },
+  "before": {
+    "contentVersion": "2026.06.22-exp1",
+    "candidateCount": 100,
+    "sourceValidCount": 88,
+    "draftHeldCount": 12,
+    "playableCount": 80,
+    "dailyEligibleCount": 43
+  },
+  "after": {
+    "contentVersion": "2026.06.22-exp2",
+    "candidateCount": 198,
+    "sourceValidCount": 167,
+    "draftHeldCount": 31,
+    "playableCount": 132,
+    "dailyEligibleCount": 59
+  },
+  "delta": {
+    "candidateCount": 98,
+    "sourceValidCount": 79,
+    "draftHeldCount": 19,
+    "playableCount": 52,
+    "dailyEligibleCount": 16
+  },
+  "batch": {
+    "candidatesAdded": 98,
+    "sourceValidCount": 79,
+    "draftHeldCount": 19,
+    "promotedPlayableCount": 52,
+    "statusCounts": {
+      "daily_eligible": 16,
+      "practice_eligible": 18,
+      "expert_only": 18,
+      "needs_review": 46,
+      "retired": 0
+    },
+    "approvedStatusCounts": {
+      "daily_eligible": 16,
+      "practice_eligible": 18,
+      "expert_only": 18,
+      "needs_review": 27,
+      "retired": 0
+    },
+    "categorySummary": [
+      {
+        "category": "agriculture",
+        "total": 4,
+        "sourceValid": 3,
+        "held": 1,
+        "playable": 3,
+        "dailyEligible": 0
+      },
+      {
+        "category": "connectivity",
+        "total": 7,
+        "sourceValid": 4,
+        "held": 3,
+        "playable": 3,
+        "dailyEligible": 0
+      },
+      {
+        "category": "development",
+        "total": 11,
+        "sourceValid": 3,
+        "held": 8,
+        "playable": 2,
+        "dailyEligible": 2
+      },
+      {
+        "category": "economy",
+        "total": 18,
+        "sourceValid": 16,
+        "held": 2,
+        "playable": 8,
+        "dailyEligible": 1
+      },
+      {
+        "category": "education",
+        "total": 9,
+        "sourceValid": 5,
+        "held": 4,
+        "playable": 0,
+        "dailyEligible": 0
+      },
+      {
+        "category": "energy",
+        "total": 9,
+        "sourceValid": 9,
+        "held": 0,
+        "playable": 5,
+        "dailyEligible": 1
+      },
+      {
+        "category": "environment",
+        "total": 12,
+        "sourceValid": 12,
+        "held": 0,
+        "playable": 8,
+        "dailyEligible": 5
+      },
+      {
+        "category": "health",
+        "total": 11,
+        "sourceValid": 11,
+        "held": 0,
+        "playable": 11,
+        "dailyEligible": 1
+      },
+      {
+        "category": "labor",
+        "total": 10,
+        "sourceValid": 10,
+        "held": 0,
+        "playable": 7,
+        "dailyEligible": 3
+      },
+      {
+        "category": "land",
+        "total": 2,
+        "sourceValid": 2,
+        "held": 0,
+        "playable": 2,
+        "dailyEligible": 2
+      },
+      {
+        "category": "settlement",
+        "total": 5,
+        "sourceValid": 4,
+        "held": 1,
+        "playable": 3,
+        "dailyEligible": 1
+      }
+    ],
+    "promotedByStatus": {
+      "daily_eligible": [
+        "account-ownership",
+        "agricultural-water-withdrawals",
+        "arable-land-per-person",
+        "carbon-intensity-gdp",
+        "coal-electricity-share",
+        "employers-share",
+        "labor-force-gender-ratio",
+        "natural-resource-rents",
+        "open-defecation",
+        "permanent-cropland",
+        "precipitation-depth",
+        "total-protected-areas",
+        "urban-population-growth",
+        "water-stress",
+        "women-business-law",
+        "youth-unemployment"
+      ],
+      "practice_eligible": [
+        "domestic-water-withdrawals",
+        "employment-population-ratio",
+        "fixed-telephone-subscriptions",
+        "health-spending-per-person",
+        "hydro-electricity-share",
+        "industrial-water-withdrawals",
+        "largest-city-share",
+        "livestock-production-index",
+        "natural-gas-electricity-share",
+        "neonatal-mortality",
+        "nonhydro-renewable-electricity",
+        "nurses-midwives",
+        "rural-clean-cooking-access",
+        "safely-managed-drinking-water",
+        "safely-managed-sanitation",
+        "wage-salaried-workers",
+        "water-productivity",
+        "youth-labor-force"
+      ],
+      "expert_only": [
+        "agricultural-raw-material-exports",
+        "agricultural-raw-material-imports",
+        "agriculture-growth",
+        "agriculture-value-per-worker",
+        "bank-branches",
+        "communicable-death-share",
+        "domestic-savings",
+        "fdi-outflows",
+        "female-unemployment",
+        "fixed-capital-formation",
+        "gdp-per-capita-growth",
+        "government-health-spending-share",
+        "gross-savings-gdp",
+        "hepatitis-b-immunization",
+        "logistics-infrastructure",
+        "low-elevation-land-share",
+        "noncommunicable-death-share",
+        "private-health-spending-share"
+      ]
+    },
+    "needsReviewApproved": [
+      "domestic-credit-private-sector",
+      "employment-industry",
+      "forest-rents",
+      "fossil-electricity-share",
+      "government-consumption",
+      "government-expense",
+      "gross-capital-formation",
+      "household-consumption",
+      "logistics-overall",
+      "male-labor-force",
+      "male-unemployment",
+      "natural-resource-depletion",
+      "net-forest-depletion",
+      "net-primary-enrollment",
+      "nuclear-electricity-share",
+      "oil-electricity-share",
+      "particulate-damage-share",
+      "pm25-guideline-exposure",
+      "preprimary-enrollment",
+      "primary-gender-parity",
+      "primary-private-enrollment",
+      "revenue-excluding-grants",
+      "rural-electricity-access",
+      "statistical-data-infrastructure",
+      "tertiary-gender-parity",
+      "tourism-expenditures-share",
+      "urban-slum-population"
+    ],
+    "held": [
+      {
+        "id": "borrowers-commercial-banks",
+        "providerCode": "FB.CBK.BRWR.P3",
+        "category": "connectivity",
+        "shortTitle": "Commercial bank borrowers",
+        "reasons": [
+          "borrowers-commercial-banks: no year in 2015:2025 met 120 mapped countries; best coverage was 88",
+          "borrowers-commercial-banks: selected coverage 64 is below 120"
+        ],
+        "statusRecommendation": "hold_for_data"
+      },
+      {
+        "id": "broadband-monthly-tariff",
+        "providerCode": "IT.BBD.USEC.CD",
+        "category": "connectivity",
+        "shortTitle": "Fixed broadband tariff",
+        "reasons": [
+          "Unexpected World Bank response for https://api.worldbank.org/v2/country/all/indicator/IT.BBD.USEC.CD?format=json&per_page=20000&page=1&date=2015%3A2025"
+        ],
+        "statusRecommendation": "hold_for_data"
+      },
+      {
+        "id": "central-government-debt",
+        "providerCode": "GC.DOD.TOTL.GD.ZS",
+        "category": "economy",
+        "shortTitle": "Central government debt",
+        "reasons": [
+          "central-government-debt: no year in 2015:2025 met 120 mapped countries; best coverage was 47",
+          "central-government-debt: selected coverage 26 is below 120"
+        ],
+        "statusRecommendation": "hold_for_data"
+      },
+      {
+        "id": "gini-index",
+        "providerCode": "SI.POV.GINI",
+        "category": "development",
+        "shortTitle": "Gini index",
+        "reasons": [
+          "gini-index: no year in 2015:2025 met 120 mapped countries; best coverage was 89",
+          "gini-index: selected coverage 4 is below 120"
+        ],
+        "statusRecommendation": "hold_for_data"
+      },
+      {
+        "id": "irrigated-agricultural-land",
+        "providerCode": "AG.LND.IRIG.AG.ZS",
+        "category": "agriculture",
+        "shortTitle": "Irrigated agricultural land",
+        "reasons": [
+          "irrigated-agricultural-land: no year in 2015:2025 met 120 mapped countries; best coverage was 59",
+          "irrigated-agricultural-land: selected coverage 59 is below 120"
+        ],
+        "statusRecommendation": "hold_for_data"
+      },
+      {
+        "id": "lower-secondary-completion",
+        "providerCode": "SE.SEC.CMPT.LO.ZS",
+        "category": "education",
+        "shortTitle": "Lower secondary completion",
+        "reasons": [
+          "lower-secondary-completion: no year in 2015:2025 met 120 mapped countries; best coverage was 114",
+          "lower-secondary-completion: selected coverage 10 is below 120"
+        ],
+        "statusRecommendation": "hold_for_data"
+      },
+      {
+        "id": "net-secondary-enrollment",
+        "providerCode": "SE.SEC.NENR",
+        "category": "education",
+        "shortTitle": "Net secondary enrollment",
+        "reasons": [
+          "net-secondary-enrollment: no year in 2015:2025 met 120 mapped countries; best coverage was 103",
+          "net-secondary-enrollment: selected coverage 3 is below 120"
+        ],
+        "statusRecommendation": "hold_for_data"
+      },
+      {
+        "id": "poverty-headcount-420",
+        "providerCode": "SI.POV.LMIC",
+        "category": "development",
+        "shortTitle": "Poverty below $4.20 a day",
+        "reasons": [
+          "poverty-headcount-420: no year in 2015:2025 met 120 mapped countries; best coverage was 89",
+          "poverty-headcount-420: selected coverage 4 is below 120"
+        ],
+        "statusRecommendation": "hold_for_data"
+      },
+      {
+        "id": "primary-completion",
+        "providerCode": "SE.PRM.CMPT.ZS",
+        "category": "education",
+        "shortTitle": "Primary completion",
+        "reasons": [
+          "primary-completion: no year in 2015:2025 met 120 mapped countries; best coverage was 118",
+          "primary-completion: selected coverage 9 is below 120"
+        ],
+        "statusRecommendation": "hold_for_data"
+      },
+      {
+        "id": "private-fixed-capital-formation",
+        "providerCode": "NE.GDI.FPRV.ZS",
+        "category": "economy",
+        "shortTitle": "Private fixed capital formation",
+        "reasons": [
+          "private-fixed-capital-formation: no year in 2015:2025 met 120 mapped countries; best coverage was 59",
+          "private-fixed-capital-formation: selected coverage 47 is below 120"
+        ],
+        "statusRecommendation": "hold_for_data"
+      },
+      {
+        "id": "roads-paved",
+        "providerCode": "IS.ROD.PAVE.ZS",
+        "category": "connectivity",
+        "shortTitle": "Paved roads",
+        "reasons": [
+          "roads-paved: no year in 2015:2025 met 120 mapped countries; best coverage was 0",
+          "roads-paved: selected coverage 0 is below 120"
+        ],
+        "statusRecommendation": "hold_for_data"
+      },
+      {
+        "id": "secondary-private-enrollment",
+        "providerCode": "SE.SEC.PRIV.ZS",
+        "category": "education",
+        "shortTitle": "Private secondary enrollment",
+        "reasons": [
+          "secondary-private-enrollment: no year in 2015:2025 met 120 mapped countries; best coverage was 119",
+          "secondary-private-enrollment: selected coverage 1 is below 120"
+        ],
+        "statusRecommendation": "hold_for_data"
+      },
+      {
+        "id": "urban-agglomerations-share",
+        "providerCode": "EN.URB.MCTY.TL.ZS",
+        "category": "settlement",
+        "shortTitle": "Large urban agglomerations",
+        "reasons": [
+          "urban-agglomerations-share: no year in 2015:2025 met 120 mapped countries; best coverage was 119",
+          "urban-agglomerations-share: selected coverage 119 is below 120"
+        ],
+        "statusRecommendation": "hold_for_data"
+      },
+      {
+        "id": "wgi-control-corruption-rank",
+        "providerCode": "CC.PER.RNK",
+        "category": "development",
+        "shortTitle": "Control of corruption rank",
+        "reasons": [
+          "Unexpected World Bank response for https://api.worldbank.org/v2/country/all/indicator/CC.PER.RNK?format=json&per_page=20000&page=1&date=2015%3A2025"
+        ],
+        "statusRecommendation": "hold_for_data"
+      },
+      {
+        "id": "wgi-government-effectiveness-rank",
+        "providerCode": "GE.PER.RNK",
+        "category": "development",
+        "shortTitle": "Government effectiveness rank",
+        "reasons": [
+          "Unexpected World Bank response for https://api.worldbank.org/v2/country/all/indicator/GE.PER.RNK?format=json&per_page=20000&page=1&date=2015%3A2025"
+        ],
+        "statusRecommendation": "hold_for_data"
+      },
+      {
+        "id": "wgi-political-stability-rank",
+        "providerCode": "PV.PER.RNK",
+        "category": "development",
+        "shortTitle": "Political stability rank",
+        "reasons": [
+          "Unexpected World Bank response for https://api.worldbank.org/v2/country/all/indicator/PV.PER.RNK?format=json&per_page=20000&page=1&date=2015%3A2025"
+        ],
+        "statusRecommendation": "hold_for_data"
+      },
+      {
+        "id": "wgi-regulatory-quality-rank",
+        "providerCode": "RQ.PER.RNK",
+        "category": "development",
+        "shortTitle": "Regulatory quality rank",
+        "reasons": [
+          "Unexpected World Bank response for https://api.worldbank.org/v2/country/all/indicator/RQ.PER.RNK?format=json&per_page=20000&page=1&date=2015%3A2025"
+        ],
+        "statusRecommendation": "hold_for_data"
+      },
+      {
+        "id": "wgi-rule-of-law-rank",
+        "providerCode": "RL.PER.RNK",
+        "category": "development",
+        "shortTitle": "Rule of law rank",
+        "reasons": [
+          "Unexpected World Bank response for https://api.worldbank.org/v2/country/all/indicator/RL.PER.RNK?format=json&per_page=20000&page=1&date=2015%3A2025"
+        ],
+        "statusRecommendation": "hold_for_data"
+      },
+      {
+        "id": "wgi-voice-accountability-rank",
+        "providerCode": "VA.PER.RNK",
+        "category": "development",
+        "shortTitle": "Voice and accountability rank",
+        "reasons": [
+          "Unexpected World Bank response for https://api.worldbank.org/v2/country/all/indicator/VA.PER.RNK?format=json&per_page=20000&page=1&date=2015%3A2025"
+        ],
+        "statusRecommendation": "hold_for_data"
+      }
+    ]
+  },
+  "dailyRegeneration": {
+    "manifestCount": 121,
+    "range": {
+      "start": "2026-05-23",
+      "end": "2026-09-20",
+      "pastDays": 30,
+      "futureDays": 90
+    },
+    "firstDate": "2026-05-23",
+    "lastDate": "2026-09-20",
+    "allRoundIdsDailyEligible": true
+  },
+  "strongestNewMaps": [
+    {
+      "id": "arable-land-per-person",
+      "providerCode": "AG.LND.ARBL.HA.PC",
+      "shortTitle": "Arable land per person",
+      "category": "land",
+      "selectedYear": 2023,
+      "coverage": 168,
+      "overallScore": 4,
+      "why": "Automated scorecard supports the current curated editorial status."
+    },
+    {
+      "id": "total-protected-areas",
+      "providerCode": "ER.PTD.TOTL.ZS",
+      "shortTitle": "Protected land and seas",
+      "category": "environment",
+      "selectedYear": 2025,
+      "coverage": 169,
+      "overallScore": 3.95,
+      "why": "Automated scorecard supports the current curated editorial status."
+    },
+    {
+      "id": "urban-population-growth",
+      "providerCode": "SP.URB.GROW",
+      "shortTitle": "Urban population growth",
+      "category": "settlement",
+      "selectedYear": 2024,
+      "coverage": 169,
+      "overallScore": 3.95,
+      "why": "Automated scorecard supports the current curated editorial status."
+    },
+    {
+      "id": "employers-share",
+      "providerCode": "SL.EMP.MPYR.ZS",
+      "shortTitle": "Employers share",
+      "category": "labor",
+      "selectedYear": 2025,
+      "coverage": 163,
+      "overallScore": 3.95,
+      "why": "Automated scorecard supports the current curated editorial status."
+    },
+    {
+      "id": "labor-force-gender-ratio",
+      "providerCode": "SL.TLF.CACT.FM.ZS",
+      "shortTitle": "Female-to-male labor force ratio",
+      "category": "labor",
+      "selectedYear": 2025,
+      "coverage": 163,
+      "overallScore": 3.95,
+      "why": "Automated scorecard supports the current curated editorial status."
+    },
+    {
+      "id": "youth-unemployment",
+      "providerCode": "SL.UEM.1524.ZS",
+      "shortTitle": "Youth unemployment",
+      "category": "labor",
+      "selectedYear": 2025,
+      "coverage": 163,
+      "overallScore": 3.95,
+      "why": "Automated scorecard supports the current curated editorial status."
+    },
+    {
+      "id": "carbon-intensity-gdp",
+      "providerCode": "EN.GHG.CO2.RT.GDP.KD",
+      "shortTitle": "Carbon intensity of GDP",
+      "category": "environment",
+      "selectedYear": 2024,
+      "coverage": 156,
+      "overallScore": 3.95,
+      "why": "Automated scorecard supports the current curated editorial status."
+    },
+    {
+      "id": "open-defecation",
+      "providerCode": "SH.STA.ODFC.ZS",
+      "shortTitle": "Open defecation",
+      "category": "health",
+      "selectedYear": 2024,
+      "coverage": 150,
+      "overallScore": 3.95,
+      "why": "Automated scorecard supports the current curated editorial status."
+    },
+    {
+      "id": "permanent-cropland",
+      "providerCode": "AG.LND.CROP.ZS",
+      "shortTitle": "Permanent cropland",
+      "category": "land",
+      "selectedYear": 2023,
+      "coverage": 167,
+      "overallScore": 3.8,
+      "why": "Automated scorecard supports the current curated editorial status."
+    },
+    {
+      "id": "precipitation-depth",
+      "providerCode": "AG.LND.PRCP.MM",
+      "shortTitle": "Average precipitation",
+      "category": "environment",
+      "selectedYear": 2022,
+      "coverage": 163,
+      "overallScore": 3.8,
+      "why": "Automated scorecard supports the current curated editorial status."
+    },
+    {
+      "id": "agricultural-water-withdrawals",
+      "providerCode": "ER.H2O.FWAG.ZS",
+      "shortTitle": "Agricultural water withdrawals",
+      "category": "environment",
+      "selectedYear": 2022,
+      "coverage": 161,
+      "overallScore": 3.8,
+      "why": "Automated scorecard supports the current curated editorial status."
+    },
+    {
+      "id": "water-stress",
+      "providerCode": "ER.H2O.FWST.ZS",
+      "shortTitle": "Water stress",
+      "category": "environment",
+      "selectedYear": 2022,
+      "coverage": 161,
+      "overallScore": 3.8,
+      "why": "Automated scorecard supports the current curated editorial status."
+    }
+  ],
+  "weakOrRejectedMaps": [
+    {
+      "id": "borrowers-commercial-banks",
+      "providerCode": "FB.CBK.BRWR.P3",
+      "shortTitle": "Commercial bank borrowers",
+      "category": "connectivity",
+      "whyHeld": "borrowers-commercial-banks: no year in 2015:2025 met 120 mapped countries; best coverage was 88 borrowers-commercial-banks: selected coverage 64 is below 120"
+    },
+    {
+      "id": "broadband-monthly-tariff",
+      "providerCode": "IT.BBD.USEC.CD",
+      "shortTitle": "Fixed broadband tariff",
+      "category": "connectivity",
+      "whyHeld": "Unexpected World Bank response for https://api.worldbank.org/v2/country/all/indicator/IT.BBD.USEC.CD?format=json&per_page=20000&page=1&date=2015%3A2025"
+    },
+    {
+      "id": "central-government-debt",
+      "providerCode": "GC.DOD.TOTL.GD.ZS",
+      "shortTitle": "Central government debt",
+      "category": "economy",
+      "whyHeld": "central-government-debt: no year in 2015:2025 met 120 mapped countries; best coverage was 47 central-government-debt: selected coverage 26 is below 120"
+    },
+    {
+      "id": "gini-index",
+      "providerCode": "SI.POV.GINI",
+      "shortTitle": "Gini index",
+      "category": "development",
+      "whyHeld": "gini-index: no year in 2015:2025 met 120 mapped countries; best coverage was 89 gini-index: selected coverage 4 is below 120"
+    },
+    {
+      "id": "irrigated-agricultural-land",
+      "providerCode": "AG.LND.IRIG.AG.ZS",
+      "shortTitle": "Irrigated agricultural land",
+      "category": "agriculture",
+      "whyHeld": "irrigated-agricultural-land: no year in 2015:2025 met 120 mapped countries; best coverage was 59 irrigated-agricultural-land: selected coverage 59 is below 120"
+    },
+    {
+      "id": "lower-secondary-completion",
+      "providerCode": "SE.SEC.CMPT.LO.ZS",
+      "shortTitle": "Lower secondary completion",
+      "category": "education",
+      "whyHeld": "lower-secondary-completion: no year in 2015:2025 met 120 mapped countries; best coverage was 114 lower-secondary-completion: selected coverage 10 is below 120"
+    },
+    {
+      "id": "net-secondary-enrollment",
+      "providerCode": "SE.SEC.NENR",
+      "shortTitle": "Net secondary enrollment",
+      "category": "education",
+      "whyHeld": "net-secondary-enrollment: no year in 2015:2025 met 120 mapped countries; best coverage was 103 net-secondary-enrollment: selected coverage 3 is below 120"
+    },
+    {
+      "id": "poverty-headcount-420",
+      "providerCode": "SI.POV.LMIC",
+      "shortTitle": "Poverty below $4.20 a day",
+      "category": "development",
+      "whyHeld": "poverty-headcount-420: no year in 2015:2025 met 120 mapped countries; best coverage was 89 poverty-headcount-420: selected coverage 4 is below 120"
+    },
+    {
+      "id": "primary-completion",
+      "providerCode": "SE.PRM.CMPT.ZS",
+      "shortTitle": "Primary completion",
+      "category": "education",
+      "whyHeld": "primary-completion: no year in 2015:2025 met 120 mapped countries; best coverage was 118 primary-completion: selected coverage 9 is below 120"
+    },
+    {
+      "id": "private-fixed-capital-formation",
+      "providerCode": "NE.GDI.FPRV.ZS",
+      "shortTitle": "Private fixed capital formation",
+      "category": "economy",
+      "whyHeld": "private-fixed-capital-formation: no year in 2015:2025 met 120 mapped countries; best coverage was 59 private-fixed-capital-formation: selected coverage 47 is below 120"
+    },
+    {
+      "id": "roads-paved",
+      "providerCode": "IS.ROD.PAVE.ZS",
+      "shortTitle": "Paved roads",
+      "category": "connectivity",
+      "whyHeld": "roads-paved: no year in 2015:2025 met 120 mapped countries; best coverage was 0 roads-paved: selected coverage 0 is below 120"
+    },
+    {
+      "id": "secondary-private-enrollment",
+      "providerCode": "SE.SEC.PRIV.ZS",
+      "shortTitle": "Private secondary enrollment",
+      "category": "education",
+      "whyHeld": "secondary-private-enrollment: no year in 2015:2025 met 120 mapped countries; best coverage was 119 secondary-private-enrollment: selected coverage 1 is below 120"
+    },
+    {
+      "id": "urban-agglomerations-share",
+      "providerCode": "EN.URB.MCTY.TL.ZS",
+      "shortTitle": "Large urban agglomerations",
+      "category": "settlement",
+      "whyHeld": "urban-agglomerations-share: no year in 2015:2025 met 120 mapped countries; best coverage was 119 urban-agglomerations-share: selected coverage 119 is below 120"
+    },
+    {
+      "id": "wgi-control-corruption-rank",
+      "providerCode": "CC.PER.RNK",
+      "shortTitle": "Control of corruption rank",
+      "category": "development",
+      "whyHeld": "Unexpected World Bank response for https://api.worldbank.org/v2/country/all/indicator/CC.PER.RNK?format=json&per_page=20000&page=1&date=2015%3A2025"
+    },
+    {
+      "id": "wgi-government-effectiveness-rank",
+      "providerCode": "GE.PER.RNK",
+      "shortTitle": "Government effectiveness rank",
+      "category": "development",
+      "whyHeld": "Unexpected World Bank response for https://api.worldbank.org/v2/country/all/indicator/GE.PER.RNK?format=json&per_page=20000&page=1&date=2015%3A2025"
+    },
+    {
+      "id": "wgi-political-stability-rank",
+      "providerCode": "PV.PER.RNK",
+      "shortTitle": "Political stability rank",
+      "category": "development",
+      "whyHeld": "Unexpected World Bank response for https://api.worldbank.org/v2/country/all/indicator/PV.PER.RNK?format=json&per_page=20000&page=1&date=2015%3A2025"
+    },
+    {
+      "id": "wgi-regulatory-quality-rank",
+      "providerCode": "RQ.PER.RNK",
+      "shortTitle": "Regulatory quality rank",
+      "category": "development",
+      "whyHeld": "Unexpected World Bank response for https://api.worldbank.org/v2/country/all/indicator/RQ.PER.RNK?format=json&per_page=20000&page=1&date=2015%3A2025"
+    },
+    {
+      "id": "wgi-rule-of-law-rank",
+      "providerCode": "RL.PER.RNK",
+      "shortTitle": "Rule of law rank",
+      "category": "development",
+      "whyHeld": "Unexpected World Bank response for https://api.worldbank.org/v2/country/all/indicator/RL.PER.RNK?format=json&per_page=20000&page=1&date=2015%3A2025"
+    },
+    {
+      "id": "wgi-voice-accountability-rank",
+      "providerCode": "VA.PER.RNK",
+      "shortTitle": "Voice and accountability rank",
+      "category": "development",
+      "whyHeld": "Unexpected World Bank response for https://api.worldbank.org/v2/country/all/indicator/VA.PER.RNK?format=json&per_page=20000&page=1&date=2015%3A2025"
+    }
+  ],
+  "reportPaths": [
+    "generated/reports/candidate-batch-2-summary.md",
+    "generated/reports/candidate-batch-2-summary.json",
+    "generated/reports/candidate-intake-report.md",
+    "generated/reports/candidate-scorecards.md",
+    "generated/reports/content-status-diff.md",
+    "generated/reports/validation-report.md"
+  ],
+  "limitations": [
+    "Batch 2 improves the catalog but 132 playable maps is still below the 150-250 early-beta target.",
+    "Daily-ready count is 59, just below the desired 60-80 range for a stronger beta.",
+    "Some education, poverty, governance, debt, banking, and road indicators failed or nearly failed the coverage/source gate and should not be promoted without better source handling or alternate indicators.",
+    "The status-diff report is rolling build-to-build; this batch summary preserves the exp1-to-exp2 before/after counts."
+  ],
+  "recommendedNextTask": "WORLDPRINT Batch 2 Editorial QA + Beta Map Triage: playtest the 52 newly promoted maps, demote confusing lookalikes, then add a narrower Batch 3 aimed at education, technology, migration/tourism, and underrepresented Daily categories."
+}

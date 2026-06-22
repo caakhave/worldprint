@@ -2,34 +2,34 @@
   "schemaVersion": "1.1.0",
   "game": "worldprint",
   "date": "2026-07-17",
-  "contentVersion": "2026.06.19-ed1",
+  "contentVersion": "2026.06.22-exp2-qa1",
   "roundIds": [
-    "worldprint-cereal-yield",
-    "worldprint-arable-land",
-    "worldprint-under-five-mortality",
+    "worldprint-tuberculosis-incidence",
+    "worldprint-food-production-index",
     "worldprint-forest-area",
-    "worldprint-urban-population"
+    "worldprint-fertility-rate",
+    "worldprint-account-ownership"
   ],
   "indicatorIds": [
-    "cereal-yield",
-    "arable-land",
-    "under-five-mortality",
+    "tuberculosis-incidence",
+    "food-production-index",
     "forest-area",
-    "urban-population"
+    "fertility-rate",
+    "account-ownership"
   ],
   "categoryMix": {
-    "agriculture": 1,
-    "land": 1,
     "health": 1,
+    "agriculture": 1,
     "environment": 1,
-    "settlement": 1
+    "demography": 1,
+    "development": 1
   },
   "mapDifficultyMix": {
     "expert": 1,
-    "standard": 2,
-    "intro": 2
+    "standard": 3,
+    "intro": 1
   },
-  "generatedAt": "2026-06-19T17:09:23.338473+00:00",
+  "generatedAt": "2026-06-22T18:07:37.463543+00:00",
   "generatorVersion": "daily-manifest-v1",
   "varietyNotes": [
     "Selected with category, difficulty, and same-day correlation safeguards."

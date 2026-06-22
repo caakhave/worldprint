@@ -104,5 +104,5 @@ export function challengePayloadFromRun(run: RunState): Omit<ChallengePayload, "
 }
 
 export function challengeTitle(tier: Tier): string {
-  return `WORLDPRINT Challenge · ${tier}`;
+  return `Can You Geo? Challenge · Mystery Map · ${tier}`;
 }

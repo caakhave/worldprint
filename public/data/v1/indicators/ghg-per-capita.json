@@ -204,12 +204,12 @@
     "valuesReference": "https://api.worldbank.org/v2/country/all/indicator/EN.GHG.ALL.PC.CE.AR5?format=json&per_page=20000&page=1&date=2015%3A2025",
     "license": "Creative Commons Attribution 4.0 International unless specifically labeled otherwise by World Bank metadata",
     "licenseReference": "https://www.worldbank.org/en/about/legal/terms-of-use-for-datasets",
-    "retrievedAt": "2026-06-19T17:09:10.966357+00:00",
+    "retrievedAt": "2026-06-22T18:05:52.112625+00:00",
     "checksum": "b1195a73e6610661dc5fe377c8d7f796a6cae16b1beee0a6e395c0fcf4446af2",
     "sourceOrganization": "EDGAR (Emissions Database for Global Atmospheric Research) Community GHG Database, Joint Research Centre (JRC) - European Commission, uri: https://edgar.jrc.ec.europa.eu/dataset_ghg2024, publisher: JRC European Commission, date published: 2024;\nInternational Energy Agency (IEA), uri: https://edgar.jrc.ec.europa.eu/dataset_ghg2024, publisher: JRC European Commission, date published: 2024"
   },
   "reviewStatus": "approved",
-  "contentVersion": "2026.06.19-ed1",
+  "contentVersion": "2026.06.22-exp2-qa1",
   "editorial": {
     "shortHook": "A broader climate footprint map.",
     "patternNote": "The darkest countries include Qatar, Kuwait, Mongolia, while the lightest include Congo, Dem. Rep., Rwanda, Burundi; that contrast is the fastest way to read the greenhouse gas emissions per capita pattern.",
@@ -234,12 +234,12 @@
         "reason": "CO2 emissions per capita can tempt players because it shares a strong country ranking with this map, but its unit and definition point to a different story."
       },
       {
-        "confusedWithIndicatorCode": "NY.GDP.PCAP.PP.CD",
-        "reason": "GDP per capita, PPP can tempt players because it shares a strong country ranking with this map, but its unit and definition point to a different story."
+        "confusedWithIndicatorCode": "EG.USE.PCAP.KG.OE",
+        "reason": "Energy use can tempt players because it shares a strong country ranking with this map, but its unit and definition point to a different story."
       },
       {
-        "confusedWithIndicatorCode": "IT.NET.USER.ZS",
-        "reason": "Internet users can tempt players because it shares a strong country ranking with this map, but its unit and definition point to a different story."
+        "confusedWithIndicatorCode": "EG.USE.ELEC.KH.PC",
+        "reason": "Electric power use can tempt players because it shares a strong country ranking with this map, but its unit and definition point to a different story."
       }
     ],
     "difficultyReason": "Expert difficulty: the map can be mistaken for adjacent indicators unless players probe a high, low, and middle country.",
@@ -250,7 +250,7 @@
   },
   "editorialReview": {
     "status": "expert_only",
-    "reviewedAt": "2026-06-19",
+    "reviewedAt": "2026-06-22",
     "reviewedBy": "Codex editorial QA",
     "qualityScore": 3,
     "funScore": 4,

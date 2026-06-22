@@ -195,12 +195,12 @@
     "valuesReference": "https://api.worldbank.org/v2/country/all/indicator/BX.KLT.DINV.WD.GD.ZS?format=json&per_page=20000&page=1&date=2015%3A2025",
     "license": "Creative Commons Attribution 4.0 International unless specifically labeled otherwise by World Bank metadata",
     "licenseReference": "https://www.worldbank.org/en/about/legal/terms-of-use-for-datasets",
-    "retrievedAt": "2026-06-19T17:09:21.234351+00:00",
+    "retrievedAt": "2026-06-22T18:06:05.312509+00:00",
     "checksum": "492d6cb64c25fea63f273b8b2d5d5a191885e51c2b1721eaae464cd566650600",
     "sourceOrganization": "International Financial Statistics and Balance of Payments databases, International Monetary Fund (IMF);\nInternational Debt Statistics, World Bank (WB);\nWorld Bank GDP estimates, World Bank (WB);\nOECD GDP estimates, Organisation for Economic Co-operation and Development (OECD)"
   },
   "reviewStatus": "approved",
-  "contentVersion": "2026.06.19-ed1",
+  "contentVersion": "2026.06.22-exp2-qa1",
   "editorial": {
     "shortHook": "A volatile investment-flow map.",
     "patternNote": "The darkest countries include Luxembourg, Guyana, Mozambique, while the lightest include Cyprus, Hungary, Switzerland; that contrast is the fastest way to read the foreign direct investment inflows pattern.",
@@ -221,16 +221,16 @@
     ],
     "commonConfusions": [
       {
-        "confusedWithIndicatorCode": "BN.CAB.XOKA.GD.ZS",
-        "reason": "Current account balance lives in the same category, so it can feel plausible until the high and low countries are checked."
+        "confusedWithIndicatorCode": "BM.KLT.DINV.WD.GD.ZS",
+        "reason": "Foreign direct investment outflows lives in the same category, so it can feel plausible until the high and low countries are checked."
       },
       {
-        "confusedWithIndicatorCode": "NE.IMP.GNFS.ZS",
-        "reason": "Imports lives in the same category, so it can feel plausible until the high and low countries are checked."
+        "confusedWithIndicatorCode": "ER.GDP.FWTL.M3.KD",
+        "reason": "Water productivity overlaps with part of the visible pattern, but the full country spread does not match."
       },
       {
-        "confusedWithIndicatorCode": "NE.TRD.GNFS.ZS",
-        "reason": "Trade lives in the same category, so it can feel plausible until the high and low countries are checked."
+        "confusedWithIndicatorCode": "EG.ELC.HYRO.ZS",
+        "reason": "Hydroelectricity share overlaps with part of the visible pattern, but the full country spread does not match."
       }
     ],
     "difficultyReason": "Expert difficulty: the map can be mistaken for adjacent indicators unless players probe a high, low, and middle country.",
@@ -242,7 +242,7 @@
   },
   "editorialReview": {
     "status": "expert_only",
-    "reviewedAt": "2026-06-19",
+    "reviewedAt": "2026-06-22",
     "reviewedBy": "Codex editorial QA",
     "qualityScore": 3,
     "funScore": 3,

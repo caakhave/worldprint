@@ -2,34 +2,33 @@
   "schemaVersion": "1.1.0",
   "game": "worldprint",
   "date": "2026-06-26",
-  "contentVersion": "2026.06.19-ed1",
+  "contentVersion": "2026.06.22-exp2-qa1",
   "roundIds": [
-    "worldprint-cereal-yield",
-    "worldprint-internet-users",
-    "worldprint-gdp-per-capita",
-    "worldprint-renewable-electricity",
-    "worldprint-pm25-exposure"
+    "worldprint-arable-land-per-person",
+    "worldprint-open-defecation",
+    "worldprint-tourism-arrivals",
+    "worldprint-electricity-access",
+    "worldprint-measles-immunization"
   ],
   "indicatorIds": [
-    "cereal-yield",
-    "internet-users",
-    "gdp-per-capita",
-    "renewable-electricity",
-    "pm25-exposure"
+    "arable-land-per-person",
+    "open-defecation",
+    "tourism-arrivals",
+    "electricity-access",
+    "measles-immunization"
   ],
   "categoryMix": {
-    "agriculture": 1,
-    "connectivity": 1,
-    "development": 1,
-    "energy": 1,
-    "environment": 1
+    "land": 1,
+    "health": 2,
+    "economy": 1,
+    "energy": 1
   },
   "mapDifficultyMix": {
     "expert": 1,
-    "intro": 2,
-    "standard": 2
+    "standard": 3,
+    "intro": 1
   },
-  "generatedAt": "2026-06-19T17:09:23.333459+00:00",
+  "generatedAt": "2026-06-22T18:07:37.460645+00:00",
   "generatorVersion": "daily-manifest-v1",
   "varietyNotes": [
     "Selected with category, difficulty, and same-day correlation safeguards."

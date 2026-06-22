@@ -175,12 +175,12 @@
     "valuesReference": "https://api.worldbank.org/v2/country/all/indicator/SE.PRM.ENRR?format=json&per_page=20000&page=1&date=2015%3A2025",
     "license": "Creative Commons Attribution 4.0 International unless specifically labeled otherwise by World Bank metadata",
     "licenseReference": "https://www.worldbank.org/en/about/legal/terms-of-use-for-datasets",
-    "retrievedAt": "2026-06-19T17:09:01.323698+00:00",
+    "retrievedAt": "2026-06-22T18:05:41.415886+00:00",
     "checksum": "35ee8198b821dbf818e01c2d0c9001147b7360e4de6b2f85f2a0e0ca55387f9e",
     "sourceOrganization": "Data API, UN Educational, Scientific and Cultural Organization (UNESCO), uri: https://databrowser.uis.unesco.org/resources, note: The data are obtained through the UIS API.  Detailed documentation is available at: https://api.uis.unesco.org/api/public/documentation/, publisher: UNESCO Institute for Statistics (UIS), type: Bulk file (csv), date accessed: 2026-03-19, date published: 2026-02"
   },
   "reviewStatus": "approved",
-  "contentVersion": "2026.06.19-ed1",
+  "contentVersion": "2026.06.22-exp2-qa1",
   "editorial": {
     "shortHook": "A schooling map with a surprisingly noisy edge.",
     "patternNote": "The darkest countries include Sierra Leone, Rwanda, Malawi, while the lightest include Somalia, Fed. Rep., Suriname, Niger; that contrast is the fastest way to read the primary enrollment pattern.",
@@ -201,16 +201,16 @@
     ],
     "commonConfusions": [
       {
+        "confusedWithIndicatorCode": "SE.PRM.NENR",
+        "reason": "Net primary enrollment lives in the same category, so it can feel plausible until the high and low countries are checked."
+      },
+      {
+        "confusedWithIndicatorCode": "EG.ELC.PETR.ZS",
+        "reason": "Oil electricity share overlaps with part of the visible pattern, but the full country spread does not match."
+      },
+      {
         "confusedWithIndicatorCode": "SE.SEC.ENRR",
         "reason": "Secondary enrollment lives in the same category, so it can feel plausible until the high and low countries are checked."
-      },
-      {
-        "confusedWithIndicatorCode": "EG.ELC.RNEW.ZS",
-        "reason": "Renewable electricity overlaps with part of the visible pattern, but the full country spread does not match."
-      },
-      {
-        "confusedWithIndicatorCode": "SH.XPD.OOPC.CH.ZS",
-        "reason": "Out-of-pocket health spending overlaps with part of the visible pattern, but the full country spread does not match."
       }
     ],
     "difficultyReason": "Standard difficulty: the map has readable regional structure, but the best answer still depends on checking the unit and country anchors.",
@@ -221,7 +221,7 @@
   },
   "editorialReview": {
     "status": "needs_review",
-    "reviewedAt": "2026-06-19",
+    "reviewedAt": "2026-06-22",
     "reviewedBy": "Codex editorial QA",
     "qualityScore": 2,
     "funScore": 2,

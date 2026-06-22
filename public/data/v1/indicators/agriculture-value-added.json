@@ -188,12 +188,12 @@
     "valuesReference": "https://api.worldbank.org/v2/country/all/indicator/NV.AGR.TOTL.ZS?format=json&per_page=20000&page=1&date=2015%3A2025",
     "license": "Creative Commons Attribution 4.0 International unless specifically labeled otherwise by World Bank metadata",
     "licenseReference": "https://www.worldbank.org/en/about/legal/terms-of-use-for-datasets",
-    "retrievedAt": "2026-06-19T17:09:14.086187+00:00",
+    "retrievedAt": "2026-06-22T18:05:55.663924+00:00",
     "checksum": "72c672ac677d652660e6b0cd31b880a24b05efba0cb892aade9e1f1d830c3083",
     "sourceOrganization": "Country official statistics, National Statistical Organizations and/or Central Banks;\nNational Accounts data files, Organisation for Economic Co-operation and Development (OECD);\nStaff estimates, World Bank (WB)"
   },
   "reviewStatus": "approved",
-  "contentVersion": "2026.06.19-ed1",
+  "contentVersion": "2026.06.22-exp2-qa1",
   "editorial": {
     "shortHook": "An economy-structure map.",
     "patternNote": "The darkest countries include Guinea-Bissau, Chad, Burundi, while the lightest include Luxembourg, Qatar, Kuwait; that contrast is the fastest way to read the agriculture value added pattern.",
@@ -214,16 +214,16 @@
     ],
     "commonConfusions": [
       {
+        "confusedWithIndicatorCode": "NY.GNP.PCAP.CD",
+        "reason": "GNI per capita can tempt players because it shares a strong country ranking with this map, but its unit and definition point to a different story."
+      },
+      {
         "confusedWithIndicatorCode": "NY.GDP.PCAP.CD",
         "reason": "GDP per capita can tempt players because it shares a strong country ranking with this map, but its unit and definition point to a different story."
       },
       {
-        "confusedWithIndicatorCode": "SL.AGR.EMPL.ZS",
-        "reason": "Employment in agriculture can tempt players because it shares a strong country ranking with this map, but its unit and definition point to a different story."
-      },
-      {
-        "confusedWithIndicatorCode": "NY.GDP.PCAP.PP.CD",
-        "reason": "GDP per capita, PPP can tempt players because it shares a strong country ranking with this map, but its unit and definition point to a different story."
+        "confusedWithIndicatorCode": "SH.XPD.CHEX.PC.CD",
+        "reason": "Health spending per person can tempt players because it shares a strong country ranking with this map, but its unit and definition point to a different story."
       }
     ],
     "difficultyReason": "Standard difficulty: the map has readable regional structure, but the best answer still depends on checking the unit and country anchors.",
@@ -234,7 +234,7 @@
   },
   "editorialReview": {
     "status": "daily_eligible",
-    "reviewedAt": "2026-06-19",
+    "reviewedAt": "2026-06-22",
     "reviewedBy": "Codex editorial QA",
     "qualityScore": 4,
     "funScore": 4,

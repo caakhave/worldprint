@@ -2,33 +2,32 @@
   "schemaVersion": "1.1.0",
   "game": "worldprint",
   "date": "2026-06-17",
-  "contentVersion": "2026.06.19-ed1",
+  "contentVersion": "2026.06.22-exp2-qa1",
   "roundIds": [
-    "worldprint-adolescent-fertility",
-    "worldprint-health-expenditure",
-    "worldprint-renewable-electricity",
-    "worldprint-mobile-subscriptions",
-    "worldprint-trade-share"
+    "worldprint-cereal-yield",
+    "worldprint-manufacturing-share",
+    "worldprint-food-production-index",
+    "worldprint-permanent-cropland",
+    "worldprint-under-five-mortality"
   ],
   "indicatorIds": [
-    "adolescent-fertility",
-    "health-expenditure",
-    "renewable-electricity",
-    "mobile-subscriptions",
-    "trade-share"
+    "cereal-yield",
+    "manufacturing-share",
+    "food-production-index",
+    "permanent-cropland",
+    "under-five-mortality"
   ],
   "categoryMix": {
-    "demography": 1,
-    "health": 1,
-    "energy": 1,
-    "connectivity": 1,
-    "economy": 1
+    "agriculture": 2,
+    "economy": 1,
+    "land": 1,
+    "health": 1
   },
   "mapDifficultyMix": {
     "expert": 1,
     "standard": 4
   },
-  "generatedAt": "2026-06-19T17:09:23.332481+00:00",
+  "generatedAt": "2026-06-22T18:07:37.458931+00:00",
   "generatorVersion": "daily-manifest-v1",
   "varietyNotes": [
     "Selected with category, difficulty, and same-day correlation safeguards."

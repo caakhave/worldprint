@@ -2,13 +2,29 @@ import type { Metadata, Viewport } from "next";
 import Link from "next/link";
 import "@/styles/globals.css";
 import { BrandMark } from "@/components/BrandMark";
+import { BRAND_NAME } from "@/lib/brand";
 
 export const metadata: Metadata = {
+  metadataBase: new URL("https://canyougeo.com"),
   title: {
-    default: "WORLDPRINT",
-    template: "%s | WORLDPRINT"
+    default: "Can You Geo? — Daily Geography Games & World Data Puzzles",
+    template: "%s | Can You Geo?"
   },
-  description: "Read the world. A geography game for people who already know the capitals."
+  description:
+    "Identify hidden data maps, find population centers, spot atlas anomalies, and follow water across the planet in geography games made for world-data nerds.",
+  openGraph: {
+    title: "Can You Geo? — Daily Geography Games & World Data Puzzles",
+    description:
+      "Identify hidden data maps, find population centers, spot atlas anomalies, and follow water across the planet in geography games made for world-data nerds.",
+    url: "https://canyougeo.com",
+    siteName: "Can You Geo?"
+  },
+  twitter: {
+    card: "summary",
+    title: "Can You Geo? — Daily Geography Games & World Data Puzzles",
+    description:
+      "Identify hidden data maps, find population centers, spot atlas anomalies, and follow water across the planet in geography games made for world-data nerds."
+  }
 };
 
 export const viewport: Viewport = {
@@ -34,7 +50,7 @@ export default function RootLayout({ children }: Readonly<{ children: React.Reac
           Skip to content
         </a>
         <header className="site-header">
-          <Link className="brand-link" href="/" aria-label="WORLDPRINT home">
+          <Link className="brand-link" href="/" aria-label={`${BRAND_NAME} home`}>
             <BrandMark />
           </Link>
           <nav className="site-nav" aria-label="Primary navigation">
@@ -47,7 +63,7 @@ export default function RootLayout({ children }: Readonly<{ children: React.Reac
         </header>
         <main id="main">{children}</main>
         <footer className="site-footer">
-          <p>WORLDPRINT is a working product name. Map and data sources are documented before play.</p>
+          <p>Can You Geo? is an open beta. Map and data sources are documented before play.</p>
           <Link href="/sources">Methodology and licenses</Link>
         </footer>
       </body>

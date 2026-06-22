@@ -202,12 +202,12 @@
     "valuesReference": "https://api.worldbank.org/v2/country/all/indicator/SL.SRV.EMPL.ZS?format=json&per_page=20000&page=1&date=2015%3A2025",
     "license": "Creative Commons Attribution 4.0 International unless specifically labeled otherwise by World Bank metadata",
     "licenseReference": "https://www.worldbank.org/en/about/legal/terms-of-use-for-datasets",
-    "retrievedAt": "2026-06-19T17:09:18.282985+00:00",
+    "retrievedAt": "2026-06-22T18:06:01.377236+00:00",
     "checksum": "dfcbfdf1d0527c19a8dc0840f1ffc00f61f92fa368ef1ad1ed7b4762782b014a",
     "sourceOrganization": "ILO Modelled Estimates database (ILOEST), International Labour Organization (ILO), uri: https://ilostat.ilo.org/data/bulk/, publisher: ILOSTAT, type: external database, date accessed: January 17, 2026"
   },
   "reviewStatus": "approved",
-  "contentVersion": "2026.06.19-ed1",
+  "contentVersion": "2026.06.22-exp2-qa1",
   "editorial": {
     "shortHook": "The service-economy workforce map.",
     "patternNote": "The darkest countries include Djibouti, Luxembourg, Netherlands, while the lightest include Burundi, Niger, Chad; that contrast is the fastest way to read the employment in services pattern.",
@@ -232,12 +232,12 @@
         "reason": "Employment in agriculture can tempt players because it shares a strong country ranking with this map, but its unit and definition point to a different story."
       },
       {
-        "confusedWithIndicatorCode": "SL.EMP.VULN.ZS",
-        "reason": "Vulnerable employment can tempt players because it shares a strong country ranking with this map, but its unit and definition point to a different story."
+        "confusedWithIndicatorCode": "NV.AGR.EMPL.KD",
+        "reason": "Agriculture value per worker can tempt players because it shares a strong country ranking with this map, but its unit and definition point to a different story."
       },
       {
-        "confusedWithIndicatorCode": "NY.GDP.PCAP.CD",
-        "reason": "GDP per capita can tempt players because it shares a strong country ranking with this map, but its unit and definition point to a different story."
+        "confusedWithIndicatorCode": "NY.GNP.PCAP.CD",
+        "reason": "GNI per capita can tempt players because it shares a strong country ranking with this map, but its unit and definition point to a different story."
       }
     ],
     "difficultyReason": "Standard difficulty: the map has readable regional structure, but the best answer still depends on checking the unit and country anchors.",
@@ -248,7 +248,7 @@
   },
   "editorialReview": {
     "status": "practice_eligible",
-    "reviewedAt": "2026-06-19",
+    "reviewedAt": "2026-06-22",
     "reviewedBy": "Codex editorial QA",
     "qualityScore": 3,
     "funScore": 3,

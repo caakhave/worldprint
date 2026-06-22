@@ -2,34 +2,32 @@
   "schemaVersion": "1.1.0",
   "game": "worldprint",
   "date": "2026-08-05",
-  "contentVersion": "2026.06.19-ed1",
+  "contentVersion": "2026.06.22-exp2-qa1",
   "roundIds": [
-    "worldprint-adolescent-fertility",
-    "worldprint-population-density",
-    "worldprint-safe-drinking-water",
-    "worldprint-secondary-enrollment",
-    "worldprint-employment-agriculture"
+    "worldprint-tuberculosis-incidence",
+    "worldprint-clean-fuels-access",
+    "worldprint-life-expectancy",
+    "worldprint-co2-per-capita",
+    "worldprint-electricity-access"
   ],
   "indicatorIds": [
-    "adolescent-fertility",
-    "population-density",
-    "safe-drinking-water",
-    "secondary-enrollment",
-    "employment-agriculture"
+    "tuberculosis-incidence",
+    "clean-fuels-access",
+    "life-expectancy",
+    "co2-per-capita",
+    "electricity-access"
   ],
   "categoryMix": {
-    "demography": 1,
-    "settlement": 1,
-    "health": 1,
-    "education": 1,
-    "labor": 1
+    "health": 2,
+    "energy": 2,
+    "environment": 1
   },
   "mapDifficultyMix": {
     "expert": 1,
-    "standard": 3,
-    "intro": 1
+    "standard": 2,
+    "intro": 2
   },
-  "generatedAt": "2026-06-19T17:09:23.340959+00:00",
+  "generatedAt": "2026-06-22T18:07:37.465692+00:00",
   "generatorVersion": "daily-manifest-v1",
   "varietyNotes": [
     "Selected with category, difficulty, and same-day correlation safeguards."

@@ -1,4 +1,6 @@
-# WORLDPRINT Data Governance
+# Can You Geo? Data Governance
+
+Mystery Map is the current Can You Geo? game mode. The data pipeline still uses the legacy `worldprint` namespace for static artifacts, route compatibility, challenge payloads, and localStorage migrations.
 
 ## Sources
 
@@ -7,7 +9,7 @@
 
 ## Single-Year Rule
 
-Each approved indicator artifact uses one explicit reference year. A map must never mix every country&apos;s individually latest value into a single unlabeled round.
+Each source-valid indicator artifact uses one explicit reference year. A map must never mix every country's individually latest value into a single unlabeled round.
 
 ## Coverage Rule
 
@@ -36,7 +38,7 @@ Warnings may remain only for reviewed edge cases.
 
 ## Distractor Review
 
-The build computes Pearson correlation, Spearman rank correlation, overlapping country count, missing-data count, quantile-class visual similarity, near-uniform-map warnings, same-topic warnings, and per-capita wording notes across approved indicators. The report lives at `generated/reports/distractor-review.md`.
+The build computes Pearson correlation, Spearman rank correlation, overlapping country count, missing-data count, quantile-class visual similarity, near-uniform-map warnings, same-topic warnings, and per-capita wording notes across source-valid indicators. The report lives at `generated/reports/distractor-review.md`.
 
 High-correlation pairs are not automatically banned from all play. They are useful on Cartographer when the topic is intentionally close, but Daily selection avoids putting strongly correlated indicators in the same five-round set when the approved pool allows it.
 
@@ -44,7 +46,7 @@ High-correlation pairs are not automatically banned from all play. They are usef
 
 Approved indicators must include rich editorial metadata: short hook, pattern note, why-it-matters, best probe countries, common confusions, difficulty reason, optional caveat, and regional signals. Practice/dev-only fixtures may be looser only when clearly marked outside the approved Daily catalog.
 
-The current expanded catalog is generated from curated `IndicatorSpec` entries in `tools/data_pipeline/build.py`. Round choices and aliases are generated from approved indicators and validated before gameplay. Correlation warnings guide review but do not auto-write unsupported causal claims.
+The current expanded catalog is generated from curated `IndicatorSpec` entries in `tools/data_pipeline/build.py`. Round choices and aliases are generated from playable indicators and validated before gameplay. Correlation warnings guide review but do not auto-write unsupported causal claims.
 
 ## Content Versioning
 
