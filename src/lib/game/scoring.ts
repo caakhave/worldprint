@@ -15,9 +15,12 @@ export type TierConfig = {
     investigationPenalties: number[];
     unitCluePenalty: number;
     wrongAnswerPenalty: number;
-    minimumSolvedScore: number;
   };
 };
+
+export const COUNTRY_REVEAL_COST = 100;
+export const UNIT_REVEAL_COST = 100;
+export const WRONG_ANSWER_COST = 300;
 
 export const TIER_CONFIGS: Record<Tier, TierConfig> = {
   explorer: {
@@ -25,16 +28,15 @@ export const TIER_CONFIGS: Record<Tier, TierConfig> = {
     label: "Explorer",
     shortLabel: "Explorer",
     description: "Easiest tier with broad answers and generous clues.",
-    highlights: ["3 broad choices", "3 country investigations", "Country names on hover", "Unit clue available"],
+    highlights: ["3 broad choices", "3 country reveals", "Country names on hover", "Useful unit clues"],
     choiceCount: 3,
     maxInvestigations: 3,
     unitClue: true,
     scoring: {
       start: 1000,
-      investigationPenalties: [60, 90, 120],
-      unitCluePenalty: 120,
-      wrongAnswerPenalty: 200,
-      minimumSolvedScore: 100
+      investigationPenalties: [COUNTRY_REVEAL_COST, COUNTRY_REVEAL_COST, COUNTRY_REVEAL_COST],
+      unitCluePenalty: UNIT_REVEAL_COST,
+      wrongAnswerPenalty: WRONG_ANSWER_COST
     }
   },
   analyst: {
@@ -43,16 +45,15 @@ export const TIER_CONFIGS: Record<Tier, TierConfig> = {
     shortLabel: "Analyst",
     description: "Balanced serious play with plausible choices and enough evidence to reason it out.",
     badge: "Recommended",
-    highlights: ["4 plausible choices", "3 country investigations", "Unit clue available", "Default serious play"],
+    highlights: ["4 plausible choices", "3 country reveals", "Useful unit clues", "Default serious play"],
     choiceCount: 4,
     maxInvestigations: 3,
     unitClue: true,
     scoring: {
       start: 1000,
-      investigationPenalties: [100, 150, 200],
-      unitCluePenalty: 200,
-      wrongAnswerPenalty: 300,
-      minimumSolvedScore: 100
+      investigationPenalties: [COUNTRY_REVEAL_COST, COUNTRY_REVEAL_COST, COUNTRY_REVEAL_COST],
+      unitCluePenalty: UNIT_REVEAL_COST,
+      wrongAnswerPenalty: WRONG_ANSWER_COST
     }
   },
   cartographer: {
@@ -60,16 +61,15 @@ export const TIER_CONFIGS: Record<Tier, TierConfig> = {
     label: "Cartographer",
     shortLabel: "Cartographer",
     description: "Hard tier for strong geography and data players.",
-    highlights: ["6 close choices", "1 country investigation", "No unit clue", "Closely related distractors"],
+    highlights: ["6 close choices", "1 country reveal", "Useful unit clues", "Closely related distractors"],
     choiceCount: 6,
     maxInvestigations: 1,
-    unitClue: false,
+    unitClue: true,
     scoring: {
       start: 1000,
-      investigationPenalties: [250],
-      unitCluePenalty: 0,
-      wrongAnswerPenalty: 300,
-      minimumSolvedScore: 100
+      investigationPenalties: [COUNTRY_REVEAL_COST],
+      unitCluePenalty: UNIT_REVEAL_COST,
+      wrongAnswerPenalty: WRONG_ANSWER_COST
     }
   },
   atlasMaster: {
@@ -77,23 +77,21 @@ export const TIER_CONFIGS: Record<Tier, TierConfig> = {
     label: "Atlas Master",
     shortLabel: "Master",
     description: "Brutal expert tier with no visible answer list.",
-    highlights: ["No visible answer choices", "Search the approved catalog", "1 expensive investigation", "No unit clue"],
+    highlights: ["No visible answer choices", "Search the approved catalog", "1 country reveal", "Useful unit clues"],
     choiceCount: null,
     maxInvestigations: 1,
-    unitClue: false,
+    unitClue: true,
     scoring: {
       start: 1000,
-      investigationPenalties: [300],
-      unitCluePenalty: 0,
-      wrongAnswerPenalty: 250,
-      minimumSolvedScore: 100
+      investigationPenalties: [COUNTRY_REVEAL_COST],
+      unitCluePenalty: UNIT_REVEAL_COST,
+      wrongAnswerPenalty: WRONG_ANSWER_COST
     }
   }
 };
 
-export function deductScore(currentScore: number, penalty: number, tier: Tier): number {
-  const minimum = TIER_CONFIGS[tier].scoring.minimumSolvedScore;
-  return Math.max(minimum, currentScore - penalty);
+export function deductScore(currentScore: number, penalty: number): number {
+  return currentScore - penalty;
 }
 
 export function nextInvestigationPenalty(tier: Tier, paidInvestigationCount: number): number | null {

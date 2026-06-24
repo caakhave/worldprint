@@ -18,7 +18,7 @@ The first product promise is data-pattern literacy, not political-boundary adjud
 
 ## Missing Data
 
-Countries without a valid value for a round are shown with a distinct missing-data treatment and are never treated as zero. Investigating a missing country costs no points and says `No data for this round`.
+Countries without a valid value for a round are shown with a distinct missing-data treatment and are never treated as zero. Revealing a missing country costs no points and says `No data for this country on this map`.
 
 ## Reporting Issues
 

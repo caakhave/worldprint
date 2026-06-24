@@ -14,6 +14,7 @@ const config = [
       "test-results/**",
       "output/**",
       "generated/raw/**",
+      "supabase/functions/**",
       "public/data/v1/**",
       "public/maps/**"
     ],

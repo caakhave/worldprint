@@ -1,4 +1,4 @@
-import { render, screen } from "@testing-library/react";
+import { fireEvent, render, screen } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
 import { readFileSync } from "node:fs";
 import path from "node:path";
@@ -36,6 +36,29 @@ describe("WorldMap", () => {
     expect(country).not.toBeNull();
     await user.click(country!);
     expect(onCountryClick).toHaveBeenCalled();
+  });
+
+  it("shows the actual country name on hover", () => {
+    const { container } = render(<WorldMap map={map} indicator={indicator} labelledBy="map-title" />);
+    const country = container.querySelector<SVGPathElement>(".country-path[data-country-name='Mexico']");
+    expect(country).not.toBeNull();
+    fireEvent.pointerMove(country!, { clientX: 30, clientY: 40 });
+    expect(screen.getByText("Mexico")).toBeInTheDocument();
+    expect(screen.queryByText(/^Country$/)).not.toBeInTheDocument();
+    expect(screen.queryByText("Unlabeled country")).not.toBeInTheDocument();
+  });
+
+  it("shows the actual country name on focus and supports keyboard selection", () => {
+    const onCountryClick = vi.fn();
+    const { container } = render(<WorldMap map={map} indicator={indicator} onCountryClick={onCountryClick} labelledBy="map-title" />);
+    const country = container.querySelector<SVGPathElement>(".country-path[data-country-name='Mexico']");
+    expect(country).not.toBeNull();
+    fireEvent.focus(country!);
+    expect(screen.getByText("Mexico")).toBeInTheDocument();
+    expect(screen.queryByText(/^Country$/)).not.toBeInTheDocument();
+    expect(screen.queryByText("Unlabeled country")).not.toBeInTheDocument();
+    fireEvent.keyDown(country!, { key: "Enter" });
+    expect(onCountryClick).toHaveBeenCalledWith({ iso3: "MEX", name: "Mexico" });
   });
 
   it("uses the same active palette for map fills and legend swatches", () => {

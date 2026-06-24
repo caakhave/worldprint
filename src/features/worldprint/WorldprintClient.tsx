@@ -1,10 +1,13 @@
 "use client";
 
 import { Compass, Copy, Lightbulb, Search, Share2, Shuffle } from "lucide-react";
+import Link from "next/link";
 import { useSearchParams } from "next/navigation";
 import { useCallback, useEffect, useMemo, useState } from "react";
 import { EntryAtlasVisual } from "@/features/worldprint/EntryAtlasVisual";
 import { TierSelector } from "@/features/worldprint/TierSelector";
+import { PlayerStatsPanel } from "@/features/worldprint/PlayerStatsPanel";
+import { useEntitlement } from "@/features/account/useEntitlement";
 import {
   loadEntityRegistry,
   loadIndicator,
@@ -28,7 +31,7 @@ import { filterPracticeRounds, selectPracticeRoundIds, utcDateKey, challengeNumb
 import { selectDailyRoundIdsFromManifest } from "@/lib/game/dailyManifest";
 import { buildShareText } from "@/lib/game/share";
 import { challengePayloadFromRun, decodeChallenge, encodeChallenge, type ChallengePayload } from "@/lib/game/challenge";
-import { TIER_CONFIGS, nextInvestigationPenalty } from "@/lib/game/scoring";
+import { COUNTRY_REVEAL_COST, TIER_CONFIGS, nextInvestigationPenalty } from "@/lib/game/scoring";
 import {
   activeRound,
   createRun,
@@ -47,6 +50,7 @@ import {
   type PersistedState
 } from "@/lib/persistence/storage";
 import { countryNameByIso3, formatValue } from "@/lib/geo/format";
+import { unitClueForIndicator } from "@/lib/geo/unitClue";
 import { MapLegend } from "@/components/MapLegend";
 import { WorldMap } from "@/components/WorldMap";
 
@@ -79,28 +83,44 @@ function useGameDateKey(dateOverride?: string) {
   return dateOverride ?? (override && /^\d{4}-\d{2}-\d{2}$/.test(override) ? override : utcDateKey(new Date()));
 }
 
-function pluralize(count: number, singular: string, plural = `${singular}s`) {
-  return `${count} ${count === 1 ? singular : plural}`;
+function practiceReadyLine(count: number) {
+  if (count >= 3) return "3 maps ready";
+  if (count === 2) return "2 maps ready for this topic";
+  if (count === 1) return "1 map ready for this topic";
+  return "No practice maps found for this combo";
 }
 
-function summarizeMix(values: string[]) {
-  if (values.length === 0) return "none";
-  const counts = new Map<string, number>();
-  for (const value of values) {
-    counts.set(value, (counts.get(value) ?? 0) + 1);
-  }
-  return Array.from(counts.entries())
-    .map(([value, count]) => (count > 1 ? `${value} x${count}` : value))
-    .join(", ");
+function rarePracticeNote(count: number) {
+  if (count === 2) return "Rare combo. Your warm-up will use both.";
+  if (count === 1) return "Rare combo. Try this one or change the topic or difficulty.";
+  return null;
 }
 
-function practiceSetCode(ids: string[]) {
-  let hash = 2166136261;
-  for (const id of ids.join("|")) {
-    hash ^= id.charCodeAt(0);
-    hash = Math.imul(hash, 16777619);
-  }
-  return (hash >>> 0).toString(36).toUpperCase().padStart(5, "0").slice(-5);
+function practiceLabel(difficulty: string, category: string) {
+  return category ? `${difficulty} ${category} practice` : `${difficulty} practice`;
+}
+
+function practiceFlavor(difficulty: IndicatorDifficulty) {
+  if (difficulty === "expert") return "A quick warm-up with trickier patterns.";
+  if (difficulty === "standard") return "A quick warm-up with sharper patterns.";
+  return "A quick warm-up before the Daily.";
+}
+
+function runProgressStats(run: RunState) {
+  const solvedRounds = run.rounds.filter((round) => round.phase === "solved");
+  const score = solvedRounds.reduce((total, round) => total + round.score, 0);
+  const bestRound = solvedRounds.length ? Math.max(...solvedRounds.map((round) => round.score)) : null;
+  return {
+    score,
+    mapsPlayed: solvedRounds.length,
+    correctAnswers: solvedRounds.length,
+    averageScore: solvedRounds.length ? Math.round(score / solvedRounds.length) : null,
+    bestRound
+  };
+}
+
+function formatStat(value: number | null) {
+  return value === null ? "—" : value.toLocaleString("en-US");
 }
 
 export function WorldprintClient({ dateOverride, entryMode = "standard" }: WorldprintClientProps) {
@@ -109,6 +129,7 @@ export function WorldprintClient({ dateOverride, entryMode = "standard" }: World
   const todayKey = useGameDateKey(dateOverride);
   const isArchiveDate = Boolean(dateOverride && todayKey !== actualTodayKey);
   const challengeCode = entryMode === "challenge" ? searchParams.get("c") : null;
+  const { entitlement } = useEntitlement();
   const [data, setData] = useState<LoadedData | null>(null);
   const [loadError, setLoadError] = useState<string | null>(null);
   const [store, setStore] = useState<PersistedState>(() => defaultPersistedState());
@@ -206,6 +227,10 @@ export function WorldprintClient({ dateOverride, entryMode = "standard" }: World
       window.requestAnimationFrame(() => window.scrollTo(0, 0));
     }
   }, [currentPhase, runStatus]);
+
+  useEffect(() => {
+    setSelectedCountryIso3("");
+  }, [run?.id, run?.currentRoundIndex]);
 
   const currentDailyRun = useMemo(() => {
     if (!data) return null;
@@ -366,12 +391,9 @@ export function WorldprintClient({ dateOverride, entryMode = "standard" }: World
       return (
         <section className="game-shell page-shell">
           <div className="empty-state surface challenge-state">
-            <p className="eyebrow">Challenge version mismatch</p>
-            <h1>This challenge belongs to another content version.</h1>
-            <p>
-              It was built for {challengeResult.payload.contentVersion}; this static build contains {data.manifest.contentVersion}.
-              The link will not be remixed against newer maps.
-            </p>
+            <p className="eyebrow">Challenge unavailable</p>
+            <h1>This challenge belongs to another build.</h1>
+            <p>This static build cannot safely replay those exact maps. Ask the sender for a fresh link.</p>
           </div>
         </section>
       );
@@ -383,7 +405,7 @@ export function WorldprintClient({ dateOverride, entryMode = "standard" }: World
           <div className="empty-state surface challenge-state">
             <p className="eyebrow">Challenge unavailable</p>
             <h1>Some maps in this challenge are missing.</h1>
-            <p>This static build cannot find {missingChallengeRounds.length} required round ID.</p>
+            <p>This build cannot find {missingChallengeRounds.length} map required by the link. Ask the sender for a fresh link.</p>
           </div>
         </section>
       );
@@ -397,8 +419,8 @@ export function WorldprintClient({ dateOverride, entryMode = "standard" }: World
         <section className="game-shell page-shell">
           <div className="empty-state surface challenge-state">
             <p className="eyebrow">Challenge unavailable</p>
-            <h1>Some indicator data is missing.</h1>
-            <p>This static build cannot find {missingChallengeIndicators.length} required indicator artifact.</p>
+            <h1>Some map data is missing.</h1>
+            <p>This build cannot find {missingChallengeIndicators.length} map required by the link. Ask the sender for a fresh link.</p>
           </div>
         </section>
       );
@@ -410,7 +432,7 @@ export function WorldprintClient({ dateOverride, entryMode = "standard" }: World
             <p className="eyebrow">Can You Geo? Challenge</p>
             <h1 className="page-title">Play the exact same maps.</h1>
             <p className="lead">
-              This Mystery Map link locks the content version, skill tier, and round IDs. Challenge plays do not affect today&apos;s Daily streak.
+              This Mystery Map link locks the exact maps and skill tier. Challenge plays do not affect today&apos;s Daily streak.
             </p>
             <div className="entry-facts" aria-label="Challenge facts">
               <span>{challengeResult.payload.roundIds.length} maps</span>
@@ -438,9 +460,9 @@ export function WorldprintClient({ dateOverride, entryMode = "standard" }: World
     return (
       <section className="game-shell page-shell">
         <div className="empty-state surface">
-          <p className="eyebrow">Archive unavailable</p>
-          <h1>No generated Daily exists for {todayKey}.</h1>
-          <p>Mystery Map archives are static. Choose a date from the generated archive index.</p>
+          <p className="eyebrow">Past game unavailable</p>
+          <h1>No Daily exists for {todayKey}.</h1>
+          <p>Choose another day from Past Games.</p>
         </div>
       </section>
     );
@@ -451,44 +473,41 @@ export function WorldprintClient({ dateOverride, entryMode = "standard" }: World
     const dailyLabel = activeDateRun
       ? activeDateRun.status === "complete"
         ? isArchiveDate
-          ? "Review archive result"
+          ? "Review past game result"
           : "View completed Mystery Map"
         : isArchiveDate
-          ? "Continue archived Mystery Map"
+          ? "Continue past Mystery Map"
           : "Continue today's Mystery Map"
       : isArchiveDate
         ? `Start ${todayKey} Mystery Map`
         : "Start today's Mystery Map";
     const selectedCount = selectedPracticeRounds.length;
-    const categoryMix = summarizeMix(selectedPracticeRounds.map((round) => round.category));
-    const difficultyMix = summarizeMix(selectedPracticeRounds.map((round) => DIFFICULTY_LABELS[round.difficulty]));
-    const setCode = practiceSetCode(practiceSetRoundIds);
     const selectedDifficultyLabel = DIFFICULTY_LABELS[practiceDifficulty];
-    const setReadyLabel = selectedCount > 0 ? "Practice set ready" : practiceMatches.length > 0 ? `${selectedDifficultyLabel} practice pool` : "No maps match these filters";
-    const dailyReadyCount = data.rounds.filter((round) => round.eligibility.daily).length;
+    const setReadyLabel = practiceMatches.length > 0 ? practiceLabel(selectedDifficultyLabel, practiceCategory) : "Practice mode";
+    const availablePracticeCount = Math.min(3, practiceMatches.length);
+    const practiceWarning = rarePracticeNote(practiceMatches.length);
     return (
       <section className="game-entry page-shell">
         <div className="entry-copy">
           <EntryAtlasVisual />
-          <p className="eyebrow">{isArchiveDate ? `Mystery Map Archive — ${todayKey}` : `Mystery Map Daily #${challengeNumber(todayKey)}`}</p>
+          <p className="eyebrow">{isArchiveDate ? `Past Mystery Map — ${todayKey}` : `Mystery Map Daily #${challengeNumber(todayKey)}`}</p>
           <h1 className="page-title">What does this map measure?</h1>
           <p className="lead">
             {isArchiveDate
-              ? "This archive Daily is open in the public build: five unlabeled maps, one hidden indicator each."
+              ? "This past Daily is open in the public build: five unlabeled maps, one hidden indicator each."
               : "Today's open beta runs the full 5-map Daily: five unlabeled maps, one hidden indicator each."}{" "}
             Investigate countries when you need evidence, but every clue spends score.
           </p>
           <div className="entry-facts" aria-label="Daily facts">
-            <span>{isArchiveDate ? "Open beta archive access" : "Open beta: no account required"}</span>
-            <span>{isArchiveDate ? "Archive plays do not change today's streak" : "5-map Daily open now"}</span>
-            <span>{data.rounds.length} playable maps</span>
-            <span>{dailyReadyCount} Daily-ready maps</span>
+            <span>{isArchiveDate ? "Past game replay" : "No account today"}</span>
+            <span>{isArchiveDate ? "Streak stays safe" : "5-map Daily"}</span>
+            <span>Practice mode included</span>
           </div>
           <div className="entry-access-note" aria-label="Access model">
             <span>Access model</span>
             <p>
               {isArchiveDate
-                ? "Archive access is open in this public build while account limits are not enforced."
+                ? "Past games are open in this public build while account limits are not enforced."
                 : "Today's public build is open while account limits are not enforced."}{" "}
               Future plan: try 3 maps instantly, free-account limited Daily Mystery Map play, and paid full atlas access.
             </p>
@@ -512,90 +531,104 @@ export function WorldprintClient({ dateOverride, entryMode = "standard" }: World
             </div>
           ) : null}
           {!isArchiveDate ? (
-          <div className="practice-panel" aria-label="Practice filters">
-            <div>
-              <p className="setup-kicker">Optional practice</p>
-              <h2>Warm up with 3 {selectedDifficultyLabel} maps.</h2>
-              <p>
-                Today&apos;s Mystery Map starts its own 5-map set. Practice is the open 3-map warm-up in this build; filters only shape Practice and never change your Daily
-                streak.
+            <div className="practice-panel" aria-label="Practice options">
+              <div>
+                <p className="setup-kicker">Optional practice</p>
+                <h2>Practice mode</h2>
+                <p>Pick a topic and difficulty, then play a quick warm-up. Practice never touches your Daily streak.</p>
+              </div>
+              <div className="practice-filters">
+                <label htmlFor="practice-category">
+                  Topic
+                  <select id="practice-category" value={practiceCategory} onChange={(event) => setPracticeCategory(event.target.value)}>
+                    <option value="">Any topic</option>
+                    {practiceCategories.map((category) => (
+                      <option key={category} value={category}>
+                        {category}
+                      </option>
+                    ))}
+                  </select>
+                </label>
+                <label htmlFor="practice-difficulty">
+                  Map difficulty
+                  <select
+                    id="practice-difficulty"
+                    value={practiceDifficulty}
+                    onChange={(event) => setPracticeDifficulty(event.target.value as IndicatorDifficulty)}
+                  >
+                    <option value="intro">Intro</option>
+                    <option value="standard">Standard</option>
+                    <option value="expert">Expert</option>
+                  </select>
+                </label>
+              </div>
+              <p className="practice-helper">
+                Intro is a gentle start. Standard and Expert bring tighter, stranger map patterns.
               </p>
-            </div>
-            <div className="practice-filters">
-              <label htmlFor="practice-category">
-                Topic
-                <select id="practice-category" value={practiceCategory} onChange={(event) => setPracticeCategory(event.target.value)}>
-                  <option value="">Any topic</option>
-                  {practiceCategories.map((category) => (
-                    <option key={category} value={category}>
-                      {category}
-                    </option>
-                  ))}
-                </select>
-              </label>
-              <label htmlFor="practice-difficulty">
-                Map difficulty
-                <select
-                  id="practice-difficulty"
-                  value={practiceDifficulty}
-                  onChange={(event) => setPracticeDifficulty(event.target.value as IndicatorDifficulty)}
+              <div className="practice-access-note" aria-label="Practice access">
+                <span>{entitlement.capabilities.canUseFullPractice ? "Full atlas practice" : "Limited practice"}</span>
+                <p>
+                  {entitlement.capabilities.canUseFullPractice
+                    ? "Pro access is active. Practice can grow into the full map atlas."
+                    : `This warm-up stays at ${entitlement.capabilities.practiceLimit ?? 3} maps. Pro will unlock every practice map when paid access opens.`}
+                </p>
+                {!entitlement.capabilities.canUseFullPractice ? (
+                  <Link href="/upgrade">
+                    Full atlas coming soon
+                  </Link>
+                ) : null}
+              </div>
+              <div className="practice-set-card" data-status={selectedCount > 0 ? practiceSetStatus : "empty"} aria-live="polite">
+                <span>{setReadyLabel}</span>
+                <strong>
+                  {selectedCount > 0
+                    ? practiceReadyLine(selectedCount)
+                    : practiceMatches.length > 0
+                      ? practiceReadyLine(availablePracticeCount)
+                      : practiceReadyLine(0)}
+                </strong>
+                {selectedCount > 0 ? (
+                  <>
+                    <p>{practiceFlavor(practiceDifficulty)}</p>
+                  </>
+                ) : (
+                  <p>
+                    {practiceMatches.length > 0
+                      ? "Pick a practice set when you are ready."
+                      : "Try another topic or difficulty."}
+                  </p>
+                )}
+                {practiceWarning ? <p className="practice-warning">{practiceWarning}</p> : null}
+              </div>
+              <div className="practice-actions">
+                <button
+                  className="button practice-start-button"
+                  type="button"
+                  disabled={selectedPracticeRounds.length === 0}
+                  onClick={() => void startRun("practice")}
                 >
-                  <option value="intro">Intro</option>
-                  <option value="standard">Standard</option>
-                  <option value="expert">Expert</option>
-                </select>
-              </label>
+                  Start practice
+                </button>
+                <button className="button-secondary" type="button" disabled={practiceMatches.length === 0} onClick={buildPracticeSet}>
+                  <Shuffle size={17} aria-hidden="true" />
+                  {practiceSetStatus === "ready" ? "New practice set" : "Pick practice maps"}
+                </button>
+              </div>
             </div>
-            <p className="practice-helper">
-              Intro is the default. Standard and Expert raise the map difficulty; Expert also unlocks expert-only practice maps.
-            </p>
-            <div className="practice-set-card" data-status={selectedCount > 0 ? practiceSetStatus : "empty"} aria-live="polite">
-              <span>{setReadyLabel}</span>
-              <strong>
-                {selectedCount > 0
-                  ? `${pluralize(selectedCount, "map")} selected from ${pluralize(practiceMatches.length, "matching map")}`
-                  : practiceMatches.length > 0
-                    ? `Build a random ${selectedDifficultyLabel} practice set.`
-                    : "No maps match these filters."}
-              </strong>
-              {selectedCount > 0 ? (
-                <>
-                  <p>These {selectedCount} maps will be used when you start Practice. Normal scoring applies; Daily streaks are unaffected.</p>
-                  <p>Category mix: {categoryMix}</p>
-                  <p>Map difficulty mix: {difficultyMix}</p>
-                  <small>Set code {setCode}</small>
-                </>
-              ) : (
-                <p>{practiceMatches.length > 0 ? `${pluralize(practiceMatches.length, "map")} available for these filters.` : "Loosen the category or map difficulty filter."}</p>
-              )}
-              {practiceMatches.length > 0 && practiceMatches.length < 3 ? (
-                <p className="practice-warning">Only {pluralize(practiceMatches.length, "matching map")} available; Practice will use every match.</p>
-              ) : null}
-            </div>
-            <div className="practice-actions">
-              <button className="button-secondary" type="button" disabled={practiceMatches.length === 0} onClick={buildPracticeSet}>
-                <Shuffle size={17} aria-hidden="true" />
-                {practiceSetStatus === "ready" ? "Reroll practice set" : "Build practice set"}
-              </button>
-              <button className="button-secondary practice-start-button" type="button" disabled={selectedPracticeRounds.length === 0} onClick={() => void startRun("practice")}>
-                {selectedPracticeRounds.length > 0 ? `Start this ${selectedPracticeRounds.length}-map practice set` : "Start this 3-map practice set"}
-              </button>
-            </div>
-          </div>
           ) : (
             <div className="archive-banner">
-          <p className="setup-kicker">Mystery Map Archive</p>
+              <p className="setup-kicker">Past Mystery Map</p>
               <h2>{todayKey}</h2>
-              <p>This generated Mystery Map Daily uses frozen round IDs from the archive manifest. Archive plays save local history but do not change today&apos;s streak.</p>
+              <p>This past Daily uses the same maps every time. Replay it for practice or review; it saves local history but does not change today&apos;s streak.</p>
             </div>
           )}
           {isArchiveDate ? (
-          <div className="button-row">
-            <button className="button" type="button" onClick={() => void startRun(isArchiveDate ? "archive" : "daily")}>
-              <Compass size={18} aria-hidden="true" />
-              {dailyLabel}
-            </button>
-          </div>
+            <div className="button-row archive-start-row">
+              <button className="button" type="button" onClick={() => void startRun(isArchiveDate ? "archive" : "daily")}>
+                <Compass size={18} aria-hidden="true" />
+                {dailyLabel}
+              </button>
+            </div>
           ) : null}
         </div>
       </section>
@@ -613,8 +646,8 @@ export function WorldprintClient({ dateOverride, entryMode = "standard" }: World
     return (
       <section className="game-shell page-shell">
         <div className="empty-state surface">
-          <h1>Loading round</h1>
-          <p>Fetching the selected indicator artifact.</p>
+          <h1>Loading round…</h1>
+          <p>Preparing the selected map.</p>
         </div>
       </section>
     );
@@ -654,6 +687,8 @@ export function WorldprintClient({ dateOverride, entryMode = "standard" }: World
   };
 
   const topBottom = topAndBottom(indicator, data.countryNames);
+  const unitClue = unitClueForIndicator(indicator);
+  const runStats = runProgressStats(run);
 
   if (roundState.phase === "solved") {
     return (
@@ -681,10 +716,10 @@ export function WorldprintClient({ dateOverride, entryMode = "standard" }: World
           <span>{config.label}</span>
           <span>
             {run.mode === "daily"
-                  ? `Mystery Map Daily #${challengeNumber(run.dateKey)}`
-                : run.mode === "archive"
-                  ? `Mystery Map Archive ${run.dateKey}`
-                  : run.mode === "challenge"
+              ? `Mystery Map Daily #${challengeNumber(run.dateKey)}`
+              : run.mode === "archive"
+                ? `Past Mystery Map ${run.dateKey}`
+                : run.mode === "challenge"
                   ? "Mystery Map Challenge"
                   : "Mystery Map Practice"}
           </span>
@@ -693,22 +728,50 @@ export function WorldprintClient({ dateOverride, entryMode = "standard" }: World
         <WorldMap
           map={data.map}
           indicator={indicator}
+          countryNames={data.countryNames}
           investigatedIso3={roundState.investigations.map((item) => item.iso3)}
           selectedIso3={selectedCountryIso3}
-          showHoverNames={run.tier === "explorer"}
           onCountryClick={(country) => selectCountry(country.iso3)}
           labelledBy="active-map-title"
         />
       </div>
       <div className="play-control-panel surface" aria-label="Round controls">
         <div className="score-block">
-          <span>Possible score</span>
+          <span>Current round score</span>
           <strong>{roundState.score}</strong>
+        </div>
+        <div className="run-stats-card" aria-label="This run">
+          <span>This run</span>
+          <dl>
+            <div>
+              <dt>Score</dt>
+              <dd>{formatStat(runStats.score)}</dd>
+            </div>
+            <div>
+              <dt>Maps played</dt>
+              <dd>{runStats.mapsPlayed}</dd>
+            </div>
+            <div>
+              <dt>Correct</dt>
+              <dd>{runStats.correctAnswers}</dd>
+            </div>
+            <div>
+              <dt>Average</dt>
+              <dd>{formatStat(runStats.averageScore)}</dd>
+            </div>
+            <div>
+              <dt>Best round</dt>
+              <dd>{formatStat(runStats.bestRound)}</dd>
+            </div>
+          </dl>
         </div>
         <p className="map-rule">Darker means a larger numerical value. Hatched countries have no data for this round.</p>
         <div className="investigation-box">
           <h2>Investigate a country</h2>
-          <p className="cost-note">Use this when a country is too small or hard to click on the map. Selecting only previews the country; revealing spends an investigation when the country has data.</p>
+          <p className="cost-note">
+            Use this when a country is too small or hard to click. Selecting only previews the country. Revealing a value costs{" "}
+            {COUNTRY_REVEAL_COST} points.
+          </p>
           <label htmlFor="country-search">Choose a country to investigate</label>
           <div className="country-select-row">
             <select id="country-search" value={selectedCountryIso3} onChange={(event) => setSelectedCountryIso3(event.target.value)}>
@@ -720,37 +783,30 @@ export function WorldprintClient({ dateOverride, entryMode = "standard" }: World
               ))}
             </select>
           </div>
-          <div className="selected-country-card" data-state={selectedCountry ? "selected" : "empty"} aria-live="polite">
-            {selectedCountry ? (
-              <>
-                <span>Selected country</span>
-                <span className="selected-country-status">Selected: {selectedCountry.name}</span>
-                <strong>{selectedCountry.name}</strong>
-                <p>
-                  {selectedCountryAlreadyRevealed
-                    ? `Already revealed: ${selectedCountryInvestigation?.value === null ? "No data for this round" : formatValue(selectedCountryInvestigation?.value ?? selectedCountryValue ?? 0, indicator)}`
-                    : selectedCountryHasData
-                      ? "Data is available for this map. Reveal to see the value."
-                      : "No data for this round. Revealing this status costs nothing."}
-                </p>
-                <small>
-                  {selectedCountryAlreadyRevealed
-                    ? "Already revealed countries do not spend points again."
-                    : selectedCountryHasData
-                      ? investigationPenalty === null
-                        ? "No point-cost investigations remaining in this tier."
-                        : `Reveal cost: ${investigationPenalty} points.`
-                      : "Reveal cost: 0 points."}
-                </small>
-              </>
-            ) : (
-              <>
-                <span>No country selected</span>
-                <strong>Pick from the list or tap the map</strong>
-                <p>Selecting from this list highlights the country before you decide whether to reveal its value.</p>
-              </>
-            )}
-          </div>
+          {selectedCountry ? (
+            <div className="selected-country-card" data-state="selected" aria-live="polite">
+              <span>Selected country</span>
+              <strong>{selectedCountry.name}</strong>
+              <p>
+                {selectedCountryAlreadyRevealed
+                  ? selectedCountryInvestigation?.value === null
+                    ? "No data for this country on this map. Try another one."
+                    : `Revealed: ${formatValue(selectedCountryInvestigation?.value ?? selectedCountryValue ?? 0, indicator)}`
+                  : selectedCountryHasData
+                    ? "Reveal this country's value when you need a clue."
+                    : "No data for this country on this map. Try another one."}
+              </p>
+              <small>
+                {selectedCountryAlreadyRevealed
+                  ? "No points spent this time."
+                  : selectedCountryHasData
+                    ? investigationPenalty === null
+                      ? "Country reveals used up for this round."
+                      : `Reveal cost: ${investigationPenalty} points.`
+                    : "Reveal cost: 0 points."}
+              </small>
+            </div>
+          ) : null}
           <button
             className="button-secondary full-width investigate-button"
             type="button"
@@ -763,8 +819,8 @@ export function WorldprintClient({ dateOverride, entryMode = "standard" }: World
           </button>
           <p className="cost-note">
             {investigationPenalty === null
-              ? "No point-cost investigations remaining for new countries with data."
-              : `Next new valid country costs ${investigationPenalty} points.`}
+              ? "Country reveals used up for this round."
+              : `Next reveal costs ${investigationPenalty} points.`}
           </p>
           <div className="inspection-readout" aria-live="polite">
             {latestInvestigation ? (
@@ -772,7 +828,7 @@ export function WorldprintClient({ dateOverride, entryMode = "standard" }: World
                 <span>{latestInvestigation.cost ? `-${latestInvestigation.cost} points` : "No cost"}</span>
                 <strong>{latestInvestigation.countryName}</strong>
                 <p>
-                  {latestInvestigation.value === null ? "No data for this round" : formatValue(latestInvestigation.value, indicator)}
+                  {latestInvestigation.value === null ? "No data for this country on this map." : formatValue(latestInvestigation.value, indicator)}
                 </p>
               </>
             ) : (
@@ -784,13 +840,14 @@ export function WorldprintClient({ dateOverride, entryMode = "standard" }: World
             )}
           </div>
         </div>
-        {config.unitClue ? (
+        {config.unitClue && unitClue.eligible ? (
           <button className="button-secondary full-width" type="button" disabled={roundState.unitClueUsed} onClick={() => dispatch({ type: "unitClue" })}>
             <Lightbulb size={18} aria-hidden="true" />
-            {roundState.unitClueUsed ? `Unit: ${indicator.unit}` : `Reveal unit clue (-${config.scoring.unitCluePenalty})`}
+            {roundState.unitClueUsed ? `Unit clue: ${unitClue.text}` : `Reveal unit: -${config.scoring.unitCluePenalty}`}
           </button>
         ) : null}
-        {roundState.unitClueUsed ? <p className="unit-clue">Unit: {indicator.unit}</p> : null}
+        {config.unitClue && !unitClue.eligible ? <p className="unit-clue">{unitClue.text}</p> : null}
+        {roundState.unitClueUsed && unitClue.eligible ? <p className="unit-clue">Unit clue: {unitClue.text}</p> : null}
         <div className="answer-box">
           {run.tier === "atlasMaster" ? (
             <form
@@ -915,10 +972,12 @@ function RevealView({
     const rightInChoices = choiceProviderCodes.has(right.confusedWithIndicatorCode);
     return Number(rightInChoices) - Number(leftInChoices);
   });
+  const resultLabel = roundState.score < 0 ? `Round lost: ${roundState.score} points` : `Solved for ${roundState.score} points`;
+  const hasInvestigationHistory = roundState.unitClueUsed || roundState.investigations.length > 0;
   return (
     <section className="reveal-layout page-shell">
       <div className="reveal-map">
-        <p className="eyebrow">Solved for {roundState.score} points</p>
+        <p className="eyebrow">{resultLabel}</p>
         <h1 id="reveal-map-title">{indicator.shortTitle}</h1>
         <p className="full-indicator-title">{indicator.title}</p>
         <div className="source-badges" aria-label="Indicator metadata">
@@ -929,6 +988,7 @@ function RevealView({
         <WorldMap
           map={map}
           indicator={indicator}
+          countryNames={countryNames}
           investigatedIso3={roundState.investigations.map((item) => item.iso3)}
           interactive={false}
           labelledBy="reveal-map-title"
@@ -938,7 +998,7 @@ function RevealView({
         <div className="reveal-scoreline">
           <span>Correct answer</span>
           <strong>{indicator.shortTitle}</strong>
-          <small>{roundState.score} points</small>
+          <small>{resultLabel}</small>
         </div>
         <dl className="indicator-facts">
           <div>
@@ -1014,13 +1074,20 @@ function RevealView({
         <RankedTable title="Lowest five" rows={topBottom.lowest} indicator={indicator} />
         <div>
           <h2>Investigations</h2>
-          {roundState.investigations.length ? (
+          {hasInvestigationHistory ? (
             <ul className="investigation-history">
+              {roundState.unitClueUsed ? (
+                <li key="unit-clue">
+                  <span>Unit clue</span>
+                  <strong>{indicator.unit}</strong>
+                  <small>-{TIER_CONFIGS[run.tier].scoring.unitCluePenalty} points</small>
+                </li>
+              ) : null}
               {roundState.investigations.map((item) => (
                 <li key={item.iso3}>
                   <span>{item.countryName}</span>
                   <strong>{item.value === null ? "No data" : formatValue(item.value, indicator)}</strong>
-                  <small>{item.cost ? `-${item.cost}` : "no cost"}</small>
+                  <small>{item.cost ? `-${item.cost} points` : "no cost"}</small>
                 </li>
               ))}
             </ul>
@@ -1117,7 +1184,7 @@ function CompletionSummary({
     run.mode === "daily"
       ? `Mystery Map Daily #${challengeNumber(run.dateKey)}`
       : run.mode === "archive"
-        ? `Mystery Map Archive — ${run.dateKey}`
+        ? `Past Mystery Map — ${run.dateKey}`
         : run.mode === "challenge"
           ? "Mystery Map Challenge complete"
           : "Mystery Map Practice complete";
@@ -1163,24 +1230,23 @@ function CompletionSummary({
         </div>
         <textarea className="share-text" readOnly value={shareText} aria-label="Spoiler-free share text" />
         <textarea className="share-text challenge-share-text" readOnly value={challengeShareText} aria-label="Spoiler-free challenge share text" />
+        <section className="account-save-card surface" aria-label="Save your progress">
+          <div>
+            <p className="eyebrow">Save progress</p>
+            <h2>Save your score and streak.</h2>
+            <p>Your result is saved in this browser. A free account can save aggregate stats and streaks to your account.</p>
+          </div>
+          <div className="button-row">
+            <Link className="button" href="/sign-in">
+              Create a free account
+            </Link>
+            <Link className="button-secondary" href="/account">
+              View account
+            </Link>
+          </div>
+        </section>
       </div>
-      <div className="stats-panel surface" aria-label="Lifetime statistics">
-        <h2>Lifetime on this device</h2>
-        <dl className="summary-stats">
-          <div>
-            <dt>Daily games</dt>
-            <dd>{store.lifetime.dailyGames}</dd>
-          </div>
-          <div>
-            <dt>Best streak</dt>
-            <dd>{store.streak.best}</dd>
-          </div>
-          <div>
-            <dt>Average Daily score</dt>
-            <dd>{Math.round(store.lifetime.averageScore)}</dd>
-          </div>
-        </dl>
-      </div>
+      <PlayerStatsPanel store={store} />
     </section>
   );
 }

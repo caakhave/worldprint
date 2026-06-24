@@ -10,22 +10,22 @@ The map is intentionally unlabeled. Darker means a larger numerical value, not a
 
 ## Tiers
 
-- Explorer: three broad choices, country names on pointer interaction, up to three investigations, unit clue available, lower penalties.
-- Analyst: default tier, four plausible choices, up to three investigations, unit clue available.
-- Cartographer: six close choices, one investigation, no unit clue.
-- Atlas Master: no visible choices, explicit search/autocomplete over the playable map catalog, one investigation, no unit clue.
+- Explorer: three broad choices, country names on map interaction, up to three country value reveals, unit reveal available.
+- Analyst: default tier, four plausible choices, up to three country value reveals, unit reveal available.
+- Cartographer: six close choices, one country value reveal, unit reveal available.
+- Atlas Master: no visible choices, explicit search/autocomplete over the playable map catalog, one country value reveal, unit reveal available.
 
 ## Scoring
 
-Each round starts at 1,000 points. Scores are never time-based in Daily. Minimum eventual solved score is 100.
+Each round starts at 1,000 points. Scores are never time-based in Daily. Scores can go below zero; a negative round is a bad/lost round but the player can still continue to the reveal.
 
-Analyst baseline:
+Current baseline:
 
-- Investigation penalties: 100, 150, 200.
-- Unit clue: 200.
+- Country value reveal: 100.
+- Unit reveal: 100.
 - Wrong answer: 300.
 
-Explorer uses gentler clues. Cartographer and Atlas Master use fewer, steeper clues. Scoring lives in pure configuration and is tested.
+Tiers differ by answer interface and number of country value reveals, not by escalating clue cost. Scoring lives in pure configuration and is tested.
 
 ## Daily Loop
 
@@ -60,6 +60,12 @@ Mystery Map
 3350 / 5000
 Read the world.
 ```
+
+## Local Stats
+
+Player stats are local-only in this static build. The game derives them from validated browser history: Daily completions count once, Past Games count as local replays by date, and Challenges count by challenge ID. The panel includes maps played, Daily runs completed, correct answers, games completed, total points, average round score, best Daily, best round, current streak, game-type breakdown, and recent local performance.
+
+Practice completion history is not separately tracked yet. Supabase account sync can save aggregate stats, but there is no run-level cloud history, backend gameplay API, public profile, or leaderboard.
 
 ## Future Calibration Questions
 

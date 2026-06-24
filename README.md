@@ -80,6 +80,7 @@ Cloudflare Pages settings:
 ## Current Limitations
 
 - Practice is limited to a three-map preview with category/difficulty filters.
-- WORLDPRINT has 56 approved indicators in this slice; production should pre-generate seasonal Daily manifests before archive or challenge-link features.
-- No account, archive, leaderboard, payment, server API, or runtime map-tile service is included in this milestone.
+- Can You Geo? has 125 playable maps and 50 Daily-ready maps in this build.
+- Accounts, aggregate stats sync, and Stripe Billing run through Supabase. Run-level cloud history, Challenge history UI, leaderboards, backend gameplay APIs, and runtime map-tile services are not included yet.
+- The public app remains a static export; Stripe Checkout, Billing Portal, and webhooks require the Supabase Edge Functions documented in `docs/STRIPE_BILLING.md`.
 - No Lighthouse score has been run or claimed.

@@ -7,7 +7,7 @@ import type { DailyManifest } from "@/lib/content/schemas";
 import { decodeChallenge, encodeChallenge } from "@/lib/game/challenge";
 import { selectDailyRoundIds, selectPracticeRoundIds, utcDateKey } from "@/lib/game/daily";
 import { selectDailyRoundIdsFromManifest } from "@/lib/game/dailyManifest";
-import { TIER_CONFIGS } from "@/lib/game/scoring";
+import { COUNTRY_REVEAL_COST, TIER_CONFIGS, UNIT_REVEAL_COST, WRONG_ANSWER_COST } from "@/lib/game/scoring";
 import { buildShareText, containsSpoiler, scoreCell } from "@/lib/game/share";
 import { updateStreak } from "@/lib/game/streak";
 import { createRun, isAcceptedAtlasGuess, reduceRun } from "@/lib/game/state";
@@ -157,8 +157,8 @@ describe("run reducer and scoring", () => {
     expect(TIER_CONFIGS.atlasMaster.maxInvestigations).toBe(1);
     expect(TIER_CONFIGS.explorer.unitClue).toBe(true);
     expect(TIER_CONFIGS.analyst.unitClue).toBe(true);
-    expect(TIER_CONFIGS.cartographer.unitClue).toBe(false);
-    expect(TIER_CONFIGS.atlasMaster.unitClue).toBe(false);
+    expect(TIER_CONFIGS.cartographer.unitClue).toBe(true);
+    expect(TIER_CONFIGS.atlasMaster.unitClue).toBe(true);
   });
 
   it("charges country investigations once and never charges no-data countries", () => {
@@ -170,12 +170,27 @@ describe("run reducer and scoring", () => {
       roundIds: [{ roundId: "fertility-rate", correctIndicatorId: "fertility-rate" }]
     });
     run = reduceRun(run, { type: "investigate", iso3: "MEX", countryName: "Mexico", value: 2.1 });
-    expect(run.rounds[0].score).toBe(900);
+    expect(run.rounds[0].score).toBe(1000 - COUNTRY_REVEAL_COST);
     run = reduceRun(run, { type: "investigate", iso3: "MEX", countryName: "Mexico", value: 2.1 });
-    expect(run.rounds[0].score).toBe(900);
+    expect(run.rounds[0].score).toBe(1000 - COUNTRY_REVEAL_COST);
     run = reduceRun(run, { type: "investigate", iso3: "ATA", countryName: "Antarctica", value: null });
-    expect(run.rounds[0].score).toBe(900);
+    expect(run.rounds[0].score).toBe(1000 - COUNTRY_REVEAL_COST);
     expect(run.rounds[0].investigations).toHaveLength(2);
+  });
+
+  it("charges the unit clue once as a separate 100-point reveal", () => {
+    let run = createRun({
+      mode: "daily",
+      dateKey: "2026-06-18",
+      contentVersion: "test",
+      tier: "analyst",
+      roundIds: [{ roundId: "fertility-rate", correctIndicatorId: "fertility-rate" }]
+    });
+    run = reduceRun(run, { type: "unitClue" });
+    expect(run.rounds[0].unitClueUsed).toBe(true);
+    expect(run.rounds[0].score).toBe(1000 - UNIT_REVEAL_COST);
+    run = reduceRun(run, { type: "unitClue" });
+    expect(run.rounds[0].score).toBe(1000 - UNIT_REVEAL_COST);
   });
 
   it("deducts wrong answers once and prevents score changes after solved", () => {
@@ -187,13 +202,29 @@ describe("run reducer and scoring", () => {
       roundIds: [{ roundId: "fertility-rate", correctIndicatorId: "fertility-rate" }]
     });
     run = reduceRun(run, { type: "submit", answerId: "life-expectancy", label: "Life expectancy", correct: false });
-    expect(run.rounds[0].score).toBe(700);
+    expect(run.rounds[0].score).toBe(1000 - WRONG_ANSWER_COST);
     run = reduceRun(run, { type: "submit", answerId: "life-expectancy", label: "Life expectancy", correct: false });
-    expect(run.rounds[0].score).toBe(700);
+    expect(run.rounds[0].score).toBe(1000 - WRONG_ANSWER_COST);
     run = reduceRun(run, { type: "submit", answerId: "fertility-rate", label: "Fertility rate", correct: true });
     expect(run.rounds[0].phase).toBe("solved");
     run = reduceRun(run, { type: "investigate", iso3: "USA", countryName: "United States", value: 1.6 });
-    expect(run.rounds[0].score).toBe(700);
+    expect(run.rounds[0].score).toBe(1000 - WRONG_ANSWER_COST);
+  });
+
+  it("allows wrong answers to take the score negative", () => {
+    let run = createRun({
+      mode: "daily",
+      dateKey: "2026-06-18",
+      contentVersion: "test",
+      tier: "cartographer",
+      roundIds: [{ roundId: "fertility-rate", correctIndicatorId: "fertility-rate" }]
+    });
+    run = reduceRun(run, { type: "submit", answerId: "wrong-1", label: "Wrong 1", correct: false });
+    run = reduceRun(run, { type: "submit", answerId: "wrong-2", label: "Wrong 2", correct: false });
+    run = reduceRun(run, { type: "submit", answerId: "wrong-3", label: "Wrong 3", correct: false });
+    expect(run.rounds[0].score).toBe(100);
+    run = reduceRun(run, { type: "submit", answerId: "wrong-4", label: "Wrong 4", correct: false });
+    expect(run.rounds[0].score).toBe(-200);
   });
 
   it("enforces clue limits by tier", () => {
@@ -205,19 +236,22 @@ describe("run reducer and scoring", () => {
       roundIds: [{ roundId: "gdp-per-capita", correctIndicatorId: "gdp-per-capita" }]
     });
     run = reduceRun(run, { type: "investigate", iso3: "USA", countryName: "United States", value: 86000 });
-    expect(run.rounds[0].score).toBe(750);
+    expect(run.rounds[0].score).toBe(900);
     run = reduceRun(run, { type: "investigate", iso3: "CAN", countryName: "Canada", value: 53000 });
-    expect(run.rounds[0].score).toBe(750);
+    expect(run.rounds[0].score).toBe(900);
     run = reduceRun(run, { type: "unitClue" });
-    expect(run.rounds[0].unitClueUsed).toBe(false);
+    expect(run.rounds[0].unitClueUsed).toBe(true);
+    expect(run.rounds[0].score).toBe(800);
+    run = reduceRun(run, { type: "unitClue" });
+    expect(run.rounds[0].score).toBe(800);
   });
 
-  it("applies each tier investigation scoring as configured", () => {
+  it("applies flat country reveal scoring across tiers", () => {
     const tiers = [
-      ["explorer", 940],
+      ["explorer", 900],
       ["analyst", 900],
-      ["cartographer", 750],
-      ["atlasMaster", 700]
+      ["cartographer", 900],
+      ["atlasMaster", 900]
     ] as const;
     for (const [tier, expectedScore] of tiers) {
       let run = createRun({
@@ -232,12 +266,12 @@ describe("run reducer and scoring", () => {
     }
   });
 
-  it("applies tier-specific wrong-answer scoring as designed", () => {
+  it("applies flat wrong-answer scoring across tiers", () => {
     const tiers = [
-      ["explorer", 800],
+      ["explorer", 700],
       ["analyst", 700],
       ["cartographer", 700],
-      ["atlasMaster", 750]
+      ["atlasMaster", 700]
     ] as const;
     for (const [tier, expectedScore] of tiers) {
       let run = createRun({
@@ -337,5 +371,25 @@ describe("streaks and sharing", () => {
     expect(next.streak).toEqual(state.streak);
     expect(next.lifetime).toEqual(state.lifetime);
     expect(Object.keys(next.completedDailyResults)).toHaveLength(0);
+  });
+
+  it("records negative Daily round scores in totals", () => {
+    const state = defaultPersistedState();
+    const run = createRun({
+      mode: "daily",
+      dateKey: "2026-06-18",
+      contentVersion: "test",
+      tier: "cartographer",
+      roundIds: [{ roundId: "fertility-rate", correctIndicatorId: "fertility-rate" }]
+    });
+    const completed = recordDailyCompletion(state, {
+      ...run,
+      status: "complete",
+      rounds: [{ ...run.rounds[0], phase: "solved", score: -200 }]
+    });
+    const result = completed.completedDailyResults[run.id];
+    expect(result.totalScore).toBe(-200);
+    expect(result.roundScores).toEqual([-200]);
+    expect(completed.lifetime.totalScore).toBe(-200);
   });
 });

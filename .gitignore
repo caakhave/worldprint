@@ -9,6 +9,12 @@ output/
 tsconfig.tsbuildinfo
 .env*
 !.env.example
+.DS_Store
+public/.DS_Store
+public/images/.DS_Store
+.agents/
+skills-lock.json
+supabase/.temp/
 tools/data_pipeline/.venv/
 tools/data_pipeline/__pycache__/
 generated/raw/

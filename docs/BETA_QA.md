@@ -38,7 +38,7 @@ The sample includes 11 distinct palette labels and 11 maps with subtle or high-r
 
 - Batch 2 QA intentionally trimmed the public pool from 132 playable maps / 59 Daily-ready maps to `125 playable maps` and `50 Daily-ready maps`.
 - Public copy should keep using playable/Daily-ready counts rather than source-valid artifact counts.
-- The phrase `paid investigations` was confusing in a freemium context. The UI now says `point-cost investigations`.
+- The phrase `paid investigations` was confusing in a freemium context. The UI now uses plain `country reveal` language.
 - Atlas Master search copy now says `Search playable map catalog`, not `Search approved indicators`.
 - Several otherwise strong Daily-ready maps have close correlation risks: older-adult share vs birth/children-share, life expectancy vs mortality, trade vs exports/imports, energy use vs electric power use, and internet users vs clean-fuels/development proxies.
 - Tourism arrivals remains a content-review watch item because it is older and has weaker unit clarity; the focused sample uses International migrant stock for the migration/tourism palette check.

@@ -1,122 +1,159 @@
+import Image from "next/image";
 import Link from "next/link";
-import { ArrowRight, Clock, LockKeyhole, MapPinned, Sparkles } from "lucide-react";
-import { HeroMap } from "@/components/HeroMap";
-import { BRAND_NAME, BRAND_POSITIONING, BRAND_TAGLINE, MYSTERY_MAP_NAME } from "@/lib/brand";
-import { TIER_CONFIGS } from "@/lib/game/scoring";
+import { ArrowRight } from "lucide-react";
+import { HomepageHeroMedia } from "@/components/HomepageHeroMedia";
 
-const suite = [
+const signalCards = [
   {
-    name: MYSTERY_MAP_NAME,
-    status: "Playable now",
-    text: "Identify the hidden world-data pattern on an unlabeled map."
+    step: "01",
+    image: "/images/homepage/01-read-the-map.png",
+    objectPosition: "50% 50%",
+    title: "Read the map",
+    copy: "The world lights up with a hidden statistic."
   },
   {
-    name: "Human Center",
-    status: "Coming next",
-    text: "Place the population-weighted center of a country."
+    step: "02",
+    image: "/images/homepage/02-use-your-clues.png",
+    objectPosition: "50% 48%",
+    title: "Use your clues",
+    copy: "Reveal a few countries when the pattern gets slippery."
   },
   {
-    name: "Atlas Anomaly",
-    status: "Planned",
-    text: "Find the one wrong or impossible thing on a map."
-  },
-  {
-    name: "Raindrop",
-    status: "Planned",
-    text: "Trace where water falling at a point ultimately drains."
+    step: "03",
+    image: "/images/homepage/03-make-the-call.png",
+    objectPosition: "50% 52%",
+    title: "Make the call",
+    copy: "Pick the answer and watch the atlas score your read."
   }
-];
+] as const;
+
+const modeCards = [
+  {
+    image: "/images/homepage/04-daily-mystery-map.png",
+    objectPosition: "50% 50%",
+    title: "Daily Mystery Map",
+    copy: "Five maps. One streak. Fresh every day.",
+    cta: "Play today"
+  },
+  {
+    image: "/images/homepage/05-practice.png",
+    objectPosition: "50% 50%",
+    title: "Practice",
+    copy: "Train by topic and difficulty.",
+    cta: "Practice now"
+  },
+  {
+    image: "/images/homepage/06-challenge-friends.png",
+    objectPosition: "48% 50%",
+    title: "Challenge friends",
+    copy: "Send a map and compare scores."
+  }
+] as const;
 
 export default function HomePage() {
   return (
     <>
-      <section className="landing-hero page-shell">
-        <div className="hero-copy">
-          <p className="eyebrow">A new way to play the planet</p>
-          <h1 className="hero-title">{BRAND_NAME}</h1>
-          <p className="lead">{BRAND_TAGLINE}</p>
-          <p>Identify hidden data maps, chase population centers, catch impossible atlases, and follow water across the planet.</p>
-          <p className="audience-line">{BRAND_POSITIONING}</p>
-          <div className="button-row">
-            <Link className="button" href="/play/worldprint">
-              Play today&apos;s Mystery Map
+      <section className="landing-hero" data-testid="cinematic-home-hero">
+        <HomepageHeroMedia />
+        <div className="landing-hero-backdrop" aria-hidden="true" />
+        <div className="landing-hero-inner page-shell">
+          <div className="hero-copy">
+            <p className="eyebrow">Join the daily challenge</p>
+            <h1 className="hero-title">Can you read the world?</h1>
+            <p className="lead">
+              A new mystery map is waiting. Spot the pattern, spend your clues wisely, and guess what the planet is hiding.
+            </p>
+            <div className="button-row">
+              <Link className="button hero-primary-cta" href="/play/worldprint">
+                Play today&apos;s Mystery Map
+                <ArrowRight size={18} aria-hidden="true" />
+              </Link>
+              <Link className="button-secondary hero-secondary-cta" href="#how-it-works">
+                How it works
+              </Link>
+            </div>
+            <p className="hero-note">Free to play while the atlas grows.</p>
+          </div>
+          <aside className="hero-join-panel" aria-label="Join the daily challenge">
+            <p className="eyebrow">Join the game</p>
+            <h2>Join the daily challenge</h2>
+            <p>Five maps. One streak. A fresh world puzzle every day.</p>
+            <Link className="button hero-panel-button" href="/play/worldprint">
+              Start playing
               <ArrowRight size={18} aria-hidden="true" />
             </Link>
-            <Link className="button-secondary" href="/how-to-play">
-              How it works
-            </Link>
-          </div>
-          <div className="trust-row">
-            <span>
-              <LockKeyhole size={16} aria-hidden="true" />
-              Open beta: no account
-            </span>
-            <span>
-              <MapPinned size={16} aria-hidden="true" />
-              Try 3-map practice
-            </span>
-            <span>
-              <Clock size={16} aria-hidden="true" />
-              5-map Daily open now
-            </span>
-          </div>
-        </div>
-        <HeroMap />
-      </section>
-
-      <section className="section-band">
-        <div className="suite-grid page-shell">
-          {suite.map((item) => (
-            <article className="suite-card" key={item.name} data-playable={item.status === "Playable now" ? "true" : "false"}>
-              <span>{item.status}</span>
-              <h2>{item.name}</h2>
-              <p>{item.text}</p>
-            </article>
-          ))}
+          </aside>
         </div>
       </section>
 
-      <section className="section-band source-promise">
-        <div className="page-shell promise-layout">
-          <div>
-            <p className="eyebrow">Source-backed rounds</p>
-            <h2>Every reveal shows the year, unit, coverage, provider, and attribution.</h2>
+      <section className="section-band homepage-section" id="how-it-works">
+        <div className="page-shell homepage-section-layout">
+          <div className="homepage-section-heading">
+            <p className="eyebrow">How it works</p>
+            <h2>Follow the signal.</h2>
+            <p className="section-lede">Every round is a tiny mystery: read the map, spend clues, make the call.</p>
           </div>
-          <p>
-            Mystery Map consumes generated static artifacts from official sources. The first slice uses Natural Earth for the basemap and World Bank
-            indicators for gameplay data, with validation reports checked into the project.
-          </p>
-        </div>
-      </section>
-
-      <section className="section-band">
-        <div className="page-shell tiers-preview">
-          <div>
-            <p className="eyebrow">Choose your pressure</p>
-            <h2>Four tiers, same hidden daily pattern.</h2>
-          </div>
-          <div className="tier-preview-grid">
-            {Object.values(TIER_CONFIGS).map((tier) => (
-              <article key={tier.id}>
-                <h3>{tier.label}</h3>
-                <p>{tier.description}</p>
+          <div className="game-loop-grid" aria-label="How Can You Geo works">
+            {signalCards.map((card) => (
+              <article className="game-loop-tile homepage-image-card" key={card.title}>
+                <Image
+                  className="homepage-card-image"
+                  src={card.image}
+                  alt=""
+                  fill
+                  sizes="(max-width: 720px) calc(100vw - 2rem), (max-width: 1100px) 30vw, 27vw"
+                  style={{ objectPosition: card.objectPosition }}
+                  loading="eager"
+                />
+                <div className="homepage-card-overlay">
+                  <div className="game-loop-copy">
+                    <span>{card.step}</span>
+                    <h3>{card.title}</h3>
+                    <p>{card.copy}</p>
+                  </div>
+                </div>
               </article>
             ))}
           </div>
         </div>
       </section>
 
-      <section className="section-band">
-        <div className="plus-teaser page-shell">
-          <MapPinned size={28} aria-hidden="true" />
-          <div>
-            <h2>Future access model</h2>
-            <p>
-              Open demo first. Later, free accounts are expected to get limited Daily play, likely 3 maps/day, while paid access opens the full atlas:
-              Daily, Practice, Archive, Challenges, advanced tiers, and larger map pools. Accounts, Stripe, and billing are not implemented in this build.
+      <section className="section-band homepage-section">
+        <div className="page-shell homepage-section-layout">
+          <div className="homepage-section-heading">
+            <p className="eyebrow">Ways to play</p>
+            <h2>Choose your atlas run.</h2>
+            <p className="section-lede">
+              Play the daily, warm up in practice, or send a map to someone who thinks they know the world.
             </p>
           </div>
-          <Sparkles size={28} aria-hidden="true" />
+          <div className="mode-poster-grid" aria-label="Ways to play Can You Geo">
+            {modeCards.map((card) => (
+              <article className="mode-poster homepage-image-card" key={card.title}>
+                <Image
+                  className="homepage-card-image"
+                  src={card.image}
+                  alt=""
+                  fill
+                  sizes="(max-width: 720px) calc(100vw - 2rem), (max-width: 1100px) 30vw, 27vw"
+                  style={{ objectPosition: card.objectPosition }}
+                  loading="eager"
+                />
+                <div className="homepage-card-overlay">
+                  <div className="mode-poster-copy">
+                    <h3>{card.title}</h3>
+                    <p>{card.copy}</p>
+                    {"cta" in card ? (
+                      <Link className="mode-poster-cta" href="/play/worldprint">
+                        {card.cta}
+                        <ArrowRight size={16} aria-hidden="true" />
+                      </Link>
+                    ) : null}
+                  </div>
+                </div>
+              </article>
+            ))}
+          </div>
         </div>
       </section>
     </>

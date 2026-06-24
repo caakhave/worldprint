@@ -57,22 +57,25 @@ Added in Archive + Challenge Links v1:
 ## Current Game Rules
 
 - Four tiers: Explorer, Analyst, Cartographer, Atlas Master.
-- Analyst baseline starts at 1,000 points; investigations cost 100/150/200; unit clue costs 200; wrong answers cost 300; minimum solved score is 100.
-- Explorer has gentler clue/wrong penalties and more explicit support.
-- Cartographer has six close choices, one investigation, and no unit clue.
-- Atlas Master has one investigation, no visible answer buttons, and explicit alias matching only.
+- Every tier starts each round at 1,000 points. Revealing a new country value costs 100 points, revealing the unit costs 100 points, and each wrong answer costs 300 points.
+- Scores may finish below zero; a negative round is treated as a bad/lost round, not a blocked game-over.
+- Explorer has three broad choices, three country value reveals, country names on map interaction, and unit reveal.
+- Analyst has four plausible choices, three country value reveals, and unit reveal.
+- Cartographer has six close choices, one country value reveal, and unit reveal.
+- Atlas Master has one country value reveal, unit reveal, no visible answer buttons, and explicit alias matching only.
 - Daily selects five deterministic rounds from Daily-eligible indicators by UTC date/content version while balancing category mix, difficulty mix, one expert-style round when possible, and avoiding highly correlated same-day pairs.
 - Practice selects three rounds from Practice-eligible indicators, supports category/difficulty filters and random rerolls, keeps Expert-only maps behind Expert map difficulty, and does not affect Daily streak.
 - State persists locally through a Zod-validated `worldprint:v1` localStorage record. Schema `1.1.0` adds date-keyed Daily/archive history and challenge completion history while preserving existing streak/lifetime data.
+- The player-facing **Your stats** panel is derived from local history unless the player signs in and syncs aggregate stats to Supabase. Daily completions count once, Past Games count as local replays by date, Challenges count by challenge ID, and Practice completion history is not separately tracked yet.
+- Production Spine v0 adds `/sign-in`, `/account`, `/account/stats`, and a “Save your score and streak” result prompt. Auth Sync v1 adds Supabase magic-link sign-in and aggregate `user_stats` sync. Entitlements v0 adds `/upgrade`, centralized Guest/Free/Pro capabilities, Supabase entitlement reads, and soft gates for full archive/full Practice/advanced stats. Stripe Billing v1 adds Supabase Edge Function Checkout, Billing Portal, and webhook-driven entitlement updates. Run-level cloud history is still future work.
 
-## Intended Access Model (Not Implemented Yet)
+## Current Access Model
 
-- Current public build: open beta, no account required, no account limits enforced. Daily remains five maps and Practice remains a three-map warm-up.
-- Open demo direction: visitors should always be able to try 3 maps instantly before giving an email.
-- Future free account direction: limited Daily play, likely 3 maps/day at first while outside beta proves whether 125 playable maps and 50 Daily-ready maps can sustain broader free use. Keep the current 5-map Daily as the full Daily format unless playtesting proves a shorter public Daily is better.
-- Future paid account direction: full atlas access across Daily, Practice, Archive, Challenges, advanced tiers, larger map pools, and deeper learning/reveal features.
-- Stripe and authentication should come later as explicit implementation projects. Until then, UI copy must not say "sign up", show fake checkout, or imply accounts already exist.
-- Access enforcement is intentionally absent in this static build. Product copy may describe the roadmap, but gameplay should remain open until real account and billing architecture is designed.
+- Guests can still play today's Daily, keep local browser stats, use limited Practice, view recent Past Games, and use basic Challenge links.
+- Free accounts can save aggregate stats/streaks, play today's Daily, use limited Practice, view recent Past Games, and use basic Challenge links.
+- Pro is a real entitlement state in code and can be granted by Stripe webhooks or manually enabled in Supabase for local testing. Pro unlocks full Practice atlas labels, full Past Games, advanced stats, and future Challenge history.
+- Stripe billing lives in Supabase Edge Functions. The static app must never expose Stripe secrets or write entitlements from the browser.
+- Access enforcement is intentionally soft in this static build. Today's Daily remains open and anonymous gameplay is not blocked.
 
 ## Current Test Coverage
 
@@ -100,7 +103,8 @@ Added in Archive + Challenge Links v1:
 - Daily variety is deterministic and balanced inside the current content version. Generated Daily manifests freeze the current archive window, but indefinite old-link support will require preserving prior content-version artifacts.
 - Sources page is stronger but still uses a placeholder correction/contact channel.
 - Focused beta QA found no UI blockers, but 12 of 15 sampled maps still need outside playtest attention for correlation, answer-choice fairness, or mobile readability nuance.
-- No accounts, leaderboard, backend, payments, runtime map tiles, or future game implementations exist.
+- No leaderboard, runtime map tiles, or future game implementations exist.
+- Local stats can sync aggregate snapshots to Supabase when configured, but there is no run-level cloud history, Challenge history UI, leaderboard, or public profile.
 
 ## Current Editorial QA Result
 

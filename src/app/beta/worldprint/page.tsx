@@ -83,13 +83,12 @@ export default function WorldprintBetaPage() {
               <dd>{betaPacks.contentCounts.dailyReadyCount}</dd>
             </div>
             <div>
-              <dt>Candidate maps under review</dt>
+              <dt>Maps being tested</dt>
               <dd>{betaPacks.contentCounts.candidateCount}</dd>
             </div>
           </dl>
           <p>
-            This is an open beta, not paid launch readiness. Accounts, billing, payment, and access enforcement are not implemented
-            in this build.
+            This is an open beta, not paid launch readiness. Billing exists for Pro access, but these beta packs stay open for testing.
           </p>
         </aside>
       </section>
@@ -153,8 +152,7 @@ export default function WorldprintBetaPage() {
             ))}
           </div>
           <p className="beta-link-note">
-            Challenge links are content-version locked and preserve the exact selected rounds. After deployment, replace the
-            localhost origin in the generated report with the deployed site origin; the encoded path stays the same.
+            Challenge links preserve the exact selected maps, so everyone in a pack sees the same puzzles.
           </p>
         </div>
       </section>

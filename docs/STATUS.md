@@ -1,10 +1,10 @@
 # Can You Geo? Status
 
-Last updated: 2026-06-22 America/Mexico_City.
+Last updated: 2026-06-24 America/Mexico_City.
 
 ## Current Milestone
 
-Can You Geo? Branding Overhaul v1 - complete.
+Stripe Billing v1 - complete.
 
 ## Public Brand And Compatibility
 
@@ -19,12 +19,55 @@ Can You Geo? Branding Overhaul v1 - complete.
 
 ## Current App Snapshot
 
-- Routes: `/`, `/play/worldprint`, `/play/worldprint/YYYY-MM-DD` for generated Mystery Map Daily manifests, `/archive/worldprint`, `/challenge/worldprint/?c=...`, `/how-to-play`, `/sources`, `/about`, and the unlinked internal QA route `/internal/worldprint-review`.
+- Routes: `/`, `/play/worldprint`, `/play/worldprint/YYYY-MM-DD` for generated Mystery Map Daily manifests, `/archive/worldprint`, `/challenge/worldprint/?c=...`, `/how-to-play`, `/sources`, `/about`, `/sign-in`, `/auth/callback`, `/account`, `/account/stats`, `/upgrade`, and the unlinked internal QA route `/internal/worldprint-review`.
 - Unlisted testing route: `/beta/worldprint`.
 - Static delivery: Next.js App Router with `output: 'export'`; gameplay uses same-origin static JSON and SVG/GeoJSON artifacts.
 - Data: `public/data/v1` contains the manifest, round definitions, source-valid indicator manifest, source registry, entity registry, 167 source-valid World Bank indicator artifacts from a 198-candidate bank, 125 playable maps, 50 Daily-ready maps, generated editorial review data for all 198 candidates, and generated Daily manifests under `public/data/v1/dailies`. `public/maps/world-110m.v1.geojson` is the Natural Earth basemap artifact.
 - Game rules: Explorer has 3 broad choices, 3 investigations, hover names, and unit clue; Analyst is recommended with 4 plausible choices, 3 investigations, and unit clue; Cartographer has 6 close choices, 1 investigation, and no unit clue; Atlas Master has catalog search, 1 investigation, and no unit clue.
 - Data build flow: `pnpm data:build` runs `tools/data_pipeline/build.py`, regenerates static data, and writes validation, intake, scorecard, status-diff, and distractor reports under `generated/reports`.
+
+## Completed In Stripe Billing v1
+
+- Kept the public Next app static-export compatible; no Next API routes or browser Stripe secrets were added.
+- Added Supabase Edge Functions as the trusted billing server boundary: `stripe-checkout`, `stripe-portal`, and `stripe-webhook`.
+- Checkout creates or reuses a Stripe customer for the signed-in Supabase user, creates a subscription Checkout Session with `STRIPE_PRO_MONTHLY_PRICE_ID` or `STRIPE_PRO_YEARLY_PRICE_ID`, keeps `STRIPE_PRO_PRICE_ID` as a local/dev fallback, and returns to `/account` or `/upgrade`.
+- Billing Portal creates a Stripe portal session only for signed-in users with a stored `stripe_customer_id`.
+- Webhook verifies Stripe signatures and handles `checkout.session.completed`, subscription create/update/delete, and `invoice.payment_failed`.
+- Stripe subscription statuses map into the existing entitlement model: `active`/`trialing` -> Pro, `past_due` -> Free/past_due, canceled/unpaid/incomplete states -> Free/canceled.
+- Entitlements now persist `stripe_customer_id`, `stripe_subscription_id`, `stripe_price_id`, `stripe_status`, and `current_period_end`.
+- `/upgrade` and `/account` now show real billing actions when signed in and configured, while still showing clear disabled/sign-in states locally.
+- Added `docs/STRIPE_BILLING.md` with product/price setup, env vars, Edge Function deployment, Stripe CLI webhook testing, and cancellation/past-due/resubscribe checks.
+- Anonymous Daily gameplay remains open; scoring, maps, indicators, Daily selection, Practice selection, Challenge payloads, and local persistence rules were not changed.
+
+## Validation Results For Stripe Billing v1
+
+- `pnpm test -- src/lib/billing/stripeEntitlements.test.ts` passed: billing/webhook unit coverage included Stripe status mapping, webhook event handling, payment failure handling, missing-user handling, and unsigned/invalid webhook request rejection.
+- `pnpm quality` passed: ESLint, TypeScript, Vitest (15 files / 89 tests), and `next build` static export. Build exported 137 static pages.
+- After `next build` flipped `next-env.d.ts` to production route types, the file was restored to the repo's dev route-types import and `pnpm typecheck` passed.
+- Focused `pnpm test:e2e --grep "account and sign-in|mobile viewport|axe scans"` passed: 5 passed, 1 expected desktop mobile-overflow skip.
+- Full `pnpm test:e2e` passed: 57 passed, 1 expected desktop mobile-overflow skip, 1.1m.
+- `pnpm static:preview` served `out/` at `http://localhost:59659` because `3001` was already occupied.
+- `curl -I` returned `HTTP/1.1 200 OK` for `/`, `/play/worldprint/`, `/account/`, `/account/stats/`, `/upgrade/`, and `/archive/worldprint/`.
+
+## Completed In Entitlements v0
+
+- Added centralized Guest/Free/Pro entitlement rules with capabilities for saved stats, full Practice, full Past Games, advanced stats, basic Challenge links, Challenge history, and access limits.
+- Added Supabase `entitlements` row typing and client read helper. Signed-out users resolve to Guest; signed-in users without a row resolve to Free; active/trialing Pro rows unlock Pro capabilities; past-due/canceled Pro rows fall back to Free capabilities.
+- Added `/upgrade` as a static-compatible plan shell. It explains future Pro access without Stripe Checkout, billing, webhooks, payment collection, or fake payment buttons.
+- Added `/account` membership state and `/account/stats` advanced-stats soft gate.
+- Added soft Past Games gating: Guest/Free see recent Past Games plus any completed days saved in this browser; Pro can see the full archive.
+- Added Practice full-atlas messaging while keeping the current 3-map warm-up playable.
+- Updated `docs/supabase/production_spine_v0.sql` so `entitlements.plan` uses `free | pro`, browser clients only read their own entitlement, and manual Pro testing is documented through trusted SQL.
+- Anonymous Daily gameplay remains open; scoring, maps, indicators, Daily selection, Practice selection, Challenge payloads, and local persistence rules were not changed.
+
+## Validation Results For Entitlements v0
+
+- `pnpm quality` passed: ESLint, TypeScript, Vitest (14 files / 82 tests), and `next build` static export. Build exported 137 static pages.
+- After `next build` flipped `next-env.d.ts` to production route types, the file was restored to the repo's dev route-types import and `pnpm typecheck` passed.
+- `pnpm test:e2e` passed: 57 passed, 1 expected desktop mobile-overflow skip, 1.1m.
+- Targeted checks also passed while debugging: desktop account/upgrade, mobile account/upgrade, focused account/archive/mobile/axe suite, and completed-Daily archive visibility.
+- `pnpm static:preview` served `out/` at `http://localhost:50930` because `3001` was already occupied.
+- `curl -I` returned `HTTP/1.1 200 OK` for `/`, `/play/worldprint/`, `/account/`, `/account/stats/`, `/upgrade/`, and `/archive/worldprint/`.
 
 ## Completed In Can You Geo? Branding Overhaul v1
 
@@ -142,7 +185,7 @@ Can You Geo? Branding Overhaul v1 - complete.
 - Added `generated/reports/beta-qa-scorecards.md` / `.json` with unit clarity, map readability, answer fairness, distractor ambiguity, difficulty fit, reveal copy, mobile readability, decision, and recommended fix fields.
 - Added `docs/BETA_QA.md` with honest content counts, sample summary, top issues, flow review, launch readiness assessment, and beta/free-tier recommendation.
 - Cleaned public copy so the play setup says playable and Daily-ready maps instead of source-valid approved indicators. Current copy shows `125 playable maps` and `50 Daily-ready maps`.
-- Changed score-cost wording from `paid investigations` to `point-cost investigations`.
+- Changed score-cost wording from `paid investigations` to plain `country reveal` language.
 - Changed Atlas Master copy from `Search approved indicators` to `Search playable map catalog`.
 - Updated `/sources` to distinguish candidate, source-valid, playable, and Daily-ready counts with human-readable editorial status labels.
 - Updated screenshots to include active Practice plus the existing landing, play setup, archive, challenge, reveal, and palette examples.
@@ -323,7 +366,7 @@ Can You Geo? Branding Overhaul v1 - complete.
 - Keep value reveal and score changes behind the explicit reveal button.
 - Remove unnecessary root-SVG pointer capture and keep drag suppression for true pans.
 - Add clearer selected/revealed path styling, pointer cursor, and `Selected: country` side-panel feedback.
-- Rename the Practice start CTA to `Start this 3-map practice set` and make it disabled until a set is built.
+- Rename the Practice start CTA to `Start practice` and make it disabled until a set is built.
 - Move matching/no-match clarity into the Practice preview card and add a zero-match screenshot state.
 
 ## Out Of Scope For This Task
@@ -338,9 +381,9 @@ Can You Geo? Branding Overhaul v1 - complete.
 - Added `data-iso3` and `data-country-name` hooks to country paths for testing/debugging.
 - Updated map tooltip copy from `Click to investigate` to `Click to select`.
 - Improved tactile feedback with pointer cursor, clearer selected-country outline, revealed-country treatment, and `Selected: country` side-panel feedback.
-- Clarified Practice flow by disabling start until a set is built, renaming the start CTA to `Start this 3-map practice set`, and strengthening its enabled visual treatment.
+- Clarified Practice flow by disabling start until a set is built, renaming the start CTA to `Start practice`, and strengthening its enabled visual treatment.
 - Moved matching/no-match clarity into the Practice preview card and removed the detached matching-count chip.
-- Added zero-match Practice behavior and screenshot state for filters with no matching maps.
+- Added zero-match Practice behavior and screenshot state when a topic/difficulty combo has no practice maps.
 - Updated E2E coverage for direct map click selection, reveal-after-selection scoring, pan safety, selected state after zoom/pan, Practice selected-set start, and zero-match disabled actions.
 
 ## Audit Findings For Practice + Investigation UX Clarity v1

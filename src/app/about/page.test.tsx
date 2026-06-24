@@ -6,6 +6,6 @@ describe("AboutPage", () => {
   it("renders the mission and sources CTA", () => {
     render(<AboutPage />);
     expect(screen.getByRole("heading", { name: /seeing what maps are saying/i })).toBeInTheDocument();
-    expect(screen.getByRole("link", { name: /Read sources and licenses/i })).toBeVisible();
+    expect(screen.getByRole("link", { name: /Read Data & Sources/i })).toBeVisible();
   });
 });

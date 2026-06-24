@@ -2,7 +2,7 @@
 
 import { Minus, Plus, RotateCcw } from "lucide-react";
 import { geoEqualEarth, geoGraticule10, geoPath } from "d3-geo";
-import { useCallback, useMemo, useRef, useState, type PointerEvent, type WheelEvent } from "react";
+import { useCallback, useMemo, useRef, useState, type KeyboardEvent, type PointerEvent, type WheelEvent } from "react";
 import type { IndicatorArtifact, MapFeature, MapFeatureCollection } from "@/lib/content/schemas";
 import { valueClass } from "@/lib/geo/bins";
 import { DEFAULT_MAP_VIEW, isDefaultMapView, panMapView, zoomMapView, type MapViewTransform } from "@/lib/geo/mapView";
@@ -11,9 +11,9 @@ import { MISSING_DATA_FILL, paletteForIndicator, valueClassColor } from "@/lib/g
 type WorldMapProps = {
   map: MapFeatureCollection;
   indicator?: IndicatorArtifact;
+  countryNames?: Map<string, string>;
   investigatedIso3?: string[];
   selectedIso3?: string | null;
-  showHoverNames?: boolean;
   interactive?: boolean;
   zoomable?: boolean;
   onCountryClick?: (country: { iso3: string; name: string }) => void;
@@ -23,9 +23,9 @@ type WorldMapProps = {
 export function WorldMap({
   map,
   indicator,
+  countryNames,
   investigatedIso3 = [],
   selectedIso3,
-  showHoverNames = false,
   interactive = true,
   zoomable = true,
   onCountryClick,
@@ -130,7 +130,7 @@ export function WorldMap({
         ref={svgRef}
         className="world-map"
         viewBox="0 0 960 520"
-        role="img"
+        role={interactive ? "group" : "img"}
         aria-labelledby={labelledBy}
         onPointerLeave={() => setHovered(null)}
         onWheel={handleWheel}
@@ -148,9 +148,10 @@ export function WorldMap({
         <rect className="map-ocean" width="960" height="520" rx="0" />
         <g className="map-viewport" transform={`translate(${view.x} ${view.y}) scale(${view.k})`}>
           {graticulePath ? <path className="map-graticule" d={graticulePath} vectorEffect="non-scaling-stroke" /> : null}
-          <g aria-hidden="true">
+          <g>
             {map.features.map((feature: MapFeature) => {
               const iso3 = feature.properties.iso3;
+              const countryName = (iso3 ? countryNames?.get(iso3) : undefined) ?? feature.properties.name ?? "Unknown country";
               const value = iso3 && indicator ? indicator.valuesByIso3[iso3] : undefined;
               const klass = valueClass(value, indicator?.stats.quantileBreaks ?? []);
               const d = path(feature as never);
@@ -164,7 +165,7 @@ export function WorldMap({
                   d={d}
                   className="country-path"
                   data-iso3={iso3 ?? ""}
-                  data-country-name={feature.properties.name}
+                  data-country-name={countryName}
                   data-value-class={klass ?? "missing"}
                   data-has-data={value === undefined ? "false" : "true"}
                   data-investigated={isInvestigated ? "true" : "false"}
@@ -172,26 +173,43 @@ export function WorldMap({
                   data-hovered={isHovered ? "true" : "false"}
                   style={klass === null ? undefined : { fill: valueClassColor(klass, indicator) }}
                   vectorEffect="non-scaling-stroke"
-                  tabIndex={-1}
-                  role="presentation"
+                  tabIndex={interactive && iso3 ? 0 : -1}
+                  role={interactive && iso3 ? "button" : "presentation"}
+                  aria-label={interactive && iso3 ? `${countryName}. Click to select.` : undefined}
                   onPointerMove={(event) => {
-                    const canShowName = showHoverNames || !interactive;
                     setHovered({
                       mapId: feature.properties.mapId,
-                      name: canShowName ? feature.properties.name : "Country",
+                      name: countryName,
                       value: value ?? null,
                       x: event.clientX,
                       y: event.clientY
                     });
                   }}
                   onPointerLeave={() => setHovered(null)}
+                  onFocus={(event) => {
+                    const rect = event.currentTarget.getBoundingClientRect();
+                    setHovered({
+                      mapId: feature.properties.mapId,
+                      name: countryName,
+                      value: value ?? null,
+                      x: rect.left + rect.width / 2,
+                      y: rect.top + rect.height / 2
+                    });
+                  }}
+                  onBlur={() => setHovered(null)}
+                  onKeyDown={(event: KeyboardEvent<SVGPathElement>) => {
+                    if (!interactive || !iso3 || !onCountryClick) return;
+                    if (event.key !== "Enter" && event.key !== " ") return;
+                    event.preventDefault();
+                    onCountryClick({ iso3, name: countryName });
+                  }}
                   onClick={() => {
                     if (suppressClick.current) {
                       suppressClick.current = false;
                       return;
                     }
                     if (!interactive || !iso3 || !onCountryClick) return;
-                    onCountryClick({ iso3, name: feature.properties.name });
+                    onCountryClick({ iso3, name: countryName });
                   }}
                 />
               );
@@ -217,7 +235,7 @@ export function WorldMap({
         <div className="map-tooltip" style={{ left: hovered.x + 12, top: hovered.y + 12 }}>
           <strong>{hovered.name}</strong>
           {indicator ? (
-            <span>{hovered.value === null ? "No data for this round" : interactive ? "Click to select" : "Mapped value"}</span>
+            <span>{hovered.value === null ? "No data on this map" : interactive ? "Click to select" : "Mapped value"}</span>
           ) : null}
         </div>
       ) : null}

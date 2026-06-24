@@ -105,8 +105,8 @@ export function reduceRun(run: RunState, action: RunAction): RunState {
         ...round,
         feedback:
           existing.value === null
-            ? `${existing.countryName}: No data for this round`
-            : `${existing.countryName} was already investigated`
+            ? `${existing.countryName}: No data for this country on this map.`
+            : `${existing.countryName} already revealed. No points spent this time.`
       });
     }
     if (action.value === null) {
@@ -114,7 +114,7 @@ export function reduceRun(run: RunState, action: RunAction): RunState {
         ...round,
         phase: "feedback",
         investigations: [...round.investigations, { ...action, cost: 0 }],
-        feedback: `${action.countryName}: No data for this round`
+        feedback: `${action.countryName}: No data for this country on this map.`
       });
     }
     const paidCount = paidInvestigationCount(round);
@@ -123,15 +123,15 @@ export function reduceRun(run: RunState, action: RunAction): RunState {
       return updateCurrentRound(run, {
         ...round,
         phase: "feedback",
-        feedback: "Investigation limit reached"
+        feedback: "Country reveals used up for this round."
       });
     }
     return updateCurrentRound(run, {
       ...round,
       phase: "feedback",
-      score: deductScore(round.score, penalty, run.tier),
+      score: deductScore(round.score, penalty),
       investigations: [...round.investigations, { ...action, cost: penalty }],
-      feedback: `${action.countryName} investigated for ${penalty} points`
+      feedback: `${action.countryName} revealed for ${penalty} points`
     });
   }
 
@@ -142,8 +142,8 @@ export function reduceRun(run: RunState, action: RunAction): RunState {
       ...round,
       phase: "feedback",
       unitClueUsed: true,
-      score: deductScore(round.score, config.scoring.unitCluePenalty, run.tier),
-      feedback: `Unit clue used for ${config.scoring.unitCluePenalty} points`
+      score: deductScore(round.score, config.scoring.unitCluePenalty),
+      feedback: `Unit clue revealed for ${config.scoring.unitCluePenalty} points`
     });
   }
 
@@ -166,7 +166,7 @@ export function reduceRun(run: RunState, action: RunAction): RunState {
     return updateCurrentRound(run, {
       ...round,
       phase: "feedback",
-      score: deductScore(round.score, penalty, run.tier),
+      score: deductScore(round.score, penalty),
       rejectedAnswers: [...round.rejectedAnswers, { id: action.answerId, label: action.label }],
       feedback: `Incorrect. ${penalty} points deducted.`
     });

@@ -42,8 +42,16 @@ The intended long-term model is simple freemium:
 
 Focused beta recommendation: keep the current build open and unenforced, keep the full Daily at five maps, use three maps for the future no-account demo, and start future free-account Daily allowance at three maps/day until outside testing proves the current 125 playable maps and 50 Daily-ready maps can sustain a broader free Daily.
 
-Stripe, authentication, billing, and access enforcement are not implemented in this slice. Paid access must not sell answers, streak protection, or pay-to-win advantages.
+Supabase authentication and Stripe Billing are now wired for account sync and Pro access. Paid access must not sell answers, streak protection, or pay-to-win advantages.
+
+## Local Player Stats
+
+Can You Geo? now shows a lightweight **Your stats** surface after completed games and on Past Games. These stats are saved in this browser only and are derived from validated local gameplay history.
+
+Current local stats include maps played, Daily runs completed, correct answers, games completed, total points, average round score, best Daily score, best round score, current streak, Daily/Past Games/Challenge counts, and recent local performance. Daily completions count once per date/run, Past Games count as local replays by date, and Challenges count by challenge ID. Practice completion history is not separately tracked yet, so Practice does not contribute to the local stats panel beyond the active completed result.
+
+There is now Supabase-backed magic-link sign-in for “Save your score and streak.” Signed-in players can sync aggregate local stats to `user_stats`; Stripe webhooks can grant Pro entitlements. Run-level cloud history, public profiles, leaderboards, backend gameplay APIs, and cross-device conflict resolution are not part of this slice.
 
 ## Non-Goals For This Slice
 
-No accounts, payments, backend gameplay API, runtime map tiles, leaderboards, AI-generated live questions, advertising, push notifications, native app, or generalized mini-game plugin framework.
+No backend gameplay API, runtime map tiles, leaderboards, AI-generated live questions, advertising, push notifications, native app, or generalized mini-game plugin framework.

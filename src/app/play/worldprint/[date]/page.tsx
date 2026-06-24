@@ -6,7 +6,7 @@ import { DailyIndexSchema } from "@/lib/content/schemas";
 import { WorldprintClient } from "@/features/worldprint/WorldprintClient";
 
 export const metadata: Metadata = {
-  title: "Mystery Map Archive Daily"
+  title: "Past Mystery Map"
 };
 
 export const dynamicParams = false;
@@ -25,8 +25,8 @@ export default async function DatedWorldprintPage({ params }: { params: Promise<
       fallback={
         <section className="game-shell page-shell">
           <div className="empty-state surface">
-            <h1>Loading Mystery Map archive</h1>
-            <p>Preparing the frozen map set.</p>
+            <h1>Loading past Mystery Map…</h1>
+            <p>Preparing that day&apos;s maps.</p>
           </div>
         </section>
       }

@@ -68,8 +68,8 @@ export default function HowToPlayPage() {
         </div>
         <div className="scoring-card surface">
           <p>
-            Each round starts at 1,000 points. Analyst uses the baseline scoring: country investigations cost 100, 150, then
-            200 points; the unit clue costs 200; each wrong answer costs 300; the minimum solved score is 100.
+            Each round starts at 1,000 points. Revealing a new country value costs 100 points, revealing the unit costs 100 points,
+            and each wrong answer costs 300 points. Scores can finish below zero, but you can always continue to the reveal.
           </p>
           <p>Daily has no speed bonus. The best scores come from reading the map before spending clues.</p>
         </div>
