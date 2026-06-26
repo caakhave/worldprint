@@ -24,7 +24,7 @@ function completionForDate(store: PersistedState, dateKey: string): CompletionHi
   return store.dailyHistoryByDate[dateKey] ?? store.archiveHistoryByDate[dateKey] ?? null;
 }
 
-function ArchiveCard({
+export function ArchiveCard({
   entry,
   todayKey,
   completion,
@@ -36,13 +36,15 @@ function ArchiveCard({
   accountRun: GameRunRow | null;
 }) {
   const isToday = entry.date === todayKey;
-  const status = completion
-    ? `${completion.bestScore.toLocaleString("en-US")} points · ${TIER_CONFIGS[completion.tier].shortLabel}${accountRun ? " · account saved" : " · local"}`
-    : accountRun
-      ? `${accountRun.total_score.toLocaleString("en-US")} points · saved to account`
-      : "Unplayed on this browser";
+  const hasCompletion = Boolean(completion || accountRun);
+  const status = accountRun
+    ? `${accountRun.total_score.toLocaleString("en-US")} points · Saved to account`
+    : completion
+      ? `${completion.bestScore.toLocaleString("en-US")} points · ${TIER_CONFIGS[completion.tier].shortLabel} · Saved on this browser`
+      : "Unplayed";
+  const actionLabel = hasCompletion ? "View / Replay" : "Replay maps";
   return (
-    <article className="archive-card" data-today={isToday ? "true" : "false"} data-completed={completion ? "true" : "false"}>
+    <article className="archive-card" data-today={isToday ? "true" : "false"} data-completed={hasCompletion ? "true" : "false"}>
       <div className="archive-card-heading">
         <div>
           <span>{isToday ? "Today" : `Mystery Map Daily #${challengeNumber(entry.date)}`}</span>
@@ -64,8 +66,8 @@ function ArchiveCard({
           <dd>{status}</dd>
         </div>
       </dl>
-      <Link className={completion ? "button-secondary" : "button"} href={`/play/worldprint/${entry.date}`}>
-        {completion ? "Review / Replay" : "Play"}
+      <Link className={hasCompletion ? "button-secondary" : "button"} href={`/play/worldprint/${entry.date}`}>
+        {actionLabel}
       </Link>
     </article>
   );
@@ -96,7 +98,12 @@ export function ArchiveClient() {
       }
       const result = await fetchRemoteRunSummaries(account.client, account.user.id);
       if (cancelled) return;
-      setAccountRuns(result.error ? [] : result.data);
+      if (result.error) {
+        console.warn("[Can You Geo] Archive account-run load failed.", result.error);
+        setAccountRuns([]);
+        return;
+      }
+      setAccountRuns(result.data);
     }
     void loadAccountRuns();
     return () => {
@@ -154,12 +161,16 @@ export function ArchiveClient() {
         <h1 className="page-title">Replay recent Mystery Maps.</h1>
         <p className="lead">
           Missed a day? Replay recent Daily Mystery Maps
-          {publicRange ? ` from ${publicRange.start} to ${publicRange.end}` : ""}. For now, completed days are saved in this browser only.
+          {publicRange ? ` from ${publicRange.start} to ${publicRange.end}` : ""}. Saved cards are records first, and replaying them never changes today&apos;s
+          streak.
         </p>
       </div>
       <div className="archive-note surface">
         <strong>Past games do not change today&apos;s streak.</strong>
-        <span>Today&apos;s Daily still updates the live streak; replayed days save only local history.</span>
+        <span>
+          Today&apos;s Daily still updates the live streak; replayed days save history as Past Game records
+          {signedIn ? " for this account when sync is available." : " in this browser."}
+        </span>
       </div>
       {hiddenCount > 0 ? (
         <div className="archive-upgrade-panel surface" aria-label="Full archive access">
@@ -185,7 +196,15 @@ export function ArchiveClient() {
           </Link>
         </div>
       ) : null}
-      <PlayerStatsPanel store={store} compact />
+      <PlayerStatsPanel
+        store={store}
+        compact
+        note={
+          signedIn
+            ? "Account-saved Past Games are marked on each card. This browser record stays available here too."
+            : "Local on this device. Sign in to save completed Past Games to your account."
+        }
+      />
       <div className="archive-grid" aria-label="Past Mystery Map Dailies">
         {visibleEntries.map((entry) => (
           <ArchiveCard

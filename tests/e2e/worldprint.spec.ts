@@ -146,6 +146,7 @@ test("first visit starts the Analyst Daily", async ({ page }) => {
   await expect(primaryNav.getByRole("link", { name: /Sources|Beta|About|Internal/i })).toHaveCount(0);
   const footerNav = page.getByRole("navigation", { name: "Footer navigation" });
   await expect(footerNav.getByRole("link", { name: "Sources" })).toHaveAttribute("href", /\/sources\/?$/);
+  await expect(footerNav.getByRole("link", { name: "Terms, Privacy & Accessibility" })).toHaveAttribute("href", /\/legal\/?$/);
   await expect(footerNav.getByRole("link", { name: "Beta" })).toHaveAttribute("href", /\/beta\/worldprint\/?$/);
   await expect(footerNav.getByRole("link", { name: "About" })).toHaveAttribute("href", /\/about\/?$/);
   await expect(page.getByRole("link", { name: /Internal/i })).toHaveCount(0);
@@ -388,6 +389,8 @@ test("wrong answer recovers and correct answer reveals the source", async ({ pag
   await page.getByRole("button", { name: wrongLabel(0) }).click();
   await expect(page.getByText(/Incorrect/)).toBeVisible();
   await page.getByRole("button", { name: correctLabel(0) }).click();
+  await expect(page.getByText(/Revealed/)).toBeVisible();
+  await expect(page.getByText(/Answer found/)).toBeVisible();
   await expect(page.getByText(/Source and year/)).toBeVisible();
   await expect(page.getByText(/What the map was showing/)).toBeVisible();
   await expect(page.getByText(/Why the wrong answers were tempting/)).toBeVisible();
@@ -424,12 +427,13 @@ test("completes a five-round Daily and preserves completed result", async ({ pag
 
 test("archive route opens a dated Daily without affecting today's streak", async ({ page }) => {
   await page.goto(`/play/worldprint/${TEST_DATE}`);
-  await expect(page.getByText(`Past Mystery Map — ${TEST_DATE}`)).toBeVisible();
+  await expect(page.getByText(`Past Mystery Map Replay · ${TEST_DATE}`)).toBeVisible();
   await expect(page.locator("body")).not.toContainText("WORLDPRINT");
   await expect(page.getByText(/Streak stays safe/i)).toBeVisible();
-  await expect(page.getByRole("button", { name: `Start ${TEST_DATE} Mystery Map` })).toBeVisible();
-  await page.getByRole("button", { name: `Start ${TEST_DATE} Mystery Map` }).click();
-  await expect(page.getByText(`Past Mystery Map ${TEST_DATE}`)).toBeVisible();
+  await expect(page.getByText(/Past Mystery Map Replay/i).first()).toBeVisible();
+  await expect(page.getByRole("button", { name: "Replay maps" })).toBeVisible();
+  await page.getByRole("button", { name: "Replay maps" }).click();
+  await expect(page.getByText(`Past Mystery Map Replay ${TEST_DATE}`)).toBeVisible();
   for (let index = 0; index < 5; index += 1) {
     await page.getByRole("button", { name: correctLabel(index) }).click();
     await page.getByRole("button", { name: index === 4 ? /See results/ : /Next round/ }).click();
@@ -502,6 +506,29 @@ test("keyboard-only answer flow works", async ({ page }) => {
   await page.getByRole("button", { name: correctLabel(0) }).focus();
   await page.keyboard.press("Enter");
   await expect(page.getByText(/What the map was showing/)).toBeVisible();
+});
+
+test("keyboard access reaches legal and sign-in controls", async ({ page }) => {
+  await page.goto("/");
+  const legalLink = page.getByRole("link", { name: "Terms, Privacy & Accessibility" });
+  await legalLink.focus();
+  await page.keyboard.press("Enter");
+  await expect(page).toHaveURL(/\/legal\/?$/);
+  await expect(page.getByRole("heading", { name: "Accessibility" })).toBeVisible();
+
+  await page.goto("/sign-in");
+  await expect(page.locator(".account-primary-card h2")).not.toHaveText(/Checking your account/i);
+  const email = page.getByLabel("Email");
+  if (await email.isVisible()) {
+    await email.focus();
+    await page.keyboard.insertText("player@example.com");
+    await expect(email).toHaveValue("player@example.com");
+    await page.getByRole("button", { name: "Send sign-in link" }).focus();
+    await expect(page.getByRole("button", { name: "Send sign-in link" })).toBeFocused();
+  } else {
+    await page.getByRole("link", { name: "Keep playing" }).focus();
+    await expect(page.getByRole("link", { name: "Keep playing" })).toBeFocused();
+  }
 });
 
 test("practice filters start a filtered preview run", async ({ page }) => {
@@ -606,6 +633,7 @@ test("sources page renders player-friendly data attribution without admin wordin
 test("account and sign-in stay optional, friendly, and local-first", async ({ page }) => {
   await page.goto("/sign-in");
   await expect(page.getByRole("heading", { name: /Save your score and streak/i })).toBeVisible();
+  await expect(page.getByText(/No password needed\. Enter your email and we'll send a secure one-time sign-in link/i)).toBeVisible();
   const emailSignInAvailable = await page.getByLabel("Email").isVisible();
   if (emailSignInAvailable) {
     await expect(page.getByLabel("Email")).toBeVisible();
@@ -667,7 +695,7 @@ test("account and sign-in stay optional, friendly, and local-first", async ({ pa
 
   await page.goto("/auth/callback?error=server_error&error_description=PKCE%20code%20verifier%20not%20found");
   await expect(page.getByRole("heading", { name: /That sign-in link did not work/i })).toBeVisible();
-  await expect(page.getByText(/expired or was opened in another browser/i)).toBeVisible();
+  await expect(page.getByText(/expired or has already been used/i)).toBeVisible();
   await expect(page.getByRole("link", { name: /Send a new sign-in link/i })).toHaveAttribute("href", /\/sign-in\/?$/);
   await expect(page.locator("body")).not.toContainText(/PKCE|code verifier|Supabase/i);
 });
@@ -677,10 +705,11 @@ test("past games page reads as player replay, not admin archive", async ({ page 
   await expect(page.locator(".archive-hero .eyebrow")).toHaveText("Past Games");
   await expect(page.getByRole("heading", { name: /Replay recent Mystery Maps/i })).toBeVisible();
   await expect(page.getByText(/Missed a day\? Replay recent Daily Mystery Maps/i)).toBeVisible();
-  await expect(page.getByText(/completed days are saved in this browser only/i)).toBeVisible();
+  await expect(page.getByText(/Saved cards are records first/i)).toBeVisible();
   await expect(page.getByText(/Past games do not change today's streak/i)).toBeVisible();
   await expect(page.getByRole("complementary", { name: "Your stats" })).toContainText("No saved games yet");
   await expect(page.getByRole("complementary", { name: "Your stats" })).toContainText("Local on this device");
+  await expect(page.getByRole("link", { name: "Replay maps" }).first()).toBeVisible();
   await expect(page.getByText(/Full archive access is coming soon|Create a free account to save your progress/i)).toBeVisible();
   await expect(page.locator("body")).not.toContainText(/manifest|archive window|localStorage|generated data|content version|admin/i);
   await expect(page.locator("body")).not.toContainText("WORLDPRINT");
@@ -756,6 +785,10 @@ test("mobile viewport has no horizontal overflow", async ({ page, isMobile }) =>
   await page.goto("/sources");
   await expect(page.getByRole("heading", { name: /Real data, readable puzzles/i })).toBeVisible();
   expect(await page.evaluate(() => document.documentElement.scrollWidth > window.innerWidth)).toBe(false);
+  await page.goto("/legal");
+  await expect(page.getByRole("heading", { name: /Terms & Privacy/i })).toBeVisible();
+  await expect(page.getByRole("heading", { name: "Accessibility" })).toBeVisible();
+  expect(await page.evaluate(() => document.documentElement.scrollWidth > window.innerWidth)).toBe(false);
   await page.goto("/archive/worldprint");
   await expect(page.getByRole("heading", { name: /Replay recent Mystery Maps/i })).toBeVisible();
   expect(await page.evaluate(() => document.documentElement.scrollWidth > window.innerWidth)).toBe(false);
@@ -802,6 +835,9 @@ test("axe scans landing, active game, and reveal", async ({ page }) => {
   await page.goto("/sources");
   await expect(page.getByRole("heading", { name: /How editorial eligibility works/i })).toBeVisible();
   expect((await new AxeBuilder({ page }).analyze()).violations).toEqual([]);
+  await page.goto("/legal");
+  await expect(page.getByRole("heading", { name: "Accessibility" })).toBeVisible();
+  expect((await new AxeBuilder({ page }).analyze()).violations).toEqual([]);
   await page.goto("/sign-in");
   expect((await new AxeBuilder({ page }).analyze()).violations).toEqual([]);
   await page.goto("/account");
@@ -822,6 +858,19 @@ test("axe scans landing, active game, and reveal", async ({ page }) => {
   });
   await page.goto(`/challenge/worldprint?c=${challengeCode}`);
   expect((await new AxeBuilder({ page }).analyze()).violations).toEqual([]);
+  await page.getByRole("button", { name: /Start challenge/i }).click();
+  await expect(page.getByRole("heading", { name: /What does this map measure/i })).toBeVisible();
+  expect((await new AxeBuilder({ page }).analyze()).violations).toEqual([]);
+  await page.evaluate(() => window.localStorage.clear());
+
+  await page.goto(`/play/worldprint?date=${TEST_DATE}`);
+  await page.getByRole("button", { name: /Pick practice maps/i }).click();
+  await page.getByRole("button", { name: /Start practice/i }).click();
+  await expect(page.getByText("Practice").first()).toBeVisible();
+  await expect(page.getByRole("heading", { name: /What does this map measure/i })).toBeVisible();
+  expect((await new AxeBuilder({ page }).analyze()).violations).toEqual([]);
+  await page.evaluate(() => window.localStorage.clear());
+
   await startDaily(page);
   expect((await new AxeBuilder({ page }).analyze()).violations).toEqual([]);
   await page.getByRole("button", { name: correctLabel(0) }).click();

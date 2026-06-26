@@ -238,7 +238,8 @@ export function WorldprintClient({ dateOverride, entryMode = "standard" }: World
       if (result.status === "saved") {
         setCloudSaveStatus("Saved to your account.");
       } else if (result.status === "error") {
-        setCloudSaveStatus("Saved locally. Account sync will try again from your stats page.");
+        console.warn("[Can You Geo] Completed-run cloud sync failed.", result.error);
+        setCloudSaveStatus("Saved locally. Account sync failed; open Saved Stats to try again.");
       }
     });
   }, [account.client, account.user, run]);
@@ -498,13 +499,13 @@ export function WorldprintClient({ dateOverride, entryMode = "standard" }: World
     const dailyLabel = activeDateRun
       ? activeDateRun.status === "complete"
         ? isArchiveDate
-          ? "Review past game result"
+          ? "View / Replay past game"
           : "View completed Mystery Map"
         : isArchiveDate
-          ? "Continue past Mystery Map"
+          ? "Continue replay"
           : "Continue today's Mystery Map"
       : isArchiveDate
-        ? `Start ${todayKey} Mystery Map`
+        ? "Replay maps"
         : "Start today's Mystery Map";
     const selectedCount = selectedPracticeRounds.length;
     const selectedDifficultyLabel = DIFFICULTY_LABELS[practiceDifficulty];
@@ -531,11 +532,11 @@ export function WorldprintClient({ dateOverride, entryMode = "standard" }: World
       <section className="game-entry page-shell">
         <div className="entry-copy">
           <EntryAtlasVisual />
-          <p className="eyebrow">{isArchiveDate ? `Past Mystery Map — ${todayKey}` : `Mystery Map Daily #${challengeNumber(todayKey)}`}</p>
+          <p className="eyebrow">{isArchiveDate ? `Past Mystery Map Replay · ${todayKey}` : `Mystery Map Daily #${challengeNumber(todayKey)}`}</p>
           <h1 className="page-title">What does this map measure?</h1>
           <p className="lead">
             {isArchiveDate
-              ? "This past Daily is open in the public build: five unlabeled maps, one hidden indicator each."
+              ? "Replay this past Mystery Map as a record run: five unlabeled maps, one hidden indicator each."
               : "Today's open beta runs the full 5-map Daily: five unlabeled maps, one hidden indicator each."}{" "}
             Investigate countries when you need evidence, but every clue spends score.
           </p>
@@ -653,9 +654,12 @@ export function WorldprintClient({ dateOverride, entryMode = "standard" }: World
             </div>
           ) : (
             <div className="archive-banner">
-              <p className="setup-kicker">Past Mystery Map</p>
+              <p className="setup-kicker">Past Mystery Map Replay</p>
               <h2>{todayKey}</h2>
-              <p>This past Daily uses the same maps every time. Replay it for practice or review; it saves local history but does not change today&apos;s streak.</p>
+              <p>
+                This past Daily uses the same maps every time. Replay it to improve your record; completed replays save history but never change today&apos;s
+                streak.
+              </p>
             </div>
           )}
           {isArchiveDate ? (
@@ -735,6 +739,9 @@ export function WorldprintClient({ dateOverride, entryMode = "standard" }: World
   const topBottom = topAndBottom(indicator, data.countryNames);
   const unitClue = unitClueForIndicator(indicator);
   const runStats = runProgressStats(run);
+  const latestRejectedAnswer = roundState.rejectedAnswers.at(-1) ?? null;
+  const feedbackText = roundState.feedback ?? "";
+  const showIncorrectFeedback = Boolean(latestRejectedAnswer && feedbackText.toLowerCase().includes("incorrect"));
 
   if (roundState.phase === "solved") {
     return (
@@ -764,7 +771,7 @@ export function WorldprintClient({ dateOverride, entryMode = "standard" }: World
             {run.mode === "daily"
               ? `Mystery Map Daily #${challengeNumber(run.dateKey)}`
               : run.mode === "archive"
-                ? `Past Mystery Map ${run.dateKey}`
+                ? `Past Mystery Map Replay ${run.dateKey}`
                 : run.mode === "challenge"
                   ? "Mystery Map Challenge"
                   : "Mystery Map Practice"}
@@ -966,8 +973,15 @@ export function WorldprintClient({ dateOverride, entryMode = "standard" }: World
             </div>
           ) : null}
         </div>
+        {showIncorrectFeedback ? (
+          <div className="answer-feedback-banner" data-result="incorrect" role="status" aria-live="polite">
+            <span>Incorrect</span>
+            <strong>{latestRejectedAnswer?.label}</strong>
+            <p>{feedbackText} Cross it off and read the remaining signal.</p>
+          </div>
+        ) : null}
         <div className="status-live" role="status" aria-live="polite">
-          {roundState.feedback}
+          {showIncorrectFeedback ? "" : feedbackText}
         </div>
       </div>
     </section>
@@ -1019,6 +1033,9 @@ function RevealView({
     return Number(rightInChoices) - Number(leftInChoices);
   });
   const resultLabel = roundState.score < 0 ? `Round lost: ${roundState.score} points` : `Solved for ${roundState.score} points`;
+  const scoreText = `${roundState.score >= 0 ? "+" : ""}${roundState.score.toLocaleString("en-US")} points`;
+  const missedAnswerCount = roundState.rejectedAnswers.length;
+  const resultTone = missedAnswerCount > 0 ? "recovered" : "correct";
   const hasInvestigationHistory = roundState.unitClueUsed || roundState.investigations.length > 0;
   return (
     <section className="reveal-layout page-shell">
@@ -1041,8 +1058,18 @@ function RevealView({
         />
       </div>
       <div className="reveal-panel surface" aria-label="Reveal details">
+        <div className="round-result-banner" data-result={resultTone} role="status" aria-live="polite">
+          <span>{missedAnswerCount > 0 ? "Revealed" : "Correct"}</span>
+          <strong>{missedAnswerCount > 0 ? "Answer found." : "Solved."}</strong>
+          <p>
+            {missedAnswerCount > 0
+              ? `The hidden map was ${indicator.shortTitle}. ${missedAnswerCount} wrong ${missedAnswerCount === 1 ? "read" : "reads"} ruled out.`
+              : `Sharp read. The hidden map was ${indicator.shortTitle}.`}
+          </p>
+          <em>{scoreText}</em>
+        </div>
         <div className="reveal-scoreline">
-          <span>Correct answer</span>
+          <span>Answer</span>
           <strong>{indicator.shortTitle}</strong>
           <small>{resultLabel}</small>
         </div>
@@ -1207,6 +1234,11 @@ function CompletionSummary({
     typeof window === "undefined" ? `/challenge/worldprint?c=${challengeCode}` : `${window.location.origin}/challenge/worldprint/?c=${challengeCode}`;
   const challengeShareText = buildShareText({ ...run, mode: "challenge" }, { challengeUrl });
   const total = run.rounds.reduce((sum, round) => sum + round.score, 0);
+  const bestRound = run.rounds.length ? Math.max(...run.rounds.map((round) => round.score)) : 0;
+  const averageRound = run.rounds.length ? Math.round(total / run.rounds.length) : 0;
+  const saveNote = signedIn
+    ? "Account sync is active. This run is saved locally first, then matched to your account when the connection is available."
+    : "Local on this device. Sign in to save completed runs, stats, and streaks to your account.";
   async function share() {
     try {
       if (navigator.share) {
@@ -1234,7 +1266,7 @@ function CompletionSummary({
     run.mode === "daily"
       ? `Mystery Map Daily #${challengeNumber(run.dateKey)}`
       : run.mode === "archive"
-        ? `Past Mystery Map — ${run.dateKey}`
+        ? `Past Mystery Map Replay · ${run.dateKey}`
         : run.mode === "challenge"
           ? "Mystery Map Challenge complete"
           : "Mystery Map Practice complete";
@@ -1254,9 +1286,27 @@ function CompletionSummary({
           {run.rounds.length} maps completed on {TIER_CONFIGS[run.tier].label}.{" "}
           {run.mode === "daily" ? `Daily streak: ${store.streak.current}.` : "Daily streaks are unaffected."}
         </p>
+        <div className="summary-achievement surface" aria-label="Completed run summary">
+          <div>
+            <span>Total score</span>
+            <strong>{total.toLocaleString("en-US")}</strong>
+          </div>
+          <div>
+            <span>Best round</span>
+            <strong>{bestRound.toLocaleString("en-US")}</strong>
+          </div>
+          <div>
+            <span>Average</span>
+            <strong>{averageRound.toLocaleString("en-US")}</strong>
+          </div>
+          <div>
+            <span>Maps</span>
+            <strong>{run.rounds.length}</strong>
+          </div>
+        </div>
         <div className="result-cells" aria-label="Per-round scores">
           {run.rounds.map((round, index) => (
-            <span key={round.roundId}>
+            <span key={round.roundId} data-best={round.score === bestRound ? "true" : "false"}>
               <small>{index + 1}</small>
               <strong>{round.score}</strong>
             </span>
@@ -1305,7 +1355,7 @@ function CompletionSummary({
           </div>
         </section>
       </div>
-      <PlayerStatsPanel store={store} />
+      <PlayerStatsPanel store={store} note={saveNote} />
     </section>
   );
 }

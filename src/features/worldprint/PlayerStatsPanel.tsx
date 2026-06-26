@@ -9,11 +9,13 @@ function formatPoints(value: number | null): string {
 export function PlayerStatsPanel({
   store,
   compact = false,
-  landmark = true
+  landmark = true,
+  note
 }: {
   store: PersistedState;
   compact?: boolean;
   landmark?: boolean;
+  note?: string;
 }) {
   const stats = buildLocalPlayerStats(store);
   const hasHistory = stats.gamesCompleted > 0;
@@ -89,7 +91,7 @@ export function PlayerStatsPanel({
       ) : (
         <p className="player-stats-empty">No saved games yet. Finish a Daily, past game, or Challenge to start your local record.</p>
       )}
-      <p className="player-stats-note">Local on this device. Sign in to sync aggregate stats; no leaderboard yet.</p>
+      <p className="player-stats-note">{note ?? "Local on this device. Sign in to sync aggregate stats; no leaderboard yet."}</p>
     </Root>
   );
 }
