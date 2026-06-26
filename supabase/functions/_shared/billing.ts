@@ -1,5 +1,6 @@
 import Stripe from "https://esm.sh/stripe@16.12.0?target=deno";
 import { createClient } from "https://esm.sh/@supabase/supabase-js@2.108.2";
+import { resolveBillingSiteOrigin } from "./returnUrls.ts";
 
 export const corsHeaders = {
   "Access-Control-Allow-Origin": "*",
@@ -32,6 +33,7 @@ export function json(body: unknown, status = 200): Response {
 }
 
 export function readEnv(requireWebhookSecret = false): { env: Env | null; error: string | null } {
+  const rawSiteUrl = Deno.env.get("NEXT_PUBLIC_SITE_URL") ?? Deno.env.get("SITE_URL") ?? "";
   const env = {
     supabaseUrl: Deno.env.get("SUPABASE_URL") ?? "",
     supabaseAnonKey: Deno.env.get("SUPABASE_ANON_KEY") ?? "",
@@ -41,7 +43,7 @@ export function readEnv(requireWebhookSecret = false): { env: Env | null; error:
     stripeProPriceId: Deno.env.get("STRIPE_PRO_PRICE_ID") ?? null,
     stripeProMonthlyPriceId: Deno.env.get("STRIPE_PRO_MONTHLY_PRICE_ID") ?? null,
     stripeProYearlyPriceId: Deno.env.get("STRIPE_PRO_YEARLY_PRICE_ID") ?? null,
-    siteUrl: Deno.env.get("NEXT_PUBLIC_SITE_URL") ?? Deno.env.get("SITE_URL") ?? ""
+    siteUrl: rawSiteUrl
   };
   const hasProPrice = Boolean(env.stripeProMonthlyPriceId || env.stripeProYearlyPriceId || env.stripeProPriceId);
   const missing = [
@@ -56,6 +58,16 @@ export function readEnv(requireWebhookSecret = false): { env: Env | null; error:
     .filter(([, value]) => !value)
     .map(([key]) => key);
   if (missing.length) return { env: null, error: `Missing server env: ${missing.join(", ")}` };
+  const siteOrigin = resolveBillingSiteOrigin({
+    configuredSiteUrl: env.siteUrl,
+    supabaseUrl: env.supabaseUrl,
+    allowPreviewUrls: Deno.env.get("ALLOW_BILLING_PREVIEW_URLS") === "true"
+  });
+  if (siteOrigin.error || !siteOrigin.origin) {
+    console.error(`[billing] Invalid billing return URL configuration: ${siteOrigin.error}`);
+    return { env: null, error: siteOrigin.error ?? "Billing return URL is not configured." };
+  }
+  env.siteUrl = siteOrigin.origin;
   return { env, error: null };
 }
 

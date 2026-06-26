@@ -32,6 +32,14 @@ STRIPE_PRO_PRICE_ID=
 NEXT_PUBLIC_SITE_URL=
 ```
 
+For production Supabase Edge Functions, set:
+
+```bash
+NEXT_PUBLIC_SITE_URL=https://canyougeo.com
+```
+
+The hosted billing functions reject `localhost` return URLs when `SUPABASE_URL` points at a deployed Supabase project. Local development may still use `http://localhost:3000` only with a local Supabase URL such as `http://127.0.0.1:54321`.
+
 The static Next app still needs:
 
 ```bash

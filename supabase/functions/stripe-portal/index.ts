@@ -1,4 +1,5 @@
 import { corsHeaders, entitlementForUser, getSignedInUser, json, readEnv, serviceClient, stripeClient } from "../_shared/billing.ts";
+import { billingReturnUrls } from "../_shared/returnUrls.ts";
 
 Deno.serve(async (request) => {
   if (request.method === "OPTIONS") return new Response("ok", { headers: corsHeaders });
@@ -16,7 +17,7 @@ Deno.serve(async (request) => {
 
   const portal = await stripeClient(env).billingPortal.sessions.create({
     customer: customerId,
-    return_url: `${env.siteUrl.replace(/\/$/, "")}/account`
+    return_url: billingReturnUrls(env.siteUrl).portalReturnUrl
   });
 
   return json({ url: portal.url });

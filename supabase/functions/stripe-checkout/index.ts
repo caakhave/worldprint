@@ -11,6 +11,7 @@ import {
   stripeClient,
   type ProBillingInterval
 } from "../_shared/billing.ts";
+import { billingReturnUrls } from "../_shared/returnUrls.ts";
 
 Deno.serve(async (request) => {
   if (request.method === "OPTIONS") return new Response("ok", { headers: corsHeaders });
@@ -38,14 +39,15 @@ Deno.serve(async (request) => {
   const productName = "Can You Geo? Pro";
   const productSummary = "Full practice atlas, complete Past Games archive, and advanced stats.";
   const metadata = { supabase_user_id: user.id, pro_billing_interval: interval, product_name: productName };
+  const returnUrls = billingReturnUrls(env.siteUrl);
 
   const session = await stripe.checkout.sessions.create({
     mode: "subscription",
     customer: customerId,
     adaptive_pricing: { enabled: false },
     line_items: [{ price: priceId, quantity: 1 }],
-    success_url: `${env.siteUrl.replace(/\/$/, "")}/account?billing=success`,
-    cancel_url: `${env.siteUrl.replace(/\/$/, "")}/upgrade?billing=cancelled`,
+    success_url: returnUrls.successUrl,
+    cancel_url: returnUrls.cancelUrl,
     custom_text: {
       submit: {
         message: `${productName} unlocks the ${productSummary.toLowerCase()}`
