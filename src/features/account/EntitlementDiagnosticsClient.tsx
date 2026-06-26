@@ -65,6 +65,10 @@ export function EntitlementDiagnosticsClient() {
           <dd>{entitlement.row?.stripe_status ?? "Not present"}</dd>
         </div>
         <div>
+          <dt>Cancel at period end</dt>
+          <dd>{entitlement.row?.cancel_at_period_end === true ? "Yes" : entitlement.row?.cancel_at_period_end === false ? "No" : "Not present"}</dd>
+        </div>
+        <div>
           <dt>Last checked</dt>
           <dd>{checkedAt || "Just now"}</dd>
         </div>

@@ -153,6 +153,7 @@ export async function upsertBillingEntitlement(
     stripe_subscription_id: string | null;
     stripe_price_id: string | null;
     stripe_status: string | null;
+    cancel_at_period_end: boolean | null;
     current_period_end: string | null;
   }
 ) {

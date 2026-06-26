@@ -26,6 +26,7 @@ export type EntitlementRow = {
   stripe_subscription_id: string | null;
   stripe_price_id: string | null;
   stripe_status: string | null;
+  cancel_at_period_end: boolean | null;
   current_period_end: string | null;
   updated_at: string;
 };
@@ -84,6 +85,7 @@ export type Database = {
           stripe_subscription_id?: string | null;
           stripe_price_id?: string | null;
           stripe_status?: string | null;
+          cancel_at_period_end?: boolean | null;
           current_period_end?: string | null;
           updated_at?: string;
         };
@@ -94,6 +96,7 @@ export type Database = {
           stripe_subscription_id?: string | null;
           stripe_price_id?: string | null;
           stripe_status?: string | null;
+          cancel_at_period_end?: boolean | null;
           current_period_end?: string | null;
           updated_at?: string;
         };

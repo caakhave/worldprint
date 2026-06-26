@@ -17,6 +17,7 @@ function entitlementRow(overrides: Partial<EntitlementRow> = {}): EntitlementRow
     stripe_subscription_id: null,
     stripe_price_id: null,
     stripe_status: null,
+    cancel_at_period_end: null,
     current_period_end: null,
     updated_at: "2026-06-24T12:00:00.000Z",
     ...overrides

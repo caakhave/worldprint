@@ -31,7 +31,7 @@ function store(
   return { billingStore, updates };
 }
 
-function subscriptionEvent(status: string): StripeWebhookLikeEvent {
+function subscriptionEvent(status: string, cancelAtPeriodEnd = false): StripeWebhookLikeEvent {
   return {
     type: "customer.subscription.updated",
     data: {
@@ -39,6 +39,7 @@ function subscriptionEvent(status: string): StripeWebhookLikeEvent {
         id: "sub_123",
         customer: "cus_123",
         status,
+        cancel_at_period_end: cancelAtPeriodEnd,
         current_period_end: 1782345600,
         metadata: { supabase_user_id: "user-1" },
         items: {
@@ -77,6 +78,20 @@ describe("Stripe billing entitlement mapping", () => {
       stripe_subscription_id: "sub_123",
       stripe_price_id: "price_pro",
       stripe_status: "active",
+      cancel_at_period_end: false,
+      current_period_end: "2026-06-25T00:00:00.000Z"
+    });
+  });
+
+  it("preserves cancel-at-period-end state for active Pro subscriptions", async () => {
+    const { billingStore, updates } = store();
+    const result = await handleStripeWebhookEvent(subscriptionEvent("active", true), billingStore, "2026-06-24T12:00:00.000Z");
+    expect(result).toEqual({ handled: true, action: "subscription_synced" });
+    expect(updates[0]).toMatchObject({
+      user_id: "user-1",
+      plan: "pro",
+      status: "active",
+      cancel_at_period_end: true,
       current_period_end: "2026-06-25T00:00:00.000Z"
     });
   });
@@ -116,7 +131,13 @@ describe("Stripe billing entitlement mapping", () => {
       billingStore
     );
     expect(result).toEqual({ handled: true, action: "payment_failed" });
-    expect(updates[0]).toMatchObject({ user_id: "user-1", plan: "free", status: "past_due", stripe_status: "past_due" });
+    expect(updates[0]).toMatchObject({
+      user_id: "user-1",
+      plan: "free",
+      status: "past_due",
+      stripe_status: "past_due",
+      cancel_at_period_end: null
+    });
   });
 
   it("ignores stale inactive events for an older subscription when a newer Pro subscription exists", async () => {
