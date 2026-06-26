@@ -1092,11 +1092,132 @@ button:disabled {
 
 @keyframes score-pop {
   from {
-    transform: translateY(4px) scale(0.92);
-    opacity: 0.62;
+    transform: translateY(-3px) scale(1.08);
+    filter: brightness(1.24);
+    opacity: 0.72;
+  }
+  52% {
+    transform: translateY(2px) scale(0.98);
+    filter: brightness(1.08);
   }
   to {
     transform: translateY(0) scale(1);
+    filter: brightness(1);
+    opacity: 1;
+  }
+}
+
+@keyframes wrong-answer-shake {
+  0%,
+  100% {
+    transform: translateX(0);
+  }
+  22% {
+    transform: translateX(-5px);
+  }
+  44% {
+    transform: translateX(4px);
+  }
+  66% {
+    transform: translateX(-3px);
+  }
+  82% {
+    transform: translateX(2px);
+  }
+}
+
+@keyframes reveal-map-pulse {
+  from {
+    box-shadow:
+      inset 0 0 0 1px rgb(164 216 205 / 0.08),
+      0 0 0 0 rgb(164 216 205 / 0.26);
+  }
+  55% {
+    box-shadow:
+      inset 0 0 0 1px rgb(164 216 205 / 0.42),
+      0 0 0 14px rgb(164 216 205 / 0);
+  }
+  to {
+    box-shadow:
+      inset 0 0 0 1px rgb(164 216 205 / 0.12),
+      0 0 0 0 rgb(164 216 205 / 0);
+  }
+}
+
+@keyframes solve-overlay-rise {
+  from {
+    transform: translate(-50%, -44%) scale(0.88);
+    opacity: 0;
+  }
+  22%,
+  76% {
+    opacity: 1;
+  }
+  to {
+    transform: translate(-50%, -50%) scale(1);
+    opacity: 0;
+  }
+}
+
+@keyframes banked-flight {
+  from {
+    transform: translate3d(0, 14px, 0) scale(0.92);
+    opacity: 0;
+  }
+  25%,
+  70% {
+    opacity: 1;
+  }
+  to {
+    transform: translate3d(0, -22px, 0) scale(1.02);
+    opacity: 0;
+  }
+}
+
+@keyframes entry-scan {
+  from {
+    transform: translateX(-120%);
+    opacity: 0;
+  }
+  18%,
+  72% {
+    opacity: 0.8;
+  }
+  to {
+    transform: translateX(120%);
+    opacity: 0;
+  }
+}
+
+@keyframes entry-node-pulse {
+  0%,
+  100% {
+    transform: scale(0.9);
+    opacity: 0.58;
+  }
+  50% {
+    transform: scale(1.22);
+    opacity: 1;
+  }
+}
+
+@keyframes entry-chip-drift {
+  0%,
+  100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-6px);
+  }
+}
+
+@keyframes next-map-rise {
+  from {
+    transform: translateY(8px);
+    opacity: 0;
+  }
+  to {
+    transform: translateY(0);
     opacity: 1;
   }
 }
@@ -1679,6 +1800,77 @@ button:disabled {
   box-shadow: inset 0 0 0 1px rgb(164 216 205 / 0.1);
 }
 
+.entry-atlas-preview {
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+  overflow: hidden;
+  pointer-events: none;
+}
+
+.entry-preview-scan {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(90deg, transparent 0%, rgb(164 216 205 / 0.18) 46%, rgb(215 168 75 / 0.16) 50%, transparent 56%);
+  transform: translateX(-120%);
+  animation: entry-scan 4.4s ease-in-out infinite;
+}
+
+.entry-preview-node {
+  position: absolute;
+  width: 0.75rem;
+  height: 0.75rem;
+  border: 1px solid rgb(164 216 205 / 0.72);
+  border-radius: 999px;
+  background: rgb(104 183 170 / 0.38);
+  box-shadow: 0 0 18px rgb(104 183 170 / 0.32);
+  animation: entry-node-pulse 2.2s ease-in-out infinite;
+}
+
+.entry-preview-node-a {
+  left: 30%;
+  top: 38%;
+}
+
+.entry-preview-node-b {
+  right: 28%;
+  top: 31%;
+  animation-delay: 360ms;
+}
+
+.entry-preview-node-c {
+  left: 56%;
+  bottom: 28%;
+  animation-delay: 720ms;
+}
+
+.entry-preview-chip {
+  position: absolute;
+  border: 1px solid rgb(215 168 75 / 0.42);
+  border-radius: 999px;
+  padding: 0.36rem 0.58rem;
+  background: rgb(5 18 22 / 0.72);
+  color: var(--gold);
+  font-family: var(--font-mono);
+  font-size: 0.72rem;
+  font-weight: 900;
+  text-transform: uppercase;
+  box-shadow: 0 10px 24px rgb(0 0 0 / 0.22);
+  animation: entry-chip-drift 3.1s ease-in-out infinite;
+}
+
+.entry-preview-chip-a {
+  left: 1rem;
+  top: 1rem;
+}
+
+.entry-preview-chip-b {
+  right: 1rem;
+  bottom: 1rem;
+  color: var(--signal-2);
+  animation-delay: 420ms;
+}
+
 .entry-atlas-image {
   object-fit: cover;
   object-position: center;
@@ -2077,9 +2269,8 @@ button:disabled {
 }
 
 .score-block {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto;
   gap: 1rem;
   border-bottom: 1px solid var(--line);
   padding-bottom: 0.85rem;
@@ -2094,11 +2285,20 @@ button:disabled {
   color: var(--gold);
   font-family: var(--font-mono);
   font-size: 2.3rem;
+  grid-row: span 2;
+  align-self: center;
   animation: score-pop 260ms ease-out both;
 }
 
 .score-block strong[data-score-tone="negative"] {
   color: #ffb0a7;
+}
+
+.score-block small {
+  margin: -0.65rem 0 0;
+  color: var(--muted);
+  font-size: 0.82rem;
+  line-height: 1.35;
 }
 
 .run-stats-card {
@@ -2325,8 +2525,12 @@ textarea,
 
 .choice-button[data-rejected="true"] {
   border-color: rgb(230 122 100 / 0.7);
+  background:
+    linear-gradient(90deg, rgb(230 122 100 / 0.12), rgb(215 168 75 / 0.06)),
+    var(--surface);
   color: #f2b5aa;
   text-decoration: line-through;
+  animation: wrong-answer-shake 360ms ease-out both;
 }
 
 .choice-button small,
@@ -2398,6 +2602,71 @@ textarea,
 
 .reveal-map .map-frame {
   min-height: clamp(390px, 50vh, 640px);
+}
+
+.reveal-map[data-result] .map-frame {
+  animation: reveal-map-pulse 1.55s ease-out both;
+}
+
+.reveal-map[data-result="recovered"] .map-frame {
+  animation-name: reveal-map-pulse;
+}
+
+.solve-moment-overlay {
+  position: absolute;
+  left: 50%;
+  top: clamp(18rem, 42%, 27rem);
+  z-index: 3;
+  display: grid;
+  gap: 0.2rem;
+  min-width: min(28rem, calc(100% - 2rem));
+  place-items: center;
+  border: 1px solid rgb(164 216 205 / 0.5);
+  border-radius: 12px;
+  padding: 0.9rem 1rem;
+  background:
+    radial-gradient(circle at 50% 0%, rgb(164 216 205 / 0.2), transparent 58%),
+    rgb(5 18 22 / 0.78);
+  box-shadow: 0 18px 46px rgb(0 0 0 / 0.36);
+  text-align: center;
+  text-transform: uppercase;
+  transform: translate(-50%, -50%);
+  animation: solve-overlay-rise 1.55s ease-out both;
+  pointer-events: none;
+}
+
+.solve-moment-overlay[data-result="recovered"] {
+  border-color: rgb(215 168 75 / 0.46);
+  background:
+    radial-gradient(circle at 50% 0%, rgb(215 168 75 / 0.18), transparent 58%),
+    rgb(5 18 22 / 0.78);
+}
+
+.solve-moment-overlay span {
+  color: var(--signal-2);
+  font-family: var(--font-mono);
+  font-size: 0.86rem;
+  font-weight: 900;
+  letter-spacing: 0;
+}
+
+.solve-moment-overlay[data-result="recovered"] span {
+  color: var(--gold);
+}
+
+.solve-moment-overlay strong {
+  color: var(--parchment);
+  font-family: var(--font-serif);
+  font-size: 3.2rem;
+  line-height: 0.95;
+}
+
+.solve-moment-overlay em {
+  color: var(--gold);
+  font-family: var(--font-mono);
+  font-size: 1rem;
+  font-style: normal;
+  font-weight: 900;
 }
 
 .result-atlas-burst {
@@ -2579,6 +2848,65 @@ textarea,
   font-style: normal;
   font-weight: 800;
   animation: points-pop 420ms ease-out both;
+}
+
+.banked-score-flight {
+  position: absolute;
+  right: 1rem;
+  top: 0.85rem;
+  border: 1px solid rgb(215 168 75 / 0.42);
+  border-radius: 999px;
+  padding: 0.28rem 0.52rem;
+  background: rgb(215 168 75 / 0.14);
+  color: var(--gold);
+  font-family: var(--font-mono);
+  font-size: 0.78rem;
+  font-weight: 900;
+  text-transform: uppercase;
+  animation: banked-flight 1.2s ease-out 240ms both;
+  pointer-events: none;
+}
+
+.round-transition-card {
+  display: grid;
+  gap: 0.25rem;
+  border: 1px solid rgb(164 216 205 / 0.3);
+  border-radius: 7px;
+  padding: 0.8rem;
+  background:
+    linear-gradient(135deg, rgb(104 183 170 / 0.1), transparent 55%),
+    rgb(5 18 22 / 0.44);
+  animation: next-map-rise 320ms ease-out both;
+}
+
+.round-transition-card[data-final="true"] {
+  border-color: rgb(215 168 75 / 0.4);
+  background:
+    linear-gradient(135deg, rgb(215 168 75 / 0.1), transparent 55%),
+    rgb(5 18 22 / 0.44);
+}
+
+.round-transition-card span {
+  color: var(--signal-2);
+  font-family: var(--font-mono);
+  font-size: 0.74rem;
+  font-weight: 900;
+  text-transform: uppercase;
+}
+
+.round-transition-card[data-final="true"] span {
+  color: var(--gold);
+}
+
+.round-transition-card strong {
+  color: var(--parchment);
+  font-family: var(--font-serif);
+  font-size: 1.24rem;
+  line-height: 1.08;
+}
+
+.next-map-button {
+  animation: next-map-rise 360ms ease-out 110ms both;
 }
 
 .reveal-scoreline {
@@ -2801,6 +3129,61 @@ dd {
   padding: clamp(2rem, 5vw, 4rem) 0;
 }
 
+.summary-main {
+  position: relative;
+}
+
+.summary-main::before {
+  display: block;
+  width: min(22rem, 100%);
+  height: 1px;
+  margin-bottom: 1rem;
+  background: linear-gradient(90deg, rgb(215 168 75 / 0.72), transparent);
+  content: "";
+}
+
+.summary-main .page-title {
+  text-shadow: 0 0 24px rgb(215 168 75 / 0.14);
+}
+
+.final-score-title {
+  font-variant-numeric: tabular-nums;
+}
+
+.run-rank-card {
+  display: grid;
+  gap: 0.35rem;
+  max-width: 42rem;
+  margin: 1rem 0 0;
+  border-color: rgb(215 168 75 / 0.38);
+  background:
+    radial-gradient(circle at 0% 0%, rgb(215 168 75 / 0.12), transparent 42%),
+    linear-gradient(135deg, rgb(104 183 170 / 0.08), transparent 58%),
+    var(--surface);
+  animation: result-pulse 1.5s ease-out;
+}
+
+.run-rank-card span {
+  color: var(--gold);
+  font-family: var(--font-mono);
+  font-size: 0.74rem;
+  font-weight: 900;
+  text-transform: uppercase;
+}
+
+.run-rank-card strong {
+  color: var(--parchment);
+  font-family: var(--font-serif);
+  font-size: clamp(1.7rem, 3.6vw, 2.55rem);
+  line-height: 1;
+}
+
+.run-rank-card p {
+  margin: 0;
+  color: var(--muted);
+  line-height: 1.5;
+}
+
 .summary-achievement {
   display: grid;
   grid-template-columns: repeat(4, minmax(0, 1fr));
@@ -2810,6 +3193,7 @@ dd {
   background:
     linear-gradient(135deg, rgb(215 168 75 / 0.08), rgb(104 183 170 / 0.06)),
     var(--surface);
+  animation: result-pulse 1.4s ease-out;
 }
 
 .summary-achievement div {
@@ -2859,6 +3243,7 @@ dd {
 .result-cells span[data-best="true"] {
   border-color: rgb(215 168 75 / 0.55);
   background: rgb(215 168 75 / 0.09);
+  animation: points-pop 360ms ease-out both;
 }
 
 .result-cells small {
@@ -5048,6 +5433,15 @@ dd {
     padding-right: 0;
   }
 
+  .solve-moment-overlay {
+    top: 16rem;
+    min-width: min(22rem, calc(100% - 1.5rem));
+  }
+
+  .solve-moment-overlay strong {
+    font-size: 2.2rem;
+  }
+
   .game-loop-copy,
   .mode-poster-copy {
     max-width: 21rem;
@@ -5167,11 +5561,23 @@ dd {
   .landing-hero-backdrop::before,
   .landing-hero-backdrop::after,
   .hero-join-panel,
+  .entry-preview-scan,
+  .entry-preview-node,
+  .entry-preview-chip,
   .answer-feedback-banner,
   .answer-feedback-banner::before,
+  .choice-button[data-rejected="true"],
+  .reveal-map[data-result] .map-frame,
   .round-result-banner,
   .round-result-banner::before,
   .round-result-banner em,
+  .banked-score-flight,
+  .solve-moment-overlay,
+  .round-transition-card,
+  .next-map-button,
+  .run-rank-card,
+  .summary-achievement,
+  .result-cells span[data-best="true"],
   .result-atlas-burst,
   .result-atlas-burst::before,
   .result-atlas-burst span,

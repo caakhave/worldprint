@@ -183,6 +183,7 @@ test("first visit starts the Analyst Daily", async ({ page }) => {
   await expect(page.locator("main")).not.toContainText(/World Bank|indicators|data visualization|filters|matching maps|generated|point-cost|pool|set code|educational tool/i);
   await expect(page.locator("body")).not.toContainText("WORLDPRINT");
   await page.getByRole("link", { name: /Play today's Mystery Map/i }).click();
+  await expect(page.locator(".entry-atlas-preview")).toBeVisible();
   await page.getByLabel("Analyst").check();
   await page.getByRole("button", { name: /Start today's Mystery Map/i }).click();
   await expect(page.getByRole("heading", { name: /What does this map measure/i })).toBeVisible();
@@ -223,8 +224,11 @@ test("landing cinematic hero respects reduced-motion without layout overflow", a
 
 test("investigating a country charges once", async ({ page }) => {
   await startDaily(page);
+  await expect(page.getByText("Current map points available")).toBeVisible();
+  await expect(page.getByText("These points are added to the run total after the map is solved.")).toBeVisible();
   const runStats = page.locator(".run-stats-card");
-  await expect(runStats).toContainText("Score");
+  await expect(runStats).toContainText("Run total so far");
+  await expect(runStats).toContainText("Banked score");
   await expect(runStats).toContainText("Maps played");
   await expect(runStats).toContainText("Correct");
   await expect(runStats).toContainText("Average");
@@ -258,7 +262,7 @@ test("investigating a country charges once", async ({ page }) => {
   await expect(page.getByText("Mexico already revealed. No points spent this time.")).toBeVisible();
   await expect(scoreValue(page)).toHaveText("900");
   await page.getByRole("button", { name: correctLabel(0) }).click();
-  await page.getByRole("button", { name: /Next round/i }).click();
+  await page.getByRole("button", { name: /Next map/i }).click();
   await expect(page.locator("#country-search")).toHaveValue("");
   await expect(page.locator(".selected-country-card")).toHaveCount(0);
   await expect(page.locator(".inspection-readout")).toContainText("Pick a country");
@@ -391,6 +395,7 @@ test("wrong answer recovers and correct answer reveals the source", async ({ pag
   await page.getByRole("button", { name: correctLabel(0) }).click();
   await expect(page.getByText(/Answer revealed/i)).toBeVisible();
   await expect(page.getByText(/Correct answer:/i)).toBeVisible();
+  await expect(page.locator(".banked-score-flight")).toContainText(/banked/i);
   await expect(page.getByText(/Source and year/)).toBeVisible();
   await expect(page.getByText(/What the map was showing/)).toBeVisible();
   await expect(page.getByText(/Why the wrong answers were tempting/)).toBeVisible();
@@ -400,10 +405,21 @@ test("completes a five-round Daily and preserves completed result", async ({ pag
   await startDaily(page);
   for (let index = 0; index < 5; index += 1) {
     await page.getByRole("button", { name: correctLabel(index) }).click();
+    if (index === 0) {
+      await expect(page.locator(".round-result-banner")).toContainText("Correct");
+      await expect(page.locator(".round-result-banner")).toContainText("Solved");
+      await expect(page.locator(".banked-score-flight")).toContainText("+1,000 points banked");
+      await expect(page.getByText("Map 2 of 5")).toBeVisible();
+      await expect(page.getByText("Next map is ready.")).toBeVisible();
+    }
     await expect(page.getByText(/Source and year/)).toBeVisible();
-    await page.getByRole("button", { name: index === 4 ? /See results/ : /Next round/ }).click();
+    await page.getByRole("button", { name: index === 4 ? /See results/ : /Next map/ }).click();
   }
   await expect(page.getByRole("heading", { name: /points/i })).toBeVisible();
+  await expect(page.getByText("Final score")).toBeVisible();
+  await expect(page.getByText("Run rank")).toBeVisible();
+  await expect(page.getByText("Worldprint Master")).toBeVisible();
+  await expect(page.getByText("Clean reads")).toBeVisible();
   await expect(page.getByRole("button", { name: /Share result/i })).toBeVisible();
   const statsPanel = page.getByRole("complementary", { name: "Your stats" });
   await expect(statsPanel).toBeVisible();
@@ -439,7 +455,7 @@ test("archive route opens a dated Daily without affecting today's streak", async
   await expect(page.getByText(`Past Mystery Map Replay ${TEST_DATE}`)).toBeVisible();
   for (let index = 0; index < 5; index += 1) {
     await page.getByRole("button", { name: correctLabel(index) }).click();
-    await page.getByRole("button", { name: index === 4 ? /See results/ : /Next round/ }).click();
+    await page.getByRole("button", { name: index === 4 ? /See results/ : /Next map/ }).click();
   }
   await expect(page.getByText(/Daily streaks are unaffected/i)).toBeVisible();
   const stored = await page.evaluate(() => JSON.parse(window.localStorage.getItem("worldprint:v1") ?? "{}") as { streak?: { current: number }; archiveHistoryByDate?: Record<string, unknown> });
@@ -461,7 +477,7 @@ test("challenge link opens exact selected rounds and saves challenge completion"
   await page.getByRole("button", { name: /Start challenge/i }).click();
   for (let index = 0; index < challengeRoundIds.length; index += 1) {
     await page.getByRole("button", { name: correctLabelForRoundId(challengeRoundIds[index]) }).click();
-    await page.getByRole("button", { name: index === challengeRoundIds.length - 1 ? /See results/ : /Next round/ }).click();
+    await page.getByRole("button", { name: index === challengeRoundIds.length - 1 ? /See results/ : /Next map/ }).click();
   }
   await expect(page.getByText(/Challenge complete/i)).toBeVisible();
   const challengeShare = page.getByLabel("Spoiler-free challenge share text");
@@ -1012,7 +1028,7 @@ test("captures deterministic visual screenshots", async ({ page }, testInfo) => 
   await page.getByRole("button", { name: /Start challenge/i }).click();
   for (let index = 0; index < 3; index += 1) {
     await page.getByRole("button", { name: correctLabelForRoundId(dailyRoundIds[index]) }).click();
-    await page.getByRole("button", { name: index === 2 ? /See results/ : /Next round/ }).click();
+    await page.getByRole("button", { name: index === 2 ? /See results/ : /Next map/ }).click();
   }
   await scrollToTop(page);
   await page.screenshot({ path: path.join(dir, "challenge-complete.png"), fullPage: true });
@@ -1020,7 +1036,7 @@ test("captures deterministic visual screenshots", async ({ page }, testInfo) => 
   await page.getByRole("button", { name: /Start challenge/i }).click();
   for (let index = 0; index < introPack.roundIds.length; index += 1) {
     await page.getByRole("button", { name: correctLabelForRoundId(introPack.roundIds[index]) }).click();
-    await page.getByRole("button", { name: index === introPack.roundIds.length - 1 ? /See results/ : /Next round/ }).click();
+    await page.getByRole("button", { name: index === introPack.roundIds.length - 1 ? /See results/ : /Next map/ }).click();
   }
   await scrollToTop(page);
   await page.screenshot({ path: path.join(dir, "beta-intro-pack-complete.png"), fullPage: true });

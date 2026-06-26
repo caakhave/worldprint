@@ -126,6 +126,39 @@ function formatStat(value: number | null) {
   return value === null ? "—" : value.toLocaleString("en-US");
 }
 
+function scoreRank(total: number, roundCount: number) {
+  const possible = Math.max(1, roundCount * 1000);
+  const ratio = total / possible;
+  if (ratio >= 0.92) return { title: "Worldprint Master", note: "Elite pattern reading across the whole run." };
+  if (ratio >= 0.76) return { title: "Pattern Hunter", note: "Strong reads, sharp clue discipline." };
+  if (ratio >= 0.52) return { title: "Atlas Reader", note: "Good signal work with room to tighten the clues." };
+  return { title: "Signal Seeker", note: "The map gave up its secrets. Now chase the cleaner read." };
+}
+
+function AnimatedNumber({ value }: { value: number }) {
+  const [displayValue, setDisplayValue] = useState(0);
+
+  useEffect(() => {
+    if (typeof window !== "undefined" && window.matchMedia("(prefers-reduced-motion: reduce)").matches) {
+      setDisplayValue(value);
+      return;
+    }
+    const start = performance.now();
+    const duration = 850;
+    let frame = 0;
+    function tick(now: number) {
+      const progress = Math.min(1, (now - start) / duration);
+      const eased = 1 - Math.pow(1 - progress, 3);
+      setDisplayValue(Math.round(value * eased));
+      if (progress < 1) frame = window.requestAnimationFrame(tick);
+    }
+    frame = window.requestAnimationFrame(tick);
+    return () => window.cancelAnimationFrame(frame);
+  }, [value]);
+
+  return <>{displayValue.toLocaleString("en-US")}</>;
+}
+
 function formatRecordDate(value: string | null | undefined) {
   if (!value) return null;
   const date = new Date(value);
@@ -820,16 +853,17 @@ export function WorldprintClient({ dateOverride, entryMode = "standard" }: World
       </div>
       <div className="play-control-panel surface" aria-label="Round controls">
         <div className="score-block">
-          <span>Current round score</span>
+          <span>Current map points available</span>
           <strong key={roundState.score} data-score-tone={roundState.score < 0 ? "negative" : "positive"}>
             {roundState.score}
           </strong>
+          <small>These points are added to the run total after the map is solved.</small>
         </div>
-        <div className="run-stats-card" aria-label="This run">
-          <span>This run</span>
+        <div className="run-stats-card" aria-label="Run total so far">
+          <span>Run total so far</span>
           <dl>
             <div>
-              <dt>Score</dt>
+              <dt>Banked score</dt>
               <dd>{formatStat(runStats.score)}</dd>
             </div>
             <div>
@@ -1068,10 +1102,12 @@ function RevealView({
   const scoreText = `${roundState.score >= 0 ? "+" : ""}${roundState.score.toLocaleString("en-US")} points`;
   const missedAnswerCount = roundState.rejectedAnswers.length;
   const resultTone = missedAnswerCount > 0 ? "recovered" : "correct";
+  const nextMapNumber = run.currentRoundIndex + 2;
+  const finalRoundSolved = run.currentRoundIndex + 1 >= run.rounds.length;
   const hasInvestigationHistory = roundState.unitClueUsed || roundState.investigations.length > 0;
   return (
     <section className="reveal-layout page-shell">
-      <div className="reveal-map">
+      <div className="reveal-map" data-result={resultTone}>
         <p className="eyebrow">{resultLabel}</p>
         <h1 id="reveal-map-title">{indicator.shortTitle}</h1>
         <p className="full-indicator-title">{indicator.title}</p>
@@ -1088,6 +1124,11 @@ function RevealView({
           interactive={false}
           labelledBy="reveal-map-title"
         />
+        <div className="solve-moment-overlay" data-result={resultTone} aria-hidden="true">
+          <span>{resultTone === "correct" ? "Correct" : "Answer found"}</span>
+          <strong>{resultTone === "correct" ? "Solved" : "Revealed"}</strong>
+          <em>{scoreText}</em>
+        </div>
         <div className="result-atlas-burst" data-result={resultTone} aria-hidden="true">
           <span />
           <span />
@@ -1106,6 +1147,9 @@ function RevealView({
               : `Sharp read. The hidden map was ${indicator.shortTitle}.`}
           </p>
           <em>{scoreText}</em>
+          <div className="banked-score-flight" aria-hidden="true">
+            {scoreText} banked
+          </div>
         </div>
         <div className="reveal-scoreline">
           <span>Answer</span>
@@ -1211,8 +1255,12 @@ function RevealView({
           Source: {indicator.source.attribution}, {indicator.source.dataset}.{" "}
           <a href={indicator.source.sourceReference}>Metadata</a>
         </p>
-        <button className="button full-width" type="button" onClick={onNext}>
-          {run.currentRoundIndex + 1 >= run.rounds.length ? "See results" : "Next round"}
+        <div className="round-transition-card" data-final={finalRoundSolved ? "true" : "false"}>
+          <span>{finalRoundSolved ? "Run complete" : `Map ${nextMapNumber} of ${run.rounds.length}`}</span>
+          <strong>{finalRoundSolved ? "Ready for the final score." : "Next map is ready."}</strong>
+        </div>
+        <button className="button full-width next-map-button" type="button" onClick={onNext}>
+          {finalRoundSolved ? "See results" : "Next map"}
         </button>
       </div>
     </section>
@@ -1275,6 +1323,9 @@ function CompletionSummary({
   const total = run.rounds.reduce((sum, round) => sum + round.score, 0);
   const bestRound = run.rounds.length ? Math.max(...run.rounds.map((round) => round.score)) : 0;
   const averageRound = run.rounds.length ? Math.round(total / run.rounds.length) : 0;
+  const cleanReads = run.rounds.filter((round) => round.rejectedAnswers.length === 0).length;
+  const cleanReadRate = run.rounds.length ? Math.round((cleanReads / run.rounds.length) * 100) : 0;
+  const rank = scoreRank(total, run.rounds.length);
   const isPastRecord = run.mode === "archive";
   const saveNote = signedIn
     ? "Account sync is active. This run is saved locally first, then matched to your account when the connection is available."
@@ -1321,7 +1372,14 @@ function CompletionSummary({
     <section className="summary-shell page-shell">
       <div className="summary-main">
         <p className="eyebrow">{summaryLabel}</p>
-        <h1 className="page-title">{total} points</h1>
+        <h1 className="page-title final-score-title" aria-label={`${total.toLocaleString("en-US")} points`}>
+          <AnimatedNumber value={total} /> points
+        </h1>
+        <div className="run-rank-card surface" aria-label="Run rank">
+          <span>Run rank</span>
+          <strong>{rank.title}</strong>
+          <p>{rank.note}</p>
+        </div>
         <p className="lead">
           {isPastRecord ? "Record entry saved for this fixed Past Game. " : ""}
           {run.rounds.length} maps completed on {TIER_CONFIGS[run.tier].label}.{" "}
@@ -1329,8 +1387,10 @@ function CompletionSummary({
         </p>
         <div className="summary-achievement surface" aria-label="Completed run summary">
           <div>
-            <span>Total score</span>
-            <strong>{total.toLocaleString("en-US")}</strong>
+            <span>Final score</span>
+            <strong>
+              <AnimatedNumber value={total} />
+            </strong>
           </div>
           <div>
             <span>Best round</span>
@@ -1341,8 +1401,8 @@ function CompletionSummary({
             <strong>{averageRound.toLocaleString("en-US")}</strong>
           </div>
           <div>
-            <span>Maps</span>
-            <strong>{run.rounds.length}</strong>
+            <span>Clean reads</span>
+            <strong>{cleanReadRate}%</strong>
           </div>
         </div>
         <div className="result-cells" aria-label="Per-round scores">
