@@ -61,7 +61,7 @@ export function ArchiveClient() {
   const [store, setStore] = useState<PersistedState>(() => defaultPersistedState());
   const [error, setError] = useState("");
   const todayKey = utcDateKey(new Date());
-  const { entitlement, loading: entitlementLoading } = useEntitlement();
+  const { entitlement, loading: entitlementLoading, signedIn } = useEntitlement();
 
   useEffect(() => {
     setStore(loadPersistedState());
@@ -126,14 +126,23 @@ export function ArchiveClient() {
         <div className="archive-upgrade-panel surface" aria-label="Full archive access">
           <div>
             <p className="eyebrow">{entitlementLoading ? "Checking access" : "Full archive"}</p>
-            <h2>{entitlement.plan === "guest" ? "Create a free account to save your progress." : "Full archive access is coming soon."}</h2>
+            <h2>
+              {entitlement.plan === "pro"
+                ? "Full archive access is active."
+                : signedIn
+                  ? "Your account can replay recent Past Games."
+                  : "Create a free account to save your progress."}
+            </h2>
             <p>
-              Showing {visibleEntries.length} recent Past Games. Pro will unlock the complete archive with {hiddenCount} more Mystery Map
-              {hiddenCount === 1 ? "" : "s"}.
+              {entitlement.plan === "pro"
+                ? `Showing ${visibleEntries.length} Past Games from the atlas.`
+                : `Showing ${visibleEntries.length} recent Past Games. Pro will unlock the complete archive with ${hiddenCount} more Mystery Map${
+                    hiddenCount === 1 ? "" : "s"
+                  }.`}
             </p>
           </div>
-          <Link className="button-secondary" href={entitlement.plan === "guest" ? "/sign-in" : "/upgrade"}>
-            {entitlement.plan === "guest" ? "Create a free account" : "See full atlas plan"}
+          <Link className="button-secondary" href={signedIn ? "/upgrade" : "/sign-in"}>
+            {signedIn ? "See full atlas plan" : "Create a free account"}
           </Link>
         </div>
       ) : null}

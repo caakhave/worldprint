@@ -1,15 +1,45 @@
 "use client";
 
 import Link from "next/link";
+import { accountInitial, compactPlanLabel } from "@/features/account/accountDisplay";
+import { useEntitlement } from "@/features/account/useEntitlement";
 import { useSupabaseAccount } from "@/features/account/useSupabaseAccount";
 
 export function AuthNavStatus() {
   const { configured, loading, user } = useSupabaseAccount();
+  const { entitlement, loading: entitlementLoading } = useEntitlement();
   if (!configured) {
-    return <Link href="/account">Account</Link>;
+    return (
+      <Link className="account-nav-control account-nav-control-signed-out" href="/account">
+        Account
+      </Link>
+    );
   }
   if (loading) {
-    return <Link href="/account">Account</Link>;
+    return (
+      <Link className="account-nav-control account-nav-control-loading" href="/account" aria-label="Checking account">
+        Account
+      </Link>
+    );
   }
-  return <Link href={user ? "/account" : "/sign-in"}>{user ? "Account" : "Save progress"}</Link>;
+  if (!user) {
+    return (
+      <Link className="account-nav-control account-nav-control-signed-out" href="/sign-in">
+        Sign in
+      </Link>
+    );
+  }
+
+  const plan = entitlementLoading ? "Account" : compactPlanLabel(entitlement.plan);
+  return (
+    <Link className="account-nav-control account-nav-control-signed-in" href="/account" aria-label={`Account for ${user.email ?? "signed-in player"}`}>
+      <span className="account-avatar" aria-hidden="true">
+        {accountInitial(user.email)}
+      </span>
+      <span className="account-nav-email">{user.email ?? "Account"}</span>
+      <span className="account-plan-badge" data-plan={entitlementLoading ? "loading" : entitlement.plan}>
+        {plan}
+      </span>
+    </Link>
+  );
 }

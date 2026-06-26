@@ -35,7 +35,9 @@ Deno.serve(async (request) => {
     user,
     existingCustomerId: entitlement?.stripe_customer_id ?? null
   });
-  const metadata = { supabase_user_id: user.id, pro_billing_interval: interval };
+  const productName = "Can You Geo? Pro";
+  const productSummary = "Full practice atlas, complete Past Games archive, and advanced stats.";
+  const metadata = { supabase_user_id: user.id, pro_billing_interval: interval, product_name: productName };
 
   const session = await stripe.checkout.sessions.create({
     mode: "subscription",
@@ -44,9 +46,15 @@ Deno.serve(async (request) => {
     line_items: [{ price: priceId, quantity: 1 }],
     success_url: `${env.siteUrl.replace(/\/$/, "")}/account?billing=success`,
     cancel_url: `${env.siteUrl.replace(/\/$/, "")}/upgrade?billing=cancelled`,
+    custom_text: {
+      submit: {
+        message: `${productName} unlocks the ${productSummary.toLowerCase()}`
+      }
+    },
     client_reference_id: user.id,
     metadata,
     subscription_data: {
+      description: `${productName} - ${productSummary}`,
       metadata
     }
   });

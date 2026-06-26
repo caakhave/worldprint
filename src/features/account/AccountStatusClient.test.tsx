@@ -64,12 +64,14 @@ describe("AccountStatusClient", () => {
     const user = userEvent.setup();
     render(<AccountStatusClient />);
 
-    expect(screen.getByRole("heading", { name: "Your atlas is connected." })).toBeVisible();
+    expect(screen.getByRole("heading", { name: "player@example.com" })).toBeVisible();
+    expect(screen.getByText(/Your atlas is connected/i)).toBeVisible();
     expect(screen.getByText("player@example.com")).toBeVisible();
     expect(screen.getByText("Free account")).toBeVisible();
     expect(screen.getByText("Account sync ready")).toBeVisible();
     expect(screen.queryByText("11111111-2222-4333-8444-555555555555")).not.toBeInTheDocument();
     expect(screen.getByRole("link", { name: "View saved stats" })).toHaveAttribute("href", "/account/stats");
+    expect(screen.getByRole("link", { name: "Compare plans" })).toHaveAttribute("href", "/upgrade");
     expect(screen.getByRole("button", { name: "Sign out" })).toBeVisible();
 
     await user.click(screen.getByRole("button", { name: "Show support ID" }));

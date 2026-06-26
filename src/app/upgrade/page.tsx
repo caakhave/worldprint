@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import Link from "next/link";
+import { BillingReturnNotice } from "@/features/account/BillingReturnNotice";
 import { UpgradeClient } from "@/features/account/UpgradeClient";
 
 export const metadata: Metadata = {
@@ -27,6 +28,7 @@ export default function UpgradePage() {
           </Link>
         </div>
       </div>
+      <BillingReturnNotice context="upgrade" />
       <UpgradeClient />
     </section>
   );

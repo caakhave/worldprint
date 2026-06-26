@@ -2,6 +2,7 @@
 
 import Link from "next/link";
 import { useState } from "react";
+import { accountInitial, compactPlanLabel } from "@/features/account/accountDisplay";
 import { useEntitlement } from "@/features/account/useEntitlement";
 import { useSupabaseAccount } from "@/features/account/useSupabaseAccount";
 import { planLabel, statusLabel } from "@/lib/account/entitlements";
@@ -70,21 +71,32 @@ export function AccountStatusClient() {
   }
 
   const membershipLabel = entitlementLoading ? "Checking" : planLabel(entitlement.plan);
+  const compactMembershipLabel = entitlementLoading ? "Account" : compactPlanLabel(entitlement.plan);
   const membershipStatus = entitlementLoading ? "Checking access" : entitlement.status === "free" ? "Ready" : statusLabel(entitlement.status);
   const syncLabel = entitlementLoading ? "Checking sync" : entitlement.capabilities.canSaveStats ? "Account sync ready" : "Local stats only";
+  const planActionLabel = entitlement.plan === "pro" ? "Manage plan" : "Compare plans";
 
   return (
     <article className="surface account-card account-primary-card account-summary-card">
+      <div className="account-identity">
+        <span className="account-avatar account-avatar-large" aria-hidden="true">
+          {accountInitial(user.email)}
+        </span>
+        <div className="account-identity-copy">
+          <p className="eyebrow">Signed in</p>
+          <h2>{user.email ?? "Signed-in player"}</h2>
+          <div className="account-identity-badges" aria-label="Account status">
+            <span className="account-plan-badge" data-plan={entitlementLoading ? "loading" : entitlement.plan}>
+              {compactMembershipLabel}
+            </span>
+            <span>{membershipStatus}</span>
+          </div>
+        </div>
+      </div>
       <div className="account-summary-head">
-        <p className="eyebrow">Signed in</p>
-        <h2>Your atlas is connected.</h2>
-        <p>Your account is ready. Keep playing, save this device&apos;s stats, or check your atlas access.</p>
+        <p>Your atlas is connected. Keep playing, save this device&apos;s stats, or check your atlas access.</p>
       </div>
       <dl className="account-status-list account-mini-status account-summary-list">
-        <div>
-          <dt>Email</dt>
-          <dd>{user.email ?? "Signed-in player"}</dd>
-        </div>
         <div>
           <dt>Membership</dt>
           <dd>
@@ -127,6 +139,9 @@ export function AccountStatusClient() {
       <div className="button-row">
         <Link className="button" href="/account/stats">
           View saved stats
+        </Link>
+        <Link className="button-secondary" href="/upgrade">
+          {planActionLabel}
         </Link>
         <button className="button-secondary" type="button" onClick={() => void handleSignOut()}>
           Sign out

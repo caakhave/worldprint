@@ -87,6 +87,9 @@ export default function RootLayout({ children }: Readonly<{ children: React.Reac
               </Link>
             ))}
           </nav>
+          <nav className="site-account-nav" aria-label="Account">
+            <AuthNavStatus />
+          </nav>
         </header>
         <main id="main">{children}</main>
         <footer className="site-footer">

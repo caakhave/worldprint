@@ -129,7 +129,7 @@ export function WorldprintClient({ dateOverride, entryMode = "standard" }: World
   const todayKey = useGameDateKey(dateOverride);
   const isArchiveDate = Boolean(dateOverride && todayKey !== actualTodayKey);
   const challengeCode = entryMode === "challenge" ? searchParams.get("c") : null;
-  const { entitlement } = useEntitlement();
+  const { entitlement, loading: entitlementLoading, signedIn } = useEntitlement();
   const [data, setData] = useState<LoadedData | null>(null);
   const [loadError, setLoadError] = useState<string | null>(null);
   const [store, setStore] = useState<PersistedState>(() => defaultPersistedState());
@@ -486,6 +486,22 @@ export function WorldprintClient({ dateOverride, entryMode = "standard" }: World
     const setReadyLabel = practiceMatches.length > 0 ? practiceLabel(selectedDifficultyLabel, practiceCategory) : "Practice mode";
     const availablePracticeCount = Math.min(3, practiceMatches.length);
     const practiceWarning = rarePracticeNote(practiceMatches.length);
+    const accountFactLabel = entitlementLoading
+      ? "Checking account"
+      : signedIn
+        ? entitlement.plan === "pro"
+          ? "Pro account"
+          : "Free account"
+        : "No account needed";
+    const accessModelCopy = entitlementLoading
+      ? "Checking your account access for this device."
+      : signedIn
+        ? entitlement.plan === "pro"
+          ? "Pro account is active here. Daily, Practice, and Past Games stay playable while account sync grows."
+          : "Free account is active here. The Daily stays playable, and your saved stats can follow this account as sync grows."
+        : isArchiveDate
+          ? "Past games are open in this public build while account limits are not enforced. Future Pro access will open the full atlas."
+          : "Today's public build is open while account limits are not enforced. Future plans will include instant demo play, free Daily play, and paid full atlas access.";
     return (
       <section className="game-entry page-shell">
         <div className="entry-copy">
@@ -499,18 +515,13 @@ export function WorldprintClient({ dateOverride, entryMode = "standard" }: World
             Investigate countries when you need evidence, but every clue spends score.
           </p>
           <div className="entry-facts" aria-label="Daily facts">
-            <span>{isArchiveDate ? "Past game replay" : "No account today"}</span>
+            <span>{accountFactLabel}</span>
             <span>{isArchiveDate ? "Streak stays safe" : "5-map Daily"}</span>
             <span>Practice mode included</span>
           </div>
           <div className="entry-access-note" aria-label="Access model">
             <span>Access model</span>
-            <p>
-              {isArchiveDate
-                ? "Past games are open in this public build while account limits are not enforced."
-                : "Today's public build is open while account limits are not enforced."}{" "}
-              Future plan: try 3 maps instantly, free-account limited Daily Mystery Map play, and paid full atlas access.
-            </p>
+            <p>{accessModelCopy}</p>
           </div>
           {data.dailyManifestIssue ? <p className="archive-note">{data.dailyManifestIssue}</p> : null}
         </div>

@@ -507,10 +507,10 @@ test("keyboard-only answer flow works", async ({ page }) => {
 test("practice filters start a filtered preview run", async ({ page }) => {
   await page.goto(`/play/worldprint?date=${TEST_DATE}`);
   await expect(page.getByText(/Choose how you play/i)).toBeVisible();
-  await expect(page.getByText(/No account today/i)).toBeVisible();
+  await expect(page.getByText(/No account needed/i)).toBeVisible();
   await expect(page.getByText("5-map Daily", { exact: true })).toBeVisible();
   await expect(page.getByText(/Practice mode included/i)).toBeVisible();
-  await expect(page.getByText(/Future plan: try 3 maps instantly/i)).toBeVisible();
+  await expect(page.getByText(/Future plans will include instant demo play/i)).toBeVisible();
   await expect(page.getByTestId("entry-atlas-visual")).toBeVisible();
   await expect(page.getByRole("img", { name: /Stylized atlas globe showing mystery data-map patterns/i })).toBeVisible();
   await expect(page.getByText(/Optional practice/i)).toBeVisible();

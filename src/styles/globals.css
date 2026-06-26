@@ -155,6 +155,90 @@ button:disabled {
   color: var(--text);
 }
 
+.site-account-nav {
+  display: flex;
+  justify-content: flex-end;
+  min-width: 0;
+}
+
+.account-nav-control {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.45rem;
+  min-height: 2.25rem;
+  border: 1px solid var(--line-strong);
+  border-radius: 999px;
+  padding: 0.36rem 0.56rem;
+  background: rgb(242 234 220 / 0.045);
+  color: var(--text);
+  font-size: 0.82rem;
+  font-weight: 700;
+  line-height: 1;
+  transition:
+    border-color 160ms ease,
+    background-color 160ms ease,
+    color 160ms ease,
+    transform 160ms ease;
+}
+
+.account-nav-control:hover {
+  border-color: rgb(135 224 211 / 0.52);
+  background: rgb(135 224 211 / 0.1);
+  color: var(--parchment);
+  transform: translateY(-1px);
+}
+
+.account-nav-control-signed-out {
+  padding-inline: 0.82rem;
+}
+
+.account-avatar {
+  display: inline-grid;
+  place-items: center;
+  width: 1.55rem;
+  height: 1.55rem;
+  flex: 0 0 auto;
+  border: 1px solid rgb(135 224 211 / 0.42);
+  border-radius: 999px;
+  background:
+    radial-gradient(circle at 35% 25%, rgb(135 224 211 / 0.34), transparent 48%),
+    rgb(5 24 28 / 0.92);
+  color: var(--signal-2);
+  font-family: var(--font-mono);
+  font-size: 0.74rem;
+  font-weight: 800;
+}
+
+.account-nav-email {
+  max-width: min(18vw, 12rem);
+  overflow: hidden;
+  color: var(--muted);
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.account-plan-badge {
+  display: inline-flex;
+  align-items: center;
+  min-height: 1.35rem;
+  border: 1px solid rgb(241 183 71 / 0.38);
+  border-radius: 999px;
+  padding: 0.14rem 0.42rem;
+  background: rgb(241 183 71 / 0.1);
+  color: var(--gold);
+  font-family: var(--font-mono);
+  font-size: 0.68rem;
+  font-weight: 800;
+  text-transform: uppercase;
+}
+
+.account-plan-badge[data-plan="pro"] {
+  border-color: rgb(135 224 211 / 0.48);
+  background: rgb(135 224 211 / 0.13);
+  color: var(--signal-2);
+}
+
 .site-footer {
   display: flex;
   justify-content: space-between;
@@ -2647,6 +2731,52 @@ dd {
   margin-bottom: 0;
 }
 
+.account-identity {
+  display: grid;
+  grid-template-columns: auto minmax(0, 1fr);
+  gap: 0.9rem;
+  align-items: center;
+  border: 1px solid rgb(135 224 211 / 0.18);
+  border-radius: 8px;
+  padding: 0.85rem;
+  background:
+    linear-gradient(135deg, rgb(135 224 211 / 0.1), transparent 56%),
+    rgb(4 14 18 / 0.34);
+}
+
+.account-avatar-large {
+  width: 3.4rem;
+  height: 3.4rem;
+  box-shadow: 0 0 24px rgb(135 224 211 / 0.16);
+  font-size: 1.25rem;
+}
+
+.account-identity-copy {
+  min-width: 0;
+}
+
+.account-identity-copy .eyebrow {
+  margin-bottom: 0.35rem;
+}
+
+.account-identity-copy h2 {
+  overflow: hidden;
+  margin: 0;
+  color: var(--parchment);
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.account-identity-badges {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.45rem;
+  align-items: center;
+  margin-top: 0.55rem;
+  color: var(--muted);
+  font-size: 0.88rem;
+}
+
 .account-summary-list {
   gap: 0.45rem;
 }
@@ -2694,6 +2824,50 @@ dd {
   font-family: var(--font-mono);
   font-size: 0.75rem;
   overflow-wrap: anywhere;
+}
+
+.billing-return-notice {
+  display: flex;
+  justify-content: space-between;
+  gap: 1rem;
+  align-items: center;
+  border-color: rgb(135 224 211 / 0.34);
+  padding: clamp(1rem, 2.4vw, 1.25rem);
+  background:
+    linear-gradient(135deg, rgb(135 224 211 / 0.12), transparent 54%),
+    var(--surface);
+}
+
+.billing-return-notice[data-status="cancelled"] {
+  border-color: rgb(241 183 71 / 0.28);
+  background:
+    linear-gradient(135deg, rgb(241 183 71 / 0.08), transparent 54%),
+    var(--surface);
+}
+
+.billing-return-notice h2,
+.entitlement-diagnostics h2 {
+  margin: 0 0 0.45rem;
+  font-family: var(--font-serif);
+  font-size: clamp(1.3rem, 2.4vw, 1.8rem);
+  line-height: 1.1;
+}
+
+.billing-return-notice p,
+.entitlement-diagnostics p {
+  margin: 0;
+  color: var(--muted);
+  line-height: 1.55;
+}
+
+.billing-return-notice .button-secondary {
+  flex: 0 0 auto;
+}
+
+.entitlement-diagnostics {
+  display: grid;
+  gap: 1rem;
+  border-style: dashed;
 }
 
 .button-subtle {
@@ -4091,6 +4265,24 @@ dd {
 
   .site-nav a {
     flex: 0 1 auto;
+  }
+
+  .site-account-nav {
+    justify-content: flex-start;
+    width: 100%;
+  }
+
+  .account-nav-control {
+    min-height: 2.4rem;
+  }
+
+  .site-header .account-nav-email {
+    max-width: min(54vw, 14rem);
+  }
+
+  .billing-return-notice {
+    align-items: flex-start;
+    flex-direction: column;
   }
 
   .brand-link {
