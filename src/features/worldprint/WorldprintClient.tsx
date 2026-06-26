@@ -48,6 +48,7 @@ import {
   persistRun,
   recordRunCompletion,
   savePersistedState,
+  type CompletionHistory,
   type PersistedState
 } from "@/lib/persistence/storage";
 import { countryNameByIso3, formatValue } from "@/lib/geo/format";
@@ -123,6 +124,17 @@ function runProgressStats(run: RunState) {
 
 function formatStat(value: number | null) {
   return value === null ? "—" : value.toLocaleString("en-US");
+}
+
+function formatRecordDate(value: string | null | undefined) {
+  if (!value) return null;
+  const date = new Date(value);
+  if (Number.isNaN(date.getTime())) return null;
+  return new Intl.DateTimeFormat("en-US", { month: "short", day: "numeric", year: "numeric" }).format(date);
+}
+
+function savedArchiveRecord(store: PersistedState, dateKey: string): CompletionHistory | null {
+  return store.archiveHistoryByDate[dateKey] ?? store.dailyHistoryByDate[dateKey] ?? null;
 }
 
 export function WorldprintClient({ dateOverride, entryMode = "standard" }: WorldprintClientProps) {
@@ -332,15 +344,15 @@ export function WorldprintClient({ dateOverride, entryMode = "standard" }: World
     setPracticeSetStatus("ready");
   }
 
-  async function startRun(mode: RunMode, challengePayload?: ChallengePayload) {
+  async function startRun(mode: RunMode, challengePayload?: ChallengePayload, options: { freshReplay?: boolean } = {}) {
     if (!data) return;
-    if (mode === "daily" && currentDailyRun) {
+    if (mode === "daily" && currentDailyRun && !options.freshReplay) {
       setRun(currentDailyRun);
       window.requestAnimationFrame(() => window.scrollTo(0, 0));
       await ensureIndicators(currentDailyRun.rounds.map((round) => round.correctIndicatorId));
       return;
     }
-    if (mode === "archive" && currentArchiveRun) {
+    if (mode === "archive" && currentArchiveRun && !options.freshReplay) {
       setRun(currentArchiveRun);
       window.requestAnimationFrame(() => window.scrollTo(0, 0));
       await ensureIndicators(currentArchiveRun.rounds.map((round) => round.correctIndicatorId));
@@ -496,16 +508,20 @@ export function WorldprintClient({ dateOverride, entryMode = "standard" }: World
 
   if (!run) {
     const activeDateRun = isArchiveDate ? currentArchiveRun : currentDailyRun;
+    const archiveRecord = isArchiveDate ? savedArchiveRecord(store, todayKey) : null;
+    const archiveRecordDate = formatRecordDate(archiveRecord?.completedAt);
     const dailyLabel = activeDateRun
       ? activeDateRun.status === "complete"
         ? isArchiveDate
-          ? "View / Replay past game"
+          ? "View record"
           : "View completed Mystery Map"
         : isArchiveDate
           ? "Continue replay"
           : "Continue today's Mystery Map"
       : isArchiveDate
-        ? "Replay maps"
+        ? archiveRecord
+          ? "Replay for better score"
+          : "Play past map"
         : "Start today's Mystery Map";
     const selectedCount = selectedPracticeRounds.length;
     const selectedDifficultyLabel = DIFFICULTY_LABELS[practiceDifficulty];
@@ -657,9 +673,18 @@ export function WorldprintClient({ dateOverride, entryMode = "standard" }: World
               <p className="setup-kicker">Past Mystery Map Replay</p>
               <h2>{todayKey}</h2>
               <p>
-                This past Daily uses the same maps every time. Replay it to improve your record; completed replays save history but never change today&apos;s
-                streak.
+                This fixed 5-map set is your record slot for the date. Beat your saved score, or fill the archive if you have not played it yet. Past replays
+                never change today&apos;s streak.
               </p>
+              <div className="archive-record-summary" data-state={archiveRecord ? "saved" : "empty"} aria-label="Past game record">
+                <span>{archiveRecord ? "Saved record" : "No record yet"}</span>
+                <strong>{archiveRecord ? `${archiveRecord.bestScore.toLocaleString("en-US")} points` : "Fill this slot"}</strong>
+                <p>
+                  {archiveRecord
+                    ? `${TIER_CONFIGS[archiveRecord.tier].shortLabel}${archiveRecordDate ? ` · saved ${archiveRecordDate}` : ""}`
+                    : "Play the fixed map set once to create a personal best."}
+                </p>
+              </div>
             </div>
           )}
           {isArchiveDate ? (
@@ -668,6 +693,11 @@ export function WorldprintClient({ dateOverride, entryMode = "standard" }: World
                 <Compass size={18} aria-hidden="true" />
                 {dailyLabel}
               </button>
+              {activeDateRun?.status === "complete" ? (
+                <button className="button-secondary" type="button" onClick={() => void startRun("archive", undefined, { freshReplay: true })}>
+                  Replay again
+                </button>
+              ) : null}
             </div>
           ) : null}
         </div>
@@ -791,7 +821,9 @@ export function WorldprintClient({ dateOverride, entryMode = "standard" }: World
       <div className="play-control-panel surface" aria-label="Round controls">
         <div className="score-block">
           <span>Current round score</span>
-          <strong>{roundState.score}</strong>
+          <strong key={roundState.score} data-score-tone={roundState.score < 0 ? "negative" : "positive"}>
+            {roundState.score}
+          </strong>
         </div>
         <div className="run-stats-card" aria-label="This run">
           <span>This run</span>
@@ -1056,14 +1088,21 @@ function RevealView({
           interactive={false}
           labelledBy="reveal-map-title"
         />
+        <div className="result-atlas-burst" data-result={resultTone} aria-hidden="true">
+          <span />
+          <span />
+          <span />
+          <span />
+          <span />
+        </div>
       </div>
       <div className="reveal-panel surface" aria-label="Reveal details">
         <div className="round-result-banner" data-result={resultTone} role="status" aria-live="polite">
-          <span>{missedAnswerCount > 0 ? "Revealed" : "Correct"}</span>
-          <strong>{missedAnswerCount > 0 ? "Answer found." : "Solved."}</strong>
+          <span>{missedAnswerCount > 0 ? "Answer revealed" : "Correct"}</span>
+          <strong>{missedAnswerCount > 0 ? indicator.shortTitle : "Solved."}</strong>
           <p>
             {missedAnswerCount > 0
-              ? `The hidden map was ${indicator.shortTitle}. ${missedAnswerCount} wrong ${missedAnswerCount === 1 ? "read" : "reads"} ruled out.`
+              ? `Correct answer: ${indicator.shortTitle}. ${missedAnswerCount} wrong ${missedAnswerCount === 1 ? "read" : "reads"} ruled out.`
               : `Sharp read. The hidden map was ${indicator.shortTitle}.`}
           </p>
           <em>{scoreText}</em>
@@ -1236,6 +1275,7 @@ function CompletionSummary({
   const total = run.rounds.reduce((sum, round) => sum + round.score, 0);
   const bestRound = run.rounds.length ? Math.max(...run.rounds.map((round) => round.score)) : 0;
   const averageRound = run.rounds.length ? Math.round(total / run.rounds.length) : 0;
+  const isPastRecord = run.mode === "archive";
   const saveNote = signedIn
     ? "Account sync is active. This run is saved locally first, then matched to your account when the connection is available."
     : "Local on this device. Sign in to save completed runs, stats, and streaks to your account.";
@@ -1283,6 +1323,7 @@ function CompletionSummary({
         <p className="eyebrow">{summaryLabel}</p>
         <h1 className="page-title">{total} points</h1>
         <p className="lead">
+          {isPastRecord ? "Record entry saved for this fixed Past Game. " : ""}
           {run.rounds.length} maps completed on {TIER_CONFIGS[run.tier].label}.{" "}
           {run.mode === "daily" ? `Daily streak: ${store.streak.current}.` : "Daily streaks are unaffected."}
         </p>
@@ -1322,7 +1363,7 @@ function CompletionSummary({
             {challengeButtonLabel}
           </button>
           <button className="button-secondary" type="button" onClick={onBack}>
-            Back to Mystery Map
+            {isPastRecord ? "Back to record" : "Back to Mystery Map"}
           </button>
         </div>
         <div className="status-live" role="status" aria-live="polite">
@@ -1333,10 +1374,12 @@ function CompletionSummary({
         <section className="account-save-card surface" aria-label="Save your progress">
           <div>
             <p className="eyebrow">Save progress</p>
-            <h2>{signedIn ? "Account save is on." : "Save your score and streak."}</h2>
+            <h2>{signedIn ? (isPastRecord ? "Past Game record sync is on." : "Account save is on.") : "Save your score and streak."}</h2>
             <p>
               {signedIn
-                ? "Your result is saved locally first. Completed-run summaries sync to your account when the connection is available."
+                ? isPastRecord
+                  ? "This Past Game result is saved locally first. Completed-run summaries sync to your account when the connection is available."
+                  : "Your result is saved locally first. Completed-run summaries sync to your account when the connection is available."
                 : "Your result is saved in this browser. A free account can save completed runs, stats, and streaks to your account."}
             </p>
             {cloudSaveStatus ? (

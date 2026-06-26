@@ -389,8 +389,8 @@ test("wrong answer recovers and correct answer reveals the source", async ({ pag
   await page.getByRole("button", { name: wrongLabel(0) }).click();
   await expect(page.getByText(/Incorrect/)).toBeVisible();
   await page.getByRole("button", { name: correctLabel(0) }).click();
-  await expect(page.getByText(/Revealed/)).toBeVisible();
-  await expect(page.getByText(/Answer found/)).toBeVisible();
+  await expect(page.getByText(/Answer revealed/i)).toBeVisible();
+  await expect(page.getByText(/Correct answer:/i)).toBeVisible();
   await expect(page.getByText(/Source and year/)).toBeVisible();
   await expect(page.getByText(/What the map was showing/)).toBeVisible();
   await expect(page.getByText(/Why the wrong answers were tempting/)).toBeVisible();
@@ -420,9 +420,11 @@ test("completes a five-round Daily and preserves completed result", async ({ pag
   await page.getByRole("button", { name: /View completed Mystery Map/i }).click();
   await expect(page.getByRole("heading", { name: /points/i })).toBeVisible();
   await page.goto("/archive/worldprint");
-  await expect(page.getByRole("heading", { name: /Replay recent Mystery Maps/i })).toBeVisible();
+  await expect(page.getByRole("heading", { name: /Build your Mystery Map record book/i })).toBeVisible();
   await expect(page.locator("body")).not.toContainText("WORLDPRINT");
-  await expect(page.getByText(/5,000 points · Analyst/i)).toBeVisible();
+  await expect(page.getByText("5,000 points").first()).toBeVisible();
+  await expect(page.getByText("Analyst").first()).toBeVisible();
+  await expect(page.getByRole("link", { name: "View record" }).first()).toBeVisible();
 });
 
 test("archive route opens a dated Daily without affecting today's streak", async ({ page }) => {
@@ -431,8 +433,9 @@ test("archive route opens a dated Daily without affecting today's streak", async
   await expect(page.locator("body")).not.toContainText("WORLDPRINT");
   await expect(page.getByText(/Streak stays safe/i)).toBeVisible();
   await expect(page.getByText(/Past Mystery Map Replay/i).first()).toBeVisible();
-  await expect(page.getByRole("button", { name: "Replay maps" })).toBeVisible();
-  await page.getByRole("button", { name: "Replay maps" }).click();
+  await expect(page.getByText(/No record yet/i)).toBeVisible();
+  await expect(page.getByRole("button", { name: "Play past map" })).toBeVisible();
+  await page.getByRole("button", { name: "Play past map" }).click();
   await expect(page.getByText(`Past Mystery Map Replay ${TEST_DATE}`)).toBeVisible();
   for (let index = 0; index < 5; index += 1) {
     await page.getByRole("button", { name: correctLabel(index) }).click();
@@ -702,14 +705,14 @@ test("account and sign-in stay optional, friendly, and local-first", async ({ pa
 
 test("past games page reads as player replay, not admin archive", async ({ page }) => {
   await page.goto("/archive/worldprint");
-  await expect(page.locator(".archive-hero .eyebrow")).toHaveText("Past Games");
-  await expect(page.getByRole("heading", { name: /Replay recent Mystery Maps/i })).toBeVisible();
-  await expect(page.getByText(/Missed a day\? Replay recent Daily Mystery Maps/i)).toBeVisible();
-  await expect(page.getByText(/Saved cards are records first/i)).toBeVisible();
-  await expect(page.getByText(/Past games do not change today's streak/i)).toBeVisible();
+  await expect(page.locator(".archive-hero .eyebrow")).toHaveText("Past Games · Replay Library");
+  await expect(page.getByRole("heading", { name: /Build your Mystery Map record book/i })).toBeVisible();
+  await expect(page.getByText(/Each past date is a fixed 5-map set/i)).toBeVisible();
+  await expect(page.getByText(/chase a better personal best/i)).toBeVisible();
+  await expect(page.getByText(/Past Games are replays, not today's live Daily/i)).toBeVisible();
   await expect(page.getByRole("complementary", { name: "Your stats" })).toContainText("No saved games yet");
   await expect(page.getByRole("complementary", { name: "Your stats" })).toContainText("Local on this device");
-  await expect(page.getByRole("link", { name: "Replay maps" }).first()).toBeVisible();
+  await expect(page.getByRole("link", { name: "Play past map" }).first()).toBeVisible();
   await expect(page.getByText(/Full archive access is coming soon|Create a free account to save your progress/i)).toBeVisible();
   await expect(page.locator("body")).not.toContainText(/manifest|archive window|localStorage|generated data|content version|admin/i);
   await expect(page.locator("body")).not.toContainText("WORLDPRINT");
@@ -726,7 +729,7 @@ test("past games header and nav are visible across breakpoints", async ({ page }
   ]) {
     await page.setViewportSize(viewport);
     await page.goto("/archive/worldprint");
-    await expect(page.getByRole("heading", { name: /Replay recent Mystery Maps/i })).toBeVisible();
+    await expect(page.getByRole("heading", { name: /Build your Mystery Map record book/i })).toBeVisible();
     await expect(page.locator(".archive-card")).toHaveCount(14);
 
     const brandLink = page.getByRole("link", { name: /Can You Geo\? home/i });
@@ -790,7 +793,7 @@ test("mobile viewport has no horizontal overflow", async ({ page, isMobile }) =>
   await expect(page.getByRole("heading", { name: "Accessibility" })).toBeVisible();
   expect(await page.evaluate(() => document.documentElement.scrollWidth > window.innerWidth)).toBe(false);
   await page.goto("/archive/worldprint");
-  await expect(page.getByRole("heading", { name: /Replay recent Mystery Maps/i })).toBeVisible();
+  await expect(page.getByRole("heading", { name: /Build your Mystery Map record book/i })).toBeVisible();
   expect(await page.evaluate(() => document.documentElement.scrollWidth > window.innerWidth)).toBe(false);
   await page.goto("/sign-in");
   await expect(page.getByRole("heading", { name: /Save your score and streak/i })).toBeVisible();

@@ -24,6 +24,19 @@ function completionForDate(store: PersistedState, dateKey: string): CompletionHi
   return store.dailyHistoryByDate[dateKey] ?? store.archiveHistoryByDate[dateKey] ?? null;
 }
 
+type TierKey = keyof typeof TIER_CONFIGS;
+
+function isTierKey(value: string | null | undefined): value is TierKey {
+  return Boolean(value && value in TIER_CONFIGS);
+}
+
+function formatSavedDate(value: string | null | undefined): string | null {
+  if (!value) return null;
+  const date = new Date(value);
+  if (Number.isNaN(date.getTime())) return null;
+  return new Intl.DateTimeFormat("en-US", { month: "short", day: "numeric", year: "numeric" }).format(date);
+}
+
 export function ArchiveCard({
   entry,
   todayKey,
@@ -37,12 +50,12 @@ export function ArchiveCard({
 }) {
   const isToday = entry.date === todayKey;
   const hasCompletion = Boolean(completion || accountRun);
-  const status = accountRun
-    ? `${accountRun.total_score.toLocaleString("en-US")} points · Saved to account`
-    : completion
-      ? `${completion.bestScore.toLocaleString("en-US")} points · ${TIER_CONFIGS[completion.tier].shortLabel} · Saved on this browser`
-      : "Unplayed";
-  const actionLabel = hasCompletion ? "View / Replay" : "Replay maps";
+  const bestScore = accountRun?.total_score ?? completion?.bestScore ?? null;
+  const savedTier = accountRun?.tier ?? completion?.tier ?? null;
+  const tierLabel = isTierKey(savedTier) ? TIER_CONFIGS[savedTier].shortLabel : hasCompletion ? "Unknown tier" : "Choose on setup";
+  const savedDate = formatSavedDate(accountRun?.completed_at ?? completion?.completedAt);
+  const status = accountRun ? "Saved to account" : completion ? "Saved on this browser" : "Unplayed";
+  const actionLabel = hasCompletion ? "View record" : "Play past map";
   return (
     <article className="archive-card" data-today={isToday ? "true" : "false"} data-completed={hasCompletion ? "true" : "false"}>
       <div className="archive-card-heading">
@@ -63,12 +76,33 @@ export function ArchiveCard({
         </div>
         <div>
           <dt>Status</dt>
-          <dd>{status}</dd>
+          <dd>
+            <span className="archive-status-pill" data-status={hasCompletion ? "saved" : "unplayed"}>
+              {status}
+            </span>
+          </dd>
         </div>
       </dl>
-      <Link className={hasCompletion ? "button-secondary" : "button"} href={`/play/worldprint/${entry.date}`}>
-        {actionLabel}
-      </Link>
+      <dl className="archive-record-meta" aria-label="Record details">
+        <div>
+          <dt>Best score</dt>
+          <dd>{bestScore === null ? "No record yet" : `${bestScore.toLocaleString("en-US")} points`}</dd>
+        </div>
+        <div>
+          <dt>Tier</dt>
+          <dd>{tierLabel}</dd>
+        </div>
+        <div>
+          <dt>Date saved</dt>
+          <dd>{savedDate ?? "Not saved yet"}</dd>
+        </div>
+      </dl>
+      <div className="archive-card-action">
+        <Link className="button" href={`/play/worldprint/${entry.date}`}>
+          {actionLabel}
+        </Link>
+        <p>{hasCompletion ? "Replay for better score." : "Fixed 5-map set. Fill this record slot."}</p>
+      </div>
     </article>
   );
 }
@@ -157,18 +191,18 @@ export function ArchiveClient() {
   return (
     <section className="archive-page page-shell">
       <div className="archive-hero">
-        <p className="eyebrow">Past Games</p>
-        <h1 className="page-title">Replay recent Mystery Maps.</h1>
+        <p className="eyebrow">Past Games · Replay Library</p>
+        <h1 className="page-title">Build your Mystery Map record book.</h1>
         <p className="lead">
-          Missed a day? Replay recent Daily Mystery Maps
-          {publicRange ? ` from ${publicRange.start} to ${publicRange.end}` : ""}. Saved cards are records first, and replaying them never changes today&apos;s
-          streak.
+          Each past date is a fixed 5-map set
+          {publicRange ? ` from ${publicRange.start} to ${publicRange.end}` : ""}. Replay one to fill the record, chase a better personal best, or review a
+          map you missed. It never changes today&apos;s streak.
         </p>
       </div>
       <div className="archive-note surface">
-        <strong>Past games do not change today&apos;s streak.</strong>
+        <strong>Past Games are replays, not today&apos;s live Daily.</strong>
         <span>
-          Today&apos;s Daily still updates the live streak; replayed days save history as Past Game records
+          Today&apos;s Mystery Map updates the live streak; replayed dates save as fixed Past Game records
           {signedIn ? " for this account when sync is available." : " in this browser."}
         </span>
       </div>

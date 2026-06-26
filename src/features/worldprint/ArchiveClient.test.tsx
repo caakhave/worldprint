@@ -59,23 +59,29 @@ describe("ArchiveCard", () => {
   it("shows account-saved status for cloud completions", () => {
     render(<ArchiveCard entry={entry()} todayKey="2026-06-26" completion={null} accountRun={accountRun()} />);
 
-    expect(screen.getByText("4,200 points · Saved to account")).toBeVisible();
-    expect(screen.getByRole("link", { name: "View / Replay" })).toBeVisible();
+    expect(screen.getByText("Saved to account")).toBeVisible();
+    expect(screen.getByText("4,200 points")).toBeVisible();
+    expect(screen.getByText("Jun 24, 2026")).toBeVisible();
+    expect(screen.getByRole("link", { name: "View record" })).toBeVisible();
+    expect(screen.getByText("Replay for better score.")).toBeVisible();
   });
 
   it("prefers account-saved status when both account and browser completions exist", () => {
     render(<ArchiveCard entry={entry()} todayKey="2026-06-26" completion={localCompletion()} accountRun={accountRun()} />);
 
-    expect(screen.getByText("4,200 points · Saved to account")).toBeVisible();
+    expect(screen.getByText("Saved to account")).toBeVisible();
+    expect(screen.getByText("4,200 points")).toBeVisible();
     expect(screen.queryByText(/Saved on this browser/i)).not.toBeInTheDocument();
   });
 
   it("shows browser-only and unplayed statuses clearly", () => {
     const { rerender } = render(<ArchiveCard entry={entry()} todayKey="2026-06-26" completion={localCompletion()} accountRun={null} />);
-    expect(screen.getByText("4,000 points · Analyst · Saved on this browser")).toBeVisible();
+    expect(screen.getByText("4,000 points")).toBeVisible();
+    expect(screen.getByText("Analyst")).toBeVisible();
+    expect(screen.getByText("Saved on this browser")).toBeVisible();
 
     rerender(<ArchiveCard entry={entry()} todayKey="2026-06-26" completion={null} accountRun={null} />);
     expect(screen.getByText("Unplayed")).toBeVisible();
-    expect(screen.getByRole("link", { name: "Replay maps" })).toBeVisible();
+    expect(screen.getByRole("link", { name: "Play past map" })).toBeVisible();
   });
 });
