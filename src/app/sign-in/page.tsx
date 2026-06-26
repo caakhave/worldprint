@@ -16,7 +16,7 @@ export default function SignInPage() {
         <h1 id="sign-in-title" className="page-title">
           Save your score and streak.
         </h1>
-        <p className="lead">Enter your email and we&apos;ll send a secure sign-in link. No password needed.</p>
+        <p className="lead">No password needed. Enter your email and we&apos;ll send a secure one-time sign-in link.</p>
       </div>
 
       <div className="account-grid">

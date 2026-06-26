@@ -2,15 +2,30 @@
 
 import Link from "next/link";
 import { useState } from "react";
+import { useEntitlement } from "@/features/account/useEntitlement";
 import { useSupabaseAccount } from "@/features/account/useSupabaseAccount";
+import { planLabel, statusLabel } from "@/lib/account/entitlements";
 
 export function AccountStatusClient() {
   const { configured, loading, user, profileError, signOut } = useSupabaseAccount();
+  const { entitlement, loading: entitlementLoading } = useEntitlement();
   const [signOutError, setSignOutError] = useState<string | null>(null);
+  const [supportIdVisible, setSupportIdVisible] = useState(false);
+  const [supportIdStatus, setSupportIdStatus] = useState("");
 
   async function handleSignOut() {
     const result = await signOut();
     setSignOutError(result.error ? "We could not sign you out. Try again in a moment." : null);
+  }
+
+  async function copySupportId() {
+    if (!user) return;
+    try {
+      await navigator.clipboard?.writeText(user.id);
+      setSupportIdStatus("Support ID copied.");
+    } catch {
+      setSupportIdStatus("Copy did not work. You can select the ID instead.");
+    }
   }
 
   if (!configured) {
@@ -54,20 +69,55 @@ export function AccountStatusClient() {
     );
   }
 
+  const membershipLabel = entitlementLoading ? "Checking" : planLabel(entitlement.plan);
+  const membershipStatus = entitlementLoading ? "Checking access" : entitlement.status === "free" ? "Ready" : statusLabel(entitlement.status);
+  const syncLabel = entitlementLoading ? "Checking sync" : entitlement.capabilities.canSaveStats ? "Account sync ready" : "Local stats only";
+
   return (
-    <article className="surface account-card account-primary-card">
-      <p className="eyebrow">Signed in</p>
-      <h2>Your atlas is connected.</h2>
-      <dl className="account-status-list account-mini-status">
+    <article className="surface account-card account-primary-card account-summary-card">
+      <div className="account-summary-head">
+        <p className="eyebrow">Signed in</p>
+        <h2>Your atlas is connected.</h2>
+        <p>Your account is ready. Keep playing, save this device&apos;s stats, or check your atlas access.</p>
+      </div>
+      <dl className="account-status-list account-mini-status account-summary-list">
         <div>
           <dt>Email</dt>
           <dd>{user.email ?? "Signed-in player"}</dd>
         </div>
         <div>
-          <dt>User ID</dt>
-          <dd>{user.id}</dd>
+          <dt>Membership</dt>
+          <dd>
+            {membershipLabel}
+            <span>{membershipStatus}</span>
+          </dd>
+        </div>
+        <div>
+          <dt>Stats sync</dt>
+          <dd>
+            {syncLabel}
+            <span>Save this browser&apos;s stats from your stats page.</span>
+          </dd>
         </div>
       </dl>
+      <div className="account-support-tools">
+        <button className="button-subtle" type="button" onClick={() => setSupportIdVisible((visible) => !visible)}>
+          {supportIdVisible ? "Hide support ID" : "Show support ID"}
+        </button>
+        {supportIdVisible ? (
+          <div className="account-support-id" role="group" aria-label="Support ID">
+            <code>{user.id}</code>
+            <button className="button-subtle" type="button" onClick={() => void copySupportId()}>
+              Copy support ID
+            </button>
+          </div>
+        ) : null}
+        {supportIdStatus ? (
+          <p className="status-live" role="status">
+            {supportIdStatus}
+          </p>
+        ) : null}
+      </div>
       {profileError ? <p className="account-error">We could not refresh your account details. You can keep playing.</p> : null}
       {signOutError ? (
         <p className="account-error" role="alert">

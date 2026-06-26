@@ -2627,10 +2627,105 @@ dd {
 .account-primary-card {
   display: grid;
   gap: 1rem;
-  min-height: 100%;
+  align-content: start;
   background:
     radial-gradient(circle at top right, rgb(104 183 170 / 0.18), transparent 32%),
     var(--surface);
+}
+
+.account-summary-card {
+  gap: 0.9rem;
+  padding: clamp(1rem, 2vw, 1.25rem);
+}
+
+.account-summary-head {
+  display: grid;
+  gap: 0.35rem;
+}
+
+.account-summary-head h2 {
+  margin-bottom: 0;
+}
+
+.account-summary-list {
+  gap: 0.45rem;
+}
+
+.account-summary-list div {
+  grid-template-columns: minmax(6.8rem, auto) minmax(0, 1fr);
+  gap: 0.8rem;
+  padding-top: 0.65rem;
+}
+
+.account-summary-list dd {
+  color: var(--parchment);
+  font-weight: 700;
+}
+
+.account-summary-list dd span {
+  display: block;
+  margin-top: 0.12rem;
+  color: var(--muted);
+  font-size: 0.9rem;
+  font-weight: 500;
+}
+
+.account-support-tools {
+  display: grid;
+  gap: 0.55rem;
+  border-top: 1px solid var(--line);
+  padding-top: 0.75rem;
+}
+
+.account-support-id {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.55rem;
+  align-items: center;
+}
+
+.account-support-id code {
+  max-width: 100%;
+  border: 1px solid var(--line);
+  border-radius: 6px;
+  padding: 0.4rem 0.5rem;
+  background: rgb(4 14 18 / 0.68);
+  color: var(--muted);
+  font-family: var(--font-mono);
+  font-size: 0.75rem;
+  overflow-wrap: anywhere;
+}
+
+.button-subtle {
+  justify-self: start;
+  border: 1px solid var(--line);
+  border-radius: 999px;
+  padding: 0.42rem 0.7rem;
+  background: rgb(255 255 255 / 0.03);
+  color: var(--muted);
+  font: inherit;
+  font-family: var(--font-mono);
+  font-size: 0.72rem;
+  font-weight: 700;
+  letter-spacing: 0.035em;
+  text-transform: uppercase;
+  cursor: pointer;
+  transition:
+    border-color 160ms ease,
+    color 160ms ease,
+    background 160ms ease;
+}
+
+.button-subtle:hover,
+.button-subtle:focus-visible {
+  border-color: var(--signal-2);
+  background: rgb(104 183 170 / 0.1);
+  color: var(--parchment);
+}
+
+.button-subtle:focus-visible {
+  outline: 2px solid rgb(164 216 205 / 0.3);
+  outline-offset: 3px;
 }
 
 .account-status-card {

@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import Link from "next/link";
+import { AccountHeroClient } from "@/features/account/AccountHeroClient";
 import { MembershipCardClient } from "@/features/account/MembershipCardClient";
 import { AccountStatusClient } from "@/features/account/AccountStatusClient";
 import { AccountStatsClient } from "@/features/account/AccountStatsClient";
@@ -12,21 +12,7 @@ export const metadata: Metadata = {
 export default function AccountPage() {
   return (
     <section className="account-page account-page-shell page-shell" aria-labelledby="account-title">
-      <div className="account-hero">
-        <p className="eyebrow">Player account</p>
-        <h1 id="account-title" className="page-title">
-          Your atlas, saved.
-        </h1>
-        <p className="lead">Play without an account, or create a free account when you want your streak and stats to follow you.</p>
-        <div className="button-row">
-          <Link className="button" href="/play/worldprint">
-            Play today&apos;s Mystery Map
-          </Link>
-          <Link className="button-secondary" href="/sign-in">
-            Save your score and streak
-          </Link>
-        </div>
-      </div>
+      <AccountHeroClient />
 
       <div className="account-grid">
         <AccountStatusClient />
@@ -41,7 +27,7 @@ export default function AccountPage() {
           <article className="surface account-card">
             <p className="eyebrow">Free account</p>
             <h2>Keep your streak.</h2>
-            <p>Email sign-in can save your score history and streak to your account. No password needed.</p>
+            <p>Email sign-in can save your score history and streak to your account. Returning later? Use the same email and request a fresh link.</p>
           </article>
           <article className="surface account-card">
             <p className="eyebrow">Pro</p>

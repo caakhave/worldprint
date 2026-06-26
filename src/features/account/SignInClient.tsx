@@ -1,9 +1,19 @@
 "use client";
 
 import Link from "next/link";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { siteOrigin } from "@/lib/supabase/env";
 import { useSupabaseAccount } from "@/features/account/useSupabaseAccount";
+
+const RESEND_COOLDOWN_MS = 60_000;
+const RATE_LIMIT_MESSAGE = "A sign-in link was just sent. Wait about 60 seconds, then try again.";
+const GENERIC_SIGN_IN_ERROR = "We could not send that sign-in link. Check the email address and try again.";
+
+type SupabaseOtpError = {
+  message: string;
+  status?: number;
+  code?: string;
+};
 
 function warnAuthDetail(message: string, detail: unknown) {
   if (process.env.NODE_ENV !== "production") {
@@ -11,15 +21,44 @@ function warnAuthDetail(message: string, detail: unknown) {
   }
 }
 
+export function isPasswordlessRateLimitError(error: SupabaseOtpError | null | undefined): boolean {
+  if (!error) return false;
+  const code = error.code?.toLowerCase() ?? "";
+  const message = error.message.toLowerCase();
+  return (
+    error.status === 429 ||
+    (code.includes("rate") && code.includes("limit")) ||
+    code.includes("over_email_send_rate_limit") ||
+    message.includes("rate limit") ||
+    message.includes("email rate") ||
+    message.includes("only request") ||
+    message.includes("after 60 seconds") ||
+    (message.includes("wait") && message.includes("seconds"))
+  );
+}
+
 export function SignInClient() {
-  const { client, configured, loading, user, profileError } = useSupabaseAccount();
+  const { client, configured, loading, user, profileError, signOut } = useSupabaseAccount();
   const [email, setEmail] = useState("");
   const [status, setStatus] = useState<string>("");
   const [error, setError] = useState<string>("");
   const [submitting, setSubmitting] = useState(false);
+  const [signOutError, setSignOutError] = useState("");
+  const [resendCooldownActive, setResendCooldownActive] = useState(false);
+
+  useEffect(() => {
+    if (!resendCooldownActive) return undefined;
+    const timeout = window.setTimeout(() => setResendCooldownActive(false), RESEND_COOLDOWN_MS);
+    return () => window.clearTimeout(timeout);
+  }, [resendCooldownActive]);
+
+  function startResendCooldown() {
+    setResendCooldownActive(true);
+  }
 
   async function submit(event: React.FormEvent<HTMLFormElement>) {
     event.preventDefault();
+    if (resendCooldownActive) return;
     if (!client) {
       setError("Email sign-in is not available in this preview. You can still play without an account.");
       return;
@@ -37,10 +76,21 @@ export function SignInClient() {
     setSubmitting(false);
     if (signInError) {
       warnAuthDetail("Could not send sign-in link.", signInError);
-      setError("We could not send that sign-in link. Check the email address and try again.");
+      if (isPasswordlessRateLimitError(signInError)) {
+        startResendCooldown();
+        setError(RATE_LIMIT_MESSAGE);
+      } else {
+        setError(GENERIC_SIGN_IN_ERROR);
+      }
       return;
     }
-    setStatus("Check your email. Open the link we sent to finish signing in.");
+    startResendCooldown();
+    setStatus("Check your email. Sign-in links are temporary and can be used once.");
+  }
+
+  async function handleSignOut() {
+    const result = await signOut();
+    setSignOutError(result.error ? "We could not sign you out. Try again in a moment." : "");
   }
 
   if (!configured) {
@@ -79,8 +129,14 @@ export function SignInClient() {
       <article className="surface account-card account-primary-card">
         <p className="eyebrow">Signed in</p>
         <h2>Your atlas is connected.</h2>
-        <p>{user.email ? `Signed in as ${user.email}.` : "You are signed in."}</p>
+        <p>{user.email ? `You're signed in as ${user.email}.` : "You're signed in."}</p>
+        <p className="account-env-note">Returning later? Use the same email and request a fresh link.</p>
         {profileError ? <p className="account-error">We could not refresh your account details. You can keep playing.</p> : null}
+        {signOutError ? (
+          <p className="account-error" role="alert">
+            {signOutError}
+          </p>
+        ) : null}
         <div className="button-row">
           <Link className="button" href="/account">
             Go to account
@@ -88,6 +144,9 @@ export function SignInClient() {
           <Link className="button-secondary" href="/play/worldprint">
             Keep playing
           </Link>
+          <button className="button-secondary" type="button" onClick={() => void handleSignOut()}>
+            Sign out
+          </button>
         </div>
       </article>
     );
@@ -97,7 +156,7 @@ export function SignInClient() {
     <article className="surface account-card account-primary-card">
       <p className="eyebrow">Create a free account</p>
       <h2>Send a secure sign-in link.</h2>
-      <p>Enter your email and we&apos;ll send a link. No password needed.</p>
+      <p>No password needed. Enter your email and we&apos;ll send a secure one-time sign-in link.</p>
       <form className="account-form" onSubmit={(event) => void submit(event)}>
         <label htmlFor="account-email">
           Email
@@ -112,10 +171,11 @@ export function SignInClient() {
             required
           />
         </label>
-        <button className="button" type="submit" disabled={submitting}>
-          {submitting ? "Sending..." : "Send sign-in link"}
+        <button className="button" type="submit" disabled={submitting || resendCooldownActive}>
+          {submitting ? "Sending..." : resendCooldownActive ? "Wait a minute" : "Send sign-in link"}
         </button>
       </form>
+      <p className="account-env-note">For security, sign-in links can only be requested about once per minute.</p>
       {status ? (
         <p className="status-live" role="status">
           {status}
@@ -126,6 +186,7 @@ export function SignInClient() {
           {error}
         </p>
       ) : null}
+      <p className="account-env-note">Returning later? Use the same email and request a fresh link.</p>
     </article>
   );
 }
