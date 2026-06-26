@@ -3,6 +3,7 @@
 import Link from "next/link";
 import { useEffect, useMemo, useState } from "react";
 import { useEntitlement } from "@/features/account/useEntitlement";
+import { archiveDateRange, publicArchiveEntries, visibleArchiveEntries } from "@/features/worldprint/archiveAccess";
 import { PlayerStatsPanel } from "@/features/worldprint/PlayerStatsPanel";
 import { loadDailyIndex } from "@/lib/content/loaders";
 import type { DailyIndex, DailyIndexEntry } from "@/lib/content/schemas";
@@ -72,17 +73,13 @@ export function ArchiveClient() {
 
   const entries = useMemo(() => {
     if (!index) return [];
-    return [...index.dates].sort((left, right) => right.date.localeCompare(left.date));
-  }, [index]);
-  const visibleEntries = useMemo(() => {
-    const limit = entitlement.capabilities.archiveLimitDays;
-    if (!limit) return entries;
-    const recentEntries = entries.slice(0, limit);
-    const visibleDates = new Set(recentEntries.map((entry) => entry.date));
-    const completedDates = new Set([...Object.keys(store.dailyHistoryByDate), ...Object.keys(store.archiveHistoryByDate)]);
-    const completedEntries = entries.filter((entry) => completedDates.has(entry.date) && !visibleDates.has(entry.date));
-    return [...recentEntries, ...completedEntries].sort((left, right) => right.date.localeCompare(left.date));
-  }, [entries, entitlement.capabilities.archiveLimitDays, store.archiveHistoryByDate, store.dailyHistoryByDate]);
+    return publicArchiveEntries(index.dates, todayKey);
+  }, [index, todayKey]);
+  const visibleEntries = useMemo(
+    () => visibleArchiveEntries(entries, store, entitlement.capabilities.archiveLimitDays),
+    [entries, entitlement.capabilities.archiveLimitDays, store]
+  );
+  const publicRange = archiveDateRange(entries);
   const hiddenCount = Math.max(0, entries.length - visibleEntries.length);
 
   if (error) {
@@ -114,8 +111,8 @@ export function ArchiveClient() {
         <p className="eyebrow">Past Games</p>
         <h1 className="page-title">Replay recent Mystery Maps.</h1>
         <p className="lead">
-          Missed a day? Replay recent Daily Mystery Maps from {index.range.start} to {index.range.end}. For now, completed days are
-          saved in this browser only.
+          Missed a day? Replay recent Daily Mystery Maps
+          {publicRange ? ` from ${publicRange.start} to ${publicRange.end}` : ""}. For now, completed days are saved in this browser only.
         </p>
       </div>
       <div className="archive-note surface">

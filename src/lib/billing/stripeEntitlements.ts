@@ -21,6 +21,7 @@ export type EntitlementBillingUpdate = StripeEntitlementState & {
   stripe_subscription_id: string | null;
   stripe_price_id: string | null;
   stripe_status: string | null;
+  cancel_at_period_end: boolean | null;
   current_period_end: string | null;
   updated_at: string;
 };
@@ -73,6 +74,7 @@ export async function handleStripeWebhookEvent(
       subscriptionId: stringField(session.subscription),
       priceId: null,
       stripeStatus: "active",
+      cancelAtPeriodEnd: null,
       currentPeriodEnd: null,
       now
     });
@@ -97,6 +99,7 @@ export async function handleStripeWebhookEvent(
       subscriptionId,
       priceId: subscriptionPriceId(subscription),
       stripeStatus,
+      cancelAtPeriodEnd: booleanField(subscription.cancel_at_period_end),
       currentPeriodEnd: timestampToIso(numberField(subscription.current_period_end)),
       now
     });
@@ -118,6 +121,7 @@ export async function handleStripeWebhookEvent(
       stripe_subscription_id: subscriptionId,
       stripe_price_id: null,
       stripe_status: "past_due",
+      cancel_at_period_end: null,
       current_period_end: null,
       updated_at: now
     };
@@ -155,6 +159,7 @@ function entitlementUpdate(input: {
   subscriptionId: string | null;
   priceId: string | null;
   stripeStatus: string | null;
+  cancelAtPeriodEnd: boolean | null;
   currentPeriodEnd: string | null;
   now: string;
 }): EntitlementBillingUpdate {
@@ -165,6 +170,7 @@ function entitlementUpdate(input: {
     stripe_subscription_id: input.subscriptionId,
     stripe_price_id: input.priceId,
     stripe_status: input.stripeStatus,
+    cancel_at_period_end: input.cancelAtPeriodEnd,
     current_period_end: input.currentPeriodEnd,
     updated_at: input.now
   };
@@ -200,6 +206,10 @@ function stringField(value: unknown): string | null {
 
 function numberField(value: unknown): number | null {
   return typeof value === "number" && Number.isFinite(value) ? value : null;
+}
+
+function booleanField(value: unknown): boolean | null {
+  return typeof value === "boolean" ? value : null;
 }
 
 function timestampToIso(timestamp: number | null): string | null {

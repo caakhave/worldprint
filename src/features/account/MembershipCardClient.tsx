@@ -2,32 +2,26 @@
 
 import Link from "next/link";
 import { BillingActionsClient } from "@/features/account/BillingActionsClient";
+import { membershipDisplay } from "@/features/account/subscriptionDisplay";
 import { useEntitlement } from "@/features/account/useEntitlement";
-import { planLabel, statusLabel } from "@/lib/account/entitlements";
 
 export function MembershipCardClient() {
   const { entitlement, loading, error, signedIn } = useEntitlement();
   const { capabilities } = entitlement;
-  const isPro = entitlement.plan === "pro";
-  const heading = loading ? "Checking access." : signedIn ? planLabel(entitlement.plan) : "Playing without an account";
+  const membership = membershipDisplay(entitlement, loading);
+  const heading = signedIn || loading ? membership.heading : "Playing without an account";
 
   return (
     <article className="surface account-card membership-card" aria-label="Membership plan">
       <div>
         <p className="eyebrow">Membership</p>
         <h2>{heading}</h2>
-        <p>
-          {isPro
-            ? "Full atlas access is active on this account."
-            : signedIn
-              ? "Your free account can save stats and play the daily while the paid atlas takes shape."
-              : "You can play today and keep local stats in this browser."}
-        </p>
+        <p>{membership.body}</p>
       </div>
       <dl className="account-status-list account-mini-status">
         <div>
           <dt>Status</dt>
-          <dd>{loading ? "Checking" : statusLabel(entitlement.status)}</dd>
+          <dd>{loading ? "Checking" : membership.detail}</dd>
         </div>
         <div>
           <dt>Practice</dt>

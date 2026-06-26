@@ -67,6 +67,7 @@ create table if not exists public.entitlements (
   stripe_subscription_id text,
   stripe_price_id text,
   stripe_status text,
+  cancel_at_period_end boolean,
   current_period_end timestamptz,
   updated_at timestamptz not null default now()
 );

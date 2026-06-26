@@ -42,6 +42,7 @@ Deno.serve(async (request) => {
       stripe_subscription_id: idValue(session.subscription),
       stripe_price_id: null,
       stripe_status: "active",
+      cancel_at_period_end: null,
       current_period_end: null
     });
     return json({ received: true });
@@ -65,6 +66,7 @@ Deno.serve(async (request) => {
       stripe_subscription_id: subscription.id,
       stripe_price_id: subscription.items.data[0]?.price.id ?? null,
       stripe_status: subscription.status,
+      cancel_at_period_end: subscription.cancel_at_period_end,
       current_period_end: periodEndToIso(subscription.current_period_end)
     });
     return json({ received: true });
@@ -84,6 +86,7 @@ Deno.serve(async (request) => {
       stripe_subscription_id: subscriptionId,
       stripe_price_id: null,
       stripe_status: "past_due",
+      cancel_at_period_end: null,
       current_period_end: null
     });
     return json({ received: true });
