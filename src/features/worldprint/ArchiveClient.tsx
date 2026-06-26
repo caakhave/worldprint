@@ -3,13 +3,16 @@
 import Link from "next/link";
 import { useEffect, useMemo, useState } from "react";
 import { useEntitlement } from "@/features/account/useEntitlement";
+import { useSupabaseAccount } from "@/features/account/useSupabaseAccount";
 import { archiveDateRange, publicArchiveEntries, visibleArchiveEntries } from "@/features/worldprint/archiveAccess";
 import { PlayerStatsPanel } from "@/features/worldprint/PlayerStatsPanel";
+import { fetchRemoteRunSummaries } from "@/lib/account/sync";
 import { loadDailyIndex } from "@/lib/content/loaders";
 import type { DailyIndex, DailyIndexEntry } from "@/lib/content/schemas";
 import { challengeNumber, utcDateKey } from "@/lib/game/daily";
 import { TIER_CONFIGS } from "@/lib/game/scoring";
 import { defaultPersistedState, loadPersistedState, type CompletionHistory, type PersistedState } from "@/lib/persistence/storage";
+import type { GameRunRow } from "@/lib/supabase/database";
 
 function mixLabel(mix: Record<string, number>) {
   return Object.entries(mix)
@@ -21,8 +24,23 @@ function completionForDate(store: PersistedState, dateKey: string): CompletionHi
   return store.dailyHistoryByDate[dateKey] ?? store.archiveHistoryByDate[dateKey] ?? null;
 }
 
-function ArchiveCard({ entry, todayKey, completion }: { entry: DailyIndexEntry; todayKey: string; completion: CompletionHistory | null }) {
+function ArchiveCard({
+  entry,
+  todayKey,
+  completion,
+  accountRun
+}: {
+  entry: DailyIndexEntry;
+  todayKey: string;
+  completion: CompletionHistory | null;
+  accountRun: GameRunRow | null;
+}) {
   const isToday = entry.date === todayKey;
+  const status = completion
+    ? `${completion.bestScore.toLocaleString("en-US")} points · ${TIER_CONFIGS[completion.tier].shortLabel}${accountRun ? " · account saved" : " · local"}`
+    : accountRun
+      ? `${accountRun.total_score.toLocaleString("en-US")} points · saved to account`
+      : "Unplayed on this browser";
   return (
     <article className="archive-card" data-today={isToday ? "true" : "false"} data-completed={completion ? "true" : "false"}>
       <div className="archive-card-heading">
@@ -43,11 +61,7 @@ function ArchiveCard({ entry, todayKey, completion }: { entry: DailyIndexEntry; 
         </div>
         <div>
           <dt>Status</dt>
-          <dd>
-            {completion
-              ? `${completion.bestScore.toLocaleString("en-US")} points · ${TIER_CONFIGS[completion.tier].shortLabel}`
-              : "Unplayed on this browser"}
-          </dd>
+          <dd>{status}</dd>
         </div>
       </dl>
       <Link className={completion ? "button-secondary" : "button"} href={`/play/worldprint/${entry.date}`}>
@@ -60,9 +74,11 @@ function ArchiveCard({ entry, todayKey, completion }: { entry: DailyIndexEntry; 
 export function ArchiveClient() {
   const [index, setIndex] = useState<DailyIndex | null>(null);
   const [store, setStore] = useState<PersistedState>(() => defaultPersistedState());
+  const [accountRuns, setAccountRuns] = useState<GameRunRow[]>([]);
   const [error, setError] = useState("");
   const todayKey = utcDateKey(new Date());
   const { entitlement, loading: entitlementLoading, signedIn } = useEntitlement();
+  const account = useSupabaseAccount();
 
   useEffect(() => {
     setStore(loadPersistedState());
@@ -70,6 +86,23 @@ export function ArchiveClient() {
       .then(setIndex)
       .catch((loadError: unknown) => setError(loadError instanceof Error ? loadError.message : "Could not load past games"));
   }, []);
+
+  useEffect(() => {
+    let cancelled = false;
+    async function loadAccountRuns() {
+      if (!account.client || !account.user) {
+        setAccountRuns([]);
+        return;
+      }
+      const result = await fetchRemoteRunSummaries(account.client, account.user.id);
+      if (cancelled) return;
+      setAccountRuns(result.error ? [] : result.data);
+    }
+    void loadAccountRuns();
+    return () => {
+      cancelled = true;
+    };
+  }, [account.client, account.user]);
 
   const entries = useMemo(() => {
     if (!index) return [];
@@ -81,6 +114,15 @@ export function ArchiveClient() {
   );
   const publicRange = archiveDateRange(entries);
   const hiddenCount = Math.max(0, entries.length - visibleEntries.length);
+  const accountRunByDate = useMemo(() => {
+    const byDate = new Map<string, GameRunRow>();
+    for (const run of accountRuns) {
+      if ((run.mode === "daily" || run.mode === "archive") && run.daily_date && !byDate.has(run.daily_date)) {
+        byDate.set(run.daily_date, run);
+      }
+    }
+    return byDate;
+  }, [accountRuns]);
 
   if (error) {
     return (
@@ -146,7 +188,13 @@ export function ArchiveClient() {
       <PlayerStatsPanel store={store} compact />
       <div className="archive-grid" aria-label="Past Mystery Map Dailies">
         {visibleEntries.map((entry) => (
-          <ArchiveCard key={entry.date} entry={entry} todayKey={todayKey} completion={completionForDate(store, entry.date)} />
+          <ArchiveCard
+            key={entry.date}
+            entry={entry}
+            todayKey={todayKey}
+            completion={completionForDate(store, entry.date)}
+            accountRun={accountRunByDate.get(entry.date) ?? null}
+          />
         ))}
       </div>
     </section>

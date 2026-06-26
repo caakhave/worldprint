@@ -1,19 +1,19 @@
 # Production Spine v0
 
-Can You Geo? is still a play-first geography game. Production Spine v0 added the account shell; Supabase Auth Sync v1 wires that shell to real Supabase magic-link sign-in and aggregate stat sync. Entitlements v0 adds real Free/Pro access rules and soft UI gates. Stripe Billing v1 adds subscription Checkout, Billing Portal, and verified webhooks through Supabase Edge Functions without changing gameplay or requiring accounts before play.
+Can You Geo? is still a play-first geography game. Production Spine v0 added the account shell; Supabase Auth Sync v1 wires that shell to real Supabase magic-link sign-in and account stat sync. Entitlements v0 adds real Free/Pro access rules and soft UI gates. Stripe Billing v1 adds subscription Checkout, Billing Portal, and verified webhooks through Supabase Edge Functions without changing gameplay or requiring accounts before play. Saved Stats / Cloud Sync v1 adds completed-run summaries for signed-in accounts.
 
 ## What Exists Now
 
 - `/sign-in` starts Supabase magic-link email sign-in when public Supabase env vars are configured.
 - `/auth/callback` finishes the browser-side magic-link session and ensures a profile row exists.
 - `/account` shows signed-in/signed-out state, profile basics, sign-out, local stats, and sync controls.
-- `/account/stats` prefers Supabase `user_stats` when signed in and falls back to local browser stats when signed out.
+- `/account/stats` prefers Supabase `game_runs` account history when signed in and falls back to local browser stats when signed out.
 - `/upgrade` explains Free versus Pro access and opens Stripe Checkout through a trusted Supabase Edge Function when configured.
 - Account UI reads `entitlements` when signed in and treats missing rows as Free.
 - Billing Portal access opens through a trusted Supabase Edge Function for signed-in Stripe customers.
 - Stripe webhooks verify signatures and update `entitlements` using service-role credentials.
 - Guests and Free accounts see limited Practice/Past Games messaging; Pro rows unlock full-atlas labels.
-- Completed results include a “Save your score and streak” prompt after play.
+- Completed results save locally first, then try to save signed-in Daily, Past Games, and Challenge summaries to Supabase.
 - Anonymous/local stats remain in `worldprint:v1` localStorage and are derived from existing completion history.
 - If Supabase env vars are missing, account pages render a disabled setup state instead of crashing.
 
@@ -72,28 +72,50 @@ It creates:
 - `entitlements`
 - RLS policies so signed-in players can read their own private profile, runs, results, stats, and entitlement.
 
+If the Supabase project already has an earlier version of these tables, apply the Cloud Sync v1 additions before testing signed-in run sync:
+
+```sql
+alter table public.game_runs add column if not exists client_run_key text;
+alter table public.game_runs add column if not exists best_round_score integer not null default 0;
+alter table public.round_results alter column indicator_id drop not null;
+
+do $$
+begin
+  alter table public.game_runs add constraint game_runs_user_client_run_key_unique unique (user_id, client_run_key);
+exception
+  when duplicate_object then null;
+end $$;
+
+grant select, insert, update on public.game_runs to authenticated;
+grant select, insert, update on public.round_results to authenticated;
+```
+
+Also add the `game_runs_update_own` and `round_results_update_own` RLS policies from `docs/supabase/production_spine_v0.sql` if they are not already present.
+
 For Auth, enable email magic links in Supabase. Add your local and deployed origins to Supabase Auth URL configuration, including:
 
 - `http://localhost:3000/auth/callback`
 - `https://your-domain.example/auth/callback`
 
-## Auth Sync v1 Scope
+## Auth Sync v1 And Saved Stats Scope
 
 Implemented:
 
 - email magic-link sign-in
 - browser-side `/auth/callback` session exchange
 - profile upsert into `profiles`
-- local aggregate stat sync into `user_stats`
+- newly completed Daily, Practice, Past Games, and Challenge summaries into `game_runs`
+- per-round scores and clue-use summaries into `round_results` when the completed run is available
+- imported local history summaries into `game_runs`, with nullable `round_results.indicator_id` for older local rows that did not store indicator ids
+- refreshed aggregate account stats into `user_stats`
 - local sync marker to avoid repeated sync attempts for the same local history snapshot
 - signed-in account display and sign-out
 
 Not implemented yet:
 
-- syncing individual completed runs into `game_runs`
-- syncing per-round details into `round_results`
 - server-side session reads in static pages
-- cross-device conflict resolution beyond conservative aggregate max-merge
+- deep cross-device conflict resolution beyond stable run-key dedupe
+- import of older Practice history; previous local Practice runs were not permanently stored before Cloud Sync v1
 
 ## Entitlements v0 And Stripe Billing v1 Scope
 
@@ -114,7 +136,6 @@ Implemented:
 
 Not implemented yet:
 
-- run-level cloud history
 - Challenge history UI
 - hard blocking of today&apos;s Daily
 - additional pricing tiers

@@ -4,14 +4,15 @@ import Link from "next/link";
 import { useEffect, useMemo, useState } from "react";
 import { PlayerStatsPanel } from "@/features/worldprint/PlayerStatsPanel";
 import {
-  fetchRemoteStats,
-  syncLocalStatsToSupabase,
+  buildAccountStatsFromCloudRuns,
+  fetchRemoteRunSummaries,
+  syncLocalRunsToSupabase,
   syncMarkerKey,
-  statsSyncSignature
+  statsSyncSignature,
+  type AccountCloudStats
 } from "@/lib/account/sync";
 import { buildLocalPlayerStats } from "@/lib/persistence/playerStats";
 import { defaultPersistedState, loadPersistedState, type PersistedState } from "@/lib/persistence/storage";
-import type { UserStatsRow } from "@/lib/supabase/database";
 import { useSupabaseAccount } from "@/features/account/useSupabaseAccount";
 
 function formatNumber(value: number | null | undefined): string {
@@ -19,7 +20,7 @@ function formatNumber(value: number | null | undefined): string {
   return value.toLocaleString("en-US");
 }
 
-function AccountRemoteStatsPanel({ stats }: { stats: UserStatsRow }) {
+function AccountRemoteStatsPanel({ stats }: { stats: AccountCloudStats }) {
   return (
     <section className="stats-panel surface player-stats-panel account-remote-stats" aria-label="Your stats">
       <div className="player-stats-heading">
@@ -27,6 +28,10 @@ function AccountRemoteStatsPanel({ stats }: { stats: UserStatsRow }) {
         <h2>Saved to your account.</h2>
       </div>
       <dl className="summary-stats player-stats-grid">
+        <div>
+          <dt>Runs saved</dt>
+          <dd>{formatNumber(stats.games_completed)}</dd>
+        </div>
         <div>
           <dt>Maps played</dt>
           <dd>{formatNumber(stats.maps_played)}</dd>
@@ -52,8 +57,24 @@ function AccountRemoteStatsPanel({ stats }: { stats: UserStatsRow }) {
           <dd>{formatNumber(stats.current_daily_streak)}</dd>
         </div>
       </dl>
+      {stats.recent_runs.length ? (
+        <div className="player-stats-recent">
+          <strong>Recent account saves</strong>
+          <ul>
+            {stats.recent_runs.map((run) => (
+              <li key={run.client_run_key ?? `${run.mode}:${run.completed_at}`}>
+                <span>{run.label}</span>
+                <small>
+                  {formatNumber(run.total_score)} points · {run.maps_played} maps
+                </small>
+              </li>
+            ))}
+          </ul>
+        </div>
+      ) : null}
       <p className="player-stats-note">
-        Account sync is active. Last Daily saved: {stats.last_played_daily_date ?? "None yet"}.
+        Account sync is active. Daily: {stats.daily_games}. Practice: {stats.practice_games}. Past Games: {stats.archive_games}.
+        Challenges: {stats.challenge_games}.
       </p>
     </section>
   );
@@ -62,7 +83,7 @@ function AccountRemoteStatsPanel({ stats }: { stats: UserStatsRow }) {
 export function AccountStatsClient() {
   const [store, setStore] = useState<PersistedState>(() => defaultPersistedState());
   const [storeLoaded, setStoreLoaded] = useState(false);
-  const [remoteStats, setRemoteStats] = useState<UserStatsRow | null>(null);
+  const [remoteStats, setRemoteStats] = useState<AccountCloudStats | null>(null);
   const [remoteLoading, setRemoteLoading] = useState(false);
   const [syncStatus, setSyncStatus] = useState<string>("");
   const [syncError, setSyncError] = useState<string>("");
@@ -85,12 +106,12 @@ export function AccountStatsClient() {
         return;
       }
       setRemoteLoading(true);
-      const result = await fetchRemoteStats(client, user.id);
+      const result = await fetchRemoteRunSummaries(client, user.id);
       if (cancelled) return;
       if (result.error) {
         setSyncError(result.error);
       } else {
-        setRemoteStats(result.data);
+        setRemoteStats(result.data.length ? buildAccountStatsFromCloudRuns(user.id, result.data) : null);
       }
       setRemoteLoading(false);
     }
@@ -125,13 +146,7 @@ export function AccountStatsClient() {
     setSyncing(true);
     setSyncError("");
     setSyncStatus("");
-    const latestRemote = await fetchRemoteStats(client, user.id);
-    if (latestRemote.error) {
-      setSyncing(false);
-      setSyncError(latestRemote.error);
-      return;
-    }
-    const result = await syncLocalStatsToSupabase(client, user.id, store, latestRemote.data);
+    const result = await syncLocalRunsToSupabase(client, user.id, store);
     setSyncing(false);
     if (result.error || !result.data) {
       setSyncError(result.error ?? "Could not save stats.");
@@ -139,7 +154,7 @@ export function AccountStatsClient() {
     }
     setRemoteStats(result.data);
     window.localStorage.setItem(markerKey, result.signature);
-    setSyncStatus("Saved this device's stats to your account.");
+    setSyncStatus(`Saved ${result.syncedRuns} completed run${result.syncedRuns === 1 ? "" : "s"} from this device to your account.`);
   }
 
   return (
@@ -157,11 +172,11 @@ export function AccountStatsClient() {
           <>
             <h2>Save this device&apos;s stats to your account.</h2>
             <p>
-              This copies this browser&apos;s completed Daily, Past Games, and Challenge stats into your account. It does not change scoring
-              or require login to play.
+              This saves completed Daily, Past Games, and Challenge summaries from this browser to your account. Existing account saves are
+              deduped, and local play still works.
             </p>
             <button className="button" type="button" onClick={() => void syncStats()} disabled={syncing || !hasLocalHistory}>
-              {syncing ? "Saving..." : "Save this device's stats"}
+              {syncing ? "Saving..." : "Save completed runs"}
             </button>
           </>
         ) : configured ? (

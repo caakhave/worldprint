@@ -18,6 +18,7 @@ create table if not exists public.game_runs (
   id uuid primary key default gen_random_uuid(),
   user_id uuid references public.profiles(id) on delete cascade,
   anonymous_id text,
+  client_run_key text,
   mode text not null check (mode in ('daily', 'practice', 'archive', 'challenge')),
   game_key text not null default 'worldprint',
   daily_date date,
@@ -27,8 +28,10 @@ create table if not exists public.game_runs (
   total_score integer not null default 0,
   maps_played integer not null default 0,
   correct_count integer not null default 0,
+  best_round_score integer not null default 0,
   completed_at timestamptz,
   created_at timestamptz not null default now(),
+  unique (user_id, client_run_key),
   constraint game_runs_identity_check check (user_id is not null or anonymous_id is not null)
 );
 
@@ -36,7 +39,7 @@ create table if not exists public.round_results (
   id uuid primary key default gen_random_uuid(),
   run_id uuid not null references public.game_runs(id) on delete cascade,
   round_index integer not null,
-  indicator_id text not null,
+  indicator_id text,
   guessed_indicator_id text,
   correct boolean not null default false,
   score integer not null default 0,
@@ -74,6 +77,7 @@ create table if not exists public.entitlements (
 
 create index if not exists game_runs_user_id_idx on public.game_runs(user_id);
 create index if not exists game_runs_anonymous_id_idx on public.game_runs(anonymous_id);
+create index if not exists game_runs_client_run_key_idx on public.game_runs(client_run_key);
 create index if not exists game_runs_daily_date_idx on public.game_runs(daily_date);
 create index if not exists round_results_run_id_idx on public.round_results(run_id);
 create index if not exists entitlements_customer_idx on public.entitlements(stripe_customer_id);
@@ -82,8 +86,8 @@ create index if not exists entitlements_price_idx on public.entitlements(stripe_
 
 grant usage on schema public to authenticated, service_role;
 grant select, insert, update on public.profiles to authenticated;
-grant select, insert on public.game_runs to authenticated;
-grant select, insert on public.round_results to authenticated;
+grant select, insert, update on public.game_runs to authenticated;
+grant select, insert, update on public.round_results to authenticated;
 grant select, insert, update on public.user_stats to authenticated;
 grant select on public.entitlements to authenticated;
 grant all privileges on table public.profiles to service_role;
@@ -129,6 +133,13 @@ create policy "game_runs_insert_own"
   to authenticated
   with check ((select auth.uid()) = user_id);
 
+drop policy if exists "game_runs_update_own" on public.game_runs;
+create policy "game_runs_update_own"
+  on public.game_runs for update
+  to authenticated
+  using ((select auth.uid()) = user_id)
+  with check ((select auth.uid()) = user_id);
+
 drop policy if exists "round_results_select_own" on public.round_results;
 create policy "round_results_select_own"
   on public.round_results for select
@@ -146,6 +157,27 @@ drop policy if exists "round_results_insert_own" on public.round_results;
 create policy "round_results_insert_own"
   on public.round_results for insert
   to authenticated
+  with check (
+    exists (
+      select 1
+      from public.game_runs
+      where game_runs.id = round_results.run_id
+        and game_runs.user_id = (select auth.uid())
+    )
+  );
+
+drop policy if exists "round_results_update_own" on public.round_results;
+create policy "round_results_update_own"
+  on public.round_results for update
+  to authenticated
+  using (
+    exists (
+      select 1
+      from public.game_runs
+      where game_runs.id = round_results.run_id
+        and game_runs.user_id = (select auth.uid())
+    )
+  )
   with check (
     exists (
       select 1

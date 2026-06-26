@@ -5,18 +5,20 @@ import { AdvancedStatsGateClient } from "@/features/account/MembershipCardClient
 
 export const metadata: Metadata = {
   title: "Saved Stats",
-  description: "Can You Geo? local and account stats."
+  description: "Can You Geo? local and account-saved stats."
 };
 
 export default function AccountStatsPage() {
   return (
     <section className="account-page account-page-shell page-shell" aria-labelledby="stats-title">
       <div className="account-hero">
-        <p className="eyebrow">Local record</p>
+        <p className="eyebrow">Saved record</p>
         <h1 id="stats-title" className="page-title">
           Your saved stats.
         </h1>
-        <p className="lead">Signed-in players see account stats first. Without an account, completed runs stay saved in this browser.</p>
+        <p className="lead">
+          Signed-in players see account-saved runs first. Without an account, completed runs stay saved in this browser.
+        </p>
       </div>
 
       <div className="account-grid account-stats-grid">
@@ -30,7 +32,7 @@ export default function AccountStatsPage() {
             </li>
             <li>
               <strong>Past Games</strong>
-              <span>Replayed days save local best scores without changing the live streak.</span>
+              <span>Replayed days can be saved to your account without changing the live streak.</span>
             </li>
             <li>
               <strong>Challenges</strong>

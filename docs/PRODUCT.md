@@ -46,11 +46,11 @@ Supabase authentication and Stripe Billing are now wired for account sync and Pr
 
 ## Local Player Stats
 
-Can You Geo? now shows a lightweight **Your stats** surface after completed games and on Past Games. These stats are saved in this browser only and are derived from validated local gameplay history.
+Can You Geo? now shows a lightweight **Your stats** surface after completed games and on Past Games. Guests keep stats in this browser. Signed-in players can save completed-run summaries and account stats to Supabase.
 
 Current local stats include maps played, Daily runs completed, correct answers, games completed, total points, average round score, best Daily score, best round score, current streak, Daily/Past Games/Challenge counts, and recent local performance. Daily completions count once per date/run, Past Games count as local replays by date, and Challenges count by challenge ID. Practice completion history is not separately tracked yet, so Practice does not contribute to the local stats panel beyond the active completed result.
 
-There is now Supabase-backed magic-link sign-in for “Save your score and streak.” Signed-in players can sync aggregate local stats to `user_stats`; Stripe webhooks can grant Pro entitlements. Run-level cloud history, public profiles, leaderboards, backend gameplay APIs, and cross-device conflict resolution are not part of this slice.
+There is now Supabase-backed magic-link sign-in for “Save your score and streak.” Signed-in players sync newly completed Daily, Practice, Past Games, and Challenge summaries to `game_runs`, round summaries to `round_results`, and aggregate account stats to `user_stats`; Stripe webhooks can grant Pro entitlements. Older local Practice runs cannot be imported because they were not permanently stored. Public profiles, leaderboards, backend gameplay APIs, and deep cross-device conflict resolution are not part of this slice.
 
 ## Non-Goals For This Slice
 

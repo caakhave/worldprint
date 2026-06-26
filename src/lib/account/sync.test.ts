@@ -1,8 +1,18 @@
 import { describe, expect, it } from "vitest";
-import { mergeStatsSnapshot, statsSnapshotForUser, statsSyncSignature } from "@/lib/account/sync";
+import {
+  buildAccountStatsFromCloudRuns,
+  clientRunKeyFor,
+  mergeStatsSnapshot,
+  syncCompletedRunForAccount,
+  syncLocalRunsToSupabase,
+  statsSnapshotForUser,
+  statsSyncSignature
+} from "@/lib/account/sync";
+import { createRun, reduceRun } from "@/lib/game/state";
 import type { LocalPlayerStats } from "@/lib/persistence/playerStats";
-import { defaultPersistedState } from "@/lib/persistence/storage";
-import type { UserStatsRow } from "@/lib/supabase/database";
+import { defaultPersistedState, recordRunCompletion } from "@/lib/persistence/storage";
+import type { CanYouGeoSupabaseClient } from "@/lib/supabase/client";
+import type { GameRunRow, RoundResultRow, UserStatsRow } from "@/lib/supabase/database";
 
 const localStats: LocalPlayerStats = {
   mapsPlayed: 5,
@@ -86,4 +96,210 @@ describe("account stats sync helpers", () => {
     expect(statsSyncSignature(state)).toBe(statsSyncSignature(state));
     expect(statsSyncSignature(state)).not.toBe(statsSyncSignature(defaultPersistedState()));
   });
+
+  it("uses stable cloud run keys for deduped saved runs", () => {
+    expect(clientRunKeyFor("daily", "2026-06-24", "daily-run")).toBe("worldprint:daily:2026-06-24");
+    expect(clientRunKeyFor("archive", "2026-06-24", "archive-run")).toBe("worldprint:archive:2026-06-24");
+    expect(clientRunKeyFor("challenge", "2026-06-24", "challenge-run")).toBe("worldprint:challenge:challenge-run");
+    expect(clientRunKeyFor("practice", "2026-06-24", "practice-run")).toBe("worldprint:practice:practice-run");
+  });
+
+  it("skips cloud save when the player is signed out", async () => {
+    let run = createRun({
+      mode: "daily",
+      dateKey: "2026-06-24",
+      contentVersion: "test",
+      tier: "analyst",
+      roundIds: [{ roundId: "round-1", correctIndicatorId: "indicator-1" }]
+    });
+    run = reduceRun(run, { type: "submit", answerId: "indicator-1", label: "Indicator", correct: true });
+    run = reduceRun(run, { type: "nextRound" });
+
+    await expect(syncCompletedRunForAccount({ client: null, userId: null, run })).resolves.toEqual({
+      status: "skipped",
+      reason: "signed-out"
+    });
+  });
+
+  it("saves a signed-in completed run and refreshes account stats", async () => {
+    const mock = createMockSyncClient();
+    let run = createRun({
+      mode: "daily",
+      dateKey: "2026-06-24",
+      contentVersion: "test",
+      tier: "analyst",
+      roundIds: [{ roundId: "round-1", correctIndicatorId: "indicator-1" }]
+    });
+    run = reduceRun(run, { type: "submit", answerId: "indicator-1", label: "Indicator", correct: true });
+    run = reduceRun(run, { type: "nextRound" });
+
+    const result = await syncCompletedRunForAccount({ client: mock.client, userId: "user-1", run, completedAt: "2026-06-24T12:00:00.000Z" });
+
+    expect(result.status).toBe("saved");
+    expect(mock.gameRuns).toHaveLength(1);
+    expect(mock.gameRuns[0]).toMatchObject({
+      user_id: "user-1",
+      client_run_key: "worldprint:daily:2026-06-24",
+      maps_played: 1,
+      correct_count: 1,
+      best_round_score: 1000
+    });
+    expect(mock.roundResults).toHaveLength(1);
+    expect(mock.roundResults[0]).toMatchObject({
+      indicator_id: "indicator-1",
+      score: 1000,
+      correct: true
+    });
+    expect(mock.userStats?.maps_played).toBe(1);
+  });
+
+  it("returns a non-blocking error when cloud save fails", async () => {
+    const mock = createMockSyncClient({ failGameRuns: true });
+    const run = {
+      ...createRun({
+        mode: "daily",
+        dateKey: "2026-06-24",
+        contentVersion: "test",
+        tier: "analyst",
+        roundIds: [{ roundId: "round-1", correctIndicatorId: "indicator-1" }]
+      }),
+      status: "complete" as const
+    };
+
+    await expect(syncCompletedRunForAccount({ client: mock.client, userId: "user-1", run })).resolves.toMatchObject({
+      status: "error",
+      clientRunKey: "worldprint:daily:2026-06-24"
+    });
+  });
+
+  it("dedupes local imports by stable client run key", async () => {
+    const mock = createMockSyncClient();
+    let run = createRun({
+      mode: "archive",
+      dateKey: "2026-06-20",
+      contentVersion: "test",
+      tier: "analyst",
+      roundIds: [{ roundId: "round-1", correctIndicatorId: "indicator-1" }]
+    });
+    run = reduceRun(run, { type: "submit", answerId: "indicator-1", label: "Indicator", correct: true });
+    run = reduceRun(run, { type: "nextRound" });
+    const state = recordRunCompletion(defaultPersistedState(), run);
+
+    await syncLocalRunsToSupabase(mock.client, "user-1", state);
+    await syncLocalRunsToSupabase(mock.client, "user-1", state);
+
+    expect(mock.gameRuns).toHaveLength(1);
+    expect(buildAccountStatsFromCloudRuns("user-1", mock.gameRuns).games_completed).toBe(1);
+  });
 });
+
+function createMockSyncClient(options: { failGameRuns?: boolean } = {}) {
+  const gameRuns: GameRunRow[] = [];
+  const roundResults: RoundResultRow[] = [];
+  let userStats: UserStatsRow | null = null;
+  let nextId = 1;
+
+  const client = {
+    from(table: string) {
+      if (table === "game_runs") {
+        return {
+          upsert(row: Partial<GameRunRow>) {
+            return {
+              select() {
+                return {
+                  async single() {
+                    if (options.failGameRuns) return { data: null, error: { message: "game_runs failed" } };
+                    const key = row.client_run_key ?? `missing-${nextId}`;
+                    const existingIndex = gameRuns.findIndex((item) => item.user_id === row.user_id && item.client_run_key === key);
+                    const nextRow: GameRunRow = {
+                      id: existingIndex >= 0 ? gameRuns[existingIndex].id : `run-${nextId++}`,
+                      user_id: row.user_id ?? null,
+                      anonymous_id: row.anonymous_id ?? null,
+                      client_run_key: key,
+                      mode: row.mode ?? "daily",
+                      game_key: row.game_key ?? "worldprint",
+                      daily_date: row.daily_date ?? null,
+                      challenge_code: row.challenge_code ?? null,
+                      content_version: row.content_version ?? null,
+                      tier: row.tier ?? null,
+                      total_score: row.total_score ?? 0,
+                      maps_played: row.maps_played ?? 0,
+                      correct_count: row.correct_count ?? 0,
+                      best_round_score: row.best_round_score ?? 0,
+                      completed_at: row.completed_at ?? null,
+                      created_at: row.created_at ?? "2026-06-24T12:00:00.000Z"
+                    };
+                    if (existingIndex >= 0) gameRuns[existingIndex] = nextRow;
+                    else gameRuns.push(nextRow);
+                    return { data: { id: nextRow.id, client_run_key: nextRow.client_run_key }, error: null };
+                  }
+                };
+              }
+            };
+          },
+          select() {
+            return {
+              eq() {
+                return {
+                  async order() {
+                    return { data: gameRuns, error: null };
+                  }
+                };
+              }
+            };
+          }
+        };
+      }
+      if (table === "round_results") {
+        return {
+          async upsert(rows: Array<Partial<RoundResultRow>>) {
+            for (const row of rows) {
+              const existingIndex = roundResults.findIndex((item) => item.run_id === row.run_id && item.round_index === row.round_index);
+              const nextRow: RoundResultRow = {
+                id: existingIndex >= 0 ? roundResults[existingIndex].id : `round-result-${roundResults.length + 1}`,
+                run_id: row.run_id ?? "run-unknown",
+                round_index: row.round_index ?? 0,
+                indicator_id: row.indicator_id ?? null,
+                guessed_indicator_id: row.guessed_indicator_id ?? null,
+                correct: row.correct ?? false,
+                score: row.score ?? 0,
+                investigations_used: row.investigations_used ?? 0,
+                unit_clue_used: row.unit_clue_used ?? false,
+                created_at: row.created_at ?? "2026-06-24T12:00:00.000Z"
+              };
+              if (existingIndex >= 0) roundResults[existingIndex] = nextRow;
+              else roundResults.push(nextRow);
+            }
+            return { error: null };
+          }
+        };
+      }
+      if (table === "user_stats") {
+        return {
+          upsert(row: UserStatsRow) {
+            return {
+              select() {
+                return {
+                  async single() {
+                    userStats = row;
+                    return { data: row, error: null };
+                  }
+                };
+              }
+            };
+          }
+        };
+      }
+      throw new Error(`Unexpected table ${table}`);
+    }
+  } as unknown as CanYouGeoSupabaseClient;
+
+  return {
+    client,
+    gameRuns,
+    roundResults,
+    get userStats() {
+      return userStats;
+    }
+  };
+}

@@ -63,9 +63,9 @@ Read the world.
 
 ## Local Stats
 
-Player stats are local-only in this static build. The game derives them from validated browser history: Daily completions count once, Past Games count as local replays by date, and Challenges count by challenge ID. The panel includes maps played, Daily runs completed, correct answers, games completed, total points, average round score, best Daily, best round, current streak, game-type breakdown, and recent local performance.
+Guests keep player stats locally in this browser. Signed-in players can sync completed Daily, Practice, Past Games, and Challenge summaries to their account. The game derives stats from validated browser history and account-saved runs: Daily completions count once, Past Games count by date, and Challenges count by challenge ID. The panel includes maps played, Daily runs completed, correct answers, games completed, total points, average round score, best Daily, best round, current streak, game-type breakdown, and recent local performance.
 
-Practice completion history is not separately tracked yet. Supabase account sync can save aggregate stats, but there is no run-level cloud history, backend gameplay API, public profile, or leaderboard.
+Older Practice completion history cannot be imported because previous local Practice runs were not permanently stored. Newly completed signed-in Practice runs can save account summaries. There is no backend gameplay API, public profile, leaderboard, or deep cross-device conflict resolution.
 
 ## Future Calibration Questions
 

@@ -3,11 +3,12 @@
 import { Compass, Copy, Lightbulb, Search, Share2, Shuffle } from "lucide-react";
 import Link from "next/link";
 import { useSearchParams } from "next/navigation";
-import { useCallback, useEffect, useMemo, useState } from "react";
+import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import { EntryAtlasVisual } from "@/features/worldprint/EntryAtlasVisual";
 import { TierSelector } from "@/features/worldprint/TierSelector";
 import { PlayerStatsPanel } from "@/features/worldprint/PlayerStatsPanel";
 import { useEntitlement } from "@/features/account/useEntitlement";
+import { useSupabaseAccount } from "@/features/account/useSupabaseAccount";
 import {
   loadEntityRegistry,
   loadIndicator,
@@ -51,6 +52,7 @@ import {
 } from "@/lib/persistence/storage";
 import { countryNameByIso3, formatValue } from "@/lib/geo/format";
 import { unitClueForIndicator } from "@/lib/geo/unitClue";
+import { clientRunKeyForRun, syncCompletedRunForAccount } from "@/lib/account/sync";
 import { MapLegend } from "@/components/MapLegend";
 import { WorldMap } from "@/components/WorldMap";
 
@@ -130,6 +132,7 @@ export function WorldprintClient({ dateOverride, entryMode = "standard" }: World
   const isArchiveDate = Boolean(dateOverride && todayKey !== actualTodayKey);
   const challengeCode = entryMode === "challenge" ? searchParams.get("c") : null;
   const { entitlement, loading: entitlementLoading, signedIn } = useEntitlement();
+  const account = useSupabaseAccount();
   const [data, setData] = useState<LoadedData | null>(null);
   const [loadError, setLoadError] = useState<string | null>(null);
   const [store, setStore] = useState<PersistedState>(() => defaultPersistedState());
@@ -144,6 +147,8 @@ export function WorldprintClient({ dateOverride, entryMode = "standard" }: World
   const [practiceSalt, setPracticeSalt] = useState("starter");
   const [practiceSetRoundIds, setPracticeSetRoundIds] = useState<string[]>([]);
   const [practiceSetStatus, setPracticeSetStatus] = useState<"idle" | "ready">("idle");
+  const [cloudSaveStatus, setCloudSaveStatus] = useState("");
+  const cloudSaveAttempts = useRef(new Set<string>());
 
   useEffect(() => {
     const persisted = loadPersistedState();
@@ -217,6 +222,26 @@ export function WorldprintClient({ dateOverride, entryMode = "standard" }: World
       return next;
     });
   }, [run]);
+
+  useEffect(() => {
+    if (!run || run.status !== "complete") return;
+    const clientRunKey = clientRunKeyForRun(run);
+    if (!clientRunKey) return;
+    if (!account.client || !account.user) {
+      setCloudSaveStatus("Saved locally in this browser. Sign in to save this run to your account.");
+      return;
+    }
+    if (cloudSaveAttempts.current.has(clientRunKey)) return;
+    cloudSaveAttempts.current.add(clientRunKey);
+    setCloudSaveStatus("Saving this run to your account...");
+    void syncCompletedRunForAccount({ client: account.client, userId: account.user.id, run }).then((result) => {
+      if (result.status === "saved") {
+        setCloudSaveStatus("Saved to your account.");
+      } else if (result.status === "error") {
+        setCloudSaveStatus("Saved locally. Account sync will try again from your stats page.");
+      }
+    });
+  }, [account.client, account.user, run]);
 
   const currentPhase = run ? run.rounds[run.currentRoundIndex]?.phase : null;
   const runStatus = run?.status ?? null;
@@ -647,7 +672,17 @@ export function WorldprintClient({ dateOverride, entryMode = "standard" }: World
   }
 
   if (run.status === "complete") {
-    return <CompletionSummary run={run} store={store} onBack={() => setRun(null)} shareStatus={shareStatus} setShareStatus={setShareStatus} />;
+    return (
+      <CompletionSummary
+        run={run}
+        store={store}
+        onBack={() => setRun(null)}
+        shareStatus={shareStatus}
+        setShareStatus={setShareStatus}
+        cloudSaveStatus={cloudSaveStatus}
+        signedIn={signedIn}
+      />
+    );
   }
 
   const roundState = activeRound(run);
@@ -1154,13 +1189,17 @@ function CompletionSummary({
   store,
   onBack,
   shareStatus,
-  setShareStatus
+  setShareStatus,
+  cloudSaveStatus,
+  signedIn
 }: {
   run: RunState;
   store: PersistedState;
   onBack: () => void;
   shareStatus: string;
   setShareStatus: (value: string) => void;
+  cloudSaveStatus: string;
+  signedIn: boolean;
 }) {
   const shareText = buildShareText(run);
   const challengeCode = encodeChallenge(challengePayloadFromRun(run));
@@ -1244,12 +1283,21 @@ function CompletionSummary({
         <section className="account-save-card surface" aria-label="Save your progress">
           <div>
             <p className="eyebrow">Save progress</p>
-            <h2>Save your score and streak.</h2>
-            <p>Your result is saved in this browser. A free account can save aggregate stats and streaks to your account.</p>
+            <h2>{signedIn ? "Account save is on." : "Save your score and streak."}</h2>
+            <p>
+              {signedIn
+                ? "Your result is saved locally first. Completed-run summaries sync to your account when the connection is available."
+                : "Your result is saved in this browser. A free account can save completed runs, stats, and streaks to your account."}
+            </p>
+            {cloudSaveStatus ? (
+              <p className="status-live" role="status">
+                {cloudSaveStatus}
+              </p>
+            ) : null}
           </div>
           <div className="button-row">
-            <Link className="button" href="/sign-in">
-              Create a free account
+            <Link className="button" href={signedIn ? "/account/stats" : "/sign-in"}>
+              {signedIn ? "View saved stats" : "Create a free account"}
             </Link>
             <Link className="button-secondary" href="/account">
               View account
