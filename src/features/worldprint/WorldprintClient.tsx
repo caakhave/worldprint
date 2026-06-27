@@ -578,7 +578,7 @@ export function WorldprintClient({ dateOverride, entryMode = "standard" }: World
           ? "Past games are open in this public build while account limits are not enforced. Future Pro access will open the full atlas."
           : "Today's public build is open while account limits are not enforced. Future plans will include instant demo play, free Daily play, and paid full atlas access.";
     return (
-      <section className="game-entry page-shell">
+      <section className="game-entry page-shell" data-entry-mode={isArchiveDate ? "archive" : "daily"}>
         <div className="entry-copy">
           <EntryAtlasVisual />
           <p className="eyebrow">{isArchiveDate ? `Past Mystery Map Replay · ${todayKey}` : `Mystery Map Daily #${challengeNumber(todayKey)}`}</p>
@@ -593,6 +593,24 @@ export function WorldprintClient({ dateOverride, entryMode = "standard" }: World
             <span>{accountFactLabel}</span>
             <span>{isArchiveDate ? "Streak stays safe" : "5-map Daily"}</span>
             <span>Practice mode included</span>
+          </div>
+          <div className="entry-lobby-strip" aria-label="Mystery Map lobby preview">
+            <span>
+              <strong>5</strong>
+              Mystery maps
+            </span>
+            <span>
+              <strong>1000</strong>
+              Max per map
+            </span>
+            <span>
+              <strong>-100</strong>
+              Clue spend
+            </span>
+            <span>
+              <strong>Daily</strong>
+              Streak run
+            </span>
           </div>
           <div className="entry-access-note" aria-label="Access model">
             <span>Access model</span>
@@ -614,10 +632,16 @@ export function WorldprintClient({ dateOverride, entryMode = "standard" }: World
                 <Compass size={18} aria-hidden="true" />
                 {dailyLabel}
               </button>
+              <a className="button-secondary" href="#practice-atlas">
+                Practice atlas
+              </a>
+              <Link className="button-secondary" href="/archive/worldprint">
+                Replay Library
+              </Link>
             </div>
           ) : null}
           {!isArchiveDate ? (
-            <div className="practice-panel" aria-label="Practice options">
+            <div className="practice-panel" id="practice-atlas" aria-label="Practice options">
               <div>
                 <p className="setup-kicker">Optional practice</p>
                 <h2>Practice mode</h2>
@@ -802,9 +826,19 @@ export function WorldprintClient({ dateOverride, entryMode = "standard" }: World
   const topBottom = topAndBottom(indicator, data.countryNames);
   const unitClue = unitClueForIndicator(indicator);
   const runStats = runProgressStats(run);
+  const bankedMapLabel = `${runStats.mapsPlayed} map${runStats.mapsPlayed === 1 ? "" : "s"}`;
+  const possibleTotal = runStats.score + roundState.score;
   const latestRejectedAnswer = roundState.rejectedAnswers.at(-1) ?? null;
   const feedbackText = roundState.feedback ?? "";
   const showIncorrectFeedback = Boolean(latestRejectedAnswer && feedbackText.toLowerCase().includes("incorrect"));
+  const wrongAnswerPenalty = config.scoring.wrongAnswerPenalty;
+  const scoreSpendEvent = latestInvestigation?.cost
+    ? `-${latestInvestigation.cost}`
+    : showIncorrectFeedback
+      ? `-${wrongAnswerPenalty}`
+      : feedbackText.toLowerCase().includes("unit clue revealed")
+      ? `-${config.scoring.unitCluePenalty}`
+      : null;
 
   if (roundState.phase === "solved") {
     return (
@@ -850,22 +884,44 @@ export function WorldprintClient({ dateOverride, entryMode = "standard" }: World
           onCountryClick={(country) => selectCountry(country.iso3)}
           labelledBy="active-map-title"
         />
+        {showIncorrectFeedback ? (
+          <div className="miss-moment-overlay" key={latestRejectedAnswer?.id ?? feedbackText} aria-hidden="true">
+            <span>Miss</span>
+            <strong>Not this map</strong>
+            <em>-{wrongAnswerPenalty} points</em>
+          </div>
+        ) : null}
       </div>
       <div className="play-control-panel surface" aria-label="Round controls">
-        <div className="score-block">
-          <span>Current map points available</span>
-          <strong key={roundState.score} data-score-tone={roundState.score < 0 ? "negative" : "positive"}>
-            {roundState.score}
-          </strong>
-          <small>These points are added to the run total after the map is solved.</small>
+        <div className="score-hud" aria-label="Score status">
+          <div className="score-hud-card score-hud-current">
+            <span>This map</span>
+            <strong key={roundState.score} data-score-tone={roundState.score < 0 ? "negative" : "positive"}>
+              <span className="score-number">{roundState.score}</span> available
+            </strong>
+            <small>Not banked until solved.</small>
+            {scoreSpendEvent ? (
+              <em className="score-spend-flyout" key={`${roundState.score}-${feedbackText}-${latestInvestigation?.iso3 ?? "unit"}`} aria-hidden="true">
+                {scoreSpendEvent}
+              </em>
+            ) : null}
+          </div>
+          <div className="score-hud-card score-hud-banked">
+            <span>Banked</span>
+            <strong>
+              <span className="score-number">{runStats.score}</span> from {bankedMapLabel}
+            </strong>
+          </div>
+          <div className="score-hud-card score-hud-possible">
+            <span>Possible total</span>
+            <strong>
+              <span className="score-number">{possibleTotal}</span> if solved now
+            </strong>
+          </div>
         </div>
-        <div className="run-stats-card" aria-label="Run total so far">
-          <span>Run total so far</span>
+        <div className="run-stats-card" aria-label="Run details">
+          <span>Run details</span>
           <dl>
-            <div>
-              <dt>Banked score</dt>
-              <dd>{formatStat(runStats.score)}</dd>
-            </div>
             <div>
               <dt>Maps played</dt>
               <dd>{runStats.mapsPlayed}</dd>
@@ -965,7 +1021,6 @@ export function WorldprintClient({ dateOverride, entryMode = "standard" }: World
             {roundState.unitClueUsed ? `Unit clue: ${unitClue.text}` : `Reveal unit: -${config.scoring.unitCluePenalty}`}
           </button>
         ) : null}
-        {config.unitClue && !unitClue.eligible ? <p className="unit-clue">{unitClue.text}</p> : null}
         {roundState.unitClueUsed && unitClue.eligible ? <p className="unit-clue">Unit clue: {unitClue.text}</p> : null}
         <div className="answer-box">
           {run.tier === "atlasMaster" ? (
@@ -1043,6 +1098,7 @@ export function WorldprintClient({ dateOverride, entryMode = "standard" }: World
           <div className="answer-feedback-banner" data-result="incorrect" role="status" aria-live="polite">
             <span>Incorrect</span>
             <strong>{latestRejectedAnswer?.label}</strong>
+            <em>-{wrongAnswerPenalty} points</em>
             <p>{feedbackText} Cross it off and read the remaining signal.</p>
           </div>
         ) : null}
@@ -1102,9 +1158,12 @@ function RevealView({
   const scoreText = `${roundState.score >= 0 ? "+" : ""}${roundState.score.toLocaleString("en-US")} points`;
   const missedAnswerCount = roundState.rejectedAnswers.length;
   const resultTone = missedAnswerCount > 0 ? "recovered" : "correct";
+  const revealEyebrow = resultTone === "correct" ? "Correct" : "Answer found";
+  const revealHeadline = resultTone === "correct" ? "Solved" : "Answer found";
   const nextMapNumber = run.currentRoundIndex + 2;
   const finalRoundSolved = run.currentRoundIndex + 1 >= run.rounds.length;
   const hasInvestigationHistory = roundState.unitClueUsed || roundState.investigations.length > 0;
+  const transitionPips = Array.from({ length: run.rounds.length }, (_, index) => index);
   return (
     <section className="reveal-layout page-shell">
       <div className="reveal-map" data-result={resultTone}>
@@ -1125,10 +1184,15 @@ function RevealView({
           labelledBy="reveal-map-title"
         />
         <div className="solve-moment-overlay" data-result={resultTone} aria-hidden="true">
-          <span>{resultTone === "correct" ? "Correct" : "Answer found"}</span>
-          <strong>{resultTone === "correct" ? "Solved" : "Revealed"}</strong>
+          <span>{revealEyebrow}</span>
+          <strong>{revealHeadline}</strong>
           <em>{scoreText}</em>
         </div>
+        {resultTone === "correct" ? (
+          <video className="correct-burst-video" autoPlay muted playsInline preload="none" aria-hidden="true">
+            <source src="/worldprint/correct-burst.webm" type="video/webm" />
+          </video>
+        ) : null}
         <div className="result-atlas-burst" data-result={resultTone} aria-hidden="true">
           <span />
           <span />
@@ -1257,7 +1321,14 @@ function RevealView({
         </p>
         <div className="round-transition-card" data-final={finalRoundSolved ? "true" : "false"}>
           <span>{finalRoundSolved ? "Run complete" : `Map ${nextMapNumber} of ${run.rounds.length}`}</span>
-          <strong>{finalRoundSolved ? "Ready for the final score." : "Next map is ready."}</strong>
+          <strong>{finalRoundSolved ? "Final score loading." : "Next mystery loading."}</strong>
+          <em>Banked {scoreText}</em>
+          <div className="transition-pips" aria-hidden="true">
+            {transitionPips.map((index) => (
+              <i key={index} data-state={index <= run.currentRoundIndex ? "banked" : index === run.currentRoundIndex + 1 ? "next" : "locked"} />
+            ))}
+          </div>
+          <small>{finalRoundSolved ? "Every map is scored. Your run record is next." : "Preparing the next hidden statistic."}</small>
         </div>
         <button className="button full-width next-map-button" type="button" onClick={onNext}>
           {finalRoundSolved ? "See results" : "Next map"}
@@ -1324,9 +1395,18 @@ function CompletionSummary({
   const bestRound = run.rounds.length ? Math.max(...run.rounds.map((round) => round.score)) : 0;
   const averageRound = run.rounds.length ? Math.round(total / run.rounds.length) : 0;
   const cleanReads = run.rounds.filter((round) => round.rejectedAnswers.length === 0).length;
+  const wrongGuessCount = run.rounds.reduce((sum, round) => sum + round.rejectedAnswers.length, 0);
+  const clueCount = run.rounds.reduce((sum, round) => sum + round.investigations.filter((item) => item.cost > 0).length + (round.unitClueUsed ? 1 : 0), 0);
   const cleanReadRate = run.rounds.length ? Math.round((cleanReads / run.rounds.length) * 100) : 0;
   const rank = scoreRank(total, run.rounds.length);
+  const possibleRunScore = Math.max(1, run.rounds.length * 1000);
+  const scorePercent = Math.max(0, Math.min(100, Math.round((total / possibleRunScore) * 100)));
   const isPastRecord = run.mode === "archive";
+  const accountSaveHeading = signedIn
+    ? cloudSaveStatus.toLowerCase().includes("failed")
+      ? "Saved locally. Sync needs another try."
+      : "Saved to your account."
+    : "Save your score and streak.";
   const saveNote = signedIn
     ? "Account sync is active. This run is saved locally first, then matched to your account when the connection is available."
     : "Local on this device. Sign in to save completed runs, stats, and streaks to your account.";
@@ -1371,14 +1451,27 @@ function CompletionSummary({
   return (
     <section className="summary-shell page-shell">
       <div className="summary-main">
+        <div className="summary-ceremony-glow" aria-hidden="true">
+          <span />
+          <span />
+          <span />
+        </div>
         <p className="eyebrow">{summaryLabel}</p>
         <h1 className="page-title final-score-title" aria-label={`${total.toLocaleString("en-US")} points`}>
           <AnimatedNumber value={total} /> points
         </h1>
+        <div className="summary-score-meter" aria-label={`${scorePercent}% of the maximum possible score`}>
+          <span style={{ width: `${scorePercent}%` }} />
+        </div>
         <div className="run-rank-card surface" aria-label="Run rank">
-          <span>Run rank</span>
-          <strong>{rank.title}</strong>
-          <p>{rank.note}</p>
+          <div className="rank-medallion" aria-hidden="true">
+            {scorePercent}
+          </div>
+          <div>
+            <span>Run rank</span>
+            <strong>{rank.title}</strong>
+            <p>{rank.note}</p>
+          </div>
         </div>
         <p className="lead">
           {isPastRecord ? "Record entry saved for this fixed Past Game. " : ""}
@@ -1404,14 +1497,26 @@ function CompletionSummary({
             <span>Clean reads</span>
             <strong>{cleanReadRate}%</strong>
           </div>
+          <div>
+            <span>Wrong guesses</span>
+            <strong>{wrongGuessCount}</strong>
+          </div>
+          <div>
+            <span>Clues used</span>
+            <strong>{clueCount}</strong>
+          </div>
         </div>
         <div className="result-cells" aria-label="Per-round scores">
-          {run.rounds.map((round, index) => (
-            <span key={round.roundId} data-best={round.score === bestRound ? "true" : "false"}>
-              <small>{index + 1}</small>
-              <strong>{round.score}</strong>
-            </span>
-          ))}
+          {run.rounds.map((round, index) => {
+            const roundScorePercent = Math.max(0, Math.min(100, Math.round((round.score / 1000) * 100)));
+            return (
+              <span key={round.roundId} data-best={round.score === bestRound ? "true" : "false"}>
+                <small>{index + 1}</small>
+                <strong>{round.score}</strong>
+                <i style={{ width: `${roundScorePercent}%` }} aria-hidden="true" />
+              </span>
+            );
+          })}
         </div>
         <div className="button-row">
           <button className="button" type="button" onClick={() => void share()}>
@@ -1434,12 +1539,12 @@ function CompletionSummary({
         <section className="account-save-card surface" aria-label="Save your progress">
           <div>
             <p className="eyebrow">Save progress</p>
-            <h2>{signedIn ? (isPastRecord ? "Past Game record sync is on." : "Account save is on.") : "Save your score and streak."}</h2>
+            <h2>{accountSaveHeading}</h2>
             <p>
               {signedIn
                 ? isPastRecord
-                  ? "This Past Game result is saved locally first. Completed-run summaries sync to your account when the connection is available."
-                  : "Your result is saved locally first. Completed-run summaries sync to your account when the connection is available."
+                  ? "This Past Game result is saved locally first, then attached to your account record when sync is available."
+                  : "Your result is saved locally first, then attached to your account record when sync is available."
                 : "Your result is saved in this browser. A free account can save completed runs, stats, and streaks to your account."}
             </p>
             {cloudSaveStatus ? (

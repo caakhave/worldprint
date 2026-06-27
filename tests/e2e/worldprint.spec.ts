@@ -73,7 +73,7 @@ async function startDaily(page: Page) {
 }
 
 function scoreValue(page: Page) {
-  return page.locator(".score-block strong");
+  return page.locator(".score-hud-current .score-number");
 }
 
 function countryPath(page: Page, iso3: string) {
@@ -194,18 +194,23 @@ test("landing cinematic hero replaces the fake gameplay panel", async ({ page })
   const hero = page.getByTestId("cinematic-home-hero");
   await expect(hero).toBeVisible();
   await expect(hero.getByRole("heading", { name: "Can you read the world?" })).toBeVisible();
+  const heroLineHeight = await hero.getByRole("heading", { name: "Can you read the world?" }).evaluate((element) => {
+    const style = window.getComputedStyle(element);
+    return Number.parseFloat(style.lineHeight) / Number.parseFloat(style.fontSize);
+  });
+  expect(heroLineHeight).toBeGreaterThanOrEqual(1);
   await expect(hero.getByRole("link", { name: /Play today's Mystery Map/i })).toBeVisible();
   await expect(page.locator(".fake-gameplay-stage")).toHaveCount(0);
   await expect(page.locator(".fake-atlas-map")).toHaveCount(0);
   await expect(page.getByTestId("hero-map-stage")).toHaveCount(0);
   const video = page.getByTestId("homepage-hero-video");
   await expect(video).toBeAttached();
-  await expect(video).toHaveAttribute("poster", "/images/homepage/can-you-geo-cinematic-hero.png");
+  await expect(video).toHaveAttribute("poster", "/worldprint/hero-poster.jpg");
   await expect(video).not.toHaveAttribute("controls", /.*/);
   await expect(video).not.toHaveAttribute("loop", /.*/);
-  await expect(page.locator(".landing-hero-video source")).toHaveAttribute(
+  await expect(page.locator(".landing-hero-video source").first()).toHaveAttribute(
     "src",
-    "/images/homepage/can-you-geo-cinematic-hero-720p.mp4"
+    "/worldprint/hero-loop.webm"
   );
   expect(await page.evaluate(() => document.documentElement.scrollWidth > window.innerWidth)).toBe(false);
 });
@@ -222,13 +227,31 @@ test("landing cinematic hero respects reduced-motion without layout overflow", a
   expect(await page.evaluate(() => document.documentElement.scrollWidth > window.innerWidth)).toBe(false);
 });
 
+test("Mystery Map lobby presents game-mode CTAs without motion dependency", async ({ page }) => {
+  await page.emulateMedia({ reducedMotion: "reduce" });
+  await page.goto(`/play/worldprint?date=${TEST_DATE}`);
+  await expect(page.getByTestId("entry-atlas-visual")).toBeVisible();
+  await expect(page.getByText("Choose your game mode")).toBeVisible();
+  await expect(page.locator(".entry-lobby-strip")).toContainText("Mystery maps");
+  await expect(page.locator(".entry-lobby-strip")).toContainText("Clue spend");
+  await expect(page.getByRole("button", { name: /Start today's Mystery Map/i })).toBeVisible();
+  await expect(page.getByRole("link", { name: "Practice atlas" })).toHaveAttribute("href", "#practice-atlas");
+  await expect(page.getByRole("link", { name: "Replay Library" })).toHaveAttribute("href", /\/archive\/worldprint\/?$/);
+  await expectNoHorizontalOverflow(page);
+});
+
 test("investigating a country charges once", async ({ page }) => {
   await startDaily(page);
-  await expect(page.getByText("Current map points available")).toBeVisible();
-  await expect(page.getByText("These points are added to the run total after the map is solved.")).toBeVisible();
+  const scoreHud = page.locator(".score-hud");
+  await expect(scoreHud).toContainText("This map");
+  await expect(scoreHud).toContainText("1000 available");
+  await expect(scoreHud).toContainText("Banked");
+  await expect(scoreHud).toContainText("0 from 0 maps");
+  await expect(scoreHud).toContainText("Possible total");
+  await expect(scoreHud).toContainText("1000 if solved now");
+  await expect(scoreHud).toContainText("Not banked until solved.");
   const runStats = page.locator(".run-stats-card");
-  await expect(runStats).toContainText("Run total so far");
-  await expect(runStats).toContainText("Banked score");
+  await expect(runStats).toContainText("Run details");
   await expect(runStats).toContainText("Maps played");
   await expect(runStats).toContainText("Correct");
   await expect(runStats).toContainText("Average");
@@ -323,7 +346,7 @@ test("revealed values keep compact units while unit clue explains them", async (
   await expect(page.getByRole("button", { name: /Unit clue: per 1k means births per 1,000 people/i })).toBeDisabled();
 });
 
-test("obvious unit clues are shown free instead of charging points", async ({ page }) => {
+test("obvious unit clues are hidden instead of charging points", async ({ page }) => {
   const obviousUnitCode = encodeChallenge({
     kind: "practice",
     contentVersion: manifest.contentVersion,
@@ -333,7 +356,7 @@ test("obvious unit clues are shown free instead of charging points", async ({ pa
   await page.goto(`/challenge/worldprint?c=${obviousUnitCode}`);
   await page.getByRole("button", { name: /Start challenge/i }).click();
   await expect(page.getByRole("button", { name: /Reveal unit/i })).toHaveCount(0);
-  await expect(page.locator(".unit-clue")).toHaveText("Unit is already shown.");
+  await expect(page.locator(".unit-clue")).toHaveCount(0);
   await expect(scoreValue(page)).toHaveText("1000");
 });
 
@@ -391,10 +414,13 @@ test("negative round scores show a lost round message", async ({ page }) => {
 test("wrong answer recovers and correct answer reveals the source", async ({ page }) => {
   await startDaily(page);
   await page.getByRole("button", { name: wrongLabel(0) }).click();
-  await expect(page.getByText(/Incorrect/)).toBeVisible();
+  await expect(page.locator(".answer-feedback-banner span")).toHaveText("Incorrect");
+  await expect(page.locator(".miss-moment-overlay")).toContainText("Not this map");
+  await expect(page.locator(".score-spend-flyout")).toContainText("-300");
   await page.getByRole("button", { name: correctLabel(0) }).click();
   await expect(page.getByText(/Answer revealed/i)).toBeVisible();
   await expect(page.getByText(/Correct answer:/i)).toBeVisible();
+  await expect(page.locator(".solve-moment-overlay")).toContainText("Answer found");
   await expect(page.locator(".banked-score-flight")).toContainText(/banked/i);
   await expect(page.getByText(/Source and year/)).toBeVisible();
   await expect(page.getByText(/What the map was showing/)).toBeVisible();
@@ -410,16 +436,22 @@ test("completes a five-round Daily and preserves completed result", async ({ pag
       await expect(page.locator(".round-result-banner")).toContainText("Solved");
       await expect(page.locator(".banked-score-flight")).toContainText("+1,000 points banked");
       await expect(page.getByText("Map 2 of 5")).toBeVisible();
-      await expect(page.getByText("Next map is ready.")).toBeVisible();
+      await expect(page.getByText("Next mystery loading.")).toBeVisible();
+      await expect(page.getByText("Banked +1,000 points")).toBeVisible();
+      await expect(page.locator(".transition-pips")).toBeVisible();
     }
     await expect(page.getByText(/Source and year/)).toBeVisible();
     await page.getByRole("button", { name: index === 4 ? /See results/ : /Next map/ }).click();
   }
   await expect(page.getByRole("heading", { name: /points/i })).toBeVisible();
+  await expect(page.locator(".summary-score-meter")).toBeVisible();
+  await expect(page.locator(".rank-medallion")).toContainText("100");
   await expect(page.getByText("Final score")).toBeVisible();
   await expect(page.getByText("Run rank")).toBeVisible();
   await expect(page.getByText("Worldprint Master")).toBeVisible();
   await expect(page.getByText("Clean reads")).toBeVisible();
+  await expect(page.getByText("Wrong guesses")).toBeVisible();
+  await expect(page.getByText("Clues used")).toBeVisible();
   await expect(page.getByRole("button", { name: /Share result/i })).toBeVisible();
   const statsPanel = page.getByRole("complementary", { name: "Your stats" });
   await expect(statsPanel).toBeVisible();
