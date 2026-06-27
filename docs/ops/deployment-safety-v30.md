@@ -122,8 +122,11 @@ Current headers:
   - `object-src 'none'`
   - `base-uri 'self'`
   - `connect-src 'self' https://*.supabase.co wss://*.supabase.co`
+  - a narrow Cloudflare Insights allowlist while Cloudflare Web Analytics is enabled
 
 The CSP currently allows inline scripts and inline styles because the static Next export emits React/Next bootstrap scripts and inline style attributes. Tightening to nonce/hash-based CSP is a future server-rendered deployment task, not safe to force in the static export without testing hydration.
+
+Cloudflare Web Analytics injects its beacon from `static.cloudflareinsights.com`. Keep the CSP exception only while that dashboard feature is enabled; if analytics are not needed, disable the injected beacon in Cloudflare and remove the Cloudflare Insights CSP entries.
 
 ## Supabase Edge Function Guardrails
 

@@ -104,9 +104,11 @@ Current header baseline:
 - `Referrer-Policy: strict-origin-when-cross-origin`
 - `Permissions-Policy` for unused browser capabilities
 - `X-Frame-Options: DENY`
-- `Content-Security-Policy` with `frame-ancestors 'none'`, `object-src 'none'`, same-origin assets, and Supabase-only network connections
+- `Content-Security-Policy` with `frame-ancestors 'none'`, `object-src 'none'`, same-origin assets, Supabase network connections, and a narrow Cloudflare Insights exception while Web Analytics is enabled
 
 The CSP currently allows inline scripts/styles because Next static export emits inline bootstrap scripts and inline style attributes. Tighten this only after a nonce/hash CSP pass with hydration testing.
+
+Cloudflare Web Analytics currently injects `static.cloudflareinsights.com/beacon.min.js` at the edge. If analytics are disabled in the Cloudflare dashboard, remove the `static.cloudflareinsights.com` and `cloudflareinsights.com` CSP allowlist entries from `public/_headers`.
 
 ## Supabase
 
