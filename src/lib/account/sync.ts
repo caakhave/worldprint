@@ -154,15 +154,18 @@ export function cloudRunPayloadFromHistory(userId: string, history: CompletionHi
       best_round_score: history.roundScores.length ? Math.max(...history.roundScores) : 0,
       completed_at: history.completedAt
     },
-    rounds: history.roundScores.map((score, index) => ({
-      round_index: index,
-      indicator_id: null,
-      guessed_indicator_id: null,
-      correct: true,
-      score,
-      investigations_used: 0,
-      unit_clue_used: false
-    }))
+    rounds: history.roundScores.map((score, index) => {
+      const detail = history.roundDetails?.[index];
+      return {
+        round_index: index,
+        indicator_id: detail?.correctIndicatorId ?? null,
+        guessed_indicator_id: detail?.result === "incomplete" ? null : (detail?.correctIndicatorId ?? null),
+        correct: detail ? detail.result !== "incomplete" : true,
+        score,
+        investigations_used: detail?.investigationsUsed ?? 0,
+        unit_clue_used: detail?.unitClueUsed ?? false
+      };
+    })
   };
 }
 

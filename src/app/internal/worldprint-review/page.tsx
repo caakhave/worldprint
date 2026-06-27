@@ -3,6 +3,7 @@ import editorialReviewJson from "../../../../public/data/v1/editorial-review.jso
 import candidateScorecardsJson from "../../../../generated/reports/candidate-scorecards.json";
 import distractorReviewJson from "../../../../generated/reports/distractor-review.json";
 import { InternalReviewClient, type InternalReviewRow } from "@/features/worldprint/InternalReviewClient";
+import { getAuthShellStatus } from "@/lib/account/authConfig";
 import { EditorialReviewSchema, type EditorialReview } from "@/lib/content/schemas";
 import { paletteForIndicator } from "@/lib/geo/palette";
 
@@ -50,6 +51,7 @@ export default function InternalWorldprintReviewPage() {
   const editorial = editorialReviewJson as EditorialRegistry;
   const distractor = distractorReviewJson as DistractorReview;
   const candidateScorecards = candidateScorecardsJson as CandidateScorecards;
+  const opsStatus = getAuthShellStatus();
   const correlationById = new Map(distractor.rows.map((row) => [row.id, row.topCorrelatedIndicators]));
   const scorecardById = new Map(candidateScorecards.scorecards.map((row) => [row.id, row]));
   const rows: InternalReviewRow[] = editorial.indicators.map((indicator) => ({
@@ -65,5 +67,5 @@ export default function InternalWorldprintReviewPage() {
       overlapCount: entry.overlapCount
     }))
   }));
-  return <InternalReviewClient rows={rows} statusCounts={editorial.statusCounts} contentVersion={editorial.contentVersion} />;
+  return <InternalReviewClient rows={rows} statusCounts={editorial.statusCounts} contentVersion={editorial.contentVersion} opsStatus={opsStatus} />;
 }

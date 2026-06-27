@@ -1,6 +1,7 @@
 "use client";
 
 import { useMemo, useState } from "react";
+import type { AuthShellStatus } from "@/lib/account/authConfig";
 import type { AmbiguityRisk, EditorialReview, EditorialStatus, IndicatorDifficulty } from "@/lib/content/schemas";
 
 export type InternalReviewRow = {
@@ -49,6 +50,7 @@ type InternalReviewClientProps = {
   rows: InternalReviewRow[];
   statusCounts: Record<string, number>;
   contentVersion: string;
+  opsStatus?: AuthShellStatus;
 };
 
 const statusLabels: Record<EditorialStatus, string> = {
@@ -63,7 +65,7 @@ function uniqueSorted(values: string[]) {
   return Array.from(new Set(values)).sort();
 }
 
-export function InternalReviewClient({ rows, statusCounts, contentVersion }: InternalReviewClientProps) {
+export function InternalReviewClient({ rows, statusCounts, contentVersion, opsStatus }: InternalReviewClientProps) {
   const [status, setStatus] = useState<EditorialStatus | "">("");
   const [category, setCategory] = useState("");
   const [difficulty, setDifficulty] = useState<IndicatorDifficulty | "">("");
@@ -98,6 +100,51 @@ export function InternalReviewClient({ rows, statusCounts, contentVersion }: Int
           </span>
         ))}
       </div>
+      {opsStatus ? (
+        <section className="review-ops-check surface" aria-labelledby="ops-readiness-heading">
+          <div>
+            <p className="eyebrow">Ops readiness</p>
+            <h2 id="ops-readiness-heading">Non-secret production checklist.</h2>
+            <p>
+              Internal-only status for deployment plumbing. This section lists variable names and readiness only; secret values and key
+              contents never render here.
+            </p>
+          </div>
+          <div className="review-ops-grid">
+            <article>
+              <span>Public Supabase env</span>
+              <strong>{opsStatus.supabaseConfigured ? "Present" : "Missing"}</strong>
+              <small>{opsStatus.supabaseConfigured ? "Browser auth can initialize." : "Browser auth will stay disabled."}</small>
+            </article>
+            <article>
+              <span>Public site env</span>
+              <strong>{opsStatus.missingPublicEnv.length === 0 ? "Ready" : "Needs review"}</strong>
+              <small>
+                {opsStatus.missingPublicEnv.length === 0
+                  ? "All public production names are present."
+                  : `Missing: ${opsStatus.missingPublicEnv.join(", ")}`}
+              </small>
+            </article>
+          </div>
+          <details className="review-ops-details">
+            <summary>Required deployment variable names</summary>
+            <div>
+              <h3>Cloudflare Pages public env</h3>
+              <ul>
+                {opsStatus.futurePublicEnv.map((name) => (
+                  <li key={name}>{name}</li>
+                ))}
+              </ul>
+              <h3>Supabase Edge Function env/secrets</h3>
+              <ul>
+                {opsStatus.futureServerEnv.map((name) => (
+                  <li key={name}>{name}</li>
+                ))}
+              </ul>
+            </div>
+          </details>
+        </section>
+      ) : null}
       <div className="review-filters surface" aria-label="Review filters">
         <label>
           Status

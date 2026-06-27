@@ -43,6 +43,34 @@ describe("persisted state", () => {
     expect(buildLocalPlayerStats(second).lastPlayedDailyDate).toBe("2026-06-18");
   });
 
+  it("persists round review details for new completed runs", () => {
+    let run = createRun({
+      mode: "daily",
+      dateKey: "2026-06-18",
+      contentVersion: "test",
+      tier: "analyst",
+      roundIds: [{ roundId: "fertility-rate", correctIndicatorId: "fertility-rate" }]
+    });
+    run = reduceRun(run, { type: "investigate", iso3: "BOL", countryName: "Bolivia", value: 105.2 });
+    run = reduceRun(run, { type: "submit", answerId: "life-expectancy", label: "Life expectancy", correct: false });
+    run = reduceRun(run, { type: "submit", answerId: "fertility-rate", label: "Fertility rate", correct: true });
+    run = reduceRun(run, { type: "nextRound" });
+
+    const state = recordDailyCompletion(defaultPersistedState(), run);
+    const detail = state.dailyHistoryByDate["2026-06-18"]?.roundDetails?.[0];
+    expect(detail).toMatchObject({
+      roundNumber: 1,
+      roundId: "fertility-rate",
+      correctIndicatorId: "fertility-rate",
+      result: "recovered",
+      investigationsUsed: 1,
+      misses: 1,
+      rejectedAnswers: [{ id: "life-expectancy", label: "Life expectancy" }]
+    });
+    expect(detail?.clueSpend).toBe(100);
+    expect(detail?.countryClues[0]?.countryName).toBe("Bolivia");
+  });
+
   it("builds an empty local stats state", () => {
     const stats = buildLocalPlayerStats(defaultPersistedState());
     expect(stats.gamesCompleted).toBe(0);
@@ -85,6 +113,7 @@ describe("persisted state", () => {
     expect(migrated.schemaVersion).toBe("1.1.0");
     expect(migrated.streak.current).toBe(1);
     expect(migrated.dailyHistoryByDate["2026-06-18"]?.bestScore).toBe(900);
+    expect(migrated.dailyHistoryByDate["2026-06-18"]?.roundDetails).toBeUndefined();
   });
 
   it("records archive and challenge completions without changing the Daily streak", () => {

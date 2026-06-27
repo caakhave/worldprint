@@ -62,8 +62,9 @@ describe("ArchiveCard", () => {
     expect(screen.getByText("Saved to account")).toBeVisible();
     expect(screen.getByText("4,200 points")).toBeVisible();
     expect(screen.getByText("Jun 24, 2026")).toBeVisible();
-    expect(screen.getByRole("link", { name: "View record" })).toBeVisible();
-    expect(screen.getByText("Replay for better score.")).toBeVisible();
+    expect(screen.getByRole("link", { name: "View result" })).toHaveAttribute("href", "/play/worldprint/2026-06-24?review=1");
+    expect(screen.getByRole("link", { name: "Replay for practice" })).toBeVisible();
+    expect(screen.getByText(/Your official Daily score will not change/i)).toBeVisible();
   });
 
   it("prefers account-saved status when both account and browser completions exist", () => {
@@ -82,6 +83,6 @@ describe("ArchiveCard", () => {
 
     rerender(<ArchiveCard entry={entry()} todayKey="2026-06-26" completion={null} accountRun={null} />);
     expect(screen.getByText("Unplayed")).toBeVisible();
-    expect(screen.getByRole("link", { name: "Play past map" })).toBeVisible();
+    expect(screen.getByRole("link", { name: "Try past puzzle" })).toBeVisible();
   });
 });

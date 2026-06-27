@@ -65,6 +65,7 @@ const navItems = [
 
 const footerItems = [
   { href: "/sources", label: "Sources" },
+  { href: "/legal", label: "Terms, Privacy & Accessibility" },
   { href: "/beta/worldprint", label: "Beta" },
   { href: "/about", label: "About" }
 ];

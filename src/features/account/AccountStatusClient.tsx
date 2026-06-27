@@ -3,9 +3,10 @@
 import Link from "next/link";
 import { useState } from "react";
 import { accountInitial, compactPlanLabel } from "@/features/account/accountDisplay";
+import { membershipDisplay } from "@/features/account/subscriptionDisplay";
 import { useEntitlement } from "@/features/account/useEntitlement";
 import { useSupabaseAccount } from "@/features/account/useSupabaseAccount";
-import { planLabel, statusLabel } from "@/lib/account/entitlements";
+import { planLabel } from "@/lib/account/entitlements";
 
 export function AccountStatusClient() {
   const { configured, loading, user, profileError, signOut } = useSupabaseAccount();
@@ -57,7 +58,7 @@ export function AccountStatusClient() {
       <article className="surface account-card account-primary-card">
         <p className="eyebrow">Signed out</p>
         <h2>Create a free account to save your streak.</h2>
-        <p>You can keep playing without an account. Sign in when you want to save this browser&apos;s stats to your account.</p>
+        <p>Keep playing locally, or connect an email when you want account-saved records.</p>
         <div className="button-row">
           <Link className="button" href="/sign-in">
             Save your score and streak
@@ -72,7 +73,7 @@ export function AccountStatusClient() {
 
   const membershipLabel = entitlementLoading ? "Checking" : planLabel(entitlement.plan);
   const compactMembershipLabel = entitlementLoading ? "Account" : compactPlanLabel(entitlement.plan);
-  const membershipStatus = entitlementLoading ? "Checking access" : entitlement.status === "free" ? "Ready" : statusLabel(entitlement.status);
+  const membership = membershipDisplay(entitlement, entitlementLoading);
   const syncLabel = entitlementLoading ? "Checking sync" : entitlement.capabilities.canSaveStats ? "Account sync ready" : "Local stats only";
   const planActionLabel = entitlement.plan === "pro" ? "Manage plan" : "Compare plans";
 
@@ -83,32 +84,32 @@ export function AccountStatusClient() {
           {accountInitial(user.email)}
         </span>
         <div className="account-identity-copy">
-          <p className="eyebrow">Signed in</p>
-          <h2>{user.email ?? "Signed-in player"}</h2>
+        <p className="eyebrow">Player profile</p>
+        <h2>{user.email ?? "Signed-in player"}</h2>
           <div className="account-identity-badges" aria-label="Account status">
             <span className="account-plan-badge" data-plan={entitlementLoading ? "loading" : entitlement.plan}>
               {compactMembershipLabel}
             </span>
-            <span>{membershipStatus}</span>
+            <span>{membership.heading}</span>
           </div>
         </div>
       </div>
       <div className="account-summary-head">
-        <p>Your atlas is connected. Keep playing, save this device&apos;s stats, or check your atlas access.</p>
+        <p>Profile connected. Your scores, saved runs, and plan controls are ready.</p>
       </div>
       <dl className="account-status-list account-mini-status account-summary-list">
         <div>
           <dt>Membership</dt>
           <dd>
             {membershipLabel}
-            <span>{membershipStatus}</span>
+            <span>{membership.detail}</span>
           </dd>
         </div>
         <div>
           <dt>Stats sync</dt>
           <dd>
             {syncLabel}
-            <span>Save this browser&apos;s stats from your stats page.</span>
+            <span>Import local runs from your stats page.</span>
           </dd>
         </div>
       </dl>

@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import { AccountHeroClient } from "@/features/account/AccountHeroClient";
+import { AccountPlanNotesClient } from "@/features/account/AccountPlanNotesClient";
 import { BillingReturnNotice } from "@/features/account/BillingReturnNotice";
 import { EntitlementDiagnosticsClient } from "@/features/account/EntitlementDiagnosticsClient";
 import { MembershipCardClient } from "@/features/account/MembershipCardClient";
@@ -22,21 +23,7 @@ export default function AccountPage() {
 
         <div className="account-stack">
           <MembershipCardClient />
-          <article className="surface account-card">
-            <p className="eyebrow">Open now</p>
-            <h2>Play first.</h2>
-            <p>Anyone can start a Mystery Map. Completed runs save locally in this browser.</p>
-          </article>
-          <article className="surface account-card">
-            <p className="eyebrow">Free account</p>
-            <h2>Keep your streak.</h2>
-            <p>Email sign-in can save your score history and streak to your account. Returning later? Use the same email and request a fresh link.</p>
-          </article>
-          <article className="surface account-card">
-            <p className="eyebrow">Pro</p>
-            <h2>Open the full atlas.</h2>
-            <p>Unlock the full archive, unlimited practice, advanced stats, and Challenge history.</p>
-          </article>
+          <AccountPlanNotesClient />
         </div>
       </div>
 

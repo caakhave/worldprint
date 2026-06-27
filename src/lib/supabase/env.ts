@@ -16,7 +16,10 @@ export function missingSupabasePublicEnv(): string[] {
   return SUPABASE_PUBLIC_ENV_KEYS.filter((key) => !process.env[key]);
 }
 
+export function resolveSiteOrigin(browserOrigin: string | null, configuredOrigin = process.env.NEXT_PUBLIC_SITE_URL): string {
+  return browserOrigin ?? configuredOrigin ?? "http://localhost:3000";
+}
+
 export function siteOrigin(): string {
-  if (typeof window !== "undefined") return window.location.origin;
-  return process.env.NEXT_PUBLIC_SITE_URL ?? "http://localhost:3000";
+  return resolveSiteOrigin(typeof window !== "undefined" ? window.location.origin : null);
 }

@@ -1,5 +1,6 @@
 import { z } from "zod";
 import { TierSchema } from "@/lib/content/schemas";
+import { TIER_CONFIGS } from "@/lib/game/scoring";
 import { updateStreak, emptyStreak } from "@/lib/game/streak";
 import type { RunState } from "@/lib/game/state";
 
@@ -45,6 +46,20 @@ const CompletedResultSchema = z.object({
   completedAt: z.string()
 });
 
+const CompletionRoundDetailSchema = z.object({
+  roundNumber: z.number().int(),
+  roundId: z.string(),
+  correctIndicatorId: z.string(),
+  result: z.enum(["correct", "recovered", "incomplete"]),
+  score: z.number().int(),
+  clueSpend: z.number().int(),
+  investigationsUsed: z.number().int(),
+  unitClueUsed: z.boolean(),
+  misses: z.number().int(),
+  rejectedAnswers: z.array(z.object({ id: z.string(), label: z.string() })),
+  countryClues: z.array(InvestigationSchema)
+});
+
 const CompletionHistorySchema = z.object({
   id: z.string(),
   dateKey: z.string(),
@@ -55,7 +70,8 @@ const CompletionHistorySchema = z.object({
   roundScores: z.array(z.number().int()),
   roundCount: z.number().int(),
   completedAt: z.string(),
-  lastPlayedAt: z.string()
+  lastPlayedAt: z.string(),
+  roundDetails: z.array(CompletionRoundDetailSchema).optional()
 });
 
 const PersistedStateBaseSchema = z.object({
@@ -88,6 +104,7 @@ export const PersistedStateSchema = PersistedStateBaseSchema.extend({
 });
 export type PersistedState = z.infer<typeof PersistedStateSchema>;
 export type CompletionHistory = z.infer<typeof CompletionHistorySchema>;
+export type CompletionRoundDetail = z.infer<typeof CompletionRoundDetailSchema>;
 
 export function defaultPersistedState(): PersistedState {
   return {
@@ -120,6 +137,7 @@ const LegacyPersistedStateSchema = PersistedStateBaseSchema.extend({
 function completionFromRun(run: RunState, completedAt = new Date().toISOString()): CompletionHistory {
   const totalScore = run.rounds.reduce((sum, round) => sum + round.score, 0);
   const roundScores = run.rounds.map((round) => round.score);
+  const unitCluePenalty = TIER_CONFIGS[run.tier].scoring.unitCluePenalty;
   return {
     id: run.id,
     dateKey: run.dateKey,
@@ -130,7 +148,24 @@ function completionFromRun(run: RunState, completedAt = new Date().toISOString()
     roundScores,
     roundCount: run.rounds.length,
     completedAt,
-    lastPlayedAt: completedAt
+    lastPlayedAt: completedAt,
+    roundDetails: run.rounds.map((round, index) => {
+      const investigationSpend = round.investigations.reduce((sum, investigation) => sum + investigation.cost, 0);
+      const clueSpend = investigationSpend + (round.unitClueUsed ? unitCluePenalty : 0);
+      return {
+        roundNumber: index + 1,
+        roundId: round.roundId,
+        correctIndicatorId: round.correctIndicatorId,
+        result: round.phase === "solved" ? (round.rejectedAnswers.length > 0 ? "recovered" : "correct") : "incomplete",
+        score: round.score,
+        clueSpend,
+        investigationsUsed: round.investigations.filter((investigation) => investigation.cost > 0).length,
+        unitClueUsed: round.unitClueUsed,
+        misses: round.rejectedAnswers.length,
+        rejectedAnswers: round.rejectedAnswers,
+        countryClues: round.investigations
+      };
+    })
   };
 }
 
@@ -142,6 +177,7 @@ function mergeBestCompletion(existing: CompletionHistory | undefined, next: Comp
     bestScore,
     totalScore: bestScore,
     roundScores: next.totalScore >= existing.bestScore ? next.roundScores : existing.roundScores,
+    roundDetails: next.totalScore >= existing.bestScore ? next.roundDetails : existing.roundDetails,
     completedAt: existing.completedAt,
     lastPlayedAt: next.lastPlayedAt
   };

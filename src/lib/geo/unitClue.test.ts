@@ -1,9 +1,17 @@
 import { describe, expect, it } from "vitest";
-import { unitClueForIndicator } from "@/lib/geo/unitClue";
+import { isUnitClueUseful, unitClueForIndicator } from "@/lib/geo/unitClue";
 
-function indicator(unit: string, formatting: { prefix?: string; suffix?: string } = {}) {
+function indicator(
+  unit: string,
+  formatting: { prefix?: string; suffix?: string } = {},
+  extra: { shortTitle?: string; title?: string; unitClue?: string | null; unitClueUseful?: boolean } = {}
+) {
   return {
+    shortTitle: extra.shortTitle ?? "Test indicator",
+    title: extra.title ?? "Test indicator",
     unit,
+    unitClue: extra.unitClue,
+    unitClueUseful: extra.unitClueUseful,
     formatting: {
       maximumFractionDigits: 1,
       ...formatting
@@ -36,5 +44,27 @@ describe("unit clue eligibility", () => {
     });
     expect(unitClueForIndicator(indicator("people")).eligible).toBe(false);
     expect(unitClueForIndicator(indicator("births per woman")).eligible).toBe(true);
+  });
+
+  it("hides redundant unit clues that would restate the answer", () => {
+    const tourism = indicator("international arrivals", {}, { shortTitle: "Tourism arrivals", title: "International tourism, number of arrivals" });
+
+    expect(isUnitClueUseful(tourism)).toBe(false);
+    expect(unitClueForIndicator(tourism)).toEqual({
+      eligible: false,
+      text: "No useful unit clue for this map."
+    });
+  });
+
+  it("honors explicit unit clue metadata before fallback matching", () => {
+    expect(
+      unitClueForIndicator(
+        indicator("international arrivals", {}, { shortTitle: "Tourism arrivals", unitClue: "Counts inbound visitor arrivals, not travelers." })
+      )
+    ).toEqual({
+      eligible: true,
+      text: "Counts inbound visitor arrivals, not travelers."
+    });
+    expect(unitClueForIndicator(indicator("births per woman", {}, { unitClueUseful: false })).eligible).toBe(false);
   });
 });

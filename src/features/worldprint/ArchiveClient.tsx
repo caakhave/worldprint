@@ -37,6 +37,15 @@ function formatSavedDate(value: string | null | undefined): string | null {
   return new Intl.DateTimeFormat("en-US", { month: "short", day: "numeric", year: "numeric" }).format(date);
 }
 
+function recordRankTitle(score: number | null, roundCount: number): string {
+  if (score === null) return "Mission open";
+  const ratio = score / Math.max(1, roundCount * 1000);
+  if (ratio >= 0.92) return "Worldprint Master";
+  if (ratio >= 0.76) return "Pattern Hunter";
+  if (ratio >= 0.52) return "Atlas Reader";
+  return "Signal Seeker";
+}
+
 export function ArchiveCard({
   entry,
   todayKey,
@@ -55,9 +64,17 @@ export function ArchiveCard({
   const tierLabel = isTierKey(savedTier) ? TIER_CONFIGS[savedTier].shortLabel : hasCompletion ? "Unknown tier" : "Choose on setup";
   const savedDate = formatSavedDate(accountRun?.completed_at ?? completion?.completedAt);
   const status = accountRun ? "Saved to account" : completion ? "Saved on this browser" : "Unplayed";
-  const actionLabel = hasCompletion ? "View record" : "Play past map";
+  const actionLabel = hasCompletion ? "View result" : "Try past puzzle";
+  const recordRank = recordRankTitle(bestScore, entry.roundCount);
+  const roundScores = completion?.roundScores ?? null;
+  const cleanRoundCount = roundScores ? roundScores.filter((score) => score >= 1000).length : null;
   return (
     <article className="archive-card" data-today={isToday ? "true" : "false"} data-completed={hasCompletion ? "true" : "false"}>
+      <div className="archive-card-signal" aria-hidden="true">
+        <span />
+        <span />
+        <span />
+      </div>
       <div className="archive-card-heading">
         <div>
           <span>{isToday ? "Today" : `Mystery Map Daily #${challengeNumber(entry.date)}`}</span>
@@ -83,6 +100,10 @@ export function ArchiveCard({
           </dd>
         </div>
       </dl>
+      <div className="archive-record-stamp" data-state={hasCompletion ? "saved" : "mission"}>
+        <span>{hasCompletion ? "Past game rank" : "Available past game"}</span>
+        <strong>{recordRank}</strong>
+      </div>
       <dl className="archive-record-meta" aria-label="Record details">
         <div>
           <dt>Best score</dt>
@@ -93,15 +114,28 @@ export function ArchiveCard({
           <dd>{tierLabel}</dd>
         </div>
         <div>
-          <dt>Date saved</dt>
+          <dt>Rounds</dt>
+          <dd>{cleanRoundCount === null ? `${entry.roundCount} fixed maps` : `${cleanRoundCount}/${entry.roundCount} clean`}</dd>
+        </div>
+        <div>
+          <dt>Saved</dt>
           <dd>{savedDate ?? "Not saved yet"}</dd>
         </div>
       </dl>
-      <div className="archive-card-action">
-        <Link className="button" href={`/play/worldprint/${entry.date}`}>
+      <div className="archive-card-action" data-state={hasCompletion ? "saved" : "open"}>
+        <Link className="button" href={hasCompletion ? `/play/worldprint/${entry.date}?review=1` : `/play/worldprint/${entry.date}`}>
           {actionLabel}
         </Link>
-        <p>{hasCompletion ? "Replay for better score." : "Fixed 5-map set. Fill this record slot."}</p>
+        {hasCompletion ? (
+          <Link className="button-secondary" href={`/play/worldprint/${entry.date}`}>
+            Replay for practice
+          </Link>
+        ) : null}
+        <p>
+          {hasCompletion
+            ? "Replay for practice. Your official Daily score will not change."
+            : "Fixed 5-map past game. Play once without touching today's streak."}
+        </p>
       </div>
     </article>
   );
@@ -191,18 +225,17 @@ export function ArchiveClient() {
   return (
     <section className="archive-page page-shell">
       <div className="archive-hero">
-        <p className="eyebrow">Past Games · Replay Library</p>
-        <h1 className="page-title">Build your Mystery Map record book.</h1>
+        <p className="eyebrow">Past Games</p>
+        <h1 className="page-title">Review Past Mystery Maps.</h1>
         <p className="lead">
-          Each past date is a fixed 5-map set
-          {publicRange ? ` from ${publicRange.start} to ${publicRange.end}` : ""}. Replay one to fill the record, chase a better personal best, or review a
-          map you missed. It never changes today&apos;s streak.
+          Each past date is a fixed 5-map set{publicRange ? ` from ${publicRange.start} to ${publicRange.end}` : ""}. Review your result, replay for
+          practice, or chase a personal best. Replays never change today&apos;s streak.
         </p>
       </div>
       <div className="archive-note surface">
-        <strong>Past Games are replays, not today&apos;s live Daily.</strong>
+        <strong>Past Games are separate from today&apos;s Daily.</strong>
         <span>
-          Today&apos;s Mystery Map updates the live streak; replayed dates save as fixed Past Game records
+          Today&apos;s Mystery Map updates the live streak; replayed dates save as Past Games
           {signedIn ? " for this account when sync is available." : " in this browser."}
         </span>
       </div>

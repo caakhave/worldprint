@@ -1,10 +1,11 @@
 "use client";
 
-import Image from "next/image";
 import { useEffect, useState } from "react";
 
-const HERO_POSTER = "/images/homepage/can-you-geo-cinematic-hero.png";
+const HERO_POSTER = "/worldprint/hero-poster.jpg";
 const HERO_VIDEO = "/images/homepage/can-you-geo-cinematic-hero-720p.mp4";
+const GENERATED_HERO_LOOP_WEBM = "/worldprint/hero-loop.webm";
+const GENERATED_HERO_LOOP_MP4 = "/worldprint/hero-loop.mp4";
 
 export function HomepageHeroMedia() {
   const [shouldPlayVideo, setShouldPlayVideo] = useState(false);
@@ -29,19 +30,14 @@ export function HomepageHeroMedia() {
           poster={HERO_POSTER}
           preload="metadata"
           data-testid="homepage-hero-video"
+          loop
         >
+          <source src={GENERATED_HERO_LOOP_WEBM} type="video/webm" />
+          <source src={GENERATED_HERO_LOOP_MP4} type="video/mp4" />
           <source src={HERO_VIDEO} type="video/mp4" />
         </video>
       ) : (
-        <Image
-          className="landing-hero-poster"
-          src={HERO_POSTER}
-          alt=""
-          fill
-          priority
-          sizes="100vw"
-          data-testid="homepage-hero-poster"
-        />
+        <div className="landing-hero-poster" data-testid="homepage-hero-poster" />
       )}
     </div>
   );

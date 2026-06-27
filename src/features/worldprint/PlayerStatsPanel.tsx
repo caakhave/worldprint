@@ -10,11 +10,13 @@ export function PlayerStatsPanel({
   store,
   compact = false,
   landmark = true,
+  heading = "Saved in this browser.",
   note
 }: {
   store: PersistedState;
   compact?: boolean;
   landmark?: boolean;
+  heading?: string;
   note?: string;
 }) {
   const stats = buildLocalPlayerStats(store);
@@ -25,7 +27,7 @@ export function PlayerStatsPanel({
     <Root className="stats-panel surface player-stats-panel" data-compact={compact ? "true" : "false"} aria-label="Your stats">
       <div className="player-stats-heading">
         <p className="eyebrow">Your stats</p>
-        <h2>Saved in this browser.</h2>
+        <h2>{heading}</h2>
       </div>
       {hasHistory ? (
         <>

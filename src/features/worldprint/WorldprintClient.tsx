@@ -49,11 +49,13 @@ import {
   recordRunCompletion,
   savePersistedState,
   type CompletionHistory,
+  type CompletionRoundDetail,
   type PersistedState
 } from "@/lib/persistence/storage";
 import { countryNameByIso3, formatValue } from "@/lib/geo/format";
 import { unitClueForIndicator } from "@/lib/geo/unitClue";
-import { clientRunKeyForRun, syncCompletedRunForAccount } from "@/lib/account/sync";
+import { clientRunKeyForRun, fetchRemoteRunSummaries, syncCompletedRunForAccount } from "@/lib/account/sync";
+import type { GameRunRow } from "@/lib/supabase/database";
 import { MapLegend } from "@/components/MapLegend";
 import { WorldMap } from "@/components/WorldMap";
 
@@ -62,6 +64,7 @@ const DIFFICULTY_LABELS: Record<IndicatorDifficulty, string> = {
   standard: "Standard",
   expert: "Expert"
 };
+const DIFFICULTY_ORDER: IndicatorDifficulty[] = ["intro", "standard", "expert"];
 
 type LoadedData = {
   manifest: Manifest;
@@ -107,6 +110,21 @@ function practiceFlavor(difficulty: IndicatorDifficulty) {
   if (difficulty === "expert") return "A quick warm-up with trickier patterns.";
   if (difficulty === "standard") return "A quick warm-up with sharper patterns.";
   return "A quick warm-up before the Daily.";
+}
+
+function roundCountForFilters(rounds: RoundDefinition[], category: string, difficulty?: IndicatorDifficulty) {
+  return rounds.filter((round) => (!category || round.category === category) && (!difficulty || round.difficulty === difficulty)).length;
+}
+
+function nearestPracticeDifficulty(current: IndicatorDifficulty, available: IndicatorDifficulty[]) {
+  if (available.includes(current)) return current;
+  if (available.length === 0) return current;
+  const currentIndex = DIFFICULTY_ORDER.indexOf(current);
+  return available.reduce((best, difficulty) => {
+    const bestDistance = Math.abs(DIFFICULTY_ORDER.indexOf(best) - currentIndex);
+    const nextDistance = Math.abs(DIFFICULTY_ORDER.indexOf(difficulty) - currentIndex);
+    return nextDistance < bestDistance ? difficulty : best;
+  }, available[0]);
 }
 
 function runProgressStats(run: RunState) {
@@ -170,11 +188,56 @@ function savedArchiveRecord(store: PersistedState, dateKey: string): CompletionH
   return store.archiveHistoryByDate[dateKey] ?? store.dailyHistoryByDate[dateKey] ?? null;
 }
 
+type ArchiveReviewRecord = {
+  dateKey: string;
+  tier: Tier | null;
+  totalScore: number;
+  bestScore: number;
+  roundScores: number[];
+  roundCount: number;
+  correctCount: number;
+  completedAt: string | null;
+  savedState: "Saved to account" | "Saved on this browser";
+  roundDetails?: CompletionRoundDetail[];
+};
+
+function isTier(value: string | null | undefined): value is Tier {
+  return Boolean(value && value in TIER_CONFIGS);
+}
+
+function accountRunForDate(runs: GameRunRow[], dateKey: string): GameRunRow | null {
+  return runs.find((run) => (run.mode === "daily" || run.mode === "archive") && run.daily_date === dateKey) ?? null;
+}
+
+function archiveReviewRecord(local: CompletionHistory | null, accountRun: GameRunRow | null, dateKey: string): ArchiveReviewRecord | null {
+  if (!local && !accountRun) return null;
+  const tier = isTier(accountRun?.tier) ? accountRun.tier : (local?.tier ?? null);
+  return {
+    dateKey,
+    tier,
+    totalScore: accountRun?.total_score ?? local?.totalScore ?? 0,
+    bestScore: Math.max(accountRun?.total_score ?? Number.NEGATIVE_INFINITY, local?.bestScore ?? Number.NEGATIVE_INFINITY, 0),
+    roundScores: local?.roundScores ?? [],
+    roundCount: accountRun?.maps_played ?? local?.roundCount ?? 0,
+    correctCount: accountRun?.correct_count ?? local?.roundDetails?.filter((detail) => detail.result !== "incomplete").length ?? local?.roundCount ?? 0,
+    completedAt: accountRun?.completed_at ?? local?.completedAt ?? null,
+    savedState: accountRun ? "Saved to account" : "Saved on this browser",
+    roundDetails: local?.roundDetails
+  };
+}
+
+function reviewResultLabel(detail: CompletionRoundDetail) {
+  if (detail.result === "correct") return "Correct";
+  if (detail.result === "recovered") return "Recovered";
+  return "Incomplete";
+}
+
 export function WorldprintClient({ dateOverride, entryMode = "standard" }: WorldprintClientProps) {
   const searchParams = useSearchParams();
   const actualTodayKey = utcDateKey(new Date());
   const todayKey = useGameDateKey(dateOverride);
   const isArchiveDate = Boolean(dateOverride && todayKey !== actualTodayKey);
+  const reviewRequested = isArchiveDate && searchParams.get("review") === "1";
   const challengeCode = entryMode === "challenge" ? searchParams.get("c") : null;
   const { entitlement, loading: entitlementLoading, signedIn } = useEntitlement();
   const account = useSupabaseAccount();
@@ -193,6 +256,7 @@ export function WorldprintClient({ dateOverride, entryMode = "standard" }: World
   const [practiceSetRoundIds, setPracticeSetRoundIds] = useState<string[]>([]);
   const [practiceSetStatus, setPracticeSetStatus] = useState<"idle" | "ready">("idle");
   const [cloudSaveStatus, setCloudSaveStatus] = useState("");
+  const [accountRuns, setAccountRuns] = useState<GameRunRow[]>([]);
   const cloudSaveAttempts = useRef(new Set<string>());
 
   useEffect(() => {
@@ -257,6 +321,14 @@ export function WorldprintClient({ dateOverride, entryMode = "standard" }: World
   }, [run, ensureIndicators]);
 
   useEffect(() => {
+    if (!data || !reviewRequested) return;
+    const reviewRecord = savedArchiveRecord(store, todayKey);
+    const indicatorIds = reviewRecord?.roundDetails?.map((detail) => detail.correctIndicatorId) ?? [];
+    if (indicatorIds.length === 0) return;
+    ensureIndicators(indicatorIds).catch((error: unknown) => setLoadError(error instanceof Error ? error.message : "Could not load review details"));
+  }, [data, ensureIndicators, reviewRequested, store, todayKey]);
+
+  useEffect(() => {
     if (!run) return;
     setStore((current) => {
       let next = persistRun(current, run);
@@ -288,6 +360,28 @@ export function WorldprintClient({ dateOverride, entryMode = "standard" }: World
       }
     });
   }, [account.client, account.user, run]);
+
+  useEffect(() => {
+    let cancelled = false;
+    async function loadAccountRuns() {
+      if (!account.client || !account.user || !isArchiveDate) {
+        setAccountRuns([]);
+        return;
+      }
+      const result = await fetchRemoteRunSummaries(account.client, account.user.id);
+      if (cancelled) return;
+      if (result.error) {
+        console.warn("[Can You Geo] Past Game account summary load failed.", result.error);
+        setAccountRuns([]);
+        return;
+      }
+      setAccountRuns(result.data);
+    }
+    void loadAccountRuns();
+    return () => {
+      cancelled = true;
+    };
+  }, [account.client, account.user, isArchiveDate]);
 
   const currentPhase = run ? run.rounds[run.currentRoundIndex]?.phase : null;
   const runStatus = run?.status ?? null;
@@ -321,6 +415,8 @@ export function WorldprintClient({ dateOverride, entryMode = "standard" }: World
     return null;
   }, [data, store.activeArchiveRunsByDate, todayKey]);
 
+  const currentAccountArchiveRun = useMemo(() => accountRunForDate(accountRuns, todayKey), [accountRuns, todayKey]);
+
   const challengeResult = useMemo(() => decodeChallenge(challengeCode), [challengeCode]);
 
   const practiceFilters = useMemo(
@@ -336,10 +432,24 @@ export function WorldprintClient({ dateOverride, entryMode = "standard" }: World
     return filterPracticeRounds(data.rounds, practiceFilters);
   }, [data, practiceFilters]);
 
-  const practiceCategories = useMemo(() => {
+  const practiceCategoryOptions = useMemo(() => {
     if (!data) return [];
-    return Array.from(new Set(data.rounds.map((round) => round.category))).sort();
+    return Array.from(new Set(data.rounds.map((round) => round.category)))
+      .sort()
+      .map((category) => ({
+        category,
+        count: roundCountForFilters(data.rounds, category)
+      }))
+      .filter((option) => option.count > 0);
   }, [data]);
+
+  const practiceDifficultyOptions = useMemo(() => {
+    if (!data) return [];
+    return DIFFICULTY_ORDER.map((difficulty) => ({
+      difficulty,
+      count: roundCountForFilters(data.rounds, practiceCategory, difficulty)
+    })).filter((option) => option.count > 0);
+  }, [data, practiceCategory]);
 
   const selectedPracticeRounds = useMemo(() => {
     if (!data) return [];
@@ -355,11 +465,30 @@ export function WorldprintClient({ dateOverride, entryMode = "standard" }: World
     setPracticeSetStatus("idle");
   }, [data, practiceFilters]);
 
+  useEffect(() => {
+    if (!data || practiceDifficultyOptions.length === 0) return;
+    const availableDifficulties = practiceDifficultyOptions.map((option) => option.difficulty);
+    const nextDifficulty = nearestPracticeDifficulty(practiceDifficulty, availableDifficulties);
+    if (nextDifficulty !== practiceDifficulty) {
+      setPracticeDifficulty(nextDifficulty);
+    }
+  }, [data, practiceDifficulty, practiceDifficultyOptions]);
+
   function updateTier(tier: Tier) {
     setSelectedTier(tier);
     const next = { ...store, selectedTier: tier };
     setStore(next);
     savePersistedState(next);
+  }
+
+  function updatePracticeCategory(category: string) {
+    setPracticeCategory(category);
+    if (!data) return;
+    const availableDifficulties = DIFFICULTY_ORDER.filter((difficulty) => roundCountForFilters(data.rounds, category, difficulty) > 0);
+    const nextDifficulty = nearestPracticeDifficulty(practiceDifficulty, availableDifficulties);
+    if (nextDifficulty !== practiceDifficulty) {
+      setPracticeDifficulty(nextDifficulty);
+    }
   }
 
   function buildPracticeSet() {
@@ -377,7 +506,33 @@ export function WorldprintClient({ dateOverride, entryMode = "standard" }: World
     setPracticeSetStatus("ready");
   }
 
-  async function startRun(mode: RunMode, challengePayload?: ChallengePayload, options: { freshReplay?: boolean } = {}) {
+  async function startPracticeRun() {
+    if (!data || practiceMatches.length === 0) return;
+    const selectedIds =
+      selectedPracticeRounds.length > 0
+        ? selectedPracticeRounds.map((round) => round.id)
+        : selectPracticeRoundIds(data.rounds, data.manifest.contentVersion, practiceSalt, practiceFilters, []);
+    if (selectedPracticeRounds.length === 0) {
+      setPracticeSetRoundIds(selectedIds);
+      setPracticeSetStatus("ready");
+    }
+    await startRun("practice", undefined, { practiceRoundIds: selectedIds, practiceSalt });
+  }
+
+  async function startArchivePracticeReplay() {
+    if (!data) return;
+    const selectedIds = selectDailyRoundIdsFromManifest(data.rounds, data.manifest.contentVersion, todayKey, data.dailyManifest).roundIds;
+    await startRun("practice", undefined, {
+      practiceRoundIds: selectedIds,
+      practiceSalt: `past-game-practice:${todayKey}:${Date.now()}`
+    });
+  }
+
+  async function startRun(
+    mode: RunMode,
+    challengePayload?: ChallengePayload,
+    options: { freshReplay?: boolean; practiceRoundIds?: string[]; practiceSalt?: string } = {}
+  ) {
     if (!data) return;
     if (mode === "daily" && currentDailyRun && !options.freshReplay) {
       setRun(currentDailyRun);
@@ -398,7 +553,7 @@ export function WorldprintClient({ dateOverride, entryMode = "standard" }: World
           ? selectDailyRoundIdsFromManifest(data.rounds, data.manifest.contentVersion, todayKey, data.dailyManifest).roundIds
           : mode === "challenge" && challengePayload
             ? challengePayload.roundIds
-            : selectedPracticeRounds.map((round) => round.id);
+            : options.practiceRoundIds ?? selectedPracticeRounds.map((round) => round.id);
     if (selectedIds.length === 0) return;
     const roundIds = selectedIds.map((id) => {
       const round = data.roundById.get(id);
@@ -411,13 +566,47 @@ export function WorldprintClient({ dateOverride, entryMode = "standard" }: World
       contentVersion: data.manifest.contentVersion,
       tier: challengePayload?.tier ?? selectedTier,
       roundIds,
-      salt: mode === "practice" ? practiceSalt : mode === "challenge" ? challengePayload?.checksum : undefined
+      salt: mode === "practice" ? (options.practiceSalt ?? practiceSalt) : mode === "challenge" ? challengePayload?.checksum : undefined
     });
     await ensureIndicators(nextRun.rounds.map((round) => round.correctIndicatorId));
     setRun(nextRun);
     setSelectedCountryIso3("");
     setMasterGuess("");
     window.requestAnimationFrame(() => window.scrollTo(0, 0));
+  }
+
+  async function replayCompletedRun(sourceRun: RunState) {
+    if (!data) return;
+    const roundIds = sourceRun.rounds.map((round) => ({
+      roundId: round.roundId,
+      correctIndicatorId: round.correctIndicatorId
+    }));
+    const replay = createRun({
+      mode: sourceRun.mode,
+      dateKey: sourceRun.dateKey,
+      contentVersion: sourceRun.contentVersion,
+      tier: sourceRun.tier,
+      roundIds,
+      salt: `replay:${Date.now()}:${sourceRun.id}`
+    });
+    await ensureIndicators(replay.rounds.map((round) => round.correctIndicatorId));
+    setRun(replay);
+    setSelectedCountryIso3("");
+    setMasterGuess("");
+    setShareStatus("");
+    window.requestAnimationFrame(() => window.scrollTo(0, 0));
+  }
+
+  function returnToLobby(targetId?: string) {
+    setRun(null);
+    setShareStatus("");
+    window.requestAnimationFrame(() => {
+      if (targetId) {
+        document.getElementById(targetId)?.scrollIntoView({ block: "start" });
+        return;
+      }
+      window.scrollTo(0, 0);
+    });
   }
 
   function dispatch(action: Parameters<typeof reduceRun>[1]) {
@@ -542,19 +731,23 @@ export function WorldprintClient({ dateOverride, entryMode = "standard" }: World
   if (!run) {
     const activeDateRun = isArchiveDate ? currentArchiveRun : currentDailyRun;
     const archiveRecord = isArchiveDate ? savedArchiveRecord(store, todayKey) : null;
+    const reviewRecord = isArchiveDate ? archiveReviewRecord(archiveRecord, currentAccountArchiveRun, todayKey) : null;
+    const todayRecord = !isArchiveDate ? store.dailyHistoryByDate[todayKey] ?? null : null;
+    const completedDailyRun = !isArchiveDate && activeDateRun?.status === "complete" ? activeDateRun : null;
+    const todayCompleted = Boolean(!isArchiveDate && (completedDailyRun || todayRecord));
     const archiveRecordDate = formatRecordDate(archiveRecord?.completedAt);
     const dailyLabel = activeDateRun
-      ? activeDateRun.status === "complete"
+        ? activeDateRun.status === "complete"
         ? isArchiveDate
-          ? "View record"
-          : "View completed Mystery Map"
+          ? "View result"
+          : "View today's result"
         : isArchiveDate
           ? "Continue replay"
           : "Continue today's Mystery Map"
       : isArchiveDate
         ? archiveRecord
-          ? "Replay for better score"
-          : "Play past map"
+          ? "Replay for practice"
+          : "Try past puzzle"
         : "Start today's Mystery Map";
     const selectedCount = selectedPracticeRounds.length;
     const selectedDifficultyLabel = DIFFICULTY_LABELS[practiceDifficulty];
@@ -576,7 +769,36 @@ export function WorldprintClient({ dateOverride, entryMode = "standard" }: World
           : "Free account is active here. The Daily stays playable, and your saved stats can follow this account as sync grows."
         : isArchiveDate
           ? "Past games are open in this public build while account limits are not enforced. Future Pro access will open the full atlas."
-          : "Today's public build is open while account limits are not enforced. Future plans will include instant demo play, free Daily play, and paid full atlas access.";
+        : "Today's public build is open while account limits are not enforced. Future plans will include instant demo play, free Daily play, and paid full atlas access.";
+    if (reviewRequested) {
+      if (reviewRecord) {
+        return (
+          <ArchiveReview
+            record={reviewRecord}
+            data={data}
+            indicatorCache={indicatorCache}
+            onReplay={() => void startArchivePracticeReplay()}
+          />
+        );
+      }
+      return (
+        <section className="game-shell page-shell">
+          <div className="empty-state surface">
+            <p className="eyebrow">Past Game review</p>
+            <h1>No saved result for {todayKey} yet.</h1>
+            <p>Play this past game once to create a result, then return here to review it.</p>
+            <div className="button-row">
+              <button className="button" type="button" onClick={() => void startRun("archive")}>
+                Try past puzzle
+              </button>
+              <Link className="button-secondary" href="/archive/worldprint">
+                Open past games
+              </Link>
+            </div>
+          </div>
+        </section>
+      );
+    }
     return (
       <section className="game-entry page-shell" data-entry-mode={isArchiveDate ? "archive" : "daily"}>
         <div className="entry-copy">
@@ -619,144 +841,166 @@ export function WorldprintClient({ dateOverride, entryMode = "standard" }: World
           {data.dailyManifestIssue ? <p className="archive-note">{data.dailyManifestIssue}</p> : null}
         </div>
         <div className="entry-panel surface">
-          <div className="setup-section">
-            <div className="setup-heading">
-              <p className="setup-kicker">Choose how you play</p>
-              <p>Pick how much help you want. This changes answer choices, clue costs, investigations, and Atlas Master search.</p>
-            </div>
-            <TierSelector value={selectedTier} onChange={updateTier} />
-          </div>
           {!isArchiveDate ? (
-            <div className="button-row entry-primary-actions">
-              <button className="button" type="button" onClick={() => void startRun("daily")}>
-                <Compass size={18} aria-hidden="true" />
-                {dailyLabel}
-              </button>
-              <a className="button-secondary" href="#practice-atlas">
-                Practice atlas
-              </a>
-              <Link className="button-secondary" href="/archive/worldprint">
-                Replay Library
-              </Link>
-            </div>
-          ) : null}
-          {!isArchiveDate ? (
-            <div className="practice-panel" id="practice-atlas" aria-label="Practice options">
-              <div>
-                <p className="setup-kicker">Optional practice</p>
-                <h2>Practice mode</h2>
-                <p>Pick a topic and difficulty, then play a quick warm-up. Practice never touches your Daily streak.</p>
+            <>
+              <div className="mode-panel-heading">
+                <p className="setup-kicker">Choose your game mode</p>
+                <h2>Pick your run.</h2>
+                <p>Replays do not change your official Daily score.</p>
               </div>
-              <div className="practice-filters">
-                <label htmlFor="practice-category">
-                  Topic
-                  <select id="practice-category" value={practiceCategory} onChange={(event) => setPracticeCategory(event.target.value)}>
-                    <option value="">Any topic</option>
-                    {practiceCategories.map((category) => (
-                      <option key={category} value={category}>
-                        {category}
-                      </option>
-                    ))}
-                  </select>
-                </label>
-                <label htmlFor="practice-difficulty">
-                  Map difficulty
-                  <select
-                    id="practice-difficulty"
-                    value={practiceDifficulty}
-                    onChange={(event) => setPracticeDifficulty(event.target.value as IndicatorDifficulty)}
-                  >
-                    <option value="intro">Intro</option>
-                    <option value="standard">Standard</option>
-                    <option value="expert">Expert</option>
-                  </select>
-                </label>
+              <div className="mode-card-grid" aria-label="Mystery Map modes">
+                <article className="mode-card mode-card-daily" data-state={todayCompleted ? "complete" : "ready"} aria-label={todayCompleted ? "Today completed" : "Daily Mystery Map"}>
+                  <div>
+                    <p className="setup-kicker">Daily Mystery Map</p>
+                    <h3>Daily Mystery Map</h3>
+                    <p>Five maps. One official daily score.</p>
+                  </div>
+                  {todayCompleted ? <span className="mode-state-pill">Today&apos;s run complete</span> : <span className="mode-state-pill">Ready today</span>}
+                  <div className="mode-card-actions">
+                    {todayCompleted ? (
+                      <>
+                        <button className="button" type="button" disabled={!completedDailyRun} onClick={() => completedDailyRun && setRun(completedDailyRun)}>
+                          View today&apos;s result
+                        </button>
+                        <button className="button-secondary" type="button" onClick={() => void startRun("daily", undefined, { freshReplay: true })}>
+                          Replay for practice
+                        </button>
+                      </>
+                    ) : (
+                      <button className="button" type="button" onClick={() => void startRun("daily")}>
+                        <Compass size={18} aria-hidden="true" />
+                        {dailyLabel}
+                      </button>
+                    )}
+                  </div>
+                </article>
+                <article className="mode-card mode-card-practice" id="practice-atlas">
+                  <div>
+                    <p className="setup-kicker">Practice Atlas</p>
+                    <h3>Practice Atlas</h3>
+                    <p>Train on topics and difficulty. Never affects your streak.</p>
+                  </div>
+                  <div className="practice-filters">
+                    <label htmlFor="practice-category">
+                      Topic
+                      <select id="practice-category" value={practiceCategory} onChange={(event) => updatePracticeCategory(event.target.value)}>
+                        <option value="">Any topic · {roundCountForFilters(data.rounds, "")} maps</option>
+                        {practiceCategoryOptions.map((option) => (
+                          <option key={option.category} value={option.category}>
+                            {option.category} · {option.count} maps
+                          </option>
+                        ))}
+                      </select>
+                    </label>
+                    <label htmlFor="practice-difficulty">
+                      Map difficulty
+                      <select
+                        id="practice-difficulty"
+                        value={practiceDifficulty}
+                        onChange={(event) => setPracticeDifficulty(event.target.value as IndicatorDifficulty)}
+                      >
+                        {practiceDifficultyOptions.map((option) => (
+                          <option key={option.difficulty} value={option.difficulty}>
+                            {DIFFICULTY_LABELS[option.difficulty]} · {option.count} maps
+                          </option>
+                        ))}
+                      </select>
+                    </label>
+                  </div>
+                  <div className="practice-set-card" data-status={selectedCount > 0 ? practiceSetStatus : "empty"} aria-live="polite">
+                    <span>{setReadyLabel}</span>
+                    <strong>
+                      {selectedCount > 0
+                        ? practiceReadyLine(selectedCount)
+                        : practiceMatches.length > 0
+                          ? practiceReadyLine(availablePracticeCount)
+                          : practiceReadyLine(0)}
+                    </strong>
+                    <p>
+                      {selectedCount > 0
+                        ? practiceFlavor(practiceDifficulty)
+                        : practiceMatches.length > 0
+                          ? "Ready from these filters."
+                          : "Try another topic or difficulty."}
+                    </p>
+                    {practiceWarning ? <p className="practice-warning">{practiceWarning}</p> : null}
+                  </div>
+                  <div className="practice-actions">
+                    <button className="button practice-start-button" type="button" disabled={practiceMatches.length === 0} onClick={() => void startPracticeRun()}>
+                      Start practice
+                    </button>
+                    <button className="button-secondary" type="button" disabled={practiceMatches.length === 0} onClick={buildPracticeSet}>
+                      <Shuffle size={17} aria-hidden="true" />
+                      Shuffle set
+                    </button>
+                  </div>
+                </article>
+                <article className="mode-card mode-card-past">
+                  <div>
+                    <p className="setup-kicker">Past Games</p>
+                    <h3>Past Games</h3>
+                    <p>Review or replay earlier Mystery Maps.</p>
+                  </div>
+                  <div className="mode-card-actions">
+                    <Link className="button-secondary" href="/archive/worldprint">
+                      Open past games
+                    </Link>
+                  </div>
+                </article>
               </div>
-              <p className="practice-helper">
-                Intro is a gentle start. Standard and Expert bring tighter, stranger map patterns.
-              </p>
-              <div className="practice-access-note" aria-label="Practice access">
-                <span>{entitlement.capabilities.canUseFullPractice ? "Full atlas practice" : "Limited practice"}</span>
+              <div className="setup-section setup-section-compact">
+                <div className="setup-heading">
+                  <p className="setup-kicker">Skill tier</p>
+                  <p>Sets the answer list, clues, and investigations for Daily, Practice, and replays.</p>
+                </div>
+                <TierSelector value={selectedTier} onChange={updateTier} />
+              </div>
+            </>
+          ) : (
+            <>
+              <div className="setup-section">
+                <div className="setup-heading">
+                  <p className="setup-kicker">Skill tier</p>
+                  <p>Pick how much help you want for this replay.</p>
+                </div>
+                <TierSelector value={selectedTier} onChange={updateTier} />
+              </div>
+              <div className="archive-banner">
+                <p className="setup-kicker">Past Mystery Map Replay</p>
+                <h2>{todayKey}</h2>
                 <p>
-                  {entitlement.capabilities.canUseFullPractice
-                    ? "Pro access is active. Practice can grow into the full map atlas."
-                    : `This warm-up stays at ${entitlement.capabilities.practiceLimit ?? 3} maps. Pro will unlock every practice map when paid access opens.`}
+                  This fixed 5-map set is a Past Game for the date. Review your result, replay for practice, or chase a personal best. Past replays never
+                  change today&apos;s streak.
                 </p>
-                {!entitlement.capabilities.canUseFullPractice ? (
-                  <Link href="/upgrade">
-                    Full atlas coming soon
-                  </Link>
-                ) : null}
+                <div className="archive-record-summary" data-state={archiveRecord ? "saved" : "empty"} aria-label="Past game record">
+                  <span>{archiveRecord ? "Saved result" : "No result yet"}</span>
+                  <strong>{archiveRecord ? `${archiveRecord.bestScore.toLocaleString("en-US")} points` : "Play this past game"}</strong>
+                  <p>
+                    {archiveRecord
+                      ? `${TIER_CONFIGS[archiveRecord.tier].shortLabel}${archiveRecordDate ? ` · saved ${archiveRecordDate}` : ""}`
+                      : "Play the fixed map set once or practice without changing today's streak."}
+                  </p>
+                </div>
               </div>
-              <div className="practice-set-card" data-status={selectedCount > 0 ? practiceSetStatus : "empty"} aria-live="polite">
-                <span>{setReadyLabel}</span>
-                <strong>
-                  {selectedCount > 0
-                    ? practiceReadyLine(selectedCount)
-                    : practiceMatches.length > 0
-                      ? practiceReadyLine(availablePracticeCount)
-                      : practiceReadyLine(0)}
-                </strong>
-                {selectedCount > 0 ? (
+              <div className="button-row archive-start-row">
+                {reviewRecord ? (
                   <>
-                    <p>{practiceFlavor(practiceDifficulty)}</p>
+                    <Link className="button" href={`/play/worldprint/${todayKey}?review=1`}>
+                      View result
+                    </Link>
+                    <button className="button-secondary" type="button" onClick={() => void startArchivePracticeReplay()}>
+                      Replay for practice
+                    </button>
                   </>
                 ) : (
-                  <p>
-                    {practiceMatches.length > 0
-                      ? "Pick a practice set when you are ready."
-                      : "Try another topic or difficulty."}
-                  </p>
+                  <button className="button" type="button" onClick={() => void startRun("archive")}>
+                    <Compass size={18} aria-hidden="true" />
+                    {dailyLabel}
+                  </button>
                 )}
-                {practiceWarning ? <p className="practice-warning">{practiceWarning}</p> : null}
               </div>
-              <div className="practice-actions">
-                <button
-                  className="button practice-start-button"
-                  type="button"
-                  disabled={selectedPracticeRounds.length === 0}
-                  onClick={() => void startRun("practice")}
-                >
-                  Start practice
-                </button>
-                <button className="button-secondary" type="button" disabled={practiceMatches.length === 0} onClick={buildPracticeSet}>
-                  <Shuffle size={17} aria-hidden="true" />
-                  {practiceSetStatus === "ready" ? "New practice set" : "Pick practice maps"}
-                </button>
-              </div>
-            </div>
-          ) : (
-            <div className="archive-banner">
-              <p className="setup-kicker">Past Mystery Map Replay</p>
-              <h2>{todayKey}</h2>
-              <p>
-                This fixed 5-map set is your record slot for the date. Beat your saved score, or fill the archive if you have not played it yet. Past replays
-                never change today&apos;s streak.
-              </p>
-              <div className="archive-record-summary" data-state={archiveRecord ? "saved" : "empty"} aria-label="Past game record">
-                <span>{archiveRecord ? "Saved record" : "No record yet"}</span>
-                <strong>{archiveRecord ? `${archiveRecord.bestScore.toLocaleString("en-US")} points` : "Fill this slot"}</strong>
-                <p>
-                  {archiveRecord
-                    ? `${TIER_CONFIGS[archiveRecord.tier].shortLabel}${archiveRecordDate ? ` · saved ${archiveRecordDate}` : ""}`
-                    : "Play the fixed map set once to create a personal best."}
-                </p>
-              </div>
-            </div>
+            </>
           )}
-          {isArchiveDate ? (
-            <div className="button-row archive-start-row">
-              <button className="button" type="button" onClick={() => void startRun(isArchiveDate ? "archive" : "daily")}>
-                <Compass size={18} aria-hidden="true" />
-                {dailyLabel}
-              </button>
-              {activeDateRun?.status === "complete" ? (
-                <button className="button-secondary" type="button" onClick={() => void startRun("archive", undefined, { freshReplay: true })}>
-                  Replay again
-                </button>
-              ) : null}
-            </div>
-          ) : null}
         </div>
       </section>
     );
@@ -767,7 +1011,9 @@ export function WorldprintClient({ dateOverride, entryMode = "standard" }: World
       <CompletionSummary
         run={run}
         store={store}
-        onBack={() => setRun(null)}
+        onBack={() => returnToLobby()}
+        onPractice={() => returnToLobby("practice-atlas")}
+        onReplay={() => void replayCompletedRun(run)}
         shareStatus={shareStatus}
         setShareStatus={setShareStatus}
         cloudSaveStatus={cloudSaveStatus}
@@ -1345,6 +1591,159 @@ function indicatorTitleByProviderCode(indicators: Map<string, IndicatorSummary>,
   return providerCode;
 }
 
+function ArchiveReview({
+  record,
+  data,
+  indicatorCache,
+  onReplay
+}: {
+  record: ArchiveReviewRecord;
+  data: LoadedData;
+  indicatorCache: Record<string, IndicatorArtifact>;
+  onReplay: () => void;
+}) {
+  const rank = scoreRank(record.bestScore, record.roundCount);
+  const details = record.roundDetails ?? [];
+  const hasRoundDetails = details.length > 0;
+  const roundCount = Math.max(record.roundCount, details.length, record.roundScores.length);
+  const totalClueSpend = details.reduce((sum, detail) => sum + detail.clueSpend, 0);
+  const totalMisses = details.reduce((sum, detail) => sum + detail.misses, 0);
+  const roundNumbers = Array.from({ length: roundCount }, (_, index) => index + 1);
+  const tierLabel = record.tier ? TIER_CONFIGS[record.tier].shortLabel : "Unknown tier";
+  const savedDate = formatRecordDate(record.completedAt);
+
+  return (
+    <section className="archive-review-page page-shell" aria-label="Past Game result review">
+      <div className="archive-review-hero surface">
+        <div>
+          <p className="eyebrow">Past Game result</p>
+          <h1 className="page-title">Review {record.dateKey}.</h1>
+          <p className="lead">
+            Historical result only. Replay for practice starts a separate attempt and will not change your official Daily score.
+          </p>
+        </div>
+        <div className="archive-review-score">
+          <span>{rank.title}</span>
+          <strong>{record.bestScore.toLocaleString("en-US")}</strong>
+          <p>
+            {record.savedState}
+            {savedDate ? ` · saved ${savedDate}` : ""}
+          </p>
+        </div>
+      </div>
+      <dl className="archive-review-stats surface" aria-label="Past Game summary">
+        <div>
+          <dt>Date</dt>
+          <dd>{record.dateKey}</dd>
+        </div>
+        <div>
+          <dt>Tier</dt>
+          <dd>{tierLabel}</dd>
+        </div>
+        <div>
+          <dt>Maps completed</dt>
+          <dd>{record.roundCount}</dd>
+        </div>
+        <div>
+          <dt>Correct</dt>
+          <dd>{record.correctCount}</dd>
+        </div>
+        <div>
+          <dt>Misses</dt>
+          <dd>{hasRoundDetails ? totalMisses : "Not saved"}</dd>
+        </div>
+        <div>
+          <dt>Clue spend</dt>
+          <dd>{hasRoundDetails ? totalClueSpend.toLocaleString("en-US") : "Not saved"}</dd>
+        </div>
+      </dl>
+      <div className="archive-review-actions">
+        <button className="button" type="button" onClick={onReplay}>
+          Replay for practice
+        </button>
+        <Link className="button-secondary" href="/archive/worldprint">
+          Open past games
+        </Link>
+      </div>
+      <section className="archive-review-rounds" aria-label="Round timeline">
+        <div className="section-heading">
+          <p className="eyebrow">5-map timeline</p>
+          <h2>Round by round.</h2>
+        </div>
+        {!hasRoundDetails ? (
+          <div className="archive-review-fallback surface">
+            <strong>Round detail was not saved for this older run.</strong>
+            <p>We can still show the saved score summary. New completed runs will save round-level detail for this review.</p>
+          </div>
+        ) : null}
+        <div className="archive-review-round-grid">
+          {roundNumbers.map((roundNumber, index) => {
+            const detail = details[index];
+            const score = detail?.score ?? record.roundScores[index] ?? null;
+            const summary = detail ? data.indicators.get(detail.correctIndicatorId) : null;
+            const indicator = detail ? indicatorCache[detail.correctIndicatorId] : null;
+            const title = indicator?.shortTitle ?? summary?.shortTitle ?? summary?.title ?? "Round detail unavailable";
+            const source = indicator?.source;
+            return (
+              <article key={roundNumber} className="archive-review-round-card surface" data-result={detail?.result ?? "summary"}>
+                <div className="archive-review-round-heading">
+                  <span>Map {roundNumber}</span>
+                  <strong>{score === null ? "Score not saved" : `${score.toLocaleString("en-US")} points`}</strong>
+                </div>
+                {detail ? (
+                  <>
+                    <dl>
+                      <div>
+                        <dt>State</dt>
+                        <dd>{reviewResultLabel(detail)}</dd>
+                      </div>
+                      <div>
+                        <dt>Indicator</dt>
+                        <dd>{title}</dd>
+                      </div>
+                      <div>
+                        <dt>Final guess</dt>
+                        <dd>{title}</dd>
+                      </div>
+                      <div>
+                        <dt>Misses</dt>
+                        <dd>{detail.misses}</dd>
+                      </div>
+                      <div>
+                        <dt>Clue spend</dt>
+                        <dd>{detail.clueSpend}</dd>
+                      </div>
+                      <div>
+                        <dt>Country clues</dt>
+                        <dd>{detail.countryClues.length ? detail.countryClues.map((clue) => clue.countryName).join(", ") : "None"}</dd>
+                      </div>
+                    </dl>
+                    {detail.rejectedAnswers.length ? (
+                      <p className="archive-review-misses">Wrong guesses: {detail.rejectedAnswers.map((answer) => answer.label).join(", ")}</p>
+                    ) : null}
+                    <p className="archive-review-source">
+                      Source:{" "}
+                      {source ? (
+                        <a href={source.sourceReference} target="_blank" rel="noreferrer">
+                          {source.provider} · {source.dataset}
+                        </a>
+                      ) : (
+                        "Loading source details"
+                      )}
+                    </p>
+                  </>
+                ) : (
+                  <p>Round detail was not saved for this older run.</p>
+                )}
+              </article>
+            );
+          })}
+        </div>
+      </section>
+    </section>
+  );
+}
+
 function RankedTable({ title, rows, indicator }: { title: string; rows: RankedCountry[]; indicator: IndicatorArtifact }) {
   return (
     <div>
@@ -1373,6 +1772,8 @@ function CompletionSummary({
   run,
   store,
   onBack,
+  onPractice,
+  onReplay,
   shareStatus,
   setShareStatus,
   cloudSaveStatus,
@@ -1381,6 +1782,8 @@ function CompletionSummary({
   run: RunState;
   store: PersistedState;
   onBack: () => void;
+  onPractice: () => void;
+  onReplay: () => void;
   shareStatus: string;
   setShareStatus: (value: string) => void;
   cloudSaveStatus: string;
@@ -1390,7 +1793,7 @@ function CompletionSummary({
   const challengeCode = encodeChallenge(challengePayloadFromRun(run));
   const challengeUrl =
     typeof window === "undefined" ? `/challenge/worldprint?c=${challengeCode}` : `${window.location.origin}/challenge/worldprint/?c=${challengeCode}`;
-  const challengeShareText = buildShareText({ ...run, mode: "challenge" }, { challengeUrl });
+  const challengeSharePrompt = "Think you can beat my Can You Geo? Mystery Map score?";
   const total = run.rounds.reduce((sum, round) => sum + round.score, 0);
   const bestRound = run.rounds.length ? Math.max(...run.rounds.map((round) => round.score)) : 0;
   const averageRound = run.rounds.length ? Math.round(total / run.rounds.length) : 0;
@@ -1403,33 +1806,69 @@ function CompletionSummary({
   const scorePercent = Math.max(0, Math.min(100, Math.round((total / possibleRunScore) * 100)));
   const isPastRecord = run.mode === "archive";
   const accountSaveHeading = signedIn
-    ? cloudSaveStatus.toLowerCase().includes("failed")
+    ? cloudSaveStatus.toLowerCase().includes("saved to your account")
+      ? "Saved to your account."
+      : cloudSaveStatus.toLowerCase().includes("failed")
       ? "Saved locally. Sync needs another try."
-      : "Saved to your account."
+      : "Account save is on."
     : "Save your score and streak.";
   const saveNote = signedIn
-    ? "Account sync is active. This run is saved locally first, then matched to your account when the connection is available."
+    ? cloudSaveStatus.toLowerCase().includes("saved to your account")
+      ? "Saved to your account."
+      : "Account sync is active for completed runs."
     : "Local on this device. Sign in to save completed runs, stats, and streaks to your account.";
-  async function share() {
+  const statsHeading = signedIn
+    ? cloudSaveStatus.toLowerCase().includes("saved to your account")
+      ? "Saved to your account."
+      : "Account stats."
+    : "Saved in this browser.";
+  async function shareResult() {
     try {
       if (navigator.share) {
-        await navigator.share({ text: shareText });
+        await navigator.share({ title: "Can You Geo? result", text: shareText });
         setShareStatus("Shared.");
         return;
       }
       await navigator.clipboard.writeText(shareText);
-      setShareStatus("Copied spoiler-free result.");
+      setShareStatus("Copied result text.");
     } catch {
-      setShareStatus("Share text is ready below.");
+      setShareStatus("Result text is ready below.");
     }
   }
 
-  async function copyChallenge() {
+  async function copyResultText() {
     try {
-      await navigator.clipboard.writeText(challengeShareText);
+      await navigator.clipboard.writeText(shareText);
+      setShareStatus("Copied result text.");
+    } catch {
+      setShareStatus("Result text is ready below.");
+    }
+  }
+
+  async function shareChallenge() {
+    try {
+      if (navigator.share) {
+        await navigator.share({
+          title: "Can You Geo? challenge",
+          text: challengeSharePrompt,
+          url: challengeUrl
+        });
+        setShareStatus("Challenge shared.");
+        return;
+      }
+      setShareStatus("Copied challenge link.");
+      await navigator.clipboard.writeText(challengeUrl);
+    } catch {
+      setShareStatus("Copy the challenge link instead.");
+    }
+  }
+
+  async function copyChallengeLink() {
+    try {
+      await navigator.clipboard.writeText(challengeUrl);
       setShareStatus("Copied challenge link.");
     } catch {
-      setShareStatus("Challenge text is ready below.");
+      setShareStatus("Challenge link could not be copied.");
     }
   }
 
@@ -1467,7 +1906,7 @@ function CompletionSummary({
           <div className="rank-medallion" aria-hidden="true">
             {scorePercent}
           </div>
-          <div>
+          <div className="run-rank-copy">
             <span>Run rank</span>
             <strong>{rank.title}</strong>
             <p>{rank.note}</p>
@@ -1518,24 +1957,45 @@ function CompletionSummary({
             );
           })}
         </div>
-        <div className="button-row">
-          <button className="button" type="button" onClick={() => void share()}>
+        <div className="summary-next-actions surface" aria-label="Post-run actions">
+          <button className="button" type="button" onClick={onPractice}>
+            Practice another set
+          </button>
+          <button className="button-secondary" type="button" onClick={onReplay}>
+            Replay this map set
+          </button>
+          <Link className="button-secondary" href="/archive/worldprint">
+            Past Games
+          </Link>
+          <Link className="button-secondary" href="/account/stats">
+            View saved stats
+          </Link>
+        </div>
+        <div className="share-action-grid" aria-label="Share options">
+          <button className="button-secondary" type="button" onClick={() => void shareResult()}>
             <Share2 size={18} aria-hidden="true" />
             Share result
           </button>
-          <button className="button-secondary" type="button" onClick={() => void copyChallenge()}>
+          <button className="button-secondary" type="button" onClick={() => void copyResultText()}>
             <Copy size={18} aria-hidden="true" />
+            Copy result text
+          </button>
+          <button className="button-secondary" type="button" onClick={() => void shareChallenge()}>
+            <Share2 size={18} aria-hidden="true" />
             {challengeButtonLabel}
           </button>
+          <button className="button-secondary" type="button" onClick={() => void copyChallengeLink()}>
+            <Copy size={18} aria-hidden="true" />
+            Copy challenge link
+          </button>
           <button className="button-secondary" type="button" onClick={onBack}>
-            {isPastRecord ? "Back to record" : "Back to Mystery Map"}
+            {isPastRecord ? "Back to record" : "Back to lobby"}
           </button>
         </div>
         <div className="status-live" role="status" aria-live="polite">
           {shareStatus}
         </div>
-        <textarea className="share-text" readOnly value={shareText} aria-label="Spoiler-free share text" />
-        <textarea className="share-text challenge-share-text" readOnly value={challengeShareText} aria-label="Spoiler-free challenge share text" />
+        <textarea className="share-text" readOnly value={shareText} aria-label="Result share text" />
         <section className="account-save-card surface" aria-label="Save your progress">
           <div>
             <p className="eyebrow">Save progress</p>
@@ -1563,7 +2023,7 @@ function CompletionSummary({
           </div>
         </section>
       </div>
-      <PlayerStatsPanel store={store} note={saveNote} />
+      <PlayerStatsPanel store={store} heading={statsHeading} note={saveNote} />
     </section>
   );
 }

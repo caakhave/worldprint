@@ -161,6 +161,8 @@ export const IndicatorArtifactSchema = z.object({
   difficulty: IndicatorDifficultySchema,
   definition: z.string(),
   unit: z.string(),
+  unitClue: z.string().nullable().optional(),
+  unitClueUseful: z.boolean().optional(),
   year: z.number().int(),
   valuesByIso3: z.record(z.string(), z.number().finite()),
   stats: z.object({

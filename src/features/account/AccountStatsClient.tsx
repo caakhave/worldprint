@@ -80,6 +80,23 @@ function AccountRemoteStatsPanel({ stats }: { stats: AccountCloudStats }) {
   );
 }
 
+function AccountEmptyStatsPanel({ hasLocalHistory }: { hasLocalHistory: boolean }) {
+  return (
+    <section className="stats-panel surface player-stats-panel account-remote-stats" aria-label="Your stats">
+      <div className="player-stats-heading">
+        <p className="eyebrow">Account stats</p>
+        <h2>No account-saved runs yet.</h2>
+      </div>
+      <p className="player-stats-empty">
+        {hasLocalHistory
+          ? "This browser has completed runs ready to import into your account."
+          : "Complete a Daily, Practice run, Past Game, or Challenge while signed in and it will appear here."}
+      </p>
+      <p className="player-stats-note">Signed in. Account stats are private to you; no leaderboard or public profile.</p>
+    </section>
+  );
+}
+
 export function AccountStatsClient() {
   const [store, setStore] = useState<PersistedState>(() => defaultPersistedState());
   const [storeLoaded, setStoreLoaded] = useState(false);
@@ -109,7 +126,8 @@ export function AccountStatsClient() {
       const result = await fetchRemoteRunSummaries(client, user.id);
       if (cancelled) return;
       if (result.error) {
-        setSyncError(result.error);
+        console.warn("[Can You Geo] Account stats load failed.", result.error);
+        setSyncError("We could not load account-saved runs. Local stats are still safe on this device.");
       } else {
         setRemoteStats(result.data.length ? buildAccountStatsFromCloudRuns(user.id, result.data) : null);
       }
@@ -125,7 +143,7 @@ export function AccountStatsClient() {
     if (!user || !storeLoaded) return;
     const existingMarker = window.localStorage.getItem(syncMarkerKey(user.id));
     if (existingMarker === signature && hasLocalHistory) {
-      setSyncStatus("This device's current stats are already saved to your account.");
+      setSyncStatus("Local runs from this browser are already in your account.");
     }
   }, [hasLocalHistory, signature, storeLoaded, user]);
 
@@ -135,12 +153,12 @@ export function AccountStatsClient() {
       return;
     }
     if (!hasLocalHistory) {
-      setSyncStatus("Finish a Daily, Past Game, or Challenge before syncing stats.");
+      setSyncStatus("No completed local runs are ready to import from this browser.");
       return;
     }
     const markerKey = syncMarkerKey(user.id);
     if (window.localStorage.getItem(markerKey) === signature) {
-      setSyncStatus("This device's current stats are already saved to your account.");
+      setSyncStatus("Local runs from this browser are already in your account.");
       return;
     }
     setSyncing(true);
@@ -149,17 +167,35 @@ export function AccountStatsClient() {
     const result = await syncLocalRunsToSupabase(client, user.id, store);
     setSyncing(false);
     if (result.error || !result.data) {
-      setSyncError(result.error ?? "Could not save stats.");
+      console.warn("[Can You Geo] Account stats sync failed.", result.error ?? "No synced data returned.");
+      setSyncError("We could not import these runs yet. They are still saved locally in this browser.");
       return;
     }
     setRemoteStats(result.data);
     window.localStorage.setItem(markerKey, result.signature);
-    setSyncStatus(`Saved ${result.syncedRuns} completed run${result.syncedRuns === 1 ? "" : "s"} from this device to your account.`);
+    setSyncStatus(`Imported ${result.syncedRuns} completed run${result.syncedRuns === 1 ? "" : "s"} into your account.`);
   }
+
+  const alreadyImported = syncStatus.toLowerCase().includes("already in your account");
+  const importButtonLabel = syncing
+    ? "Importing..."
+    : !hasLocalHistory
+      ? "No local runs to import"
+      : alreadyImported
+        ? "Already imported"
+        : "Import local runs";
 
   return (
     <div className="account-stats-stack">
-      {user && remoteStats ? <AccountRemoteStatsPanel stats={remoteStats} /> : <PlayerStatsPanel store={store} landmark={false} />}
+      {user ? (
+        remoteStats ? (
+          <AccountRemoteStatsPanel stats={remoteStats} />
+        ) : (
+          <AccountEmptyStatsPanel hasLocalHistory={hasLocalHistory} />
+        )
+      ) : (
+        <PlayerStatsPanel store={store} landmark={false} />
+      )}
 
       <section className="surface account-card account-sync-card" aria-label="Account stats sync">
         <p className="eyebrow">Stats sync</p>
@@ -170,13 +206,15 @@ export function AccountStatsClient() {
           </>
         ) : user ? (
           <>
-            <h2>Save this device&apos;s stats to your account.</h2>
-            <p>
-              This saves completed Daily, Past Games, and Challenge summaries from this browser to your account. Existing account saves are
-              deduped, and local play still works.
-            </p>
-            <button className="button" type="button" onClick={() => void syncStats()} disabled={syncing || !hasLocalHistory}>
-              {syncing ? "Saving..." : "Save completed runs"}
+            <h2>Import local runs</h2>
+            <p>Move completed runs from this browser into your account. Existing account saves are deduped, and local play still works.</p>
+            <button
+              className={hasLocalHistory && !alreadyImported ? "button" : "button-secondary"}
+              type="button"
+              onClick={() => void syncStats()}
+              disabled={syncing || !hasLocalHistory || alreadyImported}
+            >
+              {importButtonLabel}
             </button>
           </>
         ) : configured ? (

@@ -78,10 +78,18 @@ The `entitlements` table stores:
 - `stripe_subscription_id`
 - `stripe_price_id`
 - `stripe_status`
+- `cancel_at_period_end`
 - `current_period_end`
 - `updated_at`
 
 Browser clients can read their own entitlement row through RLS. They cannot grant themselves Pro.
+
+If an existing Supabase project was created before `cancel_at_period_end` was added, run this once in Supabase SQL Editor before deploying the updated webhook:
+
+```sql
+alter table public.entitlements
+  add column if not exists cancel_at_period_end boolean;
+```
 
 ## Deploy Functions
 
