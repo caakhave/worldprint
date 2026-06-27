@@ -210,6 +210,7 @@ customer.subscription.created
 customer.subscription.updated
 customer.subscription.deleted
 invoice.payment_failed
+invoice.payment_succeeded
 ```
 
 ### Test Mode Now, Live Mode Later

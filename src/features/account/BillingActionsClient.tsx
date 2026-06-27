@@ -4,6 +4,7 @@ import Link from "next/link";
 import { useState } from "react";
 import { useSupabaseAccount } from "@/features/account/useSupabaseAccount";
 import type { PlayerEntitlement } from "@/lib/account/entitlements";
+import { publicBillingEnabled } from "@/lib/billing/publicBillingConfig";
 import { PRO_PRICE_OPTIONS, type ProBillingInterval } from "@/lib/billing/proPricing";
 
 type BillingActionResponse = {
@@ -25,7 +26,7 @@ function warnBillingDetail(message: string, detail: unknown) {
 function billingErrorCopy(message?: string | null) {
   const normalized = message?.toLowerCase() ?? "";
   if (normalized.includes("configured") || normalized.includes("env") || normalized.includes("supabase")) {
-    return "Pro checkout is not available in this preview.";
+    return "Billing setup is not live yet.";
   }
   if (normalized.includes("sign in")) {
     return "Create a free account before upgrading.";
@@ -40,6 +41,7 @@ export function BillingActionsClient({ entitlement, context }: BillingActionsCli
   const signedIn = Boolean(user);
   const isPro = entitlement.plan === "pro";
   const hasStripeCustomer = Boolean(entitlement.row?.stripe_customer_id);
+  const billingEnabled = configured && publicBillingEnabled();
 
   async function invokeBillingFunction(
     functionName: "stripe-checkout" | "stripe-portal",
@@ -73,17 +75,17 @@ export function BillingActionsClient({ entitlement, context }: BillingActionsCli
       return;
     }
     if (!data?.url) {
-      setMessage("Pro checkout is not available in this preview.");
+      setMessage("Billing setup is not live yet.");
       return;
     }
     window.location.assign(data.url);
   }
 
-  if (!configured) {
+  if (!billingEnabled) {
     return (
       <div className="billing-actions" aria-label="Billing actions">
         <button className="button" type="button" disabled>
-          Pro checkout unavailable
+          Billing setup is not live yet
         </button>
         {context === "account" ? (
           <Link className="button-secondary" href="/upgrade">

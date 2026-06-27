@@ -92,6 +92,25 @@ Deno.serve(async (request) => {
     return json({ received: true });
   }
 
+  if (event.type === "invoice.payment_succeeded") {
+    const invoice = event.data.object as Stripe.Invoice;
+    const subscriptionId = idValue(invoice.subscription);
+    if (!subscriptionId) return json({ received: true, ignored: "missing_subscription" });
+    const subscription = await subscriptionForInvoice(stripe, subscriptionId);
+    const userId = metadataUserId(subscription) ?? metadataUserId(invoice) ?? (await userIdFromCustomer(supabase, invoice.customer));
+    if (!userId) return json({ received: true, ignored: "missing_user" });
+    await upsertBillingEntitlement(supabase, {
+      user_id: userId,
+      stripe_customer_id: idValue(subscription.customer) ?? idValue(invoice.customer),
+      stripe_subscription_id: subscription.id,
+      stripe_price_id: subscription.items.data[0]?.price.id ?? null,
+      stripe_status: subscription.status,
+      cancel_at_period_end: subscription.cancel_at_period_end,
+      current_period_end: periodEndToIso(subscription.current_period_end)
+    });
+    return json({ received: true });
+  }
+
   return json({ received: true, ignored: event.type });
 });
 
@@ -109,6 +128,10 @@ async function latestSubscriptionForWrite(stripe: Stripe, subscription: Stripe.S
   } catch (_error) {
     return subscription;
   }
+}
+
+async function subscriptionForInvoice(stripe: Stripe, subscriptionId: string) {
+  return await stripe.subscriptions.retrieve(subscriptionId);
 }
 
 async function shouldIgnoreStaleInactiveEvent(

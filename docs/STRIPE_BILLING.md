@@ -6,6 +6,8 @@ Can You Geo? keeps the public app statically exported. Stripe secrets therefore 
 - `stripe-portal` - creates Billing Portal sessions for signed-in players with a Stripe customer.
 - `stripe-webhook` - verifies Stripe webhook signatures and updates Supabase `entitlements`.
 
+The current architecture decision and test-mode launch checklist are documented in `docs/BILLING_ARCHITECTURE.md`.
+
 ## Required Env Vars
 
 Use the Supabase project root URL, for example `https://<project-ref>.supabase.co`. Do not use the REST API path such as `/rest/v1/`.
@@ -46,7 +48,10 @@ The static Next app still needs:
 NEXT_PUBLIC_SUPABASE_URL=
 NEXT_PUBLIC_SUPABASE_ANON_KEY=
 NEXT_PUBLIC_SITE_URL=
+NEXT_PUBLIC_BILLING_MODE=disabled
 ```
+
+Use `NEXT_PUBLIC_BILLING_MODE=test` only for intentional Stripe test-mode QA. Keep it `disabled` for regular production deploys until live billing is approved. The current app intentionally does not enable checkout for `NEXT_PUBLIC_BILLING_MODE=live`.
 
 Never expose `STRIPE_SECRET_KEY`, `STRIPE_WEBHOOK_SECRET`, or `SUPABASE_SERVICE_ROLE_KEY` to browser code.
 
@@ -64,10 +69,16 @@ Checkout Sessions intentionally disable Stripe adaptive pricing. The public prod
 
 ## Apply Supabase SQL
 
-Run:
+Run the full production spine SQL for a fresh project:
 
 ```sql
 -- docs/supabase/production_spine_v0.sql
+```
+
+For an existing project that already has the production spine tables but is missing Stripe billing fields, apply:
+
+```sql
+-- supabase/migrations/20260627000000_billing_test_mode_entitlements.sql
 ```
 
 The `entitlements` table stores:
@@ -84,12 +95,7 @@ The `entitlements` table stores:
 
 Browser clients can read their own entitlement row through RLS. They cannot grant themselves Pro.
 
-If an existing Supabase project was created before `cancel_at_period_end` was added, run this once in Supabase SQL Editor before deploying the updated webhook:
-
-```sql
-alter table public.entitlements
-  add column if not exists cancel_at_period_end boolean;
-```
+That migration is idempotent, adds the Stripe fields and indexes, enables RLS, grants authenticated read access, grants service-role write access, and does not create browser write policies.
 
 ## Deploy Functions
 
@@ -155,6 +161,7 @@ Trigger test events:
 stripe trigger checkout.session.completed
 stripe trigger customer.subscription.updated
 stripe trigger invoice.payment_failed
+stripe trigger invoice.payment_succeeded
 ```
 
 For a full local upgrade test:
@@ -166,11 +173,13 @@ For a full local upgrade test:
 5. Click `Upgrade to Pro`.
 6. Complete monthly or yearly Checkout with Stripe test card `4242 4242 4242 4242`.
 7. Confirm the webhook writes `entitlements.plan = 'pro'` and `status = 'active'`.
+8. Use the successful Checkout test card `4242 4242 4242 4242` with any future date and any three-digit CVC. Do not use real card details.
 
 ## Cancellation, Past Due, Resubscribe
 
 - Cancel subscription in Stripe Dashboard or Billing Portal. If Stripe keeps the subscription `active` with `cancel_at_period_end`, Can You Geo? keeps Pro until Stripe reaches the period end and emits the canceled/deleted subscription state. Immediate cancellation writes `plan = 'free'`, `status = 'canceled'`.
 - Simulate payment failure with Stripe test cards or `stripe trigger invoice.payment_failed`. The webhook writes `plan = 'free'`, `status = 'past_due'`.
+- Simulate payment success/recovery with `invoice.payment_succeeded` on the QA subscription. The webhook reconciles the subscription and writes active/trialing subscriptions back to Pro.
 - Resubscribe through Checkout. Subscription `active` or `trialing` writes `plan = 'pro'`.
 
 The webhook also ignores inactive events for an older subscription if the same user already has a newer active/trialing Stripe subscription recorded. Subscription create/update/delete events are reconciled against Stripe's current subscription record before the entitlement row is written whenever Stripe can be reached.

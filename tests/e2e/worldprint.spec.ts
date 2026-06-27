@@ -925,7 +925,7 @@ test("account and sign-in stay optional, friendly, and local-first", async ({ pa
     await expect(page.getByRole("link", { name: "Create a free account" })).toHaveAttribute("href", /\/sign-in\/?$/);
   } else {
     await expect(page.getByRole("link", { name: "Compare plans" })).toHaveAttribute("href", /\/upgrade\/?$/);
-    await expect(page.getByRole("button", { name: "Pro checkout unavailable" })).toBeDisabled();
+    await expect(page.getByRole("button", { name: "Billing setup is not live yet" })).toBeDisabled();
   }
   expect(await page.evaluate(() => document.documentElement.scrollWidth > window.innerWidth)).toBe(false);
 

@@ -38,7 +38,7 @@ Deno.serve(async (request) => {
   });
   const productName = "Can You Geo? Pro";
   const productSummary = "Full practice atlas, complete Past Games archive, and advanced stats.";
-  const metadata = { supabase_user_id: user.id, pro_billing_interval: interval, product_name: productName };
+  const metadata = { supabase_user_id: user.id, entitlement_tier: "pro", pro_billing_interval: interval, product_name: productName };
   const returnUrls = billingReturnUrls(env.siteUrl);
 
   const session = await stripe.checkout.sessions.create({

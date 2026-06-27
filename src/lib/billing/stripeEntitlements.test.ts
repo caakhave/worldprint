@@ -116,6 +116,32 @@ describe("Stripe billing entitlement mapping", () => {
     expect(updates[0]).toMatchObject({ user_id: "user-1", plan: "pro", status: "active" });
   });
 
+  it("records successful subscription invoice payments as active Pro through customer lookup", async () => {
+    const { billingStore, updates } = store({ cus_123: "user-1" });
+    const result = await handleStripeWebhookEvent(
+      {
+        type: "invoice.payment_succeeded",
+        data: {
+          object: {
+            customer: "cus_123",
+            subscription: "sub_123"
+          }
+        }
+      },
+      billingStore,
+      "2026-06-24T12:00:00.000Z"
+    );
+    expect(result).toEqual({ handled: true, action: "payment_succeeded" });
+    expect(updates[0]).toMatchObject({
+      user_id: "user-1",
+      plan: "pro",
+      status: "active",
+      stripe_customer_id: "cus_123",
+      stripe_subscription_id: "sub_123",
+      stripe_status: "active"
+    });
+  });
+
   it("marks payment failures past due through customer lookup", async () => {
     const { billingStore, updates } = store({ cus_123: "user-1" });
     const result = await handleStripeWebhookEvent(

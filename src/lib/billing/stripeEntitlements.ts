@@ -46,7 +46,7 @@ export type StripeWebhookLikeEvent = {
 
 export type StripeWebhookResult = {
   handled: boolean;
-  action: "checkout_completed" | "subscription_synced" | "payment_failed" | "ignored" | "missing_user";
+  action: "checkout_completed" | "subscription_synced" | "payment_failed" | "payment_succeeded" | "ignored" | "missing_user";
 };
 
 export function mapStripeStatusToEntitlement(status: string | null | undefined): StripeEntitlementState {
@@ -127,6 +127,27 @@ export async function handleStripeWebhookEvent(
     };
     await store.upsertEntitlement(update);
     return { handled: true, action: "payment_failed" };
+  }
+
+  if (event.type === "invoice.payment_succeeded") {
+    const invoice = event.data.object;
+    const customerId = stringField(invoice.customer);
+    const subscriptionId = stringField(invoice.subscription);
+    if (!subscriptionId) return { handled: false, action: "ignored" };
+    const userId = metadataUserId(invoice) ?? (customerId ? await store.findUserIdByCustomerId(customerId) : null);
+    if (!userId) return { handled: false, action: "missing_user" };
+    const update = entitlementUpdate({
+      userId,
+      customerId,
+      subscriptionId,
+      priceId: null,
+      stripeStatus: "active",
+      cancelAtPeriodEnd: null,
+      currentPeriodEnd: null,
+      now
+    });
+    await store.upsertEntitlement(update);
+    return { handled: true, action: "payment_succeeded" };
   }
 
   return { handled: false, action: "ignored" };
