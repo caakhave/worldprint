@@ -3,7 +3,6 @@
 import { useEffect, useState } from "react";
 
 const HERO_POSTER = "/worldprint/hero-poster.jpg";
-const HERO_VIDEO = "/images/homepage/can-you-geo-cinematic-hero-720p.mp4";
 const GENERATED_HERO_LOOP_WEBM = "/worldprint/hero-loop.webm";
 const GENERATED_HERO_LOOP_MP4 = "/worldprint/hero-loop.mp4";
 
@@ -34,7 +33,6 @@ export function HomepageHeroMedia() {
         >
           <source src={GENERATED_HERO_LOOP_WEBM} type="video/webm" />
           <source src={GENERATED_HERO_LOOP_MP4} type="video/mp4" />
-          <source src={HERO_VIDEO} type="video/mp4" />
         </video>
       ) : (
         <div className="landing-hero-poster" data-testid="homepage-hero-poster" />
