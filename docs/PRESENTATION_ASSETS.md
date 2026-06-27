@@ -9,9 +9,9 @@ Use these optional static assets to upgrade the homepage, Mystery Map lobby, and
 - `public/worldprint/hero-poster.jpg`
 - Recommended size: 1920x1080, 16:9
 - Recommended length: 8-12 seconds, seamless loop
-- Target weight: under 4 MB per video format
+- Target weight: keep each optimized public video comfortably below 10 MB; keep source/intermediate renders outside `public/`
 - Visual direction: cinematic dark world map, glowing choropleth countries, clue/score energy, atmospheric atlas-grid motion
-- Current fallback: `public/images/homepage/can-you-geo-cinematic-hero-720p.mp4` and `public/images/homepage/can-you-geo-cinematic-hero.png`
+- Current fallback: `public/worldprint/hero-poster.jpg`
 
 ## Lobby Hero Loop
 

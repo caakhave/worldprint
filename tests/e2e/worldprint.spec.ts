@@ -237,7 +237,7 @@ test("landing cinematic hero replaces the fake gameplay panel", async ({ page })
     "src",
     "/worldprint/hero-loop.webm"
   );
-  await expect(page.locator('.landing-hero-video source[src="/images/homepage/can-you-geo-cinematic-hero-720p.mp4"]')).toHaveCount(1);
+  await expect(page.locator('.landing-hero-video source[src="/worldprint/hero-loop.mp4"]')).toHaveCount(1);
   expect(await page.evaluate(() => document.documentElement.scrollWidth > window.innerWidth)).toBe(false);
 });
 
@@ -253,7 +253,7 @@ test("landing cinematic hero respects reduced-motion without layout overflow", a
   await expect(poster).toBeVisible();
   const posterBackground = await poster.evaluate((element) => window.getComputedStyle(element).backgroundImage);
   expect(posterBackground).toContain("/worldprint/hero-poster.jpg");
-  expect(posterBackground).toContain("/images/homepage/can-you-geo-cinematic-hero.png");
+  expect(posterBackground).not.toContain("/images/homepage/can-you-geo-cinematic-hero.png");
   expect(await page.evaluate(() => document.documentElement.scrollWidth > window.innerWidth)).toBe(false);
 });
 

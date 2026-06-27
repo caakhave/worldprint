@@ -18,3 +18,4 @@ supabase/.temp/
 tools/data_pipeline/.venv/
 tools/data_pipeline/__pycache__/
 generated/raw/
+source-assets/
