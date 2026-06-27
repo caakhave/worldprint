@@ -489,7 +489,7 @@ button:disabled {
   z-index: -4;
   overflow: hidden;
   background:
-    url("/worldprint/hero-poster.jpg") center / cover no-repeat,
+    url("/worldprint/hero-poster.jpg?v=20260627-v35") center / cover no-repeat,
     radial-gradient(circle at 76% 42%, rgb(215 168 75 / 0.16), transparent 21rem),
     linear-gradient(115deg, #061316 0%, #08181d 48%, #0d2429 100%);
 }
@@ -506,7 +506,7 @@ button:disabled {
 
 .landing-hero-poster {
   background:
-    url("/worldprint/hero-poster.jpg") center / cover no-repeat;
+    url("/worldprint/hero-poster.jpg?v=20260627-v35") center / cover no-repeat;
 }
 
 .landing-hero::after {

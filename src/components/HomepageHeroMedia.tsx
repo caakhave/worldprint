@@ -2,9 +2,10 @@
 
 import { useEffect, useState } from "react";
 
-const HERO_POSTER = "/worldprint/hero-poster.jpg";
-const GENERATED_HERO_LOOP_WEBM = "/worldprint/hero-loop.webm";
-const GENERATED_HERO_LOOP_MP4 = "/worldprint/hero-loop.mp4";
+const HERO_ASSET_VERSION = "v=20260627-v35";
+const HERO_POSTER = `/worldprint/hero-poster.jpg?${HERO_ASSET_VERSION}`;
+const GENERATED_HERO_LOOP_WEBM = `/worldprint/hero-loop.webm?${HERO_ASSET_VERSION}`;
+const GENERATED_HERO_LOOP_MP4 = `/worldprint/hero-loop.mp4?${HERO_ASSET_VERSION}`;
 
 export function HomepageHeroMedia() {
   const [shouldPlayVideo, setShouldPlayVideo] = useState(false);

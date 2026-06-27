@@ -230,14 +230,14 @@ test("landing cinematic hero replaces the fake gameplay panel", async ({ page })
   await expect(page.getByTestId("hero-map-stage")).toHaveCount(0);
   const video = page.getByTestId("homepage-hero-video");
   await expect(video).toBeAttached();
-  await expect(video).toHaveAttribute("poster", "/worldprint/hero-poster.jpg");
+  await expect(video).toHaveAttribute("poster", /\/worldprint\/hero-poster\.jpg\?v=20260627-v35/);
   await expect(video).not.toHaveAttribute("controls", /.*/);
   await expect(video).toHaveAttribute("loop", /.*/);
   await expect(page.locator(".landing-hero-video source").first()).toHaveAttribute(
     "src",
-    "/worldprint/hero-loop.webm"
+    /\/worldprint\/hero-loop\.webm\?v=20260627-v35/
   );
-  await expect(page.locator('.landing-hero-video source[src="/worldprint/hero-loop.mp4"]')).toHaveCount(1);
+  await expect(page.locator('.landing-hero-video source[src="/worldprint/hero-loop.mp4?v=20260627-v35"]')).toHaveCount(1);
   expect(await page.evaluate(() => document.documentElement.scrollWidth > window.innerWidth)).toBe(false);
 });
 
