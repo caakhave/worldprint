@@ -81,6 +81,12 @@ For an existing project that already has the production spine tables but is miss
 -- supabase/migrations/20260627000000_billing_test_mode_entitlements.sql
 ```
 
+Before deploying hardened billing functions, also apply:
+
+```sql
+-- supabase/migrations/20260627010000_rls_account_security_hardening.sql
+```
+
 The `entitlements` table stores:
 
 - `plan`
@@ -95,7 +101,7 @@ The `entitlements` table stores:
 
 Browser clients can read their own entitlement row through RLS. They cannot grant themselves Pro.
 
-That migration is idempotent, adds the Stripe fields and indexes, enables RLS, grants authenticated read access, grants service-role write access, and does not create browser write policies.
+Those migrations are idempotent, add the Stripe fields and indexes, enable/force RLS, grant authenticated read access for own rows, grant service-role write access, and do not create browser write policies.
 
 ## Deploy Functions
 
@@ -183,6 +189,12 @@ For a full local upgrade test:
 - Resubscribe through Checkout. Subscription `active` or `trialing` writes `plan = 'pro'`.
 
 The webhook also ignores inactive events for an older subscription if the same user already has a newer active/trialing Stripe subscription recorded. Subscription create/update/delete events are reconciled against Stripe's current subscription record before the entitlement row is written whenever Stripe can be reached.
+
+Security hardening notes:
+
+- Replayed Stripe webhook event IDs are recorded in `stripe_webhook_events` and return duplicate no-ops.
+- Pro grants require a subscription price matching `STRIPE_PRO_MONTHLY_PRICE_ID`, `STRIPE_PRO_YEARLY_PRICE_ID`, or the legacy fallback `STRIPE_PRO_PRICE_ID`.
+- Active/trialing subscriptions with unconfigured prices are ignored and do not grant Pro.
 
 ## Manual Pro Testing
 

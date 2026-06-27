@@ -1,12 +1,18 @@
 import Stripe from "https://esm.sh/stripe@16.12.0?target=deno";
 import { createClient } from "https://esm.sh/@supabase/supabase-js@2.108.2";
 import { resolveBillingSiteOrigin } from "./returnUrls.ts";
+import {
+  billingCorsHeaders,
+  configuredProPriceIds,
+  hasConfiguredProPriceId,
+  isProBillingInterval,
+  matchingConfiguredProPriceId,
+  subscriptionPriceIds,
+  type ProBillingInterval
+} from "./security.ts";
 
-export const corsHeaders = {
-  "Access-Control-Allow-Origin": "*",
-  "Access-Control-Allow-Headers": "authorization, x-client-info, apikey, content-type, stripe-signature",
-  "Access-Control-Allow-Methods": "POST, OPTIONS"
-};
+export { configuredProPriceIds, hasConfiguredProPriceId, isProBillingInterval, matchingConfiguredProPriceId, subscriptionPriceIds };
+export type { ProBillingInterval } from "./security.ts";
 
 export type Env = {
   supabaseUrl: string;
@@ -20,13 +26,23 @@ export type Env = {
   siteUrl: string;
 };
 
-export type ProBillingInterval = "monthly" | "yearly";
+export function corsHeadersFor(request: Request | null, env: Env | null = null): Record<string, string> {
+  const siteOrigin = env?.siteUrl ?? Deno.env.get("NEXT_PUBLIC_SITE_URL") ?? Deno.env.get("SITE_URL") ?? null;
+  return billingCorsHeaders(request?.headers.get("origin") ?? null, {
+    siteOrigin,
+    allowPreviewUrls: Deno.env.get("ALLOW_BILLING_PREVIEW_URLS") === "true"
+  });
+}
 
-export function json(body: unknown, status = 200): Response {
+export function optionsResponse(request: Request, env: Env | null = null): Response {
+  return new Response("ok", { headers: corsHeadersFor(request, env) });
+}
+
+export function json(body: unknown, status = 200, request: Request | null = null, env: Env | null = null): Response {
   return new Response(JSON.stringify(body), {
     status,
     headers: {
-      ...corsHeaders,
+      ...corsHeadersFor(request, env),
       "content-type": "application/json"
     }
   });
@@ -45,7 +61,7 @@ export function readEnv(requireWebhookSecret = false): { env: Env | null; error:
     stripeProYearlyPriceId: Deno.env.get("STRIPE_PRO_YEARLY_PRICE_ID") ?? null,
     siteUrl: rawSiteUrl
   };
-  const hasProPrice = Boolean(env.stripeProMonthlyPriceId || env.stripeProYearlyPriceId || env.stripeProPriceId);
+  const hasProPrice = configuredProPriceIds(env).size > 0;
   const missing = [
     ["SUPABASE_URL", env.supabaseUrl],
     ["SUPABASE_ANON_KEY", env.supabaseAnonKey],
@@ -71,13 +87,9 @@ export function readEnv(requireWebhookSecret = false): { env: Env | null; error:
   return { env, error: null };
 }
 
-export function isProBillingInterval(value: unknown): value is ProBillingInterval {
-  return value === "monthly" || value === "yearly";
-}
-
 export function resolveProPriceId(env: Env, interval: ProBillingInterval): string | null {
-  if (interval === "yearly") return env.stripeProYearlyPriceId ?? env.stripeProPriceId;
-  return env.stripeProMonthlyPriceId ?? env.stripeProPriceId;
+  const priceId = interval === "yearly" ? env.stripeProYearlyPriceId ?? env.stripeProPriceId : env.stripeProMonthlyPriceId ?? env.stripeProPriceId;
+  return priceId && priceId.startsWith("price_") ? priceId : null;
 }
 
 export function stripeClient(env: Env): Stripe {
@@ -122,7 +134,7 @@ export async function ensureStripeCustomer(input: {
     email: input.user.email ?? undefined,
     metadata: { supabase_user_id: input.user.id }
   });
-  await input.supabase.from("entitlements").upsert(
+  const { error } = await input.supabase.from("entitlements").upsert(
     {
       user_id: input.user.id,
       plan: "free",
@@ -132,6 +144,7 @@ export async function ensureStripeCustomer(input: {
     },
     { onConflict: "user_id" }
   );
+  if (error) throw error;
   return customer.id;
 }
 

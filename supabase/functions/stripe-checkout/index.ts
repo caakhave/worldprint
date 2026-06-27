@@ -1,10 +1,9 @@
 import {
-  corsHeaders,
   ensureStripeCustomer,
   entitlementForUser,
   getSignedInUser,
-  isProBillingInterval,
   json,
+  optionsResponse,
   readEnv,
   resolveProPriceId,
   serviceClient,
@@ -12,20 +11,21 @@ import {
   type ProBillingInterval
 } from "../_shared/billing.ts";
 import { billingReturnUrls } from "../_shared/returnUrls.ts";
+import { parseCheckoutIntervalBody } from "../_shared/security.ts";
 
 Deno.serve(async (request) => {
-  if (request.method === "OPTIONS") return new Response("ok", { headers: corsHeaders });
-  if (request.method !== "POST") return json({ error: "Method not allowed" }, 405);
+  if (request.method === "OPTIONS") return optionsResponse(request);
+  if (request.method !== "POST") return json({ error: "Method not allowed" }, 405, request);
 
   const { env, error: envError } = readEnv();
-  if (!env) return json({ error: envError ?? "Billing is not configured." }, 503);
+  if (!env) return json({ error: envError ?? "Billing is not configured." }, 503, request);
   const { interval, error: intervalError } = await checkoutInterval(request);
-  if (intervalError) return json({ error: intervalError }, 400);
+  if (intervalError || !interval) return json({ error: intervalError ?? "Choose monthly or yearly Pro billing." }, 400, request, env);
   const priceId = resolveProPriceId(env, interval);
-  if (!priceId) return json({ error: `${interval === "yearly" ? "Yearly" : "Monthly"} billing is not configured yet.` }, 503);
+  if (!priceId) return json({ error: `${interval === "yearly" ? "Yearly" : "Monthly"} billing is not configured yet.` }, 503, request, env);
 
   const { user, error: userError } = await getSignedInUser(request, env);
-  if (!user) return json({ error: userError ?? "Sign in before upgrading." }, 401);
+  if (!user) return json({ error: userError ?? "Sign in before upgrading." }, 401, request, env);
 
   const supabase = serviceClient(env);
   const stripe = stripeClient(env);
@@ -61,20 +61,13 @@ Deno.serve(async (request) => {
     }
   });
 
-  return json({ url: session.url });
+  return json({ url: session.url }, 200, request, env);
 });
 
-async function checkoutInterval(request: Request): Promise<{ interval: ProBillingInterval; error: string | null }> {
-  const contentType = request.headers.get("content-type") ?? "";
-  if (!contentType.includes("application/json")) return { interval: "monthly", error: null };
-  let body: unknown;
-  try {
-    body = await request.json();
-  } catch {
-    return { interval: "monthly", error: "Invalid checkout request." };
-  }
-  if (!body || typeof body !== "object" || !("interval" in body)) return { interval: "monthly", error: null };
-  const interval = (body as { interval?: unknown }).interval;
-  if (!isProBillingInterval(interval)) return { interval: "monthly", error: "Choose monthly or yearly Pro billing." };
-  return { interval, error: null };
+async function checkoutInterval(request: Request): Promise<{ interval: ProBillingInterval | null; error: string | null }> {
+  const bodyText = await request.text();
+  return parseCheckoutIntervalBody({
+    contentType: request.headers.get("content-type"),
+    bodyText
+  });
 }

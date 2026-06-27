@@ -63,6 +63,18 @@ export type EntitlementRow = {
   updated_at: string;
 };
 
+export type StripeWebhookEventRow = {
+  event_id: string;
+  type: string;
+  status: string;
+  user_id: string | null;
+  stripe_customer_id: string | null;
+  stripe_subscription_id: string | null;
+  received_at: string;
+  processed_at: string | null;
+  error: string | null;
+};
+
 export type Database = {
   public: {
     Tables: {
@@ -197,6 +209,31 @@ export type Database = {
           cancel_at_period_end?: boolean | null;
           current_period_end?: string | null;
           updated_at?: string;
+        };
+        Relationships: [];
+      };
+      stripe_webhook_events: {
+        Row: StripeWebhookEventRow;
+        Insert: {
+          event_id: string;
+          type: string;
+          status: string;
+          user_id?: string | null;
+          stripe_customer_id?: string | null;
+          stripe_subscription_id?: string | null;
+          received_at?: string;
+          processed_at?: string | null;
+          error?: string | null;
+        };
+        Update: {
+          type?: string;
+          status?: string;
+          user_id?: string | null;
+          stripe_customer_id?: string | null;
+          stripe_subscription_id?: string | null;
+          received_at?: string;
+          processed_at?: string | null;
+          error?: string | null;
         };
         Relationships: [];
       };

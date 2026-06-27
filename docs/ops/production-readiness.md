@@ -4,6 +4,8 @@ This is the production plumbing checklist for Can You Geo / WORLDPRINT. It cover
 
 Do not commit `.env.local`, Stripe secrets, Supabase service-role keys, Resend API keys, or Cloudflare dashboard values. The public Next app stays a static export; secret-bearing auth/billing work belongs in Supabase Dashboard settings and Supabase Edge Functions.
 
+Deployment safety guardrails for environment separation, static security headers, billing mode transitions, and smoke QA live in `docs/ops/deployment-safety-v30.md`.
+
 ## GitHub
 
 - Repository: `https://github.com/caakhave/worldprint`
@@ -59,6 +61,7 @@ Required Cloudflare Pages environment variable names:
 NEXT_PUBLIC_SITE_URL
 NEXT_PUBLIC_SUPABASE_URL
 NEXT_PUBLIC_SUPABASE_ANON_KEY
+NEXT_PUBLIC_BILLING_MODE
 ```
 
 Production values should point at:
@@ -67,6 +70,7 @@ Production values should point at:
 NEXT_PUBLIC_SITE_URL=https://canyougeo.com
 NEXT_PUBLIC_SUPABASE_URL=https://<project-ref>.supabase.co
 NEXT_PUBLIC_SUPABASE_ANON_KEY=<Supabase anon key>
+NEXT_PUBLIC_BILLING_MODE=disabled
 ```
 
 Do not set these in Cloudflare Pages:
@@ -75,6 +79,8 @@ Do not set these in Cloudflare Pages:
 SUPABASE_SERVICE_ROLE_KEY
 STRIPE_SECRET_KEY
 STRIPE_WEBHOOK_SECRET
+STRIPE_PRO_MONTHLY_PRICE_ID
+STRIPE_PRO_YEARLY_PRICE_ID
 RESEND_API_KEY
 ```
 
@@ -86,6 +92,21 @@ Preview behavior:
 - The app's sign-in request uses `window.location.origin`, so preview sign-in links will target the preview origin that requested them.
 - Supabase Auth must allow that exact preview callback URL before preview sign-in can work.
 - If preview auth is not needed, keep preview deployments usable for public browsing but test sign-in only on localhost and production.
+- Keep preview `NEXT_PUBLIC_BILLING_MODE=disabled` unless running an intentional Stripe test-mode QA window.
+
+### Static Security Headers
+
+Cloudflare Pages reads `public/_headers` into `out/_headers` during static export.
+
+Current header baseline:
+
+- `X-Content-Type-Options: nosniff`
+- `Referrer-Policy: strict-origin-when-cross-origin`
+- `Permissions-Policy` for unused browser capabilities
+- `X-Frame-Options: DENY`
+- `Content-Security-Policy` with `frame-ancestors 'none'`, `object-src 'none'`, same-origin assets, and Supabase-only network connections
+
+The CSP currently allows inline scripts/styles because Next static export emits inline bootstrap scripts and inline style attributes. Tighten this only after a nonce/hash CSP pass with hydration testing.
 
 ## Supabase
 
@@ -144,10 +165,11 @@ Body:
 
 ### Schema, Tables, And RLS
 
-Schema source currently exists at:
+Tracked schema sources currently exist at:
 
 ```text
 docs/supabase/production_spine_v0.sql
+supabase/migrations/20260627010000_rls_account_security_hardening.sql
 ```
 
 Required tables documented there:
@@ -158,6 +180,7 @@ game_runs
 round_results
 user_stats
 entitlements
+stripe_webhook_events
 ```
 
 RLS expectations:
@@ -166,14 +189,14 @@ RLS expectations:
 - Signed-in players can read only their own entitlement row.
 - Browser clients cannot grant themselves Pro.
 - Stripe entitlement writes happen only from trusted Supabase Edge Functions using service-role credentials.
+- Stripe webhook event IDs are recorded in `stripe_webhook_events` so replayed events become idempotent no-ops.
 - A missing entitlement row resolves to Free in app logic.
 
-Migration risk:
+Migration status:
 
-- `supabase/migrations` does not exist yet.
-- The production spine SQL is documented but not represented as a timestamped Supabase migration.
-- Before launch, compare the live database schema against `docs/supabase/production_spine_v0.sql`, then create a real migration file under `supabase/migrations/` so schema changes are reviewable and repeatable.
-- Do not apply production schema changes from this audit.
+- The original production spine remains documented in `docs/supabase/production_spine_v0.sql`.
+- Security Hardening v29 adds a tracked timestamped migration at `supabase/migrations/20260627010000_rls_account_security_hardening.sql`.
+- Apply the v29 migration before deploying the hardened billing Edge Functions, then run `supabase/tests/rls_security_checks.sql` in Supabase SQL Editor. The first query should return zero rows.
 
 ### Edge Functions
 
