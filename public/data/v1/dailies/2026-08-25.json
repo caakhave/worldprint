@@ -4,33 +4,32 @@
   "date": "2026-08-25",
   "contentVersion": "2026.06.22-exp2-qa1",
   "roundIds": [
-    "worldprint-adolescent-fertility",
-    "worldprint-fertility-rate",
-    "worldprint-total-protected-areas",
-    "worldprint-internet-users",
-    "worldprint-under-five-mortality"
+    "worldprint-population-growth",
+    "worldprint-energy-use",
+    "worldprint-basic-sanitation",
+    "worldprint-urban-population",
+    "worldprint-physicians"
   ],
   "indicatorIds": [
-    "adolescent-fertility",
-    "fertility-rate",
-    "total-protected-areas",
-    "internet-users",
-    "under-five-mortality"
+    "population-growth",
+    "energy-use",
+    "basic-sanitation",
+    "urban-population",
+    "physicians"
   ],
   "categoryMix": {
-    "demography": 2,
-    "environment": 1,
-    "connectivity": 1,
-    "health": 1
+    "demography": 1,
+    "energy": 1,
+    "health": 2,
+    "settlement": 1
   },
   "mapDifficultyMix": {
-    "expert": 1,
-    "standard": 3,
+    "standard": 4,
     "intro": 1
   },
-  "generatedAt": "2026-06-22T18:07:37.468004+00:00",
-  "generatorVersion": "daily-manifest-v1",
+  "generatedAt": "2026-06-27T15:17:17.652Z",
+  "generatorVersion": "daily-manifest-v2",
   "varietyNotes": [
-    "Selected with category, difficulty, and same-day correlation safeguards."
+    "Selected with category, difficulty, repeat-cooldown, and same-day correlation safeguards."
   ]
 }

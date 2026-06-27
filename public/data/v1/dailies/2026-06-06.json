@@ -4,33 +4,33 @@
   "date": "2026-06-06",
   "contentVersion": "2026.06.22-exp2-qa1",
   "roundIds": [
-    "worldprint-arable-land-per-person",
-    "worldprint-health-expenditure",
-    "worldprint-coal-electricity-share",
     "worldprint-electricity-access",
-    "worldprint-older-adults-share"
+    "worldprint-fertility-rate",
+    "worldprint-under-five-mortality",
+    "worldprint-coal-electricity-share",
+    "worldprint-cereal-yield"
   ],
   "indicatorIds": [
-    "arable-land-per-person",
-    "health-expenditure",
-    "coal-electricity-share",
     "electricity-access",
-    "older-adults-share"
+    "fertility-rate",
+    "under-five-mortality",
+    "coal-electricity-share",
+    "cereal-yield"
   ],
   "categoryMix": {
-    "land": 1,
-    "health": 1,
     "energy": 2,
-    "demography": 1
+    "demography": 1,
+    "health": 1,
+    "agriculture": 1
   },
   "mapDifficultyMix": {
-    "expert": 1,
-    "standard": 2,
-    "intro": 2
+    "intro": 1,
+    "standard": 3,
+    "expert": 1
   },
-  "generatedAt": "2026-06-22T18:07:37.457385+00:00",
-  "generatorVersion": "daily-manifest-v1",
+  "generatedAt": "2026-06-27T15:17:17.652Z",
+  "generatorVersion": "daily-manifest-v2",
   "varietyNotes": [
-    "Selected with category, difficulty, and same-day correlation safeguards."
+    "Selected with category, difficulty, repeat-cooldown, and same-day correlation safeguards."
   ]
 }

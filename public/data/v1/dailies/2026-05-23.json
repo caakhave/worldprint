@@ -4,34 +4,32 @@
   "date": "2026-05-23",
   "contentVersion": "2026.06.22-exp2-qa1",
   "roundIds": [
-    "worldprint-adolescent-fertility",
     "worldprint-industry-share",
     "worldprint-gdp-per-capita",
     "worldprint-forest-area",
-    "worldprint-renewable-electricity"
+    "worldprint-renewable-electricity",
+    "worldprint-total-protected-areas"
   ],
   "indicatorIds": [
-    "adolescent-fertility",
     "industry-share",
     "gdp-per-capita",
     "forest-area",
-    "renewable-electricity"
+    "renewable-electricity",
+    "total-protected-areas"
   ],
   "categoryMix": {
-    "demography": 1,
     "economy": 1,
     "development": 1,
-    "environment": 1,
+    "environment": 2,
     "energy": 1
   },
   "mapDifficultyMix": {
-    "expert": 1,
-    "standard": 2,
+    "standard": 3,
     "intro": 2
   },
-  "generatedAt": "2026-06-22T18:07:37.455463+00:00",
-  "generatorVersion": "daily-manifest-v1",
+  "generatedAt": "2026-06-27T15:17:17.652Z",
+  "generatorVersion": "daily-manifest-v2",
   "varietyNotes": [
-    "Selected with category, difficulty, and same-day correlation safeguards."
+    "Selected with category, difficulty, repeat-cooldown, and same-day correlation safeguards."
   ]
 }

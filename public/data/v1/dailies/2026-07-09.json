@@ -4,32 +4,33 @@
   "date": "2026-07-09",
   "contentVersion": "2026.06.22-exp2-qa1",
   "roundIds": [
+    "worldprint-safe-drinking-water",
     "worldprint-adolescent-fertility",
-    "worldprint-tourism-arrivals",
-    "worldprint-fertility-rate",
-    "worldprint-under-five-mortality",
-    "worldprint-safe-drinking-water"
+    "worldprint-protected-land",
+    "worldprint-cereal-yield",
+    "worldprint-fertility-rate"
   ],
   "indicatorIds": [
+    "safe-drinking-water",
     "adolescent-fertility",
-    "tourism-arrivals",
-    "fertility-rate",
-    "under-five-mortality",
-    "safe-drinking-water"
+    "protected-land",
+    "cereal-yield",
+    "fertility-rate"
   ],
   "categoryMix": {
+    "health": 1,
     "demography": 2,
-    "economy": 1,
-    "health": 2
+    "environment": 1,
+    "agriculture": 1
   },
   "mapDifficultyMix": {
-    "expert": 1,
-    "standard": 3,
-    "intro": 1
+    "intro": 1,
+    "expert": 2,
+    "standard": 2
   },
-  "generatedAt": "2026-06-22T18:07:37.462503+00:00",
-  "generatorVersion": "daily-manifest-v1",
+  "generatedAt": "2026-06-27T15:17:17.652Z",
+  "generatorVersion": "daily-manifest-v2",
   "varietyNotes": [
-    "Selected with category, difficulty, and same-day correlation safeguards."
+    "Selected with category, difficulty, repeat-cooldown, and same-day correlation safeguards."
   ]
 }

@@ -45,7 +45,8 @@ REPORT_OUT = ROOT / "generated/reports"
 DAILY_ROUND_COUNT = 5
 DAILY_MANIFEST_PAST_DAYS = 30
 DAILY_MANIFEST_FUTURE_DAYS = 90
-DAILY_GENERATOR_VERSION = "daily-manifest-v1"
+DAILY_GENERATOR_VERSION = "daily-manifest-v2"
+DAILY_REPEAT_COOLDOWN_DAYS = 3
 EDITORIAL_STATUSES = {"daily_eligible", "practice_eligible", "expert_only", "needs_review", "retired"}
 AMBIGUITY_RISKS = {"low", "medium", "high"}
 MIN_DAILY_ELIGIBLE_ROUNDS = 20
@@ -922,12 +923,24 @@ def mulberry32(seed: int):
     return random
 
 
-def shuffled_daily_rounds(rounds: list[dict[str, Any]], seed_text: str) -> list[dict[str, Any]]:
+def shuffled_daily_rounds(
+    rounds: list[dict[str, Any]],
+    seed_text: str,
+    usage_counts: dict[str, int] | None = None,
+) -> list[dict[str, Any]]:
     random = mulberry32(fnv1a_32(seed_text))
     shuffled = list(rounds)
     for index in range(len(shuffled) - 1, 0, -1):
         swap_index = math.floor(random() * (index + 1))
         shuffled[index], shuffled[swap_index] = shuffled[swap_index], shuffled[index]
+    if usage_counts:
+        shuffled = [
+            round_def
+            for _, round_def in sorted(
+                enumerate(shuffled),
+                key=lambda item: (usage_counts.get(item[1]["correctIndicatorId"], 0), item[0]),
+            )
+        ]
     return shuffled
 
 
@@ -996,19 +1009,19 @@ def add_first_daily_valid(
     return False
 
 
-def select_daily_rounds_for_manifest(rounds: list[dict[str, Any]], content_version: str, date_key: str) -> list[dict[str, Any]]:
-    shuffled = shuffled_daily_rounds(rounds, f"daily:{content_version}:{date_key}")
+def select_daily_rounds_for_manifest(
+    rounds: list[dict[str, Any]],
+    content_version: str,
+    date_key: str,
+    *,
+    recent_indicator_ids: set[str] | None = None,
+    usage_counts: dict[str, int] | None = None,
+) -> list[dict[str, Any]]:
+    recent_indicator_ids = recent_indicator_ids or set()
+    available = [round_def for round_def in rounds if round_def["correctIndicatorId"] not in recent_indicator_ids]
+    selection_pool = available if len(available) >= min(DAILY_ROUND_COUNT, len(rounds)) else rounds
+    shuffled = shuffled_daily_rounds(selection_pool, f"daily:{content_version}:{date_key}", usage_counts)
     selected: list[dict[str, Any]] = []
-    expert_candidates = [round_def for round_def in shuffled if round_def["difficulty"] == "expert"]
-    if expert_candidates:
-        add_first_daily_valid(
-            selected,
-            expert_candidates,
-            shuffled,
-            enforce_category=True,
-            enforce_difficulty=False,
-            enforce_correlation=True,
-        )
     passes = [
         {"enforce_category": True, "enforce_difficulty": True, "enforce_correlation": True},
         {"enforce_category": True, "enforce_difficulty": False, "enforce_correlation": True},
@@ -1032,11 +1045,24 @@ def count_mix(values: list[str]) -> dict[str, int]:
     return counts
 
 
-def daily_manifest_for_date(compiled_rounds: list[dict[str, Any]], content_version: str, date_key: str) -> dict[str, Any]:
+def daily_manifest_for_date(
+    compiled_rounds: list[dict[str, Any]],
+    content_version: str,
+    date_key: str,
+    *,
+    recent_indicator_ids: set[str] | None = None,
+    usage_counts: dict[str, int] | None = None,
+) -> dict[str, Any]:
     eligible_rounds = [round_def for round_def in compiled_rounds if round_def.get("eligibility", {}).get("daily")]
     if len(eligible_rounds) < MIN_DAILY_ELIGIBLE_ROUNDS:
         raise RuntimeError(f"only {len(eligible_rounds)} Daily-eligible rounds available for Daily manifest generation")
-    selected = select_daily_rounds_for_manifest(eligible_rounds, content_version, date_key)
+    selected = select_daily_rounds_for_manifest(
+        eligible_rounds,
+        content_version,
+        date_key,
+        recent_indicator_ids=recent_indicator_ids,
+        usage_counts=usage_counts,
+    )
     categories = [round_def["category"] for round_def in selected]
     difficulties = [round_def["difficulty"] for round_def in selected]
     conflict_notes: list[str] = []
@@ -1057,7 +1083,8 @@ def daily_manifest_for_date(compiled_rounds: list[dict[str, Any]], content_versi
         "mapDifficultyMix": count_mix(difficulties),
         "generatedAt": datetime.now(timezone.utc).isoformat(),
         "generatorVersion": DAILY_GENERATOR_VERSION,
-        "varietyNotes": conflict_notes or ["Selected with category, difficulty, and same-day correlation safeguards."],
+        "varietyNotes": conflict_notes
+        or ["Selected with category, difficulty, repeat-cooldown, and same-day correlation safeguards."],
     }
 
 
@@ -1066,12 +1093,25 @@ def write_daily_manifests(compiled_rounds: list[dict[str, Any]]) -> dict[str, An
     start_date = build_date - timedelta(days=DAILY_MANIFEST_PAST_DAYS)
     end_date = build_date + timedelta(days=DAILY_MANIFEST_FUTURE_DAYS)
     dates = []
+    recent_daily_indicator_sets: list[set[str]] = []
+    daily_usage_counts: dict[str, int] = {}
     cursor = start_date
     while cursor <= end_date:
         date_key = cursor.isoformat()
-        manifest = daily_manifest_for_date(compiled_rounds, CONTENT_VERSION, date_key)
+        recent_indicator_ids = set().union(*recent_daily_indicator_sets) if recent_daily_indicator_sets else set()
+        manifest = daily_manifest_for_date(
+            compiled_rounds,
+            CONTENT_VERSION,
+            date_key,
+            recent_indicator_ids=recent_indicator_ids,
+            usage_counts=daily_usage_counts,
+        )
         path = DAILY_OUT / f"{date_key}.json"
         write_json(path, manifest)
+        recent_daily_indicator_sets.append(set(manifest["indicatorIds"]))
+        recent_daily_indicator_sets = recent_daily_indicator_sets[-DAILY_REPEAT_COOLDOWN_DAYS:]
+        for indicator_id in manifest["indicatorIds"]:
+            daily_usage_counts[indicator_id] = daily_usage_counts.get(indicator_id, 0) + 1
         dates.append(
             {
                 "date": date_key,

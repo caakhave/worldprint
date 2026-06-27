@@ -4,31 +4,33 @@
   "date": "2026-09-05",
   "contentVersion": "2026.06.22-exp2-qa1",
   "roundIds": [
+    "worldprint-internet-users",
     "worldprint-adolescent-fertility",
-    "worldprint-women-parliament",
-    "worldprint-electric-power-use",
-    "worldprint-clean-fuels-access",
-    "worldprint-population-growth"
+    "worldprint-total-protected-areas",
+    "worldprint-precipitation-depth",
+    "worldprint-life-expectancy"
   ],
   "indicatorIds": [
+    "internet-users",
     "adolescent-fertility",
-    "women-parliament",
-    "electric-power-use",
-    "clean-fuels-access",
-    "population-growth"
+    "total-protected-areas",
+    "precipitation-depth",
+    "life-expectancy"
   ],
   "categoryMix": {
-    "demography": 2,
-    "development": 1,
-    "energy": 2
+    "connectivity": 1,
+    "demography": 1,
+    "environment": 2,
+    "health": 1
   },
   "mapDifficultyMix": {
+    "intro": 2,
     "expert": 1,
-    "standard": 4
+    "standard": 2
   },
-  "generatedAt": "2026-06-22T18:07:37.469272+00:00",
-  "generatorVersion": "daily-manifest-v1",
+  "generatedAt": "2026-06-27T15:17:17.652Z",
+  "generatorVersion": "daily-manifest-v2",
   "varietyNotes": [
-    "Selected with category, difficulty, and same-day correlation safeguards."
+    "Selected with category, difficulty, repeat-cooldown, and same-day correlation safeguards."
   ]
 }

@@ -4,33 +4,32 @@
   "date": "2026-09-10",
   "contentVersion": "2026.06.22-exp2-qa1",
   "roundIds": [
-    "worldprint-adolescent-fertility",
-    "worldprint-manufacturing-share",
-    "worldprint-clean-fuels-access",
-    "worldprint-arable-land",
-    "worldprint-employment-agriculture"
+    "worldprint-maternal-mortality",
+    "worldprint-migrant-stock",
+    "worldprint-women-parliament",
+    "worldprint-internet-users",
+    "worldprint-life-expectancy"
   ],
   "indicatorIds": [
-    "adolescent-fertility",
-    "manufacturing-share",
-    "clean-fuels-access",
-    "arable-land",
-    "employment-agriculture"
+    "maternal-mortality",
+    "migrant-stock",
+    "women-parliament",
+    "internet-users",
+    "life-expectancy"
   ],
   "categoryMix": {
+    "health": 2,
     "demography": 1,
-    "economy": 1,
-    "energy": 1,
-    "land": 1,
-    "labor": 1
+    "development": 1,
+    "connectivity": 1
   },
   "mapDifficultyMix": {
-    "expert": 1,
-    "standard": 4
+    "standard": 3,
+    "intro": 2
   },
-  "generatedAt": "2026-06-22T18:07:37.469881+00:00",
-  "generatorVersion": "daily-manifest-v1",
+  "generatedAt": "2026-06-27T15:17:17.652Z",
+  "generatorVersion": "daily-manifest-v2",
   "varietyNotes": [
-    "Selected with category, difficulty, and same-day correlation safeguards."
+    "Selected with category, difficulty, repeat-cooldown, and same-day correlation safeguards."
   ]
 }

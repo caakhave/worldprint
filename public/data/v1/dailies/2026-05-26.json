@@ -4,33 +4,31 @@
   "date": "2026-05-26",
   "contentVersion": "2026.06.22-exp2-qa1",
   "roundIds": [
-    "worldprint-cereal-yield",
-    "worldprint-agriculture-value-added",
-    "worldprint-older-adults-share",
-    "worldprint-precipitation-depth",
-    "worldprint-population-growth"
+    "worldprint-under-five-mortality",
+    "worldprint-measles-immunization",
+    "worldprint-permanent-cropland",
+    "worldprint-pm25-exposure",
+    "worldprint-agriculture-value-added"
   ],
   "indicatorIds": [
-    "cereal-yield",
-    "agriculture-value-added",
-    "older-adults-share",
-    "precipitation-depth",
-    "population-growth"
+    "under-five-mortality",
+    "measles-immunization",
+    "permanent-cropland",
+    "pm25-exposure",
+    "agriculture-value-added"
   ],
   "categoryMix": {
-    "agriculture": 1,
-    "economy": 1,
-    "demography": 2,
-    "environment": 1
+    "health": 2,
+    "land": 1,
+    "environment": 1,
+    "economy": 1
   },
   "mapDifficultyMix": {
-    "expert": 1,
-    "standard": 3,
-    "intro": 1
+    "standard": 5
   },
-  "generatedAt": "2026-06-22T18:07:37.455970+00:00",
-  "generatorVersion": "daily-manifest-v1",
+  "generatedAt": "2026-06-27T15:17:17.652Z",
+  "generatorVersion": "daily-manifest-v2",
   "varietyNotes": [
-    "Selected with category, difficulty, and same-day correlation safeguards."
+    "Selected with category, difficulty, repeat-cooldown, and same-day correlation safeguards."
   ]
 }

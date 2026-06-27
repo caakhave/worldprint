@@ -4,31 +4,34 @@
   "date": "2026-06-20",
   "contentVersion": "2026.06.22-exp2-qa1",
   "roundIds": [
-    "worldprint-adolescent-fertility",
-    "worldprint-permanent-cropland",
-    "worldprint-fertility-rate",
-    "worldprint-electric-power-use",
-    "worldprint-coal-electricity-share"
+    "worldprint-energy-use",
+    "worldprint-gdp-per-capita",
+    "worldprint-tuberculosis-incidence",
+    "worldprint-manufacturing-share",
+    "worldprint-protected-land"
   ],
   "indicatorIds": [
-    "adolescent-fertility",
-    "permanent-cropland",
-    "fertility-rate",
-    "electric-power-use",
-    "coal-electricity-share"
+    "energy-use",
+    "gdp-per-capita",
+    "tuberculosis-incidence",
+    "manufacturing-share",
+    "protected-land"
   ],
   "categoryMix": {
-    "demography": 2,
-    "land": 1,
-    "energy": 2
+    "energy": 1,
+    "development": 1,
+    "health": 1,
+    "economy": 1,
+    "environment": 1
   },
   "mapDifficultyMix": {
-    "expert": 1,
-    "standard": 4
+    "standard": 3,
+    "intro": 1,
+    "expert": 1
   },
-  "generatedAt": "2026-06-22T18:07:37.459423+00:00",
-  "generatorVersion": "daily-manifest-v1",
+  "generatedAt": "2026-06-27T15:17:17.652Z",
+  "generatorVersion": "daily-manifest-v2",
   "varietyNotes": [
-    "Selected with category, difficulty, and same-day correlation safeguards."
+    "Selected with category, difficulty, repeat-cooldown, and same-day correlation safeguards."
   ]
 }

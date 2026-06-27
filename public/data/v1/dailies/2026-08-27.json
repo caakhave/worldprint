@@ -4,33 +4,34 @@
   "date": "2026-08-27",
   "contentVersion": "2026.06.22-exp2-qa1",
   "roundIds": [
-    "worldprint-arable-land-per-person",
     "worldprint-food-production-index",
-    "worldprint-population-density",
-    "worldprint-measles-immunization",
-    "worldprint-total-protected-areas"
+    "worldprint-electricity-access",
+    "worldprint-life-expectancy",
+    "worldprint-arable-land",
+    "worldprint-adolescent-fertility"
   ],
   "indicatorIds": [
-    "arable-land-per-person",
     "food-production-index",
-    "population-density",
-    "measles-immunization",
-    "total-protected-areas"
+    "electricity-access",
+    "life-expectancy",
+    "arable-land",
+    "adolescent-fertility"
   ],
   "categoryMix": {
-    "land": 1,
     "agriculture": 1,
-    "settlement": 1,
+    "energy": 1,
     "health": 1,
-    "environment": 1
+    "land": 1,
+    "demography": 1
   },
   "mapDifficultyMix": {
-    "expert": 1,
-    "standard": 4
+    "standard": 2,
+    "intro": 2,
+    "expert": 1
   },
-  "generatedAt": "2026-06-22T18:07:37.468230+00:00",
-  "generatorVersion": "daily-manifest-v1",
+  "generatedAt": "2026-06-27T15:17:17.652Z",
+  "generatorVersion": "daily-manifest-v2",
   "varietyNotes": [
-    "Selected with category, difficulty, and same-day correlation safeguards."
+    "Selected with category, difficulty, repeat-cooldown, and same-day correlation safeguards."
   ]
 }

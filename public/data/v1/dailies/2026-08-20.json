@@ -4,34 +4,32 @@
   "date": "2026-08-20",
   "contentVersion": "2026.06.22-exp2-qa1",
   "roundIds": [
-    "worldprint-arable-land-per-person",
-    "worldprint-employment-agriculture",
-    "worldprint-urban-population",
-    "worldprint-co2-per-capita",
-    "worldprint-measles-immunization"
+    "worldprint-migrant-stock",
+    "worldprint-food-production-index",
+    "worldprint-women-parliament",
+    "worldprint-physicians",
+    "worldprint-energy-use"
   ],
   "indicatorIds": [
-    "arable-land-per-person",
-    "employment-agriculture",
-    "urban-population",
-    "co2-per-capita",
-    "measles-immunization"
+    "migrant-stock",
+    "food-production-index",
+    "women-parliament",
+    "physicians",
+    "energy-use"
   ],
   "categoryMix": {
-    "land": 1,
-    "labor": 1,
-    "settlement": 1,
-    "environment": 1,
-    "health": 1
+    "demography": 1,
+    "agriculture": 1,
+    "development": 1,
+    "health": 1,
+    "energy": 1
   },
   "mapDifficultyMix": {
-    "expert": 1,
-    "standard": 3,
-    "intro": 1
+    "standard": 5
   },
-  "generatedAt": "2026-06-22T18:07:37.467443+00:00",
-  "generatorVersion": "daily-manifest-v1",
+  "generatedAt": "2026-06-27T15:17:17.652Z",
+  "generatorVersion": "daily-manifest-v2",
   "varietyNotes": [
-    "Selected with category, difficulty, and same-day correlation safeguards."
+    "Selected with category, difficulty, repeat-cooldown, and same-day correlation safeguards."
   ]
 }

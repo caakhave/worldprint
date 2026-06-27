@@ -26,10 +26,10 @@ function warnBillingDetail(message: string, detail: unknown) {
 function billingErrorCopy(message?: string | null) {
   const normalized = message?.toLowerCase() ?? "";
   if (normalized.includes("configured") || normalized.includes("env") || normalized.includes("supabase")) {
-    return "Billing setup is not live yet.";
+    return "Checkout is not open yet.";
   }
   if (normalized.includes("sign in")) {
-    return "Create a free account before upgrading.";
+    return "Sign in to upgrade.";
   }
   return "We could not open checkout. Try again in a minute.";
 }
@@ -49,7 +49,7 @@ export function BillingActionsClient({ entitlement, context }: BillingActionsCli
     interval?: ProBillingInterval
   ) {
     if (!client || !signedIn) {
-      setMessage("Create a free account before upgrading.");
+      setMessage("Sign in to upgrade.");
       return;
     }
     setPending(pendingState);
@@ -61,7 +61,7 @@ export function BillingActionsClient({ entitlement, context }: BillingActionsCli
     if (sessionError || !session?.access_token) {
       setPending(null);
       warnBillingDetail("Could not read billing session.", sessionError);
-      setMessage("Create a free account before upgrading.");
+      setMessage("Sign in to upgrade.");
       return;
     }
     const { data, error } = await client.functions.invoke<BillingActionResponse>(functionName, {
@@ -75,24 +75,61 @@ export function BillingActionsClient({ entitlement, context }: BillingActionsCli
       return;
     }
     if (!data?.url) {
-      setMessage("Billing setup is not live yet.");
+      setMessage("Checkout is not open yet.");
       return;
     }
     window.location.assign(data.url);
   }
 
   if (!billingEnabled) {
+    if (!signedIn) {
+      return (
+        <div className="billing-actions" aria-label="Billing actions">
+          <Link className="button" href="/sign-in">
+            Sign in to upgrade
+          </Link>
+          <p className="account-env-note">Checkout is not open yet, but your free account will be ready when it is.</p>
+        </div>
+      );
+    }
+
+    if (isPro) {
+      return (
+        <div className="billing-actions" aria-label="Billing actions">
+          {context === "upgrade" ? (
+            <Link className="button" href="/account">
+              Manage from account
+            </Link>
+          ) : (
+            <button className="button" type="button" disabled>
+              Membership managed manually
+            </button>
+          )}
+          {context === "account" ? (
+            <Link className="button-secondary" href="/upgrade">
+              View plan
+            </Link>
+          ) : null}
+          <p className="account-env-note">
+            {hasStripeCustomer
+              ? "Pro is active. Billing changes are not open from this page right now."
+              : "Pro is active. This membership is managed manually for now."}
+          </p>
+        </div>
+      );
+    }
+
     return (
       <div className="billing-actions" aria-label="Billing actions">
         <button className="button" type="button" disabled>
-          Billing setup is not live yet
+          Checkout coming soon
         </button>
         {context === "account" ? (
           <Link className="button-secondary" href="/upgrade">
             Compare plans
           </Link>
         ) : null}
-        <p className="account-env-note">You can still play today&apos;s Mystery Map for free.</p>
+        <p className="account-env-note">Pricing is visible now. You can still play today&apos;s Mystery Map for free.</p>
       </div>
     );
   }
@@ -111,7 +148,7 @@ export function BillingActionsClient({ entitlement, context }: BillingActionsCli
     return (
       <div className="billing-actions" aria-label="Billing actions">
         <Link className="button" href="/sign-in">
-          Create a free account
+          Sign in to upgrade
         </Link>
       </div>
     );

@@ -4,33 +4,31 @@
   "date": "2026-06-23",
   "contentVersion": "2026.06.22-exp2-qa1",
   "roundIds": [
-    "worldprint-adolescent-fertility",
-    "worldprint-pm25-exposure",
-    "worldprint-gdp-per-capita",
-    "worldprint-account-ownership",
-    "worldprint-maternal-mortality"
+    "worldprint-freshwater-per-capita",
+    "worldprint-basic-sanitation",
+    "worldprint-forest-area",
+    "worldprint-health-expenditure",
+    "worldprint-migrant-stock"
   ],
   "indicatorIds": [
-    "adolescent-fertility",
-    "pm25-exposure",
-    "gdp-per-capita",
-    "account-ownership",
-    "maternal-mortality"
+    "freshwater-per-capita",
+    "basic-sanitation",
+    "forest-area",
+    "health-expenditure",
+    "migrant-stock"
   ],
   "categoryMix": {
-    "demography": 1,
-    "environment": 1,
-    "development": 2,
-    "health": 1
+    "environment": 2,
+    "health": 2,
+    "demography": 1
   },
   "mapDifficultyMix": {
-    "expert": 1,
-    "standard": 3,
+    "standard": 4,
     "intro": 1
   },
-  "generatedAt": "2026-06-22T18:07:37.459959+00:00",
-  "generatorVersion": "daily-manifest-v1",
+  "generatedAt": "2026-06-27T15:17:17.652Z",
+  "generatorVersion": "daily-manifest-v2",
   "varietyNotes": [
-    "Selected with category, difficulty, and same-day correlation safeguards."
+    "Selected with category, difficulty, repeat-cooldown, and same-day correlation safeguards."
   ]
 }

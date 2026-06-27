@@ -4,34 +4,33 @@
   "date": "2026-07-01",
   "contentVersion": "2026.06.22-exp2-qa1",
   "roundIds": [
-    "worldprint-arable-land-per-person",
-    "worldprint-account-ownership",
-    "worldprint-life-expectancy",
+    "worldprint-pm25-exposure",
     "worldprint-mobile-subscriptions",
-    "worldprint-co2-per-capita"
+    "worldprint-older-adults-share",
+    "worldprint-electricity-access",
+    "worldprint-women-parliament"
   ],
   "indicatorIds": [
-    "arable-land-per-person",
-    "account-ownership",
-    "life-expectancy",
+    "pm25-exposure",
     "mobile-subscriptions",
-    "co2-per-capita"
+    "older-adults-share",
+    "electricity-access",
+    "women-parliament"
   ],
   "categoryMix": {
-    "land": 1,
-    "development": 1,
-    "health": 1,
+    "environment": 1,
     "connectivity": 1,
-    "environment": 1
+    "demography": 1,
+    "energy": 1,
+    "development": 1
   },
   "mapDifficultyMix": {
-    "expert": 1,
     "standard": 3,
-    "intro": 1
+    "intro": 2
   },
-  "generatedAt": "2026-06-22T18:07:37.461452+00:00",
-  "generatorVersion": "daily-manifest-v1",
+  "generatedAt": "2026-06-27T15:17:17.652Z",
+  "generatorVersion": "daily-manifest-v2",
   "varietyNotes": [
-    "Selected with category, difficulty, and same-day correlation safeguards."
+    "Selected with category, difficulty, repeat-cooldown, and same-day correlation safeguards."
   ]
 }

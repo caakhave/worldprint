@@ -4,33 +4,32 @@
   "date": "2026-07-25",
   "contentVersion": "2026.06.22-exp2-qa1",
   "roundIds": [
-    "worldprint-arable-land-per-person",
-    "worldprint-safe-drinking-water",
-    "worldprint-physicians",
-    "worldprint-trade-share",
-    "worldprint-clean-fuels-access"
+    "worldprint-urban-population",
+    "worldprint-co2-per-capita",
+    "worldprint-health-expenditure",
+    "worldprint-total-protected-areas",
+    "worldprint-tuberculosis-incidence"
   ],
   "indicatorIds": [
-    "arable-land-per-person",
-    "safe-drinking-water",
-    "physicians",
-    "trade-share",
-    "clean-fuels-access"
+    "urban-population",
+    "co2-per-capita",
+    "health-expenditure",
+    "total-protected-areas",
+    "tuberculosis-incidence"
   ],
   "categoryMix": {
-    "land": 1,
-    "health": 2,
-    "economy": 1,
-    "energy": 1
+    "settlement": 1,
+    "environment": 2,
+    "health": 2
   },
   "mapDifficultyMix": {
-    "expert": 1,
     "intro": 1,
-    "standard": 3
+    "standard": 3,
+    "expert": 1
   },
-  "generatedAt": "2026-06-22T18:07:37.464443+00:00",
-  "generatorVersion": "daily-manifest-v1",
+  "generatedAt": "2026-06-27T15:17:17.652Z",
+  "generatorVersion": "daily-manifest-v2",
   "varietyNotes": [
-    "Selected with category, difficulty, and same-day correlation safeguards."
+    "Selected with category, difficulty, repeat-cooldown, and same-day correlation safeguards."
   ]
 }

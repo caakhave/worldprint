@@ -4,34 +4,32 @@
   "date": "2026-06-03",
   "contentVersion": "2026.06.22-exp2-qa1",
   "roundIds": [
-    "worldprint-cereal-yield",
-    "worldprint-life-expectancy",
-    "worldprint-pm25-exposure",
-    "worldprint-age-dependency",
-    "worldprint-gdp-per-capita"
+    "worldprint-energy-use",
+    "worldprint-unemployment",
+    "worldprint-renewable-electricity",
+    "worldprint-freshwater-per-capita",
+    "worldprint-adolescent-fertility"
   ],
   "indicatorIds": [
-    "cereal-yield",
-    "life-expectancy",
-    "pm25-exposure",
-    "age-dependency",
-    "gdp-per-capita"
+    "energy-use",
+    "unemployment",
+    "renewable-electricity",
+    "freshwater-per-capita",
+    "adolescent-fertility"
   ],
   "categoryMix": {
-    "agriculture": 1,
-    "health": 1,
+    "energy": 2,
+    "labor": 1,
     "environment": 1,
-    "demography": 1,
-    "development": 1
+    "demography": 1
   },
   "mapDifficultyMix": {
-    "expert": 1,
-    "intro": 2,
-    "standard": 2
+    "standard": 4,
+    "expert": 1
   },
-  "generatedAt": "2026-06-22T18:07:37.457011+00:00",
-  "generatorVersion": "daily-manifest-v1",
+  "generatedAt": "2026-06-27T15:17:17.652Z",
+  "generatorVersion": "daily-manifest-v2",
   "varietyNotes": [
-    "Selected with category, difficulty, and same-day correlation safeguards."
+    "Selected with category, difficulty, repeat-cooldown, and same-day correlation safeguards."
   ]
 }

@@ -5,33 +5,32 @@
   "contentVersion": "2026.06.22-exp2-qa1",
   "roundIds": [
     "worldprint-adolescent-fertility",
-    "worldprint-electricity-access",
-    "worldprint-undernourishment",
+    "worldprint-physicians",
     "worldprint-account-ownership",
-    "worldprint-manufacturing-share"
+    "worldprint-population-density",
+    "worldprint-secondary-enrollment"
   ],
   "indicatorIds": [
     "adolescent-fertility",
-    "electricity-access",
-    "undernourishment",
+    "physicians",
     "account-ownership",
-    "manufacturing-share"
+    "population-density",
+    "secondary-enrollment"
   ],
   "categoryMix": {
     "demography": 1,
-    "energy": 1,
     "health": 1,
     "development": 1,
-    "economy": 1
+    "settlement": 1,
+    "education": 1
   },
   "mapDifficultyMix": {
     "expert": 1,
-    "intro": 1,
-    "standard": 3
+    "standard": 4
   },
-  "generatedAt": "2026-06-22T18:07:37.458514+00:00",
-  "generatorVersion": "daily-manifest-v1",
+  "generatedAt": "2026-06-27T15:17:17.652Z",
+  "generatorVersion": "daily-manifest-v2",
   "varietyNotes": [
-    "Selected with category, difficulty, and same-day correlation safeguards."
+    "Selected with category, difficulty, repeat-cooldown, and same-day correlation safeguards."
   ]
 }

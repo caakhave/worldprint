@@ -4,32 +4,33 @@
   "date": "2026-08-30",
   "contentVersion": "2026.06.22-exp2-qa1",
   "roundIds": [
-    "worldprint-tuberculosis-incidence",
-    "worldprint-total-protected-areas",
-    "worldprint-maternal-mortality",
-    "worldprint-energy-use",
-    "worldprint-adolescent-fertility"
+    "worldprint-permanent-cropland",
+    "worldprint-precipitation-depth",
+    "worldprint-account-ownership",
+    "worldprint-age-dependency",
+    "worldprint-internet-users"
   ],
   "indicatorIds": [
-    "tuberculosis-incidence",
-    "total-protected-areas",
-    "maternal-mortality",
-    "energy-use",
-    "adolescent-fertility"
+    "permanent-cropland",
+    "precipitation-depth",
+    "account-ownership",
+    "age-dependency",
+    "internet-users"
   ],
   "categoryMix": {
-    "health": 2,
+    "land": 1,
     "environment": 1,
-    "energy": 1,
-    "demography": 1
+    "development": 1,
+    "demography": 1,
+    "connectivity": 1
   },
   "mapDifficultyMix": {
-    "expert": 2,
-    "standard": 3
+    "standard": 4,
+    "intro": 1
   },
-  "generatedAt": "2026-06-22T18:07:37.468594+00:00",
-  "generatorVersion": "daily-manifest-v1",
+  "generatedAt": "2026-06-27T15:17:17.652Z",
+  "generatorVersion": "daily-manifest-v2",
   "varietyNotes": [
-    "Selected with category, difficulty, and same-day correlation safeguards."
+    "Selected with category, difficulty, repeat-cooldown, and same-day correlation safeguards."
   ]
 }

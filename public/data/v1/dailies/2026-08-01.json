@@ -4,33 +4,30 @@
   "date": "2026-08-01",
   "contentVersion": "2026.06.22-exp2-qa1",
   "roundIds": [
-    "worldprint-adolescent-fertility",
-    "worldprint-industry-share",
-    "worldprint-electricity-access",
-    "worldprint-population-growth",
-    "worldprint-internet-users"
+    "worldprint-age-dependency",
+    "worldprint-physicians",
+    "worldprint-renewable-electricity",
+    "worldprint-undernourishment",
+    "worldprint-population-growth"
   ],
   "indicatorIds": [
-    "adolescent-fertility",
-    "industry-share",
-    "electricity-access",
-    "population-growth",
-    "internet-users"
+    "age-dependency",
+    "physicians",
+    "renewable-electricity",
+    "undernourishment",
+    "population-growth"
   ],
   "categoryMix": {
     "demography": 2,
-    "economy": 1,
-    "energy": 1,
-    "connectivity": 1
+    "health": 2,
+    "energy": 1
   },
   "mapDifficultyMix": {
-    "expert": 1,
-    "standard": 2,
-    "intro": 2
+    "standard": 5
   },
-  "generatedAt": "2026-06-22T18:07:37.465207+00:00",
-  "generatorVersion": "daily-manifest-v1",
+  "generatedAt": "2026-06-27T15:17:17.652Z",
+  "generatorVersion": "daily-manifest-v2",
   "varietyNotes": [
-    "Selected with category, difficulty, and same-day correlation safeguards."
+    "Selected with category, difficulty, repeat-cooldown, and same-day correlation safeguards."
   ]
 }

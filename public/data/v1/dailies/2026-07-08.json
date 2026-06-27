@@ -4,32 +4,32 @@
   "date": "2026-07-08",
   "contentVersion": "2026.06.22-exp2-qa1",
   "roundIds": [
-    "worldprint-cereal-yield",
-    "worldprint-food-production-index",
-    "worldprint-precipitation-depth",
-    "worldprint-basic-sanitation",
-    "worldprint-employment-agriculture"
+    "worldprint-renewable-electricity",
+    "worldprint-women-parliament",
+    "worldprint-agriculture-value-added",
+    "worldprint-electricity-access",
+    "worldprint-population-density"
   ],
   "indicatorIds": [
-    "cereal-yield",
-    "food-production-index",
-    "precipitation-depth",
-    "basic-sanitation",
-    "employment-agriculture"
+    "renewable-electricity",
+    "women-parliament",
+    "agriculture-value-added",
+    "electricity-access",
+    "population-density"
   ],
   "categoryMix": {
-    "agriculture": 2,
-    "environment": 1,
-    "health": 1,
-    "labor": 1
+    "energy": 2,
+    "development": 1,
+    "economy": 1,
+    "settlement": 1
   },
   "mapDifficultyMix": {
-    "expert": 1,
-    "standard": 4
+    "standard": 4,
+    "intro": 1
   },
-  "generatedAt": "2026-06-22T18:07:37.462376+00:00",
-  "generatorVersion": "daily-manifest-v1",
+  "generatedAt": "2026-06-27T15:17:17.652Z",
+  "generatorVersion": "daily-manifest-v2",
   "varietyNotes": [
-    "Selected with category, difficulty, and same-day correlation safeguards."
+    "Selected with category, difficulty, repeat-cooldown, and same-day correlation safeguards."
   ]
 }

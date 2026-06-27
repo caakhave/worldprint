@@ -4,34 +4,32 @@
   "date": "2026-07-17",
   "contentVersion": "2026.06.22-exp2-qa1",
   "roundIds": [
-    "worldprint-tuberculosis-incidence",
-    "worldprint-food-production-index",
     "worldprint-forest-area",
-    "worldprint-fertility-rate",
-    "worldprint-account-ownership"
+    "worldprint-maternal-mortality",
+    "worldprint-co2-per-capita",
+    "worldprint-adolescent-fertility",
+    "worldprint-population-growth"
   ],
   "indicatorIds": [
-    "tuberculosis-incidence",
-    "food-production-index",
     "forest-area",
-    "fertility-rate",
-    "account-ownership"
+    "maternal-mortality",
+    "co2-per-capita",
+    "adolescent-fertility",
+    "population-growth"
   ],
   "categoryMix": {
+    "environment": 2,
     "health": 1,
-    "agriculture": 1,
-    "environment": 1,
-    "demography": 1,
-    "development": 1
+    "demography": 2
   },
   "mapDifficultyMix": {
-    "expert": 1,
+    "intro": 1,
     "standard": 3,
-    "intro": 1
+    "expert": 1
   },
-  "generatedAt": "2026-06-22T18:07:37.463543+00:00",
-  "generatorVersion": "daily-manifest-v1",
+  "generatedAt": "2026-06-27T15:17:17.652Z",
+  "generatorVersion": "daily-manifest-v2",
   "varietyNotes": [
-    "Selected with category, difficulty, and same-day correlation safeguards."
+    "Selected with category, difficulty, repeat-cooldown, and same-day correlation safeguards."
   ]
 }

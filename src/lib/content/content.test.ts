@@ -485,4 +485,53 @@ describe("generated content schemas", () => {
     });
     expect(index.dates[0].date).toBe("2026-06-19");
   });
+
+  it("keeps generated Daily manifests varied across the calendar", () => {
+    const rounds = RoundsArtifactSchema.parse(roundsJson).rounds;
+    const roundById = new Map(rounds.map((round) => [round.id, round]));
+    const index = DailyIndexSchema.parse(dailyIndexJson);
+    const usage = new Map<string, number>();
+    const positions = new Map<string, number[]>();
+    let expertDayCount = 0;
+
+    expect(index.generatorVersion).toBe("daily-manifest-v2");
+    expect(index.dates).toHaveLength(121);
+
+    for (const [dayIndex, entry] of index.dates.entries()) {
+      expect(entry.roundCount).toBe(5);
+      expect(entry.roundIds).toHaveLength(5);
+      expect(new Set(entry.roundIds).size).toBe(5);
+      expect(new Set(entry.indicatorIds).size).toBe(5);
+      expect(Math.max(...Object.values(entry.categoryMix))).toBeLessThanOrEqual(2);
+      if ((entry.mapDifficultyMix.expert ?? 0) > 0) expertDayCount += 1;
+
+      const selectedRounds = entry.roundIds.map((roundId) => {
+        const round = roundById.get(roundId);
+        expect(round).toBeDefined();
+        return round;
+      });
+      for (const [indexA, left] of selectedRounds.entries()) {
+        for (const right of selectedRounds.slice(indexA + 1)) {
+          expect(left?.avoidSameDayIndicatorIds).not.toContain(right?.correctIndicatorId);
+          expect(right?.avoidSameDayIndicatorIds).not.toContain(left?.correctIndicatorId);
+        }
+      }
+
+      for (const indicatorId of entry.indicatorIds) {
+        usage.set(indicatorId, (usage.get(indicatorId) ?? 0) + 1);
+        const indicatorPositions = positions.get(indicatorId) ?? [];
+        indicatorPositions.push(dayIndex);
+        positions.set(indicatorId, indicatorPositions);
+      }
+    }
+
+    expect(expertDayCount).toBeGreaterThan(30);
+    expect(expertDayCount).toBeLessThan(index.dates.length);
+    expect(Math.max(...usage.values())).toBeLessThanOrEqual(14);
+    for (const indicatorPositions of positions.values()) {
+      for (let index = 1; index < indicatorPositions.length; index += 1) {
+        expect(indicatorPositions[index] - indicatorPositions[index - 1]).toBeGreaterThanOrEqual(4);
+      }
+    }
+  });
 });

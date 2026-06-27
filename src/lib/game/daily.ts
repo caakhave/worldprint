@@ -119,14 +119,6 @@ export function selectDailyRounds(rounds: RoundDefinition[], contentVersion: str
   const pool = eligible.length >= targetCount ? eligible : rounds;
   const shuffled = shuffledRounds(pool, `daily:${contentVersion}:${dateKey}`);
   const selected: RoundDefinition[] = [];
-  const expertCandidates = shuffled.filter((round) => round.difficulty === "expert");
-  if (expertCandidates.length > 0) {
-    addFirstValid(selected, expertCandidates, shuffled, {
-      enforceCategory: true,
-      enforceDifficulty: false,
-      enforceCorrelation: true
-    });
-  }
   const passes = [
     { enforceCategory: true, enforceDifficulty: true, enforceCorrelation: true },
     { enforceCategory: true, enforceDifficulty: false, enforceCorrelation: true },

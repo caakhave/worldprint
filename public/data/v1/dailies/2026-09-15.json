@@ -4,31 +4,32 @@
   "date": "2026-09-15",
   "contentVersion": "2026.06.22-exp2-qa1",
   "roundIds": [
-    "worldprint-adolescent-fertility",
-    "worldprint-under-five-mortality",
-    "worldprint-renewable-electricity",
-    "worldprint-clean-fuels-access",
-    "worldprint-age-dependency"
+    "worldprint-undernourishment",
+    "worldprint-unemployment",
+    "worldprint-measles-immunization",
+    "worldprint-co2-per-capita",
+    "worldprint-arable-land-per-person"
   ],
   "indicatorIds": [
-    "adolescent-fertility",
-    "under-five-mortality",
-    "renewable-electricity",
-    "clean-fuels-access",
-    "age-dependency"
+    "undernourishment",
+    "unemployment",
+    "measles-immunization",
+    "co2-per-capita",
+    "arable-land-per-person"
   ],
   "categoryMix": {
-    "demography": 2,
-    "health": 1,
-    "energy": 2
+    "health": 2,
+    "labor": 1,
+    "environment": 1,
+    "land": 1
   },
   "mapDifficultyMix": {
-    "expert": 1,
-    "standard": 4
+    "standard": 4,
+    "expert": 1
   },
-  "generatedAt": "2026-06-22T18:07:37.470491+00:00",
-  "generatorVersion": "daily-manifest-v1",
+  "generatedAt": "2026-06-27T15:17:17.652Z",
+  "generatorVersion": "daily-manifest-v2",
   "varietyNotes": [
-    "Selected with category, difficulty, and same-day correlation safeguards."
+    "Selected with category, difficulty, repeat-cooldown, and same-day correlation safeguards."
   ]
 }

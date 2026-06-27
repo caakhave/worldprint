@@ -4,34 +4,32 @@
   "date": "2026-07-27",
   "contentVersion": "2026.06.22-exp2-qa1",
   "roundIds": [
-    "worldprint-cereal-yield",
-    "worldprint-trade-share",
-    "worldprint-migrant-stock",
-    "worldprint-clean-fuels-access",
-    "worldprint-life-expectancy"
+    "worldprint-coal-electricity-share",
+    "worldprint-manufacturing-share",
+    "worldprint-mobile-subscriptions",
+    "worldprint-safe-drinking-water",
+    "worldprint-open-defecation"
   ],
   "indicatorIds": [
-    "cereal-yield",
-    "trade-share",
-    "migrant-stock",
-    "clean-fuels-access",
-    "life-expectancy"
+    "coal-electricity-share",
+    "manufacturing-share",
+    "mobile-subscriptions",
+    "safe-drinking-water",
+    "open-defecation"
   ],
   "categoryMix": {
-    "agriculture": 1,
-    "economy": 1,
-    "demography": 1,
     "energy": 1,
-    "health": 1
+    "economy": 1,
+    "connectivity": 1,
+    "health": 2
   },
   "mapDifficultyMix": {
-    "expert": 1,
-    "standard": 3,
+    "standard": 4,
     "intro": 1
   },
-  "generatedAt": "2026-06-22T18:07:37.464660+00:00",
-  "generatorVersion": "daily-manifest-v1",
+  "generatedAt": "2026-06-27T15:17:17.652Z",
+  "generatorVersion": "daily-manifest-v2",
   "varietyNotes": [
-    "Selected with category, difficulty, and same-day correlation safeguards."
+    "Selected with category, difficulty, repeat-cooldown, and same-day correlation safeguards."
   ]
 }

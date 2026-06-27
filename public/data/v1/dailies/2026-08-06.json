@@ -4,33 +4,32 @@
   "date": "2026-08-06",
   "contentVersion": "2026.06.22-exp2-qa1",
   "roundIds": [
-    "worldprint-cereal-yield",
-    "worldprint-internet-users",
-    "worldprint-open-defecation",
-    "worldprint-undernourishment",
-    "worldprint-energy-use"
+    "worldprint-clean-fuels-access",
+    "worldprint-mobile-subscriptions",
+    "worldprint-forest-area",
+    "worldprint-electric-power-use",
+    "worldprint-older-adults-share"
   ],
   "indicatorIds": [
-    "cereal-yield",
-    "internet-users",
-    "open-defecation",
-    "undernourishment",
-    "energy-use"
+    "clean-fuels-access",
+    "mobile-subscriptions",
+    "forest-area",
+    "electric-power-use",
+    "older-adults-share"
   ],
   "categoryMix": {
-    "agriculture": 1,
+    "energy": 2,
     "connectivity": 1,
-    "health": 2,
-    "energy": 1
+    "environment": 1,
+    "demography": 1
   },
   "mapDifficultyMix": {
-    "expert": 1,
-    "intro": 1,
-    "standard": 3
+    "standard": 3,
+    "intro": 2
   },
-  "generatedAt": "2026-06-22T18:07:37.465815+00:00",
-  "generatorVersion": "daily-manifest-v1",
+  "generatedAt": "2026-06-27T15:17:17.652Z",
+  "generatorVersion": "daily-manifest-v2",
   "varietyNotes": [
-    "Selected with category, difficulty, and same-day correlation safeguards."
+    "Selected with category, difficulty, repeat-cooldown, and same-day correlation safeguards."
   ]
 }

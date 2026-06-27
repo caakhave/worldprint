@@ -4,34 +4,34 @@
   "date": "2026-07-22",
   "contentVersion": "2026.06.22-exp2-qa1",
   "roundIds": [
+    "worldprint-safe-drinking-water",
+    "worldprint-protected-land",
     "worldprint-arable-land-per-person",
-    "worldprint-population-density",
-    "worldprint-freshwater-per-capita",
-    "worldprint-mobile-subscriptions",
-    "worldprint-gdp-per-capita"
+    "worldprint-energy-use",
+    "worldprint-population-density"
   ],
   "indicatorIds": [
+    "safe-drinking-water",
+    "protected-land",
     "arable-land-per-person",
-    "population-density",
-    "freshwater-per-capita",
-    "mobile-subscriptions",
-    "gdp-per-capita"
+    "energy-use",
+    "population-density"
   ],
   "categoryMix": {
-    "land": 1,
-    "settlement": 1,
+    "health": 1,
     "environment": 1,
-    "connectivity": 1,
-    "development": 1
+    "land": 1,
+    "energy": 1,
+    "settlement": 1
   },
   "mapDifficultyMix": {
-    "expert": 1,
+    "intro": 1,
     "standard": 3,
-    "intro": 1
+    "expert": 1
   },
-  "generatedAt": "2026-06-22T18:07:37.464095+00:00",
-  "generatorVersion": "daily-manifest-v1",
+  "generatedAt": "2026-06-27T15:17:17.652Z",
+  "generatorVersion": "daily-manifest-v2",
   "varietyNotes": [
-    "Selected with category, difficulty, and same-day correlation safeguards."
+    "Selected with category, difficulty, repeat-cooldown, and same-day correlation safeguards."
   ]
 }

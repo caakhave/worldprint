@@ -4,34 +4,31 @@
   "date": "2026-06-28",
   "contentVersion": "2026.06.22-exp2-qa1",
   "roundIds": [
-    "worldprint-cereal-yield",
-    "worldprint-secondary-enrollment",
-    "worldprint-pm25-exposure",
-    "worldprint-safe-drinking-water",
-    "worldprint-mobile-subscriptions"
+    "worldprint-maternal-mortality",
+    "worldprint-co2-per-capita",
+    "worldprint-total-protected-areas",
+    "worldprint-permanent-cropland",
+    "worldprint-life-expectancy"
   ],
   "indicatorIds": [
-    "cereal-yield",
-    "secondary-enrollment",
-    "pm25-exposure",
-    "safe-drinking-water",
-    "mobile-subscriptions"
+    "maternal-mortality",
+    "co2-per-capita",
+    "total-protected-areas",
+    "permanent-cropland",
+    "life-expectancy"
   ],
   "categoryMix": {
-    "agriculture": 1,
-    "education": 1,
-    "environment": 1,
-    "health": 1,
-    "connectivity": 1
+    "health": 2,
+    "environment": 2,
+    "land": 1
   },
   "mapDifficultyMix": {
-    "expert": 1,
-    "standard": 3,
+    "standard": 4,
     "intro": 1
   },
-  "generatedAt": "2026-06-22T18:07:37.461003+00:00",
-  "generatorVersion": "daily-manifest-v1",
+  "generatedAt": "2026-06-27T15:17:17.652Z",
+  "generatorVersion": "daily-manifest-v2",
   "varietyNotes": [
-    "Selected with category, difficulty, and same-day correlation safeguards."
+    "Selected with category, difficulty, repeat-cooldown, and same-day correlation safeguards."
   ]
 }

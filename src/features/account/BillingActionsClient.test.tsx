@@ -10,7 +10,7 @@ const accountMock = vi.hoisted(() => ({
     missingEnv: ["NEXT_PUBLIC_SUPABASE_URL"],
     loading: false,
     session: null,
-    user: null,
+    user: null as { id: string; email?: string } | null,
     profileError: null,
     refreshSession: vi.fn(),
     signOut: vi.fn()
@@ -21,6 +21,8 @@ vi.mock("@/features/account/useSupabaseAccount", () => ({
   useSupabaseAccount: () => accountMock.state
 }));
 
+const TEST_USER = { id: "11111111-2222-4333-8444-555555555555", email: "reader@example.com" };
+
 describe("BillingActionsClient", () => {
   beforeEach(() => {
     delete process.env.NEXT_PUBLIC_BILLING_MODE;
@@ -30,17 +32,29 @@ describe("BillingActionsClient", () => {
   });
 
   it("shows a safe disabled billing state on the upgrade page until billing is explicitly enabled", () => {
+    accountMock.state.user = TEST_USER;
+
     render(<BillingActionsClient entitlement={FREE_ENTITLEMENT} context="upgrade" />);
 
-    expect(screen.getByRole("button", { name: "Billing setup is not live yet" })).toBeDisabled();
-    expect(screen.getByText("You can still play today's Mystery Map for free.")).toBeVisible();
+    expect(screen.getByRole("button", { name: "Checkout coming soon" })).toBeDisabled();
+    expect(screen.getByText("Pricing is visible now. You can still play today's Mystery Map for free.")).toBeVisible();
     expect(screen.queryByRole("button", { name: /Upgrade/i })).not.toBeInTheDocument();
   });
 
+  it("asks signed-out users to sign in before upgrading while checkout is disabled", () => {
+    render(<BillingActionsClient entitlement={FREE_ENTITLEMENT} context="upgrade" />);
+
+    expect(screen.getByRole("link", { name: "Sign in to upgrade" })).toHaveAttribute("href", "/sign-in");
+    expect(screen.getByText("Checkout is not open yet, but your free account will be ready when it is.")).toBeVisible();
+    expect(screen.queryByRole("button", { name: "Checkout coming soon" })).not.toBeInTheDocument();
+  });
+
   it("keeps account plan comparison available while billing is disabled", () => {
+    accountMock.state.user = TEST_USER;
+
     render(<BillingActionsClient entitlement={FREE_ENTITLEMENT} context="account" />);
 
-    expect(screen.getByRole("button", { name: "Billing setup is not live yet" })).toBeDisabled();
+    expect(screen.getByRole("button", { name: "Checkout coming soon" })).toBeDisabled();
     expect(screen.getByRole("link", { name: "Compare plans" })).toHaveAttribute("href", "/upgrade");
   });
 
@@ -60,10 +74,12 @@ describe("BillingActionsClient", () => {
         updated_at: "2026-06-27T00:00:00.000Z"
       }
     };
+    accountMock.state.user = TEST_USER;
 
     render(<BillingActionsClient entitlement={manualPro} context="account" />);
 
-    expect(screen.getByRole("button", { name: "Billing setup is not live yet" })).toBeDisabled();
+    expect(screen.getByRole("button", { name: "Membership managed manually" })).toBeDisabled();
+    expect(screen.getByText("Pro is active. This membership is managed manually for now.")).toBeVisible();
     expect(screen.queryByRole("button", { name: "Manage billing" })).not.toBeInTheDocument();
   });
 
@@ -72,16 +88,27 @@ describe("BillingActionsClient", () => {
 
     render(<BillingActionsClient entitlement={FREE_ENTITLEMENT} context="upgrade" />);
 
-    expect(screen.getByRole("link", { name: "Create a free account" })).toHaveAttribute("href", "/sign-in");
-    expect(screen.queryByRole("button", { name: "Billing setup is not live yet" })).not.toBeInTheDocument();
+    expect(screen.getByRole("link", { name: "Sign in to upgrade" })).toHaveAttribute("href", "/sign-in");
+    expect(screen.queryByRole("button", { name: "Checkout coming soon" })).not.toBeInTheDocument();
+  });
+
+  it("shows monthly and yearly checkout actions for signed-in Free users in test mode", () => {
+    process.env.NEXT_PUBLIC_BILLING_MODE = "test";
+    accountMock.state.user = TEST_USER;
+
+    render(<BillingActionsClient entitlement={FREE_ENTITLEMENT} context="upgrade" />);
+
+    expect(screen.getByRole("button", { name: "Upgrade monthly" })).toBeEnabled();
+    expect(screen.getByRole("button", { name: "Upgrade yearly" })).toBeEnabled();
   });
 
   it("keeps live mode disabled until a future launch turns it on intentionally", () => {
     process.env.NEXT_PUBLIC_BILLING_MODE = "live";
+    accountMock.state.user = TEST_USER;
 
     render(<BillingActionsClient entitlement={FREE_ENTITLEMENT} context="upgrade" />);
 
-    expect(screen.getByRole("button", { name: "Billing setup is not live yet" })).toBeDisabled();
+    expect(screen.getByRole("button", { name: "Checkout coming soon" })).toBeDisabled();
     expect(screen.queryByRole("link", { name: "Create a free account" })).not.toBeInTheDocument();
   });
 });

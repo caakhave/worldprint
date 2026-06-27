@@ -5,33 +5,32 @@
   "contentVersion": "2026.06.22-exp2-qa1",
   "roundIds": [
     "worldprint-arable-land-per-person",
-    "worldprint-gdp-per-capita",
-    "worldprint-secondary-enrollment",
+    "worldprint-maternal-mortality",
+    "worldprint-life-expectancy",
     "worldprint-electricity-access",
-    "worldprint-age-dependency"
+    "worldprint-industry-share"
   ],
   "indicatorIds": [
     "arable-land-per-person",
-    "gdp-per-capita",
-    "secondary-enrollment",
+    "maternal-mortality",
+    "life-expectancy",
     "electricity-access",
-    "age-dependency"
+    "industry-share"
   ],
   "categoryMix": {
     "land": 1,
-    "development": 1,
-    "education": 1,
+    "health": 2,
     "energy": 1,
-    "demography": 1
+    "economy": 1
   },
   "mapDifficultyMix": {
     "expert": 1,
-    "intro": 2,
-    "standard": 2
+    "standard": 2,
+    "intro": 2
   },
-  "generatedAt": "2026-06-22T18:07:37.458652+00:00",
-  "generatorVersion": "daily-manifest-v1",
+  "generatedAt": "2026-06-27T15:17:17.652Z",
+  "generatorVersion": "daily-manifest-v2",
   "varietyNotes": [
-    "Selected with category, difficulty, and same-day correlation safeguards."
+    "Selected with category, difficulty, repeat-cooldown, and same-day correlation safeguards."
   ]
 }

@@ -4,33 +4,30 @@
   "date": "2026-07-04",
   "contentVersion": "2026.06.22-exp2-qa1",
   "roundIds": [
-    "worldprint-tuberculosis-incidence",
-    "worldprint-energy-use",
-    "worldprint-electricity-access",
-    "worldprint-manufacturing-share",
-    "worldprint-secondary-enrollment"
+    "worldprint-food-production-index",
+    "worldprint-physicians",
+    "worldprint-open-defecation",
+    "worldprint-industry-share",
+    "worldprint-manufacturing-share"
   ],
   "indicatorIds": [
-    "tuberculosis-incidence",
-    "energy-use",
-    "electricity-access",
-    "manufacturing-share",
-    "secondary-enrollment"
+    "food-production-index",
+    "physicians",
+    "open-defecation",
+    "industry-share",
+    "manufacturing-share"
   ],
   "categoryMix": {
-    "health": 1,
-    "energy": 2,
-    "economy": 1,
-    "education": 1
+    "agriculture": 1,
+    "health": 2,
+    "economy": 2
   },
   "mapDifficultyMix": {
-    "expert": 1,
-    "standard": 3,
-    "intro": 1
+    "standard": 5
   },
-  "generatedAt": "2026-06-22T18:07:37.461865+00:00",
-  "generatorVersion": "daily-manifest-v1",
+  "generatedAt": "2026-06-27T15:17:17.652Z",
+  "generatorVersion": "daily-manifest-v2",
   "varietyNotes": [
-    "Selected with category, difficulty, and same-day correlation safeguards."
+    "Selected with category, difficulty, repeat-cooldown, and same-day correlation safeguards."
   ]
 }

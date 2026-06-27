@@ -4,31 +4,32 @@
   "date": "2026-08-26",
   "contentVersion": "2026.06.22-exp2-qa1",
   "roundIds": [
-    "worldprint-adolescent-fertility",
-    "worldprint-measles-immunization",
-    "worldprint-under-five-mortality",
-    "worldprint-electric-power-use",
-    "worldprint-fertility-rate"
+    "worldprint-protected-land",
+    "worldprint-gdp-per-capita",
+    "worldprint-open-defecation",
+    "worldprint-tourism-arrivals",
+    "worldprint-maternal-mortality"
   ],
   "indicatorIds": [
-    "adolescent-fertility",
-    "measles-immunization",
-    "under-five-mortality",
-    "electric-power-use",
-    "fertility-rate"
+    "protected-land",
+    "gdp-per-capita",
+    "open-defecation",
+    "tourism-arrivals",
+    "maternal-mortality"
   ],
   "categoryMix": {
-    "demography": 2,
+    "environment": 1,
+    "development": 1,
     "health": 2,
-    "energy": 1
+    "economy": 1
   },
   "mapDifficultyMix": {
-    "expert": 1,
-    "standard": 4
+    "standard": 4,
+    "intro": 1
   },
-  "generatedAt": "2026-06-22T18:07:37.468116+00:00",
-  "generatorVersion": "daily-manifest-v1",
+  "generatedAt": "2026-06-27T15:17:17.652Z",
+  "generatorVersion": "daily-manifest-v2",
   "varietyNotes": [
-    "Selected with category, difficulty, and same-day correlation safeguards."
+    "Selected with category, difficulty, repeat-cooldown, and same-day correlation safeguards."
   ]
 }

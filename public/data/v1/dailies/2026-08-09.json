@@ -4,32 +4,32 @@
   "date": "2026-08-09",
   "contentVersion": "2026.06.22-exp2-qa1",
   "roundIds": [
-    "worldprint-adolescent-fertility",
-    "worldprint-forest-area",
-    "worldprint-precipitation-depth",
-    "worldprint-physicians",
-    "worldprint-health-expenditure"
+    "worldprint-basic-sanitation",
+    "worldprint-energy-use",
+    "worldprint-permanent-cropland",
+    "worldprint-life-expectancy",
+    "worldprint-freshwater-per-capita"
   ],
   "indicatorIds": [
-    "adolescent-fertility",
-    "forest-area",
-    "precipitation-depth",
-    "physicians",
-    "health-expenditure"
+    "basic-sanitation",
+    "energy-use",
+    "permanent-cropland",
+    "life-expectancy",
+    "freshwater-per-capita"
   ],
   "categoryMix": {
-    "demography": 1,
-    "environment": 2,
-    "health": 2
+    "health": 2,
+    "energy": 1,
+    "land": 1,
+    "environment": 1
   },
   "mapDifficultyMix": {
-    "expert": 1,
-    "intro": 1,
-    "standard": 3
+    "standard": 4,
+    "intro": 1
   },
-  "generatedAt": "2026-06-22T18:07:37.466152+00:00",
-  "generatorVersion": "daily-manifest-v1",
+  "generatedAt": "2026-06-27T15:17:17.652Z",
+  "generatorVersion": "daily-manifest-v2",
   "varietyNotes": [
-    "Selected with category, difficulty, and same-day correlation safeguards."
+    "Selected with category, difficulty, repeat-cooldown, and same-day correlation safeguards."
   ]
 }

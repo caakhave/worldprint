@@ -4,32 +4,32 @@
   "date": "2026-09-02",
   "contentVersion": "2026.06.22-exp2-qa1",
   "roundIds": [
+    "worldprint-coal-electricity-share",
+    "worldprint-trade-share",
+    "worldprint-cereal-yield",
     "worldprint-arable-land-per-person",
-    "worldprint-undernourishment",
-    "worldprint-tourism-arrivals",
-    "worldprint-total-protected-areas",
-    "worldprint-freshwater-per-capita"
+    "worldprint-industry-share"
   ],
   "indicatorIds": [
+    "coal-electricity-share",
+    "trade-share",
+    "cereal-yield",
     "arable-land-per-person",
-    "undernourishment",
-    "tourism-arrivals",
-    "total-protected-areas",
-    "freshwater-per-capita"
+    "industry-share"
   ],
   "categoryMix": {
-    "land": 1,
-    "health": 1,
-    "economy": 1,
-    "environment": 2
+    "energy": 1,
+    "economy": 2,
+    "agriculture": 1,
+    "land": 1
   },
   "mapDifficultyMix": {
-    "expert": 1,
-    "standard": 4
+    "standard": 3,
+    "expert": 2
   },
-  "generatedAt": "2026-06-22T18:07:37.468924+00:00",
-  "generatorVersion": "daily-manifest-v1",
+  "generatedAt": "2026-06-27T15:17:17.652Z",
+  "generatorVersion": "daily-manifest-v2",
   "varietyNotes": [
-    "Selected with category, difficulty, and same-day correlation safeguards."
+    "Selected with category, difficulty, repeat-cooldown, and same-day correlation safeguards."
   ]
 }

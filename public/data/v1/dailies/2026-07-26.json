@@ -4,34 +4,33 @@
   "date": "2026-07-26",
   "contentVersion": "2026.06.22-exp2-qa1",
   "roundIds": [
-    "worldprint-arable-land-per-person",
-    "worldprint-electricity-access",
     "worldprint-secondary-enrollment",
-    "worldprint-population-growth",
-    "worldprint-population-density"
+    "worldprint-arable-land",
+    "worldprint-life-expectancy",
+    "worldprint-older-adults-share",
+    "worldprint-renewable-electricity"
   ],
   "indicatorIds": [
-    "arable-land-per-person",
-    "electricity-access",
     "secondary-enrollment",
-    "population-growth",
-    "population-density"
+    "arable-land",
+    "life-expectancy",
+    "older-adults-share",
+    "renewable-electricity"
   ],
   "categoryMix": {
-    "land": 1,
-    "energy": 1,
     "education": 1,
+    "land": 1,
+    "health": 1,
     "demography": 1,
-    "settlement": 1
+    "energy": 1
   },
   "mapDifficultyMix": {
-    "expert": 1,
-    "intro": 1,
-    "standard": 3
+    "standard": 3,
+    "intro": 2
   },
-  "generatedAt": "2026-06-22T18:07:37.464553+00:00",
-  "generatorVersion": "daily-manifest-v1",
+  "generatedAt": "2026-06-27T15:17:17.652Z",
+  "generatorVersion": "daily-manifest-v2",
   "varietyNotes": [
-    "Selected with category, difficulty, and same-day correlation safeguards."
+    "Selected with category, difficulty, repeat-cooldown, and same-day correlation safeguards."
   ]
 }

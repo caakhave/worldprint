@@ -4,33 +4,32 @@
   "date": "2026-08-31",
   "contentVersion": "2026.06.22-exp2-qa1",
   "roundIds": [
-    "worldprint-tuberculosis-incidence",
-    "worldprint-coal-electricity-share",
-    "worldprint-permanent-cropland",
-    "worldprint-manufacturing-share",
-    "worldprint-precipitation-depth"
+    "worldprint-protected-land",
+    "worldprint-gdp-per-capita",
+    "worldprint-health-expenditure",
+    "worldprint-measles-immunization",
+    "worldprint-urban-population"
   ],
   "indicatorIds": [
-    "tuberculosis-incidence",
-    "coal-electricity-share",
-    "permanent-cropland",
-    "manufacturing-share",
-    "precipitation-depth"
+    "protected-land",
+    "gdp-per-capita",
+    "health-expenditure",
+    "measles-immunization",
+    "urban-population"
   ],
   "categoryMix": {
-    "health": 1,
-    "energy": 1,
-    "land": 1,
-    "economy": 1,
-    "environment": 1
+    "environment": 1,
+    "development": 1,
+    "health": 2,
+    "settlement": 1
   },
   "mapDifficultyMix": {
-    "expert": 1,
-    "standard": 4
+    "standard": 3,
+    "intro": 2
   },
-  "generatedAt": "2026-06-22T18:07:37.468704+00:00",
-  "generatorVersion": "daily-manifest-v1",
+  "generatedAt": "2026-06-27T15:17:17.652Z",
+  "generatorVersion": "daily-manifest-v2",
   "varietyNotes": [
-    "Selected with category, difficulty, and same-day correlation safeguards."
+    "Selected with category, difficulty, repeat-cooldown, and same-day correlation safeguards."
   ]
 }

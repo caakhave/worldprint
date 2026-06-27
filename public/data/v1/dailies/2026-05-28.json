@@ -4,33 +4,32 @@
   "date": "2026-05-28",
   "contentVersion": "2026.06.22-exp2-qa1",
   "roundIds": [
-    "worldprint-adolescent-fertility",
     "worldprint-population-growth",
-    "worldprint-undernourishment",
-    "worldprint-industry-share",
-    "worldprint-urban-population"
+    "worldprint-older-adults-share",
+    "worldprint-maternal-mortality",
+    "worldprint-population-density",
+    "worldprint-mobile-subscriptions"
   ],
   "indicatorIds": [
-    "adolescent-fertility",
     "population-growth",
-    "undernourishment",
-    "industry-share",
-    "urban-population"
+    "older-adults-share",
+    "maternal-mortality",
+    "population-density",
+    "mobile-subscriptions"
   ],
   "categoryMix": {
     "demography": 2,
     "health": 1,
-    "economy": 1,
-    "settlement": 1
+    "settlement": 1,
+    "connectivity": 1
   },
   "mapDifficultyMix": {
-    "expert": 1,
-    "standard": 3,
+    "standard": 4,
     "intro": 1
   },
-  "generatedAt": "2026-06-22T18:07:37.456223+00:00",
-  "generatorVersion": "daily-manifest-v1",
+  "generatedAt": "2026-06-27T15:17:17.652Z",
+  "generatorVersion": "daily-manifest-v2",
   "varietyNotes": [
-    "Selected with category, difficulty, and same-day correlation safeguards."
+    "Selected with category, difficulty, repeat-cooldown, and same-day correlation safeguards."
   ]
 }

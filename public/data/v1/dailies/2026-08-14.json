@@ -4,33 +4,33 @@
   "date": "2026-08-14",
   "contentVersion": "2026.06.22-exp2-qa1",
   "roundIds": [
-    "worldprint-adolescent-fertility",
-    "worldprint-freshwater-per-capita",
-    "worldprint-internet-users",
-    "worldprint-forest-area",
-    "worldprint-employment-agriculture"
+    "worldprint-electricity-access",
+    "worldprint-arable-land-per-person",
+    "worldprint-pm25-exposure",
+    "worldprint-employment-agriculture",
+    "worldprint-renewable-electricity"
   ],
   "indicatorIds": [
-    "adolescent-fertility",
-    "freshwater-per-capita",
-    "internet-users",
-    "forest-area",
-    "employment-agriculture"
+    "electricity-access",
+    "arable-land-per-person",
+    "pm25-exposure",
+    "employment-agriculture",
+    "renewable-electricity"
   ],
   "categoryMix": {
-    "demography": 1,
-    "environment": 2,
-    "connectivity": 1,
+    "energy": 2,
+    "land": 1,
+    "environment": 1,
     "labor": 1
   },
   "mapDifficultyMix": {
+    "intro": 1,
     "expert": 1,
-    "standard": 2,
-    "intro": 2
+    "standard": 3
   },
-  "generatedAt": "2026-06-22T18:07:37.466725+00:00",
-  "generatorVersion": "daily-manifest-v1",
+  "generatedAt": "2026-06-27T15:17:17.652Z",
+  "generatorVersion": "daily-manifest-v2",
   "varietyNotes": [
-    "Selected with category, difficulty, and same-day correlation safeguards."
+    "Selected with category, difficulty, repeat-cooldown, and same-day correlation safeguards."
   ]
 }

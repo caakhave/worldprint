@@ -4,33 +4,33 @@
   "date": "2026-07-15",
   "contentVersion": "2026.06.22-exp2-qa1",
   "roundIds": [
-    "worldprint-tuberculosis-incidence",
-    "worldprint-electricity-access",
-    "worldprint-fertility-rate",
-    "worldprint-protected-land",
-    "worldprint-coal-electricity-share"
+    "worldprint-older-adults-share",
+    "worldprint-employment-agriculture",
+    "worldprint-gdp-per-capita",
+    "worldprint-renewable-electricity",
+    "worldprint-tourism-arrivals"
   ],
   "indicatorIds": [
-    "tuberculosis-incidence",
-    "electricity-access",
-    "fertility-rate",
-    "protected-land",
-    "coal-electricity-share"
+    "older-adults-share",
+    "employment-agriculture",
+    "gdp-per-capita",
+    "renewable-electricity",
+    "tourism-arrivals"
   ],
   "categoryMix": {
-    "health": 1,
-    "energy": 2,
     "demography": 1,
-    "environment": 1
+    "labor": 1,
+    "development": 1,
+    "energy": 1,
+    "economy": 1
   },
   "mapDifficultyMix": {
-    "expert": 1,
-    "intro": 1,
+    "intro": 2,
     "standard": 3
   },
-  "generatedAt": "2026-06-22T18:07:37.463289+00:00",
-  "generatorVersion": "daily-manifest-v1",
+  "generatedAt": "2026-06-27T15:17:17.652Z",
+  "generatorVersion": "daily-manifest-v2",
   "varietyNotes": [
-    "Selected with category, difficulty, and same-day correlation safeguards."
+    "Selected with category, difficulty, repeat-cooldown, and same-day correlation safeguards."
   ]
 }

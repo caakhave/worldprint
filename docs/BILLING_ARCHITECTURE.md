@@ -199,8 +199,8 @@ Generated fixture events may not always map to the real QA customer/subscription
 ## Failure States
 
 - Missing public Supabase env: account pages render disabled sign-in/billing states; gameplay remains available.
-- `NEXT_PUBLIC_BILLING_MODE` unset, `disabled`, or `live`: public checkout/portal actions stay disabled with `Billing setup is not live yet.`
-- Missing billing function env: functions return `503`; public UI shows `Billing setup is not live yet.`
+- `NEXT_PUBLIC_BILLING_MODE` unset, `disabled`, or `live`: public checkout/portal actions stay disabled with `Checkout coming soon.`
+- Missing billing function env: functions return `503`; public UI shows `Checkout is not open yet.`
 - Signed-out checkout or portal request: function returns `401`; UI asks player to create a free account.
 - Missing Stripe customer for Portal: function returns a safe error; account does not expose raw ids.
 - Checkout success before webhook arrives: account shows pending verification, not immediate Pro.

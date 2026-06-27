@@ -4,33 +4,33 @@
   "date": "2026-08-15",
   "contentVersion": "2026.06.22-exp2-qa1",
   "roundIds": [
-    "worldprint-arable-land-per-person",
     "worldprint-safe-drinking-water",
-    "worldprint-co2-per-capita",
-    "worldprint-tourism-arrivals",
-    "worldprint-life-expectancy"
+    "worldprint-internet-users",
+    "worldprint-freshwater-per-capita",
+    "worldprint-unemployment",
+    "worldprint-manufacturing-share"
   ],
   "indicatorIds": [
-    "arable-land-per-person",
     "safe-drinking-water",
-    "co2-per-capita",
-    "tourism-arrivals",
-    "life-expectancy"
+    "internet-users",
+    "freshwater-per-capita",
+    "unemployment",
+    "manufacturing-share"
   ],
   "categoryMix": {
-    "land": 1,
-    "health": 2,
+    "health": 1,
+    "connectivity": 1,
     "environment": 1,
+    "labor": 1,
     "economy": 1
   },
   "mapDifficultyMix": {
-    "expert": 1,
     "intro": 2,
-    "standard": 2
+    "standard": 3
   },
-  "generatedAt": "2026-06-22T18:07:37.466839+00:00",
-  "generatorVersion": "daily-manifest-v1",
+  "generatedAt": "2026-06-27T15:17:17.652Z",
+  "generatorVersion": "daily-manifest-v2",
   "varietyNotes": [
-    "Selected with category, difficulty, and same-day correlation safeguards."
+    "Selected with category, difficulty, repeat-cooldown, and same-day correlation safeguards."
   ]
 }

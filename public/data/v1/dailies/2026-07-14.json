@@ -4,33 +4,32 @@
   "date": "2026-07-14",
   "contentVersion": "2026.06.22-exp2-qa1",
   "roundIds": [
-    "worldprint-arable-land-per-person",
-    "worldprint-protected-land",
-    "worldprint-forest-area",
     "worldprint-agriculture-value-added",
-    "worldprint-coal-electricity-share"
+    "worldprint-under-five-mortality",
+    "worldprint-unemployment",
+    "worldprint-clean-fuels-access",
+    "worldprint-pm25-exposure"
   ],
   "indicatorIds": [
-    "arable-land-per-person",
-    "protected-land",
-    "forest-area",
     "agriculture-value-added",
-    "coal-electricity-share"
+    "under-five-mortality",
+    "unemployment",
+    "clean-fuels-access",
+    "pm25-exposure"
   ],
   "categoryMix": {
-    "land": 1,
-    "environment": 2,
     "economy": 1,
-    "energy": 1
+    "health": 1,
+    "labor": 1,
+    "energy": 1,
+    "environment": 1
   },
   "mapDifficultyMix": {
-    "expert": 1,
-    "standard": 3,
-    "intro": 1
+    "standard": 5
   },
-  "generatedAt": "2026-06-22T18:07:37.463162+00:00",
-  "generatorVersion": "daily-manifest-v1",
+  "generatedAt": "2026-06-27T15:17:17.652Z",
+  "generatorVersion": "daily-manifest-v2",
   "varietyNotes": [
-    "Selected with category, difficulty, and same-day correlation safeguards."
+    "Selected with category, difficulty, repeat-cooldown, and same-day correlation safeguards."
   ]
 }

@@ -30,7 +30,8 @@ import type {
 import type { Tier } from "@/lib/content/schemas";
 import { filterPracticeRounds, selectPracticeRoundIds, utcDateKey, challengeNumber } from "@/lib/game/daily";
 import { selectDailyRoundIdsFromManifest } from "@/lib/game/dailyManifest";
-import { buildShareText } from "@/lib/game/share";
+import { nextDailyUnlockCopy } from "@/lib/game/retention";
+import { buildResultShareSummary, buildShareText, scoreRank } from "@/lib/game/share";
 import { challengePayloadFromRun, decodeChallenge, encodeChallenge, type ChallengePayload } from "@/lib/game/challenge";
 import { COUNTRY_REVEAL_COST, TIER_CONFIGS, nextInvestigationPenalty } from "@/lib/game/scoring";
 import {
@@ -144,15 +145,6 @@ function formatStat(value: number | null) {
   return value === null ? "—" : value.toLocaleString("en-US");
 }
 
-function scoreRank(total: number, roundCount: number) {
-  const possible = Math.max(1, roundCount * 1000);
-  const ratio = total / possible;
-  if (ratio >= 0.92) return { title: "Worldprint Master", note: "Elite pattern reading across the whole run." };
-  if (ratio >= 0.76) return { title: "Pattern Hunter", note: "Strong reads, sharp clue discipline." };
-  if (ratio >= 0.52) return { title: "Atlas Reader", note: "Good signal work with room to tighten the clues." };
-  return { title: "Signal Seeker", note: "The map gave up its secrets. Now chase the cleaner read." };
-}
-
 function AnimatedNumber({ value }: { value: number }) {
   const [displayValue, setDisplayValue] = useState(0);
 
@@ -186,6 +178,11 @@ function formatRecordDate(value: string | null | undefined) {
 
 function savedArchiveRecord(store: PersistedState, dateKey: string): CompletionHistory | null {
   return store.archiveHistoryByDate[dateKey] ?? store.dailyHistoryByDate[dateKey] ?? null;
+}
+
+function bestDailyScoreForStore(store: PersistedState): number | null {
+  const scores = Object.values(store.dailyHistoryByDate).map((completion) => completion.bestScore);
+  return scores.length ? Math.max(...scores) : null;
 }
 
 type ArchiveReviewRecord = {
@@ -250,6 +247,7 @@ export function WorldprintClient({ dateOverride, entryMode = "standard" }: World
   const [selectedCountryIso3, setSelectedCountryIso3] = useState("");
   const [masterGuess, setMasterGuess] = useState("");
   const [shareStatus, setShareStatus] = useState("");
+  const [showFirstRunIntro, setShowFirstRunIntro] = useState(false);
   const [practiceCategory, setPracticeCategory] = useState("");
   const [practiceDifficulty, setPracticeDifficulty] = useState<IndicatorDifficulty>("intro");
   const [practiceSalt, setPracticeSalt] = useState("starter");
@@ -536,12 +534,14 @@ export function WorldprintClient({ dateOverride, entryMode = "standard" }: World
     if (!data) return;
     if (mode === "daily" && currentDailyRun && !options.freshReplay) {
       setRun(currentDailyRun);
+      setShowFirstRunIntro(!store.onboardingComplete && currentDailyRun.status === "active" && currentDailyRun.currentRoundIndex === 0);
       window.requestAnimationFrame(() => window.scrollTo(0, 0));
       await ensureIndicators(currentDailyRun.rounds.map((round) => round.correctIndicatorId));
       return;
     }
     if (mode === "archive" && currentArchiveRun && !options.freshReplay) {
       setRun(currentArchiveRun);
+      setShowFirstRunIntro(false);
       window.requestAnimationFrame(() => window.scrollTo(0, 0));
       await ensureIndicators(currentArchiveRun.rounds.map((round) => round.correctIndicatorId));
       return;
@@ -570,6 +570,7 @@ export function WorldprintClient({ dateOverride, entryMode = "standard" }: World
     });
     await ensureIndicators(nextRun.rounds.map((round) => round.correctIndicatorId));
     setRun(nextRun);
+    setShowFirstRunIntro(mode === "daily" && !store.onboardingComplete);
     setSelectedCountryIso3("");
     setMasterGuess("");
     window.requestAnimationFrame(() => window.scrollTo(0, 0));
@@ -591,6 +592,7 @@ export function WorldprintClient({ dateOverride, entryMode = "standard" }: World
     });
     await ensureIndicators(replay.rounds.map((round) => round.correctIndicatorId));
     setRun(replay);
+    setShowFirstRunIntro(false);
     setSelectedCountryIso3("");
     setMasterGuess("");
     setShareStatus("");
@@ -599,6 +601,7 @@ export function WorldprintClient({ dateOverride, entryMode = "standard" }: World
 
   function returnToLobby(targetId?: string) {
     setRun(null);
+    setShowFirstRunIntro(false);
     setShareStatus("");
     window.requestAnimationFrame(() => {
       if (targetId) {
@@ -611,6 +614,16 @@ export function WorldprintClient({ dateOverride, entryMode = "standard" }: World
 
   function dispatch(action: Parameters<typeof reduceRun>[1]) {
     setRun((current) => (current ? reduceRun(current, action) : current));
+  }
+
+  function dismissFirstRunIntro() {
+    setStore((current) => {
+      const next = { ...current, onboardingComplete: true };
+      savePersistedState(next);
+      return next;
+    });
+    setShowFirstRunIntro(false);
+    window.requestAnimationFrame(() => window.scrollTo(0, 0));
   }
 
   if (loadError) {
@@ -735,6 +748,8 @@ export function WorldprintClient({ dateOverride, entryMode = "standard" }: World
     const todayRecord = !isArchiveDate ? store.dailyHistoryByDate[todayKey] ?? null : null;
     const completedDailyRun = !isArchiveDate && activeDateRun?.status === "complete" ? activeDateRun : null;
     const todayCompleted = Boolean(!isArchiveDate && (completedDailyRun || todayRecord));
+    const nextDaily = nextDailyUnlockCopy();
+    const bestDailyScore = bestDailyScoreForStore(store);
     const archiveRecordDate = formatRecordDate(archiveRecord?.completedAt);
     const dailyLabel = activeDateRun
         ? activeDateRun.status === "complete"
@@ -856,12 +871,33 @@ export function WorldprintClient({ dateOverride, entryMode = "standard" }: World
                     <p>Five maps. One official daily score.</p>
                   </div>
                   {todayCompleted ? <span className="mode-state-pill">Today&apos;s run complete</span> : <span className="mode-state-pill">Ready today</span>}
+                  {todayCompleted ? (
+                    <div className="daily-return-hook" aria-label="Daily return summary">
+                      <div>
+                        <span>Current streak</span>
+                        <strong>{store.streak.current}</strong>
+                      </div>
+                      <div>
+                        <span>Best Daily</span>
+                        <strong>{bestDailyScore === null ? "—" : bestDailyScore.toLocaleString("en-US")}</strong>
+                      </div>
+                      <p>
+                        <strong>{nextDaily.headline}</strong> {nextDaily.body}
+                      </p>
+                    </div>
+                  ) : null}
                   <div className="mode-card-actions">
                     {todayCompleted ? (
                       <>
                         <button className="button" type="button" disabled={!completedDailyRun} onClick={() => completedDailyRun && setRun(completedDailyRun)}>
                           View today&apos;s result
                         </button>
+                        <a className="button-secondary" href="#practice-atlas">
+                          Practice Atlas
+                        </a>
+                        <Link className="button-secondary" href="/archive/worldprint">
+                          Past Games
+                        </Link>
                         <button className="button-secondary" type="button" onClick={() => void startRun("daily", undefined, { freshReplay: true })}>
                           Replay for practice
                         </button>
@@ -1020,6 +1056,15 @@ export function WorldprintClient({ dateOverride, entryMode = "standard" }: World
         signedIn={signedIn}
       />
     );
+  }
+
+  if (
+    showFirstRunIntro &&
+    run.mode === "daily" &&
+    run.currentRoundIndex === 0 &&
+    run.rounds[0]?.phase === "active"
+  ) {
+    return <FirstRunIntro tier={run.tier} onContinue={dismissFirstRunIntro} />;
   }
 
   const roundState = activeRound(run);
@@ -1658,6 +1703,12 @@ function ArchiveReview({
         </div>
       </dl>
       <div className="archive-review-actions">
+        <Link className="button" href="/play/worldprint">
+          Play today&apos;s Daily
+        </Link>
+        <Link className="button-secondary" href="/play/worldprint#practice-atlas">
+          Practice Atlas
+        </Link>
         <button className="button" type="button" onClick={onReplay}>
           Replay for practice
         </button>
@@ -1768,6 +1819,46 @@ function RankedTable({ title, rows, indicator }: { title: string; rows: RankedCo
   );
 }
 
+function FirstRunIntro({ tier, onContinue }: { tier: Tier; onContinue: () => void }) {
+  return (
+    <section className="first-run-shell page-shell" aria-label="First run intro">
+      <div className="first-run-card surface">
+        <p className="eyebrow">Before map 1</p>
+        <h1>Read the signal, then make the call.</h1>
+        <p className="lead">
+          You are starting on {TIER_CONFIGS[tier].label}. Keep your score clean, spend clues only when the map gets slippery, and pick the hidden
+          indicator.
+        </p>
+        <ol className="first-run-beats" aria-label="How the Daily works">
+          <li>
+            <span>01</span>
+            <strong>Read the choropleth pattern.</strong>
+            <p>Darker countries carry the stronger signal.</p>
+          </li>
+          <li>
+            <span>02</span>
+            <strong>Use clues if stuck.</strong>
+            <p>Country values help, but every paid clue spends points.</p>
+          </li>
+          <li>
+            <span>03</span>
+            <strong>Pick the hidden indicator.</strong>
+            <p>Solve the map, bank the score, and move to the next one.</p>
+          </li>
+        </ol>
+        <div className="first-run-actions">
+          <button className="button" type="button" onClick={onContinue}>
+            Start map 1
+          </button>
+          <button className="button-secondary" type="button" onClick={onContinue}>
+            Skip intro
+          </button>
+        </div>
+      </div>
+    </section>
+  );
+}
+
 function CompletionSummary({
   run,
   store,
@@ -1790,6 +1881,9 @@ function CompletionSummary({
   signedIn: boolean;
 }) {
   const shareText = buildShareText(run);
+  const shareSummary = buildResultShareSummary(run);
+  const shareTextRef = useRef<HTMLTextAreaElement | null>(null);
+  const [resultCopyState, setResultCopyState] = useState<"idle" | "copied" | "failed">("idle");
   const challengeCode = encodeChallenge(challengePayloadFromRun(run));
   const challengeUrl =
     typeof window === "undefined" ? `/challenge/worldprint?c=${challengeCode}` : `${window.location.origin}/challenge/worldprint/?c=${challengeCode}`;
@@ -1822,6 +1916,17 @@ function CompletionSummary({
       ? "Saved to your account."
       : "Account stats."
     : "Saved in this browser.";
+  useEffect(() => {
+    if (resultCopyState === "idle") return undefined;
+    const timeout = window.setTimeout(() => setResultCopyState("idle"), 2600);
+    return () => window.clearTimeout(timeout);
+  }, [resultCopyState]);
+
+  function selectShareTextFallback() {
+    shareTextRef.current?.focus();
+    shareTextRef.current?.select();
+  }
+
   async function shareResult() {
     try {
       if (navigator.share) {
@@ -1830,18 +1935,23 @@ function CompletionSummary({
         return;
       }
       await navigator.clipboard.writeText(shareText);
-      setShareStatus("Copied result text.");
+      setShareStatus("Copied.");
     } catch {
-      setShareStatus("Result text is ready below.");
+      selectShareTextFallback();
+      setShareStatus("Could not share. Result text is selected below.");
     }
   }
 
   async function copyResultText() {
     try {
+      if (!navigator.clipboard?.writeText) throw new Error("Clipboard unavailable");
       await navigator.clipboard.writeText(shareText);
-      setShareStatus("Copied result text.");
+      setResultCopyState("copied");
+      setShareStatus("Copied.");
     } catch {
-      setShareStatus("Result text is ready below.");
+      selectShareTextFallback();
+      setResultCopyState("failed");
+      setShareStatus("Could not copy. Result text is selected below.");
     }
   }
 
@@ -1886,6 +1996,9 @@ function CompletionSummary({
       : run.mode === "daily"
         ? "Challenge a friend with today's maps"
         : "Challenge a friend with these maps";
+  const reviewHref = run.mode === "daily" || run.mode === "archive" ? `/play/worldprint/${run.dateKey}?review=1` : null;
+  const nextDaily = nextDailyUnlockCopy();
+  const bestDailyScore = bestDailyScoreForStore(store);
 
   return (
     <section className="summary-shell page-shell">
@@ -1917,6 +2030,23 @@ function CompletionSummary({
           {run.rounds.length} maps completed on {TIER_CONFIGS[run.tier].label}.{" "}
           {run.mode === "daily" ? `Daily streak: ${store.streak.current}.` : "Daily streaks are unaffected."}
         </p>
+        <section className="summary-retention-card surface" aria-label="Next Daily and streak">
+          <div>
+            <p className="eyebrow">Return tomorrow</p>
+            <h2>{nextDaily.headline}</h2>
+            <p>{nextDaily.body}</p>
+          </div>
+          <dl aria-label="Daily streak and best score">
+            <div>
+              <dt>Current streak</dt>
+              <dd>{store.streak.current}</dd>
+            </div>
+            <div>
+              <dt>Best Daily</dt>
+              <dd>{bestDailyScore === null ? "—" : bestDailyScore.toLocaleString("en-US")}</dd>
+            </div>
+          </dl>
+        </section>
         <div className="summary-achievement surface" aria-label="Completed run summary">
           <div>
             <span>Final score</span>
@@ -1957,12 +2087,73 @@ function CompletionSummary({
             );
           })}
         </div>
+        <section className="daily-share-card surface" aria-label="Spoiler-free result share card">
+          <div className="daily-share-card-head">
+            <div>
+              <p className="eyebrow">Share result</p>
+              <h2>{shareSummary.title}</h2>
+              <span className="daily-share-mode">{shareSummary.resultLabel}</span>
+            </div>
+            <strong>{shareSummary.score.toLocaleString("en-US")} pts</strong>
+          </div>
+          <dl className="daily-share-metrics" aria-label="Share card stats">
+            <div>
+              <dt>Rank</dt>
+              <dd>{shareSummary.rankTitle}</dd>
+            </div>
+            <div>
+              <dt>Solved</dt>
+              <dd>
+                {shareSummary.solvedCount}/{shareSummary.roundCount}
+              </dd>
+            </div>
+            <div>
+              <dt>Misses</dt>
+              <dd>{shareSummary.missCount}</dd>
+            </div>
+            <div>
+              <dt>Clue spend</dt>
+              <dd>{shareSummary.clueSpend.toLocaleString("en-US")}</dd>
+            </div>
+          </dl>
+          <div className="share-result-strip" aria-label="Five-round result strip">
+            {shareSummary.rounds.map((tone, index) => (
+              <span key={`${run.rounds[index]?.roundId ?? index}-${tone}`} data-result={tone}>
+                <small>{index + 1}</small>
+              </span>
+            ))}
+          </div>
+          <div className="daily-share-actions">
+            <button className="button" type="button" onClick={() => void copyResultText()}>
+              <Copy size={18} aria-hidden="true" />
+              {resultCopyState === "copied" ? "Copied" : resultCopyState === "failed" ? "Could not copy" : "Copy result"}
+            </button>
+            {reviewHref ? (
+              <Link className="button-secondary" href={reviewHref}>
+                Review result
+              </Link>
+            ) : null}
+            <span className="daily-share-copy-status" role="status" aria-live="polite">
+              {resultCopyState === "copied"
+                ? "Copied to clipboard."
+                : resultCopyState === "failed"
+                  ? "Result text selected below."
+                  : "No spoilers included."}
+            </span>
+          </div>
+          <p className="daily-share-note">Spoiler-free: no answers or source labels are included unless you open the review.</p>
+        </section>
         <div className="summary-next-actions surface" aria-label="Post-run actions">
+          {reviewHref ? (
+            <Link className="button" href={reviewHref}>
+              Review result
+            </Link>
+          ) : null}
           <button className="button" type="button" onClick={onPractice}>
             Practice another set
           </button>
           <button className="button-secondary" type="button" onClick={onReplay}>
-            Replay this map set
+            Replay for practice
           </button>
           <Link className="button-secondary" href="/archive/worldprint">
             Past Games
@@ -1975,10 +2166,6 @@ function CompletionSummary({
           <button className="button-secondary" type="button" onClick={() => void shareResult()}>
             <Share2 size={18} aria-hidden="true" />
             Share result
-          </button>
-          <button className="button-secondary" type="button" onClick={() => void copyResultText()}>
-            <Copy size={18} aria-hidden="true" />
-            Copy result text
           </button>
           <button className="button-secondary" type="button" onClick={() => void shareChallenge()}>
             <Share2 size={18} aria-hidden="true" />
@@ -1995,7 +2182,7 @@ function CompletionSummary({
         <div className="status-live" role="status" aria-live="polite">
           {shareStatus}
         </div>
-        <textarea className="share-text" readOnly value={shareText} aria-label="Result share text" />
+        <textarea ref={shareTextRef} className="share-text" readOnly value={shareText} aria-label="Result share text" />
         <section className="account-save-card surface" aria-label="Save your progress">
           <div>
             <p className="eyebrow">Save progress</p>

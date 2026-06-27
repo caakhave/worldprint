@@ -4,34 +4,31 @@
   "date": "2026-06-02",
   "contentVersion": "2026.06.22-exp2-qa1",
   "roundIds": [
-    "worldprint-cereal-yield",
     "worldprint-co2-per-capita",
-    "worldprint-urban-population",
-    "worldprint-industry-share",
-    "worldprint-account-ownership"
+    "worldprint-gdp-per-capita",
+    "worldprint-total-protected-areas",
+    "worldprint-life-expectancy",
+    "worldprint-undernourishment"
   ],
   "indicatorIds": [
-    "cereal-yield",
     "co2-per-capita",
-    "urban-population",
-    "industry-share",
-    "account-ownership"
+    "gdp-per-capita",
+    "total-protected-areas",
+    "life-expectancy",
+    "undernourishment"
   ],
   "categoryMix": {
-    "agriculture": 1,
-    "environment": 1,
-    "settlement": 1,
-    "economy": 1,
-    "development": 1
+    "environment": 2,
+    "development": 1,
+    "health": 2
   },
   "mapDifficultyMix": {
-    "expert": 1,
     "standard": 3,
-    "intro": 1
+    "intro": 2
   },
-  "generatedAt": "2026-06-22T18:07:37.456893+00:00",
-  "generatorVersion": "daily-manifest-v1",
+  "generatedAt": "2026-06-27T15:17:17.652Z",
+  "generatorVersion": "daily-manifest-v2",
   "varietyNotes": [
-    "Selected with category, difficulty, and same-day correlation safeguards."
+    "Selected with category, difficulty, repeat-cooldown, and same-day correlation safeguards."
   ]
 }

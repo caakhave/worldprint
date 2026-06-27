@@ -232,7 +232,7 @@ export function savePersistedState(state: PersistedState): void {
 }
 
 export function persistRun(state: PersistedState, run: RunState): PersistedState {
-  const next = { ...state, selectedTier: run.tier, onboardingComplete: true };
+  const next = { ...state, selectedTier: run.tier };
   if (run.mode === "daily") {
     next.activeDailyRun = run;
   } else if (run.mode === "practice") {

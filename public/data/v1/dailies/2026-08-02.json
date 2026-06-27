@@ -4,32 +4,31 @@
   "date": "2026-08-02",
   "contentVersion": "2026.06.22-exp2-qa1",
   "roundIds": [
-    "worldprint-adolescent-fertility",
-    "worldprint-agriculture-value-added",
-    "worldprint-under-five-mortality",
-    "worldprint-co2-per-capita",
-    "worldprint-population-growth"
+    "worldprint-open-defecation",
+    "worldprint-health-expenditure",
+    "worldprint-employment-agriculture",
+    "worldprint-pm25-exposure",
+    "worldprint-manufacturing-share"
   ],
   "indicatorIds": [
-    "adolescent-fertility",
-    "agriculture-value-added",
-    "under-five-mortality",
-    "co2-per-capita",
-    "population-growth"
+    "open-defecation",
+    "health-expenditure",
+    "employment-agriculture",
+    "pm25-exposure",
+    "manufacturing-share"
   ],
   "categoryMix": {
-    "demography": 2,
-    "economy": 1,
-    "health": 1,
-    "environment": 1
+    "health": 2,
+    "labor": 1,
+    "environment": 1,
+    "economy": 1
   },
   "mapDifficultyMix": {
-    "expert": 1,
-    "standard": 4
+    "standard": 5
   },
-  "generatedAt": "2026-06-22T18:07:37.465315+00:00",
-  "generatorVersion": "daily-manifest-v1",
+  "generatedAt": "2026-06-27T15:17:17.652Z",
+  "generatorVersion": "daily-manifest-v2",
   "varietyNotes": [
-    "Selected with category, difficulty, and same-day correlation safeguards."
+    "Selected with category, difficulty, repeat-cooldown, and same-day correlation safeguards."
   ]
 }

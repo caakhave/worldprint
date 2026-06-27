@@ -4,33 +4,34 @@
   "date": "2026-07-10",
   "contentVersion": "2026.06.22-exp2-qa1",
   "roundIds": [
-    "worldprint-cereal-yield",
-    "worldprint-undernourishment",
-    "worldprint-trade-share",
-    "worldprint-safe-drinking-water",
-    "worldprint-electric-power-use"
+    "worldprint-older-adults-share",
+    "worldprint-under-five-mortality",
+    "worldprint-energy-use",
+    "worldprint-tourism-arrivals",
+    "worldprint-arable-land-per-person"
   ],
   "indicatorIds": [
-    "cereal-yield",
-    "undernourishment",
-    "trade-share",
-    "safe-drinking-water",
-    "electric-power-use"
+    "older-adults-share",
+    "under-five-mortality",
+    "energy-use",
+    "tourism-arrivals",
+    "arable-land-per-person"
   ],
   "categoryMix": {
-    "agriculture": 1,
-    "health": 2,
+    "demography": 1,
+    "health": 1,
+    "energy": 1,
     "economy": 1,
-    "energy": 1
+    "land": 1
   },
   "mapDifficultyMix": {
-    "expert": 1,
+    "intro": 1,
     "standard": 3,
-    "intro": 1
+    "expert": 1
   },
-  "generatedAt": "2026-06-22T18:07:37.462638+00:00",
-  "generatorVersion": "daily-manifest-v1",
+  "generatedAt": "2026-06-27T15:17:17.652Z",
+  "generatorVersion": "daily-manifest-v2",
   "varietyNotes": [
-    "Selected with category, difficulty, and same-day correlation safeguards."
+    "Selected with category, difficulty, repeat-cooldown, and same-day correlation safeguards."
   ]
 }

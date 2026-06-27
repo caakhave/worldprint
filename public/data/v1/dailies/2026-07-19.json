@@ -4,33 +4,32 @@
   "date": "2026-07-19",
   "contentVersion": "2026.06.22-exp2-qa1",
   "roundIds": [
-    "worldprint-arable-land-per-person",
-    "worldprint-tuberculosis-incidence",
-    "worldprint-fertility-rate",
-    "worldprint-coal-electricity-share",
+    "worldprint-arable-land",
+    "worldprint-account-ownership",
+    "worldprint-mobile-subscriptions",
+    "worldprint-health-expenditure",
     "worldprint-freshwater-per-capita"
   ],
   "indicatorIds": [
-    "arable-land-per-person",
-    "tuberculosis-incidence",
-    "fertility-rate",
-    "coal-electricity-share",
+    "arable-land",
+    "account-ownership",
+    "mobile-subscriptions",
+    "health-expenditure",
     "freshwater-per-capita"
   ],
   "categoryMix": {
     "land": 1,
+    "development": 1,
+    "connectivity": 1,
     "health": 1,
-    "demography": 1,
-    "energy": 1,
     "environment": 1
   },
   "mapDifficultyMix": {
-    "expert": 2,
-    "standard": 3
+    "standard": 5
   },
-  "generatedAt": "2026-06-22T18:07:37.463772+00:00",
-  "generatorVersion": "daily-manifest-v1",
+  "generatedAt": "2026-06-27T15:17:17.652Z",
+  "generatorVersion": "daily-manifest-v2",
   "varietyNotes": [
-    "Selected with category, difficulty, and same-day correlation safeguards."
+    "Selected with category, difficulty, repeat-cooldown, and same-day correlation safeguards."
   ]
 }

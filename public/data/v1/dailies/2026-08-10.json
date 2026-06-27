@@ -4,32 +4,31 @@
   "date": "2026-08-10",
   "contentVersion": "2026.06.22-exp2-qa1",
   "roundIds": [
-    "worldprint-tuberculosis-incidence",
-    "worldprint-older-adults-share",
-    "worldprint-forest-area",
-    "worldprint-co2-per-capita",
-    "worldprint-measles-immunization"
+    "worldprint-total-protected-areas",
+    "worldprint-arable-land",
+    "worldprint-protected-land",
+    "worldprint-fertility-rate",
+    "worldprint-women-parliament"
   ],
   "indicatorIds": [
-    "tuberculosis-incidence",
-    "older-adults-share",
-    "forest-area",
-    "co2-per-capita",
-    "measles-immunization"
+    "total-protected-areas",
+    "arable-land",
+    "protected-land",
+    "fertility-rate",
+    "women-parliament"
   ],
   "categoryMix": {
-    "health": 2,
+    "environment": 2,
+    "land": 1,
     "demography": 1,
-    "environment": 2
+    "development": 1
   },
   "mapDifficultyMix": {
-    "expert": 1,
-    "intro": 2,
-    "standard": 2
+    "standard": 5
   },
-  "generatedAt": "2026-06-22T18:07:37.466280+00:00",
-  "generatorVersion": "daily-manifest-v1",
+  "generatedAt": "2026-06-27T15:17:17.652Z",
+  "generatorVersion": "daily-manifest-v2",
   "varietyNotes": [
-    "Selected with category, difficulty, and same-day correlation safeguards."
+    "Selected with category, difficulty, repeat-cooldown, and same-day correlation safeguards."
   ]
 }

@@ -4,34 +4,32 @@
   "date": "2026-07-03",
   "contentVersion": "2026.06.22-exp2-qa1",
   "roundIds": [
-    "worldprint-adolescent-fertility",
-    "worldprint-food-production-index",
-    "worldprint-undernourishment",
-    "worldprint-forest-area",
-    "worldprint-urban-population"
+    "worldprint-age-dependency",
+    "worldprint-permanent-cropland",
+    "worldprint-life-expectancy",
+    "worldprint-basic-sanitation",
+    "worldprint-gdp-per-capita"
   ],
   "indicatorIds": [
-    "adolescent-fertility",
-    "food-production-index",
-    "undernourishment",
-    "forest-area",
-    "urban-population"
+    "age-dependency",
+    "permanent-cropland",
+    "life-expectancy",
+    "basic-sanitation",
+    "gdp-per-capita"
   ],
   "categoryMix": {
     "demography": 1,
-    "agriculture": 1,
-    "health": 1,
-    "environment": 1,
-    "settlement": 1
+    "land": 1,
+    "health": 2,
+    "development": 1
   },
   "mapDifficultyMix": {
-    "expert": 1,
-    "standard": 2,
+    "standard": 3,
     "intro": 2
   },
-  "generatedAt": "2026-06-22T18:07:37.461723+00:00",
-  "generatorVersion": "daily-manifest-v1",
+  "generatedAt": "2026-06-27T15:17:17.652Z",
+  "generatorVersion": "daily-manifest-v2",
   "varietyNotes": [
-    "Selected with category, difficulty, and same-day correlation safeguards."
+    "Selected with category, difficulty, repeat-cooldown, and same-day correlation safeguards."
   ]
 }

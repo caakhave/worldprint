@@ -4,33 +4,32 @@
   "date": "2026-07-30",
   "contentVersion": "2026.06.22-exp2-qa1",
   "roundIds": [
-    "worldprint-tuberculosis-incidence",
-    "worldprint-unemployment",
-    "worldprint-life-expectancy",
-    "worldprint-clean-fuels-access",
-    "worldprint-fertility-rate"
+    "worldprint-adolescent-fertility",
+    "worldprint-measles-immunization",
+    "worldprint-under-five-mortality",
+    "worldprint-cereal-yield",
+    "worldprint-women-parliament"
   ],
   "indicatorIds": [
-    "tuberculosis-incidence",
-    "unemployment",
-    "life-expectancy",
-    "clean-fuels-access",
-    "fertility-rate"
+    "adolescent-fertility",
+    "measles-immunization",
+    "under-five-mortality",
+    "cereal-yield",
+    "women-parliament"
   ],
   "categoryMix": {
+    "demography": 1,
     "health": 2,
-    "labor": 1,
-    "energy": 1,
-    "demography": 1
+    "agriculture": 1,
+    "development": 1
   },
   "mapDifficultyMix": {
-    "expert": 1,
-    "standard": 3,
-    "intro": 1
+    "expert": 2,
+    "standard": 3
   },
-  "generatedAt": "2026-06-22T18:07:37.464990+00:00",
-  "generatorVersion": "daily-manifest-v1",
+  "generatedAt": "2026-06-27T15:17:17.652Z",
+  "generatorVersion": "daily-manifest-v2",
   "varietyNotes": [
-    "Selected with category, difficulty, and same-day correlation safeguards."
+    "Selected with category, difficulty, repeat-cooldown, and same-day correlation safeguards."
   ]
 }

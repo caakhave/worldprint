@@ -7,8 +7,9 @@ import type { DailyManifest } from "@/lib/content/schemas";
 import { decodeChallenge, encodeChallenge } from "@/lib/game/challenge";
 import { selectDailyRoundIds, selectPracticeRoundIds, utcDateKey } from "@/lib/game/daily";
 import { selectDailyRoundIdsFromManifest } from "@/lib/game/dailyManifest";
+import { localDateKey, nextDailyUnlockCopy, nextLocalDate } from "@/lib/game/retention";
 import { COUNTRY_REVEAL_COST, TIER_CONFIGS, UNIT_REVEAL_COST, WRONG_ANSWER_COST } from "@/lib/game/scoring";
-import { buildShareText, containsSpoiler, scoreCell } from "@/lib/game/share";
+import { buildResultShareSummary, buildShareText, containsSpoiler, scoreCell } from "@/lib/game/share";
 import { updateStreak } from "@/lib/game/streak";
 import { createRun, isAcceptedAtlasGuess, reduceRun } from "@/lib/game/state";
 import { defaultPersistedState, recordDailyCompletion } from "@/lib/persistence/storage";
@@ -25,11 +26,14 @@ describe("daily selection", () => {
     expect(first).toHaveLength(5);
   });
 
-  it("generated Daily manifests cover the archive window and mirror Daily selection", () => {
+  it("generated Daily manifests cover the archive window with eligible varied rounds", () => {
     expect(dailyIndex.range.pastDays).toBe(30);
     expect(dailyIndex.range.futureDays).toBe(90);
     expect(dailyIndex.dates.length).toBe(121);
-    expect(generatedDaily.roundIds).toEqual(selectDailyRoundIds(rounds, generatedDaily.contentVersion, "2026-06-18"));
+    expect(generatedDaily.generatorVersion).toBe("daily-manifest-v2");
+    expect(generatedDaily.roundIds).toHaveLength(5);
+    expect(new Set(generatedDaily.indicatorIds).size).toBe(generatedDaily.indicatorIds.length);
+    expect(Math.max(...Object.values(generatedDaily.categoryMix))).toBeLessThanOrEqual(2);
     expect(generatedDaily.roundIds.every((id) => rounds.find((round) => round.id === id)?.eligibility.daily)).toBe(true);
   });
 
@@ -46,15 +50,25 @@ describe("daily selection", () => {
   });
 
   it("balances category and difficulty when the approved pool supports it", () => {
-    const selectedIds = selectDailyRoundIds(rounds, "2026.06.19", "2026-06-22");
-    const selectedRounds = selectedIds.map((id) => rounds.find((round) => round.id === id)!);
+    const selectedRounds = selectDailyRoundIds(rounds, "2026.06.19", "2026-06-22").map((id) => rounds.find((round) => round.id === id)!);
     const categoryCounts = new Map<string, number>();
     for (const round of selectedRounds) {
       categoryCounts.set(round.category, (categoryCounts.get(round.category) ?? 0) + 1);
     }
     expect(Math.max(...categoryCounts.values())).toBeLessThanOrEqual(2);
-    expect(selectedRounds.some((round) => round.difficulty === "expert")).toBe(true);
     expect(selectedRounds.filter((round) => round.difficulty === "intro").length).toBeLessThanOrEqual(2);
+    expect(selectedRounds.filter((round) => round.difficulty === "expert").length).toBeLessThanOrEqual(2);
+  });
+
+  it("does not force expert maps when the Daily expert pool is thin", () => {
+    const selections = Array.from({ length: 14 }, (_, index) => {
+      const day = `${index + 1}`.padStart(2, "0");
+      return selectDailyRoundIds(rounds, "2026.06.19", `2026-07-${day}`).map((id) => rounds.find((round) => round.id === id)!);
+    });
+    expect(selections.some((selection) => selection.every((round) => round.difficulty !== "expert"))).toBe(true);
+    for (const selection of selections) {
+      expect(selection.filter((round) => round.difficulty === "expert").length).toBeLessThanOrEqual(2);
+    }
   });
 
   it("falls back cleanly when the approved pool is small", () => {
@@ -299,6 +313,18 @@ describe("run reducer and scoring", () => {
 });
 
 describe("streaks and sharing", () => {
+  it("builds next-Daily copy from the player's local date", () => {
+    const localDate = new Date(2026, 5, 27, 10, 30);
+    const nextDate = nextLocalDate(localDate);
+    const copy = nextDailyUnlockCopy(localDate);
+
+    expect(localDateKey(localDate)).toBe("2026-06-27");
+    expect(localDateKey(nextDate)).toBe("2026-06-28");
+    expect(copy.nextDateKey).toBe("2026-06-28");
+    expect(copy.headline).toBe("Next map drops tomorrow.");
+    expect(copy.body).toContain("Come back tomorrow");
+  });
+
   it("updates streaks around consecutive UTC dates", () => {
     const first = updateStreak({ current: 0, best: 0, lastCompletedDateKey: null }, "2026-06-18");
     const second = updateStreak(first, "2026-06-19");
@@ -315,7 +341,7 @@ describe("streaks and sharing", () => {
     expect(scoreCell(100)).toBe("🟥");
   });
 
-  it("builds spoiler-free share text", () => {
+  it("builds compact spoiler-free share text", () => {
     const run = createRun({
       mode: "daily",
       dateKey: "2026-06-18",
@@ -328,9 +354,78 @@ describe("streaks and sharing", () => {
     });
     const text = buildShareText({ ...run, status: "complete" });
     expect(text).toContain("Can You Geo?");
-    expect(text).toContain("Mystery Map");
+    expect(text).toContain("Daily #");
+    expect(text).toContain("pts");
+    expect(text).toContain("Official Daily result");
+    expect(text).toContain("https://canyougeo.com");
     expect(text).not.toContain("WORLDPRINT");
-    expect(containsSpoiler(text, ["fertility", "life expectancy", "World Bank"])).toBe(false);
+    expect(containsSpoiler(text, ["Japan", "Brazil", "fertility", "life expectancy", "World Bank", "api.worldbank.org"])).toBe(false);
+  });
+
+  it("labels non-Daily share text without presenting it as the official Daily", () => {
+    const practice = createRun({
+      mode: "practice",
+      dateKey: "practice",
+      contentVersion: "test",
+      tier: "explorer",
+      roundIds: [{ roundId: "tourism-arrivals", correctIndicatorId: "tourism-arrivals" }]
+    });
+    const pastGame = createRun({
+      mode: "archive",
+      dateKey: "2026-06-18",
+      contentVersion: "test",
+      tier: "analyst",
+      roundIds: [{ roundId: "tourism-arrivals", correctIndicatorId: "tourism-arrivals" }]
+    });
+
+    expect(buildShareText(practice)).toContain("Practice result");
+    expect(buildShareText(practice)).not.toContain("Official Daily result");
+    expect(buildShareText(pastGame)).toContain("Past Game Replay");
+    expect(buildShareText(pastGame)).toContain("Past Game replay");
+    expect(buildShareText(pastGame)).not.toContain("Official Daily result");
+  });
+
+  it("builds result share summaries with misses, clue spend, and a five-round strip", () => {
+    let run = createRun({
+      mode: "daily",
+      dateKey: "2026-06-18",
+      contentVersion: "test",
+      tier: "analyst",
+      roundIds: [
+        { roundId: "fertility-rate", correctIndicatorId: "fertility-rate" },
+        { roundId: "life-expectancy", correctIndicatorId: "life-expectancy" },
+        { roundId: "gdp-growth", correctIndicatorId: "gdp-growth" },
+        { roundId: "urban-population", correctIndicatorId: "urban-population" },
+        { roundId: "forest-area", correctIndicatorId: "forest-area" }
+      ]
+    });
+    run = reduceRun(run, { type: "submit", answerId: "fertility-rate", label: "Fertility rate", correct: true });
+    run = reduceRun(run, { type: "nextRound" });
+    run = reduceRun(run, { type: "investigate", iso3: "JPN", countryName: "Japan", value: 92 });
+    run = reduceRun(run, { type: "submit", answerId: "life-expectancy", label: "Life expectancy", correct: true });
+    run = reduceRun(run, { type: "nextRound" });
+    run = reduceRun(run, { type: "submit", answerId: "imports-share", label: "Imports share", correct: false });
+    run = reduceRun(run, { type: "submit", answerId: "gdp-growth", label: "GDP growth", correct: true });
+    run = reduceRun(run, { type: "nextRound" });
+    run = reduceRun(run, { type: "unitClue" });
+    run = reduceRun(run, { type: "submit", answerId: "urban-population", label: "Urban population", correct: true });
+    run = reduceRun(run, { type: "nextRound" });
+    run = reduceRun(run, { type: "submit", answerId: "forest-area", label: "Forest area", correct: true });
+    run = reduceRun(run, { type: "nextRound" });
+
+    const summary = buildResultShareSummary(run);
+    expect(summary.score).toBe(4500);
+    expect(summary.solvedCount).toBe(5);
+    expect(summary.missCount).toBe(1);
+    expect(summary.clueSpend).toBe(200);
+    expect(summary.strip).toBe("🟩🟨🟥🟨🟩");
+
+    const text = buildShareText(run);
+    expect(text).toContain("4,500 pts");
+    expect(text).toContain("5/5 solved");
+    expect(text).toContain("🟩🟨🟥🟨🟩");
+    expect(text).toContain("https://canyougeo.com");
+    expect(containsSpoiler(text, ["Japan", "fertility", "life expectancy", "GDP growth", "Urban population", "Forest area", "World Bank"])).toBe(false);
   });
 
   it("encodes and decodes spoiler-free challenge links", () => {

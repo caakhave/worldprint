@@ -4,33 +4,31 @@
   "date": "2026-07-12",
   "contentVersion": "2026.06.22-exp2-qa1",
   "roundIds": [
-    "worldprint-adolescent-fertility",
-    "worldprint-trade-share",
+    "worldprint-population-density",
     "worldprint-coal-electricity-share",
-    "worldprint-older-adults-share",
-    "worldprint-safe-drinking-water"
+    "worldprint-precipitation-depth",
+    "worldprint-food-production-index",
+    "worldprint-total-protected-areas"
   ],
   "indicatorIds": [
-    "adolescent-fertility",
-    "trade-share",
+    "population-density",
     "coal-electricity-share",
-    "older-adults-share",
-    "safe-drinking-water"
+    "precipitation-depth",
+    "food-production-index",
+    "total-protected-areas"
   ],
   "categoryMix": {
-    "demography": 2,
-    "economy": 1,
+    "settlement": 1,
     "energy": 1,
-    "health": 1
+    "environment": 2,
+    "agriculture": 1
   },
   "mapDifficultyMix": {
-    "expert": 1,
-    "standard": 2,
-    "intro": 2
+    "standard": 5
   },
-  "generatedAt": "2026-06-22T18:07:37.462894+00:00",
-  "generatorVersion": "daily-manifest-v1",
+  "generatedAt": "2026-06-27T15:17:17.652Z",
+  "generatorVersion": "daily-manifest-v2",
   "varietyNotes": [
-    "Selected with category, difficulty, and same-day correlation safeguards."
+    "Selected with category, difficulty, repeat-cooldown, and same-day correlation safeguards."
   ]
 }

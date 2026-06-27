@@ -4,34 +4,31 @@
   "date": "2026-06-21",
   "contentVersion": "2026.06.22-exp2-qa1",
   "roundIds": [
-    "worldprint-arable-land-per-person",
-    "worldprint-population-growth",
-    "worldprint-protected-land",
-    "worldprint-population-density",
-    "worldprint-gdp-per-capita"
+    "worldprint-coal-electricity-share",
+    "worldprint-total-protected-areas",
+    "worldprint-undernourishment",
+    "worldprint-mobile-subscriptions",
+    "worldprint-measles-immunization"
   ],
   "indicatorIds": [
-    "arable-land-per-person",
-    "population-growth",
-    "protected-land",
-    "population-density",
-    "gdp-per-capita"
+    "coal-electricity-share",
+    "total-protected-areas",
+    "undernourishment",
+    "mobile-subscriptions",
+    "measles-immunization"
   ],
   "categoryMix": {
-    "land": 1,
-    "demography": 1,
+    "energy": 1,
     "environment": 1,
-    "settlement": 1,
-    "development": 1
+    "health": 2,
+    "connectivity": 1
   },
   "mapDifficultyMix": {
-    "expert": 1,
-    "standard": 3,
-    "intro": 1
+    "standard": 5
   },
-  "generatedAt": "2026-06-22T18:07:37.459603+00:00",
-  "generatorVersion": "daily-manifest-v1",
+  "generatedAt": "2026-06-27T15:17:17.652Z",
+  "generatorVersion": "daily-manifest-v2",
   "varietyNotes": [
-    "Selected with category, difficulty, and same-day correlation safeguards."
+    "Selected with category, difficulty, repeat-cooldown, and same-day correlation safeguards."
   ]
 }

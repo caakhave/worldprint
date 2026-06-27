@@ -4,32 +4,32 @@
   "date": "2026-08-11",
   "contentVersion": "2026.06.22-exp2-qa1",
   "roundIds": [
-    "worldprint-arable-land-per-person",
-    "worldprint-freshwater-per-capita",
-    "worldprint-physicians",
-    "worldprint-basic-sanitation",
-    "worldprint-forest-area"
+    "worldprint-clean-fuels-access",
+    "worldprint-agriculture-value-added",
+    "worldprint-health-expenditure",
+    "worldprint-secondary-enrollment",
+    "worldprint-age-dependency"
   ],
   "indicatorIds": [
-    "arable-land-per-person",
-    "freshwater-per-capita",
-    "physicians",
-    "basic-sanitation",
-    "forest-area"
+    "clean-fuels-access",
+    "agriculture-value-added",
+    "health-expenditure",
+    "secondary-enrollment",
+    "age-dependency"
   ],
   "categoryMix": {
-    "land": 1,
-    "environment": 2,
-    "health": 2
+    "energy": 1,
+    "economy": 1,
+    "health": 1,
+    "education": 1,
+    "demography": 1
   },
   "mapDifficultyMix": {
-    "expert": 1,
-    "standard": 3,
-    "intro": 1
+    "standard": 5
   },
-  "generatedAt": "2026-06-22T18:07:37.466401+00:00",
-  "generatorVersion": "daily-manifest-v1",
+  "generatedAt": "2026-06-27T15:17:17.652Z",
+  "generatorVersion": "daily-manifest-v2",
   "varietyNotes": [
-    "Selected with category, difficulty, and same-day correlation safeguards."
+    "Selected with category, difficulty, repeat-cooldown, and same-day correlation safeguards."
   ]
 }

@@ -4,34 +4,32 @@
   "date": "2026-09-13",
   "contentVersion": "2026.06.22-exp2-qa1",
   "roundIds": [
-    "worldprint-cereal-yield",
     "worldprint-gdp-per-capita",
-    "worldprint-permanent-cropland",
-    "worldprint-pm25-exposure",
+    "worldprint-trade-share",
+    "worldprint-older-adults-share",
+    "worldprint-industry-share",
     "worldprint-coal-electricity-share"
   ],
   "indicatorIds": [
-    "cereal-yield",
     "gdp-per-capita",
-    "permanent-cropland",
-    "pm25-exposure",
+    "trade-share",
+    "older-adults-share",
+    "industry-share",
     "coal-electricity-share"
   ],
   "categoryMix": {
-    "agriculture": 1,
     "development": 1,
-    "land": 1,
-    "environment": 1,
+    "economy": 2,
+    "demography": 1,
     "energy": 1
   },
   "mapDifficultyMix": {
-    "expert": 1,
-    "intro": 1,
+    "intro": 2,
     "standard": 3
   },
-  "generatedAt": "2026-06-22T18:07:37.470234+00:00",
-  "generatorVersion": "daily-manifest-v1",
+  "generatedAt": "2026-06-27T15:17:17.652Z",
+  "generatorVersion": "daily-manifest-v2",
   "varietyNotes": [
-    "Selected with category, difficulty, and same-day correlation safeguards."
+    "Selected with category, difficulty, repeat-cooldown, and same-day correlation safeguards."
   ]
 }

@@ -4,33 +4,32 @@
   "date": "2026-06-26",
   "contentVersion": "2026.06.22-exp2-qa1",
   "roundIds": [
-    "worldprint-arable-land-per-person",
-    "worldprint-open-defecation",
-    "worldprint-tourism-arrivals",
-    "worldprint-electricity-access",
+    "worldprint-arable-land",
+    "worldprint-renewable-electricity",
+    "worldprint-manufacturing-share",
+    "worldprint-food-production-index",
     "worldprint-measles-immunization"
   ],
   "indicatorIds": [
-    "arable-land-per-person",
-    "open-defecation",
-    "tourism-arrivals",
-    "electricity-access",
+    "arable-land",
+    "renewable-electricity",
+    "manufacturing-share",
+    "food-production-index",
     "measles-immunization"
   ],
   "categoryMix": {
     "land": 1,
-    "health": 2,
+    "energy": 1,
     "economy": 1,
-    "energy": 1
+    "agriculture": 1,
+    "health": 1
   },
   "mapDifficultyMix": {
-    "expert": 1,
-    "standard": 3,
-    "intro": 1
+    "standard": 5
   },
-  "generatedAt": "2026-06-22T18:07:37.460645+00:00",
-  "generatorVersion": "daily-manifest-v1",
+  "generatedAt": "2026-06-27T15:17:17.652Z",
+  "generatorVersion": "daily-manifest-v2",
   "varietyNotes": [
-    "Selected with category, difficulty, and same-day correlation safeguards."
+    "Selected with category, difficulty, repeat-cooldown, and same-day correlation safeguards."
   ]
 }
