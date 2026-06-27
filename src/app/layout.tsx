@@ -35,6 +35,11 @@ export const metadata: Metadata = {
   },
   description:
     "Identify hidden data maps, find population centers, spot atlas anomalies, and follow water across the planet in geography games made for world-data nerds.",
+  icons: {
+    icon: "/favicon.svg",
+    shortcut: "/favicon.svg",
+    apple: "/favicon.svg"
+  },
   openGraph: {
     title: "Can You Geo? — Daily Geography Games & World Data Puzzles",
     description:
