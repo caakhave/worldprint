@@ -203,7 +203,7 @@
     "valuesReference": "https://api.worldbank.org/v2/country/all/indicator/IQ.SPI.PIL5?format=json&per_page=20000&page=1&date=2015%3A2025",
     "license": "Creative Commons Attribution 4.0 International unless specifically labeled otherwise by World Bank metadata",
     "licenseReference": "https://www.worldbank.org/en/about/legal/terms-of-use-for-datasets",
-    "retrievedAt": "2026-06-22T18:07:29.819570+00:00",
+    "retrievedAt": "2026-06-27T17:15:25.748750+00:00",
     "checksum": "dccce09c5bb1b18cdca06e4d91ec6ae6a88c9823b3af72e2e86b107edec3b29a",
     "sourceOrganization": "Statistical Performance Indicators, World Bank (WB), uri: https://datacatalog.worldbank.org/dataset/statistical-performance-indicators"
   },

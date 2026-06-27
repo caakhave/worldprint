@@ -4,31 +4,31 @@
   "date": "2026-08-04",
   "contentVersion": "2026.06.22-exp2-qa1",
   "roundIds": [
-    "worldprint-coal-electricity-share",
-    "worldprint-population-density",
-    "worldprint-under-five-mortality",
-    "worldprint-internet-users",
-    "worldprint-migrant-stock"
+    "worldprint-urban-population",
+    "worldprint-safe-drinking-water",
+    "worldprint-arable-land-per-person",
+    "worldprint-manufacturing-share",
+    "worldprint-trade-share"
   ],
   "indicatorIds": [
-    "coal-electricity-share",
-    "population-density",
-    "under-five-mortality",
-    "internet-users",
-    "migrant-stock"
+    "urban-population",
+    "safe-drinking-water",
+    "arable-land-per-person",
+    "manufacturing-share",
+    "trade-share"
   ],
   "categoryMix": {
-    "energy": 1,
     "settlement": 1,
     "health": 1,
-    "connectivity": 1,
-    "demography": 1
+    "land": 1,
+    "economy": 2
   },
   "mapDifficultyMix": {
-    "standard": 4,
-    "intro": 1
+    "intro": 2,
+    "expert": 1,
+    "standard": 2
   },
-  "generatedAt": "2026-06-27T15:17:17.652Z",
+  "generatedAt": "2026-06-27T17:16:22.623167+00:00",
   "generatorVersion": "daily-manifest-v2",
   "varietyNotes": [
     "Selected with category, difficulty, repeat-cooldown, and same-day correlation safeguards."

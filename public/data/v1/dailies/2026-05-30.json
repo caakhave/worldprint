@@ -4,28 +4,31 @@
   "date": "2026-05-30",
   "contentVersion": "2026.06.22-exp2-qa1",
   "roundIds": [
-    "worldprint-physicians",
-    "worldprint-account-ownership",
-    "worldprint-clean-fuels-access",
-    "worldprint-electric-power-use",
-    "worldprint-basic-sanitation"
+    "worldprint-communications-service-exports",
+    "worldprint-electricity-access",
+    "worldprint-undernourishment",
+    "worldprint-freshwater-per-capita",
+    "worldprint-renewable-electricity"
   ],
   "indicatorIds": [
-    "physicians",
-    "account-ownership",
-    "clean-fuels-access",
-    "electric-power-use",
-    "basic-sanitation"
+    "communications-service-exports",
+    "electricity-access",
+    "undernourishment",
+    "freshwater-per-capita",
+    "renewable-electricity"
   ],
   "categoryMix": {
-    "health": 2,
-    "development": 1,
-    "energy": 2
+    "connectivity": 1,
+    "energy": 2,
+    "health": 1,
+    "environment": 1
   },
   "mapDifficultyMix": {
-    "standard": 5
+    "expert": 1,
+    "intro": 1,
+    "standard": 3
   },
-  "generatedAt": "2026-06-27T15:17:17.652Z",
+  "generatedAt": "2026-06-27T17:16:22.612728+00:00",
   "generatorVersion": "daily-manifest-v2",
   "varietyNotes": [
     "Selected with category, difficulty, repeat-cooldown, and same-day correlation safeguards."

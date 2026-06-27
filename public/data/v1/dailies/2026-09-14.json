@@ -4,30 +4,31 @@
   "date": "2026-09-14",
   "contentVersion": "2026.06.22-exp2-qa1",
   "roundIds": [
-    "worldprint-basic-sanitation",
-    "worldprint-freshwater-per-capita",
-    "worldprint-population-growth",
-    "worldprint-secondary-enrollment",
-    "worldprint-adolescent-fertility"
+    "worldprint-manufacturing-share",
+    "worldprint-mobile-subscriptions",
+    "worldprint-physicians",
+    "worldprint-government-education-spending-share",
+    "worldprint-co2-per-capita"
   ],
   "indicatorIds": [
-    "basic-sanitation",
-    "freshwater-per-capita",
-    "population-growth",
-    "secondary-enrollment",
-    "adolescent-fertility"
+    "manufacturing-share",
+    "mobile-subscriptions",
+    "physicians",
+    "government-education-spending-share",
+    "co2-per-capita"
   ],
   "categoryMix": {
+    "economy": 1,
+    "connectivity": 1,
     "health": 1,
-    "environment": 1,
-    "demography": 2,
-    "education": 1
+    "education": 1,
+    "environment": 1
   },
   "mapDifficultyMix": {
     "standard": 4,
     "expert": 1
   },
-  "generatedAt": "2026-06-27T15:17:17.652Z",
+  "generatedAt": "2026-06-27T17:16:22.629716+00:00",
   "generatorVersion": "daily-manifest-v2",
   "varietyNotes": [
     "Selected with category, difficulty, repeat-cooldown, and same-day correlation safeguards."

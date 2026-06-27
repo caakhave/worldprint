@@ -159,7 +159,7 @@
     "valuesReference": "https://api.worldbank.org/v2/country/all/indicator/GC.REV.XGRT.GD.ZS?format=json&per_page=20000&page=1&date=2015%3A2025",
     "license": "Creative Commons Attribution 4.0 International unless specifically labeled otherwise by World Bank metadata",
     "licenseReference": "https://www.worldbank.org/en/about/legal/terms-of-use-for-datasets",
-    "retrievedAt": "2026-06-22T18:07:08.235981+00:00",
+    "retrievedAt": "2026-06-27T17:15:08.151297+00:00",
     "checksum": "3b4d47601c5d75660dd5e79a6c46bbdadecb5317b7648a48c7b2d3f5a0fa912e",
     "sourceOrganization": "Government Finance Statistics Yearbook and data files, International Monetary Fund (IMF)"
   },

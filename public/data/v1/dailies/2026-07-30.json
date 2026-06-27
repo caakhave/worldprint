@@ -4,30 +4,29 @@
   "date": "2026-07-30",
   "contentVersion": "2026.06.22-exp2-qa1",
   "roundIds": [
-    "worldprint-adolescent-fertility",
-    "worldprint-measles-immunization",
-    "worldprint-under-five-mortality",
-    "worldprint-cereal-yield",
-    "worldprint-women-parliament"
+    "worldprint-renewable-electricity",
+    "worldprint-population-growth",
+    "worldprint-primary-female-teachers",
+    "worldprint-food-insecurity-moderate-severe",
+    "worldprint-electric-power-use"
   ],
   "indicatorIds": [
-    "adolescent-fertility",
-    "measles-immunization",
-    "under-five-mortality",
-    "cereal-yield",
-    "women-parliament"
+    "renewable-electricity",
+    "population-growth",
+    "primary-female-teachers",
+    "food-insecurity-moderate-severe",
+    "electric-power-use"
   ],
   "categoryMix": {
+    "energy": 2,
     "demography": 1,
-    "health": 2,
-    "agriculture": 1,
-    "development": 1
+    "education": 1,
+    "agriculture": 1
   },
   "mapDifficultyMix": {
-    "expert": 2,
-    "standard": 3
+    "standard": 5
   },
-  "generatedAt": "2026-06-27T15:17:17.652Z",
+  "generatedAt": "2026-06-27T17:16:22.622399+00:00",
   "generatorVersion": "daily-manifest-v2",
   "varietyNotes": [
     "Selected with category, difficulty, repeat-cooldown, and same-day correlation safeguards."

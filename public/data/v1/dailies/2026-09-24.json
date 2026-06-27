@@ -1,33 +1,33 @@
 {
   "schemaVersion": "1.1.0",
   "game": "worldprint",
-  "date": "2026-05-23",
+  "date": "2026-09-24",
   "contentVersion": "2026.06.22-exp2-qa1",
   "roundIds": [
+    "worldprint-migrant-stock",
+    "worldprint-tuberculosis-incidence",
     "worldprint-industry-share",
-    "worldprint-gdp-per-capita",
-    "worldprint-forest-area",
-    "worldprint-renewable-electricity",
-    "worldprint-total-protected-areas"
+    "worldprint-fertility-rate",
+    "worldprint-protected-land"
   ],
   "indicatorIds": [
+    "migrant-stock",
+    "tuberculosis-incidence",
     "industry-share",
-    "gdp-per-capita",
-    "forest-area",
-    "renewable-electricity",
-    "total-protected-areas"
+    "fertility-rate",
+    "protected-land"
   ],
   "categoryMix": {
+    "demography": 2,
+    "health": 1,
     "economy": 1,
-    "development": 1,
-    "environment": 2,
-    "energy": 1
+    "environment": 1
   },
   "mapDifficultyMix": {
-    "standard": 3,
-    "intro": 2
+    "standard": 4,
+    "expert": 1
   },
-  "generatedAt": "2026-06-27T15:17:17.652Z",
+  "generatedAt": "2026-06-27T17:16:22.631327+00:00",
   "generatorVersion": "daily-manifest-v2",
   "varietyNotes": [
     "Selected with category, difficulty, repeat-cooldown, and same-day correlation safeguards."

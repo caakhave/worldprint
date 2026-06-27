@@ -168,7 +168,7 @@
     "valuesReference": "https://api.worldbank.org/v2/country/all/indicator/SE.ENR.PRIM.FM.ZS?format=json&per_page=20000&page=1&date=2015%3A2025",
     "license": "Creative Commons Attribution 4.0 International unless specifically labeled otherwise by World Bank metadata",
     "licenseReference": "https://www.worldbank.org/en/about/legal/terms-of-use-for-datasets",
-    "retrievedAt": "2026-06-22T18:06:43.849642+00:00",
+    "retrievedAt": "2026-06-27T17:14:47.590711+00:00",
     "checksum": "dd865bbdd824f54782e119922959314cf16c2dddac71cc344fae3c0c058a5ee6",
     "sourceOrganization": "Stat Bulk Data Download Service, UN Educational, Scientific and Cultural Organization (UNESCO), uri: https://uis.unesco.org/bdds, publisher: UNESCO Institute for Statistics (UIS)"
   },
@@ -194,16 +194,16 @@
     ],
     "commonConfusions": [
       {
+        "confusedWithIndicatorCode": "SE.PRM.ENRL.FE.ZS",
+        "reason": "Female primary pupils lives in the same category, so it can feel plausible until the high and low countries are checked."
+      },
+      {
+        "confusedWithIndicatorCode": "SE.SEC.ENRL.FE.ZS",
+        "reason": "Female secondary pupils lives in the same category, so it can feel plausible until the high and low countries are checked."
+      },
+      {
         "confusedWithIndicatorCode": "SP.DYN.IMRT.IN",
         "reason": "Infant mortality overlaps with part of the visible pattern, but the full country spread does not match."
-      },
-      {
-        "confusedWithIndicatorCode": "EG.USE.ELEC.KH.PC",
-        "reason": "Electric power use overlaps with part of the visible pattern, but the full country spread does not match."
-      },
-      {
-        "confusedWithIndicatorCode": "SH.DYN.NMRT",
-        "reason": "Neonatal mortality overlaps with part of the visible pattern, but the full country spread does not match."
       }
     ],
     "difficultyReason": "Expert difficulty: the map can be mistaken for adjacent indicators unless players probe a high, low, and middle country.",

@@ -5,29 +5,29 @@
   "contentVersion": "2026.06.22-exp2-qa1",
   "roundIds": [
     "worldprint-basic-sanitation",
-    "worldprint-population-growth",
-    "worldprint-agriculture-value-added",
-    "worldprint-clean-fuels-access",
-    "worldprint-unemployment"
+    "worldprint-secondary-enrollment",
+    "worldprint-open-defecation",
+    "worldprint-female-industry-employment",
+    "worldprint-electric-power-use"
   ],
   "indicatorIds": [
     "basic-sanitation",
-    "population-growth",
-    "agriculture-value-added",
-    "clean-fuels-access",
-    "unemployment"
+    "secondary-enrollment",
+    "open-defecation",
+    "female-industry-employment",
+    "electric-power-use"
   ],
   "categoryMix": {
-    "health": 1,
-    "demography": 1,
-    "economy": 1,
-    "energy": 1,
-    "labor": 1
+    "health": 2,
+    "education": 1,
+    "labor": 1,
+    "energy": 1
   },
   "mapDifficultyMix": {
-    "standard": 5
+    "standard": 4,
+    "expert": 1
   },
-  "generatedAt": "2026-06-27T15:17:17.652Z",
+  "generatedAt": "2026-06-27T17:16:22.615836+00:00",
   "generatorVersion": "daily-manifest-v2",
   "varietyNotes": [
     "Selected with category, difficulty, repeat-cooldown, and same-day correlation safeguards."

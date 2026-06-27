@@ -4,31 +4,31 @@
   "date": "2026-08-30",
   "contentVersion": "2026.06.22-exp2-qa1",
   "roundIds": [
-    "worldprint-permanent-cropland",
-    "worldprint-precipitation-depth",
-    "worldprint-account-ownership",
-    "worldprint-age-dependency",
-    "worldprint-internet-users"
+    "worldprint-adolescent-fertility",
+    "worldprint-arable-land-per-person",
+    "worldprint-rural-basic-sanitation",
+    "worldprint-electric-power-use",
+    "worldprint-electricity-access"
   ],
   "indicatorIds": [
-    "permanent-cropland",
-    "precipitation-depth",
-    "account-ownership",
-    "age-dependency",
-    "internet-users"
+    "adolescent-fertility",
+    "arable-land-per-person",
+    "rural-basic-sanitation",
+    "electric-power-use",
+    "electricity-access"
   ],
   "categoryMix": {
-    "land": 1,
-    "environment": 1,
-    "development": 1,
     "demography": 1,
-    "connectivity": 1
+    "land": 1,
+    "settlement": 1,
+    "energy": 2
   },
   "mapDifficultyMix": {
-    "standard": 4,
+    "expert": 2,
+    "standard": 2,
     "intro": 1
   },
-  "generatedAt": "2026-06-27T15:17:17.652Z",
+  "generatedAt": "2026-06-27T17:16:22.627123+00:00",
   "generatorVersion": "daily-manifest-v2",
   "varietyNotes": [
     "Selected with category, difficulty, repeat-cooldown, and same-day correlation safeguards."

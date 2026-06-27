@@ -173,7 +173,7 @@
     "valuesReference": "https://api.worldbank.org/v2/country/all/indicator/IT.NET.BBND.P2?format=json&per_page=20000&page=1&date=2015%3A2025",
     "license": "Creative Commons Attribution 4.0 International unless specifically labeled otherwise by World Bank metadata",
     "licenseReference": "https://www.worldbank.org/en/about/legal/terms-of-use-for-datasets",
-    "retrievedAt": "2026-06-22T18:05:47.824165+00:00",
+    "retrievedAt": "2026-06-27T17:14:01.991031+00:00",
     "checksum": "b6f069268630d64910a520d9929a972437dd5faf26cd8dacd9ffea5169b1b915",
     "sourceOrganization": "World Telecommunication/ICT Indicators Database, International Telecommunication Union (ITU)"
   },

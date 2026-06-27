@@ -208,7 +208,7 @@
     "valuesReference": "https://api.worldbank.org/v2/country/all/indicator/AG.LND.FRST.ZS?format=json&per_page=20000&page=1&date=2015%3A2025",
     "license": "Creative Commons Attribution 4.0 International unless specifically labeled otherwise by World Bank metadata",
     "licenseReference": "https://www.worldbank.org/en/about/legal/terms-of-use-for-datasets",
-    "retrievedAt": "2026-06-22T18:05:53.271233+00:00",
+    "retrievedAt": "2026-06-27T17:14:06.540175+00:00",
     "checksum": "26ac325f2b04677f4bf1c08cb62210524c05c5a649e819791c9956b5e00194a4",
     "sourceOrganization": "FAOSTAT, Food and Agriculture Organization of the United Nations (FAO), uri: https://www.fao.org/faostat/en/#data/RL, publisher: Food and Agriculture Organization of the United Nations (FAO)"
   },

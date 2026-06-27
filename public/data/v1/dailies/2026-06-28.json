@@ -4,29 +4,31 @@
   "date": "2026-06-28",
   "contentVersion": "2026.06.22-exp2-qa1",
   "roundIds": [
-    "worldprint-maternal-mortality",
-    "worldprint-co2-per-capita",
-    "worldprint-total-protected-areas",
-    "worldprint-permanent-cropland",
-    "worldprint-life-expectancy"
+    "worldprint-cereal-yield",
+    "worldprint-rural-population-growth",
+    "worldprint-measles-immunization",
+    "worldprint-migrant-stock",
+    "worldprint-pm25-exposure"
   ],
   "indicatorIds": [
-    "maternal-mortality",
-    "co2-per-capita",
-    "total-protected-areas",
-    "permanent-cropland",
-    "life-expectancy"
+    "cereal-yield",
+    "rural-population-growth",
+    "measles-immunization",
+    "migrant-stock",
+    "pm25-exposure"
   ],
   "categoryMix": {
-    "health": 2,
-    "environment": 2,
-    "land": 1
+    "agriculture": 1,
+    "settlement": 1,
+    "health": 1,
+    "demography": 1,
+    "environment": 1
   },
   "mapDifficultyMix": {
-    "standard": 4,
-    "intro": 1
+    "expert": 1,
+    "standard": 4
   },
-  "generatedAt": "2026-06-27T15:17:17.652Z",
+  "generatedAt": "2026-06-27T17:16:22.617359+00:00",
   "generatorVersion": "daily-manifest-v2",
   "varietyNotes": [
     "Selected with category, difficulty, repeat-cooldown, and same-day correlation safeguards."

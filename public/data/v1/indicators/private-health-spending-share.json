@@ -203,7 +203,7 @@
     "valuesReference": "https://api.worldbank.org/v2/country/all/indicator/SH.XPD.PVTD.CH.ZS?format=json&per_page=20000&page=1&date=2015%3A2025",
     "license": "Creative Commons Attribution 4.0 International unless specifically labeled otherwise by World Bank metadata",
     "licenseReference": "https://www.worldbank.org/en/about/legal/terms-of-use-for-datasets",
-    "retrievedAt": "2026-06-22T18:06:33.474620+00:00",
+    "retrievedAt": "2026-06-27T17:14:39.466786+00:00",
     "checksum": "5a8f30d73996c224ee1112f21b907c4291823b056bcaa95d53fc29cf15371cab",
     "sourceOrganization": "Global Health Expenditure Database, updated December 12th, 2025, World Health Organization (WHO), uri: http://apps.who.int/nha/database"
   },

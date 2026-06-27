@@ -4,30 +4,31 @@
   "date": "2026-07-06",
   "contentVersion": "2026.06.22-exp2-qa1",
   "roundIds": [
-    "worldprint-arable-land",
-    "worldprint-migrant-stock",
-    "worldprint-precipitation-depth",
-    "worldprint-tuberculosis-incidence",
-    "worldprint-pm25-exposure"
+    "worldprint-urban-population",
+    "worldprint-rural-population-growth",
+    "worldprint-renewable-electricity",
+    "worldprint-government-education-spending-share",
+    "worldprint-older-adults-share"
   ],
   "indicatorIds": [
-    "arable-land",
-    "migrant-stock",
-    "precipitation-depth",
-    "tuberculosis-incidence",
-    "pm25-exposure"
+    "urban-population",
+    "rural-population-growth",
+    "renewable-electricity",
+    "government-education-spending-share",
+    "older-adults-share"
   ],
   "categoryMix": {
-    "land": 1,
-    "demography": 1,
-    "environment": 2,
-    "health": 1
+    "settlement": 2,
+    "energy": 1,
+    "education": 1,
+    "demography": 1
   },
   "mapDifficultyMix": {
-    "standard": 4,
+    "intro": 2,
+    "standard": 2,
     "expert": 1
   },
-  "generatedAt": "2026-06-27T15:17:17.652Z",
+  "generatedAt": "2026-06-27T17:16:22.618512+00:00",
   "generatorVersion": "daily-manifest-v2",
   "varietyNotes": [
     "Selected with category, difficulty, repeat-cooldown, and same-day correlation safeguards."

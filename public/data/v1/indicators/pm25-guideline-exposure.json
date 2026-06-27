@@ -207,7 +207,7 @@
     "valuesReference": "https://api.worldbank.org/v2/country/all/indicator/EN.ATM.PM25.MC.ZS?format=json&per_page=20000&page=1&date=2015%3A2025",
     "license": "Creative Commons Attribution 4.0 International unless specifically labeled otherwise by World Bank metadata",
     "licenseReference": "https://www.worldbank.org/en/about/legal/terms-of-use-for-datasets",
-    "retrievedAt": "2026-06-22T18:06:55.444043+00:00",
+    "retrievedAt": "2026-06-27T17:14:57.214154+00:00",
     "checksum": "02bfdf0fa625616a10b04463b3421ab35d9412de56a41419900514a6a4282e02",
     "sourceOrganization": "Global Burden of Disease Study 2017 (GBD 2017), Institute for Health Metrics and Evaluation (IHME), uri: https://ghdx.healthdata.org/gbd-2017, publisher: Institute for Health Metrics and Evaluation (IHME), date published: 202112"
   },

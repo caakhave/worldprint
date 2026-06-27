@@ -195,7 +195,7 @@
     "valuesReference": "https://api.worldbank.org/v2/country/all/indicator/BX.KLT.DINV.WD.GD.ZS?format=json&per_page=20000&page=1&date=2015%3A2025",
     "license": "Creative Commons Attribution 4.0 International unless specifically labeled otherwise by World Bank metadata",
     "licenseReference": "https://www.worldbank.org/en/about/legal/terms-of-use-for-datasets",
-    "retrievedAt": "2026-06-22T18:06:05.312509+00:00",
+    "retrievedAt": "2026-06-27T17:14:15.473930+00:00",
     "checksum": "492d6cb64c25fea63f273b8b2d5d5a191885e51c2b1721eaae464cd566650600",
     "sourceOrganization": "International Financial Statistics and Balance of Payments databases, International Monetary Fund (IMF);\nInternational Debt Statistics, World Bank (WB);\nWorld Bank GDP estimates, World Bank (WB);\nOECD GDP estimates, Organisation for Economic Co-operation and Development (OECD)"
   },

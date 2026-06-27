@@ -159,7 +159,7 @@
     "valuesReference": "https://api.worldbank.org/v2/country/all/indicator/SH.MED.BEDS.ZS?format=json&per_page=20000&page=1&date=2015%3A2025",
     "license": "Creative Commons Attribution 4.0 International unless specifically labeled otherwise by World Bank metadata",
     "licenseReference": "https://www.worldbank.org/en/about/legal/terms-of-use-for-datasets",
-    "retrievedAt": "2026-06-22T18:06:13.913709+00:00",
+    "retrievedAt": "2026-06-27T17:14:22.944968+00:00",
     "checksum": "3e733605fe7e8094788b8ebe820f8c6caa27b2233282d3bc51f2f63696e5dd0b",
     "sourceOrganization": "WHO data, supplemented by country data, World Health Organization (WHO)"
   },
@@ -185,16 +185,16 @@
     ],
     "commonConfusions": [
       {
+        "confusedWithIndicatorCode": "SE.PRM.TCHR.FE.ZS",
+        "reason": "Female primary teachers can tempt players because it shares a strong country ranking with this map, but its unit and definition point to a different story."
+      },
+      {
         "confusedWithIndicatorCode": "SP.DYN.CBRT.IN",
         "reason": "Birth rate can tempt players because it shares a strong country ranking with this map, but its unit and definition point to a different story."
       },
       {
         "confusedWithIndicatorCode": "SH.MED.PHYS.ZS",
         "reason": "Physicians can tempt players because it shares a strong country ranking with this map, but its unit and definition point to a different story."
-      },
-      {
-        "confusedWithIndicatorCode": "SH.STA.MMRT",
-        "reason": "Maternal mortality can tempt players because it shares a strong country ranking with this map, but its unit and definition point to a different story."
       }
     ],
     "difficultyReason": "Expert difficulty: the map can be mistaken for adjacent indicators unless players probe a high, low, and middle country.",

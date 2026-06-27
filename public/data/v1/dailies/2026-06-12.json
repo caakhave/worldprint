@@ -4,30 +4,32 @@
   "date": "2026-06-12",
   "contentVersion": "2026.06.22-exp2-qa1",
   "roundIds": [
-    "worldprint-basic-sanitation",
-    "worldprint-precipitation-depth",
-    "worldprint-electric-power-use",
-    "worldprint-fertility-rate",
-    "worldprint-older-adults-share"
+    "worldprint-maternal-mortality",
+    "worldprint-youth-employment-ratio",
+    "worldprint-gdp-per-capita",
+    "worldprint-arable-land-per-person",
+    "worldprint-total-protected-areas"
   ],
   "indicatorIds": [
-    "basic-sanitation",
-    "precipitation-depth",
-    "electric-power-use",
-    "fertility-rate",
-    "older-adults-share"
+    "maternal-mortality",
+    "youth-employment-ratio",
+    "gdp-per-capita",
+    "arable-land-per-person",
+    "total-protected-areas"
   ],
   "categoryMix": {
     "health": 1,
-    "environment": 1,
-    "energy": 1,
-    "demography": 2
+    "labor": 1,
+    "development": 1,
+    "land": 1,
+    "environment": 1
   },
   "mapDifficultyMix": {
-    "standard": 4,
-    "intro": 1
+    "standard": 3,
+    "intro": 1,
+    "expert": 1
   },
-  "generatedAt": "2026-06-27T15:17:17.652Z",
+  "generatedAt": "2026-06-27T17:16:22.614617+00:00",
   "generatorVersion": "daily-manifest-v2",
   "varietyNotes": [
     "Selected with category, difficulty, repeat-cooldown, and same-day correlation safeguards."

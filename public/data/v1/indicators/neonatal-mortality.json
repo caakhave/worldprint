@@ -205,7 +205,7 @@
     "valuesReference": "https://api.worldbank.org/v2/country/all/indicator/SH.DYN.NMRT?format=json&per_page=20000&page=1&date=2015%3A2025",
     "license": "Creative Commons Attribution 4.0 International unless specifically labeled otherwise by World Bank metadata",
     "licenseReference": "https://www.worldbank.org/en/about/legal/terms-of-use-for-datasets",
-    "retrievedAt": "2026-06-22T18:06:37.648556+00:00",
+    "retrievedAt": "2026-06-27T17:14:42.059582+00:00",
     "checksum": "1561e816058a31f36cdfd74d37df6c4ef4073130f06a1bf40d3301f33dbd4e33",
     "sourceOrganization": "UN Inter-agency Group for Child Mortality Estimation, UN Children's Fund (UNICEF), uri: www.childmortality.org;\nWorld Health Organization (WHO), uri: www.childmortality.org, note: UN Inter-agency Group for Child Mortality Estimation;\nWorld Bank (WB), uri: www.childmortality.org, note: UN Inter-agency Group for Child Mortality Estimation;\nUnited Nations (UN), uri: www.childmortality.org, note: UN Inter-agency Group for Child Mortality Estimation, publisher: UN Population Division"
   },

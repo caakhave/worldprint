@@ -200,7 +200,7 @@
     "valuesReference": "https://api.worldbank.org/v2/country/all/indicator/SH.IMM.HEPB?format=json&per_page=20000&page=1&date=2015%3A2025",
     "license": "Creative Commons Attribution 4.0 International unless specifically labeled otherwise by World Bank metadata",
     "licenseReference": "https://www.worldbank.org/en/about/legal/terms-of-use-for-datasets",
-    "retrievedAt": "2026-06-22T18:06:39.393256+00:00",
+    "retrievedAt": "2026-06-27T17:14:43.516548+00:00",
     "checksum": "656f2816fea266f20c4d7af60d4b568bb06fa152a1ba786afc3ee756ed4d41d0",
     "sourceOrganization": "World Health Organization (WHO), uri: http://www.who.int/immunization/monitoring_surveillance/en/;\nUN Children's Fund (UNICEF)"
   },
@@ -234,8 +234,8 @@
         "reason": "Measles immunization can tempt players because it shares a strong country ranking with this map, but its unit and definition point to a different story."
       },
       {
-        "confusedWithIndicatorCode": "SH.STA.ODFC.ZS",
-        "reason": "Open defecation lives in the same category, so it can feel plausible until the high and low countries are checked."
+        "confusedWithIndicatorCode": "SH.STA.ODFC.RU.ZS",
+        "reason": "Rural open defecation overlaps with part of the visible pattern, but the full country spread does not match."
       }
     ],
     "difficultyReason": "Standard difficulty: the map has readable regional structure, but the best answer still depends on checking the unit and country anchors.",

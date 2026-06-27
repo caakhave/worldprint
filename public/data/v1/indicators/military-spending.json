@@ -179,7 +179,7 @@
     "valuesReference": "https://api.worldbank.org/v2/country/all/indicator/MS.MIL.XPND.GD.ZS?format=json&per_page=20000&page=1&date=2015%3A2025",
     "license": "Creative Commons Attribution 4.0 International unless specifically labeled otherwise by World Bank metadata",
     "licenseReference": "https://www.worldbank.org/en/about/legal/terms-of-use-for-datasets",
-    "retrievedAt": "2026-06-22T18:06:20.685404+00:00",
+    "retrievedAt": "2026-06-27T17:14:28.208189+00:00",
     "checksum": "c08ab07ae174a7f009e7a9f9b27a3e235bdabb03fc2602969493b969a860361c",
     "sourceOrganization": "SIPRI Military Expenditure Database, Stockholm International Peace Research Institute (SIPRI), uri: https://www.sipri.org/databases"
   },

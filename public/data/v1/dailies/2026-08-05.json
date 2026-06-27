@@ -4,30 +4,32 @@
   "date": "2026-08-05",
   "contentVersion": "2026.06.22-exp2-qa1",
   "roundIds": [
-    "worldprint-tourism-arrivals",
-    "worldprint-co2-per-capita",
-    "worldprint-industry-share",
-    "worldprint-arable-land-per-person",
-    "worldprint-tuberculosis-incidence"
+    "worldprint-health-expenditure",
+    "worldprint-communications-service-exports",
+    "worldprint-gdp-per-capita",
+    "worldprint-protected-land",
+    "worldprint-tourism-arrivals"
   ],
   "indicatorIds": [
-    "tourism-arrivals",
-    "co2-per-capita",
-    "industry-share",
-    "arable-land-per-person",
-    "tuberculosis-incidence"
+    "health-expenditure",
+    "communications-service-exports",
+    "gdp-per-capita",
+    "protected-land",
+    "tourism-arrivals"
   ],
   "categoryMix": {
-    "economy": 2,
+    "health": 1,
+    "connectivity": 1,
+    "development": 1,
     "environment": 1,
-    "land": 1,
-    "health": 1
+    "economy": 1
   },
   "mapDifficultyMix": {
     "standard": 3,
-    "expert": 2
+    "expert": 1,
+    "intro": 1
   },
-  "generatedAt": "2026-06-27T15:17:17.652Z",
+  "generatedAt": "2026-06-27T17:16:22.623307+00:00",
   "generatorVersion": "daily-manifest-v2",
   "varietyNotes": [
     "Selected with category, difficulty, repeat-cooldown, and same-day correlation safeguards."

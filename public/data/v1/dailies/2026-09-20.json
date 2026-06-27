@@ -4,32 +4,31 @@
   "date": "2026-09-20",
   "contentVersion": "2026.06.22-exp2-qa1",
   "roundIds": [
+    "worldprint-land-under-cereal",
     "worldprint-electric-power-use",
-    "worldprint-tuberculosis-incidence",
-    "worldprint-urban-population",
-    "worldprint-arable-land-per-person",
-    "worldprint-precipitation-depth"
+    "worldprint-food-production-index",
+    "worldprint-manufacturing-share",
+    "worldprint-pm25-exposure"
   ],
   "indicatorIds": [
+    "land-under-cereal",
     "electric-power-use",
-    "tuberculosis-incidence",
-    "urban-population",
-    "arable-land-per-person",
-    "precipitation-depth"
+    "food-production-index",
+    "manufacturing-share",
+    "pm25-exposure"
   ],
   "categoryMix": {
-    "energy": 1,
-    "health": 1,
-    "settlement": 1,
     "land": 1,
+    "energy": 1,
+    "agriculture": 1,
+    "economy": 1,
     "environment": 1
   },
   "mapDifficultyMix": {
-    "standard": 2,
-    "expert": 2,
-    "intro": 1
+    "expert": 1,
+    "standard": 4
   },
-  "generatedAt": "2026-06-27T15:17:17.652Z",
+  "generatedAt": "2026-06-27T17:16:22.630727+00:00",
   "generatorVersion": "daily-manifest-v2",
   "varietyNotes": [
     "Selected with category, difficulty, repeat-cooldown, and same-day correlation safeguards."

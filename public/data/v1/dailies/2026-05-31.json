@@ -4,32 +4,29 @@
   "date": "2026-05-31",
   "contentVersion": "2026.06.22-exp2-qa1",
   "roundIds": [
-    "worldprint-arable-land-per-person",
-    "worldprint-fertility-rate",
-    "worldprint-precipitation-depth",
-    "worldprint-internet-users",
-    "worldprint-manufacturing-share"
+    "worldprint-industry-share",
+    "worldprint-permanent-cropland",
+    "worldprint-basic-sanitation",
+    "worldprint-age-dependency",
+    "worldprint-agriculture-value-added"
   ],
   "indicatorIds": [
-    "arable-land-per-person",
-    "fertility-rate",
-    "precipitation-depth",
-    "internet-users",
-    "manufacturing-share"
+    "industry-share",
+    "permanent-cropland",
+    "basic-sanitation",
+    "age-dependency",
+    "agriculture-value-added"
   ],
   "categoryMix": {
+    "economy": 2,
     "land": 1,
-    "demography": 1,
-    "environment": 1,
-    "connectivity": 1,
-    "economy": 1
+    "health": 1,
+    "demography": 1
   },
   "mapDifficultyMix": {
-    "expert": 1,
-    "standard": 3,
-    "intro": 1
+    "standard": 5
   },
-  "generatedAt": "2026-06-27T15:17:17.652Z",
+  "generatedAt": "2026-06-27T17:16:22.612878+00:00",
   "generatorVersion": "daily-manifest-v2",
   "varietyNotes": [
     "Selected with category, difficulty, repeat-cooldown, and same-day correlation safeguards."

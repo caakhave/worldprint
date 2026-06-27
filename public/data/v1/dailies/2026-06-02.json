@@ -4,29 +4,31 @@
   "date": "2026-06-02",
   "contentVersion": "2026.06.22-exp2-qa1",
   "roundIds": [
-    "worldprint-co2-per-capita",
+    "worldprint-compulsory-education-duration",
+    "worldprint-account-ownership",
+    "worldprint-population-growth",
     "worldprint-gdp-per-capita",
-    "worldprint-total-protected-areas",
-    "worldprint-life-expectancy",
-    "worldprint-undernourishment"
+    "worldprint-pm25-exposure"
   ],
   "indicatorIds": [
-    "co2-per-capita",
+    "compulsory-education-duration",
+    "account-ownership",
+    "population-growth",
     "gdp-per-capita",
-    "total-protected-areas",
-    "life-expectancy",
-    "undernourishment"
+    "pm25-exposure"
   ],
   "categoryMix": {
-    "environment": 2,
-    "development": 1,
-    "health": 2
+    "education": 1,
+    "development": 2,
+    "demography": 1,
+    "environment": 1
   },
   "mapDifficultyMix": {
+    "expert": 1,
     "standard": 3,
-    "intro": 2
+    "intro": 1
   },
-  "generatedAt": "2026-06-27T15:17:17.652Z",
+  "generatedAt": "2026-06-27T17:16:22.613162+00:00",
   "generatorVersion": "daily-manifest-v2",
   "varietyNotes": [
     "Selected with category, difficulty, repeat-cooldown, and same-day correlation safeguards."

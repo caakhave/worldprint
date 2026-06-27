@@ -4,31 +4,31 @@
   "date": "2026-08-12",
   "contentVersion": "2026.06.22-exp2-qa1",
   "roundIds": [
-    "worldprint-population-growth",
-    "worldprint-measles-immunization",
-    "worldprint-urban-population",
-    "worldprint-industry-share",
-    "worldprint-forest-area"
+    "worldprint-adolescent-fertility",
+    "worldprint-female-industry-employment",
+    "worldprint-safe-drinking-water",
+    "worldprint-mobile-subscriptions",
+    "worldprint-open-defecation"
   ],
   "indicatorIds": [
-    "population-growth",
-    "measles-immunization",
-    "urban-population",
-    "industry-share",
-    "forest-area"
+    "adolescent-fertility",
+    "female-industry-employment",
+    "safe-drinking-water",
+    "mobile-subscriptions",
+    "open-defecation"
   ],
   "categoryMix": {
     "demography": 1,
-    "health": 1,
-    "settlement": 1,
-    "economy": 1,
-    "environment": 1
+    "labor": 1,
+    "health": 2,
+    "connectivity": 1
   },
   "mapDifficultyMix": {
-    "standard": 3,
-    "intro": 2
+    "expert": 2,
+    "intro": 1,
+    "standard": 2
   },
-  "generatedAt": "2026-06-27T15:17:17.652Z",
+  "generatedAt": "2026-06-27T17:16:22.624289+00:00",
   "generatorVersion": "daily-manifest-v2",
   "varietyNotes": [
     "Selected with category, difficulty, repeat-cooldown, and same-day correlation safeguards."

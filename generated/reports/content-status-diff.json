@@ -1,31 +1,282 @@
 {
   "schemaVersion": "1.1.0",
   "contentVersion": "2026.06.22-exp2-qa1",
-  "generatedAt": "2026-06-22T18:07:37.455175+00:00",
+  "generatedAt": "2026-06-27T17:16:22.611998+00:00",
   "baselineContentVersion": "2026.06.22-exp2-qa1",
   "summaryDelta": {
     "candidateCount": 0,
     "approvedCount": 0,
     "draftCount": 0,
     "statusCounts": {
-      "daily_eligible": 0,
-      "expert_only": 0,
-      "needs_review": 0,
-      "practice_eligible": 0,
+      "daily_eligible": 12,
+      "expert_only": 25,
+      "needs_review": -50,
+      "practice_eligible": 13,
       "retired": 0
     },
     "approvedStatusCounts": {
-      "daily_eligible": 0,
-      "expert_only": 0,
-      "needs_review": 0,
-      "practice_eligible": 0,
+      "daily_eligible": 12,
+      "expert_only": 25,
+      "needs_review": -50,
+      "practice_eligible": 13,
       "retired": 0
     }
   },
   "addedCandidates": [],
   "removedCandidates": [],
   "approvalStatusChanges": [],
-  "editorialStatusChanges": [],
+  "editorialStatusChanges": [
+    {
+      "id": "agriculture-methane-emissions",
+      "from": "needs_review",
+      "to": "expert_only"
+    },
+    {
+      "id": "agriculture-nitrous-oxide-emissions",
+      "from": "needs_review",
+      "to": "expert_only"
+    },
+    {
+      "id": "air-departures",
+      "from": "needs_review",
+      "to": "expert_only"
+    },
+    {
+      "id": "air-freight",
+      "from": "needs_review",
+      "to": "expert_only"
+    },
+    {
+      "id": "air-passengers",
+      "from": "needs_review",
+      "to": "expert_only"
+    },
+    {
+      "id": "arable-land-area",
+      "from": "needs_review",
+      "to": "expert_only"
+    },
+    {
+      "id": "cereal-production",
+      "from": "needs_review",
+      "to": "expert_only"
+    },
+    {
+      "id": "communications-service-exports",
+      "from": "needs_review",
+      "to": "daily_eligible"
+    },
+    {
+      "id": "communications-service-imports",
+      "from": "needs_review",
+      "to": "practice_eligible"
+    },
+    {
+      "id": "compulsory-education-duration",
+      "from": "needs_review",
+      "to": "daily_eligible"
+    },
+    {
+      "id": "container-port-traffic",
+      "from": "needs_review",
+      "to": "expert_only"
+    },
+    {
+      "id": "contributing-family-workers",
+      "from": "needs_review",
+      "to": "expert_only"
+    },
+    {
+      "id": "female-agricultural-employment",
+      "from": "needs_review",
+      "to": "expert_only"
+    },
+    {
+      "id": "female-contributing-family-workers",
+      "from": "needs_review",
+      "to": "expert_only"
+    },
+    {
+      "id": "female-employment-population-ratio",
+      "from": "needs_review",
+      "to": "expert_only"
+    },
+    {
+      "id": "female-industry-employment",
+      "from": "needs_review",
+      "to": "daily_eligible"
+    },
+    {
+      "id": "female-self-employed",
+      "from": "needs_review",
+      "to": "expert_only"
+    },
+    {
+      "id": "female-services-employment",
+      "from": "needs_review",
+      "to": "expert_only"
+    },
+    {
+      "id": "female-vulnerable-employment",
+      "from": "needs_review",
+      "to": "expert_only"
+    },
+    {
+      "id": "female-wage-salaried-workers",
+      "from": "needs_review",
+      "to": "expert_only"
+    },
+    {
+      "id": "food-exports-share",
+      "from": "needs_review",
+      "to": "practice_eligible"
+    },
+    {
+      "id": "food-imports-share",
+      "from": "needs_review",
+      "to": "practice_eligible"
+    },
+    {
+      "id": "food-insecurity-moderate-severe",
+      "from": "needs_review",
+      "to": "daily_eligible"
+    },
+    {
+      "id": "government-education-spending-share",
+      "from": "needs_review",
+      "to": "daily_eligible"
+    },
+    {
+      "id": "ict-service-exports",
+      "from": "needs_review",
+      "to": "practice_eligible"
+    },
+    {
+      "id": "land-under-cereal",
+      "from": "needs_review",
+      "to": "daily_eligible"
+    },
+    {
+      "id": "male-employment-population-ratio",
+      "from": "needs_review",
+      "to": "expert_only"
+    },
+    {
+      "id": "male-industry-employment",
+      "from": "needs_review",
+      "to": "expert_only"
+    },
+    {
+      "id": "out-of-school-primary",
+      "from": "needs_review",
+      "to": "daily_eligible"
+    },
+    {
+      "id": "primary-female-teachers",
+      "from": "needs_review",
+      "to": "daily_eligible"
+    },
+    {
+      "id": "primary-gross-intake",
+      "from": "needs_review",
+      "to": "practice_eligible"
+    },
+    {
+      "id": "primary-pupils-female-share",
+      "from": "needs_review",
+      "to": "practice_eligible"
+    },
+    {
+      "id": "rural-basic-drinking-water",
+      "from": "needs_review",
+      "to": "practice_eligible"
+    },
+    {
+      "id": "rural-basic-sanitation",
+      "from": "needs_review",
+      "to": "daily_eligible"
+    },
+    {
+      "id": "rural-low-elevation-land",
+      "from": "needs_review",
+      "to": "expert_only"
+    },
+    {
+      "id": "rural-low-elevation-population",
+      "from": "needs_review",
+      "to": "expert_only"
+    },
+    {
+      "id": "rural-open-defecation",
+      "from": "needs_review",
+      "to": "expert_only"
+    },
+    {
+      "id": "rural-population-growth",
+      "from": "needs_review",
+      "to": "daily_eligible"
+    },
+    {
+      "id": "secondary-pupils-female-share",
+      "from": "needs_review",
+      "to": "practice_eligible"
+    },
+    {
+      "id": "severe-food-insecurity",
+      "from": "needs_review",
+      "to": "expert_only"
+    },
+    {
+      "id": "transport-service-exports",
+      "from": "needs_review",
+      "to": "practice_eligible"
+    },
+    {
+      "id": "transport-service-imports",
+      "from": "needs_review",
+      "to": "practice_eligible"
+    },
+    {
+      "id": "urban-basic-drinking-water",
+      "from": "needs_review",
+      "to": "daily_eligible"
+    },
+    {
+      "id": "urban-basic-sanitation",
+      "from": "needs_review",
+      "to": "practice_eligible"
+    },
+    {
+      "id": "urban-clean-cooking-access",
+      "from": "needs_review",
+      "to": "practice_eligible"
+    },
+    {
+      "id": "urban-electricity-access",
+      "from": "needs_review",
+      "to": "practice_eligible"
+    },
+    {
+      "id": "urban-low-elevation-land",
+      "from": "needs_review",
+      "to": "expert_only"
+    },
+    {
+      "id": "urban-low-elevation-population",
+      "from": "needs_review",
+      "to": "expert_only"
+    },
+    {
+      "id": "urban-open-defecation",
+      "from": "needs_review",
+      "to": "expert_only"
+    },
+    {
+      "id": "youth-employment-ratio",
+      "from": "needs_review",
+      "to": "daily_eligible"
+    }
+  ],
   "coverageChanges": [],
   "yearChanges": []
 }

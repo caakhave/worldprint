@@ -4,30 +4,30 @@
   "date": "2026-07-18",
   "contentVersion": "2026.06.22-exp2-qa1",
   "roundIds": [
-    "worldprint-protected-land",
-    "worldprint-internet-users",
-    "worldprint-age-dependency",
-    "worldprint-electricity-access",
-    "worldprint-energy-use"
+    "worldprint-manufacturing-share",
+    "worldprint-physicians",
+    "worldprint-population-density",
+    "worldprint-electric-power-use",
+    "worldprint-arable-land"
   ],
   "indicatorIds": [
-    "protected-land",
-    "internet-users",
-    "age-dependency",
-    "electricity-access",
-    "energy-use"
+    "manufacturing-share",
+    "physicians",
+    "population-density",
+    "electric-power-use",
+    "arable-land"
   ],
   "categoryMix": {
-    "environment": 1,
-    "connectivity": 1,
-    "demography": 1,
-    "energy": 2
+    "economy": 1,
+    "health": 1,
+    "settlement": 1,
+    "energy": 1,
+    "land": 1
   },
   "mapDifficultyMix": {
-    "standard": 3,
-    "intro": 2
+    "standard": 5
   },
-  "generatedAt": "2026-06-27T15:17:17.652Z",
+  "generatedAt": "2026-06-27T17:16:22.620700+00:00",
   "generatorVersion": "daily-manifest-v2",
   "varietyNotes": [
     "Selected with category, difficulty, repeat-cooldown, and same-day correlation safeguards."

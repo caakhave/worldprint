@@ -4,29 +4,29 @@
   "date": "2026-09-04",
   "contentVersion": "2026.06.22-exp2-qa1",
   "roundIds": [
+    "worldprint-pm25-exposure",
+    "worldprint-safe-drinking-water",
     "worldprint-agriculture-value-added",
-    "worldprint-migrant-stock",
-    "worldprint-tuberculosis-incidence",
-    "worldprint-population-growth",
-    "worldprint-tourism-arrivals"
+    "worldprint-undernourishment",
+    "worldprint-industry-share"
   ],
   "indicatorIds": [
+    "pm25-exposure",
+    "safe-drinking-water",
     "agriculture-value-added",
-    "migrant-stock",
-    "tuberculosis-incidence",
-    "population-growth",
-    "tourism-arrivals"
+    "undernourishment",
+    "industry-share"
   ],
   "categoryMix": {
-    "economy": 2,
-    "demography": 2,
-    "health": 1
+    "environment": 1,
+    "health": 2,
+    "economy": 2
   },
   "mapDifficultyMix": {
     "standard": 4,
-    "expert": 1
+    "intro": 1
   },
-  "generatedAt": "2026-06-27T15:17:17.652Z",
+  "generatedAt": "2026-06-27T17:16:22.627934+00:00",
   "generatorVersion": "daily-manifest-v2",
   "varietyNotes": [
     "Selected with category, difficulty, repeat-cooldown, and same-day correlation safeguards."

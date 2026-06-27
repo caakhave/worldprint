@@ -207,7 +207,7 @@
     "valuesReference": "https://api.worldbank.org/v2/country/all/indicator/AG.LND.ARBL.HA.PC?format=json&per_page=20000&page=1&date=2015%3A2025",
     "license": "Creative Commons Attribution 4.0 International unless specifically labeled otherwise by World Bank metadata",
     "licenseReference": "https://www.worldbank.org/en/about/legal/terms-of-use-for-datasets",
-    "retrievedAt": "2026-06-22T18:06:45.774795+00:00",
+    "retrievedAt": "2026-06-27T17:14:49.100308+00:00",
     "checksum": "fe44d5d15d17cc38c3a745016687929541335a3d507e8dc6915e0d4e0b7f79fa",
     "sourceOrganization": "FAO electronic files and web site, Food and Agriculture Organization of the United Nations (FAO), publisher: Food and Agriculture Organization of the United Nations (FAO)"
   },
@@ -233,16 +233,16 @@
     ],
     "commonConfusions": [
       {
-        "confusedWithIndicatorCode": "EN.POP.DNST",
-        "reason": "Population density overlaps with part of the visible pattern, but the full country spread does not match."
+        "confusedWithIndicatorCode": "AG.LND.ARBL.HA",
+        "reason": "Arable land area lives in the same category, so it can feel plausible until the high and low countries are checked."
       },
       {
-        "confusedWithIndicatorCode": "AG.CON.FERT.ZS",
-        "reason": "Fertilizer consumption overlaps with part of the visible pattern, but the full country spread does not match."
+        "confusedWithIndicatorCode": "AG.LND.CREL.HA",
+        "reason": "Land under cereal production lives in the same category, so it can feel plausible until the high and low countries are checked."
       },
       {
-        "confusedWithIndicatorCode": "AG.LND.ARBL.ZS",
-        "reason": "Arable land lives in the same category, so it can feel plausible until the high and low countries are checked."
+        "confusedWithIndicatorCode": "AG.PRD.CREL.MT",
+        "reason": "Cereal production overlaps with part of the visible pattern, but the full country spread does not match."
       }
     ],
     "difficultyReason": "Expert difficulty: the map can be mistaken for adjacent indicators unless players probe a high, low, and middle country.",

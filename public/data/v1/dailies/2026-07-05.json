@@ -4,30 +4,29 @@
   "date": "2026-07-05",
   "contentVersion": "2026.06.22-exp2-qa1",
   "roundIds": [
-    "worldprint-population-growth",
+    "worldprint-physicians",
+    "worldprint-under-five-mortality",
+    "worldprint-rural-basic-sanitation",
     "worldprint-total-protected-areas",
-    "worldprint-undernourishment",
-    "worldprint-forest-area",
-    "worldprint-internet-users"
+    "worldprint-manufacturing-share"
   ],
   "indicatorIds": [
-    "population-growth",
+    "physicians",
+    "under-five-mortality",
+    "rural-basic-sanitation",
     "total-protected-areas",
-    "undernourishment",
-    "forest-area",
-    "internet-users"
+    "manufacturing-share"
   ],
   "categoryMix": {
-    "demography": 1,
-    "environment": 2,
-    "health": 1,
-    "connectivity": 1
+    "health": 2,
+    "settlement": 1,
+    "environment": 1,
+    "economy": 1
   },
   "mapDifficultyMix": {
-    "standard": 3,
-    "intro": 2
+    "standard": 5
   },
-  "generatedAt": "2026-06-27T15:17:17.652Z",
+  "generatedAt": "2026-06-27T17:16:22.618374+00:00",
   "generatorVersion": "daily-manifest-v2",
   "varietyNotes": [
     "Selected with category, difficulty, repeat-cooldown, and same-day correlation safeguards."

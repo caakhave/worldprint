@@ -159,7 +159,7 @@
     "valuesReference": "https://api.worldbank.org/v2/country/all/indicator/SE.PRM.PRIV.ZS?format=json&per_page=20000&page=1&date=2015%3A2025",
     "license": "Creative Commons Attribution 4.0 International unless specifically labeled otherwise by World Bank metadata",
     "licenseReference": "https://www.worldbank.org/en/about/legal/terms-of-use-for-datasets",
-    "retrievedAt": "2026-06-22T18:06:42.714000+00:00",
+    "retrievedAt": "2026-06-27T17:14:46.582427+00:00",
     "checksum": "fb397f6558694453a6471a658c71f512c9db7fcf58d60b967a3d73f5905c922a",
     "sourceOrganization": "Data API, UN Educational, Scientific and Cultural Organization (UNESCO), uri: https://databrowser.uis.unesco.org/resources, note: The data are obtained through the UIS API.  Detailed documentation is available at: https://api.uis.unesco.org/api/public/documentation/, publisher: UNESCO Institute for Statistics (UIS), date accessed: 2026-03-19, date published: 2026-02"
   },
@@ -189,12 +189,12 @@
         "reason": "Hospital beds overlaps with part of the visible pattern, but the full country spread does not match."
       },
       {
-        "confusedWithIndicatorCode": "SP.POP.65UP.TO.ZS",
-        "reason": "Population ages 65+ overlaps with part of the visible pattern, but the full country spread does not match."
+        "confusedWithIndicatorCode": "SN.ITK.SVFI.ZS",
+        "reason": "Severe food insecurity overlaps with part of the visible pattern, but the full country spread does not match."
       },
       {
-        "confusedWithIndicatorCode": "SN.ITK.DEFC.ZS",
-        "reason": "Undernourishment overlaps with part of the visible pattern, but the full country spread does not match."
+        "confusedWithIndicatorCode": "SE.PRM.TCHR.FE.ZS",
+        "reason": "Female primary teachers lives in the same category, so it can feel plausible until the high and low countries are checked."
       }
     ],
     "difficultyReason": "Expert difficulty: the map can be mistaken for adjacent indicators unless players probe a high, low, and middle country.",

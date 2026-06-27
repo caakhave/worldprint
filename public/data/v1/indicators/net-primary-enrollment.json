@@ -159,7 +159,7 @@
     "valuesReference": "https://api.worldbank.org/v2/country/all/indicator/SE.PRM.NENR?format=json&per_page=20000&page=1&date=2015%3A2025",
     "license": "Creative Commons Attribution 4.0 International unless specifically labeled otherwise by World Bank metadata",
     "licenseReference": "https://www.worldbank.org/en/about/legal/terms-of-use-for-datasets",
-    "retrievedAt": "2026-06-22T18:06:41.055552+00:00",
+    "retrievedAt": "2026-06-27T17:14:45.006688+00:00",
     "checksum": "d952acfc1e46270f3829354c6edccbd3af4ece233f160485ef59ff2b03ee8916",
     "sourceOrganization": "Stat Bulk Data Download Service, UN Educational, Scientific and Cultural Organization (UNESCO), uri: https://uis.unesco.org/bdds, publisher: UNESCO Institute for Statistics (UIS)"
   },
@@ -185,16 +185,16 @@
     ],
     "commonConfusions": [
       {
+        "confusedWithIndicatorCode": "SE.PRM.UNER.ZS",
+        "reason": "Out-of-school primary age lives in the same category, so it can feel plausible until the high and low countries are checked."
+      },
+      {
         "confusedWithIndicatorCode": "SE.SEC.ENRR",
         "reason": "Secondary enrollment lives in the same category, so it can feel plausible until the high and low countries are checked."
       },
       {
         "confusedWithIndicatorCode": "SP.DYN.IMRT.IN",
         "reason": "Infant mortality overlaps with part of the visible pattern, but the full country spread does not match."
-      },
-      {
-        "confusedWithIndicatorCode": "SH.DYN.MORT",
-        "reason": "Under-5 mortality overlaps with part of the visible pattern, but the full country spread does not match."
       }
     ],
     "difficultyReason": "Standard difficulty: the map has readable regional structure, but the best answer still depends on checking the unit and country anchors.",

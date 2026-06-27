@@ -4,30 +4,29 @@
   "date": "2026-09-19",
   "contentVersion": "2026.06.22-exp2-qa1",
   "roundIds": [
-    "worldprint-electricity-access",
-    "worldprint-clean-fuels-access",
+    "worldprint-basic-sanitation",
+    "worldprint-safe-drinking-water",
     "worldprint-forest-area",
-    "worldprint-agriculture-value-added",
-    "worldprint-secondary-enrollment"
+    "worldprint-clean-fuels-access",
+    "worldprint-total-protected-areas"
   ],
   "indicatorIds": [
-    "electricity-access",
-    "clean-fuels-access",
+    "basic-sanitation",
+    "safe-drinking-water",
     "forest-area",
-    "agriculture-value-added",
-    "secondary-enrollment"
+    "clean-fuels-access",
+    "total-protected-areas"
   ],
   "categoryMix": {
-    "energy": 2,
-    "environment": 1,
-    "economy": 1,
-    "education": 1
+    "health": 2,
+    "environment": 2,
+    "energy": 1
   },
   "mapDifficultyMix": {
-    "intro": 2,
-    "standard": 3
+    "standard": 3,
+    "intro": 2
   },
-  "generatedAt": "2026-06-27T15:17:17.652Z",
+  "generatedAt": "2026-06-27T17:16:22.630574+00:00",
   "generatorVersion": "daily-manifest-v2",
   "varietyNotes": [
     "Selected with category, difficulty, repeat-cooldown, and same-day correlation safeguards."

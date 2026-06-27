@@ -4,31 +4,30 @@
   "date": "2026-06-27",
   "contentVersion": "2026.06.22-exp2-qa1",
   "roundIds": [
-    "worldprint-population-density",
-    "worldprint-clean-fuels-access",
-    "worldprint-age-dependency",
-    "worldprint-tuberculosis-incidence",
-    "worldprint-account-ownership"
+    "worldprint-coal-electricity-share",
+    "worldprint-manufacturing-share",
+    "worldprint-urban-population",
+    "worldprint-freshwater-per-capita",
+    "worldprint-tourism-arrivals"
   ],
   "indicatorIds": [
-    "population-density",
-    "clean-fuels-access",
-    "age-dependency",
-    "tuberculosis-incidence",
-    "account-ownership"
+    "coal-electricity-share",
+    "manufacturing-share",
+    "urban-population",
+    "freshwater-per-capita",
+    "tourism-arrivals"
   ],
   "categoryMix": {
-    "settlement": 1,
     "energy": 1,
-    "demography": 1,
-    "health": 1,
-    "development": 1
+    "economy": 2,
+    "settlement": 1,
+    "environment": 1
   },
   "mapDifficultyMix": {
     "standard": 4,
-    "expert": 1
+    "intro": 1
   },
-  "generatedAt": "2026-06-27T15:17:17.652Z",
+  "generatedAt": "2026-06-27T17:16:22.617217+00:00",
   "generatorVersion": "daily-manifest-v2",
   "varietyNotes": [
     "Selected with category, difficulty, repeat-cooldown, and same-day correlation safeguards."

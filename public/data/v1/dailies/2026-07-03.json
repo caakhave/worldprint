@@ -4,30 +4,32 @@
   "date": "2026-07-03",
   "contentVersion": "2026.06.22-exp2-qa1",
   "roundIds": [
-    "worldprint-age-dependency",
-    "worldprint-permanent-cropland",
-    "worldprint-life-expectancy",
-    "worldprint-basic-sanitation",
-    "worldprint-gdp-per-capita"
+    "worldprint-arable-land-per-person",
+    "worldprint-gdp-per-capita",
+    "worldprint-internet-users",
+    "worldprint-youth-employment-ratio",
+    "worldprint-compulsory-education-duration"
   ],
   "indicatorIds": [
-    "age-dependency",
-    "permanent-cropland",
-    "life-expectancy",
-    "basic-sanitation",
-    "gdp-per-capita"
+    "arable-land-per-person",
+    "gdp-per-capita",
+    "internet-users",
+    "youth-employment-ratio",
+    "compulsory-education-duration"
   ],
   "categoryMix": {
-    "demography": 1,
     "land": 1,
-    "health": 2,
-    "development": 1
+    "development": 1,
+    "connectivity": 1,
+    "labor": 1,
+    "education": 1
   },
   "mapDifficultyMix": {
-    "standard": 3,
-    "intro": 2
+    "expert": 2,
+    "intro": 2,
+    "standard": 1
   },
-  "generatedAt": "2026-06-27T15:17:17.652Z",
+  "generatedAt": "2026-06-27T17:16:22.618091+00:00",
   "generatorVersion": "daily-manifest-v2",
   "varietyNotes": [
     "Selected with category, difficulty, repeat-cooldown, and same-day correlation safeguards."

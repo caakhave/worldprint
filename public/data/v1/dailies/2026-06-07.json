@@ -4,30 +4,29 @@
   "date": "2026-06-07",
   "contentVersion": "2026.06.22-exp2-qa1",
   "roundIds": [
-    "worldprint-secondary-enrollment",
+    "worldprint-maternal-mortality",
+    "worldprint-fertility-rate",
     "worldprint-protected-land",
-    "worldprint-population-density",
-    "worldprint-electric-power-use",
-    "worldprint-food-production-index"
+    "worldprint-open-defecation",
+    "worldprint-manufacturing-share"
   ],
   "indicatorIds": [
-    "secondary-enrollment",
+    "maternal-mortality",
+    "fertility-rate",
     "protected-land",
-    "population-density",
-    "electric-power-use",
-    "food-production-index"
+    "open-defecation",
+    "manufacturing-share"
   ],
   "categoryMix": {
-    "education": 1,
+    "health": 2,
+    "demography": 1,
     "environment": 1,
-    "settlement": 1,
-    "energy": 1,
-    "agriculture": 1
+    "economy": 1
   },
   "mapDifficultyMix": {
     "standard": 5
   },
-  "generatedAt": "2026-06-27T15:17:17.652Z",
+  "generatedAt": "2026-06-27T17:16:22.613907+00:00",
   "generatorVersion": "daily-manifest-v2",
   "varietyNotes": [
     "Selected with category, difficulty, repeat-cooldown, and same-day correlation safeguards."

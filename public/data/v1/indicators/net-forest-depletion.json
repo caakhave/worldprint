@@ -191,7 +191,7 @@
     "valuesReference": "https://api.worldbank.org/v2/country/all/indicator/NY.ADJ.DFOR.GN.ZS?format=json&per_page=20000&page=1&date=2015%3A2025",
     "license": "Creative Commons Attribution 4.0 International unless specifically labeled otherwise by World Bank metadata",
     "licenseReference": "https://www.worldbank.org/en/about/legal/terms-of-use-for-datasets",
-    "retrievedAt": "2026-06-22T18:06:48.739254+00:00",
+    "retrievedAt": "2026-06-27T17:14:51.558486+00:00",
     "checksum": "b059d01995904ddca1deea7d737f7c8afd284115b127a5cde3a9f3d167a640b2",
     "sourceOrganization": "Staff estimates, World Bank (WB);\nThe Changing Wealth of Nations: Measuring Sustainable Development in the New Millennium, World Bank (WB)"
   },
@@ -221,12 +221,12 @@
         "reason": "Forest rents overlaps with part of the visible pattern, but the full country spread does not match."
       },
       {
-        "confusedWithIndicatorCode": "EG.ELC.ACCS.ZS",
-        "reason": "Electricity access overlaps with part of the visible pattern, but the full country spread does not match."
+        "confusedWithIndicatorCode": "EG.CFT.ACCS.UR.ZS",
+        "reason": "Urban clean cooking access overlaps with part of the visible pattern, but the full country spread does not match."
       },
       {
-        "confusedWithIndicatorCode": "EG.ELC.ACCS.RU.ZS",
-        "reason": "Rural electricity access overlaps with part of the visible pattern, but the full country spread does not match."
+        "confusedWithIndicatorCode": "SH.STA.BASS.UR.ZS",
+        "reason": "Urban basic sanitation overlaps with part of the visible pattern, but the full country spread does not match."
       }
     ],
     "difficultyReason": "Expert difficulty: the map can be mistaken for adjacent indicators unless players probe a high, low, and middle country.",

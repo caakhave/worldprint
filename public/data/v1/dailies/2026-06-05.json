@@ -4,31 +4,32 @@
   "date": "2026-06-05",
   "contentVersion": "2026.06.22-exp2-qa1",
   "roundIds": [
-    "worldprint-precipitation-depth",
+    "worldprint-internet-users",
     "worldprint-migrant-stock",
-    "worldprint-safe-drinking-water",
-    "worldprint-tuberculosis-incidence",
-    "worldprint-industry-share"
+    "worldprint-government-education-spending-share",
+    "worldprint-rural-population-growth",
+    "worldprint-trade-share"
   ],
   "indicatorIds": [
-    "precipitation-depth",
+    "internet-users",
     "migrant-stock",
-    "safe-drinking-water",
-    "tuberculosis-incidence",
-    "industry-share"
+    "government-education-spending-share",
+    "rural-population-growth",
+    "trade-share"
   ],
   "categoryMix": {
-    "environment": 1,
+    "connectivity": 1,
     "demography": 1,
-    "health": 2,
+    "education": 1,
+    "settlement": 1,
     "economy": 1
   },
   "mapDifficultyMix": {
-    "standard": 3,
     "intro": 1,
+    "standard": 3,
     "expert": 1
   },
-  "generatedAt": "2026-06-27T15:17:17.652Z",
+  "generatedAt": "2026-06-27T17:16:22.613608+00:00",
   "generatorVersion": "daily-manifest-v2",
   "varietyNotes": [
     "Selected with category, difficulty, repeat-cooldown, and same-day correlation safeguards."

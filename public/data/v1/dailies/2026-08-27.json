@@ -4,32 +4,31 @@
   "date": "2026-08-27",
   "contentVersion": "2026.06.22-exp2-qa1",
   "roundIds": [
-    "worldprint-food-production-index",
-    "worldprint-electricity-access",
-    "worldprint-life-expectancy",
-    "worldprint-arable-land",
-    "worldprint-adolescent-fertility"
+    "worldprint-out-of-school-primary",
+    "worldprint-land-under-cereal",
+    "worldprint-female-industry-employment",
+    "worldprint-total-protected-areas",
+    "worldprint-undernourishment"
   ],
   "indicatorIds": [
-    "food-production-index",
-    "electricity-access",
-    "life-expectancy",
-    "arable-land",
-    "adolescent-fertility"
+    "out-of-school-primary",
+    "land-under-cereal",
+    "female-industry-employment",
+    "total-protected-areas",
+    "undernourishment"
   ],
   "categoryMix": {
-    "agriculture": 1,
-    "energy": 1,
-    "health": 1,
+    "education": 1,
     "land": 1,
-    "demography": 1
+    "labor": 1,
+    "environment": 1,
+    "health": 1
   },
   "mapDifficultyMix": {
-    "standard": 2,
-    "intro": 2,
-    "expert": 1
+    "standard": 3,
+    "expert": 2
   },
-  "generatedAt": "2026-06-27T15:17:17.652Z",
+  "generatedAt": "2026-06-27T17:16:22.626444+00:00",
   "generatorVersion": "daily-manifest-v2",
   "varietyNotes": [
     "Selected with category, difficulty, repeat-cooldown, and same-day correlation safeguards."

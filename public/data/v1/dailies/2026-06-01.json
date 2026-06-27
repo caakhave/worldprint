@@ -4,31 +4,32 @@
   "date": "2026-06-01",
   "contentVersion": "2026.06.22-exp2-qa1",
   "roundIds": [
-    "worldprint-tuberculosis-incidence",
-    "worldprint-tourism-arrivals",
-    "worldprint-electricity-access",
-    "worldprint-trade-share",
-    "worldprint-arable-land"
+    "worldprint-women-parliament",
+    "worldprint-life-expectancy",
+    "worldprint-energy-use",
+    "worldprint-land-under-cereal",
+    "worldprint-tourism-arrivals"
   ],
   "indicatorIds": [
-    "tuberculosis-incidence",
-    "tourism-arrivals",
-    "electricity-access",
-    "trade-share",
-    "arable-land"
+    "women-parliament",
+    "life-expectancy",
+    "energy-use",
+    "land-under-cereal",
+    "tourism-arrivals"
   ],
   "categoryMix": {
+    "development": 1,
     "health": 1,
-    "economy": 2,
     "energy": 1,
-    "land": 1
+    "land": 1,
+    "economy": 1
   },
   "mapDifficultyMix": {
-    "expert": 1,
     "standard": 3,
-    "intro": 1
+    "intro": 1,
+    "expert": 1
   },
-  "generatedAt": "2026-06-27T15:17:17.652Z",
+  "generatedAt": "2026-06-27T17:16:22.613022+00:00",
   "generatorVersion": "daily-manifest-v2",
   "varietyNotes": [
     "Selected with category, difficulty, repeat-cooldown, and same-day correlation safeguards."

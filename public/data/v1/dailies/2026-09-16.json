@@ -4,30 +4,29 @@
   "date": "2026-09-16",
   "contentVersion": "2026.06.22-exp2-qa1",
   "roundIds": [
-    "worldprint-urban-population",
-    "worldprint-under-five-mortality",
-    "worldprint-permanent-cropland",
-    "worldprint-energy-use",
-    "worldprint-renewable-electricity"
+    "worldprint-open-defecation",
+    "worldprint-maternal-mortality",
+    "worldprint-account-ownership",
+    "worldprint-urban-basic-drinking-water",
+    "worldprint-population-growth"
   ],
   "indicatorIds": [
-    "urban-population",
-    "under-five-mortality",
-    "permanent-cropland",
-    "energy-use",
-    "renewable-electricity"
+    "open-defecation",
+    "maternal-mortality",
+    "account-ownership",
+    "urban-basic-drinking-water",
+    "population-growth"
   ],
   "categoryMix": {
+    "health": 2,
+    "development": 1,
     "settlement": 1,
-    "health": 1,
-    "land": 1,
-    "energy": 2
+    "demography": 1
   },
   "mapDifficultyMix": {
-    "intro": 1,
-    "standard": 4
+    "standard": 5
   },
-  "generatedAt": "2026-06-27T15:17:17.652Z",
+  "generatedAt": "2026-06-27T17:16:22.630019+00:00",
   "generatorVersion": "daily-manifest-v2",
   "varietyNotes": [
     "Selected with category, difficulty, repeat-cooldown, and same-day correlation safeguards."

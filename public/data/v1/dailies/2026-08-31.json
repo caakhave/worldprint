@@ -4,30 +4,32 @@
   "date": "2026-08-31",
   "contentVersion": "2026.06.22-exp2-qa1",
   "roundIds": [
-    "worldprint-protected-land",
-    "worldprint-gdp-per-capita",
-    "worldprint-health-expenditure",
-    "worldprint-measles-immunization",
-    "worldprint-urban-population"
+    "worldprint-tourism-arrivals",
+    "worldprint-co2-per-capita",
+    "worldprint-internet-users",
+    "worldprint-fertility-rate",
+    "worldprint-compulsory-education-duration"
   ],
   "indicatorIds": [
-    "protected-land",
-    "gdp-per-capita",
-    "health-expenditure",
-    "measles-immunization",
-    "urban-population"
+    "tourism-arrivals",
+    "co2-per-capita",
+    "internet-users",
+    "fertility-rate",
+    "compulsory-education-duration"
   ],
   "categoryMix": {
+    "economy": 1,
     "environment": 1,
-    "development": 1,
-    "health": 2,
-    "settlement": 1
+    "connectivity": 1,
+    "demography": 1,
+    "education": 1
   },
   "mapDifficultyMix": {
     "standard": 3,
-    "intro": 2
+    "intro": 1,
+    "expert": 1
   },
-  "generatedAt": "2026-06-27T15:17:17.652Z",
+  "generatedAt": "2026-06-27T17:16:22.627314+00:00",
   "generatorVersion": "daily-manifest-v2",
   "varietyNotes": [
     "Selected with category, difficulty, repeat-cooldown, and same-day correlation safeguards."

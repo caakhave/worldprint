@@ -4,29 +4,30 @@
   "date": "2026-08-02",
   "contentVersion": "2026.06.22-exp2-qa1",
   "roundIds": [
-    "worldprint-open-defecation",
-    "worldprint-health-expenditure",
-    "worldprint-employment-agriculture",
-    "worldprint-pm25-exposure",
-    "worldprint-manufacturing-share"
+    "worldprint-permanent-cropland",
+    "worldprint-rural-population-growth",
+    "worldprint-mobile-subscriptions",
+    "worldprint-fertility-rate",
+    "worldprint-open-defecation"
   ],
   "indicatorIds": [
-    "open-defecation",
-    "health-expenditure",
-    "employment-agriculture",
-    "pm25-exposure",
-    "manufacturing-share"
+    "permanent-cropland",
+    "rural-population-growth",
+    "mobile-subscriptions",
+    "fertility-rate",
+    "open-defecation"
   ],
   "categoryMix": {
-    "health": 2,
-    "labor": 1,
-    "environment": 1,
-    "economy": 1
+    "land": 1,
+    "settlement": 1,
+    "connectivity": 1,
+    "demography": 1,
+    "health": 1
   },
   "mapDifficultyMix": {
     "standard": 5
   },
-  "generatedAt": "2026-06-27T15:17:17.652Z",
+  "generatedAt": "2026-06-27T17:16:22.622869+00:00",
   "generatorVersion": "daily-manifest-v2",
   "varietyNotes": [
     "Selected with category, difficulty, repeat-cooldown, and same-day correlation safeguards."

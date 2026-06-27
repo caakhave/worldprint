@@ -176,7 +176,7 @@
     "valuesReference": "https://api.worldbank.org/v2/country/all/indicator/TX.VAL.AGRI.ZS.UN?format=json&per_page=20000&page=1&date=2015%3A2025",
     "license": "Creative Commons Attribution 4.0 International unless specifically labeled otherwise by World Bank metadata",
     "licenseReference": "https://www.worldbank.org/en/about/legal/terms-of-use-for-datasets",
-    "retrievedAt": "2026-06-22T18:06:50.043652+00:00",
+    "retrievedAt": "2026-06-27T17:14:52.628605+00:00",
     "checksum": "34e1cb5fe3545903200b5f1072a1ba6de1fd202ff345a2a1e805b7ac17cdd82e",
     "sourceOrganization": "Comtrade database, United Nations (UN), publisher: UN Statistics Division;\nWorld Integrated Trade Solution system (WITS);\nStaff estimates, World Bank (WB)"
   },
@@ -202,16 +202,16 @@
     ],
     "commonConfusions": [
       {
+        "confusedWithIndicatorCode": "SH.STA.ODFC.UR.ZS",
+        "reason": "Urban open defecation overlaps with part of the visible pattern, but the full country spread does not match."
+      },
+      {
+        "confusedWithIndicatorCode": "SH.STA.ODFC.RU.ZS",
+        "reason": "Rural open defecation overlaps with part of the visible pattern, but the full country spread does not match."
+      },
+      {
         "confusedWithIndicatorCode": "EG.FEC.RNEW.ZS",
         "reason": "Renewable energy consumption overlaps with part of the visible pattern, but the full country spread does not match."
-      },
-      {
-        "confusedWithIndicatorCode": "SH.STA.ODFC.ZS",
-        "reason": "Open defecation overlaps with part of the visible pattern, but the full country spread does not match."
-      },
-      {
-        "confusedWithIndicatorCode": "NY.GDP.FRST.RT.ZS",
-        "reason": "Forest rents lives in the same category, so it can feel plausible until the high and low countries are checked."
       }
     ],
     "difficultyReason": "Expert difficulty: the map can be mistaken for adjacent indicators unless players probe a high, low, and middle country.",

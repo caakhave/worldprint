@@ -4,30 +4,28 @@
   "date": "2026-09-02",
   "contentVersion": "2026.06.22-exp2-qa1",
   "roundIds": [
-    "worldprint-coal-electricity-share",
-    "worldprint-trade-share",
-    "worldprint-cereal-yield",
-    "worldprint-arable-land-per-person",
-    "worldprint-industry-share"
+    "worldprint-urban-basic-drinking-water",
+    "worldprint-population-density",
+    "worldprint-permanent-cropland",
+    "worldprint-arable-land",
+    "worldprint-age-dependency"
   ],
   "indicatorIds": [
-    "coal-electricity-share",
-    "trade-share",
-    "cereal-yield",
-    "arable-land-per-person",
-    "industry-share"
+    "urban-basic-drinking-water",
+    "population-density",
+    "permanent-cropland",
+    "arable-land",
+    "age-dependency"
   ],
   "categoryMix": {
-    "energy": 1,
-    "economy": 2,
-    "agriculture": 1,
-    "land": 1
+    "settlement": 2,
+    "land": 2,
+    "demography": 1
   },
   "mapDifficultyMix": {
-    "standard": 3,
-    "expert": 2
+    "standard": 5
   },
-  "generatedAt": "2026-06-27T15:17:17.652Z",
+  "generatedAt": "2026-06-27T17:16:22.627626+00:00",
   "generatorVersion": "daily-manifest-v2",
   "varietyNotes": [
     "Selected with category, difficulty, repeat-cooldown, and same-day correlation safeguards."

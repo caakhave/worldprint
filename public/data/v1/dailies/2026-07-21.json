@@ -4,30 +4,30 @@
   "date": "2026-07-21",
   "contentVersion": "2026.06.22-exp2-qa1",
   "roundIds": [
-    "worldprint-permanent-cropland",
-    "worldprint-measles-immunization",
-    "worldprint-physicians",
-    "worldprint-cereal-yield",
+    "worldprint-total-protected-areas",
+    "worldprint-out-of-school-primary",
+    "worldprint-population-growth",
+    "worldprint-food-insecurity-moderate-severe",
     "worldprint-unemployment"
   ],
   "indicatorIds": [
-    "permanent-cropland",
-    "measles-immunization",
-    "physicians",
-    "cereal-yield",
+    "total-protected-areas",
+    "out-of-school-primary",
+    "population-growth",
+    "food-insecurity-moderate-severe",
     "unemployment"
   ],
   "categoryMix": {
-    "land": 1,
-    "health": 2,
+    "environment": 1,
+    "education": 1,
+    "demography": 1,
     "agriculture": 1,
     "labor": 1
   },
   "mapDifficultyMix": {
-    "standard": 4,
-    "expert": 1
+    "standard": 5
   },
-  "generatedAt": "2026-06-27T15:17:17.652Z",
+  "generatedAt": "2026-06-27T17:16:22.621143+00:00",
   "generatorVersion": "daily-manifest-v2",
   "varietyNotes": [
     "Selected with category, difficulty, repeat-cooldown, and same-day correlation safeguards."

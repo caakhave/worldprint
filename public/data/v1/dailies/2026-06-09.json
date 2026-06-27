@@ -4,31 +4,31 @@
   "date": "2026-06-09",
   "contentVersion": "2026.06.22-exp2-qa1",
   "roundIds": [
-    "worldprint-pm25-exposure",
-    "worldprint-tourism-arrivals",
-    "worldprint-arable-land-per-person",
-    "worldprint-urban-population",
-    "worldprint-trade-share"
+    "worldprint-female-industry-employment",
+    "worldprint-population-density",
+    "worldprint-government-education-spending-share",
+    "worldprint-food-production-index",
+    "worldprint-health-expenditure"
   ],
   "indicatorIds": [
-    "pm25-exposure",
-    "tourism-arrivals",
-    "arable-land-per-person",
-    "urban-population",
-    "trade-share"
+    "female-industry-employment",
+    "population-density",
+    "government-education-spending-share",
+    "food-production-index",
+    "health-expenditure"
   ],
   "categoryMix": {
-    "environment": 1,
-    "economy": 2,
-    "land": 1,
-    "settlement": 1
+    "labor": 1,
+    "settlement": 1,
+    "education": 1,
+    "agriculture": 1,
+    "health": 1
   },
   "mapDifficultyMix": {
-    "standard": 3,
-    "expert": 1,
-    "intro": 1
+    "expert": 2,
+    "standard": 3
   },
-  "generatedAt": "2026-06-27T15:17:17.652Z",
+  "generatedAt": "2026-06-27T17:16:22.614214+00:00",
   "generatorVersion": "daily-manifest-v2",
   "varietyNotes": [
     "Selected with category, difficulty, repeat-cooldown, and same-day correlation safeguards."

@@ -4,31 +4,31 @@
   "date": "2026-08-22",
   "contentVersion": "2026.06.22-exp2-qa1",
   "roundIds": [
-    "worldprint-pm25-exposure",
-    "worldprint-clean-fuels-access",
-    "worldprint-older-adults-share",
-    "worldprint-mobile-subscriptions",
-    "worldprint-safe-drinking-water"
+    "worldprint-food-production-index",
+    "worldprint-maternal-mortality",
+    "worldprint-fertility-rate",
+    "worldprint-forest-area",
+    "worldprint-women-parliament"
   ],
   "indicatorIds": [
-    "pm25-exposure",
-    "clean-fuels-access",
-    "older-adults-share",
-    "mobile-subscriptions",
-    "safe-drinking-water"
+    "food-production-index",
+    "maternal-mortality",
+    "fertility-rate",
+    "forest-area",
+    "women-parliament"
   ],
   "categoryMix": {
-    "environment": 1,
-    "energy": 1,
+    "agriculture": 1,
+    "health": 1,
     "demography": 1,
-    "connectivity": 1,
-    "health": 1
+    "environment": 1,
+    "development": 1
   },
   "mapDifficultyMix": {
-    "standard": 3,
-    "intro": 2
+    "standard": 4,
+    "intro": 1
   },
-  "generatedAt": "2026-06-27T15:17:17.652Z",
+  "generatedAt": "2026-06-27T17:16:22.625705+00:00",
   "generatorVersion": "daily-manifest-v2",
   "varietyNotes": [
     "Selected with category, difficulty, repeat-cooldown, and same-day correlation safeguards."

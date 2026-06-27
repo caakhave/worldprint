@@ -199,7 +199,7 @@
     "valuesReference": "https://api.worldbank.org/v2/country/all/indicator/NY.GDP.MKTP.KD.ZG?format=json&per_page=20000&page=1&date=2015%3A2025",
     "license": "Creative Commons Attribution 4.0 International unless specifically labeled otherwise by World Bank metadata",
     "licenseReference": "https://www.worldbank.org/en/about/legal/terms-of-use-for-datasets",
-    "retrievedAt": "2026-06-22T18:06:18.292207+00:00",
+    "retrievedAt": "2026-06-27T17:14:26.269635+00:00",
     "checksum": "57623b8d8005347fe830593a13a7c31b0f9fecc0ce4c1c1cda0db6065e0d4a6f",
     "sourceOrganization": "Country official statistics, National Statistical Organizations and/or Central Banks;\nNational Accounts data files, Organisation for Economic Co-operation and Development (OECD);\nStaff estimates, World Bank (WB)"
   },

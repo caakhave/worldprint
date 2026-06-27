@@ -204,7 +204,7 @@
     "valuesReference": "https://api.worldbank.org/v2/country/all/indicator/SH.IMM.IDPT?format=json&per_page=20000&page=1&date=2015%3A2025",
     "license": "Creative Commons Attribution 4.0 International unless specifically labeled otherwise by World Bank metadata",
     "licenseReference": "https://www.worldbank.org/en/about/legal/terms-of-use-for-datasets",
-    "retrievedAt": "2026-06-22T18:06:12.771625+00:00",
+    "retrievedAt": "2026-06-27T17:14:21.929770+00:00",
     "checksum": "77a4309c93189c04d802bd8ce614ce373c01b0eab4438e8b1d4b6e2d53d9de0d",
     "sourceOrganization": "World Health Organization (WHO), uri: http://www.who.int/immunization/monitoring_surveillance/en/;\nUN Children's Fund (UNICEF)"
   },

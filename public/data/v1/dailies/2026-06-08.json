@@ -4,29 +4,31 @@
   "date": "2026-06-08",
   "contentVersion": "2026.06.22-exp2-qa1",
   "roundIds": [
-    "worldprint-clean-fuels-access",
-    "worldprint-manufacturing-share",
-    "worldprint-age-dependency",
-    "worldprint-health-expenditure",
-    "worldprint-maternal-mortality"
+    "worldprint-tuberculosis-incidence",
+    "worldprint-cereal-yield",
+    "worldprint-measles-immunization",
+    "worldprint-primary-female-teachers",
+    "worldprint-forest-area"
   ],
   "indicatorIds": [
-    "clean-fuels-access",
-    "manufacturing-share",
-    "age-dependency",
-    "health-expenditure",
-    "maternal-mortality"
+    "tuberculosis-incidence",
+    "cereal-yield",
+    "measles-immunization",
+    "primary-female-teachers",
+    "forest-area"
   ],
   "categoryMix": {
-    "energy": 1,
-    "economy": 1,
-    "demography": 1,
-    "health": 2
+    "health": 2,
+    "agriculture": 1,
+    "education": 1,
+    "environment": 1
   },
   "mapDifficultyMix": {
-    "standard": 5
+    "expert": 2,
+    "standard": 2,
+    "intro": 1
   },
-  "generatedAt": "2026-06-27T15:17:17.652Z",
+  "generatedAt": "2026-06-27T17:16:22.614077+00:00",
   "generatorVersion": "daily-manifest-v2",
   "varietyNotes": [
     "Selected with category, difficulty, repeat-cooldown, and same-day correlation safeguards."

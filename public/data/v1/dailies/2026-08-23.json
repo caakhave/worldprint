@@ -4,30 +4,30 @@
   "date": "2026-08-23",
   "contentVersion": "2026.06.22-exp2-qa1",
   "roundIds": [
-    "worldprint-health-expenditure",
-    "worldprint-renewable-electricity",
-    "worldprint-measles-immunization",
-    "worldprint-cereal-yield",
-    "worldprint-agriculture-value-added"
+    "worldprint-account-ownership",
+    "worldprint-life-expectancy",
+    "worldprint-industry-share",
+    "worldprint-basic-sanitation",
+    "worldprint-urban-population"
   ],
   "indicatorIds": [
-    "health-expenditure",
-    "renewable-electricity",
-    "measles-immunization",
-    "cereal-yield",
-    "agriculture-value-added"
+    "account-ownership",
+    "life-expectancy",
+    "industry-share",
+    "basic-sanitation",
+    "urban-population"
   ],
   "categoryMix": {
+    "development": 1,
     "health": 2,
-    "energy": 1,
-    "agriculture": 1,
-    "economy": 1
+    "economy": 1,
+    "settlement": 1
   },
   "mapDifficultyMix": {
-    "standard": 4,
-    "expert": 1
+    "standard": 3,
+    "intro": 2
   },
-  "generatedAt": "2026-06-27T15:17:17.652Z",
+  "generatedAt": "2026-06-27T17:16:22.625834+00:00",
   "generatorVersion": "daily-manifest-v2",
   "varietyNotes": [
     "Selected with category, difficulty, repeat-cooldown, and same-day correlation safeguards."

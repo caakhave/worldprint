@@ -4,31 +4,29 @@
   "date": "2026-06-25",
   "contentVersion": "2026.06.22-exp2-qa1",
   "roundIds": [
-    "worldprint-protected-land",
-    "worldprint-trade-share",
-    "worldprint-adolescent-fertility",
-    "worldprint-coal-electricity-share",
-    "worldprint-unemployment"
+    "worldprint-co2-per-capita",
+    "worldprint-age-dependency",
+    "worldprint-primary-female-teachers",
+    "worldprint-unemployment",
+    "worldprint-employment-agriculture"
   ],
   "indicatorIds": [
-    "protected-land",
-    "trade-share",
-    "adolescent-fertility",
-    "coal-electricity-share",
-    "unemployment"
+    "co2-per-capita",
+    "age-dependency",
+    "primary-female-teachers",
+    "unemployment",
+    "employment-agriculture"
   ],
   "categoryMix": {
     "environment": 1,
-    "economy": 1,
     "demography": 1,
-    "energy": 1,
-    "labor": 1
+    "education": 1,
+    "labor": 2
   },
   "mapDifficultyMix": {
-    "standard": 4,
-    "expert": 1
+    "standard": 5
   },
-  "generatedAt": "2026-06-27T15:17:17.652Z",
+  "generatedAt": "2026-06-27T17:16:22.616916+00:00",
   "generatorVersion": "daily-manifest-v2",
   "varietyNotes": [
     "Selected with category, difficulty, repeat-cooldown, and same-day correlation safeguards."

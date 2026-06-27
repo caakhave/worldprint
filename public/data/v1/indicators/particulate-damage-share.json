@@ -188,7 +188,7 @@
     "valuesReference": "https://api.worldbank.org/v2/country/all/indicator/NY.ADJ.DPEM.GN.ZS?format=json&per_page=20000&page=1&date=2015%3A2025",
     "license": "Creative Commons Attribution 4.0 International unless specifically labeled otherwise by World Bank metadata",
     "licenseReference": "https://www.worldbank.org/en/about/legal/terms-of-use-for-datasets",
-    "retrievedAt": "2026-06-22T18:06:57.785995+00:00",
+    "retrievedAt": "2026-06-27T17:14:59.180268+00:00",
     "checksum": "4f81284623ee10058813d7a0f9026cc51e5550429d2d39682986cc3e8cd39de3",
     "sourceOrganization": "Global Burden of Disease 2013 study, Institute for Health Metrics and Evaluation (IHME)"
   },

@@ -188,7 +188,7 @@
     "valuesReference": "https://api.worldbank.org/v2/country/all/indicator/EN.URB.LCTY.UR.ZS?format=json&per_page=20000&page=1&date=2015%3A2025",
     "license": "Creative Commons Attribution 4.0 International unless specifically labeled otherwise by World Bank metadata",
     "licenseReference": "https://www.worldbank.org/en/about/legal/terms-of-use-for-datasets",
-    "retrievedAt": "2026-06-22T18:07:24.074706+00:00",
+    "retrievedAt": "2026-06-27T17:15:20.779452+00:00",
     "checksum": "bc15986f95d577aaf0214439692fbb3e45a6bf0e9304acb5055300847f8fa978",
     "sourceOrganization": "World Urbanization Prospects 2018, United Nations (UN), uri: https://population.un.org/wup/, publisher: UN Population Division, date published: 2018"
   },
@@ -214,16 +214,16 @@
     ],
     "commonConfusions": [
       {
-        "confusedWithIndicatorCode": "ST.INT.ARVL",
-        "reason": "Tourism arrivals overlaps with part of the visible pattern, but the full country spread does not match."
+        "confusedWithIndicatorCode": "AG.PRD.CREL.MT",
+        "reason": "Cereal production overlaps with part of the visible pattern, but the full country spread does not match."
       },
       {
-        "confusedWithIndicatorCode": "EG.ELC.NUCL.ZS",
-        "reason": "Nuclear electricity share overlaps with part of the visible pattern, but the full country spread does not match."
+        "confusedWithIndicatorCode": "AG.LND.ARBL.HA",
+        "reason": "Arable land area overlaps with part of the visible pattern, but the full country spread does not match."
       },
       {
-        "confusedWithIndicatorCode": "SE.PRM.NENR",
-        "reason": "Net primary enrollment overlaps with part of the visible pattern, but the full country spread does not match."
+        "confusedWithIndicatorCode": "AG.LND.CREL.HA",
+        "reason": "Land under cereal production overlaps with part of the visible pattern, but the full country spread does not match."
       }
     ],
     "difficultyReason": "Standard difficulty: the map has readable regional structure, but the best answer still depends on checking the unit and country anchors.",

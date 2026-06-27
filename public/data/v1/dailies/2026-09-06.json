@@ -4,30 +4,28 @@
   "date": "2026-09-06",
   "contentVersion": "2026.06.22-exp2-qa1",
   "roundIds": [
-    "worldprint-undernourishment",
-    "worldprint-basic-sanitation",
-    "worldprint-forest-area",
+    "worldprint-precipitation-depth",
+    "worldprint-total-protected-areas",
+    "worldprint-rural-population-growth",
     "worldprint-arable-land",
     "worldprint-population-density"
   ],
   "indicatorIds": [
-    "undernourishment",
-    "basic-sanitation",
-    "forest-area",
+    "precipitation-depth",
+    "total-protected-areas",
+    "rural-population-growth",
     "arable-land",
     "population-density"
   ],
   "categoryMix": {
-    "health": 2,
-    "environment": 1,
-    "land": 1,
-    "settlement": 1
+    "environment": 2,
+    "settlement": 2,
+    "land": 1
   },
   "mapDifficultyMix": {
-    "standard": 4,
-    "intro": 1
+    "standard": 5
   },
-  "generatedAt": "2026-06-27T15:17:17.652Z",
+  "generatedAt": "2026-06-27T17:16:22.628235+00:00",
   "generatorVersion": "daily-manifest-v2",
   "varietyNotes": [
     "Selected with category, difficulty, repeat-cooldown, and same-day correlation safeguards."

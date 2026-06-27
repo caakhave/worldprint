@@ -202,7 +202,7 @@
     "valuesReference": "https://api.worldbank.org/v2/country/all/indicator/SL.SRV.EMPL.ZS?format=json&per_page=20000&page=1&date=2015%3A2025",
     "license": "Creative Commons Attribution 4.0 International unless specifically labeled otherwise by World Bank metadata",
     "licenseReference": "https://www.worldbank.org/en/about/legal/terms-of-use-for-datasets",
-    "retrievedAt": "2026-06-22T18:06:01.377236+00:00",
+    "retrievedAt": "2026-06-27T17:14:12.487212+00:00",
     "checksum": "dfcbfdf1d0527c19a8dc0840f1ffc00f61f92fa368ef1ad1ed7b4762782b014a",
     "sourceOrganization": "ILO Modelled Estimates database (ILOEST), International Labour Organization (ILO), uri: https://ilostat.ilo.org/data/bulk/, publisher: ILOSTAT, type: external database, date accessed: January 17, 2026"
   },
@@ -228,16 +228,16 @@
     ],
     "commonConfusions": [
       {
+        "confusedWithIndicatorCode": "SL.SRV.EMPL.MA.ZS",
+        "reason": "Male services employment can tempt players because it shares a strong country ranking with this map, but its unit and definition point to a different story."
+      },
+      {
+        "confusedWithIndicatorCode": "SL.SRV.EMPL.FE.ZS",
+        "reason": "Female services employment can tempt players because it shares a strong country ranking with this map, but its unit and definition point to a different story."
+      },
+      {
         "confusedWithIndicatorCode": "SL.AGR.EMPL.ZS",
         "reason": "Employment in agriculture can tempt players because it shares a strong country ranking with this map, but its unit and definition point to a different story."
-      },
-      {
-        "confusedWithIndicatorCode": "NV.AGR.EMPL.KD",
-        "reason": "Agriculture value per worker can tempt players because it shares a strong country ranking with this map, but its unit and definition point to a different story."
-      },
-      {
-        "confusedWithIndicatorCode": "NY.GNP.PCAP.CD",
-        "reason": "GNI per capita can tempt players because it shares a strong country ranking with this map, but its unit and definition point to a different story."
       }
     ],
     "difficultyReason": "Standard difficulty: the map has readable regional structure, but the best answer still depends on checking the unit and country anchors.",

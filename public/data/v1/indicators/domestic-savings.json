@@ -178,7 +178,7 @@
     "valuesReference": "https://api.worldbank.org/v2/country/all/indicator/NY.GDS.TOTL.ZS?format=json&per_page=20000&page=1&date=2015%3A2025",
     "license": "Creative Commons Attribution 4.0 International unless specifically labeled otherwise by World Bank metadata",
     "licenseReference": "https://www.worldbank.org/en/about/legal/terms-of-use-for-datasets",
-    "retrievedAt": "2026-06-22T18:07:07.704606+00:00",
+    "retrievedAt": "2026-06-27T17:15:07.645492+00:00",
     "checksum": "68377a0715f98dc9aa657fa29bb7cb85b0e1b012dc69e9e4eb3ec4d2377159d6",
     "sourceOrganization": "Country official statistics, National Statistical Organizations and/or Central Banks;\nNational Accounts data files, Organisation for Economic Co-operation and Development (OECD);\nStaff estimates, World Bank (WB)"
   },

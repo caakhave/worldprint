@@ -4,31 +4,30 @@
   "date": "2026-07-15",
   "contentVersion": "2026.06.22-exp2-qa1",
   "roundIds": [
-    "worldprint-older-adults-share",
-    "worldprint-employment-agriculture",
-    "worldprint-gdp-per-capita",
-    "worldprint-renewable-electricity",
-    "worldprint-tourism-arrivals"
+    "worldprint-health-expenditure",
+    "worldprint-food-insecurity-moderate-severe",
+    "worldprint-account-ownership",
+    "worldprint-migrant-stock",
+    "worldprint-out-of-school-primary"
   ],
   "indicatorIds": [
-    "older-adults-share",
-    "employment-agriculture",
-    "gdp-per-capita",
-    "renewable-electricity",
-    "tourism-arrivals"
+    "health-expenditure",
+    "food-insecurity-moderate-severe",
+    "account-ownership",
+    "migrant-stock",
+    "out-of-school-primary"
   ],
   "categoryMix": {
-    "demography": 1,
-    "labor": 1,
+    "health": 1,
+    "agriculture": 1,
     "development": 1,
-    "energy": 1,
-    "economy": 1
+    "demography": 1,
+    "education": 1
   },
   "mapDifficultyMix": {
-    "intro": 2,
-    "standard": 3
+    "standard": 5
   },
-  "generatedAt": "2026-06-27T15:17:17.652Z",
+  "generatedAt": "2026-06-27T17:16:22.620261+00:00",
   "generatorVersion": "daily-manifest-v2",
   "varietyNotes": [
     "Selected with category, difficulty, repeat-cooldown, and same-day correlation safeguards."

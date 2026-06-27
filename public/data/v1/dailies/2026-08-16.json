@@ -4,29 +4,31 @@
   "date": "2026-08-16",
   "contentVersion": "2026.06.22-exp2-qa1",
   "roundIds": [
-    "worldprint-protected-land",
     "worldprint-life-expectancy",
-    "worldprint-undernourishment",
-    "worldprint-precipitation-depth",
-    "worldprint-fertility-rate"
+    "worldprint-energy-use",
+    "worldprint-government-education-spending-share",
+    "worldprint-trade-share",
+    "worldprint-secondary-enrollment"
   ],
   "indicatorIds": [
-    "protected-land",
     "life-expectancy",
-    "undernourishment",
-    "precipitation-depth",
-    "fertility-rate"
+    "energy-use",
+    "government-education-spending-share",
+    "trade-share",
+    "secondary-enrollment"
   ],
   "categoryMix": {
-    "environment": 2,
-    "health": 2,
-    "demography": 1
+    "health": 1,
+    "energy": 1,
+    "education": 2,
+    "economy": 1
   },
   "mapDifficultyMix": {
-    "standard": 4,
-    "intro": 1
+    "intro": 1,
+    "standard": 3,
+    "expert": 1
   },
-  "generatedAt": "2026-06-27T15:17:17.652Z",
+  "generatedAt": "2026-06-27T17:16:22.624865+00:00",
   "generatorVersion": "daily-manifest-v2",
   "varietyNotes": [
     "Selected with category, difficulty, repeat-cooldown, and same-day correlation safeguards."

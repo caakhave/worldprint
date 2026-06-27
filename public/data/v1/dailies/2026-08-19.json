@@ -4,30 +4,30 @@
   "date": "2026-08-19",
   "contentVersion": "2026.06.22-exp2-qa1",
   "roundIds": [
-    "worldprint-tourism-arrivals",
     "worldprint-total-protected-areas",
-    "worldprint-tuberculosis-incidence",
-    "worldprint-population-density",
-    "worldprint-basic-sanitation"
+    "worldprint-rural-population-growth",
+    "worldprint-under-five-mortality",
+    "worldprint-physicians",
+    "worldprint-communications-service-exports"
   ],
   "indicatorIds": [
-    "tourism-arrivals",
     "total-protected-areas",
-    "tuberculosis-incidence",
-    "population-density",
-    "basic-sanitation"
+    "rural-population-growth",
+    "under-five-mortality",
+    "physicians",
+    "communications-service-exports"
   ],
   "categoryMix": {
-    "economy": 1,
     "environment": 1,
+    "settlement": 1,
     "health": 2,
-    "settlement": 1
+    "connectivity": 1
   },
   "mapDifficultyMix": {
     "standard": 4,
     "expert": 1
   },
-  "generatedAt": "2026-06-27T15:17:17.652Z",
+  "generatedAt": "2026-06-27T17:16:22.625296+00:00",
   "generatorVersion": "daily-manifest-v2",
   "varietyNotes": [
     "Selected with category, difficulty, repeat-cooldown, and same-day correlation safeguards."

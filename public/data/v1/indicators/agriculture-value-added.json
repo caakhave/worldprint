@@ -188,7 +188,7 @@
     "valuesReference": "https://api.worldbank.org/v2/country/all/indicator/NV.AGR.TOTL.ZS?format=json&per_page=20000&page=1&date=2015%3A2025",
     "license": "Creative Commons Attribution 4.0 International unless specifically labeled otherwise by World Bank metadata",
     "licenseReference": "https://www.worldbank.org/en/about/legal/terms-of-use-for-datasets",
-    "retrievedAt": "2026-06-22T18:05:55.663924+00:00",
+    "retrievedAt": "2026-06-27T17:14:08.505312+00:00",
     "checksum": "72c672ac677d652660e6b0cd31b880a24b05efba0cb892aade9e1f1d830c3083",
     "sourceOrganization": "Country official statistics, National Statistical Organizations and/or Central Banks;\nNational Accounts data files, Organisation for Economic Co-operation and Development (OECD);\nStaff estimates, World Bank (WB)"
   },

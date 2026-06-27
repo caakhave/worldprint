@@ -167,7 +167,7 @@
     "valuesReference": "https://api.worldbank.org/v2/country/all/indicator/ST.INT.XPND.MP.ZS?format=json&per_page=20000&page=1&date=2015%3A2025",
     "license": "Creative Commons Attribution 4.0 International unless specifically labeled otherwise by World Bank metadata",
     "licenseReference": "https://www.worldbank.org/en/about/legal/terms-of-use-for-datasets",
-    "retrievedAt": "2026-06-22T18:07:25.690801+00:00",
+    "retrievedAt": "2026-06-27T17:15:22.269533+00:00",
     "checksum": "25accd1ed0c663a413a378f49af27e96281cda6e7bc8b9022ebe6990f704b08d",
     "sourceOrganization": "Yearbook of Tourism Statistics, Compendium of Tourism Statistics and data files, UN Tourism;\nIMF imports estimates, International Monetary Fund (IMF);\nWorld Bank imports estimates, World Bank (WB)"
   },

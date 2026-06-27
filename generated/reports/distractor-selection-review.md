@@ -1,6 +1,6 @@
 # WORLDPRINT Distractor Selection Review
 
-Generated: 2026-06-22T18:07:37.477416+00:00
+Generated: 2026-06-27T17:16:22.639976+00:00
 Content version: 2026.06.22-exp2-qa1
 
 This report records which distractors were selected for each tier and which candidates were rejected by editorial fairness gates.
@@ -9,7 +9,7 @@ This report records which distractors were selected for each tier and which cand
 
 - Round: `worldprint-account-ownership`
 - Final fairness warning: review
-- Selected distractors: manufacturing-share, measles-immunization
+- Selected distractors: manufacturing-share, transport-service-exports
 
 | Rejected candidate | Reason | Correlation warning |
 | --- | --- | --- |
@@ -17,7 +17,6 @@ This report records which distractors were selected for each tier and which cand
 | Gross savings (`gross-savings-gdp`) | high_ambiguity_distractor | ok |
 | Imports (`imports-share`) | high_ambiguity_distractor | ok |
 | Agricultural raw material exports (`agricultural-raw-material-exports`) | high_ambiguity_distractor | ok |
-| Exports (`exports-share`) | high_ambiguity_distractor | ok |
 
 ## Account ownership - analyst
 
@@ -46,12 +45,11 @@ This report records which distractors were selected for each tier and which cand
 
 - Round: `worldprint-adolescent-fertility`
 - Final fairness warning: review
-- Selected distractors: low-elevation-coastal-population, out-of-pocket-health
+- Selected distractors: rural-low-elevation-population, primary-pupils-female-share
 
 | Rejected candidate | Reason | Correlation warning |
 | --- | --- | --- |
-| Low-elevation land (`low-elevation-land-share`) | high_ambiguity_distractor | ok |
-| Private health spending share (`private-health-spending-share`) | high_ambiguity_distractor | ok |
+| Rural low-elevation land (`rural-low-elevation-land`) | high_ambiguity_distractor | ok |
 
 ## Adolescent fertility - analyst
 
@@ -141,7 +139,7 @@ This report records which distractors were selected for each tier and which cand
 
 - Round: `worldprint-age-dependency`
 - Final fairness warning: ok
-- Selected distractors: health-expenditure, population-density
+- Selected distractors: health-expenditure, primary-pupils-female-share
 
 | Rejected candidate | Reason | Correlation warning |
 | --- | --- | --- |
@@ -181,18 +179,18 @@ This report records which distractors were selected for each tier and which cand
 ## Agricultural land - analyst
 
 - Round: `worldprint-agricultural-land`
-- Final fairness warning: ok
-- Selected distractors: arable-land, permanent-cropland, arable-land-per-person
+- Final fairness warning: review
+- Selected distractors: arable-land, permanent-cropland, land-under-cereal
 
 | Rejected candidate | Reason | Correlation warning |
 | --- | --- | --- |
-| None | n/a | n/a |
+| Arable land area (`arable-land-area`) | high_ambiguity_distractor | review |
 
 ## Agricultural land - cartographer
 
 - Round: `worldprint-agricultural-land`
 - Final fairness warning: ok
-- Selected distractors: arable-land, permanent-cropland, arable-land-per-person, forest-area, freshwater-per-capita
+- Selected distractors: arable-land, arable-land-area, land-under-cereal, permanent-cropland, arable-land-per-person
 
 | Rejected candidate | Reason | Correlation warning |
 | --- | --- | --- |
@@ -201,12 +199,12 @@ This report records which distractors were selected for each tier and which cand
 ## Agricultural raw material exports - explorer
 
 - Round: `worldprint-agricultural-raw-material-exports`
-- Final fairness warning: ok
+- Final fairness warning: review
 - Selected distractors: youth-labor-force, women-business-law
 
 | Rejected candidate | Reason | Correlation warning |
 | --- | --- | --- |
-| None | n/a | n/a |
+| Male employment-to-population ratio (`male-employment-population-ratio`) | high_ambiguity_distractor | ok |
 
 ## Agricultural raw material exports - analyst
 
@@ -258,6 +256,73 @@ This report records which distractors were selected for each tier and which cand
 | --- | --- | --- |
 | None | n/a | n/a |
 
+## Agriculture methane emissions - explorer
+
+- Round: `worldprint-agriculture-methane-emissions`
+- Final fairness warning: review
+- Selected distractors: military-spending, female-labor-force
+
+| Rejected candidate | Reason | Correlation warning |
+| --- | --- | --- |
+| Foreign direct investment outflows (`fdi-outflows`) | high_ambiguity_distractor | ok |
+| Female employment-to-population ratio (`female-employment-population-ratio`) | high_ambiguity_distractor | ok |
+
+## Agriculture methane emissions - analyst
+
+- Round: `worldprint-agriculture-methane-emissions`
+- Final fairness warning: review
+- Selected distractors: cereal-production, food-imports-share, land-under-cereal
+
+| Rejected candidate | Reason | Correlation warning |
+| --- | --- | --- |
+| Arable land area (`arable-land-area`) | high_ambiguity_distractor | ok |
+| Agriculture nitrous oxide emissions (`agriculture-nitrous-oxide-emissions`) | high_correlation_or_visual_similarity | high |
+
+## Agriculture methane emissions - cartographer
+
+- Round: `worldprint-agriculture-methane-emissions`
+- Final fairness warning: review
+- Selected distractors: cereal-production, land-under-cereal, arable-land-area, food-imports-share, food-production-index
+
+| Rejected candidate | Reason | Correlation warning |
+| --- | --- | --- |
+| Agriculture nitrous oxide emissions (`agriculture-nitrous-oxide-emissions`) | high_correlation_or_visual_similarity | high |
+
+## Agriculture nitrous oxide emissions - explorer
+
+- Round: `worldprint-agriculture-nitrous-oxide-emissions`
+- Final fairness warning: review
+- Selected distractors: female-labor-force, military-spending
+
+| Rejected candidate | Reason | Correlation warning |
+| --- | --- | --- |
+| Foreign direct investment outflows (`fdi-outflows`) | high_ambiguity_distractor | ok |
+| Contributing family workers (`contributing-family-workers`) | high_ambiguity_distractor | ok |
+
+## Agriculture nitrous oxide emissions - analyst
+
+- Round: `worldprint-agriculture-nitrous-oxide-emissions`
+- Final fairness warning: review
+- Selected distractors: food-imports-share, severe-food-insecurity, cereal-yield
+
+| Rejected candidate | Reason | Correlation warning |
+| --- | --- | --- |
+| Cereal production (`cereal-production`) | high_correlation_or_visual_similarity | high |
+| Agriculture methane emissions (`agriculture-methane-emissions`) | high_correlation_or_visual_similarity | high |
+| Arable land area (`arable-land-area`) | high_ambiguity_distractor | ok |
+
+## Agriculture nitrous oxide emissions - cartographer
+
+- Round: `worldprint-agriculture-nitrous-oxide-emissions`
+- Final fairness warning: review
+- Selected distractors: arable-land-area, food-imports-share, cereal-yield, food-production-index, severe-food-insecurity
+
+| Rejected candidate | Reason | Correlation warning |
+| --- | --- | --- |
+| Cereal production (`cereal-production`) | high_correlation_or_visual_similarity | high |
+| Agriculture methane emissions (`agriculture-methane-emissions`) | high_correlation_or_visual_similarity | high |
+| Land under cereal production (`land-under-cereal`) | high_correlation_or_visual_similarity | high |
+
 ## Agriculture value added - explorer
 
 - Round: `worldprint-agriculture-value-added`
@@ -307,7 +372,7 @@ This report records which distractors were selected for each tier and which cand
 
 - Round: `worldprint-agriculture-value-per-worker`
 - Final fairness warning: ok
-- Selected distractors: cereal-yield, agriculture-value-added, remittances
+- Selected distractors: food-insecurity-moderate-severe, severe-food-insecurity, cereal-yield
 
 | Rejected candidate | Reason | Correlation warning |
 | --- | --- | --- |
@@ -317,17 +382,108 @@ This report records which distractors were selected for each tier and which cand
 
 - Round: `worldprint-agriculture-value-per-worker`
 - Final fairness warning: review
-- Selected distractors: cereal-yield, wage-salaried-workers, employment-services, agriculture-value-added, food-production-index
+- Selected distractors: food-insecurity-moderate-severe, severe-food-insecurity, cereal-yield, female-wage-salaried-workers, female-services-employment
 
 | Rejected candidate | Reason | Correlation warning |
 | --- | --- | --- |
-| Employment in agriculture (`employment-agriculture`) | high_correlation_or_visual_similarity | high |
+| Female agricultural employment (`female-agricultural-employment`) | high_correlation_or_visual_similarity | high |
+
+## Air carrier departures - explorer
+
+- Round: `worldprint-air-departures`
+- Final fairness warning: ok
+- Selected distractors: fossil-fuel-energy-share, secondary-pupils-female-share
+
+| Rejected candidate | Reason | Correlation warning |
+| --- | --- | --- |
+| None | n/a | n/a |
+
+## Air carrier departures - analyst
+
+- Round: `worldprint-air-departures`
+- Final fairness warning: ok
+- Selected distractors: container-port-traffic, air-freight, secure-internet-servers
+
+| Rejected candidate | Reason | Correlation warning |
+| --- | --- | --- |
+| None | n/a | n/a |
+
+## Air carrier departures - cartographer
+
+- Round: `worldprint-air-departures`
+- Final fairness warning: review
+- Selected distractors: air-freight, container-port-traffic, secure-internet-servers, fixed-broadband, internet-users
+
+| Rejected candidate | Reason | Correlation warning |
+| --- | --- | --- |
+| Air passengers carried (`air-passengers`) | high_correlation_or_visual_similarity | high |
+
+## Air freight - explorer
+
+- Round: `worldprint-air-freight`
+- Final fairness warning: ok
+- Selected distractors: fossil-fuel-energy-share, secondary-pupils-female-share
+
+| Rejected candidate | Reason | Correlation warning |
+| --- | --- | --- |
+| None | n/a | n/a |
+
+## Air freight - analyst
+
+- Round: `worldprint-air-freight`
+- Final fairness warning: review
+- Selected distractors: container-port-traffic, transport-service-imports, fixed-broadband
+
+| Rejected candidate | Reason | Correlation warning |
+| --- | --- | --- |
+| Air carrier departures (`air-departures`) | high_ambiguity_distractor | review |
+| Air passengers carried (`air-passengers`) | high_ambiguity_distractor | review |
+
+## Air freight - cartographer
+
+- Round: `worldprint-air-freight`
+- Final fairness warning: ok
+- Selected distractors: air-passengers, air-departures, container-port-traffic, internet-users, fixed-broadband
+
+| Rejected candidate | Reason | Correlation warning |
+| --- | --- | --- |
+| None | n/a | n/a |
+
+## Air passengers carried - explorer
+
+- Round: `worldprint-air-passengers`
+- Final fairness warning: ok
+- Selected distractors: fossil-fuel-energy-share, secondary-pupils-female-share
+
+| Rejected candidate | Reason | Correlation warning |
+| --- | --- | --- |
+| None | n/a | n/a |
+
+## Air passengers carried - analyst
+
+- Round: `worldprint-air-passengers`
+- Final fairness warning: ok
+- Selected distractors: container-port-traffic, air-freight, secure-internet-servers
+
+| Rejected candidate | Reason | Correlation warning |
+| --- | --- | --- |
+| None | n/a | n/a |
+
+## Air passengers carried - cartographer
+
+- Round: `worldprint-air-passengers`
+- Final fairness warning: review
+- Selected distractors: air-freight, container-port-traffic, secure-internet-servers, fixed-broadband, internet-users
+
+| Rejected candidate | Reason | Correlation warning |
+| --- | --- | --- |
+| Air carrier departures (`air-departures`) | high_correlation_or_visual_similarity | high |
 
 ## Arable land - explorer
 
 - Round: `worldprint-arable-land`
 - Final fairness warning: ok
-- Selected distractors: domestic-water-withdrawals, food-production-index
+- Selected distractors: urban-basic-drinking-water, domestic-water-withdrawals
 
 | Rejected candidate | Reason | Correlation warning |
 | --- | --- | --- |
@@ -337,7 +493,7 @@ This report records which distractors were selected for each tier and which cand
 
 - Round: `worldprint-arable-land`
 - Final fairness warning: ok
-- Selected distractors: agricultural-land, permanent-cropland, arable-land-per-person
+- Selected distractors: agricultural-land, permanent-cropland, land-under-cereal
 
 | Rejected candidate | Reason | Correlation warning |
 | --- | --- | --- |
@@ -347,37 +503,69 @@ This report records which distractors were selected for each tier and which cand
 
 - Round: `worldprint-arable-land`
 - Final fairness warning: ok
-- Selected distractors: agricultural-land, permanent-cropland, arable-land-per-person, population-density, freshwater-per-capita
+- Selected distractors: agricultural-land, permanent-cropland, land-under-cereal, arable-land-area, arable-land-per-person
 
 | Rejected candidate | Reason | Correlation warning |
 | --- | --- | --- |
 | None | n/a | n/a |
+
+## Arable land area - explorer
+
+- Round: `worldprint-arable-land-area`
+- Final fairness warning: review
+- Selected distractors: cereal-yield, urban-open-defecation
+
+| Rejected candidate | Reason | Correlation warning |
+| --- | --- | --- |
+| Rural open defecation (`rural-open-defecation`) | high_ambiguity_distractor | ok |
+
+## Arable land area - analyst
+
+- Round: `worldprint-arable-land-area`
+- Final fairness warning: review
+- Selected distractors: arable-land-per-person, arable-land, agricultural-land
+
+| Rejected candidate | Reason | Correlation warning |
+| --- | --- | --- |
+| Agriculture methane emissions (`agriculture-methane-emissions`) | high_ambiguity_distractor | ok |
+| Agriculture nitrous oxide emissions (`agriculture-nitrous-oxide-emissions`) | high_ambiguity_distractor | ok |
+
+## Arable land area - cartographer
+
+- Round: `worldprint-arable-land-area`
+- Final fairness warning: review
+- Selected distractors: arable-land-per-person, arable-land, agriculture-nitrous-oxide-emissions, agriculture-methane-emissions, agricultural-land
+
+| Rejected candidate | Reason | Correlation warning |
+| --- | --- | --- |
+| Land under cereal production (`land-under-cereal`) | high_correlation_or_visual_similarity | high |
+| Cereal production (`cereal-production`) | high_correlation_or_visual_similarity | high |
 
 ## Arable land per person - explorer
 
 - Round: `worldprint-arable-land-per-person`
-- Final fairness warning: ok
-- Selected distractors: water-productivity, urban-slum-population
+- Final fairness warning: review
+- Selected distractors: urban-open-defecation, water-productivity
 
 | Rejected candidate | Reason | Correlation warning |
 | --- | --- | --- |
-| None | n/a | n/a |
+| Rural open defecation (`rural-open-defecation`) | high_ambiguity_distractor | ok |
 
 ## Arable land per person - analyst
 
 - Round: `worldprint-arable-land-per-person`
-- Final fairness warning: ok
-- Selected distractors: arable-land, agricultural-land, permanent-cropland
+- Final fairness warning: review
+- Selected distractors: land-under-cereal, arable-land, agricultural-land
 
 | Rejected candidate | Reason | Correlation warning |
 | --- | --- | --- |
-| None | n/a | n/a |
+| Arable land area (`arable-land-area`) | high_ambiguity_distractor | review |
 
 ## Arable land per person - cartographer
 
 - Round: `worldprint-arable-land-per-person`
 - Final fairness warning: ok
-- Selected distractors: arable-land, agricultural-land, permanent-cropland, low-elevation-coastal-population, population-density
+- Selected distractors: arable-land-area, land-under-cereal, arable-land, agricultural-land, permanent-cropland
 
 | Rejected candidate | Reason | Correlation warning |
 | --- | --- | --- |
@@ -387,7 +575,7 @@ This report records which distractors were selected for each tier and which cand
 
 - Round: `worldprint-bank-branches`
 - Final fairness warning: ok
-- Selected distractors: fossil-fuel-energy-share, education-spending
+- Selected distractors: fossil-fuel-energy-share, secondary-pupils-female-share
 
 | Rejected candidate | Reason | Correlation warning |
 | --- | --- | --- |
@@ -407,7 +595,7 @@ This report records which distractors were selected for each tier and which cand
 
 - Round: `worldprint-bank-branches`
 - Final fairness warning: ok
-- Selected distractors: secure-internet-servers, fixed-broadband, fixed-telephone-subscriptions, internet-users, electricity-access
+- Selected distractors: secure-internet-servers, fixed-broadband, fixed-telephone-subscriptions, internet-users, transport-service-imports
 
 | Rejected candidate | Reason | Correlation warning |
 | --- | --- | --- |
@@ -446,12 +634,12 @@ This report records which distractors were selected for each tier and which cand
 ## Birth rate - explorer
 
 - Round: `worldprint-birth-rate`
-- Final fairness warning: review
-- Selected distractors: population-density, health-expenditure
+- Final fairness warning: ok
+- Selected distractors: primary-pupils-female-share, population-density
 
 | Rejected candidate | Reason | Correlation warning |
 | --- | --- | --- |
-| Low-elevation land (`low-elevation-land-share`) | high_ambiguity_distractor | ok |
+| None | n/a | n/a |
 
 ## Birth rate - analyst
 
@@ -504,21 +692,58 @@ This report records which distractors were selected for each tier and which cand
 | --- | --- | --- |
 | None | n/a | n/a |
 
-## Cereal yield - explorer
+## Cereal production - explorer
 
-- Round: `worldprint-cereal-yield`
-- Final fairness warning: ok
-- Selected distractors: fdi-inflows, youth-labor-force
+- Round: `worldprint-cereal-production`
+- Final fairness warning: review
+- Selected distractors: female-labor-force, current-account
 
 | Rejected candidate | Reason | Correlation warning |
 | --- | --- | --- |
-| None | n/a | n/a |
+| Foreign direct investment outflows (`fdi-outflows`) | high_ambiguity_distractor | ok |
+| Female vulnerable employment (`female-vulnerable-employment`) | high_ambiguity_distractor | ok |
+| Female self-employed (`female-self-employed`) | high_ambiguity_distractor | ok |
+| Female wage workers (`female-wage-salaried-workers`) | high_ambiguity_distractor | ok |
+
+## Cereal production - analyst
+
+- Round: `worldprint-cereal-production`
+- Final fairness warning: review
+- Selected distractors: food-imports-share, cereal-yield, severe-food-insecurity
+
+| Rejected candidate | Reason | Correlation warning |
+| --- | --- | --- |
+| Agriculture methane emissions (`agriculture-methane-emissions`) | high_ambiguity_distractor | review |
+| Agriculture nitrous oxide emissions (`agriculture-nitrous-oxide-emissions`) | high_correlation_or_visual_similarity | high |
+
+## Cereal production - cartographer
+
+- Round: `worldprint-cereal-production`
+- Final fairness warning: review
+- Selected distractors: agriculture-methane-emissions, food-imports-share, cereal-yield, severe-food-insecurity, food-insecurity-moderate-severe
+
+| Rejected candidate | Reason | Correlation warning |
+| --- | --- | --- |
+| Agriculture nitrous oxide emissions (`agriculture-nitrous-oxide-emissions`) | high_correlation_or_visual_similarity | high |
+| Arable land area (`arable-land-area`) | high_correlation_or_visual_similarity | high |
+| Land under cereal production (`land-under-cereal`) | high_correlation_or_visual_similarity | high |
+
+## Cereal yield - explorer
+
+- Round: `worldprint-cereal-yield`
+- Final fairness warning: review
+- Selected distractors: land-under-cereal, fdi-inflows
+
+| Rejected candidate | Reason | Correlation warning |
+| --- | --- | --- |
+| Female employment-to-population ratio (`female-employment-population-ratio`) | high_ambiguity_distractor | ok |
+| Arable land area (`arable-land-area`) | high_ambiguity_distractor | ok |
 
 ## Cereal yield - analyst
 
 - Round: `worldprint-cereal-yield`
 - Final fairness warning: review
-- Selected distractors: employment-agriculture, agriculture-value-added, food-production-index
+- Selected distractors: severe-food-insecurity, food-insecurity-moderate-severe, food-imports-share
 
 | Rejected candidate | Reason | Correlation warning |
 | --- | --- | --- |
@@ -528,7 +753,7 @@ This report records which distractors were selected for each tier and which cand
 
 - Round: `worldprint-cereal-yield`
 - Final fairness warning: ok
-- Selected distractors: agriculture-value-per-worker, food-production-index, employment-agriculture, wage-salaried-workers, agriculture-value-added
+- Selected distractors: agriculture-value-per-worker, food-insecurity-moderate-severe, severe-food-insecurity, food-imports-share, cereal-production
 
 | Rejected candidate | Reason | Correlation warning |
 | --- | --- | --- |
@@ -537,12 +762,12 @@ This report records which distractors were selected for each tier and which cand
 ## Population ages 0-14 - explorer
 
 - Round: `worldprint-children-share`
-- Final fairness warning: review
-- Selected distractors: population-density, health-expenditure
+- Final fairness warning: ok
+- Selected distractors: primary-pupils-female-share, population-density
 
 | Rejected candidate | Reason | Correlation warning |
 | --- | --- | --- |
-| Low-elevation land (`low-elevation-land-share`) | high_ambiguity_distractor | ok |
+| None | n/a | n/a |
 
 ## Population ages 0-14 - analyst
 
@@ -569,7 +794,7 @@ This report records which distractors were selected for each tier and which cand
 
 - Round: `worldprint-clean-fuels-access`
 - Final fairness warning: ok
-- Selected distractors: freshwater-per-capita, women-parliament
+- Selected distractors: freshwater-per-capita, communications-service-exports
 
 | Rejected candidate | Reason | Correlation warning |
 | --- | --- | --- |
@@ -687,15 +912,174 @@ This report records which distractors were selected for each tier and which cand
 | --- | --- | --- |
 | None | n/a | n/a |
 
-## Current account balance - explorer
+## Communications service exports - explorer
 
-- Round: `worldprint-current-account`
+- Round: `worldprint-communications-service-exports`
 - Final fairness warning: ok
-- Selected distractors: youth-labor-force, women-business-law
+- Selected distractors: fossil-fuel-energy-share, compulsory-education-duration
 
 | Rejected candidate | Reason | Correlation warning |
 | --- | --- | --- |
 | None | n/a | n/a |
+
+## Communications service exports - analyst
+
+- Round: `worldprint-communications-service-exports`
+- Final fairness warning: ok
+- Selected distractors: ict-service-exports, transport-service-exports, communications-service-imports
+
+| Rejected candidate | Reason | Correlation warning |
+| --- | --- | --- |
+| None | n/a | n/a |
+
+## Communications service exports - cartographer
+
+- Round: `worldprint-communications-service-exports`
+- Final fairness warning: ok
+- Selected distractors: ict-service-exports, transport-service-exports, communications-service-imports, transport-service-imports, secure-internet-servers
+
+| Rejected candidate | Reason | Correlation warning |
+| --- | --- | --- |
+| None | n/a | n/a |
+
+## Communications service imports - explorer
+
+- Round: `worldprint-communications-service-imports`
+- Final fairness warning: ok
+- Selected distractors: fossil-fuel-energy-share, secondary-pupils-female-share
+
+| Rejected candidate | Reason | Correlation warning |
+| --- | --- | --- |
+| None | n/a | n/a |
+
+## Communications service imports - analyst
+
+- Round: `worldprint-communications-service-imports`
+- Final fairness warning: ok
+- Selected distractors: transport-service-imports, secure-internet-servers, fixed-broadband
+
+| Rejected candidate | Reason | Correlation warning |
+| --- | --- | --- |
+| None | n/a | n/a |
+
+## Communications service imports - cartographer
+
+- Round: `worldprint-communications-service-imports`
+- Final fairness warning: ok
+- Selected distractors: transport-service-imports, secure-internet-servers, fixed-broadband, communications-service-exports, fixed-telephone-subscriptions
+
+| Rejected candidate | Reason | Correlation warning |
+| --- | --- | --- |
+| None | n/a | n/a |
+
+## Compulsory education duration - explorer
+
+- Round: `worldprint-compulsory-education-duration`
+- Final fairness warning: ok
+- Selected distractors: communications-service-exports, death-rate
+
+| Rejected candidate | Reason | Correlation warning |
+| --- | --- | --- |
+| None | n/a | n/a |
+
+## Compulsory education duration - analyst
+
+- Round: `worldprint-compulsory-education-duration`
+- Final fairness warning: ok
+- Selected distractors: tertiary-enrollment, secondary-enrollment, education-spending
+
+| Rejected candidate | Reason | Correlation warning |
+| --- | --- | --- |
+| None | n/a | n/a |
+
+## Compulsory education duration - cartographer
+
+- Round: `worldprint-compulsory-education-duration`
+- Final fairness warning: ok
+- Selected distractors: tertiary-enrollment, secondary-enrollment, primary-female-teachers, education-spending, primary-gross-intake
+
+| Rejected candidate | Reason | Correlation warning |
+| --- | --- | --- |
+| None | n/a | n/a |
+
+## Container port traffic - explorer
+
+- Round: `worldprint-container-port-traffic`
+- Final fairness warning: ok
+- Selected distractors: fossil-fuel-energy-share, primary-gross-intake
+
+| Rejected candidate | Reason | Correlation warning |
+| --- | --- | --- |
+| None | n/a | n/a |
+
+## Container port traffic - analyst
+
+- Round: `worldprint-container-port-traffic`
+- Final fairness warning: review
+- Selected distractors: air-freight, secure-internet-servers, fixed-broadband
+
+| Rejected candidate | Reason | Correlation warning |
+| --- | --- | --- |
+| Air carrier departures (`air-departures`) | high_ambiguity_distractor | review |
+| Air passengers carried (`air-passengers`) | high_ambiguity_distractor | review |
+
+## Container port traffic - cartographer
+
+- Round: `worldprint-container-port-traffic`
+- Final fairness warning: ok
+- Selected distractors: air-passengers, air-departures, air-freight, secure-internet-servers, fixed-broadband
+
+| Rejected candidate | Reason | Correlation warning |
+| --- | --- | --- |
+| None | n/a | n/a |
+
+## Contributing family workers - explorer
+
+- Round: `worldprint-contributing-family-workers`
+- Final fairness warning: review
+- Selected distractors: fdi-inflows, cereal-production
+
+| Rejected candidate | Reason | Correlation warning |
+| --- | --- | --- |
+| Agriculture nitrous oxide emissions (`agriculture-nitrous-oxide-emissions`) | high_ambiguity_distractor | ok |
+
+## Contributing family workers - analyst
+
+- Round: `worldprint-contributing-family-workers`
+- Final fairness warning: review
+- Selected distractors: male-industry-employment, employment-agriculture, employment-industry
+
+| Rejected candidate | Reason | Correlation warning |
+| --- | --- | --- |
+| Female services employment (`female-services-employment`) | high_ambiguity_distractor | review |
+| Female wage workers (`female-wage-salaried-workers`) | high_ambiguity_distractor | review |
+| Female agricultural employment (`female-agricultural-employment`) | high_ambiguity_distractor | review |
+| Employment in services (`employment-services`) | high_ambiguity_distractor | review |
+| Wage and salaried workers (`wage-salaried-workers`) | high_ambiguity_distractor | review |
+| Female self-employed (`female-self-employed`) | high_ambiguity_distractor | review |
+| Female vulnerable employment (`female-vulnerable-employment`) | high_ambiguity_distractor | review |
+| Agriculture value per worker (`agriculture-value-per-worker`) | high_ambiguity_distractor | ok |
+
+## Contributing family workers - cartographer
+
+- Round: `worldprint-contributing-family-workers`
+- Final fairness warning: ok
+- Selected distractors: female-vulnerable-employment, female-wage-salaried-workers, female-self-employed, female-agricultural-employment, wage-salaried-workers
+
+| Rejected candidate | Reason | Correlation warning |
+| --- | --- | --- |
+| None | n/a | n/a |
+
+## Current account balance - explorer
+
+- Round: `worldprint-current-account`
+- Final fairness warning: review
+- Selected distractors: youth-labor-force, women-business-law
+
+| Rejected candidate | Reason | Correlation warning |
+| --- | --- | --- |
+| Female employment-to-population ratio (`female-employment-population-ratio`) | high_ambiguity_distractor | ok |
+| Male employment-to-population ratio (`male-employment-population-ratio`) | high_ambiguity_distractor | ok |
 
 ## Current account balance - analyst
 
@@ -722,11 +1106,12 @@ This report records which distractors were selected for each tier and which cand
 
 - Round: `worldprint-death-rate`
 - Final fairness warning: review
-- Selected distractors: education-spending, low-elevation-coastal-population
+- Selected distractors: rural-low-elevation-population, education-spending
 
 | Rejected candidate | Reason | Correlation warning |
 | --- | --- | --- |
 | Low-elevation land (`low-elevation-land-share`) | high_ambiguity_distractor | ok |
+| Rural low-elevation land (`rural-low-elevation-land`) | high_ambiguity_distractor | ok |
 
 ## Death rate - analyst
 
@@ -751,12 +1136,12 @@ This report records which distractors were selected for each tier and which cand
 ## Domestic savings - explorer
 
 - Round: `worldprint-domestic-savings`
-- Final fairness warning: ok
+- Final fairness warning: review
 - Selected distractors: youth-labor-force, women-business-law
 
 | Rejected candidate | Reason | Correlation warning |
 | --- | --- | --- |
-| None | n/a | n/a |
+| Male employment-to-population ratio (`male-employment-population-ratio`) | high_ambiguity_distractor | ok |
 
 ## Domestic savings - analyst
 
@@ -841,18 +1226,18 @@ This report records which distractors were selected for each tier and which cand
 ## Education spending - explorer
 
 - Round: `worldprint-education-spending`
-- Final fairness warning: review
-- Selected distractors: death-rate, fixed-telephone-subscriptions
+- Final fairness warning: ok
+- Selected distractors: death-rate, communications-service-exports
 
 | Rejected candidate | Reason | Correlation warning |
 | --- | --- | --- |
-| Commercial bank branches (`bank-branches`) | high_ambiguity_distractor | ok |
+| None | n/a | n/a |
 
 ## Education spending - analyst
 
 - Round: `worldprint-education-spending`
 - Final fairness warning: ok
-- Selected distractors: secondary-enrollment, tertiary-enrollment, adolescent-fertility
+- Selected distractors: government-education-spending-share, secondary-enrollment, tertiary-enrollment
 
 | Rejected candidate | Reason | Correlation warning |
 | --- | --- | --- |
@@ -862,7 +1247,7 @@ This report records which distractors were selected for each tier and which cand
 
 - Round: `worldprint-education-spending`
 - Final fairness warning: ok
-- Selected distractors: secondary-enrollment, tertiary-enrollment, adolescent-fertility, secure-internet-servers, account-ownership
+- Selected distractors: government-education-spending-share, secondary-enrollment, tertiary-enrollment, secondary-pupils-female-share, out-of-school-primary
 
 | Rejected candidate | Reason | Correlation warning |
 | --- | --- | --- |
@@ -937,28 +1322,34 @@ This report records which distractors were selected for each tier and which cand
 
 - Round: `worldprint-employers-share`
 - Final fairness warning: review
-- Selected distractors: fdi-inflows, cereal-yield
+- Selected distractors: cereal-production, fdi-inflows
 
 | Rejected candidate | Reason | Correlation warning |
 | --- | --- | --- |
 | Foreign direct investment outflows (`fdi-outflows`) | high_ambiguity_distractor | ok |
-| GDP growth (`gdp-growth`) | high_ambiguity_distractor | ok |
 
 ## Employers share - analyst
 
 - Round: `worldprint-employers-share`
 - Final fairness warning: review
-- Selected distractors: female-labor-force, labor-force-participation, unemployment
+- Selected distractors: female-labor-force, female-industry-employment, labor-force-participation
 
 | Rejected candidate | Reason | Correlation warning |
 | --- | --- | --- |
+| Male employment-to-population ratio (`male-employment-population-ratio`) | high_ambiguity_distractor | review |
+| Female employment-to-population ratio (`female-employment-population-ratio`) | high_ambiguity_distractor | review |
+| Female services employment (`female-services-employment`) | high_ambiguity_distractor | review |
+| Contributing family workers (`contributing-family-workers`) | high_ambiguity_distractor | review |
+| Female agricultural employment (`female-agricultural-employment`) | high_ambiguity_distractor | review |
+| Female vulnerable employment (`female-vulnerable-employment`) | high_ambiguity_distractor | review |
+| Female contributing family workers (`female-contributing-family-workers`) | high_ambiguity_distractor | review |
 | Employment-to-population ratio (`employment-population-ratio`) | high_ambiguity_distractor | review |
 
 ## Employers share - cartographer
 
 - Round: `worldprint-employers-share`
 - Final fairness warning: ok
-- Selected distractors: youth-unemployment, unemployment, labor-force-participation, employment-population-ratio, employment-services
+- Selected distractors: male-employment-population-ratio, youth-unemployment, unemployment, labor-force-participation, employment-population-ratio
 
 | Rejected candidate | Reason | Correlation warning |
 | --- | --- | --- |
@@ -968,38 +1359,47 @@ This report records which distractors were selected for each tier and which cand
 
 - Round: `worldprint-employment-agriculture`
 - Final fairness warning: review
-- Selected distractors: industry-share, women-parliament
+- Selected distractors: industry-share, cereal-production
 
 | Rejected candidate | Reason | Correlation warning |
 | --- | --- | --- |
 | Fixed capital formation (`fixed-capital-formation`) | high_ambiguity_distractor | ok |
-| Gross savings (`gross-savings-gdp`) | high_ambiguity_distractor | ok |
+| Agriculture nitrous oxide emissions (`agriculture-nitrous-oxide-emissions`) | high_ambiguity_distractor | review |
 
 ## Employment in agriculture - analyst
 
 - Round: `worldprint-employment-agriculture`
 - Final fairness warning: review
-- Selected distractors: employment-industry, account-ownership, youth-unemployment
+- Selected distractors: male-industry-employment, employment-industry, account-ownership
 
 | Rejected candidate | Reason | Correlation warning |
 | --- | --- | --- |
 | Wage and salaried workers (`wage-salaried-workers`) | high_correlation_or_visual_similarity | high |
+| Female wage workers (`female-wage-salaried-workers`) | high_correlation_or_visual_similarity | high |
 | Employment in services (`employment-services`) | high_correlation_or_visual_similarity | high |
+| Female contributing family workers (`female-contributing-family-workers`) | high_ambiguity_distractor | review |
+| Contributing family workers (`contributing-family-workers`) | high_ambiguity_distractor | review |
+| Female services employment (`female-services-employment`) | high_correlation_or_visual_similarity | high |
 | GDP per capita, PPP (`gdp-per-capita-ppp`) | high_ambiguity_distractor | ok |
 | GNI per capita, PPP (`gni-per-capita-ppp`) | high_ambiguity_distractor | ok |
 | GNI per capita (`gni-per-capita`) | high_ambiguity_distractor | ok |
-| Services value added (`services-share`) | high_ambiguity_distractor | ok |
+| Female self-employed (`female-self-employed`) | high_correlation_or_visual_similarity | high |
 
 ## Employment in agriculture - cartographer
 
 - Round: `worldprint-employment-agriculture`
 - Final fairness warning: review
-- Selected distractors: employment-industry, gni-per-capita-ppp, gdp-per-capita-ppp, gni-per-capita, agriculture-value-added
+- Selected distractors: contributing-family-workers, female-contributing-family-workers, male-industry-employment, employment-industry, gni-per-capita-ppp
 
 | Rejected candidate | Reason | Correlation warning |
 | --- | --- | --- |
 | Wage and salaried workers (`wage-salaried-workers`) | high_correlation_or_visual_similarity | high |
 | Employment in services (`employment-services`) | high_correlation_or_visual_similarity | high |
+| Female self-employed (`female-self-employed`) | high_correlation_or_visual_similarity | high |
+| Female wage workers (`female-wage-salaried-workers`) | high_correlation_or_visual_similarity | high |
+| Female services employment (`female-services-employment`) | high_correlation_or_visual_similarity | high |
+| Female vulnerable employment (`female-vulnerable-employment`) | high_correlation_or_visual_similarity | high |
+| Female agricultural employment (`female-agricultural-employment`) | high_correlation_or_visual_similarity | high |
 
 ## Employment in industry - explorer
 
@@ -1016,28 +1416,32 @@ This report records which distractors were selected for each tier and which cand
 
 - Round: `worldprint-employment-industry`
 - Final fairness warning: review
-- Selected distractors: employment-agriculture, labor-force-participation, female-labor-force
+- Selected distractors: employment-agriculture, female-industry-employment, labor-force-participation
 
 | Rejected candidate | Reason | Correlation warning |
 | --- | --- | --- |
 | Wage and salaried workers (`wage-salaried-workers`) | high_ambiguity_distractor | review |
-| Employment-to-population ratio (`employment-population-ratio`) | high_ambiguity_distractor | review |
+| Female agricultural employment (`female-agricultural-employment`) | high_ambiguity_distractor | review |
+| Female self-employed (`female-self-employed`) | high_ambiguity_distractor | review |
+| Female vulnerable employment (`female-vulnerable-employment`) | high_ambiguity_distractor | review |
+| Female wage workers (`female-wage-salaried-workers`) | high_ambiguity_distractor | review |
+| Contributing family workers (`contributing-family-workers`) | high_ambiguity_distractor | review |
 
 ## Employment in industry - cartographer
 
 - Round: `worldprint-employment-industry`
-- Final fairness warning: ok
-- Selected distractors: employment-agriculture, wage-salaried-workers, female-labor-force, labor-force-gender-ratio, labor-force-participation
+- Final fairness warning: review
+- Selected distractors: female-industry-employment, employment-agriculture, wage-salaried-workers, female-wage-salaried-workers, female-self-employed
 
 | Rejected candidate | Reason | Correlation warning |
 | --- | --- | --- |
-| None | n/a | n/a |
+| Male industry employment (`male-industry-employment`) | high_correlation_or_visual_similarity | high |
 
 ## Employment-to-population ratio - explorer
 
 - Round: `worldprint-employment-population-ratio`
 - Final fairness warning: ok
-- Selected distractors: account-ownership, industry-share
+- Selected distractors: food-insecurity-moderate-severe, account-ownership
 
 | Rejected candidate | Reason | Correlation warning |
 | --- | --- | --- |
@@ -1047,7 +1451,7 @@ This report records which distractors were selected for each tier and which cand
 
 - Round: `worldprint-employment-population-ratio`
 - Final fairness warning: review
-- Selected distractors: youth-unemployment, unemployment, youth-labor-force
+- Selected distractors: youth-unemployment, unemployment, youth-employment-ratio
 
 | Rejected candidate | Reason | Correlation warning |
 | --- | --- | --- |
@@ -1057,10 +1461,11 @@ This report records which distractors were selected for each tier and which cand
 
 - Round: `worldprint-employment-population-ratio`
 - Final fairness warning: review
-- Selected distractors: female-labor-force, youth-labor-force, female-unemployment, youth-unemployment, unemployment
+- Selected distractors: male-employment-population-ratio, female-labor-force, youth-employment-ratio, youth-labor-force, female-unemployment
 
 | Rejected candidate | Reason | Correlation warning |
 | --- | --- | --- |
+| Female employment-to-population ratio (`female-employment-population-ratio`) | high_correlation_or_visual_similarity | high |
 | Labor force participation (`labor-force-participation`) | high_correlation_or_visual_similarity | high |
 
 ## Employment in services - explorer
@@ -1073,32 +1478,37 @@ This report records which distractors were selected for each tier and which cand
 | --- | --- | --- |
 | Fixed capital formation (`fixed-capital-formation`) | high_ambiguity_distractor | ok |
 | Gross savings (`gross-savings-gdp`) | high_ambiguity_distractor | ok |
+| Agriculture nitrous oxide emissions (`agriculture-nitrous-oxide-emissions`) | high_ambiguity_distractor | ok |
 
 ## Employment in services - analyst
 
 - Round: `worldprint-employment-services`
 - Final fairness warning: review
-- Selected distractors: agriculture-value-added, youth-unemployment, account-ownership
+- Selected distractors: agriculture-value-added, food-insecurity-moderate-severe, youth-unemployment
 
 | Rejected candidate | Reason | Correlation warning |
 | --- | --- | --- |
+| Female self-employed (`female-self-employed`) | high_ambiguity_distractor | review |
+| Female contributing family workers (`female-contributing-family-workers`) | high_ambiguity_distractor | review |
+| Contributing family workers (`contributing-family-workers`) | high_ambiguity_distractor | review |
+| Female vulnerable employment (`female-vulnerable-employment`) | high_ambiguity_distractor | review |
 | Wage and salaried workers (`wage-salaried-workers`) | high_ambiguity_distractor | review |
 | Employment in agriculture (`employment-agriculture`) | high_correlation_or_visual_similarity | high |
+| Female wage workers (`female-wage-salaried-workers`) | high_ambiguity_distractor | review |
+| Female agricultural employment (`female-agricultural-employment`) | high_correlation_or_visual_similarity | high |
 | GNI per capita, PPP (`gni-per-capita-ppp`) | high_ambiguity_distractor | ok |
-| GDP per capita, PPP (`gdp-per-capita-ppp`) | high_ambiguity_distractor | ok |
-| GNI per capita (`gni-per-capita`) | high_ambiguity_distractor | ok |
-| Services value added (`services-share`) | high_ambiguity_distractor | review |
-| Employment-to-population ratio (`employment-population-ratio`) | high_ambiguity_distractor | review |
 
 ## Employment in services - cartographer
 
 - Round: `worldprint-employment-services`
 - Final fairness warning: review
-- Selected distractors: wage-salaried-workers, gni-per-capita, agriculture-value-added, gni-per-capita-ppp, gdp-per-capita-ppp
+- Selected distractors: wage-salaried-workers, female-vulnerable-employment, female-wage-salaried-workers, female-self-employed, contributing-family-workers
 
 | Rejected candidate | Reason | Correlation warning |
 | --- | --- | --- |
 | Employment in agriculture (`employment-agriculture`) | high_correlation_or_visual_similarity | high |
+| Female agricultural employment (`female-agricultural-employment`) | high_correlation_or_visual_similarity | high |
+| Female services employment (`female-services-employment`) | high_correlation_or_visual_similarity | high |
 
 ## Energy use - explorer
 
@@ -1164,12 +1574,17 @@ This report records which distractors were selected for each tier and which cand
 ## Foreign direct investment inflows - explorer
 
 - Round: `worldprint-fdi-inflows`
-- Final fairness warning: ok
+- Final fairness warning: review
 - Selected distractors: youth-labor-force, women-business-law
 
 | Rejected candidate | Reason | Correlation warning |
 | --- | --- | --- |
-| None | n/a | n/a |
+| Female contributing family workers (`female-contributing-family-workers`) | high_ambiguity_distractor | ok |
+| Contributing family workers (`contributing-family-workers`) | high_ambiguity_distractor | ok |
+| Female employment-to-population ratio (`female-employment-population-ratio`) | high_ambiguity_distractor | ok |
+| Male employment-to-population ratio (`male-employment-population-ratio`) | high_ambiguity_distractor | ok |
+| Female vulnerable employment (`female-vulnerable-employment`) | high_ambiguity_distractor | ok |
+| Female services employment (`female-services-employment`) | high_ambiguity_distractor | ok |
 
 ## Foreign direct investment inflows - analyst
 
@@ -1200,6 +1615,10 @@ This report records which distractors were selected for each tier and which cand
 
 | Rejected candidate | Reason | Correlation warning |
 | --- | --- | --- |
+| Male employment-to-population ratio (`male-employment-population-ratio`) | high_ambiguity_distractor | ok |
+| Female employment-to-population ratio (`female-employment-population-ratio`) | high_ambiguity_distractor | ok |
+| Contributing family workers (`contributing-family-workers`) | high_ambiguity_distractor | ok |
+| Female contributing family workers (`female-contributing-family-workers`) | high_ambiguity_distractor | ok |
 | Employment-to-population ratio (`employment-population-ratio`) | high_ambiguity_distractor | ok |
 
 ## Foreign direct investment outflows - analyst
@@ -1222,38 +1641,264 @@ This report records which distractors were selected for each tier and which cand
 | --- | --- | --- |
 | Foreign direct investment inflows (`fdi-inflows`) | high_correlation_or_visual_similarity | high |
 
-## Female labor force participation - explorer
+## Female agricultural employment - explorer
 
-- Round: `worldprint-female-labor-force`
+- Round: `worldprint-female-agricultural-employment`
 - Final fairness warning: review
-- Selected distractors: fdi-inflows, cereal-yield
+- Selected distractors: fdi-inflows, cereal-production
+
+| Rejected candidate | Reason | Correlation warning |
+| --- | --- | --- |
+| Agriculture nitrous oxide emissions (`agriculture-nitrous-oxide-emissions`) | high_ambiguity_distractor | ok |
+
+## Female agricultural employment - analyst
+
+- Round: `worldprint-female-agricultural-employment`
+- Final fairness warning: review
+- Selected distractors: male-industry-employment, employment-industry, cereal-yield
+
+| Rejected candidate | Reason | Correlation warning |
+| --- | --- | --- |
+| Female wage workers (`female-wage-salaried-workers`) | high_ambiguity_distractor | review |
+| Female contributing family workers (`female-contributing-family-workers`) | high_ambiguity_distractor | review |
+| Contributing family workers (`contributing-family-workers`) | high_ambiguity_distractor | review |
+| Wage and salaried workers (`wage-salaried-workers`) | high_ambiguity_distractor | review |
+| Female self-employed (`female-self-employed`) | high_ambiguity_distractor | review |
+| Female vulnerable employment (`female-vulnerable-employment`) | high_ambiguity_distractor | review |
+| Employment in services (`employment-services`) | high_correlation_or_visual_similarity | high |
+| Female services employment (`female-services-employment`) | high_correlation_or_visual_similarity | high |
+| Agriculture value per worker (`agriculture-value-per-worker`) | high_correlation_or_visual_similarity | high |
+| GNI per capita, PPP (`gni-per-capita-ppp`) | high_ambiguity_distractor | ok |
+| GDP per capita, PPP (`gdp-per-capita-ppp`) | high_ambiguity_distractor | ok |
+| GNI per capita (`gni-per-capita`) | high_ambiguity_distractor | ok |
+
+## Female agricultural employment - cartographer
+
+- Round: `worldprint-female-agricultural-employment`
+- Final fairness warning: review
+- Selected distractors: female-self-employed, female-vulnerable-employment, female-wage-salaried-workers, wage-salaried-workers, contributing-family-workers
+
+| Rejected candidate | Reason | Correlation warning |
+| --- | --- | --- |
+| Employment in services (`employment-services`) | high_correlation_or_visual_similarity | high |
+
+## Female contributing family workers - explorer
+
+- Round: `worldprint-female-contributing-family-workers`
+- Final fairness warning: review
+- Selected distractors: fdi-inflows, cereal-production
+
+| Rejected candidate | Reason | Correlation warning |
+| --- | --- | --- |
+| Agriculture nitrous oxide emissions (`agriculture-nitrous-oxide-emissions`) | high_ambiguity_distractor | ok |
+
+## Female contributing family workers - analyst
+
+- Round: `worldprint-female-contributing-family-workers`
+- Final fairness warning: review
+- Selected distractors: employment-agriculture, male-industry-employment, employment-industry
+
+| Rejected candidate | Reason | Correlation warning |
+| --- | --- | --- |
+| Female services employment (`female-services-employment`) | high_ambiguity_distractor | review |
+| Female wage workers (`female-wage-salaried-workers`) | high_ambiguity_distractor | review |
+| Female agricultural employment (`female-agricultural-employment`) | high_ambiguity_distractor | review |
+| Female self-employed (`female-self-employed`) | high_ambiguity_distractor | review |
+| Female vulnerable employment (`female-vulnerable-employment`) | high_ambiguity_distractor | review |
+| Employment in services (`employment-services`) | high_ambiguity_distractor | review |
+| Wage and salaried workers (`wage-salaried-workers`) | high_ambiguity_distractor | review |
+| Agriculture value per worker (`agriculture-value-per-worker`) | high_ambiguity_distractor | ok |
+| GNI per capita (`gni-per-capita`) | high_ambiguity_distractor | ok |
+| GDP per capita, PPP (`gdp-per-capita-ppp`) | high_ambiguity_distractor | ok |
+| GNI per capita, PPP (`gni-per-capita-ppp`) | high_ambiguity_distractor | ok |
+
+## Female contributing family workers - cartographer
+
+- Round: `worldprint-female-contributing-family-workers`
+- Final fairness warning: ok
+- Selected distractors: female-vulnerable-employment, female-wage-salaried-workers, female-self-employed, female-agricultural-employment, female-services-employment
+
+| Rejected candidate | Reason | Correlation warning |
+| --- | --- | --- |
+| None | n/a | n/a |
+
+## Female employment-to-population ratio - explorer
+
+- Round: `worldprint-female-employment-population-ratio`
+- Final fairness warning: review
+- Selected distractors: cereal-yield, tourism-receipts-share
+
+| Rejected candidate | Reason | Correlation warning |
+| --- | --- | --- |
+| GDP growth (`gdp-growth`) | high_ambiguity_distractor | ok |
+| Agriculture methane emissions (`agriculture-methane-emissions`) | high_ambiguity_distractor | ok |
+
+## Female employment-to-population ratio - analyst
+
+- Round: `worldprint-female-employment-population-ratio`
+- Final fairness warning: review
+- Selected distractors: youth-labor-force, labor-force-gender-ratio, youth-employment-ratio
+
+| Rejected candidate | Reason | Correlation warning |
+| --- | --- | --- |
+| Female unemployment (`female-unemployment`) | high_ambiguity_distractor | review |
+
+## Female employment-to-population ratio - cartographer
+
+- Round: `worldprint-female-employment-population-ratio`
+- Final fairness warning: review
+- Selected distractors: labor-force-gender-ratio, youth-labor-force, youth-employment-ratio, female-unemployment, male-employment-population-ratio
+
+| Rejected candidate | Reason | Correlation warning |
+| --- | --- | --- |
+| Labor force participation (`labor-force-participation`) | high_correlation_or_visual_similarity | high |
+| Employment-to-population ratio (`employment-population-ratio`) | high_correlation_or_visual_similarity | high |
+| Female labor force participation (`female-labor-force`) | high_correlation_or_visual_similarity | high |
+
+## Female industry employment - explorer
+
+- Round: `worldprint-female-industry-employment`
+- Final fairness warning: review
+- Selected distractors: fdi-inflows, women-business-law
 
 | Rejected candidate | Reason | Correlation warning |
 | --- | --- | --- |
 | Foreign direct investment outflows (`fdi-outflows`) | high_ambiguity_distractor | ok |
-| GDP growth (`gdp-growth`) | high_ambiguity_distractor | ok |
+
+## Female industry employment - analyst
+
+- Round: `worldprint-female-industry-employment`
+- Final fairness warning: ok
+- Selected distractors: employment-industry, male-industry-employment, female-labor-force
+
+| Rejected candidate | Reason | Correlation warning |
+| --- | --- | --- |
+| None | n/a | n/a |
+
+## Female industry employment - cartographer
+
+- Round: `worldprint-female-industry-employment`
+- Final fairness warning: ok
+- Selected distractors: employment-industry, male-industry-employment, female-labor-force, labor-force-gender-ratio, female-employment-population-ratio
+
+| Rejected candidate | Reason | Correlation warning |
+| --- | --- | --- |
+| None | n/a | n/a |
+
+## Female labor force participation - explorer
+
+- Round: `worldprint-female-labor-force`
+- Final fairness warning: review
+- Selected distractors: cereal-production, fdi-inflows
+
+| Rejected candidate | Reason | Correlation warning |
+| --- | --- | --- |
+| Agriculture nitrous oxide emissions (`agriculture-nitrous-oxide-emissions`) | high_ambiguity_distractor | ok |
+| Foreign direct investment outflows (`fdi-outflows`) | high_ambiguity_distractor | ok |
 
 ## Female labor force participation - analyst
 
 - Round: `worldprint-female-labor-force`
 - Final fairness warning: review
-- Selected distractors: youth-labor-force, labor-force-participation, youth-unemployment
+- Selected distractors: youth-labor-force, youth-employment-ratio, labor-force-participation
 
 | Rejected candidate | Reason | Correlation warning |
 | --- | --- | --- |
 | Female-to-male labor force ratio (`labor-force-gender-ratio`) | high_correlation_or_visual_similarity | high |
 | Employment-to-population ratio (`employment-population-ratio`) | high_ambiguity_distractor | review |
+| Male employment-to-population ratio (`male-employment-population-ratio`) | high_ambiguity_distractor | review |
 | Female unemployment (`female-unemployment`) | high_ambiguity_distractor | review |
 
 ## Female labor force participation - cartographer
 
 - Round: `worldprint-female-labor-force`
 - Final fairness warning: review
-- Selected distractors: labor-force-participation, employment-population-ratio, youth-labor-force, female-unemployment, youth-unemployment
+- Selected distractors: labor-force-participation, employment-population-ratio, youth-labor-force, youth-employment-ratio, female-unemployment
 
 | Rejected candidate | Reason | Correlation warning |
 | --- | --- | --- |
 | Female-to-male labor force ratio (`labor-force-gender-ratio`) | high_correlation_or_visual_similarity | high |
+| Female employment-to-population ratio (`female-employment-population-ratio`) | high_correlation_or_visual_similarity | high |
+
+## Female self-employed - explorer
+
+- Round: `worldprint-female-self-employed`
+- Final fairness warning: review
+- Selected distractors: cereal-production, fdi-inflows
+
+| Rejected candidate | Reason | Correlation warning |
+| --- | --- | --- |
+| Agriculture nitrous oxide emissions (`agriculture-nitrous-oxide-emissions`) | high_ambiguity_distractor | ok |
+
+## Female self-employed - analyst
+
+- Round: `worldprint-female-self-employed`
+- Final fairness warning: review
+- Selected distractors: male-industry-employment, employment-industry, cereal-yield
+
+| Rejected candidate | Reason | Correlation warning |
+| --- | --- | --- |
+| Female services employment (`female-services-employment`) | high_ambiguity_distractor | review |
+| Female contributing family workers (`female-contributing-family-workers`) | high_ambiguity_distractor | review |
+| Employment in services (`employment-services`) | high_ambiguity_distractor | review |
+| Contributing family workers (`contributing-family-workers`) | high_ambiguity_distractor | review |
+| Female agricultural employment (`female-agricultural-employment`) | high_ambiguity_distractor | review |
+| Agriculture value per worker (`agriculture-value-per-worker`) | high_ambiguity_distractor | ok |
+| Employment in agriculture (`employment-agriculture`) | high_correlation_or_visual_similarity | high |
+| Female wage workers (`female-wage-salaried-workers`) | high_correlation_or_visual_similarity | high |
+| GDP per capita, PPP (`gdp-per-capita-ppp`) | high_ambiguity_distractor | ok |
+| GNI per capita (`gni-per-capita`) | high_ambiguity_distractor | ok |
+| GNI per capita, PPP (`gni-per-capita-ppp`) | high_ambiguity_distractor | ok |
+| Wage and salaried workers (`wage-salaried-workers`) | high_correlation_or_visual_similarity | high |
+
+## Female self-employed - cartographer
+
+- Round: `worldprint-female-self-employed`
+- Final fairness warning: review
+- Selected distractors: female-agricultural-employment, female-services-employment, contributing-family-workers, female-contributing-family-workers, employment-services
+
+| Rejected candidate | Reason | Correlation warning |
+| --- | --- | --- |
+| Employment in agriculture (`employment-agriculture`) | high_correlation_or_visual_similarity | high |
+
+## Female services employment - explorer
+
+- Round: `worldprint-female-services-employment`
+- Final fairness warning: review
+- Selected distractors: fdi-inflows, food-exports-share
+
+| Rejected candidate | Reason | Correlation warning |
+| --- | --- | --- |
+| Agriculture nitrous oxide emissions (`agriculture-nitrous-oxide-emissions`) | high_ambiguity_distractor | ok |
+
+## Female services employment - analyst
+
+- Round: `worldprint-female-services-employment`
+- Final fairness warning: review
+- Selected distractors: male-industry-employment, agriculture-value-added, food-insecurity-moderate-severe
+
+| Rejected candidate | Reason | Correlation warning |
+| --- | --- | --- |
+| Female contributing family workers (`female-contributing-family-workers`) | high_ambiguity_distractor | review |
+| Contributing family workers (`contributing-family-workers`) | high_ambiguity_distractor | review |
+| Female self-employed (`female-self-employed`) | high_ambiguity_distractor | review |
+| Female vulnerable employment (`female-vulnerable-employment`) | high_ambiguity_distractor | review |
+| Female wage workers (`female-wage-salaried-workers`) | high_ambiguity_distractor | review |
+| Wage and salaried workers (`wage-salaried-workers`) | high_ambiguity_distractor | review |
+| Employment in agriculture (`employment-agriculture`) | high_correlation_or_visual_similarity | high |
+| Female agricultural employment (`female-agricultural-employment`) | high_correlation_or_visual_similarity | high |
+| Agriculture value per worker (`agriculture-value-per-worker`) | high_ambiguity_distractor | ok |
+
+## Female services employment - cartographer
+
+- Round: `worldprint-female-services-employment`
+- Final fairness warning: review
+- Selected distractors: female-vulnerable-employment, female-self-employed, female-wage-salaried-workers, wage-salaried-workers, contributing-family-workers
+
+| Rejected candidate | Reason | Correlation warning |
+| --- | --- | --- |
+| Employment in agriculture (`employment-agriculture`) | high_correlation_or_visual_similarity | high |
+| Female agricultural employment (`female-agricultural-employment`) | high_correlation_or_visual_similarity | high |
 
 ## Female unemployment - explorer
 
@@ -1270,31 +1915,108 @@ This report records which distractors were selected for each tier and which cand
 
 - Round: `worldprint-female-unemployment`
 - Final fairness warning: review
-- Selected distractors: youth-unemployment, labor-force-participation, female-labor-force
+- Selected distractors: youth-employment-ratio, youth-unemployment, labor-force-participation
 
 | Rejected candidate | Reason | Correlation warning |
 | --- | --- | --- |
 | Employment-to-population ratio (`employment-population-ratio`) | high_ambiguity_distractor | review |
+| Female employment-to-population ratio (`female-employment-population-ratio`) | high_ambiguity_distractor | review |
 
 ## Female unemployment - cartographer
 
 - Round: `worldprint-female-unemployment`
 - Final fairness warning: review
-- Selected distractors: youth-unemployment, employment-population-ratio, labor-force-participation, female-labor-force, labor-force-gender-ratio
+- Selected distractors: youth-unemployment, employment-population-ratio, female-employment-population-ratio, youth-employment-ratio, male-employment-population-ratio
 
 | Rejected candidate | Reason | Correlation warning |
 | --- | --- | --- |
 | Unemployment (`unemployment`) | high_correlation_or_visual_similarity | high |
 
-## Fertility rate - explorer
+## Female vulnerable employment - explorer
 
-- Round: `worldprint-fertility-rate`
+- Round: `worldprint-female-vulnerable-employment`
 - Final fairness warning: review
-- Selected distractors: largest-city-share, health-expenditure
+- Selected distractors: cereal-production, fdi-inflows
 
 | Rejected candidate | Reason | Correlation warning |
 | --- | --- | --- |
-| Low-elevation land (`low-elevation-land-share`) | high_ambiguity_distractor | ok |
+| Agriculture nitrous oxide emissions (`agriculture-nitrous-oxide-emissions`) | high_ambiguity_distractor | ok |
+
+## Female vulnerable employment - analyst
+
+- Round: `worldprint-female-vulnerable-employment`
+- Final fairness warning: review
+- Selected distractors: male-industry-employment, employment-industry, severe-food-insecurity
+
+| Rejected candidate | Reason | Correlation warning |
+| --- | --- | --- |
+| Female services employment (`female-services-employment`) | high_ambiguity_distractor | review |
+| Female contributing family workers (`female-contributing-family-workers`) | high_ambiguity_distractor | review |
+| Employment in services (`employment-services`) | high_ambiguity_distractor | review |
+| Contributing family workers (`contributing-family-workers`) | high_ambiguity_distractor | review |
+| Female agricultural employment (`female-agricultural-employment`) | high_ambiguity_distractor | review |
+| Agriculture value per worker (`agriculture-value-per-worker`) | high_ambiguity_distractor | ok |
+| Employment in agriculture (`employment-agriculture`) | high_correlation_or_visual_similarity | high |
+| Female wage workers (`female-wage-salaried-workers`) | high_correlation_or_visual_similarity | high |
+| GDP per capita, PPP (`gdp-per-capita-ppp`) | high_ambiguity_distractor | ok |
+| GNI per capita (`gni-per-capita`) | high_ambiguity_distractor | ok |
+| Wage and salaried workers (`wage-salaried-workers`) | high_correlation_or_visual_similarity | high |
+| GNI per capita, PPP (`gni-per-capita-ppp`) | high_ambiguity_distractor | ok |
+
+## Female vulnerable employment - cartographer
+
+- Round: `worldprint-female-vulnerable-employment`
+- Final fairness warning: review
+- Selected distractors: female-agricultural-employment, female-services-employment, contributing-family-workers, female-contributing-family-workers, employment-services
+
+| Rejected candidate | Reason | Correlation warning |
+| --- | --- | --- |
+| Employment in agriculture (`employment-agriculture`) | high_correlation_or_visual_similarity | high |
+
+## Female wage workers - explorer
+
+- Round: `worldprint-female-wage-salaried-workers`
+- Final fairness warning: review
+- Selected distractors: cereal-production, fdi-inflows
+
+| Rejected candidate | Reason | Correlation warning |
+| --- | --- | --- |
+| Agriculture nitrous oxide emissions (`agriculture-nitrous-oxide-emissions`) | high_ambiguity_distractor | ok |
+
+## Female wage workers - analyst
+
+- Round: `worldprint-female-wage-salaried-workers`
+- Final fairness warning: review
+- Selected distractors: male-industry-employment, employment-industry, severe-food-insecurity
+
+| Rejected candidate | Reason | Correlation warning |
+| --- | --- | --- |
+| Female contributing family workers (`female-contributing-family-workers`) | high_ambiguity_distractor | review |
+| Contributing family workers (`contributing-family-workers`) | high_ambiguity_distractor | review |
+| Female agricultural employment (`female-agricultural-employment`) | high_ambiguity_distractor | review |
+| Female services employment (`female-services-employment`) | high_ambiguity_distractor | review |
+| Employment in agriculture (`employment-agriculture`) | high_correlation_or_visual_similarity | high |
+| Employment in services (`employment-services`) | high_ambiguity_distractor | review |
+
+## Female wage workers - cartographer
+
+- Round: `worldprint-female-wage-salaried-workers`
+- Final fairness warning: review
+- Selected distractors: female-agricultural-employment, female-services-employment, contributing-family-workers, female-contributing-family-workers, employment-services
+
+| Rejected candidate | Reason | Correlation warning |
+| --- | --- | --- |
+| Employment in agriculture (`employment-agriculture`) | high_correlation_or_visual_similarity | high |
+
+## Fertility rate - explorer
+
+- Round: `worldprint-fertility-rate`
+- Final fairness warning: ok
+- Selected distractors: primary-pupils-female-share, largest-city-share
+
+| Rejected candidate | Reason | Correlation warning |
+| --- | --- | --- |
+| None | n/a | n/a |
 
 ## Fertility rate - analyst
 
@@ -1320,7 +2042,7 @@ This report records which distractors were selected for each tier and which cand
 
 - Round: `worldprint-fixed-broadband`
 - Final fairness warning: ok
-- Selected distractors: fossil-fuel-energy-share, education-spending
+- Selected distractors: fossil-fuel-energy-share, secondary-pupils-female-share
 
 | Rejected candidate | Reason | Correlation warning |
 | --- | --- | --- |
@@ -1330,17 +2052,19 @@ This report records which distractors were selected for each tier and which cand
 
 - Round: `worldprint-fixed-broadband`
 - Final fairness warning: review
-- Selected distractors: secure-internet-servers, fixed-telephone-subscriptions, internet-users
+- Selected distractors: secure-internet-servers, fixed-telephone-subscriptions, transport-service-imports
 
 | Rejected candidate | Reason | Correlation warning |
 | --- | --- | --- |
+| Air passengers carried (`air-passengers`) | high_ambiguity_distractor | review |
 | Commercial bank branches (`bank-branches`) | high_ambiguity_distractor | review |
+| Air carrier departures (`air-departures`) | high_ambiguity_distractor | review |
 
 ## Fixed broadband - cartographer
 
 - Round: `worldprint-fixed-broadband`
 - Final fairness warning: ok
-- Selected distractors: secure-internet-servers, fixed-telephone-subscriptions, internet-users, bank-branches, gdp-per-capita-ppp
+- Selected distractors: secure-internet-servers, fixed-telephone-subscriptions, internet-users, bank-branches, air-passengers
 
 | Rejected candidate | Reason | Correlation warning |
 | --- | --- | --- |
@@ -1384,7 +2108,7 @@ This report records which distractors were selected for each tier and which cand
 
 - Round: `worldprint-fixed-telephone-subscriptions`
 - Final fairness warning: ok
-- Selected distractors: fossil-fuel-energy-share, education-spending
+- Selected distractors: fossil-fuel-energy-share, secondary-pupils-female-share
 
 | Rejected candidate | Reason | Correlation warning |
 | --- | --- | --- |
@@ -1399,16 +2123,113 @@ This report records which distractors were selected for each tier and which cand
 | Rejected candidate | Reason | Correlation warning |
 | --- | --- | --- |
 | Commercial bank branches (`bank-branches`) | high_ambiguity_distractor | review |
+| Air passengers carried (`air-passengers`) | high_ambiguity_distractor | review |
 
 ## Fixed telephone subscriptions - cartographer
 
 - Round: `worldprint-fixed-telephone-subscriptions`
 - Final fairness warning: ok
-- Selected distractors: fixed-broadband, secure-internet-servers, internet-users, bank-branches, mobile-subscriptions
+- Selected distractors: fixed-broadband, secure-internet-servers, internet-users, bank-branches, air-passengers
 
 | Rejected candidate | Reason | Correlation warning |
 | --- | --- | --- |
 | None | n/a | n/a |
+
+## Food exports share - explorer
+
+- Round: `worldprint-food-exports-share`
+- Final fairness warning: review
+- Selected distractors: labor-force-gender-ratio, land-under-cereal
+
+| Rejected candidate | Reason | Correlation warning |
+| --- | --- | --- |
+| Female employment-to-population ratio (`female-employment-population-ratio`) | high_ambiguity_distractor | ok |
+| Arable land area (`arable-land-area`) | high_ambiguity_distractor | ok |
+
+## Food exports share - analyst
+
+- Round: `worldprint-food-exports-share`
+- Final fairness warning: ok
+- Selected distractors: severe-food-insecurity, food-imports-share, food-insecurity-moderate-severe
+
+| Rejected candidate | Reason | Correlation warning |
+| --- | --- | --- |
+| None | n/a | n/a |
+
+## Food exports share - cartographer
+
+- Round: `worldprint-food-exports-share`
+- Final fairness warning: ok
+- Selected distractors: severe-food-insecurity, food-insecurity-moderate-severe, food-imports-share, agriculture-value-per-worker, cereal-yield
+
+| Rejected candidate | Reason | Correlation warning |
+| --- | --- | --- |
+| None | n/a | n/a |
+
+## Food imports share - explorer
+
+- Round: `worldprint-food-imports-share`
+- Final fairness warning: review
+- Selected distractors: inflation, female-industry-employment
+
+| Rejected candidate | Reason | Correlation warning |
+| --- | --- | --- |
+| GDP growth (`gdp-growth`) | high_ambiguity_distractor | ok |
+| Male employment-to-population ratio (`male-employment-population-ratio`) | high_ambiguity_distractor | ok |
+
+## Food imports share - analyst
+
+- Round: `worldprint-food-imports-share`
+- Final fairness warning: review
+- Selected distractors: cereal-production, cereal-yield, severe-food-insecurity
+
+| Rejected candidate | Reason | Correlation warning |
+| --- | --- | --- |
+| Agriculture nitrous oxide emissions (`agriculture-nitrous-oxide-emissions`) | high_ambiguity_distractor | review |
+| Agriculture methane emissions (`agriculture-methane-emissions`) | high_ambiguity_distractor | review |
+
+## Food imports share - cartographer
+
+- Round: `worldprint-food-imports-share`
+- Final fairness warning: ok
+- Selected distractors: cereal-production, agriculture-nitrous-oxide-emissions, food-insecurity-moderate-severe, severe-food-insecurity, agriculture-methane-emissions
+
+| Rejected candidate | Reason | Correlation warning |
+| --- | --- | --- |
+| None | n/a | n/a |
+
+## Moderate or severe food insecurity - explorer
+
+- Round: `worldprint-food-insecurity-moderate-severe`
+- Final fairness warning: review
+- Selected distractors: industry-share, youth-employment-ratio
+
+| Rejected candidate | Reason | Correlation warning |
+| --- | --- | --- |
+| Employment-to-population ratio (`employment-population-ratio`) | high_ambiguity_distractor | ok |
+
+## Moderate or severe food insecurity - analyst
+
+- Round: `worldprint-food-insecurity-moderate-severe`
+- Final fairness warning: review
+- Selected distractors: cereal-yield, employment-agriculture, high-tech-exports
+
+| Rejected candidate | Reason | Correlation warning |
+| --- | --- | --- |
+| Agriculture value per worker (`agriculture-value-per-worker`) | high_ambiguity_distractor | review |
+| Wage and salaried workers (`wage-salaried-workers`) | high_ambiguity_distractor | ok |
+| Employment in services (`employment-services`) | high_ambiguity_distractor | ok |
+| Female wage workers (`female-wage-salaried-workers`) | high_ambiguity_distractor | ok |
+
+## Moderate or severe food insecurity - cartographer
+
+- Round: `worldprint-food-insecurity-moderate-severe`
+- Final fairness warning: review
+- Selected distractors: agriculture-value-per-worker, cereal-yield, food-exports-share, food-imports-share, wage-salaried-workers
+
+| Rejected candidate | Reason | Correlation warning |
+| --- | --- | --- |
+| Severe food insecurity (`severe-food-insecurity`) | high_correlation_or_visual_similarity | high |
 
 ## Food production index - explorer
 
@@ -1425,20 +2246,19 @@ This report records which distractors were selected for each tier and which cand
 
 - Round: `worldprint-food-production-index`
 - Final fairness warning: review
-- Selected distractors: cereal-yield, natural-resource-rents, agriculture-value-added
+- Selected distractors: food-insecurity-moderate-severe, cereal-yield, severe-food-insecurity
 
 | Rejected candidate | Reason | Correlation warning |
 | --- | --- | --- |
 | Agriculture value per worker (`agriculture-value-per-worker`) | high_ambiguity_distractor | review |
 | Services value added (`services-share`) | high_ambiguity_distractor | ok |
-| Employment in services (`employment-services`) | high_ambiguity_distractor | ok |
-| Wage and salaried workers (`wage-salaried-workers`) | high_ambiguity_distractor | ok |
+| Agriculture methane emissions (`agriculture-methane-emissions`) | high_ambiguity_distractor | review |
 
 ## Food production index - cartographer
 
 - Round: `worldprint-food-production-index`
 - Final fairness warning: ok
-- Selected distractors: agriculture-value-per-worker, cereal-yield, services-share, natural-resource-rents, agriculture-value-added
+- Selected distractors: food-insecurity-moderate-severe, agriculture-value-per-worker, severe-food-insecurity, agriculture-methane-emissions, cereal-yield
 
 | Rejected candidate | Reason | Correlation warning |
 | --- | --- | --- |
@@ -1478,7 +2298,7 @@ This report records which distractors were selected for each tier and which cand
 
 - Round: `worldprint-fossil-fuel-energy-share`
 - Final fairness warning: ok
-- Selected distractors: freshwater-withdrawal, secure-internet-servers
+- Selected distractors: ict-service-exports, freshwater-withdrawal
 
 | Rejected candidate | Reason | Correlation warning |
 | --- | --- | --- |
@@ -1572,6 +2392,8 @@ This report records which distractors were selected for each tier and which cand
 
 | Rejected candidate | Reason | Correlation warning |
 | --- | --- | --- |
+| Female employment-to-population ratio (`female-employment-population-ratio`) | high_ambiguity_distractor | ok |
+| Male employment-to-population ratio (`male-employment-population-ratio`) | high_ambiguity_distractor | ok |
 | Employment-to-population ratio (`employment-population-ratio`) | high_ambiguity_distractor | ok |
 
 ## GDP growth - analyst
@@ -1601,14 +2423,11 @@ This report records which distractors were selected for each tier and which cand
 
 - Round: `worldprint-gdp-per-capita`
 - Final fairness warning: review
-- Selected distractors: industry-share, health-expenditure
+- Selected distractors: industry-share, communications-service-exports
 
 | Rejected candidate | Reason | Correlation warning |
 | --- | --- | --- |
 | Fixed capital formation (`fixed-capital-formation`) | high_ambiguity_distractor | ok |
-| Gross savings (`gross-savings-gdp`) | high_ambiguity_distractor | ok |
-| Imports (`imports-share`) | high_ambiguity_distractor | ok |
-| Agricultural raw material exports (`agricultural-raw-material-exports`) | high_ambiguity_distractor | ok |
 
 ## GDP per capita - analyst
 
@@ -1634,14 +2453,11 @@ This report records which distractors were selected for each tier and which cand
 
 - Round: `worldprint-gdp-per-capita-ppp`
 - Final fairness warning: review
-- Selected distractors: manufacturing-share, health-expenditure
+- Selected distractors: manufacturing-share, communications-service-exports
 
 | Rejected candidate | Reason | Correlation warning |
 | --- | --- | --- |
 | Fixed capital formation (`fixed-capital-formation`) | high_ambiguity_distractor | ok |
-| Gross savings (`gross-savings-gdp`) | high_ambiguity_distractor | ok |
-| Imports (`imports-share`) | high_ambiguity_distractor | ok |
-| Agricultural raw material exports (`agricultural-raw-material-exports`) | high_ambiguity_distractor | ok |
 
 ## GDP per capita, PPP - analyst
 
@@ -1667,7 +2483,7 @@ This report records which distractors were selected for each tier and which cand
 
 - Round: `worldprint-ghg-per-capita`
 - Final fairness warning: ok
-- Selected distractors: fossil-fuel-energy-share, arable-land-per-person
+- Selected distractors: fossil-fuel-energy-share, land-under-cereal
 
 | Rejected candidate | Reason | Correlation warning |
 | --- | --- | --- |
@@ -1697,14 +2513,11 @@ This report records which distractors were selected for each tier and which cand
 
 - Round: `worldprint-gni-per-capita`
 - Final fairness warning: review
-- Selected distractors: industry-share, mobile-subscriptions
+- Selected distractors: industry-share, communications-service-exports
 
 | Rejected candidate | Reason | Correlation warning |
 | --- | --- | --- |
 | Fixed capital formation (`fixed-capital-formation`) | high_ambiguity_distractor | ok |
-| Gross savings (`gross-savings-gdp`) | high_ambiguity_distractor | ok |
-| Imports (`imports-share`) | high_ambiguity_distractor | ok |
-| Agricultural raw material exports (`agricultural-raw-material-exports`) | high_ambiguity_distractor | ok |
 
 ## GNI per capita - analyst
 
@@ -1730,14 +2543,11 @@ This report records which distractors were selected for each tier and which cand
 
 - Round: `worldprint-gni-per-capita-ppp`
 - Final fairness warning: review
-- Selected distractors: manufacturing-share, health-expenditure
+- Selected distractors: manufacturing-share, communications-service-exports
 
 | Rejected candidate | Reason | Correlation warning |
 | --- | --- | --- |
 | Fixed capital formation (`fixed-capital-formation`) | high_ambiguity_distractor | ok |
-| Imports (`imports-share`) | high_ambiguity_distractor | ok |
-| Gross savings (`gross-savings-gdp`) | high_ambiguity_distractor | ok |
-| Agricultural raw material exports (`agricultural-raw-material-exports`) | high_ambiguity_distractor | ok |
 
 ## GNI per capita, PPP - analyst
 
@@ -1758,6 +2568,37 @@ This report records which distractors were selected for each tier and which cand
 | Rejected candidate | Reason | Correlation warning |
 | --- | --- | --- |
 | GDP per capita (`gdp-per-capita`) | high_correlation_or_visual_similarity | high |
+
+## Education spending share - explorer
+
+- Round: `worldprint-government-education-spending-share`
+- Final fairness warning: review
+- Selected distractors: transport-service-exports, age-dependency
+
+| Rejected candidate | Reason | Correlation warning |
+| --- | --- | --- |
+| Air carrier departures (`air-departures`) | high_ambiguity_distractor | ok |
+| Air passengers carried (`air-passengers`) | high_ambiguity_distractor | ok |
+
+## Education spending share - analyst
+
+- Round: `worldprint-government-education-spending-share`
+- Final fairness warning: ok
+- Selected distractors: education-spending, tertiary-enrollment, secondary-pupils-female-share
+
+| Rejected candidate | Reason | Correlation warning |
+| --- | --- | --- |
+| None | n/a | n/a |
+
+## Education spending share - cartographer
+
+- Round: `worldprint-government-education-spending-share`
+- Final fairness warning: ok
+- Selected distractors: education-spending, primary-female-teachers, secondary-pupils-female-share, tertiary-enrollment, primary-gross-intake
+
+| Rejected candidate | Reason | Correlation warning |
+| --- | --- | --- |
+| None | n/a | n/a |
 
 ## Government health spending share - explorer
 
@@ -1894,8 +2735,17 @@ This report records which distractors were selected for each tier and which cand
 
 | Rejected candidate | Reason | Correlation warning |
 | --- | --- | --- |
+| Male employment-to-population ratio (`male-employment-population-ratio`) | high_ambiguity_distractor | ok |
+| Female employment-to-population ratio (`female-employment-population-ratio`) | high_ambiguity_distractor | ok |
 | Employment-to-population ratio (`employment-population-ratio`) | high_ambiguity_distractor | ok |
+| Female services employment (`female-services-employment`) | high_ambiguity_distractor | ok |
+| Female contributing family workers (`female-contributing-family-workers`) | high_ambiguity_distractor | ok |
+| Female agricultural employment (`female-agricultural-employment`) | high_ambiguity_distractor | ok |
 | Female unemployment (`female-unemployment`) | high_ambiguity_distractor | ok |
+| Contributing family workers (`contributing-family-workers`) | high_ambiguity_distractor | ok |
+| Female vulnerable employment (`female-vulnerable-employment`) | high_ambiguity_distractor | ok |
+| Female wage workers (`female-wage-salaried-workers`) | high_ambiguity_distractor | ok |
+| Female self-employed (`female-self-employed`) | high_ambiguity_distractor | ok |
 
 ## High-tech exports - analyst
 
@@ -1972,6 +2822,36 @@ This report records which distractors were selected for each tier and which cand
 - Round: `worldprint-hydro-electricity-share`
 - Final fairness warning: ok
 - Selected distractors: renewable-electricity, renewable-energy-consumption, natural-gas-electricity-share, clean-fuels-access, electricity-access
+
+| Rejected candidate | Reason | Correlation warning |
+| --- | --- | --- |
+| None | n/a | n/a |
+
+## ICT service exports - explorer
+
+- Round: `worldprint-ict-service-exports`
+- Final fairness warning: ok
+- Selected distractors: fossil-fuel-energy-share, education-spending
+
+| Rejected candidate | Reason | Correlation warning |
+| --- | --- | --- |
+| None | n/a | n/a |
+
+## ICT service exports - analyst
+
+- Round: `worldprint-ict-service-exports`
+- Final fairness warning: ok
+- Selected distractors: communications-service-exports, secure-internet-servers, fixed-broadband
+
+| Rejected candidate | Reason | Correlation warning |
+| --- | --- | --- |
+| None | n/a | n/a |
+
+## ICT service exports - cartographer
+
+- Round: `worldprint-ict-service-exports`
+- Final fairness warning: ok
+- Selected distractors: communications-service-exports, secure-internet-servers, fixed-broadband, transport-service-exports, communications-service-imports
 
 | Rejected candidate | Reason | Correlation warning |
 | --- | --- | --- |
@@ -2108,12 +2988,13 @@ This report records which distractors were selected for each tier and which cand
 ## Inflation - explorer
 
 - Round: `worldprint-inflation`
-- Final fairness warning: ok
+- Final fairness warning: review
 - Selected distractors: youth-labor-force, women-business-law
 
 | Rejected candidate | Reason | Correlation warning |
 | --- | --- | --- |
-| None | n/a | n/a |
+| Female employment-to-population ratio (`female-employment-population-ratio`) | high_ambiguity_distractor | ok |
+| Male employment-to-population ratio (`male-employment-population-ratio`) | high_ambiguity_distractor | ok |
 
 ## Inflation - analyst
 
@@ -2141,7 +3022,7 @@ This report records which distractors were selected for each tier and which cand
 
 - Round: `worldprint-internet-users`
 - Final fairness warning: ok
-- Selected distractors: fossil-fuel-energy-share, women-parliament
+- Selected distractors: primary-pupils-female-share, fossil-fuel-energy-share
 
 | Rejected candidate | Reason | Correlation warning |
 | --- | --- | --- |
@@ -2161,7 +3042,7 @@ This report records which distractors were selected for each tier and which cand
 
 - Round: `worldprint-internet-users`
 - Final fairness warning: ok
-- Selected distractors: fixed-broadband, secure-internet-servers, fixed-telephone-subscriptions, bank-branches, electricity-access
+- Selected distractors: fixed-broadband, secure-internet-servers, fixed-telephone-subscriptions, air-passengers, air-departures
 
 | Rejected candidate | Reason | Correlation warning |
 | --- | --- | --- |
@@ -2170,23 +3051,22 @@ This report records which distractors were selected for each tier and which cand
 ## Female-to-male labor force ratio - explorer
 
 - Round: `worldprint-labor-force-gender-ratio`
-- Final fairness warning: review
-- Selected distractors: fdi-inflows, cereal-yield
+- Final fairness warning: ok
+- Selected distractors: food-exports-share, fdi-inflows
 
 | Rejected candidate | Reason | Correlation warning |
 | --- | --- | --- |
-| GDP growth (`gdp-growth`) | high_ambiguity_distractor | ok |
-| Foreign direct investment outflows (`fdi-outflows`) | high_ambiguity_distractor | ok |
-| Domestic savings (`domestic-savings`) | high_ambiguity_distractor | ok |
+| None | n/a | n/a |
 
 ## Female-to-male labor force ratio - analyst
 
 - Round: `worldprint-labor-force-gender-ratio`
 - Final fairness warning: review
-- Selected distractors: labor-force-participation, youth-labor-force, employment-industry
+- Selected distractors: labor-force-participation, youth-labor-force, youth-employment-ratio
 
 | Rejected candidate | Reason | Correlation warning |
 | --- | --- | --- |
+| Female employment-to-population ratio (`female-employment-population-ratio`) | high_ambiguity_distractor | review |
 | Female labor force participation (`female-labor-force`) | high_correlation_or_visual_similarity | high |
 | Employment-to-population ratio (`employment-population-ratio`) | high_ambiguity_distractor | review |
 | Female unemployment (`female-unemployment`) | high_ambiguity_distractor | review |
@@ -2195,7 +3075,7 @@ This report records which distractors were selected for each tier and which cand
 
 - Round: `worldprint-labor-force-gender-ratio`
 - Final fairness warning: review
-- Selected distractors: labor-force-participation, employment-population-ratio, youth-labor-force, female-unemployment, employment-industry
+- Selected distractors: female-employment-population-ratio, labor-force-participation, employment-population-ratio, youth-labor-force, female-unemployment
 
 | Rejected candidate | Reason | Correlation warning |
 | --- | --- | --- |
@@ -2215,7 +3095,7 @@ This report records which distractors were selected for each tier and which cand
 
 - Round: `worldprint-labor-force-participation`
 - Final fairness warning: review
-- Selected distractors: youth-labor-force, youth-unemployment, unemployment
+- Selected distractors: youth-employment-ratio, youth-labor-force, youth-unemployment
 
 | Rejected candidate | Reason | Correlation warning |
 | --- | --- | --- |
@@ -2225,11 +3105,45 @@ This report records which distractors were selected for each tier and which cand
 
 - Round: `worldprint-labor-force-participation`
 - Final fairness warning: review
-- Selected distractors: female-labor-force, youth-labor-force, labor-force-gender-ratio, female-unemployment, youth-unemployment
+- Selected distractors: female-labor-force, youth-employment-ratio, male-employment-population-ratio, youth-labor-force, labor-force-gender-ratio
 
 | Rejected candidate | Reason | Correlation warning |
 | --- | --- | --- |
+| Female employment-to-population ratio (`female-employment-population-ratio`) | high_correlation_or_visual_similarity | high |
 | Employment-to-population ratio (`employment-population-ratio`) | high_correlation_or_visual_similarity | high |
+
+## Land under cereal production - explorer
+
+- Round: `worldprint-land-under-cereal`
+- Final fairness warning: review
+- Selected distractors: cereal-yield, urban-open-defecation
+
+| Rejected candidate | Reason | Correlation warning |
+| --- | --- | --- |
+| Rural open defecation (`rural-open-defecation`) | high_ambiguity_distractor | ok |
+
+## Land under cereal production - analyst
+
+- Round: `worldprint-land-under-cereal`
+- Final fairness warning: review
+- Selected distractors: arable-land-per-person, arable-land, agricultural-land
+
+| Rejected candidate | Reason | Correlation warning |
+| --- | --- | --- |
+| Agriculture methane emissions (`agriculture-methane-emissions`) | high_ambiguity_distractor | ok |
+| Arable land area (`arable-land-area`) | high_correlation_or_visual_similarity | high |
+
+## Land under cereal production - cartographer
+
+- Round: `worldprint-land-under-cereal`
+- Final fairness warning: review
+- Selected distractors: arable-land-per-person, arable-land, agriculture-methane-emissions, agricultural-land, largest-city-share
+
+| Rejected candidate | Reason | Correlation warning |
+| --- | --- | --- |
+| Arable land area (`arable-land-area`) | high_correlation_or_visual_similarity | high |
+| Cereal production (`cereal-production`) | high_correlation_or_visual_similarity | high |
+| Agriculture nitrous oxide emissions (`agriculture-nitrous-oxide-emissions`) | high_correlation_or_visual_similarity | high |
 
 ## Largest city share - explorer
 
@@ -2245,7 +3159,7 @@ This report records which distractors were selected for each tier and which cand
 
 - Round: `worldprint-largest-city-share`
 - Final fairness warning: ok
-- Selected distractors: population-density, urban-population-growth, urban-slum-population
+- Selected distractors: rural-basic-drinking-water, urban-electricity-access, urban-clean-cooking-access
 
 | Rejected candidate | Reason | Correlation warning |
 | --- | --- | --- |
@@ -2255,7 +3169,7 @@ This report records which distractors were selected for each tier and which cand
 
 - Round: `worldprint-largest-city-share`
 - Final fairness warning: ok
-- Selected distractors: urban-slum-population, population-density, urban-population-growth, urban-population, low-elevation-coastal-population
+- Selected distractors: urban-electricity-access, rural-basic-drinking-water, urban-clean-cooking-access, rural-open-defecation, rural-basic-sanitation
 
 | Rejected candidate | Reason | Correlation warning |
 | --- | --- | --- |
@@ -2307,21 +3221,26 @@ This report records which distractors were selected for each tier and which cand
 
 - Round: `worldprint-low-elevation-coastal-population`
 - Final fairness warning: review
-- Selected distractors: urban-slum-population, urban-population-growth, arable-land-per-person
+- Selected distractors: urban-low-elevation-land, urban-slum-population, urban-population-growth
 
 | Rejected candidate | Reason | Correlation warning |
 | --- | --- | --- |
+| Rural low-elevation land (`rural-low-elevation-land`) | high_ambiguity_distractor | review |
 | Low-elevation land (`low-elevation-land-share`) | high_ambiguity_distractor | review |
+| Rural low-elevation population (`rural-low-elevation-population`) | high_correlation_or_visual_similarity | high |
+| Urban low-elevation population (`urban-low-elevation-population`) | high_correlation_or_visual_similarity | high |
+| Rural open defecation (`rural-open-defecation`) | high_ambiguity_distractor | review |
 
 ## Low-elevation coastal population - cartographer
 
 - Round: `worldprint-low-elevation-coastal-population`
-- Final fairness warning: ok
-- Selected distractors: low-elevation-land-share, urban-slum-population, urban-population, urban-population-growth, largest-city-share
+- Final fairness warning: review
+- Selected distractors: low-elevation-land-share, rural-low-elevation-land, urban-low-elevation-land, urban-slum-population, urban-population
 
 | Rejected candidate | Reason | Correlation warning |
 | --- | --- | --- |
-| None | n/a | n/a |
+| Rural low-elevation population (`rural-low-elevation-population`) | high_correlation_or_visual_similarity | high |
+| Urban low-elevation population (`urban-low-elevation-population`) | high_correlation_or_visual_similarity | high |
 
 ## Low-elevation land - explorer
 
@@ -2336,22 +3255,93 @@ This report records which distractors were selected for each tier and which cand
 ## Low-elevation land - analyst
 
 - Round: `worldprint-low-elevation-land-share`
-- Final fairness warning: ok
-- Selected distractors: low-elevation-coastal-population, urban-slum-population, urban-population-growth
+- Final fairness warning: review
+- Selected distractors: urban-low-elevation-land, low-elevation-coastal-population, rural-low-elevation-population
 
 | Rejected candidate | Reason | Correlation warning |
 | --- | --- | --- |
-| None | n/a | n/a |
+| Urban low-elevation population (`urban-low-elevation-population`) | high_ambiguity_distractor | review |
 
 ## Low-elevation land - cartographer
 
 - Round: `worldprint-low-elevation-land-share`
+- Final fairness warning: review
+- Selected distractors: rural-low-elevation-population, low-elevation-coastal-population, urban-low-elevation-land, urban-low-elevation-population, urban-slum-population
+
+| Rejected candidate | Reason | Correlation warning |
+| --- | --- | --- |
+| Rural low-elevation land (`rural-low-elevation-land`) | high_correlation_or_visual_similarity | high |
+
+## Male employment-to-population ratio - explorer
+
+- Round: `worldprint-male-employment-population-ratio`
+- Final fairness warning: review
+- Selected distractors: tourism-receipts-share, severe-food-insecurity
+
+| Rejected candidate | Reason | Correlation warning |
+| --- | --- | --- |
+| Foreign direct investment outflows (`fdi-outflows`) | high_ambiguity_distractor | ok |
+
+## Male employment-to-population ratio - analyst
+
+- Round: `worldprint-male-employment-population-ratio`
 - Final fairness warning: ok
-- Selected distractors: low-elevation-coastal-population, urban-slum-population, urban-population-growth, population-density, urban-population
+- Selected distractors: youth-labor-force, unemployment, youth-unemployment
 
 | Rejected candidate | Reason | Correlation warning |
 | --- | --- | --- |
 | None | n/a | n/a |
+
+## Male employment-to-population ratio - cartographer
+
+- Round: `worldprint-male-employment-population-ratio`
+- Final fairness warning: ok
+- Selected distractors: employment-population-ratio, labor-force-participation, youth-employment-ratio, youth-labor-force, unemployment
+
+| Rejected candidate | Reason | Correlation warning |
+| --- | --- | --- |
+| None | n/a | n/a |
+
+## Male industry employment - explorer
+
+- Round: `worldprint-male-industry-employment`
+- Final fairness warning: review
+- Selected distractors: fdi-inflows, cereal-production
+
+| Rejected candidate | Reason | Correlation warning |
+| --- | --- | --- |
+| Agriculture methane emissions (`agriculture-methane-emissions`) | high_ambiguity_distractor | ok |
+| Agriculture nitrous oxide emissions (`agriculture-nitrous-oxide-emissions`) | high_ambiguity_distractor | ok |
+| Foreign direct investment outflows (`fdi-outflows`) | high_ambiguity_distractor | ok |
+| GDP growth (`gdp-growth`) | high_ambiguity_distractor | ok |
+| Agricultural raw material exports (`agricultural-raw-material-exports`) | high_ambiguity_distractor | ok |
+
+## Male industry employment - analyst
+
+- Round: `worldprint-male-industry-employment`
+- Final fairness warning: review
+- Selected distractors: employment-agriculture, female-industry-employment, female-labor-force
+
+| Rejected candidate | Reason | Correlation warning |
+| --- | --- | --- |
+| Female self-employed (`female-self-employed`) | high_ambiguity_distractor | review |
+| Female vulnerable employment (`female-vulnerable-employment`) | high_ambiguity_distractor | review |
+| Female agricultural employment (`female-agricultural-employment`) | high_ambiguity_distractor | review |
+| Female wage workers (`female-wage-salaried-workers`) | high_ambiguity_distractor | review |
+| Contributing family workers (`contributing-family-workers`) | high_ambiguity_distractor | review |
+| Female contributing family workers (`female-contributing-family-workers`) | high_ambiguity_distractor | review |
+| Wage and salaried workers (`wage-salaried-workers`) | high_ambiguity_distractor | review |
+| Female services employment (`female-services-employment`) | high_ambiguity_distractor | review |
+
+## Male industry employment - cartographer
+
+- Round: `worldprint-male-industry-employment`
+- Final fairness warning: review
+- Selected distractors: female-wage-salaried-workers, female-self-employed, female-vulnerable-employment, employment-agriculture, female-agricultural-employment
+
+| Rejected candidate | Reason | Correlation warning |
+| --- | --- | --- |
+| Employment in industry (`employment-industry`) | high_correlation_or_visual_similarity | high |
 
 ## Manufacturing value added - explorer
 
@@ -2448,12 +3438,12 @@ This report records which distractors were selected for each tier and which cand
 ## International migrant stock - explorer
 
 - Round: `worldprint-migrant-stock`
-- Final fairness warning: review
-- Selected distractors: largest-city-share, health-expenditure
+- Final fairness warning: ok
+- Selected distractors: largest-city-share, primary-pupils-female-share
 
 | Rejected candidate | Reason | Correlation warning |
 | --- | --- | --- |
-| Low-elevation land (`low-elevation-land-share`) | high_ambiguity_distractor | ok |
+| None | n/a | n/a |
 
 ## International migrant stock - analyst
 
@@ -2531,7 +3521,7 @@ This report records which distractors were selected for each tier and which cand
 
 - Round: `worldprint-mobile-subscriptions`
 - Final fairness warning: ok
-- Selected distractors: secure-internet-servers, internet-users, fixed-broadband, fixed-telephone-subscriptions, bank-branches
+- Selected distractors: secure-internet-servers, internet-users, fixed-broadband, fixed-telephone-subscriptions, air-passengers
 
 | Rejected candidate | Reason | Correlation warning |
 | --- | --- | --- |
@@ -2571,12 +3561,13 @@ This report records which distractors were selected for each tier and which cand
 
 - Round: `worldprint-natural-resource-rents`
 - Final fairness warning: review
-- Selected distractors: unemployment, women-parliament
+- Selected distractors: youth-employment-ratio, women-parliament
 
 | Rejected candidate | Reason | Correlation warning |
 | --- | --- | --- |
 | Employment-to-population ratio (`employment-population-ratio`) | high_ambiguity_distractor | ok |
 | Female unemployment (`female-unemployment`) | high_ambiguity_distractor | ok |
+| Female employment-to-population ratio (`female-employment-population-ratio`) | high_ambiguity_distractor | ok |
 
 ## Natural resource rents - analyst
 
@@ -2631,12 +3622,12 @@ This report records which distractors were selected for each tier and which cand
 ## Non-hydro renewable electricity - explorer
 
 - Round: `worldprint-nonhydro-renewable-electricity`
-- Final fairness warning: review
-- Selected distractors: freshwater-withdrawal, fixed-telephone-subscriptions
+- Final fairness warning: ok
+- Selected distractors: transport-service-exports, freshwater-withdrawal
 
 | Rejected candidate | Reason | Correlation warning |
 | --- | --- | --- |
-| Greenhouse gas emissions per capita (`ghg-per-capita`) | high_ambiguity_distractor | review |
+| None | n/a | n/a |
 
 ## Non-hydro renewable electricity - analyst
 
@@ -2661,12 +3652,12 @@ This report records which distractors were selected for each tier and which cand
 ## Population ages 65+ - explorer
 
 - Round: `worldprint-older-adults-share`
-- Final fairness warning: review
-- Selected distractors: population-density, measles-immunization
+- Final fairness warning: ok
+- Selected distractors: primary-pupils-female-share, population-density
 
 | Rejected candidate | Reason | Correlation warning |
 | --- | --- | --- |
-| Low-elevation land (`low-elevation-land-share`) | high_ambiguity_distractor | ok |
+| None | n/a | n/a |
 
 ## Population ages 65+ - analyst
 
@@ -2750,6 +3741,36 @@ This report records which distractors were selected for each tier and which cand
 | Rejected candidate | Reason | Correlation warning |
 | --- | --- | --- |
 | Private health spending share (`private-health-spending-share`) | high_correlation_or_visual_similarity | high |
+
+## Out-of-school primary age - explorer
+
+- Round: `worldprint-out-of-school-primary`
+- Final fairness warning: ok
+- Selected distractors: ict-service-exports, women-parliament
+
+| Rejected candidate | Reason | Correlation warning |
+| --- | --- | --- |
+| None | n/a | n/a |
+
+## Out-of-school primary age - analyst
+
+- Round: `worldprint-out-of-school-primary`
+- Final fairness warning: ok
+- Selected distractors: secondary-enrollment, primary-female-teachers, tertiary-enrollment
+
+| Rejected candidate | Reason | Correlation warning |
+| --- | --- | --- |
+| None | n/a | n/a |
+
+## Out-of-school primary age - cartographer
+
+- Round: `worldprint-out-of-school-primary`
+- Final fairness warning: ok
+- Selected distractors: secondary-enrollment, tertiary-enrollment, primary-female-teachers, education-spending, secondary-pupils-female-share
+
+| Rejected candidate | Reason | Correlation warning |
+| --- | --- | --- |
+| None | n/a | n/a |
 
 ## Permanent cropland - explorer
 
@@ -2858,7 +3879,7 @@ This report records which distractors were selected for each tier and which cand
 
 - Round: `worldprint-population-density`
 - Final fairness warning: ok
-- Selected distractors: permanent-cropland, arable-land, largest-city-share
+- Selected distractors: urban-low-elevation-land, permanent-cropland, arable-land
 
 | Rejected candidate | Reason | Correlation warning |
 | --- | --- | --- |
@@ -2868,7 +3889,7 @@ This report records which distractors were selected for each tier and which cand
 
 - Round: `worldprint-population-density`
 - Final fairness warning: ok
-- Selected distractors: permanent-cropland, arable-land, low-elevation-land-share, largest-city-share, urban-population-growth
+- Selected distractors: urban-low-elevation-land, permanent-cropland, arable-land, low-elevation-land-share, rural-population-growth
 
 | Rejected candidate | Reason | Correlation warning |
 | --- | --- | --- |
@@ -2878,7 +3899,7 @@ This report records which distractors were selected for each tier and which cand
 
 - Round: `worldprint-population-growth`
 - Final fairness warning: ok
-- Selected distractors: largest-city-share, out-of-pocket-health
+- Selected distractors: largest-city-share, primary-pupils-female-share
 
 | Rejected candidate | Reason | Correlation warning |
 | --- | --- | --- |
@@ -2930,6 +3951,99 @@ This report records which distractors were selected for each tier and which cand
 - Round: `worldprint-precipitation-depth`
 - Final fairness warning: ok
 - Selected distractors: freshwater-per-capita, forest-area, freshwater-withdrawal, water-stress, carbon-intensity-gdp
+
+| Rejected candidate | Reason | Correlation warning |
+| --- | --- | --- |
+| None | n/a | n/a |
+
+## Female primary teachers - explorer
+
+- Round: `worldprint-primary-female-teachers`
+- Final fairness warning: ok
+- Selected distractors: women-parliament, transport-service-exports
+
+| Rejected candidate | Reason | Correlation warning |
+| --- | --- | --- |
+| None | n/a | n/a |
+
+## Female primary teachers - analyst
+
+- Round: `worldprint-primary-female-teachers`
+- Final fairness warning: ok
+- Selected distractors: secondary-enrollment, tertiary-enrollment, out-of-school-primary
+
+| Rejected candidate | Reason | Correlation warning |
+| --- | --- | --- |
+| None | n/a | n/a |
+
+## Female primary teachers - cartographer
+
+- Round: `worldprint-primary-female-teachers`
+- Final fairness warning: ok
+- Selected distractors: tertiary-enrollment, secondary-enrollment, secondary-pupils-female-share, out-of-school-primary, fertility-rate
+
+| Rejected candidate | Reason | Correlation warning |
+| --- | --- | --- |
+| None | n/a | n/a |
+
+## Primary gross intake - explorer
+
+- Round: `worldprint-primary-gross-intake`
+- Final fairness warning: review
+- Selected distractors: container-port-traffic, women-business-law
+
+| Rejected candidate | Reason | Correlation warning |
+| --- | --- | --- |
+| Air carrier departures (`air-departures`) | high_ambiguity_distractor | ok |
+| Air passengers carried (`air-passengers`) | high_ambiguity_distractor | ok |
+
+## Primary gross intake - analyst
+
+- Round: `worldprint-primary-gross-intake`
+- Final fairness warning: ok
+- Selected distractors: tertiary-enrollment, education-spending, compulsory-education-duration
+
+| Rejected candidate | Reason | Correlation warning |
+| --- | --- | --- |
+| None | n/a | n/a |
+
+## Primary gross intake - cartographer
+
+- Round: `worldprint-primary-gross-intake`
+- Final fairness warning: ok
+- Selected distractors: tertiary-enrollment, primary-female-teachers, secondary-enrollment, education-spending, compulsory-education-duration
+
+| Rejected candidate | Reason | Correlation warning |
+| --- | --- | --- |
+| None | n/a | n/a |
+
+## Female primary pupils - explorer
+
+- Round: `worldprint-primary-pupils-female-share`
+- Final fairness warning: review
+- Selected distractors: women-parliament, age-dependency
+
+| Rejected candidate | Reason | Correlation warning |
+| --- | --- | --- |
+| GNI per capita, PPP (`gni-per-capita-ppp`) | high_ambiguity_distractor | ok |
+| GDP per capita, PPP (`gdp-per-capita-ppp`) | high_ambiguity_distractor | ok |
+| GNI per capita (`gni-per-capita`) | high_ambiguity_distractor | ok |
+
+## Female primary pupils - analyst
+
+- Round: `worldprint-primary-pupils-female-share`
+- Final fairness warning: ok
+- Selected distractors: secondary-pupils-female-share, secondary-enrollment, out-of-school-primary
+
+| Rejected candidate | Reason | Correlation warning |
+| --- | --- | --- |
+| None | n/a | n/a |
+
+## Female primary pupils - cartographer
+
+- Round: `worldprint-primary-pupils-female-share`
+- Final fairness warning: ok
+- Selected distractors: secondary-pupils-female-share, primary-gross-intake, secondary-enrollment, out-of-school-primary, primary-female-teachers
 
 | Rejected candidate | Reason | Correlation warning |
 | --- | --- | --- |
@@ -3000,7 +4114,7 @@ This report records which distractors were selected for each tier and which cand
 
 - Round: `worldprint-protected-seas`
 - Final fairness warning: ok
-- Selected distractors: fossil-fuel-energy-share, agricultural-land
+- Selected distractors: fossil-fuel-energy-share, land-under-cereal
 
 | Rejected candidate | Reason | Correlation warning |
 | --- | --- | --- |
@@ -3030,10 +4144,12 @@ This report records which distractors were selected for each tier and which cand
 
 - Round: `worldprint-remittances`
 - Final fairness warning: review
-- Selected distractors: employers-share, women-parliament
+- Selected distractors: female-industry-employment, women-parliament
 
 | Rejected candidate | Reason | Correlation warning |
 | --- | --- | --- |
+| Male employment-to-population ratio (`male-employment-population-ratio`) | high_ambiguity_distractor | ok |
+| Female employment-to-population ratio (`female-employment-population-ratio`) | high_ambiguity_distractor | ok |
 | Female unemployment (`female-unemployment`) | high_ambiguity_distractor | ok |
 
 ## Remittances received - analyst
@@ -3090,7 +4206,7 @@ This report records which distractors were selected for each tier and which cand
 
 - Round: `worldprint-renewable-energy-consumption`
 - Final fairness warning: ok
-- Selected distractors: women-business-law, water-productivity
+- Selected distractors: ict-service-exports, women-business-law
 
 | Rejected candidate | Reason | Correlation warning |
 | --- | --- | --- |
@@ -3111,6 +4227,190 @@ This report records which distractors were selected for each tier and which cand
 - Round: `worldprint-renewable-energy-consumption`
 - Final fairness warning: ok
 - Selected distractors: clean-fuels-access, hydro-electricity-share, electricity-access, renewable-electricity, energy-use
+
+| Rejected candidate | Reason | Correlation warning |
+| --- | --- | --- |
+| None | n/a | n/a |
+
+## Rural basic drinking water - explorer
+
+- Round: `worldprint-rural-basic-drinking-water`
+- Final fairness warning: review
+- Selected distractors: permanent-cropland, women-parliament
+
+| Rejected candidate | Reason | Correlation warning |
+| --- | --- | --- |
+| Arable land area (`arable-land-area`) | high_ambiguity_distractor | ok |
+
+## Rural basic drinking water - analyst
+
+- Round: `worldprint-rural-basic-drinking-water`
+- Final fairness warning: ok
+- Selected distractors: urban-population-growth, urban-clean-cooking-access, urban-electricity-access
+
+| Rejected candidate | Reason | Correlation warning |
+| --- | --- | --- |
+| None | n/a | n/a |
+
+## Rural basic drinking water - cartographer
+
+- Round: `worldprint-rural-basic-drinking-water`
+- Final fairness warning: ok
+- Selected distractors: urban-basic-sanitation, urban-basic-drinking-water, rural-basic-sanitation, urban-clean-cooking-access, urban-electricity-access
+
+| Rejected candidate | Reason | Correlation warning |
+| --- | --- | --- |
+| None | n/a | n/a |
+
+## Rural basic sanitation - explorer
+
+- Round: `worldprint-rural-basic-sanitation`
+- Final fairness warning: review
+- Selected distractors: permanent-cropland, death-rate
+
+| Rejected candidate | Reason | Correlation warning |
+| --- | --- | --- |
+| Arable land area (`arable-land-area`) | high_ambiguity_distractor | ok |
+
+## Rural basic sanitation - analyst
+
+- Round: `worldprint-rural-basic-sanitation`
+- Final fairness warning: review
+- Selected distractors: urban-population-growth, urban-open-defecation, urban-clean-cooking-access
+
+| Rejected candidate | Reason | Correlation warning |
+| --- | --- | --- |
+| Rural open defecation (`rural-open-defecation`) | high_ambiguity_distractor | review |
+
+## Rural basic sanitation - cartographer
+
+- Round: `worldprint-rural-basic-sanitation`
+- Final fairness warning: review
+- Selected distractors: rural-basic-drinking-water, urban-clean-cooking-access, urban-electricity-access, urban-slum-population, rural-open-defecation
+
+| Rejected candidate | Reason | Correlation warning |
+| --- | --- | --- |
+| Urban basic sanitation (`urban-basic-sanitation`) | high_correlation_or_visual_similarity | high |
+
+## Rural low-elevation land - explorer
+
+- Round: `worldprint-rural-low-elevation-land`
+- Final fairness warning: ok
+- Selected distractors: death-rate, women-business-law
+
+| Rejected candidate | Reason | Correlation warning |
+| --- | --- | --- |
+| None | n/a | n/a |
+
+## Rural low-elevation land - analyst
+
+- Round: `worldprint-rural-low-elevation-land`
+- Final fairness warning: review
+- Selected distractors: urban-low-elevation-land, low-elevation-coastal-population, rural-low-elevation-population
+
+| Rejected candidate | Reason | Correlation warning |
+| --- | --- | --- |
+| Urban low-elevation population (`urban-low-elevation-population`) | high_ambiguity_distractor | review |
+
+## Rural low-elevation land - cartographer
+
+- Round: `worldprint-rural-low-elevation-land`
+- Final fairness warning: review
+- Selected distractors: rural-low-elevation-population, low-elevation-coastal-population, urban-low-elevation-land, urban-low-elevation-population, urban-slum-population
+
+| Rejected candidate | Reason | Correlation warning |
+| --- | --- | --- |
+| Low-elevation land (`low-elevation-land-share`) | high_correlation_or_visual_similarity | high |
+
+## Rural low-elevation population - explorer
+
+- Round: `worldprint-rural-low-elevation-population`
+- Final fairness warning: ok
+- Selected distractors: death-rate, women-business-law
+
+| Rejected candidate | Reason | Correlation warning |
+| --- | --- | --- |
+| None | n/a | n/a |
+
+## Rural low-elevation population - analyst
+
+- Round: `worldprint-rural-low-elevation-population`
+- Final fairness warning: review
+- Selected distractors: urban-low-elevation-land, urban-slum-population, urban-population-growth
+
+| Rejected candidate | Reason | Correlation warning |
+| --- | --- | --- |
+| Urban low-elevation population (`urban-low-elevation-population`) | high_ambiguity_distractor | review |
+| Rural low-elevation land (`rural-low-elevation-land`) | high_ambiguity_distractor | review |
+| Low-elevation land (`low-elevation-land-share`) | high_ambiguity_distractor | review |
+| Low-elevation coastal population (`low-elevation-coastal-population`) | high_correlation_or_visual_similarity | high |
+| Rural open defecation (`rural-open-defecation`) | high_ambiguity_distractor | review |
+
+## Rural low-elevation population - cartographer
+
+- Round: `worldprint-rural-low-elevation-population`
+- Final fairness warning: review
+- Selected distractors: low-elevation-land-share, urban-low-elevation-population, rural-low-elevation-land, urban-low-elevation-land, urban-slum-population
+
+| Rejected candidate | Reason | Correlation warning |
+| --- | --- | --- |
+| Low-elevation coastal population (`low-elevation-coastal-population`) | high_correlation_or_visual_similarity | high |
+
+## Rural open defecation - explorer
+
+- Round: `worldprint-rural-open-defecation`
+- Final fairness warning: review
+- Selected distractors: arable-land-per-person, death-rate
+
+| Rejected candidate | Reason | Correlation warning |
+| --- | --- | --- |
+| Arable land area (`arable-land-area`) | high_ambiguity_distractor | ok |
+
+## Rural open defecation - analyst
+
+- Round: `worldprint-rural-open-defecation`
+- Final fairness warning: ok
+- Selected distractors: rural-basic-sanitation, rural-basic-drinking-water, urban-electricity-access
+
+| Rejected candidate | Reason | Correlation warning |
+| --- | --- | --- |
+| None | n/a | n/a |
+
+## Rural open defecation - cartographer
+
+- Round: `worldprint-rural-open-defecation`
+- Final fairness warning: ok
+- Selected distractors: urban-open-defecation, rural-basic-sanitation, urban-slum-population, rural-basic-drinking-water, urban-clean-cooking-access
+
+| Rejected candidate | Reason | Correlation warning |
+| --- | --- | --- |
+| None | n/a | n/a |
+
+## Rural population growth - explorer
+
+- Round: `worldprint-rural-population-growth`
+- Final fairness warning: ok
+- Selected distractors: agricultural-land, migrant-stock
+
+| Rejected candidate | Reason | Correlation warning |
+| --- | --- | --- |
+| None | n/a | n/a |
+
+## Rural population growth - analyst
+
+- Round: `worldprint-rural-population-growth`
+- Final fairness warning: ok
+- Selected distractors: urban-population-growth, urban-electricity-access, rural-basic-drinking-water
+
+| Rejected candidate | Reason | Correlation warning |
+| --- | --- | --- |
+| None | n/a | n/a |
+
+## Rural population growth - cartographer
+
+- Round: `worldprint-rural-population-growth`
+- Final fairness warning: ok
+- Selected distractors: urban-population-growth, urban-electricity-access, rural-basic-drinking-water, rural-basic-sanitation, urban-basic-drinking-water
 
 | Rejected candidate | Reason | Correlation warning |
 | --- | --- | --- |
@@ -3212,7 +4512,7 @@ This report records which distractors were selected for each tier and which cand
 
 - Round: `worldprint-secondary-enrollment`
 - Final fairness warning: ok
-- Selected distractors: women-parliament, death-rate
+- Selected distractors: ict-service-exports, women-parliament
 
 | Rejected candidate | Reason | Correlation warning |
 | --- | --- | --- |
@@ -3222,7 +4522,7 @@ This report records which distractors were selected for each tier and which cand
 
 - Round: `worldprint-secondary-enrollment`
 - Final fairness warning: ok
-- Selected distractors: tertiary-enrollment, fertility-rate, education-spending
+- Selected distractors: out-of-school-primary, primary-female-teachers, tertiary-enrollment
 
 | Rejected candidate | Reason | Correlation warning |
 | --- | --- | --- |
@@ -3232,7 +4532,39 @@ This report records which distractors were selected for each tier and which cand
 
 - Round: `worldprint-secondary-enrollment`
 - Final fairness warning: ok
-- Selected distractors: tertiary-enrollment, education-spending, gni-per-capita, internet-users, gni-per-capita-ppp
+- Selected distractors: tertiary-enrollment, out-of-school-primary, primary-female-teachers, education-spending, secondary-pupils-female-share
+
+| Rejected candidate | Reason | Correlation warning |
+| --- | --- | --- |
+| None | n/a | n/a |
+
+## Female secondary pupils - explorer
+
+- Round: `worldprint-secondary-pupils-female-share`
+- Final fairness warning: review
+- Selected distractors: communications-service-imports, death-rate
+
+| Rejected candidate | Reason | Correlation warning |
+| --- | --- | --- |
+| Air passengers carried (`air-passengers`) | high_ambiguity_distractor | ok |
+| Commercial bank branches (`bank-branches`) | high_ambiguity_distractor | ok |
+| Air carrier departures (`air-departures`) | high_ambiguity_distractor | ok |
+
+## Female secondary pupils - analyst
+
+- Round: `worldprint-secondary-pupils-female-share`
+- Final fairness warning: ok
+- Selected distractors: primary-pupils-female-share, secondary-enrollment, primary-female-teachers
+
+| Rejected candidate | Reason | Correlation warning |
+| --- | --- | --- |
+| None | n/a | n/a |
+
+## Female secondary pupils - cartographer
+
+- Round: `worldprint-secondary-pupils-female-share`
+- Final fairness warning: ok
+- Selected distractors: primary-pupils-female-share, primary-female-teachers, secondary-enrollment, education-spending, out-of-school-primary
 
 | Rejected candidate | Reason | Correlation warning |
 | --- | --- | --- |
@@ -3242,7 +4574,7 @@ This report records which distractors were selected for each tier and which cand
 
 - Round: `worldprint-secure-internet-servers`
 - Final fairness warning: ok
-- Selected distractors: fossil-fuel-energy-share, women-parliament
+- Selected distractors: fossil-fuel-energy-share, secondary-pupils-female-share
 
 | Rejected candidate | Reason | Correlation warning |
 | --- | --- | --- |
@@ -3251,18 +4583,18 @@ This report records which distractors were selected for each tier and which cand
 ## Secure internet servers - analyst
 
 - Round: `worldprint-secure-internet-servers`
-- Final fairness warning: review
-- Selected distractors: fixed-broadband, fixed-telephone-subscriptions, internet-users
+- Final fairness warning: ok
+- Selected distractors: fixed-broadband, transport-service-imports, fixed-telephone-subscriptions
 
 | Rejected candidate | Reason | Correlation warning |
 | --- | --- | --- |
-| Commercial bank branches (`bank-branches`) | high_ambiguity_distractor | review |
+| None | n/a | n/a |
 
 ## Secure internet servers - cartographer
 
 - Round: `worldprint-secure-internet-servers`
 - Final fairness warning: ok
-- Selected distractors: fixed-broadband, internet-users, fixed-telephone-subscriptions, bank-branches, mobile-subscriptions
+- Selected distractors: fixed-broadband, internet-users, fixed-telephone-subscriptions, bank-branches, transport-service-imports
 
 | Rejected candidate | Reason | Correlation warning |
 | --- | --- | --- |
@@ -3272,12 +4604,13 @@ This report records which distractors were selected for each tier and which cand
 
 - Round: `worldprint-services-share`
 - Final fairness warning: review
-- Selected distractors: employment-industry, women-parliament
+- Selected distractors: youth-employment-ratio, women-parliament
 
 | Rejected candidate | Reason | Correlation warning |
 | --- | --- | --- |
 | Female unemployment (`female-unemployment`) | high_ambiguity_distractor | ok |
 | Employment-to-population ratio (`employment-population-ratio`) | high_ambiguity_distractor | ok |
+| Female employment-to-population ratio (`female-employment-population-ratio`) | high_ambiguity_distractor | ok |
 
 ## Services value added - analyst
 
@@ -3299,11 +4632,41 @@ This report records which distractors were selected for each tier and which cand
 | --- | --- | --- |
 | None | n/a | n/a |
 
+## Severe food insecurity - explorer
+
+- Round: `worldprint-severe-food-insecurity`
+- Final fairness warning: ok
+- Selected distractors: youth-labor-force, fdi-inflows
+
+| Rejected candidate | Reason | Correlation warning |
+| --- | --- | --- |
+| None | n/a | n/a |
+
+## Severe food insecurity - analyst
+
+- Round: `worldprint-severe-food-insecurity`
+- Final fairness warning: review
+- Selected distractors: cereal-yield, food-exports-share, high-tech-exports
+
+| Rejected candidate | Reason | Correlation warning |
+| --- | --- | --- |
+| Agriculture value per worker (`agriculture-value-per-worker`) | high_ambiguity_distractor | review |
+
+## Severe food insecurity - cartographer
+
+- Round: `worldprint-severe-food-insecurity`
+- Final fairness warning: review
+- Selected distractors: agriculture-value-per-worker, cereal-yield, food-exports-share, food-imports-share, high-tech-exports
+
+| Rejected candidate | Reason | Correlation warning |
+| --- | --- | --- |
+| Moderate or severe food insecurity (`food-insecurity-moderate-severe`) | high_correlation_or_visual_similarity | high |
+
 ## Tertiary enrollment - explorer
 
 - Round: `worldprint-tertiary-enrollment`
 - Final fairness warning: ok
-- Selected distractors: women-parliament, death-rate
+- Selected distractors: transport-service-exports, women-parliament
 
 | Rejected candidate | Reason | Correlation warning |
 | --- | --- | --- |
@@ -3313,7 +4676,7 @@ This report records which distractors were selected for each tier and which cand
 
 - Round: `worldprint-tertiary-enrollment`
 - Final fairness warning: ok
-- Selected distractors: secondary-enrollment, adolescent-fertility, education-spending
+- Selected distractors: secondary-enrollment, primary-female-teachers, adolescent-fertility
 
 | Rejected candidate | Reason | Correlation warning |
 | --- | --- | --- |
@@ -3323,7 +4686,7 @@ This report records which distractors were selected for each tier and which cand
 
 - Round: `worldprint-tertiary-enrollment`
 - Final fairness warning: ok
-- Selected distractors: secondary-enrollment, education-spending, secure-internet-servers, fixed-broadband, adolescent-fertility
+- Selected distractors: secondary-enrollment, primary-female-teachers, out-of-school-primary, education-spending, secure-internet-servers
 
 | Rejected candidate | Reason | Correlation warning |
 | --- | --- | --- |
@@ -3393,12 +4756,13 @@ This report records which distractors were selected for each tier and which cand
 ## Tourism receipts - explorer
 
 - Round: `worldprint-tourism-receipts-share`
-- Final fairness warning: ok
+- Final fairness warning: review
 - Selected distractors: women-business-law, youth-labor-force
 
 | Rejected candidate | Reason | Correlation warning |
 | --- | --- | --- |
-| None | n/a | n/a |
+| Female employment-to-population ratio (`female-employment-population-ratio`) | high_ambiguity_distractor | ok |
+| Male employment-to-population ratio (`male-employment-population-ratio`) | high_ambiguity_distractor | ok |
 
 ## Tourism receipts - analyst
 
@@ -3447,6 +4811,66 @@ This report records which distractors were selected for each tier and which cand
 - Round: `worldprint-trade-share`
 - Final fairness warning: ok
 - Selected distractors: imports-share, exports-share, agriculture-value-added, services-share, inflation
+
+| Rejected candidate | Reason | Correlation warning |
+| --- | --- | --- |
+| None | n/a | n/a |
+
+## Transport service exports - explorer
+
+- Round: `worldprint-transport-service-exports`
+- Final fairness warning: ok
+- Selected distractors: fossil-fuel-energy-share, compulsory-education-duration
+
+| Rejected candidate | Reason | Correlation warning |
+| --- | --- | --- |
+| None | n/a | n/a |
+
+## Transport service exports - analyst
+
+- Round: `worldprint-transport-service-exports`
+- Final fairness warning: ok
+- Selected distractors: communications-service-exports, ict-service-exports, transport-service-imports
+
+| Rejected candidate | Reason | Correlation warning |
+| --- | --- | --- |
+| None | n/a | n/a |
+
+## Transport service exports - cartographer
+
+- Round: `worldprint-transport-service-exports`
+- Final fairness warning: ok
+- Selected distractors: communications-service-exports, ict-service-exports, transport-service-imports, air-departures, fixed-broadband
+
+| Rejected candidate | Reason | Correlation warning |
+| --- | --- | --- |
+| None | n/a | n/a |
+
+## Transport service imports - explorer
+
+- Round: `worldprint-transport-service-imports`
+- Final fairness warning: ok
+- Selected distractors: fossil-fuel-energy-share, primary-gross-intake
+
+| Rejected candidate | Reason | Correlation warning |
+| --- | --- | --- |
+| None | n/a | n/a |
+
+## Transport service imports - analyst
+
+- Round: `worldprint-transport-service-imports`
+- Final fairness warning: ok
+- Selected distractors: communications-service-imports, secure-internet-servers, fixed-broadband
+
+| Rejected candidate | Reason | Correlation warning |
+| --- | --- | --- |
+| None | n/a | n/a |
+
+## Transport service imports - cartographer
+
+- Round: `worldprint-transport-service-imports`
+- Final fairness warning: ok
+- Selected distractors: communications-service-imports, secure-internet-servers, fixed-broadband, internet-users, air-freight
 
 | Rejected candidate | Reason | Correlation warning |
 | --- | --- | --- |
@@ -3556,24 +4980,239 @@ This report records which distractors were selected for each tier and which cand
 
 - Round: `worldprint-unemployment`
 - Final fairness warning: review
-- Selected distractors: labor-force-participation, youth-labor-force, female-labor-force
+- Selected distractors: youth-employment-ratio, labor-force-participation, youth-labor-force
 
 | Rejected candidate | Reason | Correlation warning |
 | --- | --- | --- |
 | Employment-to-population ratio (`employment-population-ratio`) | high_ambiguity_distractor | review |
+| Male employment-to-population ratio (`male-employment-population-ratio`) | high_ambiguity_distractor | review |
 | Youth unemployment (`youth-unemployment`) | high_correlation_or_visual_similarity | high |
+| Female employment-to-population ratio (`female-employment-population-ratio`) | high_ambiguity_distractor | review |
 | Female unemployment (`female-unemployment`) | high_correlation_or_visual_similarity | high |
 
 ## Unemployment - cartographer
 
 - Round: `worldprint-unemployment`
 - Final fairness warning: review
-- Selected distractors: employment-population-ratio, labor-force-participation, female-labor-force, youth-labor-force, employment-services
+- Selected distractors: employment-population-ratio, male-employment-population-ratio, youth-employment-ratio, female-employment-population-ratio, labor-force-participation
 
 | Rejected candidate | Reason | Correlation warning |
 | --- | --- | --- |
 | Youth unemployment (`youth-unemployment`) | high_correlation_or_visual_similarity | high |
 | Female unemployment (`female-unemployment`) | high_correlation_or_visual_similarity | high |
+
+## Urban basic drinking water - explorer
+
+- Round: `worldprint-urban-basic-drinking-water`
+- Final fairness warning: review
+- Selected distractors: arable-land, death-rate
+
+| Rejected candidate | Reason | Correlation warning |
+| --- | --- | --- |
+| Arable land area (`arable-land-area`) | high_ambiguity_distractor | ok |
+
+## Urban basic drinking water - analyst
+
+- Round: `worldprint-urban-basic-drinking-water`
+- Final fairness warning: ok
+- Selected distractors: urban-electricity-access, urban-clean-cooking-access, urban-open-defecation
+
+| Rejected candidate | Reason | Correlation warning |
+| --- | --- | --- |
+| None | n/a | n/a |
+
+## Urban basic drinking water - cartographer
+
+- Round: `worldprint-urban-basic-drinking-water`
+- Final fairness warning: ok
+- Selected distractors: rural-basic-drinking-water, urban-electricity-access, urban-clean-cooking-access, urban-basic-sanitation, rural-basic-sanitation
+
+| Rejected candidate | Reason | Correlation warning |
+| --- | --- | --- |
+| None | n/a | n/a |
+
+## Urban basic sanitation - explorer
+
+- Round: `worldprint-urban-basic-sanitation`
+- Final fairness warning: review
+- Selected distractors: arable-land, women-parliament
+
+| Rejected candidate | Reason | Correlation warning |
+| --- | --- | --- |
+| Arable land area (`arable-land-area`) | high_ambiguity_distractor | ok |
+
+## Urban basic sanitation - analyst
+
+- Round: `worldprint-urban-basic-sanitation`
+- Final fairness warning: ok
+- Selected distractors: urban-population-growth, urban-electricity-access, urban-open-defecation
+
+| Rejected candidate | Reason | Correlation warning |
+| --- | --- | --- |
+| None | n/a | n/a |
+
+## Urban basic sanitation - cartographer
+
+- Round: `worldprint-urban-basic-sanitation`
+- Final fairness warning: review
+- Selected distractors: rural-basic-drinking-water, urban-clean-cooking-access, urban-electricity-access, urban-basic-drinking-water, urban-slum-population
+
+| Rejected candidate | Reason | Correlation warning |
+| --- | --- | --- |
+| Rural basic sanitation (`rural-basic-sanitation`) | high_correlation_or_visual_similarity | high |
+
+## Urban clean cooking access - explorer
+
+- Round: `worldprint-urban-clean-cooking-access`
+- Final fairness warning: ok
+- Selected distractors: arable-land, women-parliament
+
+| Rejected candidate | Reason | Correlation warning |
+| --- | --- | --- |
+| None | n/a | n/a |
+
+## Urban clean cooking access - analyst
+
+- Round: `worldprint-urban-clean-cooking-access`
+- Final fairness warning: ok
+- Selected distractors: urban-electricity-access, rural-basic-drinking-water, rural-basic-sanitation
+
+| Rejected candidate | Reason | Correlation warning |
+| --- | --- | --- |
+| None | n/a | n/a |
+
+## Urban clean cooking access - cartographer
+
+- Round: `worldprint-urban-clean-cooking-access`
+- Final fairness warning: ok
+- Selected distractors: urban-basic-sanitation, rural-basic-sanitation, rural-basic-drinking-water, urban-electricity-access, urban-basic-drinking-water
+
+| Rejected candidate | Reason | Correlation warning |
+| --- | --- | --- |
+| None | n/a | n/a |
+
+## Urban electricity access - explorer
+
+- Round: `worldprint-urban-electricity-access`
+- Final fairness warning: ok
+- Selected distractors: arable-land, women-parliament
+
+| Rejected candidate | Reason | Correlation warning |
+| --- | --- | --- |
+| None | n/a | n/a |
+
+## Urban electricity access - analyst
+
+- Round: `worldprint-urban-electricity-access`
+- Final fairness warning: ok
+- Selected distractors: urban-clean-cooking-access, urban-open-defecation, urban-basic-sanitation
+
+| Rejected candidate | Reason | Correlation warning |
+| --- | --- | --- |
+| None | n/a | n/a |
+
+## Urban electricity access - cartographer
+
+- Round: `worldprint-urban-electricity-access`
+- Final fairness warning: ok
+- Selected distractors: urban-basic-sanitation, rural-basic-sanitation, urban-basic-drinking-water, rural-basic-drinking-water, urban-clean-cooking-access
+
+| Rejected candidate | Reason | Correlation warning |
+| --- | --- | --- |
+| None | n/a | n/a |
+
+## Urban low-elevation land - explorer
+
+- Round: `worldprint-urban-low-elevation-land`
+- Final fairness warning: ok
+- Selected distractors: death-rate, women-business-law
+
+| Rejected candidate | Reason | Correlation warning |
+| --- | --- | --- |
+| None | n/a | n/a |
+
+## Urban low-elevation land - analyst
+
+- Round: `worldprint-urban-low-elevation-land`
+- Final fairness warning: review
+- Selected distractors: rural-low-elevation-population, low-elevation-coastal-population, urban-slum-population
+
+| Rejected candidate | Reason | Correlation warning |
+| --- | --- | --- |
+| Rural low-elevation land (`rural-low-elevation-land`) | high_ambiguity_distractor | review |
+| Low-elevation land (`low-elevation-land-share`) | high_ambiguity_distractor | review |
+| Urban low-elevation population (`urban-low-elevation-population`) | high_ambiguity_distractor | review |
+
+## Urban low-elevation land - cartographer
+
+- Round: `worldprint-urban-low-elevation-land`
+- Final fairness warning: ok
+- Selected distractors: low-elevation-land-share, urban-low-elevation-population, rural-low-elevation-land, low-elevation-coastal-population, rural-low-elevation-population
+
+| Rejected candidate | Reason | Correlation warning |
+| --- | --- | --- |
+| None | n/a | n/a |
+
+## Urban low-elevation population - explorer
+
+- Round: `worldprint-urban-low-elevation-population`
+- Final fairness warning: ok
+- Selected distractors: women-business-law, death-rate
+
+| Rejected candidate | Reason | Correlation warning |
+| --- | --- | --- |
+| None | n/a | n/a |
+
+## Urban low-elevation population - analyst
+
+- Round: `worldprint-urban-low-elevation-population`
+- Final fairness warning: review
+- Selected distractors: urban-low-elevation-land, rural-low-elevation-population, urban-slum-population
+
+| Rejected candidate | Reason | Correlation warning |
+| --- | --- | --- |
+| Low-elevation land (`low-elevation-land-share`) | high_ambiguity_distractor | review |
+| Rural low-elevation land (`rural-low-elevation-land`) | high_ambiguity_distractor | review |
+
+## Urban low-elevation population - cartographer
+
+- Round: `worldprint-urban-low-elevation-population`
+- Final fairness warning: review
+- Selected distractors: rural-low-elevation-population, urban-low-elevation-land, low-elevation-land-share, rural-low-elevation-land, urban-population
+
+| Rejected candidate | Reason | Correlation warning |
+| --- | --- | --- |
+| Low-elevation coastal population (`low-elevation-coastal-population`) | high_correlation_or_visual_similarity | high |
+
+## Urban open defecation - explorer
+
+- Round: `worldprint-urban-open-defecation`
+- Final fairness warning: review
+- Selected distractors: land-under-cereal, death-rate
+
+| Rejected candidate | Reason | Correlation warning |
+| --- | --- | --- |
+| Arable land area (`arable-land-area`) | high_ambiguity_distractor | ok |
+
+## Urban open defecation - analyst
+
+- Round: `worldprint-urban-open-defecation`
+- Final fairness warning: ok
+- Selected distractors: urban-electricity-access, rural-basic-sanitation, rural-basic-drinking-water
+
+| Rejected candidate | Reason | Correlation warning |
+| --- | --- | --- |
+| None | n/a | n/a |
+
+## Urban open defecation - cartographer
+
+- Round: `worldprint-urban-open-defecation`
+- Final fairness warning: ok
+- Selected distractors: rural-open-defecation, urban-electricity-access, rural-basic-drinking-water, rural-basic-sanitation, urban-basic-sanitation
+
+| Rejected candidate | Reason | Correlation warning |
+| --- | --- | --- |
+| None | n/a | n/a |
 
 ## Urban population - explorer
 
@@ -3589,7 +5228,7 @@ This report records which distractors were selected for each tier and which cand
 
 - Round: `worldprint-urban-population`
 - Final fairness warning: ok
-- Selected distractors: urban-slum-population, urban-population-growth, gdp-per-capita
+- Selected distractors: urban-clean-cooking-access, urban-basic-sanitation, rural-basic-sanitation
 
 | Rejected candidate | Reason | Correlation warning |
 | --- | --- | --- |
@@ -3599,7 +5238,7 @@ This report records which distractors were selected for each tier and which cand
 
 - Round: `worldprint-urban-population`
 - Final fairness warning: ok
-- Selected distractors: urban-slum-population, urban-population-growth, gdp-per-capita, gni-per-capita, gni-per-capita-ppp
+- Selected distractors: urban-clean-cooking-access, urban-basic-sanitation, rural-basic-sanitation, rural-basic-drinking-water, urban-basic-drinking-water
 
 | Rejected candidate | Reason | Correlation warning |
 | --- | --- | --- |
@@ -3619,7 +5258,7 @@ This report records which distractors were selected for each tier and which cand
 
 - Round: `worldprint-urban-population-growth`
 - Final fairness warning: ok
-- Selected distractors: urban-slum-population, urban-population, older-adults-share
+- Selected distractors: urban-basic-sanitation, rural-basic-drinking-water, rural-basic-sanitation
 
 | Rejected candidate | Reason | Correlation warning |
 | --- | --- | --- |
@@ -3628,12 +5267,12 @@ This report records which distractors were selected for each tier and which cand
 ## Urban population growth - cartographer
 
 - Round: `worldprint-urban-population-growth`
-- Final fairness warning: review
-- Selected distractors: urban-slum-population, urban-population, older-adults-share, fertility-rate, birth-rate
+- Final fairness warning: ok
+- Selected distractors: rural-population-growth, urban-basic-sanitation, rural-basic-sanitation, rural-basic-drinking-water, urban-electricity-access
 
 | Rejected candidate | Reason | Correlation warning |
 | --- | --- | --- |
-| Population growth (`population-growth`) | high_correlation_or_visual_similarity | high |
+| None | n/a | n/a |
 
 ## Urban slum population - explorer
 
@@ -3648,20 +5287,18 @@ This report records which distractors were selected for each tier and which cand
 ## Urban slum population - analyst
 
 - Round: `worldprint-urban-slum-population`
-- Final fairness warning: review
-- Selected distractors: urban-population-growth, urban-population, adolescent-fertility
+- Final fairness warning: ok
+- Selected distractors: urban-clean-cooking-access, rural-basic-drinking-water, rural-basic-sanitation
 
 | Rejected candidate | Reason | Correlation warning |
 | --- | --- | --- |
-| GDP per capita, PPP (`gdp-per-capita-ppp`) | high_ambiguity_distractor | ok |
-| GNI per capita, PPP (`gni-per-capita-ppp`) | high_ambiguity_distractor | ok |
-| GNI per capita (`gni-per-capita`) | high_ambiguity_distractor | ok |
+| None | n/a | n/a |
 
 ## Urban slum population - cartographer
 
 - Round: `worldprint-urban-slum-population`
 - Final fairness warning: ok
-- Selected distractors: urban-population-growth, urban-population, adolescent-fertility, gni-per-capita, gni-per-capita-ppp
+- Selected distractors: rural-basic-sanitation, rural-basic-drinking-water, urban-clean-cooking-access, rural-open-defecation, urban-basic-sanitation
 
 | Rejected candidate | Reason | Correlation warning |
 | --- | --- | --- |
@@ -3671,32 +5308,32 @@ This report records which distractors were selected for each tier and which cand
 
 - Round: `worldprint-wage-salaried-workers`
 - Final fairness warning: review
-- Selected distractors: industry-share, women-parliament
+- Selected distractors: industry-share, cereal-production
 
 | Rejected candidate | Reason | Correlation warning |
 | --- | --- | --- |
 | Fixed capital formation (`fixed-capital-formation`) | high_ambiguity_distractor | ok |
-| Gross savings (`gross-savings-gdp`) | high_ambiguity_distractor | ok |
 
 ## Wage and salaried workers - analyst
 
 - Round: `worldprint-wage-salaried-workers`
 - Final fairness warning: review
-- Selected distractors: employment-industry, agriculture-value-added, youth-unemployment
+- Selected distractors: employment-industry, male-industry-employment, food-insecurity-moderate-severe
 
 | Rejected candidate | Reason | Correlation warning |
 | --- | --- | --- |
 | Employment in agriculture (`employment-agriculture`) | high_correlation_or_visual_similarity | high |
+| Female contributing family workers (`female-contributing-family-workers`) | high_ambiguity_distractor | review |
+| Contributing family workers (`contributing-family-workers`) | high_ambiguity_distractor | review |
 | Employment in services (`employment-services`) | high_ambiguity_distractor | review |
-| GDP per capita, PPP (`gdp-per-capita-ppp`) | high_ambiguity_distractor | ok |
-| GNI per capita, PPP (`gni-per-capita-ppp`) | high_ambiguity_distractor | ok |
-| GNI per capita (`gni-per-capita`) | high_ambiguity_distractor | ok |
+| Female agricultural employment (`female-agricultural-employment`) | high_ambiguity_distractor | review |
+| Female services employment (`female-services-employment`) | high_ambiguity_distractor | review |
 
 ## Wage and salaried workers - cartographer
 
 - Round: `worldprint-wage-salaried-workers`
 - Final fairness warning: review
-- Selected distractors: employment-services, employment-industry, gdp-per-capita-ppp, gni-per-capita-ppp, agriculture-value-added
+- Selected distractors: employment-services, female-agricultural-employment, female-services-employment, contributing-family-workers, female-contributing-family-workers
 
 | Rejected candidate | Reason | Correlation warning |
 | --- | --- | --- |
@@ -3766,20 +5403,12 @@ This report records which distractors were selected for each tier and which cand
 ## Women, Business and the Law index - explorer
 
 - Round: `worldprint-women-business-law`
-- Final fairness warning: review
-- Selected distractors: military-spending, out-of-pocket-health
+- Final fairness warning: ok
+- Selected distractors: military-spending, communications-service-exports
 
 | Rejected candidate | Reason | Correlation warning |
 | --- | --- | --- |
-| Agricultural raw material exports (`agricultural-raw-material-exports`) | high_ambiguity_distractor | ok |
-| Domestic savings (`domestic-savings`) | high_ambiguity_distractor | ok |
-| Gross savings (`gross-savings-gdp`) | high_ambiguity_distractor | ok |
-| Fixed capital formation (`fixed-capital-formation`) | high_ambiguity_distractor | ok |
-| GDP growth (`gdp-growth`) | high_ambiguity_distractor | ok |
-| Male adult mortality (`adult-mortality-male`) | high_ambiguity_distractor | ok |
-| Foreign direct investment outflows (`fdi-outflows`) | high_ambiguity_distractor | ok |
-| Private health spending share (`private-health-spending-share`) | high_ambiguity_distractor | ok |
-| Imports (`imports-share`) | high_ambiguity_distractor | ok |
+| None | n/a | n/a |
 
 ## Women, Business and the Law index - analyst
 
@@ -3837,15 +5466,46 @@ This report records which distractors were selected for each tier and which cand
 | --- | --- | --- |
 | None | n/a | n/a |
 
-## Youth labor force participation - explorer
+## Youth employment-to-population ratio - explorer
 
-- Round: `worldprint-youth-labor-force`
-- Final fairness warning: review
-- Selected distractors: fdi-inflows, cereal-yield
+- Round: `worldprint-youth-employment-ratio`
+- Final fairness warning: ok
+- Selected distractors: food-insecurity-moderate-severe, account-ownership
 
 | Rejected candidate | Reason | Correlation warning |
 | --- | --- | --- |
-| GDP growth (`gdp-growth`) | high_ambiguity_distractor | ok |
+| None | n/a | n/a |
+
+## Youth employment-to-population ratio - analyst
+
+- Round: `worldprint-youth-employment-ratio`
+- Final fairness warning: review
+- Selected distractors: youth-unemployment, labor-force-participation, unemployment
+
+| Rejected candidate | Reason | Correlation warning |
+| --- | --- | --- |
+| Employment-to-population ratio (`employment-population-ratio`) | high_ambiguity_distractor | review |
+| Female unemployment (`female-unemployment`) | high_ambiguity_distractor | review |
+
+## Youth employment-to-population ratio - cartographer
+
+- Round: `worldprint-youth-employment-ratio`
+- Final fairness warning: review
+- Selected distractors: employment-population-ratio, labor-force-participation, female-employment-population-ratio, male-employment-population-ratio, female-labor-force
+
+| Rejected candidate | Reason | Correlation warning |
+| --- | --- | --- |
+| Youth labor force participation (`youth-labor-force`) | high_correlation_or_visual_similarity | high |
+
+## Youth labor force participation - explorer
+
+- Round: `worldprint-youth-labor-force`
+- Final fairness warning: ok
+- Selected distractors: fdi-inflows, severe-food-insecurity
+
+| Rejected candidate | Reason | Correlation warning |
+| --- | --- | --- |
+| None | n/a | n/a |
 
 ## Youth labor force participation - analyst
 
@@ -3855,17 +5515,19 @@ This report records which distractors were selected for each tier and which cand
 
 | Rejected candidate | Reason | Correlation warning |
 | --- | --- | --- |
+| Female employment-to-population ratio (`female-employment-population-ratio`) | high_ambiguity_distractor | review |
+| Male employment-to-population ratio (`male-employment-population-ratio`) | high_ambiguity_distractor | review |
 | Employment-to-population ratio (`employment-population-ratio`) | high_ambiguity_distractor | review |
 
 ## Youth labor force participation - cartographer
 
 - Round: `worldprint-youth-labor-force`
-- Final fairness warning: ok
-- Selected distractors: labor-force-participation, female-labor-force, employment-population-ratio, labor-force-gender-ratio, youth-unemployment
+- Final fairness warning: review
+- Selected distractors: labor-force-participation, female-labor-force, female-employment-population-ratio, employment-population-ratio, male-employment-population-ratio
 
 | Rejected candidate | Reason | Correlation warning |
 | --- | --- | --- |
-| None | n/a | n/a |
+| Youth employment-to-population ratio (`youth-employment-ratio`) | high_correlation_or_visual_similarity | high |
 
 ## Youth unemployment - explorer
 
@@ -3881,19 +5543,21 @@ This report records which distractors were selected for each tier and which cand
 
 - Round: `worldprint-youth-unemployment`
 - Final fairness warning: review
-- Selected distractors: labor-force-participation, youth-labor-force, employment-agriculture
+- Selected distractors: youth-employment-ratio, labor-force-participation, youth-labor-force
 
 | Rejected candidate | Reason | Correlation warning |
 | --- | --- | --- |
 | Employment-to-population ratio (`employment-population-ratio`) | high_ambiguity_distractor | review |
+| Male employment-to-population ratio (`male-employment-population-ratio`) | high_ambiguity_distractor | review |
 | Female unemployment (`female-unemployment`) | high_ambiguity_distractor | review |
+| Female employment-to-population ratio (`female-employment-population-ratio`) | high_ambiguity_distractor | review |
 | Unemployment (`unemployment`) | high_correlation_or_visual_similarity | high |
 
 ## Youth unemployment - cartographer
 
 - Round: `worldprint-youth-unemployment`
 - Final fairness warning: review
-- Selected distractors: female-unemployment, employment-population-ratio, labor-force-participation, youth-labor-force, female-labor-force
+- Selected distractors: female-unemployment, employment-population-ratio, youth-employment-ratio, male-employment-population-ratio, female-employment-population-ratio
 
 | Rejected candidate | Reason | Correlation warning |
 | --- | --- | --- |

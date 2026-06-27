@@ -199,7 +199,7 @@
     "valuesReference": "https://api.worldbank.org/v2/country/all/indicator/ER.H2O.FWIN.ZS?format=json&per_page=20000&page=1&date=2015%3A2025",
     "license": "Creative Commons Attribution 4.0 International unless specifically labeled otherwise by World Bank metadata",
     "licenseReference": "https://www.worldbank.org/en/about/legal/terms-of-use-for-datasets",
-    "retrievedAt": "2026-06-22T18:06:53.039920+00:00",
+    "retrievedAt": "2026-06-27T17:14:55.151996+00:00",
     "checksum": "b2cb62b4abc564b39250e9d9ab6365490679ceb7581b8055b8d674dfe5bb6db4",
     "sourceOrganization": "AQUASTAT - FAO's Global Information System on Water and Agriculture, Food and Agriculture Organization of the United Nations (FAO), uri: https://data.apps.fao.org/aquastat/, publisher: Food and Agriculture Organization of the United Nations (FAO), date accessed: 20240529"
   },

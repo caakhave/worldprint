@@ -204,7 +204,7 @@
     "valuesReference": "https://api.worldbank.org/v2/country/all/indicator/EG.ELC.ACCS.RU.ZS?format=json&per_page=20000&page=1&date=2015%3A2025",
     "license": "Creative Commons Attribution 4.0 International unless specifically labeled otherwise by World Bank metadata",
     "licenseReference": "https://www.worldbank.org/en/about/legal/terms-of-use-for-datasets",
-    "retrievedAt": "2026-06-22T18:07:02.490065+00:00",
+    "retrievedAt": "2026-06-27T17:15:03.133707+00:00",
     "checksum": "af72dd1f7e2b8f97d401c98eedfa709ee2aab5e990d9fc4576b55185447fbcef",
     "sourceOrganization": "SDG 7.1.1 Electrification Dataset, World Bank (WB), uri: https://trackingsdg7.esmap.org/downloads, note: Data is downloaded from ESMAP website. Data is released when a new Tracking SDG7 report is released., publisher: World Bank (WB), date accessed: 2024-05-16, date published: 2023"
   },
@@ -234,12 +234,12 @@
         "reason": "Electricity access can tempt players because it shares a strong country ranking with this map, but its unit and definition point to a different story."
       },
       {
-        "confusedWithIndicatorCode": "SH.STA.BASS.ZS",
-        "reason": "Basic sanitation access can tempt players because it shares a strong country ranking with this map, but its unit and definition point to a different story."
+        "confusedWithIndicatorCode": "EG.ELC.ACCS.UR.ZS",
+        "reason": "Urban electricity access can tempt players because it shares a strong country ranking with this map, but its unit and definition point to a different story."
       },
       {
-        "confusedWithIndicatorCode": "SH.H2O.BASW.ZS",
-        "reason": "Basic drinking water access can tempt players because it shares a strong country ranking with this map, but its unit and definition point to a different story."
+        "confusedWithIndicatorCode": "SH.STA.BASS.ZS",
+        "reason": "Basic sanitation access can tempt players because it shares a strong country ranking with this map, but its unit and definition point to a different story."
       }
     ],
     "difficultyReason": "Standard difficulty: the map has readable regional structure, but the best answer still depends on checking the unit and country anchors.",

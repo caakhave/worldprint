@@ -4,29 +4,31 @@
   "date": "2026-06-21",
   "contentVersion": "2026.06.22-exp2-qa1",
   "roundIds": [
+    "worldprint-tuberculosis-incidence",
+    "worldprint-pm25-exposure",
     "worldprint-coal-electricity-share",
-    "worldprint-total-protected-areas",
-    "worldprint-undernourishment",
-    "worldprint-mobile-subscriptions",
-    "worldprint-measles-immunization"
+    "worldprint-communications-service-exports",
+    "worldprint-industry-share"
   ],
   "indicatorIds": [
+    "tuberculosis-incidence",
+    "pm25-exposure",
     "coal-electricity-share",
-    "total-protected-areas",
-    "undernourishment",
-    "mobile-subscriptions",
-    "measles-immunization"
+    "communications-service-exports",
+    "industry-share"
   ],
   "categoryMix": {
-    "energy": 1,
+    "health": 1,
     "environment": 1,
-    "health": 2,
-    "connectivity": 1
+    "energy": 1,
+    "connectivity": 1,
+    "economy": 1
   },
   "mapDifficultyMix": {
-    "standard": 5
+    "expert": 2,
+    "standard": 3
   },
-  "generatedAt": "2026-06-27T15:17:17.652Z",
+  "generatedAt": "2026-06-27T17:16:22.616148+00:00",
   "generatorVersion": "daily-manifest-v2",
   "varietyNotes": [
     "Selected with category, difficulty, repeat-cooldown, and same-day correlation safeguards."

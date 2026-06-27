@@ -4,31 +4,31 @@
   "date": "2026-09-05",
   "contentVersion": "2026.06.22-exp2-qa1",
   "roundIds": [
+    "worldprint-older-adults-share",
     "worldprint-internet-users",
-    "worldprint-adolescent-fertility",
-    "worldprint-total-protected-areas",
-    "worldprint-precipitation-depth",
-    "worldprint-life-expectancy"
+    "worldprint-health-expenditure",
+    "worldprint-cereal-yield",
+    "worldprint-population-growth"
   ],
   "indicatorIds": [
+    "older-adults-share",
     "internet-users",
-    "adolescent-fertility",
-    "total-protected-areas",
-    "precipitation-depth",
-    "life-expectancy"
+    "health-expenditure",
+    "cereal-yield",
+    "population-growth"
   ],
   "categoryMix": {
+    "demography": 2,
     "connectivity": 1,
-    "demography": 1,
-    "environment": 2,
-    "health": 1
+    "health": 1,
+    "agriculture": 1
   },
   "mapDifficultyMix": {
     "intro": 2,
-    "expert": 1,
-    "standard": 2
+    "standard": 2,
+    "expert": 1
   },
-  "generatedAt": "2026-06-27T15:17:17.652Z",
+  "generatedAt": "2026-06-27T17:16:22.628084+00:00",
   "generatorVersion": "daily-manifest-v2",
   "varietyNotes": [
     "Selected with category, difficulty, repeat-cooldown, and same-day correlation safeguards."

@@ -4,30 +4,30 @@
   "date": "2026-06-11",
   "contentVersion": "2026.06.22-exp2-qa1",
   "roundIds": [
-    "worldprint-internet-users",
-    "worldprint-employment-agriculture",
-    "worldprint-population-growth",
-    "worldprint-mobile-subscriptions",
-    "worldprint-women-parliament"
+    "worldprint-women-parliament",
+    "worldprint-agriculture-value-added",
+    "worldprint-freshwater-per-capita",
+    "worldprint-energy-use",
+    "worldprint-employment-agriculture"
   ],
   "indicatorIds": [
-    "internet-users",
-    "employment-agriculture",
-    "population-growth",
-    "mobile-subscriptions",
-    "women-parliament"
+    "women-parliament",
+    "agriculture-value-added",
+    "freshwater-per-capita",
+    "energy-use",
+    "employment-agriculture"
   ],
   "categoryMix": {
-    "connectivity": 2,
-    "labor": 1,
-    "demography": 1,
-    "development": 1
+    "development": 1,
+    "economy": 1,
+    "environment": 1,
+    "energy": 1,
+    "labor": 1
   },
   "mapDifficultyMix": {
-    "intro": 1,
-    "standard": 4
+    "standard": 5
   },
-  "generatedAt": "2026-06-27T15:17:17.652Z",
+  "generatedAt": "2026-06-27T17:16:22.614480+00:00",
   "generatorVersion": "daily-manifest-v2",
   "varietyNotes": [
     "Selected with category, difficulty, repeat-cooldown, and same-day correlation safeguards."

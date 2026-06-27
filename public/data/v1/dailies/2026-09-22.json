@@ -1,32 +1,33 @@
 {
   "schemaVersion": "1.1.0",
   "game": "worldprint",
-  "date": "2026-05-26",
+  "date": "2026-09-22",
   "contentVersion": "2026.06.22-exp2-qa1",
   "roundIds": [
+    "worldprint-female-industry-employment",
     "worldprint-under-five-mortality",
-    "worldprint-measles-immunization",
-    "worldprint-permanent-cropland",
-    "worldprint-pm25-exposure",
-    "worldprint-agriculture-value-added"
+    "worldprint-adolescent-fertility",
+    "worldprint-older-adults-share",
+    "worldprint-undernourishment"
   ],
   "indicatorIds": [
+    "female-industry-employment",
     "under-five-mortality",
-    "measles-immunization",
-    "permanent-cropland",
-    "pm25-exposure",
-    "agriculture-value-added"
+    "adolescent-fertility",
+    "older-adults-share",
+    "undernourishment"
   ],
   "categoryMix": {
+    "labor": 1,
     "health": 2,
-    "land": 1,
-    "environment": 1,
-    "economy": 1
+    "demography": 2
   },
   "mapDifficultyMix": {
-    "standard": 5
+    "expert": 2,
+    "standard": 2,
+    "intro": 1
   },
-  "generatedAt": "2026-06-27T15:17:17.652Z",
+  "generatedAt": "2026-06-27T17:16:22.631033+00:00",
   "generatorVersion": "daily-manifest-v2",
   "varietyNotes": [
     "Selected with category, difficulty, repeat-cooldown, and same-day correlation safeguards."

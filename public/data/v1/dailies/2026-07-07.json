@@ -4,28 +4,29 @@
   "date": "2026-07-07",
   "contentVersion": "2026.06.22-exp2-qa1",
   "roundIds": [
-    "worldprint-electric-power-use",
-    "worldprint-health-expenditure",
-    "worldprint-unemployment",
-    "worldprint-measles-immunization",
-    "worldprint-coal-electricity-share"
+    "worldprint-population-density",
+    "worldprint-forest-area",
+    "worldprint-maternal-mortality",
+    "worldprint-freshwater-per-capita",
+    "worldprint-measles-immunization"
   ],
   "indicatorIds": [
-    "electric-power-use",
-    "health-expenditure",
-    "unemployment",
-    "measles-immunization",
-    "coal-electricity-share"
+    "population-density",
+    "forest-area",
+    "maternal-mortality",
+    "freshwater-per-capita",
+    "measles-immunization"
   ],
   "categoryMix": {
-    "energy": 2,
-    "health": 2,
-    "labor": 1
+    "settlement": 1,
+    "environment": 2,
+    "health": 2
   },
   "mapDifficultyMix": {
-    "standard": 5
+    "standard": 4,
+    "intro": 1
   },
-  "generatedAt": "2026-06-27T15:17:17.652Z",
+  "generatedAt": "2026-06-27T17:16:22.618650+00:00",
   "generatorVersion": "daily-manifest-v2",
   "varietyNotes": [
     "Selected with category, difficulty, repeat-cooldown, and same-day correlation safeguards."

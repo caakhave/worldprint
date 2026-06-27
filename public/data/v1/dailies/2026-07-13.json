@@ -4,30 +4,32 @@
   "date": "2026-07-13",
   "contentVersion": "2026.06.22-exp2-qa1",
   "roundIds": [
-    "worldprint-women-parliament",
-    "worldprint-industry-share",
-    "worldprint-life-expectancy",
-    "worldprint-undernourishment",
-    "worldprint-urban-population"
+    "worldprint-arable-land",
+    "worldprint-coal-electricity-share",
+    "worldprint-adolescent-fertility",
+    "worldprint-safe-drinking-water",
+    "worldprint-food-production-index"
   ],
   "indicatorIds": [
-    "women-parliament",
-    "industry-share",
-    "life-expectancy",
-    "undernourishment",
-    "urban-population"
+    "arable-land",
+    "coal-electricity-share",
+    "adolescent-fertility",
+    "safe-drinking-water",
+    "food-production-index"
   ],
   "categoryMix": {
-    "development": 1,
-    "economy": 1,
-    "health": 2,
-    "settlement": 1
+    "land": 1,
+    "energy": 1,
+    "demography": 1,
+    "health": 1,
+    "agriculture": 1
   },
   "mapDifficultyMix": {
     "standard": 3,
-    "intro": 2
+    "expert": 1,
+    "intro": 1
   },
-  "generatedAt": "2026-06-27T15:17:17.652Z",
+  "generatedAt": "2026-06-27T17:16:22.619936+00:00",
   "generatorVersion": "daily-manifest-v2",
   "varietyNotes": [
     "Selected with category, difficulty, repeat-cooldown, and same-day correlation safeguards."

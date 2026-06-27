@@ -4,30 +4,32 @@
   "date": "2026-07-31",
   "contentVersion": "2026.06.22-exp2-qa1",
   "roundIds": [
-    "worldprint-precipitation-depth",
-    "worldprint-electricity-access",
-    "worldprint-freshwater-per-capita",
-    "worldprint-basic-sanitation",
-    "worldprint-migrant-stock"
+    "worldprint-agriculture-value-added",
+    "worldprint-compulsory-education-duration",
+    "worldprint-cereal-yield",
+    "worldprint-internet-users",
+    "worldprint-undernourishment"
   ],
   "indicatorIds": [
-    "precipitation-depth",
-    "electricity-access",
-    "freshwater-per-capita",
-    "basic-sanitation",
-    "migrant-stock"
+    "agriculture-value-added",
+    "compulsory-education-duration",
+    "cereal-yield",
+    "internet-users",
+    "undernourishment"
   ],
   "categoryMix": {
-    "environment": 2,
-    "energy": 1,
-    "health": 1,
-    "demography": 1
+    "economy": 1,
+    "education": 1,
+    "agriculture": 1,
+    "connectivity": 1,
+    "health": 1
   },
   "mapDifficultyMix": {
-    "standard": 4,
+    "standard": 2,
+    "expert": 2,
     "intro": 1
   },
-  "generatedAt": "2026-06-27T15:17:17.652Z",
+  "generatedAt": "2026-06-27T17:16:22.622549+00:00",
   "generatorVersion": "daily-manifest-v2",
   "varietyNotes": [
     "Selected with category, difficulty, repeat-cooldown, and same-day correlation safeguards."

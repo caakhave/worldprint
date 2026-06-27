@@ -206,7 +206,7 @@
     "valuesReference": "https://api.worldbank.org/v2/country/all/indicator/SH.DTH.NCOM.ZS?format=json&per_page=20000&page=1&date=2015%3A2025",
     "license": "Creative Commons Attribution 4.0 International unless specifically labeled otherwise by World Bank metadata",
     "licenseReference": "https://www.worldbank.org/en/about/legal/terms-of-use-for-datasets",
-    "retrievedAt": "2026-06-22T18:06:38.844299+00:00",
+    "retrievedAt": "2026-06-27T17:14:43.051616+00:00",
     "checksum": "0f5cdb37396442bc5d586766f4ff9b003119ac45c8debb6d3c69ff0f235b3e44",
     "sourceOrganization": "Global Health Estimates, World Health Organization (WHO), uri: https://www.who.int/data/gho/data/themes/mortality-and-global-health-estimates/ghe-leading-causes-of-death, note: Derived based on the data from Global Health Estimates  Deaths by Cause, Age, Sex, by Country and by Region, 2000-2021"
   },

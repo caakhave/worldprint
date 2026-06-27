@@ -4,30 +4,30 @@
   "date": "2026-06-03",
   "contentVersion": "2026.06.22-exp2-qa1",
   "roundIds": [
-    "worldprint-energy-use",
-    "worldprint-unemployment",
-    "worldprint-renewable-electricity",
-    "worldprint-freshwater-per-capita",
-    "worldprint-adolescent-fertility"
+    "worldprint-health-expenditure",
+    "worldprint-precipitation-depth",
+    "worldprint-youth-employment-ratio",
+    "worldprint-food-production-index",
+    "worldprint-coal-electricity-share"
   ],
   "indicatorIds": [
-    "energy-use",
-    "unemployment",
-    "renewable-electricity",
-    "freshwater-per-capita",
-    "adolescent-fertility"
+    "health-expenditure",
+    "precipitation-depth",
+    "youth-employment-ratio",
+    "food-production-index",
+    "coal-electricity-share"
   ],
   "categoryMix": {
-    "energy": 2,
-    "labor": 1,
+    "health": 1,
     "environment": 1,
-    "demography": 1
+    "labor": 1,
+    "agriculture": 1,
+    "energy": 1
   },
   "mapDifficultyMix": {
-    "standard": 4,
-    "expert": 1
+    "standard": 5
   },
-  "generatedAt": "2026-06-27T15:17:17.652Z",
+  "generatedAt": "2026-06-27T17:16:22.613308+00:00",
   "generatorVersion": "daily-manifest-v2",
   "varietyNotes": [
     "Selected with category, difficulty, repeat-cooldown, and same-day correlation safeguards."

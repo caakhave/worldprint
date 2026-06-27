@@ -4,30 +4,30 @@
   "date": "2026-08-26",
   "contentVersion": "2026.06.22-exp2-qa1",
   "roundIds": [
-    "worldprint-protected-land",
-    "worldprint-gdp-per-capita",
-    "worldprint-open-defecation",
-    "worldprint-tourism-arrivals",
-    "worldprint-maternal-mortality"
+    "worldprint-energy-use",
+    "worldprint-under-five-mortality",
+    "worldprint-unemployment",
+    "worldprint-trade-share",
+    "worldprint-protected-land"
   ],
   "indicatorIds": [
-    "protected-land",
-    "gdp-per-capita",
-    "open-defecation",
-    "tourism-arrivals",
-    "maternal-mortality"
+    "energy-use",
+    "under-five-mortality",
+    "unemployment",
+    "trade-share",
+    "protected-land"
   ],
   "categoryMix": {
-    "environment": 1,
-    "development": 1,
-    "health": 2,
-    "economy": 1
+    "energy": 1,
+    "health": 1,
+    "labor": 1,
+    "economy": 1,
+    "environment": 1
   },
   "mapDifficultyMix": {
-    "standard": 4,
-    "intro": 1
+    "standard": 5
   },
-  "generatedAt": "2026-06-27T15:17:17.652Z",
+  "generatedAt": "2026-06-27T17:16:22.626269+00:00",
   "generatorVersion": "daily-manifest-v2",
   "varietyNotes": [
     "Selected with category, difficulty, repeat-cooldown, and same-day correlation safeguards."

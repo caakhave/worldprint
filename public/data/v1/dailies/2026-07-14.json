@@ -5,29 +5,30 @@
   "contentVersion": "2026.06.22-exp2-qa1",
   "roundIds": [
     "worldprint-agriculture-value-added",
-    "worldprint-under-five-mortality",
-    "worldprint-unemployment",
-    "worldprint-clean-fuels-access",
-    "worldprint-pm25-exposure"
+    "worldprint-electric-power-use",
+    "worldprint-land-under-cereal",
+    "worldprint-cereal-yield",
+    "worldprint-precipitation-depth"
   ],
   "indicatorIds": [
     "agriculture-value-added",
-    "under-five-mortality",
-    "unemployment",
-    "clean-fuels-access",
-    "pm25-exposure"
+    "electric-power-use",
+    "land-under-cereal",
+    "cereal-yield",
+    "precipitation-depth"
   ],
   "categoryMix": {
     "economy": 1,
-    "health": 1,
-    "labor": 1,
     "energy": 1,
+    "land": 1,
+    "agriculture": 1,
     "environment": 1
   },
   "mapDifficultyMix": {
-    "standard": 5
+    "standard": 3,
+    "expert": 2
   },
-  "generatedAt": "2026-06-27T15:17:17.652Z",
+  "generatedAt": "2026-06-27T17:16:22.620106+00:00",
   "generatorVersion": "daily-manifest-v2",
   "varietyNotes": [
     "Selected with category, difficulty, repeat-cooldown, and same-day correlation safeguards."

@@ -4,30 +4,31 @@
   "date": "2026-09-10",
   "contentVersion": "2026.06.22-exp2-qa1",
   "roundIds": [
-    "worldprint-maternal-mortality",
-    "worldprint-migrant-stock",
-    "worldprint-women-parliament",
-    "worldprint-internet-users",
-    "worldprint-life-expectancy"
+    "worldprint-trade-share",
+    "worldprint-female-industry-employment",
+    "worldprint-primary-female-teachers",
+    "worldprint-communications-service-exports",
+    "worldprint-under-five-mortality"
   ],
   "indicatorIds": [
-    "maternal-mortality",
-    "migrant-stock",
-    "women-parliament",
-    "internet-users",
-    "life-expectancy"
+    "trade-share",
+    "female-industry-employment",
+    "primary-female-teachers",
+    "communications-service-exports",
+    "under-five-mortality"
   ],
   "categoryMix": {
-    "health": 2,
-    "demography": 1,
-    "development": 1,
-    "connectivity": 1
+    "economy": 1,
+    "labor": 1,
+    "education": 1,
+    "connectivity": 1,
+    "health": 1
   },
   "mapDifficultyMix": {
     "standard": 3,
-    "intro": 2
+    "expert": 2
   },
-  "generatedAt": "2026-06-27T15:17:17.652Z",
+  "generatedAt": "2026-06-27T17:16:22.628840+00:00",
   "generatorVersion": "daily-manifest-v2",
   "varietyNotes": [
     "Selected with category, difficulty, repeat-cooldown, and same-day correlation safeguards."

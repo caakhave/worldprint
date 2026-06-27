@@ -4,31 +4,28 @@
   "date": "2026-06-04",
   "contentVersion": "2026.06.22-exp2-qa1",
   "roundIds": [
-    "worldprint-permanent-cropland",
-    "worldprint-open-defecation",
-    "worldprint-forest-area",
-    "worldprint-women-parliament",
-    "worldprint-older-adults-share"
+    "worldprint-rural-basic-sanitation",
+    "worldprint-co2-per-capita",
+    "worldprint-urban-basic-drinking-water",
+    "worldprint-total-protected-areas",
+    "worldprint-arable-land"
   ],
   "indicatorIds": [
-    "permanent-cropland",
-    "open-defecation",
-    "forest-area",
-    "women-parliament",
-    "older-adults-share"
+    "rural-basic-sanitation",
+    "co2-per-capita",
+    "urban-basic-drinking-water",
+    "total-protected-areas",
+    "arable-land"
   ],
   "categoryMix": {
-    "land": 1,
-    "health": 1,
-    "environment": 1,
-    "development": 1,
-    "demography": 1
+    "settlement": 2,
+    "environment": 2,
+    "land": 1
   },
   "mapDifficultyMix": {
-    "standard": 3,
-    "intro": 2
+    "standard": 5
   },
-  "generatedAt": "2026-06-27T15:17:17.652Z",
+  "generatedAt": "2026-06-27T17:16:22.613457+00:00",
   "generatorVersion": "daily-manifest-v2",
   "varietyNotes": [
     "Selected with category, difficulty, repeat-cooldown, and same-day correlation safeguards."

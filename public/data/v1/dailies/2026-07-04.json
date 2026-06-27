@@ -4,28 +4,31 @@
   "date": "2026-07-04",
   "contentVersion": "2026.06.22-exp2-qa1",
   "roundIds": [
-    "worldprint-food-production-index",
-    "worldprint-physicians",
-    "worldprint-open-defecation",
-    "worldprint-industry-share",
-    "worldprint-manufacturing-share"
+    "worldprint-basic-sanitation",
+    "worldprint-electricity-access",
+    "worldprint-pm25-exposure",
+    "worldprint-population-growth",
+    "worldprint-mobile-subscriptions"
   ],
   "indicatorIds": [
-    "food-production-index",
-    "physicians",
-    "open-defecation",
-    "industry-share",
-    "manufacturing-share"
+    "basic-sanitation",
+    "electricity-access",
+    "pm25-exposure",
+    "population-growth",
+    "mobile-subscriptions"
   ],
   "categoryMix": {
-    "agriculture": 1,
-    "health": 2,
-    "economy": 2
+    "health": 1,
+    "energy": 1,
+    "environment": 1,
+    "demography": 1,
+    "connectivity": 1
   },
   "mapDifficultyMix": {
-    "standard": 5
+    "standard": 4,
+    "intro": 1
   },
-  "generatedAt": "2026-06-27T15:17:17.652Z",
+  "generatedAt": "2026-06-27T17:16:22.618229+00:00",
   "generatorVersion": "daily-manifest-v2",
   "varietyNotes": [
     "Selected with category, difficulty, repeat-cooldown, and same-day correlation safeguards."

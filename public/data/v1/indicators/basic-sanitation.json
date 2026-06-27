@@ -195,7 +195,7 @@
     "valuesReference": "https://api.worldbank.org/v2/country/all/indicator/SH.STA.BASS.ZS?format=json&per_page=20000&page=1&date=2015%3A2025",
     "license": "Creative Commons Attribution 4.0 International unless specifically labeled otherwise by World Bank metadata",
     "licenseReference": "https://www.worldbank.org/en/about/legal/terms-of-use-for-datasets",
-    "retrievedAt": "2026-06-22T18:05:45.337868+00:00",
+    "retrievedAt": "2026-06-27T17:14:00.003654+00:00",
     "checksum": "4e36e0bac8830a63f7b67d930e7d221fb30dbae87b4d339267df18573330e487",
     "sourceOrganization": "WHO/UNICEF Joint Monitoring Programme (JMP) for Water Supply, Sanitation and Hygiene, World Health Organization (WHO), uri: washdata.org, publisher: WHO/UNICEF Joint Monitoring Programme (JMP) for Water Supply, Sanitation and Hygiene (washdata.org), date accessed: 2025-09-30, date published: 2025-08-25;\nUN Children's Fund (UNICEF), uri: washdata.org, note: WHO/UNICEF Joint Monitoring Programme (JMP) for Water Supply, Sanitation and Hygiene"
   },
@@ -221,16 +221,16 @@
     ],
     "commonConfusions": [
       {
+        "confusedWithIndicatorCode": "SH.STA.BASS.RU.ZS",
+        "reason": "Rural basic sanitation can tempt players because it shares a strong country ranking with this map, but its unit and definition point to a different story."
+      },
+      {
+        "confusedWithIndicatorCode": "SH.STA.BASS.UR.ZS",
+        "reason": "Urban basic sanitation can tempt players because it shares a strong country ranking with this map, but its unit and definition point to a different story."
+      },
+      {
         "confusedWithIndicatorCode": "IT.NET.USER.ZS",
         "reason": "Internet users can tempt players because it shares a strong country ranking with this map, but its unit and definition point to a different story."
-      },
-      {
-        "confusedWithIndicatorCode": "EG.ELC.ACCS.RU.ZS",
-        "reason": "Rural electricity access can tempt players because it shares a strong country ranking with this map, but its unit and definition point to a different story."
-      },
-      {
-        "confusedWithIndicatorCode": "SH.H2O.BASW.ZS",
-        "reason": "Basic drinking water access can tempt players because it shares a strong country ranking with this map, but its unit and definition point to a different story."
       }
     ],
     "difficultyReason": "Standard difficulty: the map has readable regional structure, but the best answer still depends on checking the unit and country anchors.",

@@ -208,7 +208,7 @@
     "valuesReference": "https://api.worldbank.org/v2/country/all/indicator/EG.ELC.NUCL.ZS?format=json&per_page=20000&page=1&date=2015%3A2025",
     "license": "Creative Commons Attribution 4.0 International unless specifically labeled otherwise by World Bank metadata",
     "licenseReference": "https://www.worldbank.org/en/about/legal/terms-of-use-for-datasets",
-    "retrievedAt": "2026-06-22T18:07:00.759372+00:00",
+    "retrievedAt": "2026-06-27T17:15:01.660525+00:00",
     "checksum": "a781fe4487b463ae2073822762cb024f233b8498db55b11b6eb45bce0f7ce5f7",
     "sourceOrganization": "IEA Energy Statistics Data Browser, International Energy Agency (IEA), uri: https://www.iea.org/data-and-statistics/data-tools/energy-statistics-data-browser, publisher: International Energy Agency (IEA), date accessed: 2025-03-25"
   },
@@ -238,12 +238,12 @@
         "reason": "Tourism arrivals overlaps with part of the visible pattern, but the full country spread does not match."
       },
       {
-        "confusedWithIndicatorCode": "IT.NET.SECR.P6",
-        "reason": "Secure internet servers overlaps with part of the visible pattern, but the full country spread does not match."
+        "confusedWithIndicatorCode": "TM.VAL.FOOD.ZS.UN",
+        "reason": "Food imports share overlaps with part of the visible pattern, but the full country spread does not match."
       },
       {
-        "confusedWithIndicatorCode": "SP.POP.65UP.TO.ZS",
-        "reason": "Population ages 65+ overlaps with part of the visible pattern, but the full country spread does not match."
+        "confusedWithIndicatorCode": "IT.NET.SECR.P6",
+        "reason": "Secure internet servers overlaps with part of the visible pattern, but the full country spread does not match."
       }
     ],
     "difficultyReason": "Expert difficulty: the map can be mistaken for adjacent indicators unless players probe a high, low, and middle country.",

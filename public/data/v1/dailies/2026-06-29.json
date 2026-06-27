@@ -4,30 +4,30 @@
   "date": "2026-06-29",
   "contentVersion": "2026.06.22-exp2-qa1",
   "roundIds": [
-    "worldprint-population-growth",
-    "worldprint-undernourishment",
     "worldprint-agriculture-value-added",
-    "worldprint-internet-users",
-    "worldprint-fertility-rate"
+    "worldprint-physicians",
+    "worldprint-adolescent-fertility",
+    "worldprint-food-production-index",
+    "worldprint-open-defecation"
   ],
   "indicatorIds": [
-    "population-growth",
-    "undernourishment",
     "agriculture-value-added",
-    "internet-users",
-    "fertility-rate"
+    "physicians",
+    "adolescent-fertility",
+    "food-production-index",
+    "open-defecation"
   ],
   "categoryMix": {
-    "demography": 2,
-    "health": 1,
     "economy": 1,
-    "connectivity": 1
+    "health": 2,
+    "demography": 1,
+    "agriculture": 1
   },
   "mapDifficultyMix": {
     "standard": 4,
-    "intro": 1
+    "expert": 1
   },
-  "generatedAt": "2026-06-27T15:17:17.652Z",
+  "generatedAt": "2026-06-27T17:16:22.617497+00:00",
   "generatorVersion": "daily-manifest-v2",
   "varietyNotes": [
     "Selected with category, difficulty, repeat-cooldown, and same-day correlation safeguards."

@@ -207,7 +207,7 @@
     "valuesReference": "https://api.worldbank.org/v2/country/all/indicator/AG.LND.ARBL.ZS?format=json&per_page=20000&page=1&date=2015%3A2025",
     "license": "Creative Commons Attribution 4.0 International unless specifically labeled otherwise by World Bank metadata",
     "licenseReference": "https://www.worldbank.org/en/about/legal/terms-of-use-for-datasets",
-    "retrievedAt": "2026-06-22T18:05:53.870115+00:00",
+    "retrievedAt": "2026-06-27T17:14:07.019382+00:00",
     "checksum": "e83dbced38a7f0b250713c150348ceaf742f16e841dce4a16572b159ceff3a9a",
     "sourceOrganization": "FAO electronic files and website, Food and Agriculture Organization of the United Nations (FAO), publisher: Food and Agriculture Organization of the United Nations (FAO)"
   },
@@ -241,8 +241,8 @@
         "reason": "Agricultural land lives in the same category, so it can feel plausible until the high and low countries are checked."
       },
       {
-        "confusedWithIndicatorCode": "AG.LND.CROP.ZS",
-        "reason": "Permanent cropland lives in the same category, so it can feel plausible until the high and low countries are checked."
+        "confusedWithIndicatorCode": "AG.PRD.CREL.MT",
+        "reason": "Cereal production overlaps with part of the visible pattern, but the full country spread does not match."
       }
     ],
     "difficultyReason": "Standard difficulty: the map has readable regional structure, but the best answer still depends on checking the unit and country anchors.",

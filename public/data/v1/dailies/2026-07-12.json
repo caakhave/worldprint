@@ -4,29 +4,31 @@
   "date": "2026-07-12",
   "contentVersion": "2026.06.22-exp2-qa1",
   "roundIds": [
-    "worldprint-population-density",
-    "worldprint-coal-electricity-share",
-    "worldprint-precipitation-depth",
-    "worldprint-food-production-index",
-    "worldprint-total-protected-areas"
+    "worldprint-secondary-enrollment",
+    "worldprint-gdp-per-capita",
+    "worldprint-urban-basic-drinking-water",
+    "worldprint-employment-agriculture",
+    "worldprint-fertility-rate"
   ],
   "indicatorIds": [
-    "population-density",
-    "coal-electricity-share",
-    "precipitation-depth",
-    "food-production-index",
-    "total-protected-areas"
+    "secondary-enrollment",
+    "gdp-per-capita",
+    "urban-basic-drinking-water",
+    "employment-agriculture",
+    "fertility-rate"
   ],
   "categoryMix": {
+    "education": 1,
+    "development": 1,
     "settlement": 1,
-    "energy": 1,
-    "environment": 2,
-    "agriculture": 1
+    "labor": 1,
+    "demography": 1
   },
   "mapDifficultyMix": {
-    "standard": 5
+    "standard": 4,
+    "intro": 1
   },
-  "generatedAt": "2026-06-27T15:17:17.652Z",
+  "generatedAt": "2026-06-27T17:16:22.619738+00:00",
   "generatorVersion": "daily-manifest-v2",
   "varietyNotes": [
     "Selected with category, difficulty, repeat-cooldown, and same-day correlation safeguards."

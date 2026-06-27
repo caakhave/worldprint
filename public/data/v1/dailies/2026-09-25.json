@@ -1,32 +1,33 @@
 {
   "schemaVersion": "1.1.0",
   "game": "worldprint",
-  "date": "2026-05-24",
+  "date": "2026-09-25",
   "contentVersion": "2026.06.22-exp2-qa1",
   "roundIds": [
-    "worldprint-open-defecation",
     "worldprint-health-expenditure",
-    "worldprint-coal-electricity-share",
-    "worldprint-migrant-stock",
-    "worldprint-food-production-index"
+    "worldprint-employment-agriculture",
+    "worldprint-freshwater-per-capita",
+    "worldprint-renewable-electricity",
+    "worldprint-rural-population-growth"
   ],
   "indicatorIds": [
-    "open-defecation",
     "health-expenditure",
-    "coal-electricity-share",
-    "migrant-stock",
-    "food-production-index"
+    "employment-agriculture",
+    "freshwater-per-capita",
+    "renewable-electricity",
+    "rural-population-growth"
   ],
   "categoryMix": {
-    "health": 2,
+    "health": 1,
+    "labor": 1,
+    "environment": 1,
     "energy": 1,
-    "demography": 1,
-    "agriculture": 1
+    "settlement": 1
   },
   "mapDifficultyMix": {
     "standard": 5
   },
-  "generatedAt": "2026-06-27T15:17:17.652Z",
+  "generatedAt": "2026-06-27T17:16:22.631472+00:00",
   "generatorVersion": "daily-manifest-v2",
   "varietyNotes": [
     "Selected with category, difficulty, repeat-cooldown, and same-day correlation safeguards."

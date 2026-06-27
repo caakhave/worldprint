@@ -208,7 +208,7 @@
     "valuesReference": "https://api.worldbank.org/v2/country/all/indicator/SP.URB.TOTL.IN.ZS?format=json&per_page=20000&page=1&date=2015%3A2025",
     "license": "Creative Commons Attribution 4.0 International unless specifically labeled otherwise by World Bank metadata",
     "licenseReference": "https://www.worldbank.org/en/about/legal/terms-of-use-for-datasets",
-    "retrievedAt": "2026-06-22T18:05:40.224459+00:00",
+    "retrievedAt": "2026-06-27T17:13:55.583760+00:00",
     "checksum": "d87b10af83bd2292c8d544c18499ff5ce9c5a131a358157221df9378c18d05c9",
     "sourceOrganization": "World Urbanization Prospects, United Nations (UN), uri: https://population.un.org/wup/, note: United Nations Population Division's World Urbanization Prospects, National definitions, publisher: UN Population Division"
   },
@@ -238,12 +238,12 @@
         "reason": "Rural population can tempt players because it shares a strong country ranking with this map, but its unit and definition point to a different story."
       },
       {
-        "confusedWithIndicatorCode": "SL.SRV.EMPL.ZS",
-        "reason": "Employment in services can tempt players because it shares a strong country ranking with this map, but its unit and definition point to a different story."
+        "confusedWithIndicatorCode": "SL.SRV.EMPL.FE.ZS",
+        "reason": "Female services employment can tempt players because it shares a strong country ranking with this map, but its unit and definition point to a different story."
       },
       {
-        "confusedWithIndicatorCode": "SL.AGR.EMPL.ZS",
-        "reason": "Employment in agriculture can tempt players because it shares a strong country ranking with this map, but its unit and definition point to a different story."
+        "confusedWithIndicatorCode": "SL.AGR.EMPL.FE.ZS",
+        "reason": "Female agricultural employment can tempt players because it shares a strong country ranking with this map, but its unit and definition point to a different story."
       }
     ],
     "difficultyReason": "Intro difficulty: the map has broad, recognizable regional anchors and a player-facing unit that is easy to reason about.",

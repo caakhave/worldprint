@@ -4,30 +4,29 @@
   "date": "2026-08-08",
   "contentVersion": "2026.06.22-exp2-qa1",
   "roundIds": [
-    "worldprint-safe-drinking-water",
-    "worldprint-urban-population",
-    "worldprint-measles-immunization",
-    "worldprint-food-production-index",
-    "worldprint-unemployment"
+    "worldprint-secondary-enrollment",
+    "worldprint-freshwater-per-capita",
+    "worldprint-total-protected-areas",
+    "worldprint-migrant-stock",
+    "worldprint-government-education-spending-share"
   ],
   "indicatorIds": [
-    "safe-drinking-water",
-    "urban-population",
-    "measles-immunization",
-    "food-production-index",
-    "unemployment"
+    "secondary-enrollment",
+    "freshwater-per-capita",
+    "total-protected-areas",
+    "migrant-stock",
+    "government-education-spending-share"
   ],
   "categoryMix": {
-    "health": 2,
-    "settlement": 1,
-    "agriculture": 1,
-    "labor": 1
+    "education": 2,
+    "environment": 2,
+    "demography": 1
   },
   "mapDifficultyMix": {
-    "intro": 2,
-    "standard": 3
+    "standard": 4,
+    "expert": 1
   },
-  "generatedAt": "2026-06-27T15:17:17.652Z",
+  "generatedAt": "2026-06-27T17:16:22.623730+00:00",
   "generatorVersion": "daily-manifest-v2",
   "varietyNotes": [
     "Selected with category, difficulty, repeat-cooldown, and same-day correlation safeguards."

@@ -4,31 +4,31 @@
   "date": "2026-08-14",
   "contentVersion": "2026.06.22-exp2-qa1",
   "roundIds": [
-    "worldprint-electricity-access",
-    "worldprint-arable-land-per-person",
-    "worldprint-pm25-exposure",
-    "worldprint-employment-agriculture",
+    "worldprint-gdp-per-capita",
+    "worldprint-land-under-cereal",
+    "worldprint-industry-share",
+    "worldprint-tourism-arrivals",
     "worldprint-renewable-electricity"
   ],
   "indicatorIds": [
-    "electricity-access",
-    "arable-land-per-person",
-    "pm25-exposure",
-    "employment-agriculture",
+    "gdp-per-capita",
+    "land-under-cereal",
+    "industry-share",
+    "tourism-arrivals",
     "renewable-electricity"
   ],
   "categoryMix": {
-    "energy": 2,
+    "development": 1,
     "land": 1,
-    "environment": 1,
-    "labor": 1
+    "economy": 2,
+    "energy": 1
   },
   "mapDifficultyMix": {
     "intro": 1,
     "expert": 1,
     "standard": 3
   },
-  "generatedAt": "2026-06-27T15:17:17.652Z",
+  "generatedAt": "2026-06-27T17:16:22.624575+00:00",
   "generatorVersion": "daily-manifest-v2",
   "varietyNotes": [
     "Selected with category, difficulty, repeat-cooldown, and same-day correlation safeguards."

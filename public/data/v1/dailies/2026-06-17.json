@@ -4,31 +4,31 @@
   "date": "2026-06-17",
   "contentVersion": "2026.06.22-exp2-qa1",
   "roundIds": [
-    "worldprint-open-defecation",
-    "worldprint-internet-users",
     "worldprint-cereal-yield",
-    "worldprint-arable-land",
-    "worldprint-safe-drinking-water"
+    "worldprint-population-growth",
+    "worldprint-clean-fuels-access",
+    "worldprint-safe-drinking-water",
+    "worldprint-under-five-mortality"
   ],
   "indicatorIds": [
-    "open-defecation",
-    "internet-users",
     "cereal-yield",
-    "arable-land",
-    "safe-drinking-water"
+    "population-growth",
+    "clean-fuels-access",
+    "safe-drinking-water",
+    "under-five-mortality"
   ],
   "categoryMix": {
-    "health": 2,
-    "connectivity": 1,
     "agriculture": 1,
-    "land": 1
+    "demography": 1,
+    "energy": 1,
+    "health": 2
   },
   "mapDifficultyMix": {
-    "standard": 2,
-    "intro": 2,
-    "expert": 1
+    "expert": 1,
+    "standard": 3,
+    "intro": 1
   },
-  "generatedAt": "2026-06-27T15:17:17.652Z",
+  "generatedAt": "2026-06-27T17:16:22.615522+00:00",
   "generatorVersion": "daily-manifest-v2",
   "varietyNotes": [
     "Selected with category, difficulty, repeat-cooldown, and same-day correlation safeguards."

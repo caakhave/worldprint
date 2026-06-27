@@ -1,10 +1,10 @@
 # WORLDPRINT Data Validation Report
 
-Generated: 2026-06-22T18:07:37.480893+00:00
+Generated: 2026-06-27T17:16:22.645571+00:00
 Content version: 2026.06.22-exp2-qa1
-Approved indicators: 167
-Rejected or draft candidates: 31
-Editorial status counts: {'daily_eligible': 53, 'practice_eligible': 34, 'expert_only': 48, 'retired': 9, 'needs_review': 54}
+Approved indicators: 226
+Rejected or draft candidates: 59
+Editorial status counts: {'daily_eligible': 65, 'practice_eligible': 47, 'expert_only': 73, 'retired': 9, 'needs_review': 91}
 
 ## Source Geometry
 
@@ -216,6 +216,93 @@ Editorial status counts: {'daily_eligible': 53, 'practice_eligible': 34, 'expert
 | `wgi-political-stability-rank` | n/a | 0 | 0 |
 | `women-business-law` | 2025 | 164 | 484 |
 | `statistical-data-infrastructure` | 2024 | 164 | 484 |
+| `secondary-gender-parity` | 2022 | 2 | 484 |
+| `primary-female-teachers` | 2023 | 122 | 484 |
+| `secondary-female-teachers` | 2025 | 7 | 484 |
+| `secondary-pupil-teacher-ratio` | 2019 | 4 | 484 |
+| `lower-secondary-pupil-teacher-ratio` | 2019 | 3 | 484 |
+| `secondary-vocational-enrollment` | 2020 | 1 | 462 |
+| `secondary-repeaters` | n/a | 0 | 0 |
+| `out-of-school-secondary` | n/a | 0 | 0 |
+| `government-education-spending-share` | 2022 | 123 | 484 |
+| `primary-education-spending-share` | 2019 | 1 | 484 |
+| `secondary-education-spending-share` | 2019 | 1 | 484 |
+| `upper-secondary-attainment` | 2025 | 1 | 484 |
+| `science-engineering-students` | n/a | 0 | 0 |
+| `cereal-cropland` | 0 | 0 | 0 |
+| `irrigated-cropland` | n/a | 0 | 0 |
+| `tractors-arable-land` | n/a | 0 | 0 |
+| `permanent-pasture` | n/a | 0 | 0 |
+| `rural-density-arable` | 0 | 0 | 0 |
+| `land-under-cereal` | 2023 | 167 | 484 |
+| `urban-low-elevation-population` | 2015 | 169 | 484 |
+| `rural-low-elevation-population` | 2015 | 169 | 484 |
+| `urban-low-elevation-land` | 2015 | 169 | 484 |
+| `rural-low-elevation-land` | 2015 | 169 | 484 |
+| `rural-population-growth` | 2024 | 168 | 484 |
+| `ict-service-exports` | 2024 | 135 | 484 |
+| `air-passengers` | 2023 | 135 | 484 |
+| `air-departures` | 2023 | 136 | 484 |
+| `container-port-traffic` | 2019 | 128 | 484 |
+| `lpi-customs` | 2022 | 131 | 484 |
+| `lpi-tracking` | 2022 | 131 | 484 |
+| `lpi-timeliness` | 2022 | 131 | 484 |
+| `part-time-employment` | 2025 | 17 | 484 |
+| `part-time-employment-female` | 2025 | 17 | 484 |
+| `youth-neet` | 2025 | 15 | 484 |
+| `female-youth-neet` | 2025 | 15 | 484 |
+| `youth-employment-ratio` | 2025 | 163 | 484 |
+| `own-account-workers` | 0 | 0 | 0 |
+| `female-senior-management` | 2025 | 12 | 484 |
+| `labor-force-advanced-education` | 2025 | 17 | 484 |
+| `labor-force-secondary-education` | n/a | 0 | 0 |
+| `unemployment-advanced-education` | 2025 | 17 | 484 |
+| `primary-pupils-female-share` | 2017 | 134 | 484 |
+| `secondary-pupils-female-share` | 2016 | 120 | 484 |
+| `primary-secondary-gender-parity` | 2022 | 2 | 484 |
+| `primary-gross-intake` | 2016 | 120 | 484 |
+| `primary-repeaters` | 2019 | 2 | 484 |
+| `out-of-school-primary` | 2023 | 120 | 484 |
+| `compulsory-education-duration` | 2025 | 158 | 484 |
+| `primary-attainment` | 2025 | 1 | 484 |
+| `female-employment-population-ratio` | 2025 | 163 | 484 |
+| `male-employment-population-ratio` | 2025 | 163 | 484 |
+| `female-wage-salaried-workers` | 2025 | 163 | 484 |
+| `male-wage-salaried-workers` | 2025 | 163 | 484 |
+| `female-vulnerable-employment` | 2025 | 163 | 484 |
+| `male-vulnerable-employment` | 2025 | 163 | 484 |
+| `female-agricultural-employment` | 2025 | 163 | 484 |
+| `male-agricultural-employment` | 2025 | 163 | 484 |
+| `female-industry-employment` | 2025 | 163 | 484 |
+| `male-industry-employment` | 2025 | 163 | 484 |
+| `female-services-employment` | 2025 | 163 | 484 |
+| `male-services-employment` | 2025 | 163 | 484 |
+| `contributing-family-workers` | 2025 | 163 | 484 |
+| `female-contributing-family-workers` | 2025 | 163 | 484 |
+| `male-contributing-family-workers` | 2025 | 163 | 484 |
+| `female-self-employed` | 2025 | 163 | 484 |
+| `male-self-employed` | 2025 | 163 | 484 |
+| `communications-service-exports` | 2024 | 137 | 484 |
+| `communications-service-imports` | 2024 | 137 | 484 |
+| `transport-service-exports` | 2024 | 137 | 484 |
+| `transport-service-imports` | 2024 | 137 | 484 |
+| `air-freight` | 2023 | 123 | 484 |
+| `urban-electricity-access` | 2023 | 168 | 484 |
+| `urban-clean-cooking-access` | 2023 | 162 | 484 |
+| `urban-basic-drinking-water` | 2024 | 151 | 484 |
+| `rural-basic-drinking-water` | 2024 | 150 | 484 |
+| `urban-basic-sanitation` | 2024 | 147 | 484 |
+| `rural-basic-sanitation` | 2024 | 144 | 484 |
+| `urban-open-defecation` | 2024 | 145 | 484 |
+| `rural-open-defecation` | 2024 | 140 | 484 |
+| `cereal-production` | 2023 | 167 | 484 |
+| `arable-land-area` | 2023 | 168 | 484 |
+| `agriculture-methane-emissions` | 2024 | 165 | 484 |
+| `agriculture-nitrous-oxide-emissions` | 2024 | 165 | 484 |
+| `food-insecurity-moderate-severe` | 2023 | 124 | 484 |
+| `severe-food-insecurity` | 2023 | 123 | 484 |
+| `food-imports-share` | 2023 | 137 | 484 |
+| `food-exports-share` | 2023 | 137 | 484 |
 
 ## Rejected or Draft Candidates
 
@@ -250,6 +337,34 @@ Editorial status counts: {'daily_eligible': 53, 'practice_eligible': 34, 'expert
 - `wgi-regulatory-quality-rank` (`RQ.PER.RNK`): Unexpected World Bank response for https://api.worldbank.org/v2/country/all/indicator/RQ.PER.RNK?format=json&per_page=20000&page=1&date=2015%3A2025
 - `wgi-voice-accountability-rank` (`VA.PER.RNK`): Unexpected World Bank response for https://api.worldbank.org/v2/country/all/indicator/VA.PER.RNK?format=json&per_page=20000&page=1&date=2015%3A2025
 - `wgi-political-stability-rank` (`PV.PER.RNK`): Unexpected World Bank response for https://api.worldbank.org/v2/country/all/indicator/PV.PER.RNK?format=json&per_page=20000&page=1&date=2015%3A2025
+- `secondary-gender-parity` (`SE.ENR.SECO.FM.ZS`): secondary-gender-parity: no year in 2015:2025 met 120 mapped countries; best coverage was 116 secondary-gender-parity: selected coverage 2 is below 120
+- `secondary-female-teachers` (`SE.SEC.TCHR.FE.ZS`): secondary-female-teachers: no year in 2015:2025 met 120 mapped countries; best coverage was 105 secondary-female-teachers: selected coverage 7 is below 120
+- `secondary-pupil-teacher-ratio` (`SE.SEC.ENRL.TC.ZS`): secondary-pupil-teacher-ratio: no year in 2015:2025 met 120 mapped countries; best coverage was 97 secondary-pupil-teacher-ratio: selected coverage 4 is below 120
+- `lower-secondary-pupil-teacher-ratio` (`SE.SEC.ENRL.LO.TC.ZS`): lower-secondary-pupil-teacher-ratio: no year in 2015:2025 met 120 mapped countries; best coverage was 89 lower-secondary-pupil-teacher-ratio: selected coverage 3 is below 120
+- `secondary-vocational-enrollment` (`SE.SEC.ENRL.VO.ZS`): secondary-vocational-enrollment: no year in 2015:2025 met 120 mapped countries; best coverage was 111 secondary-vocational-enrollment: selected coverage 1 is below 120
+- `secondary-repeaters` (`SE.SEC.REPT.ZS`): Unexpected World Bank response for https://api.worldbank.org/v2/country/all/indicator/SE.SEC.REPT.ZS?format=json&per_page=20000&page=1&date=2015%3A2025
+- `out-of-school-secondary` (`SE.SEC.UNER.ZS`): Unexpected World Bank response for https://api.worldbank.org/v2/country/all/indicator/SE.SEC.UNER.ZS?format=json&per_page=20000&page=1&date=2015%3A2025
+- `primary-education-spending-share` (`SE.XPD.PRIM.ZS`): primary-education-spending-share: no year in 2015:2025 met 120 mapped countries; best coverage was 67 primary-education-spending-share: selected coverage 1 is below 120
+- `secondary-education-spending-share` (`SE.XPD.SECO.ZS`): secondary-education-spending-share: no year in 2015:2025 met 120 mapped countries; best coverage was 69 secondary-education-spending-share: selected coverage 1 is below 120
+- `upper-secondary-attainment` (`SE.SEC.CUAT.UP.ZS`): upper-secondary-attainment: no year in 2015:2025 met 120 mapped countries; best coverage was 107 upper-secondary-attainment: selected coverage 1 is below 120
+- `science-engineering-students` (`SE.TER.SCIE.ZS`): Unexpected World Bank response for https://api.worldbank.org/v2/country/all/indicator/SE.TER.SCIE.ZS?format=json&per_page=20000&page=1&date=2015%3A2025
+- `cereal-cropland` (`AG.LND.CERE.ZS`): cereal-cropland: no year in 2015:2025 met 120 mapped countries; best coverage was 0 cereal-cropland: selected coverage 0 is below 120
+- `irrigated-cropland` (`AG.LND.IRIG.ZS`): Unexpected World Bank response for https://api.worldbank.org/v2/country/all/indicator/AG.LND.IRIG.ZS?format=json&per_page=20000&page=1&date=2015%3A2025
+- `tractors-arable-land` (`AG.LND.TRAC.ZS`): Unexpected World Bank response for https://api.worldbank.org/v2/country/all/indicator/AG.LND.TRAC.ZS?format=json&per_page=20000&page=1&date=2015%3A2025
+- `permanent-pasture` (`EN.LAND.PPS.ZS`): Unexpected World Bank response for https://api.worldbank.org/v2/country/all/indicator/EN.LAND.PPS.ZS?format=json&per_page=20000&page=1&date=2015%3A2025
+- `rural-density-arable` (`EN.RUR.DNST`): rural-density-arable: no year in 2015:2025 met 120 mapped countries; best coverage was 0 rural-density-arable: selected coverage 0 is below 120
+- `part-time-employment` (`SL.TLF.PART.ZS`): part-time-employment: no year in 2015:2025 met 120 mapped countries; best coverage was 113 part-time-employment: selected coverage 17 is below 120
+- `part-time-employment-female` (`SL.TLF.PART.FE.ZS`): part-time-employment-female: no year in 2015:2025 met 120 mapped countries; best coverage was 113 part-time-employment-female: selected coverage 17 is below 120
+- `youth-neet` (`SL.UEM.NEET.ZS`): youth-neet: no year in 2015:2025 met 120 mapped countries; best coverage was 108 youth-neet: selected coverage 15 is below 120
+- `female-youth-neet` (`SL.UEM.NEET.FE.ZS`): female-youth-neet: no year in 2015:2025 met 120 mapped countries; best coverage was 108 female-youth-neet: selected coverage 15 is below 120
+- `own-account-workers` (`SL.EMP.OWAC.ZS`): own-account-workers: no year in 2015:2025 met 120 mapped countries; best coverage was 0 own-account-workers: selected coverage 0 is below 120
+- `female-senior-management` (`SL.EMP.SMGT.FE.ZS`): female-senior-management: no year in 2015:2025 met 120 mapped countries; best coverage was 90 female-senior-management: selected coverage 12 is below 120
+- `labor-force-advanced-education` (`SL.TLF.ADVN.ZS`): labor-force-advanced-education: no year in 2015:2025 met 120 mapped countries; best coverage was 109 labor-force-advanced-education: selected coverage 17 is below 120
+- `labor-force-secondary-education` (`SL.TLF.SECO.ZS`): Unexpected World Bank response for https://api.worldbank.org/v2/country/all/indicator/SL.TLF.SECO.ZS?format=json&per_page=20000&page=1&date=2015%3A2025
+- `unemployment-advanced-education` (`SL.UEM.ADVN.ZS`): unemployment-advanced-education: no year in 2015:2025 met 120 mapped countries; best coverage was 108 unemployment-advanced-education: selected coverage 17 is below 120
+- `primary-secondary-gender-parity` (`SE.ENR.PRSC.FM.ZS`): primary-secondary-gender-parity: no year in 2015:2025 met 120 mapped countries; best coverage was 113 primary-secondary-gender-parity: selected coverage 2 is below 120
+- `primary-repeaters` (`SE.PRM.REPT.ZS`): primary-repeaters: no year in 2015:2025 met 120 mapped countries; best coverage was 118 primary-repeaters: selected coverage 2 is below 120
+- `primary-attainment` (`SE.PRM.CUAT.ZS`): primary-attainment: no year in 2015:2025 met 120 mapped countries; best coverage was 109 primary-attainment: selected coverage 1 is below 120
 
 ## Reviewed Natural Earth Entities Without World Bank Country Match
 
@@ -304,7 +419,49 @@ Editorial status counts: {'daily_eligible': 53, 'practice_eligible': 34, 'expert
 - wgi-regulatory-quality-rank: rejected candidate because source data could not be built: Unexpected World Bank response for https://api.worldbank.org/v2/country/all/indicator/RQ.PER.RNK?format=json&per_page=20000&page=1&date=2015%3A2025
 - wgi-voice-accountability-rank: rejected candidate because source data could not be built: Unexpected World Bank response for https://api.worldbank.org/v2/country/all/indicator/VA.PER.RNK?format=json&per_page=20000&page=1&date=2015%3A2025
 - wgi-political-stability-rank: rejected candidate because source data could not be built: Unexpected World Bank response for https://api.worldbank.org/v2/country/all/indicator/PV.PER.RNK?format=json&per_page=20000&page=1&date=2015%3A2025
-- only 125 approved rounds compiled; target is 150, but weak candidates may remain draft
+- secondary-gender-parity: near-uniform-map warning; range is small relative to median
+- secondary-gender-parity: candidate held as draft: secondary-gender-parity: no year in 2015:2025 met 120 mapped countries; best coverage was 116 secondary-gender-parity: selected coverage 2 is below 120
+- secondary-female-teachers: candidate held as draft: secondary-female-teachers: no year in 2015:2025 met 120 mapped countries; best coverage was 105 secondary-female-teachers: selected coverage 7 is below 120
+- secondary-pupil-teacher-ratio: candidate held as draft: secondary-pupil-teacher-ratio: no year in 2015:2025 met 120 mapped countries; best coverage was 97 secondary-pupil-teacher-ratio: selected coverage 4 is below 120
+- lower-secondary-pupil-teacher-ratio: candidate held as draft: lower-secondary-pupil-teacher-ratio: no year in 2015:2025 met 120 mapped countries; best coverage was 89 lower-secondary-pupil-teacher-ratio: selected coverage 3 is below 120
+- secondary-vocational-enrollment: quantile breaks have low uniqueness; review legend legibility
+- secondary-vocational-enrollment: near-uniform-map warning; range is small relative to median
+- secondary-vocational-enrollment: candidate held as draft: secondary-vocational-enrollment: no year in 2015:2025 met 120 mapped countries; best coverage was 111 secondary-vocational-enrollment: selected coverage 1 is below 120
+- secondary-repeaters: rejected candidate because source data could not be built: Unexpected World Bank response for https://api.worldbank.org/v2/country/all/indicator/SE.SEC.REPT.ZS?format=json&per_page=20000&page=1&date=2015%3A2025
+- out-of-school-secondary: rejected candidate because source data could not be built: Unexpected World Bank response for https://api.worldbank.org/v2/country/all/indicator/SE.SEC.UNER.ZS?format=json&per_page=20000&page=1&date=2015%3A2025
+- primary-education-spending-share: quantile breaks have low uniqueness; review legend legibility
+- primary-education-spending-share: near-uniform-map warning; range is small relative to median
+- primary-education-spending-share: candidate held as draft: primary-education-spending-share: no year in 2015:2025 met 120 mapped countries; best coverage was 67 primary-education-spending-share: selected coverage 1 is below 120
+- secondary-education-spending-share: quantile breaks have low uniqueness; review legend legibility
+- secondary-education-spending-share: near-uniform-map warning; range is small relative to median
+- secondary-education-spending-share: candidate held as draft: secondary-education-spending-share: no year in 2015:2025 met 120 mapped countries; best coverage was 69 secondary-education-spending-share: selected coverage 1 is below 120
+- upper-secondary-attainment: quantile breaks have low uniqueness; review legend legibility
+- upper-secondary-attainment: near-uniform-map warning; range is small relative to median
+- upper-secondary-attainment: candidate held as draft: upper-secondary-attainment: no year in 2015:2025 met 120 mapped countries; best coverage was 107 upper-secondary-attainment: selected coverage 1 is below 120
+- science-engineering-students: rejected candidate because source data could not be built: Unexpected World Bank response for https://api.worldbank.org/v2/country/all/indicator/SE.TER.SCIE.ZS?format=json&per_page=20000&page=1&date=2015%3A2025
+- cereal-cropland: quantile breaks have low uniqueness; review legend legibility
+- cereal-cropland: candidate held as draft: cereal-cropland: no year in 2015:2025 met 120 mapped countries; best coverage was 0 cereal-cropland: selected coverage 0 is below 120
+- irrigated-cropland: rejected candidate because source data could not be built: Unexpected World Bank response for https://api.worldbank.org/v2/country/all/indicator/AG.LND.IRIG.ZS?format=json&per_page=20000&page=1&date=2015%3A2025
+- tractors-arable-land: rejected candidate because source data could not be built: Unexpected World Bank response for https://api.worldbank.org/v2/country/all/indicator/AG.LND.TRAC.ZS?format=json&per_page=20000&page=1&date=2015%3A2025
+- permanent-pasture: rejected candidate because source data could not be built: Unexpected World Bank response for https://api.worldbank.org/v2/country/all/indicator/EN.LAND.PPS.ZS?format=json&per_page=20000&page=1&date=2015%3A2025
+- rural-density-arable: quantile breaks have low uniqueness; review legend legibility
+- rural-density-arable: candidate held as draft: rural-density-arable: no year in 2015:2025 met 120 mapped countries; best coverage was 0 rural-density-arable: selected coverage 0 is below 120
+- part-time-employment: candidate held as draft: part-time-employment: no year in 2015:2025 met 120 mapped countries; best coverage was 113 part-time-employment: selected coverage 17 is below 120
+- part-time-employment-female: candidate held as draft: part-time-employment-female: no year in 2015:2025 met 120 mapped countries; best coverage was 113 part-time-employment-female: selected coverage 17 is below 120
+- youth-neet: candidate held as draft: youth-neet: no year in 2015:2025 met 120 mapped countries; best coverage was 108 youth-neet: selected coverage 15 is below 120
+- female-youth-neet: candidate held as draft: female-youth-neet: no year in 2015:2025 met 120 mapped countries; best coverage was 108 female-youth-neet: selected coverage 15 is below 120
+- own-account-workers: quantile breaks have low uniqueness; review legend legibility
+- own-account-workers: candidate held as draft: own-account-workers: no year in 2015:2025 met 120 mapped countries; best coverage was 0 own-account-workers: selected coverage 0 is below 120
+- female-senior-management: candidate held as draft: female-senior-management: no year in 2015:2025 met 120 mapped countries; best coverage was 90 female-senior-management: selected coverage 12 is below 120
+- labor-force-advanced-education: candidate held as draft: labor-force-advanced-education: no year in 2015:2025 met 120 mapped countries; best coverage was 109 labor-force-advanced-education: selected coverage 17 is below 120
+- labor-force-secondary-education: rejected candidate because source data could not be built: Unexpected World Bank response for https://api.worldbank.org/v2/country/all/indicator/SL.TLF.SECO.ZS?format=json&per_page=20000&page=1&date=2015%3A2025
+- unemployment-advanced-education: candidate held as draft: unemployment-advanced-education: no year in 2015:2025 met 120 mapped countries; best coverage was 108 unemployment-advanced-education: selected coverage 17 is below 120
+- primary-secondary-gender-parity: near-uniform-map warning; range is small relative to median
+- primary-secondary-gender-parity: candidate held as draft: primary-secondary-gender-parity: no year in 2015:2025 met 120 mapped countries; best coverage was 113 primary-secondary-gender-parity: selected coverage 2 is below 120
+- primary-repeaters: candidate held as draft: primary-repeaters: no year in 2015:2025 met 120 mapped countries; best coverage was 118 primary-repeaters: selected coverage 2 is below 120
+- primary-attainment: quantile breaks have low uniqueness; review legend legibility
+- primary-attainment: near-uniform-map warning; range is small relative to median
+- primary-attainment: candidate held as draft: primary-attainment: no year in 2015:2025 met 120 mapped countries; best coverage was 109 primary-attainment: selected coverage 1 is below 120
 
 ## Failures
 

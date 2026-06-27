@@ -180,7 +180,7 @@
     "valuesReference": "https://api.worldbank.org/v2/country/all/indicator/EG.ELC.FOSL.ZS?format=json&per_page=20000&page=1&date=2015%3A2025",
     "license": "Creative Commons Attribution 4.0 International unless specifically labeled otherwise by World Bank metadata",
     "licenseReference": "https://www.worldbank.org/en/about/legal/terms-of-use-for-datasets",
-    "retrievedAt": "2026-06-22T18:07:01.359136+00:00",
+    "retrievedAt": "2026-06-27T17:15:02.179377+00:00",
     "checksum": "887cd6f362d22cefc1c2f0c8f75887fbcc0f2d600f290679cad55166e67f3b98",
     "sourceOrganization": "IEA Energy Statistics Data Browser, International Energy Agency (IEA), uri: https://www.iea.org/data-and-statistics/data-tools/energy-statistics-data-browser, publisher: International Energy Agency (IEA), date accessed: 2025-03-25"
   },

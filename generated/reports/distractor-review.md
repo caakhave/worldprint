@@ -1,6 +1,6 @@
 # WORLDPRINT Distractor Review
 
-Generated: 2026-06-22T18:07:37.471863+00:00
+Generated: 2026-06-27T17:16:22.632041+00:00
 Content version: 2026.06.22-exp2-qa1
 
 This automated review helps editors avoid distractors that are too weak, too obvious, or unfairly ambiguous. It does not auto-approve editorial judgment.
@@ -16,11 +16,11 @@ This automated review helps editors avoid distractors that are too weak, too obv
 | Correlated indicator | Pearson | Spearman | Overlap | Visual similarity | Warning | Notes |
 | --- | ---: | ---: | ---: | ---: | --- | --- |
 | Secure internet servers (`IT.NET.SECR.P6`) | 0.41 | 0.81 | 132 | 0.31 | ok | Reasonable distractor candidate; no major automated warning. |
+| Logistics customs score (`LP.LPI.CUST.XQ`) | 0.77 | 0.80 | 108 | 0.44 | ok | Reasonable distractor candidate; no major automated warning. |
 | GDP per capita, PPP (`NY.GDP.PCAP.PP.CD`) | 0.75 | 0.80 | 130 | 0.34 | review | Same or closely related topic; use only when the tier calls for close distractors. |
 | GNI per capita, PPP (`NY.GNP.PCAP.PP.CD`) | 0.75 | 0.79 | 130 | 0.33 | review | Same or closely related topic; use only when the tier calls for close distractors. |
 | Safely managed drinking water (`SH.H2O.SMDW.ZS`) | 0.72 | 0.78 | 106 | 0.34 | ok | Reasonable distractor candidate; no major automated warning. |
 | Logistics infrastructure quality (`LP.LPI.INFR.XQ`) | 0.76 | 0.78 | 108 | 0.35 | ok | Reasonable distractor candidate; no major automated warning. |
-| Nurses and midwives (`SH.MED.NUMW.P3`) | 0.71 | 0.78 | 122 | 0.30 | ok | Reasonable distractor candidate; no major automated warning. |
 
 ## Adolescent fertility (`SP.ADO.TFRT`)
 
@@ -87,8 +87,8 @@ This automated review helps editors avoid distractors that are too weak, too obv
 | Birth rate (`SP.DYN.CBRT.IN`) | 0.82 | 0.62 | 169 | 0.33 | review | Same or closely related topic; use only when the tier calls for close distractors. |
 | Internet users (`IT.NET.USER.ZS`) | -0.79 | -0.63 | 154 | 0.09 | ok | Reasonable distractor candidate; no major automated warning. |
 | Population ages 0-14 (`SP.POP.0014.TO.ZS`) | 0.78 | 0.63 | 169 | 0.38 | review | Same or closely related topic; use only when the tier calls for close distractors. |
+| Rural basic sanitation (`SH.STA.BASS.RU.ZS`) | -0.76 | -0.56 | 144 | 0.08 | ok | Reasonable distractor candidate; no major automated warning. |
 | Basic sanitation access (`SH.STA.BASS.ZS`) | -0.75 | -0.56 | 156 | 0.06 | ok | Reasonable distractor candidate; no major automated warning. |
-| Under-5 mortality (`SH.DYN.MORT`) | 0.74 | 0.54 | 166 | 0.20 | ok | Reasonable distractor candidate; no major automated warning. |
 
 ## Agricultural land (`AG.LND.AGRI.ZS`)
 
@@ -103,9 +103,9 @@ This automated review helps editors avoid distractors that are too weak, too obv
 | Arable land (`AG.LND.ARBL.ZS`) | 0.54 | 0.57 | 168 | 0.29 | review | Same or closely related topic; use only when the tier calls for close distractors. |
 | Forest area (`AG.LND.FRST.ZS`) | -0.52 | -0.47 | 169 | 0.14 | ok | Reasonable distractor candidate; no major automated warning. |
 | Freshwater per person (`ER.H2O.INTR.PC`) | -0.33 | -0.44 | 164 | 0.13 | ok | Reasonable distractor candidate; no major automated warning. |
+| Rural low-elevation population (`EN.POP.EL5M.RU.ZS`) | -0.34 | -0.37 | 169 | 0.08 | ok | Reasonable distractor candidate; no major automated warning. |
 | Low-elevation coastal population (`EN.POP.EL5M.ZS`) | -0.34 | -0.37 | 169 | 0.08 | ok | Reasonable distractor candidate; no major automated warning. |
-| Energy use (`EG.USE.PCAP.KG.OE`) | -0.35 | -0.29 | 142 | 0.12 | ok | Reasonable distractor candidate; no major automated warning. |
-| Hydroelectricity share (`EG.ELC.HYRO.ZS`) | -0.32 | -0.34 | 124 | 0.06 | ok | Reasonable distractor candidate; no major automated warning. |
+| Arable land area (`AG.LND.ARBL.HA`) | 0.09 | 0.36 | 168 | 0.18 | review | Same or closely related topic; use only when the tier calls for close distractors. |
 
 ## Agricultural raw material exports (`TX.VAL.AGRI.ZS.UN`)
 
@@ -117,12 +117,12 @@ This automated review helps editors avoid distractors that are too weak, too obv
 
 | Correlated indicator | Pearson | Spearman | Overlap | Visual similarity | Warning | Notes |
 | --- | ---: | ---: | ---: | ---: | --- | --- |
+| Urban open defecation (`SH.STA.ODFC.UR.ZS`) | 0.63 | 0.16 | 122 | 0.18 | ok | Reasonable distractor candidate; no major automated warning. |
+| Rural open defecation (`SH.STA.ODFC.RU.ZS`) | 0.48 | 0.18 | 119 | 0.17 | ok | Reasonable distractor candidate; no major automated warning. |
 | Renewable energy consumption (`EG.FEC.RNEW.ZS`) | 0.32 | 0.47 | 137 | 0.28 | ok | Reasonable distractor candidate; no major automated warning. |
 | Open defecation (`SH.STA.ODFC.ZS`) | 0.46 | 0.21 | 126 | 0.17 | ok | Reasonable distractor candidate; no major automated warning. |
 | Forest rents (`NY.GDP.FRST.RT.ZS`) | 0.44 | 0.45 | 136 | 0.24 | review | Same or closely related topic; use only when the tier calls for close distractors. |
 | Net forest depletion (`NY.ADJ.DFOR.GN.ZS`) | 0.41 | 0.03 | 131 | 0.13 | ok | Reasonable distractor candidate; no major automated warning. |
-| Maternal mortality (`SH.STA.MMRT`) | 0.40 | 0.19 | 137 | 0.15 | ok | Reasonable distractor candidate; no major automated warning. |
-| Renewable electricity (`EG.ELC.RNEW.ZS`) | 0.10 | 0.40 | 133 | 0.26 | ok | Reasonable distractor candidate; no major automated warning. |
 
 ## Agricultural raw material imports (`TM.VAL.AGRI.ZS.UN`)
 
@@ -135,11 +135,11 @@ This automated review helps editors avoid distractors that are too weak, too obv
 | Correlated indicator | Pearson | Spearman | Overlap | Visual similarity | Warning | Notes |
 | --- | ---: | ---: | ---: | ---: | --- | --- |
 | Arable land (`AG.LND.ARBL.ZS`) | 0.25 | 0.37 | 137 | 0.23 | ok | Reasonable distractor candidate; no major automated warning. |
+| Female services employment (`SL.SRV.EMPL.FE.ZS`) | -0.33 | -0.20 | 134 | 0.15 | ok | Reasonable distractor candidate; no major automated warning. |
 | Natural resource rents (`NY.GDP.TOTL.RT.ZS`) | -0.25 | -0.30 | 136 | 0.10 | review | Same or closely related topic; use only when the tier calls for close distractors. |
 | Natural resource depletion (`NY.ADJ.DRES.GN.ZS`) | -0.20 | -0.28 | 131 | 0.09 | ok | Reasonable distractor candidate; no major automated warning. |
-| Net migration (`SM.POP.NETM`) | -0.28 | -0.25 | 137 | 0.11 | ok | Reasonable distractor candidate; no major automated warning. |
-| Rural population (`SP.RUR.TOTL.ZS`) | 0.27 | 0.19 | 137 | 0.18 | ok | Reasonable distractor candidate; no major automated warning. |
-| Urban population (`SP.URB.TOTL.IN.ZS`) | -0.27 | -0.19 | 137 | 0.08 | ok | Reasonable distractor candidate; no major automated warning. |
+| Female agricultural employment (`SL.AGR.EMPL.FE.ZS`) | 0.28 | 0.13 | 134 | 0.18 | review | Same or closely related topic; use only when the tier calls for close distractors. |
+| Female contributing family workers (`SL.FAM.WORK.FE.ZS`) | 0.28 | 0.14 | 134 | 0.18 | ok | Reasonable distractor candidate; no major automated warning. |
 
 ## Agricultural water withdrawals (`ER.H2O.FWAG.ZS`)
 
@@ -154,9 +154,9 @@ This automated review helps editors avoid distractors that are too weak, too obv
 | Industrial water withdrawals (`ER.H2O.FWIN.ZS`) | -0.76 | -0.78 | 160 | 0.09 | review | Same or closely related topic; use only when the tier calls for close distractors. |
 | Domestic water withdrawals (`ER.H2O.FWDM.ZS`) | -0.65 | -0.76 | 161 | 0.08 | review | Same or closely related topic; use only when the tier calls for close distractors. |
 | Water productivity (`ER.GDP.FWTL.M3.KD`) | -0.40 | -0.74 | 157 | 0.08 | review | Same or closely related topic; use only when the tier calls for close distractors. |
+| Female contributing family workers (`SL.FAM.WORK.FE.ZS`) | 0.45 | 0.53 | 157 | 0.25 | ok | Reasonable distractor candidate; no major automated warning. |
 | Agriculture value added (`NV.AGR.TOTL.ZS`) | 0.39 | 0.53 | 145 | 0.28 | ok | Reasonable distractor candidate; no major automated warning. |
 | Physicians (`SH.MED.PHYS.ZS`) | -0.49 | -0.53 | 120 | 0.09 | ok | Reasonable distractor candidate; no major automated warning. |
-| Hospital beds (`SH.MED.BEDS.ZS`) | -0.45 | -0.51 | 117 | 0.09 | ok | Reasonable distractor candidate; no major automated warning. |
 
 ## Agriculture value growth (`NV.AGR.TOTL.KD.ZG`)
 
@@ -174,6 +174,40 @@ This automated review helps editors avoid distractors that are too weak, too obv
 | Preprimary enrollment (`SE.PRE.ENRR`) | -0.20 | -0.30 | 117 | 0.12 | ok | Reasonable distractor candidate; no major automated warning. |
 | Government revenue excluding grants (`GC.REV.XGRT.GD.ZS`) | -0.16 | -0.29 | 113 | 0.09 | ok | Reasonable distractor candidate; no major automated warning. |
 | Livestock production index (`AG.PRD.LVSK.XD`) | 0.14 | 0.29 | 149 | 0.21 | review | Same or closely related topic; use only when the tier calls for close distractors. |
+
+## Agriculture methane emissions (`EN.GHG.CH4.AG.MT.CE.AR5`)
+
+- Approved status: approved
+- Category: agriculture
+- Difficulty: expert
+- Coverage: 165 countries
+- Warning level: high
+
+| Correlated indicator | Pearson | Spearman | Overlap | Visual similarity | Warning | Notes |
+| --- | ---: | ---: | ---: | ---: | --- | --- |
+| Agriculture nitrous oxide emissions (`EN.GHG.N2O.AG.MT.CE.AR5`) | 0.96 | 0.95 | 165 | 0.59 | high | Very high correlation can make the pair unfairly ambiguous. Same or closely related topic; use only when the tier calls for close distractors. |
+| Land under cereal production (`AG.LND.CREL.HA`) | 0.89 | 0.83 | 163 | 0.45 | ok | Reasonable distractor candidate; no major automated warning. |
+| Cereal production (`AG.PRD.CREL.MT`) | 0.85 | 0.82 | 163 | 0.44 | review | Same or closely related topic; use only when the tier calls for close distractors. |
+| Arable land area (`AG.LND.ARBL.HA`) | 0.80 | 0.84 | 164 | 0.42 | ok | Reasonable distractor candidate; no major automated warning. |
+| Container port traffic (`IS.SHP.GOOD.TU`) | 0.60 | 0.58 | 127 | 0.28 | ok | Reasonable distractor candidate; no major automated warning. |
+| Air passengers carried (`IS.AIR.PSGR`) | 0.59 | 0.46 | 133 | 0.22 | ok | Reasonable distractor candidate; no major automated warning. |
+
+## Agriculture nitrous oxide emissions (`EN.GHG.N2O.AG.MT.CE.AR5`)
+
+- Approved status: approved
+- Category: agriculture
+- Difficulty: expert
+- Coverage: 165 countries
+- Warning level: high
+
+| Correlated indicator | Pearson | Spearman | Overlap | Visual similarity | Warning | Notes |
+| --- | ---: | ---: | ---: | ---: | --- | --- |
+| Agriculture methane emissions (`EN.GHG.CH4.AG.MT.CE.AR5`) | 0.96 | 0.95 | 165 | 0.59 | high | Very high correlation can make the pair unfairly ambiguous. Same or closely related topic; use only when the tier calls for close distractors. |
+| Land under cereal production (`AG.LND.CREL.HA`) | 0.95 | 0.86 | 163 | 0.47 | high | Very high correlation can make the pair unfairly ambiguous. |
+| Cereal production (`AG.PRD.CREL.MT`) | 0.94 | 0.86 | 163 | 0.43 | high | Very high correlation can make the pair unfairly ambiguous. Same or closely related topic; use only when the tier calls for close distractors. |
+| Arable land area (`AG.LND.ARBL.HA`) | 0.86 | 0.88 | 164 | 0.51 | ok | Reasonable distractor candidate; no major automated warning. |
+| Container port traffic (`IS.SHP.GOOD.TU`) | 0.73 | 0.61 | 127 | 0.26 | ok | Reasonable distractor candidate; no major automated warning. |
+| Air passengers carried (`IS.AIR.PSGR`) | 0.72 | 0.52 | 133 | 0.23 | ok | Reasonable distractor candidate; no major automated warning. |
 
 ## Agriculture value added (`NV.AGR.TOTL.ZS`)
 
@@ -203,11 +237,62 @@ This automated review helps editors avoid distractors that are too weak, too obv
 | Correlated indicator | Pearson | Spearman | Overlap | Visual similarity | Warning | Notes |
 | --- | ---: | ---: | ---: | ---: | --- | --- |
 | Employment in agriculture (`SL.AGR.EMPL.ZS`) | -0.56 | -0.94 | 146 | 0.10 | high | Very high correlation can make the pair unfairly ambiguous. Same or closely related topic; use only when the tier calls for close distractors. |
+| Male agricultural employment (`SL.AGR.EMPL.MA.ZS`) | -0.58 | -0.94 | 146 | 0.10 | high | Very high correlation can make the pair unfairly ambiguous. |
+| Female agricultural employment (`SL.AGR.EMPL.FE.ZS`) | -0.51 | -0.91 | 146 | 0.08 | high | Very high correlation can make the pair unfairly ambiguous. |
 | Employment in services (`SL.SRV.EMPL.ZS`) | 0.64 | 0.90 | 146 | 0.55 | ok | Reasonable distractor candidate; no major automated warning. |
 | GNI per capita (`NY.GNP.PCAP.CD`) | 0.79 | 0.89 | 145 | 0.53 | ok | Reasonable distractor candidate; no major automated warning. |
 | GNI per capita, PPP (`NY.GNP.PCAP.PP.CD`) | 0.72 | 0.89 | 145 | 0.44 | ok | Reasonable distractor candidate; no major automated warning. |
-| GDP per capita (`NY.GDP.PCAP.CD`) | 0.75 | 0.89 | 145 | 0.54 | ok | Reasonable distractor candidate; no major automated warning. |
-| GDP per capita, PPP (`NY.GDP.PCAP.PP.CD`) | 0.69 | 0.89 | 145 | 0.47 | ok | Reasonable distractor candidate; no major automated warning. |
+
+## Air carrier departures (`IS.AIR.DPRT`)
+
+- Approved status: approved
+- Category: connectivity
+- Difficulty: expert
+- Coverage: 136 countries
+- Warning level: high
+
+| Correlated indicator | Pearson | Spearman | Overlap | Visual similarity | Warning | Notes |
+| --- | ---: | ---: | ---: | ---: | --- | --- |
+| Air passengers carried (`IS.AIR.PSGR`) | 0.99 | 0.97 | 135 | 0.73 | high | Very high correlation can make the pair unfairly ambiguous. Same or closely related topic; use only when the tier calls for close distractors. |
+| Air freight (`IS.AIR.GOOD.MT.K1`) | 0.89 | 0.83 | 123 | 0.37 | review | Same or closely related topic; use only when the tier calls for close distractors. |
+| Cereal production (`AG.PRD.CREL.MT`) | 0.82 | 0.47 | 135 | 0.23 | ok | Reasonable distractor candidate; no major automated warning. |
+| Container port traffic (`IS.SHP.GOOD.TU`) | 0.64 | 0.82 | 105 | 0.37 | review | Same or closely related topic; use only when the tier calls for close distractors. |
+| Arable land area (`AG.LND.ARBL.HA`) | 0.72 | 0.35 | 136 | 0.19 | ok | Reasonable distractor candidate; no major automated warning. |
+| Logistics infrastructure quality (`LP.LPI.INFR.XQ`) | 0.32 | 0.72 | 109 | 0.26 | review | Same or closely related topic; use only when the tier calls for close distractors. |
+
+## Air freight (`IS.AIR.GOOD.MT.K1`)
+
+- Approved status: approved
+- Category: connectivity
+- Difficulty: expert
+- Coverage: 123 countries
+- Warning level: review
+
+| Correlated indicator | Pearson | Spearman | Overlap | Visual similarity | Warning | Notes |
+| --- | ---: | ---: | ---: | ---: | --- | --- |
+| Air passengers carried (`IS.AIR.PSGR`) | 0.89 | 0.84 | 122 | 0.38 | review | Same or closely related topic; use only when the tier calls for close distractors. |
+| Air carrier departures (`IS.AIR.DPRT`) | 0.89 | 0.83 | 123 | 0.37 | review | Same or closely related topic; use only when the tier calls for close distractors. |
+| Container port traffic (`IS.SHP.GOOD.TU`) | 0.65 | 0.79 | 96 | 0.36 | review | Same or closely related topic; use only when the tier calls for close distractors. |
+| Logistics infrastructure quality (`LP.LPI.INFR.XQ`) | 0.41 | 0.70 | 99 | 0.28 | review | Same or closely related topic; use only when the tier calls for close distractors. |
+| Cereal production (`AG.PRD.CREL.MT`) | 0.70 | 0.27 | 122 | 0.20 | ok | Reasonable distractor candidate; no major automated warning. |
+| Logistics performance (`LP.LPI.OVRL.XQ`) | 0.38 | 0.66 | 99 | 0.29 | review | Same or closely related topic; use only when the tier calls for close distractors. |
+
+## Air passengers carried (`IS.AIR.PSGR`)
+
+- Approved status: approved
+- Category: connectivity
+- Difficulty: expert
+- Coverage: 135 countries
+- Warning level: high
+
+| Correlated indicator | Pearson | Spearman | Overlap | Visual similarity | Warning | Notes |
+| --- | ---: | ---: | ---: | ---: | --- | --- |
+| Air carrier departures (`IS.AIR.DPRT`) | 0.99 | 0.97 | 135 | 0.73 | high | Very high correlation can make the pair unfairly ambiguous. Same or closely related topic; use only when the tier calls for close distractors. |
+| Air freight (`IS.AIR.GOOD.MT.K1`) | 0.89 | 0.84 | 122 | 0.38 | review | Same or closely related topic; use only when the tier calls for close distractors. |
+| Cereal production (`AG.PRD.CREL.MT`) | 0.86 | 0.49 | 134 | 0.22 | ok | Reasonable distractor candidate; no major automated warning. |
+| Container port traffic (`IS.SHP.GOOD.TU`) | 0.70 | 0.84 | 104 | 0.39 | review | Same or closely related topic; use only when the tier calls for close distractors. |
+| Arable land area (`AG.LND.ARBL.HA`) | 0.73 | 0.36 | 135 | 0.21 | ok | Reasonable distractor candidate; no major automated warning. |
+| Agriculture nitrous oxide emissions (`EN.GHG.N2O.AG.MT.CE.AR5`) | 0.72 | 0.52 | 133 | 0.23 | ok | Reasonable distractor candidate; no major automated warning. |
 
 ## Arable land (`AG.LND.ARBL.ZS`)
 
@@ -221,10 +306,27 @@ This automated review helps editors avoid distractors that are too weak, too obv
 | --- | ---: | ---: | ---: | ---: | --- | --- |
 | Population density (`EN.POP.DNST`) | 0.48 | 0.62 | 168 | 0.30 | ok | Reasonable distractor candidate; no major automated warning. |
 | Agricultural land (`AG.LND.AGRI.ZS`) | 0.54 | 0.57 | 168 | 0.29 | review | Same or closely related topic; use only when the tier calls for close distractors. |
+| Cereal production (`AG.PRD.CREL.MT`) | 0.13 | 0.53 | 167 | 0.25 | ok | Reasonable distractor candidate; no major automated warning. |
+| Land under cereal production (`AG.LND.CREL.HA`) | 0.18 | 0.49 | 167 | 0.24 | review | Same or closely related topic; use only when the tier calls for close distractors. |
+| Arable land area (`AG.LND.ARBL.HA`) | 0.16 | 0.48 | 168 | 0.23 | review | Same or closely related topic; use only when the tier calls for close distractors. |
 | Permanent cropland (`AG.LND.CROP.ZS`) | 0.25 | 0.46 | 167 | 0.25 | review | Same or closely related topic; use only when the tier calls for close distractors. |
-| Arable land per person (`AG.LND.ARBL.HA.PC`) | 0.23 | 0.40 | 168 | 0.28 | review | Same or closely related topic; use only when the tier calls for close distractors. |
-| Natural resource rents (`NY.GDP.TOTL.RT.ZS`) | -0.33 | -0.38 | 159 | 0.11 | ok | Reasonable distractor candidate; no major automated warning. |
-| Death rate (`SP.DYN.CDRT.IN`) | 0.37 | 0.38 | 168 | 0.23 | ok | Reasonable distractor candidate; no major automated warning. |
+
+## Arable land area (`AG.LND.ARBL.HA`)
+
+- Approved status: approved
+- Category: land
+- Difficulty: expert
+- Coverage: 168 countries
+- Warning level: high
+
+| Correlated indicator | Pearson | Spearman | Overlap | Visual similarity | Warning | Notes |
+| --- | ---: | ---: | ---: | ---: | --- | --- |
+| Land under cereal production (`AG.LND.CREL.HA`) | 0.93 | 0.97 | 167 | 0.71 | high | Very high correlation can make the pair unfairly ambiguous. Same or closely related topic; use only when the tier calls for close distractors. |
+| Cereal production (`AG.PRD.CREL.MT`) | 0.87 | 0.91 | 167 | 0.47 | high | Very high correlation can make the pair unfairly ambiguous. |
+| Agriculture nitrous oxide emissions (`EN.GHG.N2O.AG.MT.CE.AR5`) | 0.86 | 0.88 | 164 | 0.51 | ok | Reasonable distractor candidate; no major automated warning. |
+| Agriculture methane emissions (`EN.GHG.CH4.AG.MT.CE.AR5`) | 0.80 | 0.84 | 164 | 0.42 | ok | Reasonable distractor candidate; no major automated warning. |
+| Air passengers carried (`IS.AIR.PSGR`) | 0.73 | 0.36 | 135 | 0.21 | ok | Reasonable distractor candidate; no major automated warning. |
+| Air carrier departures (`IS.AIR.DPRT`) | 0.72 | 0.35 | 136 | 0.19 | ok | Reasonable distractor candidate; no major automated warning. |
 
 ## Arable land per person (`AG.LND.ARBL.HA.PC`)
 
@@ -236,12 +338,12 @@ This automated review helps editors avoid distractors that are too weak, too obv
 
 | Correlated indicator | Pearson | Spearman | Overlap | Visual similarity | Warning | Notes |
 | --- | ---: | ---: | ---: | ---: | --- | --- |
+| Arable land area (`AG.LND.ARBL.HA`) | 0.29 | 0.56 | 168 | 0.25 | review | Same or closely related topic; use only when the tier calls for close distractors. |
+| Land under cereal production (`AG.LND.CREL.HA`) | 0.18 | 0.52 | 167 | 0.30 | review | Same or closely related topic; use only when the tier calls for close distractors. |
+| Cereal production (`AG.PRD.CREL.MT`) | 0.09 | 0.45 | 167 | 0.29 | ok | Reasonable distractor candidate; no major automated warning. |
+| Urban low-elevation land (`AG.LND.EL5M.UR.ZS`) | -0.14 | -0.42 | 168 | 0.10 | review | Same or closely related topic; use only when the tier calls for close distractors. |
 | Population density (`EN.POP.DNST`) | -0.31 | -0.41 | 168 | 0.11 | ok | Reasonable distractor candidate; no major automated warning. |
-| Fertilizer consumption (`AG.CON.FERT.ZS`) | -0.19 | -0.40 | 165 | 0.07 | ok | Reasonable distractor candidate; no major automated warning. |
-| Arable land (`AG.LND.ARBL.ZS`) | 0.23 | 0.40 | 168 | 0.28 | review | Same or closely related topic; use only when the tier calls for close distractors. |
-| Death rate (`SP.DYN.CDRT.IN`) | 0.38 | 0.36 | 168 | 0.23 | ok | Reasonable distractor candidate; no major automated warning. |
-| Low-elevation coastal population (`EN.POP.EL5M.ZS`) | -0.18 | -0.37 | 168 | 0.10 | ok | Reasonable distractor candidate; no major automated warning. |
-| Low-elevation land (`AG.LND.EL5M.ZS`) | -0.17 | -0.35 | 168 | 0.05 | review | Same or closely related topic; use only when the tier calls for close distractors. |
+| Fertilizer use per hectare (`AG.CON.FERT.ZS`) | -0.19 | -0.40 | 165 | 0.07 | ok | Reasonable distractor candidate; no major automated warning. |
 
 ## Commercial bank branches (`FB.CBK.BRCH.P5`)
 
@@ -270,12 +372,12 @@ This automated review helps editors avoid distractors that are too weak, too obv
 
 | Correlated indicator | Pearson | Spearman | Overlap | Visual similarity | Warning | Notes |
 | --- | ---: | ---: | ---: | ---: | --- | --- |
+| Rural basic sanitation (`SH.STA.BASS.RU.ZS`) | 0.98 | 0.97 | 144 | 0.65 | high | Very high correlation can make the pair unfairly ambiguous. Same or closely related topic; use only when the tier calls for close distractors. |
+| Urban basic sanitation (`SH.STA.BASS.UR.ZS`) | 0.96 | 0.96 | 145 | 0.63 | high | Very high correlation can make the pair unfairly ambiguous. Same or closely related topic; use only when the tier calls for close distractors. |
 | Internet users (`IT.NET.USER.ZS`) | 0.91 | 0.85 | 144 | 0.44 | high | Very high correlation can make the pair unfairly ambiguous. |
 | Rural electricity access (`EG.ELC.ACCS.RU.ZS`) | 0.91 | 0.85 | 154 | 0.30 | high | Very high correlation can make the pair unfairly ambiguous. Same or closely related topic; use only when the tier calls for close distractors. |
+| Rural basic drinking water (`SH.H2O.BASW.RU.ZS`) | 0.90 | 0.86 | 144 | 0.44 | high | Very high correlation can make the pair unfairly ambiguous. Same or closely related topic; use only when the tier calls for close distractors. |
 | Basic drinking water access (`SH.H2O.BASW.ZS`) | 0.90 | 0.85 | 156 | 0.44 | review | Same or closely related topic; use only when the tier calls for close distractors. |
-| Clean cooking fuels access (`EG.CFT.ACCS.ZS`) | 0.90 | 0.85 | 150 | 0.35 | review | Same or closely related topic; use only when the tier calls for close distractors. |
-| Electricity access (`EG.ELC.ACCS.ZS`) | 0.89 | 0.86 | 156 | 0.34 | review | Same or closely related topic; use only when the tier calls for close distractors. |
-| Female adult mortality (`SP.DYN.AMRT.FE`) | -0.83 | -0.88 | 136 | 0.05 | review | Same or closely related topic; use only when the tier calls for close distractors. |
 
 ## Birth rate (`SP.DYN.CBRT.IN`)
 
@@ -311,6 +413,23 @@ This automated review helps editors avoid distractors that are too weak, too obv
 | Natural resource rents (`NY.GDP.TOTL.RT.ZS`) | 0.41 | 0.41 | 152 | 0.21 | ok | Reasonable distractor candidate; no major automated warning. |
 | Female-to-male labor force ratio (`SL.TLF.CACT.FM.ZS`) | -0.36 | -0.40 | 154 | 0.10 | ok | Reasonable distractor candidate; no major automated warning. |
 
+## Cereal production (`AG.PRD.CREL.MT`)
+
+- Approved status: approved
+- Category: agriculture
+- Difficulty: expert
+- Coverage: 167 countries
+- Warning level: high
+
+| Correlated indicator | Pearson | Spearman | Overlap | Visual similarity | Warning | Notes |
+| --- | ---: | ---: | ---: | ---: | --- | --- |
+| Land under cereal production (`AG.LND.CREL.HA`) | 0.93 | 0.94 | 167 | 0.57 | high | Very high correlation can make the pair unfairly ambiguous. Same or closely related topic; use only when the tier calls for close distractors. |
+| Agriculture nitrous oxide emissions (`EN.GHG.N2O.AG.MT.CE.AR5`) | 0.94 | 0.86 | 163 | 0.43 | high | Very high correlation can make the pair unfairly ambiguous. Same or closely related topic; use only when the tier calls for close distractors. |
+| Arable land area (`AG.LND.ARBL.HA`) | 0.87 | 0.91 | 167 | 0.47 | high | Very high correlation can make the pair unfairly ambiguous. |
+| Air passengers carried (`IS.AIR.PSGR`) | 0.86 | 0.49 | 134 | 0.22 | ok | Reasonable distractor candidate; no major automated warning. |
+| Agriculture methane emissions (`EN.GHG.CH4.AG.MT.CE.AR5`) | 0.85 | 0.82 | 163 | 0.44 | review | Same or closely related topic; use only when the tier calls for close distractors. |
+| Air carrier departures (`IS.AIR.DPRT`) | 0.82 | 0.47 | 135 | 0.23 | ok | Reasonable distractor candidate; no major automated warning. |
+
 ## Cereal yield (`AG.YLD.CREL.KG`)
 
 - Approved status: approved
@@ -322,7 +441,7 @@ This automated review helps editors avoid distractors that are too weak, too obv
 | Correlated indicator | Pearson | Spearman | Overlap | Visual similarity | Warning | Notes |
 | --- | ---: | ---: | ---: | ---: | --- | --- |
 | Population ages 0-14 (`SP.POP.0014.TO.ZS`) | -0.48 | -0.71 | 167 | 0.05 | ok | Reasonable distractor candidate; no major automated warning. |
-| Fertilizer consumption (`AG.CON.FERT.ZS`) | 0.33 | 0.70 | 164 | 0.29 | review | Same or closely related topic; use only when the tier calls for close distractors. |
+| Fertilizer use per hectare (`AG.CON.FERT.ZS`) | 0.33 | 0.70 | 164 | 0.29 | review | Same or closely related topic; use only when the tier calls for close distractors. |
 | GNI per capita, PPP (`NY.GNP.PCAP.PP.CD`) | 0.52 | 0.69 | 156 | 0.28 | ok | Reasonable distractor candidate; no major automated warning. |
 | GDP per capita, PPP (`NY.GDP.PCAP.PP.CD`) | 0.50 | 0.69 | 156 | 0.25 | ok | Reasonable distractor candidate; no major automated warning. |
 | Life expectancy (`SP.DYN.LE00.IN`) | 0.52 | 0.69 | 167 | 0.29 | ok | Reasonable distractor candidate; no major automated warning. |
@@ -355,12 +474,12 @@ This automated review helps editors avoid distractors that are too weak, too obv
 
 | Correlated indicator | Pearson | Spearman | Overlap | Visual similarity | Warning | Notes |
 | --- | ---: | ---: | ---: | ---: | --- | --- |
+| Urban clean cooking access (`EG.CFT.ACCS.UR.ZS`) | 0.95 | 0.99 | 162 | 0.83 | high | Very high correlation can make the pair unfairly ambiguous. Same or closely related topic; use only when the tier calls for close distractors. |
 | Rural clean cooking access (`EG.CFT.ACCS.RU.ZS`) | 0.97 | 0.99 | 162 | 0.84 | high | Very high correlation can make the pair unfairly ambiguous. Same or closely related topic; use only when the tier calls for close distractors. |
 | GNI per capita, PPP (`NY.GNP.PCAP.PP.CD`) | 0.67 | 0.92 | 153 | 0.37 | high | Very high correlation can make the pair unfairly ambiguous. |
 | GDP per capita, PPP (`NY.GDP.PCAP.PP.CD`) | 0.65 | 0.92 | 153 | 0.35 | high | Very high correlation can make the pair unfairly ambiguous. |
 | GNI per capita (`NY.GNP.PCAP.CD`) | 0.54 | 0.91 | 154 | 0.34 | high | Very high correlation can make the pair unfairly ambiguous. |
 | Particulate emission damage (`NY.ADJ.DPEM.GN.ZS`) | -0.72 | -0.91 | 145 | 0.08 | high | Very high correlation can make the pair unfairly ambiguous. |
-| GDP per capita (`NY.GDP.PCAP.CD`) | 0.53 | 0.91 | 154 | 0.35 | high | Very high correlation can make the pair unfairly ambiguous. |
 
 ## CO2 emissions per capita (`EN.GHG.CO2.PC.CE.AR5`)
 
@@ -389,12 +508,12 @@ This automated review helps editors avoid distractors that are too weak, too obv
 
 | Correlated indicator | Pearson | Spearman | Overlap | Visual similarity | Warning | Notes |
 | --- | ---: | ---: | ---: | ---: | --- | --- |
+| Container port traffic (`IS.SHP.GOOD.TU`) | 0.35 | 0.56 | 128 | 0.24 | ok | Reasonable distractor candidate; no major automated warning. |
 | Tourism arrivals (`ST.INT.ARVL`) | 0.16 | 0.49 | 139 | 0.19 | ok | Reasonable distractor candidate; no major automated warning. |
 | Population ages 65+ (`SP.POP.65UP.TO.ZS`) | 0.23 | 0.48 | 169 | 0.21 | ok | Reasonable distractor candidate; no major automated warning. |
 | Secure internet servers (`IT.NET.SECR.P6`) | 0.03 | 0.47 | 169 | 0.22 | ok | Reasonable distractor candidate; no major automated warning. |
+| Logistics timeliness score (`LP.LPI.TIME.XQ`) | 0.25 | 0.46 | 131 | 0.23 | ok | Reasonable distractor candidate; no major automated warning. |
 | Logistics performance (`LP.LPI.OVRL.XQ`) | 0.24 | 0.46 | 131 | 0.24 | ok | Reasonable distractor candidate; no major automated warning. |
-| Birth rate (`SP.DYN.CBRT.IN`) | -0.27 | -0.45 | 169 | 0.03 | ok | Reasonable distractor candidate; no major automated warning. |
-| Logistics infrastructure quality (`LP.LPI.INFR.XQ`) | 0.21 | 0.45 | 131 | 0.28 | ok | Reasonable distractor candidate; no major automated warning. |
 
 ## Communicable disease deaths (`SH.DTH.COMM.ZS`)
 
@@ -413,6 +532,91 @@ This automated review helps editors avoid distractors that are too weak, too obv
 | Under-5 mortality (`SH.DYN.MORT`) | 0.83 | 0.81 | 166 | 0.42 | review | Same or closely related topic; use only when the tier calls for close distractors. |
 | Birth rate (`SP.DYN.CBRT.IN`) | 0.83 | 0.78 | 167 | 0.30 | ok | Reasonable distractor candidate; no major automated warning. |
 
+## Communications service exports (`BX.GSR.CMCP.ZS`)
+
+- Approved status: approved
+- Category: connectivity
+- Difficulty: expert
+- Coverage: 137 countries
+- Warning level: review
+
+| Correlated indicator | Pearson | Spearman | Overlap | Visual similarity | Warning | Notes |
+| --- | ---: | ---: | ---: | ---: | --- | --- |
+| ICT service exports (`BX.GSR.CCIS.ZS`) | 0.62 | 0.62 | 135 | 0.25 | review | Same or closely related topic; use only when the tier calls for close distractors. |
+| Tourism receipts (`ST.INT.RCPT.XP.ZS`) | -0.44 | -0.44 | 121 | 0.07 | ok | Reasonable distractor candidate; no major automated warning. |
+| Transport service exports (`BX.GSR.TRAN.ZS`) | -0.38 | -0.32 | 137 | 0.09 | review | Same or closely related topic; use only when the tier calls for close distractors. |
+| Communications service imports (`BM.GSR.CMCP.ZS`) | 0.37 | 0.36 | 137 | 0.25 | review | Same or closely related topic; use only when the tier calls for close distractors. |
+| Safely managed drinking water (`SH.H2O.SMDW.ZS`) | 0.24 | 0.28 | 105 | 0.20 | ok | Reasonable distractor candidate; no major automated warning. |
+| Nuclear electricity share (`EG.ELC.NUCL.ZS`) | 0.20 | 0.28 | 137 | 0.18 | ok | Reasonable distractor candidate; no major automated warning. |
+
+## Communications service imports (`BM.GSR.CMCP.ZS`)
+
+- Approved status: approved
+- Category: connectivity
+- Difficulty: expert
+- Coverage: 137 countries
+- Warning level: review
+
+| Correlated indicator | Pearson | Spearman | Overlap | Visual similarity | Warning | Notes |
+| --- | ---: | ---: | ---: | ---: | --- | --- |
+| Transport service imports (`BM.GSR.TRAN.ZS`) | -0.64 | -0.63 | 137 | 0.08 | review | Same or closely related topic; use only when the tier calls for close distractors. |
+| Account ownership (`FX.OWN.TOTL.ZS`) | 0.57 | 0.62 | 119 | 0.27 | ok | Reasonable distractor candidate; no major automated warning. |
+| Logistics tracking score (`LP.LPI.TRAC.XQ`) | 0.55 | 0.58 | 112 | 0.25 | review | Same or closely related topic; use only when the tier calls for close distractors. |
+| Logistics performance (`LP.LPI.OVRL.XQ`) | 0.55 | 0.58 | 112 | 0.23 | review | Same or closely related topic; use only when the tier calls for close distractors. |
+| Logistics timeliness score (`LP.LPI.TIME.XQ`) | 0.53 | 0.57 | 112 | 0.24 | review | Same or closely related topic; use only when the tier calls for close distractors. |
+| Logistics customs score (`LP.LPI.CUST.XQ`) | 0.55 | 0.56 | 112 | 0.21 | review | Same or closely related topic; use only when the tier calls for close distractors. |
+
+## Compulsory education duration (`SE.COM.DURS`)
+
+- Approved status: approved
+- Category: education
+- Difficulty: expert
+- Coverage: 158 countries
+- Warning level: ok
+
+| Correlated indicator | Pearson | Spearman | Overlap | Visual similarity | Warning | Notes |
+| --- | ---: | ---: | ---: | ---: | --- | --- |
+| Rural population (`SP.RUR.TOTL.ZS`) | -0.45 | -0.50 | 158 | 0.09 | ok | Reasonable distractor candidate; no major automated warning. |
+| Urban population (`SP.URB.TOTL.IN.ZS`) | 0.45 | 0.50 | 158 | 0.21 | ok | Reasonable distractor candidate; no major automated warning. |
+| Urban basic drinking water (`SH.H2O.BASW.UR.ZS`) | 0.37 | 0.50 | 141 | 0.21 | ok | Reasonable distractor candidate; no major automated warning. |
+| Health spending per person (`SH.XPD.CHEX.PC.CD`) | 0.28 | 0.48 | 153 | 0.21 | ok | Reasonable distractor candidate; no major automated warning. |
+| Women, Business and the Law index (`GD_WBL_OVL_LAW`) | 0.39 | 0.47 | 154 | 0.14 | ok | Reasonable distractor candidate; no major automated warning. |
+| Urban basic sanitation (`SH.STA.BASS.UR.ZS`) | 0.46 | 0.45 | 137 | 0.20 | ok | Reasonable distractor candidate; no major automated warning. |
+
+## Container port traffic (`IS.SHP.GOOD.TU`)
+
+- Approved status: approved
+- Category: connectivity
+- Difficulty: expert
+- Coverage: 128 countries
+- Warning level: review
+
+| Correlated indicator | Pearson | Spearman | Overlap | Visual similarity | Warning | Notes |
+| --- | ---: | ---: | ---: | ---: | --- | --- |
+| Air passengers carried (`IS.AIR.PSGR`) | 0.70 | 0.84 | 104 | 0.39 | review | Same or closely related topic; use only when the tier calls for close distractors. |
+| Air carrier departures (`IS.AIR.DPRT`) | 0.64 | 0.82 | 105 | 0.37 | review | Same or closely related topic; use only when the tier calls for close distractors. |
+| Cereal production (`AG.PRD.CREL.MT`) | 0.81 | 0.54 | 126 | 0.20 | ok | Reasonable distractor candidate; no major automated warning. |
+| Air freight (`IS.AIR.GOOD.MT.K1`) | 0.65 | 0.79 | 96 | 0.36 | review | Same or closely related topic; use only when the tier calls for close distractors. |
+| Agriculture nitrous oxide emissions (`EN.GHG.N2O.AG.MT.CE.AR5`) | 0.73 | 0.61 | 127 | 0.26 | ok | Reasonable distractor candidate; no major automated warning. |
+| Tourism arrivals (`ST.INT.ARVL`) | 0.54 | 0.68 | 107 | 0.36 | ok | Reasonable distractor candidate; no major automated warning. |
+
+## Contributing family workers (`SL.FAM.WORK.ZS`)
+
+- Approved status: approved
+- Category: labor
+- Difficulty: expert
+- Coverage: 163 countries
+- Warning level: high
+
+| Correlated indicator | Pearson | Spearman | Overlap | Visual similarity | Warning | Notes |
+| --- | ---: | ---: | ---: | ---: | --- | --- |
+| Male contributing family workers (`SL.FAM.WORK.MA.ZS`) | 0.97 | 0.99 | 163 | 0.78 | high | Very high correlation can make the pair unfairly ambiguous. Same or closely related topic; use only when the tier calls for close distractors. |
+| Female contributing family workers (`SL.FAM.WORK.FE.ZS`) | 0.95 | 0.99 | 163 | 0.79 | high | Very high correlation can make the pair unfairly ambiguous. Same or closely related topic; use only when the tier calls for close distractors. |
+| Female vulnerable employment (`SL.EMP.VULN.FE.ZS`) | 0.74 | 0.83 | 163 | 0.39 | review | Same or closely related topic; use only when the tier calls for close distractors. |
+| Vulnerable employment (`SL.EMP.VULN.ZS`) | 0.75 | 0.82 | 163 | 0.36 | review | Same or closely related topic; use only when the tier calls for close distractors. |
+| Female self-employed (`SL.EMP.SELF.FE.ZS`) | 0.74 | 0.82 | 163 | 0.36 | review | Same or closely related topic; use only when the tier calls for close distractors. |
+| Female wage workers (`SL.EMP.WORK.FE.ZS`) | -0.74 | -0.82 | 163 | 0.10 | review | Same or closely related topic; use only when the tier calls for close distractors. |
+
 ## Crop production index (`AG.PRD.CROP.XD`)
 
 - Approved status: approved
@@ -425,10 +629,10 @@ This automated review helps editors avoid distractors that are too weak, too obv
 | --- | ---: | ---: | ---: | ---: | --- | --- |
 | Food production index (`AG.PRD.FOOD.XD`) | 0.87 | 0.84 | 168 | 0.49 | review | Same or closely related topic; use only when the tier calls for close distractors. |
 | Population ages 65+ (`SP.POP.65UP.TO.ZS`) | -0.43 | -0.51 | 168 | 0.09 | ok | Reasonable distractor candidate; no major automated warning. |
+| Rural basic drinking water (`SH.H2O.BASW.RU.ZS`) | -0.37 | -0.47 | 149 | 0.05 | ok | Reasonable distractor candidate; no major automated warning. |
 | Urban population growth (`SP.URB.GROW`) | 0.45 | 0.47 | 168 | 0.27 | ok | Reasonable distractor candidate; no major automated warning. |
 | Population ages 0-14 (`SP.POP.0014.TO.ZS`) | 0.41 | 0.47 | 168 | 0.20 | ok | Reasonable distractor candidate; no major automated warning. |
 | Birth rate (`SP.DYN.CBRT.IN`) | 0.42 | 0.46 | 168 | 0.21 | ok | Reasonable distractor candidate; no major automated warning. |
-| Population growth (`SP.POP.GROW`) | 0.45 | 0.44 | 168 | 0.26 | ok | Reasonable distractor candidate; no major automated warning. |
 
 ## Current account balance (`BN.CAB.XOKA.GD.ZS`)
 
@@ -476,10 +680,10 @@ This automated review helps editors avoid distractors that are too weak, too obv
 | --- | ---: | ---: | ---: | ---: | --- | --- |
 | Logistics infrastructure quality (`LP.LPI.INFR.XQ`) | 0.66 | 0.64 | 104 | 0.27 | ok | Reasonable distractor candidate; no major automated warning. |
 | Life expectancy (`SP.DYN.LE00.IN`) | 0.59 | 0.65 | 130 | 0.31 | ok | Reasonable distractor candidate; no major automated warning. |
+| Logistics customs score (`LP.LPI.CUST.XQ`) | 0.65 | 0.64 | 104 | 0.30 | ok | Reasonable distractor candidate; no major automated warning. |
 | Health spending per person (`SH.XPD.CHEX.PC.CD`) | 0.48 | 0.64 | 129 | 0.32 | ok | Reasonable distractor candidate; no major automated warning. |
 | Logistics performance (`LP.LPI.OVRL.XQ`) | 0.63 | 0.64 | 104 | 0.31 | ok | Reasonable distractor candidate; no major automated warning. |
 | Neonatal mortality (`SH.DYN.NMRT`) | -0.55 | -0.64 | 130 | 0.08 | ok | Reasonable distractor candidate; no major automated warning. |
-| Basic drinking water access (`SH.H2O.BASW.ZS`) | 0.48 | 0.63 | 127 | 0.28 | ok | Reasonable distractor candidate; no major automated warning. |
 
 ## Domestic savings (`NY.GDS.TOTL.ZS`)
 
@@ -510,10 +714,10 @@ This automated review helps editors avoid distractors that are too weak, too obv
 | --- | ---: | ---: | ---: | ---: | --- | --- |
 | Agricultural water withdrawals (`ER.H2O.FWAG.ZS`) | -0.65 | -0.76 | 161 | 0.08 | review | Same or closely related topic; use only when the tier calls for close distractors. |
 | Water productivity (`ER.GDP.FWTL.M3.KD`) | 0.51 | 0.75 | 157 | 0.31 | review | Same or closely related topic; use only when the tier calls for close distractors. |
+| Agriculture methane emissions (`EN.GHG.CH4.AG.MT.CE.AR5`) | -0.15 | -0.41 | 158 | 0.11 | ok | Reasonable distractor candidate; no major automated warning. |
 | Water stress (`ER.H2O.FWST.ZS`) | 0.02 | -0.40 | 160 | 0.14 | review | Same or closely related topic; use only when the tier calls for close distractors. |
 | Freshwater withdrawal (`ER.H2O.FWTL.ZS`) | -0.07 | -0.40 | 159 | 0.08 | review | Same or closely related topic; use only when the tier calls for close distractors. |
 | Exports (`NE.EXP.GNFS.ZS`) | 0.38 | 0.26 | 135 | 0.31 | ok | Reasonable distractor candidate; no major automated warning. |
-| Industrial water withdrawals (`ER.H2O.FWIN.ZS`) | 0.07 | 0.37 | 160 | 0.24 | review | Same or closely related topic; use only when the tier calls for close distractors. |
 
 ## DPT immunization (`SH.IMM.IDPT`)
 
@@ -528,9 +732,9 @@ This automated review helps editors avoid distractors that are too weak, too obv
 | Hepatitis B immunization (`SH.IMM.HEPB`) | 0.99 | 0.98 | 161 | 0.84 | high | Very high correlation can make the pair unfairly ambiguous. Same or closely related topic; use only when the tier calls for close distractors. |
 | Measles immunization (`SH.IMM.MEAS`) | 0.87 | 0.88 | 165 | 0.49 | review | Same or closely related topic; use only when the tier calls for close distractors. |
 | Open defecation (`SH.STA.ODFC.ZS`) | -0.37 | -0.60 | 148 | 0.06 | review | Same or closely related topic; use only when the tier calls for close distractors. |
+| Rural open defecation (`SH.STA.ODFC.RU.ZS`) | -0.41 | -0.60 | 140 | 0.04 | ok | Reasonable distractor candidate; no major automated warning. |
 | Adolescent fertility (`SP.ADO.TFRT`) | -0.54 | -0.59 | 165 | 0.07 | ok | Reasonable distractor candidate; no major automated warning. |
 | Safely managed drinking water (`SH.H2O.SMDW.ZS`) | 0.58 | 0.53 | 120 | 0.25 | review | Same or closely related topic; use only when the tier calls for close distractors. |
-| Rural electricity access (`EG.ELC.ACCS.RU.ZS`) | 0.47 | 0.56 | 161 | 0.25 | ok | Reasonable distractor candidate; no major automated warning. |
 
 ## Education spending (`SE.XPD.TOTL.GD.ZS`)
 
@@ -538,16 +742,16 @@ This automated review helps editors avoid distractors that are too weak, too obv
 - Category: education
 - Difficulty: expert
 - Coverage: 130 countries
-- Warning level: ok
+- Warning level: review
 
 | Correlated indicator | Pearson | Spearman | Overlap | Visual similarity | Warning | Notes |
 | --- | ---: | ---: | ---: | ---: | --- | --- |
 | Government consumption (`NE.CON.GOVT.ZS`) | 0.69 | 0.67 | 118 | 0.33 | ok | Reasonable distractor candidate; no major automated warning. |
 | Nurses and midwives (`SH.MED.NUMW.P3`) | 0.43 | 0.54 | 120 | 0.23 | ok | Reasonable distractor candidate; no major automated warning. |
+| Education spending share (`SE.XPD.TOTL.GB.ZS`) | 0.53 | 0.47 | 120 | 0.24 | review | Same or closely related topic; use only when the tier calls for close distractors. |
 | Safely managed sanitation (`SH.STA.SMSS.ZS`) | 0.47 | 0.51 | 97 | 0.31 | ok | Reasonable distractor candidate; no major automated warning. |
 | Urban slum population (`EN.POP.SLUM.UR.ZS`) | -0.40 | -0.51 | 115 | 0.06 | ok | Reasonable distractor candidate; no major automated warning. |
 | Health expenditure (`SH.XPD.CHEX.GD.ZS`) | 0.42 | 0.51 | 129 | 0.24 | ok | Reasonable distractor candidate; no major automated warning. |
-| Government expense (`GC.XPN.TOTL.GD.ZS`) | 0.45 | 0.51 | 102 | 0.16 | ok | Reasonable distractor candidate; no major automated warning. |
 
 ## Electric power use (`EG.USE.ELEC.KH.PC`)
 
@@ -577,11 +781,11 @@ This automated review helps editors avoid distractors that are too weak, too obv
 | Correlated indicator | Pearson | Spearman | Overlap | Visual similarity | Warning | Notes |
 | --- | ---: | ---: | ---: | ---: | --- | --- |
 | Rural electricity access (`EG.ELC.ACCS.RU.ZS`) | 0.95 | 0.99 | 165 | 0.90 | high | Very high correlation can make the pair unfairly ambiguous. The quantile classes produce a visually similar map. Same or closely related topic; use only when the tier calls for close distractors. |
+| Urban electricity access (`EG.ELC.ACCS.UR.ZS`) | 0.90 | 0.91 | 168 | 0.34 | high | Very high correlation can make the pair unfairly ambiguous. Same or closely related topic; use only when the tier calls for close distractors. |
 | Basic drinking water access (`SH.H2O.BASW.ZS`) | 0.90 | 0.81 | 162 | 0.29 | high | Very high correlation can make the pair unfairly ambiguous. Same or closely related topic; use only when the tier calls for close distractors. |
 | Basic sanitation access (`SH.STA.BASS.ZS`) | 0.89 | 0.86 | 156 | 0.34 | review | Same or closely related topic; use only when the tier calls for close distractors. |
 | Internet users (`IT.NET.USER.ZS`) | 0.88 | 0.85 | 154 | 0.38 | ok | Reasonable distractor candidate; no major automated warning. |
-| Maternal mortality (`SH.STA.MMRT`) | -0.78 | -0.86 | 167 | 0.10 | ok | Reasonable distractor candidate; no major automated warning. |
-| Open defecation (`SH.STA.ODFC.ZS`) | -0.70 | -0.84 | 150 | 0.12 | ok | Reasonable distractor candidate; no major automated warning. |
+| Urban basic sanitation (`SH.STA.BASS.UR.ZS`) | 0.87 | 0.85 | 147 | 0.31 | ok | Reasonable distractor candidate; no major automated warning. |
 
 ## Employers share (`SL.EMP.MPYR.ZS`)
 
@@ -610,12 +814,12 @@ This automated review helps editors avoid distractors that are too weak, too obv
 
 | Correlated indicator | Pearson | Spearman | Overlap | Visual similarity | Warning | Notes |
 | --- | ---: | ---: | ---: | ---: | --- | --- |
+| Male agricultural employment (`SL.AGR.EMPL.MA.ZS`) | 0.98 | 0.99 | 163 | 0.80 | high | Very high correlation can make the pair unfairly ambiguous. Same or closely related topic; use only when the tier calls for close distractors. |
+| Female agricultural employment (`SL.AGR.EMPL.FE.ZS`) | 0.96 | 0.97 | 163 | 0.69 | high | Very high correlation can make the pair unfairly ambiguous. Same or closely related topic; use only when the tier calls for close distractors. |
 | Agriculture value per worker (`NV.AGR.EMPL.KD`) | -0.56 | -0.94 | 146 | 0.10 | high | Very high correlation can make the pair unfairly ambiguous. Same or closely related topic; use only when the tier calls for close distractors. |
 | Employment in services (`SL.SRV.EMPL.ZS`) | -0.94 | -0.94 | 163 | 0.06 | high | Very high correlation can make the pair unfairly ambiguous. Same or closely related topic; use only when the tier calls for close distractors. |
+| Female services employment (`SL.SRV.EMPL.FE.ZS`) | -0.93 | -0.93 | 163 | 0.06 | high | Very high correlation can make the pair unfairly ambiguous. Same or closely related topic; use only when the tier calls for close distractors. |
 | Vulnerable employment (`SL.EMP.VULN.ZS`) | 0.90 | 0.91 | 163 | 0.55 | high | Very high correlation can make the pair unfairly ambiguous. Same or closely related topic; use only when the tier calls for close distractors. |
-| Self-employed workers (`SL.EMP.SELF.ZS`) | 0.89 | 0.90 | 163 | 0.50 | high | Very high correlation can make the pair unfairly ambiguous. Same or closely related topic; use only when the tier calls for close distractors. |
-| Wage and salaried workers (`SL.EMP.WORK.ZS`) | -0.89 | -0.90 | 163 | 0.06 | high | Very high correlation can make the pair unfairly ambiguous. Same or closely related topic; use only when the tier calls for close distractors. |
-| GNI per capita (`NY.GNP.PCAP.CD`) | -0.61 | -0.89 | 156 | 0.08 | ok | Reasonable distractor candidate; no major automated warning. |
 
 ## Employment in industry (`SL.IND.EMPL.ZS`)
 
@@ -623,16 +827,16 @@ This automated review helps editors avoid distractors that are too weak, too obv
 - Category: labor
 - Difficulty: standard
 - Coverage: 163 countries
-- Warning level: review
+- Warning level: high
 
 | Correlated indicator | Pearson | Spearman | Overlap | Visual similarity | Warning | Notes |
 | --- | ---: | ---: | ---: | ---: | --- | --- |
+| Male industry employment (`SL.IND.EMPL.MA.ZS`) | 0.93 | 0.93 | 163 | 0.50 | high | Very high correlation can make the pair unfairly ambiguous. Same or closely related topic; use only when the tier calls for close distractors. |
+| Female industry employment (`SL.IND.EMPL.FE.ZS`) | 0.75 | 0.75 | 163 | 0.43 | review | Same or closely related topic; use only when the tier calls for close distractors. |
+| Urban clean cooking access (`EG.CFT.ACCS.UR.ZS`) | 0.61 | 0.52 | 159 | 0.23 | ok | Reasonable distractor candidate; no major automated warning. |
 | Clean cooking fuels access (`EG.CFT.ACCS.ZS`) | 0.60 | 0.52 | 159 | 0.25 | ok | Reasonable distractor candidate; no major automated warning. |
 | Basic sanitation access (`SH.STA.BASS.ZS`) | 0.59 | 0.51 | 151 | 0.21 | ok | Reasonable distractor candidate; no major automated warning. |
 | Employment in agriculture (`SL.AGR.EMPL.ZS`) | -0.59 | -0.47 | 163 | 0.10 | review | Same or closely related topic; use only when the tier calls for close distractors. |
-| Electricity access (`EG.ELC.ACCS.ZS`) | 0.58 | 0.55 | 163 | 0.27 | ok | Reasonable distractor candidate; no major automated warning. |
-| Rural electricity access (`EG.ELC.ACCS.RU.ZS`) | 0.58 | 0.54 | 159 | 0.24 | ok | Reasonable distractor candidate; no major automated warning. |
-| Internet users (`IT.NET.USER.ZS`) | 0.57 | 0.48 | 152 | 0.28 | ok | Reasonable distractor candidate; no major automated warning. |
 
 ## Employment-to-population ratio (`SL.EMP.TOTL.SP.ZS`)
 
@@ -645,11 +849,11 @@ This automated review helps editors avoid distractors that are too weak, too obv
 | Correlated indicator | Pearson | Spearman | Overlap | Visual similarity | Warning | Notes |
 | --- | ---: | ---: | ---: | ---: | --- | --- |
 | Labor force participation (`SL.TLF.CACT.ZS`) | 0.97 | 0.96 | 163 | 0.72 | high | Very high correlation can make the pair unfairly ambiguous. Same or closely related topic; use only when the tier calls for close distractors. |
+| Female employment-to-population ratio (`SL.EMP.TOTL.SP.FE.ZS`) | 0.90 | 0.88 | 163 | 0.46 | high | Very high correlation can make the pair unfairly ambiguous. Same or closely related topic; use only when the tier calls for close distractors. |
 | Female labor force participation (`SL.TLF.CACT.FE.ZS`) | 0.86 | 0.83 | 163 | 0.45 | review | Same or closely related topic; use only when the tier calls for close distractors. |
+| Male employment-to-population ratio (`SL.EMP.TOTL.SP.MA.ZS`) | 0.85 | 0.84 | 163 | 0.42 | review | Same or closely related topic; use only when the tier calls for close distractors. |
+| Youth employment-to-population ratio (`SL.EMP.1524.SP.ZS`) | 0.80 | 0.79 | 163 | 0.40 | review | Same or closely related topic; use only when the tier calls for close distractors. |
 | Male labor force participation (`SL.TLF.CACT.MA.ZS`) | 0.80 | 0.79 | 163 | 0.37 | review | Same or closely related topic; use only when the tier calls for close distractors. |
-| Youth labor force participation (`SL.TLF.ACTI.1524.ZS`) | 0.74 | 0.73 | 163 | 0.36 | review | Same or closely related topic; use only when the tier calls for close distractors. |
-| Female unemployment (`SL.UEM.TOTL.FE.ZS`) | -0.69 | -0.60 | 163 | 0.10 | review | Same or closely related topic; use only when the tier calls for close distractors. |
-| Youth unemployment (`SL.UEM.1524.ZS`) | -0.67 | -0.65 | 163 | 0.10 | review | Same or closely related topic; use only when the tier calls for close distractors. |
 
 ## Employment in services (`SL.SRV.EMPL.ZS`)
 
@@ -661,12 +865,12 @@ This automated review helps editors avoid distractors that are too weak, too obv
 
 | Correlated indicator | Pearson | Spearman | Overlap | Visual similarity | Warning | Notes |
 | --- | ---: | ---: | ---: | ---: | --- | --- |
+| Male services employment (`SL.SRV.EMPL.MA.ZS`) | 0.96 | 0.97 | 163 | 0.69 | high | Very high correlation can make the pair unfairly ambiguous. Same or closely related topic; use only when the tier calls for close distractors. |
+| Female services employment (`SL.SRV.EMPL.FE.ZS`) | 0.96 | 0.97 | 163 | 0.72 | high | Very high correlation can make the pair unfairly ambiguous. Same or closely related topic; use only when the tier calls for close distractors. |
 | Employment in agriculture (`SL.AGR.EMPL.ZS`) | -0.94 | -0.94 | 163 | 0.06 | high | Very high correlation can make the pair unfairly ambiguous. Same or closely related topic; use only when the tier calls for close distractors. |
+| Female agricultural employment (`SL.AGR.EMPL.FE.ZS`) | -0.91 | -0.93 | 163 | 0.07 | high | Very high correlation can make the pair unfairly ambiguous. Same or closely related topic; use only when the tier calls for close distractors. |
+| Male agricultural employment (`SL.AGR.EMPL.MA.ZS`) | -0.92 | -0.92 | 163 | 0.07 | high | Very high correlation can make the pair unfairly ambiguous. Same or closely related topic; use only when the tier calls for close distractors. |
 | Agriculture value per worker (`NV.AGR.EMPL.KD`) | 0.64 | 0.90 | 146 | 0.55 | ok | Reasonable distractor candidate; no major automated warning. |
-| GNI per capita (`NY.GNP.PCAP.CD`) | 0.66 | 0.84 | 156 | 0.41 | ok | Reasonable distractor candidate; no major automated warning. |
-| Vulnerable employment (`SL.EMP.VULN.ZS`) | -0.84 | -0.84 | 163 | 0.06 | review | Same or closely related topic; use only when the tier calls for close distractors. |
-| GDP per capita (`NY.GDP.PCAP.CD`) | 0.66 | 0.84 | 156 | 0.44 | ok | Reasonable distractor candidate; no major automated warning. |
-| Health spending per person (`SH.XPD.CHEX.PC.CD`) | 0.61 | 0.84 | 159 | 0.45 | ok | Reasonable distractor candidate; no major automated warning. |
 
 ## Energy use (`EG.USE.PCAP.KG.OE`)
 
@@ -700,7 +904,7 @@ This automated review helps editors avoid distractors that are too weak, too obv
 | Water productivity (`ER.GDP.FWTL.M3.KD`) | 0.60 | 0.42 | 136 | 0.26 | ok | Reasonable distractor candidate; no major automated warning. |
 | Agriculture value added (`NV.AGR.TOTL.ZS`) | -0.46 | -0.59 | 133 | 0.03 | review | Same or closely related topic; use only when the tier calls for close distractors. |
 | GDP per capita, PPP (`NY.GDP.PCAP.PP.CD`) | 0.56 | 0.48 | 138 | 0.25 | ok | Reasonable distractor candidate; no major automated warning. |
-| Infant mortality (`SP.DYN.IMRT.IN`) | -0.36 | -0.51 | 139 | 0.08 | ok | Reasonable distractor candidate; no major automated warning. |
+| Moderate or severe food insecurity (`SN.ITK.MSFI.ZS`) | -0.41 | -0.52 | 106 | 0.05 | ok | Reasonable distractor candidate; no major automated warning. |
 
 ## Foreign direct investment inflows (`BX.KLT.DINV.WD.GD.ZS`)
 
@@ -736,6 +940,74 @@ This automated review helps editors avoid distractors that are too weak, too obv
 | Logistics performance (`LP.LPI.OVRL.XQ`) | 0.07 | 0.45 | 119 | 0.26 | ok | Reasonable distractor candidate; no major automated warning. |
 | Life expectancy (`SP.DYN.LE00.IN`) | 0.03 | 0.43 | 141 | 0.26 | ok | Reasonable distractor candidate; no major automated warning. |
 
+## Female agricultural employment (`SL.AGR.EMPL.FE.ZS`)
+
+- Approved status: approved
+- Category: labor
+- Difficulty: expert
+- Coverage: 163 countries
+- Warning level: high
+
+| Correlated indicator | Pearson | Spearman | Overlap | Visual similarity | Warning | Notes |
+| --- | ---: | ---: | ---: | ---: | --- | --- |
+| Employment in agriculture (`SL.AGR.EMPL.ZS`) | 0.96 | 0.97 | 163 | 0.69 | high | Very high correlation can make the pair unfairly ambiguous. Same or closely related topic; use only when the tier calls for close distractors. |
+| Female services employment (`SL.SRV.EMPL.FE.ZS`) | -0.96 | -0.96 | 163 | 0.08 | high | Very high correlation can make the pair unfairly ambiguous. Same or closely related topic; use only when the tier calls for close distractors. |
+| Male agricultural employment (`SL.AGR.EMPL.MA.ZS`) | 0.90 | 0.94 | 163 | 0.60 | high | Very high correlation can make the pair unfairly ambiguous. Same or closely related topic; use only when the tier calls for close distractors. |
+| Employment in services (`SL.SRV.EMPL.ZS`) | -0.91 | -0.93 | 163 | 0.07 | high | Very high correlation can make the pair unfairly ambiguous. Same or closely related topic; use only when the tier calls for close distractors. |
+| Agriculture value per worker (`NV.AGR.EMPL.KD`) | -0.51 | -0.91 | 146 | 0.08 | high | Very high correlation can make the pair unfairly ambiguous. |
+| Female vulnerable employment (`SL.EMP.VULN.FE.ZS`) | 0.86 | 0.89 | 163 | 0.47 | review | Same or closely related topic; use only when the tier calls for close distractors. |
+
+## Female contributing family workers (`SL.FAM.WORK.FE.ZS`)
+
+- Approved status: approved
+- Category: labor
+- Difficulty: expert
+- Coverage: 163 countries
+- Warning level: high
+
+| Correlated indicator | Pearson | Spearman | Overlap | Visual similarity | Warning | Notes |
+| --- | ---: | ---: | ---: | ---: | --- | --- |
+| Contributing family workers (`SL.FAM.WORK.ZS`) | 0.95 | 0.99 | 163 | 0.79 | high | Very high correlation can make the pair unfairly ambiguous. Same or closely related topic; use only when the tier calls for close distractors. |
+| Male contributing family workers (`SL.FAM.WORK.MA.ZS`) | 0.90 | 0.96 | 163 | 0.64 | high | Very high correlation can make the pair unfairly ambiguous. Same or closely related topic; use only when the tier calls for close distractors. |
+| Female vulnerable employment (`SL.EMP.VULN.FE.ZS`) | 0.73 | 0.81 | 163 | 0.31 | review | Same or closely related topic; use only when the tier calls for close distractors. |
+| Vulnerable employment (`SL.EMP.VULN.ZS`) | 0.73 | 0.81 | 163 | 0.30 | review | Same or closely related topic; use only when the tier calls for close distractors. |
+| Female self-employed (`SL.EMP.SELF.FE.ZS`) | 0.72 | 0.80 | 163 | 0.29 | review | Same or closely related topic; use only when the tier calls for close distractors. |
+| Female wage workers (`SL.EMP.WORK.FE.ZS`) | -0.72 | -0.80 | 163 | 0.06 | review | Same or closely related topic; use only when the tier calls for close distractors. |
+
+## Female employment-to-population ratio (`SL.EMP.TOTL.SP.FE.ZS`)
+
+- Approved status: approved
+- Category: labor
+- Difficulty: expert
+- Coverage: 163 countries
+- Warning level: high
+
+| Correlated indicator | Pearson | Spearman | Overlap | Visual similarity | Warning | Notes |
+| --- | ---: | ---: | ---: | ---: | --- | --- |
+| Female labor force participation (`SL.TLF.CACT.FE.ZS`) | 0.98 | 0.97 | 163 | 0.74 | high | Very high correlation can make the pair unfairly ambiguous. Same or closely related topic; use only when the tier calls for close distractors. |
+| Labor force participation (`SL.TLF.CACT.ZS`) | 0.90 | 0.87 | 163 | 0.50 | high | Very high correlation can make the pair unfairly ambiguous. Same or closely related topic; use only when the tier calls for close distractors. |
+| Employment-to-population ratio (`SL.EMP.TOTL.SP.ZS`) | 0.90 | 0.88 | 163 | 0.46 | high | Very high correlation can make the pair unfairly ambiguous. Same or closely related topic; use only when the tier calls for close distractors. |
+| Female-to-male labor force ratio (`SL.TLF.CACT.FM.ZS`) | 0.87 | 0.79 | 163 | 0.43 | review | Same or closely related topic; use only when the tier calls for close distractors. |
+| Youth employment-to-population ratio (`SL.EMP.1524.SP.ZS`) | 0.73 | 0.74 | 163 | 0.31 | review | Same or closely related topic; use only when the tier calls for close distractors. |
+| Youth labor force participation (`SL.TLF.ACTI.1524.ZS`) | 0.70 | 0.70 | 163 | 0.29 | review | Same or closely related topic; use only when the tier calls for close distractors. |
+
+## Female industry employment (`SL.IND.EMPL.FE.ZS`)
+
+- Approved status: approved
+- Category: labor
+- Difficulty: expert
+- Coverage: 163 countries
+- Warning level: review
+
+| Correlated indicator | Pearson | Spearman | Overlap | Visual similarity | Warning | Notes |
+| --- | ---: | ---: | ---: | ---: | --- | --- |
+| Employment in industry (`SL.IND.EMPL.ZS`) | 0.75 | 0.75 | 163 | 0.43 | review | Same or closely related topic; use only when the tier calls for close distractors. |
+| Male industry employment (`SL.IND.EMPL.MA.ZS`) | 0.55 | 0.56 | 163 | 0.29 | review | Same or closely related topic; use only when the tier calls for close distractors. |
+| Manufacturing value added (`NV.IND.MANF.ZS`) | 0.39 | 0.49 | 140 | 0.31 | ok | Reasonable distractor candidate; no major automated warning. |
+| Coal electricity share (`EG.ELC.COAL.ZS`) | 0.27 | 0.36 | 163 | 0.22 | ok | Reasonable distractor candidate; no major automated warning. |
+| Population growth (`SP.POP.GROW`) | -0.31 | -0.35 | 163 | 0.12 | ok | Reasonable distractor candidate; no major automated warning. |
+| Cereal production (`AG.PRD.CREL.MT`) | 0.15 | 0.34 | 162 | 0.17 | ok | Reasonable distractor candidate; no major automated warning. |
+
 ## Female labor force participation (`SL.TLF.CACT.FE.ZS`)
 
 - Approved status: approved
@@ -746,12 +1018,46 @@ This automated review helps editors avoid distractors that are too weak, too obv
 
 | Correlated indicator | Pearson | Spearman | Overlap | Visual similarity | Warning | Notes |
 | --- | ---: | ---: | ---: | ---: | --- | --- |
+| Female employment-to-population ratio (`SL.EMP.TOTL.SP.FE.ZS`) | 0.98 | 0.97 | 163 | 0.74 | high | Very high correlation can make the pair unfairly ambiguous. Same or closely related topic; use only when the tier calls for close distractors. |
 | Female-to-male labor force ratio (`SL.TLF.CACT.FM.ZS`) | 0.90 | 0.82 | 163 | 0.45 | high | Very high correlation can make the pair unfairly ambiguous. Same or closely related topic; use only when the tier calls for close distractors. |
 | Labor force participation (`SL.TLF.CACT.ZS`) | 0.90 | 0.88 | 163 | 0.52 | review | Same or closely related topic; use only when the tier calls for close distractors. |
 | Employment-to-population ratio (`SL.EMP.TOTL.SP.ZS`) | 0.86 | 0.83 | 163 | 0.45 | review | Same or closely related topic; use only when the tier calls for close distractors. |
 | Youth labor force participation (`SL.TLF.ACTI.1524.ZS`) | 0.68 | 0.71 | 163 | 0.29 | review | Same or closely related topic; use only when the tier calls for close distractors. |
-| Female unemployment (`SL.UEM.TOTL.FE.ZS`) | -0.53 | -0.42 | 163 | 0.11 | review | Same or closely related topic; use only when the tier calls for close distractors. |
-| Male labor force participation (`SL.TLF.CACT.MA.ZS`) | 0.47 | 0.49 | 163 | 0.23 | review | Same or closely related topic; use only when the tier calls for close distractors. |
+| Youth employment-to-population ratio (`SL.EMP.1524.SP.ZS`) | 0.68 | 0.68 | 163 | 0.33 | review | Same or closely related topic; use only when the tier calls for close distractors. |
+
+## Female self-employed (`SL.EMP.SELF.FE.ZS`)
+
+- Approved status: approved
+- Category: labor
+- Difficulty: expert
+- Coverage: 163 countries
+- Warning level: high
+
+| Correlated indicator | Pearson | Spearman | Overlap | Visual similarity | Warning | Notes |
+| --- | ---: | ---: | ---: | ---: | --- | --- |
+| Female wage workers (`SL.EMP.WORK.FE.ZS`) | -1.00 | -1.00 | 163 | 0.14 | high | Very high correlation can make the pair unfairly ambiguous. Same or closely related topic; use only when the tier calls for close distractors. |
+| Female vulnerable employment (`SL.EMP.VULN.FE.ZS`) | 1.00 | 1.00 | 163 | 0.87 | high | Very high correlation can make the pair unfairly ambiguous. The quantile classes produce a visually similar map. Same or closely related topic; use only when the tier calls for close distractors. |
+| Wage and salaried workers (`SL.EMP.WORK.ZS`) | -0.99 | -0.99 | 163 | 0.09 | high | Very high correlation can make the pair unfairly ambiguous. Same or closely related topic; use only when the tier calls for close distractors. |
+| Self-employed workers (`SL.EMP.SELF.ZS`) | 0.99 | 0.99 | 163 | 0.75 | high | Very high correlation can make the pair unfairly ambiguous. Same or closely related topic; use only when the tier calls for close distractors. |
+| Vulnerable employment (`SL.EMP.VULN.ZS`) | 0.98 | 0.98 | 163 | 0.71 | high | Very high correlation can make the pair unfairly ambiguous. Same or closely related topic; use only when the tier calls for close distractors. |
+| Male self-employed (`SL.EMP.SELF.MA.ZS`) | 0.96 | 0.97 | 163 | 0.61 | high | Very high correlation can make the pair unfairly ambiguous. Same or closely related topic; use only when the tier calls for close distractors. |
+
+## Female services employment (`SL.SRV.EMPL.FE.ZS`)
+
+- Approved status: approved
+- Category: labor
+- Difficulty: expert
+- Coverage: 163 countries
+- Warning level: high
+
+| Correlated indicator | Pearson | Spearman | Overlap | Visual similarity | Warning | Notes |
+| --- | ---: | ---: | ---: | ---: | --- | --- |
+| Employment in services (`SL.SRV.EMPL.ZS`) | 0.96 | 0.97 | 163 | 0.72 | high | Very high correlation can make the pair unfairly ambiguous. Same or closely related topic; use only when the tier calls for close distractors. |
+| Female agricultural employment (`SL.AGR.EMPL.FE.ZS`) | -0.96 | -0.96 | 163 | 0.08 | high | Very high correlation can make the pair unfairly ambiguous. Same or closely related topic; use only when the tier calls for close distractors. |
+| Employment in agriculture (`SL.AGR.EMPL.ZS`) | -0.93 | -0.93 | 163 | 0.06 | high | Very high correlation can make the pair unfairly ambiguous. Same or closely related topic; use only when the tier calls for close distractors. |
+| Male services employment (`SL.SRV.EMPL.MA.ZS`) | 0.87 | 0.91 | 163 | 0.52 | high | Very high correlation can make the pair unfairly ambiguous. Same or closely related topic; use only when the tier calls for close distractors. |
+| Male agricultural employment (`SL.AGR.EMPL.MA.ZS`) | -0.88 | -0.90 | 163 | 0.06 | high | Very high correlation can make the pair unfairly ambiguous. Same or closely related topic; use only when the tier calls for close distractors. |
+| Agriculture value per worker (`NV.AGR.EMPL.KD`) | 0.57 | 0.88 | 146 | 0.49 | ok | Reasonable distractor candidate; no major automated warning. |
 
 ## Female unemployment (`SL.UEM.TOTL.FE.ZS`)
 
@@ -767,8 +1073,42 @@ This automated review helps editors avoid distractors that are too weak, too obv
 | Youth unemployment (`SL.UEM.1524.ZS`) | 0.90 | 0.90 | 163 | 0.48 | review | Same or closely related topic; use only when the tier calls for close distractors. |
 | Male unemployment (`SL.UEM.TOTL.MA.ZS`) | 0.89 | 0.85 | 163 | 0.54 | review | Same or closely related topic; use only when the tier calls for close distractors. |
 | Employment-to-population ratio (`SL.EMP.TOTL.SP.ZS`) | -0.69 | -0.60 | 163 | 0.10 | review | Same or closely related topic; use only when the tier calls for close distractors. |
-| Labor force participation (`SL.TLF.CACT.ZS`) | -0.53 | -0.43 | 163 | 0.13 | review | Same or closely related topic; use only when the tier calls for close distractors. |
-| Female labor force participation (`SL.TLF.CACT.FE.ZS`) | -0.53 | -0.42 | 163 | 0.11 | review | Same or closely related topic; use only when the tier calls for close distractors. |
+| Female employment-to-population ratio (`SL.EMP.TOTL.SP.FE.ZS`) | -0.66 | -0.57 | 163 | 0.07 | review | Same or closely related topic; use only when the tier calls for close distractors. |
+| Male employment-to-population ratio (`SL.EMP.TOTL.SP.MA.ZS`) | -0.58 | -0.52 | 163 | 0.09 | review | Same or closely related topic; use only when the tier calls for close distractors. |
+
+## Female vulnerable employment (`SL.EMP.VULN.FE.ZS`)
+
+- Approved status: approved
+- Category: labor
+- Difficulty: expert
+- Coverage: 163 countries
+- Warning level: high
+
+| Correlated indicator | Pearson | Spearman | Overlap | Visual similarity | Warning | Notes |
+| --- | ---: | ---: | ---: | ---: | --- | --- |
+| Female wage workers (`SL.EMP.WORK.FE.ZS`) | -1.00 | -1.00 | 163 | 0.13 | high | Very high correlation can make the pair unfairly ambiguous. Same or closely related topic; use only when the tier calls for close distractors. |
+| Female self-employed (`SL.EMP.SELF.FE.ZS`) | 1.00 | 1.00 | 163 | 0.87 | high | Very high correlation can make the pair unfairly ambiguous. The quantile classes produce a visually similar map. Same or closely related topic; use only when the tier calls for close distractors. |
+| Vulnerable employment (`SL.EMP.VULN.ZS`) | 0.99 | 0.99 | 163 | 0.76 | high | Very high correlation can make the pair unfairly ambiguous. Same or closely related topic; use only when the tier calls for close distractors. |
+| Wage and salaried workers (`SL.EMP.WORK.ZS`) | -0.98 | -0.98 | 163 | 0.10 | high | Very high correlation can make the pair unfairly ambiguous. Same or closely related topic; use only when the tier calls for close distractors. |
+| Self-employed workers (`SL.EMP.SELF.ZS`) | 0.98 | 0.98 | 163 | 0.75 | high | Very high correlation can make the pair unfairly ambiguous. Same or closely related topic; use only when the tier calls for close distractors. |
+| Male vulnerable employment (`SL.EMP.VULN.MA.ZS`) | 0.96 | 0.97 | 163 | 0.65 | high | Very high correlation can make the pair unfairly ambiguous. Same or closely related topic; use only when the tier calls for close distractors. |
+
+## Female wage workers (`SL.EMP.WORK.FE.ZS`)
+
+- Approved status: approved
+- Category: labor
+- Difficulty: expert
+- Coverage: 163 countries
+- Warning level: high
+
+| Correlated indicator | Pearson | Spearman | Overlap | Visual similarity | Warning | Notes |
+| --- | ---: | ---: | ---: | ---: | --- | --- |
+| Female self-employed (`SL.EMP.SELF.FE.ZS`) | -1.00 | -1.00 | 163 | 0.14 | high | Very high correlation can make the pair unfairly ambiguous. Same or closely related topic; use only when the tier calls for close distractors. |
+| Female vulnerable employment (`SL.EMP.VULN.FE.ZS`) | -1.00 | -1.00 | 163 | 0.13 | high | Very high correlation can make the pair unfairly ambiguous. Same or closely related topic; use only when the tier calls for close distractors. |
+| Wage and salaried workers (`SL.EMP.WORK.ZS`) | 0.99 | 0.99 | 163 | 0.75 | high | Very high correlation can make the pair unfairly ambiguous. Same or closely related topic; use only when the tier calls for close distractors. |
+| Self-employed workers (`SL.EMP.SELF.ZS`) | -0.99 | -0.99 | 163 | 0.09 | high | Very high correlation can make the pair unfairly ambiguous. Same or closely related topic; use only when the tier calls for close distractors. |
+| Vulnerable employment (`SL.EMP.VULN.ZS`) | -0.98 | -0.98 | 163 | 0.09 | high | Very high correlation can make the pair unfairly ambiguous. Same or closely related topic; use only when the tier calls for close distractors. |
+| Male self-employed (`SL.EMP.SELF.MA.ZS`) | -0.96 | -0.97 | 163 | 0.07 | high | Very high correlation can make the pair unfairly ambiguous. Same or closely related topic; use only when the tier calls for close distractors. |
 
 ## Fertility rate (`SP.DYN.TFRT.IN`)
 
@@ -787,7 +1127,7 @@ This automated review helps editors avoid distractors that are too weak, too obv
 | Population ages 65+ (`SP.POP.65UP.TO.ZS`) | -0.74 | -0.86 | 169 | 0.08 | review | Same or closely related topic; use only when the tier calls for close distractors. |
 | Internet users (`IT.NET.USER.ZS`) | -0.86 | -0.80 | 154 | 0.07 | ok | Reasonable distractor candidate; no major automated warning. |
 
-## Fertilizer consumption (`AG.CON.FERT.ZS`)
+## Fertilizer use per hectare (`AG.CON.FERT.ZS`)
 
 - Approved status: approved
 - Category: agriculture
@@ -800,9 +1140,9 @@ This automated review helps editors avoid distractors that are too weak, too obv
 | Cereal yield (`AG.YLD.CREL.KG`) | 0.33 | 0.70 | 164 | 0.29 | review | Same or closely related topic; use only when the tier calls for close distractors. |
 | Basic drinking water access (`SH.H2O.BASW.ZS`) | 0.27 | 0.66 | 159 | 0.26 | ok | Reasonable distractor candidate; no major automated warning. |
 | Life expectancy (`SP.DYN.LE00.IN`) | 0.32 | 0.65 | 165 | 0.24 | ok | Reasonable distractor candidate; no major automated warning. |
+| Rural basic drinking water (`SH.H2O.BASW.RU.ZS`) | 0.28 | 0.65 | 147 | 0.21 | ok | Reasonable distractor candidate; no major automated warning. |
 | Logistics performance (`LP.LPI.OVRL.XQ`) | 0.27 | 0.64 | 129 | 0.22 | ok | Reasonable distractor candidate; no major automated warning. |
-| Maternal mortality (`SH.STA.MMRT`) | -0.25 | -0.63 | 164 | 0.05 | ok | Reasonable distractor candidate; no major automated warning. |
-| Basic sanitation access (`SH.STA.BASS.ZS`) | 0.28 | 0.63 | 154 | 0.25 | ok | Reasonable distractor candidate; no major automated warning. |
+| Urban electricity access (`EG.ELC.ACCS.UR.ZS`) | 0.21 | 0.64 | 164 | 0.21 | ok | Reasonable distractor candidate; no major automated warning. |
 
 ## Fixed broadband (`IT.NET.BBND.P2`)
 
@@ -835,8 +1175,8 @@ This automated review helps editors avoid distractors that are too weak, too obv
 | Gross savings (`NY.GNS.ICTR.ZS`) | 0.51 | 0.59 | 121 | 0.36 | review | Same or closely related topic; use only when the tier calls for close distractors. |
 | Domestic savings (`NY.GDS.TOTL.ZS`) | 0.29 | 0.36 | 138 | 0.20 | review | Same or closely related topic; use only when the tier calls for close distractors. |
 | Household consumption (`NE.CON.PRVT.ZS`) | -0.26 | -0.29 | 133 | 0.09 | review | Same or closely related topic; use only when the tier calls for close distractors. |
+| Container port traffic (`IS.SHP.GOOD.TU`) | 0.28 | 0.07 | 108 | 0.13 | ok | Reasonable distractor candidate; no major automated warning. |
 | GDP per person growth (`NY.GDP.PCAP.KD.ZG`) | 0.22 | 0.25 | 139 | 0.22 | review | Same or closely related topic; use only when the tier calls for close distractors. |
-| GDP growth (`NY.GDP.MKTP.KD.ZG`) | 0.23 | 0.25 | 139 | 0.18 | review | Same or closely related topic; use only when the tier calls for close distractors. |
 
 ## Fixed telephone subscriptions (`IT.MLT.MAIN.P2`)
 
@@ -854,6 +1194,57 @@ This automated review helps editors avoid distractors that are too weak, too obv
 | GNI per capita, PPP (`NY.GNP.PCAP.PP.CD`) | 0.58 | 0.77 | 125 | 0.30 | ok | Reasonable distractor candidate; no major automated warning. |
 | GNI per capita (`NY.GNP.PCAP.CD`) | 0.47 | 0.77 | 126 | 0.32 | ok | Reasonable distractor candidate; no major automated warning. |
 | Basic sanitation access (`SH.STA.BASS.ZS`) | 0.57 | 0.76 | 123 | 0.33 | ok | Reasonable distractor candidate; no major automated warning. |
+
+## Food exports share (`TX.VAL.FOOD.ZS.UN`)
+
+- Approved status: approved
+- Category: agriculture
+- Difficulty: expert
+- Coverage: 137 countries
+- Warning level: review
+
+| Correlated indicator | Pearson | Spearman | Overlap | Visual similarity | Warning | Notes |
+| --- | ---: | ---: | ---: | ---: | --- | --- |
+| Household consumption (`NE.CON.PRVT.ZS`) | 0.38 | 0.52 | 120 | 0.26 | ok | Reasonable distractor candidate; no major automated warning. |
+| Industry value added (`NV.IND.TOTL.ZS`) | -0.40 | -0.46 | 128 | 0.09 | ok | Reasonable distractor candidate; no major automated warning. |
+| Moderate or severe food insecurity (`SN.ITK.MSFI.ZS`) | 0.43 | 0.46 | 111 | 0.30 | review | Same or closely related topic; use only when the tier calls for close distractors. |
+| Domestic savings (`NY.GDS.TOTL.ZS`) | -0.31 | -0.46 | 116 | 0.16 | ok | Reasonable distractor candidate; no major automated warning. |
+| Severe food insecurity (`SN.ITK.SVFI.ZS`) | 0.43 | 0.45 | 111 | 0.24 | review | Same or closely related topic; use only when the tier calls for close distractors. |
+| CO2 emissions per capita (`EN.GHG.CO2.PC.CE.AR5`) | -0.33 | -0.43 | 135 | 0.10 | review | Per-capita versus non-per-capita wording can create raw-total confusion risk. |
+
+## Food imports share (`TM.VAL.FOOD.ZS.UN`)
+
+- Approved status: approved
+- Category: agriculture
+- Difficulty: expert
+- Coverage: 137 countries
+- Warning level: review
+
+| Correlated indicator | Pearson | Spearman | Overlap | Visual similarity | Warning | Notes |
+| --- | ---: | ---: | ---: | ---: | --- | --- |
+| High-tech exports (`TX.VAL.TECH.MF.ZS`) | -0.39 | -0.53 | 137 | 0.12 | ok | Reasonable distractor candidate; no major automated warning. |
+| Air passengers carried (`IS.AIR.PSGR`) | -0.29 | -0.52 | 113 | 0.11 | ok | Reasonable distractor candidate; no major automated warning. |
+| Tourism arrivals (`ST.INT.ARVL`) | -0.30 | -0.51 | 121 | 0.07 | ok | Reasonable distractor candidate; no major automated warning. |
+| Nuclear electricity share (`EG.ELC.NUCL.ZS`) | -0.32 | -0.50 | 137 | 0.06 | review | Same or closely related topic; use only when the tier calls for close distractors. |
+| Oil electricity share (`EG.ELC.PETR.ZS`) | 0.39 | 0.50 | 110 | 0.26 | review | Same or closely related topic; use only when the tier calls for close distractors. |
+| Air carrier departures (`IS.AIR.DPRT`) | -0.26 | -0.50 | 114 | 0.09 | ok | Reasonable distractor candidate; no major automated warning. |
+
+## Moderate or severe food insecurity (`SN.ITK.MSFI.ZS`)
+
+- Approved status: approved
+- Category: agriculture
+- Difficulty: standard
+- Coverage: 124 countries
+- Warning level: high
+
+| Correlated indicator | Pearson | Spearman | Overlap | Visual similarity | Warning | Notes |
+| --- | ---: | ---: | ---: | ---: | --- | --- |
+| Severe food insecurity (`SN.ITK.SVFI.ZS`) | 0.89 | 0.95 | 123 | 0.52 | high | Very high correlation can make the pair unfairly ambiguous. Same or closely related topic; use only when the tier calls for close distractors. |
+| Infant mortality (`SP.DYN.IMRT.IN`) | 0.86 | 0.85 | 124 | 0.33 | ok | Reasonable distractor candidate; no major automated warning. |
+| Neonatal mortality (`SH.DYN.NMRT`) | 0.85 | 0.84 | 124 | 0.32 | ok | Reasonable distractor candidate; no major automated warning. |
+| Undernourishment (`SN.ITK.DEFC.ZS`) | 0.81 | 0.85 | 118 | 0.31 | ok | Reasonable distractor candidate; no major automated warning. |
+| Under-5 mortality (`SH.DYN.MORT`) | 0.82 | 0.84 | 124 | 0.33 | ok | Reasonable distractor candidate; no major automated warning. |
+| Internet users (`IT.NET.USER.ZS`) | -0.84 | -0.80 | 120 | 0.08 | ok | Reasonable distractor candidate; no major automated warning. |
 
 ## Food production index (`AG.PRD.FOOD.XD`)
 
@@ -937,8 +1328,8 @@ This automated review helps editors avoid distractors that are too weak, too obv
 | Age dependency ratio (`SP.POP.DPND`) | n/a | n/a | 142 | 0.15 | ok | Reasonable distractor candidate; no major automated warning. |
 | Agricultural land (`AG.LND.AGRI.ZS`) | n/a | n/a | 142 | 0.12 | ok | Reasonable distractor candidate; no major automated warning. |
 | Arable land (`AG.LND.ARBL.ZS`) | n/a | n/a | 142 | 0.11 | ok | Reasonable distractor candidate; no major automated warning. |
+| Arable land area (`AG.LND.ARBL.HA`) | n/a | n/a | 142 | 0.08 | ok | Reasonable distractor candidate; no major automated warning. |
 | Arable land per person (`AG.LND.ARBL.HA.PC`) | n/a | n/a | 142 | 0.12 | ok | Reasonable distractor candidate; no major automated warning. |
-| Birth rate (`SP.DYN.CBRT.IN`) | n/a | n/a | 142 | 0.18 | ok | Reasonable distractor candidate; no major automated warning. |
 
 ## Freshwater per person (`ER.H2O.INTR.PC`)
 
@@ -955,7 +1346,7 @@ This automated review helps editors avoid distractors that are too weak, too obv
 | Average precipitation (`AG.LND.PRCP.MM`) | 0.35 | 0.68 | 163 | 0.35 | review | Same or closely related topic; use only when the tier calls for close distractors. |
 | Electric power use (`EG.USE.ELEC.KH.PC`) | 0.68 | 0.18 | 139 | 0.16 | ok | Reasonable distractor candidate; no major automated warning. |
 | Water stress (`ER.H2O.FWST.ZS`) | -0.07 | -0.67 | 161 | 0.07 | review | Same or closely related topic; use only when the tier calls for close distractors. |
-| Hydroelectricity share (`EG.ELC.HYRO.ZS`) | 0.24 | 0.49 | 122 | 0.20 | ok | Reasonable distractor candidate; no major automated warning. |
+| Rural low-elevation population (`EN.POP.EL5M.RU.ZS`) | 0.52 | 0.26 | 164 | 0.20 | ok | Reasonable distractor candidate; no major automated warning. |
 
 ## Freshwater withdrawal (`ER.H2O.FWTL.ZS`)
 
@@ -1021,9 +1412,9 @@ This automated review helps editors avoid distractors that are too weak, too obv
 | GDP growth (`NY.GDP.MKTP.KD.ZG`) | 0.97 | 0.85 | 160 | 0.41 | high | Very high correlation can make the pair unfairly ambiguous. Same or closely related topic; use only when the tier calls for close distractors. |
 | Government consumption (`NE.CON.GOVT.ZS`) | -0.33 | -0.41 | 141 | 0.13 | review | Same or closely related topic; use only when the tier calls for close distractors. |
 | Out-of-pocket health spending (`SH.XPD.OOPC.CH.ZS`) | 0.12 | 0.38 | 157 | 0.25 | ok | Reasonable distractor candidate; no major automated warning. |
+| Rural low-elevation population (`EN.POP.EL5M.RU.ZS`) | 0.37 | -0.07 | 160 | 0.16 | ok | Reasonable distractor candidate; no major automated warning. |
 | Low-elevation coastal population (`EN.POP.EL5M.ZS`) | 0.36 | -0.08 | 160 | 0.14 | ok | Reasonable distractor candidate; no major automated warning. |
 | Safely managed sanitation (`SH.STA.SMSS.ZS`) | -0.19 | -0.36 | 118 | 0.07 | ok | Reasonable distractor candidate; no major automated warning. |
-| Private health spending share (`SH.XPD.PVTD.CH.ZS`) | 0.10 | 0.33 | 157 | 0.27 | ok | Reasonable distractor candidate; no major automated warning. |
 
 ## GDP per capita, PPP (`NY.GDP.PCAP.PP.CD`)
 
@@ -1110,6 +1501,23 @@ This automated review helps editors avoid distractors that are too weak, too obv
 | Private health spending share (`SH.XPD.PVTD.CH.ZS`) | -0.57 | -0.60 | 142 | 0.10 | ok | Reasonable distractor candidate; no major automated warning. |
 | Government health spending share (`SH.XPD.GHED.CH.ZS`) | 0.52 | 0.60 | 142 | 0.31 | review | Same or closely related topic; use only when the tier calls for close distractors. |
 
+## Education spending share (`SE.XPD.TOTL.GB.ZS`)
+
+- Approved status: approved
+- Category: education
+- Difficulty: expert
+- Coverage: 123 countries
+- Warning level: review
+
+| Correlated indicator | Pearson | Spearman | Overlap | Visual similarity | Warning | Notes |
+| --- | ---: | ---: | ---: | ---: | --- | --- |
+| Education spending (`SE.XPD.TOTL.GD.ZS`) | 0.53 | 0.47 | 120 | 0.24 | review | Same or closely related topic; use only when the tier calls for close distractors. |
+| Hospital beds (`SH.MED.BEDS.ZS`) | -0.34 | -0.39 | 91 | 0.14 | ok | Reasonable distractor candidate; no major automated warning. |
+| Severe food insecurity (`SN.ITK.SVFI.ZS`) | 0.36 | 0.38 | 93 | 0.29 | ok | Reasonable distractor candidate; no major automated warning. |
+| Death rate (`SP.DYN.CDRT.IN`) | -0.35 | -0.37 | 123 | 0.11 | ok | Reasonable distractor candidate; no major automated warning. |
+| Physicians (`SH.MED.PHYS.ZS`) | -0.32 | -0.36 | 91 | 0.05 | ok | Reasonable distractor candidate; no major automated warning. |
+| Moderate or severe food insecurity (`SN.ITK.MSFI.ZS`) | 0.33 | 0.35 | 93 | 0.24 | ok | Reasonable distractor candidate; no major automated warning. |
+
 ## Government expense (`GC.XPN.TOTL.GD.ZS`)
 
 - Approved status: approved
@@ -1157,9 +1565,9 @@ This automated review helps editors avoid distractors that are too weak, too obv
 | Fixed capital formation (`NE.GDI.FTOT.ZS`) | 0.85 | 0.87 | 138 | 0.57 | review | Same or closely related topic; use only when the tier calls for close distractors. |
 | Gross savings (`NY.GNS.ICTR.ZS`) | 0.56 | 0.66 | 122 | 0.36 | review | Same or closely related topic; use only when the tier calls for close distractors. |
 | Domestic savings (`NY.GDS.TOTL.ZS`) | 0.29 | 0.39 | 139 | 0.27 | review | Same or closely related topic; use only when the tier calls for close distractors. |
-| Household consumption (`NE.CON.PRVT.ZS`) | -0.27 | -0.28 | 134 | 0.08 | review | Same or closely related topic; use only when the tier calls for close distractors. |
-| GDP growth (`NY.GDP.MKTP.KD.ZG`) | 0.20 | 0.28 | 139 | 0.24 | review | Same or closely related topic; use only when the tier calls for close distractors. |
-| Employment in industry (`SL.IND.EMPL.ZS`) | 0.26 | 0.26 | 136 | 0.21 | ok | Reasonable distractor candidate; no major automated warning. |
+| Female primary pupils (`SE.PRM.ENRL.FE.ZS`) | 0.32 | 0.16 | 116 | 0.19 | ok | Reasonable distractor candidate; no major automated warning. |
+| Female industry employment (`SL.IND.EMPL.FE.ZS`) | 0.30 | 0.29 | 136 | 0.26 | ok | Reasonable distractor candidate; no major automated warning. |
+| Food exports share (`TX.VAL.FOOD.ZS.UN`) | -0.20 | -0.29 | 116 | 0.10 | ok | Reasonable distractor candidate; no major automated warning. |
 
 ## Gross savings (`NY.GNS.ICTR.ZS`)
 
@@ -1224,10 +1632,10 @@ This automated review helps editors avoid distractors that are too weak, too obv
 | --- | ---: | ---: | ---: | ---: | --- | --- |
 | DPT immunization (`SH.IMM.IDPT`) | 0.99 | 0.98 | 161 | 0.84 | high | Very high correlation can make the pair unfairly ambiguous. Same or closely related topic; use only when the tier calls for close distractors. |
 | Measles immunization (`SH.IMM.MEAS`) | 0.89 | 0.88 | 161 | 0.50 | review | Same or closely related topic; use only when the tier calls for close distractors. |
+| Rural open defecation (`SH.STA.ODFC.RU.ZS`) | -0.38 | -0.56 | 136 | 0.06 | ok | Reasonable distractor candidate; no major automated warning. |
 | Open defecation (`SH.STA.ODFC.ZS`) | -0.34 | -0.55 | 144 | 0.05 | review | Same or closely related topic; use only when the tier calls for close distractors. |
 | Adolescent fertility (`SP.ADO.TFRT`) | -0.51 | -0.54 | 161 | 0.04 | ok | Reasonable distractor candidate; no major automated warning. |
 | Safely managed drinking water (`SH.H2O.SMDW.ZS`) | 0.53 | 0.47 | 116 | 0.22 | review | Same or closely related topic; use only when the tier calls for close distractors. |
-| Rural electricity access (`EG.ELC.ACCS.RU.ZS`) | 0.44 | 0.53 | 157 | 0.22 | ok | Reasonable distractor candidate; no major automated warning. |
 
 ## High-tech exports (`TX.VAL.TECH.MF.ZS`)
 
@@ -1239,12 +1647,12 @@ This automated review helps editors avoid distractors that are too weak, too obv
 
 | Correlated indicator | Pearson | Spearman | Overlap | Visual similarity | Warning | Notes |
 | --- | ---: | ---: | ---: | ---: | --- | --- |
+| Moderate or severe food insecurity (`SN.ITK.MSFI.ZS`) | -0.53 | -0.72 | 111 | 0.05 | ok | Reasonable distractor candidate; no major automated warning. |
+| Severe food insecurity (`SN.ITK.SVFI.ZS`) | -0.45 | -0.69 | 111 | 0.04 | ok | Reasonable distractor candidate; no major automated warning. |
 | Undernourishment (`SN.ITK.DEFC.ZS`) | -0.41 | -0.63 | 127 | 0.03 | ok | Reasonable distractor candidate; no major automated warning. |
 | Preprimary enrollment (`SE.PRE.ENRR`) | 0.52 | 0.62 | 110 | 0.24 | ok | Reasonable distractor candidate; no major automated warning. |
 | Safely managed drinking water (`SH.H2O.SMDW.ZS`) | 0.41 | 0.60 | 106 | 0.31 | ok | Reasonable distractor candidate; no major automated warning. |
 | Neonatal mortality (`SH.DYN.NMRT`) | -0.42 | -0.59 | 137 | 0.06 | ok | Reasonable distractor candidate; no major automated warning. |
-| Infant mortality (`SP.DYN.IMRT.IN`) | -0.41 | -0.59 | 137 | 0.05 | ok | Reasonable distractor candidate; no major automated warning. |
-| Account ownership (`FX.OWN.TOTL.ZS`) | 0.46 | 0.59 | 120 | 0.27 | ok | Reasonable distractor candidate; no major automated warning. |
 
 ## Hospital beds (`SH.MED.BEDS.ZS`)
 
@@ -1256,12 +1664,12 @@ This automated review helps editors avoid distractors that are too weak, too obv
 
 | Correlated indicator | Pearson | Spearman | Overlap | Visual similarity | Warning | Notes |
 | --- | ---: | ---: | ---: | ---: | --- | --- |
+| Female primary teachers (`SE.PRM.TCHR.FE.ZS`) | 0.62 | 0.76 | 95 | 0.33 | ok | Reasonable distractor candidate; no major automated warning. |
 | Birth rate (`SP.DYN.CBRT.IN`) | -0.58 | -0.72 | 120 | 0.12 | ok | Reasonable distractor candidate; no major automated warning. |
 | Physicians (`SH.MED.PHYS.ZS`) | 0.53 | 0.72 | 98 | 0.28 | review | Same or closely related topic; use only when the tier calls for close distractors. |
 | Maternal mortality (`SH.STA.MMRT`) | -0.45 | -0.71 | 120 | 0.03 | review | Same or closely related topic; use only when the tier calls for close distractors. |
 | Population ages 65+ (`SP.POP.65UP.TO.ZS`) | 0.65 | 0.71 | 120 | 0.24 | ok | Reasonable distractor candidate; no major automated warning. |
 | Nurses and midwives (`SH.MED.NUMW.P3`) | 0.51 | 0.70 | 112 | 0.26 | review | Same or closely related topic; use only when the tier calls for close distractors. |
-| Neonatal mortality (`SH.DYN.NMRT`) | -0.54 | -0.69 | 120 | 0.09 | review | Same or closely related topic; use only when the tier calls for close distractors. |
 
 ## Household consumption (`NE.CON.PRVT.ZS`)
 
@@ -1297,6 +1705,23 @@ This automated review helps editors avoid distractors that are too weak, too obv
 | Natural gas electricity share (`EG.ELC.NGAS.ZS`) | -0.48 | -0.51 | 124 | 0.08 | review | Same or closely related topic; use only when the tier calls for close distractors. |
 | Freshwater per person (`ER.H2O.INTR.PC`) | 0.24 | 0.49 | 122 | 0.20 | ok | Reasonable distractor candidate; no major automated warning. |
 
+## ICT service exports (`BX.GSR.CCIS.ZS`)
+
+- Approved status: approved
+- Category: connectivity
+- Difficulty: expert
+- Coverage: 135 countries
+- Warning level: review
+
+| Correlated indicator | Pearson | Spearman | Overlap | Visual similarity | Warning | Notes |
+| --- | ---: | ---: | ---: | ---: | --- | --- |
+| Communications service exports (`BX.GSR.CMCP.ZS`) | 0.62 | 0.62 | 135 | 0.25 | review | Same or closely related topic; use only when the tier calls for close distractors. |
+| Safely managed drinking water (`SH.H2O.SMDW.ZS`) | 0.26 | 0.39 | 105 | 0.15 | ok | Reasonable distractor candidate; no major automated warning. |
+| High-tech exports (`TX.VAL.TECH.MF.ZS`) | 0.28 | 0.38 | 123 | 0.24 | review | Same or closely related topic; use only when the tier calls for close distractors. |
+| Physicians (`SH.MED.PHYS.ZS`) | 0.22 | 0.38 | 103 | 0.15 | ok | Reasonable distractor candidate; no major automated warning. |
+| Severe food insecurity (`SN.ITK.SVFI.ZS`) | -0.24 | -0.38 | 108 | 0.10 | ok | Reasonable distractor candidate; no major automated warning. |
+| Undernourishment (`SN.ITK.DEFC.ZS`) | -0.16 | -0.37 | 126 | 0.13 | ok | Reasonable distractor candidate; no major automated warning. |
+
 ## Imports (`NE.IMP.GNFS.ZS`)
 
 - Approved status: approved
@@ -1309,10 +1734,10 @@ This automated review helps editors avoid distractors that are too weak, too obv
 | --- | ---: | ---: | ---: | ---: | --- | --- |
 | Trade (`NE.TRD.GNFS.ZS`) | 0.95 | 0.95 | 141 | 0.60 | high | Very high correlation can make the pair unfairly ambiguous. Same or closely related topic; use only when the tier calls for close distractors. |
 | Exports (`NE.EXP.GNFS.ZS`) | 0.84 | 0.81 | 141 | 0.35 | review | Same or closely related topic; use only when the tier calls for close distractors. |
-| Water productivity (`ER.GDP.FWTL.M3.KD`) | 0.45 | 0.21 | 136 | 0.17 | ok | Reasonable distractor candidate; no major automated warning. |
-| Government revenue excluding grants (`GC.REV.XGRT.GD.ZS`) | 0.36 | 0.43 | 108 | 0.23 | review | Same or closely related topic; use only when the tier calls for close distractors. |
-| Tax revenue (`GC.TAX.TOTL.GD.ZS`) | 0.33 | 0.42 | 108 | 0.23 | review | Same or closely related topic; use only when the tier calls for close distractors. |
-| Agriculture value added (`NV.AGR.TOTL.ZS`) | -0.34 | -0.40 | 133 | 0.09 | review | Same or closely related topic; use only when the tier calls for close distractors. |
+| Agriculture methane emissions (`EN.GHG.CH4.AG.MT.CE.AR5`) | -0.28 | -0.52 | 138 | 0.04 | ok | Reasonable distractor candidate; no major automated warning. |
+| Arable land area (`AG.LND.ARBL.HA`) | -0.30 | -0.50 | 141 | 0.07 | ok | Reasonable distractor candidate; no major automated warning. |
+| Agriculture nitrous oxide emissions (`EN.GHG.N2O.AG.MT.CE.AR5`) | -0.28 | -0.49 | 138 | 0.07 | ok | Reasonable distractor candidate; no major automated warning. |
+| Land under cereal production (`AG.LND.CREL.HA`) | -0.27 | -0.48 | 140 | 0.09 | ok | Reasonable distractor candidate; no major automated warning. |
 
 ## Industrial water withdrawals (`ER.H2O.FWIN.ZS`)
 
@@ -1378,9 +1803,9 @@ This automated review helps editors avoid distractors that are too weak, too obv
 | Agriculture value added (`NV.AGR.TOTL.ZS`) | 0.11 | 0.46 | 141 | 0.16 | review | Same or closely related topic; use only when the tier calls for close distractors. |
 | GNI per capita (`NY.GNP.PCAP.CD`) | -0.12 | -0.42 | 147 | 0.05 | ok | Reasonable distractor candidate; no major automated warning. |
 | GDP per capita (`NY.GDP.PCAP.CD`) | -0.12 | -0.42 | 147 | 0.05 | ok | Reasonable distractor candidate; no major automated warning. |
+| Severe food insecurity (`SN.ITK.SVFI.ZS`) | 0.30 | 0.42 | 118 | 0.17 | ok | Reasonable distractor candidate; no major automated warning. |
 | Private-sector bank credit (`FD.AST.PRVT.GD.ZS`) | -0.20 | -0.41 | 127 | 0.12 | review | Same or closely related topic; use only when the tier calls for close distractors. |
-| Exports (`NE.EXP.GNFS.ZS`) | -0.19 | -0.40 | 131 | 0.06 | review | Same or closely related topic; use only when the tier calls for close distractors. |
-| GNI per capita, PPP (`NY.GNP.PCAP.PP.CD`) | -0.11 | -0.39 | 147 | 0.04 | ok | Reasonable distractor candidate; no major automated warning. |
+| Moderate or severe food insecurity (`SN.ITK.MSFI.ZS`) | 0.25 | 0.41 | 118 | 0.22 | ok | Reasonable distractor candidate; no major automated warning. |
 
 ## Internet users (`IT.NET.USER.ZS`)
 
@@ -1410,11 +1835,11 @@ This automated review helps editors avoid distractors that are too weak, too obv
 | Correlated indicator | Pearson | Spearman | Overlap | Visual similarity | Warning | Notes |
 | --- | ---: | ---: | ---: | ---: | --- | --- |
 | Female labor force participation (`SL.TLF.CACT.FE.ZS`) | 0.90 | 0.82 | 163 | 0.45 | high | Very high correlation can make the pair unfairly ambiguous. Same or closely related topic; use only when the tier calls for close distractors. |
+| Female employment-to-population ratio (`SL.EMP.TOTL.SP.FE.ZS`) | 0.87 | 0.79 | 163 | 0.43 | review | Same or closely related topic; use only when the tier calls for close distractors. |
 | Labor force participation (`SL.TLF.CACT.ZS`) | 0.64 | 0.55 | 163 | 0.33 | review | Same or closely related topic; use only when the tier calls for close distractors. |
 | Employment-to-population ratio (`SL.EMP.TOTL.SP.ZS`) | 0.59 | 0.50 | 163 | 0.27 | review | Same or closely related topic; use only when the tier calls for close distractors. |
 | Women, Business and the Law index (`GD_WBL_OVL_LAW`) | 0.52 | 0.33 | 159 | 0.21 | ok | Reasonable distractor candidate; no major automated warning. |
 | Youth labor force participation (`SL.TLF.ACTI.1524.ZS`) | 0.45 | 0.47 | 163 | 0.23 | review | Same or closely related topic; use only when the tier calls for close distractors. |
-| Female unemployment (`SL.UEM.TOTL.FE.ZS`) | -0.45 | -0.34 | 163 | 0.10 | review | Same or closely related topic; use only when the tier calls for close distractors. |
 
 ## Labor force participation (`SL.TLF.CACT.ZS`)
 
@@ -1427,11 +1852,28 @@ This automated review helps editors avoid distractors that are too weak, too obv
 | Correlated indicator | Pearson | Spearman | Overlap | Visual similarity | Warning | Notes |
 | --- | ---: | ---: | ---: | ---: | --- | --- |
 | Employment-to-population ratio (`SL.EMP.TOTL.SP.ZS`) | 0.97 | 0.96 | 163 | 0.72 | high | Very high correlation can make the pair unfairly ambiguous. Same or closely related topic; use only when the tier calls for close distractors. |
+| Female employment-to-population ratio (`SL.EMP.TOTL.SP.FE.ZS`) | 0.90 | 0.87 | 163 | 0.50 | high | Very high correlation can make the pair unfairly ambiguous. Same or closely related topic; use only when the tier calls for close distractors. |
 | Female labor force participation (`SL.TLF.CACT.FE.ZS`) | 0.90 | 0.88 | 163 | 0.52 | review | Same or closely related topic; use only when the tier calls for close distractors. |
 | Male labor force participation (`SL.TLF.CACT.MA.ZS`) | 0.80 | 0.80 | 163 | 0.36 | review | Same or closely related topic; use only when the tier calls for close distractors. |
-| Youth labor force participation (`SL.TLF.ACTI.1524.ZS`) | 0.76 | 0.75 | 163 | 0.38 | review | Same or closely related topic; use only when the tier calls for close distractors. |
-| Female-to-male labor force ratio (`SL.TLF.CACT.FM.ZS`) | 0.64 | 0.55 | 163 | 0.33 | review | Same or closely related topic; use only when the tier calls for close distractors. |
-| Female unemployment (`SL.UEM.TOTL.FE.ZS`) | -0.53 | -0.43 | 163 | 0.13 | review | Same or closely related topic; use only when the tier calls for close distractors. |
+| Male employment-to-population ratio (`SL.EMP.TOTL.SP.MA.ZS`) | 0.79 | 0.78 | 163 | 0.39 | review | Same or closely related topic; use only when the tier calls for close distractors. |
+| Youth employment-to-population ratio (`SL.EMP.1524.SP.ZS`) | 0.77 | 0.75 | 163 | 0.39 | review | Same or closely related topic; use only when the tier calls for close distractors. |
+
+## Land under cereal production (`AG.LND.CREL.HA`)
+
+- Approved status: approved
+- Category: land
+- Difficulty: expert
+- Coverage: 167 countries
+- Warning level: high
+
+| Correlated indicator | Pearson | Spearman | Overlap | Visual similarity | Warning | Notes |
+| --- | ---: | ---: | ---: | ---: | --- | --- |
+| Arable land area (`AG.LND.ARBL.HA`) | 0.93 | 0.97 | 167 | 0.71 | high | Very high correlation can make the pair unfairly ambiguous. Same or closely related topic; use only when the tier calls for close distractors. |
+| Agriculture nitrous oxide emissions (`EN.GHG.N2O.AG.MT.CE.AR5`) | 0.95 | 0.86 | 163 | 0.47 | high | Very high correlation can make the pair unfairly ambiguous. |
+| Cereal production (`AG.PRD.CREL.MT`) | 0.93 | 0.94 | 167 | 0.57 | high | Very high correlation can make the pair unfairly ambiguous. Same or closely related topic; use only when the tier calls for close distractors. |
+| Agriculture methane emissions (`EN.GHG.CH4.AG.MT.CE.AR5`) | 0.89 | 0.83 | 163 | 0.45 | ok | Reasonable distractor candidate; no major automated warning. |
+| Air passengers carried (`IS.AIR.PSGR`) | 0.69 | 0.35 | 134 | 0.22 | ok | Reasonable distractor candidate; no major automated warning. |
+| Container port traffic (`IS.SHP.GOOD.TU`) | 0.68 | 0.43 | 126 | 0.17 | ok | Reasonable distractor candidate; no major automated warning. |
 
 ## Largest city share (`EN.URB.LCTY.UR.ZS`)
 
@@ -1439,16 +1881,16 @@ This automated review helps editors avoid distractors that are too weak, too obv
 - Category: settlement
 - Difficulty: standard
 - Coverage: 149 countries
-- Warning level: review
+- Warning level: ok
 
 | Correlated indicator | Pearson | Spearman | Overlap | Visual similarity | Warning | Notes |
 | --- | ---: | ---: | ---: | ---: | --- | --- |
+| Cereal production (`AG.PRD.CREL.MT`) | -0.31 | -0.49 | 148 | 0.11 | ok | Reasonable distractor candidate; no major automated warning. |
+| Arable land area (`AG.LND.ARBL.HA`) | -0.35 | -0.49 | 149 | 0.17 | ok | Reasonable distractor candidate; no major automated warning. |
+| Land under cereal production (`AG.LND.CREL.HA`) | -0.34 | -0.48 | 148 | 0.15 | ok | Reasonable distractor candidate; no major automated warning. |
+| Agriculture nitrous oxide emissions (`EN.GHG.N2O.AG.MT.CE.AR5`) | -0.34 | -0.47 | 146 | 0.13 | ok | Reasonable distractor candidate; no major automated warning. |
+| Agriculture methane emissions (`EN.GHG.CH4.AG.MT.CE.AR5`) | -0.31 | -0.42 | 146 | 0.07 | ok | Reasonable distractor candidate; no major automated warning. |
 | Tourism arrivals (`ST.INT.ARVL`) | -0.34 | -0.41 | 122 | 0.09 | ok | Reasonable distractor candidate; no major automated warning. |
-| Nuclear electricity share (`EG.ELC.NUCL.ZS`) | -0.24 | -0.40 | 149 | 0.08 | review | Same or closely related topic; use only when the tier calls for close distractors. |
-| Net primary enrollment (`SE.PRM.NENR`) | -0.34 | -0.17 | 107 | 0.12 | ok | Reasonable distractor candidate; no major automated warning. |
-| Employment in industry (`SL.IND.EMPL.ZS`) | -0.25 | -0.29 | 144 | 0.10 | ok | Reasonable distractor candidate; no major automated warning. |
-| Coal electricity share (`EG.ELC.COAL.ZS`) | -0.22 | -0.29 | 149 | 0.14 | review | Same or closely related topic; use only when the tier calls for close distractors. |
-| Logistics performance (`LP.LPI.OVRL.XQ`) | -0.27 | -0.27 | 120 | 0.09 | ok | Reasonable distractor candidate; no major automated warning. |
 
 ## Life expectancy (`SP.DYN.LE00.IN`)
 
@@ -1495,11 +1937,11 @@ This automated review helps editors avoid distractors that are too weak, too obv
 | Correlated indicator | Pearson | Spearman | Overlap | Visual similarity | Warning | Notes |
 | --- | ---: | ---: | ---: | ---: | --- | --- |
 | Logistics performance (`LP.LPI.OVRL.XQ`) | 0.96 | 0.94 | 131 | 0.61 | high | Very high correlation can make the pair unfairly ambiguous. Same or closely related topic; use only when the tier calls for close distractors. |
+| Logistics customs score (`LP.LPI.CUST.XQ`) | 0.95 | 0.93 | 131 | 0.57 | high | Very high correlation can make the pair unfairly ambiguous. Same or closely related topic; use only when the tier calls for close distractors. |
+| Logistics tracking score (`LP.LPI.TRAC.XQ`) | 0.91 | 0.88 | 131 | 0.50 | high | Very high correlation can make the pair unfairly ambiguous. Same or closely related topic; use only when the tier calls for close distractors. |
+| Logistics timeliness score (`LP.LPI.TIME.XQ`) | 0.86 | 0.85 | 131 | 0.47 | review | Same or closely related topic; use only when the tier calls for close distractors. |
 | GNI per capita, PPP (`NY.GNP.PCAP.PP.CD`) | 0.81 | 0.80 | 125 | 0.30 | ok | Reasonable distractor candidate; no major automated warning. |
 | Health spending per person (`SH.XPD.CHEX.PC.CD`) | 0.74 | 0.81 | 129 | 0.33 | ok | Reasonable distractor candidate; no major automated warning. |
-| GNI per capita (`NY.GNP.PCAP.CD`) | 0.78 | 0.80 | 126 | 0.29 | ok | Reasonable distractor candidate; no major automated warning. |
-| GDP per capita, PPP (`NY.GDP.PCAP.PP.CD`) | 0.75 | 0.79 | 125 | 0.30 | ok | Reasonable distractor candidate; no major automated warning. |
-| GDP per capita (`NY.GDP.PCAP.CD`) | 0.73 | 0.79 | 126 | 0.29 | ok | Reasonable distractor candidate; no major automated warning. |
 
 ## Logistics performance (`LP.LPI.OVRL.XQ`)
 
@@ -1511,12 +1953,12 @@ This automated review helps editors avoid distractors that are too weak, too obv
 
 | Correlated indicator | Pearson | Spearman | Overlap | Visual similarity | Warning | Notes |
 | --- | ---: | ---: | ---: | ---: | --- | --- |
+| Logistics tracking score (`LP.LPI.TRAC.XQ`) | 0.97 | 0.96 | 131 | 0.63 | high | Very high correlation can make the pair unfairly ambiguous. Same or closely related topic; use only when the tier calls for close distractors. |
 | Logistics infrastructure quality (`LP.LPI.INFR.XQ`) | 0.96 | 0.94 | 131 | 0.61 | high | Very high correlation can make the pair unfairly ambiguous. Same or closely related topic; use only when the tier calls for close distractors. |
+| Logistics customs score (`LP.LPI.CUST.XQ`) | 0.96 | 0.96 | 131 | 0.65 | high | Very high correlation can make the pair unfairly ambiguous. Same or closely related topic; use only when the tier calls for close distractors. |
+| Logistics timeliness score (`LP.LPI.TIME.XQ`) | 0.94 | 0.94 | 131 | 0.59 | high | Very high correlation can make the pair unfairly ambiguous. Same or closely related topic; use only when the tier calls for close distractors. |
 | Health spending per person (`SH.XPD.CHEX.PC.CD`) | 0.73 | 0.80 | 129 | 0.32 | ok | Reasonable distractor candidate; no major automated warning. |
 | GNI per capita, PPP (`NY.GNP.PCAP.PP.CD`) | 0.79 | 0.79 | 125 | 0.38 | ok | Reasonable distractor candidate; no major automated warning. |
-| GNI per capita (`NY.GNP.PCAP.CD`) | 0.76 | 0.79 | 126 | 0.34 | ok | Reasonable distractor candidate; no major automated warning. |
-| GDP per capita (`NY.GDP.PCAP.CD`) | 0.72 | 0.79 | 126 | 0.32 | ok | Reasonable distractor candidate; no major automated warning. |
-| GDP per capita, PPP (`NY.GDP.PCAP.PP.CD`) | 0.74 | 0.78 | 125 | 0.36 | ok | Reasonable distractor candidate; no major automated warning. |
 
 ## Low-elevation coastal population (`EN.POP.EL5M.ZS`)
 
@@ -1524,16 +1966,16 @@ This automated review helps editors avoid distractors that are too weak, too obv
 - Category: settlement
 - Difficulty: expert
 - Coverage: 169 countries
-- Warning level: review
+- Warning level: high
 
 | Correlated indicator | Pearson | Spearman | Overlap | Visual similarity | Warning | Notes |
 | --- | ---: | ---: | ---: | ---: | --- | --- |
+| Urban low-elevation population (`EN.POP.EL5M.UR.ZS`) | 0.94 | 0.98 | 169 | 0.77 | high | Very high correlation can make the pair unfairly ambiguous. Same or closely related topic; use only when the tier calls for close distractors. |
+| Rural low-elevation population (`EN.POP.EL5M.RU.ZS`) | 0.83 | 0.94 | 169 | 0.65 | high | Very high correlation can make the pair unfairly ambiguous. Same or closely related topic; use only when the tier calls for close distractors. |
 | Low-elevation land (`AG.LND.EL5M.ZS`) | 0.39 | 0.84 | 169 | 0.51 | review | Same or closely related topic; use only when the tier calls for close distractors. |
+| Rural low-elevation land (`AG.LND.EL5M.RU.ZS`) | 0.36 | 0.83 | 169 | 0.50 | review | Same or closely related topic; use only when the tier calls for close distractors. |
+| Urban low-elevation land (`AG.LND.EL5M.UR.ZS`) | 0.38 | 0.79 | 169 | 0.47 | review | Same or closely related topic; use only when the tier calls for close distractors. |
 | Freshwater per person (`ER.H2O.INTR.PC`) | 0.45 | 0.17 | 164 | 0.16 | ok | Reasonable distractor candidate; no major automated warning. |
-| Agricultural land (`AG.LND.AGRI.ZS`) | -0.34 | -0.37 | 169 | 0.08 | ok | Reasonable distractor candidate; no major automated warning. |
-| Arable land per person (`AG.LND.ARBL.HA.PC`) | -0.18 | -0.37 | 168 | 0.10 | ok | Reasonable distractor candidate; no major automated warning. |
-| GDP per person growth (`NY.GDP.PCAP.KD.ZG`) | 0.36 | -0.08 | 160 | 0.14 | ok | Reasonable distractor candidate; no major automated warning. |
-| GDP growth (`NY.GDP.MKTP.KD.ZG`) | 0.35 | -0.08 | 160 | 0.18 | ok | Reasonable distractor candidate; no major automated warning. |
 
 ## Low-elevation land (`AG.LND.EL5M.ZS`)
 
@@ -1541,16 +1983,135 @@ This automated review helps editors avoid distractors that are too weak, too obv
 - Category: settlement
 - Difficulty: expert
 - Coverage: 169 countries
-- Warning level: review
+- Warning level: high
 
 | Correlated indicator | Pearson | Spearman | Overlap | Visual similarity | Warning | Notes |
 | --- | ---: | ---: | ---: | ---: | --- | --- |
+| Rural low-elevation land (`AG.LND.EL5M.RU.ZS`) | 0.99 | 1.00 | 169 | 0.92 | high | Very high correlation can make the pair unfairly ambiguous. The quantile classes produce a visually similar map. Same or closely related topic; use only when the tier calls for close distractors. |
+| Rural low-elevation population (`EN.POP.EL5M.RU.ZS`) | 0.31 | 0.89 | 169 | 0.51 | review | Same or closely related topic; use only when the tier calls for close distractors. |
 | Low-elevation coastal population (`EN.POP.EL5M.ZS`) | 0.39 | 0.84 | 169 | 0.51 | review | Same or closely related topic; use only when the tier calls for close distractors. |
+| Urban low-elevation land (`AG.LND.EL5M.UR.ZS`) | 0.58 | 0.83 | 169 | 0.46 | review | Same or closely related topic; use only when the tier calls for close distractors. |
+| Urban low-elevation population (`EN.POP.EL5M.UR.ZS`) | 0.37 | 0.78 | 169 | 0.46 | review | Same or closely related topic; use only when the tier calls for close distractors. |
 | Average precipitation (`AG.LND.PRCP.MM`) | 0.16 | 0.43 | 163 | 0.23 | ok | Reasonable distractor candidate; no major automated warning. |
-| Arable land per person (`AG.LND.ARBL.HA.PC`) | -0.17 | -0.35 | 168 | 0.05 | review | Same or closely related topic; use only when the tier calls for close distractors. |
-| Age dependency ratio (`SP.POP.DPND`) | -0.19 | -0.33 | 169 | 0.13 | ok | Reasonable distractor candidate; no major automated warning. |
-| Fertilizer consumption (`AG.CON.FERT.ZS`) | 0.17 | 0.32 | 165 | 0.21 | ok | Reasonable distractor candidate; no major automated warning. |
-| Agricultural land (`AG.LND.AGRI.ZS`) | -0.14 | -0.30 | 169 | 0.09 | review | Same or closely related topic; use only when the tier calls for close distractors. |
+
+## Logistics customs score (`LP.LPI.CUST.XQ`)
+
+- Approved status: approved
+- Category: connectivity
+- Difficulty: expert
+- Coverage: 131 countries
+- Warning level: high
+
+| Correlated indicator | Pearson | Spearman | Overlap | Visual similarity | Warning | Notes |
+| --- | ---: | ---: | ---: | ---: | --- | --- |
+| Logistics performance (`LP.LPI.OVRL.XQ`) | 0.96 | 0.96 | 131 | 0.65 | high | Very high correlation can make the pair unfairly ambiguous. Same or closely related topic; use only when the tier calls for close distractors. |
+| Logistics infrastructure quality (`LP.LPI.INFR.XQ`) | 0.95 | 0.93 | 131 | 0.57 | high | Very high correlation can make the pair unfairly ambiguous. Same or closely related topic; use only when the tier calls for close distractors. |
+| Logistics tracking score (`LP.LPI.TRAC.XQ`) | 0.90 | 0.88 | 131 | 0.49 | high | Very high correlation can make the pair unfairly ambiguous. Same or closely related topic; use only when the tier calls for close distractors. |
+| Logistics timeliness score (`LP.LPI.TIME.XQ`) | 0.87 | 0.86 | 131 | 0.50 | review | Same or closely related topic; use only when the tier calls for close distractors. |
+| Account ownership (`FX.OWN.TOTL.ZS`) | 0.77 | 0.80 | 108 | 0.44 | ok | Reasonable distractor candidate; no major automated warning. |
+| GNI per capita, PPP (`NY.GNP.PCAP.PP.CD`) | 0.80 | 0.80 | 125 | 0.40 | ok | Reasonable distractor candidate; no major automated warning. |
+
+## Logistics timeliness score (`LP.LPI.TIME.XQ`)
+
+- Approved status: approved
+- Category: connectivity
+- Difficulty: expert
+- Coverage: 131 countries
+- Warning level: high
+
+| Correlated indicator | Pearson | Spearman | Overlap | Visual similarity | Warning | Notes |
+| --- | ---: | ---: | ---: | ---: | --- | --- |
+| Logistics performance (`LP.LPI.OVRL.XQ`) | 0.94 | 0.94 | 131 | 0.59 | high | Very high correlation can make the pair unfairly ambiguous. Same or closely related topic; use only when the tier calls for close distractors. |
+| Logistics tracking score (`LP.LPI.TRAC.XQ`) | 0.91 | 0.91 | 131 | 0.56 | high | Very high correlation can make the pair unfairly ambiguous. Same or closely related topic; use only when the tier calls for close distractors. |
+| Logistics customs score (`LP.LPI.CUST.XQ`) | 0.87 | 0.86 | 131 | 0.50 | review | Same or closely related topic; use only when the tier calls for close distractors. |
+| Logistics infrastructure quality (`LP.LPI.INFR.XQ`) | 0.86 | 0.85 | 131 | 0.47 | review | Same or closely related topic; use only when the tier calls for close distractors. |
+| Health spending per person (`SH.XPD.CHEX.PC.CD`) | 0.65 | 0.75 | 129 | 0.26 | ok | Reasonable distractor candidate; no major automated warning. |
+| Secure internet servers (`IT.NET.SECR.P6`) | 0.54 | 0.75 | 131 | 0.31 | review | Same or closely related topic; use only when the tier calls for close distractors. |
+
+## Logistics tracking score (`LP.LPI.TRAC.XQ`)
+
+- Approved status: approved
+- Category: connectivity
+- Difficulty: expert
+- Coverage: 131 countries
+- Warning level: high
+
+| Correlated indicator | Pearson | Spearman | Overlap | Visual similarity | Warning | Notes |
+| --- | ---: | ---: | ---: | ---: | --- | --- |
+| Logistics performance (`LP.LPI.OVRL.XQ`) | 0.97 | 0.96 | 131 | 0.63 | high | Very high correlation can make the pair unfairly ambiguous. Same or closely related topic; use only when the tier calls for close distractors. |
+| Logistics timeliness score (`LP.LPI.TIME.XQ`) | 0.91 | 0.91 | 131 | 0.56 | high | Very high correlation can make the pair unfairly ambiguous. Same or closely related topic; use only when the tier calls for close distractors. |
+| Logistics infrastructure quality (`LP.LPI.INFR.XQ`) | 0.91 | 0.88 | 131 | 0.50 | high | Very high correlation can make the pair unfairly ambiguous. Same or closely related topic; use only when the tier calls for close distractors. |
+| Logistics customs score (`LP.LPI.CUST.XQ`) | 0.90 | 0.88 | 131 | 0.49 | high | Very high correlation can make the pair unfairly ambiguous. Same or closely related topic; use only when the tier calls for close distractors. |
+| Health spending per person (`SH.XPD.CHEX.PC.CD`) | 0.71 | 0.78 | 129 | 0.26 | ok | Reasonable distractor candidate; no major automated warning. |
+| GNI per capita (`NY.GNP.PCAP.CD`) | 0.73 | 0.77 | 126 | 0.31 | ok | Reasonable distractor candidate; no major automated warning. |
+
+## Male agricultural employment (`SL.AGR.EMPL.MA.ZS`)
+
+- Approved status: approved
+- Category: labor
+- Difficulty: expert
+- Coverage: 163 countries
+- Warning level: high
+
+| Correlated indicator | Pearson | Spearman | Overlap | Visual similarity | Warning | Notes |
+| --- | ---: | ---: | ---: | ---: | --- | --- |
+| Employment in agriculture (`SL.AGR.EMPL.ZS`) | 0.98 | 0.99 | 163 | 0.80 | high | Very high correlation can make the pair unfairly ambiguous. Same or closely related topic; use only when the tier calls for close distractors. |
+| Female agricultural employment (`SL.AGR.EMPL.FE.ZS`) | 0.90 | 0.94 | 163 | 0.60 | high | Very high correlation can make the pair unfairly ambiguous. Same or closely related topic; use only when the tier calls for close distractors. |
+| Agriculture value per worker (`NV.AGR.EMPL.KD`) | -0.58 | -0.94 | 146 | 0.10 | high | Very high correlation can make the pair unfairly ambiguous. |
+| Employment in services (`SL.SRV.EMPL.ZS`) | -0.92 | -0.92 | 163 | 0.07 | high | Very high correlation can make the pair unfairly ambiguous. Same or closely related topic; use only when the tier calls for close distractors. |
+| Male services employment (`SL.SRV.EMPL.MA.ZS`) | -0.90 | -0.91 | 163 | 0.06 | high | Very high correlation can make the pair unfairly ambiguous. Same or closely related topic; use only when the tier calls for close distractors. |
+| Vulnerable employment (`SL.EMP.VULN.ZS`) | 0.90 | 0.90 | 163 | 0.52 | high | Very high correlation can make the pair unfairly ambiguous. Same or closely related topic; use only when the tier calls for close distractors. |
+
+## Male contributing family workers (`SL.FAM.WORK.MA.ZS`)
+
+- Approved status: approved
+- Category: labor
+- Difficulty: expert
+- Coverage: 163 countries
+- Warning level: high
+
+| Correlated indicator | Pearson | Spearman | Overlap | Visual similarity | Warning | Notes |
+| --- | ---: | ---: | ---: | ---: | --- | --- |
+| Contributing family workers (`SL.FAM.WORK.ZS`) | 0.97 | 0.99 | 163 | 0.78 | high | Very high correlation can make the pair unfairly ambiguous. Same or closely related topic; use only when the tier calls for close distractors. |
+| Female contributing family workers (`SL.FAM.WORK.FE.ZS`) | 0.90 | 0.96 | 163 | 0.64 | high | Very high correlation can make the pair unfairly ambiguous. Same or closely related topic; use only when the tier calls for close distractors. |
+| Female vulnerable employment (`SL.EMP.VULN.FE.ZS`) | 0.72 | 0.82 | 163 | 0.37 | review | Same or closely related topic; use only when the tier calls for close distractors. |
+| Female self-employed (`SL.EMP.SELF.FE.ZS`) | 0.72 | 0.82 | 163 | 0.37 | review | Same or closely related topic; use only when the tier calls for close distractors. |
+| Female wage workers (`SL.EMP.WORK.FE.ZS`) | -0.72 | -0.82 | 163 | 0.09 | review | Same or closely related topic; use only when the tier calls for close distractors. |
+| Vulnerable employment (`SL.EMP.VULN.ZS`) | 0.72 | 0.81 | 163 | 0.35 | review | Same or closely related topic; use only when the tier calls for close distractors. |
+
+## Male employment-to-population ratio (`SL.EMP.TOTL.SP.MA.ZS`)
+
+- Approved status: approved
+- Category: labor
+- Difficulty: expert
+- Coverage: 163 countries
+- Warning level: high
+
+| Correlated indicator | Pearson | Spearman | Overlap | Visual similarity | Warning | Notes |
+| --- | ---: | ---: | ---: | ---: | --- | --- |
+| Male labor force participation (`SL.TLF.CACT.MA.ZS`) | 0.96 | 0.95 | 163 | 0.67 | high | Very high correlation can make the pair unfairly ambiguous. Same or closely related topic; use only when the tier calls for close distractors. |
+| Employment-to-population ratio (`SL.EMP.TOTL.SP.ZS`) | 0.85 | 0.84 | 163 | 0.42 | review | Same or closely related topic; use only when the tier calls for close distractors. |
+| Labor force participation (`SL.TLF.CACT.ZS`) | 0.79 | 0.78 | 163 | 0.39 | review | Same or closely related topic; use only when the tier calls for close distractors. |
+| Youth employment-to-population ratio (`SL.EMP.1524.SP.ZS`) | 0.71 | 0.72 | 163 | 0.32 | review | Same or closely related topic; use only when the tier calls for close distractors. |
+| Male unemployment (`SL.UEM.TOTL.MA.ZS`) | -0.68 | -0.72 | 163 | 0.07 | review | Same or closely related topic; use only when the tier calls for close distractors. |
+| Unemployment (`SL.UEM.TOTL.ZS`) | -0.66 | -0.66 | 163 | 0.07 | review | Same or closely related topic; use only when the tier calls for close distractors. |
+
+## Male industry employment (`SL.IND.EMPL.MA.ZS`)
+
+- Approved status: approved
+- Category: labor
+- Difficulty: expert
+- Coverage: 163 countries
+- Warning level: high
+
+| Correlated indicator | Pearson | Spearman | Overlap | Visual similarity | Warning | Notes |
+| --- | ---: | ---: | ---: | ---: | --- | --- |
+| Employment in industry (`SL.IND.EMPL.ZS`) | 0.93 | 0.93 | 163 | 0.50 | high | Very high correlation can make the pair unfairly ambiguous. Same or closely related topic; use only when the tier calls for close distractors. |
+| Male agricultural employment (`SL.AGR.EMPL.MA.ZS`) | -0.72 | -0.64 | 163 | 0.07 | review | Same or closely related topic; use only when the tier calls for close distractors. |
+| Employment in agriculture (`SL.AGR.EMPL.ZS`) | -0.71 | -0.62 | 163 | 0.06 | review | Same or closely related topic; use only when the tier calls for close distractors. |
+| Clean cooking fuels access (`EG.CFT.ACCS.ZS`) | 0.70 | 0.67 | 159 | 0.31 | ok | Reasonable distractor candidate; no major automated warning. |
+| Internet users (`IT.NET.USER.ZS`) | 0.69 | 0.62 | 152 | 0.28 | ok | Reasonable distractor candidate; no major automated warning. |
+| CO2 emissions per capita (`EN.GHG.CO2.PC.CE.AR5`) | 0.48 | 0.69 | 161 | 0.37 | review | Per-capita versus non-per-capita wording can create raw-total confusion risk. |
 
 ## Male labor force participation (`SL.TLF.CACT.MA.ZS`)
 
@@ -1558,16 +2119,50 @@ This automated review helps editors avoid distractors that are too weak, too obv
 - Category: labor
 - Difficulty: standard
 - Coverage: 163 countries
-- Warning level: review
+- Warning level: high
 
 | Correlated indicator | Pearson | Spearman | Overlap | Visual similarity | Warning | Notes |
 | --- | ---: | ---: | ---: | ---: | --- | --- |
+| Male employment-to-population ratio (`SL.EMP.TOTL.SP.MA.ZS`) | 0.96 | 0.95 | 163 | 0.67 | high | Very high correlation can make the pair unfairly ambiguous. Same or closely related topic; use only when the tier calls for close distractors. |
 | Employment-to-population ratio (`SL.EMP.TOTL.SP.ZS`) | 0.80 | 0.79 | 163 | 0.37 | review | Same or closely related topic; use only when the tier calls for close distractors. |
 | Labor force participation (`SL.TLF.CACT.ZS`) | 0.80 | 0.80 | 163 | 0.36 | review | Same or closely related topic; use only when the tier calls for close distractors. |
+| Youth employment-to-population ratio (`SL.EMP.1524.SP.ZS`) | 0.67 | 0.66 | 163 | 0.28 | review | Same or closely related topic; use only when the tier calls for close distractors. |
 | Youth labor force participation (`SL.TLF.ACTI.1524.ZS`) | 0.65 | 0.65 | 163 | 0.30 | review | Same or closely related topic; use only when the tier calls for close distractors. |
 | Male unemployment (`SL.UEM.TOTL.MA.ZS`) | -0.46 | -0.52 | 163 | 0.11 | review | Same or closely related topic; use only when the tier calls for close distractors. |
-| Female labor force participation (`SL.TLF.CACT.FE.ZS`) | 0.47 | 0.49 | 163 | 0.23 | review | Same or closely related topic; use only when the tier calls for close distractors. |
-| Youth unemployment (`SL.UEM.1524.ZS`) | -0.46 | -0.45 | 163 | 0.12 | review | Same or closely related topic; use only when the tier calls for close distractors. |
+
+## Male self-employed (`SL.EMP.SELF.MA.ZS`)
+
+- Approved status: approved
+- Category: labor
+- Difficulty: expert
+- Coverage: 163 countries
+- Warning level: high
+
+| Correlated indicator | Pearson | Spearman | Overlap | Visual similarity | Warning | Notes |
+| --- | ---: | ---: | ---: | ---: | --- | --- |
+| Male wage workers (`SL.EMP.WORK.MA.ZS`) | -1.00 | -1.00 | 163 | 0.14 | high | Very high correlation can make the pair unfairly ambiguous. Same or closely related topic; use only when the tier calls for close distractors. |
+| Self-employed workers (`SL.EMP.SELF.ZS`) | 0.99 | 0.99 | 163 | 0.85 | high | Very high correlation can make the pair unfairly ambiguous. Same or closely related topic; use only when the tier calls for close distractors. |
+| Wage and salaried workers (`SL.EMP.WORK.ZS`) | -0.99 | -0.99 | 163 | 0.11 | high | Very high correlation can make the pair unfairly ambiguous. Same or closely related topic; use only when the tier calls for close distractors. |
+| Male vulnerable employment (`SL.EMP.VULN.MA.ZS`) | 0.99 | 0.99 | 163 | 0.83 | high | Very high correlation can make the pair unfairly ambiguous. Same or closely related topic; use only when the tier calls for close distractors. |
+| Vulnerable employment (`SL.EMP.VULN.ZS`) | 0.98 | 0.99 | 163 | 0.81 | high | Very high correlation can make the pair unfairly ambiguous. Same or closely related topic; use only when the tier calls for close distractors. |
+| Female self-employed (`SL.EMP.SELF.FE.ZS`) | 0.96 | 0.97 | 163 | 0.61 | high | Very high correlation can make the pair unfairly ambiguous. Same or closely related topic; use only when the tier calls for close distractors. |
+
+## Male services employment (`SL.SRV.EMPL.MA.ZS`)
+
+- Approved status: approved
+- Category: labor
+- Difficulty: expert
+- Coverage: 163 countries
+- Warning level: high
+
+| Correlated indicator | Pearson | Spearman | Overlap | Visual similarity | Warning | Notes |
+| --- | ---: | ---: | ---: | ---: | --- | --- |
+| Employment in services (`SL.SRV.EMPL.ZS`) | 0.96 | 0.97 | 163 | 0.69 | high | Very high correlation can make the pair unfairly ambiguous. Same or closely related topic; use only when the tier calls for close distractors. |
+| Male agricultural employment (`SL.AGR.EMPL.MA.ZS`) | -0.90 | -0.91 | 163 | 0.06 | high | Very high correlation can make the pair unfairly ambiguous. Same or closely related topic; use only when the tier calls for close distractors. |
+| Female services employment (`SL.SRV.EMPL.FE.ZS`) | 0.87 | 0.91 | 163 | 0.52 | high | Very high correlation can make the pair unfairly ambiguous. Same or closely related topic; use only when the tier calls for close distractors. |
+| Employment in agriculture (`SL.AGR.EMPL.ZS`) | -0.88 | -0.90 | 163 | 0.06 | high | Very high correlation can make the pair unfairly ambiguous. Same or closely related topic; use only when the tier calls for close distractors. |
+| Female agricultural employment (`SL.AGR.EMPL.FE.ZS`) | -0.81 | -0.87 | 163 | 0.04 | review | Same or closely related topic; use only when the tier calls for close distractors. |
+| Agriculture value per worker (`NV.AGR.EMPL.KD`) | 0.65 | 0.87 | 146 | 0.49 | ok | Reasonable distractor candidate; no major automated warning. |
 
 ## Male unemployment (`SL.UEM.TOTL.MA.ZS`)
 
@@ -1582,9 +2177,43 @@ This automated review helps editors avoid distractors that are too weak, too obv
 | Unemployment (`SL.UEM.TOTL.ZS`) | 0.99 | 0.97 | 163 | 0.75 | high | Very high correlation can make the pair unfairly ambiguous. Same or closely related topic; use only when the tier calls for close distractors. |
 | Youth unemployment (`SL.UEM.1524.ZS`) | 0.90 | 0.87 | 163 | 0.46 | high | Very high correlation can make the pair unfairly ambiguous. Same or closely related topic; use only when the tier calls for close distractors. |
 | Female unemployment (`SL.UEM.TOTL.FE.ZS`) | 0.89 | 0.85 | 163 | 0.54 | review | Same or closely related topic; use only when the tier calls for close distractors. |
+| Male employment-to-population ratio (`SL.EMP.TOTL.SP.MA.ZS`) | -0.68 | -0.72 | 163 | 0.07 | review | Same or closely related topic; use only when the tier calls for close distractors. |
 | Employment-to-population ratio (`SL.EMP.TOTL.SP.ZS`) | -0.64 | -0.66 | 163 | 0.09 | review | Same or closely related topic; use only when the tier calls for close distractors. |
 | Male labor force participation (`SL.TLF.CACT.MA.ZS`) | -0.46 | -0.52 | 163 | 0.11 | review | Same or closely related topic; use only when the tier calls for close distractors. |
-| Labor force participation (`SL.TLF.CACT.ZS`) | -0.44 | -0.49 | 163 | 0.10 | review | Same or closely related topic; use only when the tier calls for close distractors. |
+
+## Male vulnerable employment (`SL.EMP.VULN.MA.ZS`)
+
+- Approved status: approved
+- Category: labor
+- Difficulty: expert
+- Coverage: 163 countries
+- Warning level: high
+
+| Correlated indicator | Pearson | Spearman | Overlap | Visual similarity | Warning | Notes |
+| --- | ---: | ---: | ---: | ---: | --- | --- |
+| Vulnerable employment (`SL.EMP.VULN.ZS`) | 0.99 | 0.99 | 163 | 0.84 | high | Very high correlation can make the pair unfairly ambiguous. Same or closely related topic; use only when the tier calls for close distractors. |
+| Male self-employed (`SL.EMP.SELF.MA.ZS`) | 0.99 | 0.99 | 163 | 0.83 | high | Very high correlation can make the pair unfairly ambiguous. Same or closely related topic; use only when the tier calls for close distractors. |
+| Male wage workers (`SL.EMP.WORK.MA.ZS`) | -0.99 | -0.99 | 163 | 0.12 | high | Very high correlation can make the pair unfairly ambiguous. Same or closely related topic; use only when the tier calls for close distractors. |
+| Self-employed workers (`SL.EMP.SELF.ZS`) | 0.98 | 0.98 | 163 | 0.79 | high | Very high correlation can make the pair unfairly ambiguous. Same or closely related topic; use only when the tier calls for close distractors. |
+| Wage and salaried workers (`SL.EMP.WORK.ZS`) | -0.98 | -0.98 | 163 | 0.10 | high | Very high correlation can make the pair unfairly ambiguous. Same or closely related topic; use only when the tier calls for close distractors. |
+| Female vulnerable employment (`SL.EMP.VULN.FE.ZS`) | 0.96 | 0.97 | 163 | 0.65 | high | Very high correlation can make the pair unfairly ambiguous. Same or closely related topic; use only when the tier calls for close distractors. |
+
+## Male wage workers (`SL.EMP.WORK.MA.ZS`)
+
+- Approved status: approved
+- Category: labor
+- Difficulty: expert
+- Coverage: 163 countries
+- Warning level: high
+
+| Correlated indicator | Pearson | Spearman | Overlap | Visual similarity | Warning | Notes |
+| --- | ---: | ---: | ---: | ---: | --- | --- |
+| Male self-employed (`SL.EMP.SELF.MA.ZS`) | -1.00 | -1.00 | 163 | 0.14 | high | Very high correlation can make the pair unfairly ambiguous. Same or closely related topic; use only when the tier calls for close distractors. |
+| Self-employed workers (`SL.EMP.SELF.ZS`) | -0.99 | -0.99 | 163 | 0.11 | high | Very high correlation can make the pair unfairly ambiguous. Same or closely related topic; use only when the tier calls for close distractors. |
+| Wage and salaried workers (`SL.EMP.WORK.ZS`) | 0.99 | 0.99 | 163 | 0.85 | high | Very high correlation can make the pair unfairly ambiguous. Same or closely related topic; use only when the tier calls for close distractors. |
+| Male vulnerable employment (`SL.EMP.VULN.MA.ZS`) | -0.99 | -0.99 | 163 | 0.12 | high | Very high correlation can make the pair unfairly ambiguous. Same or closely related topic; use only when the tier calls for close distractors. |
+| Vulnerable employment (`SL.EMP.VULN.ZS`) | -0.98 | -0.99 | 163 | 0.09 | high | Very high correlation can make the pair unfairly ambiguous. Same or closely related topic; use only when the tier calls for close distractors. |
+| Female self-employed (`SL.EMP.SELF.FE.ZS`) | -0.96 | -0.97 | 163 | 0.07 | high | Very high correlation can make the pair unfairly ambiguous. Same or closely related topic; use only when the tier calls for close distractors. |
 
 ## Manufacturing value added (`NV.IND.MANF.ZS`)
 
@@ -1596,12 +2225,12 @@ This automated review helps editors avoid distractors that are too weak, too obv
 
 | Correlated indicator | Pearson | Spearman | Overlap | Visual similarity | Warning | Notes |
 | --- | ---: | ---: | ---: | ---: | --- | --- |
+| Female industry employment (`SL.IND.EMPL.FE.ZS`) | 0.39 | 0.49 | 140 | 0.31 | ok | Reasonable distractor candidate; no major automated warning. |
 | Employment in industry (`SL.IND.EMPL.ZS`) | 0.30 | 0.42 | 140 | 0.23 | ok | Reasonable distractor candidate; no major automated warning. |
 | Industry value added (`NV.IND.TOTL.ZS`) | 0.31 | 0.40 | 141 | 0.24 | review | Same or closely related topic; use only when the tier calls for close distractors. |
 | Tourism arrivals (`ST.INT.ARVL`) | 0.17 | 0.40 | 125 | 0.17 | review | Same or closely related topic; use only when the tier calls for close distractors. |
 | Coal electricity share (`EG.ELC.COAL.ZS`) | 0.17 | 0.35 | 141 | 0.23 | ok | Reasonable distractor candidate; no major automated warning. |
-| High-tech exports (`TX.VAL.TECH.MF.ZS`) | 0.30 | 0.20 | 123 | 0.26 | review | Same or closely related topic; use only when the tier calls for close distractors. |
-| Tourism receipts (`ST.INT.RCPT.XP.ZS`) | -0.29 | -0.17 | 119 | 0.13 | review | Same or closely related topic; use only when the tier calls for close distractors. |
+| Male industry employment (`SL.IND.EMPL.MA.ZS`) | 0.23 | 0.32 | 140 | 0.17 | ok | Reasonable distractor candidate; no major automated warning. |
 
 ## Maternal mortality (`SH.STA.MMRT`)
 
@@ -1618,7 +2247,7 @@ This automated review helps editors avoid distractors that are too weak, too obv
 | Neonatal mortality (`SH.DYN.NMRT`) | 0.85 | 0.91 | 166 | 0.42 | high | Very high correlation can make the pair unfairly ambiguous. Same or closely related topic; use only when the tier calls for close distractors. |
 | Female adult mortality (`SP.DYN.AMRT.FE`) | 0.85 | 0.91 | 147 | 0.44 | high | Very high correlation can make the pair unfairly ambiguous. Same or closely related topic; use only when the tier calls for close distractors. |
 | Life expectancy (`SP.DYN.LE00.IN`) | -0.82 | -0.89 | 167 | 0.08 | review | Same or closely related topic; use only when the tier calls for close distractors. |
-| GNI per capita, PPP (`NY.GNP.PCAP.PP.CD`) | -0.54 | -0.87 | 157 | 0.09 | ok | Reasonable distractor candidate; no major automated warning. |
+| Rural basic sanitation (`SH.STA.BASS.RU.ZS`) | -0.80 | -0.87 | 144 | 0.05 | ok | Reasonable distractor candidate; no major automated warning. |
 
 ## Measles immunization (`SH.IMM.MEAS`)
 
@@ -1633,9 +2262,9 @@ This automated review helps editors avoid distractors that are too weak, too obv
 | Hepatitis B immunization (`SH.IMM.HEPB`) | 0.89 | 0.88 | 161 | 0.50 | review | Same or closely related topic; use only when the tier calls for close distractors. |
 | DPT immunization (`SH.IMM.IDPT`) | 0.87 | 0.88 | 165 | 0.49 | review | Same or closely related topic; use only when the tier calls for close distractors. |
 | Open defecation (`SH.STA.ODFC.ZS`) | -0.43 | -0.62 | 148 | 0.05 | review | Same or closely related topic; use only when the tier calls for close distractors. |
+| Rural open defecation (`SH.STA.ODFC.RU.ZS`) | -0.44 | -0.61 | 140 | 0.04 | ok | Reasonable distractor candidate; no major automated warning. |
+| Rural basic sanitation (`SH.STA.BASS.RU.ZS`) | 0.57 | 0.59 | 144 | 0.20 | ok | Reasonable distractor candidate; no major automated warning. |
 | Rural clean cooking access (`EG.CFT.ACCS.RU.ZS`) | 0.55 | 0.59 | 161 | 0.20 | ok | Reasonable distractor candidate; no major automated warning. |
-| Rural electricity access (`EG.ELC.ACCS.RU.ZS`) | 0.53 | 0.58 | 161 | 0.22 | ok | Reasonable distractor candidate; no major automated warning. |
-| Adolescent fertility (`SP.ADO.TFRT`) | -0.56 | -0.58 | 165 | 0.05 | ok | Reasonable distractor candidate; no major automated warning. |
 
 ## International migrant stock (`SM.POP.TOTL.ZS`)
 
@@ -1651,8 +2280,8 @@ This automated review helps editors avoid distractors that are too weak, too obv
 | Safely managed drinking water (`SH.H2O.SMDW.ZS`) | 0.49 | 0.72 | 122 | 0.28 | ok | Reasonable distractor candidate; no major automated warning. |
 | GDP per capita (`NY.GDP.PCAP.CD`) | 0.65 | 0.72 | 159 | 0.30 | ok | Reasonable distractor candidate; no major automated warning. |
 | GNI per capita (`NY.GNP.PCAP.CD`) | 0.66 | 0.72 | 159 | 0.32 | ok | Reasonable distractor candidate; no major automated warning. |
+| Male agricultural employment (`SL.AGR.EMPL.MA.ZS`) | -0.50 | -0.71 | 163 | 0.04 | ok | Reasonable distractor candidate; no major automated warning. |
 | GDP per capita, PPP (`NY.GDP.PCAP.PP.CD`) | 0.68 | 0.71 | 157 | 0.32 | ok | Reasonable distractor candidate; no major automated warning. |
-| GNI per capita, PPP (`NY.GNP.PCAP.PP.CD`) | 0.69 | 0.71 | 157 | 0.34 | ok | Reasonable distractor candidate; no major automated warning. |
 
 ## Military spending (`MS.MIL.XPND.GD.ZS`)
 
@@ -1681,12 +2310,12 @@ This automated review helps editors avoid distractors that are too weak, too obv
 
 | Correlated indicator | Pearson | Spearman | Overlap | Visual similarity | Warning | Notes |
 | --- | ---: | ---: | ---: | ---: | --- | --- |
+| Moderate or severe food insecurity (`SN.ITK.MSFI.ZS`) | -0.50 | -0.51 | 104 | 0.12 | ok | Reasonable distractor candidate; no major automated warning. |
+| Severe food insecurity (`SN.ITK.SVFI.ZS`) | -0.47 | -0.51 | 104 | 0.08 | ok | Reasonable distractor candidate; no major automated warning. |
 | Energy use (`EG.USE.PCAP.KG.OE`) | 0.30 | 0.50 | 122 | 0.25 | ok | Reasonable distractor candidate; no major automated warning. |
 | CO2 emissions per capita (`EN.GHG.CO2.PC.CE.AR5`) | 0.19 | 0.48 | 132 | 0.27 | review | Per-capita versus non-per-capita wording can create raw-total confusion risk. |
 | Neonatal mortality (`SH.DYN.NMRT`) | -0.27 | -0.48 | 133 | 0.05 | ok | Reasonable distractor candidate; no major automated warning. |
 | Infant mortality (`SP.DYN.IMRT.IN`) | -0.27 | -0.48 | 133 | 0.07 | ok | Reasonable distractor candidate; no major automated warning. |
-| Electric power use (`EG.USE.ELEC.KH.PC`) | 0.24 | 0.47 | 122 | 0.19 | ok | Reasonable distractor candidate; no major automated warning. |
-| Under-5 mortality (`SH.DYN.MORT`) | -0.26 | -0.47 | 133 | 0.07 | ok | Reasonable distractor candidate; no major automated warning. |
 
 ## Natural gas electricity share (`EG.ELC.NGAS.ZS`)
 
@@ -1702,8 +2331,8 @@ This automated review helps editors avoid distractors that are too weak, too obv
 | Renewable electricity (`EG.ELC.RNEW.ZS`) | -0.51 | -0.44 | 165 | 0.07 | review | Same or closely related topic; use only when the tier calls for close distractors. |
 | Hydroelectricity share (`EG.ELC.HYRO.ZS`) | -0.48 | -0.51 | 124 | 0.08 | review | Same or closely related topic; use only when the tier calls for close distractors. |
 | Renewable energy consumption (`EG.FEC.RNEW.ZS`) | -0.38 | -0.50 | 169 | 0.09 | review | Same or closely related topic; use only when the tier calls for close distractors. |
-| Clean cooking fuels access (`EG.CFT.ACCS.ZS`) | 0.28 | 0.43 | 162 | 0.23 | review | Same or closely related topic; use only when the tier calls for close distractors. |
-| Rural clean cooking access (`EG.CFT.ACCS.RU.ZS`) | 0.29 | 0.43 | 162 | 0.25 | review | Same or closely related topic; use only when the tier calls for close distractors. |
+| Container port traffic (`IS.SHP.GOOD.TU`) | -0.03 | 0.44 | 128 | 0.22 | ok | Reasonable distractor candidate; no major automated warning. |
+| Urban clean cooking access (`EG.CFT.ACCS.UR.ZS`) | 0.25 | 0.44 | 162 | 0.25 | ok | Reasonable distractor candidate; no major automated warning. |
 
 ## Natural resource depletion (`NY.ADJ.DRES.GN.ZS`)
 
@@ -1720,7 +2349,7 @@ This automated review helps editors avoid distractors that are too weak, too obv
 | Population ages 65+ (`SP.POP.65UP.TO.ZS`) | -0.41 | -0.57 | 152 | 0.10 | ok | Reasonable distractor candidate; no major automated warning. |
 | Population ages 0-14 (`SP.POP.0014.TO.ZS`) | 0.40 | 0.53 | 152 | 0.20 | ok | Reasonable distractor candidate; no major automated warning. |
 | Logistics performance (`LP.LPI.OVRL.XQ`) | -0.41 | -0.53 | 122 | 0.11 | ok | Reasonable distractor candidate; no major automated warning. |
-| Fixed broadband (`IT.NET.BBND.P2`) | -0.35 | -0.53 | 126 | 0.09 | ok | Reasonable distractor candidate; no major automated warning. |
+| Logistics timeliness score (`LP.LPI.TIME.XQ`) | -0.45 | -0.53 | 122 | 0.05 | ok | Reasonable distractor candidate; no major automated warning. |
 
 ## Natural resource rents (`NY.GDP.TOTL.RT.ZS`)
 
@@ -1737,7 +2366,7 @@ This automated review helps editors avoid distractors that are too weak, too obv
 | Industry value added (`NV.IND.TOTL.ZS`) | 0.63 | 0.47 | 146 | 0.23 | review | Same or closely related topic; use only when the tier calls for close distractors. |
 | Population ages 65+ (`SP.POP.65UP.TO.ZS`) | -0.44 | -0.60 | 159 | 0.09 | ok | Reasonable distractor candidate; no major automated warning. |
 | Population ages 0-14 (`SP.POP.0014.TO.ZS`) | 0.36 | 0.53 | 159 | 0.23 | ok | Reasonable distractor candidate; no major automated warning. |
-| Population growth (`SP.POP.GROW`) | 0.43 | 0.53 | 159 | 0.19 | ok | Reasonable distractor candidate; no major automated warning. |
+| Logistics timeliness score (`LP.LPI.TIME.XQ`) | -0.41 | -0.53 | 126 | 0.06 | ok | Reasonable distractor candidate; no major automated warning. |
 
 ## Neonatal mortality (`SH.DYN.NMRT`)
 
@@ -1767,11 +2396,11 @@ This automated review helps editors avoid distractors that are too weak, too obv
 | Correlated indicator | Pearson | Spearman | Overlap | Visual similarity | Warning | Notes |
 | --- | ---: | ---: | ---: | ---: | --- | --- |
 | Forest rents (`NY.GDP.FRST.RT.ZS`) | 0.77 | 0.44 | 152 | 0.25 | review | Same or closely related topic; use only when the tier calls for close distractors. |
+| Urban clean cooking access (`EG.CFT.ACCS.UR.ZS`) | -0.62 | -0.46 | 149 | 0.09 | ok | Reasonable distractor candidate; no major automated warning. |
+| Urban basic sanitation (`SH.STA.BASS.UR.ZS`) | -0.61 | -0.48 | 136 | 0.07 | ok | Reasonable distractor candidate; no major automated warning. |
 | Electricity access (`EG.ELC.ACCS.ZS`) | -0.60 | -0.50 | 152 | 0.14 | ok | Reasonable distractor candidate; no major automated warning. |
+| Urban electricity access (`EG.ELC.ACCS.UR.ZS`) | -0.60 | -0.50 | 152 | 0.05 | ok | Reasonable distractor candidate; no major automated warning. |
 | Rural electricity access (`EG.ELC.ACCS.RU.ZS`) | -0.59 | -0.49 | 149 | 0.14 | ok | Reasonable distractor candidate; no major automated warning. |
-| Undernourishment (`SN.ITK.DEFC.ZS`) | 0.57 | 0.49 | 141 | 0.42 | ok | Reasonable distractor candidate; no major automated warning. |
-| Basic sanitation access (`SH.STA.BASS.ZS`) | -0.56 | -0.43 | 142 | 0.10 | ok | Reasonable distractor candidate; no major automated warning. |
-| Agriculture value added (`NV.AGR.TOTL.ZS`) | 0.56 | 0.33 | 141 | 0.18 | ok | Reasonable distractor candidate; no major automated warning. |
 
 ## Net migration (`SM.POP.NETM`)
 
@@ -1785,10 +2414,10 @@ This automated review helps editors avoid distractors that are too weak, too obv
 | --- | ---: | ---: | ---: | ---: | --- | --- |
 | Military spending (`MS.MIL.XPND.GD.ZS`) | 0.54 | -0.00 | 140 | 0.15 | ok | Reasonable distractor candidate; no major automated warning. |
 | International migrant stock (`SM.POP.TOTL.ZS`) | 0.15 | 0.51 | 169 | 0.23 | review | Same or closely related topic; use only when the tier calls for close distractors. |
+| Female services employment (`SL.SRV.EMPL.FE.ZS`) | 0.31 | 0.49 | 163 | 0.25 | ok | Reasonable distractor candidate; no major automated warning. |
 | Remittances received (`BX.TRF.PWKR.DT.GD.ZS`) | -0.11 | -0.49 | 135 | 0.10 | ok | Reasonable distractor candidate; no major automated warning. |
 | Safely managed drinking water (`SH.H2O.SMDW.ZS`) | 0.21 | 0.48 | 122 | 0.20 | ok | Reasonable distractor candidate; no major automated warning. |
-| Employment in services (`SL.SRV.EMPL.ZS`) | 0.25 | 0.48 | 163 | 0.28 | ok | Reasonable distractor candidate; no major automated warning. |
-| GNI per capita (`NY.GNP.PCAP.CD`) | 0.22 | 0.45 | 159 | 0.20 | ok | Reasonable distractor candidate; no major automated warning. |
+| Male services employment (`SL.SRV.EMPL.MA.ZS`) | 0.22 | 0.48 | 163 | 0.25 | ok | Reasonable distractor candidate; no major automated warning. |
 
 ## Net primary enrollment (`SE.PRM.NENR`)
 
@@ -1800,12 +2429,12 @@ This automated review helps editors avoid distractors that are too weak, too obv
 
 | Correlated indicator | Pearson | Spearman | Overlap | Visual similarity | Warning | Notes |
 | --- | ---: | ---: | ---: | ---: | --- | --- |
+| Out-of-school primary age (`SE.PRM.UNER.ZS`) | -0.74 | -0.55 | 96 | 0.08 | review | Same or closely related topic; use only when the tier calls for close distractors. |
 | Secondary enrollment (`SE.SEC.ENRR`) | 0.67 | 0.55 | 94 | 0.37 | review | Same or closely related topic; use only when the tier calls for close distractors. |
 | Infant mortality (`SP.DYN.IMRT.IN`) | -0.60 | -0.52 | 120 | 0.12 | ok | Reasonable distractor candidate; no major automated warning. |
 | Under-5 mortality (`SH.DYN.MORT`) | -0.60 | -0.52 | 120 | 0.11 | ok | Reasonable distractor candidate; no major automated warning. |
 | Neonatal mortality (`SH.DYN.NMRT`) | -0.59 | -0.50 | 120 | 0.10 | ok | Reasonable distractor candidate; no major automated warning. |
-| Undernourishment (`SN.ITK.DEFC.ZS`) | -0.57 | -0.50 | 110 | 0.05 | ok | Reasonable distractor candidate; no major automated warning. |
-| Particulate emission damage (`NY.ADJ.DPEM.GN.ZS`) | -0.57 | -0.52 | 110 | 0.08 | ok | Reasonable distractor candidate; no major automated warning. |
+| Urban electricity access (`EG.ELC.ACCS.UR.ZS`) | 0.58 | 0.45 | 120 | 0.19 | ok | Reasonable distractor candidate; no major automated warning. |
 
 ## Noncommunicable disease deaths (`SH.DTH.NCOM.ZS`)
 
@@ -1834,12 +2463,12 @@ This automated review helps editors avoid distractors that are too weak, too obv
 
 | Correlated indicator | Pearson | Spearman | Overlap | Visual similarity | Warning | Notes |
 | --- | ---: | ---: | ---: | ---: | --- | --- |
+| Logistics timeliness score (`LP.LPI.TIME.XQ`) | 0.44 | 0.53 | 131 | 0.23 | ok | Reasonable distractor candidate; no major automated warning. |
 | Secure internet servers (`IT.NET.SECR.P6`) | 0.51 | 0.42 | 169 | 0.23 | ok | Reasonable distractor candidate; no major automated warning. |
 | Logistics performance (`LP.LPI.OVRL.XQ`) | 0.45 | 0.50 | 131 | 0.28 | ok | Reasonable distractor candidate; no major automated warning. |
 | Natural resource rents (`NY.GDP.TOTL.RT.ZS`) | -0.37 | -0.50 | 159 | 0.08 | ok | Reasonable distractor candidate; no major automated warning. |
+| Logistics tracking score (`LP.LPI.TRAC.XQ`) | 0.43 | 0.49 | 131 | 0.31 | ok | Reasonable distractor candidate; no major automated warning. |
 | Services value added (`NV.SRV.TOTL.ZS`) | 0.42 | 0.47 | 149 | 0.19 | ok | Reasonable distractor candidate; no major automated warning. |
-| Carbon intensity of GDP (`EN.GHG.CO2.RT.GDP.KD`) | -0.37 | -0.46 | 156 | 0.12 | ok | Reasonable distractor candidate; no major automated warning. |
-| Natural resource depletion (`NY.ADJ.DRES.GN.ZS`) | -0.34 | -0.46 | 152 | 0.09 | ok | Reasonable distractor candidate; no major automated warning. |
 
 ## Nuclear electricity share (`EG.ELC.NUCL.ZS`)
 
@@ -1847,16 +2476,16 @@ This automated review helps editors avoid distractors that are too weak, too obv
 - Category: energy
 - Difficulty: expert
 - Coverage: 169 countries
-- Warning level: ok
+- Warning level: review
 
 | Correlated indicator | Pearson | Spearman | Overlap | Visual similarity | Warning | Notes |
 | --- | ---: | ---: | ---: | ---: | --- | --- |
 | Tourism arrivals (`ST.INT.ARVL`) | 0.42 | 0.51 | 139 | 0.22 | ok | Reasonable distractor candidate; no major automated warning. |
+| Food imports share (`TM.VAL.FOOD.ZS.UN`) | -0.32 | -0.50 | 137 | 0.06 | review | Same or closely related topic; use only when the tier calls for close distractors. |
 | Secure internet servers (`IT.NET.SECR.P6`) | 0.24 | 0.49 | 169 | 0.23 | ok | Reasonable distractor candidate; no major automated warning. |
 | Population ages 65+ (`SP.POP.65UP.TO.ZS`) | 0.48 | 0.45 | 169 | 0.20 | ok | Reasonable distractor candidate; no major automated warning. |
 | Birth rate (`SP.DYN.CBRT.IN`) | -0.35 | -0.48 | 169 | 0.07 | ok | Reasonable distractor candidate; no major automated warning. |
 | Industrial water withdrawals (`ER.H2O.FWIN.ZS`) | 0.48 | 0.38 | 160 | 0.21 | ok | Reasonable distractor candidate; no major automated warning. |
-| Fixed broadband (`IT.NET.BBND.P2`) | 0.45 | 0.47 | 134 | 0.23 | ok | Reasonable distractor candidate; no major automated warning. |
 
 ## Nurses and midwives (`SH.MED.NUMW.P3`)
 
@@ -1881,16 +2510,16 @@ This automated review helps editors avoid distractors that are too weak, too obv
 - Category: energy
 - Difficulty: expert
 - Coverage: 129 countries
-- Warning level: ok
+- Warning level: review
 
 | Correlated indicator | Pearson | Spearman | Overlap | Visual similarity | Warning | Notes |
 | --- | ---: | ---: | ---: | ---: | --- | --- |
+| Out-of-school primary age (`SE.PRM.UNER.ZS`) | 0.60 | 0.34 | 98 | 0.21 | ok | Reasonable distractor candidate; no major automated warning. |
 | Secondary enrollment (`SE.SEC.ENRR`) | -0.55 | -0.46 | 97 | 0.16 | ok | Reasonable distractor candidate; no major automated warning. |
 | Open defecation (`SH.STA.ODFC.ZS`) | 0.51 | 0.32 | 116 | 0.18 | ok | Reasonable distractor candidate; no major automated warning. |
+| Food imports share (`TM.VAL.FOOD.ZS.UN`) | 0.39 | 0.50 | 110 | 0.26 | review | Same or closely related topic; use only when the tier calls for close distractors. |
 | Particulate emission damage (`NY.ADJ.DPEM.GN.ZS`) | 0.50 | 0.41 | 116 | 0.18 | ok | Reasonable distractor candidate; no major automated warning. |
 | Net primary enrollment (`SE.PRM.NENR`) | -0.50 | -0.29 | 99 | 0.15 | ok | Reasonable distractor candidate; no major automated warning. |
-| Secure internet servers (`IT.NET.SECR.P6`) | -0.13 | -0.48 | 129 | 0.09 | ok | Reasonable distractor candidate; no major automated warning. |
-| Logistics performance (`LP.LPI.OVRL.XQ`) | -0.41 | -0.47 | 105 | 0.07 | ok | Reasonable distractor candidate; no major automated warning. |
 
 ## Population ages 65+ (`SP.POP.65UP.TO.ZS`)
 
@@ -1915,16 +2544,16 @@ This automated review helps editors avoid distractors that are too weak, too obv
 - Category: health
 - Difficulty: standard
 - Coverage: 150 countries
-- Warning level: review
+- Warning level: high
 
 | Correlated indicator | Pearson | Spearman | Overlap | Visual similarity | Warning | Notes |
 | --- | ---: | ---: | ---: | ---: | --- | --- |
+| Rural open defecation (`SH.STA.ODFC.RU.ZS`) | 0.98 | 0.96 | 139 | 0.83 | high | Very high correlation can make the pair unfairly ambiguous. Same or closely related topic; use only when the tier calls for close distractors. |
 | Maternal mortality (`SH.STA.MMRT`) | 0.69 | 0.86 | 149 | 0.42 | review | Same or closely related topic; use only when the tier calls for close distractors. |
+| Rural basic sanitation (`SH.STA.BASS.RU.ZS`) | -0.72 | -0.85 | 139 | 0.04 | ok | Reasonable distractor candidate; no major automated warning. |
 | Basic sanitation access (`SH.STA.BASS.ZS`) | -0.74 | -0.85 | 150 | 0.03 | review | Same or closely related topic; use only when the tier calls for close distractors. |
+| Urban open defecation (`SH.STA.ODFC.UR.ZS`) | 0.84 | 0.84 | 140 | 0.67 | review | Same or closely related topic; use only when the tier calls for close distractors. |
 | Electricity access (`EG.ELC.ACCS.ZS`) | -0.70 | -0.84 | 150 | 0.12 | ok | Reasonable distractor candidate; no major automated warning. |
-| Rural electricity access (`EG.ELC.ACCS.RU.ZS`) | -0.66 | -0.84 | 148 | 0.12 | ok | Reasonable distractor candidate; no major automated warning. |
-| Basic drinking water access (`SH.H2O.BASW.ZS`) | -0.70 | -0.84 | 150 | 0.06 | review | Same or closely related topic; use only when the tier calls for close distractors. |
-| Infant mortality (`SP.DYN.IMRT.IN`) | 0.67 | 0.82 | 148 | 0.39 | review | Same or closely related topic; use only when the tier calls for close distractors. |
 
 ## Out-of-pocket health spending (`SH.XPD.OOPC.CH.ZS`)
 
@@ -1938,10 +2567,27 @@ This automated review helps editors avoid distractors that are too weak, too obv
 | --- | ---: | ---: | ---: | ---: | --- | --- |
 | Private health spending share (`SH.XPD.PVTD.CH.ZS`) | 0.92 | 0.90 | 164 | 0.52 | high | Very high correlation can make the pair unfairly ambiguous. Same or closely related topic; use only when the tier calls for close distractors. |
 | Government health spending share (`SH.XPD.GHED.CH.ZS`) | -0.75 | -0.74 | 164 | 0.05 | review | Same or closely related topic; use only when the tier calls for close distractors. |
+| Logistics tracking score (`LP.LPI.TRAC.XQ`) | -0.59 | -0.59 | 130 | 0.07 | ok | Reasonable distractor candidate; no major automated warning. |
 | Government consumption (`NE.CON.GOVT.ZS`) | -0.50 | -0.56 | 142 | 0.11 | ok | Reasonable distractor candidate; no major automated warning. |
 | Logistics infrastructure quality (`LP.LPI.INFR.XQ`) | -0.54 | -0.56 | 130 | 0.08 | ok | Reasonable distractor candidate; no major automated warning. |
 | Logistics performance (`LP.LPI.OVRL.XQ`) | -0.55 | -0.55 | 130 | 0.08 | ok | Reasonable distractor candidate; no major automated warning. |
-| Account ownership (`FX.OWN.TOTL.ZS`) | -0.51 | -0.54 | 131 | 0.08 | ok | Reasonable distractor candidate; no major automated warning. |
+
+## Out-of-school primary age (`SE.PRM.UNER.ZS`)
+
+- Approved status: approved
+- Category: education
+- Difficulty: standard
+- Coverage: 120 countries
+- Warning level: review
+
+| Correlated indicator | Pearson | Spearman | Overlap | Visual similarity | Warning | Notes |
+| --- | ---: | ---: | ---: | ---: | --- | --- |
+| Primary enrollment (`SE.PRM.ENRR`) | -0.75 | -0.73 | 120 | 0.07 | review | Same or closely related topic; use only when the tier calls for close distractors. |
+| Net primary enrollment (`SE.PRM.NENR`) | -0.74 | -0.55 | 96 | 0.08 | review | Same or closely related topic; use only when the tier calls for close distractors. |
+| Secondary enrollment (`SE.SEC.ENRR`) | -0.70 | -0.64 | 108 | 0.11 | review | Same or closely related topic; use only when the tier calls for close distractors. |
+| Safely managed sanitation (`SH.STA.SMSS.ZS`) | -0.60 | -0.65 | 91 | 0.12 | ok | Reasonable distractor candidate; no major automated warning. |
+| Internet users (`IT.NET.USER.ZS`) | -0.63 | -0.51 | 113 | 0.07 | ok | Reasonable distractor candidate; no major automated warning. |
+| Secure internet servers (`IT.NET.SECR.P6`) | -0.21 | -0.62 | 120 | 0.07 | ok | Reasonable distractor candidate; no major automated warning. |
 
 ## Particulate emission damage (`NY.ADJ.DPEM.GN.ZS`)
 
@@ -1975,7 +2621,7 @@ This automated review helps editors avoid distractors that are too weak, too obv
 | Average precipitation (`AG.LND.PRCP.MM`) | 0.31 | 0.46 | 162 | 0.20 | ok | Reasonable distractor candidate; no major automated warning. |
 | Remittances received (`BX.TRF.PWKR.DT.GD.ZS`) | 0.11 | 0.41 | 134 | 0.25 | ok | Reasonable distractor candidate; no major automated warning. |
 | Greenhouse gas emissions per capita (`EN.GHG.ALL.PC.CE.AR5`) | -0.24 | -0.37 | 163 | 0.06 | review | Per-capita versus non-per-capita wording can create raw-total confusion risk. |
-| Household consumption (`NE.CON.PRVT.ZS`) | 0.26 | 0.32 | 142 | 0.17 | ok | Reasonable distractor candidate; no major automated warning. |
+| Urban low-elevation land (`AG.LND.EL5M.UR.ZS`) | 0.08 | 0.35 | 167 | 0.21 | ok | Reasonable distractor candidate; no major automated warning. |
 
 ## Physicians (`SH.MED.PHYS.ZS`)
 
@@ -2034,16 +2680,16 @@ This automated review helps editors avoid distractors that are too weak, too obv
 - Category: settlement
 - Difficulty: standard
 - Coverage: 169 countries
-- Warning level: ok
+- Warning level: review
 
 | Correlated indicator | Pearson | Spearman | Overlap | Visual similarity | Warning | Notes |
 | --- | ---: | ---: | ---: | ---: | --- | --- |
 | Permanent cropland (`AG.LND.CROP.ZS`) | 0.40 | 0.65 | 167 | 0.31 | ok | Reasonable distractor candidate; no major automated warning. |
 | Arable land (`AG.LND.ARBL.ZS`) | 0.48 | 0.62 | 168 | 0.30 | ok | Reasonable distractor candidate; no major automated warning. |
+| Urban low-elevation land (`AG.LND.EL5M.UR.ZS`) | 0.48 | 0.46 | 169 | 0.27 | review | Same or closely related topic; use only when the tier calls for close distractors. |
 | Natural resource rents (`NY.GDP.TOTL.RT.ZS`) | -0.27 | -0.45 | 159 | 0.11 | ok | Reasonable distractor candidate; no major automated warning. |
 | Freshwater per person (`ER.H2O.INTR.PC`) | -0.20 | -0.41 | 164 | 0.10 | ok | Reasonable distractor candidate; no major automated warning. |
 | Arable land per person (`AG.LND.ARBL.HA.PC`) | -0.31 | -0.41 | 168 | 0.11 | ok | Reasonable distractor candidate; no major automated warning. |
-| Water stress (`ER.H2O.FWST.ZS`) | 0.06 | 0.37 | 161 | 0.18 | ok | Reasonable distractor candidate; no major automated warning. |
 
 ## Population growth (`SP.POP.GROW`)
 
@@ -2056,11 +2702,11 @@ This automated review helps editors avoid distractors that are too weak, too obv
 | Correlated indicator | Pearson | Spearman | Overlap | Visual similarity | Warning | Notes |
 | --- | ---: | ---: | ---: | ---: | --- | --- |
 | Urban population growth (`SP.URB.GROW`) | 0.91 | 0.95 | 169 | 0.59 | high | Very high correlation can make the pair unfairly ambiguous. Same or closely related topic; use only when the tier calls for close distractors. |
+| Rural population growth (`SP.RUR.TOTL.ZG`) | 0.79 | 0.84 | 168 | 0.37 | review | Same or closely related topic; use only when the tier calls for close distractors. |
 | Population ages 65+ (`SP.POP.65UP.TO.ZS`) | -0.67 | -0.82 | 169 | 0.05 | review | Same or closely related topic; use only when the tier calls for close distractors. |
 | Birth rate (`SP.DYN.CBRT.IN`) | 0.67 | 0.78 | 169 | 0.43 | review | Same or closely related topic; use only when the tier calls for close distractors. |
 | Fertility rate (`SP.DYN.TFRT.IN`) | 0.67 | 0.76 | 169 | 0.38 | review | Same or closely related topic; use only when the tier calls for close distractors. |
 | Population ages 0-14 (`SP.POP.0014.TO.ZS`) | 0.64 | 0.75 | 169 | 0.43 | review | Same or closely related topic; use only when the tier calls for close distractors. |
-| Under-5 mortality (`SH.DYN.MORT`) | 0.54 | 0.64 | 166 | 0.25 | ok | Reasonable distractor candidate; no major automated warning. |
 
 ## Average precipitation (`AG.LND.PRCP.MM`)
 
@@ -2106,12 +2752,29 @@ This automated review helps editors avoid distractors that are too weak, too obv
 
 | Correlated indicator | Pearson | Spearman | Overlap | Visual similarity | Warning | Notes |
 | --- | ---: | ---: | ---: | ---: | --- | --- |
+| Out-of-school primary age (`SE.PRM.UNER.ZS`) | -0.75 | -0.73 | 120 | 0.07 | review | Same or closely related topic; use only when the tier calls for close distractors. |
+| Primary gross intake (`SE.PRM.GINT.ZS`) | 0.60 | 0.19 | 102 | 0.26 | review | Same or closely related topic; use only when the tier calls for close distractors. |
 | Net primary enrollment (`SE.PRM.NENR`) | 0.49 | 0.27 | 102 | 0.21 | review | Same or closely related topic; use only when the tier calls for close distractors. |
 | Oil electricity share (`EG.ELC.PETR.ZS`) | -0.41 | -0.23 | 105 | 0.13 | ok | Reasonable distractor candidate; no major automated warning. |
+| Severe food insecurity (`SN.ITK.SVFI.ZS`) | 0.31 | -0.03 | 105 | 0.14 | ok | Reasonable distractor candidate; no major automated warning. |
 | Secondary enrollment (`SE.SEC.ENRR`) | 0.30 | 0.30 | 121 | 0.26 | review | Same or closely related topic; use only when the tier calls for close distractors. |
-| Particulate emission damage (`NY.ADJ.DPEM.GN.ZS`) | -0.29 | -0.08 | 126 | 0.08 | ok | Reasonable distractor candidate; no major automated warning. |
-| Renewable electricity (`EG.ELC.RNEW.ZS`) | 0.26 | 0.23 | 132 | 0.20 | ok | Reasonable distractor candidate; no major automated warning. |
-| Out-of-pocket health spending (`SH.XPD.OOPC.CH.ZS`) | -0.12 | -0.23 | 134 | 0.13 | ok | Reasonable distractor candidate; no major automated warning. |
+
+## Female primary teachers (`SE.PRM.TCHR.FE.ZS`)
+
+- Approved status: approved
+- Category: education
+- Difficulty: standard
+- Coverage: 122 countries
+- Warning level: review
+
+| Correlated indicator | Pearson | Spearman | Overlap | Visual similarity | Warning | Notes |
+| --- | ---: | ---: | ---: | ---: | --- | --- |
+| Female vulnerable employment (`SL.EMP.VULN.FE.ZS`) | -0.78 | -0.67 | 119 | 0.05 | review | Same or closely related topic; use only when the tier calls for close distractors. |
+| Female self-employed (`SL.EMP.SELF.FE.ZS`) | -0.78 | -0.67 | 119 | 0.05 | review | Same or closely related topic; use only when the tier calls for close distractors. |
+| Female wage workers (`SL.EMP.WORK.FE.ZS`) | 0.78 | 0.67 | 119 | 0.34 | review | Same or closely related topic; use only when the tier calls for close distractors. |
+| Clean cooking fuels access (`EG.CFT.ACCS.ZS`) | 0.77 | 0.66 | 119 | 0.31 | ok | Reasonable distractor candidate; no major automated warning. |
+| Birth rate (`SP.DYN.CBRT.IN`) | -0.76 | -0.68 | 122 | 0.07 | ok | Reasonable distractor candidate; no major automated warning. |
+| Particulate emission damage (`NY.ADJ.DPEM.GN.ZS`) | -0.76 | -0.63 | 112 | 0.11 | ok | Reasonable distractor candidate; no major automated warning. |
 
 ## Primary enrollment gender parity (`SE.ENR.PRIM.FM.ZS`)
 
@@ -2119,16 +2782,33 @@ This automated review helps editors avoid distractors that are too weak, too obv
 - Category: education
 - Difficulty: expert
 - Coverage: 129 countries
-- Warning level: ok
+- Warning level: review
 
 | Correlated indicator | Pearson | Spearman | Overlap | Visual similarity | Warning | Notes |
 | --- | ---: | ---: | ---: | ---: | --- | --- |
+| Female primary pupils (`SE.PRM.ENRL.FE.ZS`) | 0.79 | 0.53 | 117 | 0.38 | review | Same or closely related topic; use only when the tier calls for close distractors. |
+| Female secondary pupils (`SE.SEC.ENRL.FE.ZS`) | 0.65 | 0.06 | 100 | 0.26 | review | Same or closely related topic; use only when the tier calls for close distractors. |
 | Infant mortality (`SP.DYN.IMRT.IN`) | -0.43 | -0.33 | 129 | 0.08 | ok | Reasonable distractor candidate; no major automated warning. |
 | Electric power use (`EG.USE.ELEC.KH.PC`) | 0.29 | 0.42 | 113 | 0.22 | ok | Reasonable distractor candidate; no major automated warning. |
 | Neonatal mortality (`SH.DYN.NMRT`) | -0.42 | -0.32 | 129 | 0.06 | ok | Reasonable distractor candidate; no major automated warning. |
 | Under-5 mortality (`SH.DYN.MORT`) | -0.42 | -0.31 | 129 | 0.07 | ok | Reasonable distractor candidate; no major automated warning. |
-| Particulate emission damage (`NY.ADJ.DPEM.GN.ZS`) | -0.41 | -0.24 | 118 | 0.11 | ok | Reasonable distractor candidate; no major automated warning. |
-| Internet users (`IT.NET.USER.ZS`) | 0.40 | 0.29 | 123 | 0.19 | ok | Reasonable distractor candidate; no major automated warning. |
+
+## Primary gross intake (`SE.PRM.GINT.ZS`)
+
+- Approved status: approved
+- Category: education
+- Difficulty: expert
+- Coverage: 120 countries
+- Warning level: review
+
+| Correlated indicator | Pearson | Spearman | Overlap | Visual similarity | Warning | Notes |
+| --- | ---: | ---: | ---: | ---: | --- | --- |
+| Safely managed drinking water (`SH.H2O.SMDW.ZS`) | -0.66 | -0.60 | 88 | 0.08 | review | Too few overlapping countries for a comfortable distractor comparison. |
+| Primary enrollment (`SE.PRM.ENRR`) | 0.60 | 0.19 | 102 | 0.26 | review | Same or closely related topic; use only when the tier calls for close distractors. |
+| Urban basic sanitation (`SH.STA.BASS.UR.ZS`) | -0.53 | -0.36 | 110 | 0.10 | ok | Reasonable distractor candidate; no major automated warning. |
+| Services value added (`NV.SRV.TOTL.ZS`) | -0.42 | -0.53 | 112 | 0.06 | ok | Reasonable distractor candidate; no major automated warning. |
+| Internet users (`IT.NET.USER.ZS`) | -0.53 | -0.37 | 114 | 0.13 | ok | Reasonable distractor candidate; no major automated warning. |
+| Basic sanitation access (`SH.STA.BASS.ZS`) | -0.50 | -0.35 | 114 | 0.10 | ok | Reasonable distractor candidate; no major automated warning. |
 
 ## Private primary enrollment (`SE.PRM.PRIV.ZS`)
 
@@ -2136,16 +2816,33 @@ This automated review helps editors avoid distractors that are too weak, too obv
 - Category: education
 - Difficulty: expert
 - Coverage: 120 countries
-- Warning level: ok
+- Warning level: review
 
 | Correlated indicator | Pearson | Spearman | Overlap | Visual similarity | Warning | Notes |
 | --- | ---: | ---: | ---: | ---: | --- | --- |
 | Hospital beds (`SH.MED.BEDS.ZS`) | -0.36 | -0.55 | 98 | 0.04 | ok | Reasonable distractor candidate; no major automated warning. |
+| Severe food insecurity (`SN.ITK.SVFI.ZS`) | 0.22 | 0.43 | 99 | 0.21 | ok | Reasonable distractor candidate; no major automated warning. |
+| Female primary teachers (`SE.PRM.TCHR.FE.ZS`) | -0.17 | -0.41 | 95 | 0.04 | review | Same or closely related topic; use only when the tier calls for close distractors. |
+| Moderate or severe food insecurity (`SN.ITK.MSFI.ZS`) | 0.27 | 0.39 | 99 | 0.25 | ok | Reasonable distractor candidate; no major automated warning. |
 | Population ages 65+ (`SP.POP.65UP.TO.ZS`) | -0.31 | -0.37 | 120 | 0.10 | ok | Reasonable distractor candidate; no major automated warning. |
 | Undernourishment (`SN.ITK.DEFC.ZS`) | 0.16 | 0.37 | 113 | 0.21 | ok | Reasonable distractor candidate; no major automated warning. |
-| Death rate (`SP.DYN.CDRT.IN`) | -0.36 | -0.36 | 120 | 0.07 | ok | Reasonable distractor candidate; no major automated warning. |
-| Noncommunicable disease deaths (`SH.DTH.NCOM.ZS`) | -0.26 | -0.35 | 120 | 0.10 | ok | Reasonable distractor candidate; no major automated warning. |
-| PM2.5 exposure (`EN.ATM.PM25.MC.M3`) | 0.35 | 0.28 | 120 | 0.13 | ok | Reasonable distractor candidate; no major automated warning. |
+
+## Female primary pupils (`SE.PRM.ENRL.FE.ZS`)
+
+- Approved status: approved
+- Category: education
+- Difficulty: standard
+- Coverage: 134 countries
+- Warning level: review
+
+| Correlated indicator | Pearson | Spearman | Overlap | Visual similarity | Warning | Notes |
+| --- | ---: | ---: | ---: | ---: | --- | --- |
+| Primary enrollment gender parity (`SE.ENR.PRIM.FM.ZS`) | 0.79 | 0.53 | 117 | 0.38 | review | Same or closely related topic; use only when the tier calls for close distractors. |
+| Female secondary pupils (`SE.SEC.ENRL.FE.ZS`) | 0.63 | 0.28 | 110 | 0.26 | review | Same or closely related topic; use only when the tier calls for close distractors. |
+| Measles immunization (`SH.IMM.MEAS`) | 0.32 | 0.26 | 134 | 0.16 | ok | Reasonable distractor candidate; no major automated warning. |
+| Gross capital formation (`NE.GDI.TOTL.ZS`) | 0.32 | 0.16 | 116 | 0.19 | ok | Reasonable distractor candidate; no major automated warning. |
+| Female contributing family workers (`SL.FAM.WORK.FE.ZS`) | -0.28 | -0.19 | 130 | 0.12 | review | Same or closely related topic; use only when the tier calls for close distractors. |
+| Hepatitis B immunization (`SH.IMM.HEPB`) | 0.28 | 0.26 | 130 | 0.22 | ok | Reasonable distractor candidate; no major automated warning. |
 
 ## Private health spending share (`SH.XPD.PVTD.CH.ZS`)
 
@@ -2177,9 +2874,9 @@ This automated review helps editors avoid distractors that are too weak, too obv
 | Protected land and seas (`ER.PTD.TOTL.ZS`) | 0.80 | 0.81 | 169 | 0.34 | review | Same or closely related topic; use only when the tier calls for close distractors. |
 | Protected seas (`ER.MRN.PTMR.ZS`) | 0.36 | 0.45 | 132 | 0.25 | review | Same or closely related topic; use only when the tier calls for close distractors. |
 | Women, Business and the Law index (`GD_WBL_OVL_LAW`) | 0.39 | 0.40 | 164 | 0.24 | ok | Reasonable distractor candidate; no major automated warning. |
+| Logistics customs score (`LP.LPI.CUST.XQ`) | 0.28 | 0.35 | 131 | 0.18 | ok | Reasonable distractor candidate; no major automated warning. |
 | Logistics infrastructure quality (`LP.LPI.INFR.XQ`) | 0.24 | 0.33 | 131 | 0.17 | ok | Reasonable distractor candidate; no major automated warning. |
 | Logistics performance (`LP.LPI.OVRL.XQ`) | 0.25 | 0.32 | 131 | 0.16 | ok | Reasonable distractor candidate; no major automated warning. |
-| Secure internet servers (`IT.NET.SECR.P6`) | 0.18 | 0.31 | 169 | 0.17 | ok | Reasonable distractor candidate; no major automated warning. |
 
 ## Protected seas (`ER.MRN.PTMR.ZS`)
 
@@ -2244,10 +2941,10 @@ This automated review helps editors avoid distractors that are too weak, too obv
 | --- | ---: | ---: | ---: | ---: | --- | --- |
 | Internet users (`IT.NET.USER.ZS`) | -0.75 | -0.63 | 154 | 0.12 | ok | Reasonable distractor candidate; no major automated warning. |
 | Forest rents (`NY.GDP.FRST.RT.ZS`) | 0.64 | 0.73 | 159 | 0.35 | ok | Reasonable distractor candidate; no major automated warning. |
+| Urban basic sanitation (`SH.STA.BASS.UR.ZS`) | -0.73 | -0.59 | 147 | 0.07 | ok | Reasonable distractor candidate; no major automated warning. |
 | CO2 emissions per capita (`EN.GHG.CO2.PC.CE.AR5`) | -0.51 | -0.72 | 165 | 0.07 | review | Per-capita versus non-per-capita wording can create raw-total confusion risk. |
 | Basic sanitation access (`SH.STA.BASS.ZS`) | -0.71 | -0.61 | 156 | 0.09 | ok | Reasonable distractor candidate; no major automated warning. |
 | Rural electricity access (`EG.ELC.ACCS.RU.ZS`) | -0.70 | -0.62 | 165 | 0.12 | review | Same or closely related topic; use only when the tier calls for close distractors. |
-| Clean cooking fuels access (`EG.CFT.ACCS.ZS`) | -0.70 | -0.61 | 162 | 0.10 | review | Same or closely related topic; use only when the tier calls for close distractors. |
 
 ## Government revenue excluding grants (`GC.REV.XGRT.GD.ZS`)
 
@@ -2266,6 +2963,40 @@ This automated review helps editors avoid distractors that are too weak, too obv
 | Urban slum population (`EN.POP.SLUM.UR.ZS`) | -0.56 | -0.65 | 107 | 0.07 | ok | Reasonable distractor candidate; no major automated warning. |
 | Safely managed drinking water (`SH.H2O.SMDW.ZS`) | 0.63 | 0.65 | 92 | 0.35 | ok | Reasonable distractor candidate; no major automated warning. |
 
+## Rural basic drinking water (`SH.H2O.BASW.RU.ZS`)
+
+- Approved status: approved
+- Category: settlement
+- Difficulty: standard
+- Coverage: 150 countries
+- Warning level: high
+
+| Correlated indicator | Pearson | Spearman | Overlap | Visual similarity | Warning | Notes |
+| --- | ---: | ---: | ---: | ---: | --- | --- |
+| Basic drinking water access (`SH.H2O.BASW.ZS`) | 0.96 | 0.97 | 150 | 0.59 | high | Very high correlation can make the pair unfairly ambiguous. Same or closely related topic; use only when the tier calls for close distractors. |
+| Basic sanitation access (`SH.STA.BASS.ZS`) | 0.90 | 0.86 | 144 | 0.44 | high | Very high correlation can make the pair unfairly ambiguous. Same or closely related topic; use only when the tier calls for close distractors. |
+| Rural basic sanitation (`SH.STA.BASS.RU.ZS`) | 0.89 | 0.84 | 143 | 0.47 | review | Same or closely related topic; use only when the tier calls for close distractors. |
+| Urban basic drinking water (`SH.H2O.BASW.UR.ZS`) | 0.85 | 0.88 | 149 | 0.51 | review | Same or closely related topic; use only when the tier calls for close distractors. |
+| Rural electricity access (`EG.ELC.ACCS.RU.ZS`) | 0.87 | 0.82 | 148 | 0.30 | review | Same or closely related topic; use only when the tier calls for close distractors. |
+| Urban basic sanitation (`SH.STA.BASS.UR.ZS`) | 0.87 | 0.83 | 144 | 0.35 | review | Same or closely related topic; use only when the tier calls for close distractors. |
+
+## Rural basic sanitation (`SH.STA.BASS.RU.ZS`)
+
+- Approved status: approved
+- Category: settlement
+- Difficulty: standard
+- Coverage: 144 countries
+- Warning level: high
+
+| Correlated indicator | Pearson | Spearman | Overlap | Visual similarity | Warning | Notes |
+| --- | ---: | ---: | ---: | ---: | --- | --- |
+| Basic sanitation access (`SH.STA.BASS.ZS`) | 0.98 | 0.97 | 144 | 0.65 | high | Very high correlation can make the pair unfairly ambiguous. Same or closely related topic; use only when the tier calls for close distractors. |
+| Urban basic sanitation (`SH.STA.BASS.UR.ZS`) | 0.92 | 0.89 | 144 | 0.44 | high | Very high correlation can make the pair unfairly ambiguous. Same or closely related topic; use only when the tier calls for close distractors. |
+| Rural basic drinking water (`SH.H2O.BASW.RU.ZS`) | 0.89 | 0.84 | 143 | 0.47 | review | Same or closely related topic; use only when the tier calls for close distractors. |
+| Rural electricity access (`EG.ELC.ACCS.RU.ZS`) | 0.89 | 0.84 | 143 | 0.27 | review | Same or closely related topic; use only when the tier calls for close distractors. |
+| Maternal mortality (`SH.STA.MMRT`) | -0.80 | -0.87 | 144 | 0.05 | ok | Reasonable distractor candidate; no major automated warning. |
+| Internet users (`IT.NET.USER.ZS`) | 0.87 | 0.85 | 134 | 0.44 | ok | Reasonable distractor candidate; no major automated warning. |
+
 ## Rural clean cooking access (`EG.CFT.ACCS.RU.ZS`)
 
 - Approved status: approved
@@ -2277,11 +3008,11 @@ This automated review helps editors avoid distractors that are too weak, too obv
 | Correlated indicator | Pearson | Spearman | Overlap | Visual similarity | Warning | Notes |
 | --- | ---: | ---: | ---: | ---: | --- | --- |
 | Clean cooking fuels access (`EG.CFT.ACCS.ZS`) | 0.97 | 0.99 | 162 | 0.84 | high | Very high correlation can make the pair unfairly ambiguous. Same or closely related topic; use only when the tier calls for close distractors. |
+| Urban clean cooking access (`EG.CFT.ACCS.UR.ZS`) | 0.87 | 0.99 | 162 | 0.80 | high | Very high correlation can make the pair unfairly ambiguous. Same or closely related topic; use only when the tier calls for close distractors. |
 | GNI per capita, PPP (`NY.GNP.PCAP.PP.CD`) | 0.71 | 0.92 | 153 | 0.36 | high | Very high correlation can make the pair unfairly ambiguous. |
 | GDP per capita, PPP (`NY.GDP.PCAP.PP.CD`) | 0.69 | 0.91 | 153 | 0.33 | high | Very high correlation can make the pair unfairly ambiguous. |
 | GNI per capita (`NY.GNP.PCAP.CD`) | 0.59 | 0.90 | 154 | 0.33 | high | Very high correlation can make the pair unfairly ambiguous. |
 | Particulate emission damage (`NY.ADJ.DPEM.GN.ZS`) | -0.68 | -0.90 | 145 | 0.09 | ok | Reasonable distractor candidate; no major automated warning. |
-| GDP per capita (`NY.GDP.PCAP.CD`) | 0.57 | 0.90 | 154 | 0.32 | ok | Reasonable distractor candidate; no major automated warning. |
 
 ## Rural electricity access (`EG.ELC.ACCS.RU.ZS`)
 
@@ -2294,11 +3025,62 @@ This automated review helps editors avoid distractors that are too weak, too obv
 | Correlated indicator | Pearson | Spearman | Overlap | Visual similarity | Warning | Notes |
 | --- | ---: | ---: | ---: | ---: | --- | --- |
 | Electricity access (`EG.ELC.ACCS.ZS`) | 0.95 | 0.99 | 165 | 0.90 | high | Very high correlation can make the pair unfairly ambiguous. The quantile classes produce a visually similar map. Same or closely related topic; use only when the tier calls for close distractors. |
+| Urban electricity access (`EG.ELC.ACCS.UR.ZS`) | 0.82 | 0.91 | 165 | 0.30 | high | Very high correlation can make the pair unfairly ambiguous. Same or closely related topic; use only when the tier calls for close distractors. |
 | Basic sanitation access (`SH.STA.BASS.ZS`) | 0.91 | 0.85 | 154 | 0.30 | high | Very high correlation can make the pair unfairly ambiguous. Same or closely related topic; use only when the tier calls for close distractors. |
-| Basic drinking water access (`SH.H2O.BASW.ZS`) | 0.87 | 0.80 | 159 | 0.27 | review | Same or closely related topic; use only when the tier calls for close distractors. |
-| Maternal mortality (`SH.STA.MMRT`) | -0.78 | -0.85 | 163 | 0.09 | ok | Reasonable distractor candidate; no major automated warning. |
-| Internet users (`IT.NET.USER.ZS`) | 0.85 | 0.84 | 151 | 0.32 | ok | Reasonable distractor candidate; no major automated warning. |
-| Under-5 mortality (`SH.DYN.MORT`) | -0.84 | -0.83 | 162 | 0.09 | ok | Reasonable distractor candidate; no major automated warning. |
+| Urban basic sanitation (`SH.STA.BASS.UR.ZS`) | 0.89 | 0.85 | 146 | 0.25 | ok | Reasonable distractor candidate; no major automated warning. |
+| Rural basic sanitation (`SH.STA.BASS.RU.ZS`) | 0.89 | 0.84 | 143 | 0.27 | review | Same or closely related topic; use only when the tier calls for close distractors. |
+| Rural basic drinking water (`SH.H2O.BASW.RU.ZS`) | 0.87 | 0.82 | 148 | 0.30 | review | Same or closely related topic; use only when the tier calls for close distractors. |
+
+## Rural low-elevation land (`AG.LND.EL5M.RU.ZS`)
+
+- Approved status: approved
+- Category: settlement
+- Difficulty: expert
+- Coverage: 169 countries
+- Warning level: high
+
+| Correlated indicator | Pearson | Spearman | Overlap | Visual similarity | Warning | Notes |
+| --- | ---: | ---: | ---: | ---: | --- | --- |
+| Low-elevation land (`AG.LND.EL5M.ZS`) | 0.99 | 1.00 | 169 | 0.92 | high | Very high correlation can make the pair unfairly ambiguous. The quantile classes produce a visually similar map. Same or closely related topic; use only when the tier calls for close distractors. |
+| Rural low-elevation population (`EN.POP.EL5M.RU.ZS`) | 0.32 | 0.89 | 169 | 0.50 | review | Same or closely related topic; use only when the tier calls for close distractors. |
+| Low-elevation coastal population (`EN.POP.EL5M.ZS`) | 0.36 | 0.83 | 169 | 0.50 | review | Same or closely related topic; use only when the tier calls for close distractors. |
+| Urban low-elevation land (`AG.LND.EL5M.UR.ZS`) | 0.47 | 0.80 | 169 | 0.46 | review | Same or closely related topic; use only when the tier calls for close distractors. |
+| Urban low-elevation population (`EN.POP.EL5M.UR.ZS`) | 0.33 | 0.77 | 169 | 0.46 | review | Same or closely related topic; use only when the tier calls for close distractors. |
+| Average precipitation (`AG.LND.PRCP.MM`) | 0.17 | 0.43 | 163 | 0.21 | ok | Reasonable distractor candidate; no major automated warning. |
+
+## Rural low-elevation population (`EN.POP.EL5M.RU.ZS`)
+
+- Approved status: approved
+- Category: settlement
+- Difficulty: expert
+- Coverage: 169 countries
+- Warning level: high
+
+| Correlated indicator | Pearson | Spearman | Overlap | Visual similarity | Warning | Notes |
+| --- | ---: | ---: | ---: | ---: | --- | --- |
+| Low-elevation coastal population (`EN.POP.EL5M.ZS`) | 0.83 | 0.94 | 169 | 0.65 | high | Very high correlation can make the pair unfairly ambiguous. Same or closely related topic; use only when the tier calls for close distractors. |
+| Rural low-elevation land (`AG.LND.EL5M.RU.ZS`) | 0.32 | 0.89 | 169 | 0.50 | review | Same or closely related topic; use only when the tier calls for close distractors. |
+| Low-elevation land (`AG.LND.EL5M.ZS`) | 0.31 | 0.89 | 169 | 0.51 | review | Same or closely related topic; use only when the tier calls for close distractors. |
+| Urban low-elevation population (`EN.POP.EL5M.UR.ZS`) | 0.59 | 0.88 | 169 | 0.53 | review | Same or closely related topic; use only when the tier calls for close distractors. |
+| Urban low-elevation land (`AG.LND.EL5M.UR.ZS`) | 0.15 | 0.75 | 169 | 0.46 | review | Same or closely related topic; use only when the tier calls for close distractors. |
+| Freshwater per person (`ER.H2O.INTR.PC`) | 0.52 | 0.26 | 164 | 0.20 | ok | Reasonable distractor candidate; no major automated warning. |
+
+## Rural open defecation (`SH.STA.ODFC.RU.ZS`)
+
+- Approved status: approved
+- Category: settlement
+- Difficulty: expert
+- Coverage: 140 countries
+- Warning level: high
+
+| Correlated indicator | Pearson | Spearman | Overlap | Visual similarity | Warning | Notes |
+| --- | ---: | ---: | ---: | ---: | --- | --- |
+| Open defecation (`SH.STA.ODFC.ZS`) | 0.98 | 0.96 | 139 | 0.83 | high | Very high correlation can make the pair unfairly ambiguous. Same or closely related topic; use only when the tier calls for close distractors. |
+| Urban open defecation (`SH.STA.ODFC.UR.ZS`) | 0.85 | 0.76 | 139 | 0.62 | review | Same or closely related topic; use only when the tier calls for close distractors. |
+| Rural basic sanitation (`SH.STA.BASS.RU.ZS`) | -0.76 | -0.80 | 140 | 0.02 | review | Same or closely related topic; use only when the tier calls for close distractors. |
+| Electricity access (`EG.ELC.ACCS.ZS`) | -0.70 | -0.79 | 140 | 0.11 | ok | Reasonable distractor candidate; no major automated warning. |
+| Maternal mortality (`SH.STA.MMRT`) | 0.72 | 0.79 | 140 | 0.39 | ok | Reasonable distractor candidate; no major automated warning. |
+| Basic sanitation access (`SH.STA.BASS.ZS`) | -0.76 | -0.79 | 140 | 0.03 | ok | Reasonable distractor candidate; no major automated warning. |
 
 ## Rural population (`SP.RUR.TOTL.ZS`)
 
@@ -2311,11 +3093,28 @@ This automated review helps editors avoid distractors that are too weak, too obv
 | Correlated indicator | Pearson | Spearman | Overlap | Visual similarity | Warning | Notes |
 | --- | ---: | ---: | ---: | ---: | --- | --- |
 | Urban population (`SP.URB.TOTL.IN.ZS`) | -1.00 | -1.00 | 169 | 0.14 | high | Very high correlation can make the pair unfairly ambiguous. Same or closely related topic; use only when the tier calls for close distractors. |
+| Female services employment (`SL.SRV.EMPL.FE.ZS`) | -0.77 | -0.79 | 163 | 0.07 | ok | Reasonable distractor candidate; no major automated warning. |
+| Female agricultural employment (`SL.AGR.EMPL.FE.ZS`) | 0.74 | 0.77 | 163 | 0.31 | ok | Reasonable distractor candidate; no major automated warning. |
 | Employment in services (`SL.SRV.EMPL.ZS`) | -0.76 | -0.77 | 163 | 0.06 | ok | Reasonable distractor candidate; no major automated warning. |
 | Employment in agriculture (`SL.AGR.EMPL.ZS`) | 0.75 | 0.76 | 163 | 0.28 | ok | Reasonable distractor candidate; no major automated warning. |
-| Agriculture value per worker (`NV.AGR.EMPL.KD`) | -0.54 | -0.74 | 146 | 0.08 | ok | Reasonable distractor candidate; no major automated warning. |
-| GNI per capita (`NY.GNP.PCAP.CD`) | -0.58 | -0.73 | 159 | 0.09 | ok | Reasonable distractor candidate; no major automated warning. |
-| Internet users (`IT.NET.USER.ZS`) | -0.72 | -0.71 | 154 | 0.10 | ok | Reasonable distractor candidate; no major automated warning. |
+| Male services employment (`SL.SRV.EMPL.MA.ZS`) | -0.73 | -0.75 | 163 | 0.04 | ok | Reasonable distractor candidate; no major automated warning. |
+
+## Rural population growth (`SP.RUR.TOTL.ZG`)
+
+- Approved status: approved
+- Category: settlement
+- Difficulty: standard
+- Coverage: 168 countries
+- Warning level: review
+
+| Correlated indicator | Pearson | Spearman | Overlap | Visual similarity | Warning | Notes |
+| --- | ---: | ---: | ---: | ---: | --- | --- |
+| Population growth (`SP.POP.GROW`) | 0.79 | 0.84 | 168 | 0.37 | review | Same or closely related topic; use only when the tier calls for close distractors. |
+| Urban population growth (`SP.URB.GROW`) | 0.67 | 0.73 | 168 | 0.30 | review | Same or closely related topic; use only when the tier calls for close distractors. |
+| Population ages 65+ (`SP.POP.65UP.TO.ZS`) | -0.55 | -0.68 | 168 | 0.10 | review | Same or closely related topic; use only when the tier calls for close distractors. |
+| Birth rate (`SP.DYN.CBRT.IN`) | 0.59 | 0.65 | 168 | 0.28 | ok | Reasonable distractor candidate; no major automated warning. |
+| Fertility rate (`SP.DYN.TFRT.IN`) | 0.58 | 0.64 | 168 | 0.29 | ok | Reasonable distractor candidate; no major automated warning. |
+| Population ages 0-14 (`SP.POP.0014.TO.ZS`) | 0.56 | 0.62 | 168 | 0.26 | review | Same or closely related topic; use only when the tier calls for close distractors. |
 
 ## Basic drinking water access (`SH.H2O.BASW.ZS`)
 
@@ -2327,12 +3126,12 @@ This automated review helps editors avoid distractors that are too weak, too obv
 
 | Correlated indicator | Pearson | Spearman | Overlap | Visual similarity | Warning | Notes |
 | --- | ---: | ---: | ---: | ---: | --- | --- |
+| Rural basic drinking water (`SH.H2O.BASW.RU.ZS`) | 0.96 | 0.97 | 150 | 0.59 | high | Very high correlation can make the pair unfairly ambiguous. Same or closely related topic; use only when the tier calls for close distractors. |
+| Urban basic drinking water (`SH.H2O.BASW.UR.ZS`) | 0.90 | 0.94 | 150 | 0.47 | high | Very high correlation can make the pair unfairly ambiguous. Same or closely related topic; use only when the tier calls for close distractors. |
 | Electricity access (`EG.ELC.ACCS.ZS`) | 0.90 | 0.81 | 162 | 0.29 | high | Very high correlation can make the pair unfairly ambiguous. Same or closely related topic; use only when the tier calls for close distractors. |
 | Basic sanitation access (`SH.STA.BASS.ZS`) | 0.90 | 0.85 | 156 | 0.44 | review | Same or closely related topic; use only when the tier calls for close distractors. |
 | Internet users (`IT.NET.USER.ZS`) | 0.89 | 0.86 | 149 | 0.40 | ok | Reasonable distractor candidate; no major automated warning. |
 | GNI per capita, PPP (`NY.GNP.PCAP.PP.CD`) | 0.59 | 0.87 | 152 | 0.38 | ok | Reasonable distractor candidate; no major automated warning. |
-| Safely managed drinking water (`SH.H2O.SMDW.ZS`) | 0.79 | 0.87 | 122 | 0.46 | review | Same or closely related topic; use only when the tier calls for close distractors. |
-| GNI per capita (`NY.GNP.PCAP.CD`) | 0.47 | 0.87 | 154 | 0.42 | ok | Reasonable distractor candidate; no major automated warning. |
 
 ## Safely managed drinking water (`SH.H2O.SMDW.ZS`)
 
@@ -2361,12 +3160,12 @@ This automated review helps editors avoid distractors that are too weak, too obv
 
 | Correlated indicator | Pearson | Spearman | Overlap | Visual similarity | Warning | Notes |
 | --- | ---: | ---: | ---: | ---: | --- | --- |
+| Rural basic sanitation (`SH.STA.BASS.RU.ZS`) | 0.76 | 0.80 | 112 | 0.34 | review | Same or closely related topic; use only when the tier calls for close distractors. |
 | Rural clean cooking access (`EG.CFT.ACCS.RU.ZS`) | 0.72 | 0.80 | 117 | 0.32 | ok | Reasonable distractor candidate; no major automated warning. |
 | Safely managed drinking water (`SH.H2O.SMDW.ZS`) | 0.78 | 0.79 | 105 | 0.39 | review | Same or closely related topic; use only when the tier calls for close distractors. |
 | GNI per capita, PPP (`NY.GNP.PCAP.PP.CD`) | 0.74 | 0.79 | 116 | 0.41 | ok | Reasonable distractor candidate; no major automated warning. |
 | Clean cooking fuels access (`EG.CFT.ACCS.ZS`) | 0.70 | 0.79 | 117 | 0.32 | ok | Reasonable distractor candidate; no major automated warning. |
-| Adolescent fertility (`SP.ADO.TFRT`) | -0.71 | -0.79 | 122 | 0.05 | ok | Reasonable distractor candidate; no major automated warning. |
-| Health spending per person (`SH.XPD.CHEX.PC.CD`) | 0.62 | 0.79 | 119 | 0.42 | review | Same or closely related topic; use only when the tier calls for close distractors. |
+| Urban clean cooking access (`EG.CFT.ACCS.UR.ZS`) | 0.65 | 0.79 | 117 | 0.26 | ok | Reasonable distractor candidate; no major automated warning. |
 
 ## Secondary enrollment (`SE.SEC.ENRR`)
 
@@ -2384,6 +3183,23 @@ This automated review helps editors avoid distractors that are too weak, too obv
 | GNI per capita (`NY.GNP.PCAP.CD`) | 0.57 | 0.78 | 116 | 0.34 | ok | Reasonable distractor candidate; no major automated warning. |
 | GDP per capita (`NY.GDP.PCAP.CD`) | 0.55 | 0.78 | 116 | 0.34 | ok | Reasonable distractor candidate; no major automated warning. |
 | Agriculture value added (`NV.AGR.TOTL.ZS`) | -0.76 | -0.71 | 108 | 0.02 | ok | Reasonable distractor candidate; no major automated warning. |
+
+## Female secondary pupils (`SE.SEC.ENRL.FE.ZS`)
+
+- Approved status: approved
+- Category: education
+- Difficulty: expert
+- Coverage: 120 countries
+- Warning level: review
+
+| Correlated indicator | Pearson | Spearman | Overlap | Visual similarity | Warning | Notes |
+| --- | ---: | ---: | ---: | ---: | --- | --- |
+| Primary enrollment gender parity (`SE.ENR.PRIM.FM.ZS`) | 0.65 | 0.06 | 100 | 0.26 | review | Same or closely related topic; use only when the tier calls for close distractors. |
+| Female primary pupils (`SE.PRM.ENRL.FE.ZS`) | 0.63 | 0.28 | 110 | 0.26 | review | Same or closely related topic; use only when the tier calls for close distractors. |
+| Open defecation (`SH.STA.ODFC.ZS`) | -0.57 | -0.15 | 110 | 0.12 | ok | Reasonable distractor candidate; no major automated warning. |
+| Fertility rate (`SP.DYN.TFRT.IN`) | -0.56 | -0.12 | 120 | 0.08 | ok | Reasonable distractor candidate; no major automated warning. |
+| Rural open defecation (`SH.STA.ODFC.RU.ZS`) | -0.55 | -0.21 | 103 | 0.08 | ok | Reasonable distractor candidate; no major automated warning. |
+| Age dependency ratio (`SP.POP.DPND`) | -0.52 | -0.28 | 120 | 0.09 | ok | Reasonable distractor candidate; no major automated warning. |
 
 ## Secure internet servers (`IT.NET.SECR.P6`)
 
@@ -2414,10 +3230,10 @@ This automated review helps editors avoid distractors that are too weak, too obv
 | --- | ---: | ---: | ---: | ---: | --- | --- |
 | Wage and salaried workers (`SL.EMP.WORK.ZS`) | -1.00 | -1.00 | 163 | 0.14 | high | Very high correlation can make the pair unfairly ambiguous. Same or closely related topic; use only when the tier calls for close distractors. |
 | Vulnerable employment (`SL.EMP.VULN.ZS`) | 0.99 | 0.99 | 163 | 0.84 | high | Very high correlation can make the pair unfairly ambiguous. Same or closely related topic; use only when the tier calls for close distractors. |
-| Employment in agriculture (`SL.AGR.EMPL.ZS`) | 0.89 | 0.90 | 163 | 0.50 | high | Very high correlation can make the pair unfairly ambiguous. Same or closely related topic; use only when the tier calls for close distractors. |
-| GNI per capita, PPP (`NY.GNP.PCAP.PP.CD`) | -0.77 | -0.88 | 154 | 0.07 | ok | Reasonable distractor candidate; no major automated warning. |
-| GNI per capita (`NY.GNP.PCAP.CD`) | -0.66 | -0.88 | 156 | 0.10 | ok | Reasonable distractor candidate; no major automated warning. |
-| GDP per capita, PPP (`NY.GDP.PCAP.PP.CD`) | -0.75 | -0.88 | 154 | 0.07 | ok | Reasonable distractor candidate; no major automated warning. |
+| Male self-employed (`SL.EMP.SELF.MA.ZS`) | 0.99 | 0.99 | 163 | 0.85 | high | Very high correlation can make the pair unfairly ambiguous. Same or closely related topic; use only when the tier calls for close distractors. |
+| Male wage workers (`SL.EMP.WORK.MA.ZS`) | -0.99 | -0.99 | 163 | 0.11 | high | Very high correlation can make the pair unfairly ambiguous. Same or closely related topic; use only when the tier calls for close distractors. |
+| Female wage workers (`SL.EMP.WORK.FE.ZS`) | -0.99 | -0.99 | 163 | 0.09 | high | Very high correlation can make the pair unfairly ambiguous. Same or closely related topic; use only when the tier calls for close distractors. |
+| Female self-employed (`SL.EMP.SELF.FE.ZS`) | 0.99 | 0.99 | 163 | 0.75 | high | Very high correlation can make the pair unfairly ambiguous. Same or closely related topic; use only when the tier calls for close distractors. |
 
 ## Services value added (`NV.SRV.TOTL.ZS`)
 
@@ -2434,7 +3250,24 @@ This automated review helps editors avoid distractors that are too weak, too obv
 | Safely managed drinking water (`SH.H2O.SMDW.ZS`) | 0.64 | 0.69 | 111 | 0.34 | ok | Reasonable distractor candidate; no major automated warning. |
 | Secure internet servers (`IT.NET.SECR.P6`) | 0.37 | 0.69 | 149 | 0.26 | ok | Reasonable distractor candidate; no major automated warning. |
 | Population ages 65+ (`SP.POP.65UP.TO.ZS`) | 0.61 | 0.68 | 149 | 0.28 | ok | Reasonable distractor candidate; no major automated warning. |
-| Agriculture value added (`NV.AGR.TOTL.ZS`) | -0.61 | -0.66 | 149 | 0.08 | review | Same or closely related topic; use only when the tier calls for close distractors. |
+| Male services employment (`SL.SRV.EMPL.MA.ZS`) | 0.66 | 0.67 | 147 | 0.32 | review | Same or closely related topic; use only when the tier calls for close distractors. |
+
+## Severe food insecurity (`SN.ITK.SVFI.ZS`)
+
+- Approved status: approved
+- Category: agriculture
+- Difficulty: expert
+- Coverage: 123 countries
+- Warning level: high
+
+| Correlated indicator | Pearson | Spearman | Overlap | Visual similarity | Warning | Notes |
+| --- | ---: | ---: | ---: | ---: | --- | --- |
+| Moderate or severe food insecurity (`SN.ITK.MSFI.ZS`) | 0.89 | 0.95 | 123 | 0.52 | high | Very high correlation can make the pair unfairly ambiguous. Same or closely related topic; use only when the tier calls for close distractors. |
+| Undernourishment (`SN.ITK.DEFC.ZS`) | 0.79 | 0.81 | 118 | 0.37 | ok | Reasonable distractor candidate; no major automated warning. |
+| Infant mortality (`SP.DYN.IMRT.IN`) | 0.75 | 0.79 | 123 | 0.33 | ok | Reasonable distractor candidate; no major automated warning. |
+| Neonatal mortality (`SH.DYN.NMRT`) | 0.73 | 0.78 | 123 | 0.31 | ok | Reasonable distractor candidate; no major automated warning. |
+| Under-5 mortality (`SH.DYN.MORT`) | 0.70 | 0.78 | 123 | 0.31 | ok | Reasonable distractor candidate; no major automated warning. |
+| Maternal mortality (`SH.STA.MMRT`) | 0.69 | 0.76 | 123 | 0.29 | ok | Reasonable distractor candidate; no major automated warning. |
 
 ## Statistical data infrastructure (`IQ.SPI.PIL5`)
 
@@ -2498,11 +3331,11 @@ This automated review helps editors avoid distractors that are too weak, too obv
 | Correlated indicator | Pearson | Spearman | Overlap | Visual similarity | Warning | Notes |
 | --- | ---: | ---: | ---: | ---: | --- | --- |
 | Agriculture value added (`NV.AGR.TOTL.ZS`) | -0.76 | -0.59 | 115 | 0.07 | ok | Reasonable distractor candidate; no major automated warning. |
+| Female vulnerable employment (`SL.EMP.VULN.FE.ZS`) | -0.73 | -0.61 | 121 | 0.07 | ok | Reasonable distractor candidate; no major automated warning. |
+| Female wage workers (`SL.EMP.WORK.FE.ZS`) | 0.73 | 0.61 | 121 | 0.26 | ok | Reasonable distractor candidate; no major automated warning. |
+| Female self-employed (`SL.EMP.SELF.FE.ZS`) | -0.73 | -0.61 | 121 | 0.07 | ok | Reasonable distractor candidate; no major automated warning. |
 | Vulnerable employment (`SL.EMP.VULN.ZS`) | -0.72 | -0.61 | 121 | 0.06 | ok | Reasonable distractor candidate; no major automated warning. |
 | Wage and salaried workers (`SL.EMP.WORK.ZS`) | 0.72 | 0.61 | 121 | 0.28 | ok | Reasonable distractor candidate; no major automated warning. |
-| Self-employed workers (`SL.EMP.SELF.ZS`) | -0.72 | -0.61 | 121 | 0.06 | ok | Reasonable distractor candidate; no major automated warning. |
-| Employment in agriculture (`SL.AGR.EMPL.ZS`) | -0.72 | -0.59 | 121 | 0.07 | ok | Reasonable distractor candidate; no major automated warning. |
-| Particulate emission damage (`NY.ADJ.DPEM.GN.ZS`) | -0.71 | -0.56 | 116 | 0.11 | ok | Reasonable distractor candidate; no major automated warning. |
 
 ## Protected land and seas (`ER.PTD.TOTL.ZS`)
 
@@ -2517,9 +3350,9 @@ This automated review helps editors avoid distractors that are too weak, too obv
 | Protected land (`ER.LND.PTLD.ZS`) | 0.80 | 0.81 | 169 | 0.34 | review | Same or closely related topic; use only when the tier calls for close distractors. |
 | Protected seas (`ER.MRN.PTMR.ZS`) | 0.75 | 0.70 | 132 | 0.25 | review | Same or closely related topic; use only when the tier calls for close distractors. |
 | Women, Business and the Law index (`GD_WBL_OVL_LAW`) | 0.43 | 0.47 | 164 | 0.22 | ok | Reasonable distractor candidate; no major automated warning. |
+| Logistics customs score (`LP.LPI.CUST.XQ`) | 0.33 | 0.37 | 131 | 0.20 | ok | Reasonable distractor candidate; no major automated warning. |
 | Logistics infrastructure quality (`LP.LPI.INFR.XQ`) | 0.30 | 0.37 | 131 | 0.18 | ok | Reasonable distractor candidate; no major automated warning. |
 | Logistics performance (`LP.LPI.OVRL.XQ`) | 0.30 | 0.35 | 131 | 0.17 | ok | Reasonable distractor candidate; no major automated warning. |
-| Secure internet servers (`IT.NET.SECR.P6`) | 0.18 | 0.33 | 169 | 0.20 | ok | Reasonable distractor candidate; no major automated warning. |
 
 ## Tourism arrivals (`ST.INT.ARVL`)
 
@@ -2531,12 +3364,12 @@ This automated review helps editors avoid distractors that are too weak, too obv
 
 | Correlated indicator | Pearson | Spearman | Overlap | Visual similarity | Warning | Notes |
 | --- | ---: | ---: | ---: | ---: | --- | --- |
+| Air passengers carried (`IS.AIR.PSGR`) | 0.63 | 0.70 | 115 | 0.28 | ok | Reasonable distractor candidate; no major automated warning. |
+| Container port traffic (`IS.SHP.GOOD.TU`) | 0.54 | 0.68 | 107 | 0.36 | ok | Reasonable distractor candidate; no major automated warning. |
 | Safely managed sanitation (`SH.STA.SMSS.ZS`) | 0.34 | 0.67 | 109 | 0.28 | ok | Reasonable distractor candidate; no major automated warning. |
 | Logistics infrastructure quality (`LP.LPI.INFR.XQ`) | 0.41 | 0.66 | 112 | 0.24 | ok | Reasonable distractor candidate; no major automated warning. |
 | Rural clean cooking access (`EG.CFT.ACCS.RU.ZS`) | 0.30 | 0.66 | 134 | 0.23 | ok | Reasonable distractor candidate; no major automated warning. |
 | Clean cooking fuels access (`EG.CFT.ACCS.ZS`) | 0.29 | 0.66 | 134 | 0.24 | ok | Reasonable distractor candidate; no major automated warning. |
-| Birth rate (`SP.DYN.CBRT.IN`) | -0.33 | -0.66 | 139 | 0.09 | ok | Reasonable distractor candidate; no major automated warning. |
-| GNI per capita, PPP (`NY.GNP.PCAP.PP.CD`) | 0.31 | 0.65 | 134 | 0.29 | ok | Reasonable distractor candidate; no major automated warning. |
 
 ## Tourism expenditures (`ST.INT.XPND.MP.ZS`)
 
@@ -2552,8 +3385,8 @@ This automated review helps editors avoid distractors that are too weak, too obv
 | Tertiary enrollment gender parity (`SE.ENR.TERT.FM.ZS`) | 0.32 | 0.28 | 102 | 0.23 | ok | Reasonable distractor candidate; no major automated warning. |
 | Greenhouse gas emissions per capita (`EN.GHG.ALL.PC.CE.AR5`) | 0.31 | 0.10 | 125 | 0.20 | review | Per-capita versus non-per-capita wording can create raw-total confusion risk. |
 | International migrant stock (`SM.POP.TOTL.ZS`) | 0.29 | 0.05 | 128 | 0.20 | ok | Reasonable distractor candidate; no major automated warning. |
-| CO2 emissions per capita (`EN.GHG.CO2.PC.CE.AR5`) | 0.27 | 0.08 | 125 | 0.17 | review | Per-capita versus non-per-capita wording can create raw-total confusion risk. |
-| Manufacturing value added (`NV.IND.MANF.ZS`) | -0.27 | -0.23 | 117 | 0.18 | review | Same or closely related topic; use only when the tier calls for close distractors. |
+| Communications service imports (`BM.GSR.CMCP.ZS`) | -0.28 | -0.19 | 118 | 0.15 | ok | Reasonable distractor candidate; no major automated warning. |
+| Female primary teachers (`SE.PRM.TCHR.FE.ZS`) | 0.25 | 0.28 | 97 | 0.15 | ok | Reasonable distractor candidate; no major automated warning. |
 
 ## Tourism receipts (`ST.INT.RCPT.XP.ZS`)
 
@@ -2565,12 +3398,12 @@ This automated review helps editors avoid distractors that are too weak, too obv
 
 | Correlated indicator | Pearson | Spearman | Overlap | Visual similarity | Warning | Notes |
 | --- | ---: | ---: | ---: | ---: | --- | --- |
+| Communications service exports (`BX.GSR.CMCP.ZS`) | -0.44 | -0.44 | 121 | 0.07 | ok | Reasonable distractor candidate; no major automated warning. |
 | Household consumption (`NE.CON.PRVT.ZS`) | 0.35 | 0.40 | 118 | 0.24 | review | Same or closely related topic; use only when the tier calls for close distractors. |
 | Remittances received (`BX.TRF.PWKR.DT.GD.ZS`) | 0.31 | 0.39 | 119 | 0.19 | review | Same or closely related topic; use only when the tier calls for close distractors. |
 | Current account balance (`BN.CAB.XOKA.GD.ZS`) | -0.37 | -0.36 | 123 | 0.07 | review | Same or closely related topic; use only when the tier calls for close distractors. |
+| Communications service imports (`BM.GSR.CMCP.ZS`) | -0.32 | -0.36 | 121 | 0.07 | ok | Reasonable distractor candidate; no major automated warning. |
 | Industry value added (`NV.IND.TOTL.ZS`) | -0.36 | -0.35 | 123 | 0.11 | review | Same or closely related topic; use only when the tier calls for close distractors. |
-| Domestic savings (`NY.GDS.TOTL.ZS`) | -0.35 | -0.34 | 116 | 0.11 | review | Same or closely related topic; use only when the tier calls for close distractors. |
-| Permanent cropland (`AG.LND.CROP.ZS`) | 0.15 | 0.31 | 134 | 0.19 | ok | Reasonable distractor candidate; no major automated warning. |
 
 ## Trade (`NE.TRD.GNFS.ZS`)
 
@@ -2585,9 +3418,43 @@ This automated review helps editors avoid distractors that are too weak, too obv
 | Exports (`NE.EXP.GNFS.ZS`) | 0.96 | 0.94 | 141 | 0.58 | high | Very high correlation can make the pair unfairly ambiguous. Same or closely related topic; use only when the tier calls for close distractors. |
 | Imports (`NE.IMP.GNFS.ZS`) | 0.95 | 0.95 | 141 | 0.60 | high | Very high correlation can make the pair unfairly ambiguous. Same or closely related topic; use only when the tier calls for close distractors. |
 | Water productivity (`ER.GDP.FWTL.M3.KD`) | 0.55 | 0.31 | 136 | 0.21 | ok | Reasonable distractor candidate; no major automated warning. |
+| Agriculture methane emissions (`EN.GHG.CH4.AG.MT.CE.AR5`) | -0.26 | -0.50 | 138 | 0.09 | ok | Reasonable distractor candidate; no major automated warning. |
 | Agriculture value added (`NV.AGR.TOTL.ZS`) | -0.42 | -0.50 | 133 | 0.09 | review | Same or closely related topic; use only when the tier calls for close distractors. |
 | Government revenue excluding grants (`GC.REV.XGRT.GD.ZS`) | 0.41 | 0.48 | 108 | 0.21 | review | Same or closely related topic; use only when the tier calls for close distractors. |
-| GDP per capita, PPP (`NY.GDP.PCAP.PP.CD`) | 0.47 | 0.35 | 138 | 0.19 | ok | Reasonable distractor candidate; no major automated warning. |
+
+## Transport service exports (`BX.GSR.TRAN.ZS`)
+
+- Approved status: approved
+- Category: connectivity
+- Difficulty: expert
+- Coverage: 137 countries
+- Warning level: review
+
+| Correlated indicator | Pearson | Spearman | Overlap | Visual similarity | Warning | Notes |
+| --- | ---: | ---: | ---: | ---: | --- | --- |
+| Communications service exports (`BX.GSR.CMCP.ZS`) | -0.38 | -0.32 | 137 | 0.09 | review | Same or closely related topic; use only when the tier calls for close distractors. |
+| Hospital beds (`SH.MED.BEDS.ZS`) | 0.22 | 0.34 | 103 | 0.19 | ok | Reasonable distractor candidate; no major automated warning. |
+| Female secondary pupils (`SE.SEC.ENRL.FE.ZS`) | -0.19 | -0.29 | 105 | 0.07 | ok | Reasonable distractor candidate; no major automated warning. |
+| ICT service exports (`BX.GSR.CCIS.ZS`) | -0.29 | -0.16 | 135 | 0.17 | review | Same or closely related topic; use only when the tier calls for close distractors. |
+| Industry value added (`NV.IND.TOTL.ZS`) | 0.25 | 0.26 | 129 | 0.24 | ok | Reasonable distractor candidate; no major automated warning. |
+| Private primary enrollment (`SE.PRM.PRIV.ZS`) | -0.12 | -0.23 | 108 | 0.09 | ok | Reasonable distractor candidate; no major automated warning. |
+
+## Transport service imports (`BM.GSR.TRAN.ZS`)
+
+- Approved status: approved
+- Category: connectivity
+- Difficulty: expert
+- Coverage: 137 countries
+- Warning level: review
+
+| Correlated indicator | Pearson | Spearman | Overlap | Visual similarity | Warning | Notes |
+| --- | ---: | ---: | ---: | ---: | --- | --- |
+| Nurses and midwives (`SH.MED.NUMW.P3`) | -0.57 | -0.65 | 130 | 0.06 | ok | Reasonable distractor candidate; no major automated warning. |
+| Communications service imports (`BM.GSR.CMCP.ZS`) | -0.64 | -0.63 | 137 | 0.08 | review | Same or closely related topic; use only when the tier calls for close distractors. |
+| Account ownership (`FX.OWN.TOTL.ZS`) | -0.60 | -0.62 | 119 | 0.08 | ok | Reasonable distractor candidate; no major automated warning. |
+| GNI per capita, PPP (`NY.GNP.PCAP.PP.CD`) | -0.53 | -0.60 | 136 | 0.10 | ok | Reasonable distractor candidate; no major automated warning. |
+| Health spending per person (`SH.XPD.CHEX.PC.CD`) | -0.47 | -0.60 | 136 | 0.12 | ok | Reasonable distractor candidate; no major automated warning. |
+| GDP per capita, PPP (`NY.GDP.PCAP.PP.CD`) | -0.53 | -0.60 | 136 | 0.10 | ok | Reasonable distractor candidate; no major automated warning. |
 
 ## Tuberculosis incidence (`SH.TBS.INCD`)
 
@@ -2601,10 +3468,10 @@ This automated review helps editors avoid distractors that are too weak, too obv
 | --- | ---: | ---: | ---: | ---: | --- | --- |
 | Safely managed drinking water (`SH.H2O.SMDW.ZS`) | -0.64 | -0.82 | 122 | 0.10 | review | Same or closely related topic; use only when the tier calls for close distractors. |
 | Life expectancy (`SP.DYN.LE00.IN`) | -0.61 | -0.79 | 168 | 0.07 | review | Same or closely related topic; use only when the tier calls for close distractors. |
+| Female self-employed (`SL.EMP.SELF.FE.ZS`) | 0.55 | 0.78 | 162 | 0.35 | ok | Reasonable distractor candidate; no major automated warning. |
+| Female wage workers (`SL.EMP.WORK.FE.ZS`) | -0.55 | -0.78 | 162 | 0.07 | ok | Reasonable distractor candidate; no major automated warning. |
 | Urban slum population (`EN.POP.SLUM.UR.ZS`) | 0.51 | 0.78 | 150 | 0.38 | ok | Reasonable distractor candidate; no major automated warning. |
 | Maternal mortality (`SH.STA.MMRT`) | 0.45 | 0.78 | 166 | 0.31 | review | Same or closely related topic; use only when the tier calls for close distractors. |
-| Infant mortality (`SP.DYN.IMRT.IN`) | 0.58 | 0.77 | 165 | 0.34 | review | Same or closely related topic; use only when the tier calls for close distractors. |
-| Particulate emission damage (`NY.ADJ.DPEM.GN.ZS`) | 0.38 | 0.77 | 149 | 0.29 | ok | Reasonable distractor candidate; no major automated warning. |
 
 ## Under-5 mortality (`SH.DYN.MORT`)
 
@@ -2636,9 +3503,9 @@ This automated review helps editors avoid distractors that are too weak, too obv
 | Fixed broadband (`IT.NET.BBND.P2`) | -0.69 | -0.86 | 125 | 0.05 | ok | Reasonable distractor candidate; no major automated warning. |
 | GDP per capita, PPP (`NY.GDP.PCAP.PP.CD`) | -0.54 | -0.85 | 145 | 0.08 | ok | Reasonable distractor candidate; no major automated warning. |
 | GNI per capita, PPP (`NY.GNP.PCAP.PP.CD`) | -0.56 | -0.85 | 145 | 0.07 | ok | Reasonable distractor candidate; no major automated warning. |
+| Moderate or severe food insecurity (`SN.ITK.MSFI.ZS`) | 0.81 | 0.85 | 118 | 0.31 | ok | Reasonable distractor candidate; no major automated warning. |
 | Infant mortality (`SP.DYN.IMRT.IN`) | 0.72 | 0.84 | 150 | 0.35 | review | Same or closely related topic; use only when the tier calls for close distractors. |
 | Under-5 mortality (`SH.DYN.MORT`) | 0.70 | 0.84 | 150 | 0.36 | review | Same or closely related topic; use only when the tier calls for close distractors. |
-| Internet users (`IT.NET.USER.ZS`) | -0.79 | -0.83 | 143 | 0.05 | ok | Reasonable distractor candidate; no major automated warning. |
 
 ## Unemployment (`SL.UEM.TOTL.ZS`)
 
@@ -2653,9 +3520,128 @@ This automated review helps editors avoid distractors that are too weak, too obv
 | Male unemployment (`SL.UEM.TOTL.MA.ZS`) | 0.99 | 0.97 | 163 | 0.75 | high | Very high correlation can make the pair unfairly ambiguous. Same or closely related topic; use only when the tier calls for close distractors. |
 | Female unemployment (`SL.UEM.TOTL.FE.ZS`) | 0.94 | 0.94 | 163 | 0.69 | high | Very high correlation can make the pair unfairly ambiguous. Same or closely related topic; use only when the tier calls for close distractors. |
 | Youth unemployment (`SL.UEM.1524.ZS`) | 0.93 | 0.91 | 163 | 0.49 | high | Very high correlation can make the pair unfairly ambiguous. Same or closely related topic; use only when the tier calls for close distractors. |
+| Male employment-to-population ratio (`SL.EMP.TOTL.SP.MA.ZS`) | -0.66 | -0.66 | 163 | 0.07 | review | Same or closely related topic; use only when the tier calls for close distractors. |
 | Employment-to-population ratio (`SL.EMP.TOTL.SP.ZS`) | -0.65 | -0.66 | 163 | 0.09 | review | Same or closely related topic; use only when the tier calls for close distractors. |
-| Labor force participation (`SL.TLF.CACT.ZS`) | -0.46 | -0.48 | 163 | 0.10 | review | Same or closely related topic; use only when the tier calls for close distractors. |
-| Male labor force participation (`SL.TLF.CACT.MA.ZS`) | -0.44 | -0.46 | 163 | 0.13 | review | Same or closely related topic; use only when the tier calls for close distractors. |
+| Youth employment-to-population ratio (`SL.EMP.1524.SP.ZS`) | -0.54 | -0.51 | 163 | 0.07 | review | Same or closely related topic; use only when the tier calls for close distractors. |
+
+## Urban basic drinking water (`SH.H2O.BASW.UR.ZS`)
+
+- Approved status: approved
+- Category: settlement
+- Difficulty: standard
+- Coverage: 151 countries
+- Warning level: high
+
+| Correlated indicator | Pearson | Spearman | Overlap | Visual similarity | Warning | Notes |
+| --- | ---: | ---: | ---: | ---: | --- | --- |
+| Basic drinking water access (`SH.H2O.BASW.ZS`) | 0.90 | 0.94 | 150 | 0.47 | high | Very high correlation can make the pair unfairly ambiguous. Same or closely related topic; use only when the tier calls for close distractors. |
+| Rural basic drinking water (`SH.H2O.BASW.RU.ZS`) | 0.85 | 0.88 | 149 | 0.51 | review | Same or closely related topic; use only when the tier calls for close distractors. |
+| Urban electricity access (`EG.ELC.ACCS.UR.ZS`) | 0.81 | 0.74 | 151 | 0.28 | review | Same or closely related topic; use only when the tier calls for close distractors. |
+| Electricity access (`EG.ELC.ACCS.ZS`) | 0.80 | 0.75 | 151 | 0.26 | ok | Reasonable distractor candidate; no major automated warning. |
+| GNI per capita, PPP (`NY.GNP.PCAP.PP.CD`) | 0.49 | 0.80 | 145 | 0.33 | ok | Reasonable distractor candidate; no major automated warning. |
+| GNI per capita (`NY.GNP.PCAP.CD`) | 0.38 | 0.79 | 145 | 0.31 | ok | Reasonable distractor candidate; no major automated warning. |
+
+## Urban basic sanitation (`SH.STA.BASS.UR.ZS`)
+
+- Approved status: approved
+- Category: settlement
+- Difficulty: standard
+- Coverage: 147 countries
+- Warning level: high
+
+| Correlated indicator | Pearson | Spearman | Overlap | Visual similarity | Warning | Notes |
+| --- | ---: | ---: | ---: | ---: | --- | --- |
+| Basic sanitation access (`SH.STA.BASS.ZS`) | 0.96 | 0.96 | 145 | 0.63 | high | Very high correlation can make the pair unfairly ambiguous. Same or closely related topic; use only when the tier calls for close distractors. |
+| Rural basic sanitation (`SH.STA.BASS.RU.ZS`) | 0.92 | 0.89 | 144 | 0.44 | high | Very high correlation can make the pair unfairly ambiguous. Same or closely related topic; use only when the tier calls for close distractors. |
+| Rural electricity access (`EG.ELC.ACCS.RU.ZS`) | 0.89 | 0.85 | 146 | 0.25 | ok | Reasonable distractor candidate; no major automated warning. |
+| Female adult mortality (`SP.DYN.AMRT.FE`) | -0.84 | -0.88 | 129 | 0.09 | ok | Reasonable distractor candidate; no major automated warning. |
+| Internet users (`IT.NET.USER.ZS`) | 0.88 | 0.80 | 137 | 0.31 | ok | Reasonable distractor candidate; no major automated warning. |
+| Rural basic drinking water (`SH.H2O.BASW.RU.ZS`) | 0.87 | 0.83 | 144 | 0.35 | review | Same or closely related topic; use only when the tier calls for close distractors. |
+
+## Urban clean cooking access (`EG.CFT.ACCS.UR.ZS`)
+
+- Approved status: approved
+- Category: settlement
+- Difficulty: standard
+- Coverage: 162 countries
+- Warning level: high
+
+| Correlated indicator | Pearson | Spearman | Overlap | Visual similarity | Warning | Notes |
+| --- | ---: | ---: | ---: | ---: | --- | --- |
+| Clean cooking fuels access (`EG.CFT.ACCS.ZS`) | 0.95 | 0.99 | 162 | 0.83 | high | Very high correlation can make the pair unfairly ambiguous. Same or closely related topic; use only when the tier calls for close distractors. |
+| Rural clean cooking access (`EG.CFT.ACCS.RU.ZS`) | 0.87 | 0.99 | 162 | 0.80 | high | Very high correlation can make the pair unfairly ambiguous. Same or closely related topic; use only when the tier calls for close distractors. |
+| GNI per capita, PPP (`NY.GNP.PCAP.PP.CD`) | 0.58 | 0.91 | 153 | 0.28 | high | Very high correlation can make the pair unfairly ambiguous. |
+| GDP per capita, PPP (`NY.GDP.PCAP.PP.CD`) | 0.56 | 0.91 | 153 | 0.27 | high | Very high correlation can make the pair unfairly ambiguous. |
+| Particulate emission damage (`NY.ADJ.DPEM.GN.ZS`) | -0.69 | -0.90 | 145 | 0.06 | ok | Reasonable distractor candidate; no major automated warning. |
+| GNI per capita (`NY.GNP.PCAP.CD`) | 0.46 | 0.90 | 154 | 0.29 | ok | Reasonable distractor candidate; no major automated warning. |
+
+## Urban electricity access (`EG.ELC.ACCS.UR.ZS`)
+
+- Approved status: approved
+- Category: settlement
+- Difficulty: standard
+- Coverage: 168 countries
+- Warning level: high
+
+| Correlated indicator | Pearson | Spearman | Overlap | Visual similarity | Warning | Notes |
+| --- | ---: | ---: | ---: | ---: | --- | --- |
+| Electricity access (`EG.ELC.ACCS.ZS`) | 0.90 | 0.91 | 168 | 0.34 | high | Very high correlation can make the pair unfairly ambiguous. Same or closely related topic; use only when the tier calls for close distractors. |
+| Rural electricity access (`EG.ELC.ACCS.RU.ZS`) | 0.82 | 0.91 | 165 | 0.30 | high | Very high correlation can make the pair unfairly ambiguous. Same or closely related topic; use only when the tier calls for close distractors. |
+| Urban basic sanitation (`SH.STA.BASS.UR.ZS`) | 0.76 | 0.83 | 147 | 0.26 | review | Same or closely related topic; use only when the tier calls for close distractors. |
+| Basic sanitation access (`SH.STA.BASS.ZS`) | 0.79 | 0.83 | 156 | 0.31 | review | Same or closely related topic; use only when the tier calls for close distractors. |
+| Basic drinking water access (`SH.H2O.BASW.ZS`) | 0.83 | 0.79 | 162 | 0.31 | review | Same or closely related topic; use only when the tier calls for close distractors. |
+| Female adult mortality (`SP.DYN.AMRT.FE`) | -0.66 | -0.82 | 148 | 0.14 | ok | Reasonable distractor candidate; no major automated warning. |
+
+## Urban low-elevation land (`AG.LND.EL5M.UR.ZS`)
+
+- Approved status: approved
+- Category: settlement
+- Difficulty: expert
+- Coverage: 169 countries
+- Warning level: review
+
+| Correlated indicator | Pearson | Spearman | Overlap | Visual similarity | Warning | Notes |
+| --- | ---: | ---: | ---: | ---: | --- | --- |
+| Low-elevation land (`AG.LND.EL5M.ZS`) | 0.58 | 0.83 | 169 | 0.46 | review | Same or closely related topic; use only when the tier calls for close distractors. |
+| Urban low-elevation population (`EN.POP.EL5M.UR.ZS`) | 0.46 | 0.81 | 169 | 0.48 | review | Same or closely related topic; use only when the tier calls for close distractors. |
+| Rural low-elevation land (`AG.LND.EL5M.RU.ZS`) | 0.47 | 0.80 | 169 | 0.46 | review | Same or closely related topic; use only when the tier calls for close distractors. |
+| Low-elevation coastal population (`EN.POP.EL5M.ZS`) | 0.38 | 0.79 | 169 | 0.47 | review | Same or closely related topic; use only when the tier calls for close distractors. |
+| Rural low-elevation population (`EN.POP.EL5M.RU.ZS`) | 0.15 | 0.75 | 169 | 0.46 | review | Same or closely related topic; use only when the tier calls for close distractors. |
+| Population density (`EN.POP.DNST`) | 0.48 | 0.46 | 169 | 0.27 | review | Same or closely related topic; use only when the tier calls for close distractors. |
+
+## Urban low-elevation population (`EN.POP.EL5M.UR.ZS`)
+
+- Approved status: approved
+- Category: settlement
+- Difficulty: expert
+- Coverage: 169 countries
+- Warning level: high
+
+| Correlated indicator | Pearson | Spearman | Overlap | Visual similarity | Warning | Notes |
+| --- | ---: | ---: | ---: | ---: | --- | --- |
+| Low-elevation coastal population (`EN.POP.EL5M.ZS`) | 0.94 | 0.98 | 169 | 0.77 | high | Very high correlation can make the pair unfairly ambiguous. Same or closely related topic; use only when the tier calls for close distractors. |
+| Rural low-elevation population (`EN.POP.EL5M.RU.ZS`) | 0.59 | 0.88 | 169 | 0.53 | review | Same or closely related topic; use only when the tier calls for close distractors. |
+| Urban low-elevation land (`AG.LND.EL5M.UR.ZS`) | 0.46 | 0.81 | 169 | 0.48 | review | Same or closely related topic; use only when the tier calls for close distractors. |
+| Low-elevation land (`AG.LND.EL5M.ZS`) | 0.37 | 0.78 | 169 | 0.46 | review | Same or closely related topic; use only when the tier calls for close distractors. |
+| Rural low-elevation land (`AG.LND.EL5M.RU.ZS`) | 0.33 | 0.77 | 169 | 0.46 | review | Same or closely related topic; use only when the tier calls for close distractors. |
+| Freshwater per person (`ER.H2O.INTR.PC`) | 0.39 | 0.11 | 164 | 0.15 | ok | Reasonable distractor candidate; no major automated warning. |
+
+## Urban open defecation (`SH.STA.ODFC.UR.ZS`)
+
+- Approved status: approved
+- Category: settlement
+- Difficulty: expert
+- Coverage: 145 countries
+- Warning level: review
+
+| Correlated indicator | Pearson | Spearman | Overlap | Visual similarity | Warning | Notes |
+| --- | ---: | ---: | ---: | ---: | --- | --- |
+| Rural open defecation (`SH.STA.ODFC.RU.ZS`) | 0.85 | 0.76 | 139 | 0.62 | review | Same or closely related topic; use only when the tier calls for close distractors. |
+| Open defecation (`SH.STA.ODFC.ZS`) | 0.84 | 0.84 | 140 | 0.67 | review | Same or closely related topic; use only when the tier calls for close distractors. |
+| Electricity access (`EG.ELC.ACCS.ZS`) | -0.58 | -0.82 | 145 | 0.06 | ok | Reasonable distractor candidate; no major automated warning. |
+| Rural electricity access (`EG.ELC.ACCS.RU.ZS`) | -0.56 | -0.82 | 144 | 0.06 | ok | Reasonable distractor candidate; no major automated warning. |
+| Urban electricity access (`EG.ELC.ACCS.UR.ZS`) | -0.65 | -0.78 | 145 | 0.00 | review | Same or closely related topic; use only when the tier calls for close distractors. |
+| Basic sanitation access (`SH.STA.BASS.ZS`) | -0.64 | -0.78 | 143 | 0.03 | ok | Reasonable distractor candidate; no major automated warning. |
 
 ## Urban population (`SP.URB.TOTL.IN.ZS`)
 
@@ -2668,11 +3654,11 @@ This automated review helps editors avoid distractors that are too weak, too obv
 | Correlated indicator | Pearson | Spearman | Overlap | Visual similarity | Warning | Notes |
 | --- | ---: | ---: | ---: | ---: | --- | --- |
 | Rural population (`SP.RUR.TOTL.ZS`) | -1.00 | -1.00 | 169 | 0.14 | high | Very high correlation can make the pair unfairly ambiguous. Same or closely related topic; use only when the tier calls for close distractors. |
+| Female services employment (`SL.SRV.EMPL.FE.ZS`) | 0.77 | 0.79 | 163 | 0.33 | ok | Reasonable distractor candidate; no major automated warning. |
+| Female agricultural employment (`SL.AGR.EMPL.FE.ZS`) | -0.74 | -0.77 | 163 | 0.05 | ok | Reasonable distractor candidate; no major automated warning. |
 | Employment in services (`SL.SRV.EMPL.ZS`) | 0.76 | 0.77 | 163 | 0.36 | ok | Reasonable distractor candidate; no major automated warning. |
 | Employment in agriculture (`SL.AGR.EMPL.ZS`) | -0.75 | -0.76 | 163 | 0.05 | ok | Reasonable distractor candidate; no major automated warning. |
-| Agriculture value per worker (`NV.AGR.EMPL.KD`) | 0.54 | 0.74 | 146 | 0.34 | ok | Reasonable distractor candidate; no major automated warning. |
-| GNI per capita (`NY.GNP.PCAP.CD`) | 0.58 | 0.73 | 159 | 0.29 | ok | Reasonable distractor candidate; no major automated warning. |
-| Internet users (`IT.NET.USER.ZS`) | 0.72 | 0.71 | 154 | 0.29 | ok | Reasonable distractor candidate; no major automated warning. |
+| Male services employment (`SL.SRV.EMPL.MA.ZS`) | 0.73 | 0.75 | 163 | 0.37 | ok | Reasonable distractor candidate; no major automated warning. |
 
 ## Urban population growth (`SP.URB.GROW`)
 
@@ -2689,7 +3675,7 @@ This automated review helps editors avoid distractors that are too weak, too obv
 | Birth rate (`SP.DYN.CBRT.IN`) | 0.77 | 0.80 | 169 | 0.37 | ok | Reasonable distractor candidate; no major automated warning. |
 | Population ages 0-14 (`SP.POP.0014.TO.ZS`) | 0.74 | 0.77 | 169 | 0.39 | review | Same or closely related topic; use only when the tier calls for close distractors. |
 | Fertility rate (`SP.DYN.TFRT.IN`) | 0.76 | 0.77 | 169 | 0.40 | ok | Reasonable distractor candidate; no major automated warning. |
-| Physicians (`SH.MED.PHYS.ZS`) | -0.65 | -0.72 | 121 | 0.04 | ok | Reasonable distractor candidate; no major automated warning. |
+| Rural population growth (`SP.RUR.TOTL.ZG`) | 0.67 | 0.73 | 168 | 0.30 | review | Same or closely related topic; use only when the tier calls for close distractors. |
 
 ## Urban slum population (`EN.POP.SLUM.UR.ZS`)
 
@@ -2702,11 +3688,11 @@ This automated review helps editors avoid distractors that are too weak, too obv
 | Correlated indicator | Pearson | Spearman | Overlap | Visual similarity | Warning | Notes |
 | --- | ---: | ---: | ---: | ---: | --- | --- |
 | Safely managed drinking water (`SH.H2O.SMDW.ZS`) | -0.82 | -0.87 | 108 | 0.01 | ok | Reasonable distractor candidate; no major automated warning. |
+| Female vulnerable employment (`SL.EMP.VULN.FE.ZS`) | 0.85 | 0.87 | 148 | 0.43 | ok | Reasonable distractor candidate; no major automated warning. |
+| Female self-employed (`SL.EMP.SELF.FE.ZS`) | 0.85 | 0.87 | 148 | 0.42 | ok | Reasonable distractor candidate; no major automated warning. |
+| Female wage workers (`SL.EMP.WORK.FE.ZS`) | -0.85 | -0.87 | 148 | 0.09 | ok | Reasonable distractor candidate; no major automated warning. |
 | Health spending per person (`SH.XPD.CHEX.PC.CD`) | -0.52 | -0.86 | 148 | 0.09 | ok | Reasonable distractor candidate; no major automated warning. |
 | Electric power use (`EG.USE.ELEC.KH.PC`) | -0.48 | -0.86 | 127 | 0.09 | ok | Reasonable distractor candidate; no major automated warning. |
-| GNI per capita (`NY.GNP.PCAP.CD`) | -0.59 | -0.86 | 142 | 0.10 | ok | Reasonable distractor candidate; no major automated warning. |
-| Maternal mortality (`SH.STA.MMRT`) | 0.73 | 0.86 | 150 | 0.38 | ok | Reasonable distractor candidate; no major automated warning. |
-| Self-employed workers (`SL.EMP.SELF.ZS`) | 0.84 | 0.86 | 148 | 0.36 | ok | Reasonable distractor candidate; no major automated warning. |
 
 ## Vulnerable employment (`SL.EMP.VULN.ZS`)
 
@@ -2720,10 +3706,10 @@ This automated review helps editors avoid distractors that are too weak, too obv
 | --- | ---: | ---: | ---: | ---: | --- | --- |
 | Wage and salaried workers (`SL.EMP.WORK.ZS`) | -0.99 | -0.99 | 163 | 0.10 | high | Very high correlation can make the pair unfairly ambiguous. Same or closely related topic; use only when the tier calls for close distractors. |
 | Self-employed workers (`SL.EMP.SELF.ZS`) | 0.99 | 0.99 | 163 | 0.84 | high | Very high correlation can make the pair unfairly ambiguous. Same or closely related topic; use only when the tier calls for close distractors. |
-| Employment in agriculture (`SL.AGR.EMPL.ZS`) | 0.90 | 0.91 | 163 | 0.55 | high | Very high correlation can make the pair unfairly ambiguous. Same or closely related topic; use only when the tier calls for close distractors. |
-| GNI per capita, PPP (`NY.GNP.PCAP.PP.CD`) | -0.76 | -0.89 | 154 | 0.09 | ok | Reasonable distractor candidate; no major automated warning. |
-| GNI per capita (`NY.GNP.PCAP.CD`) | -0.65 | -0.88 | 156 | 0.11 | ok | Reasonable distractor candidate; no major automated warning. |
-| GDP per capita, PPP (`NY.GDP.PCAP.PP.CD`) | -0.74 | -0.88 | 154 | 0.09 | ok | Reasonable distractor candidate; no major automated warning. |
+| Male vulnerable employment (`SL.EMP.VULN.MA.ZS`) | 0.99 | 0.99 | 163 | 0.84 | high | Very high correlation can make the pair unfairly ambiguous. Same or closely related topic; use only when the tier calls for close distractors. |
+| Female vulnerable employment (`SL.EMP.VULN.FE.ZS`) | 0.99 | 0.99 | 163 | 0.76 | high | Very high correlation can make the pair unfairly ambiguous. Same or closely related topic; use only when the tier calls for close distractors. |
+| Male self-employed (`SL.EMP.SELF.MA.ZS`) | 0.98 | 0.99 | 163 | 0.81 | high | Very high correlation can make the pair unfairly ambiguous. Same or closely related topic; use only when the tier calls for close distractors. |
+| Male wage workers (`SL.EMP.WORK.MA.ZS`) | -0.98 | -0.99 | 163 | 0.09 | high | Very high correlation can make the pair unfairly ambiguous. Same or closely related topic; use only when the tier calls for close distractors. |
 
 ## Wage and salaried workers (`SL.EMP.WORK.ZS`)
 
@@ -2737,10 +3723,10 @@ This automated review helps editors avoid distractors that are too weak, too obv
 | --- | ---: | ---: | ---: | ---: | --- | --- |
 | Self-employed workers (`SL.EMP.SELF.ZS`) | -1.00 | -1.00 | 163 | 0.14 | high | Very high correlation can make the pair unfairly ambiguous. Same or closely related topic; use only when the tier calls for close distractors. |
 | Vulnerable employment (`SL.EMP.VULN.ZS`) | -0.99 | -0.99 | 163 | 0.10 | high | Very high correlation can make the pair unfairly ambiguous. Same or closely related topic; use only when the tier calls for close distractors. |
-| Employment in agriculture (`SL.AGR.EMPL.ZS`) | -0.89 | -0.90 | 163 | 0.06 | high | Very high correlation can make the pair unfairly ambiguous. Same or closely related topic; use only when the tier calls for close distractors. |
-| GNI per capita, PPP (`NY.GNP.PCAP.PP.CD`) | 0.77 | 0.88 | 154 | 0.43 | ok | Reasonable distractor candidate; no major automated warning. |
-| GNI per capita (`NY.GNP.PCAP.CD`) | 0.66 | 0.88 | 156 | 0.45 | ok | Reasonable distractor candidate; no major automated warning. |
-| GDP per capita, PPP (`NY.GDP.PCAP.PP.CD`) | 0.75 | 0.88 | 154 | 0.41 | ok | Reasonable distractor candidate; no major automated warning. |
+| Male self-employed (`SL.EMP.SELF.MA.ZS`) | -0.99 | -0.99 | 163 | 0.11 | high | Very high correlation can make the pair unfairly ambiguous. Same or closely related topic; use only when the tier calls for close distractors. |
+| Male wage workers (`SL.EMP.WORK.MA.ZS`) | 0.99 | 0.99 | 163 | 0.85 | high | Very high correlation can make the pair unfairly ambiguous. Same or closely related topic; use only when the tier calls for close distractors. |
+| Female wage workers (`SL.EMP.WORK.FE.ZS`) | 0.99 | 0.99 | 163 | 0.75 | high | Very high correlation can make the pair unfairly ambiguous. Same or closely related topic; use only when the tier calls for close distractors. |
+| Female self-employed (`SL.EMP.SELF.FE.ZS`) | -0.99 | -0.99 | 163 | 0.09 | high | Very high correlation can make the pair unfairly ambiguous. Same or closely related topic; use only when the tier calls for close distractors. |
 
 ## Water productivity (`ER.GDP.FWTL.M3.KD`)
 
@@ -2810,22 +3796,39 @@ This automated review helps editors avoid distractors that are too weak, too obv
 | Health expenditure (`SH.XPD.CHEX.GD.ZS`) | 0.36 | 0.40 | 154 | 0.21 | ok | Reasonable distractor candidate; no major automated warning. |
 | Secondary enrollment (`SE.SEC.ENRR`) | 0.31 | 0.39 | 116 | 0.28 | ok | Reasonable distractor candidate; no major automated warning. |
 
+## Youth employment-to-population ratio (`SL.EMP.1524.SP.ZS`)
+
+- Approved status: approved
+- Category: labor
+- Difficulty: standard
+- Coverage: 163 countries
+- Warning level: high
+
+| Correlated indicator | Pearson | Spearman | Overlap | Visual similarity | Warning | Notes |
+| --- | ---: | ---: | ---: | ---: | --- | --- |
+| Youth labor force participation (`SL.TLF.ACTI.1524.ZS`) | 0.97 | 0.96 | 163 | 0.62 | high | Very high correlation can make the pair unfairly ambiguous. Same or closely related topic; use only when the tier calls for close distractors. |
+| Employment-to-population ratio (`SL.EMP.TOTL.SP.ZS`) | 0.80 | 0.79 | 163 | 0.40 | review | Same or closely related topic; use only when the tier calls for close distractors. |
+| Labor force participation (`SL.TLF.CACT.ZS`) | 0.77 | 0.75 | 163 | 0.39 | review | Same or closely related topic; use only when the tier calls for close distractors. |
+| Female employment-to-population ratio (`SL.EMP.TOTL.SP.FE.ZS`) | 0.73 | 0.74 | 163 | 0.31 | review | Same or closely related topic; use only when the tier calls for close distractors. |
+| Male employment-to-population ratio (`SL.EMP.TOTL.SP.MA.ZS`) | 0.71 | 0.72 | 163 | 0.32 | review | Same or closely related topic; use only when the tier calls for close distractors. |
+| Female labor force participation (`SL.TLF.CACT.FE.ZS`) | 0.68 | 0.68 | 163 | 0.33 | review | Same or closely related topic; use only when the tier calls for close distractors. |
+
 ## Youth labor force participation (`SL.TLF.ACTI.1524.ZS`)
 
 - Approved status: approved
 - Category: labor
 - Difficulty: expert
 - Coverage: 163 countries
-- Warning level: review
+- Warning level: high
 
 | Correlated indicator | Pearson | Spearman | Overlap | Visual similarity | Warning | Notes |
 | --- | ---: | ---: | ---: | ---: | --- | --- |
+| Youth employment-to-population ratio (`SL.EMP.1524.SP.ZS`) | 0.97 | 0.96 | 163 | 0.62 | high | Very high correlation can make the pair unfairly ambiguous. Same or closely related topic; use only when the tier calls for close distractors. |
 | Labor force participation (`SL.TLF.CACT.ZS`) | 0.76 | 0.75 | 163 | 0.38 | review | Same or closely related topic; use only when the tier calls for close distractors. |
 | Employment-to-population ratio (`SL.EMP.TOTL.SP.ZS`) | 0.74 | 0.73 | 163 | 0.36 | review | Same or closely related topic; use only when the tier calls for close distractors. |
 | Female labor force participation (`SL.TLF.CACT.FE.ZS`) | 0.68 | 0.71 | 163 | 0.29 | review | Same or closely related topic; use only when the tier calls for close distractors. |
+| Female employment-to-population ratio (`SL.EMP.TOTL.SP.FE.ZS`) | 0.70 | 0.70 | 163 | 0.29 | review | Same or closely related topic; use only when the tier calls for close distractors. |
 | Male labor force participation (`SL.TLF.CACT.MA.ZS`) | 0.65 | 0.65 | 163 | 0.30 | review | Same or closely related topic; use only when the tier calls for close distractors. |
-| Female-to-male labor force ratio (`SL.TLF.CACT.FM.ZS`) | 0.45 | 0.47 | 163 | 0.23 | review | Same or closely related topic; use only when the tier calls for close distractors. |
-| Youth unemployment (`SL.UEM.1524.ZS`) | -0.45 | -0.44 | 163 | 0.11 | review | Same or closely related topic; use only when the tier calls for close distractors. |
 
 ## Youth unemployment (`SL.UEM.1524.ZS`)
 
@@ -2841,6 +3844,6 @@ This automated review helps editors avoid distractors that are too weak, too obv
 | Male unemployment (`SL.UEM.TOTL.MA.ZS`) | 0.90 | 0.87 | 163 | 0.46 | high | Very high correlation can make the pair unfairly ambiguous. Same or closely related topic; use only when the tier calls for close distractors. |
 | Female unemployment (`SL.UEM.TOTL.FE.ZS`) | 0.90 | 0.90 | 163 | 0.48 | review | Same or closely related topic; use only when the tier calls for close distractors. |
 | Employment-to-population ratio (`SL.EMP.TOTL.SP.ZS`) | -0.67 | -0.65 | 163 | 0.10 | review | Same or closely related topic; use only when the tier calls for close distractors. |
-| Labor force participation (`SL.TLF.CACT.ZS`) | -0.51 | -0.49 | 163 | 0.09 | review | Same or closely related topic; use only when the tier calls for close distractors. |
-| Male labor force participation (`SL.TLF.CACT.MA.ZS`) | -0.46 | -0.45 | 163 | 0.12 | review | Same or closely related topic; use only when the tier calls for close distractors. |
+| Male employment-to-population ratio (`SL.EMP.TOTL.SP.MA.ZS`) | -0.65 | -0.63 | 163 | 0.09 | review | Same or closely related topic; use only when the tier calls for close distractors. |
+| Youth employment-to-population ratio (`SL.EMP.1524.SP.ZS`) | -0.63 | -0.64 | 163 | 0.10 | review | Same or closely related topic; use only when the tier calls for close distractors. |
 

@@ -4,30 +4,29 @@
   "date": "2026-06-22",
   "contentVersion": "2026.06.22-exp2-qa1",
   "roundIds": [
-    "worldprint-industry-share",
-    "worldprint-employment-agriculture",
-    "worldprint-urban-population",
-    "worldprint-open-defecation",
-    "worldprint-safe-drinking-water"
+    "worldprint-permanent-cropland",
+    "worldprint-undernourishment",
+    "worldprint-out-of-school-primary",
+    "worldprint-protected-land",
+    "worldprint-health-expenditure"
   ],
   "indicatorIds": [
-    "industry-share",
-    "employment-agriculture",
-    "urban-population",
-    "open-defecation",
-    "safe-drinking-water"
+    "permanent-cropland",
+    "undernourishment",
+    "out-of-school-primary",
+    "protected-land",
+    "health-expenditure"
   ],
   "categoryMix": {
-    "economy": 1,
-    "labor": 1,
-    "settlement": 1,
-    "health": 2
+    "land": 1,
+    "health": 2,
+    "education": 1,
+    "environment": 1
   },
   "mapDifficultyMix": {
-    "standard": 3,
-    "intro": 2
+    "standard": 5
   },
-  "generatedAt": "2026-06-27T15:17:17.652Z",
+  "generatedAt": "2026-06-27T17:16:22.616395+00:00",
   "generatorVersion": "daily-manifest-v2",
   "varietyNotes": [
     "Selected with category, difficulty, repeat-cooldown, and same-day correlation safeguards."

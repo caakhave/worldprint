@@ -4,31 +4,32 @@
   "date": "2026-06-15",
   "contentVersion": "2026.06.22-exp2-qa1",
   "roundIds": [
-    "worldprint-arable-land-per-person",
-    "worldprint-maternal-mortality",
+    "worldprint-renewable-electricity",
     "worldprint-life-expectancy",
-    "worldprint-electricity-access",
-    "worldprint-industry-share"
+    "worldprint-compulsory-education-duration",
+    "worldprint-permanent-cropland",
+    "worldprint-fertility-rate"
   ],
   "indicatorIds": [
-    "arable-land-per-person",
-    "maternal-mortality",
+    "renewable-electricity",
     "life-expectancy",
-    "electricity-access",
-    "industry-share"
+    "compulsory-education-duration",
+    "permanent-cropland",
+    "fertility-rate"
   ],
   "categoryMix": {
-    "land": 1,
-    "health": 2,
     "energy": 1,
-    "economy": 1
+    "health": 1,
+    "education": 1,
+    "land": 1,
+    "demography": 1
   },
   "mapDifficultyMix": {
-    "expert": 1,
-    "standard": 2,
-    "intro": 2
+    "standard": 3,
+    "intro": 1,
+    "expert": 1
   },
-  "generatedAt": "2026-06-27T15:17:17.652Z",
+  "generatedAt": "2026-06-27T17:16:22.615039+00:00",
   "generatorVersion": "daily-manifest-v2",
   "varietyNotes": [
     "Selected with category, difficulty, repeat-cooldown, and same-day correlation safeguards."

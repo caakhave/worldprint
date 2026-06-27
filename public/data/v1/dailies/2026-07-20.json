@@ -4,29 +4,31 @@
   "date": "2026-07-20",
   "contentVersion": "2026.06.22-exp2-qa1",
   "roundIds": [
-    "worldprint-basic-sanitation",
-    "worldprint-open-defecation",
-    "worldprint-trade-share",
-    "worldprint-secondary-enrollment",
-    "worldprint-migrant-stock"
+    "worldprint-electricity-access",
+    "worldprint-life-expectancy",
+    "worldprint-compulsory-education-duration",
+    "worldprint-arable-land-per-person",
+    "worldprint-basic-sanitation"
   ],
   "indicatorIds": [
-    "basic-sanitation",
-    "open-defecation",
-    "trade-share",
-    "secondary-enrollment",
-    "migrant-stock"
+    "electricity-access",
+    "life-expectancy",
+    "compulsory-education-duration",
+    "arable-land-per-person",
+    "basic-sanitation"
   ],
   "categoryMix": {
+    "energy": 1,
     "health": 2,
-    "economy": 1,
     "education": 1,
-    "demography": 1
+    "land": 1
   },
   "mapDifficultyMix": {
-    "standard": 5
+    "intro": 2,
+    "expert": 2,
+    "standard": 1
   },
-  "generatedAt": "2026-06-27T15:17:17.652Z",
+  "generatedAt": "2026-06-27T17:16:22.621001+00:00",
   "generatorVersion": "daily-manifest-v2",
   "varietyNotes": [
     "Selected with category, difficulty, repeat-cooldown, and same-day correlation safeguards."

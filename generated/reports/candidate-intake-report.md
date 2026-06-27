@@ -1,11 +1,11 @@
 # WORLDPRINT Candidate Intake Report
 
-Generated: 2026-06-22T18:05:31.361301+00:00
+Generated: 2026-06-27T17:13:47.895765+00:00
 Content version: 2026.06.22-exp2-qa1
 
 - Built-in curated candidates: 100
-- Intake candidates loaded: 98
-- Total candidate bank: 198
+- Intake candidates loaded: 185
+- Total candidate bank: 285
 - Intake source: `content/candidates/worldprint-candidate-intake.json`
 
 ## Future Batch Workflow

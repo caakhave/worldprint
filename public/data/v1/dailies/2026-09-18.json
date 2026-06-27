@@ -4,30 +4,31 @@
   "date": "2026-09-18",
   "contentVersion": "2026.06.22-exp2-qa1",
   "roundIds": [
-    "worldprint-account-ownership",
-    "worldprint-total-protected-areas",
-    "worldprint-employment-agriculture",
-    "worldprint-manufacturing-share",
-    "worldprint-population-density"
+    "worldprint-life-expectancy",
+    "worldprint-age-dependency",
+    "worldprint-measles-immunization",
+    "worldprint-secondary-enrollment",
+    "worldprint-arable-land-per-person"
   ],
   "indicatorIds": [
-    "account-ownership",
-    "total-protected-areas",
-    "employment-agriculture",
-    "manufacturing-share",
-    "population-density"
+    "life-expectancy",
+    "age-dependency",
+    "measles-immunization",
+    "secondary-enrollment",
+    "arable-land-per-person"
   ],
   "categoryMix": {
-    "development": 1,
-    "environment": 1,
-    "labor": 1,
-    "economy": 1,
-    "settlement": 1
+    "health": 2,
+    "demography": 1,
+    "education": 1,
+    "land": 1
   },
   "mapDifficultyMix": {
-    "standard": 5
+    "intro": 1,
+    "standard": 3,
+    "expert": 1
   },
-  "generatedAt": "2026-06-27T15:17:17.652Z",
+  "generatedAt": "2026-06-27T17:16:22.630402+00:00",
   "generatorVersion": "daily-manifest-v2",
   "varietyNotes": [
     "Selected with category, difficulty, repeat-cooldown, and same-day correlation safeguards."

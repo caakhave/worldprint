@@ -208,7 +208,7 @@
     "valuesReference": "https://api.worldbank.org/v2/country/all/indicator/EN.POP.DNST?format=json&per_page=20000&page=1&date=2015%3A2025",
     "license": "Creative Commons Attribution 4.0 International unless specifically labeled otherwise by World Bank metadata",
     "licenseReference": "https://www.worldbank.org/en/about/legal/terms-of-use-for-datasets",
-    "retrievedAt": "2026-06-22T18:05:40.847131+00:00",
+    "retrievedAt": "2026-06-27T17:13:56.048454+00:00",
     "checksum": "d2cf21aecc08d321ca062c9ee19ad48e397d01dc3a53e2aac7d0abe1d4c55ced",
     "sourceOrganization": "FAO population estimates, Food and Agriculture Organization of the United Nations (FAO), publisher: Food and Agriculture Organization of the United Nations (FAO);\nWorld Bank population estimates, World Bank (WB), publisher: World Bank (WB)"
   },
@@ -242,8 +242,8 @@
         "reason": "Arable land overlaps with part of the visible pattern, but the full country spread does not match."
       },
       {
-        "confusedWithIndicatorCode": "NY.GDP.TOTL.RT.ZS",
-        "reason": "Natural resource rents overlaps with part of the visible pattern, but the full country spread does not match."
+        "confusedWithIndicatorCode": "AG.LND.EL5M.UR.ZS",
+        "reason": "Urban low-elevation land lives in the same category, so it can feel plausible until the high and low countries are checked."
       }
     ],
     "difficultyReason": "Standard difficulty: the map has readable regional structure, but the best answer still depends on checking the unit and country anchors.",

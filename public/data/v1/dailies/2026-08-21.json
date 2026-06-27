@@ -4,31 +4,30 @@
   "date": "2026-08-21",
   "contentVersion": "2026.06.22-exp2-qa1",
   "roundIds": [
-    "worldprint-employment-agriculture",
-    "worldprint-manufacturing-share",
-    "worldprint-under-five-mortality",
-    "worldprint-forest-area",
-    "worldprint-fertility-rate"
+    "worldprint-older-adults-share",
+    "worldprint-out-of-school-primary",
+    "worldprint-rural-basic-sanitation",
+    "worldprint-migrant-stock",
+    "worldprint-precipitation-depth"
   ],
   "indicatorIds": [
-    "employment-agriculture",
-    "manufacturing-share",
-    "under-five-mortality",
-    "forest-area",
-    "fertility-rate"
+    "older-adults-share",
+    "out-of-school-primary",
+    "rural-basic-sanitation",
+    "migrant-stock",
+    "precipitation-depth"
   ],
   "categoryMix": {
-    "labor": 1,
-    "economy": 1,
-    "health": 1,
-    "environment": 1,
-    "demography": 1
+    "demography": 2,
+    "education": 1,
+    "settlement": 1,
+    "environment": 1
   },
   "mapDifficultyMix": {
-    "standard": 4,
-    "intro": 1
+    "intro": 1,
+    "standard": 4
   },
-  "generatedAt": "2026-06-27T15:17:17.652Z",
+  "generatedAt": "2026-06-27T17:16:22.625567+00:00",
   "generatorVersion": "daily-manifest-v2",
   "varietyNotes": [
     "Selected with category, difficulty, repeat-cooldown, and same-day correlation safeguards."

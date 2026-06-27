@@ -177,7 +177,7 @@
     "valuesReference": "https://api.worldbank.org/v2/country/all/indicator/ST.INT.ARVL?format=json&per_page=20000&page=1&date=2015%3A2025",
     "license": "Creative Commons Attribution 4.0 International unless specifically labeled otherwise by World Bank metadata",
     "licenseReference": "https://www.worldbank.org/en/about/legal/terms-of-use-for-datasets",
-    "retrievedAt": "2026-06-22T18:06:24.147096+00:00",
+    "retrievedAt": "2026-06-27T17:14:31.465840+00:00",
     "checksum": "bec541475cb97d03eac8526b464afa5dba3ce147d5156ac3923f9bcb4f61963b",
     "sourceOrganization": "Yearbook of Tourism Statistics, Compendium of Tourism Statistics and data files, UN Tourism"
   },
@@ -203,16 +203,16 @@
     ],
     "commonConfusions": [
       {
+        "confusedWithIndicatorCode": "IS.AIR.PSGR",
+        "reason": "Air passengers carried can tempt players because it shares a strong country ranking with this map, but its unit and definition point to a different story."
+      },
+      {
+        "confusedWithIndicatorCode": "IS.SHP.GOOD.TU",
+        "reason": "Container port traffic can tempt players because it shares a strong country ranking with this map, but its unit and definition point to a different story."
+      },
+      {
         "confusedWithIndicatorCode": "SH.STA.SMSS.ZS",
         "reason": "Safely managed sanitation can tempt players because it shares a strong country ranking with this map, but its unit and definition point to a different story."
-      },
-      {
-        "confusedWithIndicatorCode": "LP.LPI.INFR.XQ",
-        "reason": "Logistics infrastructure quality can tempt players because it shares a strong country ranking with this map, but its unit and definition point to a different story."
-      },
-      {
-        "confusedWithIndicatorCode": "EG.CFT.ACCS.RU.ZS",
-        "reason": "Rural clean cooking access can tempt players because it shares a strong country ranking with this map, but its unit and definition point to a different story."
       }
     ],
     "difficultyReason": "Standard difficulty: the map has readable regional structure, but the best answer still depends on checking the unit and country anchors.",

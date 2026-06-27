@@ -170,7 +170,7 @@
     "valuesReference": "https://api.worldbank.org/v2/country/all/indicator/LP.LPI.OVRL.XQ?format=json&per_page=20000&page=1&date=2015%3A2025",
     "license": "Creative Commons Attribution 4.0 International unless specifically labeled otherwise by World Bank metadata",
     "licenseReference": "https://www.worldbank.org/en/about/legal/terms-of-use-for-datasets",
-    "retrievedAt": "2026-06-22T18:07:21.251235+00:00",
+    "retrievedAt": "2026-06-27T17:15:18.485570+00:00",
     "checksum": "0f921bd213e9414a1a85262112e9654ec22f468d2be2f7f1dde5c8b3f46d4657",
     "sourceOrganization": "Connecting to Compete - Logistics Performance Index (LPI), World Bank (WB), uri: https://lpi.worldbank.org"
   },
@@ -196,16 +196,16 @@
     ],
     "commonConfusions": [
       {
+        "confusedWithIndicatorCode": "LP.LPI.TRAC.XQ",
+        "reason": "Logistics tracking score can tempt players because it shares a strong country ranking with this map, but its unit and definition point to a different story."
+      },
+      {
         "confusedWithIndicatorCode": "LP.LPI.INFR.XQ",
         "reason": "Logistics infrastructure quality can tempt players because it shares a strong country ranking with this map, but its unit and definition point to a different story."
       },
       {
-        "confusedWithIndicatorCode": "SH.XPD.CHEX.PC.CD",
-        "reason": "Health spending per person can tempt players because it shares a strong country ranking with this map, but its unit and definition point to a different story."
-      },
-      {
-        "confusedWithIndicatorCode": "NY.GNP.PCAP.PP.CD",
-        "reason": "GNI per capita, PPP can tempt players because it shares a strong country ranking with this map, but its unit and definition point to a different story."
+        "confusedWithIndicatorCode": "LP.LPI.CUST.XQ",
+        "reason": "Logistics customs score can tempt players because it shares a strong country ranking with this map, but its unit and definition point to a different story."
       }
     ],
     "difficultyReason": "Expert difficulty: the map can be mistaken for adjacent indicators unless players probe a high, low, and middle country.",

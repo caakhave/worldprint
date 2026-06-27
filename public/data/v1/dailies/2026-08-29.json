@@ -4,30 +4,32 @@
   "date": "2026-08-29",
   "contentVersion": "2026.06.22-exp2-qa1",
   "roundIds": [
-    "worldprint-unemployment",
-    "worldprint-women-parliament",
-    "worldprint-freshwater-per-capita",
-    "worldprint-trade-share",
-    "worldprint-population-density"
+    "worldprint-government-education-spending-share",
+    "worldprint-rural-population-growth",
+    "worldprint-renewable-electricity",
+    "worldprint-older-adults-share",
+    "worldprint-measles-immunization"
   ],
   "indicatorIds": [
-    "unemployment",
-    "women-parliament",
-    "freshwater-per-capita",
-    "trade-share",
-    "population-density"
+    "government-education-spending-share",
+    "rural-population-growth",
+    "renewable-electricity",
+    "older-adults-share",
+    "measles-immunization"
   ],
   "categoryMix": {
-    "labor": 1,
-    "development": 1,
-    "environment": 1,
-    "economy": 1,
-    "settlement": 1
+    "education": 1,
+    "settlement": 1,
+    "energy": 1,
+    "demography": 1,
+    "health": 1
   },
   "mapDifficultyMix": {
-    "standard": 5
+    "expert": 1,
+    "standard": 3,
+    "intro": 1
   },
-  "generatedAt": "2026-06-27T15:17:17.652Z",
+  "generatedAt": "2026-06-27T17:16:22.626957+00:00",
   "generatorVersion": "daily-manifest-v2",
   "varietyNotes": [
     "Selected with category, difficulty, repeat-cooldown, and same-day correlation safeguards."

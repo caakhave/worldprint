@@ -195,7 +195,7 @@
     "valuesReference": "https://api.worldbank.org/v2/country/all/indicator/SG.GEN.PARL.ZS?format=json&per_page=20000&page=1&date=2015%3A2025",
     "license": "Creative Commons Attribution 4.0 International unless specifically labeled otherwise by World Bank metadata",
     "licenseReference": "https://www.worldbank.org/en/about/legal/terms-of-use-for-datasets",
-    "retrievedAt": "2026-06-22T18:06:22.218956+00:00",
+    "retrievedAt": "2026-06-27T17:14:29.756440+00:00",
     "checksum": "c82ccd1f16b236341748fb07710267bf0412be9c39b85faa67b4364c5e6b66e5",
     "sourceOrganization": "Monthly ranking of women in national parliaments, Inter-Parliamentary Union (IPU), uri: https://data.ipu.org/women-ranking/, note: For the year of 1998, the data is as of August 10, 1998., type: Excel, date accessed: 2026-03-29"
   },

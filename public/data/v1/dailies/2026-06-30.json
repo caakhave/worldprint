@@ -4,31 +4,31 @@
   "date": "2026-06-30",
   "contentVersion": "2026.06.22-exp2-qa1",
   "roundIds": [
-    "worldprint-physicians",
-    "worldprint-electric-power-use",
-    "worldprint-precipitation-depth",
-    "worldprint-cereal-yield",
-    "worldprint-secondary-enrollment"
+    "worldprint-land-under-cereal",
+    "worldprint-communications-service-exports",
+    "worldprint-secondary-enrollment",
+    "worldprint-total-protected-areas",
+    "worldprint-urban-basic-drinking-water"
   ],
   "indicatorIds": [
-    "physicians",
-    "electric-power-use",
-    "precipitation-depth",
-    "cereal-yield",
-    "secondary-enrollment"
+    "land-under-cereal",
+    "communications-service-exports",
+    "secondary-enrollment",
+    "total-protected-areas",
+    "urban-basic-drinking-water"
   ],
   "categoryMix": {
-    "health": 1,
-    "energy": 1,
+    "land": 1,
+    "connectivity": 1,
+    "education": 1,
     "environment": 1,
-    "agriculture": 1,
-    "education": 1
+    "settlement": 1
   },
   "mapDifficultyMix": {
-    "standard": 4,
-    "expert": 1
+    "expert": 2,
+    "standard": 3
   },
-  "generatedAt": "2026-06-27T15:17:17.652Z",
+  "generatedAt": "2026-06-27T17:16:22.617652+00:00",
   "generatorVersion": "daily-manifest-v2",
   "varietyNotes": [
     "Selected with category, difficulty, repeat-cooldown, and same-day correlation safeguards."

@@ -4,31 +4,29 @@
   "date": "2026-07-23",
   "contentVersion": "2026.06.22-exp2-qa1",
   "roundIds": [
-    "worldprint-forest-area",
     "worldprint-industry-share",
-    "worldprint-fertility-rate",
-    "worldprint-food-production-index",
-    "worldprint-undernourishment"
+    "worldprint-measles-immunization",
+    "worldprint-secondary-enrollment",
+    "worldprint-under-five-mortality",
+    "worldprint-migrant-stock"
   ],
   "indicatorIds": [
-    "forest-area",
     "industry-share",
-    "fertility-rate",
-    "food-production-index",
-    "undernourishment"
+    "measles-immunization",
+    "secondary-enrollment",
+    "under-five-mortality",
+    "migrant-stock"
   ],
   "categoryMix": {
-    "environment": 1,
     "economy": 1,
-    "demography": 1,
-    "agriculture": 1,
-    "health": 1
+    "health": 2,
+    "education": 1,
+    "demography": 1
   },
   "mapDifficultyMix": {
-    "intro": 1,
-    "standard": 4
+    "standard": 5
   },
-  "generatedAt": "2026-06-27T15:17:17.652Z",
+  "generatedAt": "2026-06-27T17:16:22.621451+00:00",
   "generatorVersion": "daily-manifest-v2",
   "varietyNotes": [
     "Selected with category, difficulty, repeat-cooldown, and same-day correlation safeguards."

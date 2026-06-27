@@ -4,30 +4,30 @@
   "date": "2026-09-08",
   "contentVersion": "2026.06.22-exp2-qa1",
   "roundIds": [
-    "worldprint-mobile-subscriptions",
-    "worldprint-food-production-index",
-    "worldprint-physicians",
-    "worldprint-secondary-enrollment",
-    "worldprint-permanent-cropland"
+    "worldprint-electricity-access",
+    "worldprint-women-parliament",
+    "worldprint-forest-area",
+    "worldprint-youth-employment-ratio",
+    "worldprint-energy-use"
   ],
   "indicatorIds": [
-    "mobile-subscriptions",
-    "food-production-index",
-    "physicians",
-    "secondary-enrollment",
-    "permanent-cropland"
+    "electricity-access",
+    "women-parliament",
+    "forest-area",
+    "youth-employment-ratio",
+    "energy-use"
   ],
   "categoryMix": {
-    "connectivity": 1,
-    "agriculture": 1,
-    "health": 1,
-    "education": 1,
-    "land": 1
+    "energy": 2,
+    "development": 1,
+    "environment": 1,
+    "labor": 1
   },
   "mapDifficultyMix": {
-    "standard": 5
+    "intro": 2,
+    "standard": 3
   },
-  "generatedAt": "2026-06-27T15:17:17.652Z",
+  "generatedAt": "2026-06-27T17:16:22.628535+00:00",
   "generatorVersion": "daily-manifest-v2",
   "varietyNotes": [
     "Selected with category, difficulty, repeat-cooldown, and same-day correlation safeguards."

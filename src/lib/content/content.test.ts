@@ -24,7 +24,7 @@ describe("generated content schemas", () => {
   it("parses the generated manifest and indicator artifact", () => {
     const manifest = ManifestSchema.parse(manifestJson);
     const indicator = IndicatorArtifactSchema.parse(fertilityJson);
-    expect(manifest.indicators.length).toBe(167);
+    expect(manifest.indicators.length).toBe(226);
     expect(indicator.reviewStatus).toBe("approved");
     expect(indicator.stats.coverage).toBeGreaterThanOrEqual(120);
     expect(indicator.editorial.patternNote).toContain("darkest");
@@ -42,7 +42,7 @@ describe("generated content schemas", () => {
 
   it("validates curated round choices", () => {
     const rounds = RoundsArtifactSchema.parse(roundsJson).rounds;
-    expect(rounds.length).toBe(125);
+    expect(rounds.length).toBe(175);
     for (const round of rounds) {
       expect(round.editorialStatus).not.toBe("retired");
       expect(round.editorialStatus).not.toBe("needs_review");
@@ -65,14 +65,14 @@ describe("generated content schemas", () => {
       approvedStatusCounts: Record<string, number>;
       indicators: Array<{ id: string; providerCode: string; approvalStatus: "approved" | "draft"; editorialReview: unknown }>;
     };
-    expect(registry.candidateCount).toBe(198);
-    expect(registry.approvedCount).toBe(167);
-    expect(registry.draftCount).toBe(31);
-    expect(registry.statusCounts).toMatchObject({ daily_eligible: 53, practice_eligible: 34, expert_only: 48, needs_review: 54, retired: 9 });
-    expect(registry.approvedStatusCounts).toMatchObject({ daily_eligible: 50, practice_eligible: 30, expert_only: 45, needs_review: 34, retired: 8 });
+    expect(registry.candidateCount).toBe(285);
+    expect(registry.approvedCount).toBe(226);
+    expect(registry.draftCount).toBe(59);
+    expect(registry.statusCounts).toMatchObject({ daily_eligible: 65, practice_eligible: 47, expert_only: 73, needs_review: 91, retired: 9 });
+    expect(registry.approvedStatusCounts).toMatchObject({ daily_eligible: 62, practice_eligible: 43, expert_only: 70, needs_review: 43, retired: 8 });
 
     const providerCodes = new Set(registry.indicators.map((row) => row.providerCode));
-    expect(candidateIntakeJson.candidates).toHaveLength(98);
+    expect(candidateIntakeJson.candidates).toHaveLength(185);
     expect(batch2CandidateCodes.filter((code) => !providerCodes.has(code))).toEqual([]);
 
     const manifest = ManifestSchema.parse(manifestJson);
@@ -102,7 +102,13 @@ describe("generated content schemas", () => {
     for (const indicatorId of ["agricultural-water-withdrawals", "labor-force-gender-ratio", "natural-resource-rents", "urban-population-growth", "youth-unemployment", "carbon-intensity-gdp", "employers-share", "water-stress", "women-business-law"]) {
       expect(dailyIndicatorIds.has(indicatorId)).toBe(false);
     }
+    for (const indicatorId of ["compulsory-education-duration", "out-of-school-primary", "food-insecurity-moderate-severe", "youth-employment-ratio", "rural-population-growth"]) {
+      expect(dailyIndicatorIds.has(indicatorId)).toBe(true);
+    }
     for (const indicatorId of ["rural-clean-cooking-access", "noncommunicable-death-share", "hepatitis-b-immunization", "agricultural-raw-material-imports", "gdp-per-capita-growth"]) {
+      expect(roundIndicatorIds.has(indicatorId)).toBe(false);
+    }
+    for (const indicatorId of ["youth-neet", "part-time-employment", "secondary-gender-parity"]) {
       expect(roundIndicatorIds.has(indicatorId)).toBe(false);
     }
     for (const indicatorId of ["nurses-midwives", "livestock-production-index", "agriculture-growth", "logistics-infrastructure"]) {
@@ -176,11 +182,11 @@ describe("generated content schemas", () => {
     };
     expect(scorecards.contentVersion).toBe(ManifestSchema.parse(manifestJson).contentVersion);
     expect(scorecards.summary).toMatchObject({
-      candidateCount: 198,
-      sourceValidCount: 167,
-      draftHeldCount: 31,
-      playableCount: 125,
-      dailyEligibleCount: 50
+      candidateCount: 285,
+      sourceValidCount: 226,
+      draftHeldCount: 59,
+      playableCount: 175,
+      dailyEligibleCount: 62
     });
     expect(scorecards.summary.candidateCount).toBe(registry.candidateCount);
     expect(scorecards.summary.sourceValidCount).toBe(registry.approvedCount);

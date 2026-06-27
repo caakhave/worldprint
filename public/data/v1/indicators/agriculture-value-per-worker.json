@@ -185,7 +185,7 @@
     "valuesReference": "https://api.worldbank.org/v2/country/all/indicator/NV.AGR.EMPL.KD?format=json&per_page=20000&page=1&date=2015%3A2025",
     "license": "Creative Commons Attribution 4.0 International unless specifically labeled otherwise by World Bank metadata",
     "licenseReference": "https://www.worldbank.org/en/about/legal/terms-of-use-for-datasets",
-    "retrievedAt": "2026-06-22T18:06:47.417565+00:00",
+    "retrievedAt": "2026-06-27T17:14:50.567052+00:00",
     "checksum": "d4aba43b4dd45ed069ccf6bff7e7e03a0fec3e53415a05da3ff1bbf6b4bfc0ac",
     "sourceOrganization": "World Development Indicators database, World Bank (WB);\nILOSTAT database, International Labour Organization (ILO)"
   },
@@ -215,12 +215,12 @@
         "reason": "Employment in agriculture can tempt players because it shares a strong country ranking with this map, but its unit and definition point to a different story."
       },
       {
-        "confusedWithIndicatorCode": "SL.SRV.EMPL.ZS",
-        "reason": "Employment in services can tempt players because it shares a strong country ranking with this map, but its unit and definition point to a different story."
+        "confusedWithIndicatorCode": "SL.AGR.EMPL.MA.ZS",
+        "reason": "Male agricultural employment can tempt players because it shares a strong country ranking with this map, but its unit and definition point to a different story."
       },
       {
-        "confusedWithIndicatorCode": "NY.GNP.PCAP.CD",
-        "reason": "GNI per capita can tempt players because it shares a strong country ranking with this map, but its unit and definition point to a different story."
+        "confusedWithIndicatorCode": "SL.AGR.EMPL.FE.ZS",
+        "reason": "Female agricultural employment can tempt players because it shares a strong country ranking with this map, but its unit and definition point to a different story."
       }
     ],
     "difficultyReason": "Expert difficulty: the map can be mistaken for adjacent indicators unless players probe a high, low, and middle country.",

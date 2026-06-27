@@ -4,30 +4,29 @@
   "date": "2026-07-17",
   "contentVersion": "2026.06.22-exp2-qa1",
   "roundIds": [
-    "worldprint-forest-area",
-    "worldprint-maternal-mortality",
     "worldprint-co2-per-capita",
     "worldprint-adolescent-fertility",
-    "worldprint-population-growth"
+    "worldprint-freshwater-per-capita",
+    "worldprint-fertility-rate",
+    "worldprint-permanent-cropland"
   ],
   "indicatorIds": [
-    "forest-area",
-    "maternal-mortality",
     "co2-per-capita",
     "adolescent-fertility",
-    "population-growth"
+    "freshwater-per-capita",
+    "fertility-rate",
+    "permanent-cropland"
   ],
   "categoryMix": {
     "environment": 2,
-    "health": 1,
-    "demography": 2
+    "demography": 2,
+    "land": 1
   },
   "mapDifficultyMix": {
-    "intro": 1,
-    "standard": 3,
+    "standard": 4,
     "expert": 1
   },
-  "generatedAt": "2026-06-27T15:17:17.652Z",
+  "generatedAt": "2026-06-27T17:16:22.620553+00:00",
   "generatorVersion": "daily-manifest-v2",
   "varietyNotes": [
     "Selected with category, difficulty, repeat-cooldown, and same-day correlation safeguards."

@@ -171,7 +171,7 @@
     "valuesReference": "https://api.worldbank.org/v2/country/all/indicator/FX.OWN.TOTL.ZS?format=json&per_page=20000&page=1&date=2015%3A2025",
     "license": "Creative Commons Attribution 4.0 International unless specifically labeled otherwise by World Bank metadata",
     "licenseReference": "https://www.worldbank.org/en/about/legal/terms-of-use-for-datasets",
-    "retrievedAt": "2026-06-22T18:07:10.914433+00:00",
+    "retrievedAt": "2026-06-27T17:15:10.747328+00:00",
     "checksum": "050a67757e3500fe93a919c4b1a548c0fe14567d0ac481e5b0b51789b3f4ef45",
     "sourceOrganization": "Global Findex Database, World Bank (WB), uri: https://www.worldbank.org/en/publication/globalfindex"
   },
@@ -201,12 +201,12 @@
         "reason": "Secure internet servers can tempt players because it shares a strong country ranking with this map, but its unit and definition point to a different story."
       },
       {
-        "confusedWithIndicatorCode": "NY.GDP.PCAP.PP.CD",
-        "reason": "GDP per capita, PPP can tempt players because it shares a strong country ranking with this map, but its unit and definition point to a different story."
+        "confusedWithIndicatorCode": "LP.LPI.CUST.XQ",
+        "reason": "Logistics customs score can tempt players because it shares a strong country ranking with this map, but its unit and definition point to a different story."
       },
       {
-        "confusedWithIndicatorCode": "NY.GNP.PCAP.PP.CD",
-        "reason": "GNI per capita, PPP can tempt players because it shares a strong country ranking with this map, but its unit and definition point to a different story."
+        "confusedWithIndicatorCode": "NY.GDP.PCAP.PP.CD",
+        "reason": "GDP per capita, PPP can tempt players because it shares a strong country ranking with this map, but its unit and definition point to a different story."
       }
     ],
     "difficultyReason": "Standard difficulty: the map has readable regional structure, but the best answer still depends on checking the unit and country anchors.",

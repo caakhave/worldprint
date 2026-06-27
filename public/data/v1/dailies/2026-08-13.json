@@ -4,31 +4,31 @@
   "date": "2026-08-13",
   "contentVersion": "2026.06.22-exp2-qa1",
   "roundIds": [
-    "worldprint-open-defecation",
-    "worldprint-cereal-yield",
-    "worldprint-co2-per-capita",
-    "worldprint-mobile-subscriptions",
-    "worldprint-trade-share"
+    "worldprint-urban-population",
+    "worldprint-account-ownership",
+    "worldprint-pm25-exposure",
+    "worldprint-electricity-access",
+    "worldprint-population-growth"
   ],
   "indicatorIds": [
-    "open-defecation",
-    "cereal-yield",
-    "co2-per-capita",
-    "mobile-subscriptions",
-    "trade-share"
+    "urban-population",
+    "account-ownership",
+    "pm25-exposure",
+    "electricity-access",
+    "population-growth"
   ],
   "categoryMix": {
-    "health": 1,
-    "agriculture": 1,
+    "settlement": 1,
+    "development": 1,
     "environment": 1,
-    "connectivity": 1,
-    "economy": 1
+    "energy": 1,
+    "demography": 1
   },
   "mapDifficultyMix": {
-    "standard": 4,
-    "expert": 1
+    "intro": 2,
+    "standard": 3
   },
-  "generatedAt": "2026-06-27T15:17:17.652Z",
+  "generatedAt": "2026-06-27T17:16:22.624433+00:00",
   "generatorVersion": "daily-manifest-v2",
   "varietyNotes": [
     "Selected with category, difficulty, repeat-cooldown, and same-day correlation safeguards."

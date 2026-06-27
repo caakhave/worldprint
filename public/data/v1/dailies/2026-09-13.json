@@ -4,30 +4,30 @@
   "date": "2026-09-13",
   "contentVersion": "2026.06.22-exp2-qa1",
   "roundIds": [
-    "worldprint-gdp-per-capita",
-    "worldprint-trade-share",
-    "worldprint-older-adults-share",
-    "worldprint-industry-share",
-    "worldprint-coal-electricity-share"
+    "worldprint-compulsory-education-duration",
+    "worldprint-food-production-index",
+    "worldprint-migrant-stock",
+    "worldprint-land-under-cereal",
+    "worldprint-secondary-enrollment"
   ],
   "indicatorIds": [
-    "gdp-per-capita",
-    "trade-share",
-    "older-adults-share",
-    "industry-share",
-    "coal-electricity-share"
+    "compulsory-education-duration",
+    "food-production-index",
+    "migrant-stock",
+    "land-under-cereal",
+    "secondary-enrollment"
   ],
   "categoryMix": {
-    "development": 1,
-    "economy": 2,
+    "education": 2,
+    "agriculture": 1,
     "demography": 1,
-    "energy": 1
+    "land": 1
   },
   "mapDifficultyMix": {
-    "intro": 2,
+    "expert": 2,
     "standard": 3
   },
-  "generatedAt": "2026-06-27T15:17:17.652Z",
+  "generatedAt": "2026-06-27T17:16:22.629546+00:00",
   "generatorVersion": "daily-manifest-v2",
   "varietyNotes": [
     "Selected with category, difficulty, repeat-cooldown, and same-day correlation safeguards."

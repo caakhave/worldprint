@@ -4,28 +4,30 @@
   "date": "2026-08-01",
   "contentVersion": "2026.06.22-exp2-qa1",
   "roundIds": [
-    "worldprint-age-dependency",
-    "worldprint-physicians",
-    "worldprint-renewable-electricity",
-    "worldprint-undernourishment",
-    "worldprint-population-growth"
+    "worldprint-life-expectancy",
+    "worldprint-electricity-access",
+    "worldprint-energy-use",
+    "worldprint-food-production-index",
+    "worldprint-population-density"
   ],
   "indicatorIds": [
-    "age-dependency",
-    "physicians",
-    "renewable-electricity",
-    "undernourishment",
-    "population-growth"
+    "life-expectancy",
+    "electricity-access",
+    "energy-use",
+    "food-production-index",
+    "population-density"
   ],
   "categoryMix": {
-    "demography": 2,
-    "health": 2,
-    "energy": 1
+    "health": 1,
+    "energy": 2,
+    "agriculture": 1,
+    "settlement": 1
   },
   "mapDifficultyMix": {
-    "standard": 5
+    "intro": 2,
+    "standard": 3
   },
-  "generatedAt": "2026-06-27T15:17:17.652Z",
+  "generatedAt": "2026-06-27T17:16:22.622684+00:00",
   "generatorVersion": "daily-manifest-v2",
   "varietyNotes": [
     "Selected with category, difficulty, repeat-cooldown, and same-day correlation safeguards."

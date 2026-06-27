@@ -178,7 +178,7 @@
     "valuesReference": "https://api.worldbank.org/v2/country/all/indicator/BN.CAB.XOKA.GD.ZS?format=json&per_page=20000&page=1&date=2015%3A2025",
     "license": "Creative Commons Attribution 4.0 International unless specifically labeled otherwise by World Bank metadata",
     "licenseReference": "https://www.worldbank.org/en/about/legal/terms-of-use-for-datasets",
-    "retrievedAt": "2026-06-22T18:06:05.875817+00:00",
+    "retrievedAt": "2026-06-27T17:14:15.959095+00:00",
     "checksum": "ef872336f619985ab09ba0c0a110142fad38beb4deecbe48ec9d7325500492ea",
     "sourceOrganization": "Balance of Payments Statistics Yearbook and data files, International Monetary Fund (IMF);\nWorld Development Indicators Database, World Bank (WB);\nNational Accounts data files, Organisation for Economic Co-operation and Development (OECD)"
   },

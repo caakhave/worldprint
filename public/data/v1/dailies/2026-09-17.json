@@ -4,29 +4,29 @@
   "date": "2026-09-17",
   "contentVersion": "2026.06.22-exp2-qa1",
   "roundIds": [
-    "worldprint-physicians",
-    "worldprint-open-defecation",
-    "worldprint-pm25-exposure",
-    "worldprint-mobile-subscriptions",
-    "worldprint-fertility-rate"
+    "worldprint-permanent-cropland",
+    "worldprint-arable-land",
+    "worldprint-gdp-per-capita",
+    "worldprint-women-parliament",
+    "worldprint-precipitation-depth"
   ],
   "indicatorIds": [
-    "physicians",
-    "open-defecation",
-    "pm25-exposure",
-    "mobile-subscriptions",
-    "fertility-rate"
+    "permanent-cropland",
+    "arable-land",
+    "gdp-per-capita",
+    "women-parliament",
+    "precipitation-depth"
   ],
   "categoryMix": {
-    "health": 2,
-    "environment": 1,
-    "connectivity": 1,
-    "demography": 1
+    "land": 2,
+    "development": 2,
+    "environment": 1
   },
   "mapDifficultyMix": {
-    "standard": 5
+    "standard": 4,
+    "intro": 1
   },
-  "generatedAt": "2026-06-27T15:17:17.652Z",
+  "generatedAt": "2026-06-27T17:16:22.630173+00:00",
   "generatorVersion": "daily-manifest-v2",
   "varietyNotes": [
     "Selected with category, difficulty, repeat-cooldown, and same-day correlation safeguards."

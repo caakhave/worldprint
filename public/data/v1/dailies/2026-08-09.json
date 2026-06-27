@@ -4,30 +4,30 @@
   "date": "2026-08-09",
   "contentVersion": "2026.06.22-exp2-qa1",
   "roundIds": [
-    "worldprint-basic-sanitation",
-    "worldprint-energy-use",
-    "worldprint-permanent-cropland",
-    "worldprint-life-expectancy",
-    "worldprint-freshwater-per-capita"
+    "worldprint-co2-per-capita",
+    "worldprint-age-dependency",
+    "worldprint-rural-basic-sanitation",
+    "worldprint-measles-immunization",
+    "worldprint-coal-electricity-share"
   ],
   "indicatorIds": [
-    "basic-sanitation",
-    "energy-use",
-    "permanent-cropland",
-    "life-expectancy",
-    "freshwater-per-capita"
+    "co2-per-capita",
+    "age-dependency",
+    "rural-basic-sanitation",
+    "measles-immunization",
+    "coal-electricity-share"
   ],
   "categoryMix": {
-    "health": 2,
-    "energy": 1,
-    "land": 1,
-    "environment": 1
+    "environment": 1,
+    "demography": 1,
+    "settlement": 1,
+    "health": 1,
+    "energy": 1
   },
   "mapDifficultyMix": {
-    "standard": 4,
-    "intro": 1
+    "standard": 5
   },
-  "generatedAt": "2026-06-27T15:17:17.652Z",
+  "generatedAt": "2026-06-27T17:16:22.623864+00:00",
   "generatorVersion": "daily-manifest-v2",
   "varietyNotes": [
     "Selected with category, difficulty, repeat-cooldown, and same-day correlation safeguards."

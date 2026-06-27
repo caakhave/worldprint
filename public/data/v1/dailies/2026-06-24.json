@@ -4,32 +4,31 @@
   "date": "2026-06-24",
   "contentVersion": "2026.06.22-exp2-qa1",
   "roundIds": [
-    "worldprint-tourism-arrivals",
-    "worldprint-energy-use",
-    "worldprint-arable-land-per-person",
-    "worldprint-gdp-per-capita",
-    "worldprint-under-five-mortality"
+    "worldprint-government-education-spending-share",
+    "worldprint-electricity-access",
+    "worldprint-forest-area",
+    "worldprint-electric-power-use",
+    "worldprint-rural-basic-sanitation"
   ],
   "indicatorIds": [
-    "tourism-arrivals",
-    "energy-use",
-    "arable-land-per-person",
-    "gdp-per-capita",
-    "under-five-mortality"
+    "government-education-spending-share",
+    "electricity-access",
+    "forest-area",
+    "electric-power-use",
+    "rural-basic-sanitation"
   ],
   "categoryMix": {
-    "economy": 1,
-    "energy": 1,
-    "land": 1,
-    "development": 1,
-    "health": 1
+    "education": 1,
+    "energy": 2,
+    "environment": 1,
+    "settlement": 1
   },
   "mapDifficultyMix": {
-    "standard": 3,
     "expert": 1,
-    "intro": 1
+    "intro": 2,
+    "standard": 2
   },
-  "generatedAt": "2026-06-27T15:17:17.652Z",
+  "generatedAt": "2026-06-27T17:16:22.616777+00:00",
   "generatorVersion": "daily-manifest-v2",
   "varietyNotes": [
     "Selected with category, difficulty, repeat-cooldown, and same-day correlation safeguards."

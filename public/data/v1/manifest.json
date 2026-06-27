@@ -1,10 +1,10 @@
 {
   "schemaVersion": "1.1.0",
   "contentVersion": "2026.06.22-exp2-qa1",
-  "generatedAt": "2026-06-22T18:07:37.479943+00:00",
+  "generatedAt": "2026-06-27T17:16:22.644102+00:00",
   "map": {
     "path": "/maps/world-110m.v1.geojson",
-    "checksum": "92ff76156e0c6262147a83eccfc3553662ab2bfcf22872031fbb40da59158694"
+    "checksum": "b26bca7f628c6f40c7ff336529502bee839ca22f20622ad2bac69432f6511210"
   },
   "entityRegistry": {
     "path": "/data/v1/entity-registry.json"
@@ -2681,14 +2681,14 @@
       "id": "fertilizer-use",
       "providerCode": "AG.CON.FERT.ZS",
       "title": "Fertilizer consumption (kilograms per hectare of arable land)",
-      "shortTitle": "Fertilizer consumption",
+      "shortTitle": "Fertilizer use per hectare",
       "category": "agriculture",
       "difficulty": "expert",
       "year": 2023,
       "coverage": 165,
       "path": "/data/v1/indicators/fertilizer-use.json",
       "reviewStatus": "approved",
-      "shortHook": "A tricky agriculture-input map with a unit trap.",
+      "shortHook": "An intensive-farming input map.",
       "editorialReview": {
         "status": "needs_review",
         "reviewedAt": "2026-06-22",
@@ -5193,6 +5193,1826 @@
         ],
         "acceptableCloseDistractorIds": []
       }
+    },
+    {
+      "id": "primary-female-teachers",
+      "providerCode": "SE.PRM.TCHR.FE.ZS",
+      "title": "Primary education, teachers (% female)",
+      "shortTitle": "Female primary teachers",
+      "category": "education",
+      "difficulty": "standard",
+      "year": 2023,
+      "coverage": 122,
+      "path": "/data/v1/indicators/primary-female-teachers.json",
+      "reviewStatus": "approved",
+      "shortHook": "A classroom-workforce map.",
+      "editorialReview": {
+        "status": "daily_eligible",
+        "reviewedAt": "2026-06-22",
+        "reviewedBy": "Codex editorial QA",
+        "qualityScore": 4,
+        "funScore": 4,
+        "fairnessScore": 4,
+        "ambiguityRisk": "medium",
+        "dailyEligible": true,
+        "practiceEligible": true,
+        "challengeEligible": true,
+        "expertOnly": false,
+        "reviewNotes": [
+          "Batch 3 promotion: a human, readable education-workforce map that adds category depth beyond enrollment.",
+          "Use as a Daily sparingly because coverage is adequate but not as deep as modeled labor or population maps."
+        ],
+        "acceptableCloseDistractorIds": []
+      }
+    },
+    {
+      "id": "government-education-spending-share",
+      "providerCode": "SE.XPD.TOTL.GB.ZS",
+      "title": "Government expenditure on education, total (% of government expenditure)",
+      "shortTitle": "Education spending share",
+      "category": "education",
+      "difficulty": "expert",
+      "year": 2022,
+      "coverage": 123,
+      "path": "/data/v1/indicators/government-education-spending-share.json",
+      "reviewStatus": "approved",
+      "shortHook": "A budget-priority education map.",
+      "editorialReview": {
+        "status": "daily_eligible",
+        "reviewedAt": "2026-06-22",
+        "reviewedBy": "Codex editorial QA",
+        "qualityScore": 4,
+        "funScore": 4,
+        "fairnessScore": 3,
+        "ambiguityRisk": "medium",
+        "dailyEligible": true,
+        "practiceEligible": true,
+        "challengeEligible": true,
+        "expertOnly": false,
+        "reviewNotes": [
+          "Batch 3 promotion: source-valid budget-priority map with clear percent-of-government-spending unit.",
+          "Expert Daily only; reveal copy should explain that budget share is not the same thing as school quality."
+        ],
+        "acceptableCloseDistractorIds": []
+      }
+    },
+    {
+      "id": "land-under-cereal",
+      "providerCode": "AG.LND.CREL.HA",
+      "title": "Land under cereal production (hectares)",
+      "shortTitle": "Land under cereal production",
+      "category": "land",
+      "difficulty": "expert",
+      "year": 2023,
+      "coverage": 167,
+      "path": "/data/v1/indicators/land-under-cereal.json",
+      "reviewStatus": "approved",
+      "shortHook": "A raw grain-area map for expert review.",
+      "editorialReview": {
+        "status": "daily_eligible",
+        "reviewedAt": "2026-06-22",
+        "reviewedBy": "Codex editorial QA",
+        "qualityScore": 4,
+        "funScore": 4,
+        "fairnessScore": 3,
+        "ambiguityRisk": "medium",
+        "dailyEligible": true,
+        "practiceEligible": true,
+        "challengeEligible": true,
+        "expertOnly": false,
+        "reviewNotes": [
+          "Batch 3 promotion: strong grain-belt pattern and broad coverage, useful for expert Daily variety.",
+          "Raw hectares favor large countries, so keep this as expert-facing and reveal the raw-area caveat."
+        ],
+        "acceptableCloseDistractorIds": []
+      }
+    },
+    {
+      "id": "urban-low-elevation-population",
+      "providerCode": "EN.POP.EL5M.UR.ZS",
+      "title": "Urban population living in areas where elevation is below 5 meters (% of total population)",
+      "shortTitle": "Urban low-elevation population",
+      "category": "settlement",
+      "difficulty": "expert",
+      "year": 2015,
+      "coverage": 169,
+      "path": "/data/v1/indicators/urban-low-elevation-population.json",
+      "reviewStatus": "approved",
+      "shortHook": "A coastal city exposure map.",
+      "editorialReview": {
+        "status": "expert_only",
+        "reviewedAt": "2026-06-22",
+        "reviewedBy": "Codex editorial QA",
+        "qualityScore": 3,
+        "funScore": 4,
+        "fairnessScore": 3,
+        "ambiguityRisk": "high",
+        "dailyEligible": false,
+        "practiceEligible": true,
+        "challengeEligible": true,
+        "expertOnly": true,
+        "reviewNotes": [
+          "Batch 3 QA: useful coastal city exposure map but old and close to the existing low-elevation population map.",
+          "Expert-only for beta."
+        ],
+        "acceptableCloseDistractorIds": []
+      }
+    },
+    {
+      "id": "rural-low-elevation-population",
+      "providerCode": "EN.POP.EL5M.RU.ZS",
+      "title": "Rural population living in areas where elevation is below 5 meters (% of total population)",
+      "shortTitle": "Rural low-elevation population",
+      "category": "settlement",
+      "difficulty": "expert",
+      "year": 2015,
+      "coverage": 169,
+      "path": "/data/v1/indicators/rural-low-elevation-population.json",
+      "reviewStatus": "approved",
+      "shortHook": "A coastal rural exposure map.",
+      "editorialReview": {
+        "status": "expert_only",
+        "reviewedAt": "2026-06-22",
+        "reviewedBy": "Codex editorial QA",
+        "qualityScore": 3,
+        "funScore": 4,
+        "fairnessScore": 3,
+        "ambiguityRisk": "medium",
+        "dailyEligible": false,
+        "practiceEligible": true,
+        "challengeEligible": true,
+        "expertOnly": true,
+        "reviewNotes": [
+          "Batch 3 QA: good advanced coastal rural exposure map.",
+          "Expert-only because selected data is old and related to existing low-elevation maps."
+        ],
+        "acceptableCloseDistractorIds": []
+      }
+    },
+    {
+      "id": "urban-low-elevation-land",
+      "providerCode": "AG.LND.EL5M.UR.ZS",
+      "title": "Urban land area where elevation is below 5 meters (% of total land area)",
+      "shortTitle": "Urban low-elevation land",
+      "category": "settlement",
+      "difficulty": "expert",
+      "year": 2015,
+      "coverage": 169,
+      "path": "/data/v1/indicators/urban-low-elevation-land.json",
+      "reviewStatus": "approved",
+      "shortHook": "A low-lying urban land map.",
+      "editorialReview": {
+        "status": "expert_only",
+        "reviewedAt": "2026-06-22",
+        "reviewedBy": "Codex editorial QA",
+        "qualityScore": 3,
+        "funScore": 4,
+        "fairnessScore": 3,
+        "ambiguityRisk": "medium",
+        "dailyEligible": false,
+        "practiceEligible": true,
+        "challengeEligible": true,
+        "expertOnly": true,
+        "reviewNotes": [
+          "Batch 3 QA: advanced low-lying urban land map with a strong coastal pattern.",
+          "Expert-only and keep apart from low-elevation land share."
+        ],
+        "acceptableCloseDistractorIds": []
+      }
+    },
+    {
+      "id": "rural-low-elevation-land",
+      "providerCode": "AG.LND.EL5M.RU.ZS",
+      "title": "Rural land area where elevation is below 5 meters (% of total land area)",
+      "shortTitle": "Rural low-elevation land",
+      "category": "settlement",
+      "difficulty": "expert",
+      "year": 2015,
+      "coverage": 169,
+      "path": "/data/v1/indicators/rural-low-elevation-land.json",
+      "reviewStatus": "approved",
+      "shortHook": "A low-lying rural land map.",
+      "editorialReview": {
+        "status": "expert_only",
+        "reviewedAt": "2026-06-22",
+        "reviewedBy": "Codex editorial QA",
+        "qualityScore": 3,
+        "funScore": 4,
+        "fairnessScore": 3,
+        "ambiguityRisk": "high",
+        "dailyEligible": false,
+        "practiceEligible": true,
+        "challengeEligible": true,
+        "expertOnly": true,
+        "reviewNotes": [
+          "Batch 3 QA: source-valid but closely related to low-elevation land and population maps.",
+          "Expert-only for beta."
+        ],
+        "acceptableCloseDistractorIds": []
+      }
+    },
+    {
+      "id": "rural-population-growth",
+      "providerCode": "SP.RUR.TOTL.ZG",
+      "title": "Rural population growth (annual %)",
+      "shortTitle": "Rural population growth",
+      "category": "settlement",
+      "difficulty": "standard",
+      "year": 2024,
+      "coverage": 168,
+      "path": "/data/v1/indicators/rural-population-growth.json",
+      "reviewStatus": "approved",
+      "shortHook": "A rural-change map.",
+      "editorialReview": {
+        "status": "daily_eligible",
+        "reviewedAt": "2026-06-22",
+        "reviewedBy": "Codex editorial QA",
+        "qualityScore": 4,
+        "funScore": 4,
+        "fairnessScore": 4,
+        "ambiguityRisk": "medium",
+        "dailyEligible": true,
+        "practiceEligible": true,
+        "challengeEligible": true,
+        "expertOnly": false,
+        "reviewNotes": [
+          "Batch 3 promotion: fresh settlement-change map with broad coverage and a distinct shrinking/rising rural pattern.",
+          "Daily-worthy when not paired with total population growth or urban population growth."
+        ],
+        "acceptableCloseDistractorIds": []
+      }
+    },
+    {
+      "id": "ict-service-exports",
+      "providerCode": "BX.GSR.CCIS.ZS",
+      "title": "ICT service exports (% of service exports, BoP)",
+      "shortTitle": "ICT service exports",
+      "category": "connectivity",
+      "difficulty": "expert",
+      "year": 2024,
+      "coverage": 135,
+      "path": "/data/v1/indicators/ict-service-exports.json",
+      "reviewStatus": "approved",
+      "shortHook": "A digital-services export map.",
+      "editorialReview": {
+        "status": "practice_eligible",
+        "reviewedAt": "2026-06-22",
+        "reviewedBy": "Codex editorial QA",
+        "qualityScore": 4,
+        "funScore": 4,
+        "fairnessScore": 3,
+        "ambiguityRisk": "medium",
+        "dailyEligible": false,
+        "practiceEligible": true,
+        "challengeEligible": true,
+        "expertOnly": false,
+        "reviewNotes": [
+          "Batch 3 QA: useful digital-services export map, but close to communications-service exports and high-tech exports.",
+          "Practice-only until the connectivity trade cluster is tested."
+        ],
+        "acceptableCloseDistractorIds": []
+      }
+    },
+    {
+      "id": "air-passengers",
+      "providerCode": "IS.AIR.PSGR",
+      "title": "Air transport, passengers carried",
+      "shortTitle": "Air passengers carried",
+      "category": "connectivity",
+      "difficulty": "expert",
+      "year": 2023,
+      "coverage": 135,
+      "path": "/data/v1/indicators/air-passengers.json",
+      "reviewStatus": "approved",
+      "shortHook": "A raw air-travel volume map.",
+      "editorialReview": {
+        "status": "expert_only",
+        "reviewedAt": "2026-06-22",
+        "reviewedBy": "Codex editorial QA",
+        "qualityScore": 3,
+        "funScore": 3,
+        "fairnessScore": 3,
+        "ambiguityRisk": "high",
+        "dailyEligible": false,
+        "practiceEligible": true,
+        "challengeEligible": true,
+        "expertOnly": true,
+        "reviewNotes": [
+          "Batch 3 QA: source-valid transport-volume map with recognizable hubs.",
+          "Expert-only because raw passenger counts favor population, tourism, and hub-country size."
+        ],
+        "acceptableCloseDistractorIds": []
+      }
+    },
+    {
+      "id": "air-departures",
+      "providerCode": "IS.AIR.DPRT",
+      "title": "Air transport, registered carrier departures worldwide",
+      "shortTitle": "Air carrier departures",
+      "category": "connectivity",
+      "difficulty": "expert",
+      "year": 2023,
+      "coverage": 136,
+      "path": "/data/v1/indicators/air-departures.json",
+      "reviewStatus": "approved",
+      "shortHook": "A flight-network volume map.",
+      "editorialReview": {
+        "status": "expert_only",
+        "reviewedAt": "2026-06-22",
+        "reviewedBy": "Codex editorial QA",
+        "qualityScore": 3,
+        "funScore": 3,
+        "fairnessScore": 3,
+        "ambiguityRisk": "high",
+        "dailyEligible": false,
+        "practiceEligible": true,
+        "challengeEligible": true,
+        "expertOnly": true,
+        "reviewNotes": [
+          "Batch 3 QA: useful aviation-network comparison map.",
+          "Expert-only and keep separate from air passengers and air freight in generated choices."
+        ],
+        "acceptableCloseDistractorIds": []
+      }
+    },
+    {
+      "id": "container-port-traffic",
+      "providerCode": "IS.SHP.GOOD.TU",
+      "title": "Container port traffic (TEU: 20 foot equivalent units)",
+      "shortTitle": "Container port traffic",
+      "category": "connectivity",
+      "difficulty": "expert",
+      "year": 2019,
+      "coverage": 128,
+      "path": "/data/v1/indicators/container-port-traffic.json",
+      "reviewStatus": "approved",
+      "shortHook": "A global shipping-hub map.",
+      "editorialReview": {
+        "status": "expert_only",
+        "reviewedAt": "2026-06-22",
+        "reviewedBy": "Codex editorial QA",
+        "qualityScore": 3,
+        "funScore": 4,
+        "fairnessScore": 3,
+        "ambiguityRisk": "medium",
+        "dailyEligible": false,
+        "practiceEligible": true,
+        "challengeEligible": true,
+        "expertOnly": true,
+        "reviewNotes": [
+          "Batch 3 QA: shipping-hub map is interesting for advanced players.",
+          "Expert-only because landlocked and small-island edge cases can make it unfair in broad Daily play."
+        ],
+        "acceptableCloseDistractorIds": []
+      }
+    },
+    {
+      "id": "lpi-customs",
+      "providerCode": "LP.LPI.CUST.XQ",
+      "title": "Logistics performance index: Efficiency of customs clearance process (1=low to 5=high)",
+      "shortTitle": "Logistics customs score",
+      "category": "connectivity",
+      "difficulty": "expert",
+      "year": 2022,
+      "coverage": 131,
+      "path": "/data/v1/indicators/lpi-customs.json",
+      "reviewStatus": "approved",
+      "shortHook": "A border-clearance logistics map.",
+      "editorialReview": {
+        "status": "needs_review",
+        "reviewedAt": "2026-06-22",
+        "reviewedBy": "pipeline-default-needs-review",
+        "qualityScore": 2,
+        "funScore": 2,
+        "fairnessScore": 2,
+        "ambiguityRisk": "medium",
+        "dailyEligible": false,
+        "practiceEligible": false,
+        "challengeEligible": false,
+        "expertOnly": false,
+        "reviewNotes": [
+          "Loaded from the candidate intake queue and default-held as Needs review until a human editor classifies it."
+        ],
+        "acceptableCloseDistractorIds": []
+      }
+    },
+    {
+      "id": "lpi-tracking",
+      "providerCode": "LP.LPI.TRAC.XQ",
+      "title": "Logistics performance index: Ability to track and trace consignments (1=low to 5=high)",
+      "shortTitle": "Logistics tracking score",
+      "category": "connectivity",
+      "difficulty": "expert",
+      "year": 2022,
+      "coverage": 131,
+      "path": "/data/v1/indicators/lpi-tracking.json",
+      "reviewStatus": "approved",
+      "shortHook": "A shipment-tracking logistics map.",
+      "editorialReview": {
+        "status": "needs_review",
+        "reviewedAt": "2026-06-22",
+        "reviewedBy": "pipeline-default-needs-review",
+        "qualityScore": 2,
+        "funScore": 2,
+        "fairnessScore": 2,
+        "ambiguityRisk": "medium",
+        "dailyEligible": false,
+        "practiceEligible": false,
+        "challengeEligible": false,
+        "expertOnly": false,
+        "reviewNotes": [
+          "Loaded from the candidate intake queue and default-held as Needs review until a human editor classifies it."
+        ],
+        "acceptableCloseDistractorIds": []
+      }
+    },
+    {
+      "id": "lpi-timeliness",
+      "providerCode": "LP.LPI.TIME.XQ",
+      "title": "Logistics performance index: Frequency with which shipments reach consignee within scheduled or expected time (1=low to 5=high)",
+      "shortTitle": "Logistics timeliness score",
+      "category": "connectivity",
+      "difficulty": "expert",
+      "year": 2022,
+      "coverage": 131,
+      "path": "/data/v1/indicators/lpi-timeliness.json",
+      "reviewStatus": "approved",
+      "shortHook": "A delivery-reliability logistics map.",
+      "editorialReview": {
+        "status": "needs_review",
+        "reviewedAt": "2026-06-22",
+        "reviewedBy": "pipeline-default-needs-review",
+        "qualityScore": 2,
+        "funScore": 2,
+        "fairnessScore": 2,
+        "ambiguityRisk": "medium",
+        "dailyEligible": false,
+        "practiceEligible": false,
+        "challengeEligible": false,
+        "expertOnly": false,
+        "reviewNotes": [
+          "Loaded from the candidate intake queue and default-held as Needs review until a human editor classifies it."
+        ],
+        "acceptableCloseDistractorIds": []
+      }
+    },
+    {
+      "id": "youth-employment-ratio",
+      "providerCode": "SL.EMP.1524.SP.ZS",
+      "title": "Employment to population ratio, ages 15-24, total (%) (modeled ILO estimate)",
+      "shortTitle": "Youth employment-to-population ratio",
+      "category": "labor",
+      "difficulty": "standard",
+      "year": 2025,
+      "coverage": 163,
+      "path": "/data/v1/indicators/youth-employment-ratio.json",
+      "reviewStatus": "approved",
+      "shortHook": "A youth-work participation map.",
+      "editorialReview": {
+        "status": "daily_eligible",
+        "reviewedAt": "2026-06-22",
+        "reviewedBy": "Codex editorial QA",
+        "qualityScore": 4,
+        "funScore": 4,
+        "fairnessScore": 4,
+        "ambiguityRisk": "medium",
+        "dailyEligible": true,
+        "practiceEligible": true,
+        "challengeEligible": true,
+        "expertOnly": false,
+        "reviewNotes": [
+          "Batch 3 promotion: broad, fresh modeled labor data and a useful youth-work story.",
+          "Daily-worthy if answer choices distinguish employment from unemployment and school-enrollment concepts."
+        ],
+        "acceptableCloseDistractorIds": []
+      }
+    },
+    {
+      "id": "primary-pupils-female-share",
+      "providerCode": "SE.PRM.ENRL.FE.ZS",
+      "title": "Primary education, pupils (% female)",
+      "shortTitle": "Female primary pupils",
+      "category": "education",
+      "difficulty": "standard",
+      "year": 2017,
+      "coverage": 134,
+      "path": "/data/v1/indicators/primary-pupils-female-share.json",
+      "reviewStatus": "approved",
+      "shortHook": "A gender-balance map inside primary classrooms.",
+      "editorialReview": {
+        "status": "practice_eligible",
+        "reviewedAt": "2026-06-22",
+        "reviewedBy": "Codex editorial QA",
+        "qualityScore": 3,
+        "funScore": 3,
+        "fairnessScore": 4,
+        "ambiguityRisk": "medium",
+        "dailyEligible": false,
+        "practiceEligible": true,
+        "challengeEligible": true,
+        "expertOnly": false,
+        "reviewNotes": [
+          "Batch 3 QA: source-valid and useful for education practice, but the map is subtle and older than ideal.",
+          "Practice-only until player testing confirms it feels distinct from gender-parity indicators."
+        ],
+        "acceptableCloseDistractorIds": []
+      }
+    },
+    {
+      "id": "secondary-pupils-female-share",
+      "providerCode": "SE.SEC.ENRL.FE.ZS",
+      "title": "Secondary education, pupils (% female)",
+      "shortTitle": "Female secondary pupils",
+      "category": "education",
+      "difficulty": "expert",
+      "year": 2016,
+      "coverage": 120,
+      "path": "/data/v1/indicators/secondary-pupils-female-share.json",
+      "reviewStatus": "approved",
+      "shortHook": "A harder gender-balance map in secondary school.",
+      "editorialReview": {
+        "status": "practice_eligible",
+        "reviewedAt": "2026-06-22",
+        "reviewedBy": "Codex editorial QA",
+        "qualityScore": 3,
+        "funScore": 3,
+        "fairnessScore": 4,
+        "ambiguityRisk": "medium",
+        "dailyEligible": false,
+        "practiceEligible": true,
+        "challengeEligible": true,
+        "expertOnly": false,
+        "reviewNotes": [
+          "Batch 3 QA: source-valid but subtle secondary-school gender map.",
+          "Practice-only; do not make it Daily until the education cluster has stronger distractor curation."
+        ],
+        "acceptableCloseDistractorIds": []
+      }
+    },
+    {
+      "id": "primary-gross-intake",
+      "providerCode": "SE.PRM.GINT.ZS",
+      "title": "Gross intake ratio in first grade of primary education, total (% of relevant age group)",
+      "shortTitle": "Primary gross intake",
+      "category": "education",
+      "difficulty": "expert",
+      "year": 2016,
+      "coverage": 120,
+      "path": "/data/v1/indicators/primary-gross-intake.json",
+      "reviewStatus": "approved",
+      "shortHook": "A first-grade entry map.",
+      "editorialReview": {
+        "status": "practice_eligible",
+        "reviewedAt": "2026-06-22",
+        "reviewedBy": "Codex editorial QA",
+        "qualityScore": 3,
+        "funScore": 3,
+        "fairnessScore": 3,
+        "ambiguityRisk": "medium",
+        "dailyEligible": false,
+        "practiceEligible": true,
+        "challengeEligible": true,
+        "expertOnly": false,
+        "reviewNotes": [
+          "Batch 3 QA: coverage passes but selected data is older and the gross-intake concept is less intuitive.",
+          "Practice-only for advanced education warmups."
+        ],
+        "acceptableCloseDistractorIds": []
+      }
+    },
+    {
+      "id": "out-of-school-primary",
+      "providerCode": "SE.PRM.UNER.ZS",
+      "title": "Children out of school (% of primary school age)",
+      "shortTitle": "Out-of-school primary age",
+      "category": "education",
+      "difficulty": "standard",
+      "year": 2023,
+      "coverage": 120,
+      "path": "/data/v1/indicators/out-of-school-primary.json",
+      "reviewStatus": "approved",
+      "shortHook": "A map of who is missing from primary school.",
+      "editorialReview": {
+        "status": "daily_eligible",
+        "reviewedAt": "2026-06-22",
+        "reviewedBy": "Codex editorial QA",
+        "qualityScore": 4,
+        "funScore": 4,
+        "fairnessScore": 4,
+        "ambiguityRisk": "medium",
+        "dailyEligible": true,
+        "practiceEligible": true,
+        "challengeEligible": true,
+        "expertOnly": false,
+        "reviewNotes": [
+          "Batch 3 promotion: clear education-access concept with just enough coverage to pass the data gate.",
+          "Daily-worthy when paired against non-education distractors or broader enrollment maps, not secondary out-of-school rows."
+        ],
+        "acceptableCloseDistractorIds": []
+      }
+    },
+    {
+      "id": "compulsory-education-duration",
+      "providerCode": "SE.COM.DURS",
+      "title": "Compulsory education, duration (years)",
+      "shortTitle": "Compulsory education duration",
+      "category": "education",
+      "difficulty": "expert",
+      "year": 2025,
+      "coverage": 158,
+      "path": "/data/v1/indicators/compulsory-education-duration.json",
+      "reviewStatus": "approved",
+      "shortHook": "A school-policy duration map.",
+      "editorialReview": {
+        "status": "daily_eligible",
+        "reviewedAt": "2026-06-22",
+        "reviewedBy": "Codex editorial QA",
+        "qualityScore": 4,
+        "funScore": 4,
+        "fairnessScore": 4,
+        "ambiguityRisk": "medium",
+        "dailyEligible": true,
+        "practiceEligible": true,
+        "challengeEligible": true,
+        "expertOnly": false,
+        "reviewNotes": [
+          "Batch 3 promotion: broad source coverage, fresh policy data, and a readable unit make this a fair expert Daily.",
+          "Keep answer choices away from enrollment-rate maps so the clue reads as education policy, not school attendance."
+        ],
+        "acceptableCloseDistractorIds": []
+      }
+    },
+    {
+      "id": "female-employment-population-ratio",
+      "providerCode": "SL.EMP.TOTL.SP.FE.ZS",
+      "title": "Employment to population ratio, 15+, female (%) (modeled ILO estimate)",
+      "shortTitle": "Female employment-to-population ratio",
+      "category": "labor",
+      "difficulty": "expert",
+      "year": 2025,
+      "coverage": 163,
+      "path": "/data/v1/indicators/female-employment-population-ratio.json",
+      "reviewStatus": "approved",
+      "shortHook": "A women's work participation map.",
+      "editorialReview": {
+        "status": "expert_only",
+        "reviewedAt": "2026-06-22",
+        "reviewedBy": "Codex editorial QA",
+        "qualityScore": 4,
+        "funScore": 4,
+        "fairnessScore": 3,
+        "ambiguityRisk": "high",
+        "dailyEligible": false,
+        "practiceEligible": true,
+        "challengeEligible": true,
+        "expertOnly": true,
+        "reviewNotes": [
+          "Batch 3 QA: useful gendered work map but close to female labor-force participation.",
+          "Expert-only until labor distractors are tuned."
+        ],
+        "acceptableCloseDistractorIds": []
+      }
+    },
+    {
+      "id": "male-employment-population-ratio",
+      "providerCode": "SL.EMP.TOTL.SP.MA.ZS",
+      "title": "Employment to population ratio, 15+, male (%) (modeled ILO estimate)",
+      "shortTitle": "Male employment-to-population ratio",
+      "category": "labor",
+      "difficulty": "expert",
+      "year": 2025,
+      "coverage": 163,
+      "path": "/data/v1/indicators/male-employment-population-ratio.json",
+      "reviewStatus": "approved",
+      "shortHook": "A men's work participation map.",
+      "editorialReview": {
+        "status": "expert_only",
+        "reviewedAt": "2026-06-22",
+        "reviewedBy": "Codex editorial QA",
+        "qualityScore": 3,
+        "funScore": 3,
+        "fairnessScore": 3,
+        "ambiguityRisk": "high",
+        "dailyEligible": false,
+        "practiceEligible": true,
+        "challengeEligible": true,
+        "expertOnly": true,
+        "reviewNotes": [
+          "Batch 3 QA: source-valid contrast map, but less distinctive than female employment-to-population ratio.",
+          "Expert-only."
+        ],
+        "acceptableCloseDistractorIds": []
+      }
+    },
+    {
+      "id": "female-wage-salaried-workers",
+      "providerCode": "SL.EMP.WORK.FE.ZS",
+      "title": "Wage and salaried workers, female (% of female employment) (modeled ILO estimate)",
+      "shortTitle": "Female wage workers",
+      "category": "labor",
+      "difficulty": "expert",
+      "year": 2025,
+      "coverage": 163,
+      "path": "/data/v1/indicators/female-wage-salaried-workers.json",
+      "reviewStatus": "approved",
+      "shortHook": "A formal-work map for women.",
+      "editorialReview": {
+        "status": "expert_only",
+        "reviewedAt": "2026-06-22",
+        "reviewedBy": "Codex editorial QA",
+        "qualityScore": 4,
+        "funScore": 4,
+        "fairnessScore": 3,
+        "ambiguityRisk": "high",
+        "dailyEligible": false,
+        "practiceEligible": true,
+        "challengeEligible": true,
+        "expertOnly": true,
+        "reviewNotes": [
+          "Batch 3 QA: strong formal-work map, but close to total wage workers and inverse self-employment maps.",
+          "Expert-only for beta."
+        ],
+        "acceptableCloseDistractorIds": []
+      }
+    },
+    {
+      "id": "male-wage-salaried-workers",
+      "providerCode": "SL.EMP.WORK.MA.ZS",
+      "title": "Wage and salaried workers, male (% of male employment) (modeled ILO estimate)",
+      "shortTitle": "Male wage workers",
+      "category": "labor",
+      "difficulty": "expert",
+      "year": 2025,
+      "coverage": 163,
+      "path": "/data/v1/indicators/male-wage-salaried-workers.json",
+      "reviewStatus": "approved",
+      "shortHook": "A formal-work map for men.",
+      "editorialReview": {
+        "status": "needs_review",
+        "reviewedAt": "2026-06-22",
+        "reviewedBy": "pipeline-default-needs-review",
+        "qualityScore": 2,
+        "funScore": 2,
+        "fairnessScore": 2,
+        "ambiguityRisk": "medium",
+        "dailyEligible": false,
+        "practiceEligible": false,
+        "challengeEligible": false,
+        "expertOnly": false,
+        "reviewNotes": [
+          "Loaded from the candidate intake queue and default-held as Needs review until a human editor classifies it."
+        ],
+        "acceptableCloseDistractorIds": []
+      }
+    },
+    {
+      "id": "female-vulnerable-employment",
+      "providerCode": "SL.EMP.VULN.FE.ZS",
+      "title": "Vulnerable employment, female (% of female employment) (modeled ILO estimate)",
+      "shortTitle": "Female vulnerable employment",
+      "category": "labor",
+      "difficulty": "expert",
+      "year": 2025,
+      "coverage": 163,
+      "path": "/data/v1/indicators/female-vulnerable-employment.json",
+      "reviewStatus": "approved",
+      "shortHook": "A women's informal-work risk map.",
+      "editorialReview": {
+        "status": "expert_only",
+        "reviewedAt": "2026-06-22",
+        "reviewedBy": "Codex editorial QA",
+        "qualityScore": 4,
+        "funScore": 4,
+        "fairnessScore": 3,
+        "ambiguityRisk": "high",
+        "dailyEligible": false,
+        "practiceEligible": true,
+        "challengeEligible": true,
+        "expertOnly": true,
+        "reviewNotes": [
+          "Batch 3 QA: meaningful gendered informal-work map with broad coverage.",
+          "Expert-only because it can be confused with self-employment and contributing-family work."
+        ],
+        "acceptableCloseDistractorIds": []
+      }
+    },
+    {
+      "id": "male-vulnerable-employment",
+      "providerCode": "SL.EMP.VULN.MA.ZS",
+      "title": "Vulnerable employment, male (% of male employment) (modeled ILO estimate)",
+      "shortTitle": "Male vulnerable employment",
+      "category": "labor",
+      "difficulty": "expert",
+      "year": 2025,
+      "coverage": 163,
+      "path": "/data/v1/indicators/male-vulnerable-employment.json",
+      "reviewStatus": "approved",
+      "shortHook": "A men's informal-work risk map.",
+      "editorialReview": {
+        "status": "needs_review",
+        "reviewedAt": "2026-06-22",
+        "reviewedBy": "pipeline-default-needs-review",
+        "qualityScore": 2,
+        "funScore": 2,
+        "fairnessScore": 2,
+        "ambiguityRisk": "medium",
+        "dailyEligible": false,
+        "practiceEligible": false,
+        "challengeEligible": false,
+        "expertOnly": false,
+        "reviewNotes": [
+          "Loaded from the candidate intake queue and default-held as Needs review until a human editor classifies it."
+        ],
+        "acceptableCloseDistractorIds": []
+      }
+    },
+    {
+      "id": "female-agricultural-employment",
+      "providerCode": "SL.AGR.EMPL.FE.ZS",
+      "title": "Employment in agriculture, female (% of female employment) (modeled ILO estimate)",
+      "shortTitle": "Female agricultural employment",
+      "category": "labor",
+      "difficulty": "expert",
+      "year": 2025,
+      "coverage": 163,
+      "path": "/data/v1/indicators/female-agricultural-employment.json",
+      "reviewStatus": "approved",
+      "shortHook": "A gendered farming-work map.",
+      "editorialReview": {
+        "status": "expert_only",
+        "reviewedAt": "2026-06-22",
+        "reviewedBy": "Codex editorial QA",
+        "qualityScore": 4,
+        "funScore": 4,
+        "fairnessScore": 3,
+        "ambiguityRisk": "high",
+        "dailyEligible": false,
+        "practiceEligible": true,
+        "challengeEligible": true,
+        "expertOnly": true,
+        "reviewNotes": [
+          "Batch 3 QA: useful gendered sector-work map.",
+          "Expert-only because it overlaps with total agricultural employment and rural development patterns."
+        ],
+        "acceptableCloseDistractorIds": []
+      }
+    },
+    {
+      "id": "male-agricultural-employment",
+      "providerCode": "SL.AGR.EMPL.MA.ZS",
+      "title": "Employment in agriculture, male (% of male employment) (modeled ILO estimate)",
+      "shortTitle": "Male agricultural employment",
+      "category": "labor",
+      "difficulty": "expert",
+      "year": 2025,
+      "coverage": 163,
+      "path": "/data/v1/indicators/male-agricultural-employment.json",
+      "reviewStatus": "approved",
+      "shortHook": "A men's farming-work map.",
+      "editorialReview": {
+        "status": "needs_review",
+        "reviewedAt": "2026-06-22",
+        "reviewedBy": "pipeline-default-needs-review",
+        "qualityScore": 2,
+        "funScore": 2,
+        "fairnessScore": 2,
+        "ambiguityRisk": "medium",
+        "dailyEligible": false,
+        "practiceEligible": false,
+        "challengeEligible": false,
+        "expertOnly": false,
+        "reviewNotes": [
+          "Loaded from the candidate intake queue and default-held as Needs review until a human editor classifies it."
+        ],
+        "acceptableCloseDistractorIds": []
+      }
+    },
+    {
+      "id": "female-industry-employment",
+      "providerCode": "SL.IND.EMPL.FE.ZS",
+      "title": "Employment in industry, female (% of female employment) (modeled ILO estimate)",
+      "shortTitle": "Female industry employment",
+      "category": "labor",
+      "difficulty": "expert",
+      "year": 2025,
+      "coverage": 163,
+      "path": "/data/v1/indicators/female-industry-employment.json",
+      "reviewStatus": "approved",
+      "shortHook": "A gendered industrial-work map.",
+      "editorialReview": {
+        "status": "daily_eligible",
+        "reviewedAt": "2026-06-22",
+        "reviewedBy": "Codex editorial QA",
+        "qualityScore": 4,
+        "funScore": 4,
+        "fairnessScore": 3,
+        "ambiguityRisk": "medium",
+        "dailyEligible": true,
+        "practiceEligible": true,
+        "challengeEligible": true,
+        "expertOnly": false,
+        "reviewNotes": [
+          "Batch 3 promotion: high-coverage gendered sector-work map with a readable industrial pattern.",
+          "Expert Daily only; keep out of the same Daily set as total industry employment or male industry employment."
+        ],
+        "acceptableCloseDistractorIds": []
+      }
+    },
+    {
+      "id": "male-industry-employment",
+      "providerCode": "SL.IND.EMPL.MA.ZS",
+      "title": "Employment in industry, male (% of male employment) (modeled ILO estimate)",
+      "shortTitle": "Male industry employment",
+      "category": "labor",
+      "difficulty": "expert",
+      "year": 2025,
+      "coverage": 163,
+      "path": "/data/v1/indicators/male-industry-employment.json",
+      "reviewStatus": "approved",
+      "shortHook": "A men's industrial-work map.",
+      "editorialReview": {
+        "status": "expert_only",
+        "reviewedAt": "2026-06-22",
+        "reviewedBy": "Codex editorial QA",
+        "qualityScore": 4,
+        "funScore": 4,
+        "fairnessScore": 3,
+        "ambiguityRisk": "medium",
+        "dailyEligible": false,
+        "practiceEligible": true,
+        "challengeEligible": true,
+        "expertOnly": true,
+        "reviewNotes": [
+          "Batch 3 QA: source-valid counterpart to female industry employment.",
+          "Expert-only; keep separate from female industry employment in answer-choice clusters."
+        ],
+        "acceptableCloseDistractorIds": []
+      }
+    },
+    {
+      "id": "female-services-employment",
+      "providerCode": "SL.SRV.EMPL.FE.ZS",
+      "title": "Employment in services, female (% of female employment) (modeled ILO estimate)",
+      "shortTitle": "Female services employment",
+      "category": "labor",
+      "difficulty": "expert",
+      "year": 2025,
+      "coverage": 163,
+      "path": "/data/v1/indicators/female-services-employment.json",
+      "reviewStatus": "approved",
+      "shortHook": "A gendered service-work map.",
+      "editorialReview": {
+        "status": "expert_only",
+        "reviewedAt": "2026-06-22",
+        "reviewedBy": "Codex editorial QA",
+        "qualityScore": 4,
+        "funScore": 4,
+        "fairnessScore": 3,
+        "ambiguityRisk": "high",
+        "dailyEligible": false,
+        "practiceEligible": true,
+        "challengeEligible": true,
+        "expertOnly": true,
+        "reviewNotes": [
+          "Batch 3 QA: good gendered service-work map, but close to total services employment.",
+          "Expert-only."
+        ],
+        "acceptableCloseDistractorIds": []
+      }
+    },
+    {
+      "id": "male-services-employment",
+      "providerCode": "SL.SRV.EMPL.MA.ZS",
+      "title": "Employment in services, male (% of male employment) (modeled ILO estimate)",
+      "shortTitle": "Male services employment",
+      "category": "labor",
+      "difficulty": "expert",
+      "year": 2025,
+      "coverage": 163,
+      "path": "/data/v1/indicators/male-services-employment.json",
+      "reviewStatus": "approved",
+      "shortHook": "A men's service-work map.",
+      "editorialReview": {
+        "status": "needs_review",
+        "reviewedAt": "2026-06-22",
+        "reviewedBy": "pipeline-default-needs-review",
+        "qualityScore": 2,
+        "funScore": 2,
+        "fairnessScore": 2,
+        "ambiguityRisk": "medium",
+        "dailyEligible": false,
+        "practiceEligible": false,
+        "challengeEligible": false,
+        "expertOnly": false,
+        "reviewNotes": [
+          "Loaded from the candidate intake queue and default-held as Needs review until a human editor classifies it."
+        ],
+        "acceptableCloseDistractorIds": []
+      }
+    },
+    {
+      "id": "contributing-family-workers",
+      "providerCode": "SL.FAM.WORK.ZS",
+      "title": "Contributing family workers, total (% of total employment) (modeled ILO estimate)",
+      "shortTitle": "Contributing family workers",
+      "category": "labor",
+      "difficulty": "expert",
+      "year": 2025,
+      "coverage": 163,
+      "path": "/data/v1/indicators/contributing-family-workers.json",
+      "reviewStatus": "approved",
+      "shortHook": "A family-work structure map.",
+      "editorialReview": {
+        "status": "expert_only",
+        "reviewedAt": "2026-06-22",
+        "reviewedBy": "Codex editorial QA",
+        "qualityScore": 4,
+        "funScore": 4,
+        "fairnessScore": 3,
+        "ambiguityRisk": "high",
+        "dailyEligible": false,
+        "practiceEligible": true,
+        "challengeEligible": true,
+        "expertOnly": true,
+        "reviewNotes": [
+          "Batch 3 QA: high-coverage labor-structure map, but concept is advanced and close to vulnerable employment.",
+          "Expert-only for beta."
+        ],
+        "acceptableCloseDistractorIds": []
+      }
+    },
+    {
+      "id": "female-contributing-family-workers",
+      "providerCode": "SL.FAM.WORK.FE.ZS",
+      "title": "Contributing family workers, female (% of female employment) (modeled ILO estimate)",
+      "shortTitle": "Female contributing family workers",
+      "category": "labor",
+      "difficulty": "expert",
+      "year": 2025,
+      "coverage": 163,
+      "path": "/data/v1/indicators/female-contributing-family-workers.json",
+      "reviewStatus": "approved",
+      "shortHook": "A women's unpaid-family-work map.",
+      "editorialReview": {
+        "status": "expert_only",
+        "reviewedAt": "2026-06-22",
+        "reviewedBy": "Codex editorial QA",
+        "qualityScore": 4,
+        "funScore": 4,
+        "fairnessScore": 3,
+        "ambiguityRisk": "high",
+        "dailyEligible": false,
+        "practiceEligible": true,
+        "challengeEligible": true,
+        "expertOnly": true,
+        "reviewNotes": [
+          "Batch 3 QA: high-coverage but advanced unpaid-family-work concept.",
+          "Expert-only; reveal copy should define contributing-family work clearly."
+        ],
+        "acceptableCloseDistractorIds": []
+      }
+    },
+    {
+      "id": "male-contributing-family-workers",
+      "providerCode": "SL.FAM.WORK.MA.ZS",
+      "title": "Contributing family workers, male (% of male employment) (modeled ILO estimate)",
+      "shortTitle": "Male contributing family workers",
+      "category": "labor",
+      "difficulty": "expert",
+      "year": 2025,
+      "coverage": 163,
+      "path": "/data/v1/indicators/male-contributing-family-workers.json",
+      "reviewStatus": "approved",
+      "shortHook": "A men's unpaid-family-work map.",
+      "editorialReview": {
+        "status": "needs_review",
+        "reviewedAt": "2026-06-22",
+        "reviewedBy": "pipeline-default-needs-review",
+        "qualityScore": 2,
+        "funScore": 2,
+        "fairnessScore": 2,
+        "ambiguityRisk": "medium",
+        "dailyEligible": false,
+        "practiceEligible": false,
+        "challengeEligible": false,
+        "expertOnly": false,
+        "reviewNotes": [
+          "Loaded from the candidate intake queue and default-held as Needs review until a human editor classifies it."
+        ],
+        "acceptableCloseDistractorIds": []
+      }
+    },
+    {
+      "id": "female-self-employed",
+      "providerCode": "SL.EMP.SELF.FE.ZS",
+      "title": "Self-employed, female (% of female employment) (modeled ILO estimate)",
+      "shortTitle": "Female self-employed",
+      "category": "labor",
+      "difficulty": "expert",
+      "year": 2025,
+      "coverage": 163,
+      "path": "/data/v1/indicators/female-self-employed.json",
+      "reviewStatus": "approved",
+      "shortHook": "A women's self-employment map.",
+      "editorialReview": {
+        "status": "expert_only",
+        "reviewedAt": "2026-06-22",
+        "reviewedBy": "Codex editorial QA",
+        "qualityScore": 4,
+        "funScore": 4,
+        "fairnessScore": 3,
+        "ambiguityRisk": "high",
+        "dailyEligible": false,
+        "practiceEligible": true,
+        "challengeEligible": true,
+        "expertOnly": true,
+        "reviewNotes": [
+          "Batch 3 QA: source-valid gendered self-employment map.",
+          "Expert-only because it overlaps with vulnerable and wage-worker maps."
+        ],
+        "acceptableCloseDistractorIds": []
+      }
+    },
+    {
+      "id": "male-self-employed",
+      "providerCode": "SL.EMP.SELF.MA.ZS",
+      "title": "Self-employed, male (% of male employment) (modeled ILO estimate)",
+      "shortTitle": "Male self-employed",
+      "category": "labor",
+      "difficulty": "expert",
+      "year": 2025,
+      "coverage": 163,
+      "path": "/data/v1/indicators/male-self-employed.json",
+      "reviewStatus": "approved",
+      "shortHook": "A men's self-employment map.",
+      "editorialReview": {
+        "status": "needs_review",
+        "reviewedAt": "2026-06-22",
+        "reviewedBy": "pipeline-default-needs-review",
+        "qualityScore": 2,
+        "funScore": 2,
+        "fairnessScore": 2,
+        "ambiguityRisk": "medium",
+        "dailyEligible": false,
+        "practiceEligible": false,
+        "challengeEligible": false,
+        "expertOnly": false,
+        "reviewNotes": [
+          "Loaded from the candidate intake queue and default-held as Needs review until a human editor classifies it."
+        ],
+        "acceptableCloseDistractorIds": []
+      }
+    },
+    {
+      "id": "communications-service-exports",
+      "providerCode": "BX.GSR.CMCP.ZS",
+      "title": "Communications, computer, etc. (% of service exports, BoP)",
+      "shortTitle": "Communications service exports",
+      "category": "connectivity",
+      "difficulty": "expert",
+      "year": 2024,
+      "coverage": 137,
+      "path": "/data/v1/indicators/communications-service-exports.json",
+      "reviewStatus": "approved",
+      "shortHook": "A digital-and-communications export map.",
+      "editorialReview": {
+        "status": "daily_eligible",
+        "reviewedAt": "2026-06-22",
+        "reviewedBy": "Codex editorial QA",
+        "qualityScore": 4,
+        "funScore": 4,
+        "fairnessScore": 3,
+        "ambiguityRisk": "medium",
+        "dailyEligible": true,
+        "practiceEligible": true,
+        "challengeEligible": true,
+        "expertOnly": false,
+        "reviewNotes": [
+          "Batch 3 promotion: fresh service-trade connectivity map with a clear share unit.",
+          "Expert Daily only; avoid pairing with ICT service exports or high-tech exports in the same round."
+        ],
+        "acceptableCloseDistractorIds": []
+      }
+    },
+    {
+      "id": "communications-service-imports",
+      "providerCode": "BM.GSR.CMCP.ZS",
+      "title": "Communications, computer, etc. (% of service imports, BoP)",
+      "shortTitle": "Communications service imports",
+      "category": "connectivity",
+      "difficulty": "expert",
+      "year": 2024,
+      "coverage": 137,
+      "path": "/data/v1/indicators/communications-service-imports.json",
+      "reviewStatus": "approved",
+      "shortHook": "A digital-service import map.",
+      "editorialReview": {
+        "status": "practice_eligible",
+        "reviewedAt": "2026-06-22",
+        "reviewedBy": "Codex editorial QA",
+        "qualityScore": 4,
+        "funScore": 3,
+        "fairnessScore": 3,
+        "ambiguityRisk": "medium",
+        "dailyEligible": false,
+        "practiceEligible": true,
+        "challengeEligible": true,
+        "expertOnly": false,
+        "reviewNotes": [
+          "Batch 3 QA: source-valid but less intuitive than export-side communications services.",
+          "Practice-only for beta."
+        ],
+        "acceptableCloseDistractorIds": []
+      }
+    },
+    {
+      "id": "transport-service-exports",
+      "providerCode": "BX.GSR.TRAN.ZS",
+      "title": "Transport services (% of service exports, BoP)",
+      "shortTitle": "Transport service exports",
+      "category": "connectivity",
+      "difficulty": "expert",
+      "year": 2024,
+      "coverage": 137,
+      "path": "/data/v1/indicators/transport-service-exports.json",
+      "reviewStatus": "approved",
+      "shortHook": "A transport-service trade map.",
+      "editorialReview": {
+        "status": "practice_eligible",
+        "reviewedAt": "2026-06-22",
+        "reviewedBy": "Codex editorial QA",
+        "qualityScore": 4,
+        "funScore": 4,
+        "fairnessScore": 3,
+        "ambiguityRisk": "medium",
+        "dailyEligible": false,
+        "practiceEligible": true,
+        "challengeEligible": true,
+        "expertOnly": false,
+        "reviewNotes": [
+          "Batch 3 QA: strong transport-services signal with fresh data.",
+          "Practice-only until it is tested against tourism, shipping, and air-travel maps."
+        ],
+        "acceptableCloseDistractorIds": []
+      }
+    },
+    {
+      "id": "transport-service-imports",
+      "providerCode": "BM.GSR.TRAN.ZS",
+      "title": "Transport services (% of service imports, BoP)",
+      "shortTitle": "Transport service imports",
+      "category": "connectivity",
+      "difficulty": "expert",
+      "year": 2024,
+      "coverage": 137,
+      "path": "/data/v1/indicators/transport-service-imports.json",
+      "reviewStatus": "approved",
+      "shortHook": "A transport-service import map.",
+      "editorialReview": {
+        "status": "practice_eligible",
+        "reviewedAt": "2026-06-22",
+        "reviewedBy": "Codex editorial QA",
+        "qualityScore": 4,
+        "funScore": 3,
+        "fairnessScore": 3,
+        "ambiguityRisk": "medium",
+        "dailyEligible": false,
+        "practiceEligible": true,
+        "challengeEligible": true,
+        "expertOnly": false,
+        "reviewNotes": [
+          "Batch 3 QA: source-valid import-side service map, but the story is less direct for new players.",
+          "Practice-only for beta."
+        ],
+        "acceptableCloseDistractorIds": []
+      }
+    },
+    {
+      "id": "air-freight",
+      "providerCode": "IS.AIR.GOOD.MT.K1",
+      "title": "Air transport, freight (million ton-km)",
+      "shortTitle": "Air freight",
+      "category": "connectivity",
+      "difficulty": "expert",
+      "year": 2023,
+      "coverage": 123,
+      "path": "/data/v1/indicators/air-freight.json",
+      "reviewStatus": "approved",
+      "shortHook": "A high-value cargo network map.",
+      "editorialReview": {
+        "status": "expert_only",
+        "reviewedAt": "2026-06-22",
+        "reviewedBy": "Codex editorial QA",
+        "qualityScore": 3,
+        "funScore": 4,
+        "fairnessScore": 3,
+        "ambiguityRisk": "medium",
+        "dailyEligible": false,
+        "practiceEligible": true,
+        "challengeEligible": true,
+        "expertOnly": true,
+        "reviewNotes": [
+          "Batch 3 QA: source-valid cargo-network map with strong hub geography.",
+          "Expert-only because raw ton-kilometers are a specialized clue."
+        ],
+        "acceptableCloseDistractorIds": []
+      }
+    },
+    {
+      "id": "urban-electricity-access",
+      "providerCode": "EG.ELC.ACCS.UR.ZS",
+      "title": "Access to electricity, urban (% of urban population)",
+      "shortTitle": "Urban electricity access",
+      "category": "settlement",
+      "difficulty": "standard",
+      "year": 2023,
+      "coverage": 168,
+      "path": "/data/v1/indicators/urban-electricity-access.json",
+      "reviewStatus": "approved",
+      "shortHook": "An urban infrastructure-access map.",
+      "editorialReview": {
+        "status": "practice_eligible",
+        "reviewedAt": "2026-06-22",
+        "reviewedBy": "Codex editorial QA",
+        "qualityScore": 4,
+        "funScore": 3,
+        "fairnessScore": 4,
+        "ambiguityRisk": "medium",
+        "dailyEligible": false,
+        "practiceEligible": true,
+        "challengeEligible": true,
+        "expertOnly": false,
+        "reviewNotes": [
+          "Batch 3 QA: clear source-valid urban access map, but close to national electricity access.",
+          "Practice-only until urban/rural access variants are tested."
+        ],
+        "acceptableCloseDistractorIds": []
+      }
+    },
+    {
+      "id": "urban-clean-cooking-access",
+      "providerCode": "EG.CFT.ACCS.UR.ZS",
+      "title": "Access to clean fuels and technologies for cooking, urban (% of urban population)",
+      "shortTitle": "Urban clean cooking access",
+      "category": "settlement",
+      "difficulty": "standard",
+      "year": 2023,
+      "coverage": 162,
+      "path": "/data/v1/indicators/urban-clean-cooking-access.json",
+      "reviewStatus": "approved",
+      "shortHook": "An urban household-energy map.",
+      "editorialReview": {
+        "status": "practice_eligible",
+        "reviewedAt": "2026-06-22",
+        "reviewedBy": "Codex editorial QA",
+        "qualityScore": 4,
+        "funScore": 4,
+        "fairnessScore": 4,
+        "ambiguityRisk": "medium",
+        "dailyEligible": false,
+        "practiceEligible": true,
+        "challengeEligible": true,
+        "expertOnly": false,
+        "reviewNotes": [
+          "Batch 3 QA: strong access pattern but close to clean-fuels and rural clean-cooking maps.",
+          "Practice-only until the access cluster is tuned."
+        ],
+        "acceptableCloseDistractorIds": []
+      }
+    },
+    {
+      "id": "urban-basic-drinking-water",
+      "providerCode": "SH.H2O.BASW.UR.ZS",
+      "title": "People using at least basic drinking water services, urban (% of urban population)",
+      "shortTitle": "Urban basic drinking water",
+      "category": "settlement",
+      "difficulty": "standard",
+      "year": 2024,
+      "coverage": 151,
+      "path": "/data/v1/indicators/urban-basic-drinking-water.json",
+      "reviewStatus": "approved",
+      "shortHook": "An urban water-access map.",
+      "editorialReview": {
+        "status": "daily_eligible",
+        "reviewedAt": "2026-06-22",
+        "reviewedBy": "Codex editorial QA",
+        "qualityScore": 4,
+        "funScore": 4,
+        "fairnessScore": 4,
+        "ambiguityRisk": "medium",
+        "dailyEligible": true,
+        "practiceEligible": true,
+        "challengeEligible": true,
+        "expertOnly": false,
+        "reviewNotes": [
+          "Batch 3 promotion: clear urban infrastructure-access map with broad enough coverage.",
+          "Daily-worthy sparingly; do not pair with national safe-drinking-water in easier tiers."
+        ],
+        "acceptableCloseDistractorIds": []
+      }
+    },
+    {
+      "id": "rural-basic-drinking-water",
+      "providerCode": "SH.H2O.BASW.RU.ZS",
+      "title": "People using at least basic drinking water services, rural (% of rural population)",
+      "shortTitle": "Rural basic drinking water",
+      "category": "settlement",
+      "difficulty": "standard",
+      "year": 2024,
+      "coverage": 150,
+      "path": "/data/v1/indicators/rural-basic-drinking-water.json",
+      "reviewStatus": "approved",
+      "shortHook": "A rural water-access map.",
+      "editorialReview": {
+        "status": "practice_eligible",
+        "reviewedAt": "2026-06-22",
+        "reviewedBy": "Codex editorial QA",
+        "qualityScore": 4,
+        "funScore": 4,
+        "fairnessScore": 4,
+        "ambiguityRisk": "medium",
+        "dailyEligible": false,
+        "practiceEligible": true,
+        "challengeEligible": true,
+        "expertOnly": false,
+        "reviewNotes": [
+          "Batch 3 QA: good rural infrastructure practice map.",
+          "Practice-only to avoid overloading Daily with water-access variants."
+        ],
+        "acceptableCloseDistractorIds": []
+      }
+    },
+    {
+      "id": "urban-basic-sanitation",
+      "providerCode": "SH.STA.BASS.UR.ZS",
+      "title": "People using at least basic sanitation services, urban (% of urban population)",
+      "shortTitle": "Urban basic sanitation",
+      "category": "settlement",
+      "difficulty": "standard",
+      "year": 2024,
+      "coverage": 147,
+      "path": "/data/v1/indicators/urban-basic-sanitation.json",
+      "reviewStatus": "approved",
+      "shortHook": "An urban sanitation-access map.",
+      "editorialReview": {
+        "status": "practice_eligible",
+        "reviewedAt": "2026-06-22",
+        "reviewedBy": "Codex editorial QA",
+        "qualityScore": 3,
+        "funScore": 3,
+        "fairnessScore": 4,
+        "ambiguityRisk": "medium",
+        "dailyEligible": false,
+        "practiceEligible": true,
+        "challengeEligible": true,
+        "expertOnly": false,
+        "reviewNotes": [
+          "Batch 3 QA: source-valid urban sanitation map, but the pattern is less distinctive than rural sanitation.",
+          "Practice-only for beta."
+        ],
+        "acceptableCloseDistractorIds": []
+      }
+    },
+    {
+      "id": "rural-basic-sanitation",
+      "providerCode": "SH.STA.BASS.RU.ZS",
+      "title": "People using at least basic sanitation services, rural (% of rural population)",
+      "shortTitle": "Rural basic sanitation",
+      "category": "settlement",
+      "difficulty": "standard",
+      "year": 2024,
+      "coverage": 144,
+      "path": "/data/v1/indicators/rural-basic-sanitation.json",
+      "reviewStatus": "approved",
+      "shortHook": "A rural sanitation-access map.",
+      "editorialReview": {
+        "status": "daily_eligible",
+        "reviewedAt": "2026-06-22",
+        "reviewedBy": "Codex editorial QA",
+        "qualityScore": 4,
+        "funScore": 4,
+        "fairnessScore": 4,
+        "ambiguityRisk": "medium",
+        "dailyEligible": true,
+        "practiceEligible": true,
+        "challengeEligible": true,
+        "expertOnly": false,
+        "reviewNotes": [
+          "Batch 3 promotion: strong rural infrastructure-gap map with a clear unit.",
+          "Daily-worthy if the reveal frames it as rural access, not national sanitation."
+        ],
+        "acceptableCloseDistractorIds": []
+      }
+    },
+    {
+      "id": "urban-open-defecation",
+      "providerCode": "SH.STA.ODFC.UR.ZS",
+      "title": "People practicing open defecation, urban (% of urban population)",
+      "shortTitle": "Urban open defecation",
+      "category": "settlement",
+      "difficulty": "expert",
+      "year": 2024,
+      "coverage": 145,
+      "path": "/data/v1/indicators/urban-open-defecation.json",
+      "reviewStatus": "approved",
+      "shortHook": "A stark urban sanitation-risk map.",
+      "editorialReview": {
+        "status": "expert_only",
+        "reviewedAt": "2026-06-22",
+        "reviewedBy": "Codex editorial QA",
+        "qualityScore": 3,
+        "funScore": 4,
+        "fairnessScore": 3,
+        "ambiguityRisk": "medium",
+        "dailyEligible": false,
+        "practiceEligible": true,
+        "challengeEligible": true,
+        "expertOnly": true,
+        "reviewNotes": [
+          "Batch 3 QA: sharp urban sanitation-risk map, but close to national open-defecation.",
+          "Expert-only until access variants are tested."
+        ],
+        "acceptableCloseDistractorIds": []
+      }
+    },
+    {
+      "id": "rural-open-defecation",
+      "providerCode": "SH.STA.ODFC.RU.ZS",
+      "title": "People practicing open defecation, rural (% of rural population)",
+      "shortTitle": "Rural open defecation",
+      "category": "settlement",
+      "difficulty": "expert",
+      "year": 2024,
+      "coverage": 140,
+      "path": "/data/v1/indicators/rural-open-defecation.json",
+      "reviewStatus": "approved",
+      "shortHook": "A rural sanitation-risk map.",
+      "editorialReview": {
+        "status": "expert_only",
+        "reviewedAt": "2026-06-22",
+        "reviewedBy": "Codex editorial QA",
+        "qualityScore": 3,
+        "funScore": 4,
+        "fairnessScore": 3,
+        "ambiguityRisk": "high",
+        "dailyEligible": false,
+        "practiceEligible": true,
+        "challengeEligible": true,
+        "expertOnly": true,
+        "reviewNotes": [
+          "Batch 3 QA: strong rural sanitation-risk map, but close to open-defecation and rural sanitation.",
+          "Expert-only for beta."
+        ],
+        "acceptableCloseDistractorIds": []
+      }
+    },
+    {
+      "id": "cereal-production",
+      "providerCode": "AG.PRD.CREL.MT",
+      "title": "Cereal production (metric tons)",
+      "shortTitle": "Cereal production",
+      "category": "agriculture",
+      "difficulty": "expert",
+      "year": 2023,
+      "coverage": 167,
+      "path": "/data/v1/indicators/cereal-production.json",
+      "reviewStatus": "approved",
+      "shortHook": "A raw grain-output map.",
+      "editorialReview": {
+        "status": "expert_only",
+        "reviewedAt": "2026-06-22",
+        "reviewedBy": "Codex editorial QA",
+        "qualityScore": 4,
+        "funScore": 4,
+        "fairnessScore": 3,
+        "ambiguityRisk": "medium",
+        "dailyEligible": false,
+        "practiceEligible": true,
+        "challengeEligible": true,
+        "expertOnly": true,
+        "reviewNotes": [
+          "Batch 3 QA: broad source-valid raw grain-output map.",
+          "Expert-only because raw tons favor large producers and can feel like a size quiz."
+        ],
+        "acceptableCloseDistractorIds": []
+      }
+    },
+    {
+      "id": "arable-land-area",
+      "providerCode": "AG.LND.ARBL.HA",
+      "title": "Arable land (hectares)",
+      "shortTitle": "Arable land area",
+      "category": "land",
+      "difficulty": "expert",
+      "year": 2023,
+      "coverage": 168,
+      "path": "/data/v1/indicators/arable-land-area.json",
+      "reviewStatus": "approved",
+      "shortHook": "A raw farmable-land map.",
+      "editorialReview": {
+        "status": "expert_only",
+        "reviewedAt": "2026-06-22",
+        "reviewedBy": "Codex editorial QA",
+        "qualityScore": 3,
+        "funScore": 4,
+        "fairnessScore": 3,
+        "ambiguityRisk": "high",
+        "dailyEligible": false,
+        "practiceEligible": true,
+        "challengeEligible": true,
+        "expertOnly": true,
+        "reviewNotes": [
+          "Batch 3 QA: source-valid raw land-area map with an obvious physical-geography signal.",
+          "Expert-only because raw hectares strongly favor large countries."
+        ],
+        "acceptableCloseDistractorIds": []
+      }
+    },
+    {
+      "id": "agriculture-methane-emissions",
+      "providerCode": "EN.GHG.CH4.AG.MT.CE.AR5",
+      "title": "Methane (CH4) emissions from Agriculture (Mt CO2e)",
+      "shortTitle": "Agriculture methane emissions",
+      "category": "agriculture",
+      "difficulty": "expert",
+      "year": 2024,
+      "coverage": 165,
+      "path": "/data/v1/indicators/agriculture-methane-emissions.json",
+      "reviewStatus": "approved",
+      "shortHook": "A farming-emissions map.",
+      "editorialReview": {
+        "status": "expert_only",
+        "reviewedAt": "2026-06-22",
+        "reviewedBy": "Codex editorial QA",
+        "qualityScore": 4,
+        "funScore": 4,
+        "fairnessScore": 3,
+        "ambiguityRisk": "high",
+        "dailyEligible": false,
+        "practiceEligible": true,
+        "challengeEligible": true,
+        "expertOnly": true,
+        "reviewNotes": [
+          "Batch 3 QA: interesting farming-emissions map with broad recent coverage.",
+          "Expert-only because raw emissions and agriculture scale can be confused with population or land area."
+        ],
+        "acceptableCloseDistractorIds": []
+      }
+    },
+    {
+      "id": "agriculture-nitrous-oxide-emissions",
+      "providerCode": "EN.GHG.N2O.AG.MT.CE.AR5",
+      "title": "Nitrous oxide (N2O) emissions from Agriculture (Mt CO2e)",
+      "shortTitle": "Agriculture nitrous oxide emissions",
+      "category": "agriculture",
+      "difficulty": "expert",
+      "year": 2024,
+      "coverage": 165,
+      "path": "/data/v1/indicators/agriculture-nitrous-oxide-emissions.json",
+      "reviewStatus": "approved",
+      "shortHook": "A fertilizer-and-soils emissions map.",
+      "editorialReview": {
+        "status": "expert_only",
+        "reviewedAt": "2026-06-22",
+        "reviewedBy": "Codex editorial QA",
+        "qualityScore": 4,
+        "funScore": 4,
+        "fairnessScore": 3,
+        "ambiguityRisk": "high",
+        "dailyEligible": false,
+        "practiceEligible": true,
+        "challengeEligible": true,
+        "expertOnly": true,
+        "reviewNotes": [
+          "Batch 3 QA: good advanced agriculture-emissions signal.",
+          "Expert-only and avoid pairing closely with agriculture methane emissions."
+        ],
+        "acceptableCloseDistractorIds": []
+      }
+    },
+    {
+      "id": "food-insecurity-moderate-severe",
+      "providerCode": "SN.ITK.MSFI.ZS",
+      "title": "Prevalence of moderate or severe food insecurity in the population (%)",
+      "shortTitle": "Moderate or severe food insecurity",
+      "category": "agriculture",
+      "difficulty": "standard",
+      "year": 2023,
+      "coverage": 124,
+      "path": "/data/v1/indicators/food-insecurity-moderate-severe.json",
+      "reviewStatus": "approved",
+      "shortHook": "A food-security hardship map.",
+      "editorialReview": {
+        "status": "daily_eligible",
+        "reviewedAt": "2026-06-22",
+        "reviewedBy": "Codex editorial QA",
+        "qualityScore": 4,
+        "funScore": 4,
+        "fairnessScore": 4,
+        "ambiguityRisk": "medium",
+        "dailyEligible": true,
+        "practiceEligible": true,
+        "challengeEligible": true,
+        "expertOnly": false,
+        "reviewNotes": [
+          "Batch 3 promotion: meaningful food-system map with recent data and an intuitive percent-of-population unit.",
+          "Daily-worthy, but keep away from undernourishment on easier tiers."
+        ],
+        "acceptableCloseDistractorIds": []
+      }
+    },
+    {
+      "id": "severe-food-insecurity",
+      "providerCode": "SN.ITK.SVFI.ZS",
+      "title": "Prevalence of severe food insecurity in the population (%)",
+      "shortTitle": "Severe food insecurity",
+      "category": "agriculture",
+      "difficulty": "expert",
+      "year": 2023,
+      "coverage": 123,
+      "path": "/data/v1/indicators/severe-food-insecurity.json",
+      "reviewStatus": "approved",
+      "shortHook": "A sharper food-security hardship map.",
+      "editorialReview": {
+        "status": "expert_only",
+        "reviewedAt": "2026-06-22",
+        "reviewedBy": "Codex editorial QA",
+        "qualityScore": 4,
+        "funScore": 4,
+        "fairnessScore": 3,
+        "ambiguityRisk": "medium",
+        "dailyEligible": false,
+        "practiceEligible": true,
+        "challengeEligible": true,
+        "expertOnly": true,
+        "reviewNotes": [
+          "Batch 3 QA: strong but close to moderate-or-severe food insecurity.",
+          "Expert-only so advanced players can explore the sharper food-security signal without padding ordinary Practice."
+        ],
+        "acceptableCloseDistractorIds": []
+      }
+    },
+    {
+      "id": "food-imports-share",
+      "providerCode": "TM.VAL.FOOD.ZS.UN",
+      "title": "Food imports (% of merchandise imports)",
+      "shortTitle": "Food imports share",
+      "category": "agriculture",
+      "difficulty": "expert",
+      "year": 2023,
+      "coverage": 137,
+      "path": "/data/v1/indicators/food-imports-share.json",
+      "reviewStatus": "approved",
+      "shortHook": "A food-dependence trade map.",
+      "editorialReview": {
+        "status": "practice_eligible",
+        "reviewedAt": "2026-06-22",
+        "reviewedBy": "Codex editorial QA",
+        "qualityScore": 4,
+        "funScore": 4,
+        "fairnessScore": 3,
+        "ambiguityRisk": "medium",
+        "dailyEligible": false,
+        "practiceEligible": true,
+        "challengeEligible": true,
+        "expertOnly": false,
+        "reviewNotes": [
+          "Batch 3 QA: useful food-dependence trade map with solid coverage.",
+          "Practice-only until it is tested against food exports and agriculture value maps."
+        ],
+        "acceptableCloseDistractorIds": []
+      }
+    },
+    {
+      "id": "food-exports-share",
+      "providerCode": "TX.VAL.FOOD.ZS.UN",
+      "title": "Food exports (% of merchandise exports)",
+      "shortTitle": "Food exports share",
+      "category": "agriculture",
+      "difficulty": "expert",
+      "year": 2023,
+      "coverage": 137,
+      "path": "/data/v1/indicators/food-exports-share.json",
+      "reviewStatus": "approved",
+      "shortHook": "A food-export specialization map.",
+      "editorialReview": {
+        "status": "practice_eligible",
+        "reviewedAt": "2026-06-22",
+        "reviewedBy": "Codex editorial QA",
+        "qualityScore": 4,
+        "funScore": 4,
+        "fairnessScore": 3,
+        "ambiguityRisk": "medium",
+        "dailyEligible": false,
+        "practiceEligible": true,
+        "challengeEligible": true,
+        "expertOnly": false,
+        "reviewNotes": [
+          "Batch 3 QA: useful agricultural trade specialization map.",
+          "Practice-only for beta because it can overlap with cereal and agriculture-output clues."
+        ],
+        "acceptableCloseDistractorIds": []
+      }
     }
   ],
   "rounds": [
@@ -5309,6 +7129,34 @@
       }
     },
     {
+      "id": "worldprint-agriculture-methane-emissions",
+      "correctIndicatorId": "agriculture-methane-emissions",
+      "category": "agriculture",
+      "difficulty": "expert",
+      "editorialStatus": "expert_only",
+      "ambiguityRisk": "high",
+      "eligibility": {
+        "daily": false,
+        "practice": true,
+        "challenge": true,
+        "expertOnly": true
+      }
+    },
+    {
+      "id": "worldprint-agriculture-nitrous-oxide-emissions",
+      "correctIndicatorId": "agriculture-nitrous-oxide-emissions",
+      "category": "agriculture",
+      "difficulty": "expert",
+      "editorialStatus": "expert_only",
+      "ambiguityRisk": "high",
+      "eligibility": {
+        "daily": false,
+        "practice": true,
+        "challenge": true,
+        "expertOnly": true
+      }
+    },
+    {
       "id": "worldprint-agriculture-value-added",
       "correctIndicatorId": "agriculture-value-added",
       "category": "economy",
@@ -5337,6 +7185,48 @@
       }
     },
     {
+      "id": "worldprint-air-departures",
+      "correctIndicatorId": "air-departures",
+      "category": "connectivity",
+      "difficulty": "expert",
+      "editorialStatus": "expert_only",
+      "ambiguityRisk": "high",
+      "eligibility": {
+        "daily": false,
+        "practice": true,
+        "challenge": true,
+        "expertOnly": true
+      }
+    },
+    {
+      "id": "worldprint-air-freight",
+      "correctIndicatorId": "air-freight",
+      "category": "connectivity",
+      "difficulty": "expert",
+      "editorialStatus": "expert_only",
+      "ambiguityRisk": "medium",
+      "eligibility": {
+        "daily": false,
+        "practice": true,
+        "challenge": true,
+        "expertOnly": true
+      }
+    },
+    {
+      "id": "worldprint-air-passengers",
+      "correctIndicatorId": "air-passengers",
+      "category": "connectivity",
+      "difficulty": "expert",
+      "editorialStatus": "expert_only",
+      "ambiguityRisk": "high",
+      "eligibility": {
+        "daily": false,
+        "practice": true,
+        "challenge": true,
+        "expertOnly": true
+      }
+    },
+    {
       "id": "worldprint-arable-land",
       "correctIndicatorId": "arable-land",
       "category": "land",
@@ -5348,6 +7238,20 @@
         "practice": true,
         "challenge": true,
         "expertOnly": false
+      }
+    },
+    {
+      "id": "worldprint-arable-land-area",
+      "correctIndicatorId": "arable-land-area",
+      "category": "land",
+      "difficulty": "expert",
+      "editorialStatus": "expert_only",
+      "ambiguityRisk": "high",
+      "eligibility": {
+        "daily": false,
+        "practice": true,
+        "challenge": true,
+        "expertOnly": true
       }
     },
     {
@@ -5410,6 +7314,20 @@
       "id": "worldprint-carbon-intensity-gdp",
       "correctIndicatorId": "carbon-intensity-gdp",
       "category": "environment",
+      "difficulty": "expert",
+      "editorialStatus": "expert_only",
+      "ambiguityRisk": "medium",
+      "eligibility": {
+        "daily": false,
+        "practice": true,
+        "challenge": true,
+        "expertOnly": true
+      }
+    },
+    {
+      "id": "worldprint-cereal-production",
+      "correctIndicatorId": "cereal-production",
+      "category": "agriculture",
       "difficulty": "expert",
       "editorialStatus": "expert_only",
       "ambiguityRisk": "medium",
@@ -5494,6 +7412,76 @@
       "id": "worldprint-communicable-death-share",
       "correctIndicatorId": "communicable-death-share",
       "category": "health",
+      "difficulty": "expert",
+      "editorialStatus": "expert_only",
+      "ambiguityRisk": "high",
+      "eligibility": {
+        "daily": false,
+        "practice": true,
+        "challenge": true,
+        "expertOnly": true
+      }
+    },
+    {
+      "id": "worldprint-communications-service-exports",
+      "correctIndicatorId": "communications-service-exports",
+      "category": "connectivity",
+      "difficulty": "expert",
+      "editorialStatus": "daily_eligible",
+      "ambiguityRisk": "medium",
+      "eligibility": {
+        "daily": true,
+        "practice": true,
+        "challenge": true,
+        "expertOnly": false
+      }
+    },
+    {
+      "id": "worldprint-communications-service-imports",
+      "correctIndicatorId": "communications-service-imports",
+      "category": "connectivity",
+      "difficulty": "expert",
+      "editorialStatus": "practice_eligible",
+      "ambiguityRisk": "medium",
+      "eligibility": {
+        "daily": false,
+        "practice": true,
+        "challenge": true,
+        "expertOnly": false
+      }
+    },
+    {
+      "id": "worldprint-compulsory-education-duration",
+      "correctIndicatorId": "compulsory-education-duration",
+      "category": "education",
+      "difficulty": "expert",
+      "editorialStatus": "daily_eligible",
+      "ambiguityRisk": "medium",
+      "eligibility": {
+        "daily": true,
+        "practice": true,
+        "challenge": true,
+        "expertOnly": false
+      }
+    },
+    {
+      "id": "worldprint-container-port-traffic",
+      "correctIndicatorId": "container-port-traffic",
+      "category": "connectivity",
+      "difficulty": "expert",
+      "editorialStatus": "expert_only",
+      "ambiguityRisk": "medium",
+      "eligibility": {
+        "daily": false,
+        "practice": true,
+        "challenge": true,
+        "expertOnly": true
+      }
+    },
+    {
+      "id": "worldprint-contributing-family-workers",
+      "correctIndicatorId": "contributing-family-workers",
+      "category": "labor",
       "difficulty": "expert",
       "editorialStatus": "expert_only",
       "ambiguityRisk": "high",
@@ -5743,6 +7731,62 @@
       }
     },
     {
+      "id": "worldprint-female-agricultural-employment",
+      "correctIndicatorId": "female-agricultural-employment",
+      "category": "labor",
+      "difficulty": "expert",
+      "editorialStatus": "expert_only",
+      "ambiguityRisk": "high",
+      "eligibility": {
+        "daily": false,
+        "practice": true,
+        "challenge": true,
+        "expertOnly": true
+      }
+    },
+    {
+      "id": "worldprint-female-contributing-family-workers",
+      "correctIndicatorId": "female-contributing-family-workers",
+      "category": "labor",
+      "difficulty": "expert",
+      "editorialStatus": "expert_only",
+      "ambiguityRisk": "high",
+      "eligibility": {
+        "daily": false,
+        "practice": true,
+        "challenge": true,
+        "expertOnly": true
+      }
+    },
+    {
+      "id": "worldprint-female-employment-population-ratio",
+      "correctIndicatorId": "female-employment-population-ratio",
+      "category": "labor",
+      "difficulty": "expert",
+      "editorialStatus": "expert_only",
+      "ambiguityRisk": "high",
+      "eligibility": {
+        "daily": false,
+        "practice": true,
+        "challenge": true,
+        "expertOnly": true
+      }
+    },
+    {
+      "id": "worldprint-female-industry-employment",
+      "correctIndicatorId": "female-industry-employment",
+      "category": "labor",
+      "difficulty": "expert",
+      "editorialStatus": "daily_eligible",
+      "ambiguityRisk": "medium",
+      "eligibility": {
+        "daily": true,
+        "practice": true,
+        "challenge": true,
+        "expertOnly": false
+      }
+    },
+    {
       "id": "worldprint-female-labor-force",
       "correctIndicatorId": "female-labor-force",
       "category": "labor",
@@ -5757,10 +7801,66 @@
       }
     },
     {
+      "id": "worldprint-female-self-employed",
+      "correctIndicatorId": "female-self-employed",
+      "category": "labor",
+      "difficulty": "expert",
+      "editorialStatus": "expert_only",
+      "ambiguityRisk": "high",
+      "eligibility": {
+        "daily": false,
+        "practice": true,
+        "challenge": true,
+        "expertOnly": true
+      }
+    },
+    {
+      "id": "worldprint-female-services-employment",
+      "correctIndicatorId": "female-services-employment",
+      "category": "labor",
+      "difficulty": "expert",
+      "editorialStatus": "expert_only",
+      "ambiguityRisk": "high",
+      "eligibility": {
+        "daily": false,
+        "practice": true,
+        "challenge": true,
+        "expertOnly": true
+      }
+    },
+    {
       "id": "worldprint-female-unemployment",
       "correctIndicatorId": "female-unemployment",
       "category": "labor",
       "difficulty": "standard",
+      "editorialStatus": "expert_only",
+      "ambiguityRisk": "high",
+      "eligibility": {
+        "daily": false,
+        "practice": true,
+        "challenge": true,
+        "expertOnly": true
+      }
+    },
+    {
+      "id": "worldprint-female-vulnerable-employment",
+      "correctIndicatorId": "female-vulnerable-employment",
+      "category": "labor",
+      "difficulty": "expert",
+      "editorialStatus": "expert_only",
+      "ambiguityRisk": "high",
+      "eligibility": {
+        "daily": false,
+        "practice": true,
+        "challenge": true,
+        "expertOnly": true
+      }
+    },
+    {
+      "id": "worldprint-female-wage-salaried-workers",
+      "correctIndicatorId": "female-wage-salaried-workers",
+      "category": "labor",
+      "difficulty": "expert",
       "editorialStatus": "expert_only",
       "ambiguityRisk": "high",
       "eligibility": {
@@ -5821,6 +7921,48 @@
       "ambiguityRisk": "medium",
       "eligibility": {
         "daily": false,
+        "practice": true,
+        "challenge": true,
+        "expertOnly": false
+      }
+    },
+    {
+      "id": "worldprint-food-exports-share",
+      "correctIndicatorId": "food-exports-share",
+      "category": "agriculture",
+      "difficulty": "expert",
+      "editorialStatus": "practice_eligible",
+      "ambiguityRisk": "medium",
+      "eligibility": {
+        "daily": false,
+        "practice": true,
+        "challenge": true,
+        "expertOnly": false
+      }
+    },
+    {
+      "id": "worldprint-food-imports-share",
+      "correctIndicatorId": "food-imports-share",
+      "category": "agriculture",
+      "difficulty": "expert",
+      "editorialStatus": "practice_eligible",
+      "ambiguityRisk": "medium",
+      "eligibility": {
+        "daily": false,
+        "practice": true,
+        "challenge": true,
+        "expertOnly": false
+      }
+    },
+    {
+      "id": "worldprint-food-insecurity-moderate-severe",
+      "correctIndicatorId": "food-insecurity-moderate-severe",
+      "category": "agriculture",
+      "difficulty": "standard",
+      "editorialStatus": "daily_eligible",
+      "ambiguityRisk": "medium",
+      "eligibility": {
+        "daily": true,
         "practice": true,
         "challenge": true,
         "expertOnly": false
@@ -5981,6 +8123,20 @@
       }
     },
     {
+      "id": "worldprint-government-education-spending-share",
+      "correctIndicatorId": "government-education-spending-share",
+      "category": "education",
+      "difficulty": "expert",
+      "editorialStatus": "daily_eligible",
+      "ambiguityRisk": "medium",
+      "eligibility": {
+        "daily": true,
+        "practice": true,
+        "challenge": true,
+        "expertOnly": false
+      }
+    },
+    {
       "id": "worldprint-government-health-spending-share",
       "correctIndicatorId": "government-health-spending-share",
       "category": "health",
@@ -6069,6 +8225,20 @@
       "correctIndicatorId": "hydro-electricity-share",
       "category": "energy",
       "difficulty": "standard",
+      "editorialStatus": "practice_eligible",
+      "ambiguityRisk": "medium",
+      "eligibility": {
+        "daily": false,
+        "practice": true,
+        "challenge": true,
+        "expertOnly": false
+      }
+    },
+    {
+      "id": "worldprint-ict-service-exports",
+      "correctIndicatorId": "ict-service-exports",
+      "category": "connectivity",
+      "difficulty": "expert",
       "editorialStatus": "practice_eligible",
       "ambiguityRisk": "medium",
       "eligibility": {
@@ -6191,6 +8361,20 @@
       }
     },
     {
+      "id": "worldprint-land-under-cereal",
+      "correctIndicatorId": "land-under-cereal",
+      "category": "land",
+      "difficulty": "expert",
+      "editorialStatus": "daily_eligible",
+      "ambiguityRisk": "medium",
+      "eligibility": {
+        "daily": true,
+        "practice": true,
+        "challenge": true,
+        "expertOnly": false
+      }
+    },
+    {
       "id": "worldprint-largest-city-share",
       "correctIndicatorId": "largest-city-share",
       "category": "settlement",
@@ -6239,6 +8423,34 @@
       "difficulty": "expert",
       "editorialStatus": "expert_only",
       "ambiguityRisk": "high",
+      "eligibility": {
+        "daily": false,
+        "practice": true,
+        "challenge": true,
+        "expertOnly": true
+      }
+    },
+    {
+      "id": "worldprint-male-employment-population-ratio",
+      "correctIndicatorId": "male-employment-population-ratio",
+      "category": "labor",
+      "difficulty": "expert",
+      "editorialStatus": "expert_only",
+      "ambiguityRisk": "high",
+      "eligibility": {
+        "daily": false,
+        "practice": true,
+        "challenge": true,
+        "expertOnly": true
+      }
+    },
+    {
+      "id": "worldprint-male-industry-employment",
+      "correctIndicatorId": "male-industry-employment",
+      "category": "labor",
+      "difficulty": "expert",
+      "editorialStatus": "expert_only",
+      "ambiguityRisk": "medium",
       "eligibility": {
         "daily": false,
         "practice": true,
@@ -6429,6 +8641,20 @@
       }
     },
     {
+      "id": "worldprint-out-of-school-primary",
+      "correctIndicatorId": "out-of-school-primary",
+      "category": "education",
+      "difficulty": "standard",
+      "editorialStatus": "daily_eligible",
+      "ambiguityRisk": "medium",
+      "eligibility": {
+        "daily": true,
+        "practice": true,
+        "challenge": true,
+        "expertOnly": false
+      }
+    },
+    {
       "id": "worldprint-permanent-cropland",
       "correctIndicatorId": "permanent-cropland",
       "category": "land",
@@ -6507,6 +8733,48 @@
       "ambiguityRisk": "medium",
       "eligibility": {
         "daily": true,
+        "practice": true,
+        "challenge": true,
+        "expertOnly": false
+      }
+    },
+    {
+      "id": "worldprint-primary-female-teachers",
+      "correctIndicatorId": "primary-female-teachers",
+      "category": "education",
+      "difficulty": "standard",
+      "editorialStatus": "daily_eligible",
+      "ambiguityRisk": "medium",
+      "eligibility": {
+        "daily": true,
+        "practice": true,
+        "challenge": true,
+        "expertOnly": false
+      }
+    },
+    {
+      "id": "worldprint-primary-gross-intake",
+      "correctIndicatorId": "primary-gross-intake",
+      "category": "education",
+      "difficulty": "expert",
+      "editorialStatus": "practice_eligible",
+      "ambiguityRisk": "medium",
+      "eligibility": {
+        "daily": false,
+        "practice": true,
+        "challenge": true,
+        "expertOnly": false
+      }
+    },
+    {
+      "id": "worldprint-primary-pupils-female-share",
+      "correctIndicatorId": "primary-pupils-female-share",
+      "category": "education",
+      "difficulty": "standard",
+      "editorialStatus": "practice_eligible",
+      "ambiguityRisk": "medium",
+      "eligibility": {
+        "daily": false,
         "practice": true,
         "challenge": true,
         "expertOnly": false
@@ -6597,6 +8865,90 @@
       }
     },
     {
+      "id": "worldprint-rural-basic-drinking-water",
+      "correctIndicatorId": "rural-basic-drinking-water",
+      "category": "settlement",
+      "difficulty": "standard",
+      "editorialStatus": "practice_eligible",
+      "ambiguityRisk": "medium",
+      "eligibility": {
+        "daily": false,
+        "practice": true,
+        "challenge": true,
+        "expertOnly": false
+      }
+    },
+    {
+      "id": "worldprint-rural-basic-sanitation",
+      "correctIndicatorId": "rural-basic-sanitation",
+      "category": "settlement",
+      "difficulty": "standard",
+      "editorialStatus": "daily_eligible",
+      "ambiguityRisk": "medium",
+      "eligibility": {
+        "daily": true,
+        "practice": true,
+        "challenge": true,
+        "expertOnly": false
+      }
+    },
+    {
+      "id": "worldprint-rural-low-elevation-land",
+      "correctIndicatorId": "rural-low-elevation-land",
+      "category": "settlement",
+      "difficulty": "expert",
+      "editorialStatus": "expert_only",
+      "ambiguityRisk": "high",
+      "eligibility": {
+        "daily": false,
+        "practice": true,
+        "challenge": true,
+        "expertOnly": true
+      }
+    },
+    {
+      "id": "worldprint-rural-low-elevation-population",
+      "correctIndicatorId": "rural-low-elevation-population",
+      "category": "settlement",
+      "difficulty": "expert",
+      "editorialStatus": "expert_only",
+      "ambiguityRisk": "medium",
+      "eligibility": {
+        "daily": false,
+        "practice": true,
+        "challenge": true,
+        "expertOnly": true
+      }
+    },
+    {
+      "id": "worldprint-rural-open-defecation",
+      "correctIndicatorId": "rural-open-defecation",
+      "category": "settlement",
+      "difficulty": "expert",
+      "editorialStatus": "expert_only",
+      "ambiguityRisk": "high",
+      "eligibility": {
+        "daily": false,
+        "practice": true,
+        "challenge": true,
+        "expertOnly": true
+      }
+    },
+    {
+      "id": "worldprint-rural-population-growth",
+      "correctIndicatorId": "rural-population-growth",
+      "category": "settlement",
+      "difficulty": "standard",
+      "editorialStatus": "daily_eligible",
+      "ambiguityRisk": "medium",
+      "eligibility": {
+        "daily": true,
+        "practice": true,
+        "challenge": true,
+        "expertOnly": false
+      }
+    },
+    {
       "id": "worldprint-safe-drinking-water",
       "correctIndicatorId": "safe-drinking-water",
       "category": "health",
@@ -6653,6 +9005,20 @@
       }
     },
     {
+      "id": "worldprint-secondary-pupils-female-share",
+      "correctIndicatorId": "secondary-pupils-female-share",
+      "category": "education",
+      "difficulty": "expert",
+      "editorialStatus": "practice_eligible",
+      "ambiguityRisk": "medium",
+      "eligibility": {
+        "daily": false,
+        "practice": true,
+        "challenge": true,
+        "expertOnly": false
+      }
+    },
+    {
       "id": "worldprint-secure-internet-servers",
       "correctIndicatorId": "secure-internet-servers",
       "category": "connectivity",
@@ -6678,6 +9044,20 @@
         "practice": true,
         "challenge": true,
         "expertOnly": false
+      }
+    },
+    {
+      "id": "worldprint-severe-food-insecurity",
+      "correctIndicatorId": "severe-food-insecurity",
+      "category": "agriculture",
+      "difficulty": "expert",
+      "editorialStatus": "expert_only",
+      "ambiguityRisk": "medium",
+      "eligibility": {
+        "daily": false,
+        "practice": true,
+        "challenge": true,
+        "expertOnly": true
       }
     },
     {
@@ -6751,6 +9131,34 @@
       }
     },
     {
+      "id": "worldprint-transport-service-exports",
+      "correctIndicatorId": "transport-service-exports",
+      "category": "connectivity",
+      "difficulty": "expert",
+      "editorialStatus": "practice_eligible",
+      "ambiguityRisk": "medium",
+      "eligibility": {
+        "daily": false,
+        "practice": true,
+        "challenge": true,
+        "expertOnly": false
+      }
+    },
+    {
+      "id": "worldprint-transport-service-imports",
+      "correctIndicatorId": "transport-service-imports",
+      "category": "connectivity",
+      "difficulty": "expert",
+      "editorialStatus": "practice_eligible",
+      "ambiguityRisk": "medium",
+      "eligibility": {
+        "daily": false,
+        "practice": true,
+        "challenge": true,
+        "expertOnly": false
+      }
+    },
+    {
       "id": "worldprint-tuberculosis-incidence",
       "correctIndicatorId": "tuberculosis-incidence",
       "category": "health",
@@ -6804,6 +9212,104 @@
         "practice": true,
         "challenge": true,
         "expertOnly": false
+      }
+    },
+    {
+      "id": "worldprint-urban-basic-drinking-water",
+      "correctIndicatorId": "urban-basic-drinking-water",
+      "category": "settlement",
+      "difficulty": "standard",
+      "editorialStatus": "daily_eligible",
+      "ambiguityRisk": "medium",
+      "eligibility": {
+        "daily": true,
+        "practice": true,
+        "challenge": true,
+        "expertOnly": false
+      }
+    },
+    {
+      "id": "worldprint-urban-basic-sanitation",
+      "correctIndicatorId": "urban-basic-sanitation",
+      "category": "settlement",
+      "difficulty": "standard",
+      "editorialStatus": "practice_eligible",
+      "ambiguityRisk": "medium",
+      "eligibility": {
+        "daily": false,
+        "practice": true,
+        "challenge": true,
+        "expertOnly": false
+      }
+    },
+    {
+      "id": "worldprint-urban-clean-cooking-access",
+      "correctIndicatorId": "urban-clean-cooking-access",
+      "category": "settlement",
+      "difficulty": "standard",
+      "editorialStatus": "practice_eligible",
+      "ambiguityRisk": "medium",
+      "eligibility": {
+        "daily": false,
+        "practice": true,
+        "challenge": true,
+        "expertOnly": false
+      }
+    },
+    {
+      "id": "worldprint-urban-electricity-access",
+      "correctIndicatorId": "urban-electricity-access",
+      "category": "settlement",
+      "difficulty": "standard",
+      "editorialStatus": "practice_eligible",
+      "ambiguityRisk": "medium",
+      "eligibility": {
+        "daily": false,
+        "practice": true,
+        "challenge": true,
+        "expertOnly": false
+      }
+    },
+    {
+      "id": "worldprint-urban-low-elevation-land",
+      "correctIndicatorId": "urban-low-elevation-land",
+      "category": "settlement",
+      "difficulty": "expert",
+      "editorialStatus": "expert_only",
+      "ambiguityRisk": "medium",
+      "eligibility": {
+        "daily": false,
+        "practice": true,
+        "challenge": true,
+        "expertOnly": true
+      }
+    },
+    {
+      "id": "worldprint-urban-low-elevation-population",
+      "correctIndicatorId": "urban-low-elevation-population",
+      "category": "settlement",
+      "difficulty": "expert",
+      "editorialStatus": "expert_only",
+      "ambiguityRisk": "high",
+      "eligibility": {
+        "daily": false,
+        "practice": true,
+        "challenge": true,
+        "expertOnly": true
+      }
+    },
+    {
+      "id": "worldprint-urban-open-defecation",
+      "correctIndicatorId": "urban-open-defecation",
+      "category": "settlement",
+      "difficulty": "expert",
+      "editorialStatus": "expert_only",
+      "ambiguityRisk": "medium",
+      "eligibility": {
+        "daily": false,
+        "practice": true,
+        "challenge": true,
+        "expertOnly": true
       }
     },
     {
@@ -6919,6 +9425,20 @@
       }
     },
     {
+      "id": "worldprint-youth-employment-ratio",
+      "correctIndicatorId": "youth-employment-ratio",
+      "category": "labor",
+      "difficulty": "standard",
+      "editorialStatus": "daily_eligible",
+      "ambiguityRisk": "medium",
+      "eligibility": {
+        "daily": true,
+        "practice": true,
+        "challenge": true,
+        "expertOnly": false
+      }
+    },
+    {
       "id": "worldprint-youth-labor-force",
       "correctIndicatorId": "youth-labor-force",
       "category": "labor",
@@ -6949,8 +9469,8 @@
   ],
   "dailies": {
     "path": "/data/v1/dailies/index.json",
-    "start": "2026-05-23",
-    "end": "2026-09-20",
+    "start": "2026-05-28",
+    "end": "2026-09-25",
     "count": 121,
     "generatorVersion": "daily-manifest-v2"
   }

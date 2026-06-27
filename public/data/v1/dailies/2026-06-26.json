@@ -4,30 +4,31 @@
   "date": "2026-06-26",
   "contentVersion": "2026.06.22-exp2-qa1",
   "roundIds": [
-    "worldprint-arable-land",
-    "worldprint-renewable-electricity",
-    "worldprint-manufacturing-share",
-    "worldprint-food-production-index",
-    "worldprint-measles-immunization"
+    "worldprint-older-adults-share",
+    "worldprint-population-growth",
+    "worldprint-tuberculosis-incidence",
+    "worldprint-food-insecurity-moderate-severe",
+    "worldprint-renewable-electricity"
   ],
   "indicatorIds": [
-    "arable-land",
-    "renewable-electricity",
-    "manufacturing-share",
-    "food-production-index",
-    "measles-immunization"
+    "older-adults-share",
+    "population-growth",
+    "tuberculosis-incidence",
+    "food-insecurity-moderate-severe",
+    "renewable-electricity"
   ],
   "categoryMix": {
-    "land": 1,
-    "energy": 1,
-    "economy": 1,
+    "demography": 2,
+    "health": 1,
     "agriculture": 1,
-    "health": 1
+    "energy": 1
   },
   "mapDifficultyMix": {
-    "standard": 5
+    "intro": 1,
+    "standard": 3,
+    "expert": 1
   },
-  "generatedAt": "2026-06-27T15:17:17.652Z",
+  "generatedAt": "2026-06-27T17:16:22.617071+00:00",
   "generatorVersion": "daily-manifest-v2",
   "varietyNotes": [
     "Selected with category, difficulty, repeat-cooldown, and same-day correlation safeguards."

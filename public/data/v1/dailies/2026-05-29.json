@@ -4,32 +4,30 @@
   "date": "2026-05-29",
   "contentVersion": "2026.06.22-exp2-qa1",
   "roundIds": [
-    "worldprint-urban-population",
-    "worldprint-cereal-yield",
-    "worldprint-secondary-enrollment",
-    "worldprint-employment-agriculture",
-    "worldprint-adolescent-fertility"
+    "worldprint-under-five-mortality",
+    "worldprint-older-adults-share",
+    "worldprint-food-insecurity-moderate-severe",
+    "worldprint-clean-fuels-access",
+    "worldprint-electric-power-use"
   ],
   "indicatorIds": [
-    "urban-population",
-    "cereal-yield",
-    "secondary-enrollment",
-    "employment-agriculture",
-    "adolescent-fertility"
+    "under-five-mortality",
+    "older-adults-share",
+    "food-insecurity-moderate-severe",
+    "clean-fuels-access",
+    "electric-power-use"
   ],
   "categoryMix": {
-    "settlement": 1,
+    "health": 1,
+    "demography": 1,
     "agriculture": 1,
-    "education": 1,
-    "labor": 1,
-    "demography": 1
+    "energy": 2
   },
   "mapDifficultyMix": {
-    "intro": 1,
-    "expert": 2,
-    "standard": 2
+    "standard": 4,
+    "intro": 1
   },
-  "generatedAt": "2026-06-27T15:17:17.652Z",
+  "generatedAt": "2026-06-27T17:16:22.612571+00:00",
   "generatorVersion": "daily-manifest-v2",
   "varietyNotes": [
     "Selected with category, difficulty, repeat-cooldown, and same-day correlation safeguards."

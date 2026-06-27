@@ -4,30 +4,28 @@
   "date": "2026-08-25",
   "contentVersion": "2026.06.22-exp2-qa1",
   "roundIds": [
-    "worldprint-population-growth",
-    "worldprint-energy-use",
-    "worldprint-basic-sanitation",
-    "worldprint-urban-population",
-    "worldprint-physicians"
+    "worldprint-secondary-enrollment",
+    "worldprint-health-expenditure",
+    "worldprint-coal-electricity-share",
+    "worldprint-physicians",
+    "worldprint-primary-female-teachers"
   ],
   "indicatorIds": [
-    "population-growth",
-    "energy-use",
-    "basic-sanitation",
-    "urban-population",
-    "physicians"
+    "secondary-enrollment",
+    "health-expenditure",
+    "coal-electricity-share",
+    "physicians",
+    "primary-female-teachers"
   ],
   "categoryMix": {
-    "demography": 1,
-    "energy": 1,
+    "education": 2,
     "health": 2,
-    "settlement": 1
+    "energy": 1
   },
   "mapDifficultyMix": {
-    "standard": 4,
-    "intro": 1
+    "standard": 5
   },
-  "generatedAt": "2026-06-27T15:17:17.652Z",
+  "generatedAt": "2026-06-27T17:16:22.626126+00:00",
   "generatorVersion": "daily-manifest-v2",
   "varietyNotes": [
     "Selected with category, difficulty, repeat-cooldown, and same-day correlation safeguards."

@@ -4,30 +4,31 @@
   "date": "2026-08-28",
   "contentVersion": "2026.06.22-exp2-qa1",
   "roundIds": [
-    "worldprint-total-protected-areas",
-    "worldprint-secondary-enrollment",
-    "worldprint-electric-power-use",
-    "worldprint-tuberculosis-incidence",
-    "worldprint-undernourishment"
+    "worldprint-food-production-index",
+    "worldprint-safe-drinking-water",
+    "worldprint-gdp-per-capita",
+    "worldprint-employment-agriculture",
+    "worldprint-freshwater-per-capita"
   ],
   "indicatorIds": [
-    "total-protected-areas",
-    "secondary-enrollment",
-    "electric-power-use",
-    "tuberculosis-incidence",
-    "undernourishment"
+    "food-production-index",
+    "safe-drinking-water",
+    "gdp-per-capita",
+    "employment-agriculture",
+    "freshwater-per-capita"
   ],
   "categoryMix": {
-    "environment": 1,
-    "education": 1,
-    "energy": 1,
-    "health": 2
+    "agriculture": 1,
+    "health": 1,
+    "development": 1,
+    "labor": 1,
+    "environment": 1
   },
   "mapDifficultyMix": {
-    "standard": 4,
-    "expert": 1
+    "standard": 3,
+    "intro": 2
   },
-  "generatedAt": "2026-06-27T15:17:17.652Z",
+  "generatedAt": "2026-06-27T17:16:22.626779+00:00",
   "generatorVersion": "daily-manifest-v2",
   "varietyNotes": [
     "Selected with category, difficulty, repeat-cooldown, and same-day correlation safeguards."

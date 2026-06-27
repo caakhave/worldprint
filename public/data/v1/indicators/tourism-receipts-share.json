@@ -173,7 +173,7 @@
     "valuesReference": "https://api.worldbank.org/v2/country/all/indicator/ST.INT.RCPT.XP.ZS?format=json&per_page=20000&page=1&date=2015%3A2025",
     "license": "Creative Commons Attribution 4.0 International unless specifically labeled otherwise by World Bank metadata",
     "licenseReference": "https://www.worldbank.org/en/about/legal/terms-of-use-for-datasets",
-    "retrievedAt": "2026-06-22T18:06:24.707622+00:00",
+    "retrievedAt": "2026-06-27T17:14:31.953398+00:00",
     "checksum": "5d686e7e8609d15e6dc5cfb23c9ff73bd6d7d31279f2d8818c84e0c9737ff08b",
     "sourceOrganization": "Yearbook of Tourism Statistics, Compendium of Tourism Statistics and data files, UN Tourism;\nIMF exports estimates, International Monetary Fund (IMF);\nWorld Bank exports estimates, World Bank (WB)"
   },
@@ -199,16 +199,16 @@
     ],
     "commonConfusions": [
       {
+        "confusedWithIndicatorCode": "BX.GSR.CMCP.ZS",
+        "reason": "Communications service exports overlaps with part of the visible pattern, but the full country spread does not match."
+      },
+      {
         "confusedWithIndicatorCode": "NE.CON.PRVT.ZS",
         "reason": "Household consumption lives in the same category, so it can feel plausible until the high and low countries are checked."
       },
       {
         "confusedWithIndicatorCode": "BX.TRF.PWKR.DT.GD.ZS",
         "reason": "Remittances received lives in the same category, so it can feel plausible until the high and low countries are checked."
-      },
-      {
-        "confusedWithIndicatorCode": "BN.CAB.XOKA.GD.ZS",
-        "reason": "Current account balance lives in the same category, so it can feel plausible until the high and low countries are checked."
       }
     ],
     "difficultyReason": "Expert difficulty: the map can be mistaken for adjacent indicators unless players probe a high, low, and middle country.",

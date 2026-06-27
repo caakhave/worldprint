@@ -4,29 +4,32 @@
   "date": "2026-06-10",
   "contentVersion": "2026.06.22-exp2-qa1",
   "roundIds": [
-    "worldprint-agriculture-value-added",
-    "worldprint-physicians",
-    "worldprint-account-ownership",
-    "worldprint-arable-land",
-    "worldprint-measles-immunization"
+    "worldprint-electricity-access",
+    "worldprint-out-of-school-primary",
+    "worldprint-land-under-cereal",
+    "worldprint-urban-basic-drinking-water",
+    "worldprint-older-adults-share"
   ],
   "indicatorIds": [
-    "agriculture-value-added",
-    "physicians",
-    "account-ownership",
-    "arable-land",
-    "measles-immunization"
+    "electricity-access",
+    "out-of-school-primary",
+    "land-under-cereal",
+    "urban-basic-drinking-water",
+    "older-adults-share"
   ],
   "categoryMix": {
-    "economy": 1,
-    "health": 2,
-    "development": 1,
-    "land": 1
+    "energy": 1,
+    "education": 1,
+    "land": 1,
+    "settlement": 1,
+    "demography": 1
   },
   "mapDifficultyMix": {
-    "standard": 5
+    "intro": 2,
+    "standard": 2,
+    "expert": 1
   },
-  "generatedAt": "2026-06-27T15:17:17.652Z",
+  "generatedAt": "2026-06-27T17:16:22.614348+00:00",
   "generatorVersion": "daily-manifest-v2",
   "varietyNotes": [
     "Selected with category, difficulty, repeat-cooldown, and same-day correlation safeguards."

@@ -4,30 +4,30 @@
   "date": "2026-07-29",
   "contentVersion": "2026.06.22-exp2-qa1",
   "roundIds": [
-    "worldprint-agriculture-value-added",
-    "worldprint-permanent-cropland",
-    "worldprint-maternal-mortality",
-    "worldprint-account-ownership",
-    "worldprint-pm25-exposure"
+    "worldprint-women-parliament",
+    "worldprint-basic-sanitation",
+    "worldprint-forest-area",
+    "worldprint-employment-agriculture",
+    "worldprint-unemployment"
   ],
   "indicatorIds": [
-    "agriculture-value-added",
-    "permanent-cropland",
-    "maternal-mortality",
-    "account-ownership",
-    "pm25-exposure"
+    "women-parliament",
+    "basic-sanitation",
+    "forest-area",
+    "employment-agriculture",
+    "unemployment"
   ],
   "categoryMix": {
-    "economy": 1,
-    "land": 1,
-    "health": 1,
     "development": 1,
-    "environment": 1
+    "health": 1,
+    "environment": 1,
+    "labor": 2
   },
   "mapDifficultyMix": {
-    "standard": 5
+    "standard": 4,
+    "intro": 1
   },
-  "generatedAt": "2026-06-27T15:17:17.652Z",
+  "generatedAt": "2026-06-27T17:16:22.622255+00:00",
   "generatorVersion": "daily-manifest-v2",
   "varietyNotes": [
     "Selected with category, difficulty, repeat-cooldown, and same-day correlation safeguards."

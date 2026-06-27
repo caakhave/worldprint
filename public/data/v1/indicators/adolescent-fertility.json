@@ -208,7 +208,7 @@
     "valuesReference": "https://api.worldbank.org/v2/country/all/indicator/SP.ADO.TFRT?format=json&per_page=20000&page=1&date=2015%3A2025",
     "license": "Creative Commons Attribution 4.0 International unless specifically labeled otherwise by World Bank metadata",
     "licenseReference": "https://www.worldbank.org/en/about/legal/terms-of-use-for-datasets",
-    "retrievedAt": "2026-06-22T18:05:33.149300+00:00",
+    "retrievedAt": "2026-06-27T17:13:49.554230+00:00",
     "checksum": "887895264d9bed7170c20a1a9eca1c8bc90b3b6c3686017eb3294b86584551d5",
     "sourceOrganization": "World Population Prospects, United Nations (UN), publisher: UN Population Division"
   },

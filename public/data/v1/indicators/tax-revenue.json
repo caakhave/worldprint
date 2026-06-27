@@ -159,7 +159,7 @@
     "valuesReference": "https://api.worldbank.org/v2/country/all/indicator/GC.TAX.TOTL.GD.ZS?format=json&per_page=20000&page=1&date=2015%3A2025",
     "license": "Creative Commons Attribution 4.0 International unless specifically labeled otherwise by World Bank metadata",
     "licenseReference": "https://www.worldbank.org/en/about/legal/terms-of-use-for-datasets",
-    "retrievedAt": "2026-06-22T18:06:06.482339+00:00",
+    "retrievedAt": "2026-06-27T17:14:16.457217+00:00",
     "checksum": "5bea44611f3140568594b5374e6db689695e3b00a7d76edc5dc500f15552259a",
     "sourceOrganization": "Government Finance Statistics Yearbook and data files, International Monetary Fund (IMF)"
   },

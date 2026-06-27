@@ -4,31 +4,30 @@
   "date": "2026-09-01",
   "contentVersion": "2026.06.22-exp2-qa1",
   "roundIds": [
-    "worldprint-maternal-mortality",
-    "worldprint-clean-fuels-access",
-    "worldprint-employment-agriculture",
-    "worldprint-co2-per-capita",
-    "worldprint-older-adults-share"
+    "worldprint-precipitation-depth",
+    "worldprint-open-defecation",
+    "worldprint-migrant-stock",
+    "worldprint-mobile-subscriptions",
+    "worldprint-food-insecurity-moderate-severe"
   ],
   "indicatorIds": [
-    "maternal-mortality",
-    "clean-fuels-access",
-    "employment-agriculture",
-    "co2-per-capita",
-    "older-adults-share"
+    "precipitation-depth",
+    "open-defecation",
+    "migrant-stock",
+    "mobile-subscriptions",
+    "food-insecurity-moderate-severe"
   ],
   "categoryMix": {
-    "health": 1,
-    "energy": 1,
-    "labor": 1,
     "environment": 1,
-    "demography": 1
+    "health": 1,
+    "demography": 1,
+    "connectivity": 1,
+    "agriculture": 1
   },
   "mapDifficultyMix": {
-    "standard": 4,
-    "intro": 1
+    "standard": 5
   },
-  "generatedAt": "2026-06-27T15:17:17.652Z",
+  "generatedAt": "2026-06-27T17:16:22.627467+00:00",
   "generatorVersion": "daily-manifest-v2",
   "varietyNotes": [
     "Selected with category, difficulty, repeat-cooldown, and same-day correlation safeguards."

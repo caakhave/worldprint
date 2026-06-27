@@ -4,30 +4,30 @@
   "date": "2026-09-12",
   "contentVersion": "2026.06.22-exp2-qa1",
   "roundIds": [
-    "worldprint-cereal-yield",
-    "worldprint-safe-drinking-water",
-    "worldprint-food-production-index",
     "worldprint-tuberculosis-incidence",
-    "worldprint-tourism-arrivals"
+    "worldprint-rural-basic-sanitation",
+    "worldprint-coal-electricity-share",
+    "worldprint-adolescent-fertility",
+    "worldprint-urban-basic-drinking-water"
   ],
   "indicatorIds": [
-    "cereal-yield",
-    "safe-drinking-water",
-    "food-production-index",
     "tuberculosis-incidence",
-    "tourism-arrivals"
+    "rural-basic-sanitation",
+    "coal-electricity-share",
+    "adolescent-fertility",
+    "urban-basic-drinking-water"
   ],
   "categoryMix": {
-    "agriculture": 2,
-    "health": 2,
-    "economy": 1
+    "health": 1,
+    "settlement": 2,
+    "energy": 1,
+    "demography": 1
   },
   "mapDifficultyMix": {
     "expert": 2,
-    "intro": 1,
-    "standard": 2
+    "standard": 3
   },
-  "generatedAt": "2026-06-27T15:17:17.652Z",
+  "generatedAt": "2026-06-27T17:16:22.629339+00:00",
   "generatorVersion": "daily-manifest-v2",
   "varietyNotes": [
     "Selected with category, difficulty, repeat-cooldown, and same-day correlation safeguards."

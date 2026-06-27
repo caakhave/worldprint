@@ -4,30 +4,30 @@
   "date": "2026-08-06",
   "contentVersion": "2026.06.22-exp2-qa1",
   "roundIds": [
-    "worldprint-clean-fuels-access",
-    "worldprint-mobile-subscriptions",
-    "worldprint-forest-area",
-    "worldprint-electric-power-use",
-    "worldprint-older-adults-share"
+    "worldprint-physicians",
+    "worldprint-land-under-cereal",
+    "worldprint-female-industry-employment",
+    "worldprint-maternal-mortality",
+    "worldprint-precipitation-depth"
   ],
   "indicatorIds": [
-    "clean-fuels-access",
-    "mobile-subscriptions",
-    "forest-area",
-    "electric-power-use",
-    "older-adults-share"
+    "physicians",
+    "land-under-cereal",
+    "female-industry-employment",
+    "maternal-mortality",
+    "precipitation-depth"
   ],
   "categoryMix": {
-    "energy": 2,
-    "connectivity": 1,
-    "environment": 1,
-    "demography": 1
+    "health": 2,
+    "land": 1,
+    "labor": 1,
+    "environment": 1
   },
   "mapDifficultyMix": {
     "standard": 3,
-    "intro": 2
+    "expert": 2
   },
-  "generatedAt": "2026-06-27T15:17:17.652Z",
+  "generatedAt": "2026-06-27T17:16:22.623450+00:00",
   "generatorVersion": "daily-manifest-v2",
   "varietyNotes": [
     "Selected with category, difficulty, repeat-cooldown, and same-day correlation safeguards."

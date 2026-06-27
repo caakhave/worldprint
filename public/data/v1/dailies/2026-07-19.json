@@ -4,30 +4,31 @@
   "date": "2026-07-19",
   "contentVersion": "2026.06.22-exp2-qa1",
   "roundIds": [
-    "worldprint-arable-land",
-    "worldprint-account-ownership",
-    "worldprint-mobile-subscriptions",
-    "worldprint-health-expenditure",
-    "worldprint-freshwater-per-capita"
+    "worldprint-food-production-index",
+    "worldprint-undernourishment",
+    "worldprint-older-adults-share",
+    "worldprint-tuberculosis-incidence",
+    "worldprint-account-ownership"
   ],
   "indicatorIds": [
-    "arable-land",
-    "account-ownership",
-    "mobile-subscriptions",
-    "health-expenditure",
-    "freshwater-per-capita"
+    "food-production-index",
+    "undernourishment",
+    "older-adults-share",
+    "tuberculosis-incidence",
+    "account-ownership"
   ],
   "categoryMix": {
-    "land": 1,
-    "development": 1,
-    "connectivity": 1,
-    "health": 1,
-    "environment": 1
+    "agriculture": 1,
+    "health": 2,
+    "demography": 1,
+    "development": 1
   },
   "mapDifficultyMix": {
-    "standard": 5
+    "standard": 3,
+    "intro": 1,
+    "expert": 1
   },
-  "generatedAt": "2026-06-27T15:17:17.652Z",
+  "generatedAt": "2026-06-27T17:16:22.620855+00:00",
   "generatorVersion": "daily-manifest-v2",
   "varietyNotes": [
     "Selected with category, difficulty, repeat-cooldown, and same-day correlation safeguards."

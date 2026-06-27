@@ -4,30 +4,31 @@
   "date": "2026-09-15",
   "contentVersion": "2026.06.22-exp2-qa1",
   "roundIds": [
-    "worldprint-undernourishment",
+    "worldprint-tourism-arrivals",
     "worldprint-unemployment",
-    "worldprint-measles-immunization",
-    "worldprint-co2-per-capita",
-    "worldprint-arable-land-per-person"
+    "worldprint-urban-population",
+    "worldprint-renewable-electricity",
+    "worldprint-pm25-exposure"
   ],
   "indicatorIds": [
-    "undernourishment",
+    "tourism-arrivals",
     "unemployment",
-    "measles-immunization",
-    "co2-per-capita",
-    "arable-land-per-person"
+    "urban-population",
+    "renewable-electricity",
+    "pm25-exposure"
   ],
   "categoryMix": {
-    "health": 2,
+    "economy": 1,
     "labor": 1,
-    "environment": 1,
-    "land": 1
+    "settlement": 1,
+    "energy": 1,
+    "environment": 1
   },
   "mapDifficultyMix": {
     "standard": 4,
-    "expert": 1
+    "intro": 1
   },
-  "generatedAt": "2026-06-27T15:17:17.652Z",
+  "generatedAt": "2026-06-27T17:16:22.629874+00:00",
   "generatorVersion": "daily-manifest-v2",
   "varietyNotes": [
     "Selected with category, difficulty, repeat-cooldown, and same-day correlation safeguards."

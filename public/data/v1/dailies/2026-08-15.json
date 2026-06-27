@@ -4,31 +4,30 @@
   "date": "2026-08-15",
   "contentVersion": "2026.06.22-exp2-qa1",
   "roundIds": [
-    "worldprint-safe-drinking-water",
-    "worldprint-internet-users",
-    "worldprint-freshwater-per-capita",
-    "worldprint-unemployment",
-    "worldprint-manufacturing-share"
+    "worldprint-cereal-yield",
+    "worldprint-permanent-cropland",
+    "worldprint-coal-electricity-share",
+    "worldprint-compulsory-education-duration",
+    "worldprint-food-insecurity-moderate-severe"
   ],
   "indicatorIds": [
-    "safe-drinking-water",
-    "internet-users",
-    "freshwater-per-capita",
-    "unemployment",
-    "manufacturing-share"
+    "cereal-yield",
+    "permanent-cropland",
+    "coal-electricity-share",
+    "compulsory-education-duration",
+    "food-insecurity-moderate-severe"
   ],
   "categoryMix": {
-    "health": 1,
-    "connectivity": 1,
-    "environment": 1,
-    "labor": 1,
-    "economy": 1
+    "agriculture": 2,
+    "land": 1,
+    "energy": 1,
+    "education": 1
   },
   "mapDifficultyMix": {
-    "intro": 2,
+    "expert": 2,
     "standard": 3
   },
-  "generatedAt": "2026-06-27T15:17:17.652Z",
+  "generatedAt": "2026-06-27T17:16:22.624726+00:00",
   "generatorVersion": "daily-manifest-v2",
   "varietyNotes": [
     "Selected with category, difficulty, repeat-cooldown, and same-day correlation safeguards."

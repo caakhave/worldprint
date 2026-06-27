@@ -4,31 +4,30 @@
   "date": "2026-06-06",
   "contentVersion": "2026.06.22-exp2-qa1",
   "roundIds": [
-    "worldprint-electricity-access",
-    "worldprint-fertility-rate",
-    "worldprint-under-five-mortality",
-    "worldprint-coal-electricity-share",
-    "worldprint-cereal-yield"
+    "worldprint-physicians",
+    "worldprint-urban-population",
+    "worldprint-safe-drinking-water",
+    "worldprint-employment-agriculture",
+    "worldprint-out-of-school-primary"
   ],
   "indicatorIds": [
-    "electricity-access",
-    "fertility-rate",
-    "under-five-mortality",
-    "coal-electricity-share",
-    "cereal-yield"
+    "physicians",
+    "urban-population",
+    "safe-drinking-water",
+    "employment-agriculture",
+    "out-of-school-primary"
   ],
   "categoryMix": {
-    "energy": 2,
-    "demography": 1,
-    "health": 1,
-    "agriculture": 1
+    "health": 2,
+    "settlement": 1,
+    "labor": 1,
+    "education": 1
   },
   "mapDifficultyMix": {
-    "intro": 1,
     "standard": 3,
-    "expert": 1
+    "intro": 2
   },
-  "generatedAt": "2026-06-27T15:17:17.652Z",
+  "generatedAt": "2026-06-27T17:16:22.613763+00:00",
   "generatorVersion": "daily-manifest-v2",
   "varietyNotes": [
     "Selected with category, difficulty, repeat-cooldown, and same-day correlation safeguards."

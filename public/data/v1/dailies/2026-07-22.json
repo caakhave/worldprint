@@ -4,32 +4,30 @@
   "date": "2026-07-22",
   "contentVersion": "2026.06.22-exp2-qa1",
   "roundIds": [
-    "worldprint-safe-drinking-water",
-    "worldprint-protected-land",
-    "worldprint-arable-land-per-person",
-    "worldprint-energy-use",
-    "worldprint-population-density"
+    "worldprint-forest-area",
+    "worldprint-precipitation-depth",
+    "worldprint-clean-fuels-access",
+    "worldprint-mobile-subscriptions",
+    "worldprint-communications-service-exports"
   ],
   "indicatorIds": [
-    "safe-drinking-water",
-    "protected-land",
-    "arable-land-per-person",
-    "energy-use",
-    "population-density"
+    "forest-area",
+    "precipitation-depth",
+    "clean-fuels-access",
+    "mobile-subscriptions",
+    "communications-service-exports"
   ],
   "categoryMix": {
-    "health": 1,
-    "environment": 1,
-    "land": 1,
+    "environment": 2,
     "energy": 1,
-    "settlement": 1
+    "connectivity": 2
   },
   "mapDifficultyMix": {
     "intro": 1,
     "standard": 3,
     "expert": 1
   },
-  "generatedAt": "2026-06-27T15:17:17.652Z",
+  "generatedAt": "2026-06-27T17:16:22.621298+00:00",
   "generatorVersion": "daily-manifest-v2",
   "varietyNotes": [
     "Selected with category, difficulty, repeat-cooldown, and same-day correlation safeguards."

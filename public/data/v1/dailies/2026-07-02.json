@@ -4,31 +4,30 @@
   "date": "2026-07-02",
   "contentVersion": "2026.06.22-exp2-qa1",
   "roundIds": [
-    "worldprint-employment-agriculture",
-    "worldprint-co2-per-capita",
+    "worldprint-fertility-rate",
     "worldprint-trade-share",
-    "worldprint-urban-population",
+    "worldprint-precipitation-depth",
+    "worldprint-women-parliament",
     "worldprint-clean-fuels-access"
   ],
   "indicatorIds": [
-    "employment-agriculture",
-    "co2-per-capita",
+    "fertility-rate",
     "trade-share",
-    "urban-population",
+    "precipitation-depth",
+    "women-parliament",
     "clean-fuels-access"
   ],
   "categoryMix": {
-    "labor": 1,
-    "environment": 1,
+    "demography": 1,
     "economy": 1,
-    "settlement": 1,
+    "environment": 1,
+    "development": 1,
     "energy": 1
   },
   "mapDifficultyMix": {
-    "standard": 4,
-    "intro": 1
+    "standard": 5
   },
-  "generatedAt": "2026-06-27T15:17:17.652Z",
+  "generatedAt": "2026-06-27T17:16:22.617960+00:00",
   "generatorVersion": "daily-manifest-v2",
   "varietyNotes": [
     "Selected with category, difficulty, repeat-cooldown, and same-day correlation safeguards."

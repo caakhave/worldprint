@@ -178,7 +178,7 @@
     "valuesReference": "https://api.worldbank.org/v2/country/all/indicator/NE.GDI.TOTL.ZS?format=json&per_page=20000&page=1&date=2015%3A2025",
     "license": "Creative Commons Attribution 4.0 International unless specifically labeled otherwise by World Bank metadata",
     "licenseReference": "https://www.worldbank.org/en/about/legal/terms-of-use-for-datasets",
-    "retrievedAt": "2026-06-22T18:07:05.393211+00:00",
+    "retrievedAt": "2026-06-27T17:15:05.666706+00:00",
     "checksum": "ed509848bd55256dea996523e97c225468a1e04a2d3e9ee7d4266ab9ca9fd563",
     "sourceOrganization": "Country official statistics, National Statistical Organizations and/or Central Banks;\nNational Accounts data files, Organisation for Economic Co-operation and Development (OECD);\nStaff estimates, World Bank (WB)"
   },

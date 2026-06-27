@@ -4,29 +4,32 @@
   "date": "2026-09-09",
   "contentVersion": "2026.06.22-exp2-qa1",
   "roundIds": [
-    "worldprint-renewable-electricity",
-    "worldprint-electric-power-use",
-    "worldprint-open-defecation",
-    "worldprint-freshwater-per-capita",
-    "worldprint-unemployment"
+    "worldprint-clean-fuels-access",
+    "worldprint-food-insecurity-moderate-severe",
+    "worldprint-out-of-school-primary",
+    "worldprint-arable-land-per-person",
+    "worldprint-life-expectancy"
   ],
   "indicatorIds": [
-    "renewable-electricity",
-    "electric-power-use",
-    "open-defecation",
-    "freshwater-per-capita",
-    "unemployment"
+    "clean-fuels-access",
+    "food-insecurity-moderate-severe",
+    "out-of-school-primary",
+    "arable-land-per-person",
+    "life-expectancy"
   ],
   "categoryMix": {
-    "energy": 2,
-    "health": 1,
-    "environment": 1,
-    "labor": 1
+    "energy": 1,
+    "agriculture": 1,
+    "education": 1,
+    "land": 1,
+    "health": 1
   },
   "mapDifficultyMix": {
-    "standard": 5
+    "standard": 3,
+    "expert": 1,
+    "intro": 1
   },
-  "generatedAt": "2026-06-27T15:17:17.652Z",
+  "generatedAt": "2026-06-27T17:16:22.628692+00:00",
   "generatorVersion": "daily-manifest-v2",
   "varietyNotes": [
     "Selected with category, difficulty, repeat-cooldown, and same-day correlation safeguards."

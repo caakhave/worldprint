@@ -4,30 +4,31 @@
   "date": "2026-07-25",
   "contentVersion": "2026.06.22-exp2-qa1",
   "roundIds": [
-    "worldprint-urban-population",
-    "worldprint-co2-per-capita",
-    "worldprint-health-expenditure",
-    "worldprint-total-protected-areas",
-    "worldprint-tuberculosis-incidence"
+    "worldprint-land-under-cereal",
+    "worldprint-safe-drinking-water",
+    "worldprint-rural-basic-sanitation",
+    "worldprint-government-education-spending-share",
+    "worldprint-open-defecation"
   ],
   "indicatorIds": [
-    "urban-population",
-    "co2-per-capita",
-    "health-expenditure",
-    "total-protected-areas",
-    "tuberculosis-incidence"
+    "land-under-cereal",
+    "safe-drinking-water",
+    "rural-basic-sanitation",
+    "government-education-spending-share",
+    "open-defecation"
   ],
   "categoryMix": {
+    "land": 1,
+    "health": 2,
     "settlement": 1,
-    "environment": 2,
-    "health": 2
+    "education": 1
   },
   "mapDifficultyMix": {
+    "expert": 2,
     "intro": 1,
-    "standard": 3,
-    "expert": 1
+    "standard": 2
   },
-  "generatedAt": "2026-06-27T15:17:17.652Z",
+  "generatedAt": "2026-06-27T17:16:22.621728+00:00",
   "generatorVersion": "daily-manifest-v2",
   "varietyNotes": [
     "Selected with category, difficulty, repeat-cooldown, and same-day correlation safeguards."

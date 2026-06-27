@@ -219,7 +219,7 @@ INDICATORS = [
     indicator("freshwater-per-capita", "ER.H2O.INTR.PC", "environment", "Freshwater per person", "cubic meters per person", 0, "standard", "A water-abundance map shaped by rivers, rainfall, and population.", "Freshwater per person helps distinguish water-rich countries from densely populated or arid countries.", ("freshwater per capita", "renewable freshwater per person", "internal freshwater resources"), suffix=" m3/person"),
     indicator("freshwater-withdrawal", "ER.H2O.FWTL.ZS", "environment", "Freshwater withdrawal", "percent of internal resources", 1, "expert", "A water-pressure map where arid countries can dominate.", "Freshwater withdrawal pressure shows where demand strains renewable water resources.", ("freshwater withdrawal", "water withdrawal pressure", "freshwater withdrawals percent resources"), suffix="%", caveat="Very arid countries can exceed 100 percent depending on withdrawals and resource accounting."),
     indicator("low-elevation-coastal-population", "EN.POP.EL5M.ZS", "settlement", "Low-elevation coastal population", "percent of population", 1, "expert", "The coastal-exposure map.", "This indicator shows where people live close to sea level, connecting settlement geography to climate exposure.", ("low elevation coastal population", "coastal population below 5m", "sea level exposure"), suffix="%"),
-    indicator("fertilizer-use", "AG.CON.FERT.ZS", "agriculture", "Fertilizer consumption", "percent of fertilizer production", 1, "expert", "A tricky agriculture-input map with a unit trap.", "Fertilizer consumption can hint at intensive agriculture, but this series is not kilograms per hectare.", ("fertilizer use", "fertilizer consumption", "fertilizer consumption percent production"), suffix="%", caveat="The selected World Bank code is consumption as a share of fertilizer production, not fertilizer applied per hectare."),
+    indicator("fertilizer-use", "AG.CON.FERT.ZS", "agriculture", "Fertilizer use per hectare", "kilograms per hectare of arable land", 1, "expert", "An intensive-farming input map.", "Fertilizer use per hectare helps distinguish high-input farming systems from land area or crop-output maps.", ("fertilizer use", "fertilizer consumption", "fertilizer per hectare", "fertilizer kg per hectare"), suffix=" kg/ha", caveat="Fertilizer use can be high in intensive systems even where total agricultural land is limited."),
     indicator("food-production-index", "AG.PRD.FOOD.XD", "agriculture", "Food production index", "index, 2014-2016 = 100", 1, "standard", "A food-output trend map.", "The food production index shows relative production change against a base period rather than raw farm output.", ("food production index", "food output index", "food production"), suffix=" index"),
     indicator("crop-production-index", "AG.PRD.CROP.XD", "agriculture", "Crop production index", "index, 2014-2016 = 100", 1, "standard", "A crop-output trend map close to the food index.", "Crop production can be useful, but it overlaps with food production enough to require editorial restraint.", ("crop production index", "crop output index", "crop production"), suffix=" index"),
     indicator("external-debt-burden", "DT.DOD.DECT.GN.ZS", "economy", "External debt burden", "percent of GNI", 1, "expert", "A debt-pressure map for external borrowing.", "External debt as a share of GNI can reveal financial exposure that income-per-person maps hide.", ("external debt burden", "external debt stocks", "external debt percent gni"), suffix="% of GNI", caveat="Debt stocks can be volatile and are not available for every high-income economy."),
@@ -425,10 +425,19 @@ def canonical_json(data: Any) -> bytes:
     return json.dumps(data, sort_keys=True, separators=(",", ":"), ensure_ascii=False).encode("utf-8")
 
 
-def fetch_bytes(url: str, timeout: int = 60) -> bytes:
+def fetch_bytes(url: str, timeout: int = 60, attempts: int = 4) -> bytes:
     request = urllib.request.Request(url, headers={"User-Agent": "WORLDPRINT data pipeline/0.1"})
-    with urllib.request.urlopen(request, timeout=timeout) as response:
-        return response.read()
+    last_error: Exception | None = None
+    for attempt in range(1, attempts + 1):
+        try:
+            with urllib.request.urlopen(request, timeout=timeout) as response:
+                return response.read()
+        except (TimeoutError, urllib.error.URLError) as exc:
+            last_error = exc
+            if attempt == attempts:
+                break
+            time.sleep(min(2 ** (attempt - 1), 8))
+    raise RuntimeError(f"Could not fetch {url} after {attempts} attempts: {last_error}") from last_error
 
 
 def fetch_json(url: str) -> tuple[Any, str]:
@@ -2465,6 +2474,14 @@ def main() -> int:
 
         scorecard_report = build_candidate_scorecards(indicators, indicator_reports, specs_by_id, editorial_reviews, similarities)
         write_candidate_scorecards(scorecard_report)
+
+        if failures:
+            write_validation_report(indicator_reports, registry, warnings, failures, natural_earth_info)
+            print("WORLDPRINT data build failed:")
+            for failure in failures:
+                print(f" - {failure}")
+            print(f"Report: {REPORT_OUT / 'validation-report.md'}")
+            return 1
 
         clear_generated_json_outputs()
         for artifact in approved_indicators.values():

@@ -4,30 +4,31 @@
   "date": "2026-07-11",
   "contentVersion": "2026.06.22-exp2-qa1",
   "roundIds": [
-    "worldprint-account-ownership",
-    "worldprint-secondary-enrollment",
-    "worldprint-mobile-subscriptions",
-    "worldprint-maternal-mortality",
-    "worldprint-freshwater-per-capita"
+    "worldprint-youth-employment-ratio",
+    "worldprint-tuberculosis-incidence",
+    "worldprint-permanent-cropland",
+    "worldprint-clean-fuels-access",
+    "worldprint-industry-share"
   ],
   "indicatorIds": [
-    "account-ownership",
-    "secondary-enrollment",
-    "mobile-subscriptions",
-    "maternal-mortality",
-    "freshwater-per-capita"
+    "youth-employment-ratio",
+    "tuberculosis-incidence",
+    "permanent-cropland",
+    "clean-fuels-access",
+    "industry-share"
   ],
   "categoryMix": {
-    "development": 1,
-    "education": 1,
-    "connectivity": 1,
+    "labor": 1,
     "health": 1,
-    "environment": 1
+    "land": 1,
+    "energy": 1,
+    "economy": 1
   },
   "mapDifficultyMix": {
-    "standard": 5
+    "standard": 4,
+    "expert": 1
   },
-  "generatedAt": "2026-06-27T15:17:17.652Z",
+  "generatedAt": "2026-06-27T17:16:22.619253+00:00",
   "generatorVersion": "daily-manifest-v2",
   "varietyNotes": [
     "Selected with category, difficulty, repeat-cooldown, and same-day correlation safeguards."

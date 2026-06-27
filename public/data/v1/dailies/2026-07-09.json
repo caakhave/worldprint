@@ -4,31 +4,30 @@
   "date": "2026-07-09",
   "contentVersion": "2026.06.22-exp2-qa1",
   "roundIds": [
-    "worldprint-safe-drinking-water",
-    "worldprint-adolescent-fertility",
-    "worldprint-protected-land",
-    "worldprint-cereal-yield",
-    "worldprint-fertility-rate"
+    "worldprint-trade-share",
+    "worldprint-primary-female-teachers",
+    "worldprint-female-industry-employment",
+    "worldprint-co2-per-capita",
+    "worldprint-unemployment"
   ],
   "indicatorIds": [
-    "safe-drinking-water",
-    "adolescent-fertility",
-    "protected-land",
-    "cereal-yield",
-    "fertility-rate"
+    "trade-share",
+    "primary-female-teachers",
+    "female-industry-employment",
+    "co2-per-capita",
+    "unemployment"
   ],
   "categoryMix": {
-    "health": 1,
-    "demography": 2,
-    "environment": 1,
-    "agriculture": 1
+    "economy": 1,
+    "education": 1,
+    "labor": 2,
+    "environment": 1
   },
   "mapDifficultyMix": {
-    "intro": 1,
-    "expert": 2,
-    "standard": 2
+    "standard": 4,
+    "expert": 1
   },
-  "generatedAt": "2026-06-27T15:17:17.652Z",
+  "generatedAt": "2026-06-27T17:16:22.618948+00:00",
   "generatorVersion": "daily-manifest-v2",
   "varietyNotes": [
     "Selected with category, difficulty, repeat-cooldown, and same-day correlation safeguards."

@@ -1,26 +1,26 @@
 {
   "schemaVersion": "1.1.0",
   "contentVersion": "2026.06.22-exp2-qa1",
-  "generatedAt": "2026-06-22T18:07:37.164106+00:00",
+  "generatedAt": "2026-06-27T17:16:22.054510+00:00",
   "summary": {
-    "candidateCount": 198,
-    "sourceValidCount": 167,
-    "draftHeldCount": 31,
-    "playableCount": 125,
-    "dailyEligibleCount": 50,
+    "candidateCount": 285,
+    "sourceValidCount": 226,
+    "draftHeldCount": 59,
+    "playableCount": 175,
+    "dailyEligibleCount": 62,
     "recommendationCounts": {
-      "hold_for_data": 31,
-      "keep_daily_eligible": 37,
-      "keep_expert_only": 23,
-      "keep_needs_review": 34,
-      "keep_practice_eligible": 19,
+      "hold_for_data": 59,
+      "keep_daily_eligible": 42,
+      "keep_expert_only": 28,
+      "keep_needs_review": 43,
+      "keep_practice_eligible": 27,
       "keep_retired": 8,
-      "review_ambiguity": 45,
-      "review_for_demotion": 1
+      "review_ambiguity": 74,
+      "review_for_demotion": 4
     },
     "dataGateCounts": {
-      "held": 31,
-      "passed": 167
+      "held": 59,
+      "passed": 226
     }
   },
   "scorecards": [
@@ -426,13 +426,13 @@
         "overall": 3.4
       },
       "topCorrelation": {
-        "indicatorId": "renewable-energy-consumption",
-        "title": "Renewable energy consumption",
+        "indicatorId": "urban-open-defecation",
+        "title": "Urban open defecation",
         "warningLevel": "ok",
-        "pearson": 0.32290955716790165,
-        "spearman": 0.467263439746296,
-        "visualSimilarity": 0.2846715328467153,
-        "overlapCount": 137
+        "pearson": 0.6253403794808554,
+        "spearman": 0.1635039827570504,
+        "visualSimilarity": 0.18032786885245902,
+        "overlapCount": 122
       },
       "statusRecommendation": {
         "recommendedAction": "review_ambiguity",
@@ -602,6 +602,112 @@
       }
     },
     {
+      "id": "agriculture-methane-emissions",
+      "providerCode": "EN.GHG.CH4.AG.MT.CE.AR5",
+      "shortTitle": "Agriculture methane emissions",
+      "category": "agriculture",
+      "difficulty": "expert",
+      "source": {
+        "selectedYear": 2024,
+        "coverage": 165,
+        "approvalStatus": "approved"
+      },
+      "dataGate": {
+        "status": "passed",
+        "reasons": [
+          "Source data passed the coverage gate."
+        ]
+      },
+      "editorial": {
+        "currentStatus": "expert_only",
+        "dailyEligible": false,
+        "practiceEligible": true,
+        "challengeEligible": true,
+        "expertOnly": true,
+        "ambiguityRisk": "high",
+        "qualityScore": 4,
+        "funScore": 4,
+        "fairnessScore": 3
+      },
+      "scores": {
+        "coverage": 4,
+        "freshness": 5,
+        "unitClarity": 3,
+        "mapInterest": 4,
+        "ambiguityCorrelation": 2,
+        "overall": 3.55
+      },
+      "topCorrelation": {
+        "indicatorId": "agriculture-nitrous-oxide-emissions",
+        "title": "Agriculture nitrous oxide emissions",
+        "warningLevel": "high",
+        "pearson": 0.9649099990179071,
+        "spearman": 0.948946117062485,
+        "visualSimilarity": 0.593939393939394,
+        "overlapCount": 165
+      },
+      "statusRecommendation": {
+        "recommendedAction": "review_ambiguity",
+        "recommendedEditorialStatus": "expert_only",
+        "reason": [
+          "High correlation or visual-similarity risk; review distractor placement and Daily same-day pairing."
+        ]
+      }
+    },
+    {
+      "id": "agriculture-nitrous-oxide-emissions",
+      "providerCode": "EN.GHG.N2O.AG.MT.CE.AR5",
+      "shortTitle": "Agriculture nitrous oxide emissions",
+      "category": "agriculture",
+      "difficulty": "expert",
+      "source": {
+        "selectedYear": 2024,
+        "coverage": 165,
+        "approvalStatus": "approved"
+      },
+      "dataGate": {
+        "status": "passed",
+        "reasons": [
+          "Source data passed the coverage gate."
+        ]
+      },
+      "editorial": {
+        "currentStatus": "expert_only",
+        "dailyEligible": false,
+        "practiceEligible": true,
+        "challengeEligible": true,
+        "expertOnly": true,
+        "ambiguityRisk": "high",
+        "qualityScore": 4,
+        "funScore": 4,
+        "fairnessScore": 3
+      },
+      "scores": {
+        "coverage": 4,
+        "freshness": 5,
+        "unitClarity": 3,
+        "mapInterest": 4,
+        "ambiguityCorrelation": 2,
+        "overall": 3.55
+      },
+      "topCorrelation": {
+        "indicatorId": "agriculture-methane-emissions",
+        "title": "Agriculture methane emissions",
+        "warningLevel": "high",
+        "pearson": 0.9649099990179071,
+        "spearman": 0.948946117062485,
+        "visualSimilarity": 0.593939393939394,
+        "overlapCount": 165
+      },
+      "statusRecommendation": {
+        "recommendedAction": "review_ambiguity",
+        "recommendedEditorialStatus": "expert_only",
+        "reason": [
+          "High correlation or visual-similarity risk; review distractor placement and Daily same-day pairing."
+        ]
+      }
+    },
+    {
       "id": "agriculture-value-added",
       "providerCode": "NV.AGR.TOTL.ZS",
       "shortTitle": "Agriculture value added",
@@ -708,6 +814,165 @@
       }
     },
     {
+      "id": "air-departures",
+      "providerCode": "IS.AIR.DPRT",
+      "shortTitle": "Air carrier departures",
+      "category": "connectivity",
+      "difficulty": "expert",
+      "source": {
+        "selectedYear": 2023,
+        "coverage": 136,
+        "approvalStatus": "approved"
+      },
+      "dataGate": {
+        "status": "passed",
+        "reasons": [
+          "Source data passed the coverage gate."
+        ]
+      },
+      "editorial": {
+        "currentStatus": "expert_only",
+        "dailyEligible": false,
+        "practiceEligible": true,
+        "challengeEligible": true,
+        "expertOnly": true,
+        "ambiguityRisk": "high",
+        "qualityScore": 3,
+        "funScore": 3,
+        "fairnessScore": 3
+      },
+      "scores": {
+        "coverage": 3,
+        "freshness": 4,
+        "unitClarity": 3,
+        "mapInterest": 4,
+        "ambiguityCorrelation": 2,
+        "overall": 3.2
+      },
+      "topCorrelation": {
+        "indicatorId": "air-passengers",
+        "title": "Air passengers carried",
+        "warningLevel": "high",
+        "pearson": 0.9899931757759486,
+        "spearman": 0.9737781679836114,
+        "visualSimilarity": 0.725925925925926,
+        "overlapCount": 135
+      },
+      "statusRecommendation": {
+        "recommendedAction": "review_ambiguity",
+        "recommendedEditorialStatus": "expert_only",
+        "reason": [
+          "High correlation or visual-similarity risk; review distractor placement and Daily same-day pairing."
+        ]
+      }
+    },
+    {
+      "id": "air-freight",
+      "providerCode": "IS.AIR.GOOD.MT.K1",
+      "shortTitle": "Air freight",
+      "category": "connectivity",
+      "difficulty": "expert",
+      "source": {
+        "selectedYear": 2023,
+        "coverage": 123,
+        "approvalStatus": "approved"
+      },
+      "dataGate": {
+        "status": "passed",
+        "reasons": [
+          "Source data passed the coverage gate."
+        ]
+      },
+      "editorial": {
+        "currentStatus": "expert_only",
+        "dailyEligible": false,
+        "practiceEligible": true,
+        "challengeEligible": true,
+        "expertOnly": true,
+        "ambiguityRisk": "medium",
+        "qualityScore": 3,
+        "funScore": 4,
+        "fairnessScore": 3
+      },
+      "scores": {
+        "coverage": 3,
+        "freshness": 4,
+        "unitClarity": 3,
+        "mapInterest": 4,
+        "ambiguityCorrelation": 3,
+        "overall": 3.4
+      },
+      "topCorrelation": {
+        "indicatorId": "air-passengers",
+        "title": "Air passengers carried",
+        "warningLevel": "review",
+        "pearson": 0.8899696453746253,
+        "spearman": 0.8375988447596167,
+        "visualSimilarity": 0.3770491803278688,
+        "overlapCount": 122
+      },
+      "statusRecommendation": {
+        "recommendedAction": "keep_expert_only",
+        "recommendedEditorialStatus": "expert_only",
+        "reason": [
+          "Automated scorecard supports the current curated editorial status."
+        ]
+      }
+    },
+    {
+      "id": "air-passengers",
+      "providerCode": "IS.AIR.PSGR",
+      "shortTitle": "Air passengers carried",
+      "category": "connectivity",
+      "difficulty": "expert",
+      "source": {
+        "selectedYear": 2023,
+        "coverage": 135,
+        "approvalStatus": "approved"
+      },
+      "dataGate": {
+        "status": "passed",
+        "reasons": [
+          "Source data passed the coverage gate."
+        ]
+      },
+      "editorial": {
+        "currentStatus": "expert_only",
+        "dailyEligible": false,
+        "practiceEligible": true,
+        "challengeEligible": true,
+        "expertOnly": true,
+        "ambiguityRisk": "high",
+        "qualityScore": 3,
+        "funScore": 3,
+        "fairnessScore": 3
+      },
+      "scores": {
+        "coverage": 3,
+        "freshness": 4,
+        "unitClarity": 1,
+        "mapInterest": 4,
+        "ambiguityCorrelation": 2,
+        "overall": 2.8
+      },
+      "topCorrelation": {
+        "indicatorId": "air-departures",
+        "title": "Air carrier departures",
+        "warningLevel": "high",
+        "pearson": 0.9899931757759486,
+        "spearman": 0.9737781679836114,
+        "visualSimilarity": 0.725925925925926,
+        "overlapCount": 135
+      },
+      "statusRecommendation": {
+        "recommendedAction": "review_for_demotion",
+        "recommendedEditorialStatus": "expert_only",
+        "reason": [
+          "Weak scorecard component; keep out of broad Daily use until manually reviewed."
+        ]
+      }
+    },
+    {
       "id": "arable-land",
       "providerCode": "AG.LND.ARBL.ZS",
       "shortTitle": "Arable land",
@@ -761,6 +1026,59 @@
       }
     },
     {
+      "id": "arable-land-area",
+      "providerCode": "AG.LND.ARBL.HA",
+      "shortTitle": "Arable land area",
+      "category": "land",
+      "difficulty": "expert",
+      "source": {
+        "selectedYear": 2023,
+        "coverage": 168,
+        "approvalStatus": "approved"
+      },
+      "dataGate": {
+        "status": "passed",
+        "reasons": [
+          "Source data passed the coverage gate."
+        ]
+      },
+      "editorial": {
+        "currentStatus": "expert_only",
+        "dailyEligible": false,
+        "practiceEligible": true,
+        "challengeEligible": true,
+        "expertOnly": true,
+        "ambiguityRisk": "high",
+        "qualityScore": 3,
+        "funScore": 4,
+        "fairnessScore": 3
+      },
+      "scores": {
+        "coverage": 4,
+        "freshness": 4,
+        "unitClarity": 3,
+        "mapInterest": 4,
+        "ambiguityCorrelation": 2,
+        "overall": 3.4
+      },
+      "topCorrelation": {
+        "indicatorId": "land-under-cereal",
+        "title": "Land under cereal production",
+        "warningLevel": "high",
+        "pearson": 0.9292458579681959,
+        "spearman": 0.9670825737722447,
+        "visualSimilarity": 0.7065868263473054,
+        "overlapCount": 167
+      },
+      "statusRecommendation": {
+        "recommendedAction": "review_ambiguity",
+        "recommendedEditorialStatus": "expert_only",
+        "reason": [
+          "High correlation or visual-similarity risk; review distractor placement and Daily same-day pairing."
+        ]
+      }
+    },
+    {
       "id": "arable-land-per-person",
       "providerCode": "AG.LND.ARBL.HA.PC",
       "shortTitle": "Arable land per person",
@@ -797,12 +1115,12 @@
         "overall": 4.0
       },
       "topCorrelation": {
-        "indicatorId": "population-density",
-        "title": "Population density",
-        "warningLevel": "ok",
-        "pearson": -0.30694012078548183,
-        "spearman": -0.40551778944224826,
-        "visualSimilarity": 0.10714285714285714,
+        "indicatorId": "arable-land-area",
+        "title": "Arable land area",
+        "warningLevel": "review",
+        "pearson": 0.2932076735815742,
+        "spearman": 0.5628850872457664,
+        "visualSimilarity": 0.25,
         "overlapCount": 168
       },
       "statusRecommendation": {
@@ -899,23 +1217,23 @@
         "freshness": 5,
         "unitClarity": 4,
         "mapInterest": 4,
-        "ambiguityCorrelation": 3,
-        "overall": 3.95
+        "ambiguityCorrelation": 2,
+        "overall": 3.75
       },
       "topCorrelation": {
-        "indicatorId": "internet-users",
-        "title": "Internet users",
+        "indicatorId": "rural-basic-sanitation",
+        "title": "Rural basic sanitation",
         "warningLevel": "high",
-        "pearson": 0.9064456852412096,
-        "spearman": 0.8465851945900553,
-        "visualSimilarity": 0.4444444444444444,
+        "pearson": 0.9783885714132168,
+        "spearman": 0.9694351226762961,
+        "visualSimilarity": 0.6458333333333334,
         "overlapCount": 144
       },
       "statusRecommendation": {
-        "recommendedAction": "keep_daily_eligible",
+        "recommendedAction": "review_ambiguity",
         "recommendedEditorialStatus": "daily_eligible",
         "reason": [
-          "Automated scorecard supports the current curated editorial status."
+          "High correlation or visual-similarity risk; review distractor placement and Daily same-day pairing."
         ]
       }
     },
@@ -1161,6 +1479,106 @@
         "reason": [
           "central-government-debt: no year in 2015:2025 met 120 mapped countries; best coverage was 47",
           "central-government-debt: selected coverage 26 is below 120"
+        ]
+      }
+    },
+    {
+      "id": "cereal-cropland",
+      "providerCode": "AG.LND.CERE.ZS",
+      "shortTitle": "Cereal cropland",
+      "category": "land",
+      "difficulty": "standard",
+      "source": {
+        "selectedYear": 0,
+        "coverage": 0,
+        "approvalStatus": "draft"
+      },
+      "dataGate": {
+        "status": "held",
+        "reasons": [
+          "cereal-cropland: no year in 2015:2025 met 120 mapped countries; best coverage was 0",
+          "cereal-cropland: selected coverage 0 is below 120"
+        ]
+      },
+      "editorial": {
+        "currentStatus": "needs_review",
+        "dailyEligible": false,
+        "practiceEligible": false,
+        "challengeEligible": false,
+        "expertOnly": false,
+        "ambiguityRisk": "medium",
+        "qualityScore": 2,
+        "funScore": 2,
+        "fairnessScore": 2
+      },
+      "scores": {
+        "coverage": 0,
+        "freshness": 0,
+        "unitClarity": 2,
+        "mapInterest": 0,
+        "ambiguityCorrelation": 2,
+        "overall": 0.8
+      },
+      "topCorrelation": null,
+      "statusRecommendation": {
+        "recommendedAction": "hold_for_data",
+        "recommendedEditorialStatus": "needs_review",
+        "reason": [
+          "cereal-cropland: no year in 2015:2025 met 120 mapped countries; best coverage was 0",
+          "cereal-cropland: selected coverage 0 is below 120"
+        ]
+      }
+    },
+    {
+      "id": "cereal-production",
+      "providerCode": "AG.PRD.CREL.MT",
+      "shortTitle": "Cereal production",
+      "category": "agriculture",
+      "difficulty": "expert",
+      "source": {
+        "selectedYear": 2023,
+        "coverage": 167,
+        "approvalStatus": "approved"
+      },
+      "dataGate": {
+        "status": "passed",
+        "reasons": [
+          "Source data passed the coverage gate."
+        ]
+      },
+      "editorial": {
+        "currentStatus": "expert_only",
+        "dailyEligible": false,
+        "practiceEligible": true,
+        "challengeEligible": true,
+        "expertOnly": true,
+        "ambiguityRisk": "medium",
+        "qualityScore": 4,
+        "funScore": 4,
+        "fairnessScore": 3
+      },
+      "scores": {
+        "coverage": 4,
+        "freshness": 4,
+        "unitClarity": 3,
+        "mapInterest": 4,
+        "ambiguityCorrelation": 3,
+        "overall": 3.6
+      },
+      "topCorrelation": {
+        "indicatorId": "land-under-cereal",
+        "title": "Land under cereal production",
+        "warningLevel": "high",
+        "pearson": 0.9347328518301242,
+        "spearman": 0.9424670452554443,
+        "visualSimilarity": 0.5748502994011976,
+        "overlapCount": 167
+      },
+      "statusRecommendation": {
+        "recommendedAction": "keep_expert_only",
+        "recommendedEditorialStatus": "expert_only",
+        "reason": [
+          "Automated scorecard supports the current curated editorial status."
         ]
       }
     },
@@ -1448,12 +1866,12 @@
         "overall": 3.6
       },
       "topCorrelation": {
-        "indicatorId": "rural-clean-cooking-access",
-        "title": "Rural clean cooking access",
+        "indicatorId": "urban-clean-cooking-access",
+        "title": "Urban clean cooking access",
         "warningLevel": "high",
-        "pearson": 0.9681559799032301,
-        "spearman": 0.9923009490970903,
-        "visualSimilarity": 0.8395061728395061,
+        "pearson": 0.9529701929786738,
+        "spearman": 0.9927772002739931,
+        "visualSimilarity": 0.8271604938271605,
         "overlapCount": 162
       },
       "statusRecommendation": {
@@ -1554,13 +1972,13 @@
         "overall": 3.65
       },
       "topCorrelation": {
-        "indicatorId": "tourism-arrivals",
-        "title": "Tourism arrivals",
+        "indicatorId": "container-port-traffic",
+        "title": "Container port traffic",
         "warningLevel": "ok",
-        "pearson": 0.16184931239835845,
-        "spearman": 0.48886170265060686,
-        "visualSimilarity": 0.19424460431654678,
-        "overlapCount": 139
+        "pearson": 0.34560884254962354,
+        "spearman": 0.5625944399671152,
+        "visualSimilarity": 0.2421875,
+        "overlapCount": 128
       },
       "statusRecommendation": {
         "recommendedAction": "keep_daily_eligible",
@@ -1624,6 +2042,218 @@
       }
     },
     {
+      "id": "communications-service-exports",
+      "providerCode": "BX.GSR.CMCP.ZS",
+      "shortTitle": "Communications service exports",
+      "category": "connectivity",
+      "difficulty": "expert",
+      "source": {
+        "selectedYear": 2024,
+        "coverage": 137,
+        "approvalStatus": "approved"
+      },
+      "dataGate": {
+        "status": "passed",
+        "reasons": [
+          "Source data passed the coverage gate."
+        ]
+      },
+      "editorial": {
+        "currentStatus": "daily_eligible",
+        "dailyEligible": true,
+        "practiceEligible": true,
+        "challengeEligible": true,
+        "expertOnly": false,
+        "ambiguityRisk": "medium",
+        "qualityScore": 4,
+        "funScore": 4,
+        "fairnessScore": 3
+      },
+      "scores": {
+        "coverage": 3,
+        "freshness": 5,
+        "unitClarity": 4,
+        "mapInterest": 4,
+        "ambiguityCorrelation": 3,
+        "overall": 3.75
+      },
+      "topCorrelation": {
+        "indicatorId": "ict-service-exports",
+        "title": "ICT service exports",
+        "warningLevel": "review",
+        "pearson": 0.6164837309080915,
+        "spearman": 0.6185981855428738,
+        "visualSimilarity": 0.2518518518518518,
+        "overlapCount": 135
+      },
+      "statusRecommendation": {
+        "recommendedAction": "keep_daily_eligible",
+        "recommendedEditorialStatus": "daily_eligible",
+        "reason": [
+          "Automated scorecard supports the current curated editorial status."
+        ]
+      }
+    },
+    {
+      "id": "communications-service-imports",
+      "providerCode": "BM.GSR.CMCP.ZS",
+      "shortTitle": "Communications service imports",
+      "category": "connectivity",
+      "difficulty": "expert",
+      "source": {
+        "selectedYear": 2024,
+        "coverage": 137,
+        "approvalStatus": "approved"
+      },
+      "dataGate": {
+        "status": "passed",
+        "reasons": [
+          "Source data passed the coverage gate."
+        ]
+      },
+      "editorial": {
+        "currentStatus": "practice_eligible",
+        "dailyEligible": false,
+        "practiceEligible": true,
+        "challengeEligible": true,
+        "expertOnly": false,
+        "ambiguityRisk": "medium",
+        "qualityScore": 4,
+        "funScore": 3,
+        "fairnessScore": 3
+      },
+      "scores": {
+        "coverage": 3,
+        "freshness": 5,
+        "unitClarity": 4,
+        "mapInterest": 4,
+        "ambiguityCorrelation": 3,
+        "overall": 3.75
+      },
+      "topCorrelation": {
+        "indicatorId": "transport-service-imports",
+        "title": "Transport service imports",
+        "warningLevel": "review",
+        "pearson": -0.6378957814344929,
+        "spearman": -0.6263791140067579,
+        "visualSimilarity": 0.08029197080291971,
+        "overlapCount": 137
+      },
+      "statusRecommendation": {
+        "recommendedAction": "keep_practice_eligible",
+        "recommendedEditorialStatus": "practice_eligible",
+        "reason": [
+          "Automated scorecard supports the current curated editorial status."
+        ]
+      }
+    },
+    {
+      "id": "compulsory-education-duration",
+      "providerCode": "SE.COM.DURS",
+      "shortTitle": "Compulsory education duration",
+      "category": "education",
+      "difficulty": "expert",
+      "source": {
+        "selectedYear": 2025,
+        "coverage": 158,
+        "approvalStatus": "approved"
+      },
+      "dataGate": {
+        "status": "passed",
+        "reasons": [
+          "Source data passed the coverage gate."
+        ]
+      },
+      "editorial": {
+        "currentStatus": "daily_eligible",
+        "dailyEligible": true,
+        "practiceEligible": true,
+        "challengeEligible": true,
+        "expertOnly": false,
+        "ambiguityRisk": "medium",
+        "qualityScore": 4,
+        "funScore": 4,
+        "fairnessScore": 4
+      },
+      "scores": {
+        "coverage": 4,
+        "freshness": 5,
+        "unitClarity": 4,
+        "mapInterest": 4,
+        "ambiguityCorrelation": 3,
+        "overall": 3.95
+      },
+      "topCorrelation": {
+        "indicatorId": "rural-population",
+        "title": "Rural population",
+        "warningLevel": "ok",
+        "pearson": -0.45435035171238963,
+        "spearman": -0.503249057890797,
+        "visualSimilarity": 0.08860759493670886,
+        "overlapCount": 158
+      },
+      "statusRecommendation": {
+        "recommendedAction": "keep_daily_eligible",
+        "recommendedEditorialStatus": "daily_eligible",
+        "reason": [
+          "Automated scorecard supports the current curated editorial status."
+        ]
+      }
+    },
+    {
+      "id": "container-port-traffic",
+      "providerCode": "IS.SHP.GOOD.TU",
+      "shortTitle": "Container port traffic",
+      "category": "connectivity",
+      "difficulty": "expert",
+      "source": {
+        "selectedYear": 2019,
+        "coverage": 128,
+        "approvalStatus": "approved"
+      },
+      "dataGate": {
+        "status": "passed",
+        "reasons": [
+          "Source data passed the coverage gate."
+        ]
+      },
+      "editorial": {
+        "currentStatus": "expert_only",
+        "dailyEligible": false,
+        "practiceEligible": true,
+        "challengeEligible": true,
+        "expertOnly": true,
+        "ambiguityRisk": "medium",
+        "qualityScore": 3,
+        "funScore": 4,
+        "fairnessScore": 3
+      },
+      "scores": {
+        "coverage": 3,
+        "freshness": 2,
+        "unitClarity": 3,
+        "mapInterest": 4,
+        "ambiguityCorrelation": 3,
+        "overall": 3.1
+      },
+      "topCorrelation": {
+        "indicatorId": "air-passengers",
+        "title": "Air passengers carried",
+        "warningLevel": "review",
+        "pearson": 0.7003697894355069,
+        "spearman": 0.8367758455137095,
+        "visualSimilarity": 0.3942307692307692,
+        "overlapCount": 104
+      },
+      "statusRecommendation": {
+        "recommendedAction": "keep_expert_only",
+        "recommendedEditorialStatus": "expert_only",
+        "reason": [
+          "Automated scorecard supports the current curated editorial status."
+        ]
+      }
+    },
+    {
       "id": "contraceptive-use",
       "providerCode": "SP.DYN.CONU.ZS",
       "shortTitle": "Contraceptive use",
@@ -1667,6 +2297,59 @@
         "reason": [
           "contraceptive-use: no year in 2015:2025 met 120 mapped countries; best coverage was 39",
           "contraceptive-use: selected coverage 1 is below 120"
+        ]
+      }
+    },
+    {
+      "id": "contributing-family-workers",
+      "providerCode": "SL.FAM.WORK.ZS",
+      "shortTitle": "Contributing family workers",
+      "category": "labor",
+      "difficulty": "expert",
+      "source": {
+        "selectedYear": 2025,
+        "coverage": 163,
+        "approvalStatus": "approved"
+      },
+      "dataGate": {
+        "status": "passed",
+        "reasons": [
+          "Source data passed the coverage gate."
+        ]
+      },
+      "editorial": {
+        "currentStatus": "expert_only",
+        "dailyEligible": false,
+        "practiceEligible": true,
+        "challengeEligible": true,
+        "expertOnly": true,
+        "ambiguityRisk": "high",
+        "qualityScore": 4,
+        "funScore": 4,
+        "fairnessScore": 3
+      },
+      "scores": {
+        "coverage": 4,
+        "freshness": 5,
+        "unitClarity": 4,
+        "mapInterest": 4,
+        "ambiguityCorrelation": 2,
+        "overall": 3.75
+      },
+      "topCorrelation": {
+        "indicatorId": "male-contributing-family-workers",
+        "title": "Male contributing family workers",
+        "warningLevel": "high",
+        "pearson": 0.9705714253108408,
+        "spearman": 0.9873005580771554,
+        "visualSimilarity": 0.7791411042944786,
+        "overlapCount": 163
+      },
+      "statusRecommendation": {
+        "recommendedAction": "review_ambiguity",
+        "recommendedEditorialStatus": "expert_only",
+        "reason": [
+          "High correlation or visual-similarity risk; review distractor placement and Daily same-day pairing."
         ]
       }
     },
@@ -2286,23 +2969,23 @@
         "freshness": 5,
         "unitClarity": 4,
         "mapInterest": 4,
-        "ambiguityCorrelation": 3,
-        "overall": 3.95
+        "ambiguityCorrelation": 2,
+        "overall": 3.75
       },
       "topCorrelation": {
-        "indicatorId": "agriculture-value-per-worker",
-        "title": "Agriculture value per worker",
+        "indicatorId": "male-agricultural-employment",
+        "title": "Male agricultural employment",
         "warningLevel": "high",
-        "pearson": -0.5598241222779675,
-        "spearman": -0.9447736014575883,
-        "visualSimilarity": 0.0958904109589041,
-        "overlapCount": 146
+        "pearson": 0.982202993905154,
+        "spearman": 0.9887719531592044,
+        "visualSimilarity": 0.803680981595092,
+        "overlapCount": 163
       },
       "statusRecommendation": {
-        "recommendedAction": "keep_daily_eligible",
+        "recommendedAction": "review_ambiguity",
         "recommendedEditorialStatus": "daily_eligible",
         "reason": [
-          "Automated scorecard supports the current curated editorial status."
+          "High correlation or visual-similarity risk; review distractor placement and Daily same-day pairing."
         ]
       }
     },
@@ -2343,13 +3026,13 @@
         "overall": 3.95
       },
       "topCorrelation": {
-        "indicatorId": "clean-fuels-access",
-        "title": "Clean cooking fuels access",
-        "warningLevel": "ok",
-        "pearson": 0.5977441535204858,
-        "spearman": 0.5229348572522571,
-        "visualSimilarity": 0.25157232704402516,
-        "overlapCount": 159
+        "indicatorId": "male-industry-employment",
+        "title": "Male industry employment",
+        "warningLevel": "high",
+        "pearson": 0.934824032169639,
+        "spearman": 0.9315815141791499,
+        "visualSimilarity": 0.5030674846625767,
+        "overlapCount": 163
       },
       "statusRecommendation": {
         "recommendedAction": "keep_practice_eligible",
@@ -2449,12 +3132,12 @@
         "overall": 3.75
       },
       "topCorrelation": {
-        "indicatorId": "employment-agriculture",
-        "title": "Employment in agriculture",
+        "indicatorId": "male-services-employment",
+        "title": "Male services employment",
         "warningLevel": "high",
-        "pearson": -0.9375640644228916,
-        "spearman": -0.9393375119845268,
-        "visualSimilarity": 0.06134969325153374,
+        "pearson": 0.9646988118982138,
+        "spearman": 0.9679535138909672,
+        "visualSimilarity": 0.6932515337423313,
         "overlapCount": 163
       },
       "statusRecommendation": {
@@ -2725,6 +3408,218 @@
       }
     },
     {
+      "id": "female-agricultural-employment",
+      "providerCode": "SL.AGR.EMPL.FE.ZS",
+      "shortTitle": "Female agricultural employment",
+      "category": "labor",
+      "difficulty": "expert",
+      "source": {
+        "selectedYear": 2025,
+        "coverage": 163,
+        "approvalStatus": "approved"
+      },
+      "dataGate": {
+        "status": "passed",
+        "reasons": [
+          "Source data passed the coverage gate."
+        ]
+      },
+      "editorial": {
+        "currentStatus": "expert_only",
+        "dailyEligible": false,
+        "practiceEligible": true,
+        "challengeEligible": true,
+        "expertOnly": true,
+        "ambiguityRisk": "high",
+        "qualityScore": 4,
+        "funScore": 4,
+        "fairnessScore": 3
+      },
+      "scores": {
+        "coverage": 4,
+        "freshness": 5,
+        "unitClarity": 4,
+        "mapInterest": 4,
+        "ambiguityCorrelation": 2,
+        "overall": 3.75
+      },
+      "topCorrelation": {
+        "indicatorId": "employment-agriculture",
+        "title": "Employment in agriculture",
+        "warningLevel": "high",
+        "pearson": 0.9644383275736963,
+        "spearman": 0.974806169329587,
+        "visualSimilarity": 0.6871165644171779,
+        "overlapCount": 163
+      },
+      "statusRecommendation": {
+        "recommendedAction": "review_ambiguity",
+        "recommendedEditorialStatus": "expert_only",
+        "reason": [
+          "High correlation or visual-similarity risk; review distractor placement and Daily same-day pairing."
+        ]
+      }
+    },
+    {
+      "id": "female-contributing-family-workers",
+      "providerCode": "SL.FAM.WORK.FE.ZS",
+      "shortTitle": "Female contributing family workers",
+      "category": "labor",
+      "difficulty": "expert",
+      "source": {
+        "selectedYear": 2025,
+        "coverage": 163,
+        "approvalStatus": "approved"
+      },
+      "dataGate": {
+        "status": "passed",
+        "reasons": [
+          "Source data passed the coverage gate."
+        ]
+      },
+      "editorial": {
+        "currentStatus": "expert_only",
+        "dailyEligible": false,
+        "practiceEligible": true,
+        "challengeEligible": true,
+        "expertOnly": true,
+        "ambiguityRisk": "high",
+        "qualityScore": 4,
+        "funScore": 4,
+        "fairnessScore": 3
+      },
+      "scores": {
+        "coverage": 4,
+        "freshness": 5,
+        "unitClarity": 4,
+        "mapInterest": 4,
+        "ambiguityCorrelation": 2,
+        "overall": 3.75
+      },
+      "topCorrelation": {
+        "indicatorId": "contributing-family-workers",
+        "title": "Contributing family workers",
+        "warningLevel": "high",
+        "pearson": 0.9501519494040848,
+        "spearman": 0.9872950160994453,
+        "visualSimilarity": 0.7852760736196319,
+        "overlapCount": 163
+      },
+      "statusRecommendation": {
+        "recommendedAction": "review_ambiguity",
+        "recommendedEditorialStatus": "expert_only",
+        "reason": [
+          "High correlation or visual-similarity risk; review distractor placement and Daily same-day pairing."
+        ]
+      }
+    },
+    {
+      "id": "female-employment-population-ratio",
+      "providerCode": "SL.EMP.TOTL.SP.FE.ZS",
+      "shortTitle": "Female employment-to-population ratio",
+      "category": "labor",
+      "difficulty": "expert",
+      "source": {
+        "selectedYear": 2025,
+        "coverage": 163,
+        "approvalStatus": "approved"
+      },
+      "dataGate": {
+        "status": "passed",
+        "reasons": [
+          "Source data passed the coverage gate."
+        ]
+      },
+      "editorial": {
+        "currentStatus": "expert_only",
+        "dailyEligible": false,
+        "practiceEligible": true,
+        "challengeEligible": true,
+        "expertOnly": true,
+        "ambiguityRisk": "high",
+        "qualityScore": 4,
+        "funScore": 4,
+        "fairnessScore": 3
+      },
+      "scores": {
+        "coverage": 4,
+        "freshness": 5,
+        "unitClarity": 4,
+        "mapInterest": 4,
+        "ambiguityCorrelation": 2,
+        "overall": 3.75
+      },
+      "topCorrelation": {
+        "indicatorId": "female-labor-force",
+        "title": "Female labor force participation",
+        "warningLevel": "high",
+        "pearson": 0.9824522000547844,
+        "spearman": 0.9674976411933975,
+        "visualSimilarity": 0.7423312883435583,
+        "overlapCount": 163
+      },
+      "statusRecommendation": {
+        "recommendedAction": "review_ambiguity",
+        "recommendedEditorialStatus": "expert_only",
+        "reason": [
+          "High correlation or visual-similarity risk; review distractor placement and Daily same-day pairing."
+        ]
+      }
+    },
+    {
+      "id": "female-industry-employment",
+      "providerCode": "SL.IND.EMPL.FE.ZS",
+      "shortTitle": "Female industry employment",
+      "category": "labor",
+      "difficulty": "expert",
+      "source": {
+        "selectedYear": 2025,
+        "coverage": 163,
+        "approvalStatus": "approved"
+      },
+      "dataGate": {
+        "status": "passed",
+        "reasons": [
+          "Source data passed the coverage gate."
+        ]
+      },
+      "editorial": {
+        "currentStatus": "daily_eligible",
+        "dailyEligible": true,
+        "practiceEligible": true,
+        "challengeEligible": true,
+        "expertOnly": false,
+        "ambiguityRisk": "medium",
+        "qualityScore": 4,
+        "funScore": 4,
+        "fairnessScore": 3
+      },
+      "scores": {
+        "coverage": 4,
+        "freshness": 5,
+        "unitClarity": 4,
+        "mapInterest": 4,
+        "ambiguityCorrelation": 3,
+        "overall": 3.95
+      },
+      "topCorrelation": {
+        "indicatorId": "employment-industry",
+        "title": "Employment in industry",
+        "warningLevel": "review",
+        "pearson": 0.7458540215951215,
+        "spearman": 0.7549642265338808,
+        "visualSimilarity": 0.4294478527607362,
+        "overlapCount": 163
+      },
+      "statusRecommendation": {
+        "recommendedAction": "keep_daily_eligible",
+        "recommendedEditorialStatus": "daily_eligible",
+        "reason": [
+          "Automated scorecard supports the current curated editorial status."
+        ]
+      }
+    },
+    {
       "id": "female-labor-force",
       "providerCode": "SL.TLF.CACT.FE.ZS",
       "shortTitle": "Female labor force participation",
@@ -2757,23 +3652,176 @@
         "freshness": 5,
         "unitClarity": 4,
         "mapInterest": 4,
-        "ambiguityCorrelation": 3,
-        "overall": 3.95
+        "ambiguityCorrelation": 2,
+        "overall": 3.75
       },
       "topCorrelation": {
-        "indicatorId": "labor-force-gender-ratio",
-        "title": "Female-to-male labor force ratio",
+        "indicatorId": "female-employment-population-ratio",
+        "title": "Female employment-to-population ratio",
         "warningLevel": "high",
-        "pearson": 0.9003170415283414,
-        "spearman": 0.8246130314063876,
-        "visualSimilarity": 0.4539877300613497,
+        "pearson": 0.9824522000547844,
+        "spearman": 0.9674976411933975,
+        "visualSimilarity": 0.7423312883435583,
         "overlapCount": 163
       },
       "statusRecommendation": {
-        "recommendedAction": "keep_expert_only",
+        "recommendedAction": "review_ambiguity",
         "recommendedEditorialStatus": "expert_only",
         "reason": [
-          "Automated scorecard supports the current curated editorial status."
+          "High correlation or visual-similarity risk; review distractor placement and Daily same-day pairing."
+        ]
+      }
+    },
+    {
+      "id": "female-self-employed",
+      "providerCode": "SL.EMP.SELF.FE.ZS",
+      "shortTitle": "Female self-employed",
+      "category": "labor",
+      "difficulty": "expert",
+      "source": {
+        "selectedYear": 2025,
+        "coverage": 163,
+        "approvalStatus": "approved"
+      },
+      "dataGate": {
+        "status": "passed",
+        "reasons": [
+          "Source data passed the coverage gate."
+        ]
+      },
+      "editorial": {
+        "currentStatus": "expert_only",
+        "dailyEligible": false,
+        "practiceEligible": true,
+        "challengeEligible": true,
+        "expertOnly": true,
+        "ambiguityRisk": "high",
+        "qualityScore": 4,
+        "funScore": 4,
+        "fairnessScore": 3
+      },
+      "scores": {
+        "coverage": 4,
+        "freshness": 5,
+        "unitClarity": 4,
+        "mapInterest": 4,
+        "ambiguityCorrelation": 2,
+        "overall": 3.75
+      },
+      "topCorrelation": {
+        "indicatorId": "female-wage-salaried-workers",
+        "title": "Female wage workers",
+        "warningLevel": "high",
+        "pearson": -0.999999999986783,
+        "spearman": -1.0,
+        "visualSimilarity": 0.1411042944785276,
+        "overlapCount": 163
+      },
+      "statusRecommendation": {
+        "recommendedAction": "review_ambiguity",
+        "recommendedEditorialStatus": "expert_only",
+        "reason": [
+          "High correlation or visual-similarity risk; review distractor placement and Daily same-day pairing."
+        ]
+      }
+    },
+    {
+      "id": "female-senior-management",
+      "providerCode": "SL.EMP.SMGT.FE.ZS",
+      "shortTitle": "Women in senior management",
+      "category": "labor",
+      "difficulty": "expert",
+      "source": {
+        "selectedYear": 2025,
+        "coverage": 12,
+        "approvalStatus": "draft"
+      },
+      "dataGate": {
+        "status": "held",
+        "reasons": [
+          "female-senior-management: no year in 2015:2025 met 120 mapped countries; best coverage was 90",
+          "female-senior-management: selected coverage 12 is below 120"
+        ]
+      },
+      "editorial": {
+        "currentStatus": "needs_review",
+        "dailyEligible": false,
+        "practiceEligible": false,
+        "challengeEligible": false,
+        "expertOnly": false,
+        "ambiguityRisk": "medium",
+        "qualityScore": 2,
+        "funScore": 2,
+        "fairnessScore": 2
+      },
+      "scores": {
+        "coverage": 1,
+        "freshness": 5,
+        "unitClarity": 2,
+        "mapInterest": 1,
+        "ambiguityCorrelation": 2,
+        "overall": 2.0
+      },
+      "topCorrelation": null,
+      "statusRecommendation": {
+        "recommendedAction": "hold_for_data",
+        "recommendedEditorialStatus": "needs_review",
+        "reason": [
+          "female-senior-management: no year in 2015:2025 met 120 mapped countries; best coverage was 90",
+          "female-senior-management: selected coverage 12 is below 120"
+        ]
+      }
+    },
+    {
+      "id": "female-services-employment",
+      "providerCode": "SL.SRV.EMPL.FE.ZS",
+      "shortTitle": "Female services employment",
+      "category": "labor",
+      "difficulty": "expert",
+      "source": {
+        "selectedYear": 2025,
+        "coverage": 163,
+        "approvalStatus": "approved"
+      },
+      "dataGate": {
+        "status": "passed",
+        "reasons": [
+          "Source data passed the coverage gate."
+        ]
+      },
+      "editorial": {
+        "currentStatus": "expert_only",
+        "dailyEligible": false,
+        "practiceEligible": true,
+        "challengeEligible": true,
+        "expertOnly": true,
+        "ambiguityRisk": "high",
+        "qualityScore": 4,
+        "funScore": 4,
+        "fairnessScore": 3
+      },
+      "scores": {
+        "coverage": 4,
+        "freshness": 5,
+        "unitClarity": 4,
+        "mapInterest": 4,
+        "ambiguityCorrelation": 2,
+        "overall": 3.75
+      },
+      "topCorrelation": {
+        "indicatorId": "employment-services",
+        "title": "Employment in services",
+        "warningLevel": "high",
+        "pearson": 0.9563171119657562,
+        "spearman": 0.9655704634755959,
+        "visualSimilarity": 0.7177914110429447,
+        "overlapCount": 163
+      },
+      "statusRecommendation": {
+        "recommendedAction": "review_ambiguity",
+        "recommendedEditorialStatus": "expert_only",
+        "reason": [
+          "High correlation or visual-similarity risk; review distractor placement and Daily same-day pairing."
         ]
       }
     },
@@ -2827,6 +3875,159 @@
         "recommendedEditorialStatus": "expert_only",
         "reason": [
           "High correlation or visual-similarity risk; review distractor placement and Daily same-day pairing."
+        ]
+      }
+    },
+    {
+      "id": "female-vulnerable-employment",
+      "providerCode": "SL.EMP.VULN.FE.ZS",
+      "shortTitle": "Female vulnerable employment",
+      "category": "labor",
+      "difficulty": "expert",
+      "source": {
+        "selectedYear": 2025,
+        "coverage": 163,
+        "approvalStatus": "approved"
+      },
+      "dataGate": {
+        "status": "passed",
+        "reasons": [
+          "Source data passed the coverage gate."
+        ]
+      },
+      "editorial": {
+        "currentStatus": "expert_only",
+        "dailyEligible": false,
+        "practiceEligible": true,
+        "challengeEligible": true,
+        "expertOnly": true,
+        "ambiguityRisk": "high",
+        "qualityScore": 4,
+        "funScore": 4,
+        "fairnessScore": 3
+      },
+      "scores": {
+        "coverage": 4,
+        "freshness": 5,
+        "unitClarity": 4,
+        "mapInterest": 4,
+        "ambiguityCorrelation": 2,
+        "overall": 3.75
+      },
+      "topCorrelation": {
+        "indicatorId": "female-wage-salaried-workers",
+        "title": "Female wage workers",
+        "warningLevel": "high",
+        "pearson": -0.9971643245906584,
+        "spearman": -0.9960541118703621,
+        "visualSimilarity": 0.12883435582822086,
+        "overlapCount": 163
+      },
+      "statusRecommendation": {
+        "recommendedAction": "review_ambiguity",
+        "recommendedEditorialStatus": "expert_only",
+        "reason": [
+          "High correlation or visual-similarity risk; review distractor placement and Daily same-day pairing."
+        ]
+      }
+    },
+    {
+      "id": "female-wage-salaried-workers",
+      "providerCode": "SL.EMP.WORK.FE.ZS",
+      "shortTitle": "Female wage workers",
+      "category": "labor",
+      "difficulty": "expert",
+      "source": {
+        "selectedYear": 2025,
+        "coverage": 163,
+        "approvalStatus": "approved"
+      },
+      "dataGate": {
+        "status": "passed",
+        "reasons": [
+          "Source data passed the coverage gate."
+        ]
+      },
+      "editorial": {
+        "currentStatus": "expert_only",
+        "dailyEligible": false,
+        "practiceEligible": true,
+        "challengeEligible": true,
+        "expertOnly": true,
+        "ambiguityRisk": "high",
+        "qualityScore": 4,
+        "funScore": 4,
+        "fairnessScore": 3
+      },
+      "scores": {
+        "coverage": 4,
+        "freshness": 5,
+        "unitClarity": 4,
+        "mapInterest": 4,
+        "ambiguityCorrelation": 2,
+        "overall": 3.75
+      },
+      "topCorrelation": {
+        "indicatorId": "female-self-employed",
+        "title": "Female self-employed",
+        "warningLevel": "high",
+        "pearson": -0.999999999986783,
+        "spearman": -1.0,
+        "visualSimilarity": 0.1411042944785276,
+        "overlapCount": 163
+      },
+      "statusRecommendation": {
+        "recommendedAction": "review_ambiguity",
+        "recommendedEditorialStatus": "expert_only",
+        "reason": [
+          "High correlation or visual-similarity risk; review distractor placement and Daily same-day pairing."
+        ]
+      }
+    },
+    {
+      "id": "female-youth-neet",
+      "providerCode": "SL.UEM.NEET.FE.ZS",
+      "shortTitle": "Female youth not in education or work",
+      "category": "labor",
+      "difficulty": "expert",
+      "source": {
+        "selectedYear": 2025,
+        "coverage": 15,
+        "approvalStatus": "draft"
+      },
+      "dataGate": {
+        "status": "held",
+        "reasons": [
+          "female-youth-neet: no year in 2015:2025 met 120 mapped countries; best coverage was 108",
+          "female-youth-neet: selected coverage 15 is below 120"
+        ]
+      },
+      "editorial": {
+        "currentStatus": "needs_review",
+        "dailyEligible": false,
+        "practiceEligible": false,
+        "challengeEligible": false,
+        "expertOnly": false,
+        "ambiguityRisk": "medium",
+        "qualityScore": 2,
+        "funScore": 2,
+        "fairnessScore": 2
+      },
+      "scores": {
+        "coverage": 1,
+        "freshness": 5,
+        "unitClarity": 2,
+        "mapInterest": 1,
+        "ambiguityCorrelation": 2,
+        "overall": 2.0
+      },
+      "topCorrelation": null,
+      "statusRecommendation": {
+        "recommendedAction": "hold_for_data",
+        "recommendedEditorialStatus": "needs_review",
+        "reason": [
+          "female-youth-neet: no year in 2015:2025 met 120 mapped countries; best coverage was 108",
+          "female-youth-neet: selected coverage 15 is below 120"
         ]
       }
     },
@@ -2886,7 +4087,7 @@
     {
       "id": "fertilizer-use",
       "providerCode": "AG.CON.FERT.ZS",
-      "shortTitle": "Fertilizer consumption",
+      "shortTitle": "Fertilizer use per hectare",
       "category": "agriculture",
       "difficulty": "expert",
       "source": {
@@ -2914,10 +4115,10 @@
       "scores": {
         "coverage": 4,
         "freshness": 4,
-        "unitClarity": 3,
+        "unitClarity": 4,
         "mapInterest": 4,
         "ambiguityCorrelation": 2,
-        "overall": 3.4
+        "overall": 3.6
       },
       "topCorrelation": {
         "indicatorId": "cereal-yield",
@@ -3090,6 +4291,165 @@
       "statusRecommendation": {
         "recommendedAction": "keep_practice_eligible",
         "recommendedEditorialStatus": "practice_eligible",
+        "reason": [
+          "Automated scorecard supports the current curated editorial status."
+        ]
+      }
+    },
+    {
+      "id": "food-exports-share",
+      "providerCode": "TX.VAL.FOOD.ZS.UN",
+      "shortTitle": "Food exports share",
+      "category": "agriculture",
+      "difficulty": "expert",
+      "source": {
+        "selectedYear": 2023,
+        "coverage": 137,
+        "approvalStatus": "approved"
+      },
+      "dataGate": {
+        "status": "passed",
+        "reasons": [
+          "Source data passed the coverage gate."
+        ]
+      },
+      "editorial": {
+        "currentStatus": "practice_eligible",
+        "dailyEligible": false,
+        "practiceEligible": true,
+        "challengeEligible": true,
+        "expertOnly": false,
+        "ambiguityRisk": "medium",
+        "qualityScore": 4,
+        "funScore": 4,
+        "fairnessScore": 3
+      },
+      "scores": {
+        "coverage": 3,
+        "freshness": 4,
+        "unitClarity": 4,
+        "mapInterest": 4,
+        "ambiguityCorrelation": 3,
+        "overall": 3.6
+      },
+      "topCorrelation": {
+        "indicatorId": "household-consumption",
+        "title": "Household consumption",
+        "warningLevel": "ok",
+        "pearson": 0.38376303834525494,
+        "spearman": 0.521404264185013,
+        "visualSimilarity": 0.25833333333333336,
+        "overlapCount": 120
+      },
+      "statusRecommendation": {
+        "recommendedAction": "keep_practice_eligible",
+        "recommendedEditorialStatus": "practice_eligible",
+        "reason": [
+          "Automated scorecard supports the current curated editorial status."
+        ]
+      }
+    },
+    {
+      "id": "food-imports-share",
+      "providerCode": "TM.VAL.FOOD.ZS.UN",
+      "shortTitle": "Food imports share",
+      "category": "agriculture",
+      "difficulty": "expert",
+      "source": {
+        "selectedYear": 2023,
+        "coverage": 137,
+        "approvalStatus": "approved"
+      },
+      "dataGate": {
+        "status": "passed",
+        "reasons": [
+          "Source data passed the coverage gate."
+        ]
+      },
+      "editorial": {
+        "currentStatus": "practice_eligible",
+        "dailyEligible": false,
+        "practiceEligible": true,
+        "challengeEligible": true,
+        "expertOnly": false,
+        "ambiguityRisk": "medium",
+        "qualityScore": 4,
+        "funScore": 4,
+        "fairnessScore": 3
+      },
+      "scores": {
+        "coverage": 3,
+        "freshness": 4,
+        "unitClarity": 4,
+        "mapInterest": 4,
+        "ambiguityCorrelation": 3,
+        "overall": 3.6
+      },
+      "topCorrelation": {
+        "indicatorId": "high-tech-exports",
+        "title": "High-tech exports",
+        "warningLevel": "ok",
+        "pearson": -0.3916404591849682,
+        "spearman": -0.5343168368585137,
+        "visualSimilarity": 0.11678832116788321,
+        "overlapCount": 137
+      },
+      "statusRecommendation": {
+        "recommendedAction": "keep_practice_eligible",
+        "recommendedEditorialStatus": "practice_eligible",
+        "reason": [
+          "Automated scorecard supports the current curated editorial status."
+        ]
+      }
+    },
+    {
+      "id": "food-insecurity-moderate-severe",
+      "providerCode": "SN.ITK.MSFI.ZS",
+      "shortTitle": "Moderate or severe food insecurity",
+      "category": "agriculture",
+      "difficulty": "standard",
+      "source": {
+        "selectedYear": 2023,
+        "coverage": 124,
+        "approvalStatus": "approved"
+      },
+      "dataGate": {
+        "status": "passed",
+        "reasons": [
+          "Source data passed the coverage gate."
+        ]
+      },
+      "editorial": {
+        "currentStatus": "daily_eligible",
+        "dailyEligible": true,
+        "practiceEligible": true,
+        "challengeEligible": true,
+        "expertOnly": false,
+        "ambiguityRisk": "medium",
+        "qualityScore": 4,
+        "funScore": 4,
+        "fairnessScore": 4
+      },
+      "scores": {
+        "coverage": 3,
+        "freshness": 4,
+        "unitClarity": 4,
+        "mapInterest": 4,
+        "ambiguityCorrelation": 3,
+        "overall": 3.6
+      },
+      "topCorrelation": {
+        "indicatorId": "severe-food-insecurity",
+        "title": "Severe food insecurity",
+        "warningLevel": "high",
+        "pearson": 0.8934481609343904,
+        "spearman": 0.9470854626244409,
+        "visualSimilarity": 0.5203252032520326,
+        "overlapCount": 123
+      },
+      "statusRecommendation": {
+        "recommendedAction": "keep_daily_eligible",
+        "recommendedEditorialStatus": "daily_eligible",
         "reason": [
           "Automated scorecard supports the current curated editorial status."
         ]
@@ -3939,6 +5299,59 @@
       }
     },
     {
+      "id": "government-education-spending-share",
+      "providerCode": "SE.XPD.TOTL.GB.ZS",
+      "shortTitle": "Education spending share",
+      "category": "education",
+      "difficulty": "expert",
+      "source": {
+        "selectedYear": 2022,
+        "coverage": 123,
+        "approvalStatus": "approved"
+      },
+      "dataGate": {
+        "status": "passed",
+        "reasons": [
+          "Source data passed the coverage gate."
+        ]
+      },
+      "editorial": {
+        "currentStatus": "daily_eligible",
+        "dailyEligible": true,
+        "practiceEligible": true,
+        "challengeEligible": true,
+        "expertOnly": false,
+        "ambiguityRisk": "medium",
+        "qualityScore": 4,
+        "funScore": 4,
+        "fairnessScore": 3
+      },
+      "scores": {
+        "coverage": 3,
+        "freshness": 4,
+        "unitClarity": 4,
+        "mapInterest": 4,
+        "ambiguityCorrelation": 3,
+        "overall": 3.6
+      },
+      "topCorrelation": {
+        "indicatorId": "education-spending",
+        "title": "Education spending",
+        "warningLevel": "review",
+        "pearson": 0.5315382304959992,
+        "spearman": 0.47107438016528935,
+        "visualSimilarity": 0.24166666666666667,
+        "overlapCount": 120
+      },
+      "statusRecommendation": {
+        "recommendedAction": "keep_daily_eligible",
+        "recommendedEditorialStatus": "daily_eligible",
+        "reason": [
+          "Automated scorecard supports the current curated editorial status."
+        ]
+      }
+    },
+    {
       "id": "government-expense",
       "providerCode": "GC.XPN.TOTL.GD.ZS",
       "shortTitle": "Government expense",
@@ -4346,13 +5759,13 @@
         "overall": 3.6
       },
       "topCorrelation": {
-        "indicatorId": "undernourishment",
-        "title": "Undernourishment",
+        "indicatorId": "food-insecurity-moderate-severe",
+        "title": "Moderate or severe food insecurity",
         "warningLevel": "ok",
-        "pearson": -0.4094760736022776,
-        "spearman": -0.6304424450458675,
-        "visualSimilarity": 0.031496062992125984,
-        "overlapCount": 127
+        "pearson": -0.5251953280742825,
+        "spearman": -0.7183211068344622,
+        "visualSimilarity": 0.04504504504504504,
+        "overlapCount": 111
       },
       "statusRecommendation": {
         "recommendedAction": "keep_expert_only",
@@ -4399,13 +5812,13 @@
         "overall": 3.65
       },
       "topCorrelation": {
-        "indicatorId": "birth-rate",
-        "title": "Birth rate",
+        "indicatorId": "primary-female-teachers",
+        "title": "Female primary teachers",
         "warningLevel": "ok",
-        "pearson": -0.5790250362040271,
-        "spearman": -0.7178657313856753,
-        "visualSimilarity": 0.11666666666666667,
-        "overlapCount": 120
+        "pearson": 0.6222510431556391,
+        "spearman": 0.7555012741279324,
+        "visualSimilarity": 0.3263157894736842,
+        "overlapCount": 95
       },
       "statusRecommendation": {
         "recommendedAction": "keep_expert_only",
@@ -4512,6 +5925,59 @@
         "spearman": 0.7973748176956734,
         "visualSimilarity": 0.4083333333333333,
         "overlapCount": 120
+      },
+      "statusRecommendation": {
+        "recommendedAction": "keep_practice_eligible",
+        "recommendedEditorialStatus": "practice_eligible",
+        "reason": [
+          "Automated scorecard supports the current curated editorial status."
+        ]
+      }
+    },
+    {
+      "id": "ict-service-exports",
+      "providerCode": "BX.GSR.CCIS.ZS",
+      "shortTitle": "ICT service exports",
+      "category": "connectivity",
+      "difficulty": "expert",
+      "source": {
+        "selectedYear": 2024,
+        "coverage": 135,
+        "approvalStatus": "approved"
+      },
+      "dataGate": {
+        "status": "passed",
+        "reasons": [
+          "Source data passed the coverage gate."
+        ]
+      },
+      "editorial": {
+        "currentStatus": "practice_eligible",
+        "dailyEligible": false,
+        "practiceEligible": true,
+        "challengeEligible": true,
+        "expertOnly": false,
+        "ambiguityRisk": "medium",
+        "qualityScore": 4,
+        "funScore": 4,
+        "fairnessScore": 3
+      },
+      "scores": {
+        "coverage": 3,
+        "freshness": 5,
+        "unitClarity": 4,
+        "mapInterest": 4,
+        "ambiguityCorrelation": 3,
+        "overall": 3.75
+      },
+      "topCorrelation": {
+        "indicatorId": "communications-service-exports",
+        "title": "Communications service exports",
+        "warningLevel": "review",
+        "pearson": 0.6164837309080915,
+        "spearman": 0.6185981855428738,
+        "visualSimilarity": 0.2518518518518518,
+        "overlapCount": 135
       },
       "statusRecommendation": {
         "recommendedAction": "keep_practice_eligible",
@@ -4887,6 +6353,98 @@
       }
     },
     {
+      "id": "irrigated-cropland",
+      "providerCode": "AG.LND.IRIG.ZS",
+      "shortTitle": "Irrigated cropland",
+      "category": "agriculture",
+      "difficulty": "expert",
+      "source": {
+        "selectedYear": "n/a",
+        "coverage": 0,
+        "approvalStatus": "draft"
+      },
+      "dataGate": {
+        "status": "held",
+        "reasons": [
+          "Unexpected World Bank response for https://api.worldbank.org/v2/country/all/indicator/AG.LND.IRIG.ZS?format=json&per_page=20000&page=1&date=2015%3A2025"
+        ]
+      },
+      "editorial": {
+        "currentStatus": "needs_review",
+        "dailyEligible": false,
+        "practiceEligible": false,
+        "challengeEligible": false,
+        "expertOnly": false,
+        "ambiguityRisk": "medium",
+        "qualityScore": 2,
+        "funScore": 2,
+        "fairnessScore": 2
+      },
+      "scores": {
+        "coverage": 0,
+        "freshness": 0,
+        "unitClarity": 2,
+        "mapInterest": 0,
+        "ambiguityCorrelation": 2,
+        "overall": 0.8
+      },
+      "topCorrelation": null,
+      "statusRecommendation": {
+        "recommendedAction": "hold_for_data",
+        "recommendedEditorialStatus": "needs_review",
+        "reason": [
+          "Unexpected World Bank response for https://api.worldbank.org/v2/country/all/indicator/AG.LND.IRIG.ZS?format=json&per_page=20000&page=1&date=2015%3A2025"
+        ]
+      }
+    },
+    {
+      "id": "labor-force-advanced-education",
+      "providerCode": "SL.TLF.ADVN.ZS",
+      "shortTitle": "Advanced-education labor force",
+      "category": "labor",
+      "difficulty": "expert",
+      "source": {
+        "selectedYear": 2025,
+        "coverage": 17,
+        "approvalStatus": "draft"
+      },
+      "dataGate": {
+        "status": "held",
+        "reasons": [
+          "labor-force-advanced-education: no year in 2015:2025 met 120 mapped countries; best coverage was 109",
+          "labor-force-advanced-education: selected coverage 17 is below 120"
+        ]
+      },
+      "editorial": {
+        "currentStatus": "needs_review",
+        "dailyEligible": false,
+        "practiceEligible": false,
+        "challengeEligible": false,
+        "expertOnly": false,
+        "ambiguityRisk": "medium",
+        "qualityScore": 2,
+        "funScore": 2,
+        "fairnessScore": 2
+      },
+      "scores": {
+        "coverage": 1,
+        "freshness": 5,
+        "unitClarity": 2,
+        "mapInterest": 1,
+        "ambiguityCorrelation": 2,
+        "overall": 2.0
+      },
+      "topCorrelation": null,
+      "statusRecommendation": {
+        "recommendedAction": "hold_for_data",
+        "recommendedEditorialStatus": "needs_review",
+        "reason": [
+          "labor-force-advanced-education: no year in 2015:2025 met 120 mapped countries; best coverage was 109",
+          "labor-force-advanced-education: selected coverage 17 is below 120"
+        ]
+      }
+    },
+    {
       "id": "labor-force-gender-ratio",
       "providerCode": "SL.TLF.CACT.FM.ZS",
       "shortTitle": "Female-to-male labor force ratio",
@@ -4993,6 +6551,104 @@
       }
     },
     {
+      "id": "labor-force-secondary-education",
+      "providerCode": "SL.TLF.SECO.ZS",
+      "shortTitle": "Labor force with secondary education",
+      "category": "labor",
+      "difficulty": "expert",
+      "source": {
+        "selectedYear": "n/a",
+        "coverage": 0,
+        "approvalStatus": "draft"
+      },
+      "dataGate": {
+        "status": "held",
+        "reasons": [
+          "Unexpected World Bank response for https://api.worldbank.org/v2/country/all/indicator/SL.TLF.SECO.ZS?format=json&per_page=20000&page=1&date=2015%3A2025"
+        ]
+      },
+      "editorial": {
+        "currentStatus": "needs_review",
+        "dailyEligible": false,
+        "practiceEligible": false,
+        "challengeEligible": false,
+        "expertOnly": false,
+        "ambiguityRisk": "medium",
+        "qualityScore": 2,
+        "funScore": 2,
+        "fairnessScore": 2
+      },
+      "scores": {
+        "coverage": 0,
+        "freshness": 0,
+        "unitClarity": 2,
+        "mapInterest": 0,
+        "ambiguityCorrelation": 2,
+        "overall": 0.8
+      },
+      "topCorrelation": null,
+      "statusRecommendation": {
+        "recommendedAction": "hold_for_data",
+        "recommendedEditorialStatus": "needs_review",
+        "reason": [
+          "Unexpected World Bank response for https://api.worldbank.org/v2/country/all/indicator/SL.TLF.SECO.ZS?format=json&per_page=20000&page=1&date=2015%3A2025"
+        ]
+      }
+    },
+    {
+      "id": "land-under-cereal",
+      "providerCode": "AG.LND.CREL.HA",
+      "shortTitle": "Land under cereal production",
+      "category": "land",
+      "difficulty": "expert",
+      "source": {
+        "selectedYear": 2023,
+        "coverage": 167,
+        "approvalStatus": "approved"
+      },
+      "dataGate": {
+        "status": "passed",
+        "reasons": [
+          "Source data passed the coverage gate."
+        ]
+      },
+      "editorial": {
+        "currentStatus": "daily_eligible",
+        "dailyEligible": true,
+        "practiceEligible": true,
+        "challengeEligible": true,
+        "expertOnly": false,
+        "ambiguityRisk": "medium",
+        "qualityScore": 4,
+        "funScore": 4,
+        "fairnessScore": 3
+      },
+      "scores": {
+        "coverage": 4,
+        "freshness": 4,
+        "unitClarity": 4,
+        "mapInterest": 4,
+        "ambiguityCorrelation": 2,
+        "overall": 3.6
+      },
+      "topCorrelation": {
+        "indicatorId": "arable-land-area",
+        "title": "Arable land area",
+        "warningLevel": "high",
+        "pearson": 0.9292458579681959,
+        "spearman": 0.9670825737722447,
+        "visualSimilarity": 0.7065868263473054,
+        "overlapCount": 167
+      },
+      "statusRecommendation": {
+        "recommendedAction": "review_ambiguity",
+        "recommendedEditorialStatus": "daily_eligible",
+        "reason": [
+          "High correlation or visual-similarity risk; review distractor placement and Daily same-day pairing."
+        ]
+      }
+    },
+    {
       "id": "largest-city-share",
       "providerCode": "EN.URB.LCTY.UR.ZS",
       "shortTitle": "Largest city share",
@@ -5029,13 +6685,13 @@
         "overall": 3.75
       },
       "topCorrelation": {
-        "indicatorId": "tourism-arrivals",
-        "title": "Tourism arrivals",
+        "indicatorId": "cereal-production",
+        "title": "Cereal production",
         "warningLevel": "ok",
-        "pearson": -0.3390458107193423,
-        "spearman": -0.40595001668753977,
-        "visualSimilarity": 0.09016393442622951,
-        "overlapCount": 122
+        "pearson": -0.31044035295665373,
+        "spearman": -0.49454906214254246,
+        "visualSimilarity": 0.11486486486486487,
+        "overlapCount": 148
       },
       "statusRecommendation": {
         "recommendedAction": "keep_practice_eligible",
@@ -5241,12 +6897,12 @@
         "overall": 2.7
       },
       "topCorrelation": {
-        "indicatorId": "logistics-infrastructure",
-        "title": "Logistics infrastructure quality",
+        "indicatorId": "lpi-tracking",
+        "title": "Logistics tracking score",
         "warningLevel": "high",
-        "pearson": 0.9619984172818818,
-        "spearman": 0.9413731542951469,
-        "visualSimilarity": 0.6106870229007634,
+        "pearson": 0.9651981581530349,
+        "spearman": 0.9573706548159729,
+        "visualSimilarity": 0.6335877862595419,
         "overlapCount": 131
       },
       "statusRecommendation": {
@@ -5290,23 +6946,23 @@
         "freshness": 1,
         "unitClarity": 4,
         "mapInterest": 4,
-        "ambiguityCorrelation": 3,
-        "overall": 3.35
+        "ambiguityCorrelation": 2,
+        "overall": 3.15
       },
       "topCorrelation": {
-        "indicatorId": "low-elevation-land-share",
-        "title": "Low-elevation land",
-        "warningLevel": "review",
-        "pearson": 0.3867015181353795,
-        "spearman": 0.8381566680944343,
-        "visualSimilarity": 0.514792899408284,
+        "indicatorId": "urban-low-elevation-population",
+        "title": "Urban low-elevation population",
+        "warningLevel": "high",
+        "pearson": 0.9433557738970078,
+        "spearman": 0.977024721764721,
+        "visualSimilarity": 0.7692307692307693,
         "overlapCount": 169
       },
       "statusRecommendation": {
-        "recommendedAction": "keep_expert_only",
+        "recommendedAction": "review_ambiguity",
         "recommendedEditorialStatus": "expert_only",
         "reason": [
-          "Automated scorecard supports the current curated editorial status."
+          "High correlation or visual-similarity risk; review distractor placement and Daily same-day pairing."
         ]
       }
     },
@@ -5347,12 +7003,12 @@
         "overall": 3.15
       },
       "topCorrelation": {
-        "indicatorId": "low-elevation-coastal-population",
-        "title": "Low-elevation coastal population",
-        "warningLevel": "review",
-        "pearson": 0.3867015181353795,
-        "spearman": 0.8381566680944343,
-        "visualSimilarity": 0.514792899408284,
+        "indicatorId": "rural-low-elevation-land",
+        "title": "Rural low-elevation land",
+        "warningLevel": "high",
+        "pearson": 0.9913447009080245,
+        "spearman": 0.9971579026934416,
+        "visualSimilarity": 0.9171597633136095,
         "overlapCount": 169
       },
       "statusRecommendation": {
@@ -5411,6 +7067,424 @@
       }
     },
     {
+      "id": "lower-secondary-pupil-teacher-ratio",
+      "providerCode": "SE.SEC.ENRL.LO.TC.ZS",
+      "shortTitle": "Lower secondary pupil-teacher ratio",
+      "category": "education",
+      "difficulty": "expert",
+      "source": {
+        "selectedYear": 2019,
+        "coverage": 3,
+        "approvalStatus": "draft"
+      },
+      "dataGate": {
+        "status": "held",
+        "reasons": [
+          "lower-secondary-pupil-teacher-ratio: no year in 2015:2025 met 120 mapped countries; best coverage was 89",
+          "lower-secondary-pupil-teacher-ratio: selected coverage 3 is below 120"
+        ]
+      },
+      "editorial": {
+        "currentStatus": "needs_review",
+        "dailyEligible": false,
+        "practiceEligible": false,
+        "challengeEligible": false,
+        "expertOnly": false,
+        "ambiguityRisk": "medium",
+        "qualityScore": 2,
+        "funScore": 2,
+        "fairnessScore": 2
+      },
+      "scores": {
+        "coverage": 1,
+        "freshness": 2,
+        "unitClarity": 2,
+        "mapInterest": 1,
+        "ambiguityCorrelation": 2,
+        "overall": 1.55
+      },
+      "topCorrelation": null,
+      "statusRecommendation": {
+        "recommendedAction": "hold_for_data",
+        "recommendedEditorialStatus": "needs_review",
+        "reason": [
+          "lower-secondary-pupil-teacher-ratio: no year in 2015:2025 met 120 mapped countries; best coverage was 89",
+          "lower-secondary-pupil-teacher-ratio: selected coverage 3 is below 120"
+        ]
+      }
+    },
+    {
+      "id": "lpi-customs",
+      "providerCode": "LP.LPI.CUST.XQ",
+      "shortTitle": "Logistics customs score",
+      "category": "connectivity",
+      "difficulty": "expert",
+      "source": {
+        "selectedYear": 2022,
+        "coverage": 131,
+        "approvalStatus": "approved"
+      },
+      "dataGate": {
+        "status": "passed",
+        "reasons": [
+          "Source data passed the coverage gate."
+        ]
+      },
+      "editorial": {
+        "currentStatus": "needs_review",
+        "dailyEligible": false,
+        "practiceEligible": false,
+        "challengeEligible": false,
+        "expertOnly": false,
+        "ambiguityRisk": "medium",
+        "qualityScore": 2,
+        "funScore": 2,
+        "fairnessScore": 2
+      },
+      "scores": {
+        "coverage": 3,
+        "freshness": 4,
+        "unitClarity": 3,
+        "mapInterest": 2,
+        "ambiguityCorrelation": 2,
+        "overall": 2.7
+      },
+      "topCorrelation": {
+        "indicatorId": "logistics-overall",
+        "title": "Logistics performance",
+        "warningLevel": "high",
+        "pearson": 0.9594760004029269,
+        "spearman": 0.957740326080312,
+        "visualSimilarity": 0.648854961832061,
+        "overlapCount": 131
+      },
+      "statusRecommendation": {
+        "recommendedAction": "keep_needs_review",
+        "recommendedEditorialStatus": "needs_review",
+        "reason": [
+          "Curated editorial status still requires human review before play."
+        ]
+      }
+    },
+    {
+      "id": "lpi-timeliness",
+      "providerCode": "LP.LPI.TIME.XQ",
+      "shortTitle": "Logistics timeliness score",
+      "category": "connectivity",
+      "difficulty": "expert",
+      "source": {
+        "selectedYear": 2022,
+        "coverage": 131,
+        "approvalStatus": "approved"
+      },
+      "dataGate": {
+        "status": "passed",
+        "reasons": [
+          "Source data passed the coverage gate."
+        ]
+      },
+      "editorial": {
+        "currentStatus": "needs_review",
+        "dailyEligible": false,
+        "practiceEligible": false,
+        "challengeEligible": false,
+        "expertOnly": false,
+        "ambiguityRisk": "medium",
+        "qualityScore": 2,
+        "funScore": 2,
+        "fairnessScore": 2
+      },
+      "scores": {
+        "coverage": 3,
+        "freshness": 4,
+        "unitClarity": 3,
+        "mapInterest": 2,
+        "ambiguityCorrelation": 3,
+        "overall": 2.9
+      },
+      "topCorrelation": {
+        "indicatorId": "logistics-overall",
+        "title": "Logistics performance",
+        "warningLevel": "high",
+        "pearson": 0.9357351796820939,
+        "spearman": 0.9384372169833989,
+        "visualSimilarity": 0.5877862595419847,
+        "overlapCount": 131
+      },
+      "statusRecommendation": {
+        "recommendedAction": "keep_needs_review",
+        "recommendedEditorialStatus": "needs_review",
+        "reason": [
+          "Curated editorial status still requires human review before play."
+        ]
+      }
+    },
+    {
+      "id": "lpi-tracking",
+      "providerCode": "LP.LPI.TRAC.XQ",
+      "shortTitle": "Logistics tracking score",
+      "category": "connectivity",
+      "difficulty": "expert",
+      "source": {
+        "selectedYear": 2022,
+        "coverage": 131,
+        "approvalStatus": "approved"
+      },
+      "dataGate": {
+        "status": "passed",
+        "reasons": [
+          "Source data passed the coverage gate."
+        ]
+      },
+      "editorial": {
+        "currentStatus": "needs_review",
+        "dailyEligible": false,
+        "practiceEligible": false,
+        "challengeEligible": false,
+        "expertOnly": false,
+        "ambiguityRisk": "medium",
+        "qualityScore": 2,
+        "funScore": 2,
+        "fairnessScore": 2
+      },
+      "scores": {
+        "coverage": 3,
+        "freshness": 4,
+        "unitClarity": 3,
+        "mapInterest": 2,
+        "ambiguityCorrelation": 2,
+        "overall": 2.7
+      },
+      "topCorrelation": {
+        "indicatorId": "logistics-overall",
+        "title": "Logistics performance",
+        "warningLevel": "high",
+        "pearson": 0.9651981581530349,
+        "spearman": 0.9573706548159729,
+        "visualSimilarity": 0.6335877862595419,
+        "overlapCount": 131
+      },
+      "statusRecommendation": {
+        "recommendedAction": "keep_needs_review",
+        "recommendedEditorialStatus": "needs_review",
+        "reason": [
+          "Curated editorial status still requires human review before play."
+        ]
+      }
+    },
+    {
+      "id": "male-agricultural-employment",
+      "providerCode": "SL.AGR.EMPL.MA.ZS",
+      "shortTitle": "Male agricultural employment",
+      "category": "labor",
+      "difficulty": "expert",
+      "source": {
+        "selectedYear": 2025,
+        "coverage": 163,
+        "approvalStatus": "approved"
+      },
+      "dataGate": {
+        "status": "passed",
+        "reasons": [
+          "Source data passed the coverage gate."
+        ]
+      },
+      "editorial": {
+        "currentStatus": "needs_review",
+        "dailyEligible": false,
+        "practiceEligible": false,
+        "challengeEligible": false,
+        "expertOnly": false,
+        "ambiguityRisk": "medium",
+        "qualityScore": 2,
+        "funScore": 2,
+        "fairnessScore": 2
+      },
+      "scores": {
+        "coverage": 4,
+        "freshness": 5,
+        "unitClarity": 4,
+        "mapInterest": 4,
+        "ambiguityCorrelation": 2,
+        "overall": 3.75
+      },
+      "topCorrelation": {
+        "indicatorId": "employment-agriculture",
+        "title": "Employment in agriculture",
+        "warningLevel": "high",
+        "pearson": 0.982202993905154,
+        "spearman": 0.9887719531592044,
+        "visualSimilarity": 0.803680981595092,
+        "overlapCount": 163
+      },
+      "statusRecommendation": {
+        "recommendedAction": "keep_needs_review",
+        "recommendedEditorialStatus": "needs_review",
+        "reason": [
+          "Curated editorial status still requires human review before play."
+        ]
+      }
+    },
+    {
+      "id": "male-contributing-family-workers",
+      "providerCode": "SL.FAM.WORK.MA.ZS",
+      "shortTitle": "Male contributing family workers",
+      "category": "labor",
+      "difficulty": "expert",
+      "source": {
+        "selectedYear": 2025,
+        "coverage": 163,
+        "approvalStatus": "approved"
+      },
+      "dataGate": {
+        "status": "passed",
+        "reasons": [
+          "Source data passed the coverage gate."
+        ]
+      },
+      "editorial": {
+        "currentStatus": "needs_review",
+        "dailyEligible": false,
+        "practiceEligible": false,
+        "challengeEligible": false,
+        "expertOnly": false,
+        "ambiguityRisk": "medium",
+        "qualityScore": 2,
+        "funScore": 2,
+        "fairnessScore": 2
+      },
+      "scores": {
+        "coverage": 4,
+        "freshness": 5,
+        "unitClarity": 4,
+        "mapInterest": 4,
+        "ambiguityCorrelation": 2,
+        "overall": 3.75
+      },
+      "topCorrelation": {
+        "indicatorId": "contributing-family-workers",
+        "title": "Contributing family workers",
+        "warningLevel": "high",
+        "pearson": 0.9705714253108408,
+        "spearman": 0.9873005580771554,
+        "visualSimilarity": 0.7791411042944786,
+        "overlapCount": 163
+      },
+      "statusRecommendation": {
+        "recommendedAction": "keep_needs_review",
+        "recommendedEditorialStatus": "needs_review",
+        "reason": [
+          "Curated editorial status still requires human review before play."
+        ]
+      }
+    },
+    {
+      "id": "male-employment-population-ratio",
+      "providerCode": "SL.EMP.TOTL.SP.MA.ZS",
+      "shortTitle": "Male employment-to-population ratio",
+      "category": "labor",
+      "difficulty": "expert",
+      "source": {
+        "selectedYear": 2025,
+        "coverage": 163,
+        "approvalStatus": "approved"
+      },
+      "dataGate": {
+        "status": "passed",
+        "reasons": [
+          "Source data passed the coverage gate."
+        ]
+      },
+      "editorial": {
+        "currentStatus": "expert_only",
+        "dailyEligible": false,
+        "practiceEligible": true,
+        "challengeEligible": true,
+        "expertOnly": true,
+        "ambiguityRisk": "high",
+        "qualityScore": 3,
+        "funScore": 3,
+        "fairnessScore": 3
+      },
+      "scores": {
+        "coverage": 4,
+        "freshness": 5,
+        "unitClarity": 4,
+        "mapInterest": 4,
+        "ambiguityCorrelation": 2,
+        "overall": 3.75
+      },
+      "topCorrelation": {
+        "indicatorId": "male-labor-force",
+        "title": "Male labor force participation",
+        "warningLevel": "high",
+        "pearson": 0.9606630847543447,
+        "spearman": 0.9517071393250405,
+        "visualSimilarity": 0.6687116564417178,
+        "overlapCount": 163
+      },
+      "statusRecommendation": {
+        "recommendedAction": "review_ambiguity",
+        "recommendedEditorialStatus": "expert_only",
+        "reason": [
+          "High correlation or visual-similarity risk; review distractor placement and Daily same-day pairing."
+        ]
+      }
+    },
+    {
+      "id": "male-industry-employment",
+      "providerCode": "SL.IND.EMPL.MA.ZS",
+      "shortTitle": "Male industry employment",
+      "category": "labor",
+      "difficulty": "expert",
+      "source": {
+        "selectedYear": 2025,
+        "coverage": 163,
+        "approvalStatus": "approved"
+      },
+      "dataGate": {
+        "status": "passed",
+        "reasons": [
+          "Source data passed the coverage gate."
+        ]
+      },
+      "editorial": {
+        "currentStatus": "expert_only",
+        "dailyEligible": false,
+        "practiceEligible": true,
+        "challengeEligible": true,
+        "expertOnly": true,
+        "ambiguityRisk": "medium",
+        "qualityScore": 4,
+        "funScore": 4,
+        "fairnessScore": 3
+      },
+      "scores": {
+        "coverage": 4,
+        "freshness": 5,
+        "unitClarity": 4,
+        "mapInterest": 4,
+        "ambiguityCorrelation": 3,
+        "overall": 3.95
+      },
+      "topCorrelation": {
+        "indicatorId": "employment-industry",
+        "title": "Employment in industry",
+        "warningLevel": "high",
+        "pearson": 0.934824032169639,
+        "spearman": 0.9315815141791499,
+        "visualSimilarity": 0.5030674846625767,
+        "overlapCount": 163
+      },
+      "statusRecommendation": {
+        "recommendedAction": "keep_expert_only",
+        "recommendedEditorialStatus": "expert_only",
+        "reason": [
+          "Automated scorecard supports the current curated editorial status."
+        ]
+      }
+    },
+    {
       "id": "male-labor-force",
       "providerCode": "SL.TLF.CACT.MA.ZS",
       "shortTitle": "Male labor force participation",
@@ -5443,16 +7517,122 @@
         "freshness": 5,
         "unitClarity": 4,
         "mapInterest": 3,
-        "ambiguityCorrelation": 3,
-        "overall": 3.7
+        "ambiguityCorrelation": 2,
+        "overall": 3.5
       },
       "topCorrelation": {
-        "indicatorId": "employment-population-ratio",
-        "title": "Employment-to-population ratio",
-        "warningLevel": "review",
-        "pearson": 0.8002959972544386,
-        "spearman": 0.7899535028070117,
-        "visualSimilarity": 0.36809815950920244,
+        "indicatorId": "male-employment-population-ratio",
+        "title": "Male employment-to-population ratio",
+        "warningLevel": "high",
+        "pearson": 0.9606630847543447,
+        "spearman": 0.9517071393250405,
+        "visualSimilarity": 0.6687116564417178,
+        "overlapCount": 163
+      },
+      "statusRecommendation": {
+        "recommendedAction": "keep_needs_review",
+        "recommendedEditorialStatus": "needs_review",
+        "reason": [
+          "Curated editorial status still requires human review before play."
+        ]
+      }
+    },
+    {
+      "id": "male-self-employed",
+      "providerCode": "SL.EMP.SELF.MA.ZS",
+      "shortTitle": "Male self-employed",
+      "category": "labor",
+      "difficulty": "expert",
+      "source": {
+        "selectedYear": 2025,
+        "coverage": 163,
+        "approvalStatus": "approved"
+      },
+      "dataGate": {
+        "status": "passed",
+        "reasons": [
+          "Source data passed the coverage gate."
+        ]
+      },
+      "editorial": {
+        "currentStatus": "needs_review",
+        "dailyEligible": false,
+        "practiceEligible": false,
+        "challengeEligible": false,
+        "expertOnly": false,
+        "ambiguityRisk": "medium",
+        "qualityScore": 2,
+        "funScore": 2,
+        "fairnessScore": 2
+      },
+      "scores": {
+        "coverage": 4,
+        "freshness": 5,
+        "unitClarity": 4,
+        "mapInterest": 4,
+        "ambiguityCorrelation": 2,
+        "overall": 3.75
+      },
+      "topCorrelation": {
+        "indicatorId": "male-wage-salaried-workers",
+        "title": "Male wage workers",
+        "warningLevel": "high",
+        "pearson": -0.9999999999807782,
+        "spearman": -1.0,
+        "visualSimilarity": 0.1411042944785276,
+        "overlapCount": 163
+      },
+      "statusRecommendation": {
+        "recommendedAction": "keep_needs_review",
+        "recommendedEditorialStatus": "needs_review",
+        "reason": [
+          "Curated editorial status still requires human review before play."
+        ]
+      }
+    },
+    {
+      "id": "male-services-employment",
+      "providerCode": "SL.SRV.EMPL.MA.ZS",
+      "shortTitle": "Male services employment",
+      "category": "labor",
+      "difficulty": "expert",
+      "source": {
+        "selectedYear": 2025,
+        "coverage": 163,
+        "approvalStatus": "approved"
+      },
+      "dataGate": {
+        "status": "passed",
+        "reasons": [
+          "Source data passed the coverage gate."
+        ]
+      },
+      "editorial": {
+        "currentStatus": "needs_review",
+        "dailyEligible": false,
+        "practiceEligible": false,
+        "challengeEligible": false,
+        "expertOnly": false,
+        "ambiguityRisk": "medium",
+        "qualityScore": 2,
+        "funScore": 2,
+        "fairnessScore": 2
+      },
+      "scores": {
+        "coverage": 4,
+        "freshness": 5,
+        "unitClarity": 4,
+        "mapInterest": 4,
+        "ambiguityCorrelation": 2,
+        "overall": 3.75
+      },
+      "topCorrelation": {
+        "indicatorId": "employment-services",
+        "title": "Employment in services",
+        "warningLevel": "high",
+        "pearson": 0.9646988118982138,
+        "spearman": 0.9679535138909672,
+        "visualSimilarity": 0.6932515337423313,
         "overlapCount": 163
       },
       "statusRecommendation": {
@@ -5517,6 +7697,112 @@
       }
     },
     {
+      "id": "male-vulnerable-employment",
+      "providerCode": "SL.EMP.VULN.MA.ZS",
+      "shortTitle": "Male vulnerable employment",
+      "category": "labor",
+      "difficulty": "expert",
+      "source": {
+        "selectedYear": 2025,
+        "coverage": 163,
+        "approvalStatus": "approved"
+      },
+      "dataGate": {
+        "status": "passed",
+        "reasons": [
+          "Source data passed the coverage gate."
+        ]
+      },
+      "editorial": {
+        "currentStatus": "needs_review",
+        "dailyEligible": false,
+        "practiceEligible": false,
+        "challengeEligible": false,
+        "expertOnly": false,
+        "ambiguityRisk": "medium",
+        "qualityScore": 2,
+        "funScore": 2,
+        "fairnessScore": 2
+      },
+      "scores": {
+        "coverage": 4,
+        "freshness": 5,
+        "unitClarity": 4,
+        "mapInterest": 4,
+        "ambiguityCorrelation": 2,
+        "overall": 3.75
+      },
+      "topCorrelation": {
+        "indicatorId": "vulnerable-employment",
+        "title": "Vulnerable employment",
+        "warningLevel": "high",
+        "pearson": 0.9913909533281305,
+        "spearman": 0.9926873604114365,
+        "visualSimilarity": 0.8404907975460123,
+        "overlapCount": 163
+      },
+      "statusRecommendation": {
+        "recommendedAction": "keep_needs_review",
+        "recommendedEditorialStatus": "needs_review",
+        "reason": [
+          "Curated editorial status still requires human review before play."
+        ]
+      }
+    },
+    {
+      "id": "male-wage-salaried-workers",
+      "providerCode": "SL.EMP.WORK.MA.ZS",
+      "shortTitle": "Male wage workers",
+      "category": "labor",
+      "difficulty": "expert",
+      "source": {
+        "selectedYear": 2025,
+        "coverage": 163,
+        "approvalStatus": "approved"
+      },
+      "dataGate": {
+        "status": "passed",
+        "reasons": [
+          "Source data passed the coverage gate."
+        ]
+      },
+      "editorial": {
+        "currentStatus": "needs_review",
+        "dailyEligible": false,
+        "practiceEligible": false,
+        "challengeEligible": false,
+        "expertOnly": false,
+        "ambiguityRisk": "medium",
+        "qualityScore": 2,
+        "funScore": 2,
+        "fairnessScore": 2
+      },
+      "scores": {
+        "coverage": 4,
+        "freshness": 5,
+        "unitClarity": 4,
+        "mapInterest": 4,
+        "ambiguityCorrelation": 2,
+        "overall": 3.75
+      },
+      "topCorrelation": {
+        "indicatorId": "male-self-employed",
+        "title": "Male self-employed",
+        "warningLevel": "high",
+        "pearson": -0.9999999999807782,
+        "spearman": -1.0,
+        "visualSimilarity": 0.1411042944785276,
+        "overlapCount": 163
+      },
+      "statusRecommendation": {
+        "recommendedAction": "keep_needs_review",
+        "recommendedEditorialStatus": "needs_review",
+        "reason": [
+          "Curated editorial status still requires human review before play."
+        ]
+      }
+    },
+    {
       "id": "manufacturing-share",
       "providerCode": "NV.IND.MANF.ZS",
       "shortTitle": "Manufacturing value added",
@@ -5553,12 +7839,12 @@
         "overall": 3.75
       },
       "topCorrelation": {
-        "indicatorId": "employment-industry",
-        "title": "Employment in industry",
+        "indicatorId": "female-industry-employment",
+        "title": "Female industry employment",
         "warningLevel": "ok",
-        "pearson": 0.29568644787685927,
-        "spearman": 0.41954910235944987,
-        "visualSimilarity": 0.22857142857142856,
+        "pearson": 0.39320087881681426,
+        "spearman": 0.4885701165511361,
+        "visualSimilarity": 0.3142857142857143,
         "overlapCount": 140
       },
       "statusRecommendation": {
@@ -5818,13 +8104,13 @@
         "overall": 4.35
       },
       "topCorrelation": {
-        "indicatorId": "energy-use",
-        "title": "Energy use",
+        "indicatorId": "food-insecurity-moderate-severe",
+        "title": "Moderate or severe food insecurity",
         "warningLevel": "ok",
-        "pearson": 0.30456521035862755,
-        "spearman": 0.4970606798602872,
-        "visualSimilarity": 0.2459016393442623,
-        "overlapCount": 122
+        "pearson": -0.5028479115758085,
+        "spearman": -0.5070137772292785,
+        "visualSimilarity": 0.11538461538461539,
+        "overlapCount": 104
       },
       "statusRecommendation": {
         "recommendedAction": "keep_daily_eligible",
@@ -6236,13 +8522,13 @@
         "overall": 2.65
       },
       "topCorrelation": {
-        "indicatorId": "secondary-enrollment",
-        "title": "Secondary enrollment",
+        "indicatorId": "out-of-school-primary",
+        "title": "Out-of-school primary age",
         "warningLevel": "review",
-        "pearson": 0.6660393377212951,
-        "spearman": 0.5507567821406638,
-        "visualSimilarity": 0.3723404255319149,
-        "overlapCount": 94
+        "pearson": -0.7421152562719726,
+        "spearman": -0.5479788388497017,
+        "visualSimilarity": 0.08333333333333333,
+        "overlapCount": 96
       },
       "statusRecommendation": {
         "recommendedAction": "keep_needs_review",
@@ -6389,13 +8675,13 @@
         "overall": 3.65
       },
       "topCorrelation": {
-        "indicatorId": "secure-internet-servers",
-        "title": "Secure internet servers",
+        "indicatorId": "lpi-timeliness",
+        "title": "Logistics timeliness score",
         "warningLevel": "ok",
-        "pearson": 0.5093084094739805,
-        "spearman": 0.4193973447367112,
-        "visualSimilarity": 0.23076923076923078,
-        "overlapCount": 169
+        "pearson": 0.44231983408582787,
+        "spearman": 0.5258483207029876,
+        "visualSimilarity": 0.22900763358778625,
+        "overlapCount": 131
       },
       "statusRecommendation": {
         "recommendedAction": "keep_practice_eligible",
@@ -6548,13 +8834,13 @@
         "overall": 3.35
       },
       "topCorrelation": {
-        "indicatorId": "secondary-enrollment",
-        "title": "Secondary enrollment",
+        "indicatorId": "out-of-school-primary",
+        "title": "Out-of-school primary age",
         "warningLevel": "ok",
-        "pearson": -0.5481994284272277,
-        "spearman": -0.45873658741847256,
-        "visualSimilarity": 0.16494845360824742,
-        "overlapCount": 97
+        "pearson": 0.604973029600387,
+        "spearman": 0.34398051629274023,
+        "visualSimilarity": 0.21428571428571427,
+        "overlapCount": 98
       },
       "statusRecommendation": {
         "recommendedAction": "keep_needs_review",
@@ -6650,23 +8936,23 @@
         "freshness": 5,
         "unitClarity": 4,
         "mapInterest": 4,
-        "ambiguityCorrelation": 3,
-        "overall": 3.95
+        "ambiguityCorrelation": 2,
+        "overall": 3.75
       },
       "topCorrelation": {
-        "indicatorId": "maternal-mortality",
-        "title": "Maternal mortality",
-        "warningLevel": "review",
-        "pearson": 0.6880264872403049,
-        "spearman": 0.8562293190339405,
-        "visualSimilarity": 0.4161073825503356,
-        "overlapCount": 149
+        "indicatorId": "rural-open-defecation",
+        "title": "Rural open defecation",
+        "warningLevel": "high",
+        "pearson": 0.9816083416811592,
+        "spearman": 0.962369296001537,
+        "visualSimilarity": 0.8345323741007195,
+        "overlapCount": 139
       },
       "statusRecommendation": {
-        "recommendedAction": "keep_daily_eligible",
+        "recommendedAction": "review_ambiguity",
         "recommendedEditorialStatus": "daily_eligible",
         "reason": [
-          "Automated scorecard supports the current curated editorial status."
+          "High correlation or visual-similarity risk; review distractor placement and Daily same-day pairing."
         ]
       }
     },
@@ -6720,6 +9006,245 @@
         "recommendedEditorialStatus": "expert_only",
         "reason": [
           "Automated scorecard supports the current curated editorial status."
+        ]
+      }
+    },
+    {
+      "id": "out-of-school-primary",
+      "providerCode": "SE.PRM.UNER.ZS",
+      "shortTitle": "Out-of-school primary age",
+      "category": "education",
+      "difficulty": "standard",
+      "source": {
+        "selectedYear": 2023,
+        "coverage": 120,
+        "approvalStatus": "approved"
+      },
+      "dataGate": {
+        "status": "passed",
+        "reasons": [
+          "Source data passed the coverage gate."
+        ]
+      },
+      "editorial": {
+        "currentStatus": "daily_eligible",
+        "dailyEligible": true,
+        "practiceEligible": true,
+        "challengeEligible": true,
+        "expertOnly": false,
+        "ambiguityRisk": "medium",
+        "qualityScore": 4,
+        "funScore": 4,
+        "fairnessScore": 4
+      },
+      "scores": {
+        "coverage": 3,
+        "freshness": 4,
+        "unitClarity": 4,
+        "mapInterest": 4,
+        "ambiguityCorrelation": 3,
+        "overall": 3.6
+      },
+      "topCorrelation": {
+        "indicatorId": "primary-enrollment",
+        "title": "Primary enrollment",
+        "warningLevel": "review",
+        "pearson": -0.750302894916706,
+        "spearman": -0.7286894923258561,
+        "visualSimilarity": 0.075,
+        "overlapCount": 120
+      },
+      "statusRecommendation": {
+        "recommendedAction": "keep_daily_eligible",
+        "recommendedEditorialStatus": "daily_eligible",
+        "reason": [
+          "Automated scorecard supports the current curated editorial status."
+        ]
+      }
+    },
+    {
+      "id": "out-of-school-secondary",
+      "providerCode": "SE.SEC.UNER.ZS",
+      "shortTitle": "Out-of-school secondary age",
+      "category": "education",
+      "difficulty": "standard",
+      "source": {
+        "selectedYear": "n/a",
+        "coverage": 0,
+        "approvalStatus": "draft"
+      },
+      "dataGate": {
+        "status": "held",
+        "reasons": [
+          "Unexpected World Bank response for https://api.worldbank.org/v2/country/all/indicator/SE.SEC.UNER.ZS?format=json&per_page=20000&page=1&date=2015%3A2025"
+        ]
+      },
+      "editorial": {
+        "currentStatus": "needs_review",
+        "dailyEligible": false,
+        "practiceEligible": false,
+        "challengeEligible": false,
+        "expertOnly": false,
+        "ambiguityRisk": "medium",
+        "qualityScore": 2,
+        "funScore": 2,
+        "fairnessScore": 2
+      },
+      "scores": {
+        "coverage": 0,
+        "freshness": 0,
+        "unitClarity": 2,
+        "mapInterest": 0,
+        "ambiguityCorrelation": 2,
+        "overall": 0.8
+      },
+      "topCorrelation": null,
+      "statusRecommendation": {
+        "recommendedAction": "hold_for_data",
+        "recommendedEditorialStatus": "needs_review",
+        "reason": [
+          "Unexpected World Bank response for https://api.worldbank.org/v2/country/all/indicator/SE.SEC.UNER.ZS?format=json&per_page=20000&page=1&date=2015%3A2025"
+        ]
+      }
+    },
+    {
+      "id": "own-account-workers",
+      "providerCode": "SL.EMP.OWAC.ZS",
+      "shortTitle": "Own-account workers",
+      "category": "labor",
+      "difficulty": "expert",
+      "source": {
+        "selectedYear": 0,
+        "coverage": 0,
+        "approvalStatus": "draft"
+      },
+      "dataGate": {
+        "status": "held",
+        "reasons": [
+          "own-account-workers: no year in 2015:2025 met 120 mapped countries; best coverage was 0",
+          "own-account-workers: selected coverage 0 is below 120"
+        ]
+      },
+      "editorial": {
+        "currentStatus": "needs_review",
+        "dailyEligible": false,
+        "practiceEligible": false,
+        "challengeEligible": false,
+        "expertOnly": false,
+        "ambiguityRisk": "medium",
+        "qualityScore": 2,
+        "funScore": 2,
+        "fairnessScore": 2
+      },
+      "scores": {
+        "coverage": 0,
+        "freshness": 0,
+        "unitClarity": 2,
+        "mapInterest": 0,
+        "ambiguityCorrelation": 2,
+        "overall": 0.8
+      },
+      "topCorrelation": null,
+      "statusRecommendation": {
+        "recommendedAction": "hold_for_data",
+        "recommendedEditorialStatus": "needs_review",
+        "reason": [
+          "own-account-workers: no year in 2015:2025 met 120 mapped countries; best coverage was 0",
+          "own-account-workers: selected coverage 0 is below 120"
+        ]
+      }
+    },
+    {
+      "id": "part-time-employment",
+      "providerCode": "SL.TLF.PART.ZS",
+      "shortTitle": "Part-time employment",
+      "category": "labor",
+      "difficulty": "expert",
+      "source": {
+        "selectedYear": 2025,
+        "coverage": 17,
+        "approvalStatus": "draft"
+      },
+      "dataGate": {
+        "status": "held",
+        "reasons": [
+          "part-time-employment: no year in 2015:2025 met 120 mapped countries; best coverage was 113",
+          "part-time-employment: selected coverage 17 is below 120"
+        ]
+      },
+      "editorial": {
+        "currentStatus": "needs_review",
+        "dailyEligible": false,
+        "practiceEligible": false,
+        "challengeEligible": false,
+        "expertOnly": false,
+        "ambiguityRisk": "medium",
+        "qualityScore": 2,
+        "funScore": 2,
+        "fairnessScore": 2
+      },
+      "scores": {
+        "coverage": 1,
+        "freshness": 5,
+        "unitClarity": 2,
+        "mapInterest": 1,
+        "ambiguityCorrelation": 2,
+        "overall": 2.0
+      },
+      "topCorrelation": null,
+      "statusRecommendation": {
+        "recommendedAction": "hold_for_data",
+        "recommendedEditorialStatus": "needs_review",
+        "reason": [
+          "part-time-employment: no year in 2015:2025 met 120 mapped countries; best coverage was 113",
+          "part-time-employment: selected coverage 17 is below 120"
+        ]
+      }
+    },
+    {
+      "id": "part-time-employment-female",
+      "providerCode": "SL.TLF.PART.FE.ZS",
+      "shortTitle": "Female part-time employment",
+      "category": "labor",
+      "difficulty": "expert",
+      "source": {
+        "selectedYear": 2025,
+        "coverage": 17,
+        "approvalStatus": "draft"
+      },
+      "dataGate": {
+        "status": "held",
+        "reasons": [
+          "part-time-employment-female: no year in 2015:2025 met 120 mapped countries; best coverage was 113",
+          "part-time-employment-female: selected coverage 17 is below 120"
+        ]
+      },
+      "editorial": {
+        "currentStatus": "needs_review",
+        "dailyEligible": false,
+        "practiceEligible": false,
+        "challengeEligible": false,
+        "expertOnly": false,
+        "ambiguityRisk": "medium",
+        "qualityScore": 2,
+        "funScore": 2,
+        "fairnessScore": 2
+      },
+      "scores": {
+        "coverage": 1,
+        "freshness": 5,
+        "unitClarity": 2,
+        "mapInterest": 1,
+        "ambiguityCorrelation": 2,
+        "overall": 2.0
+      },
+      "topCorrelation": null,
+      "statusRecommendation": {
+        "recommendedAction": "hold_for_data",
+        "recommendedEditorialStatus": "needs_review",
+        "reason": [
+          "part-time-employment-female: no year in 2015:2025 met 120 mapped countries; best coverage was 113",
+          "part-time-employment-female: selected coverage 17 is below 120"
         ]
       }
     },
@@ -6826,6 +9351,51 @@
         "recommendedEditorialStatus": "daily_eligible",
         "reason": [
           "Automated scorecard supports the current curated editorial status."
+        ]
+      }
+    },
+    {
+      "id": "permanent-pasture",
+      "providerCode": "EN.LAND.PPS.ZS",
+      "shortTitle": "Permanent pasture",
+      "category": "land",
+      "difficulty": "standard",
+      "source": {
+        "selectedYear": "n/a",
+        "coverage": 0,
+        "approvalStatus": "draft"
+      },
+      "dataGate": {
+        "status": "held",
+        "reasons": [
+          "Unexpected World Bank response for https://api.worldbank.org/v2/country/all/indicator/EN.LAND.PPS.ZS?format=json&per_page=20000&page=1&date=2015%3A2025"
+        ]
+      },
+      "editorial": {
+        "currentStatus": "needs_review",
+        "dailyEligible": false,
+        "practiceEligible": false,
+        "challengeEligible": false,
+        "expertOnly": false,
+        "ambiguityRisk": "medium",
+        "qualityScore": 2,
+        "funScore": 2,
+        "fairnessScore": 2
+      },
+      "scores": {
+        "coverage": 0,
+        "freshness": 0,
+        "unitClarity": 2,
+        "mapInterest": 0,
+        "ambiguityCorrelation": 2,
+        "overall": 0.8
+      },
+      "topCorrelation": null,
+      "statusRecommendation": {
+        "recommendedAction": "hold_for_data",
+        "recommendedEditorialStatus": "needs_review",
+        "reason": [
+          "Unexpected World Bank response for https://api.worldbank.org/v2/country/all/indicator/EN.LAND.PPS.ZS?format=json&per_page=20000&page=1&date=2015%3A2025"
         ]
       }
     },
@@ -7248,6 +9818,53 @@
       }
     },
     {
+      "id": "primary-attainment",
+      "providerCode": "SE.PRM.CUAT.ZS",
+      "shortTitle": "Primary education attainment",
+      "category": "education",
+      "difficulty": "expert",
+      "source": {
+        "selectedYear": 2025,
+        "coverage": 1,
+        "approvalStatus": "draft"
+      },
+      "dataGate": {
+        "status": "held",
+        "reasons": [
+          "primary-attainment: no year in 2015:2025 met 120 mapped countries; best coverage was 109",
+          "primary-attainment: selected coverage 1 is below 120"
+        ]
+      },
+      "editorial": {
+        "currentStatus": "needs_review",
+        "dailyEligible": false,
+        "practiceEligible": false,
+        "challengeEligible": false,
+        "expertOnly": false,
+        "ambiguityRisk": "medium",
+        "qualityScore": 2,
+        "funScore": 2,
+        "fairnessScore": 2
+      },
+      "scores": {
+        "coverage": 1,
+        "freshness": 5,
+        "unitClarity": 2,
+        "mapInterest": 1,
+        "ambiguityCorrelation": 2,
+        "overall": 2.0
+      },
+      "topCorrelation": null,
+      "statusRecommendation": {
+        "recommendedAction": "hold_for_data",
+        "recommendedEditorialStatus": "needs_review",
+        "reason": [
+          "primary-attainment: no year in 2015:2025 met 120 mapped countries; best coverage was 109",
+          "primary-attainment: selected coverage 1 is below 120"
+        ]
+      }
+    },
+    {
       "id": "primary-completion",
       "providerCode": "SE.PRM.CMPT.ZS",
       "shortTitle": "Primary completion",
@@ -7295,6 +9912,53 @@
       }
     },
     {
+      "id": "primary-education-spending-share",
+      "providerCode": "SE.XPD.PRIM.ZS",
+      "shortTitle": "Primary education spending share",
+      "category": "education",
+      "difficulty": "expert",
+      "source": {
+        "selectedYear": 2019,
+        "coverage": 1,
+        "approvalStatus": "draft"
+      },
+      "dataGate": {
+        "status": "held",
+        "reasons": [
+          "primary-education-spending-share: no year in 2015:2025 met 120 mapped countries; best coverage was 67",
+          "primary-education-spending-share: selected coverage 1 is below 120"
+        ]
+      },
+      "editorial": {
+        "currentStatus": "needs_review",
+        "dailyEligible": false,
+        "practiceEligible": false,
+        "challengeEligible": false,
+        "expertOnly": false,
+        "ambiguityRisk": "medium",
+        "qualityScore": 2,
+        "funScore": 2,
+        "fairnessScore": 2
+      },
+      "scores": {
+        "coverage": 1,
+        "freshness": 2,
+        "unitClarity": 2,
+        "mapInterest": 1,
+        "ambiguityCorrelation": 2,
+        "overall": 1.55
+      },
+      "topCorrelation": null,
+      "statusRecommendation": {
+        "recommendedAction": "hold_for_data",
+        "recommendedEditorialStatus": "needs_review",
+        "reason": [
+          "primary-education-spending-share: no year in 2015:2025 met 120 mapped countries; best coverage was 67",
+          "primary-education-spending-share: selected coverage 1 is below 120"
+        ]
+      }
+    },
+    {
       "id": "primary-enrollment",
       "providerCode": "SE.PRM.ENRR",
       "shortTitle": "Primary enrollment",
@@ -7331,19 +9995,72 @@
         "overall": 3.35
       },
       "topCorrelation": {
-        "indicatorId": "net-primary-enrollment",
-        "title": "Net primary enrollment",
+        "indicatorId": "out-of-school-primary",
+        "title": "Out-of-school primary age",
         "warningLevel": "review",
-        "pearson": 0.48679447937957004,
-        "spearman": 0.2749150414755925,
-        "visualSimilarity": 0.20588235294117646,
-        "overlapCount": 102
+        "pearson": -0.750302894916706,
+        "spearman": -0.7286894923258561,
+        "visualSimilarity": 0.075,
+        "overlapCount": 120
       },
       "statusRecommendation": {
         "recommendedAction": "keep_needs_review",
         "recommendedEditorialStatus": "needs_review",
         "reason": [
           "Curated editorial status still requires human review before play."
+        ]
+      }
+    },
+    {
+      "id": "primary-female-teachers",
+      "providerCode": "SE.PRM.TCHR.FE.ZS",
+      "shortTitle": "Female primary teachers",
+      "category": "education",
+      "difficulty": "standard",
+      "source": {
+        "selectedYear": 2023,
+        "coverage": 122,
+        "approvalStatus": "approved"
+      },
+      "dataGate": {
+        "status": "passed",
+        "reasons": [
+          "Source data passed the coverage gate."
+        ]
+      },
+      "editorial": {
+        "currentStatus": "daily_eligible",
+        "dailyEligible": true,
+        "practiceEligible": true,
+        "challengeEligible": true,
+        "expertOnly": false,
+        "ambiguityRisk": "medium",
+        "qualityScore": 4,
+        "funScore": 4,
+        "fairnessScore": 4
+      },
+      "scores": {
+        "coverage": 3,
+        "freshness": 4,
+        "unitClarity": 4,
+        "mapInterest": 4,
+        "ambiguityCorrelation": 3,
+        "overall": 3.6
+      },
+      "topCorrelation": {
+        "indicatorId": "female-vulnerable-employment",
+        "title": "Female vulnerable employment",
+        "warningLevel": "review",
+        "pearson": -0.779260551805231,
+        "spearman": -0.6667853582110811,
+        "visualSimilarity": 0.05042016806722689,
+        "overlapCount": 119
+      },
+      "statusRecommendation": {
+        "recommendedAction": "keep_daily_eligible",
+        "recommendedEditorialStatus": "daily_eligible",
+        "reason": [
+          "Automated scorecard supports the current curated editorial status."
         ]
       }
     },
@@ -7384,19 +10101,72 @@
         "overall": 2.8
       },
       "topCorrelation": {
-        "indicatorId": "infant-mortality",
-        "title": "Infant mortality",
-        "warningLevel": "ok",
-        "pearson": -0.4296727134481608,
-        "spearman": -0.3267496271100762,
-        "visualSimilarity": 0.07751937984496124,
-        "overlapCount": 129
+        "indicatorId": "primary-pupils-female-share",
+        "title": "Female primary pupils",
+        "warningLevel": "review",
+        "pearson": 0.7903293356607403,
+        "spearman": 0.5284443953245408,
+        "visualSimilarity": 0.38461538461538464,
+        "overlapCount": 117
       },
       "statusRecommendation": {
         "recommendedAction": "keep_needs_review",
         "recommendedEditorialStatus": "needs_review",
         "reason": [
           "Curated editorial status still requires human review before play."
+        ]
+      }
+    },
+    {
+      "id": "primary-gross-intake",
+      "providerCode": "SE.PRM.GINT.ZS",
+      "shortTitle": "Primary gross intake",
+      "category": "education",
+      "difficulty": "expert",
+      "source": {
+        "selectedYear": 2016,
+        "coverage": 120,
+        "approvalStatus": "approved"
+      },
+      "dataGate": {
+        "status": "passed",
+        "reasons": [
+          "Source data passed the coverage gate."
+        ]
+      },
+      "editorial": {
+        "currentStatus": "practice_eligible",
+        "dailyEligible": false,
+        "practiceEligible": true,
+        "challengeEligible": true,
+        "expertOnly": false,
+        "ambiguityRisk": "medium",
+        "qualityScore": 3,
+        "funScore": 3,
+        "fairnessScore": 3
+      },
+      "scores": {
+        "coverage": 3,
+        "freshness": 1,
+        "unitClarity": 4,
+        "mapInterest": 4,
+        "ambiguityCorrelation": 3,
+        "overall": 3.15
+      },
+      "topCorrelation": {
+        "indicatorId": "safely-managed-drinking-water",
+        "title": "Safely managed drinking water",
+        "warningLevel": "review",
+        "pearson": -0.6562757144644767,
+        "spearman": -0.6010443916040115,
+        "visualSimilarity": 0.07954545454545454,
+        "overlapCount": 88
+      },
+      "statusRecommendation": {
+        "recommendedAction": "keep_practice_eligible",
+        "recommendedEditorialStatus": "practice_eligible",
+        "reason": [
+          "Automated scorecard supports the current curated editorial status."
         ]
       }
     },
@@ -7450,6 +10220,153 @@
         "recommendedEditorialStatus": "needs_review",
         "reason": [
           "Curated editorial status still requires human review before play."
+        ]
+      }
+    },
+    {
+      "id": "primary-pupils-female-share",
+      "providerCode": "SE.PRM.ENRL.FE.ZS",
+      "shortTitle": "Female primary pupils",
+      "category": "education",
+      "difficulty": "standard",
+      "source": {
+        "selectedYear": 2017,
+        "coverage": 134,
+        "approvalStatus": "approved"
+      },
+      "dataGate": {
+        "status": "passed",
+        "reasons": [
+          "Source data passed the coverage gate."
+        ]
+      },
+      "editorial": {
+        "currentStatus": "practice_eligible",
+        "dailyEligible": false,
+        "practiceEligible": true,
+        "challengeEligible": true,
+        "expertOnly": false,
+        "ambiguityRisk": "medium",
+        "qualityScore": 3,
+        "funScore": 3,
+        "fairnessScore": 4
+      },
+      "scores": {
+        "coverage": 3,
+        "freshness": 1,
+        "unitClarity": 4,
+        "mapInterest": 3,
+        "ambiguityCorrelation": 3,
+        "overall": 2.9
+      },
+      "topCorrelation": {
+        "indicatorId": "primary-gender-parity",
+        "title": "Primary enrollment gender parity",
+        "warningLevel": "review",
+        "pearson": 0.7903293356607403,
+        "spearman": 0.5284443953245408,
+        "visualSimilarity": 0.38461538461538464,
+        "overlapCount": 117
+      },
+      "statusRecommendation": {
+        "recommendedAction": "review_for_demotion",
+        "recommendedEditorialStatus": "practice_eligible",
+        "reason": [
+          "Weak scorecard component; keep out of broad Daily use until manually reviewed."
+        ]
+      }
+    },
+    {
+      "id": "primary-repeaters",
+      "providerCode": "SE.PRM.REPT.ZS",
+      "shortTitle": "Primary repeaters",
+      "category": "education",
+      "difficulty": "expert",
+      "source": {
+        "selectedYear": 2019,
+        "coverage": 2,
+        "approvalStatus": "draft"
+      },
+      "dataGate": {
+        "status": "held",
+        "reasons": [
+          "primary-repeaters: no year in 2015:2025 met 120 mapped countries; best coverage was 118",
+          "primary-repeaters: selected coverage 2 is below 120"
+        ]
+      },
+      "editorial": {
+        "currentStatus": "needs_review",
+        "dailyEligible": false,
+        "practiceEligible": false,
+        "challengeEligible": false,
+        "expertOnly": false,
+        "ambiguityRisk": "medium",
+        "qualityScore": 2,
+        "funScore": 2,
+        "fairnessScore": 2
+      },
+      "scores": {
+        "coverage": 1,
+        "freshness": 2,
+        "unitClarity": 2,
+        "mapInterest": 1,
+        "ambiguityCorrelation": 2,
+        "overall": 1.55
+      },
+      "topCorrelation": null,
+      "statusRecommendation": {
+        "recommendedAction": "hold_for_data",
+        "recommendedEditorialStatus": "needs_review",
+        "reason": [
+          "primary-repeaters: no year in 2015:2025 met 120 mapped countries; best coverage was 118",
+          "primary-repeaters: selected coverage 2 is below 120"
+        ]
+      }
+    },
+    {
+      "id": "primary-secondary-gender-parity",
+      "providerCode": "SE.ENR.PRSC.FM.ZS",
+      "shortTitle": "Primary-secondary gender parity",
+      "category": "education",
+      "difficulty": "expert",
+      "source": {
+        "selectedYear": 2022,
+        "coverage": 2,
+        "approvalStatus": "draft"
+      },
+      "dataGate": {
+        "status": "held",
+        "reasons": [
+          "primary-secondary-gender-parity: no year in 2015:2025 met 120 mapped countries; best coverage was 113",
+          "primary-secondary-gender-parity: selected coverage 2 is below 120"
+        ]
+      },
+      "editorial": {
+        "currentStatus": "needs_review",
+        "dailyEligible": false,
+        "practiceEligible": false,
+        "challengeEligible": false,
+        "expertOnly": false,
+        "ambiguityRisk": "medium",
+        "qualityScore": 2,
+        "funScore": 2,
+        "fairnessScore": 2
+      },
+      "scores": {
+        "coverage": 1,
+        "freshness": 4,
+        "unitClarity": 2,
+        "mapInterest": 1,
+        "ambiguityCorrelation": 2,
+        "overall": 1.85
+      },
+      "topCorrelation": null,
+      "statusRecommendation": {
+        "recommendedAction": "hold_for_data",
+        "recommendedEditorialStatus": "needs_review",
+        "reason": [
+          "primary-secondary-gender-parity: no year in 2015:2025 met 120 mapped countries; best coverage was 113",
+          "primary-secondary-gender-parity: selected coverage 2 is below 120"
         ]
       }
     },
@@ -8058,6 +10975,112 @@
       }
     },
     {
+      "id": "rural-basic-drinking-water",
+      "providerCode": "SH.H2O.BASW.RU.ZS",
+      "shortTitle": "Rural basic drinking water",
+      "category": "settlement",
+      "difficulty": "standard",
+      "source": {
+        "selectedYear": 2024,
+        "coverage": 150,
+        "approvalStatus": "approved"
+      },
+      "dataGate": {
+        "status": "passed",
+        "reasons": [
+          "Source data passed the coverage gate."
+        ]
+      },
+      "editorial": {
+        "currentStatus": "practice_eligible",
+        "dailyEligible": false,
+        "practiceEligible": true,
+        "challengeEligible": true,
+        "expertOnly": false,
+        "ambiguityRisk": "medium",
+        "qualityScore": 4,
+        "funScore": 4,
+        "fairnessScore": 4
+      },
+      "scores": {
+        "coverage": 4,
+        "freshness": 5,
+        "unitClarity": 4,
+        "mapInterest": 4,
+        "ambiguityCorrelation": 2,
+        "overall": 3.75
+      },
+      "topCorrelation": {
+        "indicatorId": "safe-drinking-water",
+        "title": "Basic drinking water access",
+        "warningLevel": "high",
+        "pearson": 0.9590236633296663,
+        "spearman": 0.970234057652068,
+        "visualSimilarity": 0.5933333333333334,
+        "overlapCount": 150
+      },
+      "statusRecommendation": {
+        "recommendedAction": "review_ambiguity",
+        "recommendedEditorialStatus": "practice_eligible",
+        "reason": [
+          "High correlation or visual-similarity risk; review distractor placement and Daily same-day pairing."
+        ]
+      }
+    },
+    {
+      "id": "rural-basic-sanitation",
+      "providerCode": "SH.STA.BASS.RU.ZS",
+      "shortTitle": "Rural basic sanitation",
+      "category": "settlement",
+      "difficulty": "standard",
+      "source": {
+        "selectedYear": 2024,
+        "coverage": 144,
+        "approvalStatus": "approved"
+      },
+      "dataGate": {
+        "status": "passed",
+        "reasons": [
+          "Source data passed the coverage gate."
+        ]
+      },
+      "editorial": {
+        "currentStatus": "daily_eligible",
+        "dailyEligible": true,
+        "practiceEligible": true,
+        "challengeEligible": true,
+        "expertOnly": false,
+        "ambiguityRisk": "medium",
+        "qualityScore": 4,
+        "funScore": 4,
+        "fairnessScore": 4
+      },
+      "scores": {
+        "coverage": 3,
+        "freshness": 5,
+        "unitClarity": 4,
+        "mapInterest": 4,
+        "ambiguityCorrelation": 2,
+        "overall": 3.55
+      },
+      "topCorrelation": {
+        "indicatorId": "basic-sanitation",
+        "title": "Basic sanitation access",
+        "warningLevel": "high",
+        "pearson": 0.9783885714132168,
+        "spearman": 0.9694351226762961,
+        "visualSimilarity": 0.6458333333333334,
+        "overlapCount": 144
+      },
+      "statusRecommendation": {
+        "recommendedAction": "review_ambiguity",
+        "recommendedEditorialStatus": "daily_eligible",
+        "reason": [
+          "High correlation or visual-similarity risk; review distractor placement and Daily same-day pairing."
+        ]
+      }
+    },
+    {
       "id": "rural-clean-cooking-access",
       "providerCode": "EG.CFT.ACCS.RU.ZS",
       "shortTitle": "Rural clean cooking access",
@@ -8107,6 +11130,53 @@
         "recommendedEditorialStatus": "retired",
         "reason": [
           "Curated editorial status is Retired; keep out of playable generation unless a human reopens it."
+        ]
+      }
+    },
+    {
+      "id": "rural-density-arable",
+      "providerCode": "EN.RUR.DNST",
+      "shortTitle": "Rural density on arable land",
+      "category": "settlement",
+      "difficulty": "expert",
+      "source": {
+        "selectedYear": 0,
+        "coverage": 0,
+        "approvalStatus": "draft"
+      },
+      "dataGate": {
+        "status": "held",
+        "reasons": [
+          "rural-density-arable: no year in 2015:2025 met 120 mapped countries; best coverage was 0",
+          "rural-density-arable: selected coverage 0 is below 120"
+        ]
+      },
+      "editorial": {
+        "currentStatus": "needs_review",
+        "dailyEligible": false,
+        "practiceEligible": false,
+        "challengeEligible": false,
+        "expertOnly": false,
+        "ambiguityRisk": "medium",
+        "qualityScore": 2,
+        "funScore": 2,
+        "fairnessScore": 2
+      },
+      "scores": {
+        "coverage": 0,
+        "freshness": 0,
+        "unitClarity": 2,
+        "mapInterest": 0,
+        "ambiguityCorrelation": 2,
+        "overall": 0.8
+      },
+      "topCorrelation": null,
+      "statusRecommendation": {
+        "recommendedAction": "hold_for_data",
+        "recommendedEditorialStatus": "needs_review",
+        "reason": [
+          "rural-density-arable: no year in 2015:2025 met 120 mapped countries; best coverage was 0",
+          "rural-density-arable: selected coverage 0 is below 120"
         ]
       }
     },
@@ -8164,6 +11234,165 @@
       }
     },
     {
+      "id": "rural-low-elevation-land",
+      "providerCode": "AG.LND.EL5M.RU.ZS",
+      "shortTitle": "Rural low-elevation land",
+      "category": "settlement",
+      "difficulty": "expert",
+      "source": {
+        "selectedYear": 2015,
+        "coverage": 169,
+        "approvalStatus": "approved"
+      },
+      "dataGate": {
+        "status": "passed",
+        "reasons": [
+          "Source data passed the coverage gate."
+        ]
+      },
+      "editorial": {
+        "currentStatus": "expert_only",
+        "dailyEligible": false,
+        "practiceEligible": true,
+        "challengeEligible": true,
+        "expertOnly": true,
+        "ambiguityRisk": "high",
+        "qualityScore": 3,
+        "funScore": 4,
+        "fairnessScore": 3
+      },
+      "scores": {
+        "coverage": 4,
+        "freshness": 1,
+        "unitClarity": 4,
+        "mapInterest": 4,
+        "ambiguityCorrelation": 2,
+        "overall": 3.15
+      },
+      "topCorrelation": {
+        "indicatorId": "low-elevation-land-share",
+        "title": "Low-elevation land",
+        "warningLevel": "high",
+        "pearson": 0.9913447009080245,
+        "spearman": 0.9971579026934416,
+        "visualSimilarity": 0.9171597633136095,
+        "overlapCount": 169
+      },
+      "statusRecommendation": {
+        "recommendedAction": "review_ambiguity",
+        "recommendedEditorialStatus": "expert_only",
+        "reason": [
+          "High correlation or visual-similarity risk; review distractor placement and Daily same-day pairing."
+        ]
+      }
+    },
+    {
+      "id": "rural-low-elevation-population",
+      "providerCode": "EN.POP.EL5M.RU.ZS",
+      "shortTitle": "Rural low-elevation population",
+      "category": "settlement",
+      "difficulty": "expert",
+      "source": {
+        "selectedYear": 2015,
+        "coverage": 169,
+        "approvalStatus": "approved"
+      },
+      "dataGate": {
+        "status": "passed",
+        "reasons": [
+          "Source data passed the coverage gate."
+        ]
+      },
+      "editorial": {
+        "currentStatus": "expert_only",
+        "dailyEligible": false,
+        "practiceEligible": true,
+        "challengeEligible": true,
+        "expertOnly": true,
+        "ambiguityRisk": "medium",
+        "qualityScore": 3,
+        "funScore": 4,
+        "fairnessScore": 3
+      },
+      "scores": {
+        "coverage": 4,
+        "freshness": 1,
+        "unitClarity": 4,
+        "mapInterest": 4,
+        "ambiguityCorrelation": 3,
+        "overall": 3.35
+      },
+      "topCorrelation": {
+        "indicatorId": "low-elevation-coastal-population",
+        "title": "Low-elevation coastal population",
+        "warningLevel": "high",
+        "pearson": 0.8279576584666275,
+        "spearman": 0.9447126407820808,
+        "visualSimilarity": 0.650887573964497,
+        "overlapCount": 169
+      },
+      "statusRecommendation": {
+        "recommendedAction": "keep_expert_only",
+        "recommendedEditorialStatus": "expert_only",
+        "reason": [
+          "Automated scorecard supports the current curated editorial status."
+        ]
+      }
+    },
+    {
+      "id": "rural-open-defecation",
+      "providerCode": "SH.STA.ODFC.RU.ZS",
+      "shortTitle": "Rural open defecation",
+      "category": "settlement",
+      "difficulty": "expert",
+      "source": {
+        "selectedYear": 2024,
+        "coverage": 140,
+        "approvalStatus": "approved"
+      },
+      "dataGate": {
+        "status": "passed",
+        "reasons": [
+          "Source data passed the coverage gate."
+        ]
+      },
+      "editorial": {
+        "currentStatus": "expert_only",
+        "dailyEligible": false,
+        "practiceEligible": true,
+        "challengeEligible": true,
+        "expertOnly": true,
+        "ambiguityRisk": "high",
+        "qualityScore": 3,
+        "funScore": 4,
+        "fairnessScore": 3
+      },
+      "scores": {
+        "coverage": 3,
+        "freshness": 5,
+        "unitClarity": 4,
+        "mapInterest": 4,
+        "ambiguityCorrelation": 2,
+        "overall": 3.55
+      },
+      "topCorrelation": {
+        "indicatorId": "open-defecation",
+        "title": "Open defecation",
+        "warningLevel": "high",
+        "pearson": 0.9816083416811592,
+        "spearman": 0.962369296001537,
+        "visualSimilarity": 0.8345323741007195,
+        "overlapCount": 139
+      },
+      "statusRecommendation": {
+        "recommendedAction": "review_ambiguity",
+        "recommendedEditorialStatus": "expert_only",
+        "reason": [
+          "High correlation or visual-similarity risk; review distractor placement and Daily same-day pairing."
+        ]
+      }
+    },
+    {
       "id": "rural-population",
       "providerCode": "SP.RUR.TOTL.ZS",
       "shortTitle": "Rural population",
@@ -8217,6 +11446,59 @@
       }
     },
     {
+      "id": "rural-population-growth",
+      "providerCode": "SP.RUR.TOTL.ZG",
+      "shortTitle": "Rural population growth",
+      "category": "settlement",
+      "difficulty": "standard",
+      "source": {
+        "selectedYear": 2024,
+        "coverage": 168,
+        "approvalStatus": "approved"
+      },
+      "dataGate": {
+        "status": "passed",
+        "reasons": [
+          "Source data passed the coverage gate."
+        ]
+      },
+      "editorial": {
+        "currentStatus": "daily_eligible",
+        "dailyEligible": true,
+        "practiceEligible": true,
+        "challengeEligible": true,
+        "expertOnly": false,
+        "ambiguityRisk": "medium",
+        "qualityScore": 4,
+        "funScore": 4,
+        "fairnessScore": 4
+      },
+      "scores": {
+        "coverage": 4,
+        "freshness": 5,
+        "unitClarity": 4,
+        "mapInterest": 4,
+        "ambiguityCorrelation": 3,
+        "overall": 3.95
+      },
+      "topCorrelation": {
+        "indicatorId": "population-growth",
+        "title": "Population growth",
+        "warningLevel": "review",
+        "pearson": 0.792493290026982,
+        "spearman": 0.8436533526353887,
+        "visualSimilarity": 0.36904761904761907,
+        "overlapCount": 168
+      },
+      "statusRecommendation": {
+        "recommendedAction": "keep_daily_eligible",
+        "recommendedEditorialStatus": "daily_eligible",
+        "reason": [
+          "Automated scorecard supports the current curated editorial status."
+        ]
+      }
+    },
+    {
       "id": "safe-drinking-water",
       "providerCode": "SH.H2O.BASW.ZS",
       "shortTitle": "Basic drinking water access",
@@ -8249,23 +11531,23 @@
         "freshness": 5,
         "unitClarity": 4,
         "mapInterest": 4,
-        "ambiguityCorrelation": 3,
-        "overall": 3.95
+        "ambiguityCorrelation": 2,
+        "overall": 3.75
       },
       "topCorrelation": {
-        "indicatorId": "electricity-access",
-        "title": "Electricity access",
+        "indicatorId": "rural-basic-drinking-water",
+        "title": "Rural basic drinking water",
         "warningLevel": "high",
-        "pearson": 0.9040300730034955,
-        "spearman": 0.809506374513152,
-        "visualSimilarity": 0.29012345679012347,
-        "overlapCount": 162
+        "pearson": 0.9590236633296663,
+        "spearman": 0.970234057652068,
+        "visualSimilarity": 0.5933333333333334,
+        "overlapCount": 150
       },
       "statusRecommendation": {
-        "recommendedAction": "keep_daily_eligible",
+        "recommendedAction": "review_ambiguity",
         "recommendedEditorialStatus": "daily_eligible",
         "reason": [
-          "Automated scorecard supports the current curated editorial status."
+          "High correlation or visual-similarity risk; review distractor placement and Daily same-day pairing."
         ]
       }
     },
@@ -8359,19 +11641,111 @@
         "overall": 3.75
       },
       "topCorrelation": {
-        "indicatorId": "rural-clean-cooking-access",
-        "title": "Rural clean cooking access",
-        "warningLevel": "ok",
-        "pearson": 0.7234104190806683,
-        "spearman": 0.8009189687410174,
-        "visualSimilarity": 0.3247863247863248,
-        "overlapCount": 117
+        "indicatorId": "rural-basic-sanitation",
+        "title": "Rural basic sanitation",
+        "warningLevel": "review",
+        "pearson": 0.7569160172975177,
+        "spearman": 0.8044385410003294,
+        "visualSimilarity": 0.3392857142857143,
+        "overlapCount": 112
       },
       "statusRecommendation": {
         "recommendedAction": "keep_practice_eligible",
         "recommendedEditorialStatus": "practice_eligible",
         "reason": [
           "Automated scorecard supports the current curated editorial status."
+        ]
+      }
+    },
+    {
+      "id": "science-engineering-students",
+      "providerCode": "SE.TER.SCIE.ZS",
+      "shortTitle": "Science and engineering students",
+      "category": "education",
+      "difficulty": "expert",
+      "source": {
+        "selectedYear": "n/a",
+        "coverage": 0,
+        "approvalStatus": "draft"
+      },
+      "dataGate": {
+        "status": "held",
+        "reasons": [
+          "Unexpected World Bank response for https://api.worldbank.org/v2/country/all/indicator/SE.TER.SCIE.ZS?format=json&per_page=20000&page=1&date=2015%3A2025"
+        ]
+      },
+      "editorial": {
+        "currentStatus": "needs_review",
+        "dailyEligible": false,
+        "practiceEligible": false,
+        "challengeEligible": false,
+        "expertOnly": false,
+        "ambiguityRisk": "medium",
+        "qualityScore": 2,
+        "funScore": 2,
+        "fairnessScore": 2
+      },
+      "scores": {
+        "coverage": 0,
+        "freshness": 0,
+        "unitClarity": 2,
+        "mapInterest": 0,
+        "ambiguityCorrelation": 2,
+        "overall": 0.8
+      },
+      "topCorrelation": null,
+      "statusRecommendation": {
+        "recommendedAction": "hold_for_data",
+        "recommendedEditorialStatus": "needs_review",
+        "reason": [
+          "Unexpected World Bank response for https://api.worldbank.org/v2/country/all/indicator/SE.TER.SCIE.ZS?format=json&per_page=20000&page=1&date=2015%3A2025"
+        ]
+      }
+    },
+    {
+      "id": "secondary-education-spending-share",
+      "providerCode": "SE.XPD.SECO.ZS",
+      "shortTitle": "Secondary education spending share",
+      "category": "education",
+      "difficulty": "expert",
+      "source": {
+        "selectedYear": 2019,
+        "coverage": 1,
+        "approvalStatus": "draft"
+      },
+      "dataGate": {
+        "status": "held",
+        "reasons": [
+          "secondary-education-spending-share: no year in 2015:2025 met 120 mapped countries; best coverage was 69",
+          "secondary-education-spending-share: selected coverage 1 is below 120"
+        ]
+      },
+      "editorial": {
+        "currentStatus": "needs_review",
+        "dailyEligible": false,
+        "practiceEligible": false,
+        "challengeEligible": false,
+        "expertOnly": false,
+        "ambiguityRisk": "medium",
+        "qualityScore": 2,
+        "funScore": 2,
+        "fairnessScore": 2
+      },
+      "scores": {
+        "coverage": 1,
+        "freshness": 2,
+        "unitClarity": 2,
+        "mapInterest": 1,
+        "ambiguityCorrelation": 2,
+        "overall": 1.55
+      },
+      "topCorrelation": null,
+      "statusRecommendation": {
+        "recommendedAction": "hold_for_data",
+        "recommendedEditorialStatus": "needs_review",
+        "reason": [
+          "secondary-education-spending-share: no year in 2015:2025 met 120 mapped countries; best coverage was 69",
+          "secondary-education-spending-share: selected coverage 1 is below 120"
         ]
       }
     },
@@ -8429,6 +11803,100 @@
       }
     },
     {
+      "id": "secondary-female-teachers",
+      "providerCode": "SE.SEC.TCHR.FE.ZS",
+      "shortTitle": "Female secondary teachers",
+      "category": "education",
+      "difficulty": "expert",
+      "source": {
+        "selectedYear": 2025,
+        "coverage": 7,
+        "approvalStatus": "draft"
+      },
+      "dataGate": {
+        "status": "held",
+        "reasons": [
+          "secondary-female-teachers: no year in 2015:2025 met 120 mapped countries; best coverage was 105",
+          "secondary-female-teachers: selected coverage 7 is below 120"
+        ]
+      },
+      "editorial": {
+        "currentStatus": "needs_review",
+        "dailyEligible": false,
+        "practiceEligible": false,
+        "challengeEligible": false,
+        "expertOnly": false,
+        "ambiguityRisk": "medium",
+        "qualityScore": 2,
+        "funScore": 2,
+        "fairnessScore": 2
+      },
+      "scores": {
+        "coverage": 1,
+        "freshness": 5,
+        "unitClarity": 2,
+        "mapInterest": 1,
+        "ambiguityCorrelation": 2,
+        "overall": 2.0
+      },
+      "topCorrelation": null,
+      "statusRecommendation": {
+        "recommendedAction": "hold_for_data",
+        "recommendedEditorialStatus": "needs_review",
+        "reason": [
+          "secondary-female-teachers: no year in 2015:2025 met 120 mapped countries; best coverage was 105",
+          "secondary-female-teachers: selected coverage 7 is below 120"
+        ]
+      }
+    },
+    {
+      "id": "secondary-gender-parity",
+      "providerCode": "SE.ENR.SECO.FM.ZS",
+      "shortTitle": "Secondary enrollment gender parity",
+      "category": "education",
+      "difficulty": "expert",
+      "source": {
+        "selectedYear": 2022,
+        "coverage": 2,
+        "approvalStatus": "draft"
+      },
+      "dataGate": {
+        "status": "held",
+        "reasons": [
+          "secondary-gender-parity: no year in 2015:2025 met 120 mapped countries; best coverage was 116",
+          "secondary-gender-parity: selected coverage 2 is below 120"
+        ]
+      },
+      "editorial": {
+        "currentStatus": "needs_review",
+        "dailyEligible": false,
+        "practiceEligible": false,
+        "challengeEligible": false,
+        "expertOnly": false,
+        "ambiguityRisk": "medium",
+        "qualityScore": 2,
+        "funScore": 2,
+        "fairnessScore": 2
+      },
+      "scores": {
+        "coverage": 1,
+        "freshness": 4,
+        "unitClarity": 2,
+        "mapInterest": 1,
+        "ambiguityCorrelation": 2,
+        "overall": 1.85
+      },
+      "topCorrelation": null,
+      "statusRecommendation": {
+        "recommendedAction": "hold_for_data",
+        "recommendedEditorialStatus": "needs_review",
+        "reason": [
+          "secondary-gender-parity: no year in 2015:2025 met 120 mapped countries; best coverage was 116",
+          "secondary-gender-parity: selected coverage 2 is below 120"
+        ]
+      }
+    },
+    {
       "id": "secondary-private-enrollment",
       "providerCode": "SE.SEC.PRIV.ZS",
       "shortTitle": "Private secondary enrollment",
@@ -8472,6 +11940,198 @@
         "reason": [
           "secondary-private-enrollment: no year in 2015:2025 met 120 mapped countries; best coverage was 119",
           "secondary-private-enrollment: selected coverage 1 is below 120"
+        ]
+      }
+    },
+    {
+      "id": "secondary-pupil-teacher-ratio",
+      "providerCode": "SE.SEC.ENRL.TC.ZS",
+      "shortTitle": "Secondary pupil-teacher ratio",
+      "category": "education",
+      "difficulty": "expert",
+      "source": {
+        "selectedYear": 2019,
+        "coverage": 4,
+        "approvalStatus": "draft"
+      },
+      "dataGate": {
+        "status": "held",
+        "reasons": [
+          "secondary-pupil-teacher-ratio: no year in 2015:2025 met 120 mapped countries; best coverage was 97",
+          "secondary-pupil-teacher-ratio: selected coverage 4 is below 120"
+        ]
+      },
+      "editorial": {
+        "currentStatus": "needs_review",
+        "dailyEligible": false,
+        "practiceEligible": false,
+        "challengeEligible": false,
+        "expertOnly": false,
+        "ambiguityRisk": "medium",
+        "qualityScore": 2,
+        "funScore": 2,
+        "fairnessScore": 2
+      },
+      "scores": {
+        "coverage": 1,
+        "freshness": 2,
+        "unitClarity": 2,
+        "mapInterest": 1,
+        "ambiguityCorrelation": 2,
+        "overall": 1.55
+      },
+      "topCorrelation": null,
+      "statusRecommendation": {
+        "recommendedAction": "hold_for_data",
+        "recommendedEditorialStatus": "needs_review",
+        "reason": [
+          "secondary-pupil-teacher-ratio: no year in 2015:2025 met 120 mapped countries; best coverage was 97",
+          "secondary-pupil-teacher-ratio: selected coverage 4 is below 120"
+        ]
+      }
+    },
+    {
+      "id": "secondary-pupils-female-share",
+      "providerCode": "SE.SEC.ENRL.FE.ZS",
+      "shortTitle": "Female secondary pupils",
+      "category": "education",
+      "difficulty": "expert",
+      "source": {
+        "selectedYear": 2016,
+        "coverage": 120,
+        "approvalStatus": "approved"
+      },
+      "dataGate": {
+        "status": "passed",
+        "reasons": [
+          "Source data passed the coverage gate."
+        ]
+      },
+      "editorial": {
+        "currentStatus": "practice_eligible",
+        "dailyEligible": false,
+        "practiceEligible": true,
+        "challengeEligible": true,
+        "expertOnly": false,
+        "ambiguityRisk": "medium",
+        "qualityScore": 3,
+        "funScore": 3,
+        "fairnessScore": 4
+      },
+      "scores": {
+        "coverage": 3,
+        "freshness": 1,
+        "unitClarity": 4,
+        "mapInterest": 3,
+        "ambiguityCorrelation": 3,
+        "overall": 2.9
+      },
+      "topCorrelation": {
+        "indicatorId": "primary-gender-parity",
+        "title": "Primary enrollment gender parity",
+        "warningLevel": "review",
+        "pearson": 0.6480611523160221,
+        "spearman": 0.05558372512393792,
+        "visualSimilarity": 0.26,
+        "overlapCount": 100
+      },
+      "statusRecommendation": {
+        "recommendedAction": "review_for_demotion",
+        "recommendedEditorialStatus": "practice_eligible",
+        "reason": [
+          "Weak scorecard component; keep out of broad Daily use until manually reviewed."
+        ]
+      }
+    },
+    {
+      "id": "secondary-repeaters",
+      "providerCode": "SE.SEC.REPT.ZS",
+      "shortTitle": "Secondary repeaters",
+      "category": "education",
+      "difficulty": "expert",
+      "source": {
+        "selectedYear": "n/a",
+        "coverage": 0,
+        "approvalStatus": "draft"
+      },
+      "dataGate": {
+        "status": "held",
+        "reasons": [
+          "Unexpected World Bank response for https://api.worldbank.org/v2/country/all/indicator/SE.SEC.REPT.ZS?format=json&per_page=20000&page=1&date=2015%3A2025"
+        ]
+      },
+      "editorial": {
+        "currentStatus": "needs_review",
+        "dailyEligible": false,
+        "practiceEligible": false,
+        "challengeEligible": false,
+        "expertOnly": false,
+        "ambiguityRisk": "medium",
+        "qualityScore": 2,
+        "funScore": 2,
+        "fairnessScore": 2
+      },
+      "scores": {
+        "coverage": 0,
+        "freshness": 0,
+        "unitClarity": 2,
+        "mapInterest": 0,
+        "ambiguityCorrelation": 2,
+        "overall": 0.8
+      },
+      "topCorrelation": null,
+      "statusRecommendation": {
+        "recommendedAction": "hold_for_data",
+        "recommendedEditorialStatus": "needs_review",
+        "reason": [
+          "Unexpected World Bank response for https://api.worldbank.org/v2/country/all/indicator/SE.SEC.REPT.ZS?format=json&per_page=20000&page=1&date=2015%3A2025"
+        ]
+      }
+    },
+    {
+      "id": "secondary-vocational-enrollment",
+      "providerCode": "SE.SEC.ENRL.VO.ZS",
+      "shortTitle": "Vocational secondary enrollment",
+      "category": "education",
+      "difficulty": "expert",
+      "source": {
+        "selectedYear": 2020,
+        "coverage": 1,
+        "approvalStatus": "draft"
+      },
+      "dataGate": {
+        "status": "held",
+        "reasons": [
+          "secondary-vocational-enrollment: no year in 2015:2025 met 120 mapped countries; best coverage was 111",
+          "secondary-vocational-enrollment: selected coverage 1 is below 120"
+        ]
+      },
+      "editorial": {
+        "currentStatus": "needs_review",
+        "dailyEligible": false,
+        "practiceEligible": false,
+        "challengeEligible": false,
+        "expertOnly": false,
+        "ambiguityRisk": "medium",
+        "qualityScore": 2,
+        "funScore": 2,
+        "fairnessScore": 2
+      },
+      "scores": {
+        "coverage": 1,
+        "freshness": 3,
+        "unitClarity": 2,
+        "mapInterest": 1,
+        "ambiguityCorrelation": 2,
+        "overall": 1.7
+      },
+      "topCorrelation": null,
+      "statusRecommendation": {
+        "recommendedAction": "hold_for_data",
+        "recommendedEditorialStatus": "needs_review",
+        "reason": [
+          "secondary-vocational-enrollment: no year in 2015:2025 met 120 mapped countries; best coverage was 111",
+          "secondary-vocational-enrollment: selected coverage 1 is below 120"
         ]
       }
     },
@@ -8631,6 +12291,59 @@
         "recommendedEditorialStatus": "practice_eligible",
         "reason": [
           "High correlation or visual-similarity risk; review distractor placement and Daily same-day pairing."
+        ]
+      }
+    },
+    {
+      "id": "severe-food-insecurity",
+      "providerCode": "SN.ITK.SVFI.ZS",
+      "shortTitle": "Severe food insecurity",
+      "category": "agriculture",
+      "difficulty": "expert",
+      "source": {
+        "selectedYear": 2023,
+        "coverage": 123,
+        "approvalStatus": "approved"
+      },
+      "dataGate": {
+        "status": "passed",
+        "reasons": [
+          "Source data passed the coverage gate."
+        ]
+      },
+      "editorial": {
+        "currentStatus": "expert_only",
+        "dailyEligible": false,
+        "practiceEligible": true,
+        "challengeEligible": true,
+        "expertOnly": true,
+        "ambiguityRisk": "medium",
+        "qualityScore": 4,
+        "funScore": 4,
+        "fairnessScore": 3
+      },
+      "scores": {
+        "coverage": 3,
+        "freshness": 4,
+        "unitClarity": 4,
+        "mapInterest": 4,
+        "ambiguityCorrelation": 3,
+        "overall": 3.6
+      },
+      "topCorrelation": {
+        "indicatorId": "food-insecurity-moderate-severe",
+        "title": "Moderate or severe food insecurity",
+        "warningLevel": "high",
+        "pearson": 0.8934481609343904,
+        "spearman": 0.9470854626244409,
+        "visualSimilarity": 0.5203252032520326,
+        "overlapCount": 123
+      },
+      "statusRecommendation": {
+        "recommendedAction": "keep_expert_only",
+        "recommendedEditorialStatus": "expert_only",
+        "reason": [
+          "Automated scorecard supports the current curated editorial status."
         ]
       }
     },
@@ -8983,13 +12696,13 @@
         "overall": 2.7
       },
       "topCorrelation": {
-        "indicatorId": "safely-managed-sanitation",
-        "title": "Safely managed sanitation",
+        "indicatorId": "air-passengers",
+        "title": "Air passengers carried",
         "warningLevel": "ok",
-        "pearson": 0.3358550414212972,
-        "spearman": 0.6671763506625892,
-        "visualSimilarity": 0.28440366972477066,
-        "overlapCount": 109
+        "pearson": 0.6335969706665949,
+        "spearman": 0.7026039611773062,
+        "visualSimilarity": 0.2782608695652174,
+        "overlapCount": 115
       },
       "statusRecommendation": {
         "recommendedAction": "review_for_demotion",
@@ -9089,19 +12802,64 @@
         "overall": 3.3
       },
       "topCorrelation": {
-        "indicatorId": "household-consumption",
-        "title": "Household consumption",
-        "warningLevel": "review",
-        "pearson": 0.3505694411843492,
-        "spearman": 0.4004433585689817,
-        "visualSimilarity": 0.23728813559322035,
-        "overlapCount": 118
+        "indicatorId": "communications-service-exports",
+        "title": "Communications service exports",
+        "warningLevel": "ok",
+        "pearson": -0.4430261619644956,
+        "spearman": -0.43602492887142663,
+        "visualSimilarity": 0.06611570247933884,
+        "overlapCount": 121
       },
       "statusRecommendation": {
         "recommendedAction": "keep_expert_only",
         "recommendedEditorialStatus": "expert_only",
         "reason": [
           "Automated scorecard supports the current curated editorial status."
+        ]
+      }
+    },
+    {
+      "id": "tractors-arable-land",
+      "providerCode": "AG.LND.TRAC.ZS",
+      "shortTitle": "Tractors per arable land",
+      "category": "agriculture",
+      "difficulty": "expert",
+      "source": {
+        "selectedYear": "n/a",
+        "coverage": 0,
+        "approvalStatus": "draft"
+      },
+      "dataGate": {
+        "status": "held",
+        "reasons": [
+          "Unexpected World Bank response for https://api.worldbank.org/v2/country/all/indicator/AG.LND.TRAC.ZS?format=json&per_page=20000&page=1&date=2015%3A2025"
+        ]
+      },
+      "editorial": {
+        "currentStatus": "needs_review",
+        "dailyEligible": false,
+        "practiceEligible": false,
+        "challengeEligible": false,
+        "expertOnly": false,
+        "ambiguityRisk": "medium",
+        "qualityScore": 2,
+        "funScore": 2,
+        "fairnessScore": 2
+      },
+      "scores": {
+        "coverage": 0,
+        "freshness": 0,
+        "unitClarity": 2,
+        "mapInterest": 0,
+        "ambiguityCorrelation": 2,
+        "overall": 0.8
+      },
+      "topCorrelation": null,
+      "statusRecommendation": {
+        "recommendedAction": "hold_for_data",
+        "recommendedEditorialStatus": "needs_review",
+        "reason": [
+          "Unexpected World Bank response for https://api.worldbank.org/v2/country/all/indicator/AG.LND.TRAC.ZS?format=json&per_page=20000&page=1&date=2015%3A2025"
         ]
       }
     },
@@ -9155,6 +12913,112 @@
         "recommendedEditorialStatus": "daily_eligible",
         "reason": [
           "High correlation or visual-similarity risk; review distractor placement and Daily same-day pairing."
+        ]
+      }
+    },
+    {
+      "id": "transport-service-exports",
+      "providerCode": "BX.GSR.TRAN.ZS",
+      "shortTitle": "Transport service exports",
+      "category": "connectivity",
+      "difficulty": "expert",
+      "source": {
+        "selectedYear": 2024,
+        "coverage": 137,
+        "approvalStatus": "approved"
+      },
+      "dataGate": {
+        "status": "passed",
+        "reasons": [
+          "Source data passed the coverage gate."
+        ]
+      },
+      "editorial": {
+        "currentStatus": "practice_eligible",
+        "dailyEligible": false,
+        "practiceEligible": true,
+        "challengeEligible": true,
+        "expertOnly": false,
+        "ambiguityRisk": "medium",
+        "qualityScore": 4,
+        "funScore": 4,
+        "fairnessScore": 3
+      },
+      "scores": {
+        "coverage": 3,
+        "freshness": 5,
+        "unitClarity": 4,
+        "mapInterest": 4,
+        "ambiguityCorrelation": 3,
+        "overall": 3.75
+      },
+      "topCorrelation": {
+        "indicatorId": "communications-service-exports",
+        "title": "Communications service exports",
+        "warningLevel": "review",
+        "pearson": -0.37666905243614607,
+        "spearman": -0.3184003210932104,
+        "visualSimilarity": 0.0948905109489051,
+        "overlapCount": 137
+      },
+      "statusRecommendation": {
+        "recommendedAction": "keep_practice_eligible",
+        "recommendedEditorialStatus": "practice_eligible",
+        "reason": [
+          "Automated scorecard supports the current curated editorial status."
+        ]
+      }
+    },
+    {
+      "id": "transport-service-imports",
+      "providerCode": "BM.GSR.TRAN.ZS",
+      "shortTitle": "Transport service imports",
+      "category": "connectivity",
+      "difficulty": "expert",
+      "source": {
+        "selectedYear": 2024,
+        "coverage": 137,
+        "approvalStatus": "approved"
+      },
+      "dataGate": {
+        "status": "passed",
+        "reasons": [
+          "Source data passed the coverage gate."
+        ]
+      },
+      "editorial": {
+        "currentStatus": "practice_eligible",
+        "dailyEligible": false,
+        "practiceEligible": true,
+        "challengeEligible": true,
+        "expertOnly": false,
+        "ambiguityRisk": "medium",
+        "qualityScore": 4,
+        "funScore": 3,
+        "fairnessScore": 3
+      },
+      "scores": {
+        "coverage": 3,
+        "freshness": 5,
+        "unitClarity": 4,
+        "mapInterest": 4,
+        "ambiguityCorrelation": 3,
+        "overall": 3.75
+      },
+      "topCorrelation": {
+        "indicatorId": "nurses-midwives",
+        "title": "Nurses and midwives",
+        "warningLevel": "ok",
+        "pearson": -0.568734801880382,
+        "spearman": -0.6461009875919919,
+        "visualSimilarity": 0.06153846153846154,
+        "overlapCount": 130
+      },
+      "statusRecommendation": {
+        "recommendedAction": "keep_practice_eligible",
+        "recommendedEditorialStatus": "practice_eligible",
+        "reason": [
+          "Automated scorecard supports the current curated editorial status."
         ]
       }
     },
@@ -9371,6 +13235,100 @@
       }
     },
     {
+      "id": "unemployment-advanced-education",
+      "providerCode": "SL.UEM.ADVN.ZS",
+      "shortTitle": "Unemployment with advanced education",
+      "category": "labor",
+      "difficulty": "expert",
+      "source": {
+        "selectedYear": 2025,
+        "coverage": 17,
+        "approvalStatus": "draft"
+      },
+      "dataGate": {
+        "status": "held",
+        "reasons": [
+          "unemployment-advanced-education: no year in 2015:2025 met 120 mapped countries; best coverage was 108",
+          "unemployment-advanced-education: selected coverage 17 is below 120"
+        ]
+      },
+      "editorial": {
+        "currentStatus": "needs_review",
+        "dailyEligible": false,
+        "practiceEligible": false,
+        "challengeEligible": false,
+        "expertOnly": false,
+        "ambiguityRisk": "medium",
+        "qualityScore": 2,
+        "funScore": 2,
+        "fairnessScore": 2
+      },
+      "scores": {
+        "coverage": 1,
+        "freshness": 5,
+        "unitClarity": 2,
+        "mapInterest": 1,
+        "ambiguityCorrelation": 2,
+        "overall": 2.0
+      },
+      "topCorrelation": null,
+      "statusRecommendation": {
+        "recommendedAction": "hold_for_data",
+        "recommendedEditorialStatus": "needs_review",
+        "reason": [
+          "unemployment-advanced-education: no year in 2015:2025 met 120 mapped countries; best coverage was 108",
+          "unemployment-advanced-education: selected coverage 17 is below 120"
+        ]
+      }
+    },
+    {
+      "id": "upper-secondary-attainment",
+      "providerCode": "SE.SEC.CUAT.UP.ZS",
+      "shortTitle": "Upper-secondary attainment",
+      "category": "education",
+      "difficulty": "expert",
+      "source": {
+        "selectedYear": 2025,
+        "coverage": 1,
+        "approvalStatus": "draft"
+      },
+      "dataGate": {
+        "status": "held",
+        "reasons": [
+          "upper-secondary-attainment: no year in 2015:2025 met 120 mapped countries; best coverage was 107",
+          "upper-secondary-attainment: selected coverage 1 is below 120"
+        ]
+      },
+      "editorial": {
+        "currentStatus": "needs_review",
+        "dailyEligible": false,
+        "practiceEligible": false,
+        "challengeEligible": false,
+        "expertOnly": false,
+        "ambiguityRisk": "medium",
+        "qualityScore": 2,
+        "funScore": 2,
+        "fairnessScore": 2
+      },
+      "scores": {
+        "coverage": 1,
+        "freshness": 5,
+        "unitClarity": 2,
+        "mapInterest": 1,
+        "ambiguityCorrelation": 2,
+        "overall": 2.0
+      },
+      "topCorrelation": null,
+      "statusRecommendation": {
+        "recommendedAction": "hold_for_data",
+        "recommendedEditorialStatus": "needs_review",
+        "reason": [
+          "upper-secondary-attainment: no year in 2015:2025 met 120 mapped countries; best coverage was 107",
+          "upper-secondary-attainment: selected coverage 1 is below 120"
+        ]
+      }
+    },
+    {
       "id": "urban-agglomerations-share",
       "providerCode": "EN.URB.MCTY.TL.ZS",
       "shortTitle": "Large urban agglomerations",
@@ -9414,6 +13372,377 @@
         "reason": [
           "urban-agglomerations-share: no year in 2015:2025 met 120 mapped countries; best coverage was 119",
           "urban-agglomerations-share: selected coverage 119 is below 120"
+        ]
+      }
+    },
+    {
+      "id": "urban-basic-drinking-water",
+      "providerCode": "SH.H2O.BASW.UR.ZS",
+      "shortTitle": "Urban basic drinking water",
+      "category": "settlement",
+      "difficulty": "standard",
+      "source": {
+        "selectedYear": 2024,
+        "coverage": 151,
+        "approvalStatus": "approved"
+      },
+      "dataGate": {
+        "status": "passed",
+        "reasons": [
+          "Source data passed the coverage gate."
+        ]
+      },
+      "editorial": {
+        "currentStatus": "daily_eligible",
+        "dailyEligible": true,
+        "practiceEligible": true,
+        "challengeEligible": true,
+        "expertOnly": false,
+        "ambiguityRisk": "medium",
+        "qualityScore": 4,
+        "funScore": 4,
+        "fairnessScore": 4
+      },
+      "scores": {
+        "coverage": 4,
+        "freshness": 5,
+        "unitClarity": 4,
+        "mapInterest": 4,
+        "ambiguityCorrelation": 3,
+        "overall": 3.95
+      },
+      "topCorrelation": {
+        "indicatorId": "safe-drinking-water",
+        "title": "Basic drinking water access",
+        "warningLevel": "high",
+        "pearson": 0.9022131538871092,
+        "spearman": 0.9392371924123186,
+        "visualSimilarity": 0.47333333333333333,
+        "overlapCount": 150
+      },
+      "statusRecommendation": {
+        "recommendedAction": "keep_daily_eligible",
+        "recommendedEditorialStatus": "daily_eligible",
+        "reason": [
+          "Automated scorecard supports the current curated editorial status."
+        ]
+      }
+    },
+    {
+      "id": "urban-basic-sanitation",
+      "providerCode": "SH.STA.BASS.UR.ZS",
+      "shortTitle": "Urban basic sanitation",
+      "category": "settlement",
+      "difficulty": "standard",
+      "source": {
+        "selectedYear": 2024,
+        "coverage": 147,
+        "approvalStatus": "approved"
+      },
+      "dataGate": {
+        "status": "passed",
+        "reasons": [
+          "Source data passed the coverage gate."
+        ]
+      },
+      "editorial": {
+        "currentStatus": "practice_eligible",
+        "dailyEligible": false,
+        "practiceEligible": true,
+        "challengeEligible": true,
+        "expertOnly": false,
+        "ambiguityRisk": "medium",
+        "qualityScore": 3,
+        "funScore": 3,
+        "fairnessScore": 4
+      },
+      "scores": {
+        "coverage": 3,
+        "freshness": 5,
+        "unitClarity": 4,
+        "mapInterest": 3,
+        "ambiguityCorrelation": 2,
+        "overall": 3.3
+      },
+      "topCorrelation": {
+        "indicatorId": "basic-sanitation",
+        "title": "Basic sanitation access",
+        "warningLevel": "high",
+        "pearson": 0.9634927183671848,
+        "spearman": 0.9590331236394668,
+        "visualSimilarity": 0.6344827586206897,
+        "overlapCount": 145
+      },
+      "statusRecommendation": {
+        "recommendedAction": "review_ambiguity",
+        "recommendedEditorialStatus": "practice_eligible",
+        "reason": [
+          "High correlation or visual-similarity risk; review distractor placement and Daily same-day pairing."
+        ]
+      }
+    },
+    {
+      "id": "urban-clean-cooking-access",
+      "providerCode": "EG.CFT.ACCS.UR.ZS",
+      "shortTitle": "Urban clean cooking access",
+      "category": "settlement",
+      "difficulty": "standard",
+      "source": {
+        "selectedYear": 2023,
+        "coverage": 162,
+        "approvalStatus": "approved"
+      },
+      "dataGate": {
+        "status": "passed",
+        "reasons": [
+          "Source data passed the coverage gate."
+        ]
+      },
+      "editorial": {
+        "currentStatus": "practice_eligible",
+        "dailyEligible": false,
+        "practiceEligible": true,
+        "challengeEligible": true,
+        "expertOnly": false,
+        "ambiguityRisk": "medium",
+        "qualityScore": 4,
+        "funScore": 4,
+        "fairnessScore": 4
+      },
+      "scores": {
+        "coverage": 4,
+        "freshness": 4,
+        "unitClarity": 4,
+        "mapInterest": 4,
+        "ambiguityCorrelation": 2,
+        "overall": 3.6
+      },
+      "topCorrelation": {
+        "indicatorId": "clean-fuels-access",
+        "title": "Clean cooking fuels access",
+        "warningLevel": "high",
+        "pearson": 0.9529701929786738,
+        "spearman": 0.9927772002739931,
+        "visualSimilarity": 0.8271604938271605,
+        "overlapCount": 162
+      },
+      "statusRecommendation": {
+        "recommendedAction": "review_ambiguity",
+        "recommendedEditorialStatus": "practice_eligible",
+        "reason": [
+          "High correlation or visual-similarity risk; review distractor placement and Daily same-day pairing."
+        ]
+      }
+    },
+    {
+      "id": "urban-electricity-access",
+      "providerCode": "EG.ELC.ACCS.UR.ZS",
+      "shortTitle": "Urban electricity access",
+      "category": "settlement",
+      "difficulty": "standard",
+      "source": {
+        "selectedYear": 2023,
+        "coverage": 168,
+        "approvalStatus": "approved"
+      },
+      "dataGate": {
+        "status": "passed",
+        "reasons": [
+          "Source data passed the coverage gate."
+        ]
+      },
+      "editorial": {
+        "currentStatus": "practice_eligible",
+        "dailyEligible": false,
+        "practiceEligible": true,
+        "challengeEligible": true,
+        "expertOnly": false,
+        "ambiguityRisk": "medium",
+        "qualityScore": 4,
+        "funScore": 3,
+        "fairnessScore": 4
+      },
+      "scores": {
+        "coverage": 4,
+        "freshness": 4,
+        "unitClarity": 4,
+        "mapInterest": 4,
+        "ambiguityCorrelation": 3,
+        "overall": 3.8
+      },
+      "topCorrelation": {
+        "indicatorId": "electricity-access",
+        "title": "Electricity access",
+        "warningLevel": "high",
+        "pearson": 0.9044062558091127,
+        "spearman": 0.9140335416901724,
+        "visualSimilarity": 0.3392857142857143,
+        "overlapCount": 168
+      },
+      "statusRecommendation": {
+        "recommendedAction": "keep_practice_eligible",
+        "recommendedEditorialStatus": "practice_eligible",
+        "reason": [
+          "Automated scorecard supports the current curated editorial status."
+        ]
+      }
+    },
+    {
+      "id": "urban-low-elevation-land",
+      "providerCode": "AG.LND.EL5M.UR.ZS",
+      "shortTitle": "Urban low-elevation land",
+      "category": "settlement",
+      "difficulty": "expert",
+      "source": {
+        "selectedYear": 2015,
+        "coverage": 169,
+        "approvalStatus": "approved"
+      },
+      "dataGate": {
+        "status": "passed",
+        "reasons": [
+          "Source data passed the coverage gate."
+        ]
+      },
+      "editorial": {
+        "currentStatus": "expert_only",
+        "dailyEligible": false,
+        "practiceEligible": true,
+        "challengeEligible": true,
+        "expertOnly": true,
+        "ambiguityRisk": "medium",
+        "qualityScore": 3,
+        "funScore": 4,
+        "fairnessScore": 3
+      },
+      "scores": {
+        "coverage": 4,
+        "freshness": 1,
+        "unitClarity": 4,
+        "mapInterest": 4,
+        "ambiguityCorrelation": 3,
+        "overall": 3.35
+      },
+      "topCorrelation": {
+        "indicatorId": "low-elevation-land-share",
+        "title": "Low-elevation land",
+        "warningLevel": "review",
+        "pearson": 0.5815795245577001,
+        "spearman": 0.827225742890076,
+        "visualSimilarity": 0.46153846153846156,
+        "overlapCount": 169
+      },
+      "statusRecommendation": {
+        "recommendedAction": "keep_expert_only",
+        "recommendedEditorialStatus": "expert_only",
+        "reason": [
+          "Automated scorecard supports the current curated editorial status."
+        ]
+      }
+    },
+    {
+      "id": "urban-low-elevation-population",
+      "providerCode": "EN.POP.EL5M.UR.ZS",
+      "shortTitle": "Urban low-elevation population",
+      "category": "settlement",
+      "difficulty": "expert",
+      "source": {
+        "selectedYear": 2015,
+        "coverage": 169,
+        "approvalStatus": "approved"
+      },
+      "dataGate": {
+        "status": "passed",
+        "reasons": [
+          "Source data passed the coverage gate."
+        ]
+      },
+      "editorial": {
+        "currentStatus": "expert_only",
+        "dailyEligible": false,
+        "practiceEligible": true,
+        "challengeEligible": true,
+        "expertOnly": true,
+        "ambiguityRisk": "high",
+        "qualityScore": 3,
+        "funScore": 4,
+        "fairnessScore": 3
+      },
+      "scores": {
+        "coverage": 4,
+        "freshness": 1,
+        "unitClarity": 4,
+        "mapInterest": 4,
+        "ambiguityCorrelation": 2,
+        "overall": 3.15
+      },
+      "topCorrelation": {
+        "indicatorId": "low-elevation-coastal-population",
+        "title": "Low-elevation coastal population",
+        "warningLevel": "high",
+        "pearson": 0.9433557738970078,
+        "spearman": 0.977024721764721,
+        "visualSimilarity": 0.7692307692307693,
+        "overlapCount": 169
+      },
+      "statusRecommendation": {
+        "recommendedAction": "review_ambiguity",
+        "recommendedEditorialStatus": "expert_only",
+        "reason": [
+          "High correlation or visual-similarity risk; review distractor placement and Daily same-day pairing."
+        ]
+      }
+    },
+    {
+      "id": "urban-open-defecation",
+      "providerCode": "SH.STA.ODFC.UR.ZS",
+      "shortTitle": "Urban open defecation",
+      "category": "settlement",
+      "difficulty": "expert",
+      "source": {
+        "selectedYear": 2024,
+        "coverage": 145,
+        "approvalStatus": "approved"
+      },
+      "dataGate": {
+        "status": "passed",
+        "reasons": [
+          "Source data passed the coverage gate."
+        ]
+      },
+      "editorial": {
+        "currentStatus": "expert_only",
+        "dailyEligible": false,
+        "practiceEligible": true,
+        "challengeEligible": true,
+        "expertOnly": true,
+        "ambiguityRisk": "medium",
+        "qualityScore": 3,
+        "funScore": 4,
+        "fairnessScore": 3
+      },
+      "scores": {
+        "coverage": 3,
+        "freshness": 5,
+        "unitClarity": 4,
+        "mapInterest": 4,
+        "ambiguityCorrelation": 3,
+        "overall": 3.75
+      },
+      "topCorrelation": {
+        "indicatorId": "rural-open-defecation",
+        "title": "Rural open defecation",
+        "warningLevel": "review",
+        "pearson": 0.8481977021721222,
+        "spearman": 0.758998664741822,
+        "visualSimilarity": 0.6187050359712231,
+        "overlapCount": 139
+      },
+      "statusRecommendation": {
+        "recommendedAction": "keep_expert_only",
+        "recommendedEditorialStatus": "expert_only",
+        "reason": [
+          "Automated scorecard supports the current curated editorial status."
         ]
       }
     },
@@ -10165,6 +14494,59 @@
       }
     },
     {
+      "id": "youth-employment-ratio",
+      "providerCode": "SL.EMP.1524.SP.ZS",
+      "shortTitle": "Youth employment-to-population ratio",
+      "category": "labor",
+      "difficulty": "standard",
+      "source": {
+        "selectedYear": 2025,
+        "coverage": 163,
+        "approvalStatus": "approved"
+      },
+      "dataGate": {
+        "status": "passed",
+        "reasons": [
+          "Source data passed the coverage gate."
+        ]
+      },
+      "editorial": {
+        "currentStatus": "daily_eligible",
+        "dailyEligible": true,
+        "practiceEligible": true,
+        "challengeEligible": true,
+        "expertOnly": false,
+        "ambiguityRisk": "medium",
+        "qualityScore": 4,
+        "funScore": 4,
+        "fairnessScore": 4
+      },
+      "scores": {
+        "coverage": 4,
+        "freshness": 5,
+        "unitClarity": 4,
+        "mapInterest": 4,
+        "ambiguityCorrelation": 2,
+        "overall": 3.75
+      },
+      "topCorrelation": {
+        "indicatorId": "youth-labor-force",
+        "title": "Youth labor force participation",
+        "warningLevel": "high",
+        "pearson": 0.9716993304635454,
+        "spearman": 0.9626941770440199,
+        "visualSimilarity": 0.6196319018404908,
+        "overlapCount": 163
+      },
+      "statusRecommendation": {
+        "recommendedAction": "review_ambiguity",
+        "recommendedEditorialStatus": "daily_eligible",
+        "reason": [
+          "High correlation or visual-similarity risk; review distractor placement and Daily same-day pairing."
+        ]
+      }
+    },
+    {
       "id": "youth-labor-force",
       "providerCode": "SL.TLF.ACTI.1524.ZS",
       "shortTitle": "Youth labor force participation",
@@ -10197,23 +14579,23 @@
         "freshness": 5,
         "unitClarity": 4,
         "mapInterest": 4,
-        "ambiguityCorrelation": 3,
-        "overall": 3.95
+        "ambiguityCorrelation": 2,
+        "overall": 3.75
       },
       "topCorrelation": {
-        "indicatorId": "labor-force-participation",
-        "title": "Labor force participation",
-        "warningLevel": "review",
-        "pearson": 0.7569432040877059,
-        "spearman": 0.7548700129128081,
-        "visualSimilarity": 0.3803680981595092,
+        "indicatorId": "youth-employment-ratio",
+        "title": "Youth employment-to-population ratio",
+        "warningLevel": "high",
+        "pearson": 0.9716993304635454,
+        "spearman": 0.9626941770440199,
+        "visualSimilarity": 0.6196319018404908,
         "overlapCount": 163
       },
       "statusRecommendation": {
-        "recommendedAction": "keep_expert_only",
+        "recommendedAction": "review_ambiguity",
         "recommendedEditorialStatus": "expert_only",
         "reason": [
-          "Automated scorecard supports the current curated editorial status."
+          "High correlation or visual-similarity risk; review distractor placement and Daily same-day pairing."
         ]
       }
     },
@@ -10261,6 +14643,53 @@
         "reason": [
           "youth-literacy: no year in 2015:2025 met 120 mapped countries; best coverage was 54",
           "youth-literacy: selected coverage 27 is below 120"
+        ]
+      }
+    },
+    {
+      "id": "youth-neet",
+      "providerCode": "SL.UEM.NEET.ZS",
+      "shortTitle": "Youth not in education or work",
+      "category": "labor",
+      "difficulty": "standard",
+      "source": {
+        "selectedYear": 2025,
+        "coverage": 15,
+        "approvalStatus": "draft"
+      },
+      "dataGate": {
+        "status": "held",
+        "reasons": [
+          "youth-neet: no year in 2015:2025 met 120 mapped countries; best coverage was 108",
+          "youth-neet: selected coverage 15 is below 120"
+        ]
+      },
+      "editorial": {
+        "currentStatus": "needs_review",
+        "dailyEligible": false,
+        "practiceEligible": false,
+        "challengeEligible": false,
+        "expertOnly": false,
+        "ambiguityRisk": "medium",
+        "qualityScore": 2,
+        "funScore": 2,
+        "fairnessScore": 2
+      },
+      "scores": {
+        "coverage": 1,
+        "freshness": 5,
+        "unitClarity": 2,
+        "mapInterest": 1,
+        "ambiguityCorrelation": 2,
+        "overall": 2.0
+      },
+      "topCorrelation": null,
+      "statusRecommendation": {
+        "recommendedAction": "hold_for_data",
+        "recommendedEditorialStatus": "needs_review",
+        "reason": [
+          "youth-neet: no year in 2015:2025 met 120 mapped countries; best coverage was 108",
+          "youth-neet: selected coverage 15 is below 120"
         ]
       }
     },

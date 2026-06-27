@@ -1,22 +1,22 @@
 {
   "schemaVersion": "1.1.0",
   "contentVersion": "2026.06.22-exp2-qa1",
-  "generatedAt": "2026-06-22T18:07:37.453785+00:00",
-  "candidateCount": 198,
-  "approvedCount": 167,
-  "draftCount": 31,
+  "generatedAt": "2026-06-27T17:16:22.610178+00:00",
+  "candidateCount": 285,
+  "approvedCount": 226,
+  "draftCount": 59,
   "statusCounts": {
-    "daily_eligible": 53,
-    "expert_only": 48,
-    "needs_review": 54,
-    "practice_eligible": 34,
+    "daily_eligible": 65,
+    "expert_only": 73,
+    "needs_review": 91,
+    "practice_eligible": 47,
     "retired": 9
   },
   "approvedStatusCounts": {
-    "daily_eligible": 50,
-    "expert_only": 45,
-    "needs_review": 34,
-    "practice_eligible": 30,
+    "daily_eligible": 62,
+    "expert_only": 70,
+    "needs_review": 43,
+    "practice_eligible": 43,
     "retired": 8
   },
   "indicators": [
@@ -365,6 +365,68 @@
       }
     },
     {
+      "id": "agriculture-methane-emissions",
+      "providerCode": "EN.GHG.CH4.AG.MT.CE.AR5",
+      "shortTitle": "Agriculture methane emissions",
+      "category": "agriculture",
+      "difficulty": "expert",
+      "year": 2024,
+      "coverage": 165,
+      "sourceReference": "https://api.worldbank.org/v2/indicator/EN.GHG.CH4.AG.MT.CE.AR5?format=json&per_page=1",
+      "approvalStatus": "approved",
+      "dataWarnings": [],
+      "dataFailures": [],
+      "editorialReview": {
+        "status": "expert_only",
+        "reviewedAt": "2026-06-22",
+        "reviewedBy": "Codex editorial QA",
+        "qualityScore": 4,
+        "funScore": 4,
+        "fairnessScore": 3,
+        "ambiguityRisk": "high",
+        "dailyEligible": false,
+        "practiceEligible": true,
+        "challengeEligible": true,
+        "expertOnly": true,
+        "reviewNotes": [
+          "Batch 3 QA: interesting farming-emissions map with broad recent coverage.",
+          "Expert-only because raw emissions and agriculture scale can be confused with population or land area."
+        ],
+        "acceptableCloseDistractorIds": []
+      }
+    },
+    {
+      "id": "agriculture-nitrous-oxide-emissions",
+      "providerCode": "EN.GHG.N2O.AG.MT.CE.AR5",
+      "shortTitle": "Agriculture nitrous oxide emissions",
+      "category": "agriculture",
+      "difficulty": "expert",
+      "year": 2024,
+      "coverage": 165,
+      "sourceReference": "https://api.worldbank.org/v2/indicator/EN.GHG.N2O.AG.MT.CE.AR5?format=json&per_page=1",
+      "approvalStatus": "approved",
+      "dataWarnings": [],
+      "dataFailures": [],
+      "editorialReview": {
+        "status": "expert_only",
+        "reviewedAt": "2026-06-22",
+        "reviewedBy": "Codex editorial QA",
+        "qualityScore": 4,
+        "funScore": 4,
+        "fairnessScore": 3,
+        "ambiguityRisk": "high",
+        "dailyEligible": false,
+        "practiceEligible": true,
+        "challengeEligible": true,
+        "expertOnly": true,
+        "reviewNotes": [
+          "Batch 3 QA: good advanced agriculture-emissions signal.",
+          "Expert-only and avoid pairing closely with agriculture methane emissions."
+        ],
+        "acceptableCloseDistractorIds": []
+      }
+    },
+    {
       "id": "agriculture-value-added",
       "providerCode": "NV.AGR.TOTL.ZS",
       "shortTitle": "Agriculture value added",
@@ -427,6 +489,99 @@
       }
     },
     {
+      "id": "air-departures",
+      "providerCode": "IS.AIR.DPRT",
+      "shortTitle": "Air carrier departures",
+      "category": "connectivity",
+      "difficulty": "expert",
+      "year": 2023,
+      "coverage": 136,
+      "sourceReference": "https://api.worldbank.org/v2/indicator/IS.AIR.DPRT?format=json&per_page=1",
+      "approvalStatus": "approved",
+      "dataWarnings": [],
+      "dataFailures": [],
+      "editorialReview": {
+        "status": "expert_only",
+        "reviewedAt": "2026-06-22",
+        "reviewedBy": "Codex editorial QA",
+        "qualityScore": 3,
+        "funScore": 3,
+        "fairnessScore": 3,
+        "ambiguityRisk": "high",
+        "dailyEligible": false,
+        "practiceEligible": true,
+        "challengeEligible": true,
+        "expertOnly": true,
+        "reviewNotes": [
+          "Batch 3 QA: useful aviation-network comparison map.",
+          "Expert-only and keep separate from air passengers and air freight in generated choices."
+        ],
+        "acceptableCloseDistractorIds": []
+      }
+    },
+    {
+      "id": "air-freight",
+      "providerCode": "IS.AIR.GOOD.MT.K1",
+      "shortTitle": "Air freight",
+      "category": "connectivity",
+      "difficulty": "expert",
+      "year": 2023,
+      "coverage": 123,
+      "sourceReference": "https://api.worldbank.org/v2/indicator/IS.AIR.GOOD.MT.K1?format=json&per_page=1",
+      "approvalStatus": "approved",
+      "dataWarnings": [],
+      "dataFailures": [],
+      "editorialReview": {
+        "status": "expert_only",
+        "reviewedAt": "2026-06-22",
+        "reviewedBy": "Codex editorial QA",
+        "qualityScore": 3,
+        "funScore": 4,
+        "fairnessScore": 3,
+        "ambiguityRisk": "medium",
+        "dailyEligible": false,
+        "practiceEligible": true,
+        "challengeEligible": true,
+        "expertOnly": true,
+        "reviewNotes": [
+          "Batch 3 QA: source-valid cargo-network map with strong hub geography.",
+          "Expert-only because raw ton-kilometers are a specialized clue."
+        ],
+        "acceptableCloseDistractorIds": []
+      }
+    },
+    {
+      "id": "air-passengers",
+      "providerCode": "IS.AIR.PSGR",
+      "shortTitle": "Air passengers carried",
+      "category": "connectivity",
+      "difficulty": "expert",
+      "year": 2023,
+      "coverage": 135,
+      "sourceReference": "https://api.worldbank.org/v2/indicator/IS.AIR.PSGR?format=json&per_page=1",
+      "approvalStatus": "approved",
+      "dataWarnings": [],
+      "dataFailures": [],
+      "editorialReview": {
+        "status": "expert_only",
+        "reviewedAt": "2026-06-22",
+        "reviewedBy": "Codex editorial QA",
+        "qualityScore": 3,
+        "funScore": 3,
+        "fairnessScore": 3,
+        "ambiguityRisk": "high",
+        "dailyEligible": false,
+        "practiceEligible": true,
+        "challengeEligible": true,
+        "expertOnly": true,
+        "reviewNotes": [
+          "Batch 3 QA: source-valid transport-volume map with recognizable hubs.",
+          "Expert-only because raw passenger counts favor population, tourism, and hub-country size."
+        ],
+        "acceptableCloseDistractorIds": []
+      }
+    },
+    {
       "id": "arable-land",
       "providerCode": "AG.LND.ARBL.ZS",
       "shortTitle": "Arable land",
@@ -453,6 +608,37 @@
         "reviewNotes": [
           "Good physical-geography and farming-belt reasoning.",
           "Works best with probes in deserts, dense deltas, and temperate crop regions."
+        ],
+        "acceptableCloseDistractorIds": []
+      }
+    },
+    {
+      "id": "arable-land-area",
+      "providerCode": "AG.LND.ARBL.HA",
+      "shortTitle": "Arable land area",
+      "category": "land",
+      "difficulty": "expert",
+      "year": 2023,
+      "coverage": 168,
+      "sourceReference": "https://api.worldbank.org/v2/indicator/AG.LND.ARBL.HA?format=json&per_page=1",
+      "approvalStatus": "approved",
+      "dataWarnings": [],
+      "dataFailures": [],
+      "editorialReview": {
+        "status": "expert_only",
+        "reviewedAt": "2026-06-22",
+        "reviewedBy": "Codex editorial QA",
+        "qualityScore": 3,
+        "funScore": 4,
+        "fairnessScore": 3,
+        "ambiguityRisk": "high",
+        "dailyEligible": false,
+        "practiceEligible": true,
+        "challengeEligible": true,
+        "expertOnly": true,
+        "reviewNotes": [
+          "Batch 3 QA: source-valid raw land-area map with an obvious physical-geography signal.",
+          "Expert-only because raw hectares strongly favor large countries."
         ],
         "acceptableCloseDistractorIds": []
       }
@@ -706,6 +892,72 @@
         "expertOnly": false,
         "reviewNotes": [
           "Loaded from the candidate intake queue and default-held as Needs review until a human editor classifies it."
+        ],
+        "acceptableCloseDistractorIds": []
+      }
+    },
+    {
+      "id": "cereal-cropland",
+      "providerCode": "AG.LND.CERE.ZS",
+      "shortTitle": "Cereal cropland",
+      "category": "land",
+      "difficulty": "standard",
+      "year": 0,
+      "coverage": 0,
+      "sourceReference": "https://api.worldbank.org/v2/indicator/AG.LND.CERE.ZS?format=json&per_page=1",
+      "approvalStatus": "draft",
+      "dataWarnings": [
+        "cereal-cropland: quantile breaks have low uniqueness; review legend legibility"
+      ],
+      "dataFailures": [
+        "cereal-cropland: no year in 2015:2025 met 120 mapped countries; best coverage was 0",
+        "cereal-cropland: selected coverage 0 is below 120"
+      ],
+      "editorialReview": {
+        "status": "needs_review",
+        "reviewedAt": "2026-06-22",
+        "reviewedBy": "pipeline-default-needs-review",
+        "qualityScore": 2,
+        "funScore": 2,
+        "fairnessScore": 2,
+        "ambiguityRisk": "medium",
+        "dailyEligible": false,
+        "practiceEligible": false,
+        "challengeEligible": false,
+        "expertOnly": false,
+        "reviewNotes": [
+          "Loaded from the candidate intake queue and default-held as Needs review until a human editor classifies it."
+        ],
+        "acceptableCloseDistractorIds": []
+      }
+    },
+    {
+      "id": "cereal-production",
+      "providerCode": "AG.PRD.CREL.MT",
+      "shortTitle": "Cereal production",
+      "category": "agriculture",
+      "difficulty": "expert",
+      "year": 2023,
+      "coverage": 167,
+      "sourceReference": "https://api.worldbank.org/v2/indicator/AG.PRD.CREL.MT?format=json&per_page=1",
+      "approvalStatus": "approved",
+      "dataWarnings": [],
+      "dataFailures": [],
+      "editorialReview": {
+        "status": "expert_only",
+        "reviewedAt": "2026-06-22",
+        "reviewedBy": "Codex editorial QA",
+        "qualityScore": 4,
+        "funScore": 4,
+        "fairnessScore": 3,
+        "ambiguityRisk": "medium",
+        "dailyEligible": false,
+        "practiceEligible": true,
+        "challengeEligible": true,
+        "expertOnly": true,
+        "reviewNotes": [
+          "Batch 3 QA: broad source-valid raw grain-output map.",
+          "Expert-only because raw tons favor large producers and can feel like a size quiz."
         ],
         "acceptableCloseDistractorIds": []
       }
@@ -1001,6 +1253,130 @@
       }
     },
     {
+      "id": "communications-service-exports",
+      "providerCode": "BX.GSR.CMCP.ZS",
+      "shortTitle": "Communications service exports",
+      "category": "connectivity",
+      "difficulty": "expert",
+      "year": 2024,
+      "coverage": 137,
+      "sourceReference": "https://api.worldbank.org/v2/indicator/BX.GSR.CMCP.ZS?format=json&per_page=1",
+      "approvalStatus": "approved",
+      "dataWarnings": [],
+      "dataFailures": [],
+      "editorialReview": {
+        "status": "daily_eligible",
+        "reviewedAt": "2026-06-22",
+        "reviewedBy": "Codex editorial QA",
+        "qualityScore": 4,
+        "funScore": 4,
+        "fairnessScore": 3,
+        "ambiguityRisk": "medium",
+        "dailyEligible": true,
+        "practiceEligible": true,
+        "challengeEligible": true,
+        "expertOnly": false,
+        "reviewNotes": [
+          "Batch 3 promotion: fresh service-trade connectivity map with a clear share unit.",
+          "Expert Daily only; avoid pairing with ICT service exports or high-tech exports in the same round."
+        ],
+        "acceptableCloseDistractorIds": []
+      }
+    },
+    {
+      "id": "communications-service-imports",
+      "providerCode": "BM.GSR.CMCP.ZS",
+      "shortTitle": "Communications service imports",
+      "category": "connectivity",
+      "difficulty": "expert",
+      "year": 2024,
+      "coverage": 137,
+      "sourceReference": "https://api.worldbank.org/v2/indicator/BM.GSR.CMCP.ZS?format=json&per_page=1",
+      "approvalStatus": "approved",
+      "dataWarnings": [],
+      "dataFailures": [],
+      "editorialReview": {
+        "status": "practice_eligible",
+        "reviewedAt": "2026-06-22",
+        "reviewedBy": "Codex editorial QA",
+        "qualityScore": 4,
+        "funScore": 3,
+        "fairnessScore": 3,
+        "ambiguityRisk": "medium",
+        "dailyEligible": false,
+        "practiceEligible": true,
+        "challengeEligible": true,
+        "expertOnly": false,
+        "reviewNotes": [
+          "Batch 3 QA: source-valid but less intuitive than export-side communications services.",
+          "Practice-only for beta."
+        ],
+        "acceptableCloseDistractorIds": []
+      }
+    },
+    {
+      "id": "compulsory-education-duration",
+      "providerCode": "SE.COM.DURS",
+      "shortTitle": "Compulsory education duration",
+      "category": "education",
+      "difficulty": "expert",
+      "year": 2025,
+      "coverage": 158,
+      "sourceReference": "https://api.worldbank.org/v2/indicator/SE.COM.DURS?format=json&per_page=1",
+      "approvalStatus": "approved",
+      "dataWarnings": [],
+      "dataFailures": [],
+      "editorialReview": {
+        "status": "daily_eligible",
+        "reviewedAt": "2026-06-22",
+        "reviewedBy": "Codex editorial QA",
+        "qualityScore": 4,
+        "funScore": 4,
+        "fairnessScore": 4,
+        "ambiguityRisk": "medium",
+        "dailyEligible": true,
+        "practiceEligible": true,
+        "challengeEligible": true,
+        "expertOnly": false,
+        "reviewNotes": [
+          "Batch 3 promotion: broad source coverage, fresh policy data, and a readable unit make this a fair expert Daily.",
+          "Keep answer choices away from enrollment-rate maps so the clue reads as education policy, not school attendance."
+        ],
+        "acceptableCloseDistractorIds": []
+      }
+    },
+    {
+      "id": "container-port-traffic",
+      "providerCode": "IS.SHP.GOOD.TU",
+      "shortTitle": "Container port traffic",
+      "category": "connectivity",
+      "difficulty": "expert",
+      "year": 2019,
+      "coverage": 128,
+      "sourceReference": "https://api.worldbank.org/v2/indicator/IS.SHP.GOOD.TU?format=json&per_page=1",
+      "approvalStatus": "approved",
+      "dataWarnings": [],
+      "dataFailures": [],
+      "editorialReview": {
+        "status": "expert_only",
+        "reviewedAt": "2026-06-22",
+        "reviewedBy": "Codex editorial QA",
+        "qualityScore": 3,
+        "funScore": 4,
+        "fairnessScore": 3,
+        "ambiguityRisk": "medium",
+        "dailyEligible": false,
+        "practiceEligible": true,
+        "challengeEligible": true,
+        "expertOnly": true,
+        "reviewNotes": [
+          "Batch 3 QA: shipping-hub map is interesting for advanced players.",
+          "Expert-only because landlocked and small-island edge cases can make it unfair in broad Daily play."
+        ],
+        "acceptableCloseDistractorIds": []
+      }
+    },
+    {
       "id": "contraceptive-use",
       "providerCode": "SP.DYN.CONU.ZS",
       "shortTitle": "Contraceptive use",
@@ -1033,6 +1409,37 @@
         "reviewNotes": [
           "Interesting family-planning map, but survey coverage and married-women denominator make it harder for new players.",
           "Keep in Practice until manual QA confirms it is not just an opaque fertility proxy."
+        ],
+        "acceptableCloseDistractorIds": []
+      }
+    },
+    {
+      "id": "contributing-family-workers",
+      "providerCode": "SL.FAM.WORK.ZS",
+      "shortTitle": "Contributing family workers",
+      "category": "labor",
+      "difficulty": "expert",
+      "year": 2025,
+      "coverage": 163,
+      "sourceReference": "https://api.worldbank.org/v2/indicator/SL.FAM.WORK.ZS?format=json&per_page=1",
+      "approvalStatus": "approved",
+      "dataWarnings": [],
+      "dataFailures": [],
+      "editorialReview": {
+        "status": "expert_only",
+        "reviewedAt": "2026-06-22",
+        "reviewedBy": "Codex editorial QA",
+        "qualityScore": 4,
+        "funScore": 4,
+        "fairnessScore": 3,
+        "ambiguityRisk": "high",
+        "dailyEligible": false,
+        "practiceEligible": true,
+        "challengeEligible": true,
+        "expertOnly": true,
+        "reviewNotes": [
+          "Batch 3 QA: high-coverage labor-structure map, but concept is advanced and close to vulnerable employment.",
+          "Expert-only for beta."
         ],
         "acceptableCloseDistractorIds": []
       }
@@ -1662,6 +2069,130 @@
       }
     },
     {
+      "id": "female-agricultural-employment",
+      "providerCode": "SL.AGR.EMPL.FE.ZS",
+      "shortTitle": "Female agricultural employment",
+      "category": "labor",
+      "difficulty": "expert",
+      "year": 2025,
+      "coverage": 163,
+      "sourceReference": "https://api.worldbank.org/v2/indicator/SL.AGR.EMPL.FE.ZS?format=json&per_page=1",
+      "approvalStatus": "approved",
+      "dataWarnings": [],
+      "dataFailures": [],
+      "editorialReview": {
+        "status": "expert_only",
+        "reviewedAt": "2026-06-22",
+        "reviewedBy": "Codex editorial QA",
+        "qualityScore": 4,
+        "funScore": 4,
+        "fairnessScore": 3,
+        "ambiguityRisk": "high",
+        "dailyEligible": false,
+        "practiceEligible": true,
+        "challengeEligible": true,
+        "expertOnly": true,
+        "reviewNotes": [
+          "Batch 3 QA: useful gendered sector-work map.",
+          "Expert-only because it overlaps with total agricultural employment and rural development patterns."
+        ],
+        "acceptableCloseDistractorIds": []
+      }
+    },
+    {
+      "id": "female-contributing-family-workers",
+      "providerCode": "SL.FAM.WORK.FE.ZS",
+      "shortTitle": "Female contributing family workers",
+      "category": "labor",
+      "difficulty": "expert",
+      "year": 2025,
+      "coverage": 163,
+      "sourceReference": "https://api.worldbank.org/v2/indicator/SL.FAM.WORK.FE.ZS?format=json&per_page=1",
+      "approvalStatus": "approved",
+      "dataWarnings": [],
+      "dataFailures": [],
+      "editorialReview": {
+        "status": "expert_only",
+        "reviewedAt": "2026-06-22",
+        "reviewedBy": "Codex editorial QA",
+        "qualityScore": 4,
+        "funScore": 4,
+        "fairnessScore": 3,
+        "ambiguityRisk": "high",
+        "dailyEligible": false,
+        "practiceEligible": true,
+        "challengeEligible": true,
+        "expertOnly": true,
+        "reviewNotes": [
+          "Batch 3 QA: high-coverage but advanced unpaid-family-work concept.",
+          "Expert-only; reveal copy should define contributing-family work clearly."
+        ],
+        "acceptableCloseDistractorIds": []
+      }
+    },
+    {
+      "id": "female-employment-population-ratio",
+      "providerCode": "SL.EMP.TOTL.SP.FE.ZS",
+      "shortTitle": "Female employment-to-population ratio",
+      "category": "labor",
+      "difficulty": "expert",
+      "year": 2025,
+      "coverage": 163,
+      "sourceReference": "https://api.worldbank.org/v2/indicator/SL.EMP.TOTL.SP.FE.ZS?format=json&per_page=1",
+      "approvalStatus": "approved",
+      "dataWarnings": [],
+      "dataFailures": [],
+      "editorialReview": {
+        "status": "expert_only",
+        "reviewedAt": "2026-06-22",
+        "reviewedBy": "Codex editorial QA",
+        "qualityScore": 4,
+        "funScore": 4,
+        "fairnessScore": 3,
+        "ambiguityRisk": "high",
+        "dailyEligible": false,
+        "practiceEligible": true,
+        "challengeEligible": true,
+        "expertOnly": true,
+        "reviewNotes": [
+          "Batch 3 QA: useful gendered work map but close to female labor-force participation.",
+          "Expert-only until labor distractors are tuned."
+        ],
+        "acceptableCloseDistractorIds": []
+      }
+    },
+    {
+      "id": "female-industry-employment",
+      "providerCode": "SL.IND.EMPL.FE.ZS",
+      "shortTitle": "Female industry employment",
+      "category": "labor",
+      "difficulty": "expert",
+      "year": 2025,
+      "coverage": 163,
+      "sourceReference": "https://api.worldbank.org/v2/indicator/SL.IND.EMPL.FE.ZS?format=json&per_page=1",
+      "approvalStatus": "approved",
+      "dataWarnings": [],
+      "dataFailures": [],
+      "editorialReview": {
+        "status": "daily_eligible",
+        "reviewedAt": "2026-06-22",
+        "reviewedBy": "Codex editorial QA",
+        "qualityScore": 4,
+        "funScore": 4,
+        "fairnessScore": 3,
+        "ambiguityRisk": "medium",
+        "dailyEligible": true,
+        "practiceEligible": true,
+        "challengeEligible": true,
+        "expertOnly": false,
+        "reviewNotes": [
+          "Batch 3 promotion: high-coverage gendered sector-work map with a readable industrial pattern.",
+          "Expert Daily only; keep out of the same Daily set as total industry employment or male industry employment."
+        ],
+        "acceptableCloseDistractorIds": []
+      }
+    },
+    {
       "id": "female-labor-force",
       "providerCode": "SL.TLF.CACT.FE.ZS",
       "shortTitle": "Female labor force participation",
@@ -1693,6 +2224,101 @@
       }
     },
     {
+      "id": "female-self-employed",
+      "providerCode": "SL.EMP.SELF.FE.ZS",
+      "shortTitle": "Female self-employed",
+      "category": "labor",
+      "difficulty": "expert",
+      "year": 2025,
+      "coverage": 163,
+      "sourceReference": "https://api.worldbank.org/v2/indicator/SL.EMP.SELF.FE.ZS?format=json&per_page=1",
+      "approvalStatus": "approved",
+      "dataWarnings": [],
+      "dataFailures": [],
+      "editorialReview": {
+        "status": "expert_only",
+        "reviewedAt": "2026-06-22",
+        "reviewedBy": "Codex editorial QA",
+        "qualityScore": 4,
+        "funScore": 4,
+        "fairnessScore": 3,
+        "ambiguityRisk": "high",
+        "dailyEligible": false,
+        "practiceEligible": true,
+        "challengeEligible": true,
+        "expertOnly": true,
+        "reviewNotes": [
+          "Batch 3 QA: source-valid gendered self-employment map.",
+          "Expert-only because it overlaps with vulnerable and wage-worker maps."
+        ],
+        "acceptableCloseDistractorIds": []
+      }
+    },
+    {
+      "id": "female-senior-management",
+      "providerCode": "SL.EMP.SMGT.FE.ZS",
+      "shortTitle": "Women in senior management",
+      "category": "labor",
+      "difficulty": "expert",
+      "year": 2025,
+      "coverage": 12,
+      "sourceReference": "https://api.worldbank.org/v2/indicator/SL.EMP.SMGT.FE.ZS?format=json&per_page=1",
+      "approvalStatus": "draft",
+      "dataWarnings": [],
+      "dataFailures": [
+        "female-senior-management: no year in 2015:2025 met 120 mapped countries; best coverage was 90",
+        "female-senior-management: selected coverage 12 is below 120"
+      ],
+      "editorialReview": {
+        "status": "needs_review",
+        "reviewedAt": "2026-06-22",
+        "reviewedBy": "pipeline-default-needs-review",
+        "qualityScore": 2,
+        "funScore": 2,
+        "fairnessScore": 2,
+        "ambiguityRisk": "medium",
+        "dailyEligible": false,
+        "practiceEligible": false,
+        "challengeEligible": false,
+        "expertOnly": false,
+        "reviewNotes": [
+          "Loaded from the candidate intake queue and default-held as Needs review until a human editor classifies it."
+        ],
+        "acceptableCloseDistractorIds": []
+      }
+    },
+    {
+      "id": "female-services-employment",
+      "providerCode": "SL.SRV.EMPL.FE.ZS",
+      "shortTitle": "Female services employment",
+      "category": "labor",
+      "difficulty": "expert",
+      "year": 2025,
+      "coverage": 163,
+      "sourceReference": "https://api.worldbank.org/v2/indicator/SL.SRV.EMPL.FE.ZS?format=json&per_page=1",
+      "approvalStatus": "approved",
+      "dataWarnings": [],
+      "dataFailures": [],
+      "editorialReview": {
+        "status": "expert_only",
+        "reviewedAt": "2026-06-22",
+        "reviewedBy": "Codex editorial QA",
+        "qualityScore": 4,
+        "funScore": 4,
+        "fairnessScore": 3,
+        "ambiguityRisk": "high",
+        "dailyEligible": false,
+        "practiceEligible": true,
+        "challengeEligible": true,
+        "expertOnly": true,
+        "reviewNotes": [
+          "Batch 3 QA: good gendered service-work map, but close to total services employment.",
+          "Expert-only."
+        ],
+        "acceptableCloseDistractorIds": []
+      }
+    },
+    {
       "id": "female-unemployment",
       "providerCode": "SL.UEM.TOTL.FE.ZS",
       "shortTitle": "Female unemployment",
@@ -1719,6 +2345,101 @@
         "reviewNotes": [
           "Batch 2 promotion: Female unemployment is source-valid but more technical or correlated than a default Daily map.",
           "Keep to advanced tiers and review confusion notes before broader promotion."
+        ],
+        "acceptableCloseDistractorIds": []
+      }
+    },
+    {
+      "id": "female-vulnerable-employment",
+      "providerCode": "SL.EMP.VULN.FE.ZS",
+      "shortTitle": "Female vulnerable employment",
+      "category": "labor",
+      "difficulty": "expert",
+      "year": 2025,
+      "coverage": 163,
+      "sourceReference": "https://api.worldbank.org/v2/indicator/SL.EMP.VULN.FE.ZS?format=json&per_page=1",
+      "approvalStatus": "approved",
+      "dataWarnings": [],
+      "dataFailures": [],
+      "editorialReview": {
+        "status": "expert_only",
+        "reviewedAt": "2026-06-22",
+        "reviewedBy": "Codex editorial QA",
+        "qualityScore": 4,
+        "funScore": 4,
+        "fairnessScore": 3,
+        "ambiguityRisk": "high",
+        "dailyEligible": false,
+        "practiceEligible": true,
+        "challengeEligible": true,
+        "expertOnly": true,
+        "reviewNotes": [
+          "Batch 3 QA: meaningful gendered informal-work map with broad coverage.",
+          "Expert-only because it can be confused with self-employment and contributing-family work."
+        ],
+        "acceptableCloseDistractorIds": []
+      }
+    },
+    {
+      "id": "female-wage-salaried-workers",
+      "providerCode": "SL.EMP.WORK.FE.ZS",
+      "shortTitle": "Female wage workers",
+      "category": "labor",
+      "difficulty": "expert",
+      "year": 2025,
+      "coverage": 163,
+      "sourceReference": "https://api.worldbank.org/v2/indicator/SL.EMP.WORK.FE.ZS?format=json&per_page=1",
+      "approvalStatus": "approved",
+      "dataWarnings": [],
+      "dataFailures": [],
+      "editorialReview": {
+        "status": "expert_only",
+        "reviewedAt": "2026-06-22",
+        "reviewedBy": "Codex editorial QA",
+        "qualityScore": 4,
+        "funScore": 4,
+        "fairnessScore": 3,
+        "ambiguityRisk": "high",
+        "dailyEligible": false,
+        "practiceEligible": true,
+        "challengeEligible": true,
+        "expertOnly": true,
+        "reviewNotes": [
+          "Batch 3 QA: strong formal-work map, but close to total wage workers and inverse self-employment maps.",
+          "Expert-only for beta."
+        ],
+        "acceptableCloseDistractorIds": []
+      }
+    },
+    {
+      "id": "female-youth-neet",
+      "providerCode": "SL.UEM.NEET.FE.ZS",
+      "shortTitle": "Female youth not in education or work",
+      "category": "labor",
+      "difficulty": "expert",
+      "year": 2025,
+      "coverage": 15,
+      "sourceReference": "https://api.worldbank.org/v2/indicator/SL.UEM.NEET.FE.ZS?format=json&per_page=1",
+      "approvalStatus": "draft",
+      "dataWarnings": [],
+      "dataFailures": [
+        "female-youth-neet: no year in 2015:2025 met 120 mapped countries; best coverage was 108",
+        "female-youth-neet: selected coverage 15 is below 120"
+      ],
+      "editorialReview": {
+        "status": "needs_review",
+        "reviewedAt": "2026-06-22",
+        "reviewedBy": "pipeline-default-needs-review",
+        "qualityScore": 2,
+        "funScore": 2,
+        "fairnessScore": 2,
+        "ambiguityRisk": "medium",
+        "dailyEligible": false,
+        "practiceEligible": false,
+        "challengeEligible": false,
+        "expertOnly": false,
+        "reviewNotes": [
+          "Loaded from the candidate intake queue and default-held as Needs review until a human editor classifies it."
         ],
         "acceptableCloseDistractorIds": []
       }
@@ -1760,7 +2481,7 @@
     {
       "id": "fertilizer-use",
       "providerCode": "AG.CON.FERT.ZS",
-      "shortTitle": "Fertilizer consumption",
+      "shortTitle": "Fertilizer use per hectare",
       "category": "agriculture",
       "difficulty": "expert",
       "year": 2023,
@@ -1877,6 +2598,99 @@
         "reviewNotes": [
           "Batch 2 promotion: Fixed telephone subscriptions adds useful practice depth with an understandable unit.",
           "Practice-only until distractor ambiguity and new-player comprehension are checked in playtests."
+        ],
+        "acceptableCloseDistractorIds": []
+      }
+    },
+    {
+      "id": "food-exports-share",
+      "providerCode": "TX.VAL.FOOD.ZS.UN",
+      "shortTitle": "Food exports share",
+      "category": "agriculture",
+      "difficulty": "expert",
+      "year": 2023,
+      "coverage": 137,
+      "sourceReference": "https://api.worldbank.org/v2/indicator/TX.VAL.FOOD.ZS.UN?format=json&per_page=1",
+      "approvalStatus": "approved",
+      "dataWarnings": [],
+      "dataFailures": [],
+      "editorialReview": {
+        "status": "practice_eligible",
+        "reviewedAt": "2026-06-22",
+        "reviewedBy": "Codex editorial QA",
+        "qualityScore": 4,
+        "funScore": 4,
+        "fairnessScore": 3,
+        "ambiguityRisk": "medium",
+        "dailyEligible": false,
+        "practiceEligible": true,
+        "challengeEligible": true,
+        "expertOnly": false,
+        "reviewNotes": [
+          "Batch 3 QA: useful agricultural trade specialization map.",
+          "Practice-only for beta because it can overlap with cereal and agriculture-output clues."
+        ],
+        "acceptableCloseDistractorIds": []
+      }
+    },
+    {
+      "id": "food-imports-share",
+      "providerCode": "TM.VAL.FOOD.ZS.UN",
+      "shortTitle": "Food imports share",
+      "category": "agriculture",
+      "difficulty": "expert",
+      "year": 2023,
+      "coverage": 137,
+      "sourceReference": "https://api.worldbank.org/v2/indicator/TM.VAL.FOOD.ZS.UN?format=json&per_page=1",
+      "approvalStatus": "approved",
+      "dataWarnings": [],
+      "dataFailures": [],
+      "editorialReview": {
+        "status": "practice_eligible",
+        "reviewedAt": "2026-06-22",
+        "reviewedBy": "Codex editorial QA",
+        "qualityScore": 4,
+        "funScore": 4,
+        "fairnessScore": 3,
+        "ambiguityRisk": "medium",
+        "dailyEligible": false,
+        "practiceEligible": true,
+        "challengeEligible": true,
+        "expertOnly": false,
+        "reviewNotes": [
+          "Batch 3 QA: useful food-dependence trade map with solid coverage.",
+          "Practice-only until it is tested against food exports and agriculture value maps."
+        ],
+        "acceptableCloseDistractorIds": []
+      }
+    },
+    {
+      "id": "food-insecurity-moderate-severe",
+      "providerCode": "SN.ITK.MSFI.ZS",
+      "shortTitle": "Moderate or severe food insecurity",
+      "category": "agriculture",
+      "difficulty": "standard",
+      "year": 2023,
+      "coverage": 124,
+      "sourceReference": "https://api.worldbank.org/v2/indicator/SN.ITK.MSFI.ZS?format=json&per_page=1",
+      "approvalStatus": "approved",
+      "dataWarnings": [],
+      "dataFailures": [],
+      "editorialReview": {
+        "status": "daily_eligible",
+        "reviewedAt": "2026-06-22",
+        "reviewedBy": "Codex editorial QA",
+        "qualityScore": 4,
+        "funScore": 4,
+        "fairnessScore": 4,
+        "ambiguityRisk": "medium",
+        "dailyEligible": true,
+        "practiceEligible": true,
+        "challengeEligible": true,
+        "expertOnly": false,
+        "reviewNotes": [
+          "Batch 3 promotion: meaningful food-system map with recent data and an intuitive percent-of-population unit.",
+          "Daily-worthy, but keep away from undernourishment on easier tiers."
         ],
         "acceptableCloseDistractorIds": []
       }
@@ -2388,6 +3202,37 @@
       }
     },
     {
+      "id": "government-education-spending-share",
+      "providerCode": "SE.XPD.TOTL.GB.ZS",
+      "shortTitle": "Education spending share",
+      "category": "education",
+      "difficulty": "expert",
+      "year": 2022,
+      "coverage": 123,
+      "sourceReference": "https://api.worldbank.org/v2/indicator/SE.XPD.TOTL.GB.ZS?format=json&per_page=1",
+      "approvalStatus": "approved",
+      "dataWarnings": [],
+      "dataFailures": [],
+      "editorialReview": {
+        "status": "daily_eligible",
+        "reviewedAt": "2026-06-22",
+        "reviewedBy": "Codex editorial QA",
+        "qualityScore": 4,
+        "funScore": 4,
+        "fairnessScore": 3,
+        "ambiguityRisk": "medium",
+        "dailyEligible": true,
+        "practiceEligible": true,
+        "challengeEligible": true,
+        "expertOnly": false,
+        "reviewNotes": [
+          "Batch 3 promotion: source-valid budget-priority map with clear percent-of-government-spending unit.",
+          "Expert Daily only; reveal copy should explain that budget share is not the same thing as school quality."
+        ],
+        "acceptableCloseDistractorIds": []
+      }
+    },
+    {
       "id": "government-expense",
       "providerCode": "GC.XPN.TOTL.GD.ZS",
       "shortTitle": "Government expense",
@@ -2726,6 +3571,37 @@
       }
     },
     {
+      "id": "ict-service-exports",
+      "providerCode": "BX.GSR.CCIS.ZS",
+      "shortTitle": "ICT service exports",
+      "category": "connectivity",
+      "difficulty": "expert",
+      "year": 2024,
+      "coverage": 135,
+      "sourceReference": "https://api.worldbank.org/v2/indicator/BX.GSR.CCIS.ZS?format=json&per_page=1",
+      "approvalStatus": "approved",
+      "dataWarnings": [],
+      "dataFailures": [],
+      "editorialReview": {
+        "status": "practice_eligible",
+        "reviewedAt": "2026-06-22",
+        "reviewedBy": "Codex editorial QA",
+        "qualityScore": 4,
+        "funScore": 4,
+        "fairnessScore": 3,
+        "ambiguityRisk": "medium",
+        "dailyEligible": false,
+        "practiceEligible": true,
+        "challengeEligible": true,
+        "expertOnly": false,
+        "reviewNotes": [
+          "Batch 3 QA: useful digital-services export map, but close to communications-service exports and high-tech exports.",
+          "Practice-only until the connectivity trade cluster is tested."
+        ],
+        "acceptableCloseDistractorIds": []
+      }
+    },
+    {
       "id": "imports-share",
       "providerCode": "NE.IMP.GNFS.ZS",
       "shortTitle": "Imports",
@@ -2948,6 +3824,71 @@
       }
     },
     {
+      "id": "irrigated-cropland",
+      "providerCode": "AG.LND.IRIG.ZS",
+      "shortTitle": "Irrigated cropland",
+      "category": "agriculture",
+      "difficulty": "expert",
+      "year": "n/a",
+      "coverage": 0,
+      "sourceReference": "unavailable",
+      "approvalStatus": "draft",
+      "dataWarnings": [],
+      "dataFailures": [
+        "Unexpected World Bank response for https://api.worldbank.org/v2/country/all/indicator/AG.LND.IRIG.ZS?format=json&per_page=20000&page=1&date=2015%3A2025"
+      ],
+      "editorialReview": {
+        "status": "needs_review",
+        "reviewedAt": "2026-06-22",
+        "reviewedBy": "pipeline-default-needs-review",
+        "qualityScore": 2,
+        "funScore": 2,
+        "fairnessScore": 2,
+        "ambiguityRisk": "medium",
+        "dailyEligible": false,
+        "practiceEligible": false,
+        "challengeEligible": false,
+        "expertOnly": false,
+        "reviewNotes": [
+          "Loaded from the candidate intake queue and default-held as Needs review until a human editor classifies it."
+        ],
+        "acceptableCloseDistractorIds": []
+      }
+    },
+    {
+      "id": "labor-force-advanced-education",
+      "providerCode": "SL.TLF.ADVN.ZS",
+      "shortTitle": "Advanced-education labor force",
+      "category": "labor",
+      "difficulty": "expert",
+      "year": 2025,
+      "coverage": 17,
+      "sourceReference": "https://api.worldbank.org/v2/indicator/SL.TLF.ADVN.ZS?format=json&per_page=1",
+      "approvalStatus": "draft",
+      "dataWarnings": [],
+      "dataFailures": [
+        "labor-force-advanced-education: no year in 2015:2025 met 120 mapped countries; best coverage was 109",
+        "labor-force-advanced-education: selected coverage 17 is below 120"
+      ],
+      "editorialReview": {
+        "status": "needs_review",
+        "reviewedAt": "2026-06-22",
+        "reviewedBy": "pipeline-default-needs-review",
+        "qualityScore": 2,
+        "funScore": 2,
+        "fairnessScore": 2,
+        "ambiguityRisk": "medium",
+        "dailyEligible": false,
+        "practiceEligible": false,
+        "challengeEligible": false,
+        "expertOnly": false,
+        "reviewNotes": [
+          "Loaded from the candidate intake queue and default-held as Needs review until a human editor classifies it."
+        ],
+        "acceptableCloseDistractorIds": []
+      }
+    },
+    {
       "id": "labor-force-gender-ratio",
       "providerCode": "SL.TLF.CACT.FM.ZS",
       "shortTitle": "Female-to-male labor force ratio",
@@ -3005,6 +3946,69 @@
         "reviewNotes": [
           "Useful labor concept but less visually memorable than unemployment or agricultural employment.",
           "Practice-only for now."
+        ],
+        "acceptableCloseDistractorIds": []
+      }
+    },
+    {
+      "id": "labor-force-secondary-education",
+      "providerCode": "SL.TLF.SECO.ZS",
+      "shortTitle": "Labor force with secondary education",
+      "category": "labor",
+      "difficulty": "expert",
+      "year": "n/a",
+      "coverage": 0,
+      "sourceReference": "unavailable",
+      "approvalStatus": "draft",
+      "dataWarnings": [],
+      "dataFailures": [
+        "Unexpected World Bank response for https://api.worldbank.org/v2/country/all/indicator/SL.TLF.SECO.ZS?format=json&per_page=20000&page=1&date=2015%3A2025"
+      ],
+      "editorialReview": {
+        "status": "needs_review",
+        "reviewedAt": "2026-06-22",
+        "reviewedBy": "pipeline-default-needs-review",
+        "qualityScore": 2,
+        "funScore": 2,
+        "fairnessScore": 2,
+        "ambiguityRisk": "medium",
+        "dailyEligible": false,
+        "practiceEligible": false,
+        "challengeEligible": false,
+        "expertOnly": false,
+        "reviewNotes": [
+          "Loaded from the candidate intake queue and default-held as Needs review until a human editor classifies it."
+        ],
+        "acceptableCloseDistractorIds": []
+      }
+    },
+    {
+      "id": "land-under-cereal",
+      "providerCode": "AG.LND.CREL.HA",
+      "shortTitle": "Land under cereal production",
+      "category": "land",
+      "difficulty": "expert",
+      "year": 2023,
+      "coverage": 167,
+      "sourceReference": "https://api.worldbank.org/v2/indicator/AG.LND.CREL.HA?format=json&per_page=1",
+      "approvalStatus": "approved",
+      "dataWarnings": [],
+      "dataFailures": [],
+      "editorialReview": {
+        "status": "daily_eligible",
+        "reviewedAt": "2026-06-22",
+        "reviewedBy": "Codex editorial QA",
+        "qualityScore": 4,
+        "funScore": 4,
+        "fairnessScore": 3,
+        "ambiguityRisk": "medium",
+        "dailyEligible": true,
+        "practiceEligible": true,
+        "challengeEligible": true,
+        "expertOnly": false,
+        "reviewNotes": [
+          "Batch 3 promotion: strong grain-belt pattern and broad coverage, useful for expert Daily variety.",
+          "Raw hectares favor large countries, so keep this as expert-facing and reveal the raw-area caveat."
         ],
         "acceptableCloseDistractorIds": []
       }
@@ -3259,6 +4263,251 @@
       }
     },
     {
+      "id": "lower-secondary-pupil-teacher-ratio",
+      "providerCode": "SE.SEC.ENRL.LO.TC.ZS",
+      "shortTitle": "Lower secondary pupil-teacher ratio",
+      "category": "education",
+      "difficulty": "expert",
+      "year": 2019,
+      "coverage": 3,
+      "sourceReference": "https://api.worldbank.org/v2/indicator/SE.SEC.ENRL.LO.TC.ZS?format=json&per_page=1",
+      "approvalStatus": "draft",
+      "dataWarnings": [],
+      "dataFailures": [
+        "lower-secondary-pupil-teacher-ratio: no year in 2015:2025 met 120 mapped countries; best coverage was 89",
+        "lower-secondary-pupil-teacher-ratio: selected coverage 3 is below 120"
+      ],
+      "editorialReview": {
+        "status": "needs_review",
+        "reviewedAt": "2026-06-22",
+        "reviewedBy": "pipeline-default-needs-review",
+        "qualityScore": 2,
+        "funScore": 2,
+        "fairnessScore": 2,
+        "ambiguityRisk": "medium",
+        "dailyEligible": false,
+        "practiceEligible": false,
+        "challengeEligible": false,
+        "expertOnly": false,
+        "reviewNotes": [
+          "Loaded from the candidate intake queue and default-held as Needs review until a human editor classifies it."
+        ],
+        "acceptableCloseDistractorIds": []
+      }
+    },
+    {
+      "id": "lpi-customs",
+      "providerCode": "LP.LPI.CUST.XQ",
+      "shortTitle": "Logistics customs score",
+      "category": "connectivity",
+      "difficulty": "expert",
+      "year": 2022,
+      "coverage": 131,
+      "sourceReference": "https://api.worldbank.org/v2/indicator/LP.LPI.CUST.XQ?format=json&per_page=1",
+      "approvalStatus": "approved",
+      "dataWarnings": [],
+      "dataFailures": [],
+      "editorialReview": {
+        "status": "needs_review",
+        "reviewedAt": "2026-06-22",
+        "reviewedBy": "pipeline-default-needs-review",
+        "qualityScore": 2,
+        "funScore": 2,
+        "fairnessScore": 2,
+        "ambiguityRisk": "medium",
+        "dailyEligible": false,
+        "practiceEligible": false,
+        "challengeEligible": false,
+        "expertOnly": false,
+        "reviewNotes": [
+          "Loaded from the candidate intake queue and default-held as Needs review until a human editor classifies it."
+        ],
+        "acceptableCloseDistractorIds": []
+      }
+    },
+    {
+      "id": "lpi-timeliness",
+      "providerCode": "LP.LPI.TIME.XQ",
+      "shortTitle": "Logistics timeliness score",
+      "category": "connectivity",
+      "difficulty": "expert",
+      "year": 2022,
+      "coverage": 131,
+      "sourceReference": "https://api.worldbank.org/v2/indicator/LP.LPI.TIME.XQ?format=json&per_page=1",
+      "approvalStatus": "approved",
+      "dataWarnings": [],
+      "dataFailures": [],
+      "editorialReview": {
+        "status": "needs_review",
+        "reviewedAt": "2026-06-22",
+        "reviewedBy": "pipeline-default-needs-review",
+        "qualityScore": 2,
+        "funScore": 2,
+        "fairnessScore": 2,
+        "ambiguityRisk": "medium",
+        "dailyEligible": false,
+        "practiceEligible": false,
+        "challengeEligible": false,
+        "expertOnly": false,
+        "reviewNotes": [
+          "Loaded from the candidate intake queue and default-held as Needs review until a human editor classifies it."
+        ],
+        "acceptableCloseDistractorIds": []
+      }
+    },
+    {
+      "id": "lpi-tracking",
+      "providerCode": "LP.LPI.TRAC.XQ",
+      "shortTitle": "Logistics tracking score",
+      "category": "connectivity",
+      "difficulty": "expert",
+      "year": 2022,
+      "coverage": 131,
+      "sourceReference": "https://api.worldbank.org/v2/indicator/LP.LPI.TRAC.XQ?format=json&per_page=1",
+      "approvalStatus": "approved",
+      "dataWarnings": [],
+      "dataFailures": [],
+      "editorialReview": {
+        "status": "needs_review",
+        "reviewedAt": "2026-06-22",
+        "reviewedBy": "pipeline-default-needs-review",
+        "qualityScore": 2,
+        "funScore": 2,
+        "fairnessScore": 2,
+        "ambiguityRisk": "medium",
+        "dailyEligible": false,
+        "practiceEligible": false,
+        "challengeEligible": false,
+        "expertOnly": false,
+        "reviewNotes": [
+          "Loaded from the candidate intake queue and default-held as Needs review until a human editor classifies it."
+        ],
+        "acceptableCloseDistractorIds": []
+      }
+    },
+    {
+      "id": "male-agricultural-employment",
+      "providerCode": "SL.AGR.EMPL.MA.ZS",
+      "shortTitle": "Male agricultural employment",
+      "category": "labor",
+      "difficulty": "expert",
+      "year": 2025,
+      "coverage": 163,
+      "sourceReference": "https://api.worldbank.org/v2/indicator/SL.AGR.EMPL.MA.ZS?format=json&per_page=1",
+      "approvalStatus": "approved",
+      "dataWarnings": [],
+      "dataFailures": [],
+      "editorialReview": {
+        "status": "needs_review",
+        "reviewedAt": "2026-06-22",
+        "reviewedBy": "pipeline-default-needs-review",
+        "qualityScore": 2,
+        "funScore": 2,
+        "fairnessScore": 2,
+        "ambiguityRisk": "medium",
+        "dailyEligible": false,
+        "practiceEligible": false,
+        "challengeEligible": false,
+        "expertOnly": false,
+        "reviewNotes": [
+          "Loaded from the candidate intake queue and default-held as Needs review until a human editor classifies it."
+        ],
+        "acceptableCloseDistractorIds": []
+      }
+    },
+    {
+      "id": "male-contributing-family-workers",
+      "providerCode": "SL.FAM.WORK.MA.ZS",
+      "shortTitle": "Male contributing family workers",
+      "category": "labor",
+      "difficulty": "expert",
+      "year": 2025,
+      "coverage": 163,
+      "sourceReference": "https://api.worldbank.org/v2/indicator/SL.FAM.WORK.MA.ZS?format=json&per_page=1",
+      "approvalStatus": "approved",
+      "dataWarnings": [],
+      "dataFailures": [],
+      "editorialReview": {
+        "status": "needs_review",
+        "reviewedAt": "2026-06-22",
+        "reviewedBy": "pipeline-default-needs-review",
+        "qualityScore": 2,
+        "funScore": 2,
+        "fairnessScore": 2,
+        "ambiguityRisk": "medium",
+        "dailyEligible": false,
+        "practiceEligible": false,
+        "challengeEligible": false,
+        "expertOnly": false,
+        "reviewNotes": [
+          "Loaded from the candidate intake queue and default-held as Needs review until a human editor classifies it."
+        ],
+        "acceptableCloseDistractorIds": []
+      }
+    },
+    {
+      "id": "male-employment-population-ratio",
+      "providerCode": "SL.EMP.TOTL.SP.MA.ZS",
+      "shortTitle": "Male employment-to-population ratio",
+      "category": "labor",
+      "difficulty": "expert",
+      "year": 2025,
+      "coverage": 163,
+      "sourceReference": "https://api.worldbank.org/v2/indicator/SL.EMP.TOTL.SP.MA.ZS?format=json&per_page=1",
+      "approvalStatus": "approved",
+      "dataWarnings": [],
+      "dataFailures": [],
+      "editorialReview": {
+        "status": "expert_only",
+        "reviewedAt": "2026-06-22",
+        "reviewedBy": "Codex editorial QA",
+        "qualityScore": 3,
+        "funScore": 3,
+        "fairnessScore": 3,
+        "ambiguityRisk": "high",
+        "dailyEligible": false,
+        "practiceEligible": true,
+        "challengeEligible": true,
+        "expertOnly": true,
+        "reviewNotes": [
+          "Batch 3 QA: source-valid contrast map, but less distinctive than female employment-to-population ratio.",
+          "Expert-only."
+        ],
+        "acceptableCloseDistractorIds": []
+      }
+    },
+    {
+      "id": "male-industry-employment",
+      "providerCode": "SL.IND.EMPL.MA.ZS",
+      "shortTitle": "Male industry employment",
+      "category": "labor",
+      "difficulty": "expert",
+      "year": 2025,
+      "coverage": 163,
+      "sourceReference": "https://api.worldbank.org/v2/indicator/SL.IND.EMPL.MA.ZS?format=json&per_page=1",
+      "approvalStatus": "approved",
+      "dataWarnings": [],
+      "dataFailures": [],
+      "editorialReview": {
+        "status": "expert_only",
+        "reviewedAt": "2026-06-22",
+        "reviewedBy": "Codex editorial QA",
+        "qualityScore": 4,
+        "funScore": 4,
+        "fairnessScore": 3,
+        "ambiguityRisk": "medium",
+        "dailyEligible": false,
+        "practiceEligible": true,
+        "challengeEligible": true,
+        "expertOnly": true,
+        "reviewNotes": [
+          "Batch 3 QA: source-valid counterpart to female industry employment.",
+          "Expert-only; keep separate from female industry employment in answer-choice clusters."
+        ],
+        "acceptableCloseDistractorIds": []
+      }
+    },
+    {
       "id": "male-labor-force",
       "providerCode": "SL.TLF.CACT.MA.ZS",
       "shortTitle": "Male labor force participation",
@@ -3289,6 +4538,66 @@
       }
     },
     {
+      "id": "male-self-employed",
+      "providerCode": "SL.EMP.SELF.MA.ZS",
+      "shortTitle": "Male self-employed",
+      "category": "labor",
+      "difficulty": "expert",
+      "year": 2025,
+      "coverage": 163,
+      "sourceReference": "https://api.worldbank.org/v2/indicator/SL.EMP.SELF.MA.ZS?format=json&per_page=1",
+      "approvalStatus": "approved",
+      "dataWarnings": [],
+      "dataFailures": [],
+      "editorialReview": {
+        "status": "needs_review",
+        "reviewedAt": "2026-06-22",
+        "reviewedBy": "pipeline-default-needs-review",
+        "qualityScore": 2,
+        "funScore": 2,
+        "fairnessScore": 2,
+        "ambiguityRisk": "medium",
+        "dailyEligible": false,
+        "practiceEligible": false,
+        "challengeEligible": false,
+        "expertOnly": false,
+        "reviewNotes": [
+          "Loaded from the candidate intake queue and default-held as Needs review until a human editor classifies it."
+        ],
+        "acceptableCloseDistractorIds": []
+      }
+    },
+    {
+      "id": "male-services-employment",
+      "providerCode": "SL.SRV.EMPL.MA.ZS",
+      "shortTitle": "Male services employment",
+      "category": "labor",
+      "difficulty": "expert",
+      "year": 2025,
+      "coverage": 163,
+      "sourceReference": "https://api.worldbank.org/v2/indicator/SL.SRV.EMPL.MA.ZS?format=json&per_page=1",
+      "approvalStatus": "approved",
+      "dataWarnings": [],
+      "dataFailures": [],
+      "editorialReview": {
+        "status": "needs_review",
+        "reviewedAt": "2026-06-22",
+        "reviewedBy": "pipeline-default-needs-review",
+        "qualityScore": 2,
+        "funScore": 2,
+        "fairnessScore": 2,
+        "ambiguityRisk": "medium",
+        "dailyEligible": false,
+        "practiceEligible": false,
+        "challengeEligible": false,
+        "expertOnly": false,
+        "reviewNotes": [
+          "Loaded from the candidate intake queue and default-held as Needs review until a human editor classifies it."
+        ],
+        "acceptableCloseDistractorIds": []
+      }
+    },
+    {
       "id": "male-unemployment",
       "providerCode": "SL.UEM.TOTL.MA.ZS",
       "shortTitle": "Male unemployment",
@@ -3297,6 +4606,66 @@
       "year": 2025,
       "coverage": 163,
       "sourceReference": "https://api.worldbank.org/v2/indicator/SL.UEM.TOTL.MA.ZS?format=json&per_page=1",
+      "approvalStatus": "approved",
+      "dataWarnings": [],
+      "dataFailures": [],
+      "editorialReview": {
+        "status": "needs_review",
+        "reviewedAt": "2026-06-22",
+        "reviewedBy": "pipeline-default-needs-review",
+        "qualityScore": 2,
+        "funScore": 2,
+        "fairnessScore": 2,
+        "ambiguityRisk": "medium",
+        "dailyEligible": false,
+        "practiceEligible": false,
+        "challengeEligible": false,
+        "expertOnly": false,
+        "reviewNotes": [
+          "Loaded from the candidate intake queue and default-held as Needs review until a human editor classifies it."
+        ],
+        "acceptableCloseDistractorIds": []
+      }
+    },
+    {
+      "id": "male-vulnerable-employment",
+      "providerCode": "SL.EMP.VULN.MA.ZS",
+      "shortTitle": "Male vulnerable employment",
+      "category": "labor",
+      "difficulty": "expert",
+      "year": 2025,
+      "coverage": 163,
+      "sourceReference": "https://api.worldbank.org/v2/indicator/SL.EMP.VULN.MA.ZS?format=json&per_page=1",
+      "approvalStatus": "approved",
+      "dataWarnings": [],
+      "dataFailures": [],
+      "editorialReview": {
+        "status": "needs_review",
+        "reviewedAt": "2026-06-22",
+        "reviewedBy": "pipeline-default-needs-review",
+        "qualityScore": 2,
+        "funScore": 2,
+        "fairnessScore": 2,
+        "ambiguityRisk": "medium",
+        "dailyEligible": false,
+        "practiceEligible": false,
+        "challengeEligible": false,
+        "expertOnly": false,
+        "reviewNotes": [
+          "Loaded from the candidate intake queue and default-held as Needs review until a human editor classifies it."
+        ],
+        "acceptableCloseDistractorIds": []
+      }
+    },
+    {
+      "id": "male-wage-salaried-workers",
+      "providerCode": "SL.EMP.WORK.MA.ZS",
+      "shortTitle": "Male wage workers",
+      "category": "labor",
+      "difficulty": "expert",
+      "year": 2025,
+      "coverage": 163,
+      "sourceReference": "https://api.worldbank.org/v2/indicator/SL.EMP.WORK.MA.ZS?format=json&per_page=1",
       "approvalStatus": "approved",
       "dataWarnings": [],
       "dataFailures": [],
@@ -4041,6 +5410,170 @@
       }
     },
     {
+      "id": "out-of-school-primary",
+      "providerCode": "SE.PRM.UNER.ZS",
+      "shortTitle": "Out-of-school primary age",
+      "category": "education",
+      "difficulty": "standard",
+      "year": 2023,
+      "coverage": 120,
+      "sourceReference": "https://api.worldbank.org/v2/indicator/SE.PRM.UNER.ZS?format=json&per_page=1",
+      "approvalStatus": "approved",
+      "dataWarnings": [],
+      "dataFailures": [],
+      "editorialReview": {
+        "status": "daily_eligible",
+        "reviewedAt": "2026-06-22",
+        "reviewedBy": "Codex editorial QA",
+        "qualityScore": 4,
+        "funScore": 4,
+        "fairnessScore": 4,
+        "ambiguityRisk": "medium",
+        "dailyEligible": true,
+        "practiceEligible": true,
+        "challengeEligible": true,
+        "expertOnly": false,
+        "reviewNotes": [
+          "Batch 3 promotion: clear education-access concept with just enough coverage to pass the data gate.",
+          "Daily-worthy when paired against non-education distractors or broader enrollment maps, not secondary out-of-school rows."
+        ],
+        "acceptableCloseDistractorIds": []
+      }
+    },
+    {
+      "id": "out-of-school-secondary",
+      "providerCode": "SE.SEC.UNER.ZS",
+      "shortTitle": "Out-of-school secondary age",
+      "category": "education",
+      "difficulty": "standard",
+      "year": "n/a",
+      "coverage": 0,
+      "sourceReference": "unavailable",
+      "approvalStatus": "draft",
+      "dataWarnings": [],
+      "dataFailures": [
+        "Unexpected World Bank response for https://api.worldbank.org/v2/country/all/indicator/SE.SEC.UNER.ZS?format=json&per_page=20000&page=1&date=2015%3A2025"
+      ],
+      "editorialReview": {
+        "status": "needs_review",
+        "reviewedAt": "2026-06-22",
+        "reviewedBy": "pipeline-default-needs-review",
+        "qualityScore": 2,
+        "funScore": 2,
+        "fairnessScore": 2,
+        "ambiguityRisk": "medium",
+        "dailyEligible": false,
+        "practiceEligible": false,
+        "challengeEligible": false,
+        "expertOnly": false,
+        "reviewNotes": [
+          "Loaded from the candidate intake queue and default-held as Needs review until a human editor classifies it."
+        ],
+        "acceptableCloseDistractorIds": []
+      }
+    },
+    {
+      "id": "own-account-workers",
+      "providerCode": "SL.EMP.OWAC.ZS",
+      "shortTitle": "Own-account workers",
+      "category": "labor",
+      "difficulty": "expert",
+      "year": 0,
+      "coverage": 0,
+      "sourceReference": "https://api.worldbank.org/v2/indicator/SL.EMP.OWAC.ZS?format=json&per_page=1",
+      "approvalStatus": "draft",
+      "dataWarnings": [
+        "own-account-workers: quantile breaks have low uniqueness; review legend legibility"
+      ],
+      "dataFailures": [
+        "own-account-workers: no year in 2015:2025 met 120 mapped countries; best coverage was 0",
+        "own-account-workers: selected coverage 0 is below 120"
+      ],
+      "editorialReview": {
+        "status": "needs_review",
+        "reviewedAt": "2026-06-22",
+        "reviewedBy": "pipeline-default-needs-review",
+        "qualityScore": 2,
+        "funScore": 2,
+        "fairnessScore": 2,
+        "ambiguityRisk": "medium",
+        "dailyEligible": false,
+        "practiceEligible": false,
+        "challengeEligible": false,
+        "expertOnly": false,
+        "reviewNotes": [
+          "Loaded from the candidate intake queue and default-held as Needs review until a human editor classifies it."
+        ],
+        "acceptableCloseDistractorIds": []
+      }
+    },
+    {
+      "id": "part-time-employment",
+      "providerCode": "SL.TLF.PART.ZS",
+      "shortTitle": "Part-time employment",
+      "category": "labor",
+      "difficulty": "expert",
+      "year": 2025,
+      "coverage": 17,
+      "sourceReference": "https://api.worldbank.org/v2/indicator/SL.TLF.PART.ZS?format=json&per_page=1",
+      "approvalStatus": "draft",
+      "dataWarnings": [],
+      "dataFailures": [
+        "part-time-employment: no year in 2015:2025 met 120 mapped countries; best coverage was 113",
+        "part-time-employment: selected coverage 17 is below 120"
+      ],
+      "editorialReview": {
+        "status": "needs_review",
+        "reviewedAt": "2026-06-22",
+        "reviewedBy": "pipeline-default-needs-review",
+        "qualityScore": 2,
+        "funScore": 2,
+        "fairnessScore": 2,
+        "ambiguityRisk": "medium",
+        "dailyEligible": false,
+        "practiceEligible": false,
+        "challengeEligible": false,
+        "expertOnly": false,
+        "reviewNotes": [
+          "Loaded from the candidate intake queue and default-held as Needs review until a human editor classifies it."
+        ],
+        "acceptableCloseDistractorIds": []
+      }
+    },
+    {
+      "id": "part-time-employment-female",
+      "providerCode": "SL.TLF.PART.FE.ZS",
+      "shortTitle": "Female part-time employment",
+      "category": "labor",
+      "difficulty": "expert",
+      "year": 2025,
+      "coverage": 17,
+      "sourceReference": "https://api.worldbank.org/v2/indicator/SL.TLF.PART.FE.ZS?format=json&per_page=1",
+      "approvalStatus": "draft",
+      "dataWarnings": [],
+      "dataFailures": [
+        "part-time-employment-female: no year in 2015:2025 met 120 mapped countries; best coverage was 113",
+        "part-time-employment-female: selected coverage 17 is below 120"
+      ],
+      "editorialReview": {
+        "status": "needs_review",
+        "reviewedAt": "2026-06-22",
+        "reviewedBy": "pipeline-default-needs-review",
+        "qualityScore": 2,
+        "funScore": 2,
+        "fairnessScore": 2,
+        "ambiguityRisk": "medium",
+        "dailyEligible": false,
+        "practiceEligible": false,
+        "challengeEligible": false,
+        "expertOnly": false,
+        "reviewNotes": [
+          "Loaded from the candidate intake queue and default-held as Needs review until a human editor classifies it."
+        ],
+        "acceptableCloseDistractorIds": []
+      }
+    },
+    {
       "id": "particulate-damage-share",
       "providerCode": "NY.ADJ.DPEM.GN.ZS",
       "shortTitle": "Particulate emission damage",
@@ -4097,6 +5630,38 @@
         "reviewNotes": [
           "Batch 2 promotion: Permanent cropland passed the source gate with broad enough coverage and a readable map pattern.",
           "Daily-eligible, but keep close same-topic distractors out of easier tiers during outside beta."
+        ],
+        "acceptableCloseDistractorIds": []
+      }
+    },
+    {
+      "id": "permanent-pasture",
+      "providerCode": "EN.LAND.PPS.ZS",
+      "shortTitle": "Permanent pasture",
+      "category": "land",
+      "difficulty": "standard",
+      "year": "n/a",
+      "coverage": 0,
+      "sourceReference": "unavailable",
+      "approvalStatus": "draft",
+      "dataWarnings": [],
+      "dataFailures": [
+        "Unexpected World Bank response for https://api.worldbank.org/v2/country/all/indicator/EN.LAND.PPS.ZS?format=json&per_page=20000&page=1&date=2015%3A2025"
+      ],
+      "editorialReview": {
+        "status": "needs_review",
+        "reviewedAt": "2026-06-22",
+        "reviewedBy": "pipeline-default-needs-review",
+        "qualityScore": 2,
+        "funScore": 2,
+        "fairnessScore": 2,
+        "ambiguityRisk": "medium",
+        "dailyEligible": false,
+        "practiceEligible": false,
+        "challengeEligible": false,
+        "expertOnly": false,
+        "reviewNotes": [
+          "Loaded from the candidate intake queue and default-held as Needs review until a human editor classifies it."
         ],
         "acceptableCloseDistractorIds": []
       }
@@ -4350,6 +5915,42 @@
       }
     },
     {
+      "id": "primary-attainment",
+      "providerCode": "SE.PRM.CUAT.ZS",
+      "shortTitle": "Primary education attainment",
+      "category": "education",
+      "difficulty": "expert",
+      "year": 2025,
+      "coverage": 1,
+      "sourceReference": "https://api.worldbank.org/v2/indicator/SE.PRM.CUAT.ZS?format=json&per_page=1",
+      "approvalStatus": "draft",
+      "dataWarnings": [
+        "primary-attainment: quantile breaks have low uniqueness; review legend legibility",
+        "primary-attainment: near-uniform-map warning; range is small relative to median"
+      ],
+      "dataFailures": [
+        "primary-attainment: no year in 2015:2025 met 120 mapped countries; best coverage was 109",
+        "primary-attainment: selected coverage 1 is below 120"
+      ],
+      "editorialReview": {
+        "status": "needs_review",
+        "reviewedAt": "2026-06-22",
+        "reviewedBy": "pipeline-default-needs-review",
+        "qualityScore": 2,
+        "funScore": 2,
+        "fairnessScore": 2,
+        "ambiguityRisk": "medium",
+        "dailyEligible": false,
+        "practiceEligible": false,
+        "challengeEligible": false,
+        "expertOnly": false,
+        "reviewNotes": [
+          "Loaded from the candidate intake queue and default-held as Needs review until a human editor classifies it."
+        ],
+        "acceptableCloseDistractorIds": []
+      }
+    },
+    {
       "id": "primary-completion",
       "providerCode": "SE.PRM.CMPT.ZS",
       "shortTitle": "Primary completion",
@@ -4363,6 +5964,42 @@
       "dataFailures": [
         "primary-completion: no year in 2015:2025 met 120 mapped countries; best coverage was 118",
         "primary-completion: selected coverage 9 is below 120"
+      ],
+      "editorialReview": {
+        "status": "needs_review",
+        "reviewedAt": "2026-06-22",
+        "reviewedBy": "pipeline-default-needs-review",
+        "qualityScore": 2,
+        "funScore": 2,
+        "fairnessScore": 2,
+        "ambiguityRisk": "medium",
+        "dailyEligible": false,
+        "practiceEligible": false,
+        "challengeEligible": false,
+        "expertOnly": false,
+        "reviewNotes": [
+          "Loaded from the candidate intake queue and default-held as Needs review until a human editor classifies it."
+        ],
+        "acceptableCloseDistractorIds": []
+      }
+    },
+    {
+      "id": "primary-education-spending-share",
+      "providerCode": "SE.XPD.PRIM.ZS",
+      "shortTitle": "Primary education spending share",
+      "category": "education",
+      "difficulty": "expert",
+      "year": 2019,
+      "coverage": 1,
+      "sourceReference": "https://api.worldbank.org/v2/indicator/SE.XPD.PRIM.ZS?format=json&per_page=1",
+      "approvalStatus": "draft",
+      "dataWarnings": [
+        "primary-education-spending-share: quantile breaks have low uniqueness; review legend legibility",
+        "primary-education-spending-share: near-uniform-map warning; range is small relative to median"
+      ],
+      "dataFailures": [
+        "primary-education-spending-share: no year in 2015:2025 met 120 mapped countries; best coverage was 67",
+        "primary-education-spending-share: selected coverage 1 is below 120"
       ],
       "editorialReview": {
         "status": "needs_review",
@@ -4414,6 +6051,37 @@
       }
     },
     {
+      "id": "primary-female-teachers",
+      "providerCode": "SE.PRM.TCHR.FE.ZS",
+      "shortTitle": "Female primary teachers",
+      "category": "education",
+      "difficulty": "standard",
+      "year": 2023,
+      "coverage": 122,
+      "sourceReference": "https://api.worldbank.org/v2/indicator/SE.PRM.TCHR.FE.ZS?format=json&per_page=1",
+      "approvalStatus": "approved",
+      "dataWarnings": [],
+      "dataFailures": [],
+      "editorialReview": {
+        "status": "daily_eligible",
+        "reviewedAt": "2026-06-22",
+        "reviewedBy": "Codex editorial QA",
+        "qualityScore": 4,
+        "funScore": 4,
+        "fairnessScore": 4,
+        "ambiguityRisk": "medium",
+        "dailyEligible": true,
+        "practiceEligible": true,
+        "challengeEligible": true,
+        "expertOnly": false,
+        "reviewNotes": [
+          "Batch 3 promotion: a human, readable education-workforce map that adds category depth beyond enrollment.",
+          "Use as a Daily sparingly because coverage is adequate but not as deep as modeled labor or population maps."
+        ],
+        "acceptableCloseDistractorIds": []
+      }
+    },
+    {
       "id": "primary-gender-parity",
       "providerCode": "SE.ENR.PRIM.FM.ZS",
       "shortTitle": "Primary enrollment gender parity",
@@ -4444,6 +6112,37 @@
       }
     },
     {
+      "id": "primary-gross-intake",
+      "providerCode": "SE.PRM.GINT.ZS",
+      "shortTitle": "Primary gross intake",
+      "category": "education",
+      "difficulty": "expert",
+      "year": 2016,
+      "coverage": 120,
+      "sourceReference": "https://api.worldbank.org/v2/indicator/SE.PRM.GINT.ZS?format=json&per_page=1",
+      "approvalStatus": "approved",
+      "dataWarnings": [],
+      "dataFailures": [],
+      "editorialReview": {
+        "status": "practice_eligible",
+        "reviewedAt": "2026-06-22",
+        "reviewedBy": "Codex editorial QA",
+        "qualityScore": 3,
+        "funScore": 3,
+        "fairnessScore": 3,
+        "ambiguityRisk": "medium",
+        "dailyEligible": false,
+        "practiceEligible": true,
+        "challengeEligible": true,
+        "expertOnly": false,
+        "reviewNotes": [
+          "Batch 3 QA: coverage passes but selected data is older and the gross-intake concept is less intuitive.",
+          "Practice-only for advanced education warmups."
+        ],
+        "acceptableCloseDistractorIds": []
+      }
+    },
+    {
       "id": "primary-private-enrollment",
       "providerCode": "SE.PRM.PRIV.ZS",
       "shortTitle": "Private primary enrollment",
@@ -4455,6 +6154,105 @@
       "approvalStatus": "approved",
       "dataWarnings": [],
       "dataFailures": [],
+      "editorialReview": {
+        "status": "needs_review",
+        "reviewedAt": "2026-06-22",
+        "reviewedBy": "pipeline-default-needs-review",
+        "qualityScore": 2,
+        "funScore": 2,
+        "fairnessScore": 2,
+        "ambiguityRisk": "medium",
+        "dailyEligible": false,
+        "practiceEligible": false,
+        "challengeEligible": false,
+        "expertOnly": false,
+        "reviewNotes": [
+          "Loaded from the candidate intake queue and default-held as Needs review until a human editor classifies it."
+        ],
+        "acceptableCloseDistractorIds": []
+      }
+    },
+    {
+      "id": "primary-pupils-female-share",
+      "providerCode": "SE.PRM.ENRL.FE.ZS",
+      "shortTitle": "Female primary pupils",
+      "category": "education",
+      "difficulty": "standard",
+      "year": 2017,
+      "coverage": 134,
+      "sourceReference": "https://api.worldbank.org/v2/indicator/SE.PRM.ENRL.FE.ZS?format=json&per_page=1",
+      "approvalStatus": "approved",
+      "dataWarnings": [],
+      "dataFailures": [],
+      "editorialReview": {
+        "status": "practice_eligible",
+        "reviewedAt": "2026-06-22",
+        "reviewedBy": "Codex editorial QA",
+        "qualityScore": 3,
+        "funScore": 3,
+        "fairnessScore": 4,
+        "ambiguityRisk": "medium",
+        "dailyEligible": false,
+        "practiceEligible": true,
+        "challengeEligible": true,
+        "expertOnly": false,
+        "reviewNotes": [
+          "Batch 3 QA: source-valid and useful for education practice, but the map is subtle and older than ideal.",
+          "Practice-only until player testing confirms it feels distinct from gender-parity indicators."
+        ],
+        "acceptableCloseDistractorIds": []
+      }
+    },
+    {
+      "id": "primary-repeaters",
+      "providerCode": "SE.PRM.REPT.ZS",
+      "shortTitle": "Primary repeaters",
+      "category": "education",
+      "difficulty": "expert",
+      "year": 2019,
+      "coverage": 2,
+      "sourceReference": "https://api.worldbank.org/v2/indicator/SE.PRM.REPT.ZS?format=json&per_page=1",
+      "approvalStatus": "draft",
+      "dataWarnings": [],
+      "dataFailures": [
+        "primary-repeaters: no year in 2015:2025 met 120 mapped countries; best coverage was 118",
+        "primary-repeaters: selected coverage 2 is below 120"
+      ],
+      "editorialReview": {
+        "status": "needs_review",
+        "reviewedAt": "2026-06-22",
+        "reviewedBy": "pipeline-default-needs-review",
+        "qualityScore": 2,
+        "funScore": 2,
+        "fairnessScore": 2,
+        "ambiguityRisk": "medium",
+        "dailyEligible": false,
+        "practiceEligible": false,
+        "challengeEligible": false,
+        "expertOnly": false,
+        "reviewNotes": [
+          "Loaded from the candidate intake queue and default-held as Needs review until a human editor classifies it."
+        ],
+        "acceptableCloseDistractorIds": []
+      }
+    },
+    {
+      "id": "primary-secondary-gender-parity",
+      "providerCode": "SE.ENR.PRSC.FM.ZS",
+      "shortTitle": "Primary-secondary gender parity",
+      "category": "education",
+      "difficulty": "expert",
+      "year": 2022,
+      "coverage": 2,
+      "sourceReference": "https://api.worldbank.org/v2/indicator/SE.ENR.PRSC.FM.ZS?format=json&per_page=1",
+      "approvalStatus": "draft",
+      "dataWarnings": [
+        "primary-secondary-gender-parity: near-uniform-map warning; range is small relative to median"
+      ],
+      "dataFailures": [
+        "primary-secondary-gender-parity: no year in 2015:2025 met 120 mapped countries; best coverage was 113",
+        "primary-secondary-gender-parity: selected coverage 2 is below 120"
+      ],
       "editorialReview": {
         "status": "needs_review",
         "reviewedAt": "2026-06-22",
@@ -4859,6 +6657,68 @@
       }
     },
     {
+      "id": "rural-basic-drinking-water",
+      "providerCode": "SH.H2O.BASW.RU.ZS",
+      "shortTitle": "Rural basic drinking water",
+      "category": "settlement",
+      "difficulty": "standard",
+      "year": 2024,
+      "coverage": 150,
+      "sourceReference": "https://api.worldbank.org/v2/indicator/SH.H2O.BASW.RU.ZS?format=json&per_page=1",
+      "approvalStatus": "approved",
+      "dataWarnings": [],
+      "dataFailures": [],
+      "editorialReview": {
+        "status": "practice_eligible",
+        "reviewedAt": "2026-06-22",
+        "reviewedBy": "Codex editorial QA",
+        "qualityScore": 4,
+        "funScore": 4,
+        "fairnessScore": 4,
+        "ambiguityRisk": "medium",
+        "dailyEligible": false,
+        "practiceEligible": true,
+        "challengeEligible": true,
+        "expertOnly": false,
+        "reviewNotes": [
+          "Batch 3 QA: good rural infrastructure practice map.",
+          "Practice-only to avoid overloading Daily with water-access variants."
+        ],
+        "acceptableCloseDistractorIds": []
+      }
+    },
+    {
+      "id": "rural-basic-sanitation",
+      "providerCode": "SH.STA.BASS.RU.ZS",
+      "shortTitle": "Rural basic sanitation",
+      "category": "settlement",
+      "difficulty": "standard",
+      "year": 2024,
+      "coverage": 144,
+      "sourceReference": "https://api.worldbank.org/v2/indicator/SH.STA.BASS.RU.ZS?format=json&per_page=1",
+      "approvalStatus": "approved",
+      "dataWarnings": [],
+      "dataFailures": [],
+      "editorialReview": {
+        "status": "daily_eligible",
+        "reviewedAt": "2026-06-22",
+        "reviewedBy": "Codex editorial QA",
+        "qualityScore": 4,
+        "funScore": 4,
+        "fairnessScore": 4,
+        "ambiguityRisk": "medium",
+        "dailyEligible": true,
+        "practiceEligible": true,
+        "challengeEligible": true,
+        "expertOnly": false,
+        "reviewNotes": [
+          "Batch 3 promotion: strong rural infrastructure-gap map with a clear unit.",
+          "Daily-worthy if the reveal frames it as rural access, not national sanitation."
+        ],
+        "acceptableCloseDistractorIds": []
+      }
+    },
+    {
       "id": "rural-clean-cooking-access",
       "providerCode": "EG.CFT.ACCS.RU.ZS",
       "shortTitle": "Rural clean cooking access",
@@ -4885,6 +6745,41 @@
         "reviewNotes": [
           "Batch 2 QA: near-duplicate of clean fuels access with an even narrower rural slice.",
           "Retired for beta so the catalog does not feel padded with obvious variants."
+        ],
+        "acceptableCloseDistractorIds": []
+      }
+    },
+    {
+      "id": "rural-density-arable",
+      "providerCode": "EN.RUR.DNST",
+      "shortTitle": "Rural density on arable land",
+      "category": "settlement",
+      "difficulty": "expert",
+      "year": 0,
+      "coverage": 0,
+      "sourceReference": "https://api.worldbank.org/v2/indicator/EN.RUR.DNST?format=json&per_page=1",
+      "approvalStatus": "draft",
+      "dataWarnings": [
+        "rural-density-arable: quantile breaks have low uniqueness; review legend legibility"
+      ],
+      "dataFailures": [
+        "rural-density-arable: no year in 2015:2025 met 120 mapped countries; best coverage was 0",
+        "rural-density-arable: selected coverage 0 is below 120"
+      ],
+      "editorialReview": {
+        "status": "needs_review",
+        "reviewedAt": "2026-06-22",
+        "reviewedBy": "pipeline-default-needs-review",
+        "qualityScore": 2,
+        "funScore": 2,
+        "fairnessScore": 2,
+        "ambiguityRisk": "medium",
+        "dailyEligible": false,
+        "practiceEligible": false,
+        "challengeEligible": false,
+        "expertOnly": false,
+        "reviewNotes": [
+          "Loaded from the candidate intake queue and default-held as Needs review until a human editor classifies it."
         ],
         "acceptableCloseDistractorIds": []
       }
@@ -4920,6 +6815,99 @@
       }
     },
     {
+      "id": "rural-low-elevation-land",
+      "providerCode": "AG.LND.EL5M.RU.ZS",
+      "shortTitle": "Rural low-elevation land",
+      "category": "settlement",
+      "difficulty": "expert",
+      "year": 2015,
+      "coverage": 169,
+      "sourceReference": "https://api.worldbank.org/v2/indicator/AG.LND.EL5M.RU.ZS?format=json&per_page=1",
+      "approvalStatus": "approved",
+      "dataWarnings": [],
+      "dataFailures": [],
+      "editorialReview": {
+        "status": "expert_only",
+        "reviewedAt": "2026-06-22",
+        "reviewedBy": "Codex editorial QA",
+        "qualityScore": 3,
+        "funScore": 4,
+        "fairnessScore": 3,
+        "ambiguityRisk": "high",
+        "dailyEligible": false,
+        "practiceEligible": true,
+        "challengeEligible": true,
+        "expertOnly": true,
+        "reviewNotes": [
+          "Batch 3 QA: source-valid but closely related to low-elevation land and population maps.",
+          "Expert-only for beta."
+        ],
+        "acceptableCloseDistractorIds": []
+      }
+    },
+    {
+      "id": "rural-low-elevation-population",
+      "providerCode": "EN.POP.EL5M.RU.ZS",
+      "shortTitle": "Rural low-elevation population",
+      "category": "settlement",
+      "difficulty": "expert",
+      "year": 2015,
+      "coverage": 169,
+      "sourceReference": "https://api.worldbank.org/v2/indicator/EN.POP.EL5M.RU.ZS?format=json&per_page=1",
+      "approvalStatus": "approved",
+      "dataWarnings": [],
+      "dataFailures": [],
+      "editorialReview": {
+        "status": "expert_only",
+        "reviewedAt": "2026-06-22",
+        "reviewedBy": "Codex editorial QA",
+        "qualityScore": 3,
+        "funScore": 4,
+        "fairnessScore": 3,
+        "ambiguityRisk": "medium",
+        "dailyEligible": false,
+        "practiceEligible": true,
+        "challengeEligible": true,
+        "expertOnly": true,
+        "reviewNotes": [
+          "Batch 3 QA: good advanced coastal rural exposure map.",
+          "Expert-only because selected data is old and related to existing low-elevation maps."
+        ],
+        "acceptableCloseDistractorIds": []
+      }
+    },
+    {
+      "id": "rural-open-defecation",
+      "providerCode": "SH.STA.ODFC.RU.ZS",
+      "shortTitle": "Rural open defecation",
+      "category": "settlement",
+      "difficulty": "expert",
+      "year": 2024,
+      "coverage": 140,
+      "sourceReference": "https://api.worldbank.org/v2/indicator/SH.STA.ODFC.RU.ZS?format=json&per_page=1",
+      "approvalStatus": "approved",
+      "dataWarnings": [],
+      "dataFailures": [],
+      "editorialReview": {
+        "status": "expert_only",
+        "reviewedAt": "2026-06-22",
+        "reviewedBy": "Codex editorial QA",
+        "qualityScore": 3,
+        "funScore": 4,
+        "fairnessScore": 3,
+        "ambiguityRisk": "high",
+        "dailyEligible": false,
+        "practiceEligible": true,
+        "challengeEligible": true,
+        "expertOnly": true,
+        "reviewNotes": [
+          "Batch 3 QA: strong rural sanitation-risk map, but close to open-defecation and rural sanitation.",
+          "Expert-only for beta."
+        ],
+        "acceptableCloseDistractorIds": []
+      }
+    },
+    {
       "id": "rural-population",
       "providerCode": "SP.RUR.TOTL.ZS",
       "shortTitle": "Rural population",
@@ -4946,6 +6934,37 @@
         "reviewNotes": [
           "Exact inverse of urban population creates filler rather than a new puzzle.",
           "Retired in favor of urban population."
+        ],
+        "acceptableCloseDistractorIds": []
+      }
+    },
+    {
+      "id": "rural-population-growth",
+      "providerCode": "SP.RUR.TOTL.ZG",
+      "shortTitle": "Rural population growth",
+      "category": "settlement",
+      "difficulty": "standard",
+      "year": 2024,
+      "coverage": 168,
+      "sourceReference": "https://api.worldbank.org/v2/indicator/SP.RUR.TOTL.ZG?format=json&per_page=1",
+      "approvalStatus": "approved",
+      "dataWarnings": [],
+      "dataFailures": [],
+      "editorialReview": {
+        "status": "daily_eligible",
+        "reviewedAt": "2026-06-22",
+        "reviewedBy": "Codex editorial QA",
+        "qualityScore": 4,
+        "funScore": 4,
+        "fairnessScore": 4,
+        "ambiguityRisk": "medium",
+        "dailyEligible": true,
+        "practiceEligible": true,
+        "challengeEligible": true,
+        "expertOnly": false,
+        "reviewNotes": [
+          "Batch 3 promotion: fresh settlement-change map with broad coverage and a distinct shrinking/rising rural pattern.",
+          "Daily-worthy when not paired with total population growth or urban population growth."
         ],
         "acceptableCloseDistractorIds": []
       }
@@ -5044,6 +7063,74 @@
       }
     },
     {
+      "id": "science-engineering-students",
+      "providerCode": "SE.TER.SCIE.ZS",
+      "shortTitle": "Science and engineering students",
+      "category": "education",
+      "difficulty": "expert",
+      "year": "n/a",
+      "coverage": 0,
+      "sourceReference": "unavailable",
+      "approvalStatus": "draft",
+      "dataWarnings": [],
+      "dataFailures": [
+        "Unexpected World Bank response for https://api.worldbank.org/v2/country/all/indicator/SE.TER.SCIE.ZS?format=json&per_page=20000&page=1&date=2015%3A2025"
+      ],
+      "editorialReview": {
+        "status": "needs_review",
+        "reviewedAt": "2026-06-22",
+        "reviewedBy": "pipeline-default-needs-review",
+        "qualityScore": 2,
+        "funScore": 2,
+        "fairnessScore": 2,
+        "ambiguityRisk": "medium",
+        "dailyEligible": false,
+        "practiceEligible": false,
+        "challengeEligible": false,
+        "expertOnly": false,
+        "reviewNotes": [
+          "Loaded from the candidate intake queue and default-held as Needs review until a human editor classifies it."
+        ],
+        "acceptableCloseDistractorIds": []
+      }
+    },
+    {
+      "id": "secondary-education-spending-share",
+      "providerCode": "SE.XPD.SECO.ZS",
+      "shortTitle": "Secondary education spending share",
+      "category": "education",
+      "difficulty": "expert",
+      "year": 2019,
+      "coverage": 1,
+      "sourceReference": "https://api.worldbank.org/v2/indicator/SE.XPD.SECO.ZS?format=json&per_page=1",
+      "approvalStatus": "draft",
+      "dataWarnings": [
+        "secondary-education-spending-share: quantile breaks have low uniqueness; review legend legibility",
+        "secondary-education-spending-share: near-uniform-map warning; range is small relative to median"
+      ],
+      "dataFailures": [
+        "secondary-education-spending-share: no year in 2015:2025 met 120 mapped countries; best coverage was 69",
+        "secondary-education-spending-share: selected coverage 1 is below 120"
+      ],
+      "editorialReview": {
+        "status": "needs_review",
+        "reviewedAt": "2026-06-22",
+        "reviewedBy": "pipeline-default-needs-review",
+        "qualityScore": 2,
+        "funScore": 2,
+        "fairnessScore": 2,
+        "ambiguityRisk": "medium",
+        "dailyEligible": false,
+        "practiceEligible": false,
+        "challengeEligible": false,
+        "expertOnly": false,
+        "reviewNotes": [
+          "Loaded from the candidate intake queue and default-held as Needs review until a human editor classifies it."
+        ],
+        "acceptableCloseDistractorIds": []
+      }
+    },
+    {
       "id": "secondary-enrollment",
       "providerCode": "SE.SEC.ENRR",
       "shortTitle": "Secondary enrollment",
@@ -5075,6 +7162,74 @@
       }
     },
     {
+      "id": "secondary-female-teachers",
+      "providerCode": "SE.SEC.TCHR.FE.ZS",
+      "shortTitle": "Female secondary teachers",
+      "category": "education",
+      "difficulty": "expert",
+      "year": 2025,
+      "coverage": 7,
+      "sourceReference": "https://api.worldbank.org/v2/indicator/SE.SEC.TCHR.FE.ZS?format=json&per_page=1",
+      "approvalStatus": "draft",
+      "dataWarnings": [],
+      "dataFailures": [
+        "secondary-female-teachers: no year in 2015:2025 met 120 mapped countries; best coverage was 105",
+        "secondary-female-teachers: selected coverage 7 is below 120"
+      ],
+      "editorialReview": {
+        "status": "needs_review",
+        "reviewedAt": "2026-06-22",
+        "reviewedBy": "pipeline-default-needs-review",
+        "qualityScore": 2,
+        "funScore": 2,
+        "fairnessScore": 2,
+        "ambiguityRisk": "medium",
+        "dailyEligible": false,
+        "practiceEligible": false,
+        "challengeEligible": false,
+        "expertOnly": false,
+        "reviewNotes": [
+          "Loaded from the candidate intake queue and default-held as Needs review until a human editor classifies it."
+        ],
+        "acceptableCloseDistractorIds": []
+      }
+    },
+    {
+      "id": "secondary-gender-parity",
+      "providerCode": "SE.ENR.SECO.FM.ZS",
+      "shortTitle": "Secondary enrollment gender parity",
+      "category": "education",
+      "difficulty": "expert",
+      "year": 2022,
+      "coverage": 2,
+      "sourceReference": "https://api.worldbank.org/v2/indicator/SE.ENR.SECO.FM.ZS?format=json&per_page=1",
+      "approvalStatus": "draft",
+      "dataWarnings": [
+        "secondary-gender-parity: near-uniform-map warning; range is small relative to median"
+      ],
+      "dataFailures": [
+        "secondary-gender-parity: no year in 2015:2025 met 120 mapped countries; best coverage was 116",
+        "secondary-gender-parity: selected coverage 2 is below 120"
+      ],
+      "editorialReview": {
+        "status": "needs_review",
+        "reviewedAt": "2026-06-22",
+        "reviewedBy": "pipeline-default-needs-review",
+        "qualityScore": 2,
+        "funScore": 2,
+        "fairnessScore": 2,
+        "ambiguityRisk": "medium",
+        "dailyEligible": false,
+        "practiceEligible": false,
+        "challengeEligible": false,
+        "expertOnly": false,
+        "reviewNotes": [
+          "Loaded from the candidate intake queue and default-held as Needs review until a human editor classifies it."
+        ],
+        "acceptableCloseDistractorIds": []
+      }
+    },
+    {
       "id": "secondary-private-enrollment",
       "providerCode": "SE.SEC.PRIV.ZS",
       "shortTitle": "Private secondary enrollment",
@@ -5091,6 +7246,138 @@
       "dataFailures": [
         "secondary-private-enrollment: no year in 2015:2025 met 120 mapped countries; best coverage was 119",
         "secondary-private-enrollment: selected coverage 1 is below 120"
+      ],
+      "editorialReview": {
+        "status": "needs_review",
+        "reviewedAt": "2026-06-22",
+        "reviewedBy": "pipeline-default-needs-review",
+        "qualityScore": 2,
+        "funScore": 2,
+        "fairnessScore": 2,
+        "ambiguityRisk": "medium",
+        "dailyEligible": false,
+        "practiceEligible": false,
+        "challengeEligible": false,
+        "expertOnly": false,
+        "reviewNotes": [
+          "Loaded from the candidate intake queue and default-held as Needs review until a human editor classifies it."
+        ],
+        "acceptableCloseDistractorIds": []
+      }
+    },
+    {
+      "id": "secondary-pupil-teacher-ratio",
+      "providerCode": "SE.SEC.ENRL.TC.ZS",
+      "shortTitle": "Secondary pupil-teacher ratio",
+      "category": "education",
+      "difficulty": "expert",
+      "year": 2019,
+      "coverage": 4,
+      "sourceReference": "https://api.worldbank.org/v2/indicator/SE.SEC.ENRL.TC.ZS?format=json&per_page=1",
+      "approvalStatus": "draft",
+      "dataWarnings": [],
+      "dataFailures": [
+        "secondary-pupil-teacher-ratio: no year in 2015:2025 met 120 mapped countries; best coverage was 97",
+        "secondary-pupil-teacher-ratio: selected coverage 4 is below 120"
+      ],
+      "editorialReview": {
+        "status": "needs_review",
+        "reviewedAt": "2026-06-22",
+        "reviewedBy": "pipeline-default-needs-review",
+        "qualityScore": 2,
+        "funScore": 2,
+        "fairnessScore": 2,
+        "ambiguityRisk": "medium",
+        "dailyEligible": false,
+        "practiceEligible": false,
+        "challengeEligible": false,
+        "expertOnly": false,
+        "reviewNotes": [
+          "Loaded from the candidate intake queue and default-held as Needs review until a human editor classifies it."
+        ],
+        "acceptableCloseDistractorIds": []
+      }
+    },
+    {
+      "id": "secondary-pupils-female-share",
+      "providerCode": "SE.SEC.ENRL.FE.ZS",
+      "shortTitle": "Female secondary pupils",
+      "category": "education",
+      "difficulty": "expert",
+      "year": 2016,
+      "coverage": 120,
+      "sourceReference": "https://api.worldbank.org/v2/indicator/SE.SEC.ENRL.FE.ZS?format=json&per_page=1",
+      "approvalStatus": "approved",
+      "dataWarnings": [],
+      "dataFailures": [],
+      "editorialReview": {
+        "status": "practice_eligible",
+        "reviewedAt": "2026-06-22",
+        "reviewedBy": "Codex editorial QA",
+        "qualityScore": 3,
+        "funScore": 3,
+        "fairnessScore": 4,
+        "ambiguityRisk": "medium",
+        "dailyEligible": false,
+        "practiceEligible": true,
+        "challengeEligible": true,
+        "expertOnly": false,
+        "reviewNotes": [
+          "Batch 3 QA: source-valid but subtle secondary-school gender map.",
+          "Practice-only; do not make it Daily until the education cluster has stronger distractor curation."
+        ],
+        "acceptableCloseDistractorIds": []
+      }
+    },
+    {
+      "id": "secondary-repeaters",
+      "providerCode": "SE.SEC.REPT.ZS",
+      "shortTitle": "Secondary repeaters",
+      "category": "education",
+      "difficulty": "expert",
+      "year": "n/a",
+      "coverage": 0,
+      "sourceReference": "unavailable",
+      "approvalStatus": "draft",
+      "dataWarnings": [],
+      "dataFailures": [
+        "Unexpected World Bank response for https://api.worldbank.org/v2/country/all/indicator/SE.SEC.REPT.ZS?format=json&per_page=20000&page=1&date=2015%3A2025"
+      ],
+      "editorialReview": {
+        "status": "needs_review",
+        "reviewedAt": "2026-06-22",
+        "reviewedBy": "pipeline-default-needs-review",
+        "qualityScore": 2,
+        "funScore": 2,
+        "fairnessScore": 2,
+        "ambiguityRisk": "medium",
+        "dailyEligible": false,
+        "practiceEligible": false,
+        "challengeEligible": false,
+        "expertOnly": false,
+        "reviewNotes": [
+          "Loaded from the candidate intake queue and default-held as Needs review until a human editor classifies it."
+        ],
+        "acceptableCloseDistractorIds": []
+      }
+    },
+    {
+      "id": "secondary-vocational-enrollment",
+      "providerCode": "SE.SEC.ENRL.VO.ZS",
+      "shortTitle": "Vocational secondary enrollment",
+      "category": "education",
+      "difficulty": "expert",
+      "year": 2020,
+      "coverage": 1,
+      "sourceReference": "https://api.worldbank.org/v2/indicator/SE.SEC.ENRL.VO.ZS?format=json&per_page=1",
+      "approvalStatus": "draft",
+      "dataWarnings": [
+        "secondary-vocational-enrollment: quantile breaks have low uniqueness; review legend legibility",
+        "secondary-vocational-enrollment: near-uniform-map warning; range is small relative to median"
+      ],
+      "dataFailures": [
+        "secondary-vocational-enrollment: no year in 2015:2025 met 120 mapped countries; best coverage was 111",
+        "secondary-vocational-enrollment: selected coverage 1 is below 120"
       ],
       "editorialReview": {
         "status": "needs_review",
@@ -5203,6 +7490,37 @@
         "acceptableCloseDistractorIds": [
           "industry-share"
         ]
+      }
+    },
+    {
+      "id": "severe-food-insecurity",
+      "providerCode": "SN.ITK.SVFI.ZS",
+      "shortTitle": "Severe food insecurity",
+      "category": "agriculture",
+      "difficulty": "expert",
+      "year": 2023,
+      "coverage": 123,
+      "sourceReference": "https://api.worldbank.org/v2/indicator/SN.ITK.SVFI.ZS?format=json&per_page=1",
+      "approvalStatus": "approved",
+      "dataWarnings": [],
+      "dataFailures": [],
+      "editorialReview": {
+        "status": "expert_only",
+        "reviewedAt": "2026-06-22",
+        "reviewedBy": "Codex editorial QA",
+        "qualityScore": 4,
+        "funScore": 4,
+        "fairnessScore": 3,
+        "ambiguityRisk": "medium",
+        "dailyEligible": false,
+        "practiceEligible": true,
+        "challengeEligible": true,
+        "expertOnly": true,
+        "reviewNotes": [
+          "Batch 3 QA: strong but close to moderate-or-severe food insecurity.",
+          "Expert-only so advanced players can explore the sharper food-security signal without padding ordinary Practice."
+        ],
+        "acceptableCloseDistractorIds": []
       }
     },
     {
@@ -5485,6 +7803,38 @@
       }
     },
     {
+      "id": "tractors-arable-land",
+      "providerCode": "AG.LND.TRAC.ZS",
+      "shortTitle": "Tractors per arable land",
+      "category": "agriculture",
+      "difficulty": "expert",
+      "year": "n/a",
+      "coverage": 0,
+      "sourceReference": "unavailable",
+      "approvalStatus": "draft",
+      "dataWarnings": [],
+      "dataFailures": [
+        "Unexpected World Bank response for https://api.worldbank.org/v2/country/all/indicator/AG.LND.TRAC.ZS?format=json&per_page=20000&page=1&date=2015%3A2025"
+      ],
+      "editorialReview": {
+        "status": "needs_review",
+        "reviewedAt": "2026-06-22",
+        "reviewedBy": "pipeline-default-needs-review",
+        "qualityScore": 2,
+        "funScore": 2,
+        "fairnessScore": 2,
+        "ambiguityRisk": "medium",
+        "dailyEligible": false,
+        "practiceEligible": false,
+        "challengeEligible": false,
+        "expertOnly": false,
+        "reviewNotes": [
+          "Loaded from the candidate intake queue and default-held as Needs review until a human editor classifies it."
+        ],
+        "acceptableCloseDistractorIds": []
+      }
+    },
+    {
       "id": "trade-share",
       "providerCode": "NE.TRD.GNFS.ZS",
       "shortTitle": "Trade",
@@ -5516,6 +7866,68 @@
           "exports-share",
           "imports-share"
         ]
+      }
+    },
+    {
+      "id": "transport-service-exports",
+      "providerCode": "BX.GSR.TRAN.ZS",
+      "shortTitle": "Transport service exports",
+      "category": "connectivity",
+      "difficulty": "expert",
+      "year": 2024,
+      "coverage": 137,
+      "sourceReference": "https://api.worldbank.org/v2/indicator/BX.GSR.TRAN.ZS?format=json&per_page=1",
+      "approvalStatus": "approved",
+      "dataWarnings": [],
+      "dataFailures": [],
+      "editorialReview": {
+        "status": "practice_eligible",
+        "reviewedAt": "2026-06-22",
+        "reviewedBy": "Codex editorial QA",
+        "qualityScore": 4,
+        "funScore": 4,
+        "fairnessScore": 3,
+        "ambiguityRisk": "medium",
+        "dailyEligible": false,
+        "practiceEligible": true,
+        "challengeEligible": true,
+        "expertOnly": false,
+        "reviewNotes": [
+          "Batch 3 QA: strong transport-services signal with fresh data.",
+          "Practice-only until it is tested against tourism, shipping, and air-travel maps."
+        ],
+        "acceptableCloseDistractorIds": []
+      }
+    },
+    {
+      "id": "transport-service-imports",
+      "providerCode": "BM.GSR.TRAN.ZS",
+      "shortTitle": "Transport service imports",
+      "category": "connectivity",
+      "difficulty": "expert",
+      "year": 2024,
+      "coverage": 137,
+      "sourceReference": "https://api.worldbank.org/v2/indicator/BM.GSR.TRAN.ZS?format=json&per_page=1",
+      "approvalStatus": "approved",
+      "dataWarnings": [],
+      "dataFailures": [],
+      "editorialReview": {
+        "status": "practice_eligible",
+        "reviewedAt": "2026-06-22",
+        "reviewedBy": "Codex editorial QA",
+        "qualityScore": 4,
+        "funScore": 3,
+        "fairnessScore": 3,
+        "ambiguityRisk": "medium",
+        "dailyEligible": false,
+        "practiceEligible": true,
+        "challengeEligible": true,
+        "expertOnly": false,
+        "reviewNotes": [
+          "Batch 3 QA: source-valid import-side service map, but the story is less direct for new players.",
+          "Practice-only for beta."
+        ],
+        "acceptableCloseDistractorIds": []
       }
     },
     {
@@ -5645,6 +8057,75 @@
       }
     },
     {
+      "id": "unemployment-advanced-education",
+      "providerCode": "SL.UEM.ADVN.ZS",
+      "shortTitle": "Unemployment with advanced education",
+      "category": "labor",
+      "difficulty": "expert",
+      "year": 2025,
+      "coverage": 17,
+      "sourceReference": "https://api.worldbank.org/v2/indicator/SL.UEM.ADVN.ZS?format=json&per_page=1",
+      "approvalStatus": "draft",
+      "dataWarnings": [],
+      "dataFailures": [
+        "unemployment-advanced-education: no year in 2015:2025 met 120 mapped countries; best coverage was 108",
+        "unemployment-advanced-education: selected coverage 17 is below 120"
+      ],
+      "editorialReview": {
+        "status": "needs_review",
+        "reviewedAt": "2026-06-22",
+        "reviewedBy": "pipeline-default-needs-review",
+        "qualityScore": 2,
+        "funScore": 2,
+        "fairnessScore": 2,
+        "ambiguityRisk": "medium",
+        "dailyEligible": false,
+        "practiceEligible": false,
+        "challengeEligible": false,
+        "expertOnly": false,
+        "reviewNotes": [
+          "Loaded from the candidate intake queue and default-held as Needs review until a human editor classifies it."
+        ],
+        "acceptableCloseDistractorIds": []
+      }
+    },
+    {
+      "id": "upper-secondary-attainment",
+      "providerCode": "SE.SEC.CUAT.UP.ZS",
+      "shortTitle": "Upper-secondary attainment",
+      "category": "education",
+      "difficulty": "expert",
+      "year": 2025,
+      "coverage": 1,
+      "sourceReference": "https://api.worldbank.org/v2/indicator/SE.SEC.CUAT.UP.ZS?format=json&per_page=1",
+      "approvalStatus": "draft",
+      "dataWarnings": [
+        "upper-secondary-attainment: quantile breaks have low uniqueness; review legend legibility",
+        "upper-secondary-attainment: near-uniform-map warning; range is small relative to median"
+      ],
+      "dataFailures": [
+        "upper-secondary-attainment: no year in 2015:2025 met 120 mapped countries; best coverage was 107",
+        "upper-secondary-attainment: selected coverage 1 is below 120"
+      ],
+      "editorialReview": {
+        "status": "needs_review",
+        "reviewedAt": "2026-06-22",
+        "reviewedBy": "pipeline-default-needs-review",
+        "qualityScore": 2,
+        "funScore": 2,
+        "fairnessScore": 2,
+        "ambiguityRisk": "medium",
+        "dailyEligible": false,
+        "practiceEligible": false,
+        "challengeEligible": false,
+        "expertOnly": false,
+        "reviewNotes": [
+          "Loaded from the candidate intake queue and default-held as Needs review until a human editor classifies it."
+        ],
+        "acceptableCloseDistractorIds": []
+      }
+    },
+    {
       "id": "urban-agglomerations-share",
       "providerCode": "EN.URB.MCTY.TL.ZS",
       "shortTitle": "Large urban agglomerations",
@@ -5673,6 +8154,223 @@
         "expertOnly": false,
         "reviewNotes": [
           "Loaded from the candidate intake queue and default-held as Needs review until a human editor classifies it."
+        ],
+        "acceptableCloseDistractorIds": []
+      }
+    },
+    {
+      "id": "urban-basic-drinking-water",
+      "providerCode": "SH.H2O.BASW.UR.ZS",
+      "shortTitle": "Urban basic drinking water",
+      "category": "settlement",
+      "difficulty": "standard",
+      "year": 2024,
+      "coverage": 151,
+      "sourceReference": "https://api.worldbank.org/v2/indicator/SH.H2O.BASW.UR.ZS?format=json&per_page=1",
+      "approvalStatus": "approved",
+      "dataWarnings": [],
+      "dataFailures": [],
+      "editorialReview": {
+        "status": "daily_eligible",
+        "reviewedAt": "2026-06-22",
+        "reviewedBy": "Codex editorial QA",
+        "qualityScore": 4,
+        "funScore": 4,
+        "fairnessScore": 4,
+        "ambiguityRisk": "medium",
+        "dailyEligible": true,
+        "practiceEligible": true,
+        "challengeEligible": true,
+        "expertOnly": false,
+        "reviewNotes": [
+          "Batch 3 promotion: clear urban infrastructure-access map with broad enough coverage.",
+          "Daily-worthy sparingly; do not pair with national safe-drinking-water in easier tiers."
+        ],
+        "acceptableCloseDistractorIds": []
+      }
+    },
+    {
+      "id": "urban-basic-sanitation",
+      "providerCode": "SH.STA.BASS.UR.ZS",
+      "shortTitle": "Urban basic sanitation",
+      "category": "settlement",
+      "difficulty": "standard",
+      "year": 2024,
+      "coverage": 147,
+      "sourceReference": "https://api.worldbank.org/v2/indicator/SH.STA.BASS.UR.ZS?format=json&per_page=1",
+      "approvalStatus": "approved",
+      "dataWarnings": [],
+      "dataFailures": [],
+      "editorialReview": {
+        "status": "practice_eligible",
+        "reviewedAt": "2026-06-22",
+        "reviewedBy": "Codex editorial QA",
+        "qualityScore": 3,
+        "funScore": 3,
+        "fairnessScore": 4,
+        "ambiguityRisk": "medium",
+        "dailyEligible": false,
+        "practiceEligible": true,
+        "challengeEligible": true,
+        "expertOnly": false,
+        "reviewNotes": [
+          "Batch 3 QA: source-valid urban sanitation map, but the pattern is less distinctive than rural sanitation.",
+          "Practice-only for beta."
+        ],
+        "acceptableCloseDistractorIds": []
+      }
+    },
+    {
+      "id": "urban-clean-cooking-access",
+      "providerCode": "EG.CFT.ACCS.UR.ZS",
+      "shortTitle": "Urban clean cooking access",
+      "category": "settlement",
+      "difficulty": "standard",
+      "year": 2023,
+      "coverage": 162,
+      "sourceReference": "https://api.worldbank.org/v2/indicator/EG.CFT.ACCS.UR.ZS?format=json&per_page=1",
+      "approvalStatus": "approved",
+      "dataWarnings": [],
+      "dataFailures": [],
+      "editorialReview": {
+        "status": "practice_eligible",
+        "reviewedAt": "2026-06-22",
+        "reviewedBy": "Codex editorial QA",
+        "qualityScore": 4,
+        "funScore": 4,
+        "fairnessScore": 4,
+        "ambiguityRisk": "medium",
+        "dailyEligible": false,
+        "practiceEligible": true,
+        "challengeEligible": true,
+        "expertOnly": false,
+        "reviewNotes": [
+          "Batch 3 QA: strong access pattern but close to clean-fuels and rural clean-cooking maps.",
+          "Practice-only until the access cluster is tuned."
+        ],
+        "acceptableCloseDistractorIds": []
+      }
+    },
+    {
+      "id": "urban-electricity-access",
+      "providerCode": "EG.ELC.ACCS.UR.ZS",
+      "shortTitle": "Urban electricity access",
+      "category": "settlement",
+      "difficulty": "standard",
+      "year": 2023,
+      "coverage": 168,
+      "sourceReference": "https://api.worldbank.org/v2/indicator/EG.ELC.ACCS.UR.ZS?format=json&per_page=1",
+      "approvalStatus": "approved",
+      "dataWarnings": [],
+      "dataFailures": [],
+      "editorialReview": {
+        "status": "practice_eligible",
+        "reviewedAt": "2026-06-22",
+        "reviewedBy": "Codex editorial QA",
+        "qualityScore": 4,
+        "funScore": 3,
+        "fairnessScore": 4,
+        "ambiguityRisk": "medium",
+        "dailyEligible": false,
+        "practiceEligible": true,
+        "challengeEligible": true,
+        "expertOnly": false,
+        "reviewNotes": [
+          "Batch 3 QA: clear source-valid urban access map, but close to national electricity access.",
+          "Practice-only until urban/rural access variants are tested."
+        ],
+        "acceptableCloseDistractorIds": []
+      }
+    },
+    {
+      "id": "urban-low-elevation-land",
+      "providerCode": "AG.LND.EL5M.UR.ZS",
+      "shortTitle": "Urban low-elevation land",
+      "category": "settlement",
+      "difficulty": "expert",
+      "year": 2015,
+      "coverage": 169,
+      "sourceReference": "https://api.worldbank.org/v2/indicator/AG.LND.EL5M.UR.ZS?format=json&per_page=1",
+      "approvalStatus": "approved",
+      "dataWarnings": [],
+      "dataFailures": [],
+      "editorialReview": {
+        "status": "expert_only",
+        "reviewedAt": "2026-06-22",
+        "reviewedBy": "Codex editorial QA",
+        "qualityScore": 3,
+        "funScore": 4,
+        "fairnessScore": 3,
+        "ambiguityRisk": "medium",
+        "dailyEligible": false,
+        "practiceEligible": true,
+        "challengeEligible": true,
+        "expertOnly": true,
+        "reviewNotes": [
+          "Batch 3 QA: advanced low-lying urban land map with a strong coastal pattern.",
+          "Expert-only and keep apart from low-elevation land share."
+        ],
+        "acceptableCloseDistractorIds": []
+      }
+    },
+    {
+      "id": "urban-low-elevation-population",
+      "providerCode": "EN.POP.EL5M.UR.ZS",
+      "shortTitle": "Urban low-elevation population",
+      "category": "settlement",
+      "difficulty": "expert",
+      "year": 2015,
+      "coverage": 169,
+      "sourceReference": "https://api.worldbank.org/v2/indicator/EN.POP.EL5M.UR.ZS?format=json&per_page=1",
+      "approvalStatus": "approved",
+      "dataWarnings": [],
+      "dataFailures": [],
+      "editorialReview": {
+        "status": "expert_only",
+        "reviewedAt": "2026-06-22",
+        "reviewedBy": "Codex editorial QA",
+        "qualityScore": 3,
+        "funScore": 4,
+        "fairnessScore": 3,
+        "ambiguityRisk": "high",
+        "dailyEligible": false,
+        "practiceEligible": true,
+        "challengeEligible": true,
+        "expertOnly": true,
+        "reviewNotes": [
+          "Batch 3 QA: useful coastal city exposure map but old and close to the existing low-elevation population map.",
+          "Expert-only for beta."
+        ],
+        "acceptableCloseDistractorIds": []
+      }
+    },
+    {
+      "id": "urban-open-defecation",
+      "providerCode": "SH.STA.ODFC.UR.ZS",
+      "shortTitle": "Urban open defecation",
+      "category": "settlement",
+      "difficulty": "expert",
+      "year": 2024,
+      "coverage": 145,
+      "sourceReference": "https://api.worldbank.org/v2/indicator/SH.STA.ODFC.UR.ZS?format=json&per_page=1",
+      "approvalStatus": "approved",
+      "dataWarnings": [],
+      "dataFailures": [],
+      "editorialReview": {
+        "status": "expert_only",
+        "reviewedAt": "2026-06-22",
+        "reviewedBy": "Codex editorial QA",
+        "qualityScore": 3,
+        "funScore": 4,
+        "fairnessScore": 3,
+        "ambiguityRisk": "medium",
+        "dailyEligible": false,
+        "practiceEligible": true,
+        "challengeEligible": true,
+        "expertOnly": true,
+        "reviewNotes": [
+          "Batch 3 QA: sharp urban sanitation-risk map, but close to national open-defecation.",
+          "Expert-only until access variants are tested."
         ],
         "acceptableCloseDistractorIds": []
       }
@@ -6149,6 +8847,37 @@
       }
     },
     {
+      "id": "youth-employment-ratio",
+      "providerCode": "SL.EMP.1524.SP.ZS",
+      "shortTitle": "Youth employment-to-population ratio",
+      "category": "labor",
+      "difficulty": "standard",
+      "year": 2025,
+      "coverage": 163,
+      "sourceReference": "https://api.worldbank.org/v2/indicator/SL.EMP.1524.SP.ZS?format=json&per_page=1",
+      "approvalStatus": "approved",
+      "dataWarnings": [],
+      "dataFailures": [],
+      "editorialReview": {
+        "status": "daily_eligible",
+        "reviewedAt": "2026-06-22",
+        "reviewedBy": "Codex editorial QA",
+        "qualityScore": 4,
+        "funScore": 4,
+        "fairnessScore": 4,
+        "ambiguityRisk": "medium",
+        "dailyEligible": true,
+        "practiceEligible": true,
+        "challengeEligible": true,
+        "expertOnly": false,
+        "reviewNotes": [
+          "Batch 3 promotion: broad, fresh modeled labor data and a useful youth-work story.",
+          "Daily-worthy if answer choices distinguish employment from unemployment and school-enrollment concepts."
+        ],
+        "acceptableCloseDistractorIds": []
+      }
+    },
+    {
       "id": "youth-labor-force",
       "providerCode": "SL.TLF.ACTI.1524.ZS",
       "shortTitle": "Youth labor force participation",
@@ -6209,6 +8938,39 @@
         "reviewNotes": [
           "Useful comparison against adult literacy.",
           "Practice-only because many countries cluster near universal literacy, making the map subtle."
+        ],
+        "acceptableCloseDistractorIds": []
+      }
+    },
+    {
+      "id": "youth-neet",
+      "providerCode": "SL.UEM.NEET.ZS",
+      "shortTitle": "Youth not in education or work",
+      "category": "labor",
+      "difficulty": "standard",
+      "year": 2025,
+      "coverage": 15,
+      "sourceReference": "https://api.worldbank.org/v2/indicator/SL.UEM.NEET.ZS?format=json&per_page=1",
+      "approvalStatus": "draft",
+      "dataWarnings": [],
+      "dataFailures": [
+        "youth-neet: no year in 2015:2025 met 120 mapped countries; best coverage was 108",
+        "youth-neet: selected coverage 15 is below 120"
+      ],
+      "editorialReview": {
+        "status": "needs_review",
+        "reviewedAt": "2026-06-22",
+        "reviewedBy": "pipeline-default-needs-review",
+        "qualityScore": 2,
+        "funScore": 2,
+        "fairnessScore": 2,
+        "ambiguityRisk": "medium",
+        "dailyEligible": false,
+        "practiceEligible": false,
+        "challengeEligible": false,
+        "expertOnly": false,
+        "reviewNotes": [
+          "Loaded from the candidate intake queue and default-held as Needs review until a human editor classifies it."
         ],
         "acceptableCloseDistractorIds": []
       }

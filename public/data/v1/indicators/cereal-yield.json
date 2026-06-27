@@ -206,7 +206,7 @@
     "valuesReference": "https://api.worldbank.org/v2/country/all/indicator/AG.YLD.CREL.KG?format=json&per_page=20000&page=1&date=2015%3A2025",
     "license": "Creative Commons Attribution 4.0 International unless specifically labeled otherwise by World Bank metadata",
     "licenseReference": "https://www.worldbank.org/en/about/legal/terms-of-use-for-datasets",
-    "retrievedAt": "2026-06-22T18:05:55.059133+00:00",
+    "retrievedAt": "2026-06-27T17:14:08.031256+00:00",
     "checksum": "f80684039687ad81b7621899bce10f148674ad62d9964b6a313b1f644758d2fe",
     "sourceOrganization": "FAO electronic files and web site, Food and Agriculture Organization of the United Nations (FAO), uri: https://www.fao.org/faostat/en/#data/QCL, publisher: Food and Agriculture Organization of the United Nations (FAO)"
   },
@@ -237,7 +237,7 @@
       },
       {
         "confusedWithIndicatorCode": "AG.CON.FERT.ZS",
-        "reason": "Fertilizer consumption can tempt players because it shares a strong country ranking with this map, but its unit and definition point to a different story."
+        "reason": "Fertilizer use per hectare can tempt players because it shares a strong country ranking with this map, but its unit and definition point to a different story."
       },
       {
         "confusedWithIndicatorCode": "NY.GNP.PCAP.PP.CD",

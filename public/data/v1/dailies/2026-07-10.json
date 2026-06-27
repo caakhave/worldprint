@@ -4,32 +4,30 @@
   "date": "2026-07-10",
   "contentVersion": "2026.06.22-exp2-qa1",
   "roundIds": [
-    "worldprint-older-adults-share",
-    "worldprint-under-five-mortality",
-    "worldprint-energy-use",
-    "worldprint-tourism-arrivals",
-    "worldprint-arable-land-per-person"
+    "worldprint-age-dependency",
+    "worldprint-undernourishment",
+    "worldprint-compulsory-education-duration",
+    "worldprint-communications-service-exports",
+    "worldprint-basic-sanitation"
   ],
   "indicatorIds": [
-    "older-adults-share",
-    "under-five-mortality",
-    "energy-use",
-    "tourism-arrivals",
-    "arable-land-per-person"
+    "age-dependency",
+    "undernourishment",
+    "compulsory-education-duration",
+    "communications-service-exports",
+    "basic-sanitation"
   ],
   "categoryMix": {
     "demography": 1,
-    "health": 1,
-    "energy": 1,
-    "economy": 1,
-    "land": 1
+    "health": 2,
+    "education": 1,
+    "connectivity": 1
   },
   "mapDifficultyMix": {
-    "intro": 1,
     "standard": 3,
-    "expert": 1
+    "expert": 2
   },
-  "generatedAt": "2026-06-27T15:17:17.652Z",
+  "generatedAt": "2026-06-27T17:16:22.619106+00:00",
   "generatorVersion": "daily-manifest-v2",
   "varietyNotes": [
     "Selected with category, difficulty, repeat-cooldown, and same-day correlation safeguards."

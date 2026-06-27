@@ -4,31 +4,31 @@
   "date": "2026-07-26",
   "contentVersion": "2026.06.22-exp2-qa1",
   "roundIds": [
-    "worldprint-secondary-enrollment",
-    "worldprint-arable-land",
-    "worldprint-life-expectancy",
-    "worldprint-older-adults-share",
-    "worldprint-renewable-electricity"
+    "worldprint-protected-land",
+    "worldprint-renewable-electricity",
+    "worldprint-internet-users",
+    "worldprint-age-dependency",
+    "worldprint-rural-population-growth"
   ],
   "indicatorIds": [
-    "secondary-enrollment",
-    "arable-land",
-    "life-expectancy",
-    "older-adults-share",
-    "renewable-electricity"
+    "protected-land",
+    "renewable-electricity",
+    "internet-users",
+    "age-dependency",
+    "rural-population-growth"
   ],
   "categoryMix": {
-    "education": 1,
-    "land": 1,
-    "health": 1,
+    "environment": 1,
+    "energy": 1,
+    "connectivity": 1,
     "demography": 1,
-    "energy": 1
+    "settlement": 1
   },
   "mapDifficultyMix": {
-    "standard": 3,
-    "intro": 2
+    "standard": 4,
+    "intro": 1
   },
-  "generatedAt": "2026-06-27T15:17:17.652Z",
+  "generatedAt": "2026-06-27T17:16:22.621865+00:00",
   "generatorVersion": "daily-manifest-v2",
   "varietyNotes": [
     "Selected with category, difficulty, repeat-cooldown, and same-day correlation safeguards."

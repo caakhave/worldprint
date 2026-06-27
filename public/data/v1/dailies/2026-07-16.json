@@ -4,31 +4,31 @@
   "date": "2026-07-16",
   "contentVersion": "2026.06.22-exp2-qa1",
   "roundIds": [
-    "worldprint-electric-power-use",
-    "worldprint-manufacturing-share",
-    "worldprint-fertility-rate",
-    "worldprint-arable-land-per-person",
-    "worldprint-tuberculosis-incidence"
+    "worldprint-internet-users",
+    "worldprint-life-expectancy",
+    "worldprint-women-parliament",
+    "worldprint-primary-female-teachers",
+    "worldprint-youth-employment-ratio"
   ],
   "indicatorIds": [
-    "electric-power-use",
-    "manufacturing-share",
-    "fertility-rate",
-    "arable-land-per-person",
-    "tuberculosis-incidence"
+    "internet-users",
+    "life-expectancy",
+    "women-parliament",
+    "primary-female-teachers",
+    "youth-employment-ratio"
   ],
   "categoryMix": {
-    "energy": 1,
-    "economy": 1,
-    "demography": 1,
-    "land": 1,
-    "health": 1
+    "connectivity": 1,
+    "health": 1,
+    "development": 1,
+    "education": 1,
+    "labor": 1
   },
   "mapDifficultyMix": {
-    "standard": 3,
-    "expert": 2
+    "intro": 2,
+    "standard": 3
   },
-  "generatedAt": "2026-06-27T15:17:17.652Z",
+  "generatedAt": "2026-06-27T17:16:22.620406+00:00",
   "generatorVersion": "daily-manifest-v2",
   "varietyNotes": [
     "Selected with category, difficulty, repeat-cooldown, and same-day correlation safeguards."

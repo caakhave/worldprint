@@ -203,7 +203,7 @@
     "valuesReference": "https://api.worldbank.org/v2/country/all/indicator/GD_WBL_OVL_LAW?format=json&per_page=20000&page=1&date=2015%3A2025",
     "license": "Creative Commons Attribution 4.0 International unless specifically labeled otherwise by World Bank metadata",
     "licenseReference": "https://www.worldbank.org/en/about/legal/terms-of-use-for-datasets",
-    "retrievedAt": "2026-06-22T18:07:29.209623+00:00",
+    "retrievedAt": "2026-06-27T17:15:25.270225+00:00",
     "checksum": "d53e4eeb766b89e3269062b87f591c9245d8a7c9aa685cbf7f4cc1687ea7e8d4",
     "sourceOrganization": "Women, Business and the Law, World Bank (WB), uri: https://wbl.worldbank.org/en/wbl-data, date accessed: 2026-03-24, date published: 2026-02-24"
   },

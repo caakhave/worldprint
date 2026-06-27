@@ -4,29 +4,30 @@
   "date": "2026-08-10",
   "contentVersion": "2026.06.22-exp2-qa1",
   "roundIds": [
-    "worldprint-total-protected-areas",
-    "worldprint-arable-land",
-    "worldprint-protected-land",
-    "worldprint-fertility-rate",
-    "worldprint-women-parliament"
+    "worldprint-tuberculosis-incidence",
+    "worldprint-industry-share",
+    "worldprint-employment-agriculture",
+    "worldprint-manufacturing-share",
+    "worldprint-primary-female-teachers"
   ],
   "indicatorIds": [
-    "total-protected-areas",
-    "arable-land",
-    "protected-land",
-    "fertility-rate",
-    "women-parliament"
+    "tuberculosis-incidence",
+    "industry-share",
+    "employment-agriculture",
+    "manufacturing-share",
+    "primary-female-teachers"
   ],
   "categoryMix": {
-    "environment": 2,
-    "land": 1,
-    "demography": 1,
-    "development": 1
+    "health": 1,
+    "economy": 2,
+    "labor": 1,
+    "education": 1
   },
   "mapDifficultyMix": {
-    "standard": 5
+    "expert": 1,
+    "standard": 4
   },
-  "generatedAt": "2026-06-27T15:17:17.652Z",
+  "generatedAt": "2026-06-27T17:16:22.623995+00:00",
   "generatorVersion": "daily-manifest-v2",
   "varietyNotes": [
     "Selected with category, difficulty, repeat-cooldown, and same-day correlation safeguards."
