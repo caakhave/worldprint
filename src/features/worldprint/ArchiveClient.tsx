@@ -9,7 +9,8 @@ import { PlayerStatsPanel } from "@/features/worldprint/PlayerStatsPanel";
 import { fetchRemoteRunSummaries } from "@/lib/account/sync";
 import { loadDailyIndex } from "@/lib/content/loaders";
 import type { DailyIndex, DailyIndexEntry } from "@/lib/content/schemas";
-import { challengeNumber, utcDateKey } from "@/lib/game/daily";
+import { challengeNumber } from "@/lib/game/daily";
+import { localDateKey } from "@/lib/game/retention";
 import { TIER_CONFIGS } from "@/lib/game/scoring";
 import { defaultPersistedState, loadPersistedState, type CompletionHistory, type PersistedState } from "@/lib/persistence/storage";
 import type { GameRunRow } from "@/lib/supabase/database";
@@ -146,7 +147,7 @@ export function ArchiveClient() {
   const [store, setStore] = useState<PersistedState>(() => defaultPersistedState());
   const [accountRuns, setAccountRuns] = useState<GameRunRow[]>([]);
   const [error, setError] = useState("");
-  const todayKey = utcDateKey(new Date());
+  const todayKey = localDateKey(new Date());
   const { entitlement, loading: entitlementLoading, signedIn } = useEntitlement();
   const account = useSupabaseAccount();
 

@@ -278,6 +278,7 @@ test("Mystery Map lobby presents game-mode CTAs without motion dependency", asyn
   await expect(page.getByRole("link", { name: "Open past games" })).toHaveAttribute("href", /\/archive\/worldprint\/?$/);
   await expect(page.locator(".entry-lobby-strip")).toContainText("Mystery maps");
   await expect(page.locator(".entry-lobby-strip")).toContainText("Clue spend");
+  await expect(page.locator(".game-entry")).not.toContainText(/Access model|account limits|future plans|open beta/i);
   await expect(page.getByRole("button", { name: /Start today's Mystery Map/i })).toBeVisible();
   await expectNoHorizontalOverflow(page);
 });
@@ -289,7 +290,7 @@ test("first Daily shows a compact intro once and remembers dismissal", async ({ 
 
   const intro = page.getByLabel("First run intro");
   await expect(intro).toBeVisible();
-  await expect(intro).toContainText("Read the choropleth pattern.");
+  await expect(intro).toContainText("Read the map color pattern.");
   await expect(intro).toContainText("Use clues if stuck.");
   await expect(intro).toContainText("Pick the hidden indicator.");
   await expect(intro.getByRole("button", { name: "Skip intro" })).toBeVisible();
@@ -386,7 +387,7 @@ test("v9 mobile Daily flow keeps HUD, answers, reveal ceremony, and result in fr
 
   for (let index = 1; index < 5; index += 1) {
     await answerButton(page, correctLabel(index)).click();
-    await page.getByRole("button", { name: index === 4 ? /See results/ : /Next map/ }).click();
+    await page.getByRole("button", { name: index === 4 ? /Open results now|See results/ : /Next map/ }).click();
   }
 
   await expect(page.getByText("Final score")).toBeVisible();
@@ -615,7 +616,13 @@ test("completes a five-round Daily and preserves completed result", async ({ pag
       await expect(page.locator(".transition-pips")).toBeVisible();
     }
     await expect(page.getByText(/Source and year/)).toBeVisible();
-    await page.getByRole("button", { name: index === 4 ? /See results/ : /Next map/ }).click();
+    if (index === 4) {
+      await expect(page.getByText("Daily complete")).toBeVisible();
+      await expect(page.getByText("Score locked. Opening results...")).toBeVisible();
+      await expect(page.getByText("Final score")).toBeVisible();
+    } else {
+      await page.getByRole("button", { name: /Next map/ }).click();
+    }
   }
   await expect(page.getByRole("heading", { name: /points/i })).toBeVisible();
   await expect(page.locator(".summary-score-meter")).toBeVisible();
@@ -704,7 +711,7 @@ test("archive route opens a dated Daily without affecting today's streak", async
   await expect(page.getByText(`Past Mystery Map Replay ${TEST_DATE}`)).toBeVisible();
   for (let index = 0; index < 5; index += 1) {
     await answerButton(page, correctLabel(index)).click();
-    await page.getByRole("button", { name: index === 4 ? /See results/ : /Next map/ }).click();
+    await page.getByRole("button", { name: index === 4 ? /Open results now|See results/ : /Next map/ }).click();
   }
   await expect(page.getByText(/Daily streaks are unaffected/i)).toBeVisible();
   const stored = await page.evaluate(() => JSON.parse(window.localStorage.getItem("worldprint:v1") ?? "{}") as { streak?: { current: number }; archiveHistoryByDate?: Record<string, unknown> });
@@ -779,7 +786,7 @@ test("challenge link opens exact selected rounds and saves challenge completion"
   await page.getByRole("button", { name: /Start challenge/i }).click();
   for (let index = 0; index < challengeRoundIds.length; index += 1) {
     await answerButton(page, correctLabelForRoundId(challengeRoundIds[index])).click();
-    await page.getByRole("button", { name: index === challengeRoundIds.length - 1 ? /See results/ : /Next map/ }).click();
+    await page.getByRole("button", { name: index === challengeRoundIds.length - 1 ? /Open results now|See results/ : /Next map/ }).click();
   }
   await expect(page.getByText(/Challenge complete/i)).toBeVisible();
   const resultShare = page.getByLabel("Result share text");
@@ -1361,7 +1368,7 @@ test("captures deterministic visual screenshots", async ({ page }, testInfo) => 
   await page.getByRole("button", { name: /Start challenge/i }).click();
   for (let index = 0; index < 3; index += 1) {
     await answerButton(page, correctLabelForRoundId(dailyRoundIds[index])).click();
-    await page.getByRole("button", { name: index === 2 ? /See results/ : /Next map/ }).click();
+    await page.getByRole("button", { name: index === 2 ? /Open results now|See results/ : /Next map/ }).click();
   }
   await scrollToTop(page);
   await page.screenshot({ path: path.join(dir, "challenge-complete.png"), fullPage: true });
@@ -1369,7 +1376,7 @@ test("captures deterministic visual screenshots", async ({ page }, testInfo) => 
   await page.getByRole("button", { name: /Start challenge/i }).click();
   for (let index = 0; index < introPack.roundIds.length; index += 1) {
     await answerButton(page, correctLabelForRoundId(introPack.roundIds[index])).click();
-    await page.getByRole("button", { name: index === introPack.roundIds.length - 1 ? /See results/ : /Next map/ }).click();
+    await page.getByRole("button", { name: index === introPack.roundIds.length - 1 ? /Open results now|See results/ : /Next map/ }).click();
   }
   await scrollToTop(page);
   await page.screenshot({ path: path.join(dir, "beta-intro-pack-complete.png"), fullPage: true });

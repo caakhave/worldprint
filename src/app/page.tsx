@@ -103,7 +103,6 @@ export default function HomePage() {
                   fill
                   sizes="(max-width: 720px) calc(100vw - 2rem), (max-width: 1100px) 30vw, 27vw"
                   style={{ objectPosition: card.objectPosition }}
-                  loading="eager"
                 />
                 <div className="homepage-card-overlay">
                   <div className="game-loop-copy">
@@ -137,7 +136,6 @@ export default function HomePage() {
                   fill
                   sizes="(max-width: 720px) calc(100vw - 2rem), (max-width: 1100px) 30vw, 27vw"
                   style={{ objectPosition: card.objectPosition }}
-                  loading="eager"
                 />
                 <div className="homepage-card-overlay">
                   <div className="mode-poster-copy">

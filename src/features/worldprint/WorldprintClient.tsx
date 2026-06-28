@@ -28,9 +28,9 @@ import type {
   RoundDefinition
 } from "@/lib/content/schemas";
 import type { Tier } from "@/lib/content/schemas";
-import { filterPracticeRounds, selectPracticeRoundIds, utcDateKey, challengeNumber } from "@/lib/game/daily";
+import { filterPracticeRounds, selectPracticeRoundIds, challengeNumber } from "@/lib/game/daily";
 import { selectDailyRoundIdsFromManifest } from "@/lib/game/dailyManifest";
-import { nextDailyUnlockCopy } from "@/lib/game/retention";
+import { localDateKey, nextDailyUnlockCopy } from "@/lib/game/retention";
 import { buildResultShareSummary, buildShareText, scoreRank } from "@/lib/game/share";
 import { challengePayloadFromRun, decodeChallenge, encodeChallenge, type ChallengePayload } from "@/lib/game/challenge";
 import { COUNTRY_REVEAL_COST, TIER_CONFIGS, nextInvestigationPenalty } from "@/lib/game/scoring";
@@ -87,7 +87,7 @@ type WorldprintClientProps = {
 function useGameDateKey(dateOverride?: string) {
   const searchParams = useSearchParams();
   const override = searchParams.get("date");
-  return dateOverride ?? (override && /^\d{4}-\d{2}-\d{2}$/.test(override) ? override : utcDateKey(new Date()));
+  return dateOverride ?? (override && /^\d{4}-\d{2}-\d{2}$/.test(override) ? override : localDateKey(new Date()));
 }
 
 function practiceReadyLine(count: number) {
@@ -231,7 +231,7 @@ function reviewResultLabel(detail: CompletionRoundDetail) {
 
 export function WorldprintClient({ dateOverride, entryMode = "standard" }: WorldprintClientProps) {
   const searchParams = useSearchParams();
-  const actualTodayKey = utcDateKey(new Date());
+  const actualTodayKey = localDateKey(new Date());
   const todayKey = useGameDateKey(dateOverride);
   const isArchiveDate = Boolean(dateOverride && todayKey !== actualTodayKey);
   const reviewRequested = isArchiveDate && searchParams.get("review") === "1";
@@ -776,15 +776,6 @@ export function WorldprintClient({ dateOverride, entryMode = "standard" }: World
           ? "Pro account"
           : "Free account"
         : "No account needed";
-    const accessModelCopy = entitlementLoading
-      ? "Checking your account access for this device."
-      : signedIn
-        ? entitlement.plan === "pro"
-          ? "Pro account is active here. Daily, Practice, and Past Games stay playable while account sync grows."
-          : "Free account is active here. The Daily stays playable, and your saved stats can follow this account as sync grows."
-        : isArchiveDate
-          ? "Past games are open in this public build while account limits are not enforced. Future Pro access will open the full atlas."
-        : "Today's public build is open while account limits are not enforced. Future plans will include instant demo play, free Daily play, and paid full atlas access.";
     if (reviewRequested) {
       if (reviewRecord) {
         return (
@@ -823,7 +814,7 @@ export function WorldprintClient({ dateOverride, entryMode = "standard" }: World
           <p className="lead">
             {isArchiveDate
               ? "Replay this past Mystery Map as a record run: five unlabeled maps, one hidden indicator each."
-              : "Today's open beta runs the full 5-map Daily: five unlabeled maps, one hidden indicator each."}{" "}
+              : "Today's Daily is a full 5-map run: five unlabeled maps, one hidden indicator each."}{" "}
             Investigate countries when you need evidence, but every clue spends score.
           </p>
           <div className="entry-facts" aria-label="Daily facts">
@@ -848,10 +839,6 @@ export function WorldprintClient({ dateOverride, entryMode = "standard" }: World
               <strong>Daily</strong>
               Streak run
             </span>
-          </div>
-          <div className="entry-access-note" aria-label="Access model">
-            <span>Access model</span>
-            <p>{accessModelCopy}</p>
           </div>
           {data.dailyManifestIssue ? <p className="archive-note">{data.dailyManifestIssue}</p> : null}
         </div>
@@ -1455,6 +1442,18 @@ function RevealView({
   const finalRoundSolved = run.currentRoundIndex + 1 >= run.rounds.length;
   const hasInvestigationHistory = roundState.unitClueUsed || roundState.investigations.length > 0;
   const transitionPips = Array.from({ length: run.rounds.length }, (_, index) => index);
+  const onNextRef = useRef(onNext);
+
+  useEffect(() => {
+    onNextRef.current = onNext;
+  }, [onNext]);
+
+  useEffect(() => {
+    if (!finalRoundSolved) return;
+    const timeoutId = window.setTimeout(() => onNextRef.current(), 1600);
+    return () => window.clearTimeout(timeoutId);
+  }, [finalRoundSolved]);
+
   return (
     <section className="reveal-layout page-shell">
       <div className="reveal-map" data-result={resultTone}>
@@ -1611,18 +1610,18 @@ function RevealView({
           <a href={indicator.source.sourceReference}>Metadata</a>
         </p>
         <div className="round-transition-card" data-final={finalRoundSolved ? "true" : "false"}>
-          <span>{finalRoundSolved ? "Run complete" : `Map ${nextMapNumber} of ${run.rounds.length}`}</span>
-          <strong>{finalRoundSolved ? "Final score loading." : "Next mystery loading."}</strong>
+          <span>{finalRoundSolved ? "Daily complete" : `Map ${nextMapNumber} of ${run.rounds.length}`}</span>
+          <strong>{finalRoundSolved ? "Score locked. Opening results..." : "Next mystery loading."}</strong>
           <em>Banked {scoreText}</em>
           <div className="transition-pips" aria-hidden="true">
             {transitionPips.map((index) => (
               <i key={index} data-state={index <= run.currentRoundIndex ? "banked" : index === run.currentRoundIndex + 1 ? "next" : "locked"} />
             ))}
           </div>
-          <small>{finalRoundSolved ? "Every map is scored. Your run record is next." : "Preparing the next hidden statistic."}</small>
+          <small>{finalRoundSolved ? "Every map is scored. Your result is opening now." : "Preparing the next hidden statistic."}</small>
         </div>
         <button className="button full-width next-map-button" type="button" onClick={onNext}>
-          {finalRoundSolved ? "See results" : "Next map"}
+          {finalRoundSolved ? "Open results now" : "Next map"}
         </button>
       </div>
     </section>
@@ -1832,7 +1831,7 @@ function FirstRunIntro({ tier, onContinue }: { tier: Tier; onContinue: () => voi
         <ol className="first-run-beats" aria-label="How the Daily works">
           <li>
             <span>01</span>
-            <strong>Read the choropleth pattern.</strong>
+            <strong>Read the map color pattern.</strong>
             <p>Darker countries carry the stronger signal.</p>
           </li>
           <li>

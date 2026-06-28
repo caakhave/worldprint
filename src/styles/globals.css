@@ -3103,13 +3103,22 @@ button:disabled {
   font-size: clamp(0.94rem, 1.7vw, 1.12rem);
   font-weight: 800;
   line-height: 1.15;
-  overflow-wrap: anywhere;
+  overflow-wrap: normal;
+  word-break: normal;
 }
 
 .score-hud-current strong {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  column-gap: 0.34rem;
   color: var(--gold);
-  font-size: clamp(1.35rem, 3.1vw, 2rem);
+  font-size: clamp(1.25rem, 2.6vw, 1.78rem);
   animation: score-pop 260ms ease-out both;
+}
+
+.score-hud-current strong .score-number {
+  white-space: nowrap;
 }
 
 .score-hud-current strong[data-score-tone="negative"] {
@@ -7050,7 +7059,8 @@ dd {
 
   .account-nav-control {
     justify-content: flex-start;
-    width: fit-content;
+    width: auto;
+    max-width: max-content;
     min-height: 2.4rem;
   }
 
@@ -7418,7 +7428,8 @@ dd {
   }
 
   .account-nav-control {
-    width: 100%;
+    width: auto;
+    max-width: 100%;
   }
 
   .account-plan-badge {
