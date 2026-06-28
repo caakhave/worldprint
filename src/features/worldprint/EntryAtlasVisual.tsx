@@ -96,6 +96,7 @@ export function EntryAtlasVisual({ map, indicator, countryNames }: EntryAtlasVis
             countryNames={countryNames}
             investigatedIso3={activeStep.investigatedIso3}
             selectedIso3={activeStep.selectedIso3}
+            fit="cover"
             interactive={false}
             zoomable={false}
             labelledBy="entry-preview-title"

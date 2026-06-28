@@ -14,6 +14,7 @@ type WorldMapProps = {
   countryNames?: Map<string, string>;
   investigatedIso3?: string[];
   selectedIso3?: string | null;
+  fit?: "contain" | "cover";
   interactive?: boolean;
   zoomable?: boolean;
   onCountryClick?: (country: { iso3: string; name: string }) => void;
@@ -26,6 +27,7 @@ export function WorldMap({
   countryNames,
   investigatedIso3 = [],
   selectedIso3,
+  fit = "contain",
   interactive = true,
   zoomable = true,
   onCountryClick,
@@ -130,6 +132,7 @@ export function WorldMap({
         ref={svgRef}
         className="world-map"
         viewBox="0 0 960 520"
+        preserveAspectRatio={fit === "cover" ? "xMidYMid slice" : "xMidYMid meet"}
         role={interactive ? "group" : "img"}
         aria-labelledby={labelledBy}
         onPointerLeave={() => setHovered(null)}

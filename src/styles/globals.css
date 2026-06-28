@@ -2051,7 +2051,9 @@ button:disabled {
 .entry-atlas-visual {
   position: relative;
   overflow: hidden;
-  width: min(100%, 43rem);
+  width: 100%;
+  max-width: none;
+  min-width: 0;
   border: 1px solid rgb(242 234 220 / 0.16);
   border-radius: 7px;
   margin: 0 0 clamp(0.4rem, 1.8vw, 1rem);
@@ -2062,6 +2064,8 @@ button:disabled {
 }
 
 .entry-preview-stage {
+  --entry-preview-inset: clamp(0.7rem, 1.55vw, 1.05rem);
+
   position: relative;
   min-height: clamp(19rem, 30vw, 28rem);
   aspect-ratio: 960 / 560;
@@ -2072,6 +2076,8 @@ button:disabled {
 }
 
 .entry-preview-stage .map-frame {
+  position: absolute;
+  inset: 0;
   height: 100%;
   min-height: 0;
   border: 0;
@@ -2105,7 +2111,9 @@ button:disabled {
 }
 
 .entry-preview-chip {
+  box-sizing: border-box;
   position: absolute;
+  max-width: calc(100% - (var(--entry-preview-inset) * 2));
   border: 1px solid rgb(215 168 75 / 0.42);
   border-radius: 999px;
   padding: 0.36rem 0.58rem;
@@ -2114,19 +2122,22 @@ button:disabled {
   font-family: var(--font-mono);
   font-size: 0.72rem;
   font-weight: 900;
+  line-height: 1.1;
+  overflow-wrap: anywhere;
   text-transform: uppercase;
   box-shadow: 0 10px 24px rgb(0 0 0 / 0.22);
 }
 
 .entry-preview-chip-a {
-  left: 1rem;
-  top: 1rem;
+  left: var(--entry-preview-inset);
+  top: var(--entry-preview-inset);
 }
 
 .entry-preview-chip-b {
-  right: 1rem;
-  top: 1rem;
+  right: var(--entry-preview-inset);
+  top: var(--entry-preview-inset);
   color: var(--signal-2);
+  text-align: right;
 }
 
 .entry-preview-carousel {
@@ -2199,11 +2210,12 @@ button:disabled {
 
 .entry-preview-panel {
   position: absolute;
-  right: 1rem;
-  bottom: 1rem;
+  right: var(--entry-preview-inset);
+  bottom: var(--entry-preview-inset);
   display: grid;
   gap: 0.45rem;
-  width: min(16rem, calc(100% - 2rem));
+  width: min(15.5rem, calc(100% - (var(--entry-preview-inset) * 2)));
+  max-width: calc(100% - (var(--entry-preview-inset) * 2));
   border: 1px solid rgb(164 216 205 / 0.26);
   border-radius: 7px;
   padding: 0.8rem;
@@ -2355,29 +2367,33 @@ button:disabled {
 
 @media (max-width: 720px) {
   .entry-preview-stage {
+    --entry-preview-inset: 0.65rem;
+
     min-height: 18rem;
     aspect-ratio: 4 / 3;
   }
 
   .entry-preview-chip {
+    max-width: calc(50% - 0.85rem);
     font-size: 0.62rem;
   }
 
   .entry-preview-chip-a {
-    left: 0.65rem;
-    top: 0.65rem;
+    left: var(--entry-preview-inset);
+    top: var(--entry-preview-inset);
   }
 
   .entry-preview-chip-b {
-    right: 0.65rem;
-    top: 0.65rem;
+    right: var(--entry-preview-inset);
+    top: var(--entry-preview-inset);
   }
 
   .entry-preview-panel {
-    right: 0.65rem;
-    bottom: 0.65rem;
-    left: 0.65rem;
+    right: var(--entry-preview-inset);
+    bottom: var(--entry-preview-inset);
+    left: var(--entry-preview-inset);
     width: auto;
+    max-width: none;
     padding: 0.7rem;
   }
 
@@ -2457,6 +2473,16 @@ button:disabled {
   margin: 0;
   color: var(--muted);
   line-height: 1.48;
+}
+
+.mode-card .mode-card-note {
+  border: 1px solid rgb(164 216 205 / 0.18);
+  border-radius: 7px;
+  padding: 0.68rem 0.75rem;
+  background: rgb(242 234 220 / 0.035);
+  color: var(--text);
+  font-size: 0.88rem;
+  font-weight: 800;
 }
 
 .mode-card-daily[data-state="complete"] {
@@ -5263,7 +5289,7 @@ dd {
 .account-hero {
   display: grid;
   gap: 1rem;
-  max-width: 66rem;
+  max-width: none;
 }
 
 .account-profile-hero {
@@ -5305,11 +5331,11 @@ dd {
 }
 
 .account-hero .page-title {
-  max-width: 11ch;
+  max-width: min(100%, 24ch);
 }
 
 .account-hero .lead {
-  max-width: 55rem;
+  max-width: 76rem;
 }
 
 .account-hero-media {
@@ -6911,16 +6937,16 @@ dd {
 .archive-hero {
   display: grid;
   gap: clamp(0.85rem, 1.6vw, 1.35rem);
-  max-width: 78rem;
+  max-width: none;
 }
 
 .archive-hero .page-title {
-  max-width: 14ch;
+  max-width: min(100%, 24ch);
 }
 
 .archive-hero .lead {
   margin: 0;
-  max-width: 58rem;
+  max-width: 78rem;
 }
 
 .archive-note.surface {
@@ -7582,7 +7608,7 @@ dd {
   }
 
   .entry-atlas-visual {
-    width: min(100%, 34rem);
+    width: 100%;
   }
 
   .entry-preview-carousel {

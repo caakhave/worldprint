@@ -799,8 +799,8 @@ export function WorldprintClient({ dateOverride, entryMode = "standard" }: World
           : "Free account"
         : "Sample play";
     const dailyCardCopy = signedIn
-      ? "Read the maps, spend points for clues, and lock your official Daily result."
-      : "Try sample maps instantly. Create a free account for fresh Daily play and saved progress.";
+      ? "Today's official 5-map challenge. Your signed-in Daily result, streak, and saved history update when you finish."
+      : "Play samples now. Create a free account for fresh Daily play, saved progress, and streaks.";
     if (reviewRequested) {
       if (reviewRecord) {
         return (
@@ -879,7 +879,7 @@ export function WorldprintClient({ dateOverride, entryMode = "standard" }: World
               <div className="mode-panel-heading">
                 <p className="setup-kicker">Choose your game mode</p>
                 <h2>Pick your run.</h2>
-                <p>Replays do not change your official Daily score.</p>
+                <p>Daily is the official 5-map run. Practice and Past Games stay separate from today&apos;s streak.</p>
               </div>
               <div className="mode-card-grid" aria-label="Mystery Map modes">
                 <article className="mode-card mode-card-daily" data-state={todayCompleted ? "complete" : "ready"} aria-label={todayCompleted ? "Today completed" : "Daily Mystery Map"}>
@@ -889,6 +889,11 @@ export function WorldprintClient({ dateOverride, entryMode = "standard" }: World
                     <p>{dailyCardCopy}</p>
                   </div>
                   {todayCompleted ? <span className="mode-state-pill">Today&apos;s run complete</span> : <span className="mode-state-pill">Ready today</span>}
+                  <p className="mode-card-note">
+                    {signedIn
+                      ? "Signed-in Daily results save to your account history."
+                      : "Guests can sample maps now; free sign-in saves Daily progress and streaks."}
+                  </p>
                   {todayCompleted ? (
                     <div className="daily-return-hook" aria-label="Daily return summary">
                       <div>
@@ -939,7 +944,7 @@ export function WorldprintClient({ dateOverride, entryMode = "standard" }: World
                   <div>
                     <p className="setup-kicker">Practice Atlas</p>
                     <h3>Practice Atlas</h3>
-                    <p>Train on topics and difficulty. Never affects your streak.</p>
+                    <p>Training sets by topic and difficulty. Never affects your Daily score or streak.</p>
                   </div>
                   <div className="practice-filters">
                     <label htmlFor="practice-category">
@@ -1000,7 +1005,7 @@ export function WorldprintClient({ dateOverride, entryMode = "standard" }: World
                   <div>
                     <p className="setup-kicker">Past Games</p>
                     <h3>Past Games</h3>
-                    <p>Review or replay earlier Mystery Maps.</p>
+                    <p>Replay earlier Mystery Maps. Replays never change today&apos;s Daily.</p>
                   </div>
                   <div className="mode-card-actions">
                     <Link className="button-secondary" href="/past-games">

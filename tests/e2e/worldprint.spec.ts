@@ -285,9 +285,9 @@ test("Mystery Map lobby presents game-mode CTAs without motion dependency", asyn
   await expect(page.getByRole("heading", { name: "Choose the hidden indicator" })).toBeVisible();
   await expect(page.getByText("Choose your game mode")).toBeVisible();
   await expect(page.getByText("Daily Mystery Map").first()).toBeVisible();
-  await expect(page.getByText("Try sample maps instantly. Create a free account for fresh Daily play and saved progress.")).toBeVisible();
+  await expect(page.getByText("Play samples now. Create a free account for fresh Daily play, saved progress, and streaks.")).toBeVisible();
   await expect(page.getByText("Practice Atlas").first()).toBeVisible();
-  await expect(page.getByText("Train on topics and difficulty. Never affects your streak.")).toBeVisible();
+  await expect(page.getByText("Training sets by topic and difficulty. Never affects your Daily score or streak.")).toBeVisible();
   await expect(page.getByText("Past Games").first()).toBeVisible();
   await expect(page.getByRole("link", { name: "Open past games" })).toHaveAttribute("href", /\/past-games\/?$/);
   await expect(page.locator(".entry-lobby-strip")).toContainText("Read colors");
@@ -906,7 +906,7 @@ test("practice filters start a filtered preview run", async ({ page }) => {
   await expect(page.getByLabel("Map difficulty")).toBeVisible();
   await expect(page.getByLabel("Map difficulty")).toHaveValue("intro");
   await expect(page.locator('#practice-category option[value="economy"]')).toHaveText("economy · 22 maps");
-  await expect(page.getByText(/Train on topics and difficulty/i)).toBeVisible();
+  await expect(page.getByText(/Training sets by topic and difficulty/i)).toBeVisible();
   await expect(page.getByText(/3 maps ready/i).first()).toBeVisible();
   await expect(page.getByRole("button", { name: /Start practice/i })).toBeEnabled();
   await expect(page.getByText(/Intro practice/i)).toBeVisible();
