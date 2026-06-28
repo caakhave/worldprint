@@ -2065,6 +2065,7 @@ button:disabled {
 
 .entry-preview-stage {
   --entry-preview-inset: clamp(0.7rem, 1.55vw, 1.05rem);
+  --entry-preview-right-inset: clamp(1.35rem, 3vw, 2.35rem);
 
   position: relative;
   min-height: clamp(19rem, 30vw, 28rem);
@@ -2113,7 +2114,7 @@ button:disabled {
 .entry-preview-chip {
   box-sizing: border-box;
   position: absolute;
-  max-width: calc(100% - (var(--entry-preview-inset) * 2));
+  max-width: calc(100% - var(--entry-preview-inset) - var(--entry-preview-right-inset));
   border: 1px solid rgb(215 168 75 / 0.42);
   border-radius: 999px;
   padding: 0.36rem 0.58rem;
@@ -2134,7 +2135,7 @@ button:disabled {
 }
 
 .entry-preview-chip-b {
-  right: var(--entry-preview-inset);
+  right: var(--entry-preview-right-inset);
   top: var(--entry-preview-inset);
   color: var(--signal-2);
   text-align: right;
@@ -2210,12 +2211,12 @@ button:disabled {
 
 .entry-preview-panel {
   position: absolute;
-  right: var(--entry-preview-inset);
+  right: var(--entry-preview-right-inset);
   bottom: var(--entry-preview-inset);
   display: grid;
   gap: 0.45rem;
-  width: min(15.5rem, calc(100% - (var(--entry-preview-inset) * 2)));
-  max-width: calc(100% - (var(--entry-preview-inset) * 2));
+  width: min(15.5rem, calc(100% - var(--entry-preview-inset) - var(--entry-preview-right-inset)));
+  max-width: calc(100% - var(--entry-preview-inset) - var(--entry-preview-right-inset));
   border: 1px solid rgb(164 216 205 / 0.26);
   border-radius: 7px;
   padding: 0.8rem;
@@ -2368,6 +2369,7 @@ button:disabled {
 @media (max-width: 720px) {
   .entry-preview-stage {
     --entry-preview-inset: 0.65rem;
+    --entry-preview-right-inset: 0.85rem;
 
     min-height: 18rem;
     aspect-ratio: 4 / 3;
@@ -2384,12 +2386,12 @@ button:disabled {
   }
 
   .entry-preview-chip-b {
-    right: var(--entry-preview-inset);
+    right: var(--entry-preview-right-inset);
     top: var(--entry-preview-inset);
   }
 
   .entry-preview-panel {
-    right: var(--entry-preview-inset);
+    right: var(--entry-preview-right-inset);
     bottom: var(--entry-preview-inset);
     left: var(--entry-preview-inset);
     width: auto;
@@ -6247,18 +6249,18 @@ dd {
   grid-template-columns: 1fr;
   gap: clamp(0.95rem, 2.4vw, 1.7rem);
   align-items: start;
-  max-width: 76rem;
+  max-width: none;
   margin-bottom: clamp(1.6rem, 4vw, 3rem);
 }
 
 .how-hero .page-title {
-  max-width: 13ch;
+  max-width: min(100%, 24ch);
 }
 
 .how-hero .lead {
-  max-width: 42rem;
+  max-width: 74rem;
   margin: 0;
-  justify-self: end;
+  justify-self: start;
 }
 
 .how-section {
@@ -6379,15 +6381,15 @@ dd {
 .about-hero {
   display: grid;
   gap: 1rem;
-  max-width: 72rem;
+  max-width: none;
 }
 
 .about-hero .page-title {
-  max-width: 15ch;
+  max-width: min(100%, 24ch);
 }
 
 .about-hero .lead {
-  max-width: 64rem;
+  max-width: 76rem;
   margin: 0;
 }
 
@@ -7137,6 +7139,13 @@ dd {
   font-family: var(--font-serif);
   font-size: 1.32rem;
   line-height: 1;
+}
+
+.archive-record-stamp p {
+  margin: 0.22rem 0 0;
+  color: var(--muted);
+  font-size: 0.88rem;
+  line-height: 1.42;
 }
 
 .archive-card-heading {

@@ -9,7 +9,6 @@ import { TierSelector } from "@/features/worldprint/TierSelector";
 import { PlayerStatsPanel } from "@/features/worldprint/PlayerStatsPanel";
 import { useEntitlement } from "@/features/account/useEntitlement";
 import { useSupabaseAccount } from "@/features/account/useSupabaseAccount";
-import { ACCESS_PLAN_COPY } from "@/lib/account/accessCopy";
 import {
   loadEntityRegistry,
   loadIndicator,
@@ -781,10 +780,10 @@ export function WorldprintClient({ dateOverride, entryMode = "standard" }: World
         : isArchiveDate
           ? "Continue replay"
           : "Continue today's Mystery Map"
-      : isArchiveDate
+        : isArchiveDate
         ? archiveRecord
           ? "Replay for practice"
-          : "Try past puzzle"
+          : "Start dated replay"
         : "Start today's Mystery Map";
     const selectedCount = selectedPracticeRounds.length;
     const selectedDifficultyLabel = DIFFICULTY_LABELS[practiceDifficulty];
@@ -799,8 +798,9 @@ export function WorldprintClient({ dateOverride, entryMode = "standard" }: World
           : "Free account"
         : "Sample play";
     const dailyCardCopy = signedIn
-      ? "Today's official 5-map challenge. Your signed-in Daily result, streak, and saved history update when you finish."
-      : "Play samples now. Create a free account for fresh Daily play, saved progress, and streaks.";
+      ? "Today's official dated 5-map run. Finish to save your Daily result, progress, and streak."
+      : "Try sample play now. Create a free account for fresh Daily runs, saved results, and streaks.";
+    const dailyActionLabel = signedIn ? dailyLabel : activeDateRun ? "Continue sample play" : "Try sample play";
     if (reviewRequested) {
       if (reviewRecord) {
         return (
@@ -820,7 +820,7 @@ export function WorldprintClient({ dateOverride, entryMode = "standard" }: World
             <p>Play this past game once to create a result, then return here to review it.</p>
             <div className="button-row">
               <button className="button" type="button" onClick={() => void startRun("archive")}>
-                Try past puzzle
+                Start dated replay
               </button>
               <Link className="button-secondary" href="/past-games">
                 Open past games
@@ -845,7 +845,7 @@ export function WorldprintClient({ dateOverride, entryMode = "standard" }: World
               ? "Replay this past Mystery Map as a record run: five unlabeled maps, one hidden indicator each."
               : signedIn
                 ? "Today's Daily is a Mystery Map run: unlabeled maps, one hidden indicator each."
-                : `${ACCESS_PLAN_COPY.guest.headline} Create a free account for fresh Daily play and saved progress.`}{" "}
+                : "Try sample play now. Create a free account for fresh Daily runs, saved results, and streaks."}{" "}
             Investigate countries when you need evidence, but every clue spends points.
           </p>
           <div className="entry-facts" aria-label="Daily facts">
@@ -882,17 +882,17 @@ export function WorldprintClient({ dateOverride, entryMode = "standard" }: World
                 <p>Daily is the official 5-map run. Practice and Past Games stay separate from today&apos;s streak.</p>
               </div>
               <div className="mode-card-grid" aria-label="Mystery Map modes">
-                <article className="mode-card mode-card-daily" data-state={todayCompleted ? "complete" : "ready"} aria-label={todayCompleted ? "Today completed" : "Daily Mystery Map"}>
+                <article className="mode-card mode-card-daily" data-state={todayCompleted ? "complete" : "ready"} aria-label={todayCompleted ? "Today completed" : "Today's Mystery Map"}>
                   <div>
-                    <p className="setup-kicker">Daily Mystery Map</p>
-                    <h3>Daily Mystery Map</h3>
+                    <p className="setup-kicker">Daily Challenge</p>
+                    <h3>Today&apos;s Mystery Map</h3>
                     <p>{dailyCardCopy}</p>
                   </div>
                   {todayCompleted ? <span className="mode-state-pill">Today&apos;s run complete</span> : <span className="mode-state-pill">Ready today</span>}
                   <p className="mode-card-note">
                     {signedIn
                       ? "Signed-in Daily results save to your account history."
-                      : "Guests can sample maps now; free sign-in saves Daily progress and streaks."}
+                      : "Sample play is available now. Saving Daily progress and streaks requires free sign-in."}
                   </p>
                   {todayCompleted ? (
                     <div className="daily-return-hook" aria-label="Daily return summary">
@@ -934,7 +934,7 @@ export function WorldprintClient({ dateOverride, entryMode = "standard" }: World
                         ) : null}
                         <button className={signedIn ? "button" : "button-secondary"} type="button" onClick={() => void startRun("daily")}>
                           <Compass size={18} aria-hidden="true" />
-                          {signedIn ? dailyLabel : activeDateRun ? dailyLabel : "Try sample maps"}
+                          {dailyActionLabel}
                         </button>
                       </>
                     )}
@@ -1001,18 +1001,6 @@ export function WorldprintClient({ dateOverride, entryMode = "standard" }: World
                     </button>
                   </div>
                 </article>
-                <article className="mode-card mode-card-past">
-                  <div>
-                    <p className="setup-kicker">Past Games</p>
-                    <h3>Past Games</h3>
-                    <p>Replay earlier Mystery Maps. Replays never change today&apos;s Daily.</p>
-                  </div>
-                  <div className="mode-card-actions">
-                    <Link className="button-secondary" href="/past-games">
-                      Open past games
-                    </Link>
-                  </div>
-                </article>
               </div>
               <div className="setup-section setup-section-compact">
                 <div className="setup-heading">
@@ -1021,6 +1009,18 @@ export function WorldprintClient({ dateOverride, entryMode = "standard" }: World
                 </div>
                 <TierSelector value={selectedTier} onChange={updateTier} />
               </div>
+              <article className="mode-card mode-card-past">
+                <div>
+                  <p className="setup-kicker">Past Games</p>
+                  <h3>Past Games</h3>
+                  <p>Replay earlier Mystery Maps. Replays never change today&apos;s Daily.</p>
+                </div>
+                <div className="mode-card-actions">
+                  <Link className="button-secondary" href="/past-games">
+                    Open past games
+                  </Link>
+                </div>
+              </article>
             </>
           ) : (
             <>

@@ -96,7 +96,10 @@ async function dismissFirstRunIntroIfVisible(page: Page) {
   }
 }
 
-async function clickDailyStart(page: Page, name: RegExp = /Try sample maps|Start today's Mystery Map|Continue today's Mystery Map|View today's result/) {
+async function clickDailyStart(
+  page: Page,
+  name: RegExp = /Try sample play|Try sample maps|Start today's Mystery Map|Continue today's Mystery Map|View today's result/
+) {
   await page.getByRole("button", { name }).click();
   await dismissFirstRunIntroIfVisible(page);
 }
@@ -284,8 +287,8 @@ test("Mystery Map lobby presents game-mode CTAs without motion dependency", asyn
   await expect(page.getByTestId("entry-preview-step-index")).toHaveText("Step 4/5");
   await expect(page.getByRole("heading", { name: "Choose the hidden indicator" })).toBeVisible();
   await expect(page.getByText("Choose your game mode")).toBeVisible();
-  await expect(page.getByText("Daily Mystery Map").first()).toBeVisible();
-  await expect(page.getByText("Play samples now. Create a free account for fresh Daily play, saved progress, and streaks.")).toBeVisible();
+  await expect(page.getByText("Today's Mystery Map").first()).toBeVisible();
+  await expect(page.getByText("Try sample play now. Create a free account for fresh Daily runs, saved results, and streaks.").first()).toBeVisible();
   await expect(page.getByText("Practice Atlas").first()).toBeVisible();
   await expect(page.getByText("Training sets by topic and difficulty. Never affects your Daily score or streak.")).toBeVisible();
   await expect(page.getByText("Past Games").first()).toBeVisible();
@@ -294,14 +297,14 @@ test("Mystery Map lobby presents game-mode CTAs without motion dependency", asyn
   await expect(page.locator(".entry-lobby-strip")).toContainText("Clue points");
   await expect(page.locator(".game-entry")).not.toContainText(/Access model|account limits|future plans|open preview/i);
   await expect(page.getByRole("link", { name: "Create free account" })).toBeVisible();
-  await expect(page.getByRole("button", { name: /Try sample maps/i })).toBeVisible();
+  await expect(page.getByRole("button", { name: /Try sample play/i })).toBeVisible();
   await expectNoHorizontalOverflow(page);
 });
 
 test("first Daily shows a compact intro once and remembers dismissal", async ({ page }) => {
   await page.goto(`/play/mystery-map?date=${TEST_DATE}`);
   await page.getByLabel("Analyst").check();
-  await page.getByRole("button", { name: /Try sample maps/i }).click();
+  await page.getByRole("button", { name: /Try sample play/i }).click();
 
   const intro = page.getByLabel("First run intro");
   await expect(intro).toBeVisible();
@@ -318,7 +321,7 @@ test("first Daily shows a compact intro once and remembers dismissal", async ({ 
   expect(persistedIntroState.onboardingComplete).toBe(true);
 
   await page.goto(`/play/mystery-map?date=${TEST_DATE}`);
-  await page.getByRole("button", { name: /Continue today's Mystery Map/i }).click();
+  await page.getByRole("button", { name: /Continue sample play/i }).click();
   await expect(page.getByLabel("First run intro")).toHaveCount(0);
   await expect(page.getByRole("heading", { name: /What does this map measure/i })).toBeVisible();
 
@@ -341,7 +344,7 @@ test("v9 lobby layout and carousel controls hold across desktop, tablet, and mob
     await page.goto(`/play/mystery-map?date=${TEST_DATE}`);
     await expect(page.getByTestId("entry-atlas-visual")).toBeVisible();
     await expect(page.getByText("Choose your game mode")).toBeVisible();
-    await expect(page.getByRole("button", { name: /Try sample maps/i })).toBeVisible();
+    await expect(page.getByRole("button", { name: /Try sample play/i })).toBeVisible();
     await expect(page.getByRole("button", { name: /^Start practice$/i })).toBeVisible();
     await expect(page.getByRole("link", { name: "Open past games" })).toBeVisible();
 
@@ -722,8 +725,8 @@ test("archive route opens a dated Daily without affecting today's streak", async
   await expect(page.getByText(/Streak stays safe/i)).toBeVisible();
   await expect(page.getByText(/Past Mystery Map Replay/i).first()).toBeVisible();
   await expect(page.getByText(/No result yet/i)).toBeVisible();
-  await expect(page.getByRole("button", { name: "Try past puzzle" })).toBeVisible();
-  await page.getByRole("button", { name: "Try past puzzle" }).click();
+  await expect(page.getByRole("button", { name: "Start dated replay" })).toBeVisible();
+  await page.getByRole("button", { name: "Start dated replay" }).click();
   await expect(page.getByText(`Past Mystery Map Replay ${TEST_DATE}`)).toBeVisible();
   for (let index = 0; index < 5; index += 1) {
     await answerButton(page, correctLabel(index)).click();
@@ -850,7 +853,7 @@ test("refresh preserves an active run", async ({ page }) => {
   await page.getByRole("button", { name: /Reveal Mexico's value/i }).click();
   await expect(scoreValue(page)).toHaveText("900");
   await page.reload();
-  await page.getByRole("button", { name: /Continue today's Mystery Map/i }).click();
+  await page.getByRole("button", { name: /Continue sample play/i }).click();
   await expect(scoreValue(page)).toHaveText("900");
 });
 
@@ -859,7 +862,7 @@ test("keyboard-only answer flow works", async ({ page }) => {
   await page.keyboard.press("Tab");
   await page.keyboard.press("Tab");
   await page.getByLabel("Analyst").check();
-  await page.getByRole("button", { name: /Try sample maps/i }).focus();
+  await page.getByRole("button", { name: /Try sample play/i }).focus();
   await page.keyboard.press("Enter");
   const intro = page.getByLabel("First run intro");
   await expect(intro).toBeVisible();
@@ -900,7 +903,7 @@ test("practice filters start a filtered preview run", async ({ page }) => {
   await expect(page.getByText(/Sample play/i)).toBeVisible();
   await expect(page.getByText(/Free account unlocks Daily/i)).toBeVisible();
   await expect(page.getByText(/Practice mode included/i)).toBeVisible();
-  await expect(page.getByText(/Create a free account for fresh Daily play and saved progress/i).first()).toBeVisible();
+  await expect(page.getByText(/Create a free account for fresh Daily runs, saved results, and streaks/i).first()).toBeVisible();
   await expect(page.getByTestId("entry-atlas-visual")).toBeVisible();
   await expect(page.getByText(/Practice Atlas/i).first()).toBeVisible();
   await expect(page.getByLabel("Map difficulty")).toBeVisible();
@@ -1071,11 +1074,12 @@ test("past games page reads as player replay, not admin archive", async ({ page 
   await expect(page.getByText(/replay for practice/i)).toBeVisible();
   await expect(page.getByText(/Past Games are separate from today's Daily/i)).toBeVisible();
   await expect(page.getByRole("heading", { name: "Sign in to keep Past Games history." })).toBeVisible();
-  await expect(page.getByText(/Logged-out visitors can try sample replays/i)).toBeVisible();
+  await expect(page.getByText(/Sample replays are playable now/i)).toBeVisible();
   await expect(page.getByLabel("Past Mystery Map Dailies").getByRole("link", { name: "Create free account" }).first()).toBeVisible();
   await expect(page.getByLabel("Past Mystery Map Dailies").getByRole("link", { name: "Try sample replay" }).first()).toBeVisible();
   await expect(page.getByRole("heading", { name: "Create a free account for saved Past Games." })).toBeVisible();
-  await expect(page.getByText(/Showing 14 recent sample replays/i)).toBeVisible();
+  await expect(page.getByText(/Showing 6 recent sample replays/i)).toBeVisible();
+  await expect(page.locator("body")).not.toContainText(/Fixed past puzzle|Past puzzle/i);
   await expect(page.locator("body")).not.toContainText(/manifest|archive window|localStorage|generated data|content version|admin|Record Book|Replay Library|record slot/i);
   await expect(page.locator("body")).not.toContainText("WORLDPRINT");
   expect(await page.evaluate(() => document.documentElement.scrollWidth > window.innerWidth)).toBe(false);

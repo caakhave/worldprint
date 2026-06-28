@@ -15,6 +15,8 @@ import { TIER_CONFIGS } from "@/lib/game/scoring";
 import { defaultPersistedState, loadPersistedState, type CompletionHistory, type PersistedState } from "@/lib/persistence/storage";
 import type { GameRunRow } from "@/lib/supabase/database";
 
+const GUEST_ARCHIVE_SAMPLE_LIMIT = 6;
+
 function mixLabel(mix: Record<string, number>) {
   return Object.entries(mix)
     .map(([key, count]) => (count > 1 ? `${key} x${count}` : key))
@@ -36,6 +38,12 @@ function formatSavedDate(value: string | null | undefined): string | null {
   const date = new Date(value);
   if (Number.isNaN(date.getTime())) return null;
   return new Intl.DateTimeFormat("en-US", { month: "short", day: "numeric", year: "numeric" }).format(date);
+}
+
+function formatReplayDate(value: string): string {
+  const date = new Date(`${value}T00:00:00`);
+  if (Number.isNaN(date.getTime())) return value;
+  return new Intl.DateTimeFormat("en-US", { month: "long", day: "numeric", year: "numeric" }).format(date);
 }
 
 function recordRankTitle(score: number | null, roundCount: number): string {
@@ -67,10 +75,14 @@ export function ArchiveCard({
   const tierLabel = isTierKey(savedTier) ? TIER_CONFIGS[savedTier].shortLabel : hasCompletion ? "Unknown tier" : "Choose on setup";
   const savedDate = formatSavedDate(accountRun?.completed_at ?? completion?.completedAt);
   const status = accountRun ? "Saved to account" : completion ? "Saved on this browser" : signedIn ? "Unplayed" : "Sign in to save";
-  const actionLabel = hasCompletion ? "View result" : signedIn ? "Try past puzzle" : "Create free account";
-  const recordRank = !signedIn && !hasCompletion ? "Past puzzle" : recordRankTitle(bestScore, entry.roundCount);
+  const actionLabel = hasCompletion ? "View result" : signedIn ? "Start dated replay" : "Create free account";
+  const dailyNumber = challengeNumber(entry.date);
+  const replayTitle = `Mystery Map Daily #${dailyNumber}`;
+  const recordTitle = hasCompletion ? recordRankTitle(bestScore, entry.roundCount) : replayTitle;
+  const replayDate = formatReplayDate(entry.date);
   const roundScores = completion?.roundScores ?? null;
   const cleanRoundCount = roundScores ? roundScores.filter((score) => score >= 1000).length : null;
+  const savedLabel = savedDate ?? (signedIn ? "Not saved yet" : "Sign in to save");
   return (
     <article className="archive-card" data-today={isToday ? "true" : "false"} data-completed={hasCompletion ? "true" : "false"}>
       <div className="archive-card-signal" aria-hidden="true">
@@ -104,8 +116,9 @@ export function ArchiveCard({
         </div>
       </dl>
       <div className="archive-record-stamp" data-state={hasCompletion ? "saved" : "mission"}>
-        <span>{hasCompletion ? "Past game rank" : signedIn ? "Available past game" : "Fixed past puzzle"}</span>
-        <strong>{recordRank}</strong>
+        <span>{hasCompletion ? "Saved result" : "Dated replay"}</span>
+        <strong>{recordTitle}</strong>
+        <p>{hasCompletion ? "Review your saved result or replay for practice." : `Replay the fixed ${entry.roundCount}-map set from ${replayDate}.`}</p>
       </div>
       <dl className="archive-record-meta" aria-label="Record details">
         <div>
@@ -117,12 +130,12 @@ export function ArchiveCard({
           <dd>{tierLabel}</dd>
         </div>
         <div>
-          <dt>Rounds</dt>
-          <dd>{cleanRoundCount === null ? `${entry.roundCount} fixed maps` : `${cleanRoundCount}/${entry.roundCount} clean`}</dd>
+          <dt>{cleanRoundCount === null ? "Replay set" : "Clean maps"}</dt>
+          <dd>{cleanRoundCount === null ? `${entry.roundCount} maps` : `${cleanRoundCount}/${entry.roundCount} clean`}</dd>
         </div>
         <div>
           <dt>Saved</dt>
-          <dd>{savedDate ?? (signedIn ? "Not saved yet" : "Account history")}</dd>
+          <dd>{savedLabel}</dd>
         </div>
       </dl>
       <div className="archive-card-action" data-state={hasCompletion ? "saved" : signedIn ? "open" : "guest"}>
@@ -142,8 +155,8 @@ export function ArchiveCard({
           {hasCompletion
             ? "Replay for practice. Your official Daily score will not change."
             : signedIn
-              ? "Fixed 5-map past game. Play once without touching today's streak."
-              : "Sample replay only. Sign in to keep Past Games history with your account."}
+              ? "Dated replay. Separate from today's Daily and streak."
+              : "Sample replay. Sign in free to save history and results."}
         </p>
       </div>
     </article>
@@ -193,8 +206,8 @@ export function ArchiveClient() {
     return publicArchiveEntries(index.dates, todayKey);
   }, [index, todayKey]);
   const visibleEntries = useMemo(
-    () => visibleArchiveEntries(entries, store, entitlement.capabilities.archiveLimitDays),
-    [entries, entitlement.capabilities.archiveLimitDays, store]
+    () => visibleArchiveEntries(entries, store, signedIn ? entitlement.capabilities.archiveLimitDays : GUEST_ARCHIVE_SAMPLE_LIMIT),
+    [entries, entitlement.capabilities.archiveLimitDays, signedIn, store]
   );
   const publicRange = archiveDateRange(entries);
   const hiddenCount = Math.max(0, entries.length - visibleEntries.length);
@@ -246,7 +259,7 @@ export function ArchiveClient() {
         <span>
           {signedIn
             ? "Today's Mystery Map updates the live streak; replayed dates save as Past Games for your account."
-            : "Try sample replays here, then create a free account to keep Past Games history."}
+            : `Logged-out players can try the ${GUEST_ARCHIVE_SAMPLE_LIMIT} most recent sample replays. Create a free account to save Past Games history.`}
         </span>
       </div>
       {hiddenCount > 0 ? (
@@ -264,7 +277,7 @@ export function ArchiveClient() {
               {entitlement.plan === "pro"
                 ? `Showing ${visibleEntries.length} Past Games from the atlas.`
                 : !signedIn
-                  ? `Showing ${visibleEntries.length} recent sample replays. Free accounts save progress; Pro unlocks the complete archive with ${hiddenCount} more Mystery Map${
+                  ? `Showing ${visibleEntries.length} recent sample replay${visibleEntries.length === 1 ? "" : "s"}. Free accounts save replay history; Pro unlocks the complete archive with ${hiddenCount} more Mystery Map${
                       hiddenCount === 1 ? "" : "s"
                     }.`
                 : `Showing ${visibleEntries.length} recent Past Games. Pro will unlock the complete archive with ${hiddenCount} more Mystery Map${
@@ -284,7 +297,7 @@ export function ArchiveClient() {
           <div>
             <p className="eyebrow">Free account</p>
             <h2>Sign in to keep Past Games history.</h2>
-            <p>Logged-out visitors can try sample replays, but saved results, streaks, and basic stats belong to accounts.</p>
+            <p>Sample replays are playable now. Free sign-in saves Past Games results, Daily streaks, and basic stats to your account.</p>
           </div>
           <Link className="button" href="/sign-in">
             Create a free account

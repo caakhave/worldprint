@@ -64,6 +64,7 @@ describe("ArchiveCard", () => {
     expect(screen.getByText("Jun 24, 2026")).toBeVisible();
     expect(screen.getByRole("link", { name: "View result" })).toHaveAttribute("href", "/play/mystery-map/2026-06-24?review=1");
     expect(screen.getByRole("link", { name: "Replay for practice" })).toBeVisible();
+    expect(screen.getByText("Saved result")).toBeVisible();
     expect(screen.getByText(/Your official Daily score will not change/i)).toBeVisible();
   });
 
@@ -83,17 +84,19 @@ describe("ArchiveCard", () => {
 
     rerender(<ArchiveCard entry={entry()} todayKey="2026-06-26" completion={null} accountRun={null} />);
     expect(screen.getByText("Unplayed")).toBeVisible();
-    expect(screen.getByRole("link", { name: "Try past puzzle" })).toBeVisible();
+    expect(screen.getByRole("link", { name: "Start dated replay" })).toBeVisible();
+    expect(screen.getAllByText("Mystery Map Daily #175").length).toBeGreaterThanOrEqual(1);
   });
 
   it("frames signed-out past games as sample replays, not account history", () => {
     render(<ArchiveCard entry={entry()} todayKey="2026-06-26" completion={null} accountRun={null} signedIn={false} />);
 
-    expect(screen.getAllByText("Sign in to save")).toHaveLength(2);
-    expect(screen.getByText("Past puzzle")).toBeVisible();
-    expect(screen.getByText("Account history")).toBeVisible();
+    expect(screen.getAllByText("Sign in to save").length).toBeGreaterThanOrEqual(2);
+    expect(screen.getByText("Dated replay")).toBeVisible();
+    expect(screen.getAllByText("Mystery Map Daily #175").length).toBeGreaterThanOrEqual(1);
+    expect(screen.getByText(/Replay the fixed 5-map set from June 24, 2026/i)).toBeVisible();
     expect(screen.getByRole("link", { name: "Create free account" })).toHaveAttribute("href", "/sign-in");
     expect(screen.getByRole("link", { name: "Try sample replay" })).toHaveAttribute("href", "/play/mystery-map/2026-06-24");
-    expect(screen.getByText(/Sample replay only/i)).toBeVisible();
+    expect(screen.getByText(/Sample replay\. Sign in free/i)).toBeVisible();
   });
 });
