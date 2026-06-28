@@ -11,7 +11,7 @@ export const metadata: Metadata = {
 
 export default function SignInPage() {
   return (
-    <section className="account-page account-page-shell page-shell" aria-labelledby="sign-in-title">
+    <section className="account-page account-page-shell page-shell info-page-shell" aria-labelledby="sign-in-title">
       <div className="account-hero">
         <p className="eyebrow">Free account</p>
         <h1 id="sign-in-title" className="page-title">

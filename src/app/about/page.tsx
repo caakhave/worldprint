@@ -7,7 +7,7 @@ export const metadata: Metadata = {
 
 export default function AboutPage() {
   return (
-    <section className="about-page page-shell map-texture-page">
+    <section className="about-page page-shell info-page-shell">
       <div className="about-hero">
         <p className="eyebrow">Mission</p>
         <h1 className="page-title">A game about seeing what maps are saying.</h1>

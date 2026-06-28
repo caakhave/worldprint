@@ -288,27 +288,34 @@ button:disabled {
   margin: 0 auto;
 }
 
+.info-page-shell,
 .map-texture-page {
   position: relative;
   isolation: isolate;
 }
 
+.info-page-shell::before,
 .map-texture-page::before {
   content: "";
   position: absolute;
-  inset: -2rem -1rem;
+  top: -6rem;
+  bottom: -5rem;
+  left: 50%;
+  width: 100vw;
   z-index: 0;
   pointer-events: none;
-  opacity: 0.62;
+  opacity: 0.68;
   background:
-    radial-gradient(ellipse at 12% 14%, transparent 0 39%, rgb(164 216 205 / 0.055) 39.4% 39.8%, transparent 40.2% 100%),
-    radial-gradient(ellipse at 82% 18%, transparent 0 43%, rgb(215 168 75 / 0.04) 43.3% 43.7%, transparent 44.2% 100%),
-    radial-gradient(ellipse at 68% 86%, transparent 0 35%, rgb(164 216 205 / 0.045) 35.4% 35.8%, transparent 36.2% 100%),
-    linear-gradient(118deg, transparent 0 46%, rgb(164 216 205 / 0.035) 46.2% 46.45%, transparent 46.7% 100%),
-    linear-gradient(26deg, transparent 0 58%, rgb(242 234 220 / 0.028) 58.15% 58.35%, transparent 58.6% 100%);
+    radial-gradient(ellipse at 5% 11%, transparent 0 42%, rgb(164 216 205 / 0.06) 42.35% 42.7%, transparent 43.1% 100%),
+    radial-gradient(ellipse at 91% 16%, transparent 0 44%, rgb(215 168 75 / 0.044) 44.25% 44.6%, transparent 45% 100%),
+    radial-gradient(ellipse at 74% 91%, transparent 0 38%, rgb(164 216 205 / 0.05) 38.3% 38.65%, transparent 39.05% 100%),
+    linear-gradient(118deg, transparent 0 42%, rgb(164 216 205 / 0.038) 42.18% 42.42%, transparent 42.75% 100%),
+    linear-gradient(26deg, transparent 0 61%, rgb(242 234 220 / 0.03) 61.12% 61.34%, transparent 61.65% 100%);
   mask-image: linear-gradient(180deg, transparent 0%, black 12%, black 88%, transparent 100%);
+  transform: translateX(-50%);
 }
 
+.info-page-shell > *,
 .map-texture-page > * {
   position: relative;
   z-index: 1;

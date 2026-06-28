@@ -217,7 +217,7 @@ export function ArchiveClient() {
 
   if (error) {
     return (
-      <section className="archive-page page-shell">
+      <section className="archive-page page-shell info-page-shell">
         <div className="empty-state surface">
           <p className="eyebrow">Past games unavailable</p>
           <h1>Past games did not load.</h1>
@@ -229,7 +229,7 @@ export function ArchiveClient() {
 
   if (!index) {
     return (
-      <section className="archive-page page-shell">
+      <section className="archive-page page-shell info-page-shell">
         <div className="empty-state surface">
           <h1>Loading past games…</h1>
           <p>Finding recent Mystery Map Dailies.</p>
@@ -239,7 +239,7 @@ export function ArchiveClient() {
   }
 
   return (
-    <section className="archive-page page-shell map-texture-page">
+    <section className="archive-page page-shell info-page-shell">
       <div className="archive-hero">
         <p className="eyebrow">Past Games</p>
         <h1 className="page-title">Review Past Mystery Maps.</h1>

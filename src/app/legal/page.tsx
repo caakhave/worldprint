@@ -10,7 +10,7 @@ export const metadata: Metadata = {
 
 export default function LegalPage() {
   return (
-    <section className="legal-page page-shell" aria-labelledby="legal-title">
+    <section className="legal-page page-shell info-page-shell" aria-labelledby="legal-title">
       <header className="legal-hero">
         <p className="eyebrow">Legal</p>
         <h1 id="legal-title" className="page-title">

@@ -8,7 +8,7 @@ export const metadata: Metadata = {
 
 export default function HowToPlayPage() {
   return (
-    <section className="how-page page-shell map-texture-page">
+    <section className="how-page page-shell info-page-shell">
       <div className="how-hero map-texture-panel">
         <div>
           <p className="eyebrow">How to play</p>

@@ -23,7 +23,7 @@ export default function SourcesPage() {
   const sourceEntries = sources.sources as SourceEntry[];
 
   return (
-    <section className="sources-page page-shell">
+    <section className="sources-page page-shell info-page-shell">
       <header className="sources-hero">
         <p className="eyebrow">Data &amp; sources</p>
         <h1 className="page-title">Real data, readable puzzles.</h1>
