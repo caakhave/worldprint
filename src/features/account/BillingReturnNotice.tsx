@@ -55,7 +55,7 @@ export function BillingReturnNotice({ context }: { context: "account" | "upgrade
           {loading
             ? "Stripe is confirming your subscription. This usually takes a moment."
             : proActive
-              ? "The full practice atlas, complete Past Games archive, and advanced stats are unlocked on this account."
+              ? "The full Practice Atlas, complete Past Games archive, and advanced stats are unlocked on this account."
               : "Stripe finished checkout and the subscription update is still arriving. Refresh in a moment if your account does not switch to Pro."}
         </p>
       </div>

@@ -99,7 +99,7 @@ export function SignInClient() {
       <article className="surface account-card account-primary-card">
         <p className="eyebrow">Create a free account</p>
         <h2>Email sign-in is not available in this preview.</h2>
-        <p>Sample maps are still available in this browser. Fresh Daily play and saved progress start with a free account.</p>
+        <p>Sample play is still available in this browser. The official 5-map Daily and saved progress start with a free account.</p>
         <div className="account-disabled-panel" role="status">
           Account saving is offline for this build.
         </div>
@@ -108,7 +108,7 @@ export function SignInClient() {
             Create a free account
           </button>
           <Link className="button-secondary" href="/play/mystery-map">
-            Try sample maps
+            Try sample play
           </Link>
         </div>
       </article>
@@ -188,7 +188,7 @@ export function SignInClient() {
         </p>
       ) : null}
       <p className="account-env-note">Returning later? Use the same email and request a fresh link.</p>
-      <p className="account-env-note">{ACCESS_PLAN_COPY.guest.headline} Fresh Daily play requires a free account.</p>
+      <p className="account-env-note">{ACCESS_PLAN_COPY.guest.headline} The official 5-map Daily requires a free account.</p>
     </article>
   );
 }

@@ -190,14 +190,6 @@ export default function LegalPage() {
           </section>
         </article>
 
-        <div className="legal-sidecar surface" aria-label="Legal contact">
-          <p className="setup-kicker">Contact</p>
-          <h2>Questions or privacy requests?</h2>
-          <p>
-            Email <a href={`mailto:${CONTACT_EMAIL}`}>{CONTACT_EMAIL}</a> with your request and the account email, if you have one.
-          </p>
-          <p>This is practical launch boilerplate and should be reviewed before a larger public or paid launch.</p>
-        </div>
       </div>
     </section>
   );

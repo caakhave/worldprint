@@ -36,9 +36,9 @@ export function AccountStatusClient() {
       <article className="surface account-card account-primary-card">
         <p className="eyebrow">Account status</p>
         <h2>Email sign-in is unavailable in this preview.</h2>
-        <p>Sample maps are available in this browser. Fresh Daily play and saved progress start with a free account.</p>
+        <p>Sample play is available in this browser. The official 5-map Daily and saved progress start with a free account.</p>
         <Link className="button-secondary" href="/play/mystery-map">
-          Try sample maps
+          Try sample play
         </Link>
       </article>
     );
@@ -65,7 +65,7 @@ export function AccountStatusClient() {
             Create a free account
           </Link>
           <Link className="button-secondary" href="/play/mystery-map">
-            Try sample maps
+            Try sample play
           </Link>
         </div>
       </article>

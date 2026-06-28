@@ -28,7 +28,7 @@ export function AccountPlanNotesClient() {
   }
 
   const billingTitle = isPro ? "Manage billing" : signedIn ? "Upgrade access" : "Compare plans";
-  const billingCopy = isPro ? "Plan controls and receipts." : "Full archive, full practice, advanced stats.";
+  const billingCopy = isPro ? "Plan controls and receipts." : "Full Practice Atlas, complete Past Games archive, advanced stats.";
   const billingAction = isPro ? "Manage billing" : signedIn ? "Upgrade to Pro" : "View plans";
 
   if (!signedIn) {
@@ -36,7 +36,7 @@ export function AccountPlanNotesClient() {
       <section className="account-actions-grid" aria-label="Account actions" role="region">
         <article className="surface account-card account-action-card">
           <p className="eyebrow">Free account</p>
-          <h2>Fresh Daily play</h2>
+          <h2>Official 5-map Daily</h2>
           <p>{ACCESS_PLAN_COPY.guest.summary}</p>
           <Link className="button" href="/sign-in">
             Create a free account
@@ -45,13 +45,13 @@ export function AccountPlanNotesClient() {
 
         <article className="surface account-card account-action-card">
           <p className="eyebrow">Sample play</p>
-          <h2>Try a few maps</h2>
+          <h2>Try sample play</h2>
           <p>Sample maps let you feel the game before creating an account.</p>
           <span className="account-action-stat">
             {localRecordCount} browser record{localRecordCount === 1 ? "" : "s"}
           </span>
           <Link className="button-secondary" href="/play/mystery-map">
-            Try sample maps
+            Try sample play
           </Link>
         </article>
       </section>
@@ -75,7 +75,7 @@ export function AccountPlanNotesClient() {
       <article className="surface account-card account-action-card">
         <p className="eyebrow">Past Games</p>
         <h2>Review results</h2>
-        <p>Past Mystery Maps and saved runs.</p>
+        <p>Dated Daily replays and saved runs.</p>
         <Link className="button-secondary" href="/past-games">
           Open Past Games
         </Link>
@@ -84,7 +84,7 @@ export function AccountPlanNotesClient() {
       <article className="surface account-card account-action-card">
         <p className="eyebrow">Practice Atlas</p>
         <h2>Train a topic</h2>
-        <p>Warm up by topic and difficulty.</p>
+        <p>3-map training sets by topic and difficulty.</p>
         <Link className="button-secondary" href="/play/mystery-map">
           Start practice
         </Link>

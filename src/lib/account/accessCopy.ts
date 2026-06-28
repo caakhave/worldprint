@@ -15,20 +15,20 @@ export type AccessPlanCopy = {
 export const ACCESS_PLAN_COPY: Record<AccountPlan, AccessPlanCopy> = {
   guest: {
     label: "Sample play",
-    headline: "Try a few sample maps instantly.",
-    summary: "Try a few sample maps instantly. Create a free account to play fresh Daily maps and save your progress.",
+    headline: "Try sample play instantly.",
+    summary: "Try sample play without an account. Create a free account for the official 5-map Daily, saved results, progress, and streaks.",
     primaryCta: "Create a free account"
   },
   free: {
     label: "Free account",
-    headline: "Fresh Daily play and saved progress.",
-    summary: "Free accounts unlock fresh Daily play, saved progress, streaks, and basic stats.",
+    headline: "Official Daily and saved progress.",
+    summary: "Free accounts unlock the official 5-map Daily, saved results, streaks, progress, and basic stats.",
     primaryCta: "Play today's Mystery Map"
   },
   pro: {
     label: "Pro",
     headline: "The full atlas is open.",
-    summary: "Pro unlocks the full practice atlas, complete Past Games archive, advanced stats, and broader play.",
+    summary: "Pro unlocks the full Practice Atlas, complete Past Games archive, advanced stats, and future premium surfaces.",
     primaryCta: "Open the full atlas"
   }
 };
@@ -42,9 +42,9 @@ export function accessCopyForEntitlement(entitlement: PlayerEntitlement): Access
 }
 
 export function practiceAccessLabel(entitlement: PlayerEntitlement): string {
-  if (entitlement.capabilities.canUseFullPractice) return "Full practice atlas";
+  if (entitlement.capabilities.canUseFullPractice) return "Full Practice Atlas";
   if (entitlement.plan === "guest") return "Sample practice maps";
-  return `${entitlement.capabilities.practiceLimit ?? LIMITED_PRACTICE_MAPS}-map practice warm-ups`;
+  return `${entitlement.capabilities.practiceLimit ?? LIMITED_PRACTICE_MAPS}-map Practice sets`;
 }
 
 export function archiveAccessLabel(entitlement: PlayerEntitlement): string {
@@ -56,5 +56,5 @@ export function archiveAccessLabel(entitlement: PlayerEntitlement): string {
 export function statsAccessLabel(entitlement: PlayerEntitlement): string {
   if (entitlement.capabilities.canViewAdvancedStats) return "Advanced stats";
   if (entitlement.capabilities.canSaveStats) return "Saved progress and basic stats";
-  return "Browser-only sample progress";
+  return "Browser-only sample play";
 }

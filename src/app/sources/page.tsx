@@ -1,6 +1,5 @@
 import type { Metadata } from "next";
 import sources from "../../../public/data/v1/sources.json";
-import manifest from "../../../public/data/v1/manifest.json";
 import { storageDescription } from "@/lib/persistence/storage";
 
 export const metadata: Metadata = {
@@ -22,7 +21,6 @@ type SourceEntry = {
 
 export default function SourcesPage() {
   const sourceEntries = sources.sources as SourceEntry[];
-  const refreshDate = sourceEntries.find((source) => source.retrievalDate)?.retrievalDate ?? sources.generatedAt;
 
   return (
     <section className="sources-page page-shell">
@@ -205,13 +203,6 @@ export default function SourcesPage() {
         </aside>
       </div>
 
-      <details className="sources-build-details surface">
-        <summary>Build details</summary>
-        <p>
-          Content version {manifest.contentVersion}. Source registry refreshed {refreshDate}. These identifiers help keep challenge
-          links and past games stable across static builds.
-        </p>
-      </details>
     </section>
   );
 }

@@ -6471,16 +6471,16 @@ dd {
 }
 
 .sources-hero {
-  max-width: 76rem;
+  max-width: none;
 }
 
 .sources-hero .page-title {
-  max-width: 13ch;
+  max-width: min(100%, 24ch);
   margin-bottom: 1rem;
 }
 
 .sources-hero .lead {
-  max-width: 68rem;
+  max-width: 74rem;
 }
 
 .sources-overview-grid {
@@ -6687,25 +6687,6 @@ dd {
   font-size: 0.94rem;
 }
 
-.sources-build-details {
-  max-width: 54rem;
-  padding: 1rem;
-}
-
-.sources-build-details summary {
-  cursor: pointer;
-  color: var(--parchment);
-  font-family: var(--font-serif);
-  font-size: 1.2rem;
-  font-weight: 600;
-}
-
-.sources-build-details p {
-  margin: 0.75rem 0 0;
-  color: var(--muted);
-  line-height: 1.55;
-}
-
 .legal-page {
   display: grid;
   gap: clamp(1.3rem, 3vw, 2.2rem);
@@ -6747,9 +6728,10 @@ dd {
 
 .legal-layout {
   display: grid;
-  grid-template-columns: minmax(0, 1fr) minmax(18rem, 0.38fr);
+  grid-template-columns: minmax(0, 1fr);
   gap: clamp(1rem, 2.8vw, 1.6rem);
   align-items: start;
+  width: 100%;
 }
 
 .legal-prose {
@@ -6761,7 +6743,7 @@ dd {
 .legal-prose section {
   display: grid;
   gap: 0.85rem;
-  max-width: 66rem;
+  max-width: 68rem;
 }
 
 .legal-prose section + section {
@@ -6769,8 +6751,7 @@ dd {
   padding-top: clamp(1.35rem, 3vw, 2rem);
 }
 
-.legal-prose h2,
-.legal-sidecar h2 {
+.legal-prose h2 {
   margin: 0;
   font-family: var(--font-serif);
   font-size: clamp(1.45rem, 2.5vw, 2.05rem);
@@ -6788,8 +6769,7 @@ dd {
   text-transform: uppercase;
 }
 
-.legal-prose p,
-.legal-sidecar p {
+.legal-prose p {
   margin: 0;
   color: var(--muted);
   line-height: 1.68;
@@ -6805,22 +6785,10 @@ dd {
   line-height: 1.62;
 }
 
-.legal-prose a,
-.legal-sidecar a {
+.legal-prose a {
   color: var(--signal-2);
   font-weight: 700;
   overflow-wrap: anywhere;
-}
-
-.legal-sidecar {
-  position: sticky;
-  top: 6rem;
-  display: grid;
-  gap: 0.8rem;
-  padding: clamp(1rem, 2.4vw, 1.25rem);
-  background:
-    linear-gradient(145deg, rgb(215 168 75 / 0.09), transparent 46%),
-    var(--surface);
 }
 
 @media (max-width: 1100px) {
@@ -6878,8 +6846,7 @@ dd {
     max-width: none;
   }
 
-  .sources-sidecar,
-  .legal-sidecar {
+  .sources-sidecar {
     position: static;
   }
 }

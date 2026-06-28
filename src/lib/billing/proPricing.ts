@@ -23,7 +23,7 @@ export const PRO_PRICE_OPTIONS: ProPriceOption[] = [
     label: "Yearly",
     price: "$29.99",
     cadence: "/year",
-    summary: "Best value for regular Daily players.",
+    summary: "Best value for regular atlas players.",
     cta: "Upgrade yearly"
   }
 ];

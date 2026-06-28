@@ -33,7 +33,7 @@ const modeCards = [
     image: "/images/homepage/04-daily-mystery-map.png",
     objectPosition: "50% 50%",
     title: "Daily Mystery Map",
-    copy: "Fresh Daily play and saved progress with a free account.",
+    copy: "Official 5-map Daily and saved progress with a free account.",
     cta: "Create free account",
     href: "/sign-in"
   },
@@ -80,7 +80,7 @@ export default function HomePage() {
           <aside className="hero-join-panel" aria-label="Join the daily challenge">
             <p className="eyebrow">Join the game</p>
             <h2>Join the daily challenge</h2>
-            <p>Fresh Daily play, saved progress, streaks, and basic stats start with a free account.</p>
+            <p>The official 5-map Daily, saved progress, streaks, and basic stats start with a free account.</p>
             <Link className="button hero-panel-button" href="/sign-in">
               Create free account
               <ArrowRight size={18} aria-hidden="true" />

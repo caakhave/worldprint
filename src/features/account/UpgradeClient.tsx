@@ -16,10 +16,10 @@ export function UpgradeClient() {
   const billingEnabled = configured && publicBillingEnabled();
   const heroTitle = loading ? "Checking your atlas plan." : isPro ? "You have the full atlas." : "Unlock the full atlas.";
   const heroLead = isPro
-    ? "Pro is active on this account. The full practice atlas, complete Past Games archive, and advanced stats are unlocked."
+    ? "Pro is active on this account. The full Practice Atlas, complete Past Games archive, and advanced stats are unlocked."
     : billingEnabled
       ? "Sign in, choose monthly or yearly, and continue through secure Stripe checkout when you are ready."
-      : "Pro pricing is visible for planning, but checkout is not open yet. You can still try sample maps or create a free account for Daily play.";
+      : "Pro pricing is visible for planning, but checkout is not open yet. You can still try sample play or create a free account for the official 5-map Daily.";
   const overviewHeading = loading ? "Checking your plan." : isPro ? "Pro is active." : billingEnabled ? "Choose monthly or yearly." : "Checkout coming soon.";
   const statusTitle = isPro
     ? "Pro is active"
@@ -72,8 +72,8 @@ export function UpgradeClient() {
           <p className="eyebrow">Full atlas access</p>
           <h2>{overviewHeading}</h2>
           <p>
-            Free accounts unlock fresh Daily play and saved progress. Pro opens the full atlas: deeper archives, unlimited practice,
-            advanced stats, and Challenge history.
+            Free accounts unlock the official 5-map Daily and saved progress. Pro opens the full atlas: full Practice Atlas, complete
+            Past Games archive, advanced stats, and future premium surfaces.
           </p>
         </div>
         <div className="upgrade-status-card" aria-live="polite">
@@ -91,15 +91,15 @@ export function UpgradeClient() {
           <ul>
             <li>
               <CheckCircle2 size={18} aria-hidden="true" />
-              Daily Mystery Map
+              Official 5-map Daily
             </li>
             <li>
               <CheckCircle2 size={18} aria-hidden="true" />
-              Saved stats
+              Saved results and streaks
             </li>
             <li>
               <CheckCircle2 size={18} aria-hidden="true" />
-              Limited practice
+              Limited Practice Atlas
             </li>
             <li>
               <CheckCircle2 size={18} aria-hidden="true" />
@@ -122,8 +122,8 @@ export function UpgradeClient() {
           <h2>{isPro ? "Full atlas unlocked." : "Open the whole atlas."}</h2>
           <p>
             {isPro
-              ? "Your account already has the whole map library and deeper personal history."
-              : "For players who want the whole map library and deeper personal history."}
+              ? "Your account already has the full Practice Atlas, complete Past Games archive, and deeper personal history."
+              : "For players who want the full Practice Atlas, complete Past Games archive, and deeper personal history."}
           </p>
           <div className="pro-price-options" aria-label="Pro pricing options">
             {PRO_PRICE_OPTIONS.map((option) => (
@@ -140,11 +140,11 @@ export function UpgradeClient() {
           <ul>
             <li>
               <CheckCircle2 size={18} aria-hidden="true" />
-              Full archive
+              Full Past Games archive
             </li>
             <li>
               <CheckCircle2 size={18} aria-hidden="true" />
-              Unlimited practice
+              Full Practice Atlas
             </li>
             <li>
               <CheckCircle2 size={18} aria-hidden="true" />
@@ -152,7 +152,7 @@ export function UpgradeClient() {
             </li>
             <li>
               <CheckCircle2 size={18} aria-hidden="true" />
-              Challenge history
+              Future premium surfaces
             </li>
             <li>
               <CheckCircle2 size={18} aria-hidden="true" />

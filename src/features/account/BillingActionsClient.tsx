@@ -131,7 +131,7 @@ export function BillingActionsClient({ entitlement, context }: BillingActionsCli
           </Link>
         ) : null}
         <p className="account-env-note">
-          Pricing is visible now. {ACCESS_PLAN_COPY.guest.headline} Create a free account for fresh Daily play.
+          Pricing is visible now. {ACCESS_PLAN_COPY.guest.headline} Create a free account for the official 5-map Daily.
         </p>
       </div>
     );

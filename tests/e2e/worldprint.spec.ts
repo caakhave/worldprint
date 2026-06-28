@@ -195,9 +195,9 @@ test("first visit starts the Analyst Daily", async ({ page }) => {
   await expect(page.locator(".hero-copy .lead")).toHaveText(
     "A new mystery map is waiting. Spot the pattern, spend your clues wisely, and guess what the planet is hiding."
   );
-  await expect(page.getByText("Try a few sample maps instantly. Create a free account to play fresh Daily maps and save your progress.")).toBeVisible();
+  await expect(page.getByText("Try sample play without an account. Create a free account for the official 5-map Daily, saved results, progress, and streaks.")).toBeVisible();
   await expect(page.getByRole("heading", { name: "Join the daily challenge" })).toBeVisible();
-  await expect(page.getByText("Fresh Daily play, saved progress, streaks, and basic stats start with a free account.")).toBeVisible();
+  await expect(page.getByText("The official 5-map Daily, saved progress, streaks, and basic stats start with a free account.")).toBeVisible();
   await expect(page.getByRole("link", { name: /Create free account/i }).first()).toHaveAttribute("href", /\/sign-in\/?$/);
   await expect(page.getByRole("heading", { name: "Read the map" })).toBeVisible();
   await expect(page.getByRole("heading", { name: "Follow the signal." })).toBeVisible();
@@ -263,7 +263,7 @@ test("landing cinematic hero respects reduced-motion without layout overflow", a
   await page.goto("/");
   const hero = page.getByTestId("cinematic-home-hero");
   await expect(hero).toBeVisible();
-  await expect(hero.getByText("Try a few sample maps instantly. Create a free account to play fresh Daily maps and save your progress.")).toBeVisible();
+  await expect(hero.getByText("Try sample play without an account. Create a free account for the official 5-map Daily, saved results, progress, and streaks.")).toBeVisible();
   await expect(page.locator(".fake-gameplay-stage")).toHaveCount(0);
   await expect(page.getByTestId("homepage-hero-video")).toHaveCount(0);
   const poster = page.getByTestId("homepage-hero-poster");
@@ -287,8 +287,8 @@ test("Mystery Map lobby presents game-mode CTAs without motion dependency", asyn
   await expect(page.getByTestId("entry-preview-step-index")).toHaveText("Step 4/5");
   await expect(page.getByRole("heading", { name: "Choose the hidden indicator" })).toBeVisible();
   await expect(page.getByText("Choose your game mode")).toBeVisible();
-  await expect(page.getByText("Today's Mystery Map").first()).toBeVisible();
-  await expect(page.getByText("Try sample play now. Create a free account for fresh Daily runs, saved results, and streaks.").first()).toBeVisible();
+  await expect(page.getByText("Try sample maps").first()).toBeVisible();
+  await expect(page.getByText("Try sample play now. Create a free account for the official 5-map Daily, saved results, progress, and streaks.").first()).toBeVisible();
   await expect(page.getByText("Practice Atlas").first()).toBeVisible();
   await expect(page.getByText("Training sets by topic and difficulty. Never affects your Daily score or streak.")).toBeVisible();
   await expect(page.getByText("Past Games").first()).toBeVisible();
@@ -892,8 +892,8 @@ test("keyboard access reaches legal and sign-in controls", async ({ page }) => {
     await page.getByRole("button", { name: "Send sign-in link" }).focus();
     await expect(page.getByRole("button", { name: "Send sign-in link" })).toBeFocused();
   } else {
-    await page.getByRole("link", { name: "Try sample maps" }).focus();
-    await expect(page.getByRole("link", { name: "Try sample maps" })).toBeFocused();
+    await page.getByRole("link", { name: "Try sample play" }).focus();
+    await expect(page.getByRole("link", { name: "Try sample play" })).toBeFocused();
   }
 });
 
@@ -901,9 +901,9 @@ test("practice filters start a filtered preview run", async ({ page }) => {
   await page.goto(`/play/mystery-map?date=${TEST_DATE}`);
   await expect(page.getByText(/Choose your game mode/i)).toBeVisible();
   await expect(page.getByText(/Sample play/i)).toBeVisible();
-  await expect(page.getByText(/Free account unlocks Daily/i)).toBeVisible();
+  await expect(page.getByText(/Sample maps now/i)).toBeVisible();
   await expect(page.getByText(/Practice mode included/i)).toBeVisible();
-  await expect(page.getByText(/Create a free account for fresh Daily runs, saved results, and streaks/i).first()).toBeVisible();
+  await expect(page.getByText(/Create a free account for the official 5-map Daily, saved results, progress, and streaks/i).first()).toBeVisible();
   await expect(page.getByTestId("entry-atlas-visual")).toBeVisible();
   await expect(page.getByText(/Practice Atlas/i).first()).toBeVisible();
   await expect(page.getByLabel("Map difficulty")).toBeVisible();
@@ -965,7 +965,7 @@ test("sources page renders player-friendly data attribution without admin wordin
   await expect(page.locator(".source-card")).toHaveCount(2);
   await expect(page.getByText(/Missing is not zero/i)).toBeVisible();
   await expect(page.getByText(/Daily-ready maps are checked/i)).toBeVisible();
-  await expect(page.getByText(/Build details/i)).toBeVisible();
+  await expect(page.locator("body")).not.toContainText(/Build details|Source registry refreshed/i);
   await expect(page.locator("body")).not.toContainText(/candidate bank|source-valid|draft-held|data gate|generated report|pipeline/i);
   await expect(page.locator("body")).not.toContainText("WORLDPRINT");
   expect(await page.evaluate(() => document.documentElement.scrollWidth > window.innerWidth)).toBe(false);
@@ -974,29 +974,29 @@ test("sources page renders player-friendly data attribution without admin wordin
 test("account and sign-in stay optional, friendly, and local-first", async ({ page }) => {
   await page.goto("/sign-in");
   await expect(page.getByRole("heading", { name: /Create your free account/i })).toBeVisible();
-  await expect(page.locator(".account-hero .lead")).toContainText(/Try a few sample maps instantly/i);
-  await expect(page.locator(".account-hero .lead")).toContainText(/Create a free account to play fresh Daily maps/i);
+  await expect(page.locator(".account-hero .lead")).toContainText(/Try sample play without an account/i);
+  await expect(page.locator(".account-hero .lead")).toContainText(/official 5-map Daily/i);
   const emailSignInAvailable = await page.getByLabel("Email").isVisible();
   if (emailSignInAvailable) {
     await expect(page.getByLabel("Email")).toBeVisible();
     await expect(page.getByRole("button", { name: "Send sign-in link" })).toBeEnabled();
-    await expect(page.getByText(/Fresh Daily play and saved progress/i)).toBeVisible();
+    await expect(page.getByText(/Official Daily and saved progress/i)).toBeVisible();
   } else {
     await expect(page.getByRole("button", { name: "Create a free account" })).toBeDisabled();
-    await expect(page.getByRole("link", { name: "Try sample maps" })).toHaveAttribute("href", /\/play\/mystery-map\/?$/);
+    await expect(page.getByRole("link", { name: "Try sample play" })).toHaveAttribute("href", /\/play\/mystery-map\/?$/);
     await expect(page.getByText(/Email sign-in is not available in this preview/i)).toBeVisible();
   }
-  await expect(page.getByText(/Fresh Daily play starts with a free account/i)).toBeVisible();
-  await expect(page.getByRole("link", { name: "Try sample maps" }).last()).toHaveAttribute("href", /\/play\/mystery-map\/?$/);
+  await expect(page.getByText(/official 5-map Daily starts with a free account/i)).toBeVisible();
+  await expect(page.getByRole("link", { name: "Try sample play" }).last()).toHaveAttribute("href", /\/play\/mystery-map\/?$/);
   await expect(page.locator("body")).not.toContainText(/magic link|Supabase|SQL|PKCE|webhook|Edge Function|configured/i);
   await expect(page.locator("body")).not.toContainText(/Gameplay still works without signing in|Play without an account/i);
   expect(await page.evaluate(() => document.documentElement.scrollWidth > window.innerWidth)).toBe(false);
 
   await page.goto("/account");
   await expect(page.locator("#account-title")).toHaveText("Create a free account.");
-  await expect(page.locator(".account-hero .lead")).toContainText(/Create a free account to play fresh Daily maps and save your progress/i);
+  await expect(page.locator(".account-hero .lead")).toContainText(/Create a free account for the official 5-map Daily/i);
   await expect(page.getByRole("link", { name: /Create a free account/i }).first()).toHaveAttribute("href", /\/sign-in\/?$/);
-  await expect(page.getByRole("link", { name: /Try sample maps/i }).first()).toHaveAttribute("href", /\/play\/mystery-map\/?$/);
+  await expect(page.getByRole("link", { name: /Try sample play/i }).first()).toHaveAttribute("href", /\/play\/mystery-map\/?$/);
   if (emailSignInAvailable) {
     await expect(page.locator(".account-primary-card").getByRole("heading", { name: /Create a free account/i })).toBeVisible();
   } else {
@@ -1019,7 +1019,7 @@ test("account and sign-in stay optional, friendly, and local-first", async ({ pa
   await expect(page.getByText(/Practice warm-ups are kept out of the permanent local record for now/i)).toBeVisible();
   await expect(page.locator(".player-stats-panel")).toContainText("No saved games yet");
   if (emailSignInAvailable) {
-    await expect(page.getByText(/Create a free account to play fresh Daily maps/i)).toBeVisible();
+    await expect(page.getByText(/Create a free account for the official 5-map Daily/i)).toBeVisible();
   } else {
     await expect(page.getByText(/Email sign-in is unavailable in this preview/i)).toBeVisible();
   }
@@ -1029,8 +1029,8 @@ test("account and sign-in stay optional, friendly, and local-first", async ({ pa
 
   await page.goto("/upgrade");
   await expect(page.getByRole("heading", { name: /Unlock the full atlas/i })).toBeVisible();
-  await expect(page.locator(".account-hero .lead")).toContainText(/try sample maps or create a free account for Daily play/i);
-  await expect(page.getByText(/Free accounts unlock fresh Daily play and saved progress/i)).toBeVisible();
+  await expect(page.locator(".account-hero .lead")).toContainText(/try sample play or create a free account for the official 5-map Daily/i);
+  await expect(page.getByText(/Free accounts unlock the official 5-map Daily and saved progress/i)).toBeVisible();
   await expect(page.locator(".pro-price-options")).toContainText("$3.99");
   await expect(page.locator(".pro-price-options")).toContainText("/month");
   await expect(page.locator(".pro-price-options")).toContainText("$29.99");
@@ -1058,7 +1058,7 @@ test("account page renders a guest control center on desktop and mobile", async 
     await expect(page.locator(".account-hero-video source").first()).toHaveAttribute("src", "/worldprint/hero-loop.webm");
     await expect(page.getByRole("region", { name: "Account actions" })).toBeVisible();
     await expect(page.getByRole("link", { name: "Create a free account" }).first()).toHaveAttribute("href", /\/sign-in\/?$/);
-    await expect(page.getByRole("link", { name: "Try sample maps" }).first()).toHaveAttribute("href", /\/play\/mystery-map\/?$/);
+    await expect(page.getByRole("link", { name: "Try sample play" }).first()).toHaveAttribute("href", /\/play\/mystery-map\/?$/);
     await expect(page.getByRole("heading", { name: "Sample play" })).toBeVisible();
     await expect(page.getByRole("link", { name: "Open stats" })).toHaveCount(0);
     await expect(page.locator("body")).not.toContainText(/Play first\.|Keep your streak\.|Open the full atlas\./i);

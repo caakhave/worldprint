@@ -7,7 +7,7 @@ export const EXTERNAL_BETA_FEEDBACK_QUESTIONS = [
   "Did the reveal teach you something?",
   "Did the map colors/legend make sense?",
   "Would you play this again tomorrow?",
-  "Would you create a free account for 3 maps/day?",
+  "Would you create a free account for the official 5-map Daily?",
   "What would make it worth paying for?",
   "Overall score 1-10",
   "Notes"
@@ -35,7 +35,7 @@ Approximate time spent:
 
 8. Would you play this again tomorrow?
 
-9. Would you create a free account for 3 maps/day?
+9. Would you create a free account for the official 5-map Daily?
 
 10. What would make it worth paying for?
 

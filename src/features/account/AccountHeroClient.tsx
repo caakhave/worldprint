@@ -26,7 +26,7 @@ export function AccountHeroClient() {
             {connected ? "Play today's Mystery Map" : ACCESS_PLAN_COPY.guest.primaryCta}
           </Link>
           <Link className="button-secondary" href={connected ? "/account/stats" : "/play/mystery-map"}>
-            {connected ? "View saved stats" : "Try sample maps"}
+            {connected ? "View saved stats" : "Try sample play"}
           </Link>
         </div>
       </div>
@@ -39,7 +39,7 @@ export function AccountHeroClient() {
         <div className="account-hero-badge">
           <span>{connected ? "Account online" : "Browser record"}</span>
           <strong>{connected ? "Connected" : "Sample play"}</strong>
-          <em>{connected ? "Stats sync ready" : "Free account unlocks Daily"}</em>
+          <em>{connected ? "Stats sync ready" : "Free account unlocks official Daily"}</em>
         </div>
       </div>
     </div>

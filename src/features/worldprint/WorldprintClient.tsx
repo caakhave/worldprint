@@ -111,7 +111,7 @@ function practiceLabel(difficulty: string, category: string) {
 function practiceFlavor(difficulty: IndicatorDifficulty) {
   if (difficulty === "expert") return "A quick warm-up with trickier patterns.";
   if (difficulty === "standard") return "A quick warm-up with sharper patterns.";
-  return "A quick warm-up before the Daily.";
+  return "A quick Practice warm-up.";
 }
 
 function roundCountForFilters(rounds: RoundDefinition[], category: string, difficulty?: IndicatorDifficulty) {
@@ -799,7 +799,7 @@ export function WorldprintClient({ dateOverride, entryMode = "standard" }: World
         : "Sample play";
     const dailyCardCopy = signedIn
       ? "Today's official dated 5-map run. Finish to save your Daily result, progress, and streak."
-      : "Try sample play now. Create a free account for fresh Daily runs, saved results, and streaks.";
+      : "Try sample play now. Create a free account for the official 5-map Daily, saved results, progress, and streaks.";
     const dailyActionLabel = signedIn ? dailyLabel : activeDateRun ? "Continue sample play" : "Try sample play";
     if (reviewRequested) {
       if (reviewRecord) {
@@ -844,13 +844,13 @@ export function WorldprintClient({ dateOverride, entryMode = "standard" }: World
             {isArchiveDate
               ? "Replay this past Mystery Map as a record run: five unlabeled maps, one hidden indicator each."
               : signedIn
-                ? "Today's Daily is a Mystery Map run: unlabeled maps, one hidden indicator each."
-                : "Try sample play now. Create a free account for fresh Daily runs, saved results, and streaks."}{" "}
+                ? "Today's official 5-map Daily is a Mystery Map run: unlabeled maps, one hidden indicator each."
+                : "Try sample play now. Create a free account for the official 5-map Daily, saved results, progress, and streaks."}{" "}
             Investigate countries when you need evidence, but every clue spends points.
           </p>
           <div className="entry-facts" aria-label="Daily facts">
             <span>{accountFactLabel}</span>
-            <span>{isArchiveDate ? "Streak stays safe" : signedIn ? "Daily run" : "Free account unlocks Daily"}</span>
+            <span>{isArchiveDate ? "Streak stays safe" : signedIn ? "Official 5-map Daily" : "Sample maps now"}</span>
             <span>Practice mode included</span>
           </div>
           <div className="entry-lobby-strip" aria-label="Mystery Map lobby preview">
@@ -879,20 +879,24 @@ export function WorldprintClient({ dateOverride, entryMode = "standard" }: World
               <div className="mode-panel-heading">
                 <p className="setup-kicker">Choose your game mode</p>
                 <h2>Pick your run.</h2>
-                <p>Daily is the official 5-map run. Practice and Past Games stay separate from today&apos;s streak.</p>
+                <p>The official Daily is a 5-map run. Free sign-in saves it; Practice and Past Games stay separate from today&apos;s streak.</p>
               </div>
               <div className="mode-card-grid" aria-label="Mystery Map modes">
                 <article className="mode-card mode-card-daily" data-state={todayCompleted ? "complete" : "ready"} aria-label={todayCompleted ? "Today completed" : "Today's Mystery Map"}>
                   <div>
-                    <p className="setup-kicker">Daily Challenge</p>
-                    <h3>Today&apos;s Mystery Map</h3>
+                    <p className="setup-kicker">{signedIn ? "Daily Mystery Map" : "Sample play"}</p>
+                    <h3>{signedIn ? "Today's Mystery Map" : "Try sample maps"}</h3>
                     <p>{dailyCardCopy}</p>
                   </div>
-                  {todayCompleted ? <span className="mode-state-pill">Today&apos;s run complete</span> : <span className="mode-state-pill">Ready today</span>}
+                  {todayCompleted ? (
+                    <span className="mode-state-pill">Today&apos;s run complete</span>
+                  ) : (
+                    <span className="mode-state-pill">{signedIn ? "Ready today" : "Sample maps ready"}</span>
+                  )}
                   <p className="mode-card-note">
                     {signedIn
                       ? "Signed-in Daily results save to your account history."
-                      : "Sample play is available now. Saving Daily progress and streaks requires free sign-in."}
+                      : "Sample play is available now. Free sign-in unlocks the official 5-map Daily, saved progress, and streaks."}
                   </p>
                   {todayCompleted ? (
                     <div className="daily-return-hook" aria-label="Daily return summary">
@@ -1013,7 +1017,7 @@ export function WorldprintClient({ dateOverride, entryMode = "standard" }: World
                 <div>
                   <p className="setup-kicker">Past Games</p>
                   <h3>Past Games</h3>
-                  <p>Replay earlier Mystery Maps. Replays never change today&apos;s Daily.</p>
+                  <p>Dated Daily replays. Replays never change today&apos;s Daily score or streak.</p>
                 </div>
                 <div className="mode-card-actions">
                   <Link className="button-secondary" href="/past-games">
@@ -1036,7 +1040,7 @@ export function WorldprintClient({ dateOverride, entryMode = "standard" }: World
                 <h2>{todayKey}</h2>
                 <p>
                   This fixed 5-map set is a Past Game for the date. Review your result, replay for practice, or chase a personal best. Past replays never
-                  change today&apos;s streak.
+                  change today&apos;s Daily score or streak.
                 </p>
                 <div className="archive-record-summary" data-state={archiveRecord ? "saved" : "empty"} aria-label="Past game record">
                   <span>{archiveRecord ? "Saved result" : "No result yet"}</span>

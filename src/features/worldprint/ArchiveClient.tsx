@@ -251,14 +251,14 @@ export function ArchiveClient() {
         <h1 className="page-title">Review Past Mystery Maps.</h1>
         <p className="lead">
           Each past date is a fixed 5-map set{publicRange ? ` from ${publicRange.start} to ${publicRange.end}` : ""}. Review your result, replay for
-          practice, or chase a personal best. Replays never change today&apos;s streak.
+          practice, or chase a personal best. Replays never change today&apos;s Daily score or streak.
         </p>
       </div>
       <div className="archive-note surface map-texture-panel">
         <strong>Past Games are separate from today&apos;s Daily.</strong>
         <span>
           {signedIn
-            ? "Today's Mystery Map updates the live streak; replayed dates save as Past Games for your account."
+            ? "Today's Mystery Map updates the official Daily score and streak; replayed dates save as Past Games for your account."
             : `Logged-out players can try the ${GUEST_ARCHIVE_SAMPLE_LIMIT} most recent sample replays. Create a free account to save Past Games history.`}
         </span>
       </div>
@@ -297,7 +297,7 @@ export function ArchiveClient() {
           <div>
             <p className="eyebrow">Free account</p>
             <h2>Sign in to keep Past Games history.</h2>
-            <p>Sample replays are playable now. Free sign-in saves Past Games results, Daily streaks, and basic stats to your account.</p>
+            <p>Sample replays are playable now. Free sign-in saves Past Games results, official Daily streaks, and basic stats to your account.</p>
           </div>
           <Link className="button" href="/sign-in">
             Create a free account

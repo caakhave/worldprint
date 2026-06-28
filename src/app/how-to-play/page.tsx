@@ -78,7 +78,7 @@ export default function HowToPlayPage() {
       <div className="how-cta surface map-texture-panel">
         <div>
           <p className="eyebrow">Start playing</p>
-          <h2>Try sample maps, then create a free account for fresh Daily play.</h2>
+          <h2>Try sample maps, then create a free account for the official 5-map Daily.</h2>
         </div>
         <div className="button-row">
           <Link className="button" href="/play/mystery-map">

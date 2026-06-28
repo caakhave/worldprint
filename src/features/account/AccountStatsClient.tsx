@@ -221,7 +221,7 @@ export function AccountStatsClient() {
         ) : configured ? (
           <>
             <h2>Create a free account.</h2>
-            <p>{ACCESS_PLAN_COPY.guest.summary} Local sample stats are still shown above.</p>
+            <p>{ACCESS_PLAN_COPY.guest.summary} Local sample-play stats are still shown above.</p>
             <Link className="button" href="/sign-in">
               Create a free account
             </Link>
