@@ -102,8 +102,8 @@ describe("AccountPlanNotesClient", () => {
     expect(screen.getByRole("heading", { name: "Train a topic" })).toBeVisible();
     expect(screen.getByRole("heading", { name: "Full atlas" })).toBeVisible();
     expect(screen.getByRole("link", { name: "Open stats" })).toHaveAttribute("href", "/account/stats");
-    expect(screen.getByRole("link", { name: "Open Past Games" })).toHaveAttribute("href", "/archive/worldprint");
-    expect(screen.getByRole("link", { name: "Start practice" })).toHaveAttribute("href", "/play/worldprint");
+    expect(screen.getByRole("link", { name: "Open Past Games" })).toHaveAttribute("href", "/past-games");
+    expect(screen.getByRole("link", { name: "Start practice" })).toHaveAttribute("href", "/play/mystery-map");
     expect(screen.queryByText("Play first.")).not.toBeInTheDocument();
     expect(screen.queryByText("Keep your streak.")).not.toBeInTheDocument();
     expect(screen.queryByText("Open the full atlas.")).not.toBeInTheDocument();

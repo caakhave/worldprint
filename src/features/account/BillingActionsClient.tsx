@@ -3,6 +3,7 @@
 import Link from "next/link";
 import { useState } from "react";
 import { useSupabaseAccount } from "@/features/account/useSupabaseAccount";
+import { ACCESS_PLAN_COPY } from "@/lib/account/accessCopy";
 import type { PlayerEntitlement } from "@/lib/account/entitlements";
 import { publicBillingEnabled } from "@/lib/billing/publicBillingConfig";
 import { PRO_PRICE_OPTIONS, type ProBillingInterval } from "@/lib/billing/proPricing";
@@ -129,7 +130,9 @@ export function BillingActionsClient({ entitlement, context }: BillingActionsCli
             Compare plans
           </Link>
         ) : null}
-        <p className="account-env-note">Pricing is visible now. You can still play today&apos;s Mystery Map for free.</p>
+        <p className="account-env-note">
+          Pricing is visible now. {ACCESS_PLAN_COPY.guest.headline} Create a free account for fresh Daily play.
+        </p>
       </div>
     );
   }

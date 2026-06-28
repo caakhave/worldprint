@@ -63,15 +63,14 @@ export const viewport: Viewport = {
 };
 
 const navItems = [
-  { href: "/play/worldprint", label: "Play" },
-  { href: "/archive/worldprint", label: "Past Games" },
+  { href: "/play/mystery-map", label: "Play", primary: true },
   { href: "/how-to-play", label: "How it works" }
 ];
 
 const footerItems = [
+  { href: "/past-games", label: "Past Games" },
   { href: "/sources", label: "Sources" },
   { href: "/legal", label: "Terms, Privacy & Accessibility" },
-  { href: "/beta/worldprint", label: "Beta" },
   { href: "/about", label: "About" }
 ];
 
@@ -88,7 +87,7 @@ export default function RootLayout({ children }: Readonly<{ children: React.Reac
           </Link>
           <nav className="site-nav" aria-label="Primary navigation">
             {navItems.map((item) => (
-              <Link key={item.href} href={item.href}>
+              <Link key={item.href} href={item.href} data-primary={"primary" in item && item.primary ? "true" : undefined}>
                 {item.label}
               </Link>
             ))}
@@ -99,7 +98,7 @@ export default function RootLayout({ children }: Readonly<{ children: React.Reac
         </header>
         <main id="main">{children}</main>
         <footer className="site-footer">
-          <p>Can You Geo? is an open beta. Play the Daily, replay past games, and check the data sources any time.</p>
+          <p>Can You Geo? is a daily geography game. Play Mystery Map, replay past games, and check the data sources any time.</p>
           <nav className="footer-nav" aria-label="Footer navigation">
             {footerItems.map((item) => (
               <Link key={item.href} href={item.href}>

@@ -1,24 +1,16 @@
-import { Suspense } from "react";
 import type { Metadata } from "next";
-import { WorldprintClient } from "@/features/worldprint/WorldprintClient";
+import { LegacyRouteRedirect } from "@/components/routing/LegacyRouteRedirect";
 
 export const metadata: Metadata = {
   title: "Play Mystery Map"
 };
 
-export default function PlayWorldprintPage() {
+export default function LegacyPlayPage() {
   return (
-    <Suspense
-      fallback={
-        <section className="game-shell page-shell">
-          <div className="empty-state surface">
-            <h1>Loading Mystery Map</h1>
-            <p>Preparing the static challenge.</p>
-          </div>
-        </section>
-      }
-    >
-      <WorldprintClient />
-    </Suspense>
+    <LegacyRouteRedirect
+      destination="/play/mystery-map"
+      title="Mystery Map has moved."
+      message="The game now lives at its public Can You Geo? play route."
+    />
   );
 }

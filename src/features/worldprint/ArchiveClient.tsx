@@ -41,7 +41,7 @@ function formatSavedDate(value: string | null | undefined): string | null {
 function recordRankTitle(score: number | null, roundCount: number): string {
   if (score === null) return "Mission open";
   const ratio = score / Math.max(1, roundCount * 1000);
-  if (ratio >= 0.92) return "Worldprint Master";
+  if (ratio >= 0.92) return "Atlas Master";
   if (ratio >= 0.76) return "Pattern Hunter";
   if (ratio >= 0.52) return "Atlas Reader";
   return "Signal Seeker";
@@ -51,12 +51,14 @@ export function ArchiveCard({
   entry,
   todayKey,
   completion,
-  accountRun
+  accountRun,
+  signedIn = true
 }: {
   entry: DailyIndexEntry;
   todayKey: string;
   completion: CompletionHistory | null;
   accountRun: GameRunRow | null;
+  signedIn?: boolean;
 }) {
   const isToday = entry.date === todayKey;
   const hasCompletion = Boolean(completion || accountRun);
@@ -64,9 +66,9 @@ export function ArchiveCard({
   const savedTier = accountRun?.tier ?? completion?.tier ?? null;
   const tierLabel = isTierKey(savedTier) ? TIER_CONFIGS[savedTier].shortLabel : hasCompletion ? "Unknown tier" : "Choose on setup";
   const savedDate = formatSavedDate(accountRun?.completed_at ?? completion?.completedAt);
-  const status = accountRun ? "Saved to account" : completion ? "Saved on this browser" : "Unplayed";
-  const actionLabel = hasCompletion ? "View result" : "Try past puzzle";
-  const recordRank = recordRankTitle(bestScore, entry.roundCount);
+  const status = accountRun ? "Saved to account" : completion ? "Saved on this browser" : signedIn ? "Unplayed" : "Sign in to save";
+  const actionLabel = hasCompletion ? "View result" : signedIn ? "Try past puzzle" : "Create free account";
+  const recordRank = !signedIn && !hasCompletion ? "Past puzzle" : recordRankTitle(bestScore, entry.roundCount);
   const roundScores = completion?.roundScores ?? null;
   const cleanRoundCount = roundScores ? roundScores.filter((score) => score >= 1000).length : null;
   return (
@@ -95,20 +97,20 @@ export function ArchiveCard({
         <div>
           <dt>Status</dt>
           <dd>
-            <span className="archive-status-pill" data-status={hasCompletion ? "saved" : "unplayed"}>
+            <span className="archive-status-pill" data-status={hasCompletion ? "saved" : signedIn ? "unplayed" : "account"}>
               {status}
             </span>
           </dd>
         </div>
       </dl>
       <div className="archive-record-stamp" data-state={hasCompletion ? "saved" : "mission"}>
-        <span>{hasCompletion ? "Past game rank" : "Available past game"}</span>
+        <span>{hasCompletion ? "Past game rank" : signedIn ? "Available past game" : "Fixed past puzzle"}</span>
         <strong>{recordRank}</strong>
       </div>
       <dl className="archive-record-meta" aria-label="Record details">
         <div>
           <dt>Best score</dt>
-          <dd>{bestScore === null ? "No record yet" : `${bestScore.toLocaleString("en-US")} points`}</dd>
+          <dd>{bestScore === null ? (signedIn ? "No record yet" : "Sign in to save") : `${bestScore.toLocaleString("en-US")} points`}</dd>
         </div>
         <div>
           <dt>Tier</dt>
@@ -120,22 +122,28 @@ export function ArchiveCard({
         </div>
         <div>
           <dt>Saved</dt>
-          <dd>{savedDate ?? "Not saved yet"}</dd>
+          <dd>{savedDate ?? (signedIn ? "Not saved yet" : "Account history")}</dd>
         </div>
       </dl>
-      <div className="archive-card-action" data-state={hasCompletion ? "saved" : "open"}>
-        <Link className="button" href={hasCompletion ? `/play/worldprint/${entry.date}?review=1` : `/play/worldprint/${entry.date}`}>
+      <div className="archive-card-action" data-state={hasCompletion ? "saved" : signedIn ? "open" : "guest"}>
+        <Link className="button" href={hasCompletion ? `/play/mystery-map/${entry.date}?review=1` : signedIn ? `/play/mystery-map/${entry.date}` : "/sign-in"}>
           {actionLabel}
         </Link>
         {hasCompletion ? (
-          <Link className="button-secondary" href={`/play/worldprint/${entry.date}`}>
+          <Link className="button-secondary" href={`/play/mystery-map/${entry.date}`}>
             Replay for practice
+          </Link>
+        ) : !signedIn ? (
+          <Link className="button-secondary" href={`/play/mystery-map/${entry.date}`}>
+            Try sample replay
           </Link>
         ) : null}
         <p>
           {hasCompletion
             ? "Replay for practice. Your official Daily score will not change."
-            : "Fixed 5-map past game. Play once without touching today's streak."}
+            : signedIn
+              ? "Fixed 5-map past game. Play once without touching today's streak."
+              : "Sample replay only. Sign in to keep Past Games history with your account."}
         </p>
       </div>
     </article>
@@ -224,7 +232,7 @@ export function ArchiveClient() {
   }
 
   return (
-    <section className="archive-page page-shell">
+    <section className="archive-page page-shell map-texture-page">
       <div className="archive-hero">
         <p className="eyebrow">Past Games</p>
         <h1 className="page-title">Review Past Mystery Maps.</h1>
@@ -233,11 +241,12 @@ export function ArchiveClient() {
           practice, or chase a personal best. Replays never change today&apos;s streak.
         </p>
       </div>
-      <div className="archive-note surface">
+      <div className="archive-note surface map-texture-panel">
         <strong>Past Games are separate from today&apos;s Daily.</strong>
         <span>
-          Today&apos;s Mystery Map updates the live streak; replayed dates save as Past Games
-          {signedIn ? " for this account when sync is available." : " in this browser."}
+          {signedIn
+            ? "Today's Mystery Map updates the live streak; replayed dates save as Past Games for your account."
+            : "Try sample replays here, then create a free account to keep Past Games history."}
         </span>
       </div>
       {hiddenCount > 0 ? (
@@ -249,11 +258,15 @@ export function ArchiveClient() {
                 ? "Full archive access is active."
                 : signedIn
                   ? "Your account can replay recent Past Games."
-                  : "Create a free account to save your progress."}
+                  : "Create a free account for saved Past Games."}
             </h2>
             <p>
               {entitlement.plan === "pro"
                 ? `Showing ${visibleEntries.length} Past Games from the atlas.`
+                : !signedIn
+                  ? `Showing ${visibleEntries.length} recent sample replays. Free accounts save progress; Pro unlocks the complete archive with ${hiddenCount} more Mystery Map${
+                      hiddenCount === 1 ? "" : "s"
+                    }.`
                 : `Showing ${visibleEntries.length} recent Past Games. Pro will unlock the complete archive with ${hiddenCount} more Mystery Map${
                     hiddenCount === 1 ? "" : "s"
                   }.`}
@@ -264,15 +277,20 @@ export function ArchiveClient() {
           </Link>
         </div>
       ) : null}
-      <PlayerStatsPanel
-        store={store}
-        compact
-        note={
-          signedIn
-            ? "Account-saved Past Games are marked on each card. This browser record stays available here too."
-            : "Local on this device. Sign in to save completed Past Games to your account."
-        }
-      />
+      {signedIn ? (
+        <PlayerStatsPanel store={store} compact note="Account-saved Past Games are marked on each card. This browser record stays available here too." />
+      ) : (
+        <div className="archive-account-panel surface map-texture-panel">
+          <div>
+            <p className="eyebrow">Free account</p>
+            <h2>Sign in to keep Past Games history.</h2>
+            <p>Logged-out visitors can try sample replays, but saved results, streaks, and basic stats belong to accounts.</p>
+          </div>
+          <Link className="button" href="/sign-in">
+            Create a free account
+          </Link>
+        </div>
+      )}
       <div className="archive-grid" aria-label="Past Mystery Map Dailies">
         {visibleEntries.map((entry) => (
           <ArchiveCard
@@ -281,6 +299,7 @@ export function ArchiveClient() {
             todayKey={todayKey}
             completion={completionForDate(store, entry.date)}
             accountRun={accountRunByDate.get(entry.date) ?? null}
+            signedIn={signedIn}
           />
         ))}
       </div>

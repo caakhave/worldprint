@@ -13,7 +13,7 @@ export const EXTERNAL_BETA_FEEDBACK_QUESTIONS = [
   "Notes"
 ] as const;
 
-export const EXTERNAL_BETA_FEEDBACK_TEMPLATE = `Can You Geo? Mystery Map external beta feedback
+export const EXTERNAL_BETA_FEEDBACK_TEMPLATE = `Can You Geo? Mystery Map playtest feedback
 
 Pack played:
 Device/browser:

@@ -2,6 +2,7 @@
 
 import Link from "next/link";
 import { useSupabaseAccount } from "@/features/account/useSupabaseAccount";
+import { ACCESS_PLAN_COPY } from "@/lib/account/accessCopy";
 
 export function AccountHeroClient() {
   const { configured, loading, user } = useSupabaseAccount();
@@ -13,19 +14,19 @@ export function AccountHeroClient() {
       <div className="account-hero-copy">
         <p className="eyebrow">Player account</p>
         <h1 id="account-title" className="page-title">
-          {connected ? "Your atlas is connected." : "Your atlas, saved."}
+          {connected ? "Your atlas is connected." : "Create a free account."}
         </h1>
         <p className="lead">
           {connected
             ? "Review your scores, open Past Games, manage access, and keep playing."
-            : "Play without an account, or create a free account when you want your streak and stats to follow you."}
+            : ACCESS_PLAN_COPY.guest.summary}
         </p>
         <div className="button-row">
-          <Link className="button" href="/play/worldprint">
-            Play today&apos;s Mystery Map
+          <Link className="button" href={connected ? "/play/mystery-map" : "/sign-in"}>
+            {connected ? "Play today's Mystery Map" : ACCESS_PLAN_COPY.guest.primaryCta}
           </Link>
-          <Link className="button-secondary" href={connected ? "/account/stats" : "/sign-in"}>
-            {connected ? "View saved stats" : "Save your score and streak"}
+          <Link className="button-secondary" href={connected ? "/account/stats" : "/play/mystery-map"}>
+            {connected ? "View saved stats" : "Try sample maps"}
           </Link>
         </div>
       </div>
@@ -37,8 +38,8 @@ export function AccountHeroClient() {
         <div className="account-hero-scan" />
         <div className="account-hero-badge">
           <span>{connected ? "Account online" : "Browser record"}</span>
-          <strong>{connected ? "Connected" : "Local"}</strong>
-          <em>{connected ? "Stats sync ready" : "Sign in when ready"}</em>
+          <strong>{connected ? "Connected" : "Sample play"}</strong>
+          <em>{connected ? "Stats sync ready" : "Free account unlocks Daily"}</em>
         </div>
       </div>
     </div>

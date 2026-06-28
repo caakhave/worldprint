@@ -5,6 +5,7 @@ import { CheckCircle2, ShieldCheck, Sparkles } from "lucide-react";
 import { BillingActionsClient } from "@/features/account/BillingActionsClient";
 import { BillingReturnNotice } from "@/features/account/BillingReturnNotice";
 import { useEntitlement } from "@/features/account/useEntitlement";
+import { ACCESS_PLAN_COPY } from "@/lib/account/accessCopy";
 import { publicBillingEnabled } from "@/lib/billing/publicBillingConfig";
 import { PRO_PRICE_OPTIONS } from "@/lib/billing/proPricing";
 
@@ -18,7 +19,7 @@ export function UpgradeClient() {
     ? "Pro is active on this account. The full practice atlas, complete Past Games archive, and advanced stats are unlocked."
     : billingEnabled
       ? "Sign in, choose monthly or yearly, and continue through secure Stripe checkout when you are ready."
-      : "Pro pricing is visible for planning, but checkout is not open yet. You can still play today's Mystery Map for free.";
+      : "Pro pricing is visible for planning, but checkout is not open yet. You can still try sample maps or create a free account for Daily play.";
   const overviewHeading = loading ? "Checking your plan." : isPro ? "Pro is active." : billingEnabled ? "Choose monthly or yearly." : "Checkout coming soon.";
   const statusTitle = isPro
     ? "Pro is active"
@@ -51,7 +52,7 @@ export function UpgradeClient() {
               View account
             </Link>
           ) : signedIn ? (
-            <Link className="button" href="/play/worldprint">
+            <Link className="button" href="/play/mystery-map">
               Play today
             </Link>
           ) : (
@@ -59,7 +60,7 @@ export function UpgradeClient() {
               Sign in to upgrade
             </Link>
           )}
-          <Link className="button-secondary" href={isPro ? "/play/worldprint" : "/account"}>
+          <Link className="button-secondary" href={isPro ? "/play/mystery-map" : "/account"}>
             {isPro ? "Play Pro" : "View account"}
           </Link>
         </div>
@@ -71,7 +72,7 @@ export function UpgradeClient() {
           <p className="eyebrow">Full atlas access</p>
           <h2>{overviewHeading}</h2>
           <p>
-            Free lets you play the Daily and save basic progress. Pro opens the full atlas: deeper archives, unlimited practice,
+            Free accounts unlock fresh Daily play and saved progress. Pro opens the full atlas: deeper archives, unlimited practice,
             advanced stats, and Challenge history.
           </p>
         </div>
@@ -85,8 +86,8 @@ export function UpgradeClient() {
       <div className="plan-grid">
         <article className="surface plan-card" data-featured={!isPro ? "true" : "false"}>
           <p className="eyebrow">Free</p>
-          <h2>Start playing.</h2>
-          <p>Play the Daily, keep a simple record, and come back tomorrow.</p>
+          <h2>{ACCESS_PLAN_COPY.free.headline}</h2>
+          <p>{ACCESS_PLAN_COPY.free.summary}</p>
           <ul>
             <li>
               <CheckCircle2 size={18} aria-hidden="true" />

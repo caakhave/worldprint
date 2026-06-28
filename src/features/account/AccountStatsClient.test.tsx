@@ -105,6 +105,8 @@ describe("AccountStatsClient", () => {
     render(<AccountStatsClient />);
 
     expect(screen.getByRole("heading", { name: "Saved in this browser." })).toBeVisible();
-    expect(screen.getByRole("heading", { name: "Create a free account to save your streak." })).toBeVisible();
+    expect(screen.getByRole("heading", { name: "Create a free account." })).toBeVisible();
+    expect(screen.getByText(/Try a few sample maps instantly/i)).toBeVisible();
+    expect(screen.getByText(/play fresh Daily maps and save your progress/i)).toBeVisible();
   });
 });

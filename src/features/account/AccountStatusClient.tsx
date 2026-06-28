@@ -6,6 +6,7 @@ import { accountInitial, compactPlanLabel } from "@/features/account/accountDisp
 import { membershipDisplay } from "@/features/account/subscriptionDisplay";
 import { useEntitlement } from "@/features/account/useEntitlement";
 import { useSupabaseAccount } from "@/features/account/useSupabaseAccount";
+import { ACCESS_PLAN_COPY } from "@/lib/account/accessCopy";
 import { planLabel } from "@/lib/account/entitlements";
 
 export function AccountStatusClient() {
@@ -35,9 +36,9 @@ export function AccountStatusClient() {
       <article className="surface account-card account-primary-card">
         <p className="eyebrow">Account status</p>
         <h2>Email sign-in is unavailable in this preview.</h2>
-        <p>You can still play today&apos;s Mystery Map and keep local stats in this browser.</p>
-        <Link className="button-secondary" href="/play/worldprint">
-          Play without signing in
+        <p>Sample maps are available in this browser. Fresh Daily play and saved progress start with a free account.</p>
+        <Link className="button-secondary" href="/play/mystery-map">
+          Try sample maps
         </Link>
       </article>
     );
@@ -57,14 +58,14 @@ export function AccountStatusClient() {
     return (
       <article className="surface account-card account-primary-card">
         <p className="eyebrow">Signed out</p>
-        <h2>Create a free account to save your streak.</h2>
-        <p>Keep playing locally, or connect an email when you want account-saved records.</p>
+        <h2>{ACCESS_PLAN_COPY.guest.primaryCta}</h2>
+        <p>{ACCESS_PLAN_COPY.guest.summary}</p>
         <div className="button-row">
           <Link className="button" href="/sign-in">
-            Save your score and streak
+            Create a free account
           </Link>
-          <Link className="button-secondary" href="/play/worldprint">
-            Keep playing
+          <Link className="button-secondary" href="/play/mystery-map">
+            Try sample maps
           </Link>
         </div>
       </article>

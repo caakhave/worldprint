@@ -25,7 +25,7 @@ export function AuthNavStatus() {
   if (!user) {
     return (
       <Link className="account-nav-control account-nav-control-signed-out" href="/sign-in">
-        Sign in
+        Free account
       </Link>
     );
   }

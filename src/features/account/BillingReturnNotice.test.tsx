@@ -71,6 +71,6 @@ describe("BillingReturnNotice", () => {
     render(<BillingReturnNotice context="upgrade" />);
 
     expect(await screen.findByRole("heading", { name: "No charge was made." })).toBeVisible();
-    expect(screen.getByRole("link", { name: "Keep playing" })).toHaveAttribute("href", "/play/worldprint");
+    expect(screen.getByRole("link", { name: "Keep playing" })).toHaveAttribute("href", "/play/mystery-map");
   });
 });

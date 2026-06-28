@@ -29,7 +29,7 @@ export function scoreCell(score: number): string {
 export function scoreRank(total: number, roundCount: number) {
   const possible = Math.max(1, roundCount * 1000);
   const ratio = total / possible;
-  if (ratio >= 0.92) return { title: "Worldprint Master", note: "Elite pattern reading across the whole run." };
+  if (ratio >= 0.92) return { title: "Atlas Master", note: "Elite pattern reading across the whole run." };
   if (ratio >= 0.76) return { title: "Pattern Hunter", note: "Strong reads, sharp clue discipline." };
   if (ratio >= 0.52) return { title: "Atlas Reader", note: "Good signal work with room to tighten the clues." };
   return { title: "Signal Seeker", note: "The map gave up its secrets. Now chase the cleaner read." };

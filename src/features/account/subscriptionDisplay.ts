@@ -1,4 +1,5 @@
 import type { PlayerEntitlement } from "@/lib/account/entitlements";
+import { accessCopyForEntitlement } from "@/lib/account/accessCopy";
 
 export type MembershipDisplay = {
   heading: string;
@@ -62,13 +63,12 @@ export function membershipDisplay(entitlement: PlayerEntitlement, loading = fals
     };
   }
 
+  const accessCopy = accessCopyForEntitlement(entitlement);
+
   return {
-    heading: entitlement.plan === "guest" ? "Playing without an account" : "Free account",
-    detail: entitlement.plan === "guest" ? "Local stats only" : "Daily and basic stats",
-    body:
-      entitlement.plan === "guest"
-        ? "You can play today and keep local stats in this browser."
-        : "Your free account can save stats and play the Daily while the paid atlas takes shape."
+    heading: accessCopy.label,
+    detail: entitlement.plan === "guest" ? "Sample maps only" : "Daily and basic stats",
+    body: accessCopy.summary
   };
 }
 

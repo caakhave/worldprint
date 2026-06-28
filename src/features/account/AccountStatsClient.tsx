@@ -14,6 +14,7 @@ import {
 import { buildLocalPlayerStats } from "@/lib/persistence/playerStats";
 import { defaultPersistedState, loadPersistedState, type PersistedState } from "@/lib/persistence/storage";
 import { useSupabaseAccount } from "@/features/account/useSupabaseAccount";
+import { ACCESS_PLAN_COPY } from "@/lib/account/accessCopy";
 
 function formatNumber(value: number | null | undefined): string {
   if (value === null || value === undefined) return "None";
@@ -219,10 +220,10 @@ export function AccountStatsClient() {
           </>
         ) : configured ? (
           <>
-            <h2>Create a free account to save your streak.</h2>
-            <p>Your local stats are still shown above. Sign in when you want to save them to an account.</p>
+            <h2>Create a free account.</h2>
+            <p>{ACCESS_PLAN_COPY.guest.summary} Local sample stats are still shown above.</p>
             <Link className="button" href="/sign-in">
-              Save your score and streak
+              Create a free account
             </Link>
           </>
         ) : (

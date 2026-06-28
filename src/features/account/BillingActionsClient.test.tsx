@@ -37,7 +37,8 @@ describe("BillingActionsClient", () => {
     render(<BillingActionsClient entitlement={FREE_ENTITLEMENT} context="upgrade" />);
 
     expect(screen.getByRole("button", { name: "Checkout coming soon" })).toBeDisabled();
-    expect(screen.getByText("Pricing is visible now. You can still play today's Mystery Map for free.")).toBeVisible();
+    expect(screen.getByText(/Pricing is visible now\./)).toBeVisible();
+    expect(screen.getByText(/Create a free account for fresh Daily play\./)).toBeVisible();
     expect(screen.queryByRole("button", { name: /Upgrade/i })).not.toBeInTheDocument();
   });
 

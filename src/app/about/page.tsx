@@ -7,7 +7,7 @@ export const metadata: Metadata = {
 
 export default function AboutPage() {
   return (
-    <section className="about-page page-shell">
+    <section className="about-page page-shell map-texture-page">
       <div className="about-hero">
         <p className="eyebrow">Mission</p>
         <h1 className="page-title">A game about seeing what maps are saying.</h1>
@@ -17,7 +17,7 @@ export default function AboutPage() {
         </p>
       </div>
       <div className="about-grid">
-        <article className="about-card">
+        <article className="about-card map-texture-panel">
           <h2>Cartographic policy summary</h2>
           <p>
             Boundaries, names, and entity treatment are standardized gameplay choices, not sovereignty judgments. The vertical slice
@@ -28,26 +28,16 @@ export default function AboutPage() {
             links, affected entity or indicator, and the expected correction.
           </p>
         </article>
-        <article className="about-card">
-          <h2>What comes next</h2>
-          <p>
-            Human Center is the next intended full game. It will stay in the same spirit: playful geography first, with real data
-            and careful map choices behind the scenes.
-          </p>
-          <p>
-            Mystery Map stays first: richer past-game replay, better map review, and cleaner challenge sharing should come before any
-            account or paid layer.
-          </p>
-        </article>
-      </div>
-      <div className="about-cta surface">
-        <div>
+        <article className="about-card map-texture-panel">
           <h2>Built on visible sources.</h2>
-          <p>See the providers, licenses, year-selection policy, missing-data rules, and current limitations behind the maps.</p>
-        </div>
-        <Link className="button" href="/sources">
-          Read Data &amp; Sources
-        </Link>
+          <p>
+            Can You Geo? uses traceable data and map sources so each reveal can be checked. The sources page explains the providers,
+            licenses, year-selection policy, missing-data rules, and current limitations behind Mystery Map.
+          </p>
+          <Link className="button-secondary" href="/sources">
+            Read Data &amp; Sources
+          </Link>
+        </article>
       </div>
     </section>
   );

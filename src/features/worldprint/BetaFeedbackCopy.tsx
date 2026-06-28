@@ -39,7 +39,7 @@ export function BetaFeedbackCopy({ template }: BetaFeedbackCopyProps) {
         {status === "copied" ? "Template copied" : "Copy feedback template"}
       </button>
       <p className="status-live" aria-live="polite">
-        {status === "failed" ? "Copy failed. Select the template text and copy it manually." : status === "copied" ? "Ready to paste into your beta reply." : ""}
+        {status === "failed" ? "Copy failed. Select the template text and copy it manually." : status === "copied" ? "Ready to paste into your playtest reply." : ""}
       </p>
     </div>
   );

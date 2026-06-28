@@ -53,10 +53,10 @@ describe("AuthNavStatus", () => {
     entitlementMock.state.signedIn = false;
   });
 
-  it("links signed-out players to sign in", () => {
+  it("links signed-out players to the free account flow", () => {
     render(<AuthNavStatus />);
 
-    expect(screen.getByRole("link", { name: "Sign in" })).toHaveAttribute("href", "/sign-in");
+    expect(screen.getByRole("link", { name: "Free account" })).toHaveAttribute("href", "/sign-in");
   });
 
   it("shows a compact Free account badge for signed-in players", () => {

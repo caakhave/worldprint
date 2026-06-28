@@ -52,7 +52,7 @@ export function AuthCallbackClient() {
       const client = createSupabaseBrowserClient();
       if (!client) {
         setStatus("Email sign-in is not available in this preview.");
-        setError("You can still play without an account on this device.");
+        setError("You can still try sample maps on this device.");
         return;
       }
       const activeClient = client;

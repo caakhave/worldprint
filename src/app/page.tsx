@@ -2,6 +2,7 @@ import Image from "next/image";
 import Link from "next/link";
 import { ArrowRight } from "lucide-react";
 import { HomepageHeroMedia } from "@/components/HomepageHeroMedia";
+import { ACCESS_PLAN_COPY } from "@/lib/account/accessCopy";
 
 const signalCards = [
   {
@@ -32,15 +33,17 @@ const modeCards = [
     image: "/images/homepage/04-daily-mystery-map.png",
     objectPosition: "50% 50%",
     title: "Daily Mystery Map",
-    copy: "Five maps. One streak. Fresh every day.",
-    cta: "Play today"
+    copy: "Fresh Daily play and saved progress with a free account.",
+    cta: "Create free account",
+    href: "/sign-in"
   },
   {
     image: "/images/homepage/05-practice.png",
     objectPosition: "50% 50%",
     title: "Practice",
     copy: "Train by topic and difficulty.",
-    cta: "Practice now"
+    cta: "Try sample maps",
+    href: "/play/mystery-map"
   },
   {
     image: "/images/homepage/06-challenge-friends.png",
@@ -64,22 +67,22 @@ export default function HomePage() {
               A new mystery map is waiting. Spot the pattern, spend your clues wisely, and guess what the planet is hiding.
             </p>
             <div className="button-row">
-              <Link className="button hero-primary-cta" href="/play/worldprint">
-                Play today&apos;s Mystery Map
+              <Link className="button hero-primary-cta" href="/sign-in">
+                Create free account
                 <ArrowRight size={18} aria-hidden="true" />
               </Link>
-              <Link className="button-secondary hero-secondary-cta" href="#how-it-works">
-                How it works
+              <Link className="button-secondary hero-secondary-cta" href="/play/mystery-map">
+                Try sample maps
               </Link>
             </div>
-            <p className="hero-note">Free to play while the atlas grows.</p>
+            <p className="hero-note">{ACCESS_PLAN_COPY.guest.summary}</p>
           </div>
           <aside className="hero-join-panel" aria-label="Join the daily challenge">
             <p className="eyebrow">Join the game</p>
             <h2>Join the daily challenge</h2>
-            <p>Five maps. One streak. A fresh world puzzle every day.</p>
-            <Link className="button hero-panel-button" href="/play/worldprint">
-              Start playing
+            <p>Fresh Daily play, saved progress, streaks, and basic stats start with a free account.</p>
+            <Link className="button hero-panel-button" href="/sign-in">
+              Create free account
               <ArrowRight size={18} aria-hidden="true" />
             </Link>
           </aside>
@@ -142,7 +145,7 @@ export default function HomePage() {
                     <h3>{card.title}</h3>
                     <p>{card.copy}</p>
                     {"cta" in card ? (
-                      <Link className="mode-poster-cta" href="/play/worldprint">
+                      <Link className="mode-poster-cta" href={card.href}>
                         {card.cta}
                         <ArrowRight size={16} aria-hidden="true" />
                       </Link>

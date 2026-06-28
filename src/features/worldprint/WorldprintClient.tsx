@@ -9,6 +9,7 @@ import { TierSelector } from "@/features/worldprint/TierSelector";
 import { PlayerStatsPanel } from "@/features/worldprint/PlayerStatsPanel";
 import { useEntitlement } from "@/features/account/useEntitlement";
 import { useSupabaseAccount } from "@/features/account/useSupabaseAccount";
+import { ACCESS_PLAN_COPY } from "@/lib/account/accessCopy";
 import {
   loadEntityRegistry,
   loadIndicator,
@@ -33,7 +34,7 @@ import { selectDailyRoundIdsFromManifest } from "@/lib/game/dailyManifest";
 import { localDateKey, nextDailyUnlockCopy } from "@/lib/game/retention";
 import { buildResultShareSummary, buildShareText, scoreRank } from "@/lib/game/share";
 import { challengePayloadFromRun, decodeChallenge, encodeChallenge, type ChallengePayload } from "@/lib/game/challenge";
-import { COUNTRY_REVEAL_COST, TIER_CONFIGS, nextInvestigationPenalty } from "@/lib/game/scoring";
+import { TIER_CONFIGS, nextInvestigationPenalty } from "@/lib/game/scoring";
 import {
   activeRound,
   createRun,
@@ -66,6 +67,7 @@ const DIFFICULTY_LABELS: Record<IndicatorDifficulty, string> = {
   expert: "Expert"
 };
 const DIFFICULTY_ORDER: IndicatorDifficulty[] = ["intro", "standard", "expert"];
+const ENTRY_PREVIEW_INDICATOR_ID = "internet-users";
 
 type LoadedData = {
   manifest: Manifest;
@@ -334,6 +336,17 @@ export function WorldprintClient({ dateOverride, entryMode = "standard" }: World
     if (indicatorIds.length === 0) return;
     ensureIndicators(indicatorIds).catch((error: unknown) => setLoadError(error instanceof Error ? error.message : "Could not load review details"));
   }, [data, ensureIndicators, reviewRequested, store, todayKey]);
+
+  useEffect(() => {
+    if (!data) return;
+    const previewIndicatorId = data.indicators.has(ENTRY_PREVIEW_INDICATOR_ID)
+      ? ENTRY_PREVIEW_INDICATOR_ID
+      : data.manifest.indicators[0]?.id;
+    if (!previewIndicatorId) return;
+    ensureIndicators([previewIndicatorId]).catch((error: unknown) =>
+      setLoadError(error instanceof Error ? error.message : "Could not load preview map")
+    );
+  }, [data, ensureIndicators]);
 
   useEffect(() => {
     if (!run) return;
@@ -784,7 +797,10 @@ export function WorldprintClient({ dateOverride, entryMode = "standard" }: World
         ? entitlement.plan === "pro"
           ? "Pro account"
           : "Free account"
-        : "No account needed";
+        : "Sample play";
+    const dailyCardCopy = signedIn
+      ? "Read the maps, spend points for clues, and lock your official Daily result."
+      : "Try sample maps instantly. Create a free account for fresh Daily play and saved progress.";
     if (reviewRequested) {
       if (reviewRecord) {
         return (
@@ -806,7 +822,7 @@ export function WorldprintClient({ dateOverride, entryMode = "standard" }: World
               <button className="button" type="button" onClick={() => void startRun("archive")}>
                 Try past puzzle
               </button>
-              <Link className="button-secondary" href="/archive/worldprint">
+              <Link className="button-secondary" href="/past-games">
                 Open past games
               </Link>
             </div>
@@ -817,36 +833,42 @@ export function WorldprintClient({ dateOverride, entryMode = "standard" }: World
     return (
       <section className="game-entry page-shell" data-entry-mode={isArchiveDate ? "archive" : "daily"}>
         <div className="entry-copy">
-          <EntryAtlasVisual />
+          <EntryAtlasVisual
+            map={data.map}
+            indicator={indicatorCache[ENTRY_PREVIEW_INDICATOR_ID] ?? indicatorCache[data.manifest.indicators[0]?.id ?? ""]}
+            countryNames={data.countryNames}
+          />
           <p className="eyebrow">{isArchiveDate ? `Past Mystery Map Replay · ${todayKey}` : `Mystery Map Daily #${challengeNumber(todayKey)}`}</p>
           <h1 className="page-title">What does this map measure?</h1>
           <p className="lead">
             {isArchiveDate
               ? "Replay this past Mystery Map as a record run: five unlabeled maps, one hidden indicator each."
-              : "Today's Daily is a full 5-map run: five unlabeled maps, one hidden indicator each."}{" "}
-            Investigate countries when you need evidence, but every clue spends score.
+              : signedIn
+                ? "Today's Daily is a Mystery Map run: unlabeled maps, one hidden indicator each."
+                : `${ACCESS_PLAN_COPY.guest.headline} Create a free account for fresh Daily play and saved progress.`}{" "}
+            Investigate countries when you need evidence, but every clue spends points.
           </p>
           <div className="entry-facts" aria-label="Daily facts">
             <span>{accountFactLabel}</span>
-            <span>{isArchiveDate ? "Streak stays safe" : "5-map Daily"}</span>
+            <span>{isArchiveDate ? "Streak stays safe" : signedIn ? "Daily run" : "Free account unlocks Daily"}</span>
             <span>Practice mode included</span>
           </div>
           <div className="entry-lobby-strip" aria-label="Mystery Map lobby preview">
             <span>
-              <strong>5</strong>
-              Mystery maps
+              <strong>Map</strong>
+              Read colors
             </span>
             <span>
               <strong>1000</strong>
-              Max per map
+              Points start
             </span>
             <span>
               <strong>-100</strong>
-              Clue spend
+              Clue points
             </span>
             <span>
-              <strong>Daily</strong>
-              Streak run
+              <strong>Bank</strong>
+              Result points
             </span>
           </div>
           {data.dailyManifestIssue ? <p className="archive-note">{data.dailyManifestIssue}</p> : null}
@@ -864,7 +886,7 @@ export function WorldprintClient({ dateOverride, entryMode = "standard" }: World
                   <div>
                     <p className="setup-kicker">Daily Mystery Map</p>
                     <h3>Daily Mystery Map</h3>
-                    <p>Five maps. One official daily score.</p>
+                    <p>{dailyCardCopy}</p>
                   </div>
                   {todayCompleted ? <span className="mode-state-pill">Today&apos;s run complete</span> : <span className="mode-state-pill">Ready today</span>}
                   {todayCompleted ? (
@@ -891,7 +913,7 @@ export function WorldprintClient({ dateOverride, entryMode = "standard" }: World
                         <a className="button-secondary" href="#practice-atlas">
                           Practice Atlas
                         </a>
-                        <Link className="button-secondary" href="/archive/worldprint">
+                        <Link className="button-secondary" href="/past-games">
                           Past Games
                         </Link>
                         <button className="button-secondary" type="button" onClick={() => void startRun("daily", undefined, { freshReplay: true })}>
@@ -899,10 +921,17 @@ export function WorldprintClient({ dateOverride, entryMode = "standard" }: World
                         </button>
                       </>
                     ) : (
-                      <button className="button" type="button" onClick={() => void startRun("daily")}>
-                        <Compass size={18} aria-hidden="true" />
-                        {dailyLabel}
-                      </button>
+                      <>
+                        {!signedIn ? (
+                          <Link className="button" href="/sign-in">
+                            Create free account
+                          </Link>
+                        ) : null}
+                        <button className={signedIn ? "button" : "button-secondary"} type="button" onClick={() => void startRun("daily")}>
+                          <Compass size={18} aria-hidden="true" />
+                          {signedIn ? dailyLabel : activeDateRun ? dailyLabel : "Try sample maps"}
+                        </button>
+                      </>
                     )}
                   </div>
                 </article>
@@ -974,7 +1003,7 @@ export function WorldprintClient({ dateOverride, entryMode = "standard" }: World
                     <p>Review or replay earlier Mystery Maps.</p>
                   </div>
                   <div className="mode-card-actions">
-                    <Link className="button-secondary" href="/archive/worldprint">
+                    <Link className="button-secondary" href="/past-games">
                       Open past games
                     </Link>
                   </div>
@@ -1017,7 +1046,7 @@ export function WorldprintClient({ dateOverride, entryMode = "standard" }: World
               <div className="button-row archive-start-row">
                 {reviewRecord ? (
                   <>
-                    <Link className="button" href={`/play/worldprint/${todayKey}?review=1`}>
+                    <Link className="button" href={`/play/mystery-map/${todayKey}?review=1`}>
                       View result
                     </Link>
                     <button className="button-secondary" type="button" onClick={() => void startArchivePracticeReplay()}>
@@ -1144,42 +1173,30 @@ export function WorldprintClient({ dateOverride, entryMode = "standard" }: World
   }
 
   return (
-    <section className="play-layout page-shell">
-      <div className="play-map-panel">
-        <div className="round-kicker">
-          <span>
-            Round {run.currentRoundIndex + 1} of {run.rounds.length}
-          </span>
-          <span>{config.label}</span>
-          <span>
-            {run.mode === "daily"
-              ? `Mystery Map Daily #${challengeNumber(run.dateKey)}`
-              : run.mode === "archive"
-                ? `Past Mystery Map Replay ${run.dateKey}`
-                : run.mode === "challenge"
-                  ? "Mystery Map Challenge"
-                  : "Mystery Map Practice"}
-          </span>
-        </div>
-        <h1 id="active-map-title">What does this map measure?</h1>
-        <WorldMap
-          map={data.map}
-          indicator={indicator}
-          countryNames={data.countryNames}
-          investigatedIso3={roundState.investigations.map((item) => item.iso3)}
-          selectedIso3={selectedCountryIso3}
-          onCountryClick={(country) => selectCountry(country.iso3)}
-          labelledBy="active-map-title"
-        />
-        {showIncorrectFeedback ? (
-          <div className="miss-moment-overlay" key={latestRejectedAnswer?.id ?? feedbackText} aria-hidden="true">
-            <span>Miss</span>
-            <strong>Not this map</strong>
-            <em>-{wrongAnswerPenalty} points</em>
+    <section className="play-layout page-shell" data-layout="dashboard">
+      <div className="play-control-panel surface" aria-label="Round dashboard">
+        <div className="game-task-header">
+          <div className="round-kicker">
+            <span>
+              Round {run.currentRoundIndex + 1} of {run.rounds.length}
+            </span>
+            <span>{config.label}</span>
+            <span>
+              {run.mode === "daily"
+                ? `Mystery Map Daily #${challengeNumber(run.dateKey)}`
+                : run.mode === "archive"
+                  ? `Past Mystery Map Replay ${run.dateKey}`
+                  : run.mode === "challenge"
+                    ? "Mystery Map Challenge"
+                    : "Mystery Map Practice"}
+            </span>
           </div>
-        ) : null}
-      </div>
-      <div className="play-control-panel surface" aria-label="Round controls">
+          <div>
+            <p className="eyebrow">Your task</p>
+            <h1 id="active-map-title">What does this map measure?</h1>
+            <p>Read the map pattern, spend points only when evidence helps, then lock the answer.</p>
+          </div>
+        </div>
         <div className="score-hud" aria-label="Score status">
           <div className="score-hud-card score-hud-current">
             <span>This map</span>
@@ -1206,6 +1223,111 @@ export function WorldprintClient({ dateOverride, entryMode = "standard" }: World
             </strong>
           </div>
         </div>
+        <div className="answer-box primary-answer-box">
+          {run.tier === "atlasMaster" ? (
+            <form
+              onSubmit={(event) => {
+                event.preventDefault();
+                const correct = isAcceptedAtlasGuess(masterGuess, round.acceptedAliases, indicator);
+                dispatch({
+                  type: "submit",
+                  answerId: `guess:${normalizeGuess(masterGuess)}`,
+                  label: masterGuess,
+                  correct
+                });
+                if (!correct) setMasterGuess("");
+              }}
+            >
+              <label htmlFor="master-search">Search playable map catalog</label>
+              <input
+                id="master-search"
+                list="indicator-catalog"
+                value={masterGuess}
+                onChange={(event) => setMasterGuess(event.target.value)}
+                placeholder="Type an indicator"
+                autoComplete="off"
+              />
+              <datalist id="indicator-catalog">
+                {Array.from(data.indicators.values())
+                  .filter((item) => item.editorialReview.challengeEligible)
+                  .map((item) => (
+                    <option key={item.id} value={item.shortTitle} />
+                  ))}
+              </datalist>
+              <button className="button full-width" type="submit" disabled={!masterGuess.trim()}>
+                Submit answer
+              </button>
+            </form>
+          ) : (
+            <>
+              <div className="answer-box-heading">
+                <div>
+                  <span>Pick one answer</span>
+                  <h2>Which indicator is this?</h2>
+                </div>
+                <small>Wrong answers cost {wrongAnswerPenalty} points.</small>
+              </div>
+              <div className="choice-list">
+                {currentChoices.map((choice) => {
+                  const rejected = roundState.rejectedAnswers.some((answer) => answer.id === choice.indicatorId);
+                  return (
+                    <button
+                      key={choice.indicatorId}
+                      type="button"
+                      className="choice-button"
+                      data-rejected={rejected ? "true" : "false"}
+                      disabled={rejected}
+                      onClick={() =>
+                        dispatch({
+                          type: "submit",
+                          answerId: choice.indicatorId,
+                          label: choice.label,
+                          correct: choice.indicatorId === round.correctIndicatorId
+                        })
+                      }
+                    >
+                      <span>{choice.label}</span>
+                      {rejected ? <small>Rejected</small> : null}
+                    </button>
+                  );
+                })}
+              </div>
+            </>
+          )}
+          {roundState.rejectedAnswers.length > 0 ? (
+            <div className="attempt-history">
+              <strong>Rejected</strong>
+              <span>{roundState.rejectedAnswers.map((answer) => answer.label).join(", ")}</span>
+            </div>
+          ) : null}
+        </div>
+        {showIncorrectFeedback ? (
+          <div className="answer-feedback-banner" data-result="incorrect" role="status" aria-live="polite">
+            <span>Incorrect</span>
+            <strong>{latestRejectedAnswer?.label}</strong>
+            <em>-{wrongAnswerPenalty} points</em>
+            <p>{feedbackText} Cross it off and read the remaining signal.</p>
+          </div>
+        ) : null}
+        <div className="clue-dashboard" aria-label="Clue costs">
+          <div className="clue-summary-card">
+            <span>Country clue</span>
+            <strong>
+              {investigationPenalty === null ? "Used up" : `${investigationPenalty} points`}
+            </strong>
+            <p>{config.maxInvestigations - paidInvestigationCount} of {config.maxInvestigations} country reveals left.</p>
+          </div>
+          {config.unitClue && unitClue.eligible ? (
+            <div className="clue-action-card">
+              <span>Unit clue</span>
+              <button className="button-secondary full-width" type="button" disabled={roundState.unitClueUsed} onClick={() => dispatch({ type: "unitClue" })}>
+                <Lightbulb size={18} aria-hidden="true" />
+                {roundState.unitClueUsed ? "Unit clue revealed" : `Reveal unit: -${config.scoring.unitCluePenalty}`}
+              </button>
+              {roundState.unitClueUsed ? <p className="unit-clue">{unitClue.text}</p> : <p>Spend points to decode the unit, not the answer.</p>}
+            </div>
+          ) : null}
+        </div>
         <div className="run-stats-card" aria-label="Run details">
           <span>Run details</span>
           <dl>
@@ -1227,12 +1349,10 @@ export function WorldprintClient({ dateOverride, entryMode = "standard" }: World
             </div>
           </dl>
         </div>
-        <p className="map-rule">Darker means a larger numerical value. Hatched countries have no data for this round.</p>
         <div className="investigation-box">
           <h2>Investigate a country</h2>
           <p className="cost-note">
-            Use this when a country is too small or hard to click. Selecting only previews the country. Revealing a value costs{" "}
-            {COUNTRY_REVEAL_COST} points.
+            Use this when the pattern gets slippery. Selecting a country is free; revealing a value spends the listed points.
           </p>
           <label htmlFor="country-search">Choose a country to investigate</label>
           <div className="country-select-row">
@@ -1284,114 +1404,55 @@ export function WorldprintClient({ dateOverride, entryMode = "standard" }: World
               ? "Country reveals used up for this round."
               : `Next reveal costs ${investigationPenalty} points.`}
           </p>
-          <div className="inspection-readout" aria-live="polite">
-            {latestInvestigation ? (
-              <>
-                <span>{latestInvestigation.cost ? `-${latestInvestigation.cost} points` : "No cost"}</span>
-                <strong>{latestInvestigation.countryName}</strong>
-                <p>
-                  {latestInvestigation.value === null ? "No data for this country on this map." : formatValue(latestInvestigation.value, indicator)}
-                </p>
-              </>
-            ) : (
-              <>
-                <span>Ready</span>
-                <strong>Pick a country</strong>
-                <p>Use the map or search control to reveal one country value.</p>
-              </>
-            )}
-          </div>
         </div>
-        {config.unitClue && unitClue.eligible ? (
-          <button className="button-secondary full-width" type="button" disabled={roundState.unitClueUsed} onClick={() => dispatch({ type: "unitClue" })}>
-            <Lightbulb size={18} aria-hidden="true" />
-            {roundState.unitClueUsed ? `Unit clue: ${unitClue.text}` : `Reveal unit: -${config.scoring.unitCluePenalty}`}
-          </button>
-        ) : null}
-        {roundState.unitClueUsed && unitClue.eligible ? <p className="unit-clue">Unit clue: {unitClue.text}</p> : null}
-        <div className="answer-box">
-          {run.tier === "atlasMaster" ? (
-            <form
-              onSubmit={(event) => {
-                event.preventDefault();
-                const correct = isAcceptedAtlasGuess(masterGuess, round.acceptedAliases, indicator);
-                dispatch({
-                  type: "submit",
-                  answerId: `guess:${normalizeGuess(masterGuess)}`,
-                  label: masterGuess,
-                  correct
-                });
-                if (!correct) setMasterGuess("");
-              }}
-            >
-              <label htmlFor="master-search">Search playable map catalog</label>
-              <input
-                id="master-search"
-                list="indicator-catalog"
-                value={masterGuess}
-                onChange={(event) => setMasterGuess(event.target.value)}
-                placeholder="Type an indicator"
-                autoComplete="off"
-              />
-              <datalist id="indicator-catalog">
-                {Array.from(data.indicators.values())
-                  .filter((item) => item.editorialReview.challengeEligible)
-                  .map((item) => (
-                    <option key={item.id} value={item.shortTitle} />
-                  ))}
-              </datalist>
-              <button className="button full-width" type="submit" disabled={!masterGuess.trim()}>
-                Submit answer
-              </button>
-            </form>
-          ) : (
-            <>
-              <h2>Choose the indicator</h2>
-              <div className="choice-list">
-                {currentChoices.map((choice) => {
-                  const rejected = roundState.rejectedAnswers.some((answer) => answer.id === choice.indicatorId);
-                  return (
-                    <button
-                      key={choice.indicatorId}
-                      type="button"
-                      className="choice-button"
-                      data-rejected={rejected ? "true" : "false"}
-                      disabled={rejected}
-                      onClick={() =>
-                        dispatch({
-                          type: "submit",
-                          answerId: choice.indicatorId,
-                          label: choice.label,
-                          correct: choice.indicatorId === round.correctIndicatorId
-                        })
-                      }
-                    >
-                      <span>{choice.label}</span>
-                      {rejected ? <small>Rejected</small> : null}
-                    </button>
-                  );
-                })}
-              </div>
-            </>
-          )}
-          {roundState.rejectedAnswers.length > 0 ? (
-            <div className="attempt-history">
-              <strong>Rejected</strong>
-              <span>{roundState.rejectedAnswers.map((answer) => answer.label).join(", ")}</span>
-            </div>
-          ) : null}
-        </div>
-        {showIncorrectFeedback ? (
-          <div className="answer-feedback-banner" data-result="incorrect" role="status" aria-live="polite">
-            <span>Incorrect</span>
-            <strong>{latestRejectedAnswer?.label}</strong>
-            <em>-{wrongAnswerPenalty} points</em>
-            <p>{feedbackText} Cross it off and read the remaining signal.</p>
-          </div>
-        ) : null}
         <div className="status-live" role="status" aria-live="polite">
           {showIncorrectFeedback ? "" : feedbackText}
         </div>
+      </div>
+      <div className="play-map-panel" aria-label="Map evidence">
+        <div className="map-evidence-header">
+          <div>
+            <p className="eyebrow">Map evidence</p>
+            <h2>Read the color pattern.</h2>
+          </div>
+          <div className="map-key-inline" aria-label="Map key">
+            <span>Darker = larger value</span>
+            <span>Hatched = no data</span>
+          </div>
+        </div>
+        <WorldMap
+          map={data.map}
+          indicator={indicator}
+          countryNames={data.countryNames}
+          investigatedIso3={roundState.investigations.map((item) => item.iso3)}
+          selectedIso3={selectedCountryIso3}
+          onCountryClick={(country) => selectCountry(country.iso3)}
+          labelledBy="active-map-title"
+        />
+        <div className="inspection-readout" aria-live="polite">
+          {latestInvestigation ? (
+            <>
+              <span>{latestInvestigation.cost ? `-${latestInvestigation.cost} points` : "No cost"}</span>
+              <strong>{latestInvestigation.countryName}</strong>
+              <p>
+                {latestInvestigation.value === null ? "No data for this country on this map." : formatValue(latestInvestigation.value, indicator)}
+              </p>
+            </>
+          ) : (
+            <>
+              <span>Ready</span>
+              <strong>Pick a country</strong>
+              <p>Click the map or use the country search to collect evidence.</p>
+            </>
+          )}
+        </div>
+        {showIncorrectFeedback ? (
+          <div className="miss-moment-overlay" key={latestRejectedAnswer?.id ?? feedbackText} aria-hidden="true">
+            <span>Miss</span>
+            <strong>Not this map</strong>
+            <em>-{wrongAnswerPenalty} points</em>
+          </div>
+        ) : null}
       </div>
     </section>
   );
@@ -1447,6 +1508,11 @@ function RevealView({
   const resultTone = missedAnswerCount > 0 ? "recovered" : "correct";
   const revealEyebrow = resultTone === "correct" ? "Correct" : "Answer found";
   const revealHeadline = resultTone === "correct" ? "Solved" : "Answer found";
+  const startPoints = TIER_CONFIGS[run.tier].scoring.start;
+  const countryClueSpend = roundState.investigations.reduce((total, item) => total + Math.max(0, item.cost), 0);
+  const unitClueSpend = roundState.unitClueUsed ? TIER_CONFIGS[run.tier].scoring.unitCluePenalty : 0;
+  const clueSpend = countryClueSpend + unitClueSpend;
+  const wrongAnswerSpend = missedAnswerCount * TIER_CONFIGS[run.tier].scoring.wrongAnswerPenalty;
   const nextMapNumber = run.currentRoundIndex + 2;
   const finalRoundSolved = run.currentRoundIndex + 1 >= run.rounds.length;
   const hasInvestigationHistory = roundState.unitClueUsed || roundState.investigations.length > 0;
@@ -1465,41 +1531,6 @@ function RevealView({
 
   return (
     <section className="reveal-layout page-shell">
-      <div className="reveal-map" data-result={resultTone}>
-        <p className="eyebrow">{resultLabel}</p>
-        <h1 id="reveal-map-title">{indicator.shortTitle}</h1>
-        <p className="full-indicator-title">{indicator.title}</p>
-        <div className="source-badges" aria-label="Indicator metadata">
-          <span>{indicator.unit}</span>
-          <span>{indicator.year}</span>
-          <span>{indicator.stats.coverage} countries</span>
-        </div>
-        <WorldMap
-          map={map}
-          indicator={indicator}
-          countryNames={countryNames}
-          investigatedIso3={roundState.investigations.map((item) => item.iso3)}
-          interactive={false}
-          labelledBy="reveal-map-title"
-        />
-        <div className="solve-moment-overlay" data-result={resultTone} aria-hidden="true">
-          <span>{revealEyebrow}</span>
-          <strong>{revealHeadline}</strong>
-          <em>{scoreText}</em>
-        </div>
-        {resultTone === "correct" ? (
-          <video className="correct-burst-video" autoPlay muted playsInline preload="none" aria-hidden="true">
-            <source src="/worldprint/correct-burst.webm" type="video/webm" />
-          </video>
-        ) : null}
-        <div className="result-atlas-burst" data-result={resultTone} aria-hidden="true">
-          <span />
-          <span />
-          <span />
-          <span />
-          <span />
-        </div>
-      </div>
       <div className="reveal-panel surface" aria-label="Reveal details">
         <div className="round-result-banner" data-result={resultTone} role="status" aria-live="polite">
           <span>{missedAnswerCount > 0 ? "Answer revealed" : "Correct"}</span>
@@ -1514,11 +1545,51 @@ function RevealView({
             {scoreText} banked
           </div>
         </div>
-        <div className="reveal-scoreline">
-          <span>Answer</span>
-          <strong>{indicator.shortTitle}</strong>
-          <small>{resultLabel}</small>
+        <div className="reveal-dashboard-grid">
+          <div className="reveal-scoreline">
+            <span>Correct indicator</span>
+            <strong>{indicator.shortTitle}</strong>
+            <small>{resultLabel}</small>
+          </div>
+          <dl className="point-breakdown" aria-label="Point breakdown">
+            <div>
+              <dt>Started</dt>
+              <dd>{startPoints.toLocaleString("en-US")}</dd>
+            </div>
+            <div>
+              <dt>Clues</dt>
+              <dd>{clueSpend ? `-${clueSpend.toLocaleString("en-US")}` : "0"}</dd>
+            </div>
+            <div>
+              <dt>Misses</dt>
+              <dd>{wrongAnswerSpend ? `-${wrongAnswerSpend.toLocaleString("en-US")}` : "0"}</dd>
+            </div>
+            <div>
+              <dt>Earned</dt>
+              <dd>{scoreText}</dd>
+            </div>
+          </dl>
         </div>
+        <section className="lesson-card lesson-card-strong reveal-key-evidence" aria-labelledby="showing-heading">
+          <p className="eyebrow" id="showing-heading">
+            What the map was showing
+          </p>
+          <p>{indicator.editorial.patternNote}</p>
+        </section>
+        <div className="round-transition-card" data-final={finalRoundSolved ? "true" : "false"}>
+          <span>{finalRoundSolved ? "Daily complete" : `Map ${nextMapNumber} of ${run.rounds.length}`}</span>
+          <strong>{finalRoundSolved ? "Score locked. Opening results..." : "Next mystery loading."}</strong>
+          <em>Banked {scoreText}</em>
+          <div className="transition-pips" aria-hidden="true">
+            {transitionPips.map((index) => (
+              <i key={index} data-state={index <= run.currentRoundIndex ? "banked" : index === run.currentRoundIndex + 1 ? "next" : "locked"} />
+            ))}
+          </div>
+          <small>{finalRoundSolved ? "Every map is scored. Your result is opening now." : "Preparing the next hidden statistic."}</small>
+        </div>
+        <button className="button full-width next-map-button" type="button" onClick={onNext}>
+          {finalRoundSolved ? "Open results now" : "Next map"}
+        </button>
         <dl className="indicator-facts">
           <div>
             <dt>Unit</dt>
@@ -1540,12 +1611,6 @@ function RevealView({
           </div>
         </dl>
         <div className="lesson-stack">
-          <section className="lesson-card lesson-card-strong" aria-labelledby="showing-heading">
-            <p className="eyebrow" id="showing-heading">
-              What the map was showing
-            </p>
-            <p>{indicator.editorial.patternNote}</p>
-          </section>
           <section className="lesson-card" aria-labelledby="why-heading">
             <h2 id="why-heading">Why it matters</h2>
             <p>{indicator.editorial.whyItMatters}</p>
@@ -1618,20 +1683,41 @@ function RevealView({
           Source: {indicator.source.attribution}, {indicator.source.dataset}.{" "}
           <a href={indicator.source.sourceReference}>Metadata</a>
         </p>
-        <div className="round-transition-card" data-final={finalRoundSolved ? "true" : "false"}>
-          <span>{finalRoundSolved ? "Daily complete" : `Map ${nextMapNumber} of ${run.rounds.length}`}</span>
-          <strong>{finalRoundSolved ? "Score locked. Opening results..." : "Next mystery loading."}</strong>
-          <em>Banked {scoreText}</em>
-          <div className="transition-pips" aria-hidden="true">
-            {transitionPips.map((index) => (
-              <i key={index} data-state={index <= run.currentRoundIndex ? "banked" : index === run.currentRoundIndex + 1 ? "next" : "locked"} />
-            ))}
-          </div>
-          <small>{finalRoundSolved ? "Every map is scored. Your result is opening now." : "Preparing the next hidden statistic."}</small>
+      </div>
+      <div className="reveal-map" data-result={resultTone}>
+        <p className="eyebrow">Map reveal</p>
+        <h1 id="reveal-map-title">{indicator.shortTitle}</h1>
+        <p className="full-indicator-title">{indicator.title}</p>
+        <div className="source-badges" aria-label="Indicator metadata">
+          <span>{indicator.unit}</span>
+          <span>{indicator.year}</span>
+          <span>{indicator.stats.coverage} countries</span>
         </div>
-        <button className="button full-width next-map-button" type="button" onClick={onNext}>
-          {finalRoundSolved ? "Open results now" : "Next map"}
-        </button>
+        <WorldMap
+          map={map}
+          indicator={indicator}
+          countryNames={countryNames}
+          investigatedIso3={roundState.investigations.map((item) => item.iso3)}
+          interactive={false}
+          labelledBy="reveal-map-title"
+        />
+        <div className="solve-moment-overlay" data-result={resultTone} aria-hidden="true">
+          <span>{revealEyebrow}</span>
+          <strong>{revealHeadline}</strong>
+          <em>{scoreText}</em>
+        </div>
+        {resultTone === "correct" ? (
+          <video className="correct-burst-video" autoPlay muted playsInline preload="none" aria-hidden="true">
+            <source src="/worldprint/correct-burst.webm" type="video/webm" />
+          </video>
+        ) : null}
+        <div className="result-atlas-burst" data-result={resultTone} aria-hidden="true">
+          <span />
+          <span />
+          <span />
+          <span />
+          <span />
+        </div>
       </div>
     </section>
   );
@@ -1711,16 +1797,16 @@ function ArchiveReview({
         </div>
       </dl>
       <div className="archive-review-actions">
-        <Link className="button" href="/play/worldprint">
+        <Link className="button" href="/play/mystery-map">
           Play today&apos;s Daily
         </Link>
-        <Link className="button-secondary" href="/play/worldprint#practice-atlas">
+        <Link className="button-secondary" href="/play/mystery-map#practice-atlas">
           Practice Atlas
         </Link>
         <button className="button" type="button" onClick={onReplay}>
           Replay for practice
         </button>
-        <Link className="button-secondary" href="/archive/worldprint">
+        <Link className="button-secondary" href="/past-games">
           Open past games
         </Link>
       </div>
@@ -1897,7 +1983,7 @@ function CompletionSummary({
   );
   const challengeCode = encodeChallenge(challengePayloadFromRun(run));
   const challengeUrl =
-    typeof window === "undefined" ? `/challenge/worldprint?c=${challengeCode}` : `${window.location.origin}/challenge/worldprint/?c=${challengeCode}`;
+    typeof window === "undefined" ? `/challenge/mystery-map?c=${challengeCode}` : `${window.location.origin}/challenge/mystery-map/?c=${challengeCode}`;
   const challengeSharePrompt = "Think you can beat my Can You Geo? Mystery Map score?";
   const total = run.rounds.reduce((sum, round) => sum + round.score, 0);
   const bestRound = run.rounds.length ? Math.max(...run.rounds.map((round) => round.score)) : 0;
@@ -2014,7 +2100,7 @@ function CompletionSummary({
       : run.mode === "daily"
         ? "Challenge a friend with today's maps"
         : "Challenge a friend with these maps";
-  const reviewHref = run.mode === "daily" || run.mode === "archive" ? `/play/worldprint/${run.dateKey}?review=1` : null;
+  const reviewHref = run.mode === "daily" || run.mode === "archive" ? `/play/mystery-map/${run.dateKey}?review=1` : null;
   const nextDaily = nextDailyUnlockCopy();
   const bestDailyScore = bestDailyScoreForStore(store);
 
@@ -2176,7 +2262,7 @@ function CompletionSummary({
                 <button className="button-secondary" type="button" onClick={onReplay}>
                   Replay for practice
                 </button>
-                <Link className="button-secondary" href="/archive/worldprint">
+                <Link className="button-secondary" href="/past-games">
                   Past Games
                 </Link>
                 <Link className="button-secondary" href="/account/stats">

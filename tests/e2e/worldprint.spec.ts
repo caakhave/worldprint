@@ -4,8 +4,11 @@ import AxeBuilder from "@axe-core/playwright";
 import { mkdirSync, readFileSync } from "node:fs";
 import path from "node:path";
 import { encodeChallenge } from "../../src/lib/game/challenge";
+import type { Tier } from "../../src/lib/content/schemas";
 
 const TEST_DATE = "2026-06-18";
+const UNIT_CLUE_ROUND_ID = "worldprint-age-dependency";
+const UNIT_CLUE_TEXT = "per 100 means dependents per 100 working-age people.";
 const artifactRoot = path.join(process.cwd(), "output/playwright");
 
 type RoundsArtifact = {
@@ -28,12 +31,6 @@ const testDailyManifest = JSON.parse(readFileSync(path.join(process.cwd(), `publ
   contentVersion: string;
   date: string;
   roundIds: string[];
-};
-const externalBetaPacks = JSON.parse(readFileSync(path.join(process.cwd(), "generated/reports/external-beta-test-packs.json"), "utf8")) as {
-  packs: Array<{ id: string; name: string; mapCount: number; challenges: Array<{ id: string; label: string; path: string; roundIds: string[] }> }>;
-};
-const externalBetaLinks = JSON.parse(readFileSync(path.join(process.cwd(), "generated/reports/external-beta-challenge-links.json"), "utf8")) as {
-  links: Array<{ packId: string; packName: string; challengeId: string; label: string; path: string; roundIds: string[]; mapCount: number }>;
 };
 const roundsById = new Map(roundsArtifact.rounds.map((round) => [round.id, round]));
 const dailyRoundIds = testDailyManifest.roundIds;
@@ -73,6 +70,22 @@ function answerButton(page: Page, label: string) {
   return page.getByRole("button", { name: label, exact: true });
 }
 
+function challengePath(roundIds: string[], tier: Tier = "analyst") {
+  const code = encodeChallenge({
+    kind: "practice",
+    contentVersion: manifest.contentVersion,
+    tier,
+    roundIds
+  });
+  return `/challenge/mystery-map?c=${code}`;
+}
+
+async function startChallenge(page: Page, roundIds: string[], tier: Tier = "analyst") {
+  await page.goto(challengePath(roundIds, tier));
+  await page.getByRole("button", { name: /Start challenge/i }).click();
+  await expect(page.getByRole("heading", { name: /What does this map measure/i })).toBeVisible();
+}
+
 async function dismissFirstRunIntroIfVisible(page: Page) {
   const intro = page.getByLabel("First run intro");
   try {
@@ -83,13 +96,13 @@ async function dismissFirstRunIntroIfVisible(page: Page) {
   }
 }
 
-async function clickDailyStart(page: Page, name: RegExp = /Start today's Mystery Map|Continue today's Mystery Map|View today's result/) {
+async function clickDailyStart(page: Page, name: RegExp = /Try sample maps|Start today's Mystery Map|Continue today's Mystery Map|View today's result/) {
   await page.getByRole("button", { name }).click();
   await dismissFirstRunIntroIfVisible(page);
 }
 
 async function startDaily(page: Page) {
-  await page.goto(`/play/worldprint?date=${TEST_DATE}`);
+  await page.goto(`/play/mystery-map?date=${TEST_DATE}`);
   await page.getByLabel("Analyst").check();
   await clickDailyStart(page);
   await expect(page.getByRole("heading", { name: /What does this map measure/i })).toBeVisible();
@@ -164,25 +177,25 @@ test("first visit starts the Analyst Daily", async ({ page }) => {
   await page.goto("/");
   await expect(page.getByRole("heading", { name: "Can you read the world?" })).toBeVisible();
   const primaryNav = page.getByRole("navigation", { name: "Primary navigation" });
-  await expect(primaryNav.getByRole("link", { name: "Play" })).toHaveAttribute("href", /\/play\/worldprint\/?$/);
-  await expect(primaryNav.getByRole("link", { name: "Past Games" })).toHaveAttribute("href", /\/archive\/worldprint\/?$/);
+  await expect(primaryNav.getByRole("link", { name: "Play" })).toHaveAttribute("href", /\/play\/mystery-map\/?$/);
   await expect(primaryNav.getByRole("link", { name: "How it works" })).toHaveAttribute("href", /\/how-to-play\/?$/);
-  await expect(primaryNav.getByRole("link")).toHaveCount(3);
-  await expect(primaryNav.getByRole("link", { name: /Sources|Beta|About|Internal/i })).toHaveCount(0);
+  await expect(primaryNav.getByRole("link")).toHaveCount(2);
+  await expect(primaryNav.getByRole("link", { name: /Past Games|Sources|Beta|About|Internal/i })).toHaveCount(0);
   const footerNav = page.getByRole("navigation", { name: "Footer navigation" });
+  await expect(footerNav.getByRole("link", { name: "Past Games" })).toHaveAttribute("href", /\/past-games\/?$/);
   await expect(footerNav.getByRole("link", { name: "Sources" })).toHaveAttribute("href", /\/sources\/?$/);
   await expect(footerNav.getByRole("link", { name: "Terms, Privacy & Accessibility" })).toHaveAttribute("href", /\/legal\/?$/);
-  await expect(footerNav.getByRole("link", { name: "Beta" })).toHaveAttribute("href", /\/beta\/worldprint\/?$/);
+  await expect(footerNav.getByRole("link", { name: "Beta" })).toHaveCount(0);
   await expect(footerNav.getByRole("link", { name: "About" })).toHaveAttribute("href", /\/about\/?$/);
   await expect(page.getByRole("link", { name: /Internal/i })).toHaveCount(0);
   await expect(page.locator(".hero-copy .eyebrow")).toHaveText("Join the daily challenge");
   await expect(page.locator(".hero-copy .lead")).toHaveText(
     "A new mystery map is waiting. Spot the pattern, spend your clues wisely, and guess what the planet is hiding."
   );
-  await expect(page.getByText("Free to play while the atlas grows.")).toBeVisible();
+  await expect(page.getByText("Try a few sample maps instantly. Create a free account to play fresh Daily maps and save your progress.")).toBeVisible();
   await expect(page.getByRole("heading", { name: "Join the daily challenge" })).toBeVisible();
-  await expect(page.getByText("Five maps. One streak. A fresh world puzzle every day.")).toBeVisible();
-  await expect(page.getByRole("link", { name: /Start playing/i })).toHaveAttribute("href", /\/play\/worldprint\/?$/);
+  await expect(page.getByText("Fresh Daily play, saved progress, streaks, and basic stats start with a free account.")).toBeVisible();
+  await expect(page.getByRole("link", { name: /Create free account/i }).first()).toHaveAttribute("href", /\/sign-in\/?$/);
   await expect(page.getByRole("heading", { name: "Read the map" })).toBeVisible();
   await expect(page.getByRole("heading", { name: "Follow the signal." })).toBeVisible();
   await expect(page.getByText("Every round is a tiny mystery: read the map, spend clues, make the call.")).toBeVisible();
@@ -191,26 +204,26 @@ test("first visit starts the Analyst Daily", async ({ page }) => {
     await expect(page.locator(`img[src*="${imageName}.png"]`)).toHaveCount(1);
   }
   await expect(page.getByRole("heading", { name: "Choose your atlas run." })).toBeVisible();
-  await expect(page.getByRole("link", { name: "Play today", exact: true })).toHaveAttribute("href", /\/play\/worldprint\/?$/);
-  await expect(page.getByRole("link", { name: /Practice now/i })).toHaveAttribute("href", /\/play\/worldprint\/?$/);
+  await expect(page.getByRole("link", { name: "Create free account", exact: true }).last()).toHaveAttribute("href", /\/sign-in\/?$/);
+  await expect(page.getByRole("link", { name: /Try sample maps/i }).first()).toHaveAttribute("href", /\/play\/mystery-map\/?$/);
   await expect(page.locator(".mode-poster")).toHaveCount(3);
   for (const imageName of ["04-daily-mystery-map", "05-practice", "06-challenge-friends"]) {
     await expect(page.locator(`img[src*="${imageName}.png"]`)).toHaveCount(1);
   }
   await expect(page.getByRole("heading", { name: "Practice", exact: true })).toBeVisible();
-  await expect(page.getByTestId("cinematic-home-hero").getByRole("link", { name: /^How it works$/i })).toHaveAttribute(
+  await expect(page.getByTestId("cinematic-home-hero").getByRole("link", { name: /^Try sample maps$/i })).toHaveAttribute(
     "href",
-    "#how-it-works"
+    /\/play\/mystery-map\/?$/
   );
-  await expect(page.locator(".hero-copy")).not.toContainText("Open beta: no account");
+  await expect(page.locator(".hero-copy")).not.toContainText("Open preview: no account");
   await expect(page.locator(".hero-copy")).not.toContainText("Try 3-map practice");
   await expect(page.locator(".hero-copy")).not.toContainText("5-map Daily open now");
   await expect(page.locator("main")).not.toContainText(/World Bank|indicators|data visualization|filters|matching maps|generated|point-cost|pool|set code|educational tool/i);
   await expect(page.locator("body")).not.toContainText("WORLDPRINT");
-  await page.getByRole("link", { name: /Play today's Mystery Map/i }).click();
-  await expect(page.locator(".entry-atlas-preview")).toBeVisible();
+  await page.getByTestId("cinematic-home-hero").getByRole("link", { name: /^Try sample maps$/i }).click();
+  await expect(page.getByTestId("entry-atlas-visual")).toBeVisible();
   await page.getByLabel("Analyst").check();
-  await clickDailyStart(page, /Start today's Mystery Map/i);
+  await clickDailyStart(page);
   await expect(page.getByRole("heading", { name: /What does this map measure/i })).toBeVisible();
 });
 
@@ -224,7 +237,8 @@ test("landing cinematic hero replaces the fake gameplay panel", async ({ page })
     return Number.parseFloat(style.lineHeight) / Number.parseFloat(style.fontSize);
   });
   expect(heroLineHeight).toBeGreaterThanOrEqual(1);
-  await expect(hero.getByRole("link", { name: /Play today's Mystery Map/i })).toBeVisible();
+  await expect(hero.getByRole("link", { name: /Create free account/i }).first()).toBeVisible();
+  await expect(hero.getByRole("link", { name: /Try sample maps/i }).first()).toBeVisible();
   await expect(page.locator(".fake-gameplay-stage")).toHaveCount(0);
   await expect(page.locator(".fake-atlas-map")).toHaveCount(0);
   await expect(page.getByTestId("hero-map-stage")).toHaveCount(0);
@@ -246,7 +260,7 @@ test("landing cinematic hero respects reduced-motion without layout overflow", a
   await page.goto("/");
   const hero = page.getByTestId("cinematic-home-hero");
   await expect(hero).toBeVisible();
-  await expect(hero.getByText("Free to play while the atlas grows.")).toBeVisible();
+  await expect(hero.getByText("Try a few sample maps instantly. Create a free account to play fresh Daily maps and save your progress.")).toBeVisible();
   await expect(page.locator(".fake-gameplay-stage")).toHaveCount(0);
   await expect(page.getByTestId("homepage-hero-video")).toHaveCount(0);
   const poster = page.getByTestId("homepage-hero-poster");
@@ -259,34 +273,35 @@ test("landing cinematic hero respects reduced-motion without layout overflow", a
 
 test("Mystery Map lobby presents game-mode CTAs without motion dependency", async ({ page }) => {
   await page.emulateMedia({ reducedMotion: "reduce" });
-  await page.goto(`/play/worldprint?date=${TEST_DATE}`);
+  await page.goto(`/play/mystery-map?date=${TEST_DATE}`);
   await expect(page.getByTestId("entry-atlas-visual")).toBeVisible();
-  await expect(page.locator(".entry-atlas-image")).toBeVisible();
-  await expect(page.locator(".entry-atlas-video")).toHaveAttribute("poster", "/worldprint/hero-poster.jpg");
-  await expect(page.locator('.entry-atlas-video source[src="/worldprint/hero-loop.webm"]')).toHaveCount(1);
-  await expect(page.getByTestId("entry-preview-map-index")).toHaveText("Map 1/5");
-  await page.getByRole("button", { name: "Show preview map 3" }).click();
-  await expect(page.getByTestId("entry-preview-map-index")).toHaveText("Map 3/5");
-  await page.getByRole("button", { name: "Show preview map 3" }).press("ArrowRight");
-  await expect(page.getByTestId("entry-preview-map-index")).toHaveText("Map 4/5");
+  await expect(page.getByTestId("entry-preview-step-index")).toHaveText("Step 1/5");
+  await expect(page.getByRole("heading", { name: "Read the unlabeled map" })).toBeVisible();
+  await page.getByRole("button", { name: "Show step 3: Investigate countries" }).click();
+  await expect(page.getByTestId("entry-preview-step-index")).toHaveText("Step 3/5");
+  await expect(page.getByText("Japan")).toBeVisible();
+  await page.getByRole("button", { name: "Show step 3: Investigate countries" }).press("ArrowRight");
+  await expect(page.getByTestId("entry-preview-step-index")).toHaveText("Step 4/5");
+  await expect(page.getByRole("heading", { name: "Choose the hidden indicator" })).toBeVisible();
   await expect(page.getByText("Choose your game mode")).toBeVisible();
   await expect(page.getByText("Daily Mystery Map").first()).toBeVisible();
-  await expect(page.getByText("Five maps. One official daily score.")).toBeVisible();
+  await expect(page.getByText("Try sample maps instantly. Create a free account for fresh Daily play and saved progress.")).toBeVisible();
   await expect(page.getByText("Practice Atlas").first()).toBeVisible();
   await expect(page.getByText("Train on topics and difficulty. Never affects your streak.")).toBeVisible();
   await expect(page.getByText("Past Games").first()).toBeVisible();
-  await expect(page.getByRole("link", { name: "Open past games" })).toHaveAttribute("href", /\/archive\/worldprint\/?$/);
-  await expect(page.locator(".entry-lobby-strip")).toContainText("Mystery maps");
-  await expect(page.locator(".entry-lobby-strip")).toContainText("Clue spend");
-  await expect(page.locator(".game-entry")).not.toContainText(/Access model|account limits|future plans|open beta/i);
-  await expect(page.getByRole("button", { name: /Start today's Mystery Map/i })).toBeVisible();
+  await expect(page.getByRole("link", { name: "Open past games" })).toHaveAttribute("href", /\/past-games\/?$/);
+  await expect(page.locator(".entry-lobby-strip")).toContainText("Read colors");
+  await expect(page.locator(".entry-lobby-strip")).toContainText("Clue points");
+  await expect(page.locator(".game-entry")).not.toContainText(/Access model|account limits|future plans|open preview/i);
+  await expect(page.getByRole("link", { name: "Create free account" })).toBeVisible();
+  await expect(page.getByRole("button", { name: /Try sample maps/i })).toBeVisible();
   await expectNoHorizontalOverflow(page);
 });
 
 test("first Daily shows a compact intro once and remembers dismissal", async ({ page }) => {
-  await page.goto(`/play/worldprint?date=${TEST_DATE}`);
+  await page.goto(`/play/mystery-map?date=${TEST_DATE}`);
   await page.getByLabel("Analyst").check();
-  await page.getByRole("button", { name: /Start today's Mystery Map/i }).click();
+  await page.getByRole("button", { name: /Try sample maps/i }).click();
 
   const intro = page.getByLabel("First run intro");
   await expect(intro).toBeVisible();
@@ -302,12 +317,12 @@ test("first Daily shows a compact intro once and remembers dismissal", async ({ 
   const persistedIntroState = await page.evaluate(() => JSON.parse(window.localStorage.getItem("worldprint:v1") ?? "{}") as { onboardingComplete?: boolean });
   expect(persistedIntroState.onboardingComplete).toBe(true);
 
-  await page.goto(`/play/worldprint?date=${TEST_DATE}`);
+  await page.goto(`/play/mystery-map?date=${TEST_DATE}`);
   await page.getByRole("button", { name: /Continue today's Mystery Map/i }).click();
   await expect(page.getByLabel("First run intro")).toHaveCount(0);
   await expect(page.getByRole("heading", { name: /What does this map measure/i })).toBeVisible();
 
-  await page.goto(`/play/worldprint/${TEST_DATE}?review=1`);
+  await page.goto(`/play/mystery-map/${TEST_DATE}?review=1`);
   await expect(page.getByLabel("First run intro")).toHaveCount(0);
   await expect(page.getByText("Past Game review")).toBeVisible();
 });
@@ -323,17 +338,17 @@ test("v9 lobby layout and carousel controls hold across desktop, tablet, and mob
     { name: "narrow-mobile", width: 320, height: 844 }
   ]) {
     await page.setViewportSize({ width: viewport.width, height: viewport.height });
-    await page.goto(`/play/worldprint?date=${TEST_DATE}`);
+    await page.goto(`/play/mystery-map?date=${TEST_DATE}`);
     await expect(page.getByTestId("entry-atlas-visual")).toBeVisible();
     await expect(page.getByText("Choose your game mode")).toBeVisible();
-    await expect(page.getByRole("button", { name: /Start today's Mystery Map/i })).toBeVisible();
+    await expect(page.getByRole("button", { name: /Try sample maps/i })).toBeVisible();
     await expect(page.getByRole("button", { name: /^Start practice$/i })).toBeVisible();
     await expect(page.getByRole("link", { name: "Open past games" })).toBeVisible();
 
-    await page.getByRole("button", { name: "Show preview map 3" }).click();
-    await expect(page.getByTestId("entry-preview-map-index")).toHaveText("Map 3/5");
-    await page.getByRole("button", { name: "Show preview map 3" }).press("ArrowLeft");
-    await expect(page.getByTestId("entry-preview-map-index")).toHaveText("Map 2/5");
+    await page.getByRole("button", { name: "Show step 3: Investigate countries" }).click();
+    await expect(page.getByTestId("entry-preview-step-index")).toHaveText("Step 3/5");
+    await page.getByRole("button", { name: "Show step 3: Investigate countries" }).press("ArrowLeft");
+    await expect(page.getByTestId("entry-preview-step-index")).toHaveText("Step 2/5");
 
     if (viewport.width <= 390) {
       const controls = await page
@@ -360,13 +375,18 @@ test("v9 mobile Daily flow keeps HUD, answers, reveal ceremony, and result in fr
   const dir = path.join(artifactRoot, testInfo.project.name, "v9");
   mkdirSync(dir, { recursive: true });
   await page.setViewportSize({ width: 390, height: 844 });
-  await page.goto(`/play/worldprint?date=${TEST_DATE}`);
+  await page.goto(`/play/mystery-map?date=${TEST_DATE}`);
   await page.getByLabel("Analyst").check();
-  await clickDailyStart(page, /Start today's Mystery Map/i);
+  await clickDailyStart(page);
   await expect(page.getByRole("heading", { name: /What does this map measure/i })).toBeVisible();
+  await expect(page.getByLabel("Round dashboard")).toBeVisible();
+  await expect(page.getByRole("heading", { name: /Which indicator is this/i })).toBeVisible();
   await expect(page.locator(".score-hud")).toContainText("This map");
   await expect(page.locator(".score-hud")).toContainText("Banked");
   await expect(page.locator(".score-hud")).toContainText("Possible total");
+  await expect(page.getByLabel("Clue costs")).toContainText("Country clue");
+  await expect(page.getByLabel("Map evidence")).toContainText("Read the color pattern");
+  await expect(page.getByLabel("Map key")).toContainText("Darker = larger value");
   await expect(page.locator(".choice-list .choice-button").first()).toBeVisible();
   await expectNoHorizontalOverflow(page);
   await page.screenshot({ path: path.join(dir, "mobile-active-game.png"), fullPage: true });
@@ -380,6 +400,9 @@ test("v9 mobile Daily flow keeps HUD, answers, reveal ceremony, and result in fr
   await answerButton(page, correctLabel(0)).click();
   await expect(page.locator(".solve-moment-overlay")).toContainText(/Answer found|Solved/i);
   await expect(page.locator(".banked-score-flight")).toContainText(/banked/i);
+  await expect(page.getByLabel("Point breakdown")).toContainText("Started");
+  await expect(page.getByLabel("Point breakdown")).toContainText("Earned");
+  await expect(page.getByText(/What the map was showing/i)).toBeVisible();
   expect(await page.locator(".solve-moment-overlay").evaluate((element) => window.getComputedStyle(element).pointerEvents)).toBe("none");
   await expect(page.getByRole("button", { name: /Next map/i })).toBeVisible();
   await page.screenshot({ path: path.join(dir, "mobile-reveal-ceremony.png"), fullPage: true });
@@ -465,9 +488,9 @@ test("investigating a country charges once", async ({ page }) => {
 });
 
 test("map tooltip and selected country card use clean country names", async ({ page }) => {
-  await page.goto(`/play/worldprint?date=${TEST_DATE}`);
+  await page.goto(`/play/mystery-map?date=${TEST_DATE}`);
   await page.getByLabel("Analyst").check();
-  await clickDailyStart(page, /Start today's Mystery Map/i);
+  await clickDailyStart(page);
   await expect(page.locator(".selected-country-card")).toHaveCount(0);
   await countryPath(page, "MEX").hover();
   await expect(page.locator(".map-tooltip strong")).toHaveText("Mexico");
@@ -485,38 +508,31 @@ test("map tooltip and selected country card use clean country names", async ({ p
 });
 
 test("unit clue and investigation history use flat 100-point costs", async ({ page }) => {
-  await startDaily(page);
+  await startChallenge(page, [UNIT_CLUE_ROUND_ID]);
   await page.getByRole("button", { name: /Reveal unit: -100/i }).click();
   await expect(scoreValue(page)).toHaveText("900");
-  await expect(page.getByRole("button", { name: /Unit clue:/i })).toBeDisabled();
+  await expect(page.getByRole("button", { name: /Unit clue revealed/i })).toBeDisabled();
 
   await page.locator("#country-search").selectOption({ label: "Mexico" });
   await page.getByRole("button", { name: /Reveal Mexico's value/i }).click();
   await expect(scoreValue(page)).toHaveText("800");
-  await answerButton(page, correctLabel(0)).click();
+  await answerButton(page, correctLabelForRoundId(UNIT_CLUE_ROUND_ID)).click();
   await expect(page.locator(".investigation-history").getByText("Unit clue")).toBeVisible();
   await expect(page.locator(".investigation-history").getByText("-100 points")).toHaveCount(2);
   await expect(page.locator(".investigation-history").getByText("Mexico")).toBeVisible();
 });
 
 test("revealed values keep compact units while unit clue explains them", async ({ page }) => {
-  const compactUnitCode = encodeChallenge({
-    kind: "practice",
-    contentVersion: manifest.contentVersion,
-    tier: "analyst",
-    roundIds: ["worldprint-birth-rate"]
-  });
-  await page.goto(`/challenge/worldprint?c=${compactUnitCode}`);
-  await page.getByRole("button", { name: /Start challenge/i }).click();
+  await startChallenge(page, [UNIT_CLUE_ROUND_ID]);
   await page.locator("#country-search").selectOption({ label: "Mexico" });
   await page.getByRole("button", { name: /Reveal Mexico's value/i }).click();
   await expect(scoreValue(page)).toHaveText("900");
-  await expect(page.locator(".selected-country-card")).toContainText(/Revealed: 15\.5 per 1k/);
+  await expect(page.locator(".selected-country-card")).toContainText(/Revealed: 48\.7 per 100/);
 
   await page.getByRole("button", { name: /Reveal unit: -100/i }).click();
   await expect(scoreValue(page)).toHaveText("800");
-  await expect(page.locator(".unit-clue")).toHaveText("Unit clue: per 1k means births per 1,000 people.");
-  await expect(page.getByRole("button", { name: /Unit clue: per 1k means births per 1,000 people/i })).toBeDisabled();
+  await expect(page.locator(".unit-clue")).toHaveText(UNIT_CLUE_TEXT);
+  await expect(page.getByRole("button", { name: /Unit clue revealed/i })).toBeDisabled();
 });
 
 test("obvious unit clues are hidden instead of charging points", async ({ page }) => {
@@ -526,7 +542,7 @@ test("obvious unit clues are hidden instead of charging points", async ({ page }
     tier: "analyst",
     roundIds: ["worldprint-imports-share"]
   });
-  await page.goto(`/challenge/worldprint?c=${obviousUnitCode}`);
+  await page.goto(`/challenge/mystery-map?c=${obviousUnitCode}`);
   await page.getByRole("button", { name: /Start challenge/i }).click();
   await expect(page.getByRole("button", { name: /Reveal unit/i })).toHaveCount(0);
   await expect(page.locator(".unit-clue")).toHaveCount(0);
@@ -550,17 +566,14 @@ test("no-data and exhausted investigations are explained without surprise charge
     tier: "analyst",
     roundIds: ["worldprint-secondary-enrollment"]
   });
-  await page.goto(`/challenge/worldprint?c=${noDataCode}`);
+  await page.goto(`/challenge/mystery-map?c=${noDataCode}`);
   await page.getByRole("button", { name: /Start challenge/i }).click();
   await page.locator("#country-search").selectOption({ label: "United States" });
   await expect(page.locator(".selected-country-card").getByText(/No data for this country on this map/)).toBeVisible();
   await page.getByRole("button", { name: /Confirm United States has no data/i }).click();
   await expect(scoreValue(page)).toHaveText("1000");
 
-  await page.evaluate(() => window.localStorage.clear());
-  await page.goto(`/play/worldprint?date=${TEST_DATE}`);
-  await page.getByLabel("Cartographer").check();
-  await clickDailyStart(page, /Start today's Mystery Map/i);
+  await startChallenge(page, [UNIT_CLUE_ROUND_ID], "cartographer");
   await page.locator("#country-search").selectOption({ label: "Mexico" });
   await page.getByRole("button", { name: /Reveal Mexico's value/i }).click();
   await expect(scoreValue(page)).toHaveText("900");
@@ -569,13 +582,13 @@ test("no-data and exhausted investigations are explained without surprise charge
   await expect(page.getByRole("button", { name: /Reveal Canada's value/i })).toBeDisabled();
   await page.getByRole("button", { name: /Reveal unit: -100/i }).click();
   await expect(scoreValue(page)).toHaveText("800");
-  await expect(page.getByRole("button", { name: /Unit clue:/i })).toBeDisabled();
+  await expect(page.getByRole("button", { name: /Unit clue revealed/i })).toBeDisabled();
 });
 
 test("negative round scores show a lost round message", async ({ page }) => {
-  await page.goto(`/play/worldprint?date=${TEST_DATE}`);
+  await page.goto(`/play/mystery-map?date=${TEST_DATE}`);
   await page.getByLabel("Cartographer").check();
-  await clickDailyStart(page, /Start today's Mystery Map/i);
+  await clickDailyStart(page);
   for (const label of wrongLabels(0, "cartographer").slice(0, 4)) {
     await page.getByRole("button", { name: label }).click();
   }
@@ -632,11 +645,11 @@ test("completes a five-round Daily and preserves completed result", async ({ pag
   await expect(page.locator(".rank-medallion")).toContainText("100");
   await expect(page.getByText("Final score")).toBeVisible();
   await expect(page.getByText("Run rank")).toBeVisible();
-  await expect(page.getByLabel("Run rank").getByText("Worldprint Master")).toBeVisible();
+  await expect(page.getByLabel("Run rank").getByText("Atlas Master")).toBeVisible();
   await expect(page.getByText("Clean reads")).toBeVisible();
   await expect(page.getByText("Wrong guesses")).toBeVisible();
   await expect(page.getByText("Clues used")).toBeVisible();
-  await expect(page.getByLabel("Spoiler-free result share card")).toContainText("Worldprint Master");
+  await expect(page.getByLabel("Spoiler-free result share card")).toContainText("Atlas Master");
   await expect(page.getByLabel("Spoiler-free result share card")).toContainText("Official Daily result");
   await expect(page.getByLabel("Spoiler-free result share card")).toContainText("5/5");
   await expect(page.getByLabel("Next Daily and streak")).toContainText("Next map drops tomorrow");
@@ -648,7 +661,7 @@ test("completes a five-round Daily and preserves completed result", async ({ pag
   await expect(nextActions.getByRole("button", { name: "Practice another set" })).toBeVisible();
   await expect(nextActions.getByRole("link", { name: "Review result" })).toBeVisible();
   await expect(nextActions.getByRole("button", { name: "Replay for practice" })).toBeVisible();
-  await expect(nextActions.getByRole("link", { name: "Past Games" })).toHaveAttribute("href", /\/archive\/worldprint\/?$/);
+  await expect(nextActions.getByRole("link", { name: "Past Games" })).toHaveAttribute("href", /\/past-games\/?$/);
   await expect(nextActions.getByRole("link", { name: "View saved stats" })).toHaveAttribute("href", /\/account\/stats\/?$/);
   await expect(page.getByRole("button", { name: "Copy result" })).toBeVisible();
   await expect(page.getByRole("button", { name: /Share result/i })).toBeVisible();
@@ -669,14 +682,14 @@ test("completes a five-round Daily and preserves completed result", async ({ pag
   await expect(completedCard.getByLabel("Daily return summary")).toContainText("Next map drops tomorrow");
   await expect(completedCard.getByLabel("Daily return summary")).toContainText("Current streak");
   await expect(completedCard.getByRole("link", { name: "Practice Atlas" })).toHaveAttribute("href", "#practice-atlas");
-  await expect(completedCard.getByRole("link", { name: "Past Games" })).toHaveAttribute("href", /\/archive\/worldprint\/?$/);
+  await expect(completedCard.getByRole("link", { name: "Past Games" })).toHaveAttribute("href", /\/past-games\/?$/);
   await expect(completedCard.getByRole("button", { name: /View today's result/i })).toBeVisible();
   await expect(completedCard.getByRole("button", { name: /Replay for practice/i })).toBeVisible();
   await completedCard.getByRole("button", { name: /View today's result/i }).click();
   await expect(page.getByRole("heading", { name: /points/i })).toBeVisible();
   await page.getByRole("button", { name: /Back to lobby/i }).click();
   await expect(page.getByLabel("Mystery Map modes")).toContainText("Today's run complete");
-  await page.goto("/archive/worldprint");
+  await page.goto("/past-games");
   await expect(page.getByRole("heading", { name: /Review Past Mystery Maps/i })).toBeVisible();
   await expect(page.locator("body")).not.toContainText("WORLDPRINT");
   await expect(page.getByText("5,000 points").first()).toBeVisible();
@@ -689,8 +702,8 @@ test("completes a five-round Daily and preserves completed result", async ({ pag
   await completedArchiveCard.getByRole("link", { name: "View result" }).click();
   await expect(page.getByRole("heading", { name: `Review ${TEST_DATE}.` })).toBeVisible();
   await expect(page.getByText("Past Game result")).toBeVisible();
-  await expect(page.getByRole("link", { name: "Play today's Daily" })).toHaveAttribute("href", /\/play\/worldprint\/?$/);
-  await expect(page.getByRole("link", { name: "Practice Atlas" })).toHaveAttribute("href", /\/play\/worldprint\/?#practice-atlas$/);
+  await expect(page.getByRole("link", { name: "Play today's Daily" })).toHaveAttribute("href", /\/play\/mystery-map\/?$/);
+  await expect(page.getByRole("link", { name: "Practice Atlas" })).toHaveAttribute("href", /\/play\/mystery-map\/?#practice-atlas$/);
   await expect(page.getByLabel("Past Game summary")).toContainText("Clue spend");
   await expect(page.getByLabel("Round timeline")).toContainText("Map 1");
   await expect(page.getByLabel("Round timeline")).toContainText("Correct");
@@ -703,7 +716,7 @@ test("completes a five-round Daily and preserves completed result", async ({ pag
 });
 
 test("archive route opens a dated Daily without affecting today's streak", async ({ page }) => {
-  await page.goto(`/play/worldprint/${TEST_DATE}`);
+  await page.goto(`/play/mystery-map/${TEST_DATE}`);
   await expect(page.getByText(`Past Mystery Map Replay · ${TEST_DATE}`)).toBeVisible();
   await expect(page.locator("body")).not.toContainText("WORLDPRINT");
   await expect(page.getByText(/Streak stays safe/i)).toBeVisible();
@@ -757,7 +770,7 @@ test("past game review falls back for older score-only records", async ({ page }
       })
     );
   }, TEST_DATE);
-  await page.goto(`/play/worldprint/${TEST_DATE}?review=1`);
+  await page.goto(`/play/mystery-map/${TEST_DATE}?review=1`);
   await expect(page.getByRole("heading", { name: `Review ${TEST_DATE}.` })).toBeVisible();
   await expect(page.getByText("3,400")).toBeVisible();
   await expect(page.getByText("Round detail was not saved for this older run.").first()).toBeVisible();
@@ -783,7 +796,7 @@ test("challenge link opens exact selected rounds and saves challenge completion"
     tier: "analyst",
     roundIds: challengeRoundIds
   });
-  await page.goto(`/challenge/worldprint?c=${code}`);
+  await page.goto(`/challenge/mystery-map?c=${code}`);
   await expect(page.getByRole("heading", { name: /Play the exact same maps/i })).toBeVisible();
   await expect(page.getByText("3 maps")).toBeVisible();
   await page.getByRole("button", { name: /Start challenge/i }).click();
@@ -801,7 +814,7 @@ test("challenge link opens exact selected rounds and saves challenge completion"
   await expect(page.getByLabel("Spoiler-free challenge share text")).toHaveCount(0);
   await page.getByRole("button", { name: "Copy challenge link" }).click();
   const challengeWrites = await page.evaluate(() => ((window as typeof window & { __clipboardWrites?: string[] }).__clipboardWrites ?? []));
-  expect(challengeWrites.at(-1)).toMatch(/^http:\/\/localhost:3000\/challenge\/worldprint\/\?c=/);
+  expect(challengeWrites.at(-1)).toMatch(/^http:\/\/localhost:3000\/challenge\/mystery-map\/\?c=/);
   expect(challengeWrites.at(-1)).not.toContain("\n");
   await page.getByRole("button", { name: "Copy result" }).click();
   await expect(page.getByRole("button", { name: "Copied" })).toBeVisible();
@@ -810,7 +823,7 @@ test("challenge link opens exact selected rounds and saves challenge completion"
   expect(resultWrites.at(-1)).toContain("Can You Geo?");
   expect(resultWrites.at(-1)).toContain("pts");
   expect(resultWrites.at(-1)).toContain("https://canyougeo.com");
-  expect(resultWrites.at(-1)).not.toMatch(/\/challenge\/worldprint\/\?c=/);
+  expect(resultWrites.at(-1)).not.toMatch(/\/challenge\/mystery-map\/\?c=/);
   expect(resultWrites.at(-1)).not.toMatch(/Japan|Brazil|fertility|life expectancy|World Bank|api\.worldbank\.org/i);
   const stored = await page.evaluate(() => JSON.parse(window.localStorage.getItem("worldprint:v1") ?? "{}") as { streak?: { current: number }; challengeHistoryById?: Record<string, unknown> });
   expect(stored.streak?.current).toBe(0);
@@ -818,7 +831,7 @@ test("challenge link opens exact selected rounds and saves challenge completion"
 });
 
 test("invalid challenge links show a polished error", async ({ page }) => {
-  await page.goto("/challenge/worldprint?c=not-a-real-code");
+  await page.goto("/challenge/mystery-map?c=not-a-real-code");
   await expect(page.getByText(/Challenge unavailable/i)).toBeVisible();
   await expect(page.getByRole("heading", { name: /cannot be opened/i })).toBeVisible();
   const retiredCode = encodeChallenge({
@@ -827,7 +840,7 @@ test("invalid challenge links show a polished error", async ({ page }) => {
     tier: "analyst",
     roundIds: ["worldprint-rural-population"]
   });
-  await page.goto(`/challenge/worldprint?c=${retiredCode}`);
+  await page.goto(`/challenge/mystery-map?c=${retiredCode}`);
   await expect(page.getByRole("heading", { name: /Some maps in this challenge are missing/i })).toBeVisible();
 });
 
@@ -842,11 +855,15 @@ test("refresh preserves an active run", async ({ page }) => {
 });
 
 test("keyboard-only answer flow works", async ({ page }) => {
-  await page.goto(`/play/worldprint?date=${TEST_DATE}`);
+  await page.goto(`/play/mystery-map?date=${TEST_DATE}`);
   await page.keyboard.press("Tab");
   await page.keyboard.press("Tab");
   await page.getByLabel("Analyst").check();
-  await page.getByRole("button", { name: /Start today's Mystery Map/i }).focus();
+  await page.getByRole("button", { name: /Try sample maps/i }).focus();
+  await page.keyboard.press("Enter");
+  const intro = page.getByLabel("First run intro");
+  await expect(intro).toBeVisible();
+  await intro.getByRole("button", { name: "Start map 1" }).focus();
   await page.keyboard.press("Enter");
   await expect(page.getByRole("heading", { name: /What does this map measure/i })).toBeVisible();
   await answerButton(page, correctLabel(0)).focus();
@@ -872,20 +889,19 @@ test("keyboard access reaches legal and sign-in controls", async ({ page }) => {
     await page.getByRole("button", { name: "Send sign-in link" }).focus();
     await expect(page.getByRole("button", { name: "Send sign-in link" })).toBeFocused();
   } else {
-    await page.getByRole("link", { name: "Keep playing" }).focus();
-    await expect(page.getByRole("link", { name: "Keep playing" })).toBeFocused();
+    await page.getByRole("link", { name: "Try sample maps" }).focus();
+    await expect(page.getByRole("link", { name: "Try sample maps" })).toBeFocused();
   }
 });
 
 test("practice filters start a filtered preview run", async ({ page }) => {
-  await page.goto(`/play/worldprint?date=${TEST_DATE}`);
+  await page.goto(`/play/mystery-map?date=${TEST_DATE}`);
   await expect(page.getByText(/Choose your game mode/i)).toBeVisible();
-  await expect(page.getByText(/No account needed/i)).toBeVisible();
-  await expect(page.getByText("5-map Daily", { exact: true })).toBeVisible();
+  await expect(page.getByText(/Sample play/i)).toBeVisible();
+  await expect(page.getByText(/Free account unlocks Daily/i)).toBeVisible();
   await expect(page.getByText(/Practice mode included/i)).toBeVisible();
-  await expect(page.getByText(/Future plans will include instant demo play/i)).toBeVisible();
+  await expect(page.getByText(/Create a free account for fresh Daily play and saved progress/i).first()).toBeVisible();
   await expect(page.getByTestId("entry-atlas-visual")).toBeVisible();
-  await expect(page.getByRole("img", { name: /Cinematic atlas map glowing with mystery data patterns/i })).toBeVisible();
   await expect(page.getByText(/Practice Atlas/i).first()).toBeVisible();
   await expect(page.getByLabel("Map difficulty")).toBeVisible();
   await expect(page.getByLabel("Map difficulty")).toHaveValue("intro");
@@ -930,34 +946,10 @@ test("practice filters start a filtered preview run", async ({ page }) => {
   ).toBe(true);
 });
 
-test("external beta page renders packs, feedback template, and static challenge links", async ({ page }) => {
+test("retired preview route redirects to Mystery Map without public test copy", async ({ page }) => {
   await page.goto("/beta/worldprint");
-  await expect(page.getByRole("heading", { name: /Test whether the maps read cleanly/i })).toBeVisible();
-  await expect(page.getByText(/open beta, not paid launch readiness/i)).toBeVisible();
-  await expect(page.locator("body")).not.toContainText("WORLDPRINT");
-  await expect(page.getByText(/125/).first()).toBeVisible();
-  await expect(page.getByText(/50/).first()).toBeVisible();
-  await expect(page.locator("body")).not.toContainText(/198 playable maps|167 playable maps/i);
-  await expect(page.getByRole("link", { name: /sign up|subscribe|checkout/i })).toHaveCount(0);
-  await expect(page.getByRole("button", { name: /Copy feedback template/i })).toBeVisible();
-  await expect(page.locator(".feedback-template li").filter({ hasText: /Would you create a free account for 3 maps\/day/i })).toBeVisible();
-
-  for (const pack of externalBetaPacks.packs) {
-    await expect(page.getByRole("heading", { name: pack.name })).toBeVisible();
-    await expect(page.getByText(new RegExp(`${pack.mapCount} maps`, "i")).first()).toBeVisible();
-    for (const challenge of pack.challenges) {
-      await expect(page.getByRole("link", { name: new RegExp(challenge.label, "i") })).toHaveAttribute("href", challenge.path);
-    }
-  }
-});
-
-test("external beta challenge links load exact pack intros", async ({ page }) => {
-  for (const link of externalBetaLinks.links) {
-    await page.goto(link.path);
-    await expect(page.getByRole("heading", { name: /Play the exact same maps/i })).toBeVisible();
-    await expect(page.getByText(`${link.mapCount} maps`)).toBeVisible();
-    await expect(page.getByRole("button", { name: /Start challenge/i })).toBeVisible();
-  }
+  await expect(page).toHaveURL(/\/play\/mystery-map\/?$/);
+  await expect(page.locator("body")).not.toContainText(/Beta|Open Beta|WORLDPRINT/i);
 });
 
 test("sources page renders player-friendly data attribution without admin wording", async ({ page }) => {
@@ -978,36 +970,41 @@ test("sources page renders player-friendly data attribution without admin wordin
 
 test("account and sign-in stay optional, friendly, and local-first", async ({ page }) => {
   await page.goto("/sign-in");
-  await expect(page.getByRole("heading", { name: /Save your score and streak/i })).toBeVisible();
-  await expect(page.locator(".account-hero .lead")).toContainText(/No password needed\. Enter your email and we'll send a secure one-time sign-in link/i);
+  await expect(page.getByRole("heading", { name: /Create your free account/i })).toBeVisible();
+  await expect(page.locator(".account-hero .lead")).toContainText(/Try a few sample maps instantly/i);
+  await expect(page.locator(".account-hero .lead")).toContainText(/Create a free account to play fresh Daily maps/i);
   const emailSignInAvailable = await page.getByLabel("Email").isVisible();
   if (emailSignInAvailable) {
     await expect(page.getByLabel("Email")).toBeVisible();
     await expect(page.getByRole("button", { name: "Send sign-in link" })).toBeEnabled();
+    await expect(page.getByText(/Fresh Daily play and saved progress/i)).toBeVisible();
   } else {
     await expect(page.getByRole("button", { name: "Create a free account" })).toBeDisabled();
-    await expect(page.getByRole("link", { name: "Keep playing" })).toHaveAttribute("href", /\/play\/worldprint\/?$/);
+    await expect(page.getByRole("link", { name: "Try sample maps" })).toHaveAttribute("href", /\/play\/mystery-map\/?$/);
     await expect(page.getByText(/Email sign-in is not available in this preview/i)).toBeVisible();
   }
-  await expect(page.getByText(/Gameplay still works without signing in/i)).toBeVisible();
-  await expect(page.getByRole("link", { name: "Go to account" })).toHaveAttribute("href", /\/account\/?$/);
+  await expect(page.getByText(/Fresh Daily play starts with a free account/i)).toBeVisible();
+  await expect(page.getByRole("link", { name: "Try sample maps" }).last()).toHaveAttribute("href", /\/play\/mystery-map\/?$/);
   await expect(page.locator("body")).not.toContainText(/magic link|Supabase|SQL|PKCE|webhook|Edge Function|configured/i);
+  await expect(page.locator("body")).not.toContainText(/Gameplay still works without signing in|Play without an account/i);
   expect(await page.evaluate(() => document.documentElement.scrollWidth > window.innerWidth)).toBe(false);
 
   await page.goto("/account");
-  await expect(page.getByRole("heading", { name: /Your atlas, saved/i })).toBeVisible();
-  await expect(page.getByText(/Play without an account/i)).toBeVisible();
-  await expect(page.getByRole("link", { name: /Play today's Mystery Map/i })).toHaveAttribute("href", /\/play\/worldprint\/?$/);
+  await expect(page.locator("#account-title")).toHaveText("Create a free account.");
+  await expect(page.locator(".account-hero .lead")).toContainText(/Create a free account to play fresh Daily maps and save your progress/i);
+  await expect(page.getByRole("link", { name: /Create a free account/i }).first()).toHaveAttribute("href", /\/sign-in\/?$/);
+  await expect(page.getByRole("link", { name: /Try sample maps/i }).first()).toHaveAttribute("href", /\/play\/mystery-map\/?$/);
   if (emailSignInAvailable) {
-    await expect(page.locator(".account-primary-card").getByRole("heading", { name: /Create a free account to save your streak/i })).toBeVisible();
+    await expect(page.locator(".account-primary-card").getByRole("heading", { name: /Create a free account/i })).toBeVisible();
   } else {
     await expect(page.getByText(/Email sign-in is unavailable in this preview/i)).toBeVisible();
   }
-  await expect(page.getByRole("heading", { name: "Playing without an account" })).toBeVisible();
+  await expect(page.getByRole("heading", { name: "Sample play" })).toBeVisible();
   await expect(page.locator(".player-stats-panel")).toContainText("No saved games yet");
   await expect(page.locator("body")).not.toContainText(/Production spine|Supabase|SQL|webhook|Edge Function|Current plan: Guest|You are on Guest|account shell/i);
+  await expect(page.locator("body")).not.toContainText(/Play without an account|Gameplay still works without signing in/i);
   if (emailSignInAvailable) {
-    await expect(page.getByRole("link", { name: "Create a free account" })).toHaveAttribute("href", /\/sign-in\/?$/);
+    await expect(page.getByRole("link", { name: "Create a free account" }).first()).toHaveAttribute("href", /\/sign-in\/?$/);
   } else {
     await expect(page.getByRole("link", { name: "Compare plans" })).toHaveAttribute("href", /\/upgrade\/?$/);
     await expect(page.getByRole("button", { name: "Checkout coming soon" })).toBeDisabled();
@@ -1019,7 +1016,7 @@ test("account and sign-in stay optional, friendly, and local-first", async ({ pa
   await expect(page.getByText(/Practice warm-ups are kept out of the permanent local record for now/i)).toBeVisible();
   await expect(page.locator(".player-stats-panel")).toContainText("No saved games yet");
   if (emailSignInAvailable) {
-    await expect(page.getByText(/Create a free account to save your streak/i)).toBeVisible();
+    await expect(page.getByText(/Create a free account to play fresh Daily maps/i)).toBeVisible();
   } else {
     await expect(page.getByText(/Email sign-in is unavailable in this preview/i)).toBeVisible();
   }
@@ -1029,7 +1026,8 @@ test("account and sign-in stay optional, friendly, and local-first", async ({ pa
 
   await page.goto("/upgrade");
   await expect(page.getByRole("heading", { name: /Unlock the full atlas/i })).toBeVisible();
-  await expect(page.locator(".account-hero .lead")).toContainText(/Free lets you play the Daily/i);
+  await expect(page.locator(".account-hero .lead")).toContainText(/try sample maps or create a free account for Daily play/i);
+  await expect(page.getByText(/Free accounts unlock fresh Daily play and saved progress/i)).toBeVisible();
   await expect(page.locator(".pro-price-options")).toContainText("$3.99");
   await expect(page.locator(".pro-price-options")).toContainText("/month");
   await expect(page.locator(".pro-price-options")).toContainText("$29.99");
@@ -1046,7 +1044,7 @@ test("account and sign-in stay optional, friendly, and local-first", async ({ pa
   await expect(page.locator("body")).not.toContainText(/PKCE|code verifier|Supabase/i);
 });
 
-test("account page renders as a premium control center on desktop and mobile", async ({ page }) => {
+test("account page renders a guest control center on desktop and mobile", async ({ page }) => {
   for (const viewport of [
     { width: 1440, height: 1000 },
     { width: 390, height: 844 }
@@ -1056,25 +1054,28 @@ test("account page renders as a premium control center on desktop and mobile", a
     await expect(page.locator(".account-profile-hero")).toBeVisible();
     await expect(page.locator(".account-hero-video source").first()).toHaveAttribute("src", "/worldprint/hero-loop.webm");
     await expect(page.getByRole("region", { name: "Account actions" })).toBeVisible();
-    await expect(page.getByRole("link", { name: "Open stats" })).toHaveAttribute("href", /\/account\/stats\/?$/);
-    await expect(page.getByRole("link", { name: "Open Past Games" })).toHaveAttribute("href", /\/archive\/worldprint\/?$/);
-    await expect(page.getByRole("link", { name: "Start practice" })).toHaveAttribute("href", /\/play\/worldprint\/?$/);
+    await expect(page.getByRole("link", { name: "Create a free account" }).first()).toHaveAttribute("href", /\/sign-in\/?$/);
+    await expect(page.getByRole("link", { name: "Try sample maps" }).first()).toHaveAttribute("href", /\/play\/mystery-map\/?$/);
+    await expect(page.getByRole("heading", { name: "Sample play" })).toBeVisible();
+    await expect(page.getByRole("link", { name: "Open stats" })).toHaveCount(0);
     await expect(page.locator("body")).not.toContainText(/Play first\.|Keep your streak\.|Open the full atlas\./i);
     await expectNoHorizontalOverflow(page);
   }
 });
 
 test("past games page reads as player replay, not admin archive", async ({ page }) => {
-  await page.goto("/archive/worldprint");
+  await page.goto("/past-games");
   await expect(page.locator(".archive-hero .eyebrow")).toHaveText("Past Games");
   await expect(page.getByRole("heading", { name: /Review Past Mystery Maps/i })).toBeVisible();
   await expect(page.getByText(/Each past date is a fixed 5-map set/i)).toBeVisible();
   await expect(page.getByText(/replay for practice/i)).toBeVisible();
   await expect(page.getByText(/Past Games are separate from today's Daily/i)).toBeVisible();
-  await expect(page.getByRole("complementary", { name: "Your stats" })).toContainText("No saved games yet");
-  await expect(page.getByRole("complementary", { name: "Your stats" })).toContainText("Local on this device");
-  await expect(page.getByLabel("Past Mystery Map Dailies").getByRole("link", { name: "Try past puzzle" }).first()).toBeVisible();
-  await expect(page.getByText(/Full archive access is coming soon|Create a free account to save your progress/i)).toBeVisible();
+  await expect(page.getByRole("heading", { name: "Sign in to keep Past Games history." })).toBeVisible();
+  await expect(page.getByText(/Logged-out visitors can try sample replays/i)).toBeVisible();
+  await expect(page.getByLabel("Past Mystery Map Dailies").getByRole("link", { name: "Create free account" }).first()).toBeVisible();
+  await expect(page.getByLabel("Past Mystery Map Dailies").getByRole("link", { name: "Try sample replay" }).first()).toBeVisible();
+  await expect(page.getByRole("heading", { name: "Create a free account for saved Past Games." })).toBeVisible();
+  await expect(page.getByText(/Showing 14 recent sample replays/i)).toBeVisible();
   await expect(page.locator("body")).not.toContainText(/manifest|archive window|localStorage|generated data|content version|admin|Record Book|Replay Library|record slot/i);
   await expect(page.locator("body")).not.toContainText("WORLDPRINT");
   expect(await page.evaluate(() => document.documentElement.scrollWidth > window.innerWidth)).toBe(false);
@@ -1089,7 +1090,7 @@ test("past games header and nav are visible across breakpoints", async ({ page }
     { width: 320, height: 844 }
   ]) {
     await page.setViewportSize(viewport);
-    await page.goto("/archive/worldprint");
+    await page.goto("/past-games");
     await expect(page.getByRole("heading", { name: /Review Past Mystery Maps/i })).toBeVisible();
     await expect(page.locator(".archive-card")).toHaveCount(14);
 
@@ -1098,11 +1099,13 @@ test("past games header and nav are visible across breakpoints", async ({ page }
     await brandLink.click({ trial: true });
 
     const primaryNav = page.getByRole("navigation", { name: "Primary navigation" });
-    for (const label of ["Play", "Past Games", "How it works"]) {
+    for (const label of ["Play", "How it works"]) {
       const link = primaryNav.getByRole("link", { name: label });
       await expect(link).toBeVisible();
       await link.click({ trial: true });
     }
+    await expect(primaryNav.getByRole("link", { name: "Past Games" })).toHaveCount(0);
+    await expect(page.getByRole("navigation", { name: "Footer navigation" }).getByRole("link", { name: "Past Games" })).toBeVisible();
 
     await expectHeaderWithinViewport(page);
     await expectNoHorizontalOverflow(page);
@@ -1110,23 +1113,15 @@ test("past games header and nav are visible across breakpoints", async ({ page }
 });
 
 test("skill tiers change answer interface and clue support", async ({ page }) => {
-  await page.goto(`/play/worldprint?date=${TEST_DATE}`);
-  await page.getByLabel("Explorer").check();
-  await clickDailyStart(page, /Start today's Mystery Map/i);
+  await startChallenge(page, [UNIT_CLUE_ROUND_ID], "explorer");
   await expect(page.locator(".choice-list .choice-button")).toHaveCount(3);
   await expect(page.getByRole("button", { name: /Reveal unit: -100/i })).toBeVisible();
 
-  await page.evaluate(() => window.localStorage.clear());
-  await page.goto(`/play/worldprint?date=${TEST_DATE}`);
-  await page.getByLabel("Cartographer").check();
-  await clickDailyStart(page, /Start today's Mystery Map/i);
+  await startChallenge(page, [UNIT_CLUE_ROUND_ID], "cartographer");
   await expect(page.locator(".choice-list .choice-button")).toHaveCount(6);
   await expect(page.getByRole("button", { name: /Reveal unit: -100/i })).toBeVisible();
 
-  await page.evaluate(() => window.localStorage.clear());
-  await page.goto(`/play/worldprint?date=${TEST_DATE}`);
-  await page.getByLabel("Atlas Master").check();
-  await clickDailyStart(page, /Start today's Mystery Map/i);
+  await startChallenge(page, [UNIT_CLUE_ROUND_ID], "atlasMaster");
   await expect(page.locator(".choice-list .choice-button")).toHaveCount(0);
   await expect(page.getByRole("button", { name: /Reveal unit: -100/i })).toBeVisible();
   await expect(page.getByLabel("Search playable map catalog")).toBeVisible();
@@ -1153,14 +1148,14 @@ test("mobile viewport has no horizontal overflow", async ({ page, isMobile }) =>
   await expect(page.getByRole("heading", { name: /Terms & Privacy/i })).toBeVisible();
   await expect(page.getByRole("heading", { name: "Accessibility" })).toBeVisible();
   expect(await page.evaluate(() => document.documentElement.scrollWidth > window.innerWidth)).toBe(false);
-  await page.goto("/archive/worldprint");
+  await page.goto("/past-games");
   await expect(page.getByRole("heading", { name: /Review Past Mystery Maps/i })).toBeVisible();
   expect(await page.evaluate(() => document.documentElement.scrollWidth > window.innerWidth)).toBe(false);
   await page.goto("/sign-in");
-  await expect(page.getByRole("heading", { name: /Save your score and streak/i })).toBeVisible();
+  await expect(page.getByRole("heading", { name: /Create your free account/i })).toBeVisible();
   expect(await page.evaluate(() => document.documentElement.scrollWidth > window.innerWidth)).toBe(false);
   await page.goto("/account");
-  await expect(page.getByRole("heading", { name: /Your atlas, saved/i })).toBeVisible();
+  await expect(page.locator("#account-title")).toHaveText("Create a free account.");
   expect(await page.evaluate(() => document.documentElement.scrollWidth > window.innerWidth)).toBe(false);
   await page.goto("/account/stats");
   await expect(page.getByRole("heading", { name: /Your saved stats/i })).toBeVisible();
@@ -1171,10 +1166,11 @@ test("mobile viewport has no horizontal overflow", async ({ page, isMobile }) =>
   await page.goto("/internal/worldprint-review");
   await expect(page.getByRole("heading", { name: /Indicator review board/i })).toBeVisible();
   await page.locator(".review-filters").getByLabel("Status").selectOption("retired");
-  await expect(page.getByText(/Showing 9 of 198 candidates/i)).toBeVisible();
+  await expect(page.getByText(/Showing 9 of \d+ candidates/i)).toBeVisible();
   expect(await page.evaluate(() => document.documentElement.scrollWidth > window.innerWidth)).toBe(false);
   await page.goto("/beta/worldprint");
-  await expect(page.getByRole("heading", { name: /Test whether the maps read cleanly/i })).toBeVisible();
+  await expect(page).toHaveURL(/\/play\/mystery-map\/?$/);
+  await expect(page.getByRole("heading", { name: /What does this map measure/i })).toBeVisible();
   expect(await page.evaluate(() => document.documentElement.scrollWidth > window.innerWidth)).toBe(false);
   const challengeCode = encodeChallenge({
     kind: "practice",
@@ -1182,7 +1178,7 @@ test("mobile viewport has no horizontal overflow", async ({ page, isMobile }) =>
     tier: "analyst",
     roundIds: dailyRoundIds.slice(0, 3)
   });
-  await page.goto(`/challenge/worldprint?c=${challengeCode}`);
+  await page.goto(`/challenge/mystery-map?c=${challengeCode}`);
   await expect(page.getByRole("heading", { name: /Play the exact same maps/i })).toBeVisible();
   expect(await page.evaluate(() => document.documentElement.scrollWidth > window.innerWidth)).toBe(false);
 });
@@ -1194,7 +1190,7 @@ test("axe scans landing, active game, and reveal", async ({ page }) => {
   expect((await new AxeBuilder({ page }).analyze()).violations).toEqual([]);
   await page.goto("/about");
   expect((await new AxeBuilder({ page }).analyze()).violations).toEqual([]);
-  await page.goto("/archive/worldprint");
+  await page.goto("/past-games");
   expect((await new AxeBuilder({ page }).analyze()).violations).toEqual([]);
   await page.goto("/sources");
   await expect(page.getByRole("heading", { name: /How editorial eligibility works/i })).toBeVisible();
@@ -1210,8 +1206,6 @@ test("axe scans landing, active game, and reveal", async ({ page }) => {
   expect((await new AxeBuilder({ page }).analyze()).violations).toEqual([]);
   await page.goto("/upgrade");
   expect((await new AxeBuilder({ page }).analyze()).violations).toEqual([]);
-  await page.goto("/beta/worldprint");
-  expect((await new AxeBuilder({ page }).analyze()).violations).toEqual([]);
   await page.goto("/internal/worldprint-review");
   expect((await new AxeBuilder({ page }).analyze()).violations).toEqual([]);
   const challengeCode = encodeChallenge({
@@ -1220,14 +1214,14 @@ test("axe scans landing, active game, and reveal", async ({ page }) => {
     tier: "analyst",
     roundIds: dailyRoundIds.slice(0, 3)
   });
-  await page.goto(`/challenge/worldprint?c=${challengeCode}`);
+  await page.goto(`/challenge/mystery-map?c=${challengeCode}`);
   expect((await new AxeBuilder({ page }).analyze()).violations).toEqual([]);
   await page.getByRole("button", { name: /Start challenge/i }).click();
   await expect(page.getByRole("heading", { name: /What does this map measure/i })).toBeVisible();
   expect((await new AxeBuilder({ page }).analyze()).violations).toEqual([]);
   await page.evaluate(() => window.localStorage.clear());
 
-  await page.goto(`/play/worldprint?date=${TEST_DATE}`);
+  await page.goto(`/play/mystery-map?date=${TEST_DATE}`);
   await page.getByRole("button", { name: /Start practice/i }).click();
   await expect(page.getByText("Practice").first()).toBeVisible();
   await expect(page.getByRole("heading", { name: /What does this map measure/i })).toBeVisible();
@@ -1259,7 +1253,7 @@ test("captures deterministic visual screenshots", async ({ page }, testInfo) => 
   await page.goto("/about");
   await scrollToTop(page);
   await page.screenshot({ path: path.join(dir, "about.png"), fullPage: true });
-  await page.goto("/archive/worldprint");
+  await page.goto("/past-games");
   await scrollToTop(page);
   await page.screenshot({ path: path.join(dir, "archive.png"), fullPage: true });
   await page.goto("/internal/worldprint-review");
@@ -1280,13 +1274,10 @@ test("captures deterministic visual screenshots", async ({ page }, testInfo) => 
   await page.goto("/upgrade");
   await scrollToTop(page);
   await page.screenshot({ path: path.join(dir, "upgrade.png"), fullPage: true });
-  await page.goto("/beta/worldprint");
-  await scrollToTop(page);
-  await page.screenshot({ path: path.join(dir, "beta-worldprint.png"), fullPage: true });
-  await page.goto(`/play/worldprint?date=${TEST_DATE}`);
+  await page.goto(`/play/mystery-map?date=${TEST_DATE}`);
   await scrollToTop(page);
   await page.screenshot({ path: path.join(dir, "play-setup.png"), fullPage: true });
-  await page.goto(`/play/worldprint/${TEST_DATE}`);
+  await page.goto(`/play/mystery-map/${TEST_DATE}`);
   await scrollToTop(page);
   await page.screenshot({ path: path.join(dir, "historical-daily-intro.png"), fullPage: true });
   const visualChallengeCode = encodeChallenge({
@@ -1295,34 +1286,21 @@ test("captures deterministic visual screenshots", async ({ page }, testInfo) => 
     tier: "analyst",
     roundIds: dailyRoundIds.slice(0, 3)
   });
-  await page.goto(`/challenge/worldprint?c=${visualChallengeCode}`);
+  await page.goto(`/challenge/mystery-map?c=${visualChallengeCode}`);
   await scrollToTop(page);
   await page.screenshot({ path: path.join(dir, "challenge-intro.png"), fullPage: true });
-  const introPack = externalBetaLinks.links.find((link) => link.challengeId === "intro-pack");
-  const dailyStress = externalBetaLinks.links.find((link) => link.challengeId === "daily-ready-stress-a");
-  const ambiguityEdge = externalBetaLinks.links.find((link) => link.challengeId === "ambiguity-edge-a");
-  if (!introPack || !dailyStress || !ambiguityEdge) throw new Error("Missing external beta challenge links");
-  await page.goto(introPack.path);
-  await scrollToTop(page);
-  await page.screenshot({ path: path.join(dir, "beta-intro-pack-challenge-intro.png"), fullPage: true });
-  await page.goto(dailyStress.path);
-  await scrollToTop(page);
-  await page.screenshot({ path: path.join(dir, "beta-daily-ready-stress-challenge-intro.png"), fullPage: true });
-  await page.goto(ambiguityEdge.path);
-  await scrollToTop(page);
-  await page.screenshot({ path: path.join(dir, "beta-ambiguity-edge-challenge-intro.png"), fullPage: true });
-  await page.goto(`/play/worldprint?date=${TEST_DATE}`);
+  await page.goto(`/play/mystery-map?date=${TEST_DATE}`);
   await scrollToTop(page);
   await page.screenshot({ path: path.join(dir, "tier-selection.png"), fullPage: true });
   await page.getByRole("button", { name: /Start practice/i }).click();
   await expect(page.getByText("Practice").first()).toBeVisible();
   await scrollToTop(page);
   await page.screenshot({ path: path.join(dir, "practice-active.png"), fullPage: false });
-  await page.goto(`/play/worldprint?date=${TEST_DATE}`);
+  await page.goto(`/play/mystery-map?date=${TEST_DATE}`);
   await page.locator("#practice-category").selectOption("agriculture");
-  await page.locator("#practice-difficulty").selectOption("intro");
+  await expect(page.locator("#practice-difficulty")).toHaveValue("standard");
   await scrollToTop(page);
-  await page.screenshot({ path: path.join(dir, "practice-zero-matches.png"), fullPage: true });
+  await page.screenshot({ path: path.join(dir, "practice-filtered-agriculture.png"), fullPage: true });
   for (const example of paletteScreenshotRounds) {
     await page.evaluate(() => window.localStorage.clear());
     const paletteChallengeCode = encodeChallenge({
@@ -1331,7 +1309,7 @@ test("captures deterministic visual screenshots", async ({ page }, testInfo) => 
       tier: "analyst",
       roundIds: [example.roundId]
     });
-    await page.goto(`/challenge/worldprint?c=${paletteChallengeCode}`);
+    await page.goto(`/challenge/mystery-map?c=${paletteChallengeCode}`);
     await page.getByRole("button", { name: /Start challenge/i }).click();
     await expect(page.locator(".map-frame").first()).toHaveAttribute("data-palette", example.palette);
     await scrollToTop(page);
@@ -1339,9 +1317,9 @@ test("captures deterministic visual screenshots", async ({ page }, testInfo) => 
   }
   const originalViewport = page.viewportSize();
   await page.evaluate(() => window.localStorage.clear());
-  await page.goto(`/play/worldprint?date=${TEST_DATE}`);
+  await page.goto(`/play/mystery-map?date=${TEST_DATE}`);
   await page.getByLabel("Explorer").check();
-  await clickDailyStart(page, /Start today's Mystery Map/i);
+  await clickDailyStart(page);
   await countryPath(page, "MEX").hover();
   await page.screenshot({ path: path.join(dir, "tooltip-country.png"), fullPage: false });
   await page.locator("#country-search").selectOption({ label: "Bolivia" });
@@ -1351,9 +1329,9 @@ test("captures deterministic visual screenshots", async ({ page }, testInfo) => 
   await page.screenshot({ path: path.join(dir, "mobile-selected-country-panel.png"), fullPage: false });
   if (originalViewport) await page.setViewportSize(originalViewport);
   await page.evaluate(() => window.localStorage.clear());
-  await page.goto(`/play/worldprint?date=${TEST_DATE}`);
+  await page.goto(`/play/mystery-map?date=${TEST_DATE}`);
   await page.getByLabel("Cartographer").check();
-  await clickDailyStart(page, /Start today's Mystery Map/i);
+  await clickDailyStart(page);
   for (const label of wrongLabels(0, "cartographer").slice(0, 4)) {
     await page.getByRole("button", { name: label }).click();
   }
@@ -1362,12 +1340,12 @@ test("captures deterministic visual screenshots", async ({ page }, testInfo) => 
   await page.evaluate(() => window.localStorage.clear());
   await startDaily(page);
   await countryPath(page, "MEX").click();
-  await page.waitForFunction(() => window.scrollY === 0);
+  await scrollToTop(page);
   await page.screenshot({ path: path.join(dir, "active-game.png"), fullPage: false });
   await answerButton(page, correctLabel(0)).click();
-  await page.waitForFunction(() => window.scrollY === 0);
+  await scrollToTop(page);
   await page.screenshot({ path: path.join(dir, "reveal.png"), fullPage: false });
-  await page.goto(`/challenge/worldprint?c=${visualChallengeCode}`);
+  await page.goto(`/challenge/mystery-map?c=${visualChallengeCode}`);
   await page.getByRole("button", { name: /Start challenge/i }).click();
   for (let index = 0; index < 3; index += 1) {
     await answerButton(page, correctLabelForRoundId(dailyRoundIds[index])).click();
@@ -1375,12 +1353,4 @@ test("captures deterministic visual screenshots", async ({ page }, testInfo) => 
   }
   await scrollToTop(page);
   await page.screenshot({ path: path.join(dir, "challenge-complete.png"), fullPage: true });
-  await page.goto(introPack.path);
-  await page.getByRole("button", { name: /Start challenge/i }).click();
-  for (let index = 0; index < introPack.roundIds.length; index += 1) {
-    await answerButton(page, correctLabelForRoundId(introPack.roundIds[index])).click();
-    await page.getByRole("button", { name: index === introPack.roundIds.length - 1 ? /Open results now|See results/ : /Next map/ }).click();
-  }
-  await scrollToTop(page);
-  await page.screenshot({ path: path.join(dir, "beta-intro-pack-complete.png"), fullPage: true });
 });

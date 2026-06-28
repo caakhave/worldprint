@@ -109,7 +109,7 @@ describe("SignInClient", () => {
 
     expect(screen.getByText("You're signed in as player@example.com.")).toBeVisible();
     expect(screen.getByRole("link", { name: "Go to account" })).toHaveAttribute("href", "/account");
-    expect(screen.getByRole("link", { name: "Keep playing" })).toHaveAttribute("href", "/play/worldprint");
+    expect(screen.getByRole("link", { name: "Keep playing" })).toHaveAttribute("href", "/play/mystery-map");
     expect(screen.getByRole("button", { name: "Sign out" })).toBeVisible();
     expect(screen.queryByLabelText("Email")).not.toBeInTheDocument();
 

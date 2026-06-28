@@ -37,7 +37,7 @@ export function BillingReturnNotice({ context }: { context: "account" | "upgrade
             Compare plans
           </Link>
         ) : (
-          <Link className="button-secondary" href="/play/worldprint">
+          <Link className="button-secondary" href="/play/mystery-map">
             Keep playing
           </Link>
         )}
@@ -59,7 +59,7 @@ export function BillingReturnNotice({ context }: { context: "account" | "upgrade
               : "Stripe finished checkout and the subscription update is still arriving. Refresh in a moment if your account does not switch to Pro."}
         </p>
       </div>
-      <Link className="button-secondary" href={proActive ? "/play/worldprint" : "/account"}>
+      <Link className="button-secondary" href={proActive ? "/play/mystery-map" : "/account"}>
         {proActive ? "Play Pro" : "Refresh account"}
       </Link>
     </aside>

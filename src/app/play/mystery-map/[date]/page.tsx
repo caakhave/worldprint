@@ -1,8 +1,9 @@
 import { existsSync, readFileSync } from "node:fs";
 import path from "node:path";
+import { Suspense } from "react";
 import type { Metadata } from "next";
 import { DailyIndexSchema } from "@/lib/content/schemas";
-import { LegacyRouteRedirect } from "@/components/routing/LegacyRouteRedirect";
+import { WorldprintClient } from "@/features/worldprint/WorldprintClient";
 
 export const metadata: Metadata = {
   title: "Past Mystery Map"
@@ -17,13 +18,20 @@ export function generateStaticParams() {
   return index.dates.map((entry) => ({ date: entry.date }));
 }
 
-export default async function LegacyDatedPlayPage({ params }: { params: Promise<{ date: string }> }) {
+export default async function DatedMysteryMapPage({ params }: { params: Promise<{ date: string }> }) {
   const { date } = await params;
   return (
-    <LegacyRouteRedirect
-      destination={`/play/mystery-map/${date}`}
-      title="This past Mystery Map has moved."
-      message="Taking you to the current Can You Geo? past-game route."
-    />
+    <Suspense
+      fallback={
+        <section className="game-shell page-shell">
+          <div className="empty-state surface">
+            <h1>Loading past Mystery Map...</h1>
+            <p>Preparing that day&apos;s maps.</p>
+          </div>
+        </section>
+      }
+    >
+      <WorldprintClient dateOverride={date} />
+    </Suspense>
   );
 }

@@ -8,15 +8,15 @@ export const metadata: Metadata = {
 
 export default function HowToPlayPage() {
   return (
-    <section className="how-page page-shell">
-      <div className="how-hero">
+    <section className="how-page page-shell map-texture-page">
+      <div className="how-hero map-texture-panel">
         <div>
-          <p className="eyebrow">Rules and scoring</p>
+          <p className="eyebrow">How to play</p>
           <h1 className="page-title">Read the pattern before the answer reads you.</h1>
         </div>
         <p className="lead">
-          Mystery Map is not about naming capitals. It is about reading a silent map, choosing the right evidence, and spotting the
-          hidden world-data signal.
+          Mystery Map is the first Can You Geo? mode: read the color-map pattern, spend points only when evidence helps, then choose
+          the hidden indicator.
         </p>
       </div>
 
@@ -64,25 +64,30 @@ export default function HowToPlayPage() {
       <section className="how-section scoring-layout" aria-labelledby="scoring-heading">
         <div className="section-heading">
           <p className="eyebrow">Scoring</p>
-          <h2 id="scoring-heading">Every clue spends score.</h2>
+          <h2 id="scoring-heading">Every clue spends points.</h2>
         </div>
         <div className="scoring-card surface">
           <p>
             Each round starts at 1,000 points. Revealing a new country value costs 100 points, revealing the unit costs 100 points,
-            and each wrong answer costs 300 points. Scores can finish below zero, but you can always continue to the reveal.
+            and each wrong answer costs 300 points. Point totals can finish below zero, but you can always continue to the reveal.
           </p>
-          <p>Daily has no speed bonus. The best scores come from reading the map before spending clues.</p>
+          <p>Daily has no speed bonus. The strongest runs come from reading the map before spending clues.</p>
         </div>
       </section>
 
-      <div className="how-cta surface">
+      <div className="how-cta surface map-texture-panel">
         <div>
-          <p className="eyebrow">Open beta</p>
-          <h2>Five-map Daily now. Three-map practice when you want a taste.</h2>
+          <p className="eyebrow">Start playing</p>
+          <h2>Try sample maps, then create a free account for fresh Daily play.</h2>
         </div>
-        <Link className="button" href="/play/worldprint">
-          Play today&apos;s Mystery Map
-        </Link>
+        <div className="button-row">
+          <Link className="button" href="/play/mystery-map">
+            Try sample maps
+          </Link>
+          <Link className="button-secondary" href="/sign-in">
+            Create a free account
+          </Link>
+        </div>
       </div>
     </section>
   );

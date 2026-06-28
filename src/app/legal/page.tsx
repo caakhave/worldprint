@@ -5,7 +5,7 @@ const EFFECTIVE_DATE = "June 26, 2026";
 
 export const metadata: Metadata = {
   title: "Terms & Privacy",
-  description: "Terms of use, privacy policy, cookies, local storage, and accessibility for Can You Geo and WORLDPRINT."
+  description: "Terms of use, privacy policy, cookies, local storage, and accessibility for Can You Geo."
 };
 
 export default function LegalPage() {
@@ -17,8 +17,8 @@ export default function LegalPage() {
           Terms &amp; Privacy
         </h1>
         <p className="lead">
-          Baseline launch terms for Can You Geo and WORLDPRINT. This page explains the rules for using the game, what information
-          the service uses, how browser storage supports play, and how to report accessibility issues.
+          Baseline launch terms for Can You Geo. This page explains the rules for using the game, what information the service uses,
+          how browser storage supports play, and how to report accessibility issues.
         </p>
       </header>
 
@@ -27,7 +27,7 @@ export default function LegalPage() {
           <section>
             <p className="legal-updated">Effective date: {EFFECTIVE_DATE}</p>
             <h2 id="terms-heading">Terms of Use</h2>
-            <p>Welcome to Can You Geo, including the WORLDPRINT geography game. By using the site, you agree to these Terms.</p>
+            <p>Welcome to Can You Geo. By using the site, you agree to these Terms.</p>
 
             <h3>Use of the Service</h3>
             <p>
@@ -62,8 +62,8 @@ export default function LegalPage() {
 
             <h3>Intellectual Property</h3>
             <p>
-              The Can You Geo / WORLDPRINT name, design, game interface, copy, and original content belong to the service owner or
-              its licensors. You may not copy or reuse them except as allowed by law or with permission.
+              The Can You Geo? name, design, game interface, copy, and original content belong to the service owner or its licensors.
+              You may not copy or reuse them except as allowed by law or with permission.
             </p>
 
             <h3>No Warranty</h3>
@@ -174,8 +174,8 @@ export default function LegalPage() {
             <p className="legal-updated">Effective date: {EFFECTIVE_DATE}</p>
             <h2 id="accessibility-heading">Accessibility</h2>
             <p>
-              Can You Geo aims to make WORLDPRINT usable by as many players as possible. We are working toward WCAG 2.2 AA as a
-              practical accessibility baseline for the site&apos;s public pages, account features, and gameplay.
+              Can You Geo aims to be usable by as many players as possible. We are working toward WCAG 2.2 AA as a practical
+              accessibility baseline for the site&apos;s public pages, account features, and gameplay.
             </p>
             <p>
               Some geography gameplay is highly visual by nature, especially map-based interactions. Where possible, we provide or

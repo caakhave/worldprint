@@ -4,12 +4,13 @@ import Link from "next/link";
 import { BillingActionsClient } from "@/features/account/BillingActionsClient";
 import { membershipDisplay } from "@/features/account/subscriptionDisplay";
 import { useEntitlement } from "@/features/account/useEntitlement";
+import { archiveAccessLabel, practiceAccessLabel, statsAccessLabel } from "@/lib/account/accessCopy";
 
 export function MembershipCardClient() {
   const { entitlement, loading, error, signedIn } = useEntitlement();
   const { capabilities } = entitlement;
   const membership = membershipDisplay(entitlement, loading);
-  const heading = signedIn || loading ? membership.heading : "Playing without an account";
+  const heading = signedIn || loading ? membership.heading : "Sample play";
 
   return (
     <article className="surface account-card membership-card" aria-label="Membership plan">
@@ -25,20 +26,20 @@ export function MembershipCardClient() {
         </div>
         <div>
           <dt>Practice</dt>
-          <dd>{capabilities.canUseFullPractice ? "Full atlas practice" : `${capabilities.practiceLimit ?? 3}-map warm-ups`}</dd>
+          <dd>{practiceAccessLabel(entitlement)}</dd>
         </div>
         <div>
           <dt>Past Games</dt>
-          <dd>{capabilities.canUseFullArchive ? "Complete archive" : `${capabilities.archiveLimitDays ?? 14} recent days`}</dd>
+          <dd>{archiveAccessLabel(entitlement)}</dd>
         </div>
         <div>
           <dt>Stats</dt>
-          <dd>{capabilities.canViewAdvancedStats ? "Advanced stats unlocked" : capabilities.canSaveStats ? "Saved stats" : "Local stats"}</dd>
+          <dd>{statsAccessLabel(entitlement)}</dd>
         </div>
       </dl>
       <div className="membership-unlocks" aria-label="Unlocked today">
-        <span>Daily Mystery Map</span>
-        <span>{capabilities.canSaveStats ? "Saved stats" : "Local stats"}</span>
+        <span>{signedIn ? "Fresh Daily play" : "Sample maps"}</span>
+        <span>{capabilities.canSaveStats ? "Saved progress" : "Browser-only progress"}</span>
         <span>{capabilities.canCreateChallenges ? "Basic challenges" : "Challenge links later"}</span>
       </div>
       {error ? <p className="account-error">We could not refresh your membership details. You can keep playing.</p> : null}

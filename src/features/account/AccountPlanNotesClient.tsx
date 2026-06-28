@@ -3,6 +3,7 @@
 import Link from "next/link";
 import { useEffect, useState } from "react";
 import { useEntitlement } from "@/features/account/useEntitlement";
+import { ACCESS_PLAN_COPY } from "@/lib/account/accessCopy";
 import { defaultPersistedState, loadPersistedState } from "@/lib/persistence/storage";
 
 export function AccountPlanNotesClient() {
@@ -30,6 +31,33 @@ export function AccountPlanNotesClient() {
   const billingCopy = isPro ? "Plan controls and receipts." : "Full archive, full practice, advanced stats.";
   const billingAction = isPro ? "Manage billing" : signedIn ? "Upgrade to Pro" : "View plans";
 
+  if (!signedIn) {
+    return (
+      <section className="account-actions-grid" aria-label="Account actions" role="region">
+        <article className="surface account-card account-action-card">
+          <p className="eyebrow">Free account</p>
+          <h2>Fresh Daily play</h2>
+          <p>{ACCESS_PLAN_COPY.guest.summary}</p>
+          <Link className="button" href="/sign-in">
+            Create a free account
+          </Link>
+        </article>
+
+        <article className="surface account-card account-action-card">
+          <p className="eyebrow">Sample play</p>
+          <h2>Try a few maps</h2>
+          <p>Sample maps let you feel the game before creating an account.</p>
+          <span className="account-action-stat">
+            {localRecordCount} browser record{localRecordCount === 1 ? "" : "s"}
+          </span>
+          <Link className="button-secondary" href="/play/mystery-map">
+            Try sample maps
+          </Link>
+        </article>
+      </section>
+    );
+  }
+
   return (
     <section className="account-actions-grid" aria-label="Account actions" role="region">
       <article className="surface account-card account-action-card">
@@ -48,7 +76,7 @@ export function AccountPlanNotesClient() {
         <p className="eyebrow">Past Games</p>
         <h2>Review results</h2>
         <p>Past Mystery Maps and saved runs.</p>
-        <Link className="button-secondary" href="/archive/worldprint">
+        <Link className="button-secondary" href="/past-games">
           Open Past Games
         </Link>
       </article>
@@ -57,7 +85,7 @@ export function AccountPlanNotesClient() {
         <p className="eyebrow">Practice Atlas</p>
         <h2>Train a topic</h2>
         <p>Warm up by topic and difficulty.</p>
-        <Link className="button-secondary" href="/play/worldprint">
+        <Link className="button-secondary" href="/play/mystery-map">
           Start practice
         </Link>
       </article>
