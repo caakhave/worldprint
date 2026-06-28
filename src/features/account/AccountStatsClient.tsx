@@ -74,7 +74,7 @@ function AccountRemoteStatsPanel({ stats }: { stats: AccountCloudStats }) {
         </div>
       ) : null}
       <p className="player-stats-note">
-        Account sync is active. Daily: {stats.daily_games}. Practice: {stats.practice_games}. Past Games: {stats.archive_games}.
+        Account sync is active. Daily: {stats.daily_games}. Atlas: {stats.atlas_games}. Practice: {stats.practice_games}. Past Games: {stats.archive_games}.
         Challenges: {stats.challenge_games}.
       </p>
     </section>

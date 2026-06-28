@@ -154,6 +154,47 @@ describe("persisted state", () => {
     expect(stats.totalScore).toBe(2000);
   });
 
+  it("does not persist Sample Run completions", () => {
+    let sampleRun = createRun({
+      mode: "sample",
+      dateKey: "2026-06-18",
+      contentVersion: "test",
+      tier: "analyst",
+      roundIds: [{ roundId: "sample-round", correctIndicatorId: "sample-indicator" }]
+    });
+    sampleRun = reduceRun(sampleRun, { type: "submit", answerId: "sample-indicator", label: "Sample indicator", correct: true });
+    sampleRun = reduceRun(sampleRun, { type: "nextRound" });
+
+    const state = recordRunCompletion(defaultPersistedState(), sampleRun);
+    expect(state.dailyHistoryByDate).toEqual({});
+    expect(state.atlasHistoryById).toEqual({});
+    expect(state.streak.current).toBe(0);
+    expect(buildLocalPlayerStats(state).gamesCompleted).toBe(0);
+  });
+
+  it("records Atlas completions without changing the Daily streak", () => {
+    let atlasRun = createRun({
+      mode: "atlas",
+      dateKey: "2026-06-18",
+      contentVersion: "test",
+      tier: "cartographer",
+      roundIds: [{ roundId: "atlas-round", correctIndicatorId: "atlas-indicator" }],
+      salt: "atlas-1"
+    });
+    atlasRun = reduceRun(atlasRun, { type: "submit", answerId: "atlas-indicator", label: "Atlas indicator", correct: true });
+    atlasRun = reduceRun(atlasRun, { type: "nextRound" });
+
+    const state = recordRunCompletion(defaultPersistedState(), atlasRun);
+    expect(state.atlasHistoryById[atlasRun.id]?.totalScore).toBe(1000);
+    expect(state.dailyHistoryByDate).toEqual({});
+    expect(state.streak.current).toBe(0);
+    expect(state.lifetime.dailyGames).toBe(0);
+    const stats = buildLocalPlayerStats(state);
+    expect(stats.gamesCompleted).toBe(1);
+    expect(stats.atlasGames).toBe(1);
+    expect(stats.mapsPlayed).toBe(1);
+  });
+
   it("includes negative scores in local stats", () => {
     let dailyRun = createRun({
       mode: "daily",

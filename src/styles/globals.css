@@ -6698,11 +6698,11 @@ dd {
 }
 
 .legal-hero {
-  max-width: 74rem;
+  max-width: none;
 }
 
 .legal-hero .page-title {
-  max-width: 10ch;
+  max-width: min(100%, 24ch);
   margin-bottom: 1rem;
 }
 

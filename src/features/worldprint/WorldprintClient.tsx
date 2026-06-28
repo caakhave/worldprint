@@ -30,6 +30,15 @@ import type {
 import type { Tier } from "@/lib/content/schemas";
 import { filterPracticeRounds, selectPracticeRoundIds, challengeNumber } from "@/lib/game/daily";
 import { selectDailyRoundIdsFromManifest } from "@/lib/game/dailyManifest";
+import {
+  FREE_DAILY_ROUND_COUNT,
+  PRO_ATLAS_ROUND_COUNT,
+  SAMPLE_RUN_ROUND_COUNT,
+  atlasSeenRoundIds,
+  freeDailyRoundIds,
+  sampleRunRoundIds,
+  selectAtlasRoundIds
+} from "@/lib/game/accessModel";
 import { localDateKey, nextDailyUnlockCopy } from "@/lib/game/retention";
 import { buildResultShareSummary, buildShareText, scoreRank } from "@/lib/game/share";
 import { challengePayloadFromRun, decodeChallenge, encodeChallenge, type ChallengePayload } from "@/lib/game/challenge";
@@ -247,6 +256,9 @@ export function WorldprintClient({ dateOverride, entryMode = "standard" }: World
   const reviewRequested = isArchiveDate && searchParams.get("review") === "1";
   const challengeCode = entryMode === "challenge" ? searchParams.get("c") : null;
   const { entitlement, loading: entitlementLoading, signedIn } = useEntitlement();
+  const isProAccount = signedIn && entitlement.plan === "pro";
+  const isFreeAccount = signedIn && entitlement.plan !== "pro";
+  const isGuest = !signedIn;
   const account = useSupabaseAccount();
   const [data, setData] = useState<LoadedData | null>(null);
   const [loadError, setLoadError] = useState<string | null>(null);
@@ -419,11 +431,26 @@ export function WorldprintClient({ dateOverride, entryMode = "standard" }: World
   const currentDailyRun = useMemo(() => {
     if (!data) return null;
     const active = store.activeDailyRun;
-    if (active && active.dateKey === todayKey && active.contentVersion === data.manifest.contentVersion) {
+    if (
+      signedIn &&
+      active &&
+      active.dateKey === todayKey &&
+      active.contentVersion === data.manifest.contentVersion &&
+      active.rounds.length === FREE_DAILY_ROUND_COUNT
+    ) {
       return active;
     }
     return null;
-  }, [data, store.activeDailyRun, todayKey]);
+  }, [data, signedIn, store.activeDailyRun, todayKey]);
+
+  const currentAtlasRun = useMemo(() => {
+    if (!data || !isProAccount) return null;
+    const active = store.activeAtlasRun;
+    if (active && active.mode === "atlas" && active.contentVersion === data.manifest.contentVersion) {
+      return active;
+    }
+    return null;
+  }, [data, isProAccount, store.activeAtlasRun]);
 
   const currentArchiveRun = useMemo(() => {
     if (!data) return null;
@@ -511,6 +538,7 @@ export function WorldprintClient({ dateOverride, entryMode = "standard" }: World
   }
 
   function buildPracticeSet() {
+    if (!signedIn) return;
     if (!data) return;
     const nextSalt = `reroll:${Date.now()}:${practiceSalt}`;
     const selectedIds = selectPracticeRoundIds(
@@ -526,6 +554,7 @@ export function WorldprintClient({ dateOverride, entryMode = "standard" }: World
   }
 
   async function startPracticeRun() {
+    if (!signedIn) return;
     if (!data || practiceMatches.length === 0) return;
     const selectedIds =
       selectedPracticeRounds.length > 0
@@ -553,11 +582,22 @@ export function WorldprintClient({ dateOverride, entryMode = "standard" }: World
     options: { freshReplay?: boolean; practiceRoundIds?: string[]; practiceSalt?: string } = {}
   ) {
     if (!data) return;
+    if (mode === "practice" && !signedIn) return;
+    if (mode === "daily" && !signedIn) return;
+    if (mode === "archive" && !signedIn) return;
+    if (mode === "atlas" && !isProAccount) return;
     if (mode === "daily" && currentDailyRun && !options.freshReplay) {
       setRun(currentDailyRun);
       setShowFirstRunIntro(!store.onboardingComplete && currentDailyRun.status === "active" && currentDailyRun.currentRoundIndex === 0);
       window.requestAnimationFrame(() => window.scrollTo(0, 0));
       await ensureIndicators(currentDailyRun.rounds.map((round) => round.correctIndicatorId));
+      return;
+    }
+    if (mode === "atlas" && currentAtlasRun?.status === "active" && !options.freshReplay) {
+      setRun(currentAtlasRun);
+      setShowFirstRunIntro(!store.onboardingComplete && currentAtlasRun.currentRoundIndex === 0);
+      window.requestAnimationFrame(() => window.scrollTo(0, 0));
+      await ensureIndicators(currentAtlasRun.rounds.map((round) => round.correctIndicatorId));
       return;
     }
     if (mode === "archive" && currentArchiveRun && !options.freshReplay) {
@@ -567,11 +607,25 @@ export function WorldprintClient({ dateOverride, entryMode = "standard" }: World
       await ensureIndicators(currentArchiveRun.rounds.map((round) => round.correctIndicatorId));
       return;
     }
+    const dailyManifestIds = selectDailyRoundIdsFromManifest(data.rounds, data.manifest.contentVersion, todayKey, data.dailyManifest).roundIds;
+    const atlasSelection =
+      mode === "atlas"
+        ? selectAtlasRoundIds({
+            rounds: data.rounds,
+            contentVersion: data.manifest.contentVersion,
+            salt: `run:${Date.now()}:${Object.keys(store.atlasHistoryById).length}`,
+            seenRoundIds: atlasSeenRoundIds(Object.values(store.atlasHistoryById))
+          })
+        : null;
     const selectedIds =
-      mode === "daily"
-        ? selectDailyRoundIdsFromManifest(data.rounds, data.manifest.contentVersion, todayKey, data.dailyManifest).roundIds
+      mode === "sample"
+        ? sampleRunRoundIds(data.rounds)
+        : mode === "daily"
+          ? freeDailyRoundIds(dailyManifestIds)
+          : mode === "atlas"
+            ? (atlasSelection?.roundIds ?? [])
         : mode === "archive"
-          ? selectDailyRoundIdsFromManifest(data.rounds, data.manifest.contentVersion, todayKey, data.dailyManifest).roundIds
+          ? dailyManifestIds
           : mode === "challenge" && challengePayload
             ? challengePayload.roundIds
             : options.practiceRoundIds ?? selectedPracticeRounds.map((round) => round.id);
@@ -587,11 +641,20 @@ export function WorldprintClient({ dateOverride, entryMode = "standard" }: World
       contentVersion: data.manifest.contentVersion,
       tier: challengePayload?.tier ?? selectedTier,
       roundIds,
-      salt: mode === "practice" ? (options.practiceSalt ?? practiceSalt) : mode === "challenge" ? challengePayload?.checksum : undefined
+      salt:
+        mode === "sample"
+          ? "evergreen"
+          : mode === "practice"
+            ? (options.practiceSalt ?? practiceSalt)
+            : mode === "atlas"
+              ? `atlas:${Date.now()}:${Object.keys(store.atlasHistoryById).length}`
+              : mode === "challenge"
+                ? challengePayload?.checksum
+                : undefined
     });
     await ensureIndicators(nextRun.rounds.map((round) => round.correctIndicatorId));
     setRun(nextRun);
-    setShowFirstRunIntro(mode === "daily" && !store.onboardingComplete);
+    setShowFirstRunIntro((mode === "sample" || mode === "daily" || mode === "atlas") && !store.onboardingComplete);
     setSelectedCountryIso3("");
     setMasterGuess("");
     window.requestAnimationFrame(() => window.scrollTo(0, 0));
@@ -599,12 +662,13 @@ export function WorldprintClient({ dateOverride, entryMode = "standard" }: World
 
   async function replayCompletedRun(sourceRun: RunState) {
     if (!data) return;
+    const replayMode: RunMode = sourceRun.mode === "daily" ? "practice" : sourceRun.mode;
     const roundIds = sourceRun.rounds.map((round) => ({
       roundId: round.roundId,
       correctIndicatorId: round.correctIndicatorId
     }));
     const replay = createRun({
-      mode: sourceRun.mode,
+      mode: replayMode,
       dateKey: sourceRun.dateKey,
       contentVersion: sourceRun.contentVersion,
       tier: sourceRun.tier,
@@ -762,6 +826,26 @@ export function WorldprintClient({ dateOverride, entryMode = "standard" }: World
     );
   }
 
+  if (isArchiveDate && !signedIn) {
+    return (
+      <section className="game-shell page-shell">
+        <div className="empty-state surface">
+          <p className="eyebrow">Past Game replay</p>
+          <h1>Create a free account to replay dated sets.</h1>
+          <p>Guest play is limited to the fixed 5-map Sample Run. Free accounts can replay recent Past Games and save results.</p>
+          <div className="button-row">
+            <Link className="button" href="/sign-in">
+              Create free account
+            </Link>
+            <Link className="button-secondary" href="/play/mystery-map">
+              Try Sample Run
+            </Link>
+          </div>
+        </div>
+      </section>
+    );
+  }
+
   if (!run) {
     const activeDateRun = isArchiveDate ? currentArchiveRun : currentDailyRun;
     const archiveRecord = isArchiveDate ? savedArchiveRecord(store, todayKey) : null;
@@ -779,28 +863,67 @@ export function WorldprintClient({ dateOverride, entryMode = "standard" }: World
           : "View today's result"
         : isArchiveDate
           ? "Continue replay"
-          : "Continue today's Mystery Map"
+          : "Continue today's 3 maps"
         : isArchiveDate
         ? archiveRecord
           ? "Replay for practice"
           : "Start dated replay"
-        : "Start today's Mystery Map";
+        : "Start today's 3 maps";
     const selectedCount = selectedPracticeRounds.length;
     const selectedDifficultyLabel = DIFFICULTY_LABELS[practiceDifficulty];
     const setReadyLabel = practiceMatches.length > 0 ? practiceLabel(selectedDifficultyLabel, practiceCategory) : "Practice mode";
     const availablePracticeCount = Math.min(3, practiceMatches.length);
     const practiceWarning = rarePracticeNote(practiceMatches.length);
+    const currentAtlasActive = currentAtlasRun?.status === "active";
+    const primaryMode: "sample" | "daily" | "atlas" = isProAccount ? "atlas" : isFreeAccount ? "daily" : "sample";
+    const primaryModeComplete = primaryMode === "daily" ? todayCompleted : false;
+    const primaryKicker = primaryMode === "atlas" ? "Unlimited Atlas" : primaryMode === "daily" ? "Today's Free Maps" : "Sample Run";
+    const primaryHeading =
+      primaryMode === "atlas" ? "Play the Pro Atlas" : primaryMode === "daily" ? "Play today's 3 fresh maps" : "Try the 5-map Sample Run";
+    const primaryCopy =
+      primaryMode === "atlas"
+        ? "5-map Atlas runs draw from the approved playable pool. Keep going after today's Free Daily."
+        : primaryMode === "daily"
+          ? "Your free account gets 3 fresh maps every day with saved results, progress, and streaks."
+          : "No account needed. These sample maps never change, and the Sample Run does not save stats or streaks.";
+    const primaryStateLabel =
+      primaryMode === "atlas"
+        ? currentAtlasActive
+          ? "Atlas in progress"
+          : "Pro ready"
+        : primaryModeComplete
+          ? "Today's 3 maps complete"
+          : primaryMode === "daily"
+            ? "Ready today"
+            : "5 fixed maps";
+    const primaryNote =
+      primaryMode === "atlas"
+        ? `Unlimited Atlas uses ${PRO_ATLAS_ROUND_COUNT}-map runs and reshuffles after the full pool is complete.`
+        : primaryMode === "daily"
+          ? "Want more after today's 3 maps? Go Pro for unlimited Atlas play."
+          : "Create a free account for 3 fresh maps every day.";
+    const primaryActionLabel =
+      primaryMode === "atlas"
+        ? currentAtlasActive
+          ? "Continue Pro Atlas"
+          : "Start Pro Atlas"
+        : primaryMode === "daily"
+          ? dailyLabel
+          : "Try the 5-map Sample Run";
     const accountFactLabel = entitlementLoading
       ? "Checking account"
-      : signedIn
-        ? entitlement.plan === "pro"
-          ? "Pro account"
-          : "Free account"
-        : "Sample play";
-    const dailyCardCopy = signedIn
-      ? "Today's official dated 5-map run. Finish to save your Daily result, progress, and streak."
-      : "Try sample play now. Create a free account for the official 5-map Daily, saved results, progress, and streaks.";
-    const dailyActionLabel = signedIn ? dailyLabel : activeDateRun ? "Continue sample play" : "Try sample play";
+      : isProAccount
+        ? "Pro account"
+        : isFreeAccount
+          ? "Free account"
+          : "Guest sample";
+    const entryFactLabel = isArchiveDate
+      ? "Streak stays safe"
+      : isProAccount
+        ? "Unlimited Atlas"
+        : isFreeAccount
+          ? "3-map Free Daily"
+          : "5-map Sample Run";
     if (reviewRequested) {
       if (reviewRecord) {
         return (
@@ -838,20 +961,22 @@ export function WorldprintClient({ dateOverride, entryMode = "standard" }: World
             indicator={indicatorCache[ENTRY_PREVIEW_INDICATOR_ID] ?? indicatorCache[data.manifest.indicators[0]?.id ?? ""]}
             countryNames={data.countryNames}
           />
-          <p className="eyebrow">{isArchiveDate ? `Past Mystery Map Replay · ${todayKey}` : `Mystery Map Daily #${challengeNumber(todayKey)}`}</p>
+          <p className="eyebrow">{isArchiveDate ? `Past Mystery Map Replay · ${todayKey}` : "Mystery Map"}</p>
           <h1 className="page-title">What does this map measure?</h1>
           <p className="lead">
             {isArchiveDate
               ? "Replay this past Mystery Map as a record run: five unlabeled maps, one hidden indicator each."
-              : signedIn
-                ? "Today's official 5-map Daily is a Mystery Map run: unlabeled maps, one hidden indicator each."
-                : "Try sample play now. Create a free account for the official 5-map Daily, saved results, progress, and streaks."}{" "}
+              : isProAccount
+                ? `${PRO_ATLAS_ROUND_COUNT}-map Atlas runs keep the mystery-map format open after today's Free Daily.`
+                : isFreeAccount
+                  ? `Today's Free Daily is ${FREE_DAILY_ROUND_COUNT} fresh unlabeled maps with one hidden indicator each.`
+                  : `Try the ${SAMPLE_RUN_ROUND_COUNT}-map Sample Run now. Create a free account for ${FREE_DAILY_ROUND_COUNT} fresh maps every day.`}{" "}
             Investigate countries when you need evidence, but every clue spends points.
           </p>
-          <div className="entry-facts" aria-label="Daily facts">
+          <div className="entry-facts" aria-label="Mystery Map facts">
             <span>{accountFactLabel}</span>
-            <span>{isArchiveDate ? "Streak stays safe" : signedIn ? "Official 5-map Daily" : "Sample maps now"}</span>
-            <span>Practice mode included</span>
+            <span>{entryFactLabel}</span>
+            <span>{isGuest ? "No saved stats" : "Saved progress"}</span>
           </div>
           <div className="entry-lobby-strip" aria-label="Mystery Map lobby preview">
             <span>
@@ -879,26 +1004,26 @@ export function WorldprintClient({ dateOverride, entryMode = "standard" }: World
               <div className="mode-panel-heading">
                 <p className="setup-kicker">Choose your game mode</p>
                 <h2>Pick your run.</h2>
-                <p>The official Daily is a 5-map run. Free sign-in saves it; Practice and Past Games stay separate from today&apos;s streak.</p>
+                <p>Guest Sample Run is fixed. Free accounts get 3 fresh maps daily. Pro opens unlimited Atlas play.</p>
               </div>
               <div className="mode-card-grid" aria-label="Mystery Map modes">
-                <article className="mode-card mode-card-daily" data-state={todayCompleted ? "complete" : "ready"} aria-label={todayCompleted ? "Today completed" : "Today's Mystery Map"}>
+                <article
+                  className="mode-card mode-card-daily"
+                  data-state={primaryModeComplete ? "complete" : "ready"}
+                  aria-label={primaryModeComplete ? "Today completed" : primaryHeading}
+                >
                   <div>
-                    <p className="setup-kicker">{signedIn ? "Daily Mystery Map" : "Sample play"}</p>
-                    <h3>{signedIn ? "Today's Mystery Map" : "Try sample maps"}</h3>
-                    <p>{dailyCardCopy}</p>
+                    <p className="setup-kicker">{primaryKicker}</p>
+                    <h3>{primaryHeading}</h3>
+                    <p>{primaryCopy}</p>
                   </div>
-                  {todayCompleted ? (
-                    <span className="mode-state-pill">Today&apos;s run complete</span>
+                  {primaryModeComplete ? (
+                    <span className="mode-state-pill">Today&apos;s 3 maps complete</span>
                   ) : (
-                    <span className="mode-state-pill">{signedIn ? "Ready today" : "Sample maps ready"}</span>
+                    <span className="mode-state-pill">{primaryStateLabel}</span>
                   )}
-                  <p className="mode-card-note">
-                    {signedIn
-                      ? "Signed-in Daily results save to your account history."
-                      : "Sample play is available now. Free sign-in unlocks the official 5-map Daily, saved progress, and streaks."}
-                  </p>
-                  {todayCompleted ? (
+                  <p className="mode-card-note">{primaryNote}</p>
+                  {primaryModeComplete ? (
                     <div className="daily-return-hook" aria-label="Daily return summary">
                       <div>
                         <span>Current streak</span>
@@ -911,10 +1036,11 @@ export function WorldprintClient({ dateOverride, entryMode = "standard" }: World
                       <p>
                         <strong>{nextDaily.headline}</strong> {nextDaily.body}
                       </p>
+                      <p>Want more after today&apos;s 3 maps? Go Pro for unlimited Atlas play.</p>
                     </div>
                   ) : null}
                   <div className="mode-card-actions">
-                    {todayCompleted ? (
+                    {primaryModeComplete ? (
                       <>
                         <button className="button" type="button" disabled={!completedDailyRun} onClick={() => completedDailyRun && setRun(completedDailyRun)}>
                           View today&apos;s result
@@ -925,21 +1051,30 @@ export function WorldprintClient({ dateOverride, entryMode = "standard" }: World
                         <Link className="button-secondary" href="/past-games">
                           Past Games
                         </Link>
-                        <button className="button-secondary" type="button" onClick={() => void startRun("daily", undefined, { freshReplay: true })}>
+                        <button className="button-secondary" type="button" disabled={!completedDailyRun} onClick={() => completedDailyRun && void replayCompletedRun(completedDailyRun)}>
                           Replay for practice
                         </button>
                       </>
                     ) : (
                       <>
-                        {!signedIn ? (
+                        {primaryMode === "sample" ? (
                           <Link className="button" href="/sign-in">
                             Create free account
                           </Link>
                         ) : null}
-                        <button className={signedIn ? "button" : "button-secondary"} type="button" onClick={() => void startRun("daily")}>
+                        <button
+                          className={primaryMode === "sample" ? "button-secondary" : "button"}
+                          type="button"
+                          onClick={() => void startRun(primaryMode)}
+                        >
                           <Compass size={18} aria-hidden="true" />
-                          {dailyActionLabel}
+                          {primaryActionLabel}
                         </button>
+                        {primaryMode === "atlas" && !todayCompleted ? (
+                          <button className="button-secondary" type="button" onClick={() => void startRun("daily")}>
+                            Play today&apos;s 3 maps
+                          </button>
+                        ) : null}
                       </>
                     )}
                   </div>
@@ -948,12 +1083,16 @@ export function WorldprintClient({ dateOverride, entryMode = "standard" }: World
                   <div>
                     <p className="setup-kicker">Practice Atlas</p>
                     <h3>Practice Atlas</h3>
-                    <p>Training sets by topic and difficulty. Never affects your Daily score or streak.</p>
+                    <p>
+                      {isGuest
+                        ? "Create a free account for 3-map Practice sets. Pro unlocks the full Practice Atlas."
+                        : "Training sets by topic and difficulty. Never affects your Daily score or streak."}
+                    </p>
                   </div>
                   <div className="practice-filters">
                     <label htmlFor="practice-category">
                       Topic
-                      <select id="practice-category" value={practiceCategory} onChange={(event) => updatePracticeCategory(event.target.value)}>
+                      <select id="practice-category" value={practiceCategory} disabled={isGuest} onChange={(event) => updatePracticeCategory(event.target.value)}>
                         <option value="">Any topic · {roundCountForFilters(data.rounds, "")} maps</option>
                         {practiceCategoryOptions.map((option) => (
                           <option key={option.category} value={option.category}>
@@ -967,6 +1106,7 @@ export function WorldprintClient({ dateOverride, entryMode = "standard" }: World
                       <select
                         id="practice-difficulty"
                         value={practiceDifficulty}
+                        disabled={isGuest}
                         onChange={(event) => setPracticeDifficulty(event.target.value as IndicatorDifficulty)}
                       >
                         {practiceDifficultyOptions.map((option) => (
@@ -987,7 +1127,9 @@ export function WorldprintClient({ dateOverride, entryMode = "standard" }: World
                           : practiceReadyLine(0)}
                     </strong>
                     <p>
-                      {selectedCount > 0
+                      {isGuest
+                        ? "Sign in free to choose Practice sets."
+                        : selectedCount > 0
                         ? practiceFlavor(practiceDifficulty)
                         : practiceMatches.length > 0
                           ? "Ready from these filters."
@@ -996,10 +1138,16 @@ export function WorldprintClient({ dateOverride, entryMode = "standard" }: World
                     {practiceWarning ? <p className="practice-warning">{practiceWarning}</p> : null}
                   </div>
                   <div className="practice-actions">
-                    <button className="button practice-start-button" type="button" disabled={practiceMatches.length === 0} onClick={() => void startPracticeRun()}>
-                      Start practice
-                    </button>
-                    <button className="button-secondary" type="button" disabled={practiceMatches.length === 0} onClick={buildPracticeSet}>
+                    {isGuest ? (
+                      <Link className="button practice-start-button" href="/sign-in">
+                        Create free account
+                      </Link>
+                    ) : (
+                      <button className="button practice-start-button" type="button" disabled={practiceMatches.length === 0} onClick={() => void startPracticeRun()}>
+                        Start practice
+                      </button>
+                    )}
+                    <button className="button-secondary" type="button" disabled={isGuest || practiceMatches.length === 0} onClick={buildPracticeSet}>
                       <Shuffle size={17} aria-hidden="true" />
                       Shuffle set
                     </button>
@@ -1017,11 +1165,15 @@ export function WorldprintClient({ dateOverride, entryMode = "standard" }: World
                 <div>
                   <p className="setup-kicker">Past Games</p>
                   <h3>Past Games</h3>
-                  <p>Dated Daily replays. Replays never change today&apos;s Daily score or streak.</p>
+                  <p>
+                    {isGuest
+                      ? "Create a free account to replay dated sets. Pro unlocks the complete archive."
+                      : "Dated Daily replays. Replays never change today&apos;s Daily score or streak."}
+                  </p>
                 </div>
                 <div className="mode-card-actions">
-                  <Link className="button-secondary" href="/past-games">
-                    Open past games
+                  <Link className="button-secondary" href={isGuest ? "/sign-in" : "/past-games"}>
+                    {isGuest ? "Create free account" : "Open past games"}
                   </Link>
                 </div>
               </article>
@@ -1094,7 +1246,7 @@ export function WorldprintClient({ dateOverride, entryMode = "standard" }: World
 
   if (
     showFirstRunIntro &&
-    run.mode === "daily" &&
+    (run.mode === "sample" || run.mode === "daily" || run.mode === "atlas") &&
     run.currentRoundIndex === 0 &&
     run.rounds[0]?.phase === "active"
   ) {
@@ -1192,7 +1344,11 @@ export function WorldprintClient({ dateOverride, entryMode = "standard" }: World
             <span>{config.label}</span>
             <span>
               {run.mode === "daily"
-                ? `Mystery Map Daily #${challengeNumber(run.dateKey)}`
+                ? `Free Daily #${challengeNumber(run.dateKey)}`
+                : run.mode === "sample"
+                  ? "Sample Run"
+                  : run.mode === "atlas"
+                    ? "Pro Atlas"
                 : run.mode === "archive"
                   ? `Past Mystery Map Replay ${run.dateKey}`
                   : run.mode === "challenge"
@@ -1767,7 +1923,7 @@ function ArchiveReview({
           <p className="eyebrow">Past Game result</p>
           <h1 className="page-title">Review {record.dateKey}.</h1>
           <p className="lead">
-            Historical result only. Replay for practice starts a separate attempt and will not change your official Daily score.
+            Historical result only. Replay for practice starts a separate attempt and will not change today&apos;s Daily score.
           </p>
         </div>
         <div className="archive-review-score">
@@ -1932,7 +2088,7 @@ function FirstRunIntro({ tier, onContinue }: { tier: Tier; onContinue: () => voi
           You are starting on {TIER_CONFIGS[tier].label}. Keep your score clean, spend clues only when the map gets slippery, and pick the hidden
           indicator.
         </p>
-        <ol className="first-run-beats" aria-label="How the Daily works">
+        <ol className="first-run-beats" aria-label="How Mystery Map works">
           <li>
             <span>01</span>
             <strong>Read the map color pattern.</strong>
@@ -1990,9 +2146,17 @@ function CompletionSummary({
   const [resultScoreLocked, setResultScoreLocked] = useState(() =>
     typeof window === "undefined" ? false : window.matchMedia("(prefers-reduced-motion: reduce)").matches
   );
-  const challengeCode = encodeChallenge(challengePayloadFromRun(run));
-  const challengeUrl =
-    typeof window === "undefined" ? `/challenge/mystery-map?c=${challengeCode}` : `${window.location.origin}/challenge/mystery-map/?c=${challengeCode}`;
+  const isSampleRun = run.mode === "sample";
+  const isDailyRun = run.mode === "daily";
+  const isAtlasRun = run.mode === "atlas";
+  const isPastRecord = run.mode === "archive";
+  const canCreateChallenge = !isSampleRun;
+  const challengeCode = canCreateChallenge ? encodeChallenge(challengePayloadFromRun(run)) : "";
+  const challengeUrl = canCreateChallenge
+    ? typeof window === "undefined"
+      ? `/challenge/mystery-map?c=${challengeCode}`
+      : `${window.location.origin}/challenge/mystery-map/?c=${challengeCode}`
+    : "";
   const challengeSharePrompt = "Think you can beat my Can You Geo? Mystery Map score?";
   const total = run.rounds.reduce((sum, round) => sum + round.score, 0);
   const bestRound = run.rounds.length ? Math.max(...run.rounds.map((round) => round.score)) : 0;
@@ -2004,20 +2168,25 @@ function CompletionSummary({
   const rank = scoreRank(total, run.rounds.length);
   const possibleRunScore = Math.max(1, run.rounds.length * 1000);
   const scorePercent = Math.max(0, Math.min(100, Math.round((total / possibleRunScore) * 100)));
-  const isPastRecord = run.mode === "archive";
-  const accountSaveHeading = signedIn
+  const accountSaveHeading = isSampleRun
+    ? "Create a free account for fresh maps."
+    : signedIn
     ? cloudSaveStatus.toLowerCase().includes("saved to your account")
       ? "Saved to your account."
       : cloudSaveStatus.toLowerCase().includes("failed")
       ? "Saved locally. Sync needs another try."
       : "Account save is on."
     : "Save your score and streak.";
-  const saveNote = signedIn
+  const saveNote = isSampleRun
+    ? "Sample Run is not saved. Free accounts save Daily stats, progress, and streaks."
+    : signedIn
     ? cloudSaveStatus.toLowerCase().includes("saved to your account")
       ? "Saved to your account."
       : "Account sync is active for completed runs."
     : "Local on this device. Sign in to save completed runs, stats, and streaks to your account.";
-  const statsHeading = signedIn
+  const statsHeading = isSampleRun
+    ? "Sample complete."
+    : signedIn
     ? cloudSaveStatus.toLowerCase().includes("saved to your account")
       ? "Saved to your account."
       : "Account stats."
@@ -2069,6 +2238,7 @@ function CompletionSummary({
   }
 
   async function shareChallenge() {
+    if (!canCreateChallenge) return;
     try {
       if (navigator.share) {
         await navigator.share({
@@ -2087,6 +2257,7 @@ function CompletionSummary({
   }
 
   async function copyChallengeLink() {
+    if (!canCreateChallenge) return;
     try {
       await navigator.clipboard.writeText(challengeUrl);
       setShareStatus("Copied challenge link.");
@@ -2096,9 +2267,13 @@ function CompletionSummary({
   }
 
   const summaryLabel =
-    run.mode === "daily"
-      ? `Mystery Map Daily #${challengeNumber(run.dateKey)}`
-      : run.mode === "archive"
+    isSampleRun
+      ? "Sample Run complete"
+      : isDailyRun
+        ? `Today's Free Daily #${challengeNumber(run.dateKey)}`
+        : isAtlasRun
+          ? "Pro Atlas run complete"
+          : run.mode === "archive"
         ? `Past Mystery Map Replay · ${run.dateKey}`
         : run.mode === "challenge"
           ? "Mystery Map Challenge complete"
@@ -2106,8 +2281,10 @@ function CompletionSummary({
   const challengeButtonLabel =
     run.mode === "practice"
       ? "Challenge a friend with this practice set"
-      : run.mode === "daily"
+      : isDailyRun
         ? "Challenge a friend with today's maps"
+        : isAtlasRun
+          ? "Challenge a friend with this Atlas set"
         : "Challenge a friend with these maps";
   const reviewHref = run.mode === "daily" || run.mode === "archive" ? `/play/mystery-map/${run.dateKey}?review=1` : null;
   const nextDaily = nextDailyUnlockCopy();
@@ -2139,26 +2316,46 @@ function CompletionSummary({
           </div>
         </div>
         <p className="lead">
-          {isPastRecord ? "Record entry saved for this fixed Past Game. " : ""}
-          {run.rounds.length} maps completed on {TIER_CONFIGS[run.tier].label}.{" "}
-          {run.mode === "daily" ? `Daily streak: ${store.streak.current}.` : "Daily streaks are unaffected."}
+          {isSampleRun
+            ? "Sample Run complete. These maps never change, and the Sample Run does not save stats or streaks."
+            : isPastRecord
+              ? "Record entry saved for this fixed Past Game. "
+              : ""}
+          {!isSampleRun ? `${run.rounds.length} maps completed on ${TIER_CONFIGS[run.tier].label}. ` : ""}
+          {isDailyRun ? `Daily streak: ${store.streak.current}.` : "Daily streaks are unaffected."}
         </p>
         <section className="summary-retention-card surface" aria-label="Next Daily and streak">
           <div>
-            <p className="eyebrow">Return tomorrow</p>
-            <h2>{nextDaily.headline}</h2>
-            <p>{nextDaily.body}</p>
+            <p className="eyebrow">{isSampleRun ? "Free account" : isAtlasRun ? "Unlimited Atlas" : "Return tomorrow"}</p>
+            <h2>{isSampleRun ? "3 fresh maps every day." : isAtlasRun ? "Start another Atlas run." : nextDaily.headline}</h2>
+            <p>
+              {isSampleRun
+                ? "Create a free account for the Free Daily, saved progress, stats, and streaks."
+                : isAtlasRun
+                  ? "Pro Atlas runs keep going after the daily set and draw from the full approved pool."
+                  : nextDaily.body}
+            </p>
           </div>
-          <dl aria-label="Daily streak and best score">
-            <div>
-              <dt>Current streak</dt>
-              <dd>{store.streak.current}</dd>
-            </div>
-            <div>
-              <dt>Best Daily</dt>
-              <dd>{bestDailyScore === null ? "—" : bestDailyScore.toLocaleString("en-US")}</dd>
-            </div>
-          </dl>
+          {isSampleRun ? (
+            <Link className="button" href="/sign-in">
+              Create a free account
+            </Link>
+          ) : isAtlasRun ? (
+            <button className="button" type="button" onClick={onBack}>
+              Back to Atlas
+            </button>
+          ) : (
+            <dl aria-label="Daily streak and best score">
+              <div>
+                <dt>Current streak</dt>
+                <dd>{store.streak.current}</dd>
+              </div>
+              <div>
+                <dt>Best Daily</dt>
+                <dd>{bestDailyScore === null ? "—" : bestDailyScore.toLocaleString("en-US")}</dd>
+              </div>
+            </dl>
+          )}
         </section>
         <div className="summary-achievement surface" aria-label="Completed run summary">
           <div>
@@ -2232,7 +2429,7 @@ function CompletionSummary({
                     <dd>{shareSummary.clueSpend.toLocaleString("en-US")}</dd>
                   </div>
                 </dl>
-                <div className="share-result-strip" aria-label="Five-round result strip">
+                <div className="share-result-strip" aria-label={`${shareSummary.roundCount}-round result strip`}>
                   {shareSummary.rounds.map((tone, index) => (
                     <span key={`${run.rounds[index]?.roundId ?? index}-${tone}`} data-result={tone}>
                       <small>{index + 1}</small>
@@ -2265,17 +2462,25 @@ function CompletionSummary({
                     Review result
                   </Link>
                 ) : null}
-                <button className="button" type="button" onClick={onPractice}>
-                  Practice another set
-                </button>
+                {isSampleRun ? (
+                  <Link className="button" href="/sign-in">
+                    Create free account
+                  </Link>
+                ) : (
+                  <button className="button" type="button" onClick={onPractice}>
+                    Practice another set
+                  </button>
+                )}
                 <button className="button-secondary" type="button" onClick={onReplay}>
                   Replay for practice
                 </button>
-                <Link className="button-secondary" href="/past-games">
+                {!isSampleRun ? (
+                  <Link className="button-secondary" href="/past-games">
                   Past Games
-                </Link>
-                <Link className="button-secondary" href="/account/stats">
-                  View saved stats
+                  </Link>
+                ) : null}
+                <Link className="button-secondary" href={isSampleRun ? "/sign-in" : "/account/stats"}>
+                  {isSampleRun ? "Create free account" : "View saved stats"}
                 </Link>
               </div>
               <div className="share-action-grid" aria-label="Share options">
@@ -2283,14 +2488,18 @@ function CompletionSummary({
                   <Share2 size={18} aria-hidden="true" />
                   Share result
                 </button>
-                <button className="button-secondary" type="button" onClick={() => void shareChallenge()}>
-                  <Share2 size={18} aria-hidden="true" />
-                  {challengeButtonLabel}
-                </button>
-                <button className="button-secondary" type="button" onClick={() => void copyChallengeLink()}>
-                  <Copy size={18} aria-hidden="true" />
-                  Copy challenge link
-                </button>
+                {canCreateChallenge ? (
+                  <>
+                    <button className="button-secondary" type="button" onClick={() => void shareChallenge()}>
+                      <Share2 size={18} aria-hidden="true" />
+                      {challengeButtonLabel}
+                    </button>
+                    <button className="button-secondary" type="button" onClick={() => void copyChallengeLink()}>
+                      <Copy size={18} aria-hidden="true" />
+                      Copy challenge link
+                    </button>
+                  </>
+                ) : null}
                 <button className="button-secondary" type="button" onClick={onBack}>
                   {isPastRecord ? "Back to record" : "Back to lobby"}
                 </button>
@@ -2308,10 +2517,14 @@ function CompletionSummary({
             <h2>{accountSaveHeading}</h2>
             <p>
               {signedIn
-                ? isPastRecord
+                ? isSampleRun
+                  ? "Sample runs are not added to account history. Free Daily results and Atlas runs save after sign-in."
+                  : isPastRecord
                   ? "This Past Game result is saved locally first, then attached to your account record when sync is available."
                   : "Your result is saved locally first, then attached to your account record when sync is available."
-                : "Your result is saved in this browser. A free account can save completed runs, stats, and streaks to your account."}
+                : isSampleRun
+                  ? "Sample Run is not saved. A free account starts fresh Daily progress with stats and streaks."
+                  : "Your result is saved in this browser. A free account can save completed runs, stats, and streaks to your account."}
             </p>
             {cloudSaveStatus ? (
               <p className="status-live" role="status">
@@ -2320,16 +2533,18 @@ function CompletionSummary({
             ) : null}
           </div>
           <div className="button-row">
-            <Link className="button" href={signedIn ? "/account/stats" : "/sign-in"}>
-              {signedIn ? "View saved stats" : "Create a free account"}
+            <Link className="button" href={signedIn && !isSampleRun ? "/account/stats" : "/sign-in"}>
+              {signedIn && !isSampleRun ? "View saved stats" : "Create a free account"}
             </Link>
-            <Link className="button-secondary" href="/account">
-              View account
-            </Link>
+            {!isSampleRun ? (
+              <Link className="button-secondary" href="/account">
+                View account
+              </Link>
+            ) : null}
           </div>
         </section>
       </div>
-      <PlayerStatsPanel store={store} heading={statsHeading} note={saveNote} />
+      {isSampleRun ? null : <PlayerStatsPanel store={store} heading={statsHeading} note={saveNote} />}
     </section>
   );
 }

@@ -20,6 +20,7 @@ const localStats: LocalPlayerStats = {
   correctAnswers: 5,
   gamesCompleted: 1,
   dailyGames: 1,
+  atlasGames: 0,
   archiveGames: 0,
   challengeGames: 0,
   roundsPlayed: 5,
@@ -100,6 +101,8 @@ describe("account stats sync helpers", () => {
   it("uses stable cloud run keys for deduped saved runs", () => {
     expect(clientRunKeyFor("daily", "2026-06-24", "daily-run")).toBe("worldprint:daily:2026-06-24");
     expect(clientRunKeyFor("archive", "2026-06-24", "archive-run")).toBe("worldprint:archive:2026-06-24");
+    expect(clientRunKeyFor("sample", "2026-06-24", "sample-run")).toBeNull();
+    expect(clientRunKeyFor("atlas", "2026-06-24", "atlas-run")).toBe("worldprint:atlas:atlas-run");
     expect(clientRunKeyFor("challenge", "2026-06-24", "challenge-run")).toBe("worldprint:challenge:challenge-run");
     expect(clientRunKeyFor("practice", "2026-06-24", "practice-run")).toBe("worldprint:practice:practice-run");
   });
@@ -190,6 +193,34 @@ describe("account stats sync helpers", () => {
 
     expect(mock.gameRuns).toHaveLength(1);
     expect(buildAccountStatsFromCloudRuns("user-1", mock.gameRuns).games_completed).toBe(1);
+  });
+
+  it("syncs Atlas completions without counting them as Daily runs", async () => {
+    const mock = createMockSyncClient();
+    let run = createRun({
+      mode: "atlas",
+      dateKey: "2026-06-24",
+      contentVersion: "test",
+      tier: "analyst",
+      roundIds: [{ roundId: "round-1", correctIndicatorId: "indicator-1" }],
+      salt: "atlas"
+    });
+    run = reduceRun(run, { type: "submit", answerId: "indicator-1", label: "Indicator", correct: true });
+    run = reduceRun(run, { type: "nextRound" });
+    const state = recordRunCompletion(defaultPersistedState(), run);
+
+    await syncLocalRunsToSupabase(mock.client, "user-1", state);
+
+    expect(mock.gameRuns).toHaveLength(1);
+    expect(mock.gameRuns[0]).toMatchObject({
+      client_run_key: `worldprint:atlas:${run.id}`,
+      mode: "atlas",
+      daily_date: null
+    });
+    const stats = buildAccountStatsFromCloudRuns("user-1", mock.gameRuns);
+    expect(stats.daily_games).toBe(0);
+    expect(stats.atlas_games).toBe(1);
+    expect(stats.games_completed).toBe(1);
   });
 });
 

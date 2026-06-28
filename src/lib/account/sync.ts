@@ -23,6 +23,7 @@ export type AccountStatsSnapshot = {
 export type AccountCloudStats = AccountStatsSnapshot & {
   games_completed: number;
   daily_games: number;
+  atlas_games: number;
   practice_games: number;
   archive_games: number;
   challenge_games: number;
@@ -96,6 +97,7 @@ export function syncMarkerKey(userId: string): string {
 export function statsSyncSignature(store: PersistedState): string {
   const histories: SyncableHistory[] = [
     ...Object.values(store.dailyHistoryByDate),
+    ...Object.values(store.atlasHistoryById),
     ...Object.values(store.archiveHistoryByDate),
     ...Object.values(store.challengeHistoryById)
   ]
@@ -122,12 +124,14 @@ export function statsSyncSignature(store: PersistedState): string {
 export function syncableCompletionHistories(store: PersistedState): CompletionHistory[] {
   return [
     ...Object.values(store.dailyHistoryByDate),
+    ...Object.values(store.atlasHistoryById),
     ...Object.values(store.archiveHistoryByDate),
     ...Object.values(store.challengeHistoryById)
   ];
 }
 
 export function clientRunKeyFor(mode: RunMode, dateKey: string, id: string): string | null {
+  if (mode === "sample") return null;
   if (mode === "daily" || mode === "archive") return `worldprint:${mode}:${dateKey}`;
   return `worldprint:${mode}:${id}`;
 }
@@ -242,6 +246,7 @@ export function buildAccountStatsFromCloudRuns(
 ): AccountCloudStats {
   const completedRuns = dedupeCloudRuns(runs).filter((run) => run.completed_at);
   const dailyRuns = completedRuns.filter((run) => run.mode === "daily");
+  const atlasRuns = completedRuns.filter((run) => run.mode === "atlas");
   const practiceRuns = completedRuns.filter((run) => run.mode === "practice");
   const archiveRuns = completedRuns.filter((run) => run.mode === "archive");
   const challengeRuns = completedRuns.filter((run) => run.mode === "challenge");
@@ -265,6 +270,7 @@ export function buildAccountStatsFromCloudRuns(
     updated_at: updatedAt,
     games_completed: completedRuns.length,
     daily_games: dailyRuns.length,
+    atlas_games: atlasRuns.length,
     practice_games: practiceRuns.length,
     archive_games: archiveRuns.length,
     challenge_games: challengeRuns.length,
@@ -396,7 +402,9 @@ function dedupeCloudRuns(runs: GameRunRow[]): GameRunRow[] {
 }
 
 function modeLabel(mode: string): string {
+  if (mode === "sample") return "Sample";
   if (mode === "daily") return "Daily";
+  if (mode === "atlas") return "Atlas";
   if (mode === "archive") return "Past game";
   if (mode === "challenge") return "Challenge";
   return "Practice";

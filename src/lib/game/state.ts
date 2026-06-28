@@ -1,7 +1,7 @@
 import type { Tier } from "@/lib/content/schemas";
 import { deductScore, nextInvestigationPenalty, TIER_CONFIGS } from "@/lib/game/scoring";
 
-export type RunMode = "daily" | "practice" | "archive" | "challenge";
+export type RunMode = "sample" | "daily" | "atlas" | "practice" | "archive" | "challenge";
 export type RoundPhase = "active" | "feedback" | "solved";
 
 export type Investigation = {

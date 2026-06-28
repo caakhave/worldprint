@@ -15,6 +15,7 @@ export type LocalPlayerStats = {
   correctAnswers: number;
   gamesCompleted: number;
   dailyGames: number;
+  atlasGames: number;
   archiveGames: number;
   challengeGames: number;
   roundsPlayed: number;
@@ -33,7 +34,9 @@ export type LocalPlayerStats = {
 };
 
 function modeLabel(mode: CompletionHistory["mode"]): string {
+  if (mode === "sample") return "Sample";
   if (mode === "daily") return "Daily";
+  if (mode === "atlas") return "Atlas";
   if (mode === "archive") return "Past game";
   if (mode === "challenge") return "Challenge";
   return "Practice";
@@ -42,6 +45,7 @@ function modeLabel(mode: CompletionHistory["mode"]): string {
 function historyRows(store: PersistedState): CompletionHistory[] {
   return [
     ...Object.values(store.dailyHistoryByDate),
+    ...Object.values(store.atlasHistoryById),
     ...Object.values(store.archiveHistoryByDate),
     ...Object.values(store.challengeHistoryById)
   ];
@@ -53,6 +57,7 @@ function average(total: number, count: number): number | null {
 
 export function buildLocalPlayerStats(store: PersistedState): LocalPlayerStats {
   const daily = Object.values(store.dailyHistoryByDate);
+  const atlas = Object.values(store.atlasHistoryById);
   const archive = Object.values(store.archiveHistoryByDate);
   const challenge = Object.values(store.challengeHistoryById);
   const all = historyRows(store);
@@ -80,6 +85,7 @@ export function buildLocalPlayerStats(store: PersistedState): LocalPlayerStats {
     correctAnswers: roundsPlayed,
     gamesCompleted,
     dailyGames: daily.length,
+    atlasGames: atlas.length,
     archiveGames: archive.length,
     challengeGames: challenge.length,
     roundsPlayed,

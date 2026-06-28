@@ -16,10 +16,10 @@ export function UpgradeClient() {
   const billingEnabled = configured && publicBillingEnabled();
   const heroTitle = loading ? "Checking your atlas plan." : isPro ? "You have the full atlas." : "Unlock the full atlas.";
   const heroLead = isPro
-    ? "Pro is active on this account. The full Practice Atlas, complete Past Games archive, and advanced stats are unlocked."
+    ? "Pro is active on this account. Unlimited Atlas play, the full Practice Atlas, complete Past Games archive, and advanced stats are unlocked."
     : billingEnabled
       ? "Sign in, choose monthly or yearly, and continue through secure Stripe checkout when you are ready."
-      : "Pro pricing is visible for planning, but checkout is not open yet. You can still try sample play or create a free account for the official 5-map Daily.";
+      : "Pro pricing is visible for planning, but checkout is not open yet. You can still try the Sample Run or create a free account for 3 fresh maps every day.";
   const overviewHeading = loading ? "Checking your plan." : isPro ? "Pro is active." : billingEnabled ? "Choose monthly or yearly." : "Checkout coming soon.";
   const statusTitle = isPro
     ? "Pro is active"
@@ -72,8 +72,8 @@ export function UpgradeClient() {
           <p className="eyebrow">Full atlas access</p>
           <h2>{overviewHeading}</h2>
           <p>
-            Free accounts unlock the official 5-map Daily and saved progress. Pro opens the full atlas: full Practice Atlas, complete
-            Past Games archive, advanced stats, and future premium surfaces.
+            Free accounts unlock 3 fresh maps every day and saved progress. Pro opens unlimited Atlas play, the full Practice Atlas,
+            complete Past Games archive, advanced stats, and future premium surfaces.
           </p>
         </div>
         <div className="upgrade-status-card" aria-live="polite">
@@ -91,7 +91,7 @@ export function UpgradeClient() {
           <ul>
             <li>
               <CheckCircle2 size={18} aria-hidden="true" />
-              Official 5-map Daily
+              3-map Free Daily
             </li>
             <li>
               <CheckCircle2 size={18} aria-hidden="true" />
@@ -141,6 +141,10 @@ export function UpgradeClient() {
             <li>
               <CheckCircle2 size={18} aria-hidden="true" />
               Full Past Games archive
+            </li>
+            <li>
+              <CheckCircle2 size={18} aria-hidden="true" />
+              Unlimited Atlas play
             </li>
             <li>
               <CheckCircle2 size={18} aria-hidden="true" />

@@ -6,7 +6,7 @@ import { ACCESS_PLAN_COPY } from "@/lib/account/accessCopy";
 
 export const metadata: Metadata = {
   title: "Create a Free Account",
-  description: "Create a free Can You Geo? account for the official 5-map Daily and saved progress."
+  description: "Create a free Can You Geo? account for 3 fresh maps every day and saved progress."
 };
 
 export default function SignInPage() {
@@ -27,29 +27,29 @@ export default function SignInPage() {
           <h2>Your atlas, saved.</h2>
           <ul className="account-checklist">
             <li>
-              <strong>Sample play</strong>
-              <span>Try sample maps before creating an account.</span>
+              <strong>Sample Run</strong>
+              <span>Try 5 fixed sample maps before creating an account.</span>
             </li>
             <li>
               <strong>Free account</strong>
-              <span>Official 5-map Daily, saved results, streaks, and basic stats.</span>
+              <span>3 fresh maps every day, saved results, streaks, and basic stats.</span>
             </li>
             <li>
               <strong>Pro</strong>
-              <span>Full Practice Atlas, complete Past Games archive, advanced stats, and future premium surfaces.</span>
+              <span>Unlimited Atlas play, full Practice Atlas, complete Past Games archive, advanced stats, and future premium surfaces.</span>
             </li>
           </ul>
-          <p className="account-env-note">The official 5-map Daily starts with a free account.</p>
+          <p className="account-env-note">The 3-map Free Daily starts with a free account.</p>
         </div>
       </div>
 
       <div className="surface account-card account-next-card">
         <h2>Start with the free account</h2>
         <p>
-          {BRAND_NAME} keeps sign-in simple: enter your email, open the secure link, and your official Daily progress can follow you.
+          {BRAND_NAME} keeps sign-in simple: enter your email, open the secure link, and your Free Daily progress can follow you.
         </p>
         <Link className="button-secondary" href="/play/mystery-map">
-          Try sample play
+          Try Sample Run
         </Link>
       </div>
     </section>

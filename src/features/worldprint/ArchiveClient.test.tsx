@@ -65,7 +65,7 @@ describe("ArchiveCard", () => {
     expect(screen.getByRole("link", { name: "View result" })).toHaveAttribute("href", "/play/mystery-map/2026-06-24?review=1");
     expect(screen.getByRole("link", { name: "Replay for practice" })).toBeVisible();
     expect(screen.getByText("Saved result")).toBeVisible();
-    expect(screen.getByText(/Your official Daily score will not change/i)).toBeVisible();
+    expect(screen.getByText(/Today's Daily score will not change/i)).toBeVisible();
   });
 
   it("prefers account-saved status when both account and browser completions exist", () => {
@@ -88,7 +88,7 @@ describe("ArchiveCard", () => {
     expect(screen.getAllByText("Mystery Map Daily #175").length).toBeGreaterThanOrEqual(1);
   });
 
-  it("frames signed-out past games as sample replays, not account history", () => {
+  it("frames signed-out past games as account-gated replays, not sample play", () => {
     render(<ArchiveCard entry={entry()} todayKey="2026-06-26" completion={null} accountRun={null} signedIn={false} />);
 
     expect(screen.getAllByText("Sign in to save").length).toBeGreaterThanOrEqual(2);
@@ -96,7 +96,7 @@ describe("ArchiveCard", () => {
     expect(screen.getAllByText("Mystery Map Daily #175").length).toBeGreaterThanOrEqual(1);
     expect(screen.getByText(/Replay the fixed 5-map set from June 24, 2026/i)).toBeVisible();
     expect(screen.getByRole("link", { name: "Create free account" })).toHaveAttribute("href", "/sign-in");
-    expect(screen.getByRole("link", { name: "Try sample replay" })).toHaveAttribute("href", "/play/mystery-map/2026-06-24");
-    expect(screen.getByText(/Sample replay\. Sign in free/i)).toBeVisible();
+    expect(screen.queryByRole("link", { name: "Try sample replay" })).not.toBeInTheDocument();
+    expect(screen.getByText(/Create a free account to replay dated sets/i)).toBeVisible();
   });
 });

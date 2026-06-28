@@ -94,12 +94,13 @@ export function decodeChallenge(code: string | null | undefined): ChallengeDecod
 }
 
 export function challengePayloadFromRun(run: RunState): Omit<ChallengePayload, "schemaVersion" | "game" | "checksum"> {
+  const datedKind = run.mode === "daily" || run.mode === "archive";
   return {
-    kind: run.mode === "practice" ? "practice" : "daily",
+    kind: datedKind ? "daily" : "practice",
     contentVersion: run.contentVersion,
     tier: run.tier,
     roundIds: run.rounds.map((round) => round.roundId),
-    dateKey: run.mode === "practice" ? undefined : run.dateKey
+    dateKey: datedKind ? run.dateKey : undefined
   };
 }
 

@@ -22,8 +22,8 @@ export function nextDailyUnlockCopy(date: Date = new Date()): NextDailyUnlockCop
   const formattedDate = new Intl.DateTimeFormat("en-US", { weekday: "long", month: "short", day: "numeric" }).format(nextDate);
   return {
     nextDateKey: localDateKey(nextDate),
-    headline: "Next map drops tomorrow.",
-    body: `Come back tomorrow, ${formattedDate}, for a fresh Daily Mystery Map.`,
+    headline: "Fresh maps drop tomorrow.",
+    body: `Come back tomorrow, ${formattedDate}, for 3 fresh Free Daily maps.`,
     shortLabel: `Tomorrow · ${formattedDate}`
   };
 }

@@ -4,6 +4,13 @@ import generatedDailyJson from "../../../public/data/v1/dailies/2026-06-18.json"
 import generatedRounds from "../../../public/data/v1/rounds.json";
 import { DailyIndexSchema, DailyManifestSchema, RoundsArtifactSchema } from "@/lib/content/schemas";
 import type { DailyManifest } from "@/lib/content/schemas";
+import {
+  FREE_DAILY_ROUND_COUNT,
+  SAMPLE_RUN_ROUND_COUNT,
+  freeDailyRoundIds,
+  sampleRunRoundIds,
+  selectAtlasRoundIds
+} from "@/lib/game/accessModel";
 import { decodeChallenge, encodeChallenge } from "@/lib/game/challenge";
 import { selectDailyRoundIds, selectPracticeRoundIds, utcDateKey } from "@/lib/game/daily";
 import { selectDailyRoundIdsFromManifest } from "@/lib/game/dailyManifest";
@@ -96,6 +103,27 @@ describe("daily selection", () => {
       roundIds: manifestIds,
       source: "manifest"
     });
+  });
+
+  it("slices the Free Daily to three maps from the generated manifest", () => {
+    const selected = freeDailyRoundIds(generatedDaily.roundIds);
+    expect(selected).toHaveLength(FREE_DAILY_ROUND_COUNT);
+    expect(selected).toEqual(generatedDaily.roundIds.slice(0, FREE_DAILY_ROUND_COUNT));
+  });
+
+  it("keeps the guest Sample Run fixed at five maps", () => {
+    const selected = sampleRunRoundIds(rounds);
+    expect(selected).toHaveLength(SAMPLE_RUN_ROUND_COUNT);
+    expect(selected).toEqual(sampleRunRoundIds(rounds));
+  });
+
+  it("selects Pro Atlas runs from the approved pool without using seen maps until reshuffle", () => {
+    const first = selectAtlasRoundIds({ rounds, contentVersion: "2026.06.19", salt: "first" });
+    expect(first.roundIds).toHaveLength(5);
+    const seen = new Set(first.roundIds);
+    const second = selectAtlasRoundIds({ rounds, contentVersion: "2026.06.19", salt: "second", seenRoundIds: seen });
+    expect(second.roundIds).toHaveLength(5);
+    expect(second.roundIds.every((id) => !seen.has(id))).toBe(true);
   });
 
   it("falls back when a Daily manifest references missing rounds", () => {
@@ -321,8 +349,8 @@ describe("streaks and sharing", () => {
     expect(localDateKey(localDate)).toBe("2026-06-27");
     expect(localDateKey(nextDate)).toBe("2026-06-28");
     expect(copy.nextDateKey).toBe("2026-06-28");
-    expect(copy.headline).toBe("Next map drops tomorrow.");
-    expect(copy.body).toContain("Come back tomorrow");
+    expect(copy.headline).toBe("Fresh maps drop tomorrow.");
+    expect(copy.body).toContain("3 fresh Free Daily maps");
   });
 
   it("updates streaks around consecutive UTC dates", () => {
@@ -356,7 +384,7 @@ describe("streaks and sharing", () => {
     expect(text).toContain("Can You Geo?");
     expect(text).toContain("Daily #");
     expect(text).toContain("pts");
-    expect(text).toContain("Official Daily result");
+    expect(text).toContain("Free Daily result");
     expect(text).toContain("https://canyougeo.com");
     expect(text).not.toContain("WORLDPRINT");
     expect(containsSpoiler(text, ["Japan", "Brazil", "fertility", "life expectancy", "World Bank", "api.worldbank.org"])).toBe(false);
@@ -379,10 +407,10 @@ describe("streaks and sharing", () => {
     });
 
     expect(buildShareText(practice)).toContain("Practice result");
-    expect(buildShareText(practice)).not.toContain("Official Daily result");
+    expect(buildShareText(practice)).not.toContain("Free Daily result");
     expect(buildShareText(pastGame)).toContain("Past Game Replay");
     expect(buildShareText(pastGame)).toContain("Past Game replay");
-    expect(buildShareText(pastGame)).not.toContain("Official Daily result");
+    expect(buildShareText(pastGame)).not.toContain("Free Daily result");
   });
 
   it("builds result share summaries with misses, clue spend, and a five-round strip", () => {

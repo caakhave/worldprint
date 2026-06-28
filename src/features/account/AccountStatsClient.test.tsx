@@ -106,7 +106,7 @@ describe("AccountStatsClient", () => {
 
     expect(screen.getByRole("heading", { name: "Saved in this browser." })).toBeVisible();
     expect(screen.getByRole("heading", { name: "Create a free account." })).toBeVisible();
-    expect(screen.getByText(/Try sample play without an account/i)).toBeVisible();
-    expect(screen.getByText(/official 5-map Daily/i)).toBeVisible();
+    expect(screen.getByText(/No account needed/i)).toBeVisible();
+    expect(screen.getByText(/3 fresh maps every day/i)).toBeVisible();
   });
 });

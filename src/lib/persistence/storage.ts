@@ -28,7 +28,7 @@ const RoundPlayStateSchema = z.object({
 
 const RunStateSchema: z.ZodType<RunState> = z.object({
   id: z.string(),
-  mode: z.enum(["daily", "practice", "archive", "challenge"]),
+  mode: z.enum(["sample", "daily", "atlas", "practice", "archive", "challenge"]),
   dateKey: z.string(),
   contentVersion: z.string(),
   tier: TierSchema,
@@ -63,7 +63,7 @@ const CompletionRoundDetailSchema = z.object({
 const CompletionHistorySchema = z.object({
   id: z.string(),
   dateKey: z.string(),
-  mode: z.enum(["daily", "practice", "archive", "challenge"]),
+  mode: z.enum(["sample", "daily", "atlas", "practice", "archive", "challenge"]),
   tier: TierSchema,
   totalScore: z.number().int(),
   bestScore: z.number().int(),
@@ -78,6 +78,7 @@ const PersistedStateBaseSchema = z.object({
   onboardingComplete: z.boolean(),
   selectedTier: TierSchema,
   activeDailyRun: RunStateSchema.nullable(),
+  activeAtlasRun: RunStateSchema.nullable().default(null),
   activePracticeRun: RunStateSchema.nullable(),
   completedDailyResults: z.record(z.string(), CompletedResultSchema),
   streak: z.object({
@@ -98,6 +99,7 @@ const PersistedStateBaseSchema = z.object({
 export const PersistedStateSchema = PersistedStateBaseSchema.extend({
   schemaVersion: z.literal(SCHEMA_VERSION),
   activeArchiveRunsByDate: z.record(z.string(), RunStateSchema),
+  atlasHistoryById: z.record(z.string(), CompletionHistorySchema).default({}),
   dailyHistoryByDate: z.record(z.string(), CompletionHistorySchema),
   archiveHistoryByDate: z.record(z.string(), CompletionHistorySchema),
   challengeHistoryById: z.record(z.string(), CompletionHistorySchema)
@@ -112,9 +114,11 @@ export function defaultPersistedState(): PersistedState {
     onboardingComplete: false,
     selectedTier: "analyst",
     activeDailyRun: null,
+    activeAtlasRun: null,
     activePracticeRun: null,
     completedDailyResults: {},
     activeArchiveRunsByDate: {},
+    atlasHistoryById: {},
     dailyHistoryByDate: {},
     archiveHistoryByDate: {},
     challengeHistoryById: {},
@@ -235,6 +239,8 @@ export function persistRun(state: PersistedState, run: RunState): PersistedState
   const next = { ...state, selectedTier: run.tier };
   if (run.mode === "daily") {
     next.activeDailyRun = run;
+  } else if (run.mode === "atlas") {
+    next.activeAtlasRun = run;
   } else if (run.mode === "practice") {
     next.activePracticeRun = run;
   } else if (run.mode === "archive") {
@@ -245,6 +251,7 @@ export function persistRun(state: PersistedState, run: RunState): PersistedState
 
 export function recordRunCompletion(state: PersistedState, run: RunState): PersistedState {
   if (run.status !== "complete") return state;
+  if (run.mode === "sample") return state;
   const completion = completionFromRun(run);
   if (run.mode === "practice") {
     return {
@@ -262,6 +269,16 @@ export function recordRunCompletion(state: PersistedState, run: RunState): Persi
       archiveHistoryByDate: {
         ...state.archiveHistoryByDate,
         [run.dateKey]: mergeBestCompletion(state.archiveHistoryByDate[run.dateKey], completion)
+      }
+    };
+  }
+  if (run.mode === "atlas") {
+    return {
+      ...state,
+      activeAtlasRun: run,
+      atlasHistoryById: {
+        ...state.atlasHistoryById,
+        [run.id]: mergeBestCompletion(state.atlasHistoryById[run.id], completion)
       }
     };
   }
@@ -320,9 +337,9 @@ export function storageDescription(): string[] {
   return [
     "selected tier",
     "onboarding completion",
-    "active Daily and Practice run state",
+    "active Daily, Atlas, and Practice run state",
     "active archive Daily run state for generated archive dates",
-    "completed Daily, archive, and challenge results",
+    "completed Daily, Atlas, archive, and challenge results",
     "streak",
     "lifetime games, solved rounds, total score, average score, and accuracy",
     "practice history used to reduce immediate repetition"

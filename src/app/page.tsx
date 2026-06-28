@@ -32,8 +32,8 @@ const modeCards = [
   {
     image: "/images/homepage/04-daily-mystery-map.png",
     objectPosition: "50% 50%",
-    title: "Daily Mystery Map",
-    copy: "Official 5-map Daily and saved progress with a free account.",
+    title: "Free Daily",
+    copy: "3 fresh maps every day with saved progress on a free account.",
     cta: "Create free account",
     href: "/sign-in"
   },
@@ -42,7 +42,7 @@ const modeCards = [
     objectPosition: "50% 50%",
     title: "Practice",
     copy: "Train by topic and difficulty.",
-    cta: "Try sample maps",
+    cta: "Try Sample Run",
     href: "/play/mystery-map"
   },
   {
@@ -72,7 +72,7 @@ export default function HomePage() {
                 <ArrowRight size={18} aria-hidden="true" />
               </Link>
               <Link className="button-secondary hero-secondary-cta" href="/play/mystery-map">
-                Try sample maps
+                Try Sample Run
               </Link>
             </div>
             <p className="hero-note">{ACCESS_PLAN_COPY.guest.summary}</p>
@@ -80,7 +80,7 @@ export default function HomePage() {
           <aside className="hero-join-panel" aria-label="Join the daily challenge">
             <p className="eyebrow">Join the game</p>
             <h2>Join the daily challenge</h2>
-            <p>The official 5-map Daily, saved progress, streaks, and basic stats start with a free account.</p>
+            <p>The 3-map Free Daily, saved progress, streaks, and basic stats start with a free account.</p>
             <Link className="button hero-panel-button" href="/sign-in">
               Create free account
               <ArrowRight size={18} aria-hidden="true" />

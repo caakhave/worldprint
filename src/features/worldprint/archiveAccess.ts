@@ -19,7 +19,8 @@ export function archiveDateRange(entries: DailyIndexEntry[]): ArchiveDateRange |
 }
 
 export function visibleArchiveEntries(entries: DailyIndexEntry[], store: PersistedState, limit: number | null): DailyIndexEntry[] {
-  if (!limit) return entries;
+  if (limit === null) return entries;
+  if (limit <= 0) return [];
   const recentEntries = entries.slice(0, limit);
   const visibleDates = new Set(recentEntries.map((entry) => entry.date));
   const completedDates = new Set([...Object.keys(store.dailyHistoryByDate), ...Object.keys(store.archiveHistoryByDate)]);

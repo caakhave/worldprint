@@ -10,7 +10,7 @@ export function MembershipCardClient() {
   const { entitlement, loading, error, signedIn } = useEntitlement();
   const { capabilities } = entitlement;
   const membership = membershipDisplay(entitlement, loading);
-  const heading = signedIn || loading ? membership.heading : "Sample play";
+  const heading = signedIn || loading ? membership.heading : "Sample Run";
 
   return (
     <article className="surface account-card membership-card" aria-label="Membership plan">
@@ -38,7 +38,7 @@ export function MembershipCardClient() {
         </div>
       </dl>
       <div className="membership-unlocks" aria-label="Unlocked today">
-        <span>{signedIn ? "Official Daily" : "Sample play"}</span>
+        <span>{signedIn ? "3-map Free Daily" : "5-map Sample Run"}</span>
         <span>{capabilities.canSaveStats ? "Saved progress" : "Browser-only progress"}</span>
         <span>{capabilities.canCreateChallenges ? "Basic challenges" : "Challenge links later"}</span>
       </div>
@@ -59,7 +59,7 @@ export function AdvancedStatsGateClient() {
       <p>
         {hasAdvancedStats
           ? "Pro is active. Deeper trends and Challenge history can appear here as the atlas grows."
-          : "Free stats keep your official Daily score and streak. Pro will add full history, richer trends, and Challenge comparisons later."}
+          : "Free stats keep your 3-map Daily score and streak. Pro adds full history, richer trends, and Challenge comparisons later."}
       </p>
       <Link className={hasAdvancedStats ? "button-secondary" : "button"} href="/upgrade">
         {hasAdvancedStats ? "View plan" : "See full atlas plan"}

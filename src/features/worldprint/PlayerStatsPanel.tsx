@@ -71,6 +71,7 @@ export function PlayerStatsPanel({
           </dl>
           <div className="player-stats-breakdown" aria-label="Game type breakdown">
             <span>Daily {stats.dailyGames}</span>
+            <span>Atlas {stats.atlasGames}</span>
             <span>Past games {stats.archiveGames}</span>
             <span>Challenges {stats.challengeGames}</span>
           </div>
@@ -91,7 +92,7 @@ export function PlayerStatsPanel({
           ) : null}
         </>
       ) : (
-        <p className="player-stats-empty">No saved games yet. Finish a Daily, past game, or Challenge to start your local record.</p>
+        <p className="player-stats-empty">No saved games yet. Finish a Daily, Atlas run, past game, or Challenge to start your local record.</p>
       )}
       <p className="player-stats-note">{note ?? "Local on this device. Sign in to sync aggregate stats; no leaderboard yet."}</p>
     </Root>

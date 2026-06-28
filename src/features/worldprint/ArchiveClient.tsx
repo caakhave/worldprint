@@ -15,8 +15,6 @@ import { TIER_CONFIGS } from "@/lib/game/scoring";
 import { defaultPersistedState, loadPersistedState, type CompletionHistory, type PersistedState } from "@/lib/persistence/storage";
 import type { GameRunRow } from "@/lib/supabase/database";
 
-const GUEST_ARCHIVE_SAMPLE_LIMIT = 6;
-
 function mixLabel(mix: Record<string, number>) {
   return Object.entries(mix)
     .map(([key, count]) => (count > 1 ? `${key} x${count}` : key))
@@ -146,17 +144,13 @@ export function ArchiveCard({
           <Link className="button-secondary" href={`/play/mystery-map/${entry.date}`}>
             Replay for practice
           </Link>
-        ) : !signedIn ? (
-          <Link className="button-secondary" href={`/play/mystery-map/${entry.date}`}>
-            Try sample replay
-          </Link>
         ) : null}
         <p>
           {hasCompletion
-            ? "Replay for practice. Your official Daily score will not change."
+            ? "Replay for practice. Today's Daily score will not change."
             : signedIn
               ? "Dated replay. Separate from today's Daily and streak."
-              : "Sample replay. Sign in free to save history and results."}
+              : "Create a free account to replay dated sets and save results."}
         </p>
       </div>
     </article>
@@ -206,7 +200,7 @@ export function ArchiveClient() {
     return publicArchiveEntries(index.dates, todayKey);
   }, [index, todayKey]);
   const visibleEntries = useMemo(
-    () => visibleArchiveEntries(entries, store, signedIn ? entitlement.capabilities.archiveLimitDays : GUEST_ARCHIVE_SAMPLE_LIMIT),
+    () => visibleArchiveEntries(entries, store, signedIn ? entitlement.capabilities.archiveLimitDays : 0),
     [entries, entitlement.capabilities.archiveLimitDays, signedIn, store]
   );
   const publicRange = archiveDateRange(entries);
@@ -258,8 +252,8 @@ export function ArchiveClient() {
         <strong>Past Games are separate from today&apos;s Daily.</strong>
         <span>
           {signedIn
-            ? "Today's Mystery Map updates the official Daily score and streak; replayed dates save as Past Games for your account."
-            : `Logged-out players can try the ${GUEST_ARCHIVE_SAMPLE_LIMIT} most recent sample replays. Create a free account to save Past Games history.`}
+            ? "Today's Free Daily updates the Daily score and streak; replayed dates save as Past Games for your account."
+            : "Logged-out players can try the fixed 5-map Sample Run. Create a free account to replay dated sets and save Past Games history."}
         </span>
       </div>
       {hiddenCount > 0 ? (
@@ -277,9 +271,7 @@ export function ArchiveClient() {
               {entitlement.plan === "pro"
                 ? `Showing ${visibleEntries.length} Past Games from the atlas.`
                 : !signedIn
-                  ? `Showing ${visibleEntries.length} recent sample replay${visibleEntries.length === 1 ? "" : "s"}. Free accounts save replay history; Pro unlocks the complete archive with ${hiddenCount} more Mystery Map${
-                      hiddenCount === 1 ? "" : "s"
-                    }.`
+                  ? `Past Games require a free account. Pro unlocks the complete archive with ${hiddenCount} Mystery Map${hiddenCount === 1 ? "" : "s"}.`
                 : `Showing ${visibleEntries.length} recent Past Games. Pro will unlock the complete archive with ${hiddenCount} more Mystery Map${
                     hiddenCount === 1 ? "" : "s"
                   }.`}
@@ -297,7 +289,7 @@ export function ArchiveClient() {
           <div>
             <p className="eyebrow">Free account</p>
             <h2>Sign in to keep Past Games history.</h2>
-            <p>Sample replays are playable now. Free sign-in saves Past Games results, official Daily streaks, and basic stats to your account.</p>
+            <p>Free accounts can replay recent dated sets and save results. Sample Run remains the only guest play mode.</p>
           </div>
           <Link className="button" href="/sign-in">
             Create a free account

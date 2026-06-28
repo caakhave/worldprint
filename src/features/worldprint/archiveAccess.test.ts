@@ -45,6 +45,13 @@ describe("archive access helpers", () => {
     expect(visibleArchiveEntries(entries, store, 2).map((item) => item.date)).toEqual(["2026-06-26", "2026-06-25", "2026-06-20"]);
   });
 
+  it("shows no archive cards when access limit is zero", () => {
+    const store = defaultPersistedState();
+    const entries = publicArchiveEntries([entry("2026-06-26"), entry("2026-06-25")], "2026-06-26");
+
+    expect(visibleArchiveEntries(entries, store, 0)).toEqual([]);
+  });
+
   it("shows all public dates for Pro without future cards", () => {
     const store = defaultPersistedState();
     const entries = publicArchiveEntries([entry("2026-06-26"), entry("2026-05-23"), entry("2026-09-20")], "2026-06-26");

@@ -23,10 +23,10 @@ export function AccountHeroClient() {
         </p>
         <div className="button-row">
           <Link className="button" href={connected ? "/play/mystery-map" : "/sign-in"}>
-            {connected ? "Play today's Mystery Map" : ACCESS_PLAN_COPY.guest.primaryCta}
+            {connected ? "Play Mystery Map" : ACCESS_PLAN_COPY.guest.primaryCta}
           </Link>
           <Link className="button-secondary" href={connected ? "/account/stats" : "/play/mystery-map"}>
-            {connected ? "View saved stats" : "Try sample play"}
+            {connected ? "View saved stats" : "Try Sample Run"}
           </Link>
         </div>
       </div>
@@ -38,8 +38,8 @@ export function AccountHeroClient() {
         <div className="account-hero-scan" />
         <div className="account-hero-badge">
           <span>{connected ? "Account online" : "Browser record"}</span>
-          <strong>{connected ? "Connected" : "Sample play"}</strong>
-          <em>{connected ? "Stats sync ready" : "Free account unlocks official Daily"}</em>
+          <strong>{connected ? "Connected" : "Sample Run"}</strong>
+          <em>{connected ? "Stats sync ready" : "Free account unlocks 3 fresh maps daily"}</em>
         </div>
       </div>
     </div>

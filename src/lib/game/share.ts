@@ -36,14 +36,18 @@ export function scoreRank(total: number, roundCount: number) {
 }
 
 function runTitle(run: RunState): string {
+  if (run.mode === "sample") return "Can You Geo? Sample Run";
   if (run.mode === "daily") return `Can You Geo? Daily #${challengeNumber(run.dateKey)}`;
+  if (run.mode === "atlas") return "Can You Geo? Pro Atlas";
   if (run.mode === "archive") return `Can You Geo? Past Game Replay · ${run.dateKey}`;
   if (run.mode === "challenge") return "Can You Geo? Challenge";
   return "Can You Geo? Practice";
 }
 
 function resultLabel(run: RunState): string {
-  if (run.mode === "daily") return "Official Daily result";
+  if (run.mode === "sample") return "Sample Run result";
+  if (run.mode === "daily") return "Free Daily result";
+  if (run.mode === "atlas") return "Atlas result";
   if (run.mode === "archive") return "Past Game replay";
   if (run.mode === "challenge") return "Challenge result";
   return "Practice result";

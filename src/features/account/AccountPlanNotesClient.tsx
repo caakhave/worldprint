@@ -36,7 +36,7 @@ export function AccountPlanNotesClient() {
       <section className="account-actions-grid" aria-label="Account actions" role="region">
         <article className="surface account-card account-action-card">
           <p className="eyebrow">Free account</p>
-          <h2>Official 5-map Daily</h2>
+          <h2>3 fresh maps daily</h2>
           <p>{ACCESS_PLAN_COPY.guest.summary}</p>
           <Link className="button" href="/sign-in">
             Create a free account
@@ -44,14 +44,14 @@ export function AccountPlanNotesClient() {
         </article>
 
         <article className="surface account-card account-action-card">
-          <p className="eyebrow">Sample play</p>
-          <h2>Try sample play</h2>
-          <p>Sample maps let you feel the game before creating an account.</p>
+          <p className="eyebrow">Sample Run</p>
+          <h2>Try 5 fixed maps</h2>
+          <p>The Sample Run lets you feel the game before creating an account. It does not save stats or streaks.</p>
           <span className="account-action-stat">
             {localRecordCount} browser record{localRecordCount === 1 ? "" : "s"}
           </span>
           <Link className="button-secondary" href="/play/mystery-map">
-            Try sample play
+            Try Sample Run
           </Link>
         </article>
       </section>
