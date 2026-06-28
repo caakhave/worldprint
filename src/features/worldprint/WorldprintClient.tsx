@@ -145,12 +145,20 @@ function formatStat(value: number | null) {
   return value === null ? "—" : value.toLocaleString("en-US");
 }
 
-function AnimatedNumber({ value }: { value: number }) {
+function AnimatedNumber({ value, onComplete }: { value: number; onComplete?: () => void }) {
   const [displayValue, setDisplayValue] = useState(0);
+  const completedRef = useRef(false);
 
   useEffect(() => {
+    completedRef.current = false;
+    function completeAnimation() {
+      if (completedRef.current) return;
+      completedRef.current = true;
+      onComplete?.();
+    }
     if (typeof window !== "undefined" && window.matchMedia("(prefers-reduced-motion: reduce)").matches) {
       setDisplayValue(value);
+      completeAnimation();
       return;
     }
     const start = performance.now();
@@ -161,10 +169,11 @@ function AnimatedNumber({ value }: { value: number }) {
       const eased = 1 - Math.pow(1 - progress, 3);
       setDisplayValue(Math.round(value * eased));
       if (progress < 1) frame = window.requestAnimationFrame(tick);
+      else completeAnimation();
     }
     frame = window.requestAnimationFrame(tick);
     return () => window.cancelAnimationFrame(frame);
-  }, [value]);
+  }, [onComplete, value]);
 
   return <>{displayValue.toLocaleString("en-US")}</>;
 }
@@ -1883,6 +1892,9 @@ function CompletionSummary({
   const shareSummary = buildResultShareSummary(run);
   const shareTextRef = useRef<HTMLTextAreaElement | null>(null);
   const [resultCopyState, setResultCopyState] = useState<"idle" | "copied" | "failed">("idle");
+  const [resultScoreLocked, setResultScoreLocked] = useState(() =>
+    typeof window === "undefined" ? false : window.matchMedia("(prefers-reduced-motion: reduce)").matches
+  );
   const challengeCode = encodeChallenge(challengePayloadFromRun(run));
   const challengeUrl =
     typeof window === "undefined" ? `/challenge/worldprint?c=${challengeCode}` : `${window.location.origin}/challenge/worldprint/?c=${challengeCode}`;
@@ -1915,6 +1927,13 @@ function CompletionSummary({
       ? "Saved to your account."
       : "Account stats."
     : "Saved in this browser.";
+  const handleHeroScoreComplete = useCallback(() => setResultScoreLocked(true), []);
+
+  useEffect(() => {
+    const reducedMotion = typeof window !== "undefined" && window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+    if (reducedMotion) setResultScoreLocked(true);
+  }, [run.id, total]);
+
   useEffect(() => {
     if (resultCopyState === "idle") return undefined;
     const timeout = window.setTimeout(() => setResultCopyState("idle"), 2600);
@@ -2009,7 +2028,7 @@ function CompletionSummary({
         </div>
         <p className="eyebrow">{summaryLabel}</p>
         <h1 className="page-title final-score-title" aria-label={`${total.toLocaleString("en-US")} points`}>
-          <AnimatedNumber value={total} /> points
+          <AnimatedNumber value={total} onComplete={handleHeroScoreComplete} /> points
         </h1>
         <div className="summary-score-meter" aria-label={`${scorePercent}% of the maximum possible score`}>
           <span style={{ width: `${scorePercent}%` }} />
@@ -2086,102 +2105,108 @@ function CompletionSummary({
             );
           })}
         </div>
-        <section className="daily-share-card surface" aria-label="Spoiler-free result share card">
-          <div className="daily-share-card-head">
-            <div>
-              <p className="eyebrow">Share result</p>
-              <h2>{shareSummary.title}</h2>
-              <span className="daily-share-mode">{shareSummary.resultLabel}</span>
-            </div>
-            <strong>{shareSummary.score.toLocaleString("en-US")} pts</strong>
-          </div>
-          <dl className="daily-share-metrics" aria-label="Share card stats">
-            <div>
-              <dt>Rank</dt>
-              <dd>{shareSummary.rankTitle}</dd>
-            </div>
-            <div>
-              <dt>Solved</dt>
-              <dd>
-                {shareSummary.solvedCount}/{shareSummary.roundCount}
-              </dd>
-            </div>
-            <div>
-              <dt>Misses</dt>
-              <dd>{shareSummary.missCount}</dd>
-            </div>
-            <div>
-              <dt>Clue spend</dt>
-              <dd>{shareSummary.clueSpend.toLocaleString("en-US")}</dd>
-            </div>
-          </dl>
-          <div className="share-result-strip" aria-label="Five-round result strip">
-            {shareSummary.rounds.map((tone, index) => (
-              <span key={`${run.rounds[index]?.roundId ?? index}-${tone}`} data-result={tone}>
-                <small>{index + 1}</small>
-              </span>
-            ))}
-          </div>
-          <div className="daily-share-actions">
-            <button className="button" type="button" onClick={() => void copyResultText()}>
-              <Copy size={18} aria-hidden="true" />
-              {resultCopyState === "copied" ? "Copied" : resultCopyState === "failed" ? "Could not copy" : "Copy result"}
-            </button>
-            {reviewHref ? (
-              <Link className="button-secondary" href={reviewHref}>
-                Review result
-              </Link>
-            ) : null}
-            <span className="daily-share-copy-status" role="status" aria-live="polite">
-              {resultCopyState === "copied"
-                ? "Copied to clipboard."
-                : resultCopyState === "failed"
-                  ? "Result text selected below."
-                  : "No spoilers included."}
-            </span>
-          </div>
-          <p className="daily-share-note">Spoiler-free: no answers or source labels are included unless you open the review.</p>
-        </section>
-        <div className="summary-next-actions surface" aria-label="Post-run actions">
-          {reviewHref ? (
-            <Link className="button" href={reviewHref}>
-              Review result
-            </Link>
+        <div className="result-locked-actions" data-locked={resultScoreLocked ? "true" : "false"} aria-hidden={resultScoreLocked ? undefined : "true"}>
+          {resultScoreLocked ? (
+            <>
+              <section className="daily-share-card surface" aria-label="Spoiler-free result share card">
+                <div className="daily-share-card-head">
+                  <div>
+                    <p className="eyebrow">Share result</p>
+                    <h2>{shareSummary.title}</h2>
+                    <span className="daily-share-mode">{shareSummary.resultLabel}</span>
+                  </div>
+                  <strong>{shareSummary.score.toLocaleString("en-US")} pts</strong>
+                </div>
+                <dl className="daily-share-metrics" aria-label="Share card stats">
+                  <div>
+                    <dt>Rank</dt>
+                    <dd>{shareSummary.rankTitle}</dd>
+                  </div>
+                  <div>
+                    <dt>Solved</dt>
+                    <dd>
+                      {shareSummary.solvedCount}/{shareSummary.roundCount}
+                    </dd>
+                  </div>
+                  <div>
+                    <dt>Misses</dt>
+                    <dd>{shareSummary.missCount}</dd>
+                  </div>
+                  <div>
+                    <dt>Clue spend</dt>
+                    <dd>{shareSummary.clueSpend.toLocaleString("en-US")}</dd>
+                  </div>
+                </dl>
+                <div className="share-result-strip" aria-label="Five-round result strip">
+                  {shareSummary.rounds.map((tone, index) => (
+                    <span key={`${run.rounds[index]?.roundId ?? index}-${tone}`} data-result={tone}>
+                      <small>{index + 1}</small>
+                    </span>
+                  ))}
+                </div>
+                <div className="daily-share-actions">
+                  <button className="button" type="button" onClick={() => void copyResultText()}>
+                    <Copy size={18} aria-hidden="true" />
+                    {resultCopyState === "copied" ? "Copied" : resultCopyState === "failed" ? "Could not copy" : "Copy result"}
+                  </button>
+                  {reviewHref ? (
+                    <Link className="button-secondary" href={reviewHref}>
+                      Review result
+                    </Link>
+                  ) : null}
+                  <span className="daily-share-copy-status" role="status" aria-live="polite">
+                    {resultCopyState === "copied"
+                      ? "Copied to clipboard."
+                      : resultCopyState === "failed"
+                        ? "Result text selected below."
+                        : "No spoilers included."}
+                  </span>
+                </div>
+                <p className="daily-share-note">Spoiler-free: no answers or source labels are included unless you open the review.</p>
+              </section>
+              <div className="summary-next-actions surface" aria-label="Post-run actions">
+                {reviewHref ? (
+                  <Link className="button" href={reviewHref}>
+                    Review result
+                  </Link>
+                ) : null}
+                <button className="button" type="button" onClick={onPractice}>
+                  Practice another set
+                </button>
+                <button className="button-secondary" type="button" onClick={onReplay}>
+                  Replay for practice
+                </button>
+                <Link className="button-secondary" href="/archive/worldprint">
+                  Past Games
+                </Link>
+                <Link className="button-secondary" href="/account/stats">
+                  View saved stats
+                </Link>
+              </div>
+              <div className="share-action-grid" aria-label="Share options">
+                <button className="button-secondary" type="button" onClick={() => void shareResult()}>
+                  <Share2 size={18} aria-hidden="true" />
+                  Share result
+                </button>
+                <button className="button-secondary" type="button" onClick={() => void shareChallenge()}>
+                  <Share2 size={18} aria-hidden="true" />
+                  {challengeButtonLabel}
+                </button>
+                <button className="button-secondary" type="button" onClick={() => void copyChallengeLink()}>
+                  <Copy size={18} aria-hidden="true" />
+                  Copy challenge link
+                </button>
+                <button className="button-secondary" type="button" onClick={onBack}>
+                  {isPastRecord ? "Back to record" : "Back to lobby"}
+                </button>
+              </div>
+              <div className="status-live" role="status" aria-live="polite">
+                {shareStatus}
+              </div>
+              <textarea ref={shareTextRef} className="share-text" readOnly value={shareText} aria-label="Result share text" />
+            </>
           ) : null}
-          <button className="button" type="button" onClick={onPractice}>
-            Practice another set
-          </button>
-          <button className="button-secondary" type="button" onClick={onReplay}>
-            Replay for practice
-          </button>
-          <Link className="button-secondary" href="/archive/worldprint">
-            Past Games
-          </Link>
-          <Link className="button-secondary" href="/account/stats">
-            View saved stats
-          </Link>
         </div>
-        <div className="share-action-grid" aria-label="Share options">
-          <button className="button-secondary" type="button" onClick={() => void shareResult()}>
-            <Share2 size={18} aria-hidden="true" />
-            Share result
-          </button>
-          <button className="button-secondary" type="button" onClick={() => void shareChallenge()}>
-            <Share2 size={18} aria-hidden="true" />
-            {challengeButtonLabel}
-          </button>
-          <button className="button-secondary" type="button" onClick={() => void copyChallengeLink()}>
-            <Copy size={18} aria-hidden="true" />
-            Copy challenge link
-          </button>
-          <button className="button-secondary" type="button" onClick={onBack}>
-            {isPastRecord ? "Back to record" : "Back to lobby"}
-          </button>
-        </div>
-        <div className="status-live" role="status" aria-live="polite">
-          {shareStatus}
-        </div>
-        <textarea ref={shareTextRef} className="share-text" readOnly value={shareText} aria-label="Result share text" />
         <section className="account-save-card surface" aria-label="Save your progress">
           <div>
             <p className="eyebrow">Save progress</p>

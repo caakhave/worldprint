@@ -1290,6 +1290,17 @@ button:disabled {
   }
 }
 
+@keyframes result-actions-rise {
+  from {
+    transform: translateY(10px);
+    opacity: 0;
+  }
+  to {
+    transform: translateY(0);
+    opacity: 1;
+  }
+}
+
 @keyframes banked-flight {
   from {
     transform: translate3d(0, 14px, 0) scale(0.92);
@@ -4562,6 +4573,10 @@ dd {
   transform-origin: left center;
 }
 
+.result-locked-actions {
+  animation: result-actions-rise 420ms ease-out both;
+}
+
 .daily-share-card {
   position: relative;
   overflow: hidden;
@@ -7519,6 +7534,7 @@ dd {
   .result-cells span,
   .result-cells span[data-best="true"],
   .result-cells i,
+  .result-locked-actions,
   .result-atlas-burst,
   .result-atlas-burst::before,
   .result-atlas-burst span,

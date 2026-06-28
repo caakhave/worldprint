@@ -620,11 +620,14 @@ test("completes a five-round Daily and preserves completed result", async ({ pag
       await expect(page.getByText("Daily complete")).toBeVisible();
       await expect(page.getByText("Score locked. Opening results...")).toBeVisible();
       await expect(page.getByText("Final score")).toBeVisible();
+      await expect(page.locator(".result-locked-actions")).toHaveAttribute("data-locked", "false");
+      await expect(page.getByLabel("Spoiler-free result share card")).toHaveCount(0);
     } else {
       await page.getByRole("button", { name: /Next map/ }).click();
     }
   }
   await expect(page.getByRole("heading", { name: /points/i })).toBeVisible();
+  await expect(page.locator(".result-locked-actions")).toHaveAttribute("data-locked", "true");
   await expect(page.locator(".summary-score-meter")).toBeVisible();
   await expect(page.locator(".rank-medallion")).toContainText("100");
   await expect(page.getByText("Final score")).toBeVisible();
