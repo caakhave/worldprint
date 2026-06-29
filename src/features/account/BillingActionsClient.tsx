@@ -3,7 +3,6 @@
 import Link from "next/link";
 import { useState } from "react";
 import { useSupabaseAccount } from "@/features/account/useSupabaseAccount";
-import { ACCESS_PLAN_COPY } from "@/lib/account/accessCopy";
 import type { PlayerEntitlement } from "@/lib/account/entitlements";
 import { publicBillingEnabled } from "@/lib/billing/publicBillingConfig";
 import { PRO_PRICE_OPTIONS, type ProBillingInterval } from "@/lib/billing/proPricing";
@@ -89,7 +88,7 @@ export function BillingActionsClient({ entitlement, context }: BillingActionsCli
           <Link className="button" href="/sign-in">
             Sign in to upgrade
           </Link>
-          <p className="account-env-note">Checkout is not open yet, but your free account will be ready when it is.</p>
+          <p className="account-env-note">Checkout is coming soon. Create or sign in to your free account now; billing will open later.</p>
         </div>
       );
     }
@@ -131,7 +130,8 @@ export function BillingActionsClient({ entitlement, context }: BillingActionsCli
           </Link>
         ) : null}
         <p className="account-env-note">
-          Pricing is visible now. {ACCESS_PLAN_COPY.guest.headline} Create a free account for 3 fresh maps every day.
+          Pricing is visible now. Checkout is coming soon and billing is disabled for now. Create a free account for 3 fresh maps every
+          day.
         </p>
       </div>
     );

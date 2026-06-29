@@ -105,7 +105,7 @@ export function SignInClient() {
   if (!configured) {
     return (
       <article className="surface account-card account-primary-card">
-        <p className="eyebrow">Create a free account</p>
+        <p className="eyebrow">Email sign-in</p>
         <h2>Email sign-in is not available in this preview.</h2>
         <p>The 5-map Sample Run is still available in this browser. The 3-map Free Daily and saved progress start with a free account.</p>
         <div className="account-disabled-panel" role="status">
@@ -113,7 +113,7 @@ export function SignInClient() {
         </div>
         <div className="button-row">
           <button className="button" type="button" disabled>
-            Create a free account
+            Send sign-in link
           </button>
           <Link className="button-secondary" href="/play/mystery-map">
             Try Sample Run
@@ -126,7 +126,7 @@ export function SignInClient() {
   if (loading) {
     return (
       <article className="surface account-card account-primary-card">
-        <p className="eyebrow">Create a free account</p>
+        <p className="eyebrow">Email sign-in</p>
         <h2>Checking your account.</h2>
         <p>Looking for an existing session on this device.</p>
       </article>
@@ -139,7 +139,7 @@ export function SignInClient() {
         <p className="eyebrow">Signed in</p>
         <h2>Your atlas is connected.</h2>
         <p>{user.email ? `You're signed in as ${user.email}.` : "You're signed in."}</p>
-        <p className="account-env-note">Returning later? Use the same email and request a fresh sign-in link.</p>
+        <p className="account-env-note">Use this same email any time you need a fresh sign-in link.</p>
         {profileError ? <p className="account-error">We could not refresh your account details. You can keep playing.</p> : null}
         {signOutError ? (
           <p className="account-error" role="alert">
@@ -163,9 +163,9 @@ export function SignInClient() {
 
   return (
     <article className="surface account-card account-primary-card">
-      <p className="eyebrow">Create a free account</p>
-      <h2>{ACCESS_PLAN_COPY.free.headline}</h2>
-      <p>No password needed. Enter your email and we&apos;ll send a secure one-time sign-in link.</p>
+      <p className="eyebrow">Email sign-in</p>
+      <h2>Create a free account or sign in.</h2>
+      <p>New players get a free account automatically. Returning players use the same email to sign back in.</p>
       <form className="account-form" onSubmit={(event) => void submit(event)}>
         <label htmlFor="account-email">
           Email
@@ -184,7 +184,7 @@ export function SignInClient() {
           {submitting ? "Sending..." : resendCooldownActive ? "Wait a minute" : "Send sign-in link"}
         </button>
       </form>
-      <p className="account-env-note">For security, sign-in links can only be requested about once per minute.</p>
+      <p className="account-env-note">No password needed. Sign-in links can only be requested about once per minute.</p>
       {status ? (
         <p className="status-live" role="status">
           {status}

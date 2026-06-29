@@ -6,7 +6,6 @@ import { accountInitial, compactPlanLabel } from "@/features/account/accountDisp
 import { membershipDisplay } from "@/features/account/subscriptionDisplay";
 import { useEntitlement } from "@/features/account/useEntitlement";
 import { useSupabaseAccount } from "@/features/account/useSupabaseAccount";
-import { ACCESS_PLAN_COPY } from "@/lib/account/accessCopy";
 import { planLabel } from "@/lib/account/entitlements";
 
 export function AccountStatusClient() {
@@ -58,11 +57,11 @@ export function AccountStatusClient() {
     return (
       <article className="surface account-card account-primary-card">
         <p className="eyebrow">Signed out</p>
-        <h2>{ACCESS_PLAN_COPY.guest.primaryCta}</h2>
-        <p>{ACCESS_PLAN_COPY.guest.summary}</p>
+        <h2>Create a free account or sign in.</h2>
+        <p>New players get a free account automatically. Returning players use the same email to reopen saved progress.</p>
         <div className="button-row">
           <Link className="button" href="/sign-in">
-            Create a free account
+            Free account / sign in
           </Link>
           <Link className="button-secondary" href="/play/mystery-map">
             Try Sample Run
@@ -85,8 +84,8 @@ export function AccountStatusClient() {
           {accountInitial(user.email)}
         </span>
         <div className="account-identity-copy">
-        <p className="eyebrow">Player profile</p>
-        <h2>{user.email ?? "Signed-in player"}</h2>
+          <p className="eyebrow">Player profile</p>
+          <h2 className="account-identity-email">{user.email ?? "Signed-in player"}</h2>
           <div className="account-identity-badges" aria-label="Account status">
             <span className="account-plan-badge" data-plan={entitlementLoading ? "loading" : entitlement.plan}>
               {compactMembershipLabel}

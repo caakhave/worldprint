@@ -61,6 +61,8 @@ describe("UpgradeClient", () => {
       expect(link).toHaveAttribute("href", "/sign-in");
     }
     expect(screen.getAllByText("Checkout coming soon").length).toBeGreaterThan(0);
+    expect(screen.getByText(/Checkout is coming soon and billing is disabled for now/i)).toBeVisible();
+    expect(screen.getByText(/Billing is disabled right now/i)).toBeVisible();
   });
 
   it("leads with active Pro copy for players who already have Pro", () => {

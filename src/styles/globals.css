@@ -186,7 +186,7 @@ button:disabled {
   color: var(--text);
   font-size: 0.82rem;
   font-weight: 700;
-  line-height: 1;
+  line-height: 1.2;
   transition:
     border-color 160ms ease,
     background-color 160ms ease,
@@ -227,6 +227,7 @@ button:disabled {
   max-width: min(18vw, 12rem);
   overflow: hidden;
   color: var(--muted);
+  line-height: 1.25;
   text-overflow: ellipsis;
   white-space: nowrap;
 }
@@ -5543,12 +5544,20 @@ dd {
   margin-bottom: 0.35rem;
 }
 
-.account-identity-copy h2 {
-  overflow: hidden;
+.account-identity-copy h2,
+.account-identity-email {
   margin: 0;
   color: var(--parchment);
-  text-overflow: ellipsis;
-  white-space: nowrap;
+}
+
+.account-identity-email {
+  max-width: 100%;
+  min-height: 1.28em;
+  padding-block: 0.03em 0.08em;
+  overflow-wrap: anywhere;
+  line-height: 1.18;
+  text-wrap: pretty;
+  white-space: normal;
 }
 
 .account-identity-badges {
