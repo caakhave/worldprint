@@ -95,8 +95,8 @@ describe("ArchiveCard", () => {
     expect(screen.getByText("Dated replay")).toBeVisible();
     expect(screen.getAllByText("Mystery Map Daily #175").length).toBeGreaterThanOrEqual(1);
     expect(screen.getByText(/Replay the fixed 5-map set from June 24, 2026/i)).toBeVisible();
-    expect(screen.getByRole("link", { name: "Create free account" })).toHaveAttribute("href", "/sign-in");
+    expect(screen.getByRole("link", { name: "Continue free" })).toHaveAttribute("href", "/sign-in");
     expect(screen.queryByRole("link", { name: "Try sample replay" })).not.toBeInTheDocument();
-    expect(screen.getByText(/Create a free account to replay dated sets/i)).toBeVisible();
+    expect(screen.getByText(/Start Pro for the complete archive, or continue free/i)).toBeVisible();
   });
 });

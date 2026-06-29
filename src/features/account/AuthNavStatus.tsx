@@ -24,15 +24,20 @@ export function AuthNavStatus() {
   }
   if (!user) {
     return (
-      <Link className="account-nav-control account-nav-control-signed-out" href="/sign-in">
-        Free account
+      <Link className="account-nav-control account-nav-control-signed-out" href="/upgrade">
+        Start Pro
       </Link>
     );
   }
 
   const plan = entitlementLoading ? "Account" : compactPlanLabel(entitlement.plan);
   return (
-    <Link className="account-nav-control account-nav-control-signed-in" href="/account" aria-label={`Account for ${user.email ?? "signed-in player"}`}>
+    <Link
+      className="account-nav-control account-nav-control-signed-in"
+      href="/account"
+      aria-label={`Open account for ${user.email ?? "signed-in player"}`}
+      title="Open account"
+    >
       <span className="account-avatar" aria-hidden="true">
         {accountInitial(user.email)}
       </span>
@@ -41,6 +46,9 @@ export function AuthNavStatus() {
       </span>
       <span className="account-plan-badge" data-plan={entitlementLoading ? "loading" : entitlement.plan}>
         {plan}
+      </span>
+      <span className="account-nav-action" aria-hidden="true">
+        Account
       </span>
     </Link>
   );

@@ -58,14 +58,14 @@ export function AccountStatusClient() {
     return (
       <article className="surface account-card account-primary-card">
         <p className="eyebrow">Signed out</p>
-        <h2>Create a free account or sign in.</h2>
-        <p>New players get a free account automatically. Returning players use the same email to reopen saved progress.</p>
+        <h2>Start Pro or continue free.</h2>
+        <p>Pro unlocks the full atlas. Free needs no card and still saves your 3-map Daily progress and basic stats.</p>
         <div className="button-row">
-          <Link className="button" href="/sign-in">
-            Free account / sign in
+          <Link className="button" href="/upgrade">
+            Start Pro
           </Link>
-          <Link className="button-secondary" href="/play/mystery-map">
-            Try Sample Run
+          <Link className="button-secondary" href="/sign-in">
+            Continue free
           </Link>
         </div>
       </article>

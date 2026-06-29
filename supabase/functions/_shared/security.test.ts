@@ -5,7 +5,7 @@ import {
   configuredProPriceIds,
   hasConfiguredProPriceId,
   matchingConfiguredProPriceId,
-  parseCheckoutIntervalBody,
+  parseCheckoutPlanBody,
   requestContentLengthTooLarge,
   subscriptionPriceIds
 } from "./security";
@@ -18,31 +18,39 @@ const priceConfig = {
 
 describe("billing security helpers", () => {
   it("parses only explicit monthly/yearly checkout JSON requests", () => {
-    expect(parseCheckoutIntervalBody({ contentType: "application/json", bodyText: '{"interval":"monthly"}' })).toEqual({
-      interval: "monthly",
+    expect(parseCheckoutPlanBody({ contentType: "application/json", bodyText: '{"plan":"monthly"}' })).toEqual({
+      plan: "monthly",
       error: null
     });
-    expect(parseCheckoutIntervalBody({ contentType: "application/json; charset=utf-8", bodyText: '{"interval":"yearly"}' })).toEqual({
-      interval: "yearly",
+    expect(parseCheckoutPlanBody({ contentType: "application/json; charset=utf-8", bodyText: '{"plan":"yearly"}' })).toEqual({
+      plan: "yearly",
       error: null
     });
-    expect(parseCheckoutIntervalBody({ contentType: "text/plain", bodyText: '{"interval":"monthly"}' })).toEqual({
-      interval: null,
+    expect(parseCheckoutPlanBody({ contentType: "text/plain", bodyText: '{"plan":"monthly"}' })).toEqual({
+      plan: null,
       error: "Checkout requests must be JSON."
     });
-    expect(parseCheckoutIntervalBody({ contentType: "application/json", bodyText: '{"interval":"weekly"}' })).toEqual({
-      interval: null,
+    expect(parseCheckoutPlanBody({ contentType: "application/json", bodyText: '{"plan":"weekly"}' })).toEqual({
+      plan: null,
       error: "Choose monthly or yearly Pro billing."
     });
-    expect(parseCheckoutIntervalBody({ contentType: "application/json", bodyText: '{"interval":"monthly","role":"pro"}' })).toEqual({
-      interval: null,
+    expect(parseCheckoutPlanBody({ contentType: "application/json", bodyText: '{"plan":"price_test_123"}' })).toEqual({
+      plan: null,
+      error: "Choose monthly or yearly Pro billing."
+    });
+    expect(parseCheckoutPlanBody({ contentType: "application/json", bodyText: '{"priceId":"price_test_123"}' })).toEqual({
+      plan: null,
+      error: "Invalid checkout request."
+    });
+    expect(parseCheckoutPlanBody({ contentType: "application/json", bodyText: '{"plan":"monthly","role":"pro"}' })).toEqual({
+      plan: null,
       error: "Invalid checkout request."
     });
   });
 
   it("rejects oversized JSON and webhook payloads by content length", () => {
-    expect(parseCheckoutIntervalBody({ contentType: "application/json", bodyText: '{"interval":"monthly"}', maxBytes: 4 })).toEqual({
-      interval: null,
+    expect(parseCheckoutPlanBody({ contentType: "application/json", bodyText: '{"plan":"monthly"}', maxBytes: 4 })).toEqual({
+      plan: null,
       error: "Checkout request is too large."
     });
     expect(requestContentLengthTooLarge("1048577", 1024 * 1024)).toBe(true);

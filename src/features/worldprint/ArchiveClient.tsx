@@ -73,7 +73,7 @@ export function ArchiveCard({
   const tierLabel = isTierKey(savedTier) ? TIER_CONFIGS[savedTier].shortLabel : hasCompletion ? "Unknown tier" : "Choose on setup";
   const savedDate = formatSavedDate(accountRun?.completed_at ?? completion?.completedAt);
   const status = accountRun ? "Saved to account" : completion ? "Saved on this browser" : signedIn ? "Unplayed" : "Sign in to save";
-  const actionLabel = hasCompletion ? "View result" : signedIn ? "Start dated replay" : "Create free account";
+  const actionLabel = hasCompletion ? "View result" : signedIn ? "Start dated replay" : "Continue free";
   const dailyNumber = challengeNumber(entry.date);
   const replayTitle = `Mystery Map Daily #${dailyNumber}`;
   const recordTitle = hasCompletion ? recordRankTitle(bestScore, entry.roundCount) : replayTitle;
@@ -150,7 +150,7 @@ export function ArchiveCard({
             ? "Replay for practice. Today's Daily score will not change."
             : signedIn
               ? "Dated replay. Separate from today's Daily and streak."
-              : "Create a free account to replay dated sets and save results."}
+              : "Start Pro for the complete archive, or continue free to replay recent dated sets."}
         </p>
       </div>
     </article>
@@ -253,7 +253,7 @@ export function ArchiveClient() {
         <span>
           {signedIn
             ? "Today's Free Daily updates the Daily score and streak; replayed dates save as Past Games for your account."
-            : "Logged-out players can try the fixed 5-map Sample Run. Create a free account to replay dated sets and save Past Games history."}
+            : "Logged-out players can try the fixed 5-map Sample Run. Start Pro for the complete archive, or continue free to save recent Past Games."}
         </span>
       </div>
       {hiddenCount > 0 ? (
@@ -265,7 +265,7 @@ export function ArchiveClient() {
                 ? "Full archive access is active."
                 : signedIn
                   ? "Your account can replay recent Past Games."
-                  : "Create a free account for saved Past Games."}
+                  : "Start Pro for the complete Past Games archive."}
             </h2>
             <p>
               {entitlement.plan === "pro"
@@ -277,8 +277,8 @@ export function ArchiveClient() {
                   }.`}
             </p>
           </div>
-          <Link className="button-secondary" href={signedIn ? "/upgrade" : "/sign-in"}>
-            {signedIn ? "See full atlas plan" : "Create a free account"}
+          <Link className="button-secondary" href="/upgrade">
+            {signedIn ? "See full atlas plan" : "Start Pro"}
           </Link>
         </div>
       ) : null}
@@ -287,13 +287,18 @@ export function ArchiveClient() {
       ) : (
         <div className="archive-account-panel surface map-texture-panel">
           <div>
-            <p className="eyebrow">Free account</p>
-            <h2>Sign in to keep Past Games history.</h2>
-            <p>Free accounts can replay recent dated sets and save results. Sample Run remains the only guest play mode.</p>
+            <p className="eyebrow">Free or Pro</p>
+            <h2>Start Pro or continue free.</h2>
+            <p>Pro unlocks the complete archive. Free needs no card and can replay recent dated sets and save results.</p>
           </div>
-          <Link className="button" href="/sign-in">
-            Create a free account
-          </Link>
+          <div className="button-row">
+            <Link className="button" href="/upgrade">
+              Start Pro
+            </Link>
+            <Link className="button-secondary" href="/sign-in">
+              Continue free
+            </Link>
+          </div>
         </div>
       )}
       <div className="archive-grid" aria-label="Past Mystery Map Dailies">

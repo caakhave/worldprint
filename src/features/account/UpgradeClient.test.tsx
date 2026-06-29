@@ -57,10 +57,10 @@ describe("UpgradeClient", () => {
   it("leads with sign-in copy for signed-out players", () => {
     render(<UpgradeClient />);
 
-    expect(screen.getByRole("heading", { name: "Unlock the full atlas." })).toBeVisible();
-    for (const link of screen.getAllByRole("link", { name: "Sign in to upgrade" })) {
-      expect(link).toHaveAttribute("href", "/sign-in");
-    }
+    expect(screen.getByRole("heading", { name: "Choose Free or Pro." })).toBeVisible();
+    expect(screen.getByRole("link", { name: "Sign in for Free or Pro" })).toHaveAttribute("href", "/sign-in?next=%2Fupgrade");
+    expect(screen.getByRole("link", { name: "Start Pro" })).toHaveAttribute("href", "/sign-in?next=%2Fupgrade");
+    expect(screen.getAllByRole("link", { name: "Continue free" }).some((link) => link.getAttribute("href") === "/sign-in")).toBe(true);
     expect(screen.getByRole("link", { name: "Email support for billing help" })).toHaveAttribute(
       "href",
       CONTACT_LINKS.billingHelp.href
@@ -93,7 +93,7 @@ describe("UpgradeClient", () => {
     render(<UpgradeClient />);
 
     expect(screen.getByRole("heading", { name: "You have the full atlas." })).toBeVisible();
-    expect(screen.queryByRole("heading", { name: "Unlock the full atlas." })).not.toBeInTheDocument();
+    expect(screen.queryByRole("heading", { name: "Choose Free or Pro." })).not.toBeInTheDocument();
     expect(screen.getByText("Membership is active and managed manually.")).toBeVisible();
     expect(screen.getByRole("link", { name: "Manage from account" })).toHaveAttribute("href", "/account");
   });
@@ -109,5 +109,6 @@ describe("UpgradeClient", () => {
     expect(screen.getByText("Ready for secure checkout")).toBeVisible();
     expect(screen.getByRole("button", { name: "Upgrade monthly" })).toBeEnabled();
     expect(screen.getByRole("button", { name: "Upgrade yearly" })).toBeEnabled();
+    expect(screen.getAllByText("Best value").length).toBeGreaterThanOrEqual(1);
   });
 });

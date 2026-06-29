@@ -15,26 +15,28 @@ export default function SignInPage() {
       <div className="account-hero">
         <p className="eyebrow">Email sign-in</p>
         <h1 id="sign-in-title" className="page-title">
-          Create a free account or sign in.
+          Create an account, then choose Free or Pro.
         </h1>
         <p className="lead">
           Enter your email once. New players get a free account automatically; returning players use the same email to get back to
-          saved progress.
+          saved progress. Free needs no card, and Pro offers monthly or yearly checkout when billing is open.
         </p>
       </div>
 
       <div className="account-grid">
         <SignInClient />
 
-        <div className="surface account-card account-status-card" aria-label="Account readiness">
-          <h2>How your account works.</h2>
+        <div className="surface account-card account-status-card" aria-label="Account choices">
+          <p className="eyebrow">After sign-in</p>
+          <h2>Start Pro or continue free.</h2>
+          <p>One email opens both paths. Pro unlocks the full atlas; Free needs no card.</p>
           <ul className="account-checklist">
             <li>
-              <strong>Sample Run</strong>
-              <span>Try 5 fixed sample maps before creating an account.</span>
+              <strong>Start Pro</strong>
+              <span>After sign-in, choose monthly or yearly Pro checkout. Free remains available with no card needed.</span>
             </li>
             <li>
-              <strong>Free account</strong>
+              <strong>Continue free</strong>
               <span>First-time sign-in creates one automatically: 3 fresh maps every day, saved results, streaks, and basic stats.</span>
             </li>
             <li>
@@ -42,10 +44,18 @@ export default function SignInPage() {
               <span>Use the same email to sign back in and keep your atlas connected.</span>
             </li>
             <li>
-              <strong>Pro</strong>
-              <span>Checkout is coming soon; billing stays disabled until Pro is ready.</span>
+              <strong>Sample Run</strong>
+              <span>Try 5 fixed sample maps before creating an account.</span>
             </li>
           </ul>
+          <div className="button-row">
+            <Link className="button" href="/upgrade">
+              Start Pro
+            </Link>
+            <a className="button-secondary" href="#account-email">
+              Continue free
+            </a>
+          </div>
         </div>
       </div>
 
@@ -56,6 +66,9 @@ export default function SignInPage() {
           streaks, and basic stats.
         </p>
         <div className="button-row">
+          <Link className="button-secondary" href="/upgrade">
+            View Free and Pro
+          </Link>
           <Link className="button-secondary" href="/play/mystery-map">
             Try Sample Run
           </Link>

@@ -60,15 +60,16 @@ describe("BillingActionsClient", () => {
     expect(screen.getByRole("button", { name: "Checkout coming soon" })).toBeDisabled();
     expect(screen.getByText(/Pricing is visible now\./)).toBeVisible();
     expect(screen.getByText(/billing is disabled for now\./)).toBeVisible();
-    expect(screen.getByText(/Create a free account for 3 fresh maps every day\./)).toBeVisible();
+    expect(screen.getByText(/Continue free for 3 fresh maps every day\./)).toBeVisible();
     expect(screen.queryByRole("button", { name: /Upgrade/i })).not.toBeInTheDocument();
   });
 
   it("asks signed-out users to sign in before upgrading while checkout is disabled", () => {
     render(<BillingActionsClient entitlement={FREE_ENTITLEMENT} context="upgrade" />);
 
-    expect(screen.getByRole("link", { name: "Sign in to upgrade" })).toHaveAttribute("href", "/sign-in");
-    expect(screen.getByText("Checkout is coming soon. Create or sign in to your free account now; billing will open later.")).toBeVisible();
+    expect(screen.getByRole("link", { name: "Start Pro" })).toHaveAttribute("href", "/sign-in?next=%2Fupgrade");
+    expect(screen.getByRole("link", { name: "Continue free" })).toHaveAttribute("href", "/sign-in");
+    expect(screen.getByText("Checkout is coming soon. Free needs no card and saves your 3-map Daily progress.")).toBeVisible();
     expect(screen.queryByRole("button", { name: "Checkout coming soon" })).not.toBeInTheDocument();
   });
 
@@ -102,16 +103,18 @@ describe("BillingActionsClient", () => {
     render(<BillingActionsClient entitlement={manualPro} context="account" />);
 
     expect(screen.getByRole("button", { name: "Membership managed manually" })).toBeDisabled();
-    expect(screen.getByText("Pro is active. This membership is managed manually for now.")).toBeVisible();
+    expect(screen.getByText("Can You Geo? Pro membership is enabled. This membership is managed manually for now.")).toBeVisible();
     expect(screen.queryByRole("button", { name: "Manage billing" })).not.toBeInTheDocument();
   });
 
-  it("asks signed-out users to create an account when test billing is enabled", () => {
+  it("preserves signed-out Pro plan intent when test billing is enabled", () => {
     process.env.NEXT_PUBLIC_BILLING_MODE = "test";
 
     render(<BillingActionsClient entitlement={FREE_ENTITLEMENT} context="upgrade" />);
 
-    expect(screen.getByRole("link", { name: "Sign in to upgrade" })).toHaveAttribute("href", "/sign-in");
+    expect(screen.getByRole("link", { name: "Upgrade monthly" })).toHaveAttribute("href", "/sign-in?next=%2Fupgrade%3Fplan%3Dmonthly");
+    expect(screen.getByRole("link", { name: "Upgrade yearly" })).toHaveAttribute("href", "/sign-in?next=%2Fupgrade%3Fplan%3Dyearly");
+    expect(screen.getByRole("link", { name: "Continue free" })).toHaveAttribute("href", "/sign-in");
     expect(screen.queryByRole("button", { name: "Checkout coming soon" })).not.toBeInTheDocument();
   });
 
@@ -139,9 +142,40 @@ describe("BillingActionsClient", () => {
     expect(functionName).toBe("stripe-checkout");
     expect(options).toMatchObject({
       headers: { Authorization: "Bearer billing-token" },
-      body: { interval: "monthly" }
+      body: { plan: "monthly" }
     });
     expect(client.from).not.toHaveBeenCalled();
+  });
+
+  it("sends only the safe yearly plan value for yearly checkout", async () => {
+    process.env.NEXT_PUBLIC_BILLING_MODE = "test";
+    accountMock.state.user = TEST_USER;
+    const client = billingClientMock();
+
+    render(<BillingActionsClient entitlement={FREE_ENTITLEMENT} context="upgrade" />);
+
+    fireEvent.click(screen.getByRole("button", { name: "Upgrade yearly" }));
+
+    await waitFor(() => expect(client.functions.invoke).toHaveBeenCalledTimes(1));
+    const [functionName, options] = client.functions.invoke.mock.calls[0];
+    expect(functionName).toBe("stripe-checkout");
+    expect(options).toMatchObject({
+      headers: { Authorization: "Bearer billing-token" },
+      body: { plan: "yearly" }
+    });
+    expect(JSON.stringify(options.body)).not.toContain("price_");
+    expect(client.from).not.toHaveBeenCalled();
+  });
+
+  it("offers monthly and yearly checkout from the account membership card in test mode", () => {
+    process.env.NEXT_PUBLIC_BILLING_MODE = "test";
+    accountMock.state.user = TEST_USER;
+
+    render(<BillingActionsClient entitlement={FREE_ENTITLEMENT} context="account" />);
+
+    expect(screen.getByRole("button", { name: "Upgrade monthly" })).toBeEnabled();
+    expect(screen.getByRole("button", { name: "Upgrade yearly" })).toBeEnabled();
+    expect(screen.getByRole("link", { name: "Compare plans" })).toHaveAttribute("href", "/upgrade");
   });
 
   it("opens the protected customer portal path for Stripe-backed Pro accounts in test mode", async () => {
@@ -174,6 +208,35 @@ describe("BillingActionsClient", () => {
     expect(options.headers).toEqual({ Authorization: "Bearer billing-token" });
     expect(options.body).toBeUndefined();
     expect(client.from).not.toHaveBeenCalled();
+  });
+
+  it("uses billing-management copy for customer portal failures", async () => {
+    process.env.NEXT_PUBLIC_BILLING_MODE = "test";
+    accountMock.state.user = TEST_USER;
+    const client = billingClientMock();
+    client.functions.invoke.mockResolvedValue({ data: { error: "Portal unavailable" }, error: null });
+    const stripePro: PlayerEntitlement = {
+      ...PRO_ENTITLEMENT,
+      row: {
+        user_id: TEST_USER.id,
+        plan: "pro",
+        status: "active",
+        stripe_customer_id: "cus_test",
+        stripe_subscription_id: "sub_test",
+        stripe_price_id: "price_test",
+        stripe_status: "active",
+        cancel_at_period_end: false,
+        current_period_end: "2026-07-29T00:00:00.000Z",
+        updated_at: "2026-06-29T00:00:00.000Z"
+      }
+    };
+
+    render(<BillingActionsClient entitlement={stripePro} context="account" />);
+
+    fireEvent.click(screen.getByRole("button", { name: "Manage billing" }));
+
+    await screen.findByRole("alert");
+    expect(screen.getByText("We could not open billing management. Try again in a minute.")).toBeVisible();
   });
 
   it("keeps live mode disabled until a future launch turns it on intentionally", () => {

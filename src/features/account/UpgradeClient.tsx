@@ -6,6 +6,7 @@ import { BillingActionsClient } from "@/features/account/BillingActionsClient";
 import { BillingReturnNotice } from "@/features/account/BillingReturnNotice";
 import { useEntitlement } from "@/features/account/useEntitlement";
 import { ACCESS_PLAN_COPY } from "@/lib/account/accessCopy";
+import { signInPathForReturn } from "@/lib/account/signInRedirect";
 import { publicBillingEnabled } from "@/lib/billing/publicBillingConfig";
 import { PRO_PRICE_OPTIONS } from "@/lib/billing/proPricing";
 import { CONTACT_LINKS } from "@/lib/contact";
@@ -15,19 +16,20 @@ export function UpgradeClient() {
   const isPro = entitlement.plan === "pro";
   const hasStripeCustomer = Boolean(entitlement.row?.stripe_customer_id);
   const billingEnabled = configured && publicBillingEnabled();
-  const heroTitle = loading ? "Checking your atlas plan." : isPro ? "You have the full atlas." : "Unlock the full atlas.";
+  const signInForUpgrade = signInPathForReturn("/upgrade");
+  const heroTitle = loading ? "Checking your atlas plan." : isPro ? "You have the full atlas." : "Choose Free or Pro.";
   const heroLead = isPro
-    ? "Pro is active on this account. Unlimited Atlas play, the full Practice Atlas, complete Past Games archive, and advanced stats are unlocked."
+    ? "Can You Geo? Pro membership is enabled on this account. Unlimited Atlas play, the full Practice Atlas, complete Past Games archive, and advanced stats are unlocked."
     : billingEnabled
-      ? "Sign in, choose monthly or yearly, and continue through secure Stripe checkout when you are ready."
+      ? "Start Free with no card needed, or sign in and choose monthly or yearly Pro through secure Stripe checkout."
       : "Pro pricing is visible for planning. Checkout is coming soon and billing is disabled for now; Free accounts still get 3 fresh maps every day.";
-  const overviewHeading = loading ? "Checking your plan." : isPro ? "Pro is active." : billingEnabled ? "Choose monthly or yearly." : "Checkout coming soon.";
+  const overviewHeading = loading ? "Checking your plan." : isPro ? "Can You Geo? Pro." : billingEnabled ? "Choose monthly or yearly." : "Checkout coming soon.";
   const statusTitle = isPro
-    ? "Pro is active"
+    ? "Can You Geo? Pro"
     : billingEnabled
       ? signedIn
         ? "Ready for secure checkout"
-        : "Sign in to upgrade"
+        : "Sign in for Free or Pro"
       : "Checkout coming soon";
   const statusDetail = isPro
     ? hasStripeCustomer
@@ -36,7 +38,7 @@ export function UpgradeClient() {
     : billingEnabled
       ? signedIn
         ? "Pick monthly or yearly, then continue to secure checkout."
-        : "Sign in so Pro access can stay with your account."
+        : "New players can keep Free with no card needed or choose Pro after sign-in."
       : "Billing is disabled right now. Free accounts can play the 3-map Daily while Pro opens later.";
 
   return (
@@ -57,8 +59,8 @@ export function UpgradeClient() {
               Play today
             </Link>
           ) : (
-            <Link className="button" href="/sign-in">
-              Sign in to upgrade
+            <Link className="button" href={signInForUpgrade}>
+              Sign in for Free or Pro
             </Link>
           )}
           <Link className="button-secondary" href={isPro ? "/play/mystery-map" : "/account"}>
@@ -73,8 +75,8 @@ export function UpgradeClient() {
           <p className="eyebrow">Full atlas access</p>
           <h2>{overviewHeading}</h2>
           <p>
-            Free accounts unlock 3 fresh maps every day and saved progress. Pro is planned to open unlimited Atlas play, the full
-            Practice Atlas, complete Past Games archive, advanced stats, and future premium surfaces.
+            Free accounts unlock 3 fresh maps every day and saved progress. Pro opens unlimited Atlas play, the full Practice Atlas,
+            complete Past Games archive, advanced stats, and future premium surfaces.
           </p>
         </div>
         <div className="upgrade-status-card" aria-live="polite">
@@ -85,40 +87,7 @@ export function UpgradeClient() {
       </section>
 
       <div className="plan-grid">
-        <article className="surface plan-card" data-featured={!isPro ? "true" : "false"}>
-          <p className="eyebrow">Free</p>
-          <h2>{ACCESS_PLAN_COPY.free.headline}</h2>
-          <p>{ACCESS_PLAN_COPY.free.summary}</p>
-          <ul>
-            <li>
-              <CheckCircle2 size={18} aria-hidden="true" />
-              3-map Free Daily
-            </li>
-            <li>
-              <CheckCircle2 size={18} aria-hidden="true" />
-              Saved results and streaks
-            </li>
-            <li>
-              <CheckCircle2 size={18} aria-hidden="true" />
-              Limited Practice Atlas
-            </li>
-            <li>
-              <CheckCircle2 size={18} aria-hidden="true" />
-              Recent Past Games
-            </li>
-          </ul>
-          {!signedIn ? (
-            <Link className="button" href="/sign-in">
-              Create a free account
-            </Link>
-          ) : (
-            <Link className="button-secondary" href="/account">
-              View account
-            </Link>
-          )}
-        </article>
-
-        <article className="surface plan-card pro-plan-card" data-featured={isPro ? "true" : "false"}>
+        <article className="surface plan-card pro-plan-card" data-featured="true">
           <p className="eyebrow">Pro</p>
           <h2>{isPro ? "Full atlas unlocked." : "Open the whole atlas."}</h2>
           <p>
@@ -128,8 +97,11 @@ export function UpgradeClient() {
           </p>
           <div className="pro-price-options" aria-label="Pro pricing options">
             {PRO_PRICE_OPTIONS.map((option) => (
-              <div className="pro-price-option" key={option.interval}>
-                <span className="pro-price-label">{option.label}</span>
+              <div className="pro-price-option" data-featured={option.featured ? "true" : "false"} key={option.interval}>
+                <span className="pro-price-label">
+                  {option.label}
+                  {option.badge ? <span className="pro-price-badge">{option.badge}</span> : null}
+                </span>
                 <strong>
                   {option.price}
                   <span>{option.cadence}</span>
@@ -165,6 +137,39 @@ export function UpgradeClient() {
             </li>
           </ul>
           <BillingActionsClient entitlement={entitlement} context="upgrade" />
+        </article>
+
+        <article className="surface plan-card" data-featured="false">
+          <p className="eyebrow">Free</p>
+          <h2>{ACCESS_PLAN_COPY.free.headline}</h2>
+          <p>{ACCESS_PLAN_COPY.free.summary} No card needed.</p>
+          <ul>
+            <li>
+              <CheckCircle2 size={18} aria-hidden="true" />
+              3-map Free Daily
+            </li>
+            <li>
+              <CheckCircle2 size={18} aria-hidden="true" />
+              Saved results and streaks
+            </li>
+            <li>
+              <CheckCircle2 size={18} aria-hidden="true" />
+              Limited Practice Atlas
+            </li>
+            <li>
+              <CheckCircle2 size={18} aria-hidden="true" />
+              Recent Past Games
+            </li>
+          </ul>
+          {!signedIn ? (
+            <Link className="button-secondary" href="/sign-in">
+              Continue free
+            </Link>
+          ) : (
+            <Link className="button-secondary" href="/account">
+              View account
+            </Link>
+          )}
         </article>
       </div>
 

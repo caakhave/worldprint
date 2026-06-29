@@ -66,7 +66,7 @@ describe("BillingReturnNotice", () => {
 
     render(<BillingReturnNotice context="account" />);
 
-    expect(await screen.findByRole("heading", { name: "Can You Geo? Pro is active." })).toBeVisible();
+    expect(await screen.findByRole("heading", { name: "Can You Geo? Pro" })).toBeVisible();
     expect(screen.getByText(/full practice atlas/i)).toBeVisible();
   });
 

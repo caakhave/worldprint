@@ -58,7 +58,7 @@ export function AdvancedStatsGateClient() {
       <h2>{loading ? "Checking stats access." : hasAdvancedStats ? "Advanced stats unlocked." : "Deeper reads are coming."}</h2>
       <p>
         {hasAdvancedStats
-          ? "Pro is active. Deeper trends and Challenge history can appear here as the atlas grows."
+          ? "Can You Geo? Pro membership is enabled. Deeper trends and Challenge history can appear here as the atlas grows."
           : "Free stats keep your 3-map Daily score and streak. Pro adds full history, richer trends, and Challenge comparisons later."}
       </p>
       <Link className={hasAdvancedStats ? "button-secondary" : "button"} href="/upgrade">

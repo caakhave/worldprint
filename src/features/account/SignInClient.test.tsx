@@ -34,15 +34,19 @@ describe("SignInClient", () => {
     accountMock.state.configured = true;
     accountMock.state.user = null;
     accountMock.state.profileError = null;
+    window.history.pushState({}, "", "/sign-in");
   });
 
   it("explains passwordless email sign-in and one-time links", async () => {
     const user = userEvent.setup();
     render(<SignInClient />);
 
-    expect(screen.getByRole("heading", { name: "Create a free account or sign in." })).toBeVisible();
+    expect(screen.getByRole("heading", { name: "Enter your email to continue." })).toBeVisible();
     expect(
       screen.getByText("New players get a free account automatically. Returning players use the same email to sign back in.")
+    ).toBeVisible();
+    expect(
+      screen.getByText("Want Can You Geo? Pro? Use this email first, then choose monthly or yearly. Free stays available with no card needed.")
     ).toBeVisible();
     expect(screen.getByText("No password needed. Sign-in links can only be requested about once per minute.")).toBeVisible();
     expect(screen.getByText("Returning later? Use the same email and request a fresh link.")).toBeVisible();
@@ -58,7 +62,25 @@ describe("SignInClient", () => {
       })
     });
     await screen.findByText("Check your email. Sign-in links are temporary and can be used once.");
-    expect(screen.getByRole("button", { name: "Wait a minute" })).toBeDisabled();
+    expect(screen.getByRole("button", { name: "Check your email" })).toBeDisabled();
+  });
+
+  it("preserves Pro upgrade intent through the magic link callback", async () => {
+    const user = userEvent.setup();
+    window.history.pushState({}, "", "/sign-in?next=%2Fupgrade%3Fplan%3Dyearly");
+
+    render(<SignInClient />);
+
+    await user.type(screen.getByLabelText("Email"), "player@example.com");
+    await user.click(screen.getByRole("button", { name: "Send sign-in link" }));
+
+    expect(accountMock.state.client.auth.signInWithOtp).toHaveBeenCalledWith({
+      email: "player@example.com",
+      options: expect.objectContaining({
+        shouldCreateUser: true,
+        emailRedirectTo: expect.stringMatching(/\/auth\/callback\?next=%2Fupgrade%3Fplan%3Dyearly$/)
+      })
+    });
   });
 
   it("shows a specific message for Supabase passwordless rate limits", async () => {
@@ -77,8 +99,8 @@ describe("SignInClient", () => {
     await user.click(screen.getByRole("button", { name: "Send sign-in link" }));
 
     await screen.findByRole("alert");
-    expect(screen.getByText("A sign-in link was just sent. Wait about 60 seconds, then try again.")).toBeVisible();
-    expect(screen.getByRole("button", { name: "Wait a minute" })).toBeDisabled();
+    expect(screen.getByText("A sign-in link was just sent. Check your email, or try again in about 60 seconds.")).toBeVisible();
+    expect(screen.getByRole("button", { name: "Check your email" })).toBeDisabled();
   });
 
   it("keeps the generic message for unknown send failures", async () => {

@@ -831,11 +831,14 @@ export function WorldprintClient({ dateOverride, entryMode = "standard" }: World
       <section className="game-shell page-shell">
         <div className="empty-state surface">
           <p className="eyebrow">Past Game replay</p>
-          <h1>Create a free account to replay dated sets.</h1>
-          <p>Guest play is limited to the fixed 5-map Sample Run. Free accounts can replay recent Past Games and save results.</p>
+          <h1>Start Pro or continue free to replay dated sets.</h1>
+          <p>Guest play is limited to the fixed 5-map Sample Run. Pro unlocks the complete archive; Free can replay recent Past Games and save results.</p>
           <div className="button-row">
-            <Link className="button" href="/sign-in">
-              Create free account
+            <Link className="button" href="/upgrade">
+              Start Pro
+            </Link>
+            <Link className="button-secondary" href="/sign-in">
+              Continue free
             </Link>
             <Link className="button-secondary" href="/play/mystery-map">
               Try Sample Run
@@ -901,7 +904,7 @@ export function WorldprintClient({ dateOverride, entryMode = "standard" }: World
         ? `Unlimited Atlas uses ${PRO_ATLAS_ROUND_COUNT}-map runs and reshuffles after the full pool is complete.`
         : primaryMode === "daily"
           ? "Want more after today's 3 maps? Go Pro for unlimited Atlas play."
-          : "Create a free account for 3 fresh maps every day.";
+          : "Start Pro for the full atlas, or continue free for 3 fresh maps every day.";
     const primaryActionLabel =
       primaryMode === "atlas"
         ? currentAtlasActive
@@ -970,7 +973,7 @@ export function WorldprintClient({ dateOverride, entryMode = "standard" }: World
                 ? `${PRO_ATLAS_ROUND_COUNT}-map Atlas runs keep the mystery-map format open after today's Free Daily.`
                 : isFreeAccount
                   ? `Today's Free Daily is ${FREE_DAILY_ROUND_COUNT} fresh unlabeled maps with one hidden indicator each.`
-                  : `Try the ${SAMPLE_RUN_ROUND_COUNT}-map Sample Run now. Create a free account for ${FREE_DAILY_ROUND_COUNT} fresh maps every day.`}{" "}
+                  : `Try the ${SAMPLE_RUN_ROUND_COUNT}-map Sample Run now. Continue free for ${FREE_DAILY_ROUND_COUNT} fresh maps every day, or start Pro for the full atlas.`}{" "}
             Investigate countries when you need evidence, but every clue spends points.
           </p>
           <div className="entry-facts" aria-label="Mystery Map facts">
@@ -1058,8 +1061,8 @@ export function WorldprintClient({ dateOverride, entryMode = "standard" }: World
                     ) : (
                       <>
                         {primaryMode === "sample" ? (
-                          <Link className="button" href="/sign-in">
-                            Create free account
+                          <Link className="button" href="/upgrade">
+                            Start Pro
                           </Link>
                         ) : null}
                         <button
@@ -1085,7 +1088,7 @@ export function WorldprintClient({ dateOverride, entryMode = "standard" }: World
                     <h3>Practice Atlas</h3>
                     <p>
                       {isGuest
-                        ? "Create a free account for 3-map Practice sets. Pro unlocks the full Practice Atlas."
+                        ? "Continue free for 3-map Practice sets. Pro unlocks the full Practice Atlas."
                         : "Training sets by topic and difficulty. Never affects your Daily score or streak."}
                     </p>
                   </div>
@@ -1140,7 +1143,7 @@ export function WorldprintClient({ dateOverride, entryMode = "standard" }: World
                   <div className="practice-actions">
                     {isGuest ? (
                       <Link className="button practice-start-button" href="/sign-in">
-                        Create free account
+                        Continue free
                       </Link>
                     ) : (
                       <button className="button practice-start-button" type="button" disabled={practiceMatches.length === 0} onClick={() => void startPracticeRun()}>
@@ -1167,13 +1170,13 @@ export function WorldprintClient({ dateOverride, entryMode = "standard" }: World
                   <h3>Past Games</h3>
                   <p>
                     {isGuest
-                      ? "Create a free account to replay dated sets. Pro unlocks the complete archive."
+                      ? "Continue free to replay recent dated sets. Pro unlocks the complete archive."
                       : "Dated Daily replays. Replays never change today&apos;s Daily score or streak."}
                   </p>
                 </div>
                 <div className="mode-card-actions">
                   <Link className="button-secondary" href={isGuest ? "/sign-in" : "/past-games"}>
-                    {isGuest ? "Create free account" : "Open past games"}
+                    {isGuest ? "Continue free" : "Open past games"}
                   </Link>
                 </div>
               </article>
@@ -2169,7 +2172,7 @@ function CompletionSummary({
   const possibleRunScore = Math.max(1, run.rounds.length * 1000);
   const scorePercent = Math.max(0, Math.min(100, Math.round((total / possibleRunScore) * 100)));
   const accountSaveHeading = isSampleRun
-    ? "Create a free account for fresh maps."
+    ? "Start Pro or continue free for fresh maps."
     : signedIn
     ? cloudSaveStatus.toLowerCase().includes("saved to your account")
       ? "Saved to your account."
@@ -2326,20 +2329,25 @@ function CompletionSummary({
         </p>
         <section className="summary-retention-card surface" aria-label="Next Daily and streak">
           <div>
-            <p className="eyebrow">{isSampleRun ? "Free account" : isAtlasRun ? "Unlimited Atlas" : "Return tomorrow"}</p>
-            <h2>{isSampleRun ? "3 fresh maps every day." : isAtlasRun ? "Start another Atlas run." : nextDaily.headline}</h2>
+            <p className="eyebrow">{isSampleRun ? "Free or Pro" : isAtlasRun ? "Unlimited Atlas" : "Return tomorrow"}</p>
+            <h2>{isSampleRun ? "Start Pro or continue free." : isAtlasRun ? "Start another Atlas run." : nextDaily.headline}</h2>
             <p>
               {isSampleRun
-                ? "Create a free account for the Free Daily, saved progress, stats, and streaks."
+                ? "Pro opens the full atlas. Free needs no card and saves your Free Daily progress, stats, and streaks."
                 : isAtlasRun
                   ? "Pro Atlas runs keep going after the daily set and draw from the full approved pool."
                   : nextDaily.body}
             </p>
           </div>
           {isSampleRun ? (
-            <Link className="button" href="/sign-in">
-              Create a free account
-            </Link>
+            <div className="button-row">
+              <Link className="button" href="/upgrade">
+                Start Pro
+              </Link>
+              <Link className="button-secondary" href="/sign-in">
+                Continue free
+              </Link>
+            </div>
           ) : isAtlasRun ? (
             <button className="button" type="button" onClick={onBack}>
               Back to Atlas
@@ -2463,8 +2471,8 @@ function CompletionSummary({
                   </Link>
                 ) : null}
                 {isSampleRun ? (
-                  <Link className="button" href="/sign-in">
-                    Create free account
+                  <Link className="button" href="/upgrade">
+                    Start Pro
                   </Link>
                 ) : (
                   <button className="button" type="button" onClick={onPractice}>
@@ -2480,7 +2488,7 @@ function CompletionSummary({
                   </Link>
                 ) : null}
                 <Link className="button-secondary" href={isSampleRun ? "/sign-in" : "/account/stats"}>
-                  {isSampleRun ? "Create free account" : "View saved stats"}
+                  {isSampleRun ? "Continue free" : "View saved stats"}
                 </Link>
               </div>
               <div className="share-action-grid" aria-label="Share options">
@@ -2524,7 +2532,7 @@ function CompletionSummary({
                   : "Your result is saved locally first, then attached to your account record when sync is available."
                 : isSampleRun
                   ? "Sample Run is not saved. A free account starts fresh Daily progress with stats and streaks."
-                  : "Your result is saved in this browser. A free account can save completed runs, stats, and streaks to your account."}
+                  : "Your result is saved in this browser. Free can save completed runs, stats, and streaks to your account; Pro opens the full atlas."}
             </p>
             {cloudSaveStatus ? (
               <p className="status-live" role="status">
@@ -2533,9 +2541,14 @@ function CompletionSummary({
             ) : null}
           </div>
           <div className="button-row">
-            <Link className="button" href={signedIn && !isSampleRun ? "/account/stats" : "/sign-in"}>
-              {signedIn && !isSampleRun ? "View saved stats" : "Create a free account"}
+            <Link className="button" href={signedIn && !isSampleRun ? "/account/stats" : "/upgrade"}>
+              {signedIn && !isSampleRun ? "View saved stats" : "Start Pro"}
             </Link>
+            {signedIn && !isSampleRun ? null : (
+              <Link className="button-secondary" href="/sign-in">
+                Continue free
+              </Link>
+            )}
             {!isSampleRun ? (
               <Link className="button-secondary" href="/account">
                 View account

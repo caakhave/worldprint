@@ -34,7 +34,7 @@ const modeCards = [
     objectPosition: "50% 50%",
     title: "Free Daily",
     copy: "3 fresh maps every day with saved progress on a free account.",
-    cta: "Create free account",
+    cta: "Continue free",
     href: "/sign-in"
   },
   {
@@ -67,8 +67,8 @@ export default function HomePage() {
               A new mystery map is waiting. Spot the pattern, spend your clues wisely, and guess what the planet is hiding.
             </p>
             <div className="button-row">
-              <Link className="button hero-primary-cta" href="/sign-in">
-                Create free account
+              <Link className="button hero-primary-cta" href="/upgrade">
+                Start Pro
                 <ArrowRight size={18} aria-hidden="true" />
               </Link>
               <Link className="button-secondary hero-secondary-cta" href="/play/mystery-map">
@@ -79,10 +79,10 @@ export default function HomePage() {
           </div>
           <aside className="hero-join-panel" aria-label="Join the daily challenge">
             <p className="eyebrow">Join the game</p>
-            <h2>Join the daily challenge</h2>
-            <p>The 3-map Free Daily, saved progress, streaks, and basic stats start with a free account.</p>
-            <Link className="button hero-panel-button" href="/sign-in">
-              Create free account
+            <h2>Start Pro or continue free</h2>
+            <p>Pro opens the full atlas. Free needs no card and includes the 3-map Free Daily, saved progress, streaks, and basic stats.</p>
+            <Link className="button hero-panel-button" href="/upgrade">
+              Start Pro
               <ArrowRight size={18} aria-hidden="true" />
             </Link>
           </aside>

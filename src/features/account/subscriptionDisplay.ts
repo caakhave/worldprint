@@ -21,7 +21,7 @@ export function membershipDisplay(entitlement: PlayerEntitlement, loading = fals
 
   if (entitlement.plan === "pro" && entitlement.status === "trialing") {
     return {
-      heading: "Pro trial active",
+      heading: "Can You Geo? Pro trial",
       detail: periodEnd ? `Trial ends on ${periodEnd}` : "Trial access is active",
       body: periodEnd
         ? `The full atlas is open during your trial. Trial access ends on ${periodEnd}.`
@@ -31,19 +31,21 @@ export function membershipDisplay(entitlement: PlayerEntitlement, loading = fals
 
   if (entitlement.plan === "pro" && cancelAtPeriodEnd) {
     return {
-      heading: periodEnd ? `Pro active until ${periodEnd}` : "Pro active",
-      detail: "Renewal canceled",
+      heading: "Can You Geo? Pro",
+      detail: periodEnd ? `Renewal canceled; Pro access active until ${periodEnd}` : "Renewal canceled",
       body: periodEnd
-        ? `Renewal is canceled, but full atlas access stays active until ${periodEnd}.`
+        ? `Renewal is canceled. Pro access stays active until ${periodEnd}.`
         : "Renewal is canceled, but full atlas access is still active for the current paid period."
     };
   }
 
   if (entitlement.plan === "pro") {
     return {
-      heading: "Pro active",
+      heading: "Can You Geo? Pro",
       detail: periodEnd ? `Renews on ${periodEnd}` : "Renews automatically",
-      body: periodEnd ? `Full atlas access is active. Your plan renews on ${periodEnd}.` : "Full atlas access is active on this account."
+      body: periodEnd
+        ? `Pro membership is active. It renews on ${periodEnd}.`
+        : "Pro membership is active on this account."
     };
   }
 

@@ -5,14 +5,21 @@ import {
   billingCorsHeaders,
   configuredProPriceIds,
   hasConfiguredProPriceId,
-  isProBillingInterval,
+  isProBillingPlan,
   matchingConfiguredProPriceId,
   subscriptionPriceIds,
-  type ProBillingInterval
+  type ProBillingPlan
 } from "./security.ts";
 
-export { configuredProPriceIds, hasConfiguredProPriceId, isProBillingInterval, matchingConfiguredProPriceId, subscriptionPriceIds };
-export type { ProBillingInterval } from "./security.ts";
+export {
+  configuredProPriceIds,
+  hasConfiguredProPriceId,
+  isProBillingPlan,
+  isProBillingPlan as isProBillingInterval,
+  matchingConfiguredProPriceId,
+  subscriptionPriceIds
+};
+export type { ProBillingInterval, ProBillingPlan } from "./security.ts";
 
 export type Env = {
   supabaseUrl: string;
@@ -87,8 +94,8 @@ export function readEnv(requireWebhookSecret = false): { env: Env | null; error:
   return { env, error: null };
 }
 
-export function resolveProPriceId(env: Env, interval: ProBillingInterval): string | null {
-  const priceId = interval === "yearly" ? env.stripeProYearlyPriceId ?? env.stripeProPriceId : env.stripeProMonthlyPriceId ?? env.stripeProPriceId;
+export function resolveProPriceId(env: Env, plan: ProBillingPlan): string | null {
+  const priceId = plan === "yearly" ? env.stripeProYearlyPriceId ?? env.stripeProPriceId : env.stripeProMonthlyPriceId ?? env.stripeProPriceId;
   return priceId && priceId.startsWith("price_") ? priceId : null;
 }
 

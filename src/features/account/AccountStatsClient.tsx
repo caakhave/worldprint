@@ -14,7 +14,6 @@ import {
 import { buildLocalPlayerStats } from "@/lib/persistence/playerStats";
 import { defaultPersistedState, loadPersistedState, type PersistedState } from "@/lib/persistence/storage";
 import { useSupabaseAccount } from "@/features/account/useSupabaseAccount";
-import { ACCESS_PLAN_COPY } from "@/lib/account/accessCopy";
 
 function formatNumber(value: number | null | undefined): string {
   if (value === null || value === undefined) return "None";
@@ -220,10 +219,10 @@ export function AccountStatsClient() {
           </>
         ) : configured ? (
           <>
-            <h2>Create a free account.</h2>
-            <p>{ACCESS_PLAN_COPY.guest.summary} Local sample-play stats are still shown above.</p>
+            <h2>Start Pro or continue free.</h2>
+            <p>Pro unlocks full history and advanced stats. Free needs no card and saves your Daily progress. Local sample-play stats are still shown above.</p>
             <Link className="button" href="/sign-in">
-              Create a free account
+              Continue free
             </Link>
           </>
         ) : (

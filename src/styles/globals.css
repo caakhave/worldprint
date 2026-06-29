@@ -232,6 +232,14 @@ button:disabled {
   white-space: nowrap;
 }
 
+.account-nav-action {
+  color: var(--signal-2);
+  font-family: var(--font-mono);
+  font-size: 0.68rem;
+  font-weight: 800;
+  text-transform: uppercase;
+}
+
 .account-plan-badge {
   display: inline-flex;
   align-items: center;
@@ -5898,6 +5906,11 @@ dd {
   width: 100%;
 }
 
+.membership-card .billing-actions .checkout-option-buttons {
+  grid-column: 1 / -1;
+  width: 100%;
+}
+
 .membership-card .billing-actions:has(.button-secondary) {
   grid-template-columns: repeat(2, minmax(0, 1fr));
 }
@@ -5999,12 +6012,53 @@ dd {
   background: rgb(4 42 47 / 0.42);
 }
 
+.pro-price-option[data-featured="true"] {
+  border-color: rgb(215 168 75 / 0.5);
+  background:
+    linear-gradient(145deg, rgb(215 168 75 / 0.13), transparent 62%),
+    rgb(4 42 47 / 0.5);
+}
+
 .pro-price-label {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.45rem;
+  align-items: center;
   color: var(--signal-2);
   font-family: var(--font-mono);
   font-size: 0.72rem;
   font-weight: 800;
   text-transform: uppercase;
+}
+
+.pro-price-badge,
+.checkout-button-badge {
+  border: 1px solid rgb(215 168 75 / 0.48);
+  border-radius: 999px;
+  padding: 0.18rem 0.4rem;
+  color: var(--gold);
+  font-family: var(--font-mono);
+  font-size: 0.68rem;
+  font-weight: 800;
+  line-height: 1;
+  text-transform: uppercase;
+}
+
+.checkout-option-buttons .button,
+.checkout-option-buttons .button-secondary {
+  flex-direction: column;
+  gap: 0.25rem;
+  min-height: 54px;
+  text-align: center;
+}
+
+.checkout-option-buttons .button {
+  border-color: rgb(215 168 75 / 0.42);
+}
+
+.checkout-option-buttons .button .checkout-button-badge {
+  border-color: rgb(4 14 18 / 0.28);
+  color: rgb(4 14 18 / 0.82);
 }
 
 .pro-price-option strong {

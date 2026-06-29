@@ -8,10 +8,10 @@ import {
   resolveProPriceId,
   serviceClient,
   stripeClient,
-  type ProBillingInterval
+  type ProBillingPlan
 } from "../_shared/billing.ts";
 import { billingReturnUrls } from "../_shared/returnUrls.ts";
-import { parseCheckoutIntervalBody } from "../_shared/security.ts";
+import { parseCheckoutPlanBody } from "../_shared/security.ts";
 
 Deno.serve(async (request) => {
   if (request.method === "OPTIONS") return optionsResponse(request);
@@ -19,10 +19,10 @@ Deno.serve(async (request) => {
 
   const { env, error: envError } = readEnv();
   if (!env) return json({ error: envError ?? "Billing is not configured." }, 503, request);
-  const { interval, error: intervalError } = await checkoutInterval(request);
-  if (intervalError || !interval) return json({ error: intervalError ?? "Choose monthly or yearly Pro billing." }, 400, request, env);
-  const priceId = resolveProPriceId(env, interval);
-  if (!priceId) return json({ error: `${interval === "yearly" ? "Yearly" : "Monthly"} billing is not configured yet.` }, 503, request, env);
+  const { plan, error: planError } = await checkoutPlan(request);
+  if (planError || !plan) return json({ error: planError ?? "Choose monthly or yearly Pro billing." }, 400, request, env);
+  const priceId = resolveProPriceId(env, plan);
+  if (!priceId) return json({ error: `${plan === "yearly" ? "Yearly" : "Monthly"} billing is not configured yet.` }, 503, request, env);
 
   const { user, error: userError } = await getSignedInUser(request, env);
   if (!user) return json({ error: userError ?? "Sign in before upgrading." }, 401, request, env);
@@ -38,7 +38,13 @@ Deno.serve(async (request) => {
   });
   const productName = "Can You Geo? Pro";
   const productSummary = "Full practice atlas, complete Past Games archive, and advanced stats.";
-  const metadata = { supabase_user_id: user.id, entitlement_tier: "pro", pro_billing_interval: interval, product_name: productName };
+  const metadata = {
+    supabase_user_id: user.id,
+    entitlement_tier: "pro",
+    pro_billing_plan: plan,
+    pro_billing_interval: plan,
+    product_name: productName
+  };
   const returnUrls = billingReturnUrls(env.siteUrl);
 
   const session = await stripe.checkout.sessions.create({
@@ -64,9 +70,9 @@ Deno.serve(async (request) => {
   return json({ url: session.url }, 200, request, env);
 });
 
-async function checkoutInterval(request: Request): Promise<{ interval: ProBillingInterval | null; error: string | null }> {
+async function checkoutPlan(request: Request): Promise<{ plan: ProBillingPlan | null; error: string | null }> {
   const bodyText = await request.text();
-  return parseCheckoutIntervalBody({
+  return parseCheckoutPlanBody({
     contentType: request.headers.get("content-type"),
     bodyText
   });

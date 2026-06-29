@@ -5,9 +5,10 @@ import { useEffect, useState } from "react";
 import { siteOrigin } from "@/lib/supabase/env";
 import { useSupabaseAccount } from "@/features/account/useSupabaseAccount";
 import { ACCESS_PLAN_COPY } from "@/lib/account/accessCopy";
+import { authCallbackPathForReturn, safeSignInReturnPath } from "@/lib/account/signInRedirect";
 
 const RESEND_COOLDOWN_MS = 60_000;
-const RATE_LIMIT_MESSAGE = "A sign-in link was just sent. Wait about 60 seconds, then try again.";
+const RATE_LIMIT_MESSAGE = "A sign-in link was just sent. Check your email, or try again in about 60 seconds.";
 const GENERIC_SIGN_IN_ERROR = "We could not send that sign-in link. Check the email address and try again.";
 
 type SupabaseOtpError = {
@@ -75,11 +76,13 @@ export function SignInClient() {
     setSubmitting(true);
     setError("");
     setStatus("");
+    const nextPath = safeSignInReturnPath(new URLSearchParams(window.location.search).get("next"));
+    const callbackPath = authCallbackPathForReturn(nextPath);
     const { error: signInError } = await client.auth.signInWithOtp({
       email,
       options: {
         shouldCreateUser: true,
-        emailRedirectTo: `${siteOrigin()}/auth/callback`
+        emailRedirectTo: `${siteOrigin()}${callbackPath}`
       }
     });
     setSubmitting(false);
@@ -164,8 +167,9 @@ export function SignInClient() {
   return (
     <article className="surface account-card account-primary-card">
       <p className="eyebrow">Email sign-in</p>
-      <h2>Create a free account or sign in.</h2>
+      <h2>Enter your email to continue.</h2>
       <p>New players get a free account automatically. Returning players use the same email to sign back in.</p>
+      <p>Want Can You Geo? Pro? Use this email first, then choose monthly or yearly. Free stays available with no card needed.</p>
       <form className="account-form" onSubmit={(event) => void submit(event)}>
         <label htmlFor="account-email">
           Email
@@ -181,7 +185,7 @@ export function SignInClient() {
           />
         </label>
         <button className="button" type="submit" disabled={submitting || resendCooldownActive}>
-          {submitting ? "Sending..." : resendCooldownActive ? "Wait a minute" : "Send sign-in link"}
+          {submitting ? "Sending..." : resendCooldownActive ? "Check your email" : "Send sign-in link"}
         </button>
       </form>
       <p className="account-env-note">No password needed. Sign-in links can only be requested about once per minute.</p>

@@ -54,7 +54,7 @@ export function BillingReturnNotice({ context }: { context: "account" | "upgrade
     <aside className="surface billing-return-notice" role="status" aria-live="polite" data-status={proActive ? "pro" : "pending"}>
       <div>
         <p className="eyebrow">Checkout complete</p>
-        <h2>{loading ? "Checking Pro access." : proActive ? "Can You Geo? Pro is active." : "Pro access is being verified."}</h2>
+        <h2>{loading ? "Checking Pro access." : proActive ? "Can You Geo? Pro" : "Pro access is being verified."}</h2>
         <p>
           {loading
             ? "Stripe is confirming your subscription. This usually takes a moment."

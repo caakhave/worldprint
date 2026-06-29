@@ -5,7 +5,14 @@ describe("Pro pricing options", () => {
   it("shows monthly and yearly Pro options", () => {
     expect(PRO_PRICE_OPTIONS).toEqual([
       expect.objectContaining({ interval: "monthly", price: "$3.99", cadence: "/month", cta: "Upgrade monthly" }),
-      expect.objectContaining({ interval: "yearly", price: "$29.99", cadence: "/year", cta: "Upgrade yearly" })
+      expect.objectContaining({
+        interval: "yearly",
+        price: "$29.99",
+        cadence: "/year",
+        cta: "Upgrade yearly",
+        badge: "Best value",
+        featured: true
+      })
     ]);
   });
 

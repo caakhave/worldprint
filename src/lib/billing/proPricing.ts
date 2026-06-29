@@ -7,6 +7,8 @@ export type ProPriceOption = {
   cadence: string;
   summary: string;
   cta: string;
+  badge?: string;
+  featured?: boolean;
 };
 
 export const PRO_PRICE_OPTIONS: ProPriceOption[] = [
@@ -24,7 +26,9 @@ export const PRO_PRICE_OPTIONS: ProPriceOption[] = [
     price: "$29.99",
     cadence: "/year",
     summary: "Best value for regular atlas players.",
-    cta: "Upgrade yearly"
+    cta: "Upgrade yearly",
+    badge: "Best value",
+    featured: true
   }
 ];
 

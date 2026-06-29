@@ -2,7 +2,6 @@
 
 import Link from "next/link";
 import { useSupabaseAccount } from "@/features/account/useSupabaseAccount";
-import { ACCESS_PLAN_COPY } from "@/lib/account/accessCopy";
 
 export function AccountHeroClient() {
   const { configured, loading, user } = useSupabaseAccount();
@@ -14,19 +13,19 @@ export function AccountHeroClient() {
       <div className="account-hero-copy">
         <p className="eyebrow">Player account</p>
         <h1 id="account-title" className="page-title">
-          {connected ? "Your atlas is connected." : "Create a free account."}
+          {connected ? "Your atlas is connected." : "Start Pro or continue free."}
         </h1>
         <p className="lead">
           {connected
             ? "Review your scores, open Past Games, manage access, and keep playing."
-            : ACCESS_PLAN_COPY.guest.summary}
+            : "Choose Can You Geo? Pro for the full atlas, or continue free with no card needed, 3 fresh Daily maps, and saved progress."}
         </p>
         <div className="button-row">
-          <Link className="button" href={connected ? "/play/mystery-map" : "/sign-in"}>
-            {connected ? "Play Mystery Map" : ACCESS_PLAN_COPY.guest.primaryCta}
+          <Link className="button" href={connected ? "/play/mystery-map" : "/upgrade"}>
+            {connected ? "Play Mystery Map" : "Start Pro"}
           </Link>
-          <Link className="button-secondary" href={connected ? "/account/stats" : "/play/mystery-map"}>
-            {connected ? "View saved stats" : "Try Sample Run"}
+          <Link className="button-secondary" href={connected ? "/account/stats" : "/sign-in"}>
+            {connected ? "View saved stats" : "Continue free"}
           </Link>
         </div>
       </div>
@@ -39,7 +38,7 @@ export function AccountHeroClient() {
         <div className="account-hero-badge">
           <span>{connected ? "Account online" : "Browser record"}</span>
           <strong>{connected ? "Connected" : "Sample Run"}</strong>
-          <em>{connected ? "Stats sync ready" : "Free account unlocks 3 fresh maps daily"}</em>
+          <em>{connected ? "Stats sync ready" : "Free needs no card; Pro opens the full atlas"}</em>
         </div>
       </div>
     </div>

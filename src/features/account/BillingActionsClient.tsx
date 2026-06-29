@@ -4,6 +4,7 @@ import Link from "next/link";
 import { useState } from "react";
 import { useSupabaseAccount } from "@/features/account/useSupabaseAccount";
 import type { PlayerEntitlement } from "@/lib/account/entitlements";
+import { signInPathForReturn } from "@/lib/account/signInRedirect";
 import { publicBillingEnabled } from "@/lib/billing/publicBillingConfig";
 import { PRO_PRICE_OPTIONS, type ProBillingInterval } from "@/lib/billing/proPricing";
 
@@ -17,21 +18,27 @@ type BillingActionsClientProps = {
   context: "upgrade" | "account";
 };
 
+type BillingActionKind = "checkout" | "portal";
+
 function warnBillingDetail(message: string, detail: unknown) {
   if (process.env.NODE_ENV !== "production") {
     console.warn(`[billing] ${message}`, detail);
   }
 }
 
-function billingErrorCopy(message?: string | null) {
+function billingErrorCopy(kind: BillingActionKind, message?: string | null) {
   const normalized = message?.toLowerCase() ?? "";
   if (normalized.includes("configured") || normalized.includes("env") || normalized.includes("supabase")) {
-    return "Checkout is not open yet.";
+    return kind === "portal" ? "Billing management is not available yet." : "Checkout is not open yet.";
   }
   if (normalized.includes("sign in")) {
     return "Sign in to upgrade.";
   }
-  return "We could not open checkout. Try again in a minute.";
+  return kind === "portal" ? "We could not open billing management. Try again in a minute." : "We could not open checkout. Try again in a minute.";
+}
+
+function signInPathForPlan(interval: ProBillingInterval) {
+  return signInPathForReturn(`/upgrade?plan=${interval}`);
 }
 
 export function BillingActionsClient({ entitlement, context }: BillingActionsClientProps) {
@@ -46,6 +53,7 @@ export function BillingActionsClient({ entitlement, context }: BillingActionsCli
   async function invokeBillingFunction(
     functionName: "stripe-checkout" | "stripe-portal",
     pendingState: "checkout-monthly" | "checkout-yearly" | "portal",
+    kind: BillingActionKind,
     interval?: ProBillingInterval
   ) {
     if (!client || !signedIn) {
@@ -66,16 +74,16 @@ export function BillingActionsClient({ entitlement, context }: BillingActionsCli
     }
     const { data, error } = await client.functions.invoke<BillingActionResponse>(functionName, {
       headers: { Authorization: `Bearer ${session.access_token}` },
-      body: interval ? { interval } : undefined
+      body: interval ? { plan: interval } : undefined
     });
     setPending(null);
     if (error || data?.error) {
       warnBillingDetail("Billing action failed.", data?.error ?? error);
-      setMessage(billingErrorCopy(data?.error ?? error?.message));
+      setMessage(billingErrorCopy(kind, data?.error ?? error?.message));
       return;
     }
     if (!data?.url) {
-      setMessage("Checkout is not open yet.");
+      setMessage(kind === "portal" ? "Billing management is not available yet." : "Checkout is not open yet.");
       return;
     }
     window.location.assign(data.url);
@@ -85,10 +93,13 @@ export function BillingActionsClient({ entitlement, context }: BillingActionsCli
     if (!signedIn) {
       return (
         <div className="billing-actions" aria-label="Billing actions">
-          <Link className="button" href="/sign-in">
-            Sign in to upgrade
+          <Link className="button" href={signInPathForReturn("/upgrade")}>
+            Start Pro
           </Link>
-          <p className="account-env-note">Checkout is coming soon. Create or sign in to your free account now; billing will open later.</p>
+          <Link className="button-secondary" href="/sign-in">
+            Continue free
+          </Link>
+          <p className="account-env-note">Checkout is coming soon. Free needs no card and saves your 3-map Daily progress.</p>
         </div>
       );
     }
@@ -112,8 +123,8 @@ export function BillingActionsClient({ entitlement, context }: BillingActionsCli
           ) : null}
           <p className="account-env-note">
             {hasStripeCustomer
-              ? "Pro is active. Billing changes are not open from this page right now."
-              : "Pro is active. This membership is managed manually for now."}
+              ? "Can You Geo? Pro membership is enabled. Billing changes are not open from this page right now."
+              : "Can You Geo? Pro membership is enabled. This membership is managed manually for now."}
           </p>
         </div>
       );
@@ -130,8 +141,7 @@ export function BillingActionsClient({ entitlement, context }: BillingActionsCli
           </Link>
         ) : null}
         <p className="account-env-note">
-          Pricing is visible now. Checkout is coming soon and billing is disabled for now. Create a free account for 3 fresh maps every
-          day.
+          Pricing is visible now. Checkout is coming soon and billing is disabled for now. Continue free for 3 fresh maps every day.
         </p>
       </div>
     );
@@ -150,8 +160,20 @@ export function BillingActionsClient({ entitlement, context }: BillingActionsCli
   if (!signedIn) {
     return (
       <div className="billing-actions" aria-label="Billing actions">
-        <Link className="button" href="/sign-in">
-          Sign in to upgrade
+        <div className="checkout-option-buttons" aria-label="Choose Pro billing cadence before sign-in">
+          {PRO_PRICE_OPTIONS.map((option) => (
+            <Link className={option.featured ? "button" : "button-secondary"} href={signInPathForPlan(option.interval)} key={option.interval}>
+              <span>{option.cta}</span>
+              {option.badge ? (
+                <span className="checkout-button-badge" aria-hidden="true">
+                  {option.badge}
+                </span>
+              ) : null}
+            </Link>
+          ))}
+        </div>
+        <Link className="button-secondary" href="/sign-in">
+          Continue free
         </Link>
       </div>
     );
@@ -164,7 +186,7 @@ export function BillingActionsClient({ entitlement, context }: BillingActionsCli
           <button
             className="button"
             type="button"
-            onClick={() => void invokeBillingFunction("stripe-portal", "portal")}
+            onClick={() => void invokeBillingFunction("stripe-portal", "portal", "portal")}
             disabled={pending !== null}
           >
             {pending === "portal" ? "Opening billing..." : "Manage billing"}
@@ -184,40 +206,34 @@ export function BillingActionsClient({ entitlement, context }: BillingActionsCli
             {message}
           </p>
         ) : null}
-        {!hasStripeCustomer ? <p className="account-env-note">This account has Pro, but there is no billing portal for it yet.</p> : null}
+        {!hasStripeCustomer ? <p className="account-env-note">This account has Pro, but billing management is not available yet.</p> : null}
       </div>
     );
   }
 
   return (
     <div className="billing-actions" aria-label="Billing actions">
-      {context === "upgrade" ? (
-        <div className="checkout-option-buttons" aria-label="Choose Pro billing cadence">
-          {PRO_PRICE_OPTIONS.map((option) => {
-            const pendingKey = `checkout-${option.interval}` as const;
-            return (
-              <button
-                className={option.interval === "monthly" ? "button" : "button-secondary"}
-                type="button"
-                key={option.interval}
-                onClick={() => void invokeBillingFunction("stripe-checkout", pendingKey, option.interval)}
-                disabled={pending !== null}
-              >
-                {pending === pendingKey ? "Opening secure checkout..." : option.cta}
-              </button>
-            );
-          })}
-        </div>
-      ) : (
-        <button
-          className="button"
-          type="button"
-          onClick={() => void invokeBillingFunction("stripe-checkout", "checkout-monthly", "monthly")}
-          disabled={pending !== null}
-        >
-          {pending === "checkout-monthly" ? "Opening secure checkout..." : "Upgrade to Pro"}
-        </button>
-      )}
+      <div className="checkout-option-buttons" aria-label="Choose Pro billing cadence">
+        {PRO_PRICE_OPTIONS.map((option) => {
+          const pendingKey = `checkout-${option.interval}` as const;
+          return (
+            <button
+              className={option.featured ? "button" : "button-secondary"}
+              type="button"
+              key={option.interval}
+              onClick={() => void invokeBillingFunction("stripe-checkout", pendingKey, "checkout", option.interval)}
+              disabled={pending !== null}
+            >
+              <span>{pending === pendingKey ? "Opening secure checkout..." : option.cta}</span>
+              {option.badge ? (
+                <span className="checkout-button-badge" aria-hidden="true">
+                  {option.badge}
+                </span>
+              ) : null}
+            </button>
+          );
+        })}
+      </div>
       {context === "account" ? (
         <Link className="button-secondary" href="/upgrade">
           Compare plans

@@ -25,21 +25,21 @@ function pro(overrides: Partial<PlayerEntitlement["row"]> = {}, status: PlayerEn
 describe("membershipDisplay", () => {
   it("describes active renewing Pro", () => {
     expect(membershipDisplay(pro())).toMatchObject({
-      heading: "Pro active",
+      heading: "Can You Geo? Pro",
       detail: "Renews on July 26, 2026"
     });
   });
 
   it("describes canceled but still active Pro", () => {
     expect(membershipDisplay(pro({ cancel_at_period_end: true }))).toMatchObject({
-      heading: "Pro active until July 26, 2026",
-      detail: "Renewal canceled"
+      heading: "Can You Geo? Pro",
+      detail: "Renewal canceled; Pro access active until July 26, 2026"
     });
   });
 
   it("describes trialing Pro", () => {
     expect(membershipDisplay(pro({ cancel_at_period_end: false }, "trialing"))).toMatchObject({
-      heading: "Pro trial active",
+      heading: "Can You Geo? Pro trial",
       detail: "Trial ends on July 26, 2026"
     });
   });

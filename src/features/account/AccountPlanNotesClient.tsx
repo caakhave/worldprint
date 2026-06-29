@@ -3,7 +3,6 @@
 import Link from "next/link";
 import { useEffect, useState } from "react";
 import { useEntitlement } from "@/features/account/useEntitlement";
-import { ACCESS_PLAN_COPY } from "@/lib/account/accessCopy";
 import { publicBillingEnabled } from "@/lib/billing/publicBillingConfig";
 import { defaultPersistedState, loadPersistedState } from "@/lib/persistence/storage";
 
@@ -41,23 +40,26 @@ export function AccountPlanNotesClient() {
     return (
       <section className="account-actions-grid" aria-label="Account actions" role="region">
         <article className="surface account-card account-action-card">
-          <p className="eyebrow">Free account</p>
-          <h2>3 fresh maps daily</h2>
-          <p>{ACCESS_PLAN_COPY.guest.summary}</p>
-          <Link className="button" href="/sign-in">
-            Create a free account
+          <p className="eyebrow">Can You Geo? Pro</p>
+          <h2>Open the whole atlas.</h2>
+          <p>Full Practice Atlas, complete Past Games archive, advanced stats, and future premium surfaces.</p>
+          <Link className="button" href="/upgrade">
+            Start Pro
           </Link>
         </article>
 
         <article className="surface account-card account-action-card">
-          <p className="eyebrow">Sample Run</p>
-          <h2>Try 5 fixed maps</h2>
-          <p>The Sample Run lets you feel the game before creating an account. It does not save stats or streaks.</p>
+          <p className="eyebrow">Free account</p>
+          <h2>Continue free.</h2>
+          <p>Free needs no card and includes the 3-map Free Daily, saved progress, streaks, and basic stats.</p>
           <span className="account-action-stat">
             {localRecordCount} browser record{localRecordCount === 1 ? "" : "s"}
           </span>
           <Link className="button-secondary" href="/play/mystery-map">
             Try Sample Run
+          </Link>
+          <Link className="button-secondary" href="/sign-in">
+            Sign in free
           </Link>
         </article>
       </section>

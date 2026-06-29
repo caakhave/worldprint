@@ -16,7 +16,7 @@ const accountMock = vi.hoisted(() => ({
     user: {
       id: "11111111-2222-4333-8444-555555555555",
       email: "player@example.com"
-    },
+    } as { id: string; email: string } | null,
     profileError: null,
     refreshSession: vi.fn(),
     signOut: vi.fn(async () => ({ error: null }))
@@ -64,6 +64,8 @@ describe("AccountStatusClient", () => {
       id: "11111111-2222-4333-8444-555555555555",
       email: "player@example.com"
     };
+    entitlementMock.state.signedIn = true;
+    entitlementMock.state.entitlement.plan = "free";
   });
 
   it("renders a compact signed-in account summary without exposing the raw user ID", async () => {
@@ -97,9 +99,29 @@ describe("AccountStatusClient", () => {
 
     expect(screen.getByRole("heading", { name: longEmail })).toHaveClass("account-identity-email");
   });
+
+  it("offers Pro first while preserving the free path for signed-out players", () => {
+    accountMock.state.user = null;
+    entitlementMock.state.signedIn = false;
+
+    render(<AccountStatusClient />);
+
+    expect(screen.getByRole("heading", { name: "Start Pro or continue free." })).toBeVisible();
+    expect(screen.getByText("Pro unlocks the full atlas. Free needs no card and still saves your 3-map Daily progress and basic stats.")).toBeVisible();
+    expect(screen.getByRole("link", { name: "Start Pro" })).toHaveAttribute("href", "/upgrade");
+    expect(screen.getByRole("link", { name: "Continue free" })).toHaveAttribute("href", "/sign-in");
+  });
 });
 
 describe("AccountHeroClient", () => {
+  beforeEach(() => {
+    accountMock.state.user = {
+      id: "11111111-2222-4333-8444-555555555555",
+      email: "player@example.com"
+    };
+    entitlementMock.state.signedIn = true;
+  });
+
   it("uses connected account copy after sign-in", () => {
     render(<AccountHeroClient />);
 
@@ -108,9 +130,29 @@ describe("AccountHeroClient", () => {
     expect(document.querySelector(".account-hero-video source[src='/worldprint/hero-loop.webm']")).toBeTruthy();
     expect(screen.getByRole("link", { name: "View saved stats" })).toHaveAttribute("href", "/account/stats");
   });
+
+  it("leads with Pro while keeping Free available before sign-in", () => {
+    accountMock.state.user = null;
+
+    render(<AccountHeroClient />);
+
+    expect(screen.getByRole("heading", { name: "Start Pro or continue free." })).toBeVisible();
+    expect(screen.getByText(/Choose Can You Geo\? Pro for the full atlas/i)).toBeVisible();
+    expect(screen.getByRole("link", { name: "Start Pro" })).toHaveAttribute("href", "/upgrade");
+    expect(screen.getByRole("link", { name: "Continue free" })).toHaveAttribute("href", "/sign-in");
+  });
 });
 
 describe("AccountPlanNotesClient", () => {
+  beforeEach(() => {
+    accountMock.state.user = {
+      id: "11111111-2222-4333-8444-555555555555",
+      email: "player@example.com"
+    };
+    entitlementMock.state.signedIn = true;
+    entitlementMock.state.entitlement.plan = "free";
+  });
+
   it("renders account actions without generic onboarding cards", async () => {
     render(<AccountPlanNotesClient />);
 
@@ -125,5 +167,17 @@ describe("AccountPlanNotesClient", () => {
     expect(screen.queryByText("Play first.")).not.toBeInTheDocument();
     expect(screen.queryByText("Keep your streak.")).not.toBeInTheDocument();
     expect(screen.queryByText("Open the full atlas.")).not.toBeInTheDocument();
+  });
+
+  it("shows Pro-first account actions before sign-in", async () => {
+    accountMock.state.user = null;
+    entitlementMock.state.signedIn = false;
+
+    render(<AccountPlanNotesClient />);
+
+    expect(await screen.findByRole("heading", { name: "Open the whole atlas." })).toBeVisible();
+    expect(screen.getByRole("heading", { name: "Continue free." })).toBeVisible();
+    expect(screen.getByRole("link", { name: "Start Pro" })).toHaveAttribute("href", "/upgrade");
+    expect(screen.getByRole("link", { name: "Sign in free" })).toHaveAttribute("href", "/sign-in");
   });
 });

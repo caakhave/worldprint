@@ -67,6 +67,20 @@ describe("AuthCallbackClient", () => {
     await waitFor(() => expect(routerMock.replace).toHaveBeenCalledWith("/account"), { timeout: 1600 });
   });
 
+  it("returns players to Pro plans when sign-in started from upgrade", async () => {
+    visitCallback("?token_hash=good-token&type=magiclink&next=%2Fupgrade%3Fplan%3Dyearly");
+    supabaseMock.client.auth.verifyOtp.mockResolvedValue({
+      data: { user: signedInUser, session: { user: signedInUser } },
+      error: null
+    });
+
+    render(<AuthCallbackClient />);
+
+    await screen.findByRole("heading", { name: "Signed in. Taking you back to Pro plans..." });
+    expect(ensureProfileMock).toHaveBeenCalledWith(supabaseMock.client, signedInUser);
+    await waitFor(() => expect(routerMock.replace).toHaveBeenCalledWith("/upgrade?plan=yearly"), { timeout: 1600 });
+  });
+
   it("treats callback errors as success when a valid session already exists", async () => {
     visitCallback("?error=server_error&error_description=PKCE%20code%20verifier%20not%20found");
     supabaseMock.client.auth.getSession.mockResolvedValue({

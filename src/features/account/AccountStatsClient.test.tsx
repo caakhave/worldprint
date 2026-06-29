@@ -105,8 +105,8 @@ describe("AccountStatsClient", () => {
     render(<AccountStatsClient />);
 
     expect(screen.getByRole("heading", { name: "Saved in this browser." })).toBeVisible();
-    expect(screen.getByRole("heading", { name: "Create a free account." })).toBeVisible();
-    expect(screen.getByText(/No account needed/i)).toBeVisible();
-    expect(screen.getByText(/3 fresh maps every day/i)).toBeVisible();
+    expect(screen.getByRole("heading", { name: "Start Pro or continue free." })).toBeVisible();
+    expect(screen.getByText(/Pro unlocks full history and advanced stats/i)).toBeVisible();
+    expect(screen.getByRole("link", { name: "Continue free" })).toHaveAttribute("href", "/sign-in");
   });
 });

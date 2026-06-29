@@ -8,9 +8,10 @@ describe("HowToPlayPage", () => {
 
     expect(screen.getByRole("heading", { name: /Read the pattern before the answer reads you/i })).toBeVisible();
     expect(screen.getByRole("heading", { name: /Every clue spends points/i })).toBeVisible();
-    expect(screen.getByText(/Try the 5-map Sample Run, then create a free account/i)).toBeVisible();
+    expect(screen.getByText(/Start Pro for the full atlas, or continue free/i)).toBeVisible();
+    expect(screen.getByRole("link", { name: /Start Pro/i })).toHaveAttribute("href", "/upgrade");
     expect(screen.getByRole("link", { name: /Try Sample Run/i })).toHaveAttribute("href", "/play/mystery-map");
-    expect(screen.getByRole("link", { name: /Create a free account/i })).toHaveAttribute("href", "/sign-in");
+    expect(screen.getByRole("link", { name: /Continue free/i })).toHaveAttribute("href", "/sign-in");
     expect(screen.queryByText(/Open Beta|WORLDPRINT|spends score/i)).not.toBeInTheDocument();
   });
 });

@@ -53,10 +53,10 @@ describe("AuthNavStatus", () => {
     entitlementMock.state.signedIn = false;
   });
 
-  it("links signed-out players to the free account flow", () => {
+  it("links signed-out players to the Pro-first account flow", () => {
     render(<AuthNavStatus />);
 
-    expect(screen.getByRole("link", { name: "Free account" })).toHaveAttribute("href", "/sign-in");
+    expect(screen.getByRole("link", { name: "Start Pro" })).toHaveAttribute("href", "/upgrade");
   });
 
   it("shows a compact Free account badge for signed-in players", () => {
@@ -66,11 +66,13 @@ describe("AuthNavStatus", () => {
 
     render(<AuthNavStatus />);
 
-    expect(screen.getByRole("link", { name: /Account for player@example.com/i })).toHaveAttribute("href", "/account");
+    expect(screen.getByRole("link", { name: /Open account for player@example.com/i })).toHaveAttribute("href", "/account");
+    expect(screen.getByRole("link", { name: /Open account for player@example.com/i })).toHaveAttribute("title", "Open account");
     expect(screen.getByText("player@example.com")).toHaveClass("account-nav-email");
     expect(screen.getByText("player@example.com")).toHaveAttribute("title", "player@example.com");
     expect(screen.getByText("P")).toBeVisible();
     expect(screen.getByText("Free")).toBeVisible();
+    expect(screen.getByText("Account")).toHaveClass("account-nav-action");
     expect(screen.queryByText("user_123")).not.toBeInTheDocument();
   });
 

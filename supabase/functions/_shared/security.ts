@@ -1,6 +1,7 @@
 import { PRODUCTION_SITE_ORIGIN } from "./returnUrls.ts";
 
-export type ProBillingInterval = "monthly" | "yearly";
+export type ProBillingPlan = "monthly" | "yearly";
+export type ProBillingInterval = ProBillingPlan;
 
 export type BillingPriceConfig = {
   stripeProPriceId: string | null;
@@ -16,8 +17,44 @@ export type CorsConfig = {
 export const BILLING_JSON_MAX_BYTES = 4096;
 export const STRIPE_WEBHOOK_MAX_BYTES = 1024 * 1024;
 
-export function isProBillingInterval(value: unknown): value is ProBillingInterval {
+export function isProBillingPlan(value: unknown): value is ProBillingPlan {
   return value === "monthly" || value === "yearly";
+}
+
+export const isProBillingInterval = isProBillingPlan;
+
+export function parseCheckoutPlanBody(input: {
+  contentType: string | null;
+  bodyText: string;
+  maxBytes?: number;
+}): { plan: ProBillingPlan | null; error: string | null } {
+  const maxBytes = input.maxBytes ?? BILLING_JSON_MAX_BYTES;
+  if (new TextEncoder().encode(input.bodyText).byteLength > maxBytes) {
+    return { plan: null, error: "Checkout request is too large." };
+  }
+  if (!input.contentType?.toLowerCase().includes("application/json")) {
+    return { plan: null, error: "Checkout requests must be JSON." };
+  }
+
+  let parsed: unknown;
+  try {
+    parsed = JSON.parse(input.bodyText);
+  } catch {
+    return { plan: null, error: "Invalid checkout request." };
+  }
+
+  if (!parsed || typeof parsed !== "object" || Array.isArray(parsed)) {
+    return { plan: null, error: "Invalid checkout request." };
+  }
+  const body = parsed as Record<string, unknown>;
+  const allowedKeys = new Set(["plan"]);
+  if (Object.keys(body).some((key) => !allowedKeys.has(key))) {
+    return { plan: null, error: "Invalid checkout request." };
+  }
+  if (!isProBillingPlan(body.plan)) {
+    return { plan: null, error: "Choose monthly or yearly Pro billing." };
+  }
+  return { plan: body.plan, error: null };
 }
 
 export function parseCheckoutIntervalBody(input: {
@@ -25,33 +62,8 @@ export function parseCheckoutIntervalBody(input: {
   bodyText: string;
   maxBytes?: number;
 }): { interval: ProBillingInterval | null; error: string | null } {
-  const maxBytes = input.maxBytes ?? BILLING_JSON_MAX_BYTES;
-  if (new TextEncoder().encode(input.bodyText).byteLength > maxBytes) {
-    return { interval: null, error: "Checkout request is too large." };
-  }
-  if (!input.contentType?.toLowerCase().includes("application/json")) {
-    return { interval: null, error: "Checkout requests must be JSON." };
-  }
-
-  let parsed: unknown;
-  try {
-    parsed = JSON.parse(input.bodyText);
-  } catch {
-    return { interval: null, error: "Invalid checkout request." };
-  }
-
-  if (!parsed || typeof parsed !== "object" || Array.isArray(parsed)) {
-    return { interval: null, error: "Invalid checkout request." };
-  }
-  const body = parsed as Record<string, unknown>;
-  const allowedKeys = new Set(["interval"]);
-  if (Object.keys(body).some((key) => !allowedKeys.has(key))) {
-    return { interval: null, error: "Invalid checkout request." };
-  }
-  if (!isProBillingInterval(body.interval)) {
-    return { interval: null, error: "Choose monthly or yearly Pro billing." };
-  }
-  return { interval: body.interval, error: null };
+  const { plan, error } = parseCheckoutPlanBody(input);
+  return { interval: plan, error };
 }
 
 export function configuredProPriceIds(config: BillingPriceConfig): Set<string> {
