@@ -72,6 +72,36 @@ describe("player entitlements", () => {
     expectLimitedAtlas(canceled);
   });
 
+  it("does not grant pro from Stripe-looking fields without a trusted pro plan", () => {
+    const freeWithActiveStripeFields = resolvePlayerEntitlement(
+      entitlementRow({
+        plan: "free",
+        status: "active",
+        stripe_customer_id: "cus_test",
+        stripe_subscription_id: "sub_test",
+        stripe_price_id: "price_test",
+        stripe_status: "active"
+      }),
+      true
+    );
+    const proWithFreeStatus = resolvePlayerEntitlement(
+      entitlementRow({
+        plan: "pro",
+        status: "free",
+        stripe_customer_id: "cus_test",
+        stripe_subscription_id: "sub_test",
+        stripe_price_id: "price_test",
+        stripe_status: "active"
+      }),
+      true
+    );
+
+    expect(freeWithActiveStripeFields.plan).toBe("free");
+    expect(proWithFreeStatus.plan).toBe("free");
+    expectLimitedAtlas(freeWithActiveStripeFields);
+    expectLimitedAtlas(proWithFreeStatus);
+  });
+
   it("maps legacy paid/admin rows to pro only when active", () => {
     expect(resolvePlayerEntitlement(entitlementRow({ plan: "paid", status: "active" }), true).plan).toBe("pro");
     expect(resolvePlayerEntitlement(entitlementRow({ plan: "admin", status: "active" }), true).plan).toBe("pro");
