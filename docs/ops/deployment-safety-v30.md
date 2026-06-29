@@ -19,6 +19,10 @@ NEXT_PUBLIC_SUPABASE_ANON_KEY=<supabase-anon-key>
 NEXT_PUBLIC_BILLING_MODE=disabled
 ```
 
+`NEXT_PUBLIC_SUPABASE_URL` must be the project root URL only. For the current project, use
+`https://jquebthneczqdxagagof.supabase.co`, not `https://jquebthneczqdxagagof.supabase.co/rest/v1` or
+`https://jquebthneczqdxagagof.supabase.co/auth/v1`.
+
 Production branch:
 
 ```text
@@ -56,6 +60,8 @@ NEXT_PUBLIC_SUPABASE_URL=https://<project-ref>.supabase.co
 NEXT_PUBLIC_SUPABASE_ANON_KEY=<supabase-anon-key>
 NEXT_PUBLIC_BILLING_MODE=disabled
 ```
+
+Preview uses the same rule: `NEXT_PUBLIC_SUPABASE_URL` must be the project root URL only, not a REST/Auth endpoint path.
 
 Preview sign-in only works when the exact preview callback is allowed in Supabase Auth Redirect URLs:
 

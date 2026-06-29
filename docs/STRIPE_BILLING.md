@@ -10,7 +10,9 @@ The current architecture decision and test-mode launch checklist are documented 
 
 ## Required Env Vars
 
-Use the Supabase project root URL, for example `https://<project-ref>.supabase.co`. Do not use the REST API path such as `/rest/v1/`.
+Use the Supabase project root URL only. For the current project, use
+`https://jquebthneczqdxagagof.supabase.co`, not `https://jquebthneczqdxagagof.supabase.co/rest/v1` or
+`https://jquebthneczqdxagagof.supabase.co/auth/v1`.
 
 Hosted Supabase Edge Functions expose these reserved values from the platform:
 

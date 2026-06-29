@@ -1,7 +1,7 @@
 import { render, screen, waitFor } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
 import { beforeEach, describe, expect, it, vi } from "vitest";
-import { SignInClient } from "@/features/account/SignInClient";
+import { SignInClient, supabaseOtpErrorDiagnostic } from "@/features/account/SignInClient";
 
 const accountMock = vi.hoisted(() => ({
   state: {
@@ -115,5 +115,21 @@ describe("SignInClient", () => {
 
     await user.click(screen.getByRole("button", { name: "Sign out" }));
     await waitFor(() => expect(accountMock.state.signOut).toHaveBeenCalledTimes(1));
+  });
+});
+
+describe("supabaseOtpErrorDiagnostic", () => {
+  it("keeps only non-secret auth error fields", () => {
+    expect(
+      supabaseOtpErrorDiagnostic({
+        status: 404,
+        code: "not_found",
+        message: "Auth endpoint not found."
+      })
+    ).toEqual({
+      status: 404,
+      code: "not_found",
+      message: "Auth endpoint not found."
+    });
   });
 });

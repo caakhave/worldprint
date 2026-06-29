@@ -102,6 +102,10 @@ NEXT_PUBLIC_SUPABASE_ANON_KEY=<anon-key>
 NEXT_PUBLIC_BILLING_MODE=disabled
 ```
 
+`NEXT_PUBLIC_SUPABASE_URL` must be the project root URL only. For the current project, use
+`https://jquebthneczqdxagagof.supabase.co`, not `https://jquebthneczqdxagagof.supabase.co/rest/v1` or
+`https://jquebthneczqdxagagof.supabase.co/auth/v1`.
+
 Set `NEXT_PUBLIC_BILLING_MODE=test` only for an intentional Stripe test-mode QA deployment. Leave it `disabled` for normal static deploys until billing is ready. `live` is documented as a future value but remains disabled by the current app code until a later live-payments launch explicitly enables it.
 
 ### Supabase Edge Function secrets
