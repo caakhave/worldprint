@@ -5789,11 +5789,12 @@ dd {
 }
 
 .account-mini-status {
+  --account-mini-status-label-width: clamp(5.7rem, 24%, 7.4rem);
   gap: 0.55rem;
 }
 
 .account-mini-status div {
-  grid-template-columns: minmax(4.5rem, auto) minmax(0, 1fr);
+  grid-template-columns: var(--account-mini-status-label-width) minmax(0, 1fr);
   gap: 0.75rem;
 }
 
@@ -5886,6 +5887,24 @@ dd {
   display: grid;
   gap: 0.75rem;
   justify-items: start;
+}
+
+.membership-card .billing-actions {
+  justify-items: stretch;
+}
+
+.membership-card .billing-actions .button,
+.membership-card .billing-actions .button-secondary {
+  width: 100%;
+}
+
+.membership-card .billing-actions:has(.button-secondary) {
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+}
+
+.membership-card .billing-actions .account-env-note,
+.membership-card .billing-actions .account-error {
+  grid-column: 1 / -1;
 }
 
 .billing-actions .account-env-note,
@@ -6909,6 +6928,10 @@ dd {
   .account-status-list div {
     grid-template-columns: 1fr;
     gap: 0.35rem;
+  }
+
+  .membership-card .billing-actions:has(.button-secondary) {
+    grid-template-columns: 1fr;
   }
 
   .account-actions-grid {
