@@ -24,17 +24,21 @@ function pro(overrides: Partial<PlayerEntitlement["row"]> = {}, status: PlayerEn
 
 describe("membershipDisplay", () => {
   it("describes active renewing Pro", () => {
-    expect(membershipDisplay(pro())).toMatchObject({
+    const display = membershipDisplay(pro());
+    expect(display).toMatchObject({
       heading: "Can You Geo? Pro",
       detail: "Renews on July 26, 2026"
     });
+    expect(display.heading).not.toMatch(/active/i);
   });
 
   it("describes canceled but still active Pro", () => {
-    expect(membershipDisplay(pro({ cancel_at_period_end: true }))).toMatchObject({
+    const display = membershipDisplay(pro({ cancel_at_period_end: true }));
+    expect(display).toMatchObject({
       heading: "Can You Geo? Pro",
       detail: "Renewal canceled; Pro access active until July 26, 2026"
     });
+    expect(display.heading).not.toMatch(/active/i);
   });
 
   it("describes trialing Pro", () => {

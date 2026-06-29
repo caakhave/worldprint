@@ -49,6 +49,8 @@ describe("AuthCallbackClient", () => {
     supabaseMock.client.auth.getSession.mockReset();
     supabaseMock.client.auth.getUser.mockReset();
     supabaseMock.client.auth.getUser.mockResolvedValue({ data: { user: null }, error: null });
+    window.localStorage.clear();
+    window.sessionStorage.clear();
     visitCallback("");
   });
 
@@ -79,6 +81,53 @@ describe("AuthCallbackClient", () => {
     await screen.findByRole("heading", { name: "Signed in. Taking you back to Pro plans..." });
     expect(ensureProfileMock).toHaveBeenCalledWith(supabaseMock.client, signedInUser);
     await waitFor(() => expect(routerMock.replace).toHaveBeenCalledWith("/upgrade?plan=yearly"), { timeout: 1600 });
+  });
+
+  it("returns players to stored monthly Pro intent when the callback URL is query-free", async () => {
+    window.sessionStorage.setItem("canyougeo:sign-in-return", "/upgrade?plan=monthly");
+    visitCallback("?token_hash=good-token&type=magiclink");
+    supabaseMock.client.auth.verifyOtp.mockResolvedValue({
+      data: { user: signedInUser, session: { user: signedInUser } },
+      error: null
+    });
+
+    render(<AuthCallbackClient />);
+
+    await screen.findByRole("heading", { name: "Signed in. Taking you back to Pro plans..." });
+    expect(ensureProfileMock).toHaveBeenCalledWith(supabaseMock.client, signedInUser);
+    await waitFor(() => expect(routerMock.replace).toHaveBeenCalledWith("/upgrade?plan=monthly"), { timeout: 1600 });
+    expect(window.sessionStorage.getItem("canyougeo:sign-in-return")).toBeNull();
+  });
+
+  it("recovers malformed Pro callback links where token_hash was appended inside next", async () => {
+    visitCallback("?next=%2Fupgrade%3Fplan%3Dmonthly?token_hash=good-token&type=magiclink");
+    supabaseMock.client.auth.verifyOtp.mockResolvedValue({
+      data: { user: signedInUser, session: { user: signedInUser } },
+      error: null
+    });
+
+    render(<AuthCallbackClient />);
+
+    await screen.findByRole("heading", { name: "Signed in. Taking you back to Pro plans..." });
+    expect(supabaseMock.client.auth.verifyOtp).toHaveBeenCalledWith({
+      token_hash: "good-token",
+      type: "magiclink"
+    });
+    await waitFor(() => expect(routerMock.replace).toHaveBeenCalledWith("/upgrade?plan=monthly"), { timeout: 1600 });
+  });
+
+  it("rejects unsafe callback return targets even when stale storage exists", async () => {
+    window.sessionStorage.setItem("canyougeo:sign-in-return", "/upgrade?plan=yearly");
+    visitCallback("?token_hash=good-token&type=magiclink&next=https%3A%2F%2Fevil.example");
+    supabaseMock.client.auth.verifyOtp.mockResolvedValue({
+      data: { user: signedInUser, session: { user: signedInUser } },
+      error: null
+    });
+
+    render(<AuthCallbackClient />);
+
+    await screen.findByRole("heading", { name: "Signed in. Taking you to your account..." });
+    await waitFor(() => expect(routerMock.replace).toHaveBeenCalledWith("/account"), { timeout: 1600 });
   });
 
   it("treats callback errors as success when a valid session already exists", async () => {

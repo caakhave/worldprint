@@ -34,6 +34,8 @@ describe("SignInClient", () => {
     accountMock.state.configured = true;
     accountMock.state.user = null;
     accountMock.state.profileError = null;
+    window.localStorage.clear();
+    window.sessionStorage.clear();
     window.history.pushState({}, "", "/sign-in");
   });
 
@@ -65,7 +67,7 @@ describe("SignInClient", () => {
     expect(screen.getByRole("button", { name: "Check your email" })).toBeDisabled();
   });
 
-  it("preserves Pro upgrade intent through the magic link callback", async () => {
+  it("preserves Pro yearly upgrade intent without putting query params in the magic-link redirect", async () => {
     const user = userEvent.setup();
     window.history.pushState({}, "", "/sign-in?next=%2Fupgrade%3Fplan%3Dyearly");
 
@@ -78,9 +80,48 @@ describe("SignInClient", () => {
       email: "player@example.com",
       options: expect.objectContaining({
         shouldCreateUser: true,
-        emailRedirectTo: expect.stringMatching(/\/auth\/callback\?next=%2Fupgrade%3Fplan%3Dyearly$/)
+        emailRedirectTo: expect.stringMatching(/\/auth\/callback$/)
       })
     });
+    expect(window.sessionStorage.getItem("canyougeo:sign-in-return")).toBe("/upgrade?plan=yearly");
+  });
+
+  it("preserves Pro monthly upgrade intent without raw Stripe price IDs", async () => {
+    const user = userEvent.setup();
+    window.history.pushState({}, "", "/sign-in?next=%2Fupgrade%3Fplan%3Dmonthly");
+
+    render(<SignInClient />);
+
+    await user.type(screen.getByLabelText("Email"), "player@example.com");
+    await user.click(screen.getByRole("button", { name: "Send sign-in link" }));
+
+    expect(accountMock.state.client.auth.signInWithOtp).toHaveBeenCalledWith({
+      email: "player@example.com",
+      options: expect.objectContaining({
+        shouldCreateUser: true,
+        emailRedirectTo: expect.stringMatching(/\/auth\/callback$/)
+      })
+    });
+    expect(window.sessionStorage.getItem("canyougeo:sign-in-return")).toBe("/upgrade?plan=monthly");
+  });
+
+  it("rejects unsafe sign-in return targets", async () => {
+    const user = userEvent.setup();
+    window.history.pushState({}, "", "/sign-in?next=https%3A%2F%2Fevil.example%2Fupgrade");
+
+    render(<SignInClient />);
+
+    await user.type(screen.getByLabelText("Email"), "player@example.com");
+    await user.click(screen.getByRole("button", { name: "Send sign-in link" }));
+
+    expect(accountMock.state.client.auth.signInWithOtp).toHaveBeenCalledWith({
+      email: "player@example.com",
+      options: expect.objectContaining({
+        shouldCreateUser: true,
+        emailRedirectTo: expect.stringMatching(/\/auth\/callback$/)
+      })
+    });
+    expect(window.sessionStorage.getItem("canyougeo:sign-in-return")).toBe("/account");
   });
 
   it("shows a specific message for Supabase passwordless rate limits", async () => {

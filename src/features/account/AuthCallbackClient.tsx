@@ -5,7 +5,12 @@ import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
 import type { EmailOtpType, User } from "@supabase/supabase-js";
 import { ensureProfile } from "@/lib/account/sync";
-import { safeSignInReturnPath } from "@/lib/account/signInRedirect";
+import {
+  callbackReturnPathFromSearch,
+  callbackTokenHashFromSearch,
+  clearStoredSignInReturnPath,
+  readStoredSignInReturnPath
+} from "@/lib/account/signInRedirect";
 import { createSupabaseBrowserClient, type CanYouGeoSupabaseClient } from "@/lib/supabase/client";
 
 const supportedOtpTypes = new Set<EmailOtpType>(["signup", "magiclink", "recovery", "invite", "email", "email_change"]);
@@ -50,7 +55,8 @@ export function AuthCallbackClient() {
 
     async function finishSignIn() {
       const params = new URLSearchParams(window.location.search);
-      const nextPath = safeSignInReturnPath(params.get("next"));
+      const callbackNextPath = callbackReturnPathFromSearch(window.location.search);
+      const nextPath = callbackNextPath ?? readStoredSignInReturnPath();
       const client = createSupabaseBrowserClient();
       if (!client) {
         setStatus("Email sign-in is not available in this preview.");
@@ -71,6 +77,7 @@ export function AuthCallbackClient() {
           }
         }
         setError(null);
+        clearStoredSignInReturnPath();
         setStatus(nextPath.startsWith("/upgrade") ? "Signed in. Taking you back to Pro plans..." : "Signed in. Taking you to your account...");
         window.setTimeout(() => router.replace(nextPath), 900);
       }
@@ -93,7 +100,7 @@ export function AuthCallbackClient() {
         return;
       }
 
-      const tokenHash = params.get("token_hash");
+      const tokenHash = callbackTokenHashFromSearch(window.location.search);
       const tokenType = otpTypeFromUrl(params.get("type"));
       if (tokenHash) {
         const { data, error: verifyError } = await activeClient.auth.verifyOtp({

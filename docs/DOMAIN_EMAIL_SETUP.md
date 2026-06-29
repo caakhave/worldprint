@@ -122,6 +122,8 @@ Recommended body:
 
 The `token_hash` callback format is preferred because `/auth/callback` can verify the email link directly with `verifyOtp`. This avoids the common PKCE failure where a link is opened in a different browser than the one that requested it.
 
+The app passes Supabase a query-free `emailRedirectTo` ending in `/auth/callback`. Do not include app return paths such as `next=/upgrade?plan=monthly` inside that redirect URL; the browser stores Pro intent before sending the email and restores it after the callback. This prevents the template's `?token_hash=...` suffix from being appended inside the `next` value.
+
 ### Sender Branding
 
 If emails arrive as `Supabase Auth`, configure custom SMTP under **Authentication -> SMTP**.

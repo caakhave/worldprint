@@ -178,6 +178,8 @@ Body:
 <p>If you did not request it, you can ignore this email.</p>
 ```
 
+`{{ .RedirectTo }}` should be the plain `/auth/callback` URL with no app `next` query string. The app stores Pro plan intent before email send and restores it after callback verification, which keeps `token_hash` from being swallowed into a nested return URL.
+
 ### Schema, Tables, And RLS
 
 Tracked schema sources currently exist at:

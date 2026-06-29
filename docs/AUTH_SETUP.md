@@ -68,6 +68,8 @@ Recommended body:
 
 The `token_hash` link is the preferred static-export-compatible flow. It lets `/auth/callback` verify the email link directly and avoids relying on a browser-stored PKCE verifier.
 
+The app sends Supabase a query-free `emailRedirectTo` value ending in `/auth/callback`. Keep that redirect URL free of app `next` query parameters. Pro plan intent is stored by the browser before the email is sent and restored after `/auth/callback` verifies the token. If `{{ .RedirectTo }}` already includes a query string, the `?token_hash=...` template above can swallow the token into the `next` value.
+
 The app still accepts Supabase code-flow callback URLs as a fallback, but code-flow links can fail if the email is opened in a different browser or a different local origin than the one that requested the link.
 
 ## Sender Branding

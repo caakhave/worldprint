@@ -5,7 +5,7 @@ import { useEffect, useState } from "react";
 import { siteOrigin } from "@/lib/supabase/env";
 import { useSupabaseAccount } from "@/features/account/useSupabaseAccount";
 import { ACCESS_PLAN_COPY } from "@/lib/account/accessCopy";
-import { authCallbackPathForReturn, safeSignInReturnPath } from "@/lib/account/signInRedirect";
+import { authCallbackPathForReturn, storeSignInReturnPath } from "@/lib/account/signInRedirect";
 
 const RESEND_COOLDOWN_MS = 60_000;
 const RATE_LIMIT_MESSAGE = "A sign-in link was just sent. Check your email, or try again in about 60 seconds.";
@@ -76,7 +76,7 @@ export function SignInClient() {
     setSubmitting(true);
     setError("");
     setStatus("");
-    const nextPath = safeSignInReturnPath(new URLSearchParams(window.location.search).get("next"));
+    const nextPath = storeSignInReturnPath(new URLSearchParams(window.location.search).get("next"));
     const callbackPath = authCallbackPathForReturn(nextPath);
     const { error: signInError } = await client.auth.signInWithOtp({
       email,
