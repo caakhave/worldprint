@@ -44,6 +44,10 @@ NEXT_PUBLIC_SUPABASE_ANON_KEY=<supabase anon key>
 NEXT_PUBLIC_SITE_URL=https://canyougeo.com
 ```
 
+`NEXT_PUBLIC_SUPABASE_URL` must be the Supabase project root URL only. For the current project, use
+`https://jquebthneczqdxagagof.supabase.co`, not `https://jquebthneczqdxagagof.supabase.co/rest/v1` or
+`https://jquebthneczqdxagagof.supabase.co/auth/v1`.
+
 Do not add these to Cloudflare Pages:
 
 ```text

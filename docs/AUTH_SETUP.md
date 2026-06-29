@@ -14,7 +14,18 @@ NEXT_PUBLIC_SUPABASE_ANON_KEY=
 NEXT_PUBLIC_SITE_URL=
 ```
 
-Use the Supabase project root URL, for example `https://<project-ref>.supabase.co`. Do not use the REST API path such as `/rest/v1/`.
+Use the Supabase project root URL only. For the current project, that means:
+
+```text
+https://jquebthneczqdxagagof.supabase.co
+```
+
+Do not use a REST or Auth endpoint path:
+
+```text
+https://jquebthneczqdxagagof.supabase.co/rest/v1
+https://jquebthneczqdxagagof.supabase.co/auth/v1
+```
 
 ## Supabase URL Configuration
 

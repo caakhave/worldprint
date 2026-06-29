@@ -1,4 +1,7 @@
 import type { NextConfig } from "next";
+import { validateSupabasePublicUrlForBuild } from "./src/lib/supabase/env";
+
+validateSupabasePublicUrlForBuild();
 
 const nextConfig: NextConfig = {
   output: "export",
@@ -9,4 +12,3 @@ const nextConfig: NextConfig = {
 };
 
 export default nextConfig;
-

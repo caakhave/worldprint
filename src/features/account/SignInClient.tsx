@@ -16,9 +16,17 @@ type SupabaseOtpError = {
   code?: string;
 };
 
-function warnAuthDetail(message: string, detail: unknown) {
+export function supabaseOtpErrorDiagnostic(error: SupabaseOtpError) {
+  return {
+    message: error.message,
+    status: error.status,
+    code: error.code
+  };
+}
+
+function warnAuthDetail(message: string, error: SupabaseOtpError) {
   if (process.env.NODE_ENV !== "production") {
-    console.warn(`[auth] ${message}`, detail);
+    console.warn(`[auth] ${message}`, supabaseOtpErrorDiagnostic(error));
   }
 }
 

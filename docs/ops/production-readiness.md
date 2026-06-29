@@ -73,6 +73,19 @@ NEXT_PUBLIC_SUPABASE_ANON_KEY=<Supabase anon key>
 NEXT_PUBLIC_BILLING_MODE=disabled
 ```
 
+For the current project, `NEXT_PUBLIC_SUPABASE_URL` must be exactly:
+
+```text
+https://jquebthneczqdxagagof.supabase.co
+```
+
+It must not include an API path such as:
+
+```text
+https://jquebthneczqdxagagof.supabase.co/rest/v1
+https://jquebthneczqdxagagof.supabase.co/auth/v1
+```
+
 Do not set these in Cloudflare Pages:
 
 ```text
