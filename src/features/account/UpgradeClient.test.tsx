@@ -97,4 +97,17 @@ describe("UpgradeClient", () => {
     expect(screen.getByText("Membership is active and managed manually.")).toBeVisible();
     expect(screen.getByRole("link", { name: "Manage from account" })).toHaveAttribute("href", "/account");
   });
+
+  it("shows Stripe test-mode checkout choices for signed-in Free users", () => {
+    process.env.NEXT_PUBLIC_BILLING_MODE = "test";
+    entitlementMock.state.signedIn = true;
+    accountMock.state.user = TEST_USER;
+
+    render(<UpgradeClient />);
+
+    expect(screen.getByRole("heading", { name: "Choose monthly or yearly." })).toBeVisible();
+    expect(screen.getByText("Ready for secure checkout")).toBeVisible();
+    expect(screen.getByRole("button", { name: "Upgrade monthly" })).toBeEnabled();
+    expect(screen.getByRole("button", { name: "Upgrade yearly" })).toBeEnabled();
+  });
 });

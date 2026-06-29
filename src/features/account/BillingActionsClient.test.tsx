@@ -1,11 +1,17 @@
-import { render, screen } from "@testing-library/react";
+import { fireEvent, render, screen, waitFor } from "@testing-library/react";
 import { beforeEach, describe, expect, it, vi } from "vitest";
 import { BillingActionsClient } from "@/features/account/BillingActionsClient";
 import { FREE_ENTITLEMENT, PRO_ENTITLEMENT, type PlayerEntitlement } from "@/lib/account/entitlements";
 
+type BillingMockClient = {
+  auth: { getSession: ReturnType<typeof vi.fn> };
+  functions: { invoke: ReturnType<typeof vi.fn> };
+  from: ReturnType<typeof vi.fn>;
+};
+
 const accountMock = vi.hoisted(() => ({
   state: {
-    client: null,
+    client: null as BillingMockClient | null,
     configured: false,
     missingEnv: ["NEXT_PUBLIC_SUPABASE_URL"],
     loading: false,
@@ -23,9 +29,24 @@ vi.mock("@/features/account/useSupabaseAccount", () => ({
 
 const TEST_USER = { id: "11111111-2222-4333-8444-555555555555", email: "reader@example.com" };
 
+function billingClientMock(): BillingMockClient {
+  const client: BillingMockClient = {
+    auth: {
+      getSession: vi.fn().mockResolvedValue({ data: { session: { access_token: "billing-token" } }, error: null })
+    },
+    functions: {
+      invoke: vi.fn().mockResolvedValue({ data: {}, error: null })
+    },
+    from: vi.fn()
+  };
+  accountMock.state.client = client;
+  return client;
+}
+
 describe("BillingActionsClient", () => {
   beforeEach(() => {
     delete process.env.NEXT_PUBLIC_BILLING_MODE;
+    accountMock.state.client = null;
     accountMock.state.configured = true;
     accountMock.state.loading = false;
     accountMock.state.user = null;
@@ -102,6 +123,57 @@ describe("BillingActionsClient", () => {
 
     expect(screen.getByRole("button", { name: "Upgrade monthly" })).toBeEnabled();
     expect(screen.getByRole("button", { name: "Upgrade yearly" })).toBeEnabled();
+  });
+
+  it("uses protected checkout functions instead of browser entitlement writes in test mode", async () => {
+    process.env.NEXT_PUBLIC_BILLING_MODE = "test";
+    accountMock.state.user = TEST_USER;
+    const client = billingClientMock();
+
+    render(<BillingActionsClient entitlement={FREE_ENTITLEMENT} context="upgrade" />);
+
+    fireEvent.click(screen.getByRole("button", { name: "Upgrade monthly" }));
+
+    await waitFor(() => expect(client.functions.invoke).toHaveBeenCalledTimes(1));
+    const [functionName, options] = client.functions.invoke.mock.calls[0];
+    expect(functionName).toBe("stripe-checkout");
+    expect(options).toMatchObject({
+      headers: { Authorization: "Bearer billing-token" },
+      body: { interval: "monthly" }
+    });
+    expect(client.from).not.toHaveBeenCalled();
+  });
+
+  it("opens the protected customer portal path for Stripe-backed Pro accounts in test mode", async () => {
+    process.env.NEXT_PUBLIC_BILLING_MODE = "test";
+    accountMock.state.user = TEST_USER;
+    const client = billingClientMock();
+    const stripePro: PlayerEntitlement = {
+      ...PRO_ENTITLEMENT,
+      row: {
+        user_id: TEST_USER.id,
+        plan: "pro",
+        status: "active",
+        stripe_customer_id: "cus_test",
+        stripe_subscription_id: "sub_test",
+        stripe_price_id: "price_test",
+        stripe_status: "active",
+        cancel_at_period_end: false,
+        current_period_end: "2026-07-29T00:00:00.000Z",
+        updated_at: "2026-06-29T00:00:00.000Z"
+      }
+    };
+
+    render(<BillingActionsClient entitlement={stripePro} context="account" />);
+
+    fireEvent.click(screen.getByRole("button", { name: "Manage billing" }));
+
+    await waitFor(() => expect(client.functions.invoke).toHaveBeenCalledTimes(1));
+    const [functionName, options] = client.functions.invoke.mock.calls[0];
+    expect(functionName).toBe("stripe-portal");
+    expect(options.headers).toEqual({ Authorization: "Bearer billing-token" });
+    expect(options.body).toBeUndefined();
+    expect(client.from).not.toHaveBeenCalled();
   });
 
   it("keeps live mode disabled until a future launch turns it on intentionally", () => {

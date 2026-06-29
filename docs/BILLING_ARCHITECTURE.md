@@ -35,7 +35,8 @@ Manual Supabase SQL remains useful for local QA and trusted beta testing. It mus
 ## Checkout Flow
 
 1. User signs in with Supabase passwordless email.
-2. Static `/upgrade` page renders monthly/yearly Pro actions only when public Supabase env exists.
+2. Static `/upgrade` page renders monthly/yearly Pro actions only when public Supabase env exists and
+   `NEXT_PUBLIC_BILLING_MODE=test`.
 3. Browser invokes `stripe-checkout` through `client.functions.invoke`.
 4. Function validates:
    - Supabase Edge Function env is present.
@@ -131,12 +132,15 @@ Required tables and policies are documented in:
 
 ```text
 docs/supabase/production_spine_v0.sql
+docs/ops/supabase-owner-guide.md
+docs/ops/supabase-validation.sql
 ```
 
-The tracked v16 migration for existing projects is:
+The tracked migrations for existing projects are:
 
 ```text
 supabase/migrations/20260627000000_billing_test_mode_entitlements.sql
+supabase/migrations/20260627010000_rls_account_security_hardening.sql
 ```
 
 Important RLS expectations:
@@ -146,7 +150,8 @@ Important RLS expectations:
 - Edge Functions use service-role credentials to write billing state.
 - Missing entitlement rows resolve to Free.
 
-Current risk: only the Stripe entitlement-field migration is tracked. Before live payments, convert the rest of the production spine SQL into migrations or document the exact dashboard-applied schema revision.
+The live Supabase RLS validation was completed successfully on 2026-06-29. Keep rerunning
+`docs/ops/supabase-validation.sql` after schema changes and before enabling billing beyond test-mode QA.
 
 ## Function Deployment
 

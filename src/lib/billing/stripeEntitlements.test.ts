@@ -62,6 +62,7 @@ describe("Stripe billing entitlement mapping", () => {
     expect(mapStripeStatusToEntitlement("unpaid")).toEqual({ plan: "free", status: "canceled" });
     expect(mapStripeStatusToEntitlement("incomplete")).toEqual({ plan: "free", status: "canceled" });
     expect(mapStripeStatusToEntitlement("incomplete_expired")).toEqual({ plan: "free", status: "canceled" });
+    expect(mapStripeStatusToEntitlement("paused")).toEqual({ plan: "free", status: "canceled" });
     expect(mapStripeStatusToEntitlement(null)).toEqual({ plan: "free", status: "free" });
   });
 
