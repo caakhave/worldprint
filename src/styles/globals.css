@@ -5719,6 +5719,7 @@ dd {
 }
 
 .account-checklist {
+  --account-checklist-label-width: clamp(8.2rem, 24%, 10.5rem);
   display: grid;
   gap: 0.8rem;
   margin: 0;
@@ -5728,8 +5729,8 @@ dd {
 
 .account-checklist li {
   display: grid;
-  grid-template-columns: minmax(5rem, auto) minmax(0, 1fr);
-  gap: 0.8rem;
+  grid-template-columns: var(--account-checklist-label-width) minmax(0, 1fr);
+  gap: 1rem;
   align-items: start;
   border-top: 1px solid var(--line);
   padding-top: 0.8rem;
@@ -5741,7 +5742,13 @@ dd {
   font-family: var(--font-mono);
   font-size: 0.78rem;
   letter-spacing: 0.045em;
+  line-height: 1.35;
   text-transform: uppercase;
+}
+
+.account-checklist span {
+  min-width: 0;
+  line-height: 1.45;
 }
 
 .account-env-note {
@@ -6879,6 +6886,10 @@ dd {
 }
 
 @media (max-width: 720px) {
+  .account-checklist {
+    --account-checklist-label-width: minmax(0, 1fr);
+  }
+
   .pro-price-options,
   .checkout-option-buttons {
     grid-template-columns: 1fr;
