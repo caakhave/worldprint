@@ -26,7 +26,7 @@ export default function SignInPage() {
         <SignInClient />
 
         <div className="surface account-card account-status-card" aria-label="Account readiness">
-          <h2>One link, one account.</h2>
+          <h2>How your account works.</h2>
           <ul className="account-checklist">
             <li>
               <strong>Sample Run</strong>
@@ -45,7 +45,6 @@ export default function SignInPage() {
               <span>Checkout is coming soon; billing stays disabled until Pro is ready.</span>
             </li>
           </ul>
-          <p className="account-env-note">No password to manage. Sign-in links can be requested about once per minute.</p>
         </div>
       </div>
 

@@ -16,9 +16,10 @@ describe("SignInPage", () => {
         "Enter your email once. New players get a free account automatically; returning players use the same email to get back to saved progress."
       )
     ).toBeVisible();
-    expect(screen.getByRole("heading", { name: "One link, one account." })).toBeVisible();
+    expect(screen.getByRole("heading", { name: "How your account works." })).toBeVisible();
     expect(screen.getByText("Use the same email to sign back in and keep your atlas connected.")).toBeVisible();
     expect(screen.getByText("Checkout is coming soon; billing stays disabled until Pro is ready.")).toBeVisible();
+    expect(screen.queryByText("No password to manage. Sign-in links can be requested about once per minute.")).not.toBeInTheDocument();
     expect(screen.getByTestId("sign-in-client")).toBeInTheDocument();
   });
 });
