@@ -38,6 +38,7 @@ describe("BillingActionsClient", () => {
 
     expect(screen.getByRole("button", { name: "Checkout coming soon" })).toBeDisabled();
     expect(screen.getByText(/Pricing is visible now\./)).toBeVisible();
+    expect(screen.getByText(/billing is disabled for now\./)).toBeVisible();
     expect(screen.getByText(/Create a free account for 3 fresh maps every day\./)).toBeVisible();
     expect(screen.queryByRole("button", { name: /Upgrade/i })).not.toBeInTheDocument();
   });
@@ -46,7 +47,7 @@ describe("BillingActionsClient", () => {
     render(<BillingActionsClient entitlement={FREE_ENTITLEMENT} context="upgrade" />);
 
     expect(screen.getByRole("link", { name: "Sign in to upgrade" })).toHaveAttribute("href", "/sign-in");
-    expect(screen.getByText("Checkout is not open yet, but your free account will be ready when it is.")).toBeVisible();
+    expect(screen.getByText("Checkout is coming soon. Create or sign in to your free account now; billing will open later.")).toBeVisible();
     expect(screen.queryByRole("button", { name: "Checkout coming soon" })).not.toBeInTheDocument();
   });
 

@@ -4,11 +4,13 @@ import Link from "next/link";
 import { useEffect, useState } from "react";
 import { useEntitlement } from "@/features/account/useEntitlement";
 import { ACCESS_PLAN_COPY } from "@/lib/account/accessCopy";
+import { publicBillingEnabled } from "@/lib/billing/publicBillingConfig";
 import { defaultPersistedState, loadPersistedState } from "@/lib/persistence/storage";
 
 export function AccountPlanNotesClient() {
   const { entitlement, loading, signedIn } = useEntitlement();
   const isPro = entitlement.plan === "pro";
+  const billingEnabled = publicBillingEnabled();
   const [localRecordCount, setLocalRecordCount] = useState(0);
 
   useEffect(() => {
@@ -27,9 +29,13 @@ export function AccountPlanNotesClient() {
     );
   }
 
-  const billingTitle = isPro ? "Manage billing" : signedIn ? "Upgrade access" : "Compare plans";
-  const billingCopy = isPro ? "Plan controls and receipts." : "Full Practice Atlas, complete Past Games archive, advanced stats.";
-  const billingAction = isPro ? "Manage billing" : signedIn ? "Upgrade to Pro" : "View plans";
+  const billingTitle = isPro ? "Manage billing" : billingEnabled ? (signedIn ? "Upgrade access" : "Compare plans") : "Pro preview";
+  const billingCopy = isPro
+    ? "Plan controls and receipts."
+    : billingEnabled
+      ? "Full Practice Atlas, complete Past Games archive, advanced stats."
+      : "Pro is coming later with full Practice Atlas, complete Past Games archive, and advanced stats.";
+  const billingAction = isPro ? "Manage billing" : billingEnabled ? (signedIn ? "Upgrade to Pro" : "View plans") : "View Pro preview";
 
   if (!signedIn) {
     return (

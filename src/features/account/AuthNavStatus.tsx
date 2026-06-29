@@ -36,7 +36,9 @@ export function AuthNavStatus() {
       <span className="account-avatar" aria-hidden="true">
         {accountInitial(user.email)}
       </span>
-      <span className="account-nav-email">{user.email ?? "Account"}</span>
+      <span className="account-nav-email" title={user.email ?? "Account"}>
+        {user.email ?? "Account"}
+      </span>
       <span className="account-plan-badge" data-plan={entitlementLoading ? "loading" : entitlement.plan}>
         {plan}
       </span>

@@ -20,7 +20,7 @@ export function UpgradeClient() {
     ? "Pro is active on this account. Unlimited Atlas play, the full Practice Atlas, complete Past Games archive, and advanced stats are unlocked."
     : billingEnabled
       ? "Sign in, choose monthly or yearly, and continue through secure Stripe checkout when you are ready."
-      : "Pro pricing is visible for planning, but checkout is not open yet. You can still try the Sample Run or create a free account for 3 fresh maps every day.";
+      : "Pro pricing is visible for planning. Checkout is coming soon and billing is disabled for now; Free accounts still get 3 fresh maps every day.";
   const overviewHeading = loading ? "Checking your plan." : isPro ? "Pro is active." : billingEnabled ? "Choose monthly or yearly." : "Checkout coming soon.";
   const statusTitle = isPro
     ? "Pro is active"
@@ -37,7 +37,7 @@ export function UpgradeClient() {
       ? signedIn
         ? "Pick monthly or yearly, then continue to secure checkout."
         : "Sign in so Pro access can stay with your account."
-      : "You can review pricing now. Checkout will open when billing is ready.";
+      : "Billing is disabled right now. Free accounts can play the 3-map Daily while Pro opens later.";
 
   return (
     <div className="upgrade-shell">
@@ -73,8 +73,8 @@ export function UpgradeClient() {
           <p className="eyebrow">Full atlas access</p>
           <h2>{overviewHeading}</h2>
           <p>
-            Free accounts unlock 3 fresh maps every day and saved progress. Pro opens unlimited Atlas play, the full Practice Atlas,
-            complete Past Games archive, advanced stats, and future premium surfaces.
+            Free accounts unlock 3 fresh maps every day and saved progress. Pro is planned to open unlimited Atlas play, the full
+            Practice Atlas, complete Past Games archive, advanced stats, and future premium surfaces.
           </p>
         </div>
         <div className="upgrade-status-card" aria-live="polite">

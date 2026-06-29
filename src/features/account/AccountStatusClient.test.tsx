@@ -60,13 +60,17 @@ vi.mock("@/features/account/useEntitlement", () => ({
 describe("AccountStatusClient", () => {
   beforeEach(() => {
     accountMock.state.signOut.mockClear();
+    accountMock.state.user = {
+      id: "11111111-2222-4333-8444-555555555555",
+      email: "player@example.com"
+    };
   });
 
   it("renders a compact signed-in account summary without exposing the raw user ID", async () => {
     const user = userEvent.setup();
     render(<AccountStatusClient />);
 
-    expect(screen.getByRole("heading", { name: "player@example.com" })).toBeVisible();
+    expect(screen.getByRole("heading", { name: "player@example.com" })).toHaveClass("account-identity-email");
     expect(screen.getByText(/Profile connected/i)).toBeVisible();
     expect(screen.getByText("player@example.com")).toBeVisible();
     expect(screen.getAllByText("Free account")[0]).toBeVisible();
@@ -80,6 +84,18 @@ describe("AccountStatusClient", () => {
     await user.click(screen.getByRole("button", { name: "Show support ID" }));
     expect(screen.getByText("11111111-2222-4333-8444-555555555555")).toBeVisible();
     expect(screen.getByRole("button", { name: "Copy support ID" })).toBeVisible();
+  });
+
+  it("marks long email addresses for wrapping in the profile card", () => {
+    const longEmail = "very.long.player.name.with.saved.daily.progress@example-long-domain.canyougeo.test";
+    accountMock.state.user = {
+      id: "11111111-2222-4333-8444-555555555555",
+      email: longEmail
+    };
+
+    render(<AccountStatusClient />);
+
+    expect(screen.getByRole("heading", { name: longEmail })).toHaveClass("account-identity-email");
   });
 });
 

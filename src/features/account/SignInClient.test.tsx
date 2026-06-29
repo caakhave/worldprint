@@ -40,8 +40,11 @@ describe("SignInClient", () => {
     const user = userEvent.setup();
     render(<SignInClient />);
 
-    expect(screen.getByText("No password needed. Enter your email and we'll send a secure one-time sign-in link.")).toBeVisible();
-    expect(screen.getByText("For security, sign-in links can only be requested about once per minute.")).toBeVisible();
+    expect(screen.getByRole("heading", { name: "Create a free account or sign in." })).toBeVisible();
+    expect(
+      screen.getByText("New players get a free account automatically. Returning players use the same email to sign back in.")
+    ).toBeVisible();
+    expect(screen.getByText("No password needed. Sign-in links can only be requested about once per minute.")).toBeVisible();
     expect(screen.getByText("Returning later? Use the same email and request a fresh link.")).toBeVisible();
 
     await user.type(screen.getByLabelText("Email"), "player@example.com");

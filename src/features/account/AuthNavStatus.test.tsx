@@ -67,6 +67,8 @@ describe("AuthNavStatus", () => {
     render(<AuthNavStatus />);
 
     expect(screen.getByRole("link", { name: /Account for player@example.com/i })).toHaveAttribute("href", "/account");
+    expect(screen.getByText("player@example.com")).toHaveClass("account-nav-email");
+    expect(screen.getByText("player@example.com")).toHaveAttribute("title", "player@example.com");
     expect(screen.getByText("P")).toBeVisible();
     expect(screen.getByText("Free")).toBeVisible();
     expect(screen.queryByText("user_123")).not.toBeInTheDocument();
