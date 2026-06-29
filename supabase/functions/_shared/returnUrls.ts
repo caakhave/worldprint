@@ -33,7 +33,7 @@ export function resolveBillingSiteOrigin(input: BillingSiteOriginInput): Billing
     if (localSupabase) return { origin: siteUrl.origin, error: null };
     return {
       origin: null,
-      error: "NEXT_PUBLIC_SITE_URL cannot be localhost for deployed billing. Set it to https://canyougeo.com."
+      error: "NEXT_PUBLIC_SITE_URL cannot be localhost for deployed billing. Set it to a deployed https origin."
     };
   }
 
@@ -41,7 +41,7 @@ export function resolveBillingSiteOrigin(input: BillingSiteOriginInput): Billing
     return { origin: null, error: "NEXT_PUBLIC_SITE_URL must use https outside local development." };
   }
 
-  if (siteUrl.hostname === "canyougeo.com" || siteUrl.hostname === "www.canyougeo.com") {
+  if (isAllowedCanYouGeoHost(siteUrl.hostname)) {
     return { origin: siteUrl.origin, error: null };
   }
 
@@ -51,7 +51,7 @@ export function resolveBillingSiteOrigin(input: BillingSiteOriginInput): Billing
 
   return {
     origin: null,
-    error: "NEXT_PUBLIC_SITE_URL host is not allowed for billing returns. Use https://canyougeo.com."
+    error: "NEXT_PUBLIC_SITE_URL host is not allowed for billing returns."
   };
 }
 
@@ -82,4 +82,8 @@ function isLocalHostname(hostname: string): boolean {
 
 function isAllowedCloudflarePreview(hostname: string): boolean {
   return hostname === "canyougeo.pages.dev" || hostname.endsWith(".canyougeo.pages.dev");
+}
+
+function isAllowedCanYouGeoHost(hostname: string): boolean {
+  return hostname === "canyougeo.com" || hostname === "www.canyougeo.com" || hostname === "test.canyougeo.com";
 }

@@ -121,7 +121,7 @@ export function allowedCorsOrigin(requestOrigin: string | null, config: CorsConf
   const siteOrigin = normalizedOrigin(config.siteOrigin);
   if (siteOrigin && requestUrl.origin === siteOrigin) return requestUrl.origin;
 
-  if (requestUrl.protocol === "https:" && (requestUrl.hostname === "canyougeo.com" || requestUrl.hostname === "www.canyougeo.com")) {
+  if (requestUrl.protocol === "https:" && isAllowedCanYouGeoHost(requestUrl.hostname)) {
     return requestUrl.origin;
   }
 
@@ -154,6 +154,10 @@ function parseOrigin(value: string): URL | null {
 
 function isAllowedCloudflarePreview(hostname: string): boolean {
   return hostname === "canyougeo.pages.dev" || hostname.endsWith(".canyougeo.pages.dev");
+}
+
+function isAllowedCanYouGeoHost(hostname: string): boolean {
+  return hostname === "canyougeo.com" || hostname === "www.canyougeo.com" || hostname === "test.canyougeo.com";
 }
 
 function isLocalOrigin(origin: string): boolean {

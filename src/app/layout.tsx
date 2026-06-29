@@ -5,6 +5,7 @@ import "@/styles/globals.css";
 import { BrandMark } from "@/components/BrandMark";
 import { AuthNavStatus } from "@/features/account/AuthNavStatus";
 import { BRAND_NAME } from "@/lib/brand";
+import { publicSiteOrigin, robotsForSite, shouldNoIndexSite } from "@/lib/site/origin";
 
 const plexSans = IBM_Plex_Sans({
   subsets: ["latin"],
@@ -27,8 +28,18 @@ const plexMono = IBM_Plex_Mono({
   display: "swap"
 });
 
+const siteOrigin = publicSiteOrigin(process.env.NEXT_PUBLIC_SITE_URL, process.env.CF_PAGES_URL);
+const robots = robotsForSite(
+  shouldNoIndexSite(
+    process.env.NEXT_PUBLIC_SITE_URL,
+    process.env.NEXT_PUBLIC_NO_INDEX,
+    process.env.CF_PAGES_BRANCH,
+    process.env.CF_PAGES_URL
+  )
+);
+
 export const metadata: Metadata = {
-  metadataBase: new URL("https://canyougeo.com"),
+  metadataBase: new URL(siteOrigin),
   title: {
     default: "Can You Geo? — Daily Geography Games & World Data Puzzles",
     template: "%s | Can You Geo?"
@@ -44,7 +55,7 @@ export const metadata: Metadata = {
     title: "Can You Geo? — Daily Geography Games & World Data Puzzles",
     description:
       "Identify hidden data maps, find population centers, spot atlas anomalies, and follow water across the planet in geography games made for world-data nerds.",
-    url: "https://canyougeo.com",
+    url: siteOrigin,
     siteName: "Can You Geo?"
   },
   twitter: {
@@ -52,7 +63,8 @@ export const metadata: Metadata = {
     title: "Can You Geo? — Daily Geography Games & World Data Puzzles",
     description:
       "Identify hidden data maps, find population centers, spot atlas anomalies, and follow water across the planet in geography games made for world-data nerds."
-  }
+  },
+  robots
 };
 
 export const viewport: Viewport = {

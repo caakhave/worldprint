@@ -12,7 +12,7 @@ describe("LegalPage", () => {
     expect(screen.getByRole("heading", { name: "Cookies and Local Storage" })).toBeVisible();
     expect(screen.getByRole("heading", { name: "Accessibility" })).toBeVisible();
     expect(screen.getAllByText("Effective date: June 26, 2026")).toHaveLength(3);
-    expect(screen.getAllByRole("link", { name: "privacy@canyougeo.com" })).toHaveLength(5);
+    expect(screen.getAllByRole("link", { name: "privacy@canyougeo.com" })).toHaveLength(4);
     expect(screen.queryByText("[CONTACT_EMAIL]")).not.toBeInTheDocument();
   });
 });

@@ -1,6 +1,7 @@
 import type { RoundPlayState, RunState } from "@/lib/game/state";
 import { challengeNumber } from "@/lib/game/daily";
 import { TIER_CONFIGS } from "@/lib/game/scoring";
+import { publicSiteOrigin } from "@/lib/site/origin";
 
 export type ShareRoundTone = "clean" | "clued" | "miss" | "incomplete";
 
@@ -104,7 +105,7 @@ export function buildShareText(run: RunState, options: { challengeUrl?: string }
     `${summary.score.toLocaleString("en-US")} pts · ${summary.rankTitle}`,
     `${summary.resultLabel} · ${summary.tierLabel} · ${summary.solvedCount}/${summary.roundCount} solved`,
     summary.strip,
-    options.challengeUrl ?? "https://canyougeo.com"
+    options.challengeUrl ?? publicSiteOrigin()
   ];
   return lines.join("\n");
 }

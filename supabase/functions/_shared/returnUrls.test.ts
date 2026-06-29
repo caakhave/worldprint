@@ -19,6 +19,15 @@ describe("billing return URLs", () => {
     ).toEqual({ origin: "https://canyougeo.com", error: null });
   });
 
+  it("accepts the staging Can You Geo origin", () => {
+    expect(
+      resolveBillingSiteOrigin({
+        configuredSiteUrl: "https://test.canyougeo.com",
+        supabaseUrl: "https://jquebthneczqdxagagof.supabase.co"
+      })
+    ).toEqual({ origin: "https://test.canyougeo.com", error: null });
+  });
+
   it("rejects localhost returns for deployed Supabase projects", () => {
     expect(
       resolveBillingSiteOrigin({
@@ -27,7 +36,7 @@ describe("billing return URLs", () => {
       })
     ).toEqual({
       origin: null,
-      error: "NEXT_PUBLIC_SITE_URL cannot be localhost for deployed billing. Set it to https://canyougeo.com."
+      error: "NEXT_PUBLIC_SITE_URL cannot be localhost for deployed billing. Set it to a deployed https origin."
     });
   });
 
@@ -56,7 +65,7 @@ describe("billing return URLs", () => {
     };
     expect(resolveBillingSiteOrigin(input)).toEqual({
       origin: null,
-      error: "NEXT_PUBLIC_SITE_URL host is not allowed for billing returns. Use https://canyougeo.com."
+      error: "NEXT_PUBLIC_SITE_URL host is not allowed for billing returns."
     });
     expect(resolveBillingSiteOrigin({ ...input, allowPreviewUrls: true })).toEqual({
       origin: "https://abc123.canyougeo.pages.dev",

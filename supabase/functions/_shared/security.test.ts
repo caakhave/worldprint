@@ -53,6 +53,9 @@ describe("billing security helpers", () => {
   it("limits browser CORS to production, configured local, and explicit previews", () => {
     expect(allowedCorsOrigin("https://canyougeo.com", { siteOrigin: "https://canyougeo.com" })).toBe("https://canyougeo.com");
     expect(allowedCorsOrigin("https://www.canyougeo.com", { siteOrigin: "https://canyougeo.com" })).toBe("https://www.canyougeo.com");
+    expect(allowedCorsOrigin("https://test.canyougeo.com", { siteOrigin: "https://test.canyougeo.com" })).toBe(
+      "https://test.canyougeo.com"
+    );
     expect(allowedCorsOrigin("https://evil.example", { siteOrigin: "https://canyougeo.com" })).toBeNull();
     expect(allowedCorsOrigin("http://localhost:3000", { siteOrigin: "https://canyougeo.com" })).toBeNull();
     expect(allowedCorsOrigin("http://localhost:3000", { siteOrigin: "http://localhost:3000" })).toBe("http://localhost:3000");

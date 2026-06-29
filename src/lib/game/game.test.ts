@@ -390,6 +390,28 @@ describe("streaks and sharing", () => {
     expect(containsSpoiler(text, ["Japan", "Brazil", "fertility", "life expectancy", "World Bank", "api.worldbank.org"])).toBe(false);
   });
 
+  it("uses the configured public site URL as the share fallback", () => {
+    const originalSiteUrl = process.env.NEXT_PUBLIC_SITE_URL;
+    try {
+      process.env.NEXT_PUBLIC_SITE_URL = "https://test.canyougeo.com";
+      const run = createRun({
+        mode: "sample",
+        dateKey: "sample",
+        contentVersion: "test",
+        tier: "analyst",
+        roundIds: [{ roundId: "fertility-rate", correctIndicatorId: "fertility-rate" }]
+      });
+
+      expect(buildShareText({ ...run, status: "complete" })).toContain("https://test.canyougeo.com");
+    } finally {
+      if (originalSiteUrl === undefined) {
+        delete process.env.NEXT_PUBLIC_SITE_URL;
+      } else {
+        process.env.NEXT_PUBLIC_SITE_URL = originalSiteUrl;
+      }
+    }
+  });
+
   it("labels non-Daily share text without presenting it as the official Daily", () => {
     const practice = createRun({
       mode: "practice",
