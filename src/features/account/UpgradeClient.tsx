@@ -8,6 +8,7 @@ import { useEntitlement } from "@/features/account/useEntitlement";
 import { ACCESS_PLAN_COPY } from "@/lib/account/accessCopy";
 import { publicBillingEnabled } from "@/lib/billing/publicBillingConfig";
 import { PRO_PRICE_OPTIONS } from "@/lib/billing/proPricing";
+import { CONTACT_LINKS } from "@/lib/contact";
 
 export function UpgradeClient() {
   const { configured, entitlement, loading, signedIn } = useEntitlement();
@@ -171,7 +172,10 @@ export function UpgradeClient() {
         <ShieldCheck size={20} aria-hidden="true" />
         <div>
           <h2>Secure checkout.</h2>
-          <p>Stripe handles payment details. Can You Geo? never asks for card information on this page.</p>
+          <p>
+            Stripe handles payment details. Can You Geo? never asks for card information on this page.{" "}
+            <a href={CONTACT_LINKS.billingHelp.href}>Email support for billing help</a>.
+          </p>
         </div>
       </section>
     </div>

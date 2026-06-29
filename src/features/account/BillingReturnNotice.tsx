@@ -3,6 +3,7 @@
 import Link from "next/link";
 import { useEffect, useState } from "react";
 import { useEntitlement } from "@/features/account/useEntitlement";
+import { CONTACT_LINKS } from "@/lib/contact";
 
 type BillingReturnState = "success" | "cancelled" | null;
 
@@ -30,7 +31,10 @@ export function BillingReturnNotice({ context }: { context: "account" | "upgrade
         <div>
           <p className="eyebrow">Checkout cancelled</p>
           <h2>No charge was made.</h2>
-          <p>You can keep playing for free, compare plans again, or come back when you are ready.</p>
+          <p>
+            You can keep playing for free, compare plans again, or come back when you are ready.{" "}
+            <a href={CONTACT_LINKS.billingHelp.href}>Email support for billing help</a>.
+          </p>
         </div>
         {context === "account" ? (
           <Link className="button-secondary" href="/upgrade">
@@ -57,6 +61,12 @@ export function BillingReturnNotice({ context }: { context: "account" | "upgrade
             : proActive
               ? "The full Practice Atlas, complete Past Games archive, and advanced stats are unlocked on this account."
               : "Stripe finished checkout and the subscription update is still arriving. Refresh in a moment if your account does not switch to Pro."}
+          {!proActive && !loading ? (
+            <>
+              {" "}
+              <a href={CONTACT_LINKS.billingHelp.href}>Email support for billing help</a>.
+            </>
+          ) : null}
         </p>
       </div>
       <Link className="button-secondary" href={proActive ? "/play/mystery-map" : "/account"}>

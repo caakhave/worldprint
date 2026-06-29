@@ -5,6 +5,7 @@ import "@/styles/globals.css";
 import { BrandMark } from "@/components/BrandMark";
 import { AuthNavStatus } from "@/features/account/AuthNavStatus";
 import { BRAND_NAME } from "@/lib/brand";
+import { CONTACT_LINKS } from "@/lib/contact";
 import { publicSiteOrigin, robotsForSite, shouldNoIndexSite } from "@/lib/site/origin";
 
 const plexSans = IBM_Plex_Sans({
@@ -117,6 +118,7 @@ export default function RootLayout({ children }: Readonly<{ children: React.Reac
                 {item.label}
               </Link>
             ))}
+            <a href={CONTACT_LINKS.accountHelp.href}>Support</a>
             <AuthNavStatus />
           </nav>
         </footer>

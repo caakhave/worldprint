@@ -4,6 +4,7 @@ import { beforeEach, describe, expect, it, vi } from "vitest";
 import { AccountHeroClient } from "@/features/account/AccountHeroClient";
 import { AccountPlanNotesClient } from "@/features/account/AccountPlanNotesClient";
 import { AccountStatusClient } from "@/features/account/AccountStatusClient";
+import { CONTACT_LINKS } from "@/lib/contact";
 
 const accountMock = vi.hoisted(() => ({
   state: {
@@ -73,6 +74,7 @@ describe("AccountStatusClient", () => {
     expect(screen.queryByText("11111111-2222-4333-8444-555555555555")).not.toBeInTheDocument();
     expect(screen.getByRole("link", { name: "View saved stats" })).toHaveAttribute("href", "/account/stats");
     expect(screen.getByRole("link", { name: "Compare plans" })).toHaveAttribute("href", "/upgrade");
+    expect(screen.getByRole("link", { name: "Email support" })).toHaveAttribute("href", CONTACT_LINKS.accountHelp.href);
     expect(screen.getByRole("button", { name: "Sign out" })).toBeVisible();
 
     await user.click(screen.getByRole("button", { name: "Show support ID" }));

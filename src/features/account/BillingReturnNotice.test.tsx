@@ -1,6 +1,7 @@
 import { render, screen } from "@testing-library/react";
 import { beforeEach, describe, expect, it, vi } from "vitest";
 import { BillingReturnNotice } from "@/features/account/BillingReturnNotice";
+import { CONTACT_LINKS } from "@/lib/contact";
 
 const entitlementMock = vi.hoisted(() => ({
   state: {
@@ -53,6 +54,10 @@ describe("BillingReturnNotice", () => {
 
     expect(await screen.findByRole("heading", { name: "Pro access is being verified." })).toBeVisible();
     expect(screen.getByText(/Stripe finished checkout/i)).toBeVisible();
+    expect(screen.getByRole("link", { name: "Email support for billing help" })).toHaveAttribute(
+      "href",
+      CONTACT_LINKS.billingHelp.href
+    );
   });
 
   it("confirms Pro access when the entitlement row is active", async () => {
@@ -72,5 +77,9 @@ describe("BillingReturnNotice", () => {
 
     expect(await screen.findByRole("heading", { name: "No charge was made." })).toBeVisible();
     expect(screen.getByRole("link", { name: "Keep playing" })).toHaveAttribute("href", "/play/mystery-map");
+    expect(screen.getByRole("link", { name: "Email support for billing help" })).toHaveAttribute(
+      "href",
+      CONTACT_LINKS.billingHelp.href
+    );
   });
 });

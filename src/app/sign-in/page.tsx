@@ -3,6 +3,7 @@ import Link from "next/link";
 import { SignInClient } from "@/features/account/SignInClient";
 import { BRAND_NAME } from "@/lib/brand";
 import { ACCESS_PLAN_COPY } from "@/lib/account/accessCopy";
+import { CONTACT_LINKS } from "@/lib/contact";
 
 export const metadata: Metadata = {
   title: "Create a Free Account",
@@ -48,9 +49,14 @@ export default function SignInPage() {
         <p>
           {BRAND_NAME} keeps sign-in simple: enter your email, open the secure link, and your Free Daily progress can follow you.
         </p>
-        <Link className="button-secondary" href="/play/mystery-map">
-          Try Sample Run
-        </Link>
+        <div className="button-row">
+          <Link className="button-secondary" href="/play/mystery-map">
+            Try Sample Run
+          </Link>
+          <a className="button-secondary" href={CONTACT_LINKS.accountHelp.href}>
+            Get account help
+          </a>
+        </div>
       </div>
     </section>
   );

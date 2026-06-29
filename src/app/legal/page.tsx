@@ -1,6 +1,6 @@
 import type { Metadata } from "next";
+import { CONTACT_LINKS, SUPPORT_EMAIL } from "@/lib/contact";
 
-const CONTACT_EMAIL = "privacy@canyougeo.com";
 const EFFECTIVE_DATE = "June 26, 2026";
 
 export const metadata: Metadata = {
@@ -86,7 +86,8 @@ export default function LegalPage() {
 
             <h3>Contact</h3>
             <p>
-              Questions about these Terms can be sent to <a href={`mailto:${CONTACT_EMAIL}`}>{CONTACT_EMAIL}</a>.
+              Questions about these Terms can be sent to{" "}
+              <a href={CONTACT_LINKS.privacyLegalRequest.href}>{SUPPORT_EMAIL}</a>.
             </p>
           </section>
 
@@ -137,7 +138,8 @@ export default function LegalPage() {
             <h3>Your Choices</h3>
             <p>
               You can play some parts of the game without signing in. You can sign out at any time. You may request access,
-              correction, or deletion of your account information by contacting <a href={`mailto:${CONTACT_EMAIL}`}>{CONTACT_EMAIL}</a>.
+              correction, or deletion of your account information by contacting{" "}
+              <a href={CONTACT_LINKS.privacyLegalRequest.href}>{SUPPORT_EMAIL}</a>.
             </p>
 
             <h3>Children</h3>
@@ -166,7 +168,8 @@ export default function LegalPage() {
 
             <h3>Contact</h3>
             <p>
-              Privacy questions or requests can be sent to <a href={`mailto:${CONTACT_EMAIL}`}>{CONTACT_EMAIL}</a>.
+              Privacy questions or requests can be sent to{" "}
+              <a href={CONTACT_LINKS.privacyLegalRequest.href}>{SUPPORT_EMAIL}</a>.
             </p>
           </section>
 
@@ -184,8 +187,8 @@ export default function LegalPage() {
             </p>
             <p>
               If you have trouble using the site or need an accessibility-related accommodation, contact us at{" "}
-              <a href={`mailto:${CONTACT_EMAIL}`}>{CONTACT_EMAIL}</a>. Please include the page, browser/device, assistive technology
-              if relevant, and a short description of the problem.
+              <a href={CONTACT_LINKS.bugReport.href}>{SUPPORT_EMAIL}</a>. Please include the page, browser/device, assistive
+              technology if relevant, and a short description of the problem.
             </p>
           </section>
         </article>

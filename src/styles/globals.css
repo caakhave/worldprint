@@ -5672,6 +5672,7 @@ dd {
   font-size: 0.72rem;
   font-weight: 700;
   letter-spacing: 0.035em;
+  text-decoration: none;
   text-transform: uppercase;
   cursor: pointer;
   transition:
@@ -6020,6 +6021,12 @@ dd {
   display: flex;
   gap: 0.8rem;
   align-items: flex-start;
+}
+
+.billing-return-notice a:not(.button-secondary),
+.upgrade-note a {
+  color: var(--signal-2);
+  font-weight: 700;
 }
 
 .beta-hero {
@@ -6528,6 +6535,10 @@ dd {
   color: var(--muted);
   line-height: 1.62;
   text-wrap: pretty;
+}
+
+.sources-prose .button-secondary {
+  margin-top: 0.85rem;
 }
 
 .source-list {

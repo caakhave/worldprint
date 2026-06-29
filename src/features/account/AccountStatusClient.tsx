@@ -8,6 +8,7 @@ import { useEntitlement } from "@/features/account/useEntitlement";
 import { useSupabaseAccount } from "@/features/account/useSupabaseAccount";
 import { ACCESS_PLAN_COPY } from "@/lib/account/accessCopy";
 import { planLabel } from "@/lib/account/entitlements";
+import { CONTACT_LINKS } from "@/lib/contact";
 
 export function AccountStatusClient() {
   const { configured, loading, user, profileError, signOut } = useSupabaseAccount();
@@ -115,6 +116,9 @@ export function AccountStatusClient() {
         </div>
       </dl>
       <div className="account-support-tools">
+        <a className="button-subtle" href={CONTACT_LINKS.accountHelp.href}>
+          Email support
+        </a>
         <button className="button-subtle" type="button" onClick={() => setSupportIdVisible((visible) => !visible)}>
           {supportIdVisible ? "Hide support ID" : "Show support ID"}
         </button>

@@ -2,6 +2,7 @@ import { render, screen } from "@testing-library/react";
 import { beforeEach, describe, expect, it, vi } from "vitest";
 import { UpgradeClient } from "@/features/account/UpgradeClient";
 import { FREE_ENTITLEMENT, PRO_ENTITLEMENT, type PlayerEntitlement } from "@/lib/account/entitlements";
+import { CONTACT_LINKS } from "@/lib/contact";
 
 const TEST_USER = { id: "11111111-2222-4333-8444-555555555555", email: "reader@example.com" };
 
@@ -60,6 +61,10 @@ describe("UpgradeClient", () => {
     for (const link of screen.getAllByRole("link", { name: "Sign in to upgrade" })) {
       expect(link).toHaveAttribute("href", "/sign-in");
     }
+    expect(screen.getByRole("link", { name: "Email support for billing help" })).toHaveAttribute(
+      "href",
+      CONTACT_LINKS.billingHelp.href
+    );
     expect(screen.getAllByText("Checkout coming soon").length).toBeGreaterThan(0);
   });
 

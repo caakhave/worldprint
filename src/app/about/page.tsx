@@ -1,5 +1,6 @@
 import Link from "next/link";
 import type { Metadata } from "next";
+import { CONTACT_LINKS } from "@/lib/contact";
 
 export const metadata: Metadata = {
   title: "About"
@@ -38,6 +39,29 @@ export default function AboutPage() {
             Read Data &amp; Sources
           </Link>
         </article>
+      </div>
+      <div className="about-cta surface map-texture-panel" aria-label="Contact Can You Geo">
+        <div>
+          <h2>Send the right note to the right inbox.</h2>
+          <p>
+            Use support for bugs, account help, billing, privacy/legal requests, and data corrections. General feedback and friendly
+            partnership notes can go to hello.
+          </p>
+        </div>
+        <div className="button-row">
+          <a className="button-secondary" href={CONTACT_LINKS.bugReport.href}>
+            Report a bug
+          </a>
+          <a className="button-secondary" href={CONTACT_LINKS.dataSourceIssue.href}>
+            Data/source issue
+          </a>
+          <a className="button-secondary" href={CONTACT_LINKS.accountHelp.href}>
+            Account help
+          </a>
+          <a className="button-secondary" href={CONTACT_LINKS.generalFeedback.href}>
+            General feedback
+          </a>
+        </div>
       </div>
     </section>
   );

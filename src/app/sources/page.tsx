@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import sources from "../../../public/data/v1/sources.json";
+import { CONTACT_LINKS } from "@/lib/contact";
 import { storageDescription } from "@/lib/persistence/storage";
 
 export const metadata: Metadata = {
@@ -153,6 +154,9 @@ export default function SourcesPage() {
               If a map looks wrong, report the game date, country, and what looked suspicious. Source links or screenshots help turn
               a hunch into a clean correction.
             </p>
+            <a className="button-secondary" href={CONTACT_LINKS.dataSourceIssue.href}>
+              Report a data/source issue
+            </a>
           </section>
           <section>
             <h2>Known limitations</h2>

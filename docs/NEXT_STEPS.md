@@ -102,8 +102,8 @@ Added in Archive + Challenge Links v1:
 - Thirty-one of the 198 candidates are draft-held/data-failed by the data gate, which means scaling requires more candidates than the desired playable count.
 - Distractor-correlation and selection review are automated guidance and still need human editorial judgment for future seasonal manifests.
 - Daily variety is deterministic and balanced inside the current content version. Generated Daily manifests freeze the current archive window, but indefinite old-link support will require preserving prior content-version artifacts.
-- Sources page is stronger but still uses a placeholder correction/contact channel.
-- Legal page uses `privacy@canyougeo.com` as the public privacy contact. TODO before launch: create or forward this inbox so privacy and terms requests reach the operator.
+- Sources page now routes data/source concerns to `support@canyougeo.com`; continue improving the correction intake once a formal support workflow exists.
+- Legal page uses `support@canyougeo.com` as the public privacy, terms, and accessibility contact. TODO before launch: create or forward this inbox so requests reach the operator.
 - Focused beta QA found no UI blockers, but 12 of 15 sampled maps still need outside playtest attention for correlation, answer-choice fairness, or mobile readability nuance.
 - No leaderboard, runtime map tiles, or future game implementations exist.
 - Local stats can sync aggregate snapshots to Supabase when configured, but there is no run-level cloud history, Challenge history UI, leaderboard, or public profile.

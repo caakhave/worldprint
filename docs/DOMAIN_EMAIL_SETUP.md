@@ -125,13 +125,7 @@ If emails arrive as `Supabase Auth`, configure custom SMTP under **Authenticatio
 Recommended auth sender:
 
 ```text
-Can You Geo <login@mail.canyougeo.com>
-```
-
-Alternative:
-
-```text
-Can You Geo <no-reply@mail.canyougeo.com>
+Can You Geo <auth@canyougeo.com>
 ```
 
 Changing the visible From name/address usually requires custom SMTP or a transactional email provider. Supabase's default email service is not enough for polished production sender branding.
@@ -235,19 +229,22 @@ Do not mix test Stripe keys with live price ids or live webhook secrets.
 
 ## Email Routing And Transactional Email
 
-Recommended public receiving address:
-
-```text
-hello@canyougeo.com
-```
-
-Alternative support address:
+Main public support address:
 
 ```text
 support@canyougeo.com
 ```
 
-Use Cloudflare Email Routing for inbound forwarding from those addresses to the owner's real inbox.
+General feedback and friendly contact:
+
+```text
+hello@canyougeo.com
+```
+
+Use Cloudflare Email Routing for inbound forwarding from those addresses to the owner's real inbox. Use `support@canyougeo.com`
+for support, account/sign-in help, privacy/legal requests, billing help, bug reports, and data/source concerns. Use
+`hello@canyougeo.com` only for general feedback, partnerships, or friendly contact. Do not list `auth@canyougeo.com` as a
+public contact address; reserve it for system/auth sender configuration.
 
 Cloudflare Email Routing handles inbound forwarding only. It does not by itself send branded outbound auth emails for Supabase.
 
@@ -267,7 +264,7 @@ mail.canyougeo.com
 Recommended visible sender:
 
 ```text
-Can You Geo <login@mail.canyougeo.com>
+Can You Geo <auth@canyougeo.com>
 ```
 
 ### DNS Records At A High Level
@@ -283,7 +280,7 @@ Typical records:
 Start DMARC conservatively:
 
 ```text
-v=DMARC1; p=none; rua=mailto:hello@canyougeo.com
+v=DMARC1; p=none; rua=mailto:support@canyougeo.com
 ```
 
 After successful delivery testing, tighten the policy later.
@@ -315,5 +312,5 @@ After successful delivery testing, tighten the policy later.
 
 - Decide whether `www.canyougeo.com` redirects to the apex domain or remains fully usable.
 - Choose transactional email provider for Supabase SMTP.
-- Choose visible support inbox: `hello@canyougeo.com` or `support@canyougeo.com`.
+- Create/verify Cloudflare Email Routing for `support@canyougeo.com` and `hello@canyougeo.com`.
 - Decide when to switch Stripe from test mode to live mode.
