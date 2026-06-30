@@ -80,5 +80,21 @@ describe("WorldprintClient UI structure", () => {
   it("marks reveal result text and stat cells with overflow-resistant hooks", () => {
     expect(source).toContain("correct-answer-line");
     expect(source).toContain('className="point-breakdown"');
+    expect(styles).toContain(".round-result-banner .correct-answer-line");
+    expect(styles).toContain("padding-top: 0.72rem");
+    expect(styles).toContain("grid-template-columns: repeat(auto-fit, minmax(5.75rem, 1fr));");
+    expect(styles).toContain("grid-template-columns: repeat(auto-fit, minmax(5.2rem, 1fr));");
+    expect(styles).toContain("word-break: break-word");
+  });
+
+  it("keeps the challenge email modal padded and readable across widths", () => {
+    expect(source).toContain('className="challenge-email-modal surface"');
+    expect(source).toContain("Send challenge by email");
+    expect(styles).toContain(".challenge-email-modal");
+    expect(styles).toContain("padding: clamp(1.2rem, 3vw, 1.75rem)");
+    expect(styles).toContain(".challenge-email-modal-head");
+    expect(styles).toContain(".challenge-email-modal-head .button-secondary");
+    expect(styles).toContain("@media (min-width: 560px)");
+    expect(styles).toContain("white-space: nowrap");
   });
 });
