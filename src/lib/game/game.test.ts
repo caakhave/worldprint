@@ -11,15 +11,24 @@ import {
   sampleRunRoundIds,
   selectAtlasRoundIds
 } from "@/lib/game/accessModel";
-import { decodeChallenge, encodeChallenge } from "@/lib/game/challenge";
+import { challengePayloadFromRun, decodeChallenge, encodeChallenge } from "@/lib/game/challenge";
 import { selectDailyRoundIds, selectPracticeRoundIds, utcDateKey } from "@/lib/game/daily";
 import { selectDailyRoundIdsFromManifest } from "@/lib/game/dailyManifest";
 import { localDateKey, nextDailyUnlockCopy, nextLocalDate } from "@/lib/game/retention";
 import { COUNTRY_REVEAL_COST, TIER_CONFIGS, UNIT_REVEAL_COST, WRONG_ANSWER_COST } from "@/lib/game/scoring";
-import { buildResultShareSummary, buildShareText, containsSpoiler, scoreCell } from "@/lib/game/share";
+import {
+  buildChallengeShareTarget,
+  buildEmailChallengeHref,
+  buildMysteryMapChallengeUrl,
+  buildResultShareSummary,
+  buildShareText,
+  challengeComparisonCopy,
+  containsSpoiler,
+  scoreCell
+} from "@/lib/game/share";
 import { updateStreak } from "@/lib/game/streak";
 import { createRun, isAcceptedAtlasGuess, reduceRun } from "@/lib/game/state";
-import { defaultPersistedState, recordDailyCompletion } from "@/lib/persistence/storage";
+import { defaultPersistedState, recordDailyCompletion, recordRunCompletion } from "@/lib/persistence/storage";
 
 const rounds = RoundsArtifactSchema.parse(generatedRounds).rounds;
 const generatedDaily = DailyManifestSchema.parse(generatedDailyJson);
@@ -382,8 +391,8 @@ describe("streaks and sharing", () => {
     });
     const text = buildShareText({ ...run, status: "complete" });
     expect(text).toContain("Can You Geo?");
-    expect(text).toContain("Daily #");
-    expect(text).toContain("pts");
+    expect(text).toContain("today's Can You Geo? Mystery Map");
+    expect(text).toContain("points");
     expect(text).toContain("Free Daily result");
     expect(text).toContain("https://canyougeo.com");
     expect(text).not.toContain("WORLDPRINT");
@@ -430,7 +439,7 @@ describe("streaks and sharing", () => {
 
     expect(buildShareText(practice)).toContain("Practice result");
     expect(buildShareText(practice)).not.toContain("Free Daily result");
-    expect(buildShareText(pastGame)).toContain("Past Game Replay");
+    expect(buildShareText(pastGame)).toContain("2026-06-18 Past Game");
     expect(buildShareText(pastGame)).toContain("Past Game replay");
     expect(buildShareText(pastGame)).not.toContain("Free Daily result");
   });
@@ -471,7 +480,7 @@ describe("streaks and sharing", () => {
     expect(summary.strip).toBe("🟩🟨🟥🟨🟩");
 
     const text = buildShareText(run);
-    expect(text).toContain("4,500 pts");
+    expect(text).toContain("4,500");
     expect(text).toContain("5/5 solved");
     expect(text).toContain("🟩🟨🟥🟨🟩");
     expect(text).toContain("https://canyougeo.com");
@@ -479,6 +488,37 @@ describe("streaks and sharing", () => {
   });
 
   it("encodes and decodes spoiler-free challenge links", () => {
+    let run = createRun({
+      mode: "daily",
+      dateKey: "2026-06-18",
+      contentVersion: "test",
+      tier: "analyst",
+      roundIds: [
+        { roundId: "worldprint-fertility-rate", correctIndicatorId: "fertility-rate" },
+        { roundId: "worldprint-life-expectancy", correctIndicatorId: "life-expectancy" }
+      ]
+    });
+    run = reduceRun(run, { type: "submit", answerId: "fertility-rate", label: "Fertility rate", correct: true });
+    run = reduceRun(run, { type: "nextRound" });
+    run = reduceRun(run, { type: "submit", answerId: "life-expectancy", label: "Life expectancy", correct: true });
+    run = reduceRun(run, { type: "nextRound" });
+    const code = encodeChallenge(challengePayloadFromRun(run));
+    const decoded = decodeChallenge(code);
+    expect(decoded.ok).toBe(true);
+    if (decoded.ok) {
+      expect(decoded.payload.roundIds).toEqual(["worldprint-fertility-rate", "worldprint-life-expectancy"]);
+      expect(decoded.payload.tier).toBe("analyst");
+      expect(decoded.payload.challenger).toMatchObject({
+        score: 2000,
+        possible: 2000,
+        solvedCount: 2,
+        roundCount: 2
+      });
+    }
+    expect(containsSpoiler(code, ["fertility rate", "life expectancy"])).toBe(false);
+  });
+
+  it("decodes older challenge links without challenger score metadata", () => {
     const code = encodeChallenge({
       kind: "daily",
       contentVersion: "test",
@@ -491,8 +531,38 @@ describe("streaks and sharing", () => {
     if (decoded.ok) {
       expect(decoded.payload.roundIds).toEqual(["worldprint-fertility-rate", "worldprint-life-expectancy"]);
       expect(decoded.payload.tier).toBe("analyst");
+      expect(decoded.payload.challenger).toBeUndefined();
     }
-    expect(containsSpoiler(code, ["fertility rate", "life expectancy"])).toBe(false);
+  });
+
+  it("builds share targets, challenge URLs, and encoded mailto links without raw answer spoilers", () => {
+    const run = createRun({
+      mode: "daily",
+      dateKey: "2026-06-18",
+      contentVersion: "test",
+      tier: "analyst",
+      roundIds: [{ roundId: "worldprint-fertility-rate", correctIndicatorId: "fertility-rate" }]
+    });
+    const code = encodeChallenge(challengePayloadFromRun({ ...run, status: "complete" }));
+    const url = buildMysteryMapChallengeUrl(code, "https://test.canyougeo.com");
+    const target = buildChallengeShareTarget({ ...run, status: "complete" }, url);
+    const mailto = buildEmailChallengeHref(target);
+
+    expect(url).toMatch(/^https:\/\/test\.canyougeo\.com\/challenge\/mystery-map\/\?c=/);
+    expect(target.title).toBe("Can You Geo? Mystery Map challenge");
+    expect(target.text).toContain(url);
+    expect(target.text).toContain("Can You Geo? Mystery Map");
+    expect(mailto).toMatch(/^mailto:\?/);
+    expect(mailto).toContain("Can+you+beat+my+Can+You+Geo+score%3F");
+    expect(decodeURIComponent(mailto)).toContain(url);
+    expect(containsSpoiler(`${target.text}\n${mailto}`, ["fertility rate", "World Bank", "Japan", "Brazil"])).toBe(false);
+  });
+
+  it("summarizes challenge comparisons", () => {
+    expect(challengeComparisonCopy(2400, 2100).headline).toContain("beat");
+    expect(challengeComparisonCopy(2100, 2100).headline).toContain("tied");
+    expect(challengeComparisonCopy(1950, 2100).headline).toContain("came close");
+    expect(challengeComparisonCopy(1000, 2100).headline).toContain("complete");
   });
 
   it("rejects invalid and unsupported challenge links", () => {
@@ -516,6 +586,23 @@ describe("streaks and sharing", () => {
     expect(next.streak).toEqual(state.streak);
     expect(next.lifetime).toEqual(state.lifetime);
     expect(Object.keys(next.completedDailyResults)).toHaveLength(0);
+  });
+
+  it("does not let Challenge completion change Daily streak or lifetime stats", () => {
+    const state = defaultPersistedState();
+    const challengeRun = createRun({
+      mode: "challenge",
+      dateKey: "2026-06-18",
+      contentVersion: "test",
+      tier: "analyst",
+      roundIds: [{ roundId: "fertility-rate", correctIndicatorId: "fertility-rate" }],
+      salt: "shared-score"
+    });
+    const next = recordRunCompletion(state, { ...challengeRun, status: "complete" });
+    expect(next.streak).toEqual(state.streak);
+    expect(next.lifetime).toEqual(state.lifetime);
+    expect(Object.keys(next.completedDailyResults)).toHaveLength(0);
+    expect(Object.keys(next.challengeHistoryById)).toEqual([challengeRun.id]);
   });
 
   it("records negative Daily round scores in totals", () => {

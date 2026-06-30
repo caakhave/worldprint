@@ -1,5 +1,6 @@
 import { z } from "zod";
 import { TierSchema, type Tier } from "@/lib/content/schemas";
+import { buildResultShareSummary } from "@/lib/game/share";
 import type { RunState } from "@/lib/game/state";
 
 export const CHALLENGE_SCHEMA_VERSION = "1";
@@ -11,7 +12,17 @@ const ChallengeBodySchema = z.object({
   contentVersion: z.string().min(1),
   tier: TierSchema,
   roundIds: z.array(z.string().min(1)).min(1).max(5),
-  dateKey: z.string().regex(/^\d{4}-\d{2}-\d{2}$/).optional()
+  dateKey: z.string().regex(/^\d{4}-\d{2}-\d{2}$/).optional(),
+  challenger: z
+    .object({
+      score: z.number().int(),
+      possible: z.number().int().positive(),
+      rankTitle: z.string().min(1),
+      solvedCount: z.number().int().min(0),
+      roundCount: z.number().int().min(1).max(5),
+      strip: z.string().min(1)
+    })
+    .optional()
 });
 
 export const ChallengePayloadSchema = ChallengeBodySchema.extend({
@@ -95,12 +106,24 @@ export function decodeChallenge(code: string | null | undefined): ChallengeDecod
 
 export function challengePayloadFromRun(run: RunState): Omit<ChallengePayload, "schemaVersion" | "game" | "checksum"> {
   const datedKind = run.mode === "daily" || run.mode === "archive";
+  const summary = buildResultShareSummary(run);
   return {
     kind: datedKind ? "daily" : "practice",
     contentVersion: run.contentVersion,
     tier: run.tier,
     roundIds: run.rounds.map((round) => round.roundId),
-    dateKey: datedKind ? run.dateKey : undefined
+    dateKey: datedKind ? run.dateKey : undefined,
+    challenger:
+      run.status === "complete"
+        ? {
+            score: summary.score,
+            possible: summary.possible,
+            rankTitle: summary.rankTitle,
+            solvedCount: summary.solvedCount,
+            roundCount: summary.roundCount,
+            strip: summary.strip
+          }
+        : undefined
   };
 }
 

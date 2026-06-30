@@ -1,6 +1,6 @@
 "use client";
 
-import { Compass, Copy, Lightbulb, Search, Share2, Shuffle } from "lucide-react";
+import { Compass, Copy, Lightbulb, Mail, Search, Share2, Shuffle } from "lucide-react";
 import Link from "next/link";
 import { useSearchParams } from "next/navigation";
 import { useCallback, useEffect, useMemo, useRef, useState } from "react";
@@ -40,7 +40,15 @@ import {
   selectAtlasRoundIds
 } from "@/lib/game/accessModel";
 import { localDateKey, nextDailyUnlockCopy } from "@/lib/game/retention";
-import { buildResultShareSummary, buildShareText, scoreRank } from "@/lib/game/share";
+import {
+  buildChallengeShareTarget,
+  buildEmailChallengeHref,
+  buildMysteryMapChallengeUrl,
+  buildResultShareSummary,
+  buildShareText,
+  challengeComparisonCopy,
+  scoreRank
+} from "@/lib/game/share";
 import { challengePayloadFromRun, decodeChallenge, encodeChallenge, type ChallengePayload } from "@/lib/game/challenge";
 import { TIER_CONFIGS, nextInvestigationPenalty } from "@/lib/game/scoring";
 import {
@@ -784,13 +792,14 @@ export function WorldprintClient({ dateOverride, entryMode = "standard" }: World
       );
     }
     if (!run) {
+      const challenger = challengeResult.payload.challenger;
       return (
         <section className="game-entry page-shell">
           <div className="entry-copy">
             <p className="eyebrow">Can You Geo? Challenge</p>
-            <h1 className="page-title">Play the exact same maps.</h1>
+            <h1 className="page-title">Can you beat this map set?</h1>
             <p className="lead">
-              This Mystery Map link locks the exact maps and skill tier. Challenge plays do not affect today&apos;s Daily streak.
+              This Mystery Map link locks the exact maps and skill tier. Challenge plays do not affect today&apos;s official Daily score or streak.
             </p>
             <div className="entry-facts" aria-label="Challenge facts">
               <span>{challengeResult.payload.roundIds.length} maps</span>
@@ -802,12 +811,31 @@ export function WorldprintClient({ dateOverride, entryMode = "standard" }: World
             <p className="setup-kicker">Challenge link</p>
             <h2>Ready when you are</h2>
             <p>
-              The answers are not visible in the URL text. Complete the set, then share a spoiler-free score back.
+              The link is spoiler-safe: no answer labels, countries, or round solutions are shown before you play.
             </p>
+            {challenger ? (
+              <div className="challenge-score-card" aria-label="Score to beat">
+                <span>Score to beat</span>
+                <strong>
+                  {challenger.score.toLocaleString("en-US")} / {challenger.possible.toLocaleString("en-US")}
+                </strong>
+                <p>
+                  {challenger.rankTitle} · {challenger.solvedCount}/{challenger.roundCount} solved
+                </p>
+                <div className="challenge-result-strip" aria-label="Challenger result strip">
+                  {Array.from(challenger.strip).map((cell, index) => (
+                    <span key={`${cell}-${index}`} aria-hidden="true">
+                      {cell}
+                    </span>
+                  ))}
+                </div>
+              </div>
+            ) : null}
             <button className="button full-width" type="button" onClick={() => void startRun("challenge", challengeResult.payload)}>
               <Compass size={18} aria-hidden="true" />
-              Start challenge
+              Play the challenge
             </button>
+            <p className="challenge-safety-note">Challenge games save separately from today&apos;s Daily.</p>
           </div>
         </section>
       );
@@ -1243,6 +1271,7 @@ export function WorldprintClient({ dateOverride, entryMode = "standard" }: World
         setShareStatus={setShareStatus}
         cloudSaveStatus={cloudSaveStatus}
         signedIn={signedIn}
+        challengeTarget={entryMode === "challenge" && challengeResult.ok ? challengeResult.payload.challenger : undefined}
       />
     );
   }
@@ -2130,7 +2159,8 @@ function CompletionSummary({
   shareStatus,
   setShareStatus,
   cloudSaveStatus,
-  signedIn
+  signedIn,
+  challengeTarget
 }: {
   run: RunState;
   store: PersistedState;
@@ -2141,14 +2171,8 @@ function CompletionSummary({
   setShareStatus: (value: string) => void;
   cloudSaveStatus: string;
   signedIn: boolean;
+  challengeTarget?: ChallengePayload["challenger"];
 }) {
-  const shareText = buildShareText(run);
-  const shareSummary = buildResultShareSummary(run);
-  const shareTextRef = useRef<HTMLTextAreaElement | null>(null);
-  const [resultCopyState, setResultCopyState] = useState<"idle" | "copied" | "failed">("idle");
-  const [resultScoreLocked, setResultScoreLocked] = useState(() =>
-    typeof window === "undefined" ? false : window.matchMedia("(prefers-reduced-motion: reduce)").matches
-  );
   const isSampleRun = run.mode === "sample";
   const isDailyRun = run.mode === "daily";
   const isAtlasRun = run.mode === "atlas";
@@ -2157,11 +2181,21 @@ function CompletionSummary({
   const challengeCode = canCreateChallenge ? encodeChallenge(challengePayloadFromRun(run)) : "";
   const challengeUrl = canCreateChallenge
     ? typeof window === "undefined"
-      ? `/challenge/mystery-map?c=${challengeCode}`
-      : `${window.location.origin}/challenge/mystery-map/?c=${challengeCode}`
+      ? buildMysteryMapChallengeUrl(challengeCode)
+      : buildMysteryMapChallengeUrl(challengeCode, window.location.origin)
     : "";
-  const challengeSharePrompt = "Think you can beat my Can You Geo? Mystery Map score?";
   const total = run.rounds.reduce((sum, round) => sum + round.score, 0);
+  const shareText = buildShareText(run, canCreateChallenge ? { challengeUrl } : {});
+  const shareSummary = buildResultShareSummary(run);
+  const challengeShareTarget = canCreateChallenge ? buildChallengeShareTarget(run, challengeUrl) : null;
+  const emailChallengeHref = challengeShareTarget ? buildEmailChallengeHref(challengeShareTarget) : "";
+  const challengeComparison = run.mode === "challenge" && challengeTarget ? challengeComparisonCopy(total, challengeTarget.score) : null;
+  const challengeTargetScore = challengeTarget?.score ?? 0;
+  const shareTextRef = useRef<HTMLTextAreaElement | null>(null);
+  const [resultCopyState, setResultCopyState] = useState<"idle" | "copied" | "failed">("idle");
+  const [resultScoreLocked, setResultScoreLocked] = useState(() =>
+    typeof window === "undefined" ? false : window.matchMedia("(prefers-reduced-motion: reduce)").matches
+  );
   const bestRound = run.rounds.length ? Math.max(...run.rounds.map((round) => round.score)) : 0;
   const averageRound = run.rounds.length ? Math.round(total / run.rounds.length) : 0;
   const cleanReads = run.rounds.filter((round) => round.rejectedAnswers.length === 0).length;
@@ -2214,13 +2248,23 @@ function CompletionSummary({
 
   async function shareResult() {
     try {
+      if (challengeShareTarget && navigator.share) {
+        await navigator.share(challengeShareTarget);
+        setShareStatus("Shared.");
+        return;
+      }
       if (navigator.share) {
         await navigator.share({ title: "Can You Geo? result", text: shareText });
         setShareStatus("Shared.");
         return;
       }
+      if (challengeUrl) {
+        await navigator.clipboard.writeText(challengeUrl);
+        setShareStatus("Copied challenge link.");
+        return;
+      }
       await navigator.clipboard.writeText(shareText);
-      setShareStatus("Copied.");
+      setShareStatus("Copied result.");
     } catch {
       selectShareTextFallback();
       setShareStatus("Could not share. Result text is selected below.");
@@ -2241,14 +2285,10 @@ function CompletionSummary({
   }
 
   async function shareChallenge() {
-    if (!canCreateChallenge) return;
+    if (!challengeShareTarget) return;
     try {
       if (navigator.share) {
-        await navigator.share({
-          title: "Can You Geo? challenge",
-          text: challengeSharePrompt,
-          url: challengeUrl
-        });
+        await navigator.share(challengeShareTarget);
         setShareStatus("Challenge shared.");
         return;
       }
@@ -2327,6 +2367,25 @@ function CompletionSummary({
           {!isSampleRun ? `${run.rounds.length} maps completed on ${TIER_CONFIGS[run.tier].label}. ` : ""}
           {isDailyRun ? `Daily streak: ${store.streak.current}.` : "Daily streaks are unaffected."}
         </p>
+        {challengeComparison ? (
+          <section className="challenge-comparison-card surface" data-result={challengeComparison.tone} aria-label="Challenge comparison">
+            <div>
+              <p className="eyebrow">Challenge comparison</p>
+              <h2>{challengeComparison.headline}</h2>
+              <p>{challengeComparison.body}</p>
+            </div>
+            <dl>
+              <div>
+                <dt>Your score</dt>
+                <dd>{total.toLocaleString("en-US")}</dd>
+              </div>
+              <div>
+                <dt>Score to beat</dt>
+                <dd>{challengeTargetScore.toLocaleString("en-US")}</dd>
+              </div>
+            </dl>
+          </section>
+        ) : null}
         <section className="summary-retention-card surface" aria-label="Next Daily and streak">
           <div>
             <p className="eyebrow">{isSampleRun ? "Free or Pro" : isAtlasRun ? "Unlimited Atlas" : "Return tomorrow"}</p>
@@ -2506,6 +2565,10 @@ function CompletionSummary({
                       <Copy size={18} aria-hidden="true" />
                       Copy challenge link
                     </button>
+                    <a className="button-secondary" href={emailChallengeHref}>
+                      <Mail size={18} aria-hidden="true" />
+                      Email challenge
+                    </a>
                   </>
                 ) : null}
                 <button className="button-secondary" type="button" onClick={onBack}>

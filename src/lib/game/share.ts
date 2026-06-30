@@ -21,6 +21,18 @@ export type ResultShareSummary = {
   rounds: ShareRoundTone[];
 };
 
+export type ChallengeShareTarget = {
+  title: string;
+  text: string;
+  url: string;
+};
+
+export type ChallengeComparisonCopy = {
+  tone: "beat" | "tied" | "close" | "played";
+  headline: string;
+  body: string;
+};
+
 export function scoreCell(score: number): string {
   if (score >= 800) return "🟩";
   if (score >= 500) return "🟨";
@@ -52,6 +64,15 @@ function resultLabel(run: RunState): string {
   if (run.mode === "archive") return "Past Game replay";
   if (run.mode === "challenge") return "Challenge result";
   return "Practice result";
+}
+
+function shareContext(run: RunState): string {
+  if (run.mode === "daily") return "today's";
+  if (run.mode === "sample") return "the Sample Run";
+  if (run.mode === "atlas") return "a Pro Atlas run";
+  if (run.mode === "archive") return `the ${run.dateKey} Past Game`;
+  if (run.mode === "challenge") return "a Mystery Map challenge";
+  return "a Practice run";
 }
 
 function roundClueSpend(round: RoundPlayState, tier: RunState["tier"]): number {
@@ -101,13 +122,65 @@ export function buildResultShareSummary(run: RunState): ResultShareSummary {
 export function buildShareText(run: RunState, options: { challengeUrl?: string } = {}): string {
   const summary = buildResultShareSummary(run);
   const lines = [
-    summary.title,
-    `${summary.score.toLocaleString("en-US")} pts · ${summary.rankTitle}`,
-    `${summary.resultLabel} · ${summary.tierLabel} · ${summary.solvedCount}/${summary.roundCount} solved`,
+    `I scored ${summary.score.toLocaleString("en-US")} points on ${shareContext(run)} Can You Geo? Mystery Map. Can you read the world better than me?`,
+    `${summary.rankTitle} · ${summary.resultLabel} · ${summary.tierLabel} · ${summary.solvedCount}/${summary.roundCount} solved`,
     summary.strip,
     options.challengeUrl ?? publicSiteOrigin()
   ];
   return lines.join("\n");
+}
+
+export function buildMysteryMapChallengeUrl(code: string, origin = publicSiteOrigin()): string {
+  const url = new URL("/challenge/mystery-map/", origin);
+  url.searchParams.set("c", code);
+  return url.toString();
+}
+
+export function buildChallengeShareTarget(run: RunState, challengeUrl: string): ChallengeShareTarget {
+  return {
+    title: "Can You Geo? Mystery Map challenge",
+    text: buildShareText(run, { challengeUrl }),
+    url: challengeUrl
+  };
+}
+
+export function buildEmailChallengeHref(target: ChallengeShareTarget): string {
+  const params = new URLSearchParams({
+    subject: "Can you beat my Can You Geo score?",
+    body: `${target.text}\n\nOpen the challenge:\n${target.url}`
+  });
+  return `mailto:?${params.toString()}`;
+}
+
+export function challengeComparisonCopy(playerScore: number, targetScore: number): ChallengeComparisonCopy {
+  if (playerScore > targetScore) {
+    return {
+      tone: "beat",
+      headline: "You beat the challenge score.",
+      body: "Nice read. Share your result and pass the map set along."
+    };
+  }
+  if (playerScore === targetScore) {
+    return {
+      tone: "tied",
+      headline: "You tied the challenge score.",
+      body: "Same score, same map set. One cleaner clue choice could break the tie."
+    };
+  }
+  const gap = targetScore - playerScore;
+  const closeThreshold = Math.max(150, Math.round(Math.max(1, targetScore) * 0.1));
+  if (gap <= closeThreshold) {
+    return {
+      tone: "close",
+      headline: "You came close.",
+      body: `${gap.toLocaleString("en-US")} points off the score to beat. Share your result or run another challenge.`
+    };
+  }
+  return {
+    tone: "played",
+    headline: "Challenge complete.",
+    body: "You played the same maps without changing today's official Daily score or streak."
+  };
 }
 
 export function containsSpoiler(text: string, forbidden: string[]): boolean {

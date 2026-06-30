@@ -3080,6 +3080,57 @@ button:disabled {
   line-height: 1.55;
 }
 
+.challenge-score-card {
+  display: grid;
+  gap: 0.4rem;
+  border: 1px solid rgb(164 216 205 / 0.34);
+  border-radius: 7px;
+  padding: 0.9rem;
+  background:
+    radial-gradient(circle at 100% 0%, rgb(104 183 170 / 0.12), transparent 10rem),
+    rgb(4 14 18 / 0.34);
+}
+
+.challenge-score-card span,
+.challenge-safety-note {
+  color: var(--signal-2);
+  font-family: var(--font-mono);
+  font-size: 0.72rem;
+  font-weight: 900;
+  letter-spacing: 0;
+  text-transform: uppercase;
+}
+
+.challenge-score-card strong {
+  color: var(--parchment);
+  font-family: var(--font-mono);
+  font-size: clamp(1.15rem, 2.5vw, 1.55rem);
+  font-weight: 900;
+}
+
+.challenge-result-strip {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.35rem;
+  padding-top: 0.1rem;
+}
+
+.challenge-result-strip span {
+  display: inline-grid;
+  place-items: center;
+  min-width: 1.85rem;
+  min-height: 1.85rem;
+  border: 1px solid rgb(242 234 220 / 0.12);
+  border-radius: 999px;
+  background: rgb(242 234 220 / 0.06);
+  font-size: 0.95rem;
+}
+
+.challenge-safety-note {
+  margin: 0;
+  color: var(--muted);
+}
+
 .archive-record-summary {
   display: grid;
   gap: 0.25rem;
@@ -5013,6 +5064,67 @@ dd {
   font-family: var(--font-mono);
   font-size: clamp(1.2rem, 2.5vw, 1.8rem);
   line-height: 1.05;
+}
+
+.challenge-comparison-card {
+  display: grid;
+  grid-template-columns: minmax(0, 1.3fr) minmax(14rem, 0.7fr);
+  gap: 1rem;
+  align-items: end;
+  margin: 1.2rem 0 0;
+  border-color: rgb(215 168 75 / 0.34);
+  background:
+    radial-gradient(circle at 100% 0%, rgb(215 168 75 / 0.13), transparent 12rem),
+    linear-gradient(135deg, rgb(104 183 170 / 0.08), transparent 60%),
+    var(--surface);
+}
+
+.challenge-comparison-card[data-result="beat"] {
+  border-color: rgb(164 216 205 / 0.45);
+}
+
+.challenge-comparison-card h2 {
+  margin: 0.2rem 0 0;
+  color: var(--parchment);
+  font-family: var(--font-serif);
+  font-size: clamp(1.4rem, 3vw, 2rem);
+  line-height: 1.08;
+}
+
+.challenge-comparison-card p {
+  margin: 0.55rem 0 0;
+  color: var(--muted);
+  line-height: 1.5;
+}
+
+.challenge-comparison-card dl {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 0.6rem;
+  margin: 0;
+}
+
+.challenge-comparison-card dl div {
+  border: 1px solid rgb(242 234 220 / 0.12);
+  border-radius: 7px;
+  padding: 0.75rem;
+  background: rgb(4 14 18 / 0.38);
+}
+
+.challenge-comparison-card dt {
+  color: var(--signal-2);
+  font-family: var(--font-mono);
+  font-size: 0.68rem;
+  font-weight: 900;
+  text-transform: uppercase;
+}
+
+.challenge-comparison-card dd {
+  margin: 0.25rem 0 0;
+  color: var(--parchment);
+  font-family: var(--font-mono);
+  font-size: 1.1rem;
+  font-weight: 900;
 }
 
 .result-cells {
@@ -8300,6 +8412,11 @@ button.pro-price-option:focus-visible {
 
   .summary-next-actions,
   .share-action-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .challenge-comparison-card,
+  .challenge-comparison-card dl {
     grid-template-columns: 1fr;
   }
 
