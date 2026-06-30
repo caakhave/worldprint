@@ -128,6 +128,7 @@ export function AccountStatusClient() {
   const membership = membershipDisplay(entitlement, entitlementLoading);
   const syncLabel = entitlementLoading ? "Checking sync" : entitlement.capabilities.canSaveStats ? "Account sync ready" : "Local stats only";
   const planActionLabel = entitlement.plan === "pro" ? "Manage plan" : "Compare plans";
+  const updatesEnabled = marketingPreference?.marketing_opt_in === true;
 
   return (
     <article className="surface account-card account-primary-card account-summary-card">
@@ -173,9 +174,9 @@ export function AccountStatusClient() {
             <p>
               {marketingLoading
                 ? "Checking your update preference."
-                : marketingPreference?.marketing_opt_in
-                  ? "You are opted in to occasional Can You Geo updates and new game announcements."
-                  : "Marketing updates are off. Account, billing, password reset, and security emails still work."}
+                : updatesEnabled
+                  ? "Updates are on. You may receive occasional Can You Geo updates and new game announcements."
+                  : "Updates are off. Account, billing, password reset, and security emails still work."}
             </p>
           </div>
           <button
@@ -186,7 +187,7 @@ export function AccountStatusClient() {
           >
             {marketingSaving
               ? "Saving..."
-              : marketingPreference?.marketing_opt_in
+              : updatesEnabled
                 ? "Turn off updates"
                 : "Turn on updates"}
           </button>
@@ -209,6 +210,7 @@ export function AccountStatusClient() {
         </button>
         {supportIdVisible ? (
           <div className="account-support-id" role="group" aria-label="Support ID">
+            <p>Use this only if support asks for it.</p>
             <code>{user.id}</code>
             <button className="button-subtle" type="button" onClick={() => void copySupportId()}>
               Copy support ID

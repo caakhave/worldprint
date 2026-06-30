@@ -37,6 +37,7 @@ export function SignUpClient() {
   const [status, setStatus] = useState<string>("");
   const [error, setError] = useState<string>("");
   const [submitting, setSubmitting] = useState(false);
+  const [confirmationSent, setConfirmationSent] = useState(false);
   const [signOutError, setSignOutError] = useState("");
 
   useEffect(() => {
@@ -59,6 +60,7 @@ export function SignUpClient() {
     }
 
     setSubmitting(true);
+    setConfirmationSent(false);
     setError("");
     setStatus("");
 
@@ -106,7 +108,8 @@ export function SignUpClient() {
     }
 
     setSubmitting(false);
-    setStatus("Check your email to confirm your account. Then sign in with your password to continue.");
+    setConfirmationSent(true);
+    setStatus("Account created. Check your email to confirm it, then sign in with your password to continue.");
   }
 
   async function handleSignOut() {
@@ -230,8 +233,8 @@ export function SignUpClient() {
           />
           <span>Send me occasional Can You Geo updates and new game announcements.</span>
         </label>
-        <button className="button" type="submit" disabled={submitting}>
-          {submitting ? "Creating account..." : "Create account"}
+        <button className="button" type="submit" disabled={submitting || confirmationSent}>
+          {confirmationSent ? "Check your email" : submitting ? "Creating account..." : "Create account"}
         </button>
       </form>
       <div className="account-inline-links" aria-label="Account links">

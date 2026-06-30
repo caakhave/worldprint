@@ -182,6 +182,11 @@ export function SignInClient() {
       <p className="eyebrow">Sign in</p>
       <h2>Sign in with email and password.</h2>
       <p>Returning players use the email and password on their account. New players can create a free account first, then choose Free or Pro.</p>
+      {status ? (
+        <p className="status-live" role="status">
+          {status}
+        </p>
+      ) : null}
       <form className="account-form" onSubmit={(event) => void submit(event)}>
         <label htmlFor="account-email">
           Email
@@ -218,11 +223,6 @@ export function SignInClient() {
         <Link href="/forgot-password">Forgot password?</Link>
       </div>
       <p className="account-env-note">Free needs no card. Pro monthly or yearly checkout starts only after you are signed in.</p>
-      {status ? (
-        <p className="status-live" role="status">
-          {status}
-        </p>
-      ) : null}
       {error ? (
         <p className="account-error" role="alert">
           {error}

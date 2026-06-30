@@ -129,9 +129,11 @@ describe("AccountStatusClient", () => {
     expect(screen.getByRole("link", { name: "Compare plans" })).toHaveAttribute("href", "/upgrade");
     expect(screen.getByRole("link", { name: "Email support" })).toHaveAttribute("href", CONTACT_LINKS.accountHelp.href);
     expect(screen.getByRole("button", { name: "Sign out" })).toBeVisible();
-    expect(await screen.findByText("Marketing updates are off. Account, billing, password reset, and security emails still work.")).toBeVisible();
+    expect(await screen.findByText("Updates are off. Account, billing, password reset, and security emails still work.")).toBeVisible();
+    expect(screen.queryByText("Use this only if support asks for it.")).not.toBeInTheDocument();
 
     await user.click(screen.getByRole("button", { name: "Show support ID" }));
+    expect(screen.getByText("Use this only if support asks for it.")).toBeVisible();
     expect(screen.getByText("11111111-2222-4333-8444-555555555555")).toBeVisible();
     expect(screen.getByRole("button", { name: "Copy support ID" })).toBeVisible();
   });
@@ -159,7 +161,7 @@ describe("AccountStatusClient", () => {
 
     render(<AccountStatusClient />);
 
-    expect(await screen.findByText("You are opted in to occasional Can You Geo updates and new game announcements.")).toBeVisible();
+    expect(await screen.findByText("Updates are on. You may receive occasional Can You Geo updates and new game announcements.")).toBeVisible();
     await user.click(screen.getByRole("button", { name: "Turn off updates" }));
 
     expect(marketingMock.updateMarketingPreference).toHaveBeenCalledWith(accountMock.state.client, "11111111-2222-4333-8444-555555555555", false);

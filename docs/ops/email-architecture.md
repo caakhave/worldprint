@@ -47,6 +47,54 @@ Existing users must stay opted out unless they explicitly opt in later. Do not b
 
 RLS keeps profile rows user-scoped. Browser code may read and update the current signed-in user's own marketing preference only. Browser code must not export audiences or send marketing email.
 
+## Owner Preference Queries
+
+Marketing preferences live in `public.profiles`, not `auth.users`. Use `auth.users` only to join the account email when an owner needs to inspect consent status in Supabase SQL Editor.
+
+All users with marketing preference:
+
+```sql
+select
+  u.id,
+  u.email,
+  p.marketing_opt_in,
+  p.marketing_opt_in_at,
+  p.marketing_opt_in_source,
+  p.marketing_opt_out_at,
+  u.created_at as account_created_at
+from auth.users u
+left join public.profiles p on p.id = u.id
+order by u.created_at desc;
+```
+
+Opted-in users only:
+
+```sql
+select
+  u.id,
+  u.email,
+  p.marketing_opt_in_at,
+  p.marketing_opt_in_source
+from auth.users u
+join public.profiles p on p.id = u.id
+where p.marketing_opt_in = true
+order by p.marketing_opt_in_at desc nulls last;
+```
+
+Opted-out users:
+
+```sql
+select
+  u.id,
+  u.email,
+  coalesce(p.marketing_opt_in, false) as marketing_opt_in,
+  p.marketing_opt_out_at
+from auth.users u
+left join public.profiles p on p.id = u.id
+where coalesce(p.marketing_opt_in, false) = false
+order by u.created_at desc;
+```
+
 ## Sign-Up Behavior
 
 The sign-up form includes an optional unchecked checkbox:

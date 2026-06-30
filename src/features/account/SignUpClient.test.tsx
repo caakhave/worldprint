@@ -84,7 +84,8 @@ describe("SignUpClient", () => {
         }
       })
     });
-    await screen.findByText("Check your email to confirm your account. Then sign in with your password to continue.");
+    await screen.findByText("Account created. Check your email to confirm it, then sign in with your password to continue.");
+    expect(screen.getByRole("button", { name: "Check your email" })).toBeDisabled();
     expect(window.sessionStorage.getItem("canyougeo:sign-in-return")).toBe("/account");
   });
 

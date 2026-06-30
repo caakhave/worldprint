@@ -86,8 +86,9 @@ describe("SignInClient", () => {
 
     render(<SignInClient />);
 
-    expect(await screen.findByText("You're signed out.")).toBeVisible();
+    expect(await screen.findByRole("status")).toHaveTextContent("You're signed out.");
     expect(screen.getByRole("link", { name: "Create account" })).toHaveAttribute("href", "/sign-up");
+    expect(screen.getByRole("button", { name: "Sign in" })).toBeVisible();
   });
 
   it("signs in with password and returns to account by default", async () => {
