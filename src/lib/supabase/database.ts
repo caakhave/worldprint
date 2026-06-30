@@ -79,6 +79,19 @@ export type StripeWebhookEventRow = {
   error: string | null;
 };
 
+export type ChallengeEmailSendRow = {
+  id: string;
+  user_id: string;
+  recipient_email_hash: string;
+  recipient_domain: string;
+  challenge_code_hash: string;
+  message_length: number;
+  delivery_status: string;
+  resend_message_id: string | null;
+  error: string | null;
+  sent_at: string;
+};
+
 export type Database = {
   public: {
     Tables: {
@@ -246,6 +259,32 @@ export type Database = {
           received_at?: string;
           processed_at?: string | null;
           error?: string | null;
+        };
+        Relationships: [];
+      };
+      challenge_email_sends: {
+        Row: ChallengeEmailSendRow;
+        Insert: {
+          id?: string;
+          user_id: string;
+          recipient_email_hash: string;
+          recipient_domain: string;
+          challenge_code_hash: string;
+          message_length?: number;
+          delivery_status?: string;
+          resend_message_id?: string | null;
+          error?: string | null;
+          sent_at?: string;
+        };
+        Update: {
+          recipient_email_hash?: string;
+          recipient_domain?: string;
+          challenge_code_hash?: string;
+          message_length?: number;
+          delivery_status?: string;
+          resend_message_id?: string | null;
+          error?: string | null;
+          sent_at?: string;
         };
         Relationships: [];
       };

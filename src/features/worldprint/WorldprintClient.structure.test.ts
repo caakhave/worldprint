@@ -22,6 +22,10 @@ describe("WorldprintClient UI structure", () => {
 
   it("uses a simplified challenge sharing card with hidden raw share text by default", () => {
     expect(source).toContain("<h2>Challenge a friend</h2>");
+    expect(source).toContain("openChallengeInviteModal");
+    expect(source).toContain("Send challenge by email");
+    expect(source).toContain("Friend&apos;s email");
+    expect(source).toContain("requestChallengeEmailInvite");
     expect(source).toContain("Share challenge");
     expect(source).toContain("Copy link");
     expect(source).toContain("<Mail");

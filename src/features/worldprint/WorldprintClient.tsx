@@ -3,10 +3,11 @@
 import { Compass, Copy, Lightbulb, Mail, Search, Share2, Shuffle } from "lucide-react";
 import Link from "next/link";
 import { useSearchParams } from "next/navigation";
-import { useCallback, useEffect, useMemo, useRef, useState } from "react";
+import { useCallback, useEffect, useMemo, useRef, useState, type FormEvent } from "react";
 import { EntryAtlasVisual } from "@/features/worldprint/EntryAtlasVisual";
 import { TierSelector } from "@/features/worldprint/TierSelector";
 import { PlayerStatsPanel } from "@/features/worldprint/PlayerStatsPanel";
+import { requestChallengeEmailInvite } from "@/features/worldprint/challengeEmailInvite";
 import { useEntitlement } from "@/features/account/useEntitlement";
 import { useSupabaseAccount } from "@/features/account/useSupabaseAccount";
 import {
@@ -73,6 +74,7 @@ import {
 import { countryNameByIso3, formatValue } from "@/lib/geo/format";
 import { unitClueForIndicator } from "@/lib/geo/unitClue";
 import { clientRunKeyForRun, fetchRemoteRunSummaries, syncCompletedRunForAccount } from "@/lib/account/sync";
+import type { CanYouGeoSupabaseClient } from "@/lib/supabase/client";
 import type { GameRunRow } from "@/lib/supabase/database";
 import { MapLegend } from "@/components/MapLegend";
 import { WorldMap } from "@/components/WorldMap";
@@ -84,6 +86,7 @@ const DIFFICULTY_LABELS: Record<IndicatorDifficulty, string> = {
 };
 const DIFFICULTY_ORDER: IndicatorDifficulty[] = ["intro", "standard", "expert"];
 const ENTRY_PREVIEW_INDICATOR_ID = "internet-users";
+const CHALLENGE_EMAIL_NOTE_MAX_LENGTH = 180;
 
 type LoadedData = {
   manifest: Manifest;
@@ -1270,6 +1273,7 @@ export function WorldprintClient({ dateOverride, entryMode = "standard" }: World
         shareStatus={shareStatus}
         setShareStatus={setShareStatus}
         cloudSaveStatus={cloudSaveStatus}
+        accountClient={account.client}
         signedIn={signedIn}
         challengeTarget={entryMode === "challenge" && challengeResult.ok ? challengeResult.payload.challenger : undefined}
       />
@@ -2181,6 +2185,7 @@ function CompletionSummary({
   shareStatus,
   setShareStatus,
   cloudSaveStatus,
+  accountClient,
   signedIn,
   challengeTarget
 }: {
@@ -2192,6 +2197,7 @@ function CompletionSummary({
   shareStatus: string;
   setShareStatus: (value: string) => void;
   cloudSaveStatus: string;
+  accountClient: CanYouGeoSupabaseClient | null;
   signedIn: boolean;
   challengeTarget?: ChallengePayload["challenger"];
 }) {
@@ -2214,6 +2220,12 @@ function CompletionSummary({
   const challengeComparison = run.mode === "challenge" && challengeTarget ? challengeComparisonCopy(total, challengeTarget.score) : null;
   const challengeTargetScore = challengeTarget?.score ?? 0;
   const [resultCopyState, setResultCopyState] = useState<"idle" | "copied" | "failed">("idle");
+  const [inviteModalOpen, setInviteModalOpen] = useState(false);
+  const [inviteEmail, setInviteEmail] = useState("");
+  const [inviteMessage, setInviteMessage] = useState("");
+  const [invitePending, setInvitePending] = useState(false);
+  const [inviteStatus, setInviteStatus] = useState("");
+  const [inviteSent, setInviteSent] = useState(false);
   const [resultScoreLocked, setResultScoreLocked] = useState(() =>
     typeof window === "undefined" ? false : window.matchMedia("(prefers-reduced-motion: reduce)").matches
   );
@@ -2261,6 +2273,44 @@ function CompletionSummary({
     const timeout = window.setTimeout(() => setResultCopyState("idle"), 2600);
     return () => window.clearTimeout(timeout);
   }, [resultCopyState]);
+
+  useEffect(() => {
+    if (!inviteModalOpen) return undefined;
+    function onKeyDown(event: KeyboardEvent) {
+      if (event.key === "Escape") setInviteModalOpen(false);
+    }
+    window.addEventListener("keydown", onKeyDown);
+    return () => window.removeEventListener("keydown", onKeyDown);
+  }, [inviteModalOpen]);
+
+  function openChallengeInviteModal() {
+    setInviteModalOpen(true);
+    setInviteStatus(signedIn ? "" : "Sign in to send a one-time challenge email. Copy and mailto still work without an account.");
+    setInviteSent(false);
+  }
+
+  async function sendChallengeEmailInvite(event: FormEvent<HTMLFormElement>) {
+    event.preventDefault();
+    if (!canCreateChallenge) return;
+    setInvitePending(true);
+    setInviteStatus("");
+    setInviteSent(false);
+    const result = await requestChallengeEmailInvite({
+      client: accountClient,
+      signedIn,
+      challengeCode,
+      recipientEmail: inviteEmail,
+      message: inviteMessage
+    });
+    setInvitePending(false);
+    setInviteStatus(result.message);
+    setInviteSent(result.ok);
+    if (result.ok) {
+      setShareStatus(result.remaining === null ? "Challenge email sent." : `Challenge email sent. ${result.remaining} left today.`);
+      setInviteEmail("");
+      setInviteMessage("");
+    }
+  }
 
   async function shareChallenge() {
     if (!challengeShareTarget) return;
@@ -2482,7 +2532,11 @@ function CompletionSummary({
                     ))}
                   </div>
                   <div className="challenge-friend-actions">
-                    <button className="button" type="button" onClick={() => void shareChallenge()}>
+                    <button className="button" type="button" onClick={openChallengeInviteModal}>
+                      <Mail size={18} aria-hidden="true" />
+                      Challenge a friend
+                    </button>
+                    <button className="button-secondary" type="button" onClick={() => void shareChallenge()}>
                       <Share2 size={18} aria-hidden="true" />
                       Share challenge
                     </button>
@@ -2502,6 +2556,67 @@ function CompletionSummary({
                           : "No spoilers included."}
                     </span>
                   </div>
+                  {inviteModalOpen ? (
+                    <div className="challenge-email-modal-backdrop" role="presentation">
+                      <div className="challenge-email-modal surface" role="dialog" aria-modal="true" aria-labelledby="challenge-email-title">
+                        <div className="challenge-email-modal-head">
+                          <div>
+                            <p className="eyebrow">One-time invite</p>
+                            <h3 id="challenge-email-title">Send challenge by email</h3>
+                          </div>
+                          <button className="button-secondary" type="button" onClick={() => setInviteModalOpen(false)}>
+                            Close
+                          </button>
+                        </div>
+                        <p>
+                          Send a spoiler-free challenge link from Can You Geo. Your friend is not added to marketing lists, and your email is not exposed.
+                        </p>
+                        {signedIn ? (
+                          <form className="challenge-email-form" onSubmit={(event) => void sendChallengeEmailInvite(event)}>
+                            <label>
+                              Friend&apos;s email
+                              <input
+                                type="email"
+                                inputMode="email"
+                                autoComplete="email"
+                                required
+                                value={inviteEmail}
+                                onChange={(event) => setInviteEmail(event.target.value)}
+                                placeholder="friend@example.com"
+                              />
+                            </label>
+                            <label>
+                              Optional short message
+                              <textarea
+                                maxLength={CHALLENGE_EMAIL_NOTE_MAX_LENGTH}
+                                value={inviteMessage}
+                                onChange={(event) => setInviteMessage(event.target.value)}
+                                placeholder="I think you can beat this."
+                              />
+                            </label>
+                            <p className="challenge-email-note">
+                              {CHALLENGE_EMAIL_NOTE_MAX_LENGTH - inviteMessage.length} characters left. Keep it friendly and spoiler-free.
+                            </p>
+                            <button className="button" type="submit" disabled={invitePending}>
+                              {invitePending ? "Sending..." : "Send challenge"}
+                            </button>
+                          </form>
+                        ) : (
+                          <div className="challenge-email-signed-out">
+                            <p>Guests can share, copy, or use mailto. Sign in to send a one-time Can You Geo email invite.</p>
+                            <Link className="button" href="/sign-in">
+                              Sign in to send
+                            </Link>
+                          </div>
+                        )}
+                        {inviteStatus ? (
+                          <p className={inviteSent ? "account-disabled-panel" : "account-error"} role={inviteSent ? "status" : "alert"}>
+                            {inviteStatus}
+                          </p>
+                        ) : null}
+                      </div>
+                    </div>
+                  ) : null}
                   <details className="share-preview-disclosure">
                     <summary>Preview share text</summary>
                     <textarea className="share-text" readOnly value={shareText} aria-label="Spoiler-free share text preview" />

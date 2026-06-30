@@ -9,8 +9,9 @@ Can You Geo sharing is user-initiated only:
 - Native Web Share API where the browser supports it.
 - Copy challenge link fallback.
 - `mailto:` challenge links that open the player's own email app.
+- Optional signed-in friend email invites through the `send-challenge-email` Supabase Edge Function.
 
-The app does not send friend invitation emails from the server, does not collect friend email addresses, and does not create an address book or referral list.
+Friend email invites are one-time, user-initiated challenge messages. They are not marketing broadcasts, do not create an address book, and do not enroll recipients in any marketing list.
 
 ## Spoiler guardrails
 
@@ -44,12 +45,63 @@ Challenge games are separate from official Daily and Free Daily scoring.
 
 ## Privacy and spam posture
 
-V1 avoids server-sent invite email because it would require collecting recipient addresses, consent handling, abuse prevention, unsubscribe handling, and rate limits. `mailto:` keeps the sender in control of recipients and message delivery through their own mail app.
+V1 now supports limited server-sent friend invites for signed-in players only.
+
+- Guests cannot send server-side friend emails.
+- Signed-in users are limited server-side to a conservative daily send count, currently 5 by default.
+- The invite ledger stores `recipient_email_hash`, `recipient_domain`, `challenge_code_hash`, message length, status, and timestamps. It does not store the raw recipient email.
+- The raw recipient email is sent only to Resend for the one-time delivery.
+- Recipients are not added to marketing consent, Resend Audiences, broadcast lists, or reminders.
+- The optional player note is length-limited and should remain friendly and spoiler-free. The generated email body never includes answer countries, hidden indicators, source labels, or round solutions.
+- Use `mailto:` and copy link as fallback paths if the rate limit is reached or invite email is unavailable.
+
+## Edge Function setup
+
+Function:
+
+```bash
+supabase functions deploy send-challenge-email --use-api
+```
+
+JWT setting:
+
+```toml
+[functions.send-challenge-email]
+verify_jwt = true
+```
+
+Required Supabase Edge Function secrets:
+
+```bash
+SUPABASE_URL=<project root URL>
+SUPABASE_ANON_KEY=<public anon key>
+SUPABASE_SERVICE_ROLE_KEY=<service role key>
+RESEND_API_KEY=<Resend API key>
+CHALLENGE_EMAIL_FROM="Can You Geo Challenges <challenge@mail.canyougeo.com>"
+NEXT_PUBLIC_SITE_URL=https://test.canyougeo.com
+```
+
+Optional:
+
+```bash
+CHALLENGE_EMAIL_DAILY_LIMIT=5
+ALLOW_BILLING_PREVIEW_URLS=true
+```
+
+`CHALLENGE_EMAIL_FROM` must be a verified Resend sender. If `challenge@mail.canyougeo.com` is not verified yet, use a verified sender on `mail.canyougeo.com`, such as `notify@mail.canyougeo.com`.
+
+Database migration:
+
+```text
+supabase/migrations/20260630130000_challenge_email_sends.sql
+```
+
+Apply it before deploying or testing the function in Supabase.
 
 ## Future phases
 
 - Share image card generated from the spoiler-safe result model.
 - Account challenge history and rematch links.
 - Friend comparisons after both players complete the same challenge.
-- Optional invite emails only after compliance, consent, unsubscribe, abuse reporting, and rate limiting are designed.
+- Abuse reporting, blocklists, and per-recipient throttles before broader invite/referral systems.
 - Server-side opaque challenge IDs if public leaderboards or prize-bearing challenges are introduced.
