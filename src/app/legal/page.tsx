@@ -1,11 +1,12 @@
 import type { Metadata } from "next";
+import Link from "next/link";
 import { CONTACT_LINKS, SUPPORT_EMAIL } from "@/lib/contact";
 
-const EFFECTIVE_DATE = "June 26, 2026";
+const EFFECTIVE_DATE = "June 30, 2026";
 
 export const metadata: Metadata = {
   title: "Terms & Privacy",
-  description: "Terms of use, privacy policy, cookies, local storage, and accessibility for Can You Geo."
+  description: "Terms of use, privacy policy, cookies, local storage, accessibility, and support for Can You Geo."
 };
 
 export default function LegalPage() {
@@ -17,8 +18,7 @@ export default function LegalPage() {
           Terms &amp; Privacy
         </h1>
         <p className="lead">
-          Baseline launch terms for Can You Geo. This page explains the rules for using the game, what information the service uses,
-          how browser storage supports play, and how to report accessibility issues.
+          The practical rules for Can You Geo accounts, play, saved stats, billing readiness, privacy, accessibility, and support.
         </p>
       </header>
 
@@ -29,41 +29,74 @@ export default function LegalPage() {
             <h2 id="terms-heading">Terms of Use</h2>
             <p>Welcome to Can You Geo. By using the site, you agree to these Terms.</p>
 
-            <h3>Use of the Service</h3>
+            <h3>Service</h3>
             <p>
-              Can You Geo lets players play geography and demographic guessing games, save stats, view streaks, and use related
-              account features. You may use the service for personal, non-commercial entertainment and learning.
+              Can You Geo provides geography and world-data games, including sample play, a Free account tier, account-saved stats,
+              Past Games, Practice Atlas features, and Pro membership features when available. The service is for personal,
+              non-commercial entertainment and learning.
             </p>
 
-            <h3>Accounts</h3>
+            <h3>Accounts and Passwords</h3>
             <p>
-              You can play some parts of the service without an account. If you create an account, you are responsible for keeping
-              access to your email and password secure. Passwords are handled by Supabase Auth and are not stored in Can You Geo
-              application tables.
+              You may try sample play without an account. A Free account uses email and password sign-in through Supabase Auth and
+              may require email confirmation. You are responsible for keeping access to your email account and password secure. Do not
+              share your account or try to access another player&apos;s account.
             </p>
 
-            <h3>Fair Play</h3>
+            <h3>Free and Pro Access</h3>
             <p>
-              Do not abuse, disrupt, scrape, reverse engineer, overload, or interfere with the service. Do not attempt to access
-              another person&apos;s account, stats, saved games, or private data.
+              Free accounts include the currently offered Free Daily, saved progress, streaks, and basic stats. Can You Geo? Pro is
+              intended to unlock expanded features such as unlimited Atlas play, the full Practice Atlas, complete Past Games archive,
+              advanced stats, and future premium surfaces. Pro details may change before or after paid launch.
+            </p>
+            <p>
+              Live billing is not enabled until we explicitly launch paid checkout. The site may show Pro pricing or test-mode billing
+              during staging or QA, but public paid access should only be purchased through the official Stripe Checkout flow when
+              enabled.
             </p>
 
-            <h3>Paid Features</h3>
+            <h3>Billing, Renewal, and Cancellation</h3>
             <p>
-              Some features may require a paid plan in the future. If paid plans are offered, pricing and renewal terms will be shown
-              before purchase. Payment processing may be handled by Stripe or another payment provider. We do not store full payment
-              card numbers.
+              When paid Pro memberships are enabled, pricing, renewal interval, and material purchase terms will be shown before
+              checkout. Payment processing and billing management are handled by Stripe. Can You Geo does not store full payment card
+              numbers.
+            </p>
+            <p>
+              If you cancel a renewing Pro membership at the end of the current paid period, Pro access generally remains active until
+              that period ends. Refunds, credits, taxes, payment failures, and billing disputes may be handled through Stripe and
+              support according to the checkout terms shown at purchase.
             </p>
 
-            <h3>Availability</h3>
+            <h3>Fair Play and Acceptable Use</h3>
             <p>
-              We may change, pause, or discontinue parts of the service. We try to keep the game available, but we do not guarantee
-              uninterrupted or error-free operation.
+              Do not abuse, disrupt, scrape, overload, reverse engineer, attack, or interfere with the service. Do not use bots,
+              automated requests, payment fraud, credential attacks, vulnerability probing without permission, or other behavior that
+              harms the service or other users.
+            </p>
+
+            <h3>Stats, Scores, and No Prize Guarantees</h3>
+            <p>
+              Saved runs, scores, streaks, and stats are provided for personal play history. They are not a public official
+              leaderboard, competition, sweepstakes, or prize system. Client-submitted scores are not suitable for prizes or
+              high-stakes rankings without additional verification.
+            </p>
+
+            <h3>Data and Map Content</h3>
+            <p>
+              We use public data and map sources to create puzzles, but map boundaries, source data, year selection, missing-data
+              handling, labels, and generated game content may contain errors, omissions, or outdated information. Can You Geo is not
+              professional, legal, financial, political, or academic advice.
+            </p>
+
+            <h3>Service Changes and Availability</h3>
+            <p>
+              We may change, pause, limit, or discontinue parts of the service, including Free or Pro features. We try to keep the game
+              available, but we do not guarantee uninterrupted, secure, or error-free operation.
             </p>
 
             <h3>Intellectual Property</h3>
             <p>
-              The Can You Geo? name, design, game interface, copy, and original content belong to the service owner or its licensors.
+              The Can You Geo name, design, game interface, copy, and original content belong to the service owner or its licensors.
               You may not copy or reuse them except as allowed by law or with permission.
             </p>
 
@@ -82,7 +115,7 @@ export default function LegalPage() {
             <h3>Changes</h3>
             <p>
               We may update these Terms from time to time. If changes are material, we will make reasonable efforts to notify users
-              through the site.
+              through the site, account email, or another appropriate channel.
             </p>
 
             <h3>Contact</h3>
@@ -99,54 +132,70 @@ export default function LegalPage() {
 
             <h3>Information We Collect</h3>
             <ul>
-              <li>Account information, such as your email address and account ID when you sign in.</li>
-              <li>Marketing email preference information, such as whether you opted in to occasional product updates.</li>
-              <li>Gameplay information, such as scores, streaks, guesses, completed runs, challenge activity, and saved stats.</li>
-              <li>Technical information, such as browser/device information, approximate location from IP address, logs, and security events.</li>
+              <li>Account information, such as email address, account ID, confirmation status, and profile settings.</li>
               <li>
-                Local browser data, such as cookies, localStorage, or similar technologies used for sign-in, gameplay state,
-                preferences, and saved progress.
+                Password credentials are handled by Supabase Auth. Can You Geo does not store plaintext passwords in application
+                tables.
               </li>
-              <li>Payment information may be processed by Stripe if paid plans are enabled. We do not store full payment card numbers.</li>
+              <li>Marketing preference information, such as opt-in status, opt-in time, opt-in source, and opt-out time.</li>
+              <li>Gameplay information, such as scores, streaks, guesses, completed runs, challenge activity, and saved stats.</li>
+              <li>
+                Billing and subscription state, when paid features are enabled, such as Stripe customer ID, subscription ID, price ID,
+                subscription status, renewal period, and cancellation-at-period-end status.
+              </li>
+              <li>Support emails and related information you send to the support inbox.</li>
+              <li>Technical information, such as browser/device information, approximate location from IP address, logs, security events, and analytics.</li>
+              <li>
+                Browser storage data, such as cookies, localStorage, or sessionStorage used for sign-in, gameplay state, preferences,
+                Pro purchase intent, and saved progress.
+              </li>
             </ul>
 
             <h3>How We Use Information</h3>
             <p>
-              We use information to operate the game, authenticate accounts, save stats and streaks, prevent abuse, debug issues,
-              improve the product, provide support, send transactional account or billing messages, send optional marketing updates
-              only when you opt in, and manage paid features if enabled.
+              We use information to operate the game, authenticate accounts, confirm email addresses, reset passwords, save stats and
+              streaks, prevent abuse, debug issues, improve the product, provide support, manage paid features if enabled, and send
+              service-related account, security, support, and billing messages.
+            </p>
+            <p>
+              Marketing updates, such as product updates or new game announcements, are optional and are sent only when you opt in.
+              Transactional messages needed for the service can still be sent even if marketing updates are off.
             </p>
 
-            <h3>How We Share Information</h3>
+            <h3>Service Providers</h3>
             <p>
-              We do not sell personal information. We may share information with service providers that help operate the site,
-              including hosting, authentication, database, email, analytics, support, or payment providers. Current or expected
-              providers may include Cloudflare, Supabase, and Stripe. We may also disclose information if required by law or to
-              protect rights, safety, and security.
+              We do not sell personal information. We use service providers that help operate the site, including Cloudflare for
+              hosting and security, Supabase for authentication and database services, Stripe for checkout and billing management when
+              enabled, Resend and Supabase SMTP for transactional email and owner/admin billing notifications, and Google Workspace for
+              support email. We may also disclose information if required by law or to protect rights, safety, and security.
             </p>
 
-            <h3>Cookies and Local Storage</h3>
+            <h3>Owner and Admin Notifications</h3>
             <p>
-              We use necessary cookies, localStorage, or similar browser technologies for authentication, gameplay state, saved
-              progress, preferences, and security. If non-essential analytics or advertising cookies are added later, update this
-              policy and add consent controls where required.
+              Can You Geo may send limited owner/admin notifications for billing-related events such as new Pro subscriptions,
+              cancellations, payment failures, and recovered payments. These notifications are meant for support and operations, not
+              marketing.
             </p>
 
-            <h3>Data Retention</h3>
+            <h3>Cookies, Local Storage, and Session Storage</h3>
             <p>
-              We keep account and gameplay information as long as needed to provide the service, maintain records, resolve disputes,
-              prevent abuse, or comply with legal obligations. Users may request deletion.
+              We use necessary cookies and browser storage for authentication, gameplay state, saved progress, account preferences,
+              Pro intent during sign-in, and security. If non-essential analytics, advertising cookies, or new tracking tools are
+              added later, this policy and consent controls should be updated where required.
+            </p>
+
+            <h3>Data Retention and Deletion</h3>
+            <p>
+              We keep account, support, billing, and gameplay information as long as needed to provide the service, maintain records,
+              resolve disputes, prevent abuse, or comply with legal obligations. You may request deletion or support with account data
+              by contacting <a href={CONTACT_LINKS.privacyLegalRequest.href}>{SUPPORT_EMAIL}</a>.
             </p>
 
             <h3>Your Choices</h3>
             <p>
-              You can play some parts of the game without signing in. You can sign out at any time. You may request access,
-              correction, or deletion of your account information by contacting{" "}
+              You can play sample content without signing in, sign out at any time, turn marketing updates on or off from your
+              account, and request access, correction, deletion, or support by contacting{" "}
               <a href={CONTACT_LINKS.privacyLegalRequest.href}>{SUPPORT_EMAIL}</a>.
-            </p>
-            <p>
-              Marketing updates are optional and can be turned off from your account. Transactional emails such as account
-              confirmation, password reset, billing, and security messages may still be sent when needed to provide the service.
             </p>
 
             <h3>Children</h3>
@@ -173,7 +222,7 @@ export default function LegalPage() {
               effective date.
             </p>
 
-            <h3>Contact</h3>
+            <h3>Privacy Contact</h3>
             <p>
               Privacy questions or requests can be sent to{" "}
               <a href={CONTACT_LINKS.privacyLegalRequest.href}>{SUPPORT_EMAIL}</a>.
@@ -198,8 +247,17 @@ export default function LegalPage() {
               technology if relevant, and a short description of the problem.
             </p>
           </section>
-        </article>
 
+          <section aria-labelledby="support-heading">
+            <p className="legal-updated">Effective date: {EFFECTIVE_DATE}</p>
+            <h2 id="support-heading">Support</h2>
+            <p>
+              Support, account help, privacy/legal requests, billing questions, bug reports, and data/source concerns can be sent to{" "}
+              <a href={CONTACT_LINKS.accountHelp.href}>{SUPPORT_EMAIL}</a>. The <Link href="/support">support page</Link> explains
+              what to include and when to use your Support ID.
+            </p>
+          </section>
+        </article>
       </div>
     </section>
   );
