@@ -418,7 +418,7 @@ test("v9 mobile Daily flow keeps HUD, answers, reveal ceremony, and result in fr
 
   await expect(page.getByText("Final score")).toBeVisible();
   await expect(page.getByText("Run rank")).toBeVisible();
-  await expect(page.getByLabel("Spoiler-free result share card")).toBeVisible();
+  await expect(page.getByLabel("Challenge a friend")).toBeVisible();
   await expect(page.getByRole("button", { name: "Practice another set" })).toBeVisible();
   await expect(page.getByRole("button", { name: "Replay for practice" })).toBeVisible();
   await expectNoHorizontalOverflow(page);
@@ -637,7 +637,7 @@ test("completes a five-round Daily and preserves completed result", async ({ pag
       await expect(page.getByText("Score locked. Opening results...")).toBeVisible();
       await expect(page.getByText("Final score")).toBeVisible();
       await expect(page.locator(".result-locked-actions")).toHaveAttribute("data-locked", "false");
-      await expect(page.getByLabel("Spoiler-free result share card")).toHaveCount(0);
+      await expect(page.getByLabel("Challenge a friend")).toHaveCount(0);
     } else {
       await page.getByRole("button", { name: /Next map/ }).click();
     }
@@ -652,9 +652,9 @@ test("completes a five-round Daily and preserves completed result", async ({ pag
   await expect(page.getByText("Clean reads")).toBeVisible();
   await expect(page.getByText("Wrong guesses")).toBeVisible();
   await expect(page.getByText("Clues used")).toBeVisible();
-  await expect(page.getByLabel("Spoiler-free result share card")).toContainText("Atlas Master");
-  await expect(page.getByLabel("Spoiler-free result share card")).toContainText("Official Daily result");
-  await expect(page.getByLabel("Spoiler-free result share card")).toContainText("5/5");
+  await expect(page.getByLabel("Challenge a friend")).toContainText("Atlas Master");
+  await expect(page.getByLabel("Challenge a friend")).toContainText("Official Daily result");
+  await expect(page.getByLabel("Challenge a friend")).toContainText("5/5");
   await expect(page.getByLabel("Next Daily and streak")).toContainText("Next map drops tomorrow");
   await expect(page.getByLabel("Next Daily and streak")).toContainText("Come back tomorrow");
   await expect(page.getByLabel("Daily streak and best score")).toContainText("Current streak");
@@ -666,8 +666,9 @@ test("completes a five-round Daily and preserves completed result", async ({ pag
   await expect(nextActions.getByRole("button", { name: "Replay for practice" })).toBeVisible();
   await expect(nextActions.getByRole("link", { name: "Past Games" })).toHaveAttribute("href", /\/past-games\/?$/);
   await expect(nextActions.getByRole("link", { name: "View saved stats" })).toHaveAttribute("href", /\/account\/stats\/?$/);
-  await expect(page.getByRole("button", { name: "Copy result" })).toBeVisible();
-  await expect(page.getByRole("button", { name: /Share result/i })).toBeVisible();
+  await expect(page.getByRole("button", { name: "Share challenge" })).toBeVisible();
+  await expect(page.getByRole("button", { name: "Copy link" })).toBeVisible();
+  await expect(page.getByRole("link", { name: "Email" })).toBeVisible();
   const statsPanel = page.getByRole("complementary", { name: "Your stats" });
   await expect(statsPanel).toBeVisible();
   await expect(statsPanel).toContainText("Games completed");
@@ -808,26 +809,21 @@ test("challenge link opens exact selected rounds and saves challenge completion"
     await page.getByRole("button", { name: index === challengeRoundIds.length - 1 ? /Open results now|See results/ : /Next map/ }).click();
   }
   await expect(page.getByText(/Challenge complete/i)).toBeVisible();
-  const resultShare = page.getByLabel("Result share text");
+  const sharePreview = page.locator(".share-preview-disclosure textarea.share-text");
+  await expect(sharePreview).toBeHidden();
+  await page.getByText("Preview share text").click();
+  const resultShare = page.getByLabel("Spoiler-free share text preview");
   await expect(resultShare).toHaveValue(/Can You Geo\?/i);
   await expect(resultShare).toHaveValue(/pts/i);
-  await expect(resultShare).toHaveValue(/https:\/\/canyougeo\.com/i);
   await expect(resultShare).not.toHaveValue(/WORLDPRINT/);
   await expect(resultShare).not.toHaveValue(/Japan|Brazil|fertility|life expectancy|World Bank|api\.worldbank\.org/i);
   await expect(page.getByLabel("Spoiler-free challenge share text")).toHaveCount(0);
-  await page.getByRole("button", { name: "Copy challenge link" }).click();
+  await page.getByRole("button", { name: "Copy link" }).click();
   const challengeWrites = await page.evaluate(() => ((window as typeof window & { __clipboardWrites?: string[] }).__clipboardWrites ?? []));
   expect(challengeWrites.at(-1)).toMatch(/^http:\/\/localhost:3000\/challenge\/mystery-map\/\?c=/);
   expect(challengeWrites.at(-1)).not.toContain("\n");
-  await page.getByRole("button", { name: "Copy result" }).click();
   await expect(page.getByRole("button", { name: "Copied" })).toBeVisible();
-  await expect(page.getByText("Copied to clipboard.")).toBeVisible();
-  const resultWrites = await page.evaluate(() => ((window as typeof window & { __clipboardWrites?: string[] }).__clipboardWrites ?? []));
-  expect(resultWrites.at(-1)).toContain("Can You Geo?");
-  expect(resultWrites.at(-1)).toContain("pts");
-  expect(resultWrites.at(-1)).toContain("https://canyougeo.com");
-  expect(resultWrites.at(-1)).not.toMatch(/\/challenge\/mystery-map\/\?c=/);
-  expect(resultWrites.at(-1)).not.toMatch(/Japan|Brazil|fertility|life expectancy|World Bank|api\.worldbank\.org/i);
+  await expect(page.getByText("Challenge link copied.")).toBeVisible();
   const stored = await page.evaluate(() => JSON.parse(window.localStorage.getItem("worldprint:v1") ?? "{}") as { streak?: { current: number }; challengeHistoryById?: Record<string, unknown> });
   expect(stored.streak?.current).toBe(0);
   expect(Object.keys(stored.challengeHistoryById ?? {})).toHaveLength(1);

@@ -1314,13 +1314,33 @@ export function WorldprintClient({ dateOverride, entryMode = "standard" }: World
   const selectedCountryAlreadyRevealed = Boolean(selectedCountryInvestigation);
   const revealDisabled =
     !selectedCountry || (selectedCountryHasData && !selectedCountryAlreadyRevealed && investigationPenalty === null);
-  const revealButtonText = !selectedCountry
-    ? "Reveal value"
+  const selectedCountryRevealCost = !selectedCountry
+    ? null
     : selectedCountryAlreadyRevealed
+      ? "No points"
+      : selectedCountryHasData
+        ? investigationPenalty === null
+          ? "No reveals left"
+          : `${investigationPenalty} points`
+        : "0 points";
+  const selectedCountryActionText = selectedCountry
+    ? selectedCountryAlreadyRevealed
       ? `Show ${selectedCountry.name}'s value`
       : selectedCountryHasData
-        ? `Reveal ${selectedCountry.name}'s value`
-        : `Confirm ${selectedCountry.name} has no data`;
+        ? investigationPenalty === null
+          ? "Country reveals used up"
+          : `Reveal ${selectedCountry.name}'s value - ${selectedCountryRevealCost}`
+        : `Confirm ${selectedCountry.name} has no data - 0 points`
+    : "Reveal selected country value";
+  const selectedCountryPrompt = selectedCountry
+    ? selectedCountryAlreadyRevealed
+      ? selectedCountryInvestigation?.value === null
+        ? "No data for this country on this map. Try another one."
+        : `Revealed: ${formatValue(selectedCountryInvestigation?.value ?? selectedCountryValue ?? 0, indicator)}`
+      : selectedCountryHasData
+        ? "Reveal its value when the pattern needs evidence."
+        : "This country has no data on this map. Confirm it for no points."
+    : "";
 
   const selectCountry = (iso3: string) => {
     setSelectedCountryIso3(iso3);
@@ -1394,6 +1414,34 @@ export function WorldprintClient({ dateOverride, entryMode = "standard" }: World
             <p>Read the map pattern, spend points only when evidence helps, then lock the answer.</p>
           </div>
         </div>
+        {selectedCountry ? (
+          <div className="selected-country-card selected-country-action-card" data-state="selected" data-layout="immediate" aria-live="polite">
+            <div className="selected-country-action-copy">
+              <span>Selected: {selectedCountry.name}</span>
+              <strong>{selectedCountry.name}</strong>
+              <p>{selectedCountryPrompt}</p>
+              <small>
+                {selectedCountryAlreadyRevealed
+                  ? "No points spent this time."
+                  : selectedCountryHasData
+                    ? selectedCountryRevealCost === "No reveals left"
+                      ? "Country reveals used up for this round."
+                      : `Reveal cost: ${selectedCountryRevealCost}.`
+                    : "Reveal cost: 0 points."}
+              </small>
+            </div>
+            <button
+              className="button selected-country-reveal-button"
+              type="button"
+              aria-label={selectedCountryActionText}
+              disabled={revealDisabled}
+              onClick={() => selectedCountry.iso3 && investigate(selectedCountry.iso3, selectedCountry.name)}
+            >
+              <Search size={18} aria-hidden="true" />
+              {selectedCountryActionText}
+            </button>
+          </div>
+        ) : null}
         <div className="score-hud" aria-label="Score status">
           <div className="score-hud-card score-hud-current">
             <span>This map</span>
@@ -1562,44 +1610,18 @@ export function WorldprintClient({ dateOverride, entryMode = "standard" }: World
               ))}
             </select>
           </div>
-          {selectedCountry ? (
-            <div className="selected-country-card" data-state="selected" aria-live="polite">
-              <span>Selected country</span>
-              <strong>{selectedCountry.name}</strong>
-              <p>
-                {selectedCountryAlreadyRevealed
-                  ? selectedCountryInvestigation?.value === null
-                    ? "No data for this country on this map. Try another one."
-                    : `Revealed: ${formatValue(selectedCountryInvestigation?.value ?? selectedCountryValue ?? 0, indicator)}`
-                  : selectedCountryHasData
-                    ? "Reveal this country's value when you need a clue."
-                    : "No data for this country on this map. Try another one."}
-              </p>
-              <small>
-                {selectedCountryAlreadyRevealed
-                  ? "No points spent this time."
-                  : selectedCountryHasData
-                    ? investigationPenalty === null
-                      ? "Country reveals used up for this round."
-                      : `Reveal cost: ${investigationPenalty} points.`
-                    : "Reveal cost: 0 points."}
-              </small>
-            </div>
+          {!selectedCountry ? (
+            <button className="button-secondary full-width investigate-button" type="button" aria-label="Reveal selected country value" disabled>
+              <Search size={18} aria-hidden="true" />
+              Reveal value
+            </button>
           ) : null}
-          <button
-            className="button-secondary full-width investigate-button"
-            type="button"
-            aria-label={selectedCountry ? revealButtonText : "Reveal selected country value"}
-            disabled={revealDisabled}
-            onClick={() => selectedCountry?.iso3 && investigate(selectedCountry.iso3, selectedCountry.name)}
-          >
-            <Search size={18} aria-hidden="true" />
-            {revealButtonText}
-          </button>
           <p className="cost-note">
-            {investigationPenalty === null
-              ? "Country reveals used up for this round."
-              : `Next reveal costs ${investigationPenalty} points.`}
+            {selectedCountry
+              ? "Reveal from the selected-country panel above, or choose another country here."
+              : investigationPenalty === null
+                ? "Country reveals used up for this round."
+                : `Next reveal costs ${investigationPenalty} points.`}
           </p>
         </div>
         <div className="status-live" role="status" aria-live="polite">
@@ -1732,7 +1754,7 @@ function RevealView({
         <div className="round-result-banner" data-result={resultTone} role="status" aria-live="polite">
           <span>{missedAnswerCount > 0 ? "Answer revealed" : "Correct"}</span>
           <strong>{missedAnswerCount > 0 ? indicator.shortTitle : "Solved."}</strong>
-          <p>
+          <p className={missedAnswerCount > 0 ? "correct-answer-line" : undefined}>
             {missedAnswerCount > 0
               ? `Correct answer: ${indicator.shortTitle}. ${missedAnswerCount} wrong ${missedAnswerCount === 1 ? "read" : "reads"} ruled out.`
               : `Sharp read. The hidden map was ${indicator.shortTitle}.`}
@@ -2191,7 +2213,6 @@ function CompletionSummary({
   const emailChallengeHref = challengeShareTarget ? buildEmailChallengeHref(challengeShareTarget) : "";
   const challengeComparison = run.mode === "challenge" && challengeTarget ? challengeComparisonCopy(total, challengeTarget.score) : null;
   const challengeTargetScore = challengeTarget?.score ?? 0;
-  const shareTextRef = useRef<HTMLTextAreaElement | null>(null);
   const [resultCopyState, setResultCopyState] = useState<"idle" | "copied" | "failed">("idle");
   const [resultScoreLocked, setResultScoreLocked] = useState(() =>
     typeof window === "undefined" ? false : window.matchMedia("(prefers-reduced-motion: reduce)").matches
@@ -2241,49 +2262,6 @@ function CompletionSummary({
     return () => window.clearTimeout(timeout);
   }, [resultCopyState]);
 
-  function selectShareTextFallback() {
-    shareTextRef.current?.focus();
-    shareTextRef.current?.select();
-  }
-
-  async function shareResult() {
-    try {
-      if (challengeShareTarget && navigator.share) {
-        await navigator.share(challengeShareTarget);
-        setShareStatus("Shared.");
-        return;
-      }
-      if (navigator.share) {
-        await navigator.share({ title: "Can You Geo? result", text: shareText });
-        setShareStatus("Shared.");
-        return;
-      }
-      if (challengeUrl) {
-        await navigator.clipboard.writeText(challengeUrl);
-        setShareStatus("Copied challenge link.");
-        return;
-      }
-      await navigator.clipboard.writeText(shareText);
-      setShareStatus("Copied result.");
-    } catch {
-      selectShareTextFallback();
-      setShareStatus("Could not share. Result text is selected below.");
-    }
-  }
-
-  async function copyResultText() {
-    try {
-      if (!navigator.clipboard?.writeText) throw new Error("Clipboard unavailable");
-      await navigator.clipboard.writeText(shareText);
-      setResultCopyState("copied");
-      setShareStatus("Copied.");
-    } catch {
-      selectShareTextFallback();
-      setResultCopyState("failed");
-      setShareStatus("Could not copy. Result text is selected below.");
-    }
-  }
-
   async function shareChallenge() {
     if (!challengeShareTarget) return;
     try {
@@ -2292,10 +2270,12 @@ function CompletionSummary({
         setShareStatus("Challenge shared.");
         return;
       }
-      setShareStatus("Copied challenge link.");
       await navigator.clipboard.writeText(challengeUrl);
+      setResultCopyState("copied");
+      setShareStatus("Copied challenge link.");
     } catch {
-      setShareStatus("Copy the challenge link instead.");
+      setResultCopyState("failed");
+      setShareStatus("Copy the challenge link from the preview below.");
     }
   }
 
@@ -2303,8 +2283,10 @@ function CompletionSummary({
     if (!canCreateChallenge) return;
     try {
       await navigator.clipboard.writeText(challengeUrl);
+      setResultCopyState("copied");
       setShareStatus("Copied challenge link.");
     } catch {
+      setResultCopyState("failed");
       setShareStatus("Challenge link could not be copied.");
     }
   }
@@ -2321,14 +2303,6 @@ function CompletionSummary({
         : run.mode === "challenge"
           ? "Mystery Map Challenge complete"
           : "Mystery Map Practice complete";
-  const challengeButtonLabel =
-    run.mode === "practice"
-      ? "Challenge a friend with this practice set"
-      : isDailyRun
-        ? "Challenge a friend with today's maps"
-        : isAtlasRun
-          ? "Challenge a friend with this Atlas set"
-        : "Challenge a friend with these maps";
   const reviewHref = run.mode === "daily" || run.mode === "archive" ? `/play/mystery-map/${run.dateKey}?review=1` : null;
   const nextDaily = nextDailyUnlockCopy();
   const bestDailyScore = bestDailyScoreForStore(store);
@@ -2467,62 +2441,73 @@ function CompletionSummary({
         <div className="result-locked-actions" data-locked={resultScoreLocked ? "true" : "false"} aria-hidden={resultScoreLocked ? undefined : "true"}>
           {resultScoreLocked ? (
             <>
-              <section className="daily-share-card surface" aria-label="Spoiler-free result share card">
-                <div className="daily-share-card-head">
-                  <div>
-                    <p className="eyebrow">Share result</p>
-                    <h2>{shareSummary.title}</h2>
-                    <span className="daily-share-mode">{shareSummary.resultLabel}</span>
+              {canCreateChallenge ? (
+                <section className="daily-share-card challenge-friend-card surface" aria-label="Challenge a friend">
+                  <div className="daily-share-card-head">
+                    <div>
+                      <p className="eyebrow">Spoiler-free challenge</p>
+                      <h2>Challenge a friend</h2>
+                      <span className="daily-share-mode">{shareSummary.resultLabel}</span>
+                    </div>
+                    <strong>{shareSummary.score.toLocaleString("en-US")} score to beat</strong>
                   </div>
-                  <strong>{shareSummary.score.toLocaleString("en-US")} pts</strong>
-                </div>
-                <dl className="daily-share-metrics" aria-label="Share card stats">
-                  <div>
-                    <dt>Rank</dt>
-                    <dd>{shareSummary.rankTitle}</dd>
+                  <p className="daily-share-note">
+                    Send today&apos;s map set and see who reads the world better. No answers, countries, or source labels are included before play.
+                  </p>
+                  <dl className="daily-share-metrics" aria-label="Share card stats">
+                    <div>
+                      <dt>Rank</dt>
+                      <dd>{shareSummary.rankTitle}</dd>
+                    </div>
+                    <div>
+                      <dt>Solved</dt>
+                      <dd>
+                        {shareSummary.solvedCount}/{shareSummary.roundCount}
+                      </dd>
+                    </div>
+                    <div>
+                      <dt>Misses</dt>
+                      <dd>{shareSummary.missCount}</dd>
+                    </div>
+                    <div>
+                      <dt>Clue spend</dt>
+                      <dd>{shareSummary.clueSpend.toLocaleString("en-US")}</dd>
+                    </div>
+                  </dl>
+                  <div className="share-result-strip" aria-label={`${shareSummary.roundCount}-round result strip`}>
+                    {shareSummary.rounds.map((tone, index) => (
+                      <span key={`${run.rounds[index]?.roundId ?? index}-${tone}`} data-result={tone}>
+                        <small>{index + 1}</small>
+                      </span>
+                    ))}
                   </div>
-                  <div>
-                    <dt>Solved</dt>
-                    <dd>
-                      {shareSummary.solvedCount}/{shareSummary.roundCount}
-                    </dd>
-                  </div>
-                  <div>
-                    <dt>Misses</dt>
-                    <dd>{shareSummary.missCount}</dd>
-                  </div>
-                  <div>
-                    <dt>Clue spend</dt>
-                    <dd>{shareSummary.clueSpend.toLocaleString("en-US")}</dd>
-                  </div>
-                </dl>
-                <div className="share-result-strip" aria-label={`${shareSummary.roundCount}-round result strip`}>
-                  {shareSummary.rounds.map((tone, index) => (
-                    <span key={`${run.rounds[index]?.roundId ?? index}-${tone}`} data-result={tone}>
-                      <small>{index + 1}</small>
+                  <div className="challenge-friend-actions">
+                    <button className="button" type="button" onClick={() => void shareChallenge()}>
+                      <Share2 size={18} aria-hidden="true" />
+                      Share challenge
+                    </button>
+                    <button className="button-secondary" type="button" onClick={() => void copyChallengeLink()}>
+                      <Copy size={18} aria-hidden="true" />
+                      {resultCopyState === "copied" ? "Copied" : resultCopyState === "failed" ? "Could not copy" : "Copy link"}
+                    </button>
+                    <a className="button-secondary" href={emailChallengeHref}>
+                      <Mail size={18} aria-hidden="true" />
+                      Email
+                    </a>
+                    <span className="daily-share-copy-status" role="status" aria-live="polite">
+                      {resultCopyState === "copied"
+                        ? "Challenge link copied."
+                        : resultCopyState === "failed"
+                          ? "Open the preview to copy manually."
+                          : "No spoilers included."}
                     </span>
-                  ))}
-                </div>
-                <div className="daily-share-actions">
-                  <button className="button" type="button" onClick={() => void copyResultText()}>
-                    <Copy size={18} aria-hidden="true" />
-                    {resultCopyState === "copied" ? "Copied" : resultCopyState === "failed" ? "Could not copy" : "Copy result"}
-                  </button>
-                  {reviewHref ? (
-                    <Link className="button-secondary" href={reviewHref}>
-                      Review result
-                    </Link>
-                  ) : null}
-                  <span className="daily-share-copy-status" role="status" aria-live="polite">
-                    {resultCopyState === "copied"
-                      ? "Copied to clipboard."
-                      : resultCopyState === "failed"
-                        ? "Result text selected below."
-                        : "No spoilers included."}
-                  </span>
-                </div>
-                <p className="daily-share-note">Spoiler-free: no answers or source labels are included unless you open the review.</p>
-              </section>
+                  </div>
+                  <details className="share-preview-disclosure">
+                    <summary>Preview share text</summary>
+                    <textarea className="share-text" readOnly value={shareText} aria-label="Spoiler-free share text preview" />
+                  </details>
+                </section>
+              ) : null}
               <div className="summary-next-actions surface" aria-label="Post-run actions">
                 {reviewHref ? (
                   <Link className="button" href={reviewHref}>
@@ -2543,42 +2528,16 @@ function CompletionSummary({
                 </button>
                 {!isSampleRun ? (
                   <Link className="button-secondary" href="/past-games">
-                  Past Games
+                    Past Games
                   </Link>
                 ) : null}
                 <Link className="button-secondary" href={isSampleRun ? "/sign-in" : "/account/stats"}>
                   {isSampleRun ? "Continue free" : "View saved stats"}
                 </Link>
               </div>
-              <div className="share-action-grid" aria-label="Share options">
-                <button className="button-secondary" type="button" onClick={() => void shareResult()}>
-                  <Share2 size={18} aria-hidden="true" />
-                  Share result
-                </button>
-                {canCreateChallenge ? (
-                  <>
-                    <button className="button-secondary" type="button" onClick={() => void shareChallenge()}>
-                      <Share2 size={18} aria-hidden="true" />
-                      {challengeButtonLabel}
-                    </button>
-                    <button className="button-secondary" type="button" onClick={() => void copyChallengeLink()}>
-                      <Copy size={18} aria-hidden="true" />
-                      Copy challenge link
-                    </button>
-                    <a className="button-secondary" href={emailChallengeHref}>
-                      <Mail size={18} aria-hidden="true" />
-                      Email challenge
-                    </a>
-                  </>
-                ) : null}
-                <button className="button-secondary" type="button" onClick={onBack}>
-                  {isPastRecord ? "Back to record" : "Back to lobby"}
-                </button>
-              </div>
               <div className="status-live" role="status" aria-live="polite">
                 {shareStatus}
               </div>
-              <textarea ref={shareTextRef} className="share-text" readOnly value={shareText} aria-label="Result share text" />
             </>
           ) : null}
         </div>

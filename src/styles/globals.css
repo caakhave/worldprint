@@ -3839,6 +3839,36 @@ textarea,
   line-height: 1.45;
 }
 
+.selected-country-action-card {
+  position: sticky;
+  top: 5.65rem;
+  z-index: 4;
+  grid-template-columns: minmax(0, 1fr);
+  gap: 0.75rem;
+  border-color: rgb(164 216 205 / 0.55);
+  background:
+    radial-gradient(circle at 100% 0%, rgb(104 183 170 / 0.18), transparent 11rem),
+    linear-gradient(135deg, rgb(104 183 170 / 0.12), rgb(215 168 75 / 0.06)),
+    rgb(5 18 22 / 0.88);
+  box-shadow: 0 18px 34px rgb(0 0 0 / 0.18);
+}
+
+.selected-country-action-card[data-layout="immediate"] {
+  margin-top: -0.2rem;
+}
+
+.selected-country-action-copy {
+  display: grid;
+  gap: 0.25rem;
+  min-width: 0;
+}
+
+.selected-country-reveal-button {
+  justify-content: center;
+  min-height: 3.1rem;
+  text-align: center;
+}
+
 .investigate-button {
   justify-content: center;
   text-align: center;
@@ -4329,8 +4359,13 @@ textarea,
   line-height: 1.48;
 }
 
+.round-result-banner .correct-answer-line {
+  margin-top: 0.4rem;
+}
+
 .round-result-banner em {
   width: fit-content;
+  max-width: 100%;
   border: 1px solid rgb(215 168 75 / 0.5);
   border-radius: 999px;
   padding: 0.36rem 0.62rem;
@@ -4339,6 +4374,8 @@ textarea,
   font-family: var(--font-mono);
   font-style: normal;
   font-weight: 800;
+  overflow-wrap: anywhere;
+  white-space: normal;
   animation: points-pop 420ms ease-out both;
 }
 
@@ -4346,6 +4383,7 @@ textarea,
   position: absolute;
   right: 1rem;
   top: 0.85rem;
+  max-width: min(16rem, calc(100% - 2rem));
   border: 1px solid rgb(215 168 75 / 0.42);
   border-radius: 999px;
   padding: 0.28rem 0.52rem;
@@ -4354,6 +4392,8 @@ textarea,
   font-family: var(--font-mono);
   font-size: 0.78rem;
   font-weight: 900;
+  overflow-wrap: anywhere;
+  text-align: center;
   text-transform: uppercase;
   animation: banked-flight 1.2s ease-out 240ms both;
   pointer-events: none;
@@ -4507,6 +4547,8 @@ textarea,
 }
 
 .point-breakdown div {
+  display: grid;
+  align-content: start;
   min-width: 0;
   border: 1px solid rgb(242 234 220 / 0.12);
   border-radius: 7px;
@@ -4523,9 +4565,10 @@ textarea,
   margin-top: 0.16rem;
   color: var(--gold);
   font-family: var(--font-mono);
-  font-size: 0.96rem;
+  font-size: clamp(0.82rem, 1.7vw, 0.96rem);
   font-weight: 900;
-  white-space: nowrap;
+  line-height: 1.15;
+  overflow-wrap: anywhere;
 }
 
 .reveal-key-evidence {
@@ -5213,6 +5256,14 @@ dd {
     var(--surface);
 }
 
+.challenge-friend-card {
+  border-color: rgb(215 168 75 / 0.38);
+  background:
+    radial-gradient(circle at 100% 0%, rgb(215 168 75 / 0.14), transparent 12rem),
+    linear-gradient(135deg, rgb(104 183 170 / 0.12), transparent 54%),
+    var(--surface);
+}
+
 .daily-share-card::before {
   position: absolute;
   inset: 0;
@@ -5352,6 +5403,23 @@ dd {
   gap: 0.65rem;
 }
 
+.challenge-friend-actions {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 0.65rem;
+  align-items: center;
+}
+
+.challenge-friend-actions .button,
+.challenge-friend-actions .button-secondary {
+  width: 100%;
+  text-align: center;
+}
+
+.challenge-friend-actions .daily-share-copy-status {
+  grid-column: 1 / -1;
+}
+
 .daily-share-copy-status {
   color: var(--muted);
   font-family: var(--font-mono);
@@ -5397,6 +5465,25 @@ dd {
   margin-top: 1rem;
   font-family: var(--font-mono);
   resize: vertical;
+}
+
+.share-preview-disclosure {
+  border-top: 1px solid var(--line);
+  padding-top: 0.85rem;
+}
+
+.share-preview-disclosure summary {
+  width: fit-content;
+  border: 1px solid rgb(242 234 220 / 0.14);
+  border-radius: 999px;
+  padding: 0.34rem 0.62rem;
+  background: rgb(242 234 220 / 0.055);
+  color: var(--signal-2);
+  cursor: pointer;
+  font-family: var(--font-mono);
+  font-size: 0.72rem;
+  font-weight: 900;
+  text-transform: uppercase;
 }
 
 .challenge-share-text {
@@ -8412,6 +8499,15 @@ button.pro-price-option:focus-visible {
 
   .summary-next-actions,
   .share-action-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .selected-country-action-card {
+    position: sticky;
+    top: 4.8rem;
+  }
+
+  .challenge-friend-actions {
     grid-template-columns: 1fr;
   }
 
