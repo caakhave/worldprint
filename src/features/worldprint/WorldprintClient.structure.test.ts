@@ -3,8 +3,41 @@ import { join } from "node:path";
 import { describe, expect, it } from "vitest";
 
 const source = readFileSync(join(process.cwd(), "src/features/worldprint/WorldprintClient.tsx"), "utf8");
+const styles = readFileSync(join(process.cwd(), "src/styles/globals.css"), "utf8");
 
 describe("WorldprintClient UI structure", () => {
+  it("makes the lobby default action a dominant PLAY CTA", () => {
+    const primaryIndex = source.indexOf('className="lobby-primary-card"');
+    const playIndex = source.indexOf("<span>PLAY</span>");
+    const secondaryIndex = source.indexOf('className="lobby-secondary"');
+
+    expect(primaryIndex).toBeGreaterThan(0);
+    expect(playIndex).toBeGreaterThan(primaryIndex);
+    expect(secondaryIndex).toBeGreaterThan(playIndex);
+    expect(source).toContain('aria-label="Primary Mystery Map action"');
+    expect(styles).toContain(".lobby-play-button");
+    expect(styles).toContain("min-height: 5rem");
+  });
+
+  it("keeps Practice, Past Games, replay, and stats visually secondary in the lobby", () => {
+    expect(source).toContain("More ways to play");
+    expect(source).toContain('aria-label="More ways to play"');
+    expect(source).toContain('className="lobby-secondary-actions"');
+    expect(source).toContain("Practice Atlas");
+    expect(source).toContain("Past Games");
+    expect(source).toContain("View saved stats");
+    expect(source).toContain("Replay for practice");
+    expect(styles).toContain(".mode-card-grid-secondary .mode-card");
+  });
+
+  it("gives completed Daily players a clear next action and makes result viewing explicit", () => {
+    expect(source).toContain("Today's maps complete");
+    expect(source).toContain('const completedPrimaryLabel = signedIn && practiceMatches.length > 0 ? "Practice" : "Play Sample Run";');
+    expect(source).toContain(`const resultActionLabel = completedDailyRun ? "View today's result" : "View saved stats";`);
+    expect(source).toContain("setRun(completedDailyRun);");
+    expect(source).toContain("window.requestAnimationFrame(() => window.scrollTo(0, 0));");
+  });
+
   it("keeps selected-country reveal action in the immediate/top gameplay layout", () => {
     const selectedActionIndex = source.indexOf('className="selected-country-card selected-country-action-card"');
     const scoreHudIndex = source.indexOf('className="score-hud"');

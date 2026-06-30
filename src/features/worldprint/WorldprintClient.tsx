@@ -944,6 +944,12 @@ export function WorldprintClient({ dateOverride, entryMode = "standard" }: World
         : primaryMode === "daily"
           ? dailyLabel
           : "Try the 5-map Sample Run";
+    const completedPrimaryLabel = signedIn && practiceMatches.length > 0 ? "Practice" : "Play Sample Run";
+    const completedPrimaryDetail =
+      completedPrimaryLabel === "Practice"
+        ? "Start a practice set. It will not change today's score or streak."
+        : "Replay the fixed sample maps while tomorrow's Daily unlocks.";
+    const resultActionLabel = completedDailyRun ? "View today's result" : "View saved stats";
     const accountFactLabel = entitlementLoading
       ? "Checking account"
       : isProAccount
@@ -1032,162 +1038,200 @@ export function WorldprintClient({ dateOverride, entryMode = "standard" }: World
           </div>
           {data.dailyManifestIssue ? <p className="archive-note">{data.dailyManifestIssue}</p> : null}
         </div>
-        <div className="entry-panel surface">
+        <div className="entry-panel surface" aria-label={isArchiveDate ? undefined : "Mystery Map modes"}>
           {!isArchiveDate ? (
             <>
-              <div className="mode-panel-heading">
+              <div className="mode-panel-heading lobby-heading">
                 <p className="setup-kicker">Choose your game mode</p>
-                <h2>Pick your run.</h2>
-                <p>Guest Sample Run is fixed. Free accounts get 3 fresh maps daily. Pro opens unlimited Atlas play.</p>
+                <h2>Ready to read the map?</h2>
+                <p>Press play for the freshest Can You Geo run available to you. Other modes stay nearby when you want them.</p>
               </div>
-              <div className="mode-card-grid" aria-label="Mystery Map modes">
-                <article
-                  className="mode-card mode-card-daily"
-                  data-state={primaryModeComplete ? "complete" : "ready"}
-                  aria-label={primaryModeComplete ? "Today completed" : primaryHeading}
-                >
-                  <div>
-                    <p className="setup-kicker">{primaryKicker}</p>
-                    <h3>{primaryHeading}</h3>
-                    <p>{primaryCopy}</p>
-                  </div>
-                  {primaryModeComplete ? (
-                    <span className="mode-state-pill">Today&apos;s 3 maps complete</span>
-                  ) : (
-                    <span className="mode-state-pill">{primaryStateLabel}</span>
-                  )}
-                  <p className="mode-card-note">{primaryNote}</p>
-                  {primaryModeComplete ? (
-                    <div className="daily-return-hook" aria-label="Daily return summary">
-                      <div>
-                        <span>Current streak</span>
-                        <strong>{store.streak.current}</strong>
-                      </div>
-                      <div>
-                        <span>Best Daily</span>
-                        <strong>{bestDailyScore === null ? "—" : bestDailyScore.toLocaleString("en-US")}</strong>
-                      </div>
-                      <p>
-                        <strong>{nextDaily.headline}</strong> {nextDaily.body}
-                      </p>
-                      <p>Want more after today&apos;s 3 maps? Go Pro for unlimited Atlas play.</p>
+              <article className="lobby-primary-card" data-state={primaryModeComplete ? "complete" : "ready"} aria-label="Primary Mystery Map action">
+                <div className="lobby-primary-copy">
+                  <p className="setup-kicker">{primaryKicker}</p>
+                  <h3>{primaryModeComplete ? "Today's maps complete" : primaryHeading}</h3>
+                  <p>{primaryModeComplete ? "Your Daily score is locked. Keep playing without changing today's streak." : primaryCopy}</p>
+                  <span className="mode-state-pill">{primaryModeComplete ? "Today's maps complete" : primaryStateLabel}</span>
+                </div>
+                {primaryModeComplete ? (
+                  <div className="daily-return-hook" aria-label="Daily return summary">
+                    <div>
+                      <span>Current streak</span>
+                      <strong>{store.streak.current}</strong>
                     </div>
-                  ) : null}
-                  <div className="mode-card-actions">
-                    {primaryModeComplete ? (
-                      <>
-                        <button className="button" type="button" disabled={!completedDailyRun} onClick={() => completedDailyRun && setRun(completedDailyRun)}>
-                          View today&apos;s result
-                        </button>
-                        <a className="button-secondary" href="#practice-atlas">
-                          Practice Atlas
-                        </a>
-                        <Link className="button-secondary" href="/past-games">
-                          Past Games
-                        </Link>
-                        <button className="button-secondary" type="button" disabled={!completedDailyRun} onClick={() => completedDailyRun && void replayCompletedRun(completedDailyRun)}>
-                          Replay for practice
-                        </button>
-                      </>
-                    ) : (
-                      <>
-                        {primaryMode === "sample" ? (
-                          <Link className="button" href="/upgrade">
-                            Start Pro
-                          </Link>
-                        ) : null}
-                        <button
-                          className={primaryMode === "sample" ? "button-secondary" : "button"}
-                          type="button"
-                          onClick={() => void startRun(primaryMode)}
-                        >
-                          <Compass size={18} aria-hidden="true" />
-                          {primaryActionLabel}
-                        </button>
-                        {primaryMode === "atlas" && !todayCompleted ? (
-                          <button className="button-secondary" type="button" onClick={() => void startRun("daily")}>
-                            Play today&apos;s 3 maps
-                          </button>
-                        ) : null}
-                      </>
-                    )}
-                  </div>
-                </article>
-                <article className="mode-card mode-card-practice" id="practice-atlas">
-                  <div>
-                    <p className="setup-kicker">Practice Atlas</p>
-                    <h3>Practice Atlas</h3>
+                    <div>
+                      <span>Best Daily</span>
+                      <strong>{bestDailyScore === null ? "—" : bestDailyScore.toLocaleString("en-US")}</strong>
+                    </div>
                     <p>
-                      {isGuest
-                        ? "Continue free for 3-map Practice sets. Pro unlocks the full Practice Atlas."
-                        : "Training sets by topic and difficulty. Never affects your Daily score or streak."}
+                      <strong>{nextDaily.headline}</strong> {nextDaily.body}
                     </p>
+                    <p>{completedPrimaryDetail}</p>
                   </div>
-                  <div className="practice-filters">
-                    <label htmlFor="practice-category">
-                      Topic
-                      <select id="practice-category" value={practiceCategory} disabled={isGuest} onChange={(event) => updatePracticeCategory(event.target.value)}>
-                        <option value="">Any topic · {roundCountForFilters(data.rounds, "")} maps</option>
-                        {practiceCategoryOptions.map((option) => (
-                          <option key={option.category} value={option.category}>
-                            {option.category} · {option.count} maps
-                          </option>
-                        ))}
-                      </select>
-                    </label>
-                    <label htmlFor="practice-difficulty">
-                      Map difficulty
-                      <select
-                        id="practice-difficulty"
-                        value={practiceDifficulty}
-                        disabled={isGuest}
-                        onChange={(event) => setPracticeDifficulty(event.target.value as IndicatorDifficulty)}
-                      >
-                        {practiceDifficultyOptions.map((option) => (
-                          <option key={option.difficulty} value={option.difficulty}>
-                            {DIFFICULTY_LABELS[option.difficulty]} · {option.count} maps
-                          </option>
-                        ))}
-                      </select>
-                    </label>
-                  </div>
-                  <div className="practice-set-card" data-status={selectedCount > 0 ? practiceSetStatus : "empty"} aria-live="polite">
-                    <span>{setReadyLabel}</span>
-                    <strong>
-                      {selectedCount > 0
-                        ? practiceReadyLine(selectedCount)
-                        : practiceMatches.length > 0
-                          ? practiceReadyLine(availablePracticeCount)
-                          : practiceReadyLine(0)}
-                    </strong>
-                    <p>
-                      {isGuest
-                        ? "Sign in free to choose Practice sets."
-                        : selectedCount > 0
-                        ? practiceFlavor(practiceDifficulty)
-                        : practiceMatches.length > 0
-                          ? "Ready from these filters."
-                          : "Try another topic or difficulty."}
-                    </p>
-                    {practiceWarning ? <p className="practice-warning">{practiceWarning}</p> : null}
-                  </div>
-                  <div className="practice-actions">
-                    {isGuest ? (
-                      <Link className="button practice-start-button" href="/sign-in">
-                        Continue free
-                      </Link>
-                    ) : (
-                      <button className="button practice-start-button" type="button" disabled={practiceMatches.length === 0} onClick={() => void startPracticeRun()}>
-                        Start practice
-                      </button>
-                    )}
-                    <button className="button-secondary" type="button" disabled={isGuest || practiceMatches.length === 0} onClick={buildPracticeSet}>
-                      <Shuffle size={17} aria-hidden="true" />
-                      Shuffle set
+                ) : (
+                  <p className="mode-card-note">{primaryNote}</p>
+                )}
+                <div className="lobby-primary-actions">
+                  {primaryModeComplete ? (
+                    <button
+                      className="button lobby-play-button"
+                      type="button"
+                      onClick={() => {
+                        if (completedPrimaryLabel === "Practice") void startPracticeRun();
+                        else void startRun("sample");
+                      }}
+                    >
+                      <Compass size={20} aria-hidden="true" />
+                      {completedPrimaryLabel}
                     </button>
-                  </div>
-                </article>
-              </div>
+                  ) : (
+                    <button className="button lobby-play-button" type="button" onClick={() => void startRun(primaryMode)}>
+                      <Compass size={20} aria-hidden="true" />
+                      <span>PLAY</span>
+                      <small>{primaryActionLabel}</small>
+                    </button>
+                  )}
+                  {primaryMode === "atlas" && !todayCompleted ? (
+                    <button className="button-secondary" type="button" onClick={() => void startRun("daily")}>
+                      Play today&apos;s 3 maps
+                    </button>
+                  ) : null}
+                  {!isProAccount ? (
+                    <Link className="button-secondary" href="/upgrade">
+                      Go Pro for unlimited Atlas play
+                    </Link>
+                  ) : null}
+                </div>
+              </article>
+              <section className="lobby-secondary" aria-label="More ways to play">
+                <div className="mode-panel-heading mode-panel-heading-secondary">
+                  <p className="setup-kicker">More ways to play</p>
+                  <h2>Choose a side route.</h2>
+                  <p>Practice, replay, and stats are here when you want them. None of these changes today&apos;s Daily score.</p>
+                </div>
+                <div className="lobby-secondary-actions">
+                  {todayCompleted ? (
+                    completedDailyRun ? (
+                      <button
+                        className="button-secondary"
+                        type="button"
+                        onClick={() => {
+                          setRun(completedDailyRun);
+                          window.requestAnimationFrame(() => window.scrollTo(0, 0));
+                        }}
+                      >
+                        {resultActionLabel}
+                      </button>
+                    ) : signedIn ? (
+                      <Link className="button-secondary" href="/account/stats">
+                        {resultActionLabel}
+                      </Link>
+                    ) : null
+                  ) : null}
+                  {completedDailyRun ? (
+                    <button className="button-secondary" type="button" onClick={() => void replayCompletedRun(completedDailyRun)}>
+                      Replay for practice
+                    </button>
+                  ) : null}
+                  {signedIn && (!todayCompleted || completedDailyRun) ? (
+                    <Link className="button-secondary" href="/account/stats">
+                      View saved stats
+                    </Link>
+                  ) : null}
+                </div>
+                <div className="mode-card-grid mode-card-grid-secondary">
+                  <article className="mode-card mode-card-practice" id="practice-atlas">
+                    <div>
+                      <p className="setup-kicker">Practice Atlas</p>
+                      <h3>Practice Atlas</h3>
+                      <p>
+                        {isGuest
+                          ? "Continue free for 3-map Practice sets. Pro unlocks the full Practice Atlas."
+                          : "Training sets by topic and difficulty. Never affects your Daily score or streak."}
+                      </p>
+                    </div>
+                    <div className="practice-filters">
+                      <label htmlFor="practice-category">
+                        Topic
+                        <select id="practice-category" value={practiceCategory} disabled={isGuest} onChange={(event) => updatePracticeCategory(event.target.value)}>
+                          <option value="">Any topic · {roundCountForFilters(data.rounds, "")} maps</option>
+                          {practiceCategoryOptions.map((option) => (
+                            <option key={option.category} value={option.category}>
+                              {option.category} · {option.count} maps
+                            </option>
+                          ))}
+                        </select>
+                      </label>
+                      <label htmlFor="practice-difficulty">
+                        Map difficulty
+                        <select
+                          id="practice-difficulty"
+                          value={practiceDifficulty}
+                          disabled={isGuest}
+                          onChange={(event) => setPracticeDifficulty(event.target.value as IndicatorDifficulty)}
+                        >
+                          {practiceDifficultyOptions.map((option) => (
+                            <option key={option.difficulty} value={option.difficulty}>
+                              {DIFFICULTY_LABELS[option.difficulty]} · {option.count} maps
+                            </option>
+                          ))}
+                        </select>
+                      </label>
+                    </div>
+                    <div className="practice-set-card" data-status={selectedCount > 0 ? practiceSetStatus : "empty"} aria-live="polite">
+                      <span>{setReadyLabel}</span>
+                      <strong>
+                        {selectedCount > 0
+                          ? practiceReadyLine(selectedCount)
+                          : practiceMatches.length > 0
+                            ? practiceReadyLine(availablePracticeCount)
+                            : practiceReadyLine(0)}
+                      </strong>
+                      <p>
+                        {isGuest
+                          ? "Sign in free to choose Practice sets."
+                          : selectedCount > 0
+                          ? practiceFlavor(practiceDifficulty)
+                          : practiceMatches.length > 0
+                            ? "Ready from these filters."
+                            : "Try another topic or difficulty."}
+                      </p>
+                      {practiceWarning ? <p className="practice-warning">{practiceWarning}</p> : null}
+                    </div>
+                    <div className="practice-actions">
+                      {isGuest ? (
+                        <Link className="button practice-start-button" href="/sign-in">
+                          Continue free
+                        </Link>
+                      ) : (
+                        <button className="button practice-start-button" type="button" disabled={practiceMatches.length === 0} onClick={() => void startPracticeRun()}>
+                          Start practice
+                        </button>
+                      )}
+                      <button className="button-secondary" type="button" disabled={isGuest || practiceMatches.length === 0} onClick={buildPracticeSet}>
+                        <Shuffle size={17} aria-hidden="true" />
+                        Shuffle set
+                      </button>
+                    </div>
+                  </article>
+                  <article className="mode-card mode-card-past">
+                    <div>
+                      <p className="setup-kicker">Past Games</p>
+                      <h3>Past Games</h3>
+                      <p>
+                        {isGuest
+                          ? "Continue free to replay recent dated sets. Pro unlocks the complete archive."
+                          : "Dated Daily replays. Replays never change today&apos;s Daily score or streak."}
+                      </p>
+                    </div>
+                    <div className="mode-card-actions">
+                      <Link className="button-secondary" href={isGuest ? "/sign-in" : "/past-games"}>
+                        {isGuest ? "Continue free" : "Open past games"}
+                      </Link>
+                    </div>
+                  </article>
+                </div>
+              </section>
               <div className="setup-section setup-section-compact">
                 <div className="setup-heading">
                   <p className="setup-kicker">Skill tier</p>
@@ -1195,22 +1239,6 @@ export function WorldprintClient({ dateOverride, entryMode = "standard" }: World
                 </div>
                 <TierSelector value={selectedTier} onChange={updateTier} />
               </div>
-              <article className="mode-card mode-card-past">
-                <div>
-                  <p className="setup-kicker">Past Games</p>
-                  <h3>Past Games</h3>
-                  <p>
-                    {isGuest
-                      ? "Continue free to replay recent dated sets. Pro unlocks the complete archive."
-                      : "Dated Daily replays. Replays never change today&apos;s Daily score or streak."}
-                  </p>
-                </div>
-                <div className="mode-card-actions">
-                  <Link className="button-secondary" href={isGuest ? "/sign-in" : "/past-games"}>
-                    {isGuest ? "Continue free" : "Open past games"}
-                  </Link>
-                </div>
-              </article>
             </>
           ) : (
             <>
