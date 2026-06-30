@@ -49,6 +49,24 @@ const marketingMock = vi.hoisted(() => {
   };
 });
 
+const localHistoryMock = vi.hoisted(() => ({
+  emptyStore: () => ({
+    dailyHistoryByDate: {},
+    atlasHistoryById: {},
+    archiveHistoryByDate: {},
+    challengeHistoryById: {}
+  }),
+  loadPersistedState: vi.fn(() => ({
+    dailyHistoryByDate: {},
+    atlasHistoryById: {},
+    archiveHistoryByDate: {},
+    challengeHistoryById: {}
+  })),
+  buildLocalPlayerStats: vi.fn(() => ({ gamesCompleted: 0 })),
+  statsSyncSignature: vi.fn(() => "local-history-signature"),
+  syncMarkerKey: vi.fn((userId: string) => `stats-sync:${userId}`)
+}));
+
 const entitlementMock = vi.hoisted(() => ({
   state: {
     entitlement: {
@@ -89,7 +107,18 @@ vi.mock("@/features/account/useEntitlement", () => ({
 
 vi.mock("@/lib/account/sync", () => ({
   fetchMarketingPreference: marketingMock.fetchMarketingPreference,
+  statsSyncSignature: localHistoryMock.statsSyncSignature,
+  syncMarkerKey: localHistoryMock.syncMarkerKey,
   updateMarketingPreference: marketingMock.updateMarketingPreference
+}));
+
+vi.mock("@/lib/persistence/storage", () => ({
+  defaultPersistedState: localHistoryMock.emptyStore,
+  loadPersistedState: localHistoryMock.loadPersistedState
+}));
+
+vi.mock("@/lib/persistence/playerStats", () => ({
+  buildLocalPlayerStats: localHistoryMock.buildLocalPlayerStats
 }));
 
 describe("AccountStatusClient", () => {
@@ -97,6 +126,14 @@ describe("AccountStatusClient", () => {
     accountMock.state.signOut.mockClear();
     marketingMock.fetchMarketingPreference.mockClear();
     marketingMock.updateMarketingPreference.mockClear();
+    localHistoryMock.loadPersistedState.mockClear();
+    localHistoryMock.buildLocalPlayerStats.mockClear();
+    localHistoryMock.statsSyncSignature.mockClear();
+    localHistoryMock.syncMarkerKey.mockClear();
+    localHistoryMock.loadPersistedState.mockReturnValue(localHistoryMock.emptyStore());
+    localHistoryMock.buildLocalPlayerStats.mockReturnValue({ gamesCompleted: 0 });
+    localHistoryMock.statsSyncSignature.mockReturnValue("local-history-signature");
+    window.localStorage.clear();
     marketingMock.fetchMarketingPreference.mockResolvedValue({
       data: {
         marketing_opt_in: false,
@@ -123,7 +160,10 @@ describe("AccountStatusClient", () => {
     expect(screen.getByText(/Profile connected/i)).toBeVisible();
     expect(screen.getByText("player@example.com")).toBeVisible();
     expect(screen.getAllByText("Free account")[0]).toBeVisible();
-    expect(screen.getByText("Account sync ready")).toBeVisible();
+    expect(screen.queryByText("Stats sync")).not.toBeInTheDocument();
+    expect(screen.queryByText("Account sync ready")).not.toBeInTheDocument();
+    expect(screen.queryByText("Import local runs from your stats page.")).not.toBeInTheDocument();
+    expect(screen.queryByText("Previous plays found")).not.toBeInTheDocument();
     expect(screen.queryByText("11111111-2222-4333-8444-555555555555")).not.toBeInTheDocument();
     expect(screen.getByRole("link", { name: "View saved stats" })).toHaveAttribute("href", "/account/stats");
     expect(screen.getByRole("link", { name: "Compare plans" })).toHaveAttribute("href", "/upgrade");
@@ -136,6 +176,29 @@ describe("AccountStatusClient", () => {
     expect(screen.getByText("Use this only if support asks for it.")).toBeVisible();
     expect(screen.getByText("11111111-2222-4333-8444-555555555555")).toBeVisible();
     expect(screen.getByRole("button", { name: "Copy support ID" })).toBeVisible();
+  });
+
+  it("shows a friendly import prompt when previous local plays are ready to save", async () => {
+    localHistoryMock.buildLocalPlayerStats.mockReturnValue({ gamesCompleted: 2 });
+
+    render(<AccountStatusClient />);
+
+    expect(await screen.findByText("Previous plays found")).toBeVisible();
+    expect(screen.getByText("Move previous guest plays from this browser into your account.")).toBeVisible();
+    expect(screen.getByRole("link", { name: "Import plays" })).toHaveAttribute("href", "/account/stats");
+    expect(screen.queryByText("Stats sync")).not.toBeInTheDocument();
+    expect(screen.queryByText("Account sync ready")).not.toBeInTheDocument();
+  });
+
+  it("hides the import prompt when local plays were already saved to this account", () => {
+    localHistoryMock.buildLocalPlayerStats.mockReturnValue({ gamesCompleted: 2 });
+    window.localStorage.setItem("stats-sync:11111111-2222-4333-8444-555555555555", "local-history-signature");
+
+    render(<AccountStatusClient />);
+
+    expect(screen.queryByText("Previous plays found")).not.toBeInTheDocument();
+    expect(screen.queryByText("Stats sync")).not.toBeInTheDocument();
+    expect(screen.queryByText("Account sync ready")).not.toBeInTheDocument();
   });
 
   it("lets the current user turn marketing updates off from the account page", async () => {
@@ -220,6 +283,8 @@ describe("AccountHeroClient", () => {
 
     expect(screen.getByRole("heading", { name: "Your atlas is connected." })).toBeVisible();
     expect(screen.getByText("Review your scores, open Past Games, manage access, and keep playing.")).toBeVisible();
+    expect(screen.getByText("Saved progress ready")).toBeVisible();
+    expect(screen.queryByText("Stats sync ready")).not.toBeInTheDocument();
     expect(document.querySelector(".account-hero-video source[src='/worldprint/hero-loop.webm']")).toBeTruthy();
     expect(screen.getByRole("link", { name: "View saved stats" })).toHaveAttribute("href", "/account/stats");
   });

@@ -5737,6 +5737,22 @@ dd {
   font-weight: 500;
 }
 
+.account-inline-action {
+  display: inline-flex;
+  align-items: center;
+  margin-top: 0.55rem;
+  color: var(--signal);
+  font-size: 0.9rem;
+  font-weight: 800;
+  text-decoration: underline;
+  text-underline-offset: 0.22em;
+}
+
+.account-inline-action:hover,
+.account-inline-action:focus-visible {
+  color: var(--parchment);
+}
+
 .account-support-tools {
   display: grid;
   gap: 0.55rem;

@@ -73,7 +73,7 @@ function AccountRemoteStatsPanel({ stats }: { stats: AccountCloudStats }) {
         </div>
       ) : null}
       <p className="player-stats-note">
-        Account sync is active. Daily: {stats.daily_games}. Atlas: {stats.atlas_games}. Practice: {stats.practice_games}. Past Games: {stats.archive_games}.
+        Saved privately to this account. Daily: {stats.daily_games}. Atlas: {stats.atlas_games}. Practice: {stats.practice_games}. Past Games: {stats.archive_games}.
         Challenges: {stats.challenge_games}.
       </p>
     </section>
@@ -179,13 +179,14 @@ export function AccountStatsClient() {
   }
 
   const alreadyImported = syncStatus.toLowerCase().includes("already in your account");
+  const showLocalImportCard = loading || remoteLoading || !user || !configured || hasLocalHistory || Boolean(syncStatus || syncError);
   const importButtonLabel = syncing
     ? "Importing..."
     : !hasLocalHistory
-      ? "No local runs to import"
+      ? "No previous plays found"
       : alreadyImported
         ? "Already imported"
-        : "Import local runs";
+        : "Import plays";
 
   return (
     <div className="account-stats-stack">
@@ -199,51 +200,53 @@ export function AccountStatsClient() {
         <PlayerStatsPanel store={store} landmark={false} />
       )}
 
-      <section className="surface account-card account-sync-card" aria-label="Account stats sync">
-        <p className="eyebrow">Stats sync</p>
-        {loading || remoteLoading ? (
-          <>
-            <h2>Checking account stats.</h2>
-            <p>Looking for saved stats on this account.</p>
-          </>
-        ) : user ? (
-          <>
-            <h2>Import local runs</h2>
-            <p>Move completed runs from this browser into your account. Existing account saves are deduped, and local play still works.</p>
-            <button
-              className={hasLocalHistory && !alreadyImported ? "button" : "button-secondary"}
-              type="button"
-              onClick={() => void syncStats()}
-              disabled={syncing || !hasLocalHistory || alreadyImported}
-            >
-              {importButtonLabel}
-            </button>
-          </>
-        ) : configured ? (
-          <>
-            <h2>Start Pro or continue free.</h2>
-            <p>Pro unlocks full history and advanced stats. Free needs no card and saves your Daily progress. Local sample-play stats are still shown above.</p>
-            <Link className="button" href="/sign-in">
-              Continue free
-            </Link>
-          </>
-        ) : (
-          <>
-            <h2>Account sign-in is unavailable in this preview.</h2>
-            <p>Local stats still work in this browser.</p>
-          </>
-        )}
-        {syncStatus ? (
-          <p className="status-live" role="status">
-            {syncStatus}
-          </p>
-        ) : null}
-        {syncError ? (
-          <p className="account-error" role="alert">
-            {syncError}
-          </p>
-        ) : null}
-      </section>
+      {showLocalImportCard ? (
+        <section className="surface account-card account-sync-card" aria-label="Save local progress">
+          <p className="eyebrow">Save local progress</p>
+          {loading || remoteLoading ? (
+            <>
+              <h2>Checking account stats.</h2>
+              <p>Looking for saved stats on this account.</p>
+            </>
+          ) : user ? (
+            <>
+              <h2>Previous plays found</h2>
+              <p>Move previous guest plays from this browser into your account. Existing account saves are deduped, and local play still works.</p>
+              <button
+                className={hasLocalHistory && !alreadyImported ? "button" : "button-secondary"}
+                type="button"
+                onClick={() => void syncStats()}
+                disabled={syncing || !hasLocalHistory || alreadyImported}
+              >
+                {importButtonLabel}
+              </button>
+            </>
+          ) : configured ? (
+            <>
+              <h2>Start Pro or continue free.</h2>
+              <p>Pro unlocks full history and advanced stats. Free needs no card and saves your Daily progress. Local sample-play stats are still shown above.</p>
+              <Link className="button" href="/sign-in">
+                Continue free
+              </Link>
+            </>
+          ) : (
+            <>
+              <h2>Account sign-in is unavailable in this preview.</h2>
+              <p>Local stats still work in this browser.</p>
+            </>
+          )}
+          {syncStatus ? (
+            <p className="status-live" role="status">
+              {syncStatus}
+            </p>
+          ) : null}
+          {syncError ? (
+            <p className="account-error" role="alert">
+              {syncError}
+            </p>
+          ) : null}
+        </section>
+      ) : null}
     </div>
   );
 }

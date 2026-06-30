@@ -2,6 +2,7 @@ import { render, screen } from "@testing-library/react";
 import { beforeEach, describe, expect, it, vi } from "vitest";
 import { AccountStatsClient } from "@/features/account/AccountStatsClient";
 import type { GameRunRow } from "@/lib/supabase/database";
+import { defaultPersistedState, savePersistedState } from "@/lib/persistence/storage";
 
 const accountMock = vi.hoisted(() => ({
   state: {
@@ -82,11 +83,38 @@ describe("AccountStatsClient", () => {
 
     expect(await screen.findByRole("heading", { name: "No account-saved runs yet." })).toBeVisible();
     expect(screen.getByText(/Account stats are private to you/i)).toBeVisible();
-    expect(screen.getByRole("heading", { name: "Import local runs" })).toBeVisible();
-    expect(screen.getByText(/Move completed runs from this browser into your account/i)).toBeVisible();
+    expect(screen.queryByRole("region", { name: "Save local progress" })).not.toBeInTheDocument();
+    expect(screen.queryByText("Stats sync")).not.toBeInTheDocument();
+    expect(screen.queryByText("Account sync ready")).not.toBeInTheDocument();
+    expect(screen.queryByRole("heading", { name: "Import local runs" })).not.toBeInTheDocument();
     expect(screen.queryByText("Saved in this browser.")).not.toBeInTheDocument();
     expect(screen.queryByText(/Create a free account/i)).not.toBeInTheDocument();
     expect(screen.queryByText(/Sign in when you want/i)).not.toBeInTheDocument();
+  });
+
+  it("shows a friendly local import prompt when this browser has previous plays", async () => {
+    const store = defaultPersistedState();
+    store.dailyHistoryByDate["2026-06-24"] = {
+      id: "daily:test:2026-06-24:analyst",
+      dateKey: "2026-06-24",
+      mode: "daily",
+      tier: "analyst",
+      totalScore: 4200,
+      bestScore: 1000,
+      roundScores: [1000, 900, 800, 700, 800],
+      roundCount: 5,
+      completedAt: "2026-06-24T12:00:00.000Z",
+      lastPlayedAt: "2026-06-24T12:00:00.000Z"
+    };
+    savePersistedState(store);
+
+    render(<AccountStatsClient />);
+
+    expect(await screen.findByRole("heading", { name: "Previous plays found" })).toBeVisible();
+    expect(screen.getByText(/Move previous guest plays from this browser into your account/i)).toBeVisible();
+    expect(screen.getByRole("button", { name: "Import plays" })).toBeEnabled();
+    expect(screen.queryByText("Stats sync")).not.toBeInTheDocument();
+    expect(screen.queryByText("Account sync ready")).not.toBeInTheDocument();
   });
 
   it("renders account stats when cloud runs exist", async () => {

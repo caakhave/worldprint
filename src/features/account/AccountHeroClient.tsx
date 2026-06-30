@@ -38,7 +38,7 @@ export function AccountHeroClient() {
         <div className="account-hero-badge">
           <span>{connected ? "Account online" : "Browser record"}</span>
           <strong>{connected ? "Connected" : "Sample Run"}</strong>
-          <em>{connected ? "Stats sync ready" : "Free needs no card; Pro opens the full atlas"}</em>
+          <em>{connected ? "Saved progress ready" : "Free needs no card; Pro opens the full atlas"}</em>
         </div>
       </div>
     </div>

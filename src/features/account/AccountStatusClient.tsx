@@ -7,9 +7,11 @@ import { accountInitial, compactPlanLabel } from "@/features/account/accountDisp
 import { membershipDisplay } from "@/features/account/subscriptionDisplay";
 import { useEntitlement } from "@/features/account/useEntitlement";
 import { useSupabaseAccount } from "@/features/account/useSupabaseAccount";
-import { fetchMarketingPreference, updateMarketingPreference, type MarketingPreference } from "@/lib/account/sync";
+import { fetchMarketingPreference, statsSyncSignature, syncMarkerKey, updateMarketingPreference, type MarketingPreference } from "@/lib/account/sync";
 import { planLabel } from "@/lib/account/entitlements";
 import { CONTACT_LINKS } from "@/lib/contact";
+import { buildLocalPlayerStats } from "@/lib/persistence/playerStats";
+import { loadPersistedState } from "@/lib/persistence/storage";
 
 export function AccountStatusClient() {
   const router = useRouter();
@@ -23,6 +25,7 @@ export function AccountStatusClient() {
   const [marketingSaving, setMarketingSaving] = useState(false);
   const [marketingStatus, setMarketingStatus] = useState("");
   const [marketingError, setMarketingError] = useState("");
+  const [hasImportableLocalRuns, setHasImportableLocalRuns] = useState(false);
 
   useEffect(() => {
     let cancelled = false;
@@ -43,6 +46,22 @@ export function AccountStatusClient() {
       cancelled = true;
     };
   }, [client, user]);
+
+  useEffect(() => {
+    if (!user) {
+      setHasImportableLocalRuns(false);
+      return;
+    }
+    try {
+      const store = loadPersistedState();
+      const localStats = buildLocalPlayerStats(store);
+      const signature = statsSyncSignature(store);
+      const importedSignature = window.localStorage.getItem(syncMarkerKey(user.id));
+      setHasImportableLocalRuns(localStats.gamesCompleted > 0 && importedSignature !== signature);
+    } catch {
+      setHasImportableLocalRuns(false);
+    }
+  }, [user]);
 
   async function handleSignOut() {
     const result = await signOut();
@@ -126,7 +145,6 @@ export function AccountStatusClient() {
   const membershipLabel = entitlementLoading ? "Checking" : planLabel(entitlement.plan);
   const compactMembershipLabel = entitlementLoading ? "Account" : compactPlanLabel(entitlement.plan);
   const membership = membershipDisplay(entitlement, entitlementLoading);
-  const syncLabel = entitlementLoading ? "Checking sync" : entitlement.capabilities.canSaveStats ? "Account sync ready" : "Local stats only";
   const planActionLabel = entitlement.plan === "pro" ? "Manage plan" : "Compare plans";
   const updatesEnabled = marketingPreference?.marketing_opt_in === true;
 
@@ -158,13 +176,18 @@ export function AccountStatusClient() {
             <span>{membership.detail}</span>
           </dd>
         </div>
-        <div>
-          <dt>Stats sync</dt>
-          <dd>
-            {syncLabel}
-            <span>Import local runs from your stats page.</span>
-          </dd>
-        </div>
+        {hasImportableLocalRuns ? (
+          <div>
+            <dt>Local progress</dt>
+            <dd>
+              Previous plays found
+              <span>Move previous guest plays from this browser into your account.</span>
+              <Link className="account-inline-action" href="/account/stats">
+                Import plays
+              </Link>
+            </dd>
+          </div>
+        ) : null}
       </dl>
       <div className="account-support-tools">
         <section className="account-preference-panel" aria-labelledby="marketing-preference-title">
