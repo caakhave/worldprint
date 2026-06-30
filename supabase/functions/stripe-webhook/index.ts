@@ -1,6 +1,11 @@
 /* eslint-disable */
 import Stripe from "https://esm.sh/stripe@16.12.0?target=deno";
 import {
+  ownerNotificationForStripeWebhook,
+  parseOwnerNotificationEmails,
+  sendOwnerNotificationViaResend
+} from "../_shared/adminNotifications.ts";
+import {
   json,
   matchingConfiguredProPriceId,
   metadataUserId,
@@ -23,6 +28,12 @@ type WebhookOutcome = {
   userId?: string | null;
   customerId?: string | null;
   subscriptionId?: string | null;
+  stripeStatus?: string | null;
+  cancelAtPeriodEnd?: boolean | null;
+  currentPeriodEnd?: string | null;
+  previousStatus?: string | null;
+  previousStripeStatus?: string | null;
+  previousCancelAtPeriodEnd?: boolean | null;
 };
 
 Deno.serve(async (request) => {
@@ -55,6 +66,7 @@ Deno.serve(async (request) => {
   try {
     const outcome = await processStripeEvent({ event, env, stripe, supabase });
     await recordWebhookEvent(supabase, event, outcome);
+    await notifyOwnerAfterWebhook(env, event, outcome);
     return json(
       outcome.ignored ? { received: true, ignored: outcome.ignored } : { received: true },
       200,
@@ -96,7 +108,14 @@ async function processStripeEvent(input: {
       cancel_at_period_end: subscription.cancel_at_period_end,
       current_period_end: periodEndToIso(subscription.current_period_end)
     });
-    return processed({ userId, customerId: idValue(subscription.customer) ?? idValue(session.customer), subscriptionId });
+    return processed({
+      userId,
+      customerId: idValue(subscription.customer) ?? idValue(session.customer),
+      subscriptionId,
+      stripeStatus: subscription.status,
+      cancelAtPeriodEnd: subscription.cancel_at_period_end,
+      currentPeriodEnd: periodEndToIso(subscription.current_period_end)
+    });
   }
 
   if (
@@ -114,6 +133,7 @@ async function processStripeEvent(input: {
     if (await shouldIgnoreStaleInactiveEvent(supabase, userId, subscription.id, subscription.status)) {
       return ignored("stale_inactive_subscription", { userId, customerId: idValue(subscription.customer), subscriptionId: subscription.id });
     }
+    const previous = await billingStatusForUser(supabase, userId);
 
     await upsertBillingEntitlement(supabase, {
       user_id: userId,
@@ -124,7 +144,17 @@ async function processStripeEvent(input: {
       cancel_at_period_end: subscription.cancel_at_period_end,
       current_period_end: periodEndToIso(subscription.current_period_end)
     });
-    return processed({ userId, customerId: idValue(subscription.customer), subscriptionId: subscription.id });
+    return processed({
+      userId,
+      customerId: idValue(subscription.customer),
+      subscriptionId: subscription.id,
+      stripeStatus: subscription.status,
+      cancelAtPeriodEnd: subscription.cancel_at_period_end,
+      currentPeriodEnd: periodEndToIso(subscription.current_period_end),
+      previousStatus: previous?.status ?? null,
+      previousStripeStatus: previous?.stripe_status ?? null,
+      previousCancelAtPeriodEnd: previous?.cancel_at_period_end ?? null
+    });
   }
 
   if (event.type === "invoice.payment_failed") {
@@ -151,7 +181,14 @@ async function processStripeEvent(input: {
       cancel_at_period_end: subscription.cancel_at_period_end,
       current_period_end: periodEndToIso(subscription.current_period_end)
     });
-    return processed({ userId, customerId: idValue(subscription.customer) ?? idValue(invoice.customer), subscriptionId });
+    return processed({
+      userId,
+      customerId: idValue(subscription.customer) ?? idValue(invoice.customer),
+      subscriptionId,
+      stripeStatus: "past_due",
+      cancelAtPeriodEnd: subscription.cancel_at_period_end,
+      currentPeriodEnd: periodEndToIso(subscription.current_period_end)
+    });
   }
 
   if (event.type === "invoice.payment_succeeded") {
@@ -165,6 +202,7 @@ async function processStripeEvent(input: {
 
     const userId = metadataUserId(subscription) ?? metadataUserId(invoice) ?? (await userIdFromCustomer(supabase, invoice.customer));
     if (!userId) return ignored("missing_user", { customerId: idValue(invoice.customer), subscriptionId });
+    const previous = await billingStatusForUser(supabase, userId);
 
     await upsertBillingEntitlement(supabase, {
       user_id: userId,
@@ -175,7 +213,17 @@ async function processStripeEvent(input: {
       cancel_at_period_end: subscription.cancel_at_period_end,
       current_period_end: periodEndToIso(subscription.current_period_end)
     });
-    return processed({ userId, customerId: idValue(subscription.customer) ?? idValue(invoice.customer), subscriptionId: subscription.id });
+    return processed({
+      userId,
+      customerId: idValue(subscription.customer) ?? idValue(invoice.customer),
+      subscriptionId: subscription.id,
+      stripeStatus: subscription.status,
+      cancelAtPeriodEnd: subscription.cancel_at_period_end,
+      currentPeriodEnd: periodEndToIso(subscription.current_period_end),
+      previousStatus: previous?.status ?? null,
+      previousStripeStatus: previous?.stripe_status ?? null,
+      previousCancelAtPeriodEnd: previous?.cancel_at_period_end ?? null
+    });
   }
 
   return ignored(event.type);
@@ -190,6 +238,16 @@ async function userIdFromCustomer(
   const { data, error } = await supabase.from("entitlements").select("user_id").eq("stripe_customer_id", customerId).maybeSingle();
   if (error) throw error;
   return data?.user_id ?? null;
+}
+
+async function billingStatusForUser(supabase: SupabaseServiceClient, userId: string) {
+  const { data, error } = await supabase
+    .from("entitlements")
+    .select("status,stripe_status,cancel_at_period_end")
+    .eq("user_id", userId)
+    .maybeSingle();
+  if (error) throw error;
+  return data ?? null;
 }
 
 async function latestSubscriptionForWrite(stripe: Stripe, subscription: Stripe.Subscription) {
@@ -251,6 +309,34 @@ async function recordWebhookEvent(supabase: SupabaseServiceClient, event: Stripe
     { onConflict: "event_id" }
   );
   if (error) throw error;
+}
+
+async function notifyOwnerAfterWebhook(env: Env, event: Stripe.Event, outcome: WebhookOutcome): Promise<void> {
+  const notification = ownerNotificationForStripeWebhook({
+    eventType: event.type,
+    outcomeStatus: outcome.status,
+    ignored: outcome.ignored ?? null,
+    userId: outcome.userId ?? null,
+    customerId: outcome.customerId ?? null,
+    subscriptionId: outcome.subscriptionId ?? null,
+    stripeStatus: outcome.stripeStatus ?? null,
+    cancelAtPeriodEnd: outcome.cancelAtPeriodEnd ?? null,
+    currentPeriodEnd: outcome.currentPeriodEnd ?? null,
+    previousStatus: outcome.previousStatus ?? null,
+    previousStripeStatus: outcome.previousStripeStatus ?? null,
+    previousCancelAtPeriodEnd: outcome.previousCancelAtPeriodEnd ?? null
+  });
+  if (!notification) return;
+
+  const result = await sendOwnerNotificationViaResend(notification, {
+    enabled: env.ownerNotificationsEnabled,
+    resendApiKey: env.resendApiKey,
+    fromEmail: env.ownerNotificationFromEmail,
+    toEmails: parseOwnerNotificationEmails(env.ownerNotificationEmails)
+  });
+  if (result === "failed" || result === "misconfigured") {
+    console.warn(`[billing] Owner notification ${result} for ${event.type}.`);
+  }
 }
 
 function processed(input: Omit<WebhookOutcome, "status"> = {}): WebhookOutcome {

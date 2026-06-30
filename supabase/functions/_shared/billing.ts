@@ -31,6 +31,10 @@ export type Env = {
   stripeProMonthlyPriceId: string | null;
   stripeProYearlyPriceId: string | null;
   siteUrl: string;
+  ownerNotificationsEnabled: boolean;
+  ownerNotificationEmails: string | null;
+  ownerNotificationFromEmail: string | null;
+  resendApiKey: string | null;
 };
 
 export function corsHeadersFor(request: Request | null, env: Env | null = null): Record<string, string> {
@@ -66,7 +70,11 @@ export function readEnv(requireWebhookSecret = false): { env: Env | null; error:
     stripeProPriceId: Deno.env.get("STRIPE_PRO_PRICE_ID") ?? null,
     stripeProMonthlyPriceId: Deno.env.get("STRIPE_PRO_MONTHLY_PRICE_ID") ?? null,
     stripeProYearlyPriceId: Deno.env.get("STRIPE_PRO_YEARLY_PRICE_ID") ?? null,
-    siteUrl: rawSiteUrl
+    siteUrl: rawSiteUrl,
+    ownerNotificationsEnabled: Deno.env.get("OWNER_NOTIFICATIONS_ENABLED") === "true",
+    ownerNotificationEmails: Deno.env.get("OWNER_NOTIFICATION_EMAILS") ?? null,
+    ownerNotificationFromEmail: Deno.env.get("OWNER_NOTIFICATION_FROM_EMAIL") ?? null,
+    resendApiKey: Deno.env.get("RESEND_API_KEY") ?? null
   };
   const hasProPrice = configuredProPriceIds(env).size > 0;
   const missing = [
