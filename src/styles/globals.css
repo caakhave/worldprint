@@ -452,6 +452,7 @@ button:disabled {
 .how-hero .eyebrow::before,
 .about-hero .eyebrow::before,
 .legal-hero .eyebrow::before,
+.not-found-copy .eyebrow::before,
 .text-page > .eyebrow::before,
 .beta-hero .eyebrow::before {
   content: "";
@@ -7184,6 +7185,137 @@ button.pro-price-option:focus-visible {
   padding: clamp(1.05rem, 2.8vw, 1.6rem);
 }
 
+.not-found-page {
+  display: grid;
+  align-items: center;
+  min-height: min(760px, calc(100vh - 10rem));
+  padding: clamp(2.4rem, 7vw, 6rem) 0;
+}
+
+.not-found-page.page-shell {
+  width: min(1120px, calc(100% - 2rem));
+}
+
+.not-found-panel {
+  display: grid;
+  grid-template-columns: minmax(0, 1.05fr) minmax(18rem, 0.95fr);
+  gap: clamp(1.1rem, 4vw, 3rem);
+  align-items: center;
+  border: 1px solid rgb(164 216 205 / 0.24);
+  border-radius: 8px;
+  padding: clamp(1.1rem, 4vw, 2.5rem);
+  box-shadow: 0 26px 70px rgb(0 0 0 / 0.26);
+}
+
+.not-found-copy {
+  display: grid;
+  gap: 1rem;
+  max-width: 38rem;
+}
+
+.not-found-copy .page-title {
+  max-width: 100%;
+  font-size: clamp(3.6rem, 10vw, 7.8rem);
+}
+
+.not-found-copy .lead {
+  margin: 0;
+  max-width: 34rem;
+}
+
+.not-found-note {
+  margin: 0 0 0.25rem;
+  color: var(--muted);
+  line-height: 1.6;
+}
+
+.not-found-atlas {
+  position: relative;
+  min-height: clamp(15rem, 34vw, 25rem);
+  border: 1px solid rgb(164 216 205 / 0.28);
+  border-radius: 8px;
+  overflow: hidden;
+  background:
+    radial-gradient(ellipse at 42% 44%, rgb(164 216 205 / 0.09), transparent 35%),
+    radial-gradient(ellipse at 82% 18%, rgb(215 168 75 / 0.08), transparent 26%),
+    repeating-linear-gradient(0deg, rgb(164 216 205 / 0.08) 0 1px, transparent 1px 3.2rem),
+    repeating-linear-gradient(90deg, rgb(164 216 205 / 0.08) 0 1px, transparent 1px 3.2rem),
+    linear-gradient(135deg, rgb(8 32 37 / 0.95), rgb(5 18 23 / 0.98));
+}
+
+.not-found-atlas::before {
+  content: "";
+  position: absolute;
+  inset: 12% -20% -18% 14%;
+  border: 1px solid rgb(164 216 205 / 0.22);
+  border-radius: 50%;
+  transform: rotate(-14deg);
+}
+
+.not-found-atlas::after {
+  content: "";
+  position: absolute;
+  inset: 18% 12% 14% 18%;
+  border: 1px solid rgb(215 168 75 / 0.22);
+  border-radius: 46% 54% 40% 60%;
+  opacity: 0.65;
+  transform: rotate(18deg);
+}
+
+.not-found-coordinate {
+  position: absolute;
+  top: 1rem;
+  left: 1rem;
+  z-index: 2;
+  display: inline-flex;
+  border: 1px solid rgb(215 168 75 / 0.46);
+  border-radius: 999px;
+  padding: 0.45rem 0.72rem;
+  background: rgb(2 10 14 / 0.68);
+  color: var(--gold);
+  font-family: var(--font-mono);
+  font-size: clamp(1.2rem, 3vw, 2rem);
+  font-weight: 800;
+  letter-spacing: 0.04em;
+  box-shadow: 0 12px 30px rgb(0 0 0 / 0.24);
+}
+
+.not-found-route {
+  position: absolute;
+  right: -8%;
+  bottom: 28%;
+  z-index: 2;
+  width: 72%;
+  height: 36%;
+  border-top: 3px solid rgb(164 216 205 / 0.56);
+  border-radius: 50%;
+  transform: rotate(-12deg);
+}
+
+.not-found-marker,
+.not-found-marker-alt {
+  position: absolute;
+  z-index: 3;
+  width: 0.9rem;
+  height: 0.9rem;
+  border: 2px solid var(--signal);
+  border-radius: 50%;
+  background: rgb(5 18 23);
+  box-shadow: 0 0 0 0.5rem rgb(164 216 205 / 0.08);
+}
+
+.not-found-marker {
+  right: 22%;
+  bottom: 39%;
+}
+
+.not-found-marker-alt {
+  right: 43%;
+  bottom: 47%;
+  border-color: var(--gold);
+  box-shadow: 0 0 0 0.5rem rgb(215 168 75 / 0.08);
+}
+
 .legal-prose section {
   display: grid;
   gap: 0.85rem;
@@ -7263,12 +7395,17 @@ button.pro-price-option:focus-visible {
   .plan-grid,
   .sources-overview-grid,
   .sources-methodology-layout,
-  .legal-layout {
+  .legal-layout,
+  .not-found-panel {
     grid-template-columns: 1fr;
   }
 
   .account-hero-media {
     min-height: clamp(12rem, 42vw, 18rem);
+  }
+
+  .not-found-atlas {
+    min-height: clamp(12rem, 38vw, 18rem);
   }
 
   .archive-review-hero,
@@ -7929,7 +8066,14 @@ button.pro-price-option:focus-visible {
     flex-direction: column;
   }
 
+  .not-found-copy .button-row {
+    align-items: stretch;
+    flex-direction: column;
+  }
+
   .account-hero-copy .button,
+  .not-found-copy .button,
+  .not-found-copy .button-secondary,
   .account-hero-copy .button-secondary {
     width: 100%;
   }
