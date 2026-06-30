@@ -186,7 +186,7 @@ Run after every production deploy from `main`.
 
 ### Account And Auth
 
-- `/sign-in` shows passwordless sign-in copy.
+- `/sign-in` shows email/password sign-in copy.
 - Repeat sign-in request within the Supabase throttle window shows the friendly wait message.
 - Email callback lands on `/account` without false failure.
 - `/account` shows email and membership without raw UUID by default.

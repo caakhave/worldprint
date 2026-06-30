@@ -102,27 +102,41 @@ Keep both localhost entries for QA:
 
 If Cloudflare preview deployments will be used for auth testing, add their exact preview callback origins too.
 
-### Email Sign-In Template
+### Email Password Templates
 
-In Supabase Dashboard, open **Authentication -> Email Templates** and update the Magic Link / email sign-in template.
+In Supabase Dashboard, open **Authentication -> Email Templates** and update the account confirmation and password reset templates.
 
-Recommended subject:
+Confirm signup subject:
 
 ```text
-Sign in to Can You Geo?
+Confirm your Can You Geo? account
 ```
 
-Recommended body:
+Confirm signup body:
 
 ```html
-<p>Open this link to sign in to Can You Geo.</p>
-<p><a href="{{ .RedirectTo }}?token_hash={{ .TokenHash }}&type=magiclink">Sign in to Can You Geo?</a></p>
-<p>If you did not request it, you can ignore this email.</p>
+<p>Confirm your Can You Geo? account.</p>
+<p><a href="{{ .RedirectTo }}?token_hash={{ .TokenHash }}&type=signup">Confirm account</a></p>
+<p>If you did not create this account, you can ignore this email.</p>
 ```
 
-The `token_hash` callback format is preferred because `/auth/callback` can verify the email link directly with `verifyOtp`. This avoids the common PKCE failure where a link is opened in a different browser than the one that requested it.
+Password reset subject:
 
-The app passes Supabase a query-free `emailRedirectTo` ending in `/auth/callback`. Do not include app return paths such as `next=/upgrade?plan=monthly` inside that redirect URL; the browser stores Pro intent before sending the email and restores it after the callback. This prevents the template's `?token_hash=...` suffix from being appended inside the `next` value.
+```text
+Reset your Can You Geo? password
+```
+
+Password reset body:
+
+```html
+<p>Reset your Can You Geo? password.</p>
+<p><a href="{{ .RedirectTo }}?token_hash={{ .TokenHash }}&type=recovery">Choose a new password</a></p>
+<p>If you did not request this reset, you can ignore this email.</p>
+```
+
+The `token_hash` callback format is preferred because `/auth/callback` can verify confirmation and recovery links directly with `verifyOtp`.
+
+The app passes Supabase query-free `emailRedirectTo` and `redirectTo` values ending in `/auth/callback`. Do not include app return paths such as `next=/upgrade?plan=monthly` inside that redirect URL; the browser stores Pro intent before account creation and restores it after the callback. This prevents a template's `?token_hash=...` suffix from being appended inside the `next` value.
 
 ### Sender Branding
 
@@ -299,14 +313,14 @@ After successful delivery testing, tighten the policy later.
 4. Cloudflare Pages production env has `NEXT_PUBLIC_SITE_URL=https://canyougeo.com`.
 5. Supabase Auth Site URL is `https://canyougeo.com`.
 6. Supabase Auth Redirect URLs include localhost QA and production callbacks.
-7. Supabase email sign-in template uses the `token_hash` callback link.
+7. Supabase confirmation and password reset templates use the `token_hash` callback link.
 8. Supabase SMTP sender branding is configured before public launch email QA.
 9. Supabase Edge Function `NEXT_PUBLIC_SITE_URL` secret is `https://canyougeo.com`.
 10. Stripe test webhook endpoint points to `stripe-webhook` and has required events.
 11. Checkout success/cancel and Portal return paths land on `https://canyougeo.com`.
 12. Run full QA:
     - anonymous play
-    - email sign-in
+    - email/password sign-in
     - account page
     - monthly Checkout
     - yearly Checkout

@@ -24,9 +24,14 @@ export function AuthNavStatus() {
   }
   if (!user) {
     return (
-      <Link className="account-nav-control account-nav-control-signed-out" href="/upgrade">
-        Start Pro
-      </Link>
+      <div className="account-nav-signed-out-actions">
+        <Link className="account-nav-control account-nav-control-signed-out account-nav-control-primary" href="/upgrade">
+          Start Pro
+        </Link>
+        <Link className="account-nav-control account-nav-control-signed-out" href="/sign-in">
+          Sign in
+        </Link>
+      </div>
     );
   }
 

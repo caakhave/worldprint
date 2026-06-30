@@ -102,8 +102,8 @@ Those values belong only in trusted server/dashboard contexts.
 Preview behavior:
 
 - Cloudflare preview builds may use their own `*.pages.dev` origins.
-- The app's sign-in request uses `window.location.origin`, so preview sign-in links will target the preview origin that requested them.
-- Supabase Auth must allow that exact preview callback URL before preview sign-in can work.
+- The app's account confirmation and password reset requests use `window.location.origin`, so preview email links target the preview origin that requested them.
+- Supabase Auth must allow that exact preview callback URL before preview account confirmation or reset can work.
 - If preview auth is not needed, keep preview deployments usable for public browsing but test sign-in only on localhost and production.
 - Keep preview `NEXT_PUBLIC_BILLING_MODE=disabled` unless running an intentional Stripe test-mode QA window.
 
@@ -160,25 +160,39 @@ https://<preview>.pages.dev/auth/callback
 
 If using wildcard redirect patterns in Supabase, test them explicitly before relying on them for QA.
 
-### Auth Email Template
+### Auth Email Templates
 
 Use the token-hash link format so static export callback handling does not depend on a same-browser PKCE verifier.
 
-Subject:
+Confirm signup subject:
 
 ```text
-Sign in to Can You Geo?
+Confirm your Can You Geo? account
 ```
 
-Body:
+Confirm signup body:
 
 ```html
-<p>Open this link to sign in to Can You Geo.</p>
-<p><a href="{{ .RedirectTo }}?token_hash={{ .TokenHash }}&type=magiclink">Sign in to Can You Geo?</a></p>
-<p>If you did not request it, you can ignore this email.</p>
+<p>Confirm your Can You Geo? account.</p>
+<p><a href="{{ .RedirectTo }}?token_hash={{ .TokenHash }}&type=signup">Confirm account</a></p>
+<p>If you did not create this account, you can ignore this email.</p>
 ```
 
-`{{ .RedirectTo }}` should be the plain `/auth/callback` URL with no app `next` query string. The app stores Pro plan intent before email send and restores it after callback verification, which keeps `token_hash` from being swallowed into a nested return URL.
+Password reset subject:
+
+```text
+Reset your Can You Geo? password
+```
+
+Password reset body:
+
+```html
+<p>Reset your Can You Geo? password.</p>
+<p><a href="{{ .RedirectTo }}?token_hash={{ .TokenHash }}&type=recovery">Choose a new password</a></p>
+<p>If you did not request this reset, you can ignore this email.</p>
+```
+
+`{{ .RedirectTo }}` should be the plain `/auth/callback` URL with no app `next` query string. The app stores Pro plan intent before account creation and restores it after callback verification, which keeps `token_hash` from being swallowed into a nested return URL.
 
 ### Schema, Tables, And RLS
 
@@ -351,15 +365,17 @@ After a production deploy from `main`:
 2. Confirm the footer includes `Terms & Privacy`.
 3. Open `/legal` and confirm legal/accessibility copy is readable.
 4. Open `/sign-in`.
-5. Enter a test email and send a sign-in link.
-6. Confirm the email subject and sender are Can You Geo branded.
-7. Open the sign-in link and confirm it lands on `/auth/callback`, then redirects to `/account`.
-8. Confirm `/account` shows the signed-in email and membership state without raw technical errors.
-9. Sign out and confirm the account page returns to the signed-out state.
-10. Open `/play/worldprint/` and confirm anonymous gameplay still starts.
-11. Open `/upgrade` while signed out and signed in; confirm copy is player-facing and checkout actions only work for signed-in users.
-12. If Stripe is configured, start test-mode Checkout, cancel, and confirm the app returns to `/upgrade`.
-13. If running a full billing QA, complete Checkout, confirm webhook grants Pro, open Billing Portal, cancel, and confirm entitlement changes match `docs/billing-qa-v1.md`.
+5. Create a test account with email and password.
+6. Confirm the account confirmation email subject and sender are Can You Geo branded.
+7. Open the confirmation link and confirm it lands on `/auth/callback`, then redirects to `/account` or the selected Pro plan.
+8. Sign out, then sign in with the same email and password.
+9. Request a password reset, open the reset link, and confirm `/auth/callback` redirects to `/reset-password`.
+10. Confirm `/account` shows the signed-in email and membership state without raw technical errors.
+11. Sign out and confirm the account page returns to the signed-out state.
+12. Open `/play/worldprint/` and confirm anonymous gameplay still starts.
+13. Open `/upgrade` while signed out and signed in; confirm copy is player-facing and checkout actions only work for signed-in users.
+14. If Stripe is configured, start test-mode Checkout, cancel, and confirm the app returns to `/upgrade`.
+15. If running a full billing QA, complete Checkout, confirm webhook grants Pro, open Billing Portal, cancel, and confirm entitlement changes match `docs/billing-qa-v1.md`.
 
 ## Non-Secret Diagnostics
 

@@ -34,7 +34,7 @@ Manual Supabase SQL remains useful for local QA and trusted beta testing. It mus
 
 ## Checkout Flow
 
-1. User signs in with Supabase passwordless email.
+1. User signs in with Supabase email/password auth.
 2. Static `/upgrade` page renders monthly/yearly Pro actions only when public Supabase env exists and
    `NEXT_PUBLIC_BILLING_MODE=test`.
 3. Browser invokes `stripe-checkout` through `client.functions.invoke`.

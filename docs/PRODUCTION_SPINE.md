@@ -1,11 +1,11 @@
 # Production Spine v0
 
-Can You Geo? is still a play-first geography game. Production Spine v0 added the account shell; Supabase Auth Sync v1 wires that shell to real Supabase magic-link sign-in and account stat sync. Entitlements v0 adds real Free/Pro access rules and soft UI gates. Stripe Billing v1 adds subscription Checkout, Billing Portal, and verified webhooks through Supabase Edge Functions without changing gameplay or requiring accounts before play. Saved Stats / Cloud Sync v1 adds completed-run summaries for signed-in accounts.
+Can You Geo? is still a play-first geography game. Production Spine v0 added the account shell; Supabase Auth Sync v1 wires that shell to real Supabase email/password sign-in and account stat sync. Entitlements v0 adds real Free/Pro access rules and soft UI gates. Stripe Billing v1 adds subscription Checkout, Billing Portal, and verified webhooks through Supabase Edge Functions without changing gameplay or requiring accounts before play. Saved Stats / Cloud Sync v1 adds completed-run summaries for signed-in accounts.
 
 ## What Exists Now
 
-- `/sign-in` starts Supabase magic-link email sign-in when public Supabase env vars are configured.
-- `/auth/callback` finishes the browser-side magic-link session and ensures a profile row exists.
+- `/sign-in` signs returning players in with Supabase email/password auth when public Supabase env vars are configured.
+- `/sign-up` creates Supabase email/password accounts and `/auth/callback` verifies email confirmation and password recovery links.
 - `/account` shows signed-in/signed-out state, profile basics, sign-out, local stats, and sync controls.
 - `/account/stats` prefers Supabase `game_runs` account history when signed in and falls back to local browser stats when signed out.
 - `/upgrade` explains Free versus Pro access and opens Stripe Checkout through a trusted Supabase Edge Function when configured.
@@ -92,7 +92,7 @@ grant select, insert, update on public.round_results to authenticated;
 
 Also add the `game_runs_update_own` and `round_results_update_own` RLS policies from `docs/supabase/production_spine_v0.sql` if they are not already present.
 
-For Auth, enable email magic links in Supabase. Add your local and deployed origins to Supabase Auth URL configuration, including:
+For Auth, enable Supabase email/password accounts with email confirmation and password recovery. Add your local and deployed origins to Supabase Auth URL configuration, including:
 
 - `http://localhost:3000/auth/callback`
 - `https://your-domain.example/auth/callback`
@@ -101,8 +101,8 @@ For Auth, enable email magic links in Supabase. Add your local and deployed orig
 
 Implemented:
 
-- email magic-link sign-in
-- browser-side `/auth/callback` session exchange
+- email/password sign-in
+- browser-side `/auth/callback` confirmation and recovery verification
 - profile upsert into `profiles`
 - newly completed Daily, Practice, Past Games, and Challenge summaries into `game_runs`
 - per-round scores and clue-use summaries into `round_results` when the completed run is available
@@ -189,7 +189,7 @@ Likely paid surfaces:
 ## Security Notes
 
 - Gameplay remains playable without login.
-- The current sign-in page uses Supabase magic links; no password is collected by Can You Geo?.
+- The current sign-in page uses Supabase email/password auth; passwords are handled by Supabase Auth and are not stored in app tables.
 - Stripe payment, subscription Checkout, Billing Portal, and webhook entitlement updates exist only in Supabase Edge Functions.
 - Entitlements are private RLS-protected rows. Browser code reads the current user's row but does not insert or update paid access.
 - RLS policies in the SQL plan protect private user data once Supabase Auth exists.
@@ -198,6 +198,6 @@ Likely paid surfaces:
 
 ## Deployment Notes
 
-Auth Sync v1 and Entitlements v0 keep the current static export path by completing magic-link sign-in and entitlement reads in the browser. Stripe Billing v1 keeps the public app static by moving Checkout, Portal, and webhook verification into Supabase Edge Functions.
+Auth Sync v1 and Entitlements v0 keep the current static export path by completing email/password auth, confirmation/recovery callbacks, and entitlement reads in the browser. Stripe Billing v1 keeps the public app static by moving Checkout, Portal, and webhook verification into Supabase Edge Functions.
 
 See `docs/STRIPE_BILLING.md` for setup and local webhook testing.

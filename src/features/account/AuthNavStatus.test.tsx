@@ -60,6 +60,7 @@ describe("AuthNavStatus", () => {
     render(<AuthNavStatus />);
 
     expect(screen.getByRole("link", { name: "Start Pro" })).toHaveAttribute("href", "/upgrade");
+    expect(screen.getByRole("link", { name: "Sign in" })).toHaveAttribute("href", "/sign-in");
   });
 
   it("shows a compact Free account menu for signed-in players", async () => {

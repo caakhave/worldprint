@@ -1,13 +1,19 @@
 import { render, screen, waitFor } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
 import { beforeEach, describe, expect, it, vi } from "vitest";
-import { SignInClient, supabaseOtpErrorDiagnostic } from "@/features/account/SignInClient";
+import { SignInClient, supabaseAuthErrorDiagnostic } from "@/features/account/SignInClient";
+
+const routerMock = vi.hoisted(() => ({
+  push: vi.fn()
+}));
+
+const ensureProfileMock = vi.hoisted(() => vi.fn(async () => ({ error: null })));
 
 const accountMock = vi.hoisted(() => ({
   state: {
     client: {
       auth: {
-        signInWithOtp: vi.fn()
+        signInWithPassword: vi.fn()
       }
     },
     configured: true,
@@ -21,14 +27,32 @@ const accountMock = vi.hoisted(() => ({
   }
 }));
 
+vi.mock("next/navigation", () => ({
+  useRouter: () => routerMock
+}));
+
+vi.mock("@/lib/account/sync", () => ({
+  ensureProfile: ensureProfileMock
+}));
+
 vi.mock("@/features/account/useSupabaseAccount", () => ({
   useSupabaseAccount: () => accountMock.state
 }));
 
+const signedInUser = {
+  id: "11111111-2222-4333-8444-555555555555",
+  email: "player@example.com"
+};
+
 describe("SignInClient", () => {
   beforeEach(() => {
-    accountMock.state.client.auth.signInWithOtp.mockReset();
-    accountMock.state.client.auth.signInWithOtp.mockResolvedValue({ error: null });
+    routerMock.push.mockClear();
+    ensureProfileMock.mockClear();
+    accountMock.state.client.auth.signInWithPassword.mockReset();
+    accountMock.state.client.auth.signInWithPassword.mockResolvedValue({
+      data: { user: signedInUser, session: { user: signedInUser } },
+      error: null
+    });
     accountMock.state.signOut.mockClear();
     accountMock.state.loading = false;
     accountMock.state.configured = true;
@@ -39,72 +63,72 @@ describe("SignInClient", () => {
     window.history.pushState({}, "", "/sign-in");
   });
 
-  it("explains production email sign-in without test-era helper copy", async () => {
+  it("shows the production email and password sign-in flow", async () => {
+    render(<SignInClient />);
+
+    expect(screen.getByRole("heading", { name: "Sign in with email and password." })).toBeVisible();
+    expect(
+      screen.getByText(
+        "Returning players use the email and password on their account. New players can create a free account first, then choose Free or Pro."
+      )
+    ).toBeVisible();
+    expect(screen.getByLabelText("Email")).toHaveAttribute("autocomplete", "email");
+    expect(screen.getByLabelText("Password")).toHaveAttribute("autocomplete", "current-password");
+    expect(screen.getByRole("button", { name: "Sign in" })).toBeVisible();
+    expect(screen.getByRole("link", { name: "Create account" })).toHaveAttribute("href", "/sign-up");
+    expect(screen.getByRole("link", { name: "Forgot password?" })).toHaveAttribute("href", "/forgot-password");
+    expect(screen.queryByText("Send sign-in link")).not.toBeInTheDocument();
+    expect(screen.queryByText("We'll email a secure link.")).not.toBeInTheDocument();
+  });
+
+  it("signs in with password and returns to account by default", async () => {
     const user = userEvent.setup();
     render(<SignInClient />);
 
-    expect(screen.getByRole("heading", { name: "Enter your email to continue." })).toBeVisible();
-    expect(
-      screen.getByText("New players get a free account automatically. Returning players use the same email to sign back in.")
-    ).toBeVisible();
-    expect(
-      screen.getByText("Want Can You Geo? Pro? Use this email first, then choose monthly or yearly. Free stays available with no card needed.")
-    ).toBeVisible();
-    expect(screen.getByText("We'll email a secure link. New players can continue Free or choose Pro after signing in.")).toBeVisible();
-    expect(screen.queryByText("No password needed. Sign-in links can only be requested about once per minute.")).not.toBeInTheDocument();
-    expect(screen.queryByText("Returning later? Use the same email and request a fresh link.")).not.toBeInTheDocument();
-    expect(screen.queryByText("Try the 5-map Sample Run. The 3-map Free Daily requires a free account.")).not.toBeInTheDocument();
-
     await user.type(screen.getByLabelText("Email"), "player@example.com");
-    await user.click(screen.getByRole("button", { name: "Send sign-in link" }));
+    await user.type(screen.getByLabelText("Password"), "correct horse battery");
+    await user.click(screen.getByRole("button", { name: "Sign in" }));
 
-    expect(accountMock.state.client.auth.signInWithOtp).toHaveBeenCalledWith({
+    expect(accountMock.state.client.auth.signInWithPassword).toHaveBeenCalledWith({
       email: "player@example.com",
-      options: expect.objectContaining({
-        shouldCreateUser: true,
-        emailRedirectTo: expect.stringMatching(/\/auth\/callback$/)
-      })
+      password: "correct horse battery"
     });
-    await screen.findByText("Email sent. Open the link to continue.");
-    expect(screen.getByRole("button", { name: "Check your email" })).toBeDisabled();
+    await waitFor(() => expect(ensureProfileMock).toHaveBeenCalledWith(accountMock.state.client, signedInUser));
+    expect(window.sessionStorage.getItem("canyougeo:sign-in-return")).toBeNull();
+    expect(routerMock.push).toHaveBeenCalledWith("/account");
   });
 
-  it("preserves Pro yearly upgrade intent without putting query params in the magic-link redirect", async () => {
+  it("preserves Pro yearly intent through password sign-in", async () => {
     const user = userEvent.setup();
     window.history.pushState({}, "", "/sign-in?next=%2Fupgrade%3Fplan%3Dyearly");
 
     render(<SignInClient />);
 
-    await user.type(screen.getByLabelText("Email"), "player@example.com");
-    await user.click(screen.getByRole("button", { name: "Send sign-in link" }));
-
-    expect(accountMock.state.client.auth.signInWithOtp).toHaveBeenCalledWith({
-      email: "player@example.com",
-      options: expect.objectContaining({
-        shouldCreateUser: true,
-        emailRedirectTo: expect.stringMatching(/\/auth\/callback$/)
-      })
+    await waitFor(() => {
+      expect(screen.getByRole("link", { name: "Create account" })).toHaveAttribute("href", "/sign-up?next=%2Fupgrade%3Fplan%3Dyearly");
     });
-    expect(window.sessionStorage.getItem("canyougeo:sign-in-return")).toBe("/upgrade?plan=yearly");
+    await user.type(screen.getByLabelText("Email"), "player@example.com");
+    await user.type(screen.getByLabelText("Password"), "correct horse battery");
+    await user.click(screen.getByRole("button", { name: "Sign in" }));
+
+    expect(accountMock.state.client.auth.signInWithPassword).toHaveBeenCalledWith({
+      email: "player@example.com",
+      password: "correct horse battery"
+    });
+    expect(routerMock.push).toHaveBeenCalledWith("/upgrade?plan=yearly");
   });
 
-  it("preserves Pro monthly upgrade intent without raw Stripe price IDs", async () => {
+  it("preserves Pro monthly intent without raw Stripe price IDs", async () => {
     const user = userEvent.setup();
     window.history.pushState({}, "", "/sign-in?next=%2Fupgrade%3Fplan%3Dmonthly");
 
     render(<SignInClient />);
 
     await user.type(screen.getByLabelText("Email"), "player@example.com");
-    await user.click(screen.getByRole("button", { name: "Send sign-in link" }));
+    await user.type(screen.getByLabelText("Password"), "correct horse battery");
+    await user.click(screen.getByRole("button", { name: "Sign in" }));
 
-    expect(accountMock.state.client.auth.signInWithOtp).toHaveBeenCalledWith({
-      email: "player@example.com",
-      options: expect.objectContaining({
-        shouldCreateUser: true,
-        emailRedirectTo: expect.stringMatching(/\/auth\/callback$/)
-      })
-    });
-    expect(window.sessionStorage.getItem("canyougeo:sign-in-return")).toBe("/upgrade?plan=monthly");
+    expect(routerMock.push).toHaveBeenCalledWith("/upgrade?plan=monthly");
   });
 
   it("rejects unsafe sign-in return targets", async () => {
@@ -114,68 +138,42 @@ describe("SignInClient", () => {
     render(<SignInClient />);
 
     await user.type(screen.getByLabelText("Email"), "player@example.com");
-    await user.click(screen.getByRole("button", { name: "Send sign-in link" }));
+    await user.type(screen.getByLabelText("Password"), "correct horse battery");
+    await user.click(screen.getByRole("button", { name: "Sign in" }));
 
-    expect(accountMock.state.client.auth.signInWithOtp).toHaveBeenCalledWith({
-      email: "player@example.com",
-      options: expect.objectContaining({
-        shouldCreateUser: true,
-        emailRedirectTo: expect.stringMatching(/\/auth\/callback$/)
-      })
-    });
-    expect(window.sessionStorage.getItem("canyougeo:sign-in-return")).toBe("/account");
+    expect(routerMock.push).toHaveBeenCalledWith("/account");
   });
 
-  it("shows a specific message for Supabase passwordless rate limits", async () => {
+  it("keeps the generic message for password sign-in failures", async () => {
     const user = userEvent.setup();
-    accountMock.state.client.auth.signInWithOtp.mockResolvedValue({
+    accountMock.state.client.auth.signInWithPassword.mockResolvedValue({
+      data: { user: null, session: null },
       error: {
-        status: 429,
-        code: "over_email_send_rate_limit",
-        message: "For security purposes, you can only request this after 60 seconds."
+        status: 400,
+        code: "invalid_credentials",
+        message: "Invalid login credentials."
       }
     });
 
     render(<SignInClient />);
 
     await user.type(screen.getByLabelText("Email"), "player@example.com");
-    await user.click(screen.getByRole("button", { name: "Send sign-in link" }));
+    await user.type(screen.getByLabelText("Password"), "wrong password");
+    await user.click(screen.getByRole("button", { name: "Sign in" }));
 
     await screen.findByRole("alert");
-    expect(screen.getByText("A sign-in link was just sent. Check your email, or try again in about 60 seconds.")).toBeVisible();
-    expect(screen.getByRole("button", { name: "Check your email" })).toBeDisabled();
+    expect(screen.getByText("We could not sign you in. Check your email and password.")).toBeVisible();
+    expect(routerMock.push).not.toHaveBeenCalled();
   });
 
-  it("keeps the generic message for unknown send failures", async () => {
+  it("shows signed-in actions instead of the password form", async () => {
     const user = userEvent.setup();
-    accountMock.state.client.auth.signInWithOtp.mockResolvedValue({
-      error: {
-        status: 500,
-        code: "unexpected_failure",
-        message: "Something went wrong."
-      }
-    });
-
-    render(<SignInClient />);
-
-    await user.type(screen.getByLabelText("Email"), "player@example.com");
-    await user.click(screen.getByRole("button", { name: "Send sign-in link" }));
-
-    await screen.findByRole("alert");
-    expect(screen.getByText("We could not send that sign-in link. Check the email address and try again.")).toBeVisible();
-    expect(screen.getByRole("button", { name: "Send sign-in link" })).toBeEnabled();
-  });
-
-  it("shows signed-in actions instead of the email form", async () => {
-    const user = userEvent.setup();
-    accountMock.state.user = {
-      id: "11111111-2222-4333-8444-555555555555",
-      email: "player@example.com"
-    };
+    accountMock.state.user = signedInUser;
 
     render(<SignInClient />);
 
     expect(screen.getByText("You're signed in as player@example.com.")).toBeVisible();
+    expect(screen.getByText("Use this same email and password next time.")).toBeVisible();
     expect(screen.getByRole("link", { name: "Go to account" })).toHaveAttribute("href", "/account");
     expect(screen.getByRole("link", { name: "Keep playing" })).toHaveAttribute("href", "/play/mystery-map");
     expect(screen.getByRole("button", { name: "Sign out" })).toBeVisible();
@@ -186,10 +184,10 @@ describe("SignInClient", () => {
   });
 });
 
-describe("supabaseOtpErrorDiagnostic", () => {
+describe("supabaseAuthErrorDiagnostic", () => {
   it("keeps only non-secret auth error fields", () => {
     expect(
-      supabaseOtpErrorDiagnostic({
+      supabaseAuthErrorDiagnostic({
         status: 404,
         code: "not_found",
         message: "Auth endpoint not found."

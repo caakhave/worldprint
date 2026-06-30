@@ -6,33 +6,16 @@ import { useEffect, useState } from "react";
 import { useSupabaseAccount } from "@/features/account/useSupabaseAccount";
 import { ensureProfile } from "@/lib/account/sync";
 import {
+  authCallbackPathForReturn,
   clearStoredSignInReturnPath,
   safeSignInReturnPath,
-  signUpPathForReturn,
+  signInPathForReturn,
   storeSignInReturnPath
 } from "@/lib/account/signInRedirect";
+import { siteOrigin } from "@/lib/supabase/env";
 
-const GENERIC_SIGN_IN_ERROR = "We could not sign you in. Check your email and password.";
-
-type SupabaseAuthError = {
-  message: string;
-  status?: number;
-  code?: string;
-};
-
-export function supabaseAuthErrorDiagnostic(error: SupabaseAuthError) {
-  return {
-    message: error.message,
-    status: error.status,
-    code: error.code
-  };
-}
-
-function warnAuthDetail(message: string, error: SupabaseAuthError | unknown) {
-  if (process.env.NODE_ENV !== "production") {
-    console.warn(`[auth] ${message}`, error);
-  }
-}
+const MIN_PASSWORD_LENGTH = 8;
+const GENERIC_SIGN_UP_ERROR = "We could not create that account. If you already have one, sign in instead.";
 
 function nextSearchValue(): string | null {
   if (typeof window === "undefined") return null;
@@ -40,15 +23,16 @@ function nextSearchValue(): string | null {
 }
 
 function signedInStatusForReturn(nextPath: string): string {
-  return nextPath.startsWith("/upgrade") ? "Signed in. Taking you back to Pro plans..." : "Signed in. Taking you to your account...";
+  return nextPath.startsWith("/upgrade") ? "Account created. Taking you back to Pro plans..." : "Account created. Taking you to your account...";
 }
 
-export function SignInClient() {
+export function SignUpClient() {
   const router = useRouter();
   const { client, configured, loading, user, profileError, signOut } = useSupabaseAccount();
   const [nextValue, setNextValue] = useState<string | null>(null);
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [confirmPassword, setConfirmPassword] = useState("");
   const [status, setStatus] = useState<string>("");
   const [error, setError] = useState<string>("");
   const [submitting, setSubmitting] = useState(false);
@@ -61,7 +45,15 @@ export function SignInClient() {
   async function submit(event: React.FormEvent<HTMLFormElement>) {
     event.preventDefault();
     if (!client) {
-      setError("Email and password sign-in is not available in this preview. You can still try the Sample Run.");
+      setError("Account creation is not available in this preview. You can still try the Sample Run.");
+      return;
+    }
+    if (password.length < MIN_PASSWORD_LENGTH) {
+      setError("Use at least 8 characters for your password.");
+      return;
+    }
+    if (password !== confirmPassword) {
+      setError("The two passwords do not match.");
       return;
     }
 
@@ -70,30 +62,43 @@ export function SignInClient() {
     setStatus("");
 
     const nextPath = storeSignInReturnPath(nextSearchValue());
-    const { data, error: signInError } = await client.auth.signInWithPassword({
+    const callbackPath = authCallbackPathForReturn(nextPath);
+    const { data, error: signUpError } = await client.auth.signUp({
       email,
-      password
+      password,
+      options: {
+        emailRedirectTo: `${siteOrigin()}${callbackPath}`
+      }
     });
 
-    if (signInError) {
-      warnAuthDetail("Could not sign in with password.", supabaseAuthErrorDiagnostic(signInError));
+    if (signUpError) {
+      if (process.env.NODE_ENV !== "production") {
+        console.warn("[auth] Could not create password account.", {
+          message: signUpError.message,
+          status: signUpError.status,
+          code: signUpError.code
+        });
+      }
       setSubmitting(false);
-      setError(GENERIC_SIGN_IN_ERROR);
+      setError(GENERIC_SIGN_UP_ERROR);
       return;
     }
 
     const activeUser = data.user ?? data.session?.user ?? null;
-    if (activeUser) {
+    if (data.session && activeUser) {
       const profile = await ensureProfile(client, activeUser);
-      if (profile.error) {
-        warnAuthDetail("Profile creation failed after password sign-in.", profile.error);
+      if (profile.error && process.env.NODE_ENV !== "production") {
+        console.warn("[auth] Profile creation failed after password sign-up.", profile.error);
       }
+      clearStoredSignInReturnPath();
+      setStatus(signedInStatusForReturn(nextPath));
+      setSubmitting(false);
+      router.push(nextPath);
+      return;
     }
 
-    clearStoredSignInReturnPath();
-    setStatus(signedInStatusForReturn(nextPath));
     setSubmitting(false);
-    router.push(nextPath);
+    setStatus("Check your email to confirm your account. Then sign in with your password to continue.");
   }
 
   async function handleSignOut() {
@@ -102,26 +107,21 @@ export function SignInClient() {
   }
 
   const returnPath = safeSignInReturnPath(nextValue);
-  const signUpHref = signUpPathForReturn(returnPath);
+  const signInHref = signInPathForReturn(returnPath);
   const signedInPrimaryHref = returnPath.startsWith("/upgrade") ? returnPath : "/account";
 
   if (!configured) {
     return (
       <article className="surface account-card account-primary-card">
-        <p className="eyebrow">Account sign-in</p>
-        <h2>Account sign-in is not available in this preview.</h2>
+        <p className="eyebrow">Create account</p>
+        <h2>Account creation is not available in this preview.</h2>
         <p>The 5-map Sample Run is still available in this browser. The 3-map Free Daily and saved progress start with a free account.</p>
         <div className="account-disabled-panel" role="status">
           Account saving is offline for this build.
         </div>
-        <div className="button-row">
-          <button className="button" type="button" disabled>
-            Sign in
-          </button>
-          <Link className="button-secondary" href="/play/mystery-map">
-            Try Sample Run
-          </Link>
-        </div>
+        <Link className="button-secondary" href="/play/mystery-map">
+          Try Sample Run
+        </Link>
       </article>
     );
   }
@@ -129,7 +129,7 @@ export function SignInClient() {
   if (loading) {
     return (
       <article className="surface account-card account-primary-card">
-        <p className="eyebrow">Account sign-in</p>
+        <p className="eyebrow">Create account</p>
         <h2>Checking your account.</h2>
         <p>Looking for an existing session on this device.</p>
       </article>
@@ -142,7 +142,6 @@ export function SignInClient() {
         <p className="eyebrow">Signed in</p>
         <h2>Your atlas is connected.</h2>
         <p>{user.email ? `You're signed in as ${user.email}.` : "You're signed in."}</p>
-        <p className="account-env-note">Use this same email and password next time.</p>
         {profileError ? <p className="account-error">We could not refresh your account details. You can keep playing.</p> : null}
         {signOutError ? (
           <p className="account-error" role="alert">
@@ -152,9 +151,6 @@ export function SignInClient() {
         <div className="button-row">
           <Link className="button" href={signedInPrimaryHref}>
             {signedInPrimaryHref.startsWith("/upgrade") ? "Continue to Pro plans" : "Go to account"}
-          </Link>
-          <Link className="button-secondary" href="/play/mystery-map">
-            Keep playing
           </Link>
           <button className="button-secondary" type="button" onClick={() => void handleSignOut()}>
             Sign out
@@ -166,14 +162,14 @@ export function SignInClient() {
 
   return (
     <article className="surface account-card account-primary-card">
-      <p className="eyebrow">Sign in</p>
-      <h2>Sign in with email and password.</h2>
-      <p>Returning players use the email and password on their account. New players can create a free account first, then choose Free or Pro.</p>
-      <form className="account-form" onSubmit={(event) => void submit(event)}>
-        <label htmlFor="account-email">
+      <p className="eyebrow">Create account</p>
+      <h2>Create your Can You Geo? account.</h2>
+      <p>Free needs no card. If you picked Pro first, confirm this account and we will take you back to the selected plan.</p>
+      <form className="account-form" noValidate onSubmit={(event) => void submit(event)}>
+        <label htmlFor="sign-up-email">
           Email
           <input
-            id="account-email"
+            id="sign-up-email"
             name="email"
             type="email"
             value={email}
@@ -183,28 +179,43 @@ export function SignInClient() {
             required
           />
         </label>
-        <label htmlFor="account-password">
+        <label htmlFor="sign-up-password">
           Password
           <input
-            id="account-password"
+            id="sign-up-password"
             name="password"
             type="password"
             value={password}
             onChange={(event) => setPassword(event.target.value)}
-            placeholder="Your password"
-            autoComplete="current-password"
+            placeholder="At least 8 characters"
+            autoComplete="new-password"
+            minLength={MIN_PASSWORD_LENGTH}
+            required
+          />
+        </label>
+        <label htmlFor="sign-up-password-confirm">
+          Confirm password
+          <input
+            id="sign-up-password-confirm"
+            name="confirmPassword"
+            type="password"
+            value={confirmPassword}
+            onChange={(event) => setConfirmPassword(event.target.value)}
+            placeholder="Repeat your password"
+            autoComplete="new-password"
+            minLength={MIN_PASSWORD_LENGTH}
             required
           />
         </label>
         <button className="button" type="submit" disabled={submitting}>
-          {submitting ? "Signing in..." : "Sign in"}
+          {submitting ? "Creating account..." : "Create account"}
         </button>
       </form>
       <div className="account-inline-links" aria-label="Account links">
-        <Link href={signUpHref}>Create account</Link>
+        <Link href={signInHref}>Already have an account?</Link>
         <Link href="/forgot-password">Forgot password?</Link>
       </div>
-      <p className="account-env-note">Free needs no card. Pro monthly or yearly checkout starts only after you are signed in.</p>
+      <p className="account-env-note">Passwords are handled by Supabase Auth. Can You Geo does not store passwords in app tables.</p>
       {status ? (
         <p className="status-live" role="status">
           {status}

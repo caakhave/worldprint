@@ -35,7 +35,7 @@ export function AccountStatusClient() {
     return (
       <article className="surface account-card account-primary-card">
         <p className="eyebrow">Account status</p>
-        <h2>Email sign-in is unavailable in this preview.</h2>
+        <h2>Account sign-in is unavailable in this preview.</h2>
         <p>The 5-map Sample Run is available in this browser. The 3-map Free Daily and saved progress start with a free account.</p>
         <Link className="button-secondary" href="/play/mystery-map">
           Try Sample Run

@@ -229,7 +229,7 @@ export function AccountStatsClient() {
           </>
         ) : (
           <>
-            <h2>Email sign-in is unavailable in this preview.</h2>
+            <h2>Account sign-in is unavailable in this preview.</h2>
             <p>Local stats still work in this browser.</p>
           </>
         )}

@@ -152,7 +152,7 @@ Unit tests cover:
 
 - Verify customer-specific `invoice.payment_failed` on the actual QA subscription by using Stripe Dashboard test-mode tools or a purpose-built test subscription/payment method setup. Expected result remains `plan=free`, `status=past_due`.
 - A valid unknown event can be live-tested only by temporarily subscribing the test endpoint to an extra event or signing a custom test payload. The production endpoint should stay limited to the required event list.
-- Supabase admin-generated magic links use an implicit hash URL shape that this static app callback does not consume. The player-facing magic-link form remains the intended sign-in path.
+- Supabase email confirmation and password recovery links should use the documented `token_hash` callback shape. The player-facing sign-in path is email/password.
 
 ## Regression Commands And Results
 

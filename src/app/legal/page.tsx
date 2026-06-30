@@ -38,7 +38,8 @@ export default function LegalPage() {
             <h3>Accounts</h3>
             <p>
               You can play some parts of the service without an account. If you create an account, you are responsible for keeping
-              access to your email secure. We use email sign-in links instead of passwords.
+              access to your email and password secure. Passwords are handled by Supabase Auth and are not stored in Can You Geo
+              application tables.
             </p>
 
             <h3>Fair Play</h3>

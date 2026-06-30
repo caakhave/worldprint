@@ -16,7 +16,7 @@ Implemented now:
 - result-summary prompt for “Save your score and streak”
 - local anonymous stats derived from completed Daily, Past Games, and Challenge runs
 - Supabase schema/RLS planning SQL in `docs/supabase/production_spine_v0.sql`
-- Supabase Auth Sync v1: magic-link sign-in, browser callback, profile upsert, sign-out, and aggregate local stats sync to `user_stats`
+- Supabase Auth Sync v1: email/password sign-in, browser confirmation/recovery callback, profile upsert, sign-out, and aggregate local stats sync to `user_stats`
 - Entitlements v0: centralized Guest/Free/Pro capability model, Supabase entitlement reads, `/upgrade`, and soft gates for full archive, full Practice atlas messaging, and advanced stats
 - Stripe Billing v1: Supabase Edge Function Checkout, Billing Portal, verified Stripe webhooks, and subscription-driven entitlement updates
 

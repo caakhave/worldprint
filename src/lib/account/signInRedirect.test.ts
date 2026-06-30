@@ -7,6 +7,7 @@ import {
   readStoredSignInReturnPath,
   safeSignInReturnPath,
   signInPathForReturn,
+  signUpPathForReturn,
   storeSignInReturnPath
 } from "@/lib/account/signInRedirect";
 
@@ -36,6 +37,7 @@ describe("sign-in callback routing", () => {
   it("keeps Supabase email redirect URLs query-free", () => {
     expect(authCallbackPathForReturn("/upgrade?plan=monthly")).toBe("/auth/callback");
     expect(signInPathForReturn("/upgrade?plan=yearly")).toBe("/sign-in?next=%2Fupgrade%3Fplan%3Dyearly");
+    expect(signUpPathForReturn("/upgrade?plan=monthly")).toBe("/sign-up?next=%2Fupgrade%3Fplan%3Dmonthly");
   });
 
   it("stores and reads a sanitized return path", () => {

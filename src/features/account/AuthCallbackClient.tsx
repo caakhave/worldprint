@@ -14,9 +14,10 @@ import {
 import { createSupabaseBrowserClient, type CanYouGeoSupabaseClient } from "@/lib/supabase/client";
 
 const supportedOtpTypes = new Set<EmailOtpType>(["signup", "magiclink", "recovery", "invite", "email", "email_change"]);
+const RESET_PASSWORD_PATH = "/reset-password";
 
 function authErrorCopy() {
-  return "That sign-in link expired or has already been used. Enter your email to get a fresh link.";
+  return "That account email link expired or has already been used. Try signing in or request a new password reset.";
 }
 
 function warnAuthDetail(message: string, detail: unknown) {
@@ -27,6 +28,21 @@ function warnAuthDetail(message: string, detail: unknown) {
 
 function otpTypeFromUrl(value: string | null): EmailOtpType {
   return value && supportedOtpTypes.has(value as EmailOtpType) ? (value as EmailOtpType) : "magiclink";
+}
+
+function authParamsFromLocation(): URLSearchParams {
+  const params = new URLSearchParams(window.location.search);
+  const hash = window.location.hash.startsWith("#") ? window.location.hash.slice(1) : window.location.hash;
+  const hashParams = new URLSearchParams(hash);
+  hashParams.forEach((value, key) => {
+    if (!params.has(key)) params.set(key, value);
+  });
+  return params;
+}
+
+function searchFromParams(params: URLSearchParams): string {
+  const search = params.toString();
+  return search ? `?${search}` : "";
 }
 
 async function currentSessionUser(client: CanYouGeoSupabaseClient): Promise<User | null> {
@@ -54,12 +70,15 @@ export function AuthCallbackClient() {
     let cancelled = false;
 
     async function finishSignIn() {
-      const params = new URLSearchParams(window.location.search);
-      const callbackNextPath = callbackReturnPathFromSearch(window.location.search);
+      const params = authParamsFromLocation();
+      const callbackSearch = searchFromParams(params);
+      const callbackNextPath = callbackReturnPathFromSearch(callbackSearch);
       const nextPath = callbackNextPath ?? readStoredSignInReturnPath();
+      const tokenType = otpTypeFromUrl(params.get("type"));
+      const destinationPath = tokenType === "recovery" ? RESET_PASSWORD_PATH : nextPath;
       const client = createSupabaseBrowserClient();
       if (!client) {
-        setStatus("Email sign-in is not available in this preview.");
+        setStatus("Account sign-in is not available in this preview.");
         setError("You can still try sample maps on this device.");
         return;
       }
@@ -71,15 +90,23 @@ export function AuthCallbackClient() {
           if (cancelled) return;
           if (profile.error) {
             warnAuthDetail("Profile creation failed after sign-in.", profile.error);
-            setStatus("You are signed in.");
-            setError("We could not refresh your account details yet. You can keep playing.");
-            return;
+            if (destinationPath !== RESET_PASSWORD_PATH) {
+              setStatus("You are signed in.");
+              setError("We could not refresh your account details yet. You can keep playing.");
+              return;
+            }
           }
         }
         setError(null);
         clearStoredSignInReturnPath();
-        setStatus(nextPath.startsWith("/upgrade") ? "Signed in. Taking you back to Pro plans..." : "Signed in. Taking you to your account...");
-        window.setTimeout(() => router.replace(nextPath), 900);
+        setStatus(
+          destinationPath === RESET_PASSWORD_PATH
+            ? "Password reset verified. Taking you to choose a new password..."
+            : destinationPath.startsWith("/upgrade")
+              ? "Signed in. Taking you back to Pro plans..."
+              : "Signed in. Taking you to your account..."
+        );
+        window.setTimeout(() => router.replace(destinationPath), 900);
       }
 
       async function showLinkErrorUnlessSignedIn() {
@@ -89,7 +116,7 @@ export function AuthCallbackClient() {
           await completeSignedIn(sessionUser);
           return;
         }
-        setStatus("That sign-in link did not work.");
+        setStatus("That account email link did not work.");
         setError(authErrorCopy());
       }
 
@@ -100,8 +127,7 @@ export function AuthCallbackClient() {
         return;
       }
 
-      const tokenHash = callbackTokenHashFromSearch(window.location.search);
-      const tokenType = otpTypeFromUrl(params.get("type"));
+      const tokenHash = callbackTokenHashFromSearch(callbackSearch);
       if (tokenHash) {
         const { data, error: verifyError } = await activeClient.auth.verifyOtp({
           token_hash: tokenHash,
@@ -109,7 +135,7 @@ export function AuthCallbackClient() {
         });
         if (cancelled) return;
         if (verifyError) {
-          warnAuthDetail("Could not verify sign-in link.", verifyError);
+          warnAuthDetail("Could not verify account email link.", verifyError);
           await showLinkErrorUnlessSignedIn();
           return;
         }
@@ -140,7 +166,7 @@ export function AuthCallbackClient() {
         await completeSignedIn(sessionUser);
         return;
       }
-      setStatus("That sign-in link did not work.");
+      setStatus("That account email link did not work.");
       setError(authErrorCopy());
     }
 
@@ -159,7 +185,7 @@ export function AuthCallbackClient() {
         </h1>
         {error ? (
           <p className="account-error" role="alert">
-          {error}
+            {error}
           </p>
         ) : (
           <p>Saving the account session on this device.</p>
@@ -169,7 +195,7 @@ export function AuthCallbackClient() {
             Go to account
           </Link>
           <Link className="button-secondary" href="/sign-in">
-            Send a new sign-in link
+            Back to sign in
           </Link>
         </div>
       </div>

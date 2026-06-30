@@ -19,7 +19,7 @@ Stripe Billing v1 - complete.
 
 ## Current App Snapshot
 
-- Routes: `/`, `/play/worldprint`, `/play/worldprint/YYYY-MM-DD` for generated Mystery Map Daily manifests, `/archive/worldprint`, `/challenge/worldprint/?c=...`, `/how-to-play`, `/sources`, `/about`, `/sign-in`, `/auth/callback`, `/account`, `/account/stats`, `/upgrade`, and the unlinked internal QA route `/internal/worldprint-review`.
+- Routes: `/`, `/play/worldprint`, `/play/worldprint/YYYY-MM-DD` for generated Mystery Map Daily manifests, `/archive/worldprint`, `/challenge/worldprint/?c=...`, `/how-to-play`, `/sources`, `/about`, `/sign-in`, `/sign-up`, `/forgot-password`, `/auth/callback`, `/reset-password`, `/account`, `/account/stats`, `/upgrade`, and the unlinked internal QA route `/internal/worldprint-review`.
 - Unlisted testing route: `/beta/worldprint`.
 - Static delivery: Next.js App Router with `output: 'export'`; gameplay uses same-origin static JSON and SVG/GeoJSON artifacts.
 - Data: `public/data/v1` contains the manifest, round definitions, source-valid indicator manifest, source registry, entity registry, 167 source-valid World Bank indicator artifacts from a 198-candidate bank, 125 playable maps, 50 Daily-ready maps, generated editorial review data for all 198 candidates, and generated Daily manifests under `public/data/v1/dailies`. `public/maps/world-110m.v1.geojson` is the Natural Earth basemap artifact.

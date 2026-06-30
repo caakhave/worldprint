@@ -7,7 +7,7 @@ This guide is for owner/operator checks in the Supabase dashboard. It avoids dev
 ## Account Model
 
 - Guest players can try sample play locally in the browser. Guest sample runs are not intended to write cloud account data.
-- Free signed-in players use passwordless email auth. First-time email sign-in creates a free account; returning players use the same email address.
+- Free signed-in players use Supabase email/password auth with email confirmation. First-time account creation creates a free account; returning players use the same email and password.
 - Free account data includes the account profile, saved runs, round results, and basic stats.
 - Missing entitlement rows must be treated as Free by the app.
 - Pro is controlled by trusted backend paths only. Browser code must never be able to grant Pro or update subscription state directly.
@@ -88,7 +88,7 @@ Supabase-managed auth table.
 
 - Dependency target for: `public.profiles.id`.
 - Owner view: Authentication, Users.
-- App behavior: passwordless email sign-in creates the auth user when needed.
+- App behavior: email/password sign-up creates the auth user after confirmation; password sign-in reopens the existing account.
 - Do not expose or export private user email lists outside owner operations.
 
 ### `public.profiles`
@@ -207,4 +207,3 @@ Expected result:
 - Orphan checks return zero rows unless there is a known support/reconciliation reason.
 
 For deeper RLS behavior checks, use `supabase/tests/rls_security_checks.sql` in a safe staging database or controlled SQL session.
-

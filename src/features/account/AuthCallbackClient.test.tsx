@@ -55,7 +55,7 @@ describe("AuthCallbackClient", () => {
   });
 
   it("treats a verified token hash as success and redirects to account", async () => {
-    visitCallback("?token_hash=good-token&type=magiclink");
+    visitCallback("?token_hash=good-token&type=signup");
     supabaseMock.client.auth.verifyOtp.mockResolvedValue({
       data: { user: signedInUser, session: { user: signedInUser } },
       error: null
@@ -66,7 +66,45 @@ describe("AuthCallbackClient", () => {
     expect(screen.getByRole("heading", { name: "Signing you in..." })).toBeVisible();
     await screen.findByRole("heading", { name: "Signed in. Taking you to your account..." });
     expect(ensureProfileMock).toHaveBeenCalledWith(supabaseMock.client, signedInUser);
+    expect(supabaseMock.client.auth.verifyOtp).toHaveBeenCalledWith({
+      token_hash: "good-token",
+      type: "signup"
+    });
     await waitFor(() => expect(routerMock.replace).toHaveBeenCalledWith("/account"), { timeout: 1600 });
+  });
+
+  it("routes verified recovery tokens to the password reset page", async () => {
+    visitCallback("?token_hash=reset-token&type=recovery");
+    supabaseMock.client.auth.verifyOtp.mockResolvedValue({
+      data: { user: signedInUser, session: { user: signedInUser } },
+      error: null
+    });
+
+    render(<AuthCallbackClient />);
+
+    await screen.findByRole("heading", { name: "Password reset verified. Taking you to choose a new password..." });
+    expect(supabaseMock.client.auth.verifyOtp).toHaveBeenCalledWith({
+      token_hash: "reset-token",
+      type: "recovery"
+    });
+    await waitFor(() => expect(routerMock.replace).toHaveBeenCalledWith("/reset-password"), { timeout: 1600 });
+  });
+
+  it("reads recovery token hashes from URL fragments too", async () => {
+    visitCallback("#token_hash=reset-token&type=recovery");
+    supabaseMock.client.auth.verifyOtp.mockResolvedValue({
+      data: { user: signedInUser, session: { user: signedInUser } },
+      error: null
+    });
+
+    render(<AuthCallbackClient />);
+
+    await screen.findByRole("heading", { name: "Password reset verified. Taking you to choose a new password..." });
+    expect(supabaseMock.client.auth.verifyOtp).toHaveBeenCalledWith({
+      token_hash: "reset-token",
+      type: "recovery"
+    });
+    await waitFor(() => expect(routerMock.replace).toHaveBeenCalledWith("/reset-password"), { timeout: 1600 });
   });
 
   it("returns players to Pro plans when sign-in started from upgrade", async () => {
@@ -140,7 +178,7 @@ describe("AuthCallbackClient", () => {
     render(<AuthCallbackClient />);
 
     await screen.findByRole("heading", { name: "Signed in. Taking you to your account..." });
-    expect(screen.queryByRole("heading", { name: /That sign-in link did not work/i })).not.toBeInTheDocument();
+    expect(screen.queryByRole("heading", { name: /That account email link did not work/i })).not.toBeInTheDocument();
     expect(ensureProfileMock).toHaveBeenCalledWith(supabaseMock.client, signedInUser);
     await waitFor(() => expect(routerMock.replace).toHaveBeenCalledWith("/account"), { timeout: 1600 });
   });
@@ -154,9 +192,9 @@ describe("AuthCallbackClient", () => {
 
     render(<AuthCallbackClient />);
 
-    await screen.findByRole("heading", { name: "That sign-in link did not work." });
-    expect(screen.getByText("That sign-in link expired or has already been used. Enter your email to get a fresh link.")).toBeVisible();
-    expect(screen.getByRole("link", { name: "Send a new sign-in link" })).toHaveAttribute("href", "/sign-in");
+    await screen.findByRole("heading", { name: "That account email link did not work." });
+    expect(screen.getByText("That account email link expired or has already been used. Try signing in or request a new password reset.")).toBeVisible();
+    expect(screen.getByRole("link", { name: "Back to sign in" })).toHaveAttribute("href", "/sign-in");
     await waitFor(() => expect(routerMock.replace).not.toHaveBeenCalled());
   });
 });

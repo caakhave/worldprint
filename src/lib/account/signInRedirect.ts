@@ -51,6 +51,12 @@ export function signInPathForReturn(value: string | null | undefined): string {
   return `/sign-in?next=${encodeURIComponent(returnPath)}`;
 }
 
+export function signUpPathForReturn(value: string | null | undefined): string {
+  const returnPath = safeSignInReturnPath(value);
+  if (returnPath === "/account") return "/sign-up";
+  return `/sign-up?next=${encodeURIComponent(returnPath)}`;
+}
+
 export function storeSignInReturnPath(value: string | null | undefined): string {
   const returnPath = safeSignInReturnPath(value);
   if (typeof window === "undefined") return returnPath;

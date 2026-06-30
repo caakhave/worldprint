@@ -176,7 +176,7 @@ For a full local upgrade test:
 
 1. Start Supabase locally.
 2. Serve the static app or Next dev app with Supabase public env vars.
-3. Sign in with magic link.
+3. Create or sign in to a Supabase email/password account.
 4. Open `/upgrade`.
 5. Click `Upgrade to Pro`.
 6. Complete monthly or yearly Checkout with Stripe test card `4242 4242 4242 4242`.
