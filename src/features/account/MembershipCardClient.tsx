@@ -13,7 +13,7 @@ export function MembershipCardClient() {
   const heading = signedIn || loading ? membership.heading : "Sample Run";
 
   return (
-    <article className="surface account-card membership-card" aria-label="Membership plan">
+    <article className="surface account-card membership-card" id="membership" aria-label="Membership plan">
       <div>
         <p className="eyebrow">Membership</p>
         <h2>{heading}</h2>
@@ -62,7 +62,7 @@ export function AdvancedStatsGateClient() {
           : "Free stats keep your 3-map Daily score and streak. Pro adds full history, richer trends, and Challenge comparisons later."}
       </p>
       <Link className={hasAdvancedStats ? "button-secondary" : "button"} href="/upgrade">
-        {hasAdvancedStats ? "View plan" : "See full atlas plan"}
+        {hasAdvancedStats ? "Manage plan" : "See full atlas plan"}
       </Link>
     </article>
   );

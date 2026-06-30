@@ -61,7 +61,7 @@ describe("BillingActionsClient", () => {
     expect(screen.getByText(/Pricing is visible now\./)).toBeVisible();
     expect(screen.getByText(/billing is disabled for now\./)).toBeVisible();
     expect(screen.getByText(/Continue free for 3 fresh maps every day\./)).toBeVisible();
-    expect(screen.queryByRole("button", { name: /Upgrade/i })).not.toBeInTheDocument();
+    expect(screen.queryByRole("button", { name: /Join/i })).not.toBeInTheDocument();
   });
 
   it("asks signed-out users to sign in before upgrading while checkout is disabled", () => {
@@ -103,8 +103,10 @@ describe("BillingActionsClient", () => {
     render(<BillingActionsClient entitlement={manualPro} context="account" />);
 
     expect(screen.getByRole("button", { name: "Membership managed manually" })).toBeDisabled();
+    expect(screen.getByRole("link", { name: "Manage plan" })).toHaveAttribute("href", "/upgrade");
     expect(screen.getByText("Can You Geo? Pro membership is enabled. This membership is managed manually for now.")).toBeVisible();
     expect(screen.queryByRole("button", { name: "Manage billing" })).not.toBeInTheDocument();
+    expect(screen.queryByRole("link", { name: "View plan" })).not.toBeInTheDocument();
   });
 
   it("preserves signed-out Pro plan intent when test billing is enabled", () => {
@@ -112,8 +114,8 @@ describe("BillingActionsClient", () => {
 
     render(<BillingActionsClient entitlement={FREE_ENTITLEMENT} context="upgrade" />);
 
-    expect(screen.getByRole("link", { name: "Upgrade monthly" })).toHaveAttribute("href", "/sign-in?next=%2Fupgrade%3Fplan%3Dmonthly");
-    expect(screen.getByRole("link", { name: "Upgrade yearly" })).toHaveAttribute("href", "/sign-in?next=%2Fupgrade%3Fplan%3Dyearly");
+    expect(screen.getByRole("link", { name: "Join monthly" })).toHaveAttribute("href", "/sign-in?next=%2Fupgrade%3Fplan%3Dmonthly");
+    expect(screen.getByRole("link", { name: "Join yearly" })).toHaveAttribute("href", "/sign-in?next=%2Fupgrade%3Fplan%3Dyearly");
     expect(screen.getByRole("link", { name: "Continue free" })).toHaveAttribute("href", "/sign-in");
     expect(screen.queryByRole("button", { name: "Checkout coming soon" })).not.toBeInTheDocument();
   });
@@ -124,8 +126,8 @@ describe("BillingActionsClient", () => {
 
     render(<BillingActionsClient entitlement={FREE_ENTITLEMENT} context="upgrade" />);
 
-    expect(screen.getByRole("button", { name: "Upgrade monthly" })).toBeEnabled();
-    expect(screen.getByRole("button", { name: "Upgrade yearly" })).toBeEnabled();
+    expect(screen.getByRole("button", { name: "Join monthly" })).toBeEnabled();
+    expect(screen.getByRole("button", { name: "Join yearly" })).toBeEnabled();
   });
 
   it("uses protected checkout functions instead of browser entitlement writes in test mode", async () => {
@@ -135,7 +137,7 @@ describe("BillingActionsClient", () => {
 
     render(<BillingActionsClient entitlement={FREE_ENTITLEMENT} context="upgrade" />);
 
-    fireEvent.click(screen.getByRole("button", { name: "Upgrade monthly" }));
+    fireEvent.click(screen.getByRole("button", { name: "Join monthly" }));
 
     await waitFor(() => expect(client.functions.invoke).toHaveBeenCalledTimes(1));
     const [functionName, options] = client.functions.invoke.mock.calls[0];
@@ -154,7 +156,7 @@ describe("BillingActionsClient", () => {
 
     render(<BillingActionsClient entitlement={FREE_ENTITLEMENT} context="upgrade" />);
 
-    fireEvent.click(screen.getByRole("button", { name: "Upgrade yearly" }));
+    fireEvent.click(screen.getByRole("button", { name: "Join yearly" }));
 
     await waitFor(() => expect(client.functions.invoke).toHaveBeenCalledTimes(1));
     const [functionName, options] = client.functions.invoke.mock.calls[0];
@@ -182,7 +184,7 @@ describe("BillingActionsClient", () => {
     );
 
     expect(screen.getByRole("button", { name: "Continue to secure checkout" })).toBeEnabled();
-    expect(screen.queryByRole("button", { name: "Upgrade yearly" })).not.toBeInTheDocument();
+    expect(screen.queryByRole("button", { name: "Join yearly" })).not.toBeInTheDocument();
     fireEvent.click(screen.getByRole("button", { name: "Continue to secure checkout" }));
 
     await waitFor(() => expect(client.functions.invoke).toHaveBeenCalledTimes(1));
@@ -230,8 +232,8 @@ describe("BillingActionsClient", () => {
 
     render(<BillingActionsClient entitlement={FREE_ENTITLEMENT} context="account" />);
 
-    expect(screen.getByRole("button", { name: "Upgrade monthly" })).toBeEnabled();
-    expect(screen.getByRole("button", { name: "Upgrade yearly" })).toBeEnabled();
+    expect(screen.getByRole("button", { name: "Join monthly" })).toBeEnabled();
+    expect(screen.getByRole("button", { name: "Join yearly" })).toBeEnabled();
     expect(screen.getByRole("link", { name: "Compare plans" })).toHaveAttribute("href", "/upgrade");
   });
 
@@ -257,6 +259,7 @@ describe("BillingActionsClient", () => {
 
     render(<BillingActionsClient entitlement={stripePro} context="account" />);
 
+    expect(screen.getByRole("link", { name: "Manage plan" })).toHaveAttribute("href", "/upgrade");
     fireEvent.click(screen.getByRole("button", { name: "Manage billing" }));
 
     await waitFor(() => expect(client.functions.invoke).toHaveBeenCalledTimes(1));

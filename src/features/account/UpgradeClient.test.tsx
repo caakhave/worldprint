@@ -108,8 +108,8 @@ describe("UpgradeClient", () => {
 
     expect(screen.getByRole("heading", { name: "Choose monthly or yearly." })).toBeVisible();
     expect(screen.getByText("Ready for secure checkout")).toBeVisible();
-    expect(screen.getByRole("button", { name: "Upgrade monthly" })).toBeEnabled();
-    expect(screen.getByRole("button", { name: "Upgrade yearly" })).toBeEnabled();
+    expect(screen.getByRole("button", { name: "Join monthly" })).toBeEnabled();
+    expect(screen.getByRole("button", { name: "Join yearly" })).toBeEnabled();
     expect(screen.getAllByText("Best value").length).toBeGreaterThanOrEqual(1);
   });
 

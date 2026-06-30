@@ -1,4 +1,5 @@
 import { render, screen } from "@testing-library/react";
+import userEvent from "@testing-library/user-event";
 import { beforeEach, describe, expect, it, vi } from "vitest";
 import { AuthNavStatus } from "@/features/account/AuthNavStatus";
 
@@ -6,7 +7,8 @@ const accountMock = vi.hoisted(() => ({
   state: {
     configured: true,
     loading: false,
-    user: null as { id: string; email?: string | null } | null
+    user: null as { id: string; email?: string | null } | null,
+    signOut: vi.fn(async () => ({ error: null }))
   }
 }));
 
@@ -49,6 +51,7 @@ describe("AuthNavStatus", () => {
     accountMock.state.configured = true;
     accountMock.state.loading = false;
     accountMock.state.user = null;
+    accountMock.state.signOut.mockClear();
     entitlementMock.state.entitlement.plan = "guest";
     entitlementMock.state.signedIn = false;
   });
@@ -59,24 +62,32 @@ describe("AuthNavStatus", () => {
     expect(screen.getByRole("link", { name: "Start Pro" })).toHaveAttribute("href", "/upgrade");
   });
 
-  it("shows a compact Free account badge for signed-in players", () => {
+  it("shows a compact Free account menu for signed-in players", async () => {
+    const user = userEvent.setup();
     accountMock.state.user = { id: "user_123", email: "player@example.com" };
     entitlementMock.state.entitlement.plan = "free";
     entitlementMock.state.signedIn = true;
 
     render(<AuthNavStatus />);
 
-    expect(screen.getByRole("link", { name: /Open account for player@example.com/i })).toHaveAttribute("href", "/account");
-    expect(screen.getByRole("link", { name: /Open account for player@example.com/i })).toHaveAttribute("title", "Open account");
+    const menuControl = screen.getByLabelText(/Account menu for player@example.com/i);
+    expect(menuControl).toHaveAttribute("title", "Open account menu");
     expect(screen.getByText("player@example.com")).toHaveClass("account-nav-email");
     expect(screen.getByText("player@example.com")).toHaveAttribute("title", "player@example.com");
     expect(screen.getByText("P")).toBeVisible();
     expect(screen.getByText("Free")).toBeVisible();
-    expect(screen.getByText("Account")).toHaveClass("account-nav-action");
+    expect(screen.getByText("Menu")).toHaveClass("account-nav-action");
+    await user.click(menuControl);
+    expect(screen.getByRole("menuitem", { name: "View account" })).toHaveAttribute("href", "/account");
+    expect(screen.getByRole("menuitem", { name: "Saved stats" })).toHaveAttribute("href", "/account/stats");
+    expect(screen.getByRole("menuitem", { name: "Manage plan" })).toHaveAttribute("href", "/upgrade");
+    await user.click(screen.getByRole("menuitem", { name: "Sign out" }));
+    expect(accountMock.state.signOut).toHaveBeenCalledTimes(1);
     expect(screen.queryByText("user_123")).not.toBeInTheDocument();
   });
 
-  it("shows Pro when Pro access is active", () => {
+  it("shows Pro and billing management when Pro access is active", async () => {
+    const user = userEvent.setup();
     accountMock.state.user = { id: "user_123", email: "pro@example.com" };
     entitlementMock.state.entitlement.plan = "pro";
     entitlementMock.state.signedIn = true;
@@ -84,5 +95,8 @@ describe("AuthNavStatus", () => {
     render(<AuthNavStatus />);
 
     expect(screen.getByText("Pro")).toBeVisible();
+    await user.click(screen.getByLabelText(/Account menu for pro@example.com/i));
+    expect(screen.getByRole("menuitem", { name: "Manage billing" })).toHaveAttribute("href", "/account#membership");
+    expect(screen.queryByText("Pro active")).not.toBeInTheDocument();
   });
 });

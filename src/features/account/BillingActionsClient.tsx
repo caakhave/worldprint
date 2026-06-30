@@ -34,7 +34,7 @@ function billingErrorCopy(kind: BillingActionKind, message?: string | null) {
     return kind === "portal" ? "Billing management is not available yet." : "Checkout is not open yet.";
   }
   if (normalized.includes("sign in")) {
-    return "Sign in to upgrade.";
+    return "Sign in to continue with Pro.";
   }
   return kind === "portal" ? "We could not open billing management. Try again in a minute." : "We could not open checkout. Try again in a minute.";
 }
@@ -59,7 +59,7 @@ export function BillingActionsClient({ entitlement, context, selectedPlan = null
     interval?: ProBillingInterval
   ) {
     if (!client || !signedIn) {
-      setMessage("Sign in to upgrade.");
+      setMessage("Sign in to continue with Pro.");
       return;
     }
     setPending(pendingState);
@@ -71,7 +71,7 @@ export function BillingActionsClient({ entitlement, context, selectedPlan = null
     if (sessionError || !session?.access_token) {
       setPending(null);
       warnBillingDetail("Could not read billing session.", sessionError);
-      setMessage("Sign in to upgrade.");
+      setMessage("Sign in to continue with Pro.");
       return;
     }
     const { data, error } = await client.functions.invoke<BillingActionResponse>(functionName, {
@@ -120,7 +120,7 @@ export function BillingActionsClient({ entitlement, context, selectedPlan = null
           )}
           {context === "account" ? (
             <Link className="button-secondary" href="/upgrade">
-              View plan
+              Manage plan
             </Link>
           ) : null}
           <p className="account-env-note">
@@ -201,7 +201,7 @@ export function BillingActionsClient({ entitlement, context, selectedPlan = null
         )}
         {context === "account" ? (
           <Link className="button-secondary" href="/upgrade">
-            View plan
+            Manage plan
           </Link>
         ) : null}
         {message ? (

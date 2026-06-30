@@ -123,6 +123,8 @@ export function AccountStatsClient() {
         return;
       }
       setRemoteLoading(true);
+      // Account stats are session-scoped. Keep user ids out of URLs and rely on
+      // the Supabase session plus RLS when reading the current player's rows.
       const result = await fetchRemoteRunSummaries(client, user.id);
       if (cancelled) return;
       if (result.error) {

@@ -18,7 +18,7 @@ export const PRO_PRICE_OPTIONS: ProPriceOption[] = [
     price: "$3.99",
     cadence: "/month",
     summary: "Start Pro and keep it flexible.",
-    cta: "Upgrade monthly"
+    cta: "Join monthly"
   },
   {
     interval: "yearly",
@@ -26,7 +26,7 @@ export const PRO_PRICE_OPTIONS: ProPriceOption[] = [
     price: "$29.99",
     cadence: "/year",
     summary: "Best value for regular atlas players.",
-    cta: "Upgrade yearly",
+    cta: "Join yearly",
     badge: "Best value",
     featured: true
   }

@@ -205,6 +205,59 @@ button:disabled {
   padding-inline: 0.82rem;
 }
 
+.account-nav-menu {
+  position: relative;
+  max-width: 100%;
+}
+
+.account-nav-menu summary {
+  list-style: none;
+  cursor: pointer;
+}
+
+.account-nav-menu summary::-webkit-details-marker {
+  display: none;
+}
+
+.account-nav-menu[open] .account-nav-control {
+  border-color: rgb(135 224 211 / 0.58);
+  background: rgb(135 224 211 / 0.12);
+}
+
+.account-nav-popover {
+  position: absolute;
+  top: calc(100% + 0.55rem);
+  right: 0;
+  z-index: 40;
+  display: grid;
+  min-width: 12.5rem;
+  border: 1px solid rgb(135 224 211 / 0.26);
+  border-radius: 8px;
+  padding: 0.35rem;
+  background: rgb(5 18 22 / 0.96);
+  box-shadow: 0 18px 36px rgb(0 0 0 / 0.36);
+}
+
+.account-nav-menu-item {
+  border: 0;
+  border-radius: 6px;
+  padding: 0.62rem 0.72rem;
+  background: transparent;
+  color: var(--text);
+  font: inherit;
+  font-size: 0.88rem;
+  font-weight: 700;
+  text-align: left;
+  text-decoration: none;
+  cursor: pointer;
+}
+
+.account-nav-menu-item:hover,
+.account-nav-menu-item:focus-visible {
+  background: rgb(135 224 211 / 0.12);
+  color: var(--parchment);
+}
+
 .account-avatar {
   display: inline-grid;
   place-items: center;
@@ -2081,7 +2134,7 @@ button:disabled {
 
 .entry-preview-stage {
   --entry-preview-inset: clamp(0.7rem, 1.55vw, 1.05rem);
-  --entry-preview-right-inset: clamp(1.35rem, 3vw, 2.35rem);
+  --entry-preview-right-inset: clamp(2.25rem, 8vw, 6rem);
 
   position: relative;
   min-height: clamp(19rem, 30vw, 28rem);
@@ -2105,6 +2158,52 @@ button:disabled {
 .entry-preview-stage .world-map {
   opacity: 0.9;
   filter: saturate(1.08) contrast(1.04) brightness(0.92);
+}
+
+.entry-atlas-visual[data-preview-tone="violet"] .entry-preview-stage {
+  background:
+    linear-gradient(180deg, rgb(2 9 12 / 0.2), rgb(2 9 12 / 0.72)),
+    radial-gradient(circle at 58% 36%, rgb(94 87 205 / 0.18), transparent 66%);
+}
+
+.entry-atlas-visual[data-preview-tone="teal"] .entry-preview-stage {
+  background:
+    linear-gradient(180deg, rgb(2 9 12 / 0.18), rgb(2 9 12 / 0.7)),
+    radial-gradient(circle at 54% 42%, rgb(91 210 196 / 0.2), transparent 66%);
+}
+
+.entry-atlas-visual[data-preview-tone="teal"] .entry-preview-stage .world-map {
+  filter: hue-rotate(44deg) saturate(1.12) contrast(1.03) brightness(0.9);
+}
+
+.entry-atlas-visual[data-preview-tone="gold"] .entry-preview-stage {
+  background:
+    linear-gradient(180deg, rgb(2 9 12 / 0.2), rgb(2 9 12 / 0.72)),
+    radial-gradient(circle at 47% 48%, rgb(215 168 75 / 0.19), transparent 65%);
+}
+
+.entry-atlas-visual[data-preview-tone="gold"] .entry-preview-stage .world-map {
+  filter: hue-rotate(334deg) saturate(1.16) contrast(1.05) brightness(0.94);
+}
+
+.entry-atlas-visual[data-preview-tone="green"] .entry-preview-stage {
+  background:
+    linear-gradient(180deg, rgb(2 9 12 / 0.2), rgb(2 9 12 / 0.72)),
+    radial-gradient(circle at 55% 46%, rgb(112 178 98 / 0.18), transparent 64%);
+}
+
+.entry-atlas-visual[data-preview-tone="green"] .entry-preview-stage .world-map {
+  filter: hue-rotate(82deg) saturate(1.08) contrast(1.04) brightness(0.9);
+}
+
+.entry-atlas-visual[data-preview-tone="coral"] .entry-preview-stage {
+  background:
+    linear-gradient(180deg, rgb(2 9 12 / 0.2), rgb(2 9 12 / 0.72)),
+    radial-gradient(circle at 52% 44%, rgb(224 111 96 / 0.16), transparent 64%);
+}
+
+.entry-atlas-visual[data-preview-tone="coral"] .entry-preview-stage .world-map {
+  filter: hue-rotate(298deg) saturate(1.1) contrast(1.05) brightness(0.93);
 }
 
 .entry-preview-stage::after {
@@ -2153,6 +2252,7 @@ button:disabled {
 .entry-preview-chip-b {
   right: var(--entry-preview-right-inset);
   top: var(--entry-preview-inset);
+  max-width: min(13rem, calc(100% - var(--entry-preview-inset) - var(--entry-preview-right-inset)));
   color: var(--signal-2);
   text-align: right;
 }
@@ -2231,7 +2331,7 @@ button:disabled {
   bottom: var(--entry-preview-inset);
   display: grid;
   gap: 0.45rem;
-  width: min(15.5rem, calc(100% - var(--entry-preview-inset) - var(--entry-preview-right-inset)));
+  width: min(14.25rem, calc(100% - var(--entry-preview-inset) - var(--entry-preview-right-inset)));
   max-width: calc(100% - var(--entry-preview-inset) - var(--entry-preview-right-inset));
   border: 1px solid rgb(164 216 205 / 0.26);
   border-radius: 7px;
@@ -7663,6 +7763,11 @@ dd {
 
   .site-header .account-nav-email {
     max-width: min(54vw, 14rem);
+  }
+
+  .account-nav-popover {
+    right: auto;
+    left: 0;
   }
 
   .billing-return-notice {

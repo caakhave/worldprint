@@ -74,6 +74,7 @@ describe("AccountStatsClient", () => {
     syncMock.remoteError = null;
     syncMock.fetchRemoteRunSummaries.mockClear();
     syncMock.syncLocalRunsToSupabase.mockClear();
+    window.history.pushState({}, "", "/account/stats");
   });
 
   it("shows a signed-in empty account state without sign-in copy", async () => {
@@ -90,10 +91,12 @@ describe("AccountStatsClient", () => {
 
   it("renders account stats when cloud runs exist", async () => {
     syncMock.remoteRuns = [cloudRun()];
+    window.history.pushState({}, "", "/account/stats?user_id=attempted-other-user");
 
     render(<AccountStatsClient />);
 
     expect(await screen.findByRole("heading", { name: "Saved to your account." })).toBeVisible();
+    expect(syncMock.fetchRemoteRunSummaries).toHaveBeenCalledWith(accountMock.state.client, "11111111-2222-4333-8444-555555555555");
     expect(screen.getByText("Runs saved")).toBeVisible();
     expect(screen.getByText("4,200")).toBeVisible();
     expect(screen.getByText(/Daily: 1/i)).toBeVisible();

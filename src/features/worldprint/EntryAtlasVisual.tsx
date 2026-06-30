@@ -18,6 +18,7 @@ type PreviewStep = {
   investigatedIso3: string[];
   selectedIso3: string | null;
   panel: "map" | "legend" | "evidence" | "answers" | "result";
+  colorway: "violet" | "teal" | "gold" | "green" | "coral";
 };
 
 const PREVIEW_STEPS: PreviewStep[] = [
@@ -28,7 +29,8 @@ const PREVIEW_STEPS: PreviewStep[] = [
     points: "1,000 points available",
     investigatedIso3: [],
     selectedIso3: null,
-    panel: "map"
+    panel: "map",
+    colorway: "violet"
   },
   {
     id: "notice-legend",
@@ -37,7 +39,8 @@ const PREVIEW_STEPS: PreviewStep[] = [
     points: "1,000 points available",
     investigatedIso3: [],
     selectedIso3: null,
-    panel: "legend"
+    panel: "legend",
+    colorway: "teal"
   },
   {
     id: "investigate",
@@ -46,7 +49,8 @@ const PREVIEW_STEPS: PreviewStep[] = [
     points: "-200 points for clues",
     investigatedIso3: ["JPN", "BRA"],
     selectedIso3: "JPN",
-    panel: "evidence"
+    panel: "evidence",
+    colorway: "gold"
   },
   {
     id: "choose-answer",
@@ -55,7 +59,8 @@ const PREVIEW_STEPS: PreviewStep[] = [
     points: "800 points possible",
     investigatedIso3: ["JPN", "BRA"],
     selectedIso3: "BRA",
-    panel: "answers"
+    panel: "answers",
+    colorway: "green"
   },
   {
     id: "reveal-result",
@@ -64,7 +69,8 @@ const PREVIEW_STEPS: PreviewStep[] = [
     points: "+800 points banked",
     investigatedIso3: ["JPN", "BRA", "NGA"],
     selectedIso3: "NGA",
-    panel: "result"
+    panel: "result",
+    colorway: "coral"
   }
 ];
 
@@ -87,7 +93,12 @@ export function EntryAtlasVisual({ map, indicator, countryNames }: EntryAtlasVis
   }
 
   return (
-    <figure className="entry-atlas-visual" data-preview-step={activeStepIndex + 1} data-testid="entry-atlas-visual">
+    <figure
+      className="entry-atlas-visual"
+      data-preview-step={activeStepIndex + 1}
+      data-preview-tone={activeStep.colorway}
+      data-testid="entry-atlas-visual"
+    >
       <div className="entry-preview-stage" aria-hidden="true">
         {indicator ? (
           <WorldMap
