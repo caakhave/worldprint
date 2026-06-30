@@ -12,6 +12,12 @@ describe("LegalPage", () => {
     expect(screen.getByRole("heading", { name: "Privacy Policy" })).toBeVisible();
     expect(screen.getByRole("heading", { name: "Cookies and Local Storage" })).toBeVisible();
     expect(screen.getByRole("heading", { name: "Accessibility" })).toBeVisible();
+    expect(screen.getByText("Marketing email preference information, such as whether you opted in to occasional product updates.")).toBeVisible();
+    expect(
+      screen.getByText(
+        "Marketing updates are optional and can be turned off from your account. Transactional emails such as account confirmation, password reset, billing, and security messages may still be sent when needed to provide the service."
+      )
+    ).toBeVisible();
     expect(screen.getAllByText("Effective date: June 26, 2026")).toHaveLength(3);
     const supportLinks = screen.getAllByRole("link", { name: SUPPORT_EMAIL });
     expect(supportLinks).toHaveLength(4);

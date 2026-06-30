@@ -3,7 +3,7 @@ import type { RunMode, RunState } from "@/lib/game/state";
 import { buildLocalPlayerStats, type LocalPlayerStats } from "@/lib/persistence/playerStats";
 import type { CompletionHistory, PersistedState } from "@/lib/persistence/storage";
 import type { CanYouGeoSupabaseClient } from "@/lib/supabase/client";
-import type { Database, GameRunRow, UserStatsRow } from "@/lib/supabase/database";
+import type { Database, GameRunRow, ProfileRow, UserStatsRow } from "@/lib/supabase/database";
 
 export const SYNC_MARKER_PREFIX = "canyougeo:supabase-sync:v1";
 
@@ -41,6 +41,19 @@ type SyncableHistory = Pick<CompletionHistory, "id" | "dateKey" | "mode" | "tota
 
 type GameRunInsert = Database["public"]["Tables"]["game_runs"]["Insert"];
 type RoundResultInsert = Database["public"]["Tables"]["round_results"]["Insert"];
+type ProfileInsert = Database["public"]["Tables"]["profiles"]["Insert"];
+
+export type MarketingOptInSource = "sign_up" | "account_preferences";
+
+export type MarketingPreference = Pick<
+  ProfileRow,
+  "marketing_opt_in" | "marketing_opt_in_at" | "marketing_opt_in_source" | "marketing_opt_out_at"
+>;
+
+export type EnsureProfileOptions = {
+  marketingOptIn?: boolean;
+  marketingOptInSource?: MarketingOptInSource;
+};
 
 export type CloudRunPayload = {
   run: GameRunInsert;
@@ -210,16 +223,92 @@ export function localStatsSnapshotForUser(userId: string, store: PersistedState)
   return statsSnapshotForUser(userId, buildLocalPlayerStats(store));
 }
 
-export async function ensureProfile(client: CanYouGeoSupabaseClient, user: User): Promise<{ error: string | null }> {
+export async function ensureProfile(
+  client: CanYouGeoSupabaseClient,
+  user: User,
+  options: EnsureProfileOptions = {}
+): Promise<{ error: string | null }> {
+  const now = new Date().toISOString();
+  const { data: existingProfile, error: readError } = await client.from("profiles").select("id").eq("id", user.id).maybeSingle();
+  if (readError) return { error: readError.message };
+
+  const insertProfile: ProfileInsert = {
+    id: user.id,
+    display_name: displayNameForUser(user),
+    updated_at: now
+  };
+  if (!existingProfile && shouldCreateProfileWithMarketingOptIn(user, options)) {
+    insertProfile.marketing_opt_in = true;
+    insertProfile.marketing_opt_in_at = now;
+    insertProfile.marketing_opt_in_source = options.marketingOptInSource ?? "sign_up";
+    insertProfile.marketing_opt_out_at = null;
+  }
+
   const { error } = await client.from("profiles").upsert(
-    {
-      id: user.id,
-      display_name: displayNameForUser(user),
-      updated_at: new Date().toISOString()
-    },
+    insertProfile,
     { onConflict: "id" }
   );
+  if (error) return { error: error.message };
+
+  if (options.marketingOptIn === true && existingProfile) {
+    return updateMarketingPreference(client, user.id, true, options.marketingOptInSource ?? "sign_up");
+  }
+
+  return { error: null };
+}
+
+export async function fetchMarketingPreference(
+  client: CanYouGeoSupabaseClient,
+  userId: string
+): Promise<{ data: MarketingPreference; error: string | null }> {
+  const { data, error } = await client
+    .from("profiles")
+    .select("marketing_opt_in,marketing_opt_in_at,marketing_opt_in_source,marketing_opt_out_at")
+    .eq("id", userId)
+    .maybeSingle();
+  return {
+    data: data ?? defaultMarketingPreference(),
+    error: error?.message ?? null
+  };
+}
+
+export async function updateMarketingPreference(
+  client: CanYouGeoSupabaseClient,
+  userId: string,
+  optIn: boolean,
+  source: MarketingOptInSource = "account_preferences"
+): Promise<{ error: string | null }> {
+  const now = new Date().toISOString();
+  const update = optIn
+    ? {
+        marketing_opt_in: true,
+        marketing_opt_in_at: now,
+        marketing_opt_in_source: source,
+        marketing_opt_out_at: null,
+        updated_at: now
+      }
+    : {
+        marketing_opt_in: false,
+        marketing_opt_in_source: null,
+        marketing_opt_out_at: now,
+        updated_at: now
+      };
+  const { error } = await client.from("profiles").update(update).eq("id", userId);
   return { error: error?.message ?? null };
+}
+
+function defaultMarketingPreference(): MarketingPreference {
+  return {
+    marketing_opt_in: false,
+    marketing_opt_in_at: null,
+    marketing_opt_in_source: null,
+    marketing_opt_out_at: null
+  };
+}
+
+function shouldCreateProfileWithMarketingOptIn(user: User, options: EnsureProfileOptions): boolean {
+  if (options.marketingOptIn === true) return true;
+  return user.user_metadata?.marketing_opt_in === true && user.user_metadata?.marketing_opt_in_source === "sign_up";
 }
 
 export async function fetchRemoteStats(client: CanYouGeoSupabaseClient, userId: string): Promise<{ data: UserStatsRow | null; error: string | null }> {

@@ -33,6 +33,7 @@ export function SignUpClient() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
+  const [marketingOptIn, setMarketingOptIn] = useState(false);
   const [status, setStatus] = useState<string>("");
   const [error, setError] = useState<string>("");
   const [submitting, setSubmitting] = useState(false);
@@ -67,7 +68,11 @@ export function SignUpClient() {
       email,
       password,
       options: {
-        emailRedirectTo: `${siteOrigin()}${callbackPath}`
+        emailRedirectTo: `${siteOrigin()}${callbackPath}`,
+        data: {
+          marketing_opt_in: marketingOptIn,
+          marketing_opt_in_source: marketingOptIn ? "sign_up" : null
+        }
       }
     });
 
@@ -86,7 +91,10 @@ export function SignUpClient() {
 
     const activeUser = data.user ?? data.session?.user ?? null;
     if (data.session && activeUser) {
-      const profile = await ensureProfile(client, activeUser);
+      const profile = await ensureProfile(client, activeUser, {
+        marketingOptIn,
+        marketingOptInSource: "sign_up"
+      });
       if (profile.error && process.env.NODE_ENV !== "production") {
         console.warn("[auth] Profile creation failed after password sign-up.", profile.error);
       }
@@ -212,6 +220,16 @@ export function SignUpClient() {
             required
           />
         </label>
+        <label className="account-checkbox-label" htmlFor="sign-up-marketing-opt-in">
+          <input
+            id="sign-up-marketing-opt-in"
+            name="marketingOptIn"
+            type="checkbox"
+            checked={marketingOptIn}
+            onChange={(event) => setMarketingOptIn(event.target.checked)}
+          />
+          <span>Send me occasional Can You Geo updates and new game announcements.</span>
+        </label>
         <button className="button" type="submit" disabled={submitting}>
           {submitting ? "Creating account..." : "Create account"}
         </button>
@@ -220,7 +238,10 @@ export function SignUpClient() {
         <Link href={signInHref}>Already have an account?</Link>
         <Link href="/forgot-password">Forgot password?</Link>
       </div>
-      <p className="account-env-note">Passwords are handled by Supabase Auth. Can You Geo does not store passwords in app tables.</p>
+      <p className="account-env-note">
+        Passwords are handled by Supabase Auth. Account confirmation, password reset, billing, and security emails still work
+        whether or not you opt in to updates.
+      </p>
       {status ? (
         <p className="status-live" role="status">
           {status}

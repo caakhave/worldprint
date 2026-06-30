@@ -2,21 +2,47 @@
 
 import Link from "next/link";
 import { useRouter } from "next/navigation";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { accountInitial, compactPlanLabel } from "@/features/account/accountDisplay";
 import { membershipDisplay } from "@/features/account/subscriptionDisplay";
 import { useEntitlement } from "@/features/account/useEntitlement";
 import { useSupabaseAccount } from "@/features/account/useSupabaseAccount";
+import { fetchMarketingPreference, updateMarketingPreference, type MarketingPreference } from "@/lib/account/sync";
 import { planLabel } from "@/lib/account/entitlements";
 import { CONTACT_LINKS } from "@/lib/contact";
 
 export function AccountStatusClient() {
   const router = useRouter();
-  const { configured, loading, user, profileError, signOut } = useSupabaseAccount();
+  const { client, configured, loading, user, profileError, signOut } = useSupabaseAccount();
   const { entitlement, loading: entitlementLoading } = useEntitlement();
   const [signOutError, setSignOutError] = useState<string | null>(null);
   const [supportIdVisible, setSupportIdVisible] = useState(false);
   const [supportIdStatus, setSupportIdStatus] = useState("");
+  const [marketingPreference, setMarketingPreference] = useState<MarketingPreference | null>(null);
+  const [marketingLoading, setMarketingLoading] = useState(false);
+  const [marketingSaving, setMarketingSaving] = useState(false);
+  const [marketingStatus, setMarketingStatus] = useState("");
+  const [marketingError, setMarketingError] = useState("");
+
+  useEffect(() => {
+    let cancelled = false;
+    if (!client || !user) {
+      setMarketingPreference(null);
+      setMarketingLoading(false);
+      return;
+    }
+    setMarketingLoading(true);
+    setMarketingError("");
+    void fetchMarketingPreference(client, user.id).then((result) => {
+      if (cancelled) return;
+      setMarketingPreference(result.data);
+      setMarketingError(result.error ? "We could not load your email update preference." : "");
+      setMarketingLoading(false);
+    });
+    return () => {
+      cancelled = true;
+    };
+  }, [client, user]);
 
   async function handleSignOut() {
     const result = await signOut();
@@ -36,6 +62,24 @@ export function AccountStatusClient() {
     } catch {
       setSupportIdStatus("Copy did not work. You can select the ID instead.");
     }
+  }
+
+  async function handleMarketingPreference(nextOptIn: boolean) {
+    if (!client || !user) return;
+    setMarketingSaving(true);
+    setMarketingError("");
+    setMarketingStatus("");
+    const result = await updateMarketingPreference(client, user.id, nextOptIn);
+    if (result.error) {
+      setMarketingError("We could not update your email preference. Try again in a moment.");
+      setMarketingSaving(false);
+      return;
+    }
+    const refreshed = await fetchMarketingPreference(client, user.id);
+    setMarketingPreference(refreshed.data);
+    setMarketingError(refreshed.error ? "Preference saved, but we could not refresh it yet." : "");
+    setMarketingStatus(nextOptIn ? "Email updates turned on." : "Email updates turned off.");
+    setMarketingSaving(false);
   }
 
   if (!configured) {
@@ -122,6 +166,41 @@ export function AccountStatusClient() {
         </div>
       </dl>
       <div className="account-support-tools">
+        <section className="account-preference-panel" aria-labelledby="marketing-preference-title">
+          <div>
+            <p className="eyebrow">Email updates</p>
+            <h3 id="marketing-preference-title">Game updates</h3>
+            <p>
+              {marketingLoading
+                ? "Checking your update preference."
+                : marketingPreference?.marketing_opt_in
+                  ? "You are opted in to occasional Can You Geo updates and new game announcements."
+                  : "Marketing updates are off. Account, billing, password reset, and security emails still work."}
+            </p>
+          </div>
+          <button
+            className="button-subtle"
+            type="button"
+            disabled={marketingLoading || marketingSaving}
+            onClick={() => void handleMarketingPreference(!marketingPreference?.marketing_opt_in)}
+          >
+            {marketingSaving
+              ? "Saving..."
+              : marketingPreference?.marketing_opt_in
+                ? "Turn off updates"
+                : "Turn on updates"}
+          </button>
+          {marketingStatus ? (
+            <p className="status-live" role="status">
+              {marketingStatus}
+            </p>
+          ) : null}
+          {marketingError ? (
+            <p className="account-error" role="alert">
+              {marketingError}
+            </p>
+          ) : null}
+        </section>
         <a className="button-subtle" href={CONTACT_LINKS.accountHelp.href}>
           Email support
         </a>

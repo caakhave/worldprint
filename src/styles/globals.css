@@ -5731,6 +5731,26 @@ dd {
   padding-top: 0.75rem;
 }
 
+.account-preference-panel {
+  display: grid;
+  gap: 0.65rem;
+  border: 1px solid rgb(164 216 205 / 0.18);
+  border-radius: 8px;
+  padding: 0.8rem;
+  background: rgb(4 14 18 / 0.32);
+}
+
+.account-preference-panel h3 {
+  margin: 0 0 0.35rem;
+  color: var(--parchment);
+  font-size: 1.05rem;
+  line-height: 1.2;
+}
+
+.account-preference-panel .button-subtle {
+  justify-self: start;
+}
+
 .account-actions-grid {
   display: grid;
   grid-template-columns: repeat(2, minmax(0, 1fr));
@@ -5941,6 +5961,19 @@ dd {
   font-weight: 700;
 }
 
+.account-form .account-checkbox-label {
+  grid-template-columns: auto minmax(0, 1fr);
+  gap: 0.6rem;
+  align-items: start;
+  border: 1px solid rgb(164 216 205 / 0.16);
+  border-radius: 8px;
+  padding: 0.75rem;
+  background: rgb(4 14 18 / 0.32);
+  color: var(--muted);
+  font-weight: 700;
+  line-height: 1.45;
+}
+
 .account-form input {
   min-height: 48px;
   border: 1px solid var(--line-strong);
@@ -5949,6 +5982,14 @@ dd {
   background: rgb(4 14 18 / 0.74);
   color: var(--text);
   font: inherit;
+}
+
+.account-form input[type="checkbox"] {
+  width: 1.05rem;
+  height: 1.05rem;
+  min-height: 0;
+  margin-top: 0.17rem;
+  accent-color: var(--signal-2);
 }
 
 .account-form input:focus {

@@ -100,6 +100,7 @@ export default function LegalPage() {
             <h3>Information We Collect</h3>
             <ul>
               <li>Account information, such as your email address and account ID when you sign in.</li>
+              <li>Marketing email preference information, such as whether you opted in to occasional product updates.</li>
               <li>Gameplay information, such as scores, streaks, guesses, completed runs, challenge activity, and saved stats.</li>
               <li>Technical information, such as browser/device information, approximate location from IP address, logs, and security events.</li>
               <li>
@@ -112,7 +113,8 @@ export default function LegalPage() {
             <h3>How We Use Information</h3>
             <p>
               We use information to operate the game, authenticate accounts, save stats and streaks, prevent abuse, debug issues,
-              improve the product, provide support, and manage paid features if enabled.
+              improve the product, provide support, send transactional account or billing messages, send optional marketing updates
+              only when you opt in, and manage paid features if enabled.
             </p>
 
             <h3>How We Share Information</h3>
@@ -141,6 +143,10 @@ export default function LegalPage() {
               You can play some parts of the game without signing in. You can sign out at any time. You may request access,
               correction, or deletion of your account information by contacting{" "}
               <a href={CONTACT_LINKS.privacyLegalRequest.href}>{SUPPORT_EMAIL}</a>.
+            </p>
+            <p>
+              Marketing updates are optional and can be turned off from your account. Transactional emails such as account
+              confirmation, password reset, billing, and security messages may still be sent when needed to provide the service.
             </p>
 
             <h3>Children</h3>

@@ -12,7 +12,7 @@ const routerMock = vi.hoisted(() => ({
 
 const accountMock = vi.hoisted(() => ({
   state: {
-    client: null,
+    client: {},
     configured: true,
     missingEnv: [],
     loading: false,
@@ -26,6 +26,28 @@ const accountMock = vi.hoisted(() => ({
     signOut: vi.fn(async () => ({ error: null }))
   }
 }));
+
+const marketingMock = vi.hoisted(() => {
+  type Preference = {
+    marketing_opt_in: boolean;
+    marketing_opt_in_at: string | null;
+    marketing_opt_in_source: string | null;
+    marketing_opt_out_at: string | null;
+  };
+  const defaultPreference = (): Preference => ({
+    marketing_opt_in: false,
+    marketing_opt_in_at: null,
+    marketing_opt_in_source: null,
+    marketing_opt_out_at: null
+  });
+  return {
+    fetchMarketingPreference: vi.fn(async (): Promise<{ data: Preference; error: string | null }> => ({
+      data: defaultPreference(),
+      error: null
+    })),
+    updateMarketingPreference: vi.fn(async () => ({ error: null }))
+  };
+});
 
 const entitlementMock = vi.hoisted(() => ({
   state: {
@@ -65,9 +87,25 @@ vi.mock("@/features/account/useEntitlement", () => ({
   useEntitlement: () => entitlementMock.state
 }));
 
+vi.mock("@/lib/account/sync", () => ({
+  fetchMarketingPreference: marketingMock.fetchMarketingPreference,
+  updateMarketingPreference: marketingMock.updateMarketingPreference
+}));
+
 describe("AccountStatusClient", () => {
   beforeEach(() => {
     accountMock.state.signOut.mockClear();
+    marketingMock.fetchMarketingPreference.mockClear();
+    marketingMock.updateMarketingPreference.mockClear();
+    marketingMock.fetchMarketingPreference.mockResolvedValue({
+      data: {
+        marketing_opt_in: false,
+        marketing_opt_in_at: null,
+        marketing_opt_in_source: null,
+        marketing_opt_out_at: null
+      },
+      error: null
+    });
     accountMock.state.user = {
       id: "11111111-2222-4333-8444-555555555555",
       email: "player@example.com"
@@ -91,10 +129,41 @@ describe("AccountStatusClient", () => {
     expect(screen.getByRole("link", { name: "Compare plans" })).toHaveAttribute("href", "/upgrade");
     expect(screen.getByRole("link", { name: "Email support" })).toHaveAttribute("href", CONTACT_LINKS.accountHelp.href);
     expect(screen.getByRole("button", { name: "Sign out" })).toBeVisible();
+    expect(await screen.findByText("Marketing updates are off. Account, billing, password reset, and security emails still work.")).toBeVisible();
 
     await user.click(screen.getByRole("button", { name: "Show support ID" }));
     expect(screen.getByText("11111111-2222-4333-8444-555555555555")).toBeVisible();
     expect(screen.getByRole("button", { name: "Copy support ID" })).toBeVisible();
+  });
+
+  it("lets the current user turn marketing updates off from the account page", async () => {
+    const user = userEvent.setup();
+    marketingMock.fetchMarketingPreference.mockResolvedValueOnce({
+      data: {
+        marketing_opt_in: true,
+        marketing_opt_in_at: "2026-06-30T12:00:00.000Z",
+        marketing_opt_in_source: "sign_up",
+        marketing_opt_out_at: null
+      },
+      error: null
+    });
+    marketingMock.fetchMarketingPreference.mockResolvedValueOnce({
+      data: {
+        marketing_opt_in: false,
+        marketing_opt_in_at: "2026-06-30T12:00:00.000Z",
+        marketing_opt_in_source: null,
+        marketing_opt_out_at: "2026-06-30T13:00:00.000Z"
+      },
+      error: null
+    });
+
+    render(<AccountStatusClient />);
+
+    expect(await screen.findByText("You are opted in to occasional Can You Geo updates and new game announcements.")).toBeVisible();
+    await user.click(screen.getByRole("button", { name: "Turn off updates" }));
+
+    expect(marketingMock.updateMarketingPreference).toHaveBeenCalledWith(accountMock.state.client, "11111111-2222-4333-8444-555555555555", false);
+    expect(await screen.findByText("Email updates turned off.")).toBeVisible();
   });
 
   it("redirects to signed-out confirmation after account-page sign-out", async () => {

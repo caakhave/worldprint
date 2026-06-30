@@ -2,17 +2,20 @@ import { describe, expect, it } from "vitest";
 import {
   buildAccountStatsFromCloudRuns,
   clientRunKeyFor,
+  ensureProfile,
+  fetchMarketingPreference,
   mergeStatsSnapshot,
   syncCompletedRunForAccount,
   syncLocalRunsToSupabase,
   statsSnapshotForUser,
-  statsSyncSignature
+  statsSyncSignature,
+  updateMarketingPreference
 } from "@/lib/account/sync";
 import { createRun, reduceRun } from "@/lib/game/state";
 import type { LocalPlayerStats } from "@/lib/persistence/playerStats";
 import { defaultPersistedState, recordRunCompletion } from "@/lib/persistence/storage";
 import type { CanYouGeoSupabaseClient } from "@/lib/supabase/client";
-import type { GameRunRow, RoundResultRow, UserStatsRow } from "@/lib/supabase/database";
+import type { GameRunRow, ProfileRow, RoundResultRow, UserStatsRow } from "@/lib/supabase/database";
 
 const localStats: LocalPlayerStats = {
   mapsPlayed: 5,
@@ -105,6 +108,81 @@ describe("account stats sync helpers", () => {
     expect(clientRunKeyFor("atlas", "2026-06-24", "atlas-run")).toBe("worldprint:atlas:atlas-run");
     expect(clientRunKeyFor("challenge", "2026-06-24", "challenge-run")).toBe("worldprint:challenge:challenge-run");
     expect(clientRunKeyFor("practice", "2026-06-24", "practice-run")).toBe("worldprint:practice:practice-run");
+  });
+
+  it("defaults existing profiles to not opted in and preserves opted-out users on refresh", async () => {
+    const mock = createMockProfileClient({
+      id: "user-1",
+      display_name: "reader",
+      marketing_opt_in: false,
+      marketing_opt_in_at: null,
+      marketing_opt_in_source: null,
+      marketing_opt_out_at: "2026-06-30T13:00:00.000Z",
+      created_at: "2026-06-30T12:00:00.000Z",
+      updated_at: "2026-06-30T13:00:00.000Z"
+    });
+
+    await expect(
+      ensureProfile(mock.client, {
+        id: "user-1",
+        email: "reader@example.com",
+        user_metadata: {
+          marketing_opt_in: true,
+          marketing_opt_in_source: "sign_up"
+        }
+      } as never)
+    ).resolves.toEqual({ error: null });
+
+    expect(mock.profile?.marketing_opt_in).toBe(false);
+    await expect(fetchMarketingPreference(mock.client, "user-1")).resolves.toMatchObject({
+      data: { marketing_opt_in: false },
+      error: null
+    });
+  });
+
+  it("creates a new profile with sign-up marketing consent only when explicitly opted in", async () => {
+    const mock = createMockProfileClient(null);
+
+    await expect(
+      ensureProfile(
+        mock.client,
+        {
+          id: "user-1",
+          email: "reader@example.com",
+          user_metadata: {}
+        } as never,
+        { marketingOptIn: true, marketingOptInSource: "sign_up" }
+      )
+    ).resolves.toEqual({ error: null });
+
+    expect(mock.profile).toMatchObject({
+      id: "user-1",
+      marketing_opt_in: true,
+      marketing_opt_in_source: "sign_up",
+      marketing_opt_out_at: null
+    });
+    expect(mock.profile?.marketing_opt_in_at).toBeTruthy();
+  });
+
+  it("lets the current user update their own marketing preference through the profile layer", async () => {
+    const mock = createMockProfileClient({
+      id: "user-1",
+      display_name: "reader",
+      marketing_opt_in: true,
+      marketing_opt_in_at: "2026-06-30T12:00:00.000Z",
+      marketing_opt_in_source: "sign_up",
+      marketing_opt_out_at: null,
+      created_at: "2026-06-30T12:00:00.000Z",
+      updated_at: "2026-06-30T12:00:00.000Z"
+    });
+
+    await expect(updateMarketingPreference(mock.client, "user-1", false)).resolves.toEqual({ error: null });
+
+    expect(mock.profile).toMatchObject({
+      marketing_opt_in: false,
+      marketing_opt_in_source: null
+    });
+    expect(mock.profile?.marketing_opt_out_at).toBeTruthy();
   });
 
   it("skips cloud save when the player is signed out", async () => {
@@ -331,6 +409,55 @@ function createMockSyncClient(options: { failGameRuns?: boolean } = {}) {
     roundResults,
     get userStats() {
       return userStats;
+    }
+  };
+}
+
+function createMockProfileClient(initialProfile: ProfileRow | null) {
+  let profile = initialProfile;
+  const client = {
+    from(table: string) {
+      if (table !== "profiles") throw new Error(`Unexpected table ${table}`);
+      return {
+        select() {
+          return {
+            eq() {
+              return {
+                async maybeSingle() {
+                  return { data: profile, error: null };
+                }
+              };
+            }
+          };
+        },
+        async upsert(row: Partial<ProfileRow>) {
+          profile = {
+            id: row.id ?? profile?.id ?? "user-1",
+            display_name: row.display_name ?? profile?.display_name ?? null,
+            marketing_opt_in: row.marketing_opt_in ?? profile?.marketing_opt_in ?? false,
+            marketing_opt_in_at: row.marketing_opt_in_at ?? profile?.marketing_opt_in_at ?? null,
+            marketing_opt_in_source: row.marketing_opt_in_source ?? profile?.marketing_opt_in_source ?? null,
+            marketing_opt_out_at: row.marketing_opt_out_at ?? profile?.marketing_opt_out_at ?? null,
+            created_at: profile?.created_at ?? "2026-06-30T12:00:00.000Z",
+            updated_at: row.updated_at ?? profile?.updated_at ?? "2026-06-30T12:00:00.000Z"
+          };
+          return { error: null };
+        },
+        update(row: Partial<ProfileRow>) {
+          return {
+            async eq() {
+              if (profile) profile = { ...profile, ...row };
+              return { error: null };
+            }
+          };
+        }
+      };
+    }
+  } as unknown as CanYouGeoSupabaseClient;
+  return {
+    client,
+    get profile() {
+      return profile;
     }
   };
 }

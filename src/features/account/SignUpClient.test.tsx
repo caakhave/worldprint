@@ -67,6 +67,7 @@ describe("SignUpClient", () => {
     render(<SignUpClient />);
 
     expect(screen.getByRole("heading", { name: "Create your Can You Geo? account." })).toBeVisible();
+    expect(screen.getByLabelText("Send me occasional Can You Geo updates and new game announcements.")).not.toBeChecked();
     await user.type(screen.getByLabelText("Email"), "new@example.com");
     await user.type(screen.getByLabelText("Password"), "strong-password");
     await user.type(screen.getByLabelText("Confirm password"), "strong-password");
@@ -76,7 +77,11 @@ describe("SignUpClient", () => {
       email: "new@example.com",
       password: "strong-password",
       options: expect.objectContaining({
-        emailRedirectTo: expect.stringMatching(/\/auth\/callback$/)
+        emailRedirectTo: expect.stringMatching(/\/auth\/callback$/),
+        data: {
+          marketing_opt_in: false,
+          marketing_opt_in_source: null
+        }
       })
     });
     await screen.findByText("Check your email to confirm your account. Then sign in with your password to continue.");
@@ -101,6 +106,28 @@ describe("SignUpClient", () => {
     await user.click(screen.getByRole("button", { name: "Create account" }));
 
     expect(window.sessionStorage.getItem("canyougeo:sign-in-return")).toBe("/upgrade?plan=yearly");
+  });
+
+  it("stores marketing opt-in intent only when the optional checkbox is checked", async () => {
+    const user = userEvent.setup();
+    render(<SignUpClient />);
+
+    await user.type(screen.getByLabelText("Email"), "new@example.com");
+    await user.type(screen.getByLabelText("Password"), "strong-password");
+    await user.type(screen.getByLabelText("Confirm password"), "strong-password");
+    await user.click(screen.getByLabelText("Send me occasional Can You Geo updates and new game announcements."));
+    await user.click(screen.getByRole("button", { name: "Create account" }));
+
+    expect(accountMock.state.client.auth.signUp).toHaveBeenCalledWith(
+      expect.objectContaining({
+        options: expect.objectContaining({
+          data: {
+            marketing_opt_in: true,
+            marketing_opt_in_source: "sign_up"
+          }
+        })
+      })
+    );
   });
 
   it("validates password length and confirmation before calling Supabase", async () => {
@@ -144,8 +171,36 @@ describe("SignUpClient", () => {
     await user.type(screen.getByLabelText("Confirm password"), "strong-password");
     await user.click(screen.getByRole("button", { name: "Create account" }));
 
-    await waitFor(() => expect(ensureProfileMock).toHaveBeenCalledWith(accountMock.state.client, signedInUser));
+    await waitFor(() =>
+      expect(ensureProfileMock).toHaveBeenCalledWith(accountMock.state.client, signedInUser, {
+        marketingOptIn: false,
+        marketingOptInSource: "sign_up"
+      })
+    );
     expect(routerMock.push).toHaveBeenCalledWith("/upgrade?plan=monthly");
     expect(window.sessionStorage.getItem("canyougeo:sign-in-return")).toBeNull();
+  });
+
+  it("records checked marketing consent when Supabase returns an immediate session", async () => {
+    const user = userEvent.setup();
+    accountMock.state.client.auth.signUp.mockResolvedValue({
+      data: { user: signedInUser, session: { user: signedInUser } },
+      error: null
+    });
+
+    render(<SignUpClient />);
+
+    await user.type(screen.getByLabelText("Email"), "new@example.com");
+    await user.type(screen.getByLabelText("Password"), "strong-password");
+    await user.type(screen.getByLabelText("Confirm password"), "strong-password");
+    await user.click(screen.getByLabelText("Send me occasional Can You Geo updates and new game announcements."));
+    await user.click(screen.getByRole("button", { name: "Create account" }));
+
+    await waitFor(() =>
+      expect(ensureProfileMock).toHaveBeenCalledWith(accountMock.state.client, signedInUser, {
+        marketingOptIn: true,
+        marketingOptInSource: "sign_up"
+      })
+    );
   });
 });

@@ -1,6 +1,10 @@
 export type ProfileRow = {
   id: string;
   display_name: string | null;
+  marketing_opt_in: boolean;
+  marketing_opt_in_at: string | null;
+  marketing_opt_in_source: string | null;
+  marketing_opt_out_at: string | null;
   created_at: string;
   updated_at: string;
 };
@@ -83,11 +87,19 @@ export type Database = {
         Insert: {
           id: string;
           display_name?: string | null;
+          marketing_opt_in?: boolean;
+          marketing_opt_in_at?: string | null;
+          marketing_opt_in_source?: string | null;
+          marketing_opt_out_at?: string | null;
           created_at?: string;
           updated_at?: string;
         };
         Update: {
           display_name?: string | null;
+          marketing_opt_in?: boolean;
+          marketing_opt_in_at?: string | null;
+          marketing_opt_in_source?: string | null;
+          marketing_opt_out_at?: string | null;
           updated_at?: string;
         };
         Relationships: [];
