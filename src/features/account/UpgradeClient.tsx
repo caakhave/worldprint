@@ -27,7 +27,7 @@ export function UpgradeClient() {
     : billingEnabled
       ? "Start Free with no card needed, or sign in and choose monthly or yearly Pro through secure Stripe checkout."
       : "Pro pricing is visible for planning. Checkout is coming soon and billing is disabled for now; Free accounts still get 3 fresh maps every day.";
-  const overviewHeading = loading ? "Checking your plan." : isPro ? "Can You Geo? Pro." : billingEnabled ? "Choose monthly or yearly." : "Checkout coming soon.";
+  const overviewHeading = loading ? "Checking your plan." : isPro ? "Can You Geo? Pro." : "Choose monthly or yearly.";
   const statusTitle = isPro
     ? "Can You Geo? Pro"
     : billingEnabled
@@ -48,6 +48,14 @@ export function UpgradeClient() {
   useEffect(() => {
     setSelectedPlan(proBillingIntervalFromSearch(window.location.search));
   }, []);
+
+  function choosePlan(interval: ProBillingInterval) {
+    setSelectedPlan(interval);
+    const params = new URLSearchParams(window.location.search);
+    params.set("plan", interval);
+    const search = params.toString();
+    window.history.replaceState({}, "", `${window.location.pathname}${search ? `?${search}` : ""}`);
+  }
 
   return (
     <div className="upgrade-shell">
@@ -88,16 +96,29 @@ export function UpgradeClient() {
             </p>
           </div>
           <div className="upgrade-intent-grid">
-            <div className="pro-price-option upgrade-selected-plan" data-featured={selectedPlanOption.featured ? "true" : "false"} data-selected="true">
-              <span className="pro-price-label">
-                Selected plan: {selectedPlanOption.label}
-                {selectedPlanOption.badge ? <span className="pro-price-badge">{selectedPlanOption.badge}</span> : null}
-              </span>
-              <strong>
-                {selectedPlanOption.price}
-                <span>{selectedPlanOption.cadence}</span>
-              </strong>
-              <p>{selectedPlanOption.summary}</p>
+            <div className="pro-price-options upgrade-intent-plan-options" aria-label="Choose your Pro plan">
+              {PRO_PRICE_OPTIONS.map((option) => (
+                <button
+                  className="pro-price-option upgrade-selected-plan"
+                  data-featured={option.featured ? "true" : "false"}
+                  data-selected={selectedPlanOption.interval === option.interval ? "true" : "false"}
+                  type="button"
+                  aria-pressed={selectedPlanOption.interval === option.interval}
+                  onClick={() => choosePlan(option.interval)}
+                  key={option.interval}
+                >
+                  <span className="pro-price-label">
+                    {selectedPlanOption.interval === option.interval ? "Selected plan: " : ""}
+                    {option.label}
+                    {option.badge ? <span className="pro-price-badge">{option.badge}</span> : null}
+                  </span>
+                  <strong>
+                    {option.price}
+                    <span>{option.cadence}</span>
+                  </strong>
+                  <p>{option.summary}</p>
+                </button>
+              ))}
             </div>
             <div className="upgrade-intent-actions">
               <BillingActionsClient
@@ -116,18 +137,21 @@ export function UpgradeClient() {
       ) : null}
 
       <section className="upgrade-hero surface" aria-label="Upgrade overview">
-        <div>
+        <div className="upgrade-hero-copy">
           <p className="eyebrow">Full atlas access</p>
           <h2>{overviewHeading}</h2>
           <p>
             Free accounts unlock 3 fresh maps every day and saved progress. Pro opens unlimited Atlas play, the full Practice Atlas,
-            complete Past Games archive, advanced stats, and future premium surfaces.
+            complete Past Games archive, advanced stats, and future premium updates.
           </p>
         </div>
-        <div className="upgrade-status-card" aria-live="polite">
-          <Sparkles size={22} aria-hidden="true" />
-          <strong>{statusTitle}</strong>
-          <span>{statusDetail}</span>
+        <div className="upgrade-hero-action-panel">
+          <div className="upgrade-status-card" aria-live="polite">
+            <Sparkles size={22} aria-hidden="true" />
+            <strong>{statusTitle}</strong>
+            <span>{statusDetail}</span>
+          </div>
+          <BillingActionsClient entitlement={entitlement} context="upgrade" />
         </div>
       </section>
 

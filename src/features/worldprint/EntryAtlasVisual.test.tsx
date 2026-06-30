@@ -29,5 +29,12 @@ describe("EntryAtlasVisual", () => {
     expect(visual).toHaveAttribute("data-preview-step", "3");
     expect(visual).toHaveAttribute("data-preview-tone", "gold");
     expect(screen.getByText("Evidence")).toHaveClass("entry-preview-panel-label");
+
+    await user.click(screen.getByRole("button", { name: "Show step 4: Choose the hidden indicator" }));
+    expect(visual).toHaveAttribute("data-preview-step", "4");
+    expect(visual).toHaveAttribute("data-preview-tone", "green");
+    expect(screen.getByText("Answer choices")).toHaveClass("entry-preview-panel-label");
+    expect(screen.getByText("800 points possible")).toHaveClass("entry-preview-chip-b");
+    expect(screen.getByText("Internet access").closest(".entry-preview-panel")).toHaveAttribute("data-panel", "answers");
   });
 });

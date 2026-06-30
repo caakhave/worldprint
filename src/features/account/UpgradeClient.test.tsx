@@ -1,10 +1,16 @@
-import { render, screen } from "@testing-library/react";
+import { fireEvent, render, screen, waitFor, within } from "@testing-library/react";
 import { beforeEach, describe, expect, it, vi } from "vitest";
 import { UpgradeClient } from "@/features/account/UpgradeClient";
 import { FREE_ENTITLEMENT, PRO_ENTITLEMENT, type PlayerEntitlement } from "@/lib/account/entitlements";
 import { CONTACT_LINKS } from "@/lib/contact";
 
 const TEST_USER = { id: "11111111-2222-4333-8444-555555555555", email: "reader@example.com" };
+
+type BillingMockClient = {
+  auth: { getSession: ReturnType<typeof vi.fn> };
+  functions: { invoke: ReturnType<typeof vi.fn> };
+  from: ReturnType<typeof vi.fn>;
+};
 
 const entitlementMock = vi.hoisted(() => ({
   state: {
@@ -19,7 +25,7 @@ const entitlementMock = vi.hoisted(() => ({
 
 const accountMock = vi.hoisted(() => ({
   state: {
-    client: null,
+    client: null as BillingMockClient | null,
     configured: true,
     missingEnv: [] as string[],
     loading: false,
@@ -30,6 +36,20 @@ const accountMock = vi.hoisted(() => ({
     signOut: vi.fn()
   }
 }));
+
+function billingClientMock(): BillingMockClient {
+  const client: BillingMockClient = {
+    auth: {
+      getSession: vi.fn().mockResolvedValue({ data: { session: { access_token: "billing-token" } }, error: null })
+    },
+    functions: {
+      invoke: vi.fn().mockResolvedValue({ data: {}, error: null })
+    },
+    from: vi.fn()
+  };
+  accountMock.state.client = client;
+  return client;
+}
 
 vi.mock("@/features/account/useEntitlement", () => ({
   useEntitlement: () => ({
@@ -49,6 +69,7 @@ describe("UpgradeClient", () => {
     entitlementMock.state.loading = false;
     entitlementMock.state.configured = true;
     entitlementMock.state.signedIn = false;
+    accountMock.state.client = null;
     accountMock.state.configured = true;
     accountMock.state.loading = false;
     accountMock.state.user = null;
@@ -60,7 +81,7 @@ describe("UpgradeClient", () => {
 
     expect(screen.getByRole("heading", { name: "Choose Free or Pro." })).toBeVisible();
     expect(screen.getByRole("link", { name: "Sign in for Free or Pro" })).toHaveAttribute("href", "/sign-in?next=%2Fupgrade");
-    expect(screen.getByRole("link", { name: "Start Pro" })).toHaveAttribute("href", "/sign-in?next=%2Fupgrade");
+    expect(screen.getAllByRole("link", { name: "Start Pro" }).every((link) => link.getAttribute("href") === "/sign-in?next=%2Fupgrade")).toBe(true);
     expect(screen.getAllByRole("link", { name: "Continue free" }).some((link) => link.getAttribute("href") === "/sign-in")).toBe(true);
     expect(screen.getByRole("link", { name: "Email support for billing help" })).toHaveAttribute(
       "href",
@@ -96,7 +117,7 @@ describe("UpgradeClient", () => {
     expect(screen.getByRole("heading", { name: "You have the full atlas." })).toBeVisible();
     expect(screen.queryByRole("heading", { name: "Choose Free or Pro." })).not.toBeInTheDocument();
     expect(screen.getByText("Membership is active and managed manually.")).toBeVisible();
-    expect(screen.getByRole("link", { name: "Manage from account" })).toHaveAttribute("href", "/account");
+    expect(screen.getAllByRole("link", { name: "Manage from account" }).every((link) => link.getAttribute("href") === "/account")).toBe(true);
   });
 
   it("shows Stripe test-mode checkout choices for signed-in Free users", () => {
@@ -108,8 +129,14 @@ describe("UpgradeClient", () => {
 
     expect(screen.getByRole("heading", { name: "Choose monthly or yearly." })).toBeVisible();
     expect(screen.getByText("Ready for secure checkout")).toBeVisible();
-    expect(screen.getByRole("button", { name: "Join monthly" })).toBeEnabled();
-    expect(screen.getByRole("button", { name: "Join yearly" })).toBeEnabled();
+    const overview = screen.getByLabelText("Upgrade overview");
+    expect(within(overview).getByRole("button", { name: "Join monthly" })).toBeEnabled();
+    expect(within(overview).getByRole("button", { name: "Join yearly" })).toBeEnabled();
+    expect(
+      within(overview).getByText(
+        "Free accounts unlock 3 fresh maps every day and saved progress. Pro opens unlimited Atlas play, the full Practice Atlas, complete Past Games archive, advanced stats, and future premium updates."
+      )
+    ).toBeVisible();
     expect(screen.getAllByText("Best value").length).toBeGreaterThanOrEqual(1);
   });
 
@@ -117,15 +144,30 @@ describe("UpgradeClient", () => {
     process.env.NEXT_PUBLIC_BILLING_MODE = "test";
     entitlementMock.state.signedIn = true;
     accountMock.state.user = TEST_USER;
+    const client = billingClientMock();
     window.history.pushState({}, "", "/upgrade?plan=monthly");
 
     render(<UpgradeClient />);
 
     expect(await screen.findByRole("heading", { name: "Finish setting up Can You Geo? Pro" })).toBeVisible();
-    expect(screen.getByText("Selected plan: Monthly")).toBeVisible();
+    expect(screen.getByRole("button", { name: /Selected plan:\s*Monthly/i })).toHaveAttribute("aria-pressed", "true");
+    expect(screen.getByRole("button", { name: /Yearly.*Best value/i })).toHaveAttribute("aria-pressed", "false");
     expect(screen.getAllByText("$3.99").length).toBeGreaterThanOrEqual(1);
     expect(screen.getAllByText("/month").length).toBeGreaterThanOrEqual(1);
+    fireEvent.click(screen.getByRole("button", { name: /Yearly.*Best value/i }));
+    expect(screen.getByRole("button", { name: /Selected plan:\s*Yearly.*Best value/i })).toHaveAttribute("aria-pressed", "true");
+    expect(window.location.search).toContain("plan=yearly");
     expect(screen.getByRole("button", { name: "Continue to secure checkout" })).toBeEnabled();
+    fireEvent.click(screen.getByRole("button", { name: "Continue to secure checkout" }));
+    await waitFor(() => expect(client.functions.invoke).toHaveBeenCalledTimes(1));
+    const [functionName, options] = client.functions.invoke.mock.calls[0];
+    expect(functionName).toBe("stripe-checkout");
+    expect(options).toMatchObject({
+      headers: { Authorization: "Bearer billing-token" },
+      body: { plan: "yearly" }
+    });
+    expect(JSON.stringify(options.body)).not.toContain("price_");
+    expect(client.from).not.toHaveBeenCalled();
     expect(screen.getAllByRole("link", { name: "Continue free" }).some((link) => link.getAttribute("href") === "/account")).toBe(true);
     expect(screen.getByText("Free needs no card and includes the 3-map Free Daily, saved progress, and basic stats.")).toBeVisible();
   });
@@ -139,7 +181,7 @@ describe("UpgradeClient", () => {
     render(<UpgradeClient />);
 
     expect(await screen.findByRole("heading", { name: "Finish setting up Can You Geo? Pro" })).toBeVisible();
-    expect(screen.getByText("Selected plan: Yearly")).toBeVisible();
+    expect(screen.getByRole("button", { name: /Selected plan:\s*Yearly.*Best value/i })).toHaveAttribute("aria-pressed", "true");
     expect(screen.getAllByText("$29.99").length).toBeGreaterThanOrEqual(1);
     expect(screen.getAllByText("/year").length).toBeGreaterThanOrEqual(1);
     expect(screen.getAllByText("Best value").length).toBeGreaterThanOrEqual(1);

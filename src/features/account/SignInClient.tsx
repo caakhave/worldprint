@@ -4,7 +4,6 @@ import Link from "next/link";
 import { useEffect, useState } from "react";
 import { siteOrigin } from "@/lib/supabase/env";
 import { useSupabaseAccount } from "@/features/account/useSupabaseAccount";
-import { ACCESS_PLAN_COPY } from "@/lib/account/accessCopy";
 import { authCallbackPathForReturn, storeSignInReturnPath } from "@/lib/account/signInRedirect";
 
 const RESEND_COOLDOWN_MS = 60_000;
@@ -97,7 +96,7 @@ export function SignInClient() {
       return;
     }
     startResendCooldown();
-    setStatus("Check your email. Sign-in links are temporary and can be used once.");
+    setStatus("Email sent. Open the link to continue.");
   }
 
   async function handleSignOut() {
@@ -188,7 +187,7 @@ export function SignInClient() {
           {submitting ? "Sending..." : resendCooldownActive ? "Check your email" : "Send sign-in link"}
         </button>
       </form>
-      <p className="account-env-note">No password needed. Sign-in links can only be requested about once per minute.</p>
+      <p className="account-env-note">We&apos;ll email a secure link. New players can continue Free or choose Pro after signing in.</p>
       {status ? (
         <p className="status-live" role="status">
           {status}
@@ -199,8 +198,6 @@ export function SignInClient() {
           {error}
         </p>
       ) : null}
-      <p className="account-env-note">Returning later? Use the same email and request a fresh link.</p>
-      <p className="account-env-note">{ACCESS_PLAN_COPY.guest.headline} The 3-map Free Daily requires a free account.</p>
     </article>
   );
 }

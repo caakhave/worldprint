@@ -2134,7 +2134,7 @@ button:disabled {
 
 .entry-preview-stage {
   --entry-preview-inset: clamp(0.7rem, 1.55vw, 1.05rem);
-  --entry-preview-right-inset: clamp(2.25rem, 8vw, 6rem);
+  --entry-preview-right-inset: clamp(3.25rem, 12vw, 9rem);
 
   position: relative;
   min-height: clamp(19rem, 30vw, 28rem);
@@ -2252,7 +2252,7 @@ button:disabled {
 .entry-preview-chip-b {
   right: var(--entry-preview-right-inset);
   top: var(--entry-preview-inset);
-  max-width: min(13rem, calc(100% - var(--entry-preview-inset) - var(--entry-preview-right-inset)));
+  max-width: min(10.75rem, calc(100% - var(--entry-preview-inset) - var(--entry-preview-right-inset)));
   color: var(--signal-2);
   text-align: right;
 }
@@ -2331,7 +2331,7 @@ button:disabled {
   bottom: var(--entry-preview-inset);
   display: grid;
   gap: 0.45rem;
-  width: min(14.25rem, calc(100% - var(--entry-preview-inset) - var(--entry-preview-right-inset)));
+  width: min(12.75rem, calc(100% - var(--entry-preview-inset) - var(--entry-preview-right-inset)));
   max-width: calc(100% - var(--entry-preview-inset) - var(--entry-preview-right-inset));
   border: 1px solid rgb(164 216 205 / 0.26);
   border-radius: 7px;
@@ -2339,6 +2339,10 @@ button:disabled {
   background: rgb(5 18 22 / 0.78);
   color: var(--parchment);
   box-shadow: 0 18px 30px rgb(0 0 0 / 0.28);
+}
+
+.entry-preview-panel[data-panel="answers"] {
+  width: min(13.75rem, calc(100% - var(--entry-preview-inset) - var(--entry-preview-right-inset)));
 }
 
 .entry-preview-panel-label {
@@ -6032,13 +6036,45 @@ dd {
 
 .upgrade-hero {
   display: grid;
-  grid-template-columns: minmax(0, 1fr) minmax(280px, 0.38fr);
+  grid-template-columns: minmax(0, 1fr) minmax(300px, 0.42fr);
   gap: 1rem;
   align-items: center;
   padding: clamp(1rem, 2.8vw, 1.45rem);
   background:
     radial-gradient(circle at top right, rgb(215 168 75 / 0.13), transparent 36%),
     var(--surface);
+}
+
+.upgrade-hero-copy {
+  display: grid;
+  gap: 0.65rem;
+}
+
+.upgrade-hero-copy h2,
+.upgrade-hero-copy p {
+  margin: 0;
+}
+
+.upgrade-hero-action-panel {
+  display: grid;
+  gap: 0.75rem;
+  align-content: center;
+}
+
+.upgrade-hero-action-panel .billing-actions,
+.upgrade-hero-action-panel .checkout-option-buttons {
+  width: 100%;
+}
+
+.upgrade-hero-action-panel .billing-actions {
+  justify-items: stretch;
+}
+
+.upgrade-hero-action-panel .billing-actions > .button,
+.upgrade-hero-action-panel .billing-actions > .button-secondary,
+.upgrade-hero-action-panel .checkout-option-buttons .button,
+.upgrade-hero-action-panel .checkout-option-buttons .button-secondary {
+  width: 100%;
 }
 
 .upgrade-hero h2,
@@ -6106,6 +6142,10 @@ dd {
   align-items: stretch;
 }
 
+.upgrade-intent-plan-options {
+  align-items: stretch;
+}
+
 .upgrade-intent-actions {
   display: grid;
   gap: 0.75rem;
@@ -6159,6 +6199,27 @@ dd {
   border-radius: 8px;
   padding: 0.85rem;
   background: rgb(4 42 47 / 0.42);
+}
+
+button.pro-price-option {
+  width: 100%;
+  color: var(--text);
+  font: inherit;
+  text-align: left;
+  cursor: pointer;
+}
+
+button.pro-price-option:hover,
+button.pro-price-option:focus-visible {
+  border-color: rgb(164 216 205 / 0.72);
+  background:
+    linear-gradient(145deg, rgb(104 183 170 / 0.14), transparent 62%),
+    rgb(4 42 47 / 0.52);
+}
+
+button.pro-price-option:focus-visible {
+  outline: 2px solid var(--signal-2);
+  outline-offset: 2px;
 }
 
 .pro-price-option[data-featured="true"] {

@@ -39,7 +39,7 @@ describe("SignInClient", () => {
     window.history.pushState({}, "", "/sign-in");
   });
 
-  it("explains passwordless email sign-in and one-time links", async () => {
+  it("explains production email sign-in without test-era helper copy", async () => {
     const user = userEvent.setup();
     render(<SignInClient />);
 
@@ -50,8 +50,10 @@ describe("SignInClient", () => {
     expect(
       screen.getByText("Want Can You Geo? Pro? Use this email first, then choose monthly or yearly. Free stays available with no card needed.")
     ).toBeVisible();
-    expect(screen.getByText("No password needed. Sign-in links can only be requested about once per minute.")).toBeVisible();
-    expect(screen.getByText("Returning later? Use the same email and request a fresh link.")).toBeVisible();
+    expect(screen.getByText("We'll email a secure link. New players can continue Free or choose Pro after signing in.")).toBeVisible();
+    expect(screen.queryByText("No password needed. Sign-in links can only be requested about once per minute.")).not.toBeInTheDocument();
+    expect(screen.queryByText("Returning later? Use the same email and request a fresh link.")).not.toBeInTheDocument();
+    expect(screen.queryByText("Try the 5-map Sample Run. The 3-map Free Daily requires a free account.")).not.toBeInTheDocument();
 
     await user.type(screen.getByLabelText("Email"), "player@example.com");
     await user.click(screen.getByRole("button", { name: "Send sign-in link" }));
@@ -63,7 +65,7 @@ describe("SignInClient", () => {
         emailRedirectTo: expect.stringMatching(/\/auth\/callback$/)
       })
     });
-    await screen.findByText("Check your email. Sign-in links are temporary and can be used once.");
+    await screen.findByText("Email sent. Open the link to continue.");
     expect(screen.getByRole("button", { name: "Check your email" })).toBeDisabled();
   });
 
