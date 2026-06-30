@@ -16,6 +16,8 @@ type BillingActionResponse = {
 type BillingActionsClientProps = {
   entitlement: PlayerEntitlement;
   context: "upgrade" | "account";
+  selectedPlan?: ProBillingInterval | null;
+  checkoutLabel?: string;
 };
 
 type BillingActionKind = "checkout" | "portal";
@@ -41,7 +43,7 @@ function signInPathForPlan(interval: ProBillingInterval) {
   return signInPathForReturn(`/upgrade?plan=${interval}`);
 }
 
-export function BillingActionsClient({ entitlement, context }: BillingActionsClientProps) {
+export function BillingActionsClient({ entitlement, context, selectedPlan = null, checkoutLabel }: BillingActionsClientProps) {
   const { client, configured, loading, user } = useSupabaseAccount();
   const [pending, setPending] = useState<"checkout-monthly" | "checkout-yearly" | "portal" | null>(null);
   const [message, setMessage] = useState("");
@@ -158,12 +160,13 @@ export function BillingActionsClient({ entitlement, context }: BillingActionsCli
   }
 
   if (!signedIn) {
+    const signInOptions = selectedPlan ? PRO_PRICE_OPTIONS.filter((option) => option.interval === selectedPlan) : PRO_PRICE_OPTIONS;
     return (
       <div className="billing-actions" aria-label="Billing actions">
         <div className="checkout-option-buttons" aria-label="Choose Pro billing cadence before sign-in">
-          {PRO_PRICE_OPTIONS.map((option) => (
+          {signInOptions.map((option) => (
             <Link className={option.featured ? "button" : "button-secondary"} href={signInPathForPlan(option.interval)} key={option.interval}>
-              <span>{option.cta}</span>
+              <span>{checkoutLabel ?? option.cta}</span>
               {option.badge ? (
                 <span className="checkout-button-badge" aria-hidden="true">
                   {option.badge}
@@ -207,6 +210,34 @@ export function BillingActionsClient({ entitlement, context }: BillingActionsCli
           </p>
         ) : null}
         {!hasStripeCustomer ? <p className="account-env-note">This account has Pro, but billing management is not available yet.</p> : null}
+      </div>
+    );
+  }
+
+  if (selectedPlan) {
+    const selectedOption = PRO_PRICE_OPTIONS.find((option) => option.interval === selectedPlan) ?? PRO_PRICE_OPTIONS[0];
+    const pendingKey = `checkout-${selectedOption.interval}` as const;
+    return (
+      <div className="billing-actions billing-actions-focused" aria-label="Billing actions">
+        <button
+          className="button"
+          type="button"
+          onClick={() => void invokeBillingFunction("stripe-checkout", pendingKey, "checkout", selectedOption.interval)}
+          disabled={pending !== null}
+        >
+          <span>{pending === pendingKey ? "Opening secure checkout..." : checkoutLabel ?? selectedOption.cta}</span>
+          {selectedOption.badge ? (
+            <span className="checkout-button-badge" aria-hidden="true">
+              {selectedOption.badge}
+            </span>
+          ) : null}
+        </button>
+        {message ? (
+          <p className="account-error" role="alert">
+            {message}
+          </p>
+        ) : null}
+        <p className="account-env-note">Stripe handles checkout securely.</p>
       </div>
     );
   }

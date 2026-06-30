@@ -5972,6 +5972,55 @@ dd {
   color: var(--muted);
 }
 
+.upgrade-intent-panel {
+  display: grid;
+  gap: 1rem;
+  padding: clamp(1rem, 2.8vw, 1.5rem);
+  border-color: rgb(215 168 75 / 0.5);
+  background:
+    radial-gradient(circle at top right, rgb(215 168 75 / 0.18), transparent 34%),
+    linear-gradient(145deg, rgb(104 183 170 / 0.12), transparent 48%),
+    var(--surface);
+}
+
+.upgrade-intent-copy {
+  max-width: 54rem;
+}
+
+.upgrade-intent-copy h2 {
+  margin: 0 0 0.55rem;
+  font-family: var(--font-serif);
+  font-size: clamp(1.65rem, 3vw, 2.35rem);
+  line-height: 1.05;
+}
+
+.upgrade-intent-copy p {
+  margin: 0;
+  color: var(--muted);
+}
+
+.upgrade-intent-grid {
+  display: grid;
+  grid-template-columns: minmax(220px, 0.72fr) minmax(260px, 1fr);
+  gap: 1rem;
+  align-items: stretch;
+}
+
+.upgrade-intent-actions {
+  display: grid;
+  gap: 0.75rem;
+  align-content: center;
+}
+
+.upgrade-intent-actions .billing-actions {
+  justify-items: stretch;
+}
+
+.billing-actions-focused .button,
+.upgrade-intent-actions > .button-secondary {
+  width: 100%;
+}
+
 .plan-grid {
   display: grid;
   grid-template-columns: repeat(2, minmax(0, 1fr));
@@ -6017,6 +6066,17 @@ dd {
   background:
     linear-gradient(145deg, rgb(215 168 75 / 0.13), transparent 62%),
     rgb(4 42 47 / 0.5);
+}
+
+.pro-price-option[data-selected="true"] {
+  border-color: rgb(164 216 205 / 0.72);
+  box-shadow:
+    0 0 0 1px rgb(164 216 205 / 0.24),
+    0 18px 42px rgb(0 0 0 / 0.22);
+}
+
+.upgrade-selected-plan {
+  min-height: 100%;
 }
 
 .pro-price-label {
@@ -6961,6 +7021,10 @@ dd {
 @media (max-width: 720px) {
   .account-checklist {
     --account-checklist-label-width: minmax(0, 1fr);
+  }
+
+  .upgrade-intent-grid {
+    grid-template-columns: 1fr;
   }
 
   .pro-price-options,

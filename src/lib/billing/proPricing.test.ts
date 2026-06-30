@@ -1,5 +1,5 @@
 import { describe, expect, it } from "vitest";
-import { isProBillingInterval, PRO_PRICE_OPTIONS } from "@/lib/billing/proPricing";
+import { isProBillingInterval, proBillingIntervalFromSearch, proPriceOptionForInterval, PRO_PRICE_OPTIONS } from "@/lib/billing/proPricing";
 
 describe("Pro pricing options", () => {
   it("shows monthly and yearly Pro options", () => {
@@ -21,5 +21,13 @@ describe("Pro pricing options", () => {
     expect(isProBillingInterval("yearly")).toBe(true);
     expect(isProBillingInterval("weekly")).toBe(false);
     expect(isProBillingInterval(undefined)).toBe(false);
+  });
+
+  it("reads only supported plan values from upgrade query strings", () => {
+    expect(proBillingIntervalFromSearch("?plan=monthly")).toBe("monthly");
+    expect(proBillingIntervalFromSearch("?plan=yearly")).toBe("yearly");
+    expect(proBillingIntervalFromSearch("?plan=price_123")).toBeNull();
+    expect(proBillingIntervalFromSearch("?plan=weekly")).toBeNull();
+    expect(proPriceOptionForInterval("yearly")).toMatchObject({ label: "Yearly", badge: "Best value" });
   });
 });

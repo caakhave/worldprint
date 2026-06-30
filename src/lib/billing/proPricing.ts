@@ -35,3 +35,12 @@ export const PRO_PRICE_OPTIONS: ProPriceOption[] = [
 export function isProBillingInterval(value: unknown): value is ProBillingInterval {
   return value === "monthly" || value === "yearly";
 }
+
+export function proPriceOptionForInterval(interval: ProBillingInterval) {
+  return PRO_PRICE_OPTIONS.find((option) => option.interval === interval) ?? PRO_PRICE_OPTIONS[0];
+}
+
+export function proBillingIntervalFromSearch(search: string): ProBillingInterval | null {
+  const plan = new URLSearchParams(search).get("plan");
+  return isProBillingInterval(plan) ? plan : null;
+}

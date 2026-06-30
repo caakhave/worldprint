@@ -1,6 +1,7 @@
 "use client";
 
 import Link from "next/link";
+import { useEffect, useState } from "react";
 import { CheckCircle2, ShieldCheck, Sparkles } from "lucide-react";
 import { BillingActionsClient } from "@/features/account/BillingActionsClient";
 import { BillingReturnNotice } from "@/features/account/BillingReturnNotice";
@@ -8,15 +9,18 @@ import { useEntitlement } from "@/features/account/useEntitlement";
 import { ACCESS_PLAN_COPY } from "@/lib/account/accessCopy";
 import { signInPathForReturn } from "@/lib/account/signInRedirect";
 import { publicBillingEnabled } from "@/lib/billing/publicBillingConfig";
-import { PRO_PRICE_OPTIONS } from "@/lib/billing/proPricing";
+import { proBillingIntervalFromSearch, proPriceOptionForInterval, PRO_PRICE_OPTIONS, type ProBillingInterval } from "@/lib/billing/proPricing";
 import { CONTACT_LINKS } from "@/lib/contact";
 
 export function UpgradeClient() {
+  const [selectedPlan, setSelectedPlan] = useState<ProBillingInterval | null>(null);
   const { configured, entitlement, loading, signedIn } = useEntitlement();
   const isPro = entitlement.plan === "pro";
   const hasStripeCustomer = Boolean(entitlement.row?.stripe_customer_id);
   const billingEnabled = configured && publicBillingEnabled();
-  const signInForUpgrade = signInPathForReturn("/upgrade");
+  const selectedPlanOption = selectedPlan ? proPriceOptionForInterval(selectedPlan) : null;
+  const showProIntentPanel = Boolean(billingEnabled && signedIn && !isPro && selectedPlanOption);
+  const signInForUpgrade = signInPathForReturn(selectedPlan ? `/upgrade?plan=${selectedPlan}` : "/upgrade");
   const heroTitle = loading ? "Checking your atlas plan." : isPro ? "You have the full atlas." : "Choose Free or Pro.";
   const heroLead = isPro
     ? "Can You Geo? Pro membership is enabled on this account. Unlimited Atlas play, the full Practice Atlas, complete Past Games archive, and advanced stats are unlocked."
@@ -40,6 +44,10 @@ export function UpgradeClient() {
         ? "Pick monthly or yearly, then continue to secure checkout."
         : "New players can keep Free with no card needed or choose Pro after sign-in."
       : "Billing is disabled right now. Free accounts can play the 3-map Daily while Pro opens later.";
+
+  useEffect(() => {
+    setSelectedPlan(proBillingIntervalFromSearch(window.location.search));
+  }, []);
 
   return (
     <div className="upgrade-shell">
@@ -70,6 +78,43 @@ export function UpgradeClient() {
       </div>
       <BillingReturnNotice context="upgrade" />
 
+      {showProIntentPanel && selectedPlanOption ? (
+        <section className="surface upgrade-intent-panel" aria-labelledby="upgrade-intent-title" id="pro-checkout">
+          <div className="upgrade-intent-copy">
+            <p className="eyebrow">Next step</p>
+            <h2 id="upgrade-intent-title">Finish setting up Can You Geo? Pro</h2>
+            <p>
+              Your account is ready. Continue with the selected Pro plan, or stay on Free with no card needed.
+            </p>
+          </div>
+          <div className="upgrade-intent-grid">
+            <div className="pro-price-option upgrade-selected-plan" data-featured={selectedPlanOption.featured ? "true" : "false"} data-selected="true">
+              <span className="pro-price-label">
+                Selected plan: {selectedPlanOption.label}
+                {selectedPlanOption.badge ? <span className="pro-price-badge">{selectedPlanOption.badge}</span> : null}
+              </span>
+              <strong>
+                {selectedPlanOption.price}
+                <span>{selectedPlanOption.cadence}</span>
+              </strong>
+              <p>{selectedPlanOption.summary}</p>
+            </div>
+            <div className="upgrade-intent-actions">
+              <BillingActionsClient
+                entitlement={entitlement}
+                context="upgrade"
+                selectedPlan={selectedPlanOption.interval}
+                checkoutLabel="Continue to secure checkout"
+              />
+              <Link className="button-secondary" href="/account">
+                Continue free
+              </Link>
+              <p className="account-env-note">Free needs no card and includes the 3-map Free Daily, saved progress, and basic stats.</p>
+            </div>
+          </div>
+        </section>
+      ) : null}
+
       <section className="upgrade-hero surface" aria-label="Upgrade overview">
         <div>
           <p className="eyebrow">Full atlas access</p>
@@ -97,7 +142,12 @@ export function UpgradeClient() {
           </p>
           <div className="pro-price-options" aria-label="Pro pricing options">
             {PRO_PRICE_OPTIONS.map((option) => (
-              <div className="pro-price-option" data-featured={option.featured ? "true" : "false"} key={option.interval}>
+              <div
+                className="pro-price-option"
+                data-featured={option.featured ? "true" : "false"}
+                data-selected={selectedPlan === option.interval ? "true" : "false"}
+                key={option.interval}
+              >
                 <span className="pro-price-label">
                   {option.label}
                   {option.badge ? <span className="pro-price-badge">{option.badge}</span> : null}

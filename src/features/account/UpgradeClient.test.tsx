@@ -52,6 +52,7 @@ describe("UpgradeClient", () => {
     accountMock.state.configured = true;
     accountMock.state.loading = false;
     accountMock.state.user = null;
+    window.history.pushState({}, "", "/upgrade");
   });
 
   it("leads with sign-in copy for signed-out players", () => {
@@ -110,5 +111,69 @@ describe("UpgradeClient", () => {
     expect(screen.getByRole("button", { name: "Upgrade monthly" })).toBeEnabled();
     expect(screen.getByRole("button", { name: "Upgrade yearly" })).toBeEnabled();
     expect(screen.getAllByText("Best value").length).toBeGreaterThanOrEqual(1);
+  });
+
+  it("shows a focused monthly Pro intent landing state after sign-in", async () => {
+    process.env.NEXT_PUBLIC_BILLING_MODE = "test";
+    entitlementMock.state.signedIn = true;
+    accountMock.state.user = TEST_USER;
+    window.history.pushState({}, "", "/upgrade?plan=monthly");
+
+    render(<UpgradeClient />);
+
+    expect(await screen.findByRole("heading", { name: "Finish setting up Can You Geo? Pro" })).toBeVisible();
+    expect(screen.getByText("Selected plan: Monthly")).toBeVisible();
+    expect(screen.getAllByText("$3.99").length).toBeGreaterThanOrEqual(1);
+    expect(screen.getAllByText("/month").length).toBeGreaterThanOrEqual(1);
+    expect(screen.getByRole("button", { name: "Continue to secure checkout" })).toBeEnabled();
+    expect(screen.getAllByRole("link", { name: "Continue free" }).some((link) => link.getAttribute("href") === "/account")).toBe(true);
+    expect(screen.getByText("Free needs no card and includes the 3-map Free Daily, saved progress, and basic stats.")).toBeVisible();
+  });
+
+  it("shows a focused yearly Pro intent landing state after sign-in", async () => {
+    process.env.NEXT_PUBLIC_BILLING_MODE = "test";
+    entitlementMock.state.signedIn = true;
+    accountMock.state.user = TEST_USER;
+    window.history.pushState({}, "", "/upgrade?plan=yearly");
+
+    render(<UpgradeClient />);
+
+    expect(await screen.findByRole("heading", { name: "Finish setting up Can You Geo? Pro" })).toBeVisible();
+    expect(screen.getByText("Selected plan: Yearly")).toBeVisible();
+    expect(screen.getAllByText("$29.99").length).toBeGreaterThanOrEqual(1);
+    expect(screen.getAllByText("/year").length).toBeGreaterThanOrEqual(1);
+    expect(screen.getAllByText("Best value").length).toBeGreaterThanOrEqual(1);
+    expect(screen.getByRole("button", { name: "Continue to secure checkout" })).toBeEnabled();
+  });
+
+  it("keeps existing Pro users out of the purchase CTA even with a selected plan", async () => {
+    process.env.NEXT_PUBLIC_BILLING_MODE = "test";
+    const stripePro: PlayerEntitlement = {
+      ...PRO_ENTITLEMENT,
+      row: {
+        user_id: TEST_USER.id,
+        plan: "pro",
+        status: "active",
+        stripe_customer_id: "cus_test",
+        stripe_subscription_id: "sub_test",
+        stripe_price_id: "price_test",
+        stripe_status: "active",
+        cancel_at_period_end: false,
+        current_period_end: "2026-07-29T00:00:00.000Z",
+        updated_at: "2026-06-29T00:00:00.000Z"
+      }
+    };
+    entitlementMock.state.entitlement = stripePro;
+    entitlementMock.state.signedIn = true;
+    accountMock.state.user = TEST_USER;
+    window.history.pushState({}, "", "/upgrade?plan=yearly");
+
+    render(<UpgradeClient />);
+
+    expect(screen.getByRole("heading", { name: "You have the full atlas." })).toBeVisible();
+    expect(screen.queryByRole("heading", { name: "Finish setting up Can You Geo? Pro" })).not.toBeInTheDocument();
+    expect(screen.queryByRole("button", { name: "Continue to secure checkout" })).not.toBeInTheDocument();
+    expect(screen.queryByText("Pro active")).not.toBeInTheDocument();
+    expect(screen.getAllByText("Can You Geo? Pro").length).toBeGreaterThanOrEqual(1);
   });
 });

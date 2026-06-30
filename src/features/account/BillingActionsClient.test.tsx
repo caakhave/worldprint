@@ -167,6 +167,63 @@ describe("BillingActionsClient", () => {
     expect(client.from).not.toHaveBeenCalled();
   });
 
+  it("uses a focused monthly checkout action when returning from Pro-first sign-in", async () => {
+    process.env.NEXT_PUBLIC_BILLING_MODE = "test";
+    accountMock.state.user = TEST_USER;
+    const client = billingClientMock();
+
+    render(
+      <BillingActionsClient
+        entitlement={FREE_ENTITLEMENT}
+        context="upgrade"
+        selectedPlan="monthly"
+        checkoutLabel="Continue to secure checkout"
+      />
+    );
+
+    expect(screen.getByRole("button", { name: "Continue to secure checkout" })).toBeEnabled();
+    expect(screen.queryByRole("button", { name: "Upgrade yearly" })).not.toBeInTheDocument();
+    fireEvent.click(screen.getByRole("button", { name: "Continue to secure checkout" }));
+
+    await waitFor(() => expect(client.functions.invoke).toHaveBeenCalledTimes(1));
+    const [functionName, options] = client.functions.invoke.mock.calls[0];
+    expect(functionName).toBe("stripe-checkout");
+    expect(options).toMatchObject({
+      headers: { Authorization: "Bearer billing-token" },
+      body: { plan: "monthly" }
+    });
+    expect(JSON.stringify(options.body)).not.toContain("price_");
+    expect(client.from).not.toHaveBeenCalled();
+  });
+
+  it("uses a focused yearly checkout action when returning from Pro-first sign-in", async () => {
+    process.env.NEXT_PUBLIC_BILLING_MODE = "test";
+    accountMock.state.user = TEST_USER;
+    const client = billingClientMock();
+
+    render(
+      <BillingActionsClient
+        entitlement={FREE_ENTITLEMENT}
+        context="upgrade"
+        selectedPlan="yearly"
+        checkoutLabel="Continue to secure checkout"
+      />
+    );
+
+    expect(screen.getByRole("button", { name: "Continue to secure checkout" })).toBeEnabled();
+    fireEvent.click(screen.getByRole("button", { name: "Continue to secure checkout" }));
+
+    await waitFor(() => expect(client.functions.invoke).toHaveBeenCalledTimes(1));
+    const [functionName, options] = client.functions.invoke.mock.calls[0];
+    expect(functionName).toBe("stripe-checkout");
+    expect(options).toMatchObject({
+      headers: { Authorization: "Bearer billing-token" },
+      body: { plan: "yearly" }
+    });
+    expect(JSON.stringify(options.body)).not.toContain("price_");
+    expect(client.from).not.toHaveBeenCalled();
+  });
+
   it("offers monthly and yearly checkout from the account membership card in test mode", () => {
     process.env.NEXT_PUBLIC_BILLING_MODE = "test";
     accountMock.state.user = TEST_USER;

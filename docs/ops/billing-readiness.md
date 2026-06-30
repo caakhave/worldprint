@@ -202,6 +202,8 @@ Run this only against a test-mode Stripe setup.
 14. Send an invalid-signature webhook request and confirm it returns `400` and writes nothing.
 15. Return Cloudflare billing mode to `disabled` after the QA window unless more test-mode checkout is intentionally planned.
 
+For fresh account QA, use Gmail plus-addresses such as `name+canyougeo-billing-01@gmail.com` so each run creates a distinct Supabase Auth user. Delete Supabase Auth test users only from the Supabase **Authentication -> Users** dashboard unless you are intentionally running a reviewed cleanup script.
+
 ## Live-Mode Launch Checklist
 
 Do not enable live billing until these are complete:
