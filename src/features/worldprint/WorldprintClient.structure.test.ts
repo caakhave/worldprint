@@ -32,10 +32,43 @@ describe("WorldprintClient UI structure", () => {
 
   it("gives completed Daily players a clear next action and makes result viewing explicit", () => {
     expect(source).toContain("Today's maps complete");
-    expect(source).toContain('const completedPrimaryLabel = signedIn && practiceMatches.length > 0 ? "Practice" : "Play Sample Run";');
+    expect(source).toContain('const completedPrimaryLabel = signedIn && practiceMatches.length > 0 ? "Play" : "Play Sample Run";');
     expect(source).toContain(`const resultActionLabel = completedDailyRun ? "View today's result" : "View saved stats";`);
     expect(source).toContain("setRun(completedDailyRun);");
     expect(source).toContain("window.requestAnimationFrame(() => window.scrollTo(0, 0));");
+  });
+
+  it("keeps the unit clue visible in the immediate answer flow", () => {
+    const answerBoxIndex = source.indexOf('className="answer-box primary-answer-box"');
+    const unitClueIndex = source.indexOf('className="answer-clue-row"');
+    const choiceListIndex = source.indexOf('className="choice-list"');
+    const lowerClueDashboardIndex = source.indexOf('className="clue-dashboard"');
+
+    expect(unitClueIndex).toBeGreaterThan(answerBoxIndex);
+    expect(unitClueIndex).toBeLessThan(choiceListIndex);
+    expect(unitClueIndex).toBeLessThan(lowerClueDashboardIndex);
+    expect(source).toContain('data-clue="unit"');
+    expect(source).toContain("Reveal units");
+    expect(source).toContain("Reveal unit: -");
+    expect(source).toContain('dispatch({ type: "unitClue" })');
+    expect(styles).toContain(".answer-clue-row");
+    expect(styles).toContain(".answer-unit-button");
+  });
+
+  it("lets the indicator question use the full answer panel width", () => {
+    expect(source).toContain("<h2>Which indicator is this?</h2>");
+    expect(styles).toContain(".answer-box-heading");
+    expect(styles).toContain("grid-template-columns: minmax(0, 1fr)");
+    expect(styles).toContain(".answer-box-heading > div");
+    expect(styles).toContain("justify-self: end");
+  });
+
+  it("renames the confusing Banked HUD to a clear saved-score summary", () => {
+    expect(source).toContain("Saved score");
+    expect(source).toContain("No maps solved yet.");
+    expect(source).toContain("completed map");
+    expect(source).not.toContain("<span>Banked</span>");
+    expect(source).not.toContain("from {bankedMapLabel}");
   });
 
   it("keeps selected-country reveal action in the immediate/top gameplay layout", () => {
@@ -82,9 +115,16 @@ describe("WorldprintClient UI structure", () => {
     expect(source).toContain('className="point-breakdown"');
     expect(styles).toContain(".round-result-banner .correct-answer-line");
     expect(styles).toContain("padding-top: 0.72rem");
-    expect(styles).toContain("grid-template-columns: repeat(auto-fit, minmax(5.75rem, 1fr));");
+    expect(styles).toContain("grid-template-columns: minmax(0, 1fr)");
+    expect(styles).toContain("grid-template-columns: repeat(auto-fit, minmax(min(100%, 7rem), 1fr));");
     expect(styles).toContain("grid-template-columns: repeat(auto-fit, minmax(5.2rem, 1fr));");
     expect(styles).toContain("word-break: break-word");
+  });
+
+  it("makes generic post-challenge play leave the challenge context", () => {
+    expect(source).toContain('router.push("/play/mystery-map/#practice-atlas")');
+    expect(source).toContain("Play another set");
+    expect(source).toContain('run.mode === "challenge" ? "Replay this challenge" : "Replay for practice"');
   });
 
   it("keeps the challenge email modal padded and readable across widths", () => {

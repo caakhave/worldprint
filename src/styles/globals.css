@@ -3673,13 +3673,14 @@ button:disabled {
 }
 
 .score-hud-card strong {
+  min-width: 0;
   color: var(--parchment);
   font-family: var(--font-mono);
   font-size: clamp(0.94rem, 1.7vw, 1.12rem);
   font-weight: 800;
   line-height: 1.15;
-  overflow-wrap: normal;
-  word-break: normal;
+  overflow-wrap: anywhere;
+  word-break: break-word;
 }
 
 .score-hud-current strong {
@@ -3762,7 +3763,7 @@ button:disabled {
 
 .clue-dashboard {
   display: grid;
-  grid-template-columns: repeat(2, minmax(0, 1fr));
+  grid-template-columns: minmax(0, 1fr);
   gap: 0.65rem;
 }
 
@@ -3857,10 +3858,14 @@ button:disabled {
 }
 
 .answer-box-heading {
-  display: flex;
-  justify-content: space-between;
-  gap: 0.85rem;
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
+  gap: 0.5rem;
   align-items: start;
+}
+
+.answer-box-heading > div {
+  min-width: 0;
 }
 
 .answer-box-heading h2 {
@@ -3872,7 +3877,8 @@ button:disabled {
 }
 
 .answer-box-heading small {
-  max-width: 11rem;
+  justify-self: end;
+  max-width: 100%;
   color: var(--gold);
   font-family: var(--font-mono);
   font-size: 0.78rem;
@@ -3880,6 +3886,48 @@ button:disabled {
   line-height: 1.35;
   text-align: right;
   text-transform: uppercase;
+}
+
+.answer-clue-row {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(10rem, auto);
+  gap: 0.75rem;
+  align-items: center;
+  margin: 0.9rem 0 0.8rem;
+  border: 1px solid rgb(164 216 205 / 0.24);
+  border-radius: 7px;
+  padding: 0.72rem;
+  background:
+    linear-gradient(135deg, rgb(104 183 170 / 0.1), transparent 58%),
+    rgb(242 234 220 / 0.035);
+}
+
+.answer-clue-row > div > span {
+  color: var(--signal-2);
+  font-family: var(--font-mono);
+  font-size: 0.7rem;
+  font-weight: 900;
+  text-transform: uppercase;
+}
+
+.answer-clue-row p {
+  margin: 0.18rem 0 0;
+  color: var(--muted);
+  font-size: 0.88rem;
+  line-height: 1.35;
+}
+
+.answer-unit-button {
+  justify-self: stretch;
+  min-height: 3.3rem;
+  padding-inline: 0.8rem;
+}
+
+.answer-unit-button small {
+  color: inherit;
+  font-family: var(--font-mono);
+  font-size: 0.72rem;
+  font-weight: 900;
 }
 
 .investigation-box label,
@@ -4646,7 +4694,7 @@ textarea,
 
 .reveal-dashboard-grid {
   display: grid;
-  grid-template-columns: minmax(0, 0.85fr) minmax(0, 1.15fr);
+  grid-template-columns: minmax(0, 1fr);
   gap: 0.8rem;
   border-bottom: 1px solid var(--line);
   padding-bottom: 0.9rem;
@@ -4679,7 +4727,7 @@ textarea,
 
 .point-breakdown {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(5.75rem, 1fr));
+  grid-template-columns: repeat(auto-fit, minmax(min(100%, 7rem), 1fr));
   gap: 0.45rem;
   margin: 0;
   min-width: 0;
@@ -8828,16 +8876,16 @@ button.pro-price-option:focus-visible {
   }
 
   .point-breakdown {
-    grid-template-columns: repeat(2, minmax(0, 1fr));
+    grid-template-columns: repeat(auto-fit, minmax(min(100%, 7rem), 1fr));
   }
 
   .answer-box-heading,
   .map-evidence-header {
     align-items: flex-start;
-    flex-direction: column;
   }
 
   .answer-box-heading small {
+    justify-self: start;
     max-width: none;
     text-align: left;
   }

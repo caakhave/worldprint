@@ -2,7 +2,7 @@
 
 import { Compass, Copy, Lightbulb, Mail, Search, Share2, Shuffle } from "lucide-react";
 import Link from "next/link";
-import { useSearchParams } from "next/navigation";
+import { useRouter, useSearchParams } from "next/navigation";
 import { useCallback, useEffect, useMemo, useRef, useState, type FormEvent } from "react";
 import { EntryAtlasVisual } from "@/features/worldprint/EntryAtlasVisual";
 import { TierSelector } from "@/features/worldprint/TierSelector";
@@ -260,6 +260,7 @@ function reviewResultLabel(detail: CompletionRoundDetail) {
 }
 
 export function WorldprintClient({ dateOverride, entryMode = "standard" }: WorldprintClientProps) {
+  const router = useRouter();
   const searchParams = useSearchParams();
   const actualTodayKey = localDateKey(new Date());
   const todayKey = useGameDateKey(dateOverride);
@@ -944,9 +945,9 @@ export function WorldprintClient({ dateOverride, entryMode = "standard" }: World
         : primaryMode === "daily"
           ? dailyLabel
           : "Try the 5-map Sample Run";
-    const completedPrimaryLabel = signedIn && practiceMatches.length > 0 ? "Practice" : "Play Sample Run";
+    const completedPrimaryLabel = signedIn && practiceMatches.length > 0 ? "Play" : "Play Sample Run";
     const completedPrimaryDetail =
-      completedPrimaryLabel === "Practice"
+      completedPrimaryLabel === "Play"
         ? "Start a practice set. It will not change today's score or streak."
         : "Replay the fixed sample maps while tomorrow's Daily unlocks.";
     const resultActionLabel = completedDailyRun ? "View today's result" : "View saved stats";
@@ -1077,7 +1078,7 @@ export function WorldprintClient({ dateOverride, entryMode = "standard" }: World
                       className="button lobby-play-button"
                       type="button"
                       onClick={() => {
-                        if (completedPrimaryLabel === "Practice") void startPracticeRun();
+                        if (completedPrimaryLabel === "Play") void startPracticeRun();
                         else void startRun("sample");
                       }}
                     >
@@ -1296,7 +1297,13 @@ export function WorldprintClient({ dateOverride, entryMode = "standard" }: World
         run={run}
         store={store}
         onBack={() => returnToLobby()}
-        onPractice={() => returnToLobby("practice-atlas")}
+        onPractice={() => {
+          if (entryMode === "challenge") {
+            router.push("/play/mystery-map/#practice-atlas");
+            return;
+          }
+          returnToLobby("practice-atlas");
+        }}
         onReplay={() => void replayCompletedRun(run)}
         shareStatus={shareStatus}
         setShareStatus={setShareStatus}
@@ -1387,7 +1394,10 @@ export function WorldprintClient({ dateOverride, entryMode = "standard" }: World
   const topBottom = topAndBottom(indicator, data.countryNames);
   const unitClue = unitClueForIndicator(indicator);
   const runStats = runProgressStats(run);
-  const bankedMapLabel = `${runStats.mapsPlayed} map${runStats.mapsPlayed === 1 ? "" : "s"}`;
+  const savedScoreDetail =
+    runStats.mapsPlayed === 0
+      ? "No maps solved yet."
+      : `After ${runStats.mapsPlayed} completed map${runStats.mapsPlayed === 1 ? "" : "s"}.`;
   const possibleTotal = runStats.score + roundState.score;
   const latestRejectedAnswer = roundState.rejectedAnswers.at(-1) ?? null;
   const feedbackText = roundState.feedback ?? "";
@@ -1488,10 +1498,11 @@ export function WorldprintClient({ dateOverride, entryMode = "standard" }: World
             ) : null}
           </div>
           <div className="score-hud-card score-hud-banked">
-            <span>Banked</span>
+            <span>Saved score</span>
             <strong>
-              <span className="score-number">{runStats.score}</span> from {bankedMapLabel}
+              <span className="score-number">{runStats.score}</span> points
             </strong>
+            <small>{savedScoreDetail}</small>
           </div>
           <div className="score-hud-card score-hud-possible">
             <span>Possible total</span>
@@ -1544,6 +1555,25 @@ export function WorldprintClient({ dateOverride, entryMode = "standard" }: World
                 </div>
                 <small>Wrong answers cost {wrongAnswerPenalty} points.</small>
               </div>
+              {config.unitClue && unitClue.eligible ? (
+                <div className="answer-clue-row" data-clue="unit">
+                  <div>
+                    <span>Optional clue</span>
+                    <p>{roundState.unitClueUsed ? unitClue.text : "Reveal the measurement units when the scale is the missing piece."}</p>
+                  </div>
+                  <button
+                    className="button-secondary answer-unit-button"
+                    type="button"
+                    aria-label={roundState.unitClueUsed ? "Unit clue revealed" : `Reveal unit: -${config.scoring.unitCluePenalty}`}
+                    disabled={roundState.unitClueUsed}
+                    onClick={() => dispatch({ type: "unitClue" })}
+                  >
+                    <Lightbulb size={18} aria-hidden="true" />
+                    <span>{roundState.unitClueUsed ? "Unit revealed" : "Reveal units"}</span>
+                    {!roundState.unitClueUsed ? <small>-{config.scoring.unitCluePenalty} points</small> : null}
+                  </button>
+                </div>
+              ) : null}
               <div className="choice-list">
                 {currentChoices.map((choice) => {
                   const rejected = roundState.rejectedAnswers.some((answer) => answer.id === choice.indicatorId);
@@ -1594,16 +1624,6 @@ export function WorldprintClient({ dateOverride, entryMode = "standard" }: World
             </strong>
             <p>{config.maxInvestigations - paidInvestigationCount} of {config.maxInvestigations} country reveals left.</p>
           </div>
-          {config.unitClue && unitClue.eligible ? (
-            <div className="clue-action-card">
-              <span>Unit clue</span>
-              <button className="button-secondary full-width" type="button" disabled={roundState.unitClueUsed} onClick={() => dispatch({ type: "unitClue" })}>
-                <Lightbulb size={18} aria-hidden="true" />
-                {roundState.unitClueUsed ? "Unit clue revealed" : `Reveal unit: -${config.scoring.unitCluePenalty}`}
-              </button>
-              {roundState.unitClueUsed ? <p className="unit-clue">{unitClue.text}</p> : <p>Spend points to decode the unit, not the answer.</p>}
-            </div>
-          ) : null}
         </div>
         <div className="run-stats-card" aria-label="Run details">
           <span>Run details</span>
@@ -2663,11 +2683,11 @@ function CompletionSummary({
                   </Link>
                 ) : (
                   <button className="button" type="button" onClick={onPractice}>
-                    Practice another set
+                    Play another set
                   </button>
                 )}
                 <button className="button-secondary" type="button" onClick={onReplay}>
-                  Replay for practice
+                  {run.mode === "challenge" ? "Replay this challenge" : "Replay for practice"}
                 </button>
                 {!isSampleRun ? (
                   <Link className="button-secondary" href="/past-games">
