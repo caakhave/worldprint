@@ -103,7 +103,12 @@ export function SignUpClient() {
 
   async function handleSignOut() {
     const result = await signOut();
-    setSignOutError(result.error ? "We could not sign you out. Try again in a moment." : "");
+    if (result.error) {
+      setSignOutError("We could not sign you out. Try again in a moment.");
+      return;
+    }
+    setSignOutError("");
+    router.push("/sign-in?signedOut=1");
   }
 
   const returnPath = safeSignInReturnPath(nextValue);

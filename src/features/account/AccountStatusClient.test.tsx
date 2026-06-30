@@ -6,6 +6,10 @@ import { AccountPlanNotesClient } from "@/features/account/AccountPlanNotesClien
 import { AccountStatusClient } from "@/features/account/AccountStatusClient";
 import { CONTACT_LINKS } from "@/lib/contact";
 
+const routerMock = vi.hoisted(() => ({
+  push: vi.fn()
+}));
+
 const accountMock = vi.hoisted(() => ({
   state: {
     client: null,
@@ -49,6 +53,10 @@ const entitlementMock = vi.hoisted(() => ({
   }
 }));
 
+vi.mock("next/navigation", () => ({
+  useRouter: () => routerMock
+}));
+
 vi.mock("@/features/account/useSupabaseAccount", () => ({
   useSupabaseAccount: () => accountMock.state
 }));
@@ -64,6 +72,7 @@ describe("AccountStatusClient", () => {
       id: "11111111-2222-4333-8444-555555555555",
       email: "player@example.com"
     };
+    routerMock.push.mockClear();
     entitlementMock.state.signedIn = true;
     entitlementMock.state.entitlement.plan = "free";
   });
@@ -88,6 +97,16 @@ describe("AccountStatusClient", () => {
     expect(screen.getByRole("button", { name: "Copy support ID" })).toBeVisible();
   });
 
+  it("redirects to signed-out confirmation after account-page sign-out", async () => {
+    const user = userEvent.setup();
+    render(<AccountStatusClient />);
+
+    await user.click(screen.getByRole("button", { name: "Sign out" }));
+
+    expect(accountMock.state.signOut).toHaveBeenCalledTimes(1);
+    expect(routerMock.push).toHaveBeenCalledWith("/sign-in?signedOut=1");
+  });
+
   it("marks long email addresses for wrapping in the profile card", () => {
     const longEmail = "very.long.player.name.with.saved.daily.progress@example-long-domain.canyougeo.test";
     accountMock.state.user = {
@@ -110,6 +129,9 @@ describe("AccountStatusClient", () => {
     expect(screen.getByText("Pro unlocks the full atlas. Free needs no card and still saves your 3-map Daily progress and basic stats.")).toBeVisible();
     expect(screen.getByRole("link", { name: "Start Pro" })).toHaveAttribute("href", "/upgrade");
     expect(screen.getByRole("link", { name: "Continue free" })).toHaveAttribute("href", "/sign-in");
+    expect(screen.queryByText("Player profile")).not.toBeInTheDocument();
+    expect(screen.queryByText("Account sync ready")).not.toBeInTheDocument();
+    expect(screen.queryByRole("link", { name: "View saved stats" })).not.toBeInTheDocument();
   });
 });
 

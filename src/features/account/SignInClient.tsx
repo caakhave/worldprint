@@ -39,6 +39,11 @@ function nextSearchValue(): string | null {
   return new URLSearchParams(window.location.search).get("next");
 }
 
+function signedOutSearchValue(): boolean {
+  if (typeof window === "undefined") return false;
+  return new URLSearchParams(window.location.search).get("signedOut") === "1";
+}
+
 function signedInStatusForReturn(nextPath: string): string {
   return nextPath.startsWith("/upgrade") ? "Signed in. Taking you back to Pro plans..." : "Signed in. Taking you to your account...";
 }
@@ -56,6 +61,9 @@ export function SignInClient() {
 
   useEffect(() => {
     setNextValue(nextSearchValue());
+    if (signedOutSearchValue()) {
+      setStatus("You're signed out.");
+    }
   }, []);
 
   async function submit(event: React.FormEvent<HTMLFormElement>) {
@@ -98,7 +106,12 @@ export function SignInClient() {
 
   async function handleSignOut() {
     const result = await signOut();
-    setSignOutError(result.error ? "We could not sign you out. Try again in a moment." : "");
+    if (result.error) {
+      setSignOutError("We could not sign you out. Try again in a moment.");
+      return;
+    }
+    setSignOutError("");
+    router.push("/sign-in?signedOut=1");
   }
 
   const returnPath = safeSignInReturnPath(nextValue);

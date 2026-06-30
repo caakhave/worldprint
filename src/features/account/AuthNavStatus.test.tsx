@@ -3,6 +3,10 @@ import userEvent from "@testing-library/user-event";
 import { beforeEach, describe, expect, it, vi } from "vitest";
 import { AuthNavStatus } from "@/features/account/AuthNavStatus";
 
+const routerMock = vi.hoisted(() => ({
+  push: vi.fn()
+}));
+
 const accountMock = vi.hoisted(() => ({
   state: {
     configured: true,
@@ -38,6 +42,10 @@ const entitlementMock = vi.hoisted(() => ({
   }
 }));
 
+vi.mock("next/navigation", () => ({
+  useRouter: () => routerMock
+}));
+
 vi.mock("@/features/account/useSupabaseAccount", () => ({
   useSupabaseAccount: () => accountMock.state
 }));
@@ -52,6 +60,7 @@ describe("AuthNavStatus", () => {
     accountMock.state.loading = false;
     accountMock.state.user = null;
     accountMock.state.signOut.mockClear();
+    routerMock.push.mockClear();
     entitlementMock.state.entitlement.plan = "guest";
     entitlementMock.state.signedIn = false;
   });
@@ -63,13 +72,13 @@ describe("AuthNavStatus", () => {
     expect(screen.getByRole("link", { name: "Sign in" })).toHaveAttribute("href", "/sign-in");
   });
 
-  it("shows a compact Free account menu for signed-in players", async () => {
+  it("shows a compact Free account menu for signed-in players and redirects after sign-out", async () => {
     const user = userEvent.setup();
     accountMock.state.user = { id: "user_123", email: "player@example.com" };
     entitlementMock.state.entitlement.plan = "free";
     entitlementMock.state.signedIn = true;
 
-    render(<AuthNavStatus />);
+    const { rerender } = render(<AuthNavStatus />);
 
     const menuControl = screen.getByLabelText(/Account menu for player@example.com/i);
     expect(menuControl).toHaveAttribute("title", "Open account menu");
@@ -84,6 +93,12 @@ describe("AuthNavStatus", () => {
     expect(screen.getByRole("menuitem", { name: "Manage plan" })).toHaveAttribute("href", "/upgrade");
     await user.click(screen.getByRole("menuitem", { name: "Sign out" }));
     expect(accountMock.state.signOut).toHaveBeenCalledTimes(1);
+    expect(routerMock.push).toHaveBeenCalledWith("/sign-in?signedOut=1");
+    accountMock.state.user = null;
+    entitlementMock.state.signedIn = false;
+    rerender(<AuthNavStatus />);
+    expect(screen.getByRole("link", { name: "Start Pro" })).toHaveAttribute("href", "/upgrade");
+    expect(screen.getByRole("link", { name: "Sign in" })).toHaveAttribute("href", "/sign-in");
     expect(screen.queryByText("user_123")).not.toBeInTheDocument();
   });
 

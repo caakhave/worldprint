@@ -81,6 +81,15 @@ describe("SignInClient", () => {
     expect(screen.queryByText("We'll email a secure link.")).not.toBeInTheDocument();
   });
 
+  it("shows a signed-out confirmation after redirect", async () => {
+    window.history.pushState({}, "", "/sign-in?signedOut=1");
+
+    render(<SignInClient />);
+
+    expect(await screen.findByText("You're signed out.")).toBeVisible();
+    expect(screen.getByRole("link", { name: "Create account" })).toHaveAttribute("href", "/sign-up");
+  });
+
   it("signs in with password and returns to account by default", async () => {
     const user = userEvent.setup();
     render(<SignInClient />);
@@ -181,6 +190,7 @@ describe("SignInClient", () => {
 
     await user.click(screen.getByRole("button", { name: "Sign out" }));
     await waitFor(() => expect(accountMock.state.signOut).toHaveBeenCalledTimes(1));
+    expect(routerMock.push).toHaveBeenCalledWith("/sign-in?signedOut=1");
   });
 });
 

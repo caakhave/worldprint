@@ -1,6 +1,7 @@
 "use client";
 
 import Link from "next/link";
+import { useRouter } from "next/navigation";
 import { useState } from "react";
 import { accountInitial, compactPlanLabel } from "@/features/account/accountDisplay";
 import { membershipDisplay } from "@/features/account/subscriptionDisplay";
@@ -10,6 +11,7 @@ import { planLabel } from "@/lib/account/entitlements";
 import { CONTACT_LINKS } from "@/lib/contact";
 
 export function AccountStatusClient() {
+  const router = useRouter();
   const { configured, loading, user, profileError, signOut } = useSupabaseAccount();
   const { entitlement, loading: entitlementLoading } = useEntitlement();
   const [signOutError, setSignOutError] = useState<string | null>(null);
@@ -18,7 +20,12 @@ export function AccountStatusClient() {
 
   async function handleSignOut() {
     const result = await signOut();
-    setSignOutError(result.error ? "We could not sign you out. Try again in a moment." : null);
+    if (result.error) {
+      setSignOutError("We could not sign you out. Try again in a moment.");
+      return;
+    }
+    setSignOutError(null);
+    router.push("/sign-in?signedOut=1");
   }
 
   async function copySupportId() {

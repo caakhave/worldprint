@@ -1,11 +1,13 @@
 "use client";
 
 import Link from "next/link";
+import { useRouter } from "next/navigation";
 import { accountInitial, compactPlanLabel } from "@/features/account/accountDisplay";
 import { useEntitlement } from "@/features/account/useEntitlement";
 import { useSupabaseAccount } from "@/features/account/useSupabaseAccount";
 
 export function AuthNavStatus() {
+  const router = useRouter();
   const { configured, loading, user, signOut } = useSupabaseAccount();
   const { entitlement, loading: entitlementLoading } = useEntitlement();
   if (!configured) {
@@ -33,6 +35,15 @@ export function AuthNavStatus() {
         </Link>
       </div>
     );
+  }
+
+  async function handleSignOut() {
+    const result = await signOut();
+    if (!result.error) {
+      router.push("/sign-in?signedOut=1");
+    } else if (process.env.NODE_ENV !== "production") {
+      console.warn("[auth] Could not sign out from header menu.", result.error);
+    }
   }
 
   const plan = entitlementLoading ? "Account" : compactPlanLabel(entitlement.plan);
@@ -67,7 +78,7 @@ export function AuthNavStatus() {
         <Link className="account-nav-menu-item" role="menuitem" href={isPro ? "/account#membership" : "/upgrade"}>
           {isPro ? "Manage billing" : "Manage plan"}
         </Link>
-        <button className="account-nav-menu-item" role="menuitem" type="button" onClick={() => void signOut()}>
+        <button className="account-nav-menu-item" role="menuitem" type="button" onClick={() => void handleSignOut()}>
           Sign out
         </button>
       </div>
