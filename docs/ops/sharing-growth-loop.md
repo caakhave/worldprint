@@ -90,6 +90,14 @@ ALLOW_BILLING_PREVIEW_URLS=true
 
 `CHALLENGE_EMAIL_FROM` must be a verified Resend sender. If `challenge@mail.canyougeo.com` is not verified yet, use a verified sender on `mail.canyougeo.com`, such as `notify@mail.canyougeo.com`.
 
+The function can temporarily fall back to `OWNER_NOTIFICATION_FROM_EMAIL` when `CHALLENGE_EMAIL_FROM` is missing, which is useful for staging if owner notifications already have a verified sender. For public launch, set `CHALLENGE_EMAIL_FROM` explicitly so friend invites use a polished challenge-specific sender name.
+
+Troubleshooting:
+
+- If the UI says challenge email is not available yet and no row appears in `public.challenge_email_sends`, verify `CHALLENGE_EMAIL_FROM` or `OWNER_NOTIFICATION_FROM_EMAIL` exists as a Supabase Edge Function secret.
+- If a row appears with `delivery_status = 'failed'`, inspect Resend delivery status and verify the sender domain.
+- The function logs non-secret milestones such as auth present/missing, challenge code valid/invalid, rate-limit pass/fail, ledger insert/update, and Resend status. It does not log raw recipient emails or challenge codes.
+
 Database migration:
 
 ```text

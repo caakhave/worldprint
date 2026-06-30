@@ -17,33 +17,62 @@ type Env = {
   supabaseServiceRoleKey: string;
   resendApiKey: string;
   challengeEmailFrom: string;
+  challengeEmailFromSource: "CHALLENGE_EMAIL_FROM" | "OWNER_NOTIFICATION_FROM_EMAIL";
   siteUrl: string;
   dailyLimit: number;
 };
 
 type SupabaseServiceClient = ReturnType<typeof serviceClient>;
+type ChallengeEmailErrorCode =
+  | "method_not_allowed"
+  | "request_too_large"
+  | "email_not_configured"
+  | "invalid_request"
+  | "invalid_recipient"
+  | "invalid_note"
+  | "invalid_challenge"
+  | "auth_required"
+  | "rate_limit"
+  | "ledger_unavailable"
+  | "email_service_unavailable";
 
 Deno.serve((request) => handleSendChallengeEmailRequest(request));
 
 export async function handleSendChallengeEmailRequest(request: Request, fetchImpl: typeof fetch = fetch): Promise<Response> {
   if (request.method === "OPTIONS") return optionsResponse(request);
-  if (request.method !== "POST") return json({ error: "Method not allowed" }, 405, request);
+  if (request.method !== "POST") return jsonError("method_not_allowed", "Method not allowed", 405, request);
   if (requestContentLengthTooLarge(request.headers.get("content-length"), CHALLENGE_INVITE_MAX_BODY_BYTES)) {
-    return json({ error: "Challenge invite request is too large." }, 413, request);
+    logChallengeEmail("request_rejected", { reason: "body_too_large" });
+    return jsonError("request_too_large", "Challenge invite request is too large.", 413, request);
   }
 
   const { env, error: envError } = readEnv();
-  if (!env) return json({ error: envError ?? "Challenge email is not configured." }, 503, request);
+  if (!env) {
+    logChallengeEmail("configuration_missing", { reason: envError ?? "unknown" });
+    return jsonError("email_not_configured", envError ?? "Challenge email is not configured.", 503, request);
+  }
+  if (env.challengeEmailFromSource === "OWNER_NOTIFICATION_FROM_EMAIL") {
+    logChallengeEmail("configuration_fallback", { senderSource: env.challengeEmailFromSource });
+  }
 
   const bodyText = await request.text();
   const { invite, error: inviteError } = parseChallengeInviteRequest({
     contentType: request.headers.get("content-type"),
     bodyText
   });
-  if (!invite) return json({ error: inviteError ?? "Invalid challenge invite request." }, 400, request, env);
+  if (!invite) {
+    const code = challengeInviteErrorCode(inviteError);
+    logChallengeEmail("request_rejected", { reason: code });
+    return jsonError(code, inviteError ?? "Invalid challenge invite request.", 400, request, env);
+  }
+  logChallengeEmail("request_validated", { challengeCodeValid: true, recipientValid: true });
 
   const { user, error: userError } = await getSignedInUser(request, env);
-  if (!user) return json({ error: userError ?? "Sign in to send a challenge." }, 401, request, env);
+  if (!user) {
+    logChallengeEmail("auth_missing");
+    return jsonError("auth_required", userError ?? "Sign in to send a challenge.", 401, request, env);
+  }
+  logChallengeEmail("auth_verified");
 
   const supabase = serviceClient(env);
   const since = new Date(Date.now() - 24 * 60 * 60 * 1000).toISOString();
@@ -53,13 +82,15 @@ export async function handleSendChallengeEmailRequest(request: Request, fetchImp
     .eq("user_id", user.id)
     .gte("sent_at", since);
   if (countError) {
-    console.error("[challenge-email] rate limit check failed", countError.message);
-    return json({ error: "Challenge email is not available yet." }, 503, request, env);
+    logChallengeEmail("rate_limit_check_failed", { error: countError.message });
+    return jsonError("ledger_unavailable", "Challenge email is not available yet.", 503, request, env);
   }
   const sentInWindow = count ?? 0;
   if (challengeInviteRateLimitExceeded(sentInWindow, env.dailyLimit)) {
-    return json({ error: "Daily challenge email limit reached. Use copy or mailto for now." }, 429, request, env);
+    logChallengeEmail("rate_limit_reached", { sentInWindow, dailyLimit: env.dailyLimit });
+    return jsonError("rate_limit", "Daily challenge email limit reached. Use copy or mailto for now.", 429, request, env);
   }
+  logChallengeEmail("rate_limit_passed", { sentInWindow, dailyLimit: env.dailyLimit });
 
   const [recipientEmailHash, challengeCodeHash] = await Promise.all([
     sha256Hex(invite.recipientEmail),
@@ -78,9 +109,10 @@ export async function handleSendChallengeEmailRequest(request: Request, fetchImp
     .select("id")
     .single();
   if (insertError || !ledgerRow?.id) {
-    console.error("[challenge-email] ledger insert failed", insertError?.message);
-    return json({ error: "Challenge email is not available yet." }, 503, request, env);
+    logChallengeEmail("ledger_insert_failed", { error: insertError?.message ?? "missing row id" });
+    return jsonError("ledger_unavailable", "Challenge email is not available yet.", 503, request, env);
   }
+  logChallengeEmail("ledger_inserted");
 
   const email = buildChallengeInviteEmail({
     config: {
@@ -98,12 +130,14 @@ export async function handleSendChallengeEmailRequest(request: Request, fetchImp
   const status = resendResponse.ok ? "sent" : "failed";
   const updateError = await markLedgerStatus(supabase, ledgerRow.id, status, resendMessageId, resendResponse.ok ? null : "resend_failed");
   if (updateError) {
-    console.error("[challenge-email] ledger update failed", updateError.message);
+    logChallengeEmail("ledger_update_failed", { error: updateError.message });
   }
 
   if (!resendResponse.ok) {
-    return json({ error: "We could not send that challenge email. Try copy link or mailto for now." }, 502, request, env);
+    logChallengeEmail("resend_failed", { status: resendResponse.status });
+    return jsonError("email_service_unavailable", "We could not send that challenge email. Try copy link or mailto for now.", 502, request, env);
   }
+  logChallengeEmail("resend_sent", { status: resendResponse.status });
 
   return json(
     {
@@ -120,12 +154,15 @@ function readEnv(): { env: Env | null; error: string | null } {
   const rawSiteUrl = Deno.env.get("NEXT_PUBLIC_SITE_URL") ?? Deno.env.get("SITE_URL") ?? "";
   const parsedLimit = Number.parseInt(Deno.env.get("CHALLENGE_EMAIL_DAILY_LIMIT") ?? "", 10);
   const dailyLimit = Number.isFinite(parsedLimit) ? Math.max(1, Math.min(10, parsedLimit)) : CHALLENGE_INVITE_DAILY_LIMIT;
+  const explicitChallengeEmailFrom = Deno.env.get("CHALLENGE_EMAIL_FROM")?.trim() ?? "";
+  const fallbackChallengeEmailFrom = Deno.env.get("OWNER_NOTIFICATION_FROM_EMAIL")?.trim() ?? "";
   const env: Env = {
     supabaseUrl: Deno.env.get("SUPABASE_URL") ?? "",
     supabaseAnonKey: Deno.env.get("SUPABASE_ANON_KEY") ?? "",
     supabaseServiceRoleKey: Deno.env.get("SUPABASE_SERVICE_ROLE_KEY") ?? "",
     resendApiKey: Deno.env.get("RESEND_API_KEY") ?? "",
-    challengeEmailFrom: Deno.env.get("CHALLENGE_EMAIL_FROM") ?? "",
+    challengeEmailFrom: explicitChallengeEmailFrom || fallbackChallengeEmailFrom,
+    challengeEmailFromSource: explicitChallengeEmailFrom ? "CHALLENGE_EMAIL_FROM" : "OWNER_NOTIFICATION_FROM_EMAIL",
     siteUrl: rawSiteUrl,
     dailyLimit
   };
@@ -134,7 +171,7 @@ function readEnv(): { env: Env | null; error: string | null } {
     ["SUPABASE_ANON_KEY", env.supabaseAnonKey],
     ["SUPABASE_SERVICE_ROLE_KEY", env.supabaseServiceRoleKey],
     ["RESEND_API_KEY", env.resendApiKey],
-    ["CHALLENGE_EMAIL_FROM", env.challengeEmailFrom],
+    ["CHALLENGE_EMAIL_FROM or OWNER_NOTIFICATION_FROM_EMAIL", env.challengeEmailFrom],
     ["NEXT_PUBLIC_SITE_URL or SITE_URL", env.siteUrl]
   ]
     .filter(([, value]) => !value)
@@ -146,6 +183,15 @@ function readEnv(): { env: Env | null; error: string | null } {
     return { env: null, error: "Challenge email site URL is not configured." };
   }
   return { env, error: null };
+}
+
+function challengeInviteErrorCode(error: string | null): ChallengeEmailErrorCode {
+  const normalized = error?.toLowerCase() ?? "";
+  if (normalized.includes("friend email") || normalized.includes("valid friend email")) return "invalid_recipient";
+  if (normalized.includes("note")) return "invalid_note";
+  if (normalized.includes("challenge code")) return "invalid_challenge";
+  if (normalized.includes("too large")) return "request_too_large";
+  return "invalid_request";
 }
 
 function serviceClient(env: Env) {
@@ -208,6 +254,20 @@ function json(body: unknown, status = 200, request: Request | null = null, env: 
       "content-type": "application/json"
     }
   });
+}
+
+function jsonError(
+  code: ChallengeEmailErrorCode,
+  error: string,
+  status: number,
+  request: Request | null = null,
+  env: Env | null = null
+): Response {
+  return json({ error, code }, status, request, env);
+}
+
+function logChallengeEmail(event: string, details: Record<string, string | number | boolean | null> = {}) {
+  console.info("[challenge-email]", JSON.stringify({ event, ...details }));
 }
 
 function corsHeadersFor(request: Request | null, env: Env | null = null): Record<string, string> {

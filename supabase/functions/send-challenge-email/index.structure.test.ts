@@ -10,7 +10,7 @@ describe("send-challenge-email Edge Function structure", () => {
     expect(config).toContain("[functions.send-challenge-email]");
     expect(config).toContain("verify_jwt = true");
     expect(source).toContain("getSignedInUser(request, env)");
-    expect(source).toContain("return json({ error: userError");
+    expect(source).toContain("jsonError(\"auth_required\", userError");
     expect(source).toContain("401");
   });
 
@@ -35,5 +35,22 @@ describe("send-challenge-email Edge Function structure", () => {
     expect(insertSnippet).not.toContain("recipient_email:");
     expect(insertSnippet).not.toContain("recipientEmail:");
     expect(source).not.toContain("marketing_opt_in");
+  });
+
+  it("returns safe error codes and diagnostics without logging raw recipient emails", () => {
+    expect(source).toContain("jsonError(\"email_not_configured\"");
+    expect(source).toContain("jsonError(\"auth_required\"");
+    expect(source).toContain("jsonError(\"rate_limit\"");
+    expect(source).toContain("jsonError(\"email_service_unavailable\"");
+    expect(source).toContain("logChallengeEmail(\"request_validated\"");
+    expect(source).toContain("logChallengeEmail(\"ledger_inserted\"");
+    expect(source).toContain("logChallengeEmail(\"resend_failed\"");
+    expect(source).not.toMatch(/console\.(?:info|warn|error)\([^)]*recipientEmail/);
+  });
+
+  it("prefers a challenge sender but can fall back to the verified owner notification sender", () => {
+    expect(source).toContain("Deno.env.get(\"CHALLENGE_EMAIL_FROM\")");
+    expect(source).toContain("Deno.env.get(\"OWNER_NOTIFICATION_FROM_EMAIL\")");
+    expect(source).toContain("\"CHALLENGE_EMAIL_FROM or OWNER_NOTIFICATION_FROM_EMAIL\"");
   });
 });

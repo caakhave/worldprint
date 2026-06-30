@@ -6,9 +6,32 @@ type ChallengeEmailResponse = {
   ok?: boolean;
   remaining?: number;
   error?: string;
+  code?: ChallengeEmailErrorCode;
 };
 
-export function challengeEmailErrorCopy(message?: string | null) {
+type ChallengeEmailErrorCode =
+  | "auth_required"
+  | "email_not_configured"
+  | "email_service_unavailable"
+  | "invalid_challenge"
+  | "invalid_note"
+  | "invalid_recipient"
+  | "ledger_unavailable"
+  | "rate_limit"
+  | "request_too_large";
+
+export function challengeEmailErrorCopy(message?: string | null, code?: string | null) {
+  if (code === "auth_required") return "Sign in to send a challenge email.";
+  if (code === "rate_limit") return "Daily email limit reached. Use share, copy, or mailto for now.";
+  if (code === "invalid_recipient") return "Enter one valid friend email.";
+  if (code === "invalid_note") return message ?? "Keep the note short and spoiler-free.";
+  if (code === "invalid_challenge") return "That challenge link is not valid anymore. Use copy link or mailto for now.";
+  if (code === "request_too_large") return "That invite is too large. Shorten the note and try again.";
+  if (code === "email_service_unavailable") return "Challenge email is temporarily unavailable. Use copy link or mailto for now.";
+  if (code === "email_not_configured" || code === "ledger_unavailable") {
+    return "Challenge email is not available yet. Use copy link or mailto for now.";
+  }
+
   const normalized = message?.toLowerCase() ?? "";
   if (normalized.includes("sign in")) return "Sign in to send a challenge email.";
   if (normalized.includes("daily challenge email limit")) return "Daily email limit reached. Use share, copy, or mailto for now.";
@@ -61,8 +84,9 @@ export async function requestChallengeEmailInvite({
     }
   });
   if (error || data?.error || !data?.ok) {
-    warnChallengeEmailDetail("Challenge invite failed.", data?.error ?? error);
-    return { ok: false, message: challengeEmailErrorCopy(data?.error ?? error?.message), remaining: null };
+    const detail = await challengeEmailFailureDetail(data, error);
+    warnChallengeEmailDetail("Challenge invite failed.", detail);
+    return { ok: false, message: challengeEmailErrorCopy(detail.message, detail.code), remaining: null };
   }
 
   return {
@@ -70,4 +94,28 @@ export async function requestChallengeEmailInvite({
     message: data.remaining === 0 ? "Challenge sent. Daily email limit reached." : "Challenge email sent.",
     remaining: typeof data.remaining === "number" ? data.remaining : null
   };
+}
+
+async function challengeEmailFailureDetail(
+  data: ChallengeEmailResponse | null,
+  error: unknown
+): Promise<{ message: string | null; code: string | null; status: number | null }> {
+  if (data?.error || data?.code) return { message: data.error ?? null, code: data.code ?? null, status: null };
+
+  const context = error && typeof error === "object" && "context" in error ? (error as { context?: unknown }).context : null;
+  if (context instanceof Response) {
+    try {
+      const parsed = (await context.clone().json()) as ChallengeEmailResponse;
+      return {
+        message: typeof parsed.error === "string" ? parsed.error : null,
+        code: typeof parsed.code === "string" ? parsed.code : null,
+        status: context.status
+      };
+    } catch {
+      return { message: null, code: null, status: context.status };
+    }
+  }
+
+  const message = error && typeof error === "object" && "message" in error ? String((error as { message?: unknown }).message ?? "") : null;
+  return { message, code: null, status: null };
 }
