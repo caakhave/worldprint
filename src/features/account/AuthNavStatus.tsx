@@ -2,14 +2,20 @@
 
 import Link from "next/link";
 import { useRouter } from "next/navigation";
+import { useState } from "react";
 import { accountInitial, compactPlanLabel } from "@/features/account/accountDisplay";
+import { requestBillingActionUrl } from "@/features/account/billingActionHelpers";
 import { useEntitlement } from "@/features/account/useEntitlement";
 import { useSupabaseAccount } from "@/features/account/useSupabaseAccount";
+import { publicBillingEnabled } from "@/lib/billing/publicBillingConfig";
 
 export function AuthNavStatus() {
   const router = useRouter();
-  const { configured, loading, user, signOut } = useSupabaseAccount();
+  const { client, configured, loading, user, signOut } = useSupabaseAccount();
   const { entitlement, loading: entitlementLoading } = useEntitlement();
+  const [billingPending, setBillingPending] = useState(false);
+  const [billingMessage, setBillingMessage] = useState("");
+
   if (!configured) {
     return (
       <Link className="account-nav-control account-nav-control-signed-out" href="/account">
@@ -46,8 +52,26 @@ export function AuthNavStatus() {
     }
   }
 
+  async function handleManageBilling() {
+    setBillingPending(true);
+    setBillingMessage("");
+    const result = await requestBillingActionUrl({
+      client,
+      signedIn: Boolean(user),
+      functionName: "stripe-portal",
+      kind: "portal"
+    });
+    setBillingPending(false);
+    if (result.message || !result.url) {
+      setBillingMessage(result.message ?? "Billing management is not available yet.");
+      return;
+    }
+    window.location.assign(result.url);
+  }
+
   const plan = entitlementLoading ? "Account" : compactPlanLabel(entitlement.plan);
   const isPro = !entitlementLoading && entitlement.plan === "pro";
+  const canManageBilling = isPro && Boolean(entitlement.row?.stripe_customer_id) && publicBillingEnabled();
   return (
     <details className="account-nav-menu">
       <summary
@@ -75,9 +99,26 @@ export function AuthNavStatus() {
         <Link className="account-nav-menu-item" role="menuitem" href="/account/stats">
           Saved stats
         </Link>
-        <Link className="account-nav-menu-item" role="menuitem" href={isPro ? "/account#membership" : "/upgrade"}>
-          {isPro ? "Manage billing" : "Manage plan"}
-        </Link>
+        {canManageBilling ? (
+          <button
+            className="account-nav-menu-item"
+            role="menuitem"
+            type="button"
+            onClick={() => void handleManageBilling()}
+            disabled={billingPending}
+          >
+            {billingPending ? "Opening billing..." : "Manage billing"}
+          </button>
+        ) : (
+          <Link className="account-nav-menu-item" role="menuitem" href={isPro ? "/account#membership" : "/upgrade"}>
+            {isPro ? "View membership" : "Compare plans"}
+          </Link>
+        )}
+        {billingMessage ? (
+          <p className="account-nav-menu-error" role="alert">
+            {billingMessage}
+          </p>
+        ) : null}
         <button className="account-nav-menu-item" role="menuitem" type="button" onClick={() => void handleSignOut()}>
           Sign out
         </button>

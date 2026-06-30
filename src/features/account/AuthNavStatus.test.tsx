@@ -1,7 +1,12 @@
-import { render, screen } from "@testing-library/react";
+import { render, screen, waitFor } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
 import { beforeEach, describe, expect, it, vi } from "vitest";
 import { AuthNavStatus } from "@/features/account/AuthNavStatus";
+
+type BillingMockClient = {
+  auth: { getSession: ReturnType<typeof vi.fn> };
+  functions: { invoke: ReturnType<typeof vi.fn> };
+};
 
 const routerMock = vi.hoisted(() => ({
   push: vi.fn()
@@ -9,6 +14,7 @@ const routerMock = vi.hoisted(() => ({
 
 const accountMock = vi.hoisted(() => ({
   state: {
+    client: null as BillingMockClient | null,
     configured: true,
     loading: false,
     user: null as { id: string; email?: string | null } | null,
@@ -22,7 +28,18 @@ const entitlementMock = vi.hoisted(() => ({
       plan: "guest",
       status: "guest",
       source: "guest",
-      row: null,
+      row: null as null | {
+        user_id: string;
+        plan: string;
+        status: string;
+        stripe_customer_id: string | null;
+        stripe_subscription_id: string | null;
+        stripe_price_id: string | null;
+        stripe_status: string | null;
+        cancel_at_period_end: boolean | null;
+        current_period_end: string | null;
+        updated_at: string;
+      },
       capabilities: {
         canSaveStats: false,
         canUseFullPractice: false,
@@ -54,14 +71,30 @@ vi.mock("@/features/account/useEntitlement", () => ({
   useEntitlement: () => entitlementMock.state
 }));
 
+function billingClientMock(): BillingMockClient {
+  const client: BillingMockClient = {
+    auth: {
+      getSession: vi.fn().mockResolvedValue({ data: { session: { access_token: "billing-token" } }, error: null })
+    },
+    functions: {
+      invoke: vi.fn().mockResolvedValue({ data: {}, error: null })
+    }
+  };
+  accountMock.state.client = client;
+  return client;
+}
+
 describe("AuthNavStatus", () => {
   beforeEach(() => {
+    delete process.env.NEXT_PUBLIC_BILLING_MODE;
+    accountMock.state.client = null;
     accountMock.state.configured = true;
     accountMock.state.loading = false;
     accountMock.state.user = null;
     accountMock.state.signOut.mockClear();
     routerMock.push.mockClear();
     entitlementMock.state.entitlement.plan = "guest";
+    entitlementMock.state.entitlement.row = null;
     entitlementMock.state.signedIn = false;
   });
 
@@ -90,7 +123,8 @@ describe("AuthNavStatus", () => {
     await user.click(menuControl);
     expect(screen.getByRole("menuitem", { name: "View account" })).toHaveAttribute("href", "/account");
     expect(screen.getByRole("menuitem", { name: "Saved stats" })).toHaveAttribute("href", "/account/stats");
-    expect(screen.getByRole("menuitem", { name: "Manage plan" })).toHaveAttribute("href", "/upgrade");
+    expect(screen.getByRole("menuitem", { name: "Compare plans" })).toHaveAttribute("href", "/upgrade");
+    expect(screen.queryByRole("menuitem", { name: "Manage billing" })).not.toBeInTheDocument();
     await user.click(screen.getByRole("menuitem", { name: "Sign out" }));
     expect(accountMock.state.signOut).toHaveBeenCalledTimes(1);
     expect(routerMock.push).toHaveBeenCalledWith("/sign-in?signedOut=1");
@@ -102,17 +136,66 @@ describe("AuthNavStatus", () => {
     expect(screen.queryByText("user_123")).not.toBeInTheDocument();
   });
 
-  it("shows Pro and billing management when Pro access is active", async () => {
+  it("calls the customer portal action for Stripe-backed Pro accounts", async () => {
     const user = userEvent.setup();
+    process.env.NEXT_PUBLIC_BILLING_MODE = "test";
+    const client = billingClientMock();
     accountMock.state.user = { id: "user_123", email: "pro@example.com" };
     entitlementMock.state.entitlement.plan = "pro";
+    entitlementMock.state.entitlement.row = {
+      user_id: "user_123",
+      plan: "pro",
+      status: "active",
+      stripe_customer_id: "cus_test",
+      stripe_subscription_id: "sub_test",
+      stripe_price_id: "price_test",
+      stripe_status: "active",
+      cancel_at_period_end: false,
+      current_period_end: "2026-07-29T00:00:00.000Z",
+      updated_at: "2026-06-29T00:00:00.000Z"
+    };
     entitlementMock.state.signedIn = true;
 
     render(<AuthNavStatus />);
 
     expect(screen.getByText("Pro")).toBeVisible();
     await user.click(screen.getByLabelText(/Account menu for pro@example.com/i));
-    expect(screen.getByRole("menuitem", { name: "Manage billing" })).toHaveAttribute("href", "/account#membership");
+    await user.click(screen.getByRole("menuitem", { name: "Manage billing" }));
+
+    await waitFor(() => expect(client.functions.invoke).toHaveBeenCalledTimes(1));
+    const [functionName, options] = client.functions.invoke.mock.calls[0];
+    expect(functionName).toBe("stripe-portal");
+    expect(options.headers).toEqual({ Authorization: "Bearer billing-token" });
+    expect(options.body).toBeUndefined();
     expect(screen.queryByText("Pro active")).not.toBeInTheDocument();
+  });
+
+  it("uses billing-management copy for header customer portal failures", async () => {
+    const user = userEvent.setup();
+    process.env.NEXT_PUBLIC_BILLING_MODE = "test";
+    const client = billingClientMock();
+    client.functions.invoke.mockResolvedValue({ data: { error: "Portal unavailable" }, error: null });
+    accountMock.state.user = { id: "user_123", email: "pro@example.com" };
+    entitlementMock.state.entitlement.plan = "pro";
+    entitlementMock.state.entitlement.row = {
+      user_id: "user_123",
+      plan: "pro",
+      status: "active",
+      stripe_customer_id: "cus_test",
+      stripe_subscription_id: "sub_test",
+      stripe_price_id: "price_test",
+      stripe_status: "active",
+      cancel_at_period_end: false,
+      current_period_end: "2026-07-29T00:00:00.000Z",
+      updated_at: "2026-06-29T00:00:00.000Z"
+    };
+    entitlementMock.state.signedIn = true;
+
+    render(<AuthNavStatus />);
+
+    await user.click(screen.getByLabelText(/Account menu for pro@example.com/i));
+    await user.click(screen.getByRole("menuitem", { name: "Manage billing" }));
+
+    expect(await screen.findByRole("alert")).toHaveTextContent("We could not open billing management. Try again in a minute.");
   });
 });

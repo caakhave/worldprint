@@ -2,16 +2,17 @@
 
 import Link from "next/link";
 import { useState } from "react";
+import {
+  requestBillingActionUrl,
+  type BillingActionKind,
+  type BillingFunctionName,
+  type BillingPendingState
+} from "@/features/account/billingActionHelpers";
 import { useSupabaseAccount } from "@/features/account/useSupabaseAccount";
 import type { PlayerEntitlement } from "@/lib/account/entitlements";
 import { signInPathForReturn } from "@/lib/account/signInRedirect";
 import { publicBillingEnabled } from "@/lib/billing/publicBillingConfig";
 import { PRO_PRICE_OPTIONS, type ProBillingInterval } from "@/lib/billing/proPricing";
-
-type BillingActionResponse = {
-  url?: string;
-  error?: string;
-};
 
 type BillingActionsClientProps = {
   entitlement: PlayerEntitlement;
@@ -20,32 +21,13 @@ type BillingActionsClientProps = {
   checkoutLabel?: string;
 };
 
-type BillingActionKind = "checkout" | "portal";
-
-function warnBillingDetail(message: string, detail: unknown) {
-  if (process.env.NODE_ENV !== "production") {
-    console.warn(`[billing] ${message}`, detail);
-  }
-}
-
-function billingErrorCopy(kind: BillingActionKind, message?: string | null) {
-  const normalized = message?.toLowerCase() ?? "";
-  if (normalized.includes("configured") || normalized.includes("env") || normalized.includes("supabase")) {
-    return kind === "portal" ? "Billing management is not available yet." : "Checkout is not open yet.";
-  }
-  if (normalized.includes("sign in")) {
-    return "Sign in to continue with Pro.";
-  }
-  return kind === "portal" ? "We could not open billing management. Try again in a minute." : "We could not open checkout. Try again in a minute.";
-}
-
 function signInPathForPlan(interval: ProBillingInterval) {
   return signInPathForReturn(`/upgrade?plan=${interval}`);
 }
 
 export function BillingActionsClient({ entitlement, context, selectedPlan = null, checkoutLabel }: BillingActionsClientProps) {
   const { client, configured, loading, user } = useSupabaseAccount();
-  const [pending, setPending] = useState<"checkout-monthly" | "checkout-yearly" | "portal" | null>(null);
+  const [pending, setPending] = useState<BillingPendingState | null>(null);
   const [message, setMessage] = useState("");
   const signedIn = Boolean(user);
   const isPro = entitlement.plan === "pro";
@@ -53,42 +35,26 @@ export function BillingActionsClient({ entitlement, context, selectedPlan = null
   const billingEnabled = configured && publicBillingEnabled();
 
   async function invokeBillingFunction(
-    functionName: "stripe-checkout" | "stripe-portal",
-    pendingState: "checkout-monthly" | "checkout-yearly" | "portal",
+    functionName: BillingFunctionName,
+    pendingState: BillingPendingState,
     kind: BillingActionKind,
     interval?: ProBillingInterval
   ) {
-    if (!client || !signedIn) {
-      setMessage("Sign in to continue with Pro.");
-      return;
-    }
     setPending(pendingState);
     setMessage("");
-    const {
-      data: { session },
-      error: sessionError
-    } = await client.auth.getSession();
-    if (sessionError || !session?.access_token) {
-      setPending(null);
-      warnBillingDetail("Could not read billing session.", sessionError);
-      setMessage("Sign in to continue with Pro.");
-      return;
-    }
-    const { data, error } = await client.functions.invoke<BillingActionResponse>(functionName, {
-      headers: { Authorization: `Bearer ${session.access_token}` },
-      body: interval ? { plan: interval } : undefined
+    const result = await requestBillingActionUrl({
+      client,
+      signedIn,
+      functionName,
+      kind,
+      interval
     });
     setPending(null);
-    if (error || data?.error) {
-      warnBillingDetail("Billing action failed.", data?.error ?? error);
-      setMessage(billingErrorCopy(kind, data?.error ?? error?.message));
+    if (result.message || !result.url) {
+      setMessage(result.message ?? (kind === "portal" ? "Billing management is not available yet." : "Checkout is not open yet."));
       return;
     }
-    if (!data?.url) {
-      setMessage(kind === "portal" ? "Billing management is not available yet." : "Checkout is not open yet.");
-      return;
-    }
-    window.location.assign(data.url);
+    window.location.assign(result.url);
   }
 
   if (!billingEnabled) {

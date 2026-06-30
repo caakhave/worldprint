@@ -272,6 +272,19 @@ button:disabled {
   color: var(--parchment);
 }
 
+.account-nav-menu-item:disabled {
+  cursor: wait;
+  opacity: 0.72;
+}
+
+.account-nav-menu-error {
+  margin: 0.2rem 0.35rem 0.35rem;
+  color: var(--coral);
+  font-size: 0.78rem;
+  font-weight: 700;
+  line-height: 1.35;
+}
+
 .account-avatar {
   display: inline-grid;
   place-items: center;
