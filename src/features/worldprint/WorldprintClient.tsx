@@ -1082,13 +1082,11 @@ export function WorldprintClient({ dateOverride, entryMode = "standard" }: World
                         else void startRun("sample");
                       }}
                     >
-                      <Compass size={20} aria-hidden="true" />
-                      {completedPrimaryLabel}
+                      <span className="lobby-play-main">{completedPrimaryLabel}</span>
                     </button>
                   ) : (
                     <button className="button lobby-play-button" type="button" onClick={() => void startRun(primaryMode)}>
-                      <Compass size={20} aria-hidden="true" />
-                      <span>PLAY</span>
+                      <span className="lobby-play-main">PLAY</span>
                       <small>{primaryActionLabel}</small>
                     </button>
                   )}
@@ -1345,6 +1343,7 @@ export function WorldprintClient({ dateOverride, entryMode = "standard" }: World
   const countryOptions = data.entities.filter((entity) => entity.iso3).sort((a, b) => a.name.localeCompare(b.name));
   const selectedCountry = countryOptions.find((entity) => entity.iso3 === selectedCountryIso3);
   const latestInvestigation = roundState.investigations.at(-1) ?? null;
+  const revealedEvidence = roundState.investigations.filter((item) => item.cost > 0);
   const selectedCountryValue = selectedCountry?.iso3 ? indicator.valuesByIso3[selectedCountry.iso3] ?? null : null;
   const selectedCountryInvestigation = selectedCountry?.iso3
     ? roundState.investigations.find((item) => item.iso3 === selectedCountry.iso3)
@@ -1700,14 +1699,22 @@ export function WorldprintClient({ dateOverride, entryMode = "standard" }: World
           onCountryClick={(country) => selectCountry(country.iso3)}
           labelledBy="active-map-title"
         />
-        <div className="inspection-readout" aria-live="polite">
-          {latestInvestigation ? (
+        <div className="inspection-readout" data-state={revealedEvidence.length > 0 ? "evidence" : "empty"} aria-live="polite">
+          {revealedEvidence.length > 0 ? (
             <>
-              <span>{latestInvestigation.cost ? `-${latestInvestigation.cost} points` : "No cost"}</span>
-              <strong>{latestInvestigation.countryName}</strong>
-              <p>
-                {latestInvestigation.value === null ? "No data for this country on this map." : formatValue(latestInvestigation.value, indicator)}
-              </p>
+              <div className="inspection-readout-heading">
+                <span>Revealed evidence</span>
+                <p>Compare the countries you spent points to reveal.</p>
+              </div>
+              <div className="revealed-country-strip" aria-label="Revealed country evidence">
+                {revealedEvidence.map((item, index) => (
+                  <article className="revealed-country-chip" key={`${item.iso3}-${index}`}>
+                    <span>-{item.cost} points</span>
+                    <strong>{item.countryName}</strong>
+                    <p>{item.value === null ? "No data" : formatValue(item.value, indicator)}</p>
+                  </article>
+                ))}
+              </div>
             </>
           ) : (
             <>

@@ -8,15 +8,19 @@ const styles = readFileSync(join(process.cwd(), "src/styles/globals.css"), "utf8
 describe("WorldprintClient UI structure", () => {
   it("makes the lobby default action a dominant PLAY CTA", () => {
     const primaryIndex = source.indexOf('className="lobby-primary-card"');
-    const playIndex = source.indexOf("<span>PLAY</span>");
+    const playIndex = source.indexOf('<span className="lobby-play-main">PLAY</span>');
     const secondaryIndex = source.indexOf('className="lobby-secondary"');
 
     expect(primaryIndex).toBeGreaterThan(0);
     expect(playIndex).toBeGreaterThan(primaryIndex);
     expect(secondaryIndex).toBeGreaterThan(playIndex);
     expect(source).toContain('aria-label="Primary Mystery Map action"');
+    expect(source).toContain('<small>{primaryActionLabel}</small>');
+    expect(source).not.toContain("Compass size={20}");
     expect(styles).toContain(".lobby-play-button");
+    expect(styles).toContain(".lobby-play-main");
     expect(styles).toContain("min-height: 5rem");
+    expect(styles).toContain("justify-items: center");
   });
 
   it("keeps Practice, Past Games, replay, and stats visually secondary in the lobby", () => {
@@ -53,6 +57,17 @@ describe("WorldprintClient UI structure", () => {
     expect(source).toContain('dispatch({ type: "unitClue" })');
     expect(styles).toContain(".answer-clue-row");
     expect(styles).toContain(".answer-unit-button");
+  });
+
+  it("shows every paid country reveal in a horizontal evidence strip", () => {
+    expect(source).toContain("const revealedEvidence = roundState.investigations.filter((item) => item.cost > 0);");
+    expect(source).toContain('aria-label="Revealed country evidence"');
+    expect(source).toContain('className="revealed-country-chip"');
+    expect(source).toContain("Compare the countries you spent points to reveal.");
+    expect(source).not.toContain("{latestInvestigation ? (");
+    expect(styles).toContain(".revealed-country-strip");
+    expect(styles).toContain("grid-auto-flow: column");
+    expect(styles).toContain("overflow-x: auto");
   });
 
   it("lets the indicator question use the full answer panel width", () => {

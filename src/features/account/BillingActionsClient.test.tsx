@@ -64,11 +64,11 @@ describe("BillingActionsClient", () => {
     expect(screen.queryByRole("button", { name: /Join/i })).not.toBeInTheDocument();
   });
 
-  it("asks signed-out users to sign in before upgrading while checkout is disabled", () => {
+  it("asks signed-out users to create an account before upgrading while checkout is disabled", () => {
     render(<BillingActionsClient entitlement={FREE_ENTITLEMENT} context="upgrade" />);
 
-    expect(screen.getByRole("link", { name: "Start Pro" })).toHaveAttribute("href", "/sign-in?next=%2Fupgrade");
-    expect(screen.getByRole("link", { name: "Continue free" })).toHaveAttribute("href", "/sign-in");
+    expect(screen.getByRole("link", { name: "Start Pro" })).toHaveAttribute("href", "/sign-up?next=%2Fupgrade");
+    expect(screen.getByRole("link", { name: "Continue free" })).toHaveAttribute("href", "/sign-up");
     expect(screen.getByText("Checkout is coming soon. Free needs no card and saves your 3-map Daily progress.")).toBeVisible();
     expect(screen.queryByRole("button", { name: "Checkout coming soon" })).not.toBeInTheDocument();
   });
@@ -114,9 +114,9 @@ describe("BillingActionsClient", () => {
 
     render(<BillingActionsClient entitlement={FREE_ENTITLEMENT} context="upgrade" />);
 
-    expect(screen.getByRole("link", { name: "Join monthly" })).toHaveAttribute("href", "/sign-in?next=%2Fupgrade%3Fplan%3Dmonthly");
-    expect(screen.getByRole("link", { name: "Join yearly" })).toHaveAttribute("href", "/sign-in?next=%2Fupgrade%3Fplan%3Dyearly");
-    expect(screen.getByRole("link", { name: "Continue free" })).toHaveAttribute("href", "/sign-in");
+    expect(screen.getByRole("link", { name: "Join monthly" })).toHaveAttribute("href", "/sign-up?next=%2Fupgrade%3Fplan%3Dmonthly");
+    expect(screen.getByRole("link", { name: "Join yearly" })).toHaveAttribute("href", "/sign-up?next=%2Fupgrade%3Fplan%3Dyearly");
+    expect(screen.getByRole("link", { name: "Continue free" })).toHaveAttribute("href", "/sign-up");
     expect(screen.queryByRole("button", { name: "Checkout coming soon" })).not.toBeInTheDocument();
   });
 

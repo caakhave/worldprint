@@ -535,6 +535,27 @@ describe("streaks and sharing", () => {
     }
   });
 
+  it("encodes challenge result links without undefined optional fields in the checksum", () => {
+    let run = createRun({
+      mode: "challenge",
+      dateKey: "2026-06-18",
+      contentVersion: "test",
+      tier: "analyst",
+      roundIds: [{ roundId: "worldprint-fertility-rate", correctIndicatorId: "fertility-rate" }]
+    });
+    run = reduceRun(run, { type: "submit", answerId: "fertility-rate", label: "Fertility rate", correct: true });
+    run = reduceRun(run, { type: "nextRound" });
+
+    const code = encodeChallenge(challengePayloadFromRun(run));
+    const decoded = decodeChallenge(code);
+
+    expect(decoded.ok).toBe(true);
+    if (!decoded.ok) return;
+    expect(decoded.payload.kind).toBe("practice");
+    expect(decoded.payload.dateKey).toBeUndefined();
+    expect(decoded.payload.challenger?.score).toBe(1000);
+  });
+
   it("builds share targets, challenge URLs, and encoded mailto links without raw answer spoilers", () => {
     const run = createRun({
       mode: "daily",

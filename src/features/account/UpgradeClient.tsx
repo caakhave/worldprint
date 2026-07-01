@@ -236,7 +236,7 @@ export function UpgradeClient() {
             </li>
           </ul>
           {!signedIn ? (
-            <Link className="button-secondary" href="/sign-in">
+            <Link className="button-secondary" href="/sign-up">
               Continue free
             </Link>
           ) : (

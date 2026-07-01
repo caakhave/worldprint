@@ -10,7 +10,7 @@ import {
 } from "@/features/account/billingActionHelpers";
 import { useSupabaseAccount } from "@/features/account/useSupabaseAccount";
 import type { PlayerEntitlement } from "@/lib/account/entitlements";
-import { signInPathForReturn } from "@/lib/account/signInRedirect";
+import { signUpPathForReturn } from "@/lib/account/signInRedirect";
 import { publicBillingEnabled } from "@/lib/billing/publicBillingConfig";
 import { PRO_PRICE_OPTIONS, type ProBillingInterval } from "@/lib/billing/proPricing";
 
@@ -21,8 +21,8 @@ type BillingActionsClientProps = {
   checkoutLabel?: string;
 };
 
-function signInPathForPlan(interval: ProBillingInterval) {
-  return signInPathForReturn(`/upgrade?plan=${interval}`);
+function signUpPathForPlan(interval: ProBillingInterval) {
+  return signUpPathForReturn(`/upgrade?plan=${interval}`);
 }
 
 export function BillingActionsClient({ entitlement, context, selectedPlan = null, checkoutLabel }: BillingActionsClientProps) {
@@ -61,10 +61,10 @@ export function BillingActionsClient({ entitlement, context, selectedPlan = null
     if (!signedIn) {
       return (
         <div className="billing-actions" aria-label="Billing actions">
-          <Link className="button" href={signInPathForReturn("/upgrade")}>
+          <Link className="button" href={signUpPathForReturn("/upgrade")}>
             Start Pro
           </Link>
-          <Link className="button-secondary" href="/sign-in">
+          <Link className="button-secondary" href="/sign-up">
             Continue free
           </Link>
           <p className="account-env-note">Checkout is coming soon. Free needs no card and saves your 3-map Daily progress.</p>
@@ -131,7 +131,7 @@ export function BillingActionsClient({ entitlement, context, selectedPlan = null
       <div className="billing-actions" aria-label="Billing actions">
         <div className="checkout-option-buttons" aria-label="Choose Pro billing cadence before sign-in">
           {signInOptions.map((option) => (
-            <Link className={option.featured ? "button" : "button-secondary"} href={signInPathForPlan(option.interval)} key={option.interval}>
+            <Link className={option.featured ? "button" : "button-secondary"} href={signUpPathForPlan(option.interval)} key={option.interval}>
               <span>{checkoutLabel ?? option.cta}</span>
               {option.badge ? (
                 <span className="checkout-button-badge" aria-hidden="true">
@@ -141,7 +141,7 @@ export function BillingActionsClient({ entitlement, context, selectedPlan = null
             </Link>
           ))}
         </div>
-        <Link className="button-secondary" href="/sign-in">
+        <Link className="button-secondary" href="/sign-up">
           Continue free
         </Link>
       </div>

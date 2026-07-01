@@ -26,6 +26,21 @@ const validChallengeCode = encodeChallenge({
   }
 });
 
+const validPracticeChallengeCode = encodeChallenge({
+  kind: "practice",
+  contentVersion: "2026.06.30-test",
+  tier: "analyst",
+  roundIds: ["round-a", "round-b", "round-c"],
+  challenger: {
+    score: 500,
+    possible: 3000,
+    rankTitle: "Signal Seeker",
+    solvedCount: 3,
+    roundCount: 3,
+    strip: "🟥🟥🟥"
+  }
+});
+
 describe("challenge invite helpers", () => {
   it("accepts valid invite JSON and normalizes the recipient without adding marketing data", () => {
     const parsed = parseChallengeInviteRequest({
@@ -45,6 +60,20 @@ describe("challenge invite helpers", () => {
     });
     expect(parsed.invite?.payload.challenger?.rankTitle).toBe("Pattern Hunter");
     expect(JSON.stringify(parsed.invite)).not.toContain("marketing");
+  });
+
+  it("accepts current practice and challenge result codes without date keys", () => {
+    const decoded = decodeChallengeInviteCode(validPracticeChallengeCode);
+
+    expect(decoded.ok).toBe(true);
+    if (!decoded.ok) return;
+    expect(decoded.payload.kind).toBe("practice");
+    expect(decoded.payload.dateKey).toBeUndefined();
+    expect(decoded.payload.challenger).toMatchObject({
+      score: 500,
+      possible: 3000,
+      rankTitle: "Signal Seeker"
+    });
   });
 
   it("rejects unactionable email addresses, invalid challenge codes, and raw solution-shaped fields", () => {

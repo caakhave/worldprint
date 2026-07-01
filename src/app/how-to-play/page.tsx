@@ -87,7 +87,7 @@ export default function HowToPlayPage() {
           <Link className="button-secondary" href="/play/mystery-map">
             Try Sample Run
           </Link>
-          <Link className="button-secondary" href="/sign-in">
+          <Link className="button-secondary" href="/sign-up">
             Continue free
           </Link>
         </div>

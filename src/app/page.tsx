@@ -35,7 +35,7 @@ const modeCards = [
     title: "Free Daily",
     copy: "3 fresh maps every day with saved progress on a free account.",
     cta: "Continue free",
-    href: "/sign-in"
+    href: "/sign-up"
   },
   {
     image: "/images/homepage/05-practice.png",

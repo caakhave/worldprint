@@ -79,13 +79,13 @@ describe("UpgradeClient", () => {
     window.history.pushState({}, "", "/upgrade");
   });
 
-  it("leads with sign-in copy for signed-out players", () => {
+  it("leads with account creation copy for signed-out players", () => {
     render(<UpgradeClient />);
 
     expect(screen.getByRole("heading", { name: "Choose Free or Pro." })).toBeVisible();
     expect(screen.getByRole("link", { name: "Sign in for Free or Pro" })).toHaveAttribute("href", "/sign-in?next=%2Fupgrade");
-    expect(screen.getAllByRole("link", { name: "Start Pro" }).every((link) => link.getAttribute("href") === "/sign-in?next=%2Fupgrade")).toBe(true);
-    expect(screen.getAllByRole("link", { name: "Continue free" }).some((link) => link.getAttribute("href") === "/sign-in")).toBe(true);
+    expect(screen.getAllByRole("link", { name: "Start Pro" }).every((link) => link.getAttribute("href") === "/sign-up?next=%2Fupgrade")).toBe(true);
+    expect(screen.getAllByRole("link", { name: "Continue free" }).some((link) => link.getAttribute("href") === "/sign-up")).toBe(true);
     expect(screen.getByRole("link", { name: "Email support for billing help" })).toHaveAttribute(
       "href",
       CONTACT_LINKS.billingHelp.href

@@ -134,7 +134,7 @@ export function AccountStatusClient() {
           <Link className="button" href="/upgrade">
             Start Pro
           </Link>
-          <Link className="button-secondary" href="/sign-in">
+          <Link className="button-secondary" href="/sign-up">
             Continue free
           </Link>
         </div>

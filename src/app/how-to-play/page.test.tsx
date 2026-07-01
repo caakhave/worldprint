@@ -11,7 +11,7 @@ describe("HowToPlayPage", () => {
     expect(screen.getByText(/Start Pro for the full atlas, or continue free/i)).toBeVisible();
     expect(screen.getByRole("link", { name: /Start Pro/i })).toHaveAttribute("href", "/upgrade");
     expect(screen.getByRole("link", { name: /Try Sample Run/i })).toHaveAttribute("href", "/play/mystery-map");
-    expect(screen.getByRole("link", { name: /Continue free/i })).toHaveAttribute("href", "/sign-in");
+    expect(screen.getByRole("link", { name: /Continue free/i })).toHaveAttribute("href", "/sign-up");
     expect(screen.queryByText(/Open Beta|WORLDPRINT|spends score/i)).not.toBeInTheDocument();
   });
 });

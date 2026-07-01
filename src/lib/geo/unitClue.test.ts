@@ -25,15 +25,24 @@ describe("unit clue eligibility", () => {
       eligible: true,
       text: "per 1k means births per 1,000 people."
     });
+    expect(unitClueForIndicator(indicator("kg/ha", { suffix: " kg/ha" }))).toEqual({
+      eligible: true,
+      text: "kg/ha"
+    });
+    expect(
+      unitClueForIndicator(
+        indicator("kilograms per hectare", { suffix: " kg/ha" }, { shortTitle: "Cereal yield", title: "Cereal yield (kg per hectare)" })
+      )
+    ).toEqual({
+      eligible: true,
+      text: "kg/ha means kilograms per hectare."
+    });
     expect(unitClueForIndicator(indicator("cases per 100,000 people", { suffix: " per 100k" })).eligible).toBe(true);
     expect(unitClueForIndicator(indicator("constant 2015 US dollars per worker", { prefix: "$" })).eligible).toBe(true);
   });
 
-  it("hides tautological compact unit clues", () => {
-    expect(unitClueForIndicator(indicator("percent of GDP", { suffix: "% of GDP" }))).toEqual({
-      eligible: false,
-      text: "Unit is already shown."
-    });
+  it("keeps compact formatter units available unless the unit is too obvious", () => {
+    expect(unitClueForIndicator(indicator("percent of GDP", { suffix: "% of GDP" })).eligible).toBe(true);
     expect(unitClueForIndicator(indicator("percent", { suffix: "%" })).eligible).toBe(false);
   });
 

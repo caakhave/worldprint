@@ -262,7 +262,7 @@ describe("AccountStatusClient", () => {
     expect(screen.getByRole("heading", { name: "Start Pro or continue free." })).toBeVisible();
     expect(screen.getByText("Pro unlocks the full atlas. Free needs no card and still saves your 3-map Daily progress and basic stats.")).toBeVisible();
     expect(screen.getByRole("link", { name: "Start Pro" })).toHaveAttribute("href", "/upgrade");
-    expect(screen.getByRole("link", { name: "Continue free" })).toHaveAttribute("href", "/sign-in");
+    expect(screen.getByRole("link", { name: "Continue free" })).toHaveAttribute("href", "/sign-up");
     expect(screen.queryByText("Player profile")).not.toBeInTheDocument();
     expect(screen.queryByText("Account sync ready")).not.toBeInTheDocument();
     expect(screen.queryByRole("link", { name: "View saved stats" })).not.toBeInTheDocument();
@@ -297,7 +297,7 @@ describe("AccountHeroClient", () => {
     expect(screen.getByRole("heading", { name: "Start Pro or continue free." })).toBeVisible();
     expect(screen.getByText(/Choose Can You Geo\? Pro for the full atlas/i)).toBeVisible();
     expect(screen.getByRole("link", { name: "Start Pro" })).toHaveAttribute("href", "/upgrade");
-    expect(screen.getByRole("link", { name: "Continue free" })).toHaveAttribute("href", "/sign-in");
+    expect(screen.getByRole("link", { name: "Continue free" })).toHaveAttribute("href", "/sign-up");
   });
 });
 

@@ -80,19 +80,23 @@ export function unitClueForIndicator(indicator: UnitClueIndicator): UnitClueDeci
   const marker = compactUnitMarker(indicator);
   const unit = indicator.unit.trim();
   if (!unit) return { eligible: false, text: ALREADY_SHOWN_TEXT };
+  if (indicator.unitClueUseful === false || indicator.unitClue === null) return { eligible: false, text: NOT_USEFUL_TEXT };
 
   const normalizedUnit = normalizeUnitText(unit);
   if (!marker && OBVIOUS_PLAIN_UNITS.has(normalizedUnit)) return { eligible: false, text: ALREADY_SHOWN_TEXT };
-  if (!isUnitClueUseful(indicator)) return { eligible: false, text: NOT_USEFUL_TEXT };
   const explicitClue = indicator.unitClue?.trim();
   if (explicitClue) return { eligible: true, text: explicitClue };
 
   if (marker) {
     const normalizedMarker = normalizeUnitText(marker);
-    if (normalizedMarker === normalizedUnit) return { eligible: false, text: ALREADY_SHOWN_TEXT };
+    if (normalizedMarker === normalizedUnit) {
+      if (OBVIOUS_PLAIN_UNITS.has(normalizedUnit)) return { eligible: false, text: ALREADY_SHOWN_TEXT };
+      return { eligible: true, text: marker };
+    }
     return { eligible: true, text: `${marker} means ${unit}.` };
   }
 
+  if (!isUnitClueUseful(indicator)) return { eligible: false, text: NOT_USEFUL_TEXT };
   if (OBVIOUS_PLAIN_UNITS.has(normalizedUnit)) return { eligible: false, text: ALREADY_SHOWN_TEXT };
   return { eligible: true, text: unit };
 }
