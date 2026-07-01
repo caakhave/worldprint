@@ -67,11 +67,7 @@ describe("SignInClient", () => {
     render(<SignInClient />);
 
     expect(screen.getByRole("heading", { name: "Sign in with email and password." })).toBeVisible();
-    expect(
-      screen.getByText(
-        "Returning players use the email and password on their account. New players can create a free account first, then choose Free or Pro."
-      )
-    ).toBeVisible();
+    expect(screen.queryByText(/Returning players use the email and password on their account/i)).not.toBeInTheDocument();
     expect(screen.getByLabelText("Email")).toHaveAttribute("autocomplete", "email");
     expect(screen.getByLabelText("Password")).toHaveAttribute("autocomplete", "current-password");
     expect(screen.getByRole("button", { name: "Sign in" })).toBeVisible();

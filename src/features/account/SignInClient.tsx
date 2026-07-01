@@ -183,7 +183,6 @@ export function SignInClient() {
     <article className="surface account-card account-primary-card">
       <p className="eyebrow">Sign in</p>
       <h2>Sign in with email and password.</h2>
-      <p>Returning players use the email and password on their account. New players can create a free account first, then choose Free or Pro.</p>
       {status ? (
         <p className="status-live" role="status">
           {status}

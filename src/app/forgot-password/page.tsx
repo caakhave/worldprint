@@ -1,7 +1,5 @@
 import type { Metadata } from "next";
-import Link from "next/link";
 import { ForgotPasswordClient } from "@/features/account/ForgotPasswordClient";
-import { CONTACT_LINKS } from "@/lib/contact";
 import { pageMetadata } from "@/lib/site/seo";
 
 export const metadata: Metadata = pageMetadata({
@@ -22,22 +20,8 @@ export default function ForgotPasswordPage() {
         <p className="lead">We will send a secure reset link to the email on your account.</p>
       </div>
 
-      <div className="account-grid">
+      <div className="account-grid account-grid-single">
         <ForgotPasswordClient />
-
-        <div className="surface account-card account-status-card" aria-label="Password reset help">
-          <p className="eyebrow">Account help</p>
-          <h2>Use the same email.</h2>
-          <p>Your account, saved progress, and Pro membership stay attached to the email you used when signing up.</p>
-          <div className="button-row">
-            <Link className="button-secondary" href="/sign-in">
-              Back to sign in
-            </Link>
-            <a className="button-secondary" href={CONTACT_LINKS.accountHelp.href}>
-              Get account help
-            </a>
-          </div>
-        </div>
       </div>
     </section>
   );

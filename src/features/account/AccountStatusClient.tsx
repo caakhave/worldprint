@@ -178,12 +178,12 @@ export function AccountStatusClient() {
         </div>
         {hasImportableLocalRuns ? (
           <div>
-            <dt>Local progress</dt>
+            <dt>Import guest plays</dt>
             <dd>
-              Previous plays found
-              <span>Move previous guest plays from this browser into your account.</span>
+              Move guest plays into this account.
+              <span>If you played sample or guest maps in this browser before signing in, you can import those local results here.</span>
               <Link className="account-inline-action" href="/account/stats">
-                Import plays
+                Import guest plays
               </Link>
             </dd>
           </div>

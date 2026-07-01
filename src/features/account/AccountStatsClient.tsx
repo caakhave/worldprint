@@ -177,14 +177,10 @@ export function AccountStatsClient() {
     setSyncStatus(`Imported ${result.syncedRuns} completed run${result.syncedRuns === 1 ? "" : "s"} into your account.`);
   }
 
-  const alreadyImported = syncStatus.toLowerCase().includes("already in your account");
-  const importButtonLabel = syncing
-    ? "Importing..."
-    : !hasLocalHistory
-      ? "No previous plays found"
-      : alreadyImported
-        ? "Already imported"
-        : "Import plays";
+  const normalizedSyncStatus = syncStatus.toLowerCase();
+  const alreadyImported = normalizedSyncStatus.includes("already in your account") || normalizedSyncStatus.startsWith("imported ");
+  const showImportCard = hasLocalHistory && (loading || remoteLoading || !user || !alreadyImported);
+  const importButtonLabel = syncing ? "Importing..." : "Import guest plays";
 
   return (
     <>
@@ -203,55 +199,48 @@ export function AccountStatsClient() {
         />
       )}
 
-      <section className="surface account-card account-sync-card account-stats-secondary-card" aria-label="Save local progress">
-        <p className="eyebrow">Save local progress</p>
-        {loading || remoteLoading ? (
-          <>
-            <h2>Checking your saved plays.</h2>
-            <p>Looking for account saves and any previous plays from this browser.</p>
-          </>
-        ) : user ? (
-          <>
-            <h2>{hasLocalHistory ? "Previous plays found" : "No local plays to import."}</h2>
-            <p>
-              {hasLocalHistory
-                ? "Move previous guest plays from this browser into your account. We skip anything already saved."
-                : "When this browser has guest plays that are not in your account, you can move them here."}
+      {showImportCard ? (
+        <section className="surface account-card account-sync-card account-stats-secondary-card" aria-label="Import guest plays">
+          <p className="eyebrow">Import guest plays</p>
+          {loading || remoteLoading ? (
+            <>
+              <h2>Checking your saved plays.</h2>
+              <p>Looking for account saves and any previous plays from this browser.</p>
+            </>
+          ) : user ? (
+            <>
+              <h2>Move guest plays into this account.</h2>
+              <p>If you played sample or guest maps in this browser before signing in, you can import those local results here.</p>
+              <button className="button" type="button" onClick={() => void syncStats()} disabled={syncing}>
+                {importButtonLabel}
+              </button>
+            </>
+          ) : configured ? (
+            <>
+              <h2>Sign in to import guest plays.</h2>
+              <p>If you played sample or guest maps in this browser before signing in, you can import those local results here.</p>
+              <Link className="button" href="/sign-in">
+                Sign in
+              </Link>
+            </>
+          ) : (
+            <>
+              <h2>Account sign-in is unavailable in this preview.</h2>
+              <p>Local stats still work in this browser.</p>
+            </>
+          )}
+          {syncStatus ? (
+            <p className="status-live" role="status">
+              {syncStatus}
             </p>
-            <button
-              className={hasLocalHistory && !alreadyImported ? "button" : "button-secondary"}
-              type="button"
-              onClick={() => void syncStats()}
-              disabled={syncing || !hasLocalHistory || alreadyImported}
-            >
-              {importButtonLabel}
-            </button>
-          </>
-        ) : configured ? (
-          <>
-            <h2>Sign in to save across devices.</h2>
-            <p>Your local stats stay in this browser. A free account keeps your Daily record and saved results together.</p>
-            <Link className="button" href="/sign-in">
-              Sign in
-            </Link>
-          </>
-        ) : (
-          <>
-            <h2>Account sign-in is unavailable in this preview.</h2>
-            <p>Local stats still work in this browser.</p>
-          </>
-        )}
-        {syncStatus ? (
-          <p className="status-live" role="status">
-            {syncStatus}
-          </p>
-        ) : null}
-        {syncError ? (
-          <p className="account-error" role="alert">
-            {syncError}
-          </p>
-        ) : null}
-      </section>
+          ) : null}
+          {syncError ? (
+            <p className="account-error" role="alert">
+              {syncError}
+            </p>
+          ) : null}
+        </section>
+      ) : null}
     </>
   );
 }

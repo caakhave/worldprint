@@ -6185,6 +6185,10 @@ dd {
   align-items: start;
 }
 
+.account-grid-single {
+  grid-template-columns: minmax(0, 42rem);
+}
+
 .account-stats-grid {
   grid-template-columns: minmax(320px, 0.75fr) minmax(0, 1fr);
 }

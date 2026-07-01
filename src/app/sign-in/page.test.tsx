@@ -22,8 +22,8 @@ describe("SignInPage", () => {
     expect(screen.getByText("Use the same email and password to keep your atlas connected.")).toBeVisible();
     expect(screen.getByRole("link", { name: "Start Pro" })).toHaveAttribute("href", "/upgrade");
     expect(screen.getByRole("link", { name: "Continue free" })).toHaveAttribute("href", "/sign-up");
-    expect(screen.getByRole("link", { name: "View Free and Pro" })).toHaveAttribute("href", "/upgrade");
-    expect(screen.getByRole("link", { name: "Forgot password?" })).toHaveAttribute("href", "/forgot-password");
+    expect(screen.queryByRole("heading", { name: "Use the same account next time." })).not.toBeInTheDocument();
+    expect(screen.queryByRole("link", { name: "View Free and Pro" })).not.toBeInTheDocument();
     expect(screen.queryByText("No password to manage. Sign-in links can be requested about once per minute.")).not.toBeInTheDocument();
     expect(screen.getByTestId("sign-in-client")).toBeInTheDocument();
   });

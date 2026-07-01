@@ -67,7 +67,10 @@ describe("SignUpClient", () => {
     render(<SignUpClient />);
 
     expect(screen.getByRole("heading", { name: "Create your Can You Geo? account." })).toBeVisible();
+    expect(screen.getByText("No credit card required to sign up for a free account.")).toBeVisible();
     expect(screen.getByLabelText("Send me occasional Can You Geo updates and new game announcements.")).not.toBeChecked();
+    expect(screen.queryByText(/Passwords are handled by Supabase Auth/i)).not.toBeInTheDocument();
+    expect(screen.queryByText(/If you picked Pro first/i)).not.toBeInTheDocument();
     await user.type(screen.getByLabelText("Email"), "new@example.com");
     await user.type(screen.getByLabelText("Password"), "strong-password");
     await user.type(screen.getByLabelText("Confirm password"), "strong-password");

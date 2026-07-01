@@ -163,7 +163,7 @@ describe("AccountStatusClient", () => {
     expect(screen.queryByText("Stats sync")).not.toBeInTheDocument();
     expect(screen.queryByText("Account sync ready")).not.toBeInTheDocument();
     expect(screen.queryByText("Import local runs from your stats page.")).not.toBeInTheDocument();
-    expect(screen.queryByText("Previous plays found")).not.toBeInTheDocument();
+    expect(screen.queryByText("Move guest plays into this account.")).not.toBeInTheDocument();
     expect(screen.queryByText("11111111-2222-4333-8444-555555555555")).not.toBeInTheDocument();
     expect(screen.getByRole("link", { name: "View saved stats" })).toHaveAttribute("href", "/account/stats");
     expect(screen.getByRole("link", { name: "Compare plans" })).toHaveAttribute("href", "/upgrade");
@@ -183,9 +183,9 @@ describe("AccountStatusClient", () => {
 
     render(<AccountStatusClient />);
 
-    expect(await screen.findByText("Previous plays found")).toBeVisible();
-    expect(screen.getByText("Move previous guest plays from this browser into your account.")).toBeVisible();
-    expect(screen.getByRole("link", { name: "Import plays" })).toHaveAttribute("href", "/account/stats");
+    expect(await screen.findByText("Move guest plays into this account.")).toBeVisible();
+    expect(screen.getByText("If you played sample or guest maps in this browser before signing in, you can import those local results here.")).toBeVisible();
+    expect(screen.getByRole("link", { name: "Import guest plays" })).toHaveAttribute("href", "/account/stats");
     expect(screen.queryByText("Stats sync")).not.toBeInTheDocument();
     expect(screen.queryByText("Account sync ready")).not.toBeInTheDocument();
   });
@@ -196,7 +196,7 @@ describe("AccountStatusClient", () => {
 
     render(<AccountStatusClient />);
 
-    expect(screen.queryByText("Previous plays found")).not.toBeInTheDocument();
+    expect(screen.queryByText("Move guest plays into this account.")).not.toBeInTheDocument();
     expect(screen.queryByText("Stats sync")).not.toBeInTheDocument();
     expect(screen.queryByText("Account sync ready")).not.toBeInTheDocument();
   });

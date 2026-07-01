@@ -45,6 +45,9 @@ describe("ForgotPasswordClient", () => {
       redirectTo: expect.stringMatching(/\/auth\/callback$/)
     });
     expect(screen.getByText("Password reset email sent. Open the link to choose a new password.")).toBeVisible();
+    expect(screen.getByRole("link", { name: "Back to sign in" })).toHaveAttribute("href", "/sign-in");
+    expect(screen.getByRole("link", { name: "Create account" })).toHaveAttribute("href", "/sign-up");
+    expect(screen.getByRole("link", { name: "Get account help" })).toBeVisible();
   });
 
   it("shows a safe generic error when reset email fails", async () => {

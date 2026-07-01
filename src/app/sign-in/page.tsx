@@ -1,8 +1,6 @@
 import type { Metadata } from "next";
 import Link from "next/link";
 import { SignInClient } from "@/features/account/SignInClient";
-import { BRAND_NAME } from "@/lib/brand";
-import { CONTACT_LINKS } from "@/lib/contact";
 import { pageMetadata } from "@/lib/site/seo";
 
 export const metadata: Metadata = pageMetadata({
@@ -62,27 +60,6 @@ export default function SignInPage() {
         </div>
       </div>
 
-      <div className="surface account-card account-next-card">
-        <h2>Use the same account next time.</h2>
-        <p>
-          {BRAND_NAME} keeps your 3-map Free Daily progress, streaks, basic stats, and Pro membership attached to one signed-in
-          account.
-        </p>
-        <div className="button-row">
-          <Link className="button-secondary" href="/upgrade">
-            View Free and Pro
-          </Link>
-          <Link className="button-secondary" href="/forgot-password">
-            Forgot password?
-          </Link>
-          <Link className="button-secondary" href="/play/mystery-map">
-            Try Sample Run
-          </Link>
-          <a className="button-secondary" href={CONTACT_LINKS.accountHelp.href}>
-            Get account help
-          </a>
-        </div>
-      </div>
     </section>
   );
 }

@@ -4,6 +4,7 @@ import Link from "next/link";
 import { useState } from "react";
 import { useSupabaseAccount } from "@/features/account/useSupabaseAccount";
 import { authCallbackPathForReturn } from "@/lib/account/signInRedirect";
+import { CONTACT_LINKS } from "@/lib/contact";
 import { siteOrigin } from "@/lib/supabase/env";
 
 const GENERIC_RESET_ERROR = "We could not send a password reset email. Check the address and try again.";
@@ -95,6 +96,7 @@ export function ForgotPasswordClient() {
       <div className="account-inline-links" aria-label="Account links">
         <Link href="/sign-in">Back to sign in</Link>
         <Link href="/sign-up">Create account</Link>
+        <a href={CONTACT_LINKS.accountHelp.href}>Get account help</a>
       </div>
       {status ? (
         <p className="status-live" role="status">

@@ -25,8 +25,8 @@ export default function ResetPasswordPage() {
 
         <div className="surface account-card account-status-card" aria-label="Password security">
           <p className="eyebrow">Security</p>
-          <h2>Passwords stay in Supabase Auth.</h2>
-          <p>Can You Geo uses Supabase for password handling and keeps app tables focused on profile, stats, and membership data.</p>
+          <h2>Passwords are securely stored.</h2>
+          <p>Your password is handled securely and never stored in Can You Geo gameplay records.</p>
           <ul className="account-checklist">
             <li>
               <strong>Account</strong>

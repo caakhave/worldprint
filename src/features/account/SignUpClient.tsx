@@ -180,7 +180,7 @@ export function SignUpClient() {
     <article className="surface account-card account-primary-card">
       <p className="eyebrow">Create account</p>
       <h2>Create your Can You Geo? account.</h2>
-      <p>Free needs no card. If you picked Pro first, confirm this account and we will take you back to the selected plan.</p>
+      <p>No credit card required to sign up for a free account.</p>
       <form className="account-form" noValidate onSubmit={(event) => void submit(event)}>
         <label htmlFor="sign-up-email">
           Email
@@ -241,10 +241,6 @@ export function SignUpClient() {
         <Link href={signInHref}>Already have an account?</Link>
         <Link href="/forgot-password">Forgot password?</Link>
       </div>
-      <p className="account-env-note">
-        Passwords are handled by Supabase Auth. Account confirmation, password reset, billing, and security emails still work
-        whether or not you opt in to updates.
-      </p>
       {status ? (
         <p className="status-live" role="status">
           {status}

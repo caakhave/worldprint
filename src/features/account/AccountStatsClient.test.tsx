@@ -83,10 +83,9 @@ describe("AccountStatsClient", () => {
 
     expect(await screen.findByRole("heading", { name: "No account-saved runs yet." })).toBeVisible();
     expect(screen.getByText(/Account stats are private to you/i)).toBeVisible();
-    expect(screen.getByRole("region", { name: "Save local progress" })).toBeVisible();
-    expect(screen.getByRole("heading", { name: "No local plays to import." })).toBeVisible();
-    expect(screen.getByText(/When this browser has guest plays that are not in your account/i)).toBeVisible();
-    expect(screen.getByRole("button", { name: "No previous plays found" })).toBeDisabled();
+    expect(screen.queryByRole("region", { name: "Import guest plays" })).not.toBeInTheDocument();
+    expect(screen.queryByRole("heading", { name: "No local plays to import." })).not.toBeInTheDocument();
+    expect(screen.queryByRole("button", { name: "No previous plays found" })).not.toBeInTheDocument();
     expect(screen.queryByText("Stats sync")).not.toBeInTheDocument();
     expect(screen.queryByText("Account sync ready")).not.toBeInTheDocument();
     expect(screen.queryByRole("heading", { name: "Import local runs" })).not.toBeInTheDocument();
@@ -114,9 +113,10 @@ describe("AccountStatsClient", () => {
 
     render(<AccountStatsClient />);
 
-    expect(await screen.findByRole("heading", { name: "Previous plays found" })).toBeVisible();
-    expect(screen.getByText(/Move previous guest plays from this browser into your account/i)).toBeVisible();
-    expect(screen.getByRole("button", { name: "Import plays" })).toBeEnabled();
+    expect(await screen.findByRole("region", { name: "Import guest plays" })).toBeVisible();
+    expect(screen.getByRole("heading", { name: "Move guest plays into this account." })).toBeVisible();
+    expect(screen.getByText("If you played sample or guest maps in this browser before signing in, you can import those local results here.")).toBeVisible();
+    expect(screen.getByRole("button", { name: "Import guest plays" })).toBeEnabled();
     expect(screen.queryByText("Stats sync")).not.toBeInTheDocument();
     expect(screen.queryByText("Account sync ready")).not.toBeInTheDocument();
   });
@@ -140,9 +140,7 @@ describe("AccountStatsClient", () => {
     render(<AccountStatsClient />);
 
     expect(screen.getByRole("heading", { name: "Saved in this browser." })).toBeVisible();
-    expect(screen.getByRole("heading", { name: "Sign in to save across devices." })).toBeVisible();
-    expect(screen.getByText(/A free account keeps your Daily record and saved results together/i)).toBeVisible();
-    expect(screen.getByRole("link", { name: "Sign in" })).toHaveAttribute("href", "/sign-in");
+    expect(screen.queryByRole("region", { name: "Import guest plays" })).not.toBeInTheDocument();
     expect(screen.queryByText(/advanced stats/i)).not.toBeInTheDocument();
   });
 });
