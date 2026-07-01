@@ -9,13 +9,16 @@ Plan the promotion from `origin/staging` to `origin/main` for the Can You Geo la
 Current remote refs checked:
 
 - `origin/main`: `c208f99008262c1eb43b18dc51a96f5c84176ea5`
-- `origin/staging`: `1c3fee23b46c735c89e2abb6d1b0c926daffb924`
+- app-code smoke baseline on `origin/staging`: `1e6a4e8909f97cb94157704a7f26a49980a778cc`
 - SEO/GEO readiness commit prepared on staging: `7b4fdb89e1b78e2422d62a6ab9275e95c19fb778`
+- Analytics support commit prepared on staging: `d3e7d85fc7132ef89cd336e93974e91adbf57af8`
+- GTM launch docs commit prepared on staging: `1e6a4e8909f97cb94157704a7f26a49980a778cc`
 
 Important local workspace note:
 
 - `atd/` is untracked and unrelated. Do not stage or commit it.
-- SEO/GEO readiness is now part of the staging promotion sequence through `7b4fdb89e1b78e2422d62a6ab9275e95c19fb778`.
+- SEO/GEO readiness, analytics support, and GTM launch docs are now part of the staging promotion sequence through `1e6a4e8909f97cb94157704a7f26a49980a778cc`.
+- If a later smoke-check commit changes only this promotion-plan document, cherry-pick it after `1e6a4e8909f97cb94157704a7f26a49980a778cc` if main should keep the final ops docs.
 
 ## Recommended Strategy
 
@@ -69,7 +72,10 @@ git cherry-pick --empty=drop \
   a0db98fe9b703894579af37baef28bcf7fd0edb0 \
   9ae57d4088b2da9945d02af0f26c7d7438afa78c \
   1c3fee23b46c735c89e2abb6d1b0c926daffb924 \
-  7b4fdb89e1b78e2422d62a6ab9275e95c19fb778
+  7b4fdb89e1b78e2422d62a6ab9275e95c19fb778 \
+  1a282a76746ca6bfe1f8fdd644c0a10cb22fac82 \
+  d3e7d85fc7132ef89cd336e93974e91adbf57af8 \
+  1e6a4e8909f97cb94157704a7f26a49980a778cc
 ```
 
 After the cherry-pick sequence:
@@ -168,8 +174,11 @@ Billing promotion is safe only if Cloudflare Production keeps `NEXT_PUBLIC_BILLI
 ### SEO / GEO
 
 - `7b4fdb89e1b78e2422d62a6ab9275e95c19fb778` - Add SEO GEO readiness metadata
+- `1a282a76746ca6bfe1f8fdd644c0a10cb22fac82` - Update production promotion plan for SEO readiness
+- `d3e7d85fc7132ef89cd336e93974e91adbf57af8` - Add launch analytics gating
+- `1e6a4e8909f97cb94157704a7f26a49980a778cc` - Document production GTM launch settings
 
-This commit adds static-export compatible App Router metadata, robots and sitemap routes, JSON-LD, noindex behavior for utility routes, route-specific public metadata, homepage quick answers, and SEO/GEO readiness docs.
+These commits add static-export compatible App Router metadata, robots and sitemap routes, JSON-LD, noindex behavior for utility routes, route-specific public metadata, homepage quick answers, SEO/GEO readiness docs, production-only analytics gating, and GTM launch settings for `GTM-5CQ22953`.
 
 ### Gameplay / UI Polish
 
