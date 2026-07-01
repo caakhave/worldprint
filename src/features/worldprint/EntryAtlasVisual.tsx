@@ -125,7 +125,7 @@ export function EntryAtlasVisual({ map, indicator, countryNames }: EntryAtlasVis
       </div>
 
       <figcaption className="entry-preview-lesson" aria-live="polite">
-        <div>
+        <div className="entry-preview-copy">
           <p className="setup-kicker">Gameplay preview</p>
           <h2 id="entry-preview-title">{activeStep.title}</h2>
           <p>{activeStep.body}</p>

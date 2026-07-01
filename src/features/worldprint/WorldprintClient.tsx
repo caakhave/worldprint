@@ -34,7 +34,6 @@ import { selectDailyRoundIdsFromManifest } from "@/lib/game/dailyManifest";
 import {
   FREE_DAILY_ROUND_COUNT,
   PRO_ATLAS_ROUND_COUNT,
-  SAMPLE_RUN_ROUND_COUNT,
   atlasSeenRoundIds,
   freeDailyRoundIds,
   sampleRunRoundIds,
@@ -268,7 +267,7 @@ export function WorldprintClient({ dateOverride, entryMode = "standard" }: World
   const isArchiveDate = Boolean(dateOverride && todayKey !== actualTodayKey);
   const reviewRequested = isArchiveDate && searchParams.get("review") === "1";
   const challengeCode = entryMode === "challenge" ? searchParams.get("c") : null;
-  const { entitlement, loading: entitlementLoading, signedIn } = useEntitlement();
+  const { entitlement, signedIn } = useEntitlement();
   const isProAccount = signedIn && entitlement.plan === "pro";
   const isFreeAccount = signedIn && entitlement.plan !== "pro";
   const isGuest = !signedIn;
@@ -988,20 +987,6 @@ export function WorldprintClient({ dateOverride, entryMode = "standard" }: World
         ? "Start a practice set. It will not change today's score or streak."
         : "Replay the fixed sample maps while tomorrow's Daily unlocks.";
     const resultActionLabel = completedDailyRun ? "View today's result" : "View saved stats";
-    const accountFactLabel = entitlementLoading
-      ? "Checking account"
-      : isProAccount
-        ? "Pro account"
-        : isFreeAccount
-          ? "Free account"
-          : "Guest sample";
-    const entryFactLabel = isArchiveDate
-      ? "Streak stays safe"
-      : isProAccount
-        ? "Unlimited Atlas"
-        : isFreeAccount
-          ? "3-map Free Daily"
-          : "5-map Sample Run";
     if (reviewRequested) {
       if (reviewRecord) {
         return (
@@ -1039,41 +1024,24 @@ export function WorldprintClient({ dateOverride, entryMode = "standard" }: World
             indicator={indicatorCache[ENTRY_PREVIEW_INDICATOR_ID] ?? indicatorCache[data.manifest.indicators[0]?.id ?? ""]}
             countryNames={data.countryNames}
           />
-          <p className="eyebrow">{isArchiveDate ? `Past Mystery Map Replay · ${todayKey}` : "Mystery Map"}</p>
-          <h1 className="page-title">What does this map measure?</h1>
-          <p className="lead">
-            {isArchiveDate
-              ? "Replay this past Mystery Map as a record run: five unlabeled maps, one hidden indicator each."
-              : isProAccount
-                ? `${PRO_ATLAS_ROUND_COUNT}-map Atlas runs keep the mystery-map format open after today's Free Daily.`
-                : isFreeAccount
-                  ? `Today's Free Daily is ${FREE_DAILY_ROUND_COUNT} fresh unlabeled maps with one hidden indicator each.`
-                  : `Try the ${SAMPLE_RUN_ROUND_COUNT}-map Sample Run now. Continue free for ${FREE_DAILY_ROUND_COUNT} fresh maps every day, or start Pro for the full atlas.`}{" "}
-            Investigate countries when you need evidence, but every clue spends points.
-          </p>
-          <div className="entry-facts" aria-label="Mystery Map facts">
-            <span>{accountFactLabel}</span>
-            <span>{entryFactLabel}</span>
-            <span>{isGuest ? "No saved stats" : "Saved progress"}</span>
-          </div>
-          <div className="entry-lobby-strip" aria-label="Mystery Map lobby preview">
-            <span>
-              <strong>Map</strong>
-              Read colors
-            </span>
-            <span>
-              <strong>1000</strong>
-              Points start
-            </span>
-            <span>
-              <strong>-100</strong>
-              Clue points
-            </span>
-            <span>
-              <strong>Bank</strong>
-              Result points
-            </span>
-          </div>
+          {isArchiveDate ? (
+            <>
+              <p className="eyebrow">{`Past Mystery Map Replay · ${todayKey}`}</p>
+              <h1 className="page-title">What does this map measure?</h1>
+              <p className="lead">
+                Replay this past Mystery Map as a record run: five unlabeled maps, one hidden indicator each. Investigate countries when you need evidence,
+                but every clue spends points.
+              </p>
+            </>
+          ) : (
+            <div className="setup-section setup-section-compact entry-skill-tier">
+              <div className="setup-heading">
+                <p className="setup-kicker">Skill tier</p>
+                <p>Sets the answer list, clues, and investigations for Daily, Practice, and replays.</p>
+              </div>
+              <TierSelector value={selectedTier} onChange={updateTier} />
+            </div>
+          )}
           {data.dailyManifestIssue ? <p className="archive-note">{data.dailyManifestIssue}</p> : null}
         </div>
         <div className="entry-panel surface" aria-label={isArchiveDate ? undefined : "Mystery Map modes"}>
@@ -1169,11 +1137,6 @@ export function WorldprintClient({ dateOverride, entryMode = "standard" }: World
                       Replay for practice
                     </button>
                   ) : null}
-                  {signedIn && (!todayCompleted || completedDailyRun) ? (
-                    <Link className="button-secondary" href="/account/stats">
-                      View saved stats
-                    </Link>
-                  ) : null}
                 </div>
                 <div className="mode-card-grid mode-card-grid-secondary">
                   <article className="mode-card mode-card-practice" id="practice-atlas">
@@ -1257,24 +1220,22 @@ export function WorldprintClient({ dateOverride, entryMode = "standard" }: World
                       <p>
                         {isGuest
                           ? "Continue free to replay recent dated sets. Pro unlocks the complete archive."
-                          : "Dated Daily replays. Replays never change today&apos;s Daily score or streak."}
+                          : "Dated Daily replays. Replays never change today's Daily score or streak."}
                       </p>
                     </div>
                     <div className="mode-card-actions">
                       <Link className="button-secondary" href={isGuest ? "/sign-in" : "/past-games"}>
                         {isGuest ? "Continue free" : "Open past games"}
                       </Link>
+                      {signedIn ? (
+                        <Link className="button-secondary" href="/account/stats">
+                          View saved stats
+                        </Link>
+                      ) : null}
                     </div>
                   </article>
                 </div>
               </section>
-              <div className="setup-section setup-section-compact">
-                <div className="setup-heading">
-                  <p className="setup-kicker">Skill tier</p>
-                  <p>Sets the answer list, clues, and investigations for Daily, Practice, and replays.</p>
-                </div>
-                <TierSelector value={selectedTier} onChange={updateTier} />
-              </div>
             </>
           ) : (
             <>

@@ -34,6 +34,51 @@ describe("WorldprintClient UI structure", () => {
     expect(styles).toContain(".mode-card-grid-secondary .mode-card");
   });
 
+  it("moves the skill tier up into the start-page preview column", () => {
+    const startPageIndex = source.indexOf(
+      'data-entry-mode={isArchiveDate ? "archive" : "daily"}',
+    );
+    const entryCopyIndex = source.indexOf('className="entry-copy"', startPageIndex);
+    const entryPanelIndex = source.indexOf('className="entry-panel surface"', entryCopyIndex);
+    const entryCopySource = source.slice(entryCopyIndex, entryPanelIndex);
+    const movedTierIndex = source.indexOf(
+      'className="setup-section setup-section-compact entry-skill-tier"',
+      entryCopyIndex,
+    );
+
+    expect(movedTierIndex).toBeGreaterThan(entryCopyIndex);
+    expect(movedTierIndex).toBeLessThan(entryPanelIndex);
+    expect(entryCopySource).not.toContain('className="entry-facts"');
+    expect(entryCopySource).not.toContain('className="entry-lobby-strip"');
+    expect(source.match(/Sets the answer list, clues, and investigations for Daily, Practice, and replays\./g)).toHaveLength(1);
+    expect(styles).toContain(".entry-skill-tier");
+  });
+
+  it("keeps saved stats inside the Past Games card instead of as a stray side-route button", () => {
+    const secondaryActionsIndex = source.indexOf('className="lobby-secondary-actions"');
+    const secondaryActionsEnd = source.indexOf('className="mode-card-grid mode-card-grid-secondary"', secondaryActionsIndex);
+    const secondaryActionsSource = source.slice(secondaryActionsIndex, secondaryActionsEnd);
+    const pastCardIndex = source.indexOf('className="mode-card mode-card-past"');
+    const pastCardEnd = source.indexOf("</article>", pastCardIndex);
+    const pastCardSource = source.slice(pastCardIndex, pastCardEnd);
+
+    expect(secondaryActionsSource).not.toContain("View saved stats");
+    expect(pastCardSource).toContain("Open past games");
+    expect(pastCardSource).toContain("View saved stats");
+    expect(pastCardSource).toContain("Replays never change today's Daily score or streak.");
+    expect(pastCardSource).not.toContain("today&apos;s");
+  });
+
+  it("lets preview and reveal text use their full padded card width", () => {
+    expect(styles).toContain(".entry-preview-copy");
+    expect(styles).toContain(".entry-preview-copy h2");
+    expect(styles).toContain(".entry-preview-copy p:not(.setup-kicker)");
+    expect(styles).toContain(".reveal-map h1");
+    expect(styles).toContain("max-width: none;");
+    expect(styles).toContain(".round-result-banner strong");
+    expect(styles).toContain("width: 100%");
+  });
+
   it("gives completed Daily players a clear next action and makes result viewing explicit", () => {
     expect(source).toContain("Today's maps complete");
     expect(source).toContain('const completedPrimaryLabel = signedIn && practiceMatches.length > 0 ? "Play" : "Play Sample Run";');
