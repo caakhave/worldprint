@@ -3,8 +3,7 @@ import type { Metadata } from "next";
 import Link from "next/link";
 import { ArrowRight } from "lucide-react";
 import { HomepageHeroMedia } from "@/components/HomepageHeroMedia";
-import { ACCESS_PLAN_COPY } from "@/lib/account/accessCopy";
-import { homeFaqJsonLd, pageMetadata } from "@/lib/site/seo";
+import { HOME_FAQ_ITEMS, homeFaqJsonLd, pageMetadata } from "@/lib/site/seo";
 
 export const metadata: Metadata = pageMetadata({
   title: "Can You Geo? - Daily Geography Games & World Data Puzzles",
@@ -62,32 +61,10 @@ const modeCards = [
   }
 ] as const;
 
-const quickAnswers = [
-  {
-    question: "What is Can You Geo?",
-    answer:
-      "Can You Geo? is a geography game site built around Mystery Map, a daily world map puzzle where real data becomes the mystery."
-  },
-  {
-    question: "Is Can You Geo free?",
-    answer:
-      "Yes. Guests can try a fixed Sample Run, and Free accounts get a 3-map Free Daily with saved progress, streaks, and basic stats."
-  },
-  {
-    question: "How does Mystery Map work?",
-    answer:
-      "Mystery Map shows an unlabeled choropleth map. Read the color pattern, reveal country values only when needed, then guess the hidden indicator."
-  },
-  {
-    question: "What data sources does Can You Geo use?",
-    answer:
-      "The current game uses World Bank World Development Indicators on Natural Earth country geometry, with reviewed years, units, and missing-data rules."
-  },
-  {
-    question: "What makes it different from other geography games?",
-    answer:
-      "Instead of only naming places, Can You Geo? asks you to interpret real-world patterns: a map game, geography quiz, and world data puzzle in one."
-  }
+const heroAccountLines = [
+  "No account needed to try out our sample maps.",
+  "Free accounts get three fresh maps per day.",
+  "Pro accounts get full gameplay."
 ] as const;
 
 export default function HomePage() {
@@ -113,7 +90,11 @@ export default function HomePage() {
                 Try Sample Run
               </Link>
             </div>
-            <p className="hero-note">{ACCESS_PLAN_COPY.guest.summary}</p>
+            <p className="hero-note">
+              {heroAccountLines.map((line) => (
+                <span key={line}>{line}</span>
+              ))}
+            </p>
           </div>
           <aside className="hero-join-panel" aria-label="Join the daily challenge">
             <p className="eyebrow">Join the game</p>
@@ -137,10 +118,10 @@ export default function HomePage() {
             </p>
           </div>
           <div className="homepage-answer-grid">
-            {quickAnswers.map((item) => (
-              <article className="surface homepage-answer-card" key={item.question}>
-                <h3>{item.question}</h3>
-                <p>{item.answer}</p>
+            {HOME_FAQ_ITEMS.map((item) => (
+              <article className="surface homepage-answer-card" key={item.name}>
+                <h3>{item.name}</h3>
+                <p>{item.acceptedAnswer}</p>
               </article>
             ))}
           </div>
@@ -150,9 +131,9 @@ export default function HomePage() {
       <section className="section-band homepage-section" id="how-it-works">
         <div className="page-shell homepage-section-layout">
           <div className="homepage-section-heading">
-            <p className="eyebrow">How it works</p>
-            <h2>Follow the signal.</h2>
-            <p className="section-lede">Every round is a tiny mystery: read the map, spend clues, make the call.</p>
+            <p className="eyebrow">How Mystery Map works</p>
+            <h2>Start with Mystery Map.</h2>
+            <p className="section-lede">The current featured game is a tiny mystery: read the map, spend clues, make the call.</p>
           </div>
           <div className="game-loop-grid" aria-label="How Can You Geo works">
             {signalCards.map((card) => (

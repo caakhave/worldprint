@@ -140,7 +140,7 @@ export default function RootLayout({ children }: Readonly<{ children: React.Reac
           dangerouslySetInnerHTML={{ __html: JSON.stringify(siteStructuredData) }}
         />
         <footer className="site-footer">
-          <p>Can You Geo? is a daily geography game. Play Mystery Map, replay past games, and check the data sources any time.</p>
+          <p>Can You Geo? is a daily geography game. Play new games, replay past games, and check the data sources any time.</p>
           <nav className="footer-nav" aria-label="Footer navigation">
             {footerItems.map((item) => (
               <Link key={item.href} href={item.href}>

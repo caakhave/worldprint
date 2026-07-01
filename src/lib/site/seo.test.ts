@@ -3,6 +3,7 @@ import {
   canonicalPath,
   canonicalUrl,
   homeFaqJsonLd,
+  HOME_FAQ_ITEMS,
   NON_INDEXED_ROUTE_PREFIXES,
   pageMetadata,
   PUBLIC_INDEXED_ROUTES,
@@ -46,7 +47,9 @@ describe("site SEO helpers", () => {
   it("only emits FAQ structured data for the visible homepage quick answers", () => {
     const faq = homeFaqJsonLd("https://canyougeo.com");
     expect(faq["@type"]).toBe("FAQPage");
-    expect(faq.mainEntity.map((item) => item.name)).toContain("What is Can You Geo?");
-    expect(faq.mainEntity.map((item) => item.name)).toContain("Is Can You Geo free?");
+    expect(faq.mainEntity.map((item) => item.name)).toEqual(HOME_FAQ_ITEMS.map((item) => item.name));
+    expect(faq.mainEntity[0].acceptedAnswer.text).toContain("geography game site");
+    expect(faq.mainEntity[0].acceptedAnswer.text).toContain("Mystery Map is the first game");
+    expect(faq.mainEntity[2].acceptedAnswer.text).toContain("current featured game");
   });
 });

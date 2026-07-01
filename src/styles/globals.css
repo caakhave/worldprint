@@ -787,6 +787,10 @@ button:disabled {
   line-height: 1.45;
 }
 
+.hero-note span {
+  display: block;
+}
+
 .hero-primary-cta {
   min-height: 50px;
   border-color: rgb(242 234 220 / 0.32);

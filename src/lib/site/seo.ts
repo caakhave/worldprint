@@ -227,39 +227,39 @@ export function breadcrumbJsonLd(items: Array<{ name: string; path: string }>, o
   };
 }
 
-export function homeFaqJsonLd(origin = publicSiteOrigin()) {
-  const questions = [
-    {
-      name: "What is Can You Geo?",
-      acceptedAnswer:
-        "Can You Geo? is a web geography game built around Mystery Map, a daily data-map puzzle where players read an unlabeled world map and guess the hidden indicator."
-    },
-    {
-      name: "Is Can You Geo free?",
-      acceptedAnswer:
-        "Yes. Guests can try a fixed Sample Run, and Free accounts get a 3-map Free Daily with saved progress and basic stats. Pro is planned for expanded Atlas play, the full Practice Atlas, complete Past Games, and advanced stats."
-    },
-    {
-      name: "How does Mystery Map work?",
-      acceptedAnswer:
-        "Mystery Map shows a choropleth world map without the indicator label. Players study the color pattern, optionally reveal country values and units for points, then choose the hidden data measure."
-    },
-    {
-      name: "What data sources does Can You Geo use?",
-      acceptedAnswer:
-        "Can You Geo? currently uses World Bank World Development Indicators for gameplay values and Natural Earth Admin 0 country geometry for the world map."
-    },
-    {
-      name: "What makes Can You Geo different from other geography games?",
-      acceptedAnswer:
-        "Instead of naming capitals or finding a country outline, Can You Geo? asks players to interpret real-world data patterns on a map, making it a geography puzzle and a world data quiz at the same time."
-    }
-  ];
+export const HOME_FAQ_ITEMS = [
+  {
+    name: "What is Can You Geo?",
+    acceptedAnswer:
+      "Can You Geo? is a geography game site for daily map puzzles. Mystery Map is the first game: a world data challenge where real patterns become the mystery."
+  },
+  {
+    name: "Is Can You Geo free?",
+    acceptedAnswer:
+      "Yes. Guests can try a fixed Sample Run, and Free accounts get a 3-map Free Daily with saved progress, streaks, and basic stats."
+  },
+  {
+    name: "How does Mystery Map work?",
+    acceptedAnswer:
+      "Mystery Map is the current featured game. It shows an unlabeled choropleth map; read the color pattern, reveal country values only when needed, then guess the hidden indicator."
+  },
+  {
+    name: "What data sources does Can You Geo use?",
+    acceptedAnswer:
+      "The current game uses World Bank World Development Indicators on Natural Earth country geometry, with reviewed years, units, and missing-data rules."
+  },
+  {
+    name: "What makes it different from other geography games?",
+    acceptedAnswer:
+      "Instead of only naming places, Can You Geo? asks you to interpret real-world patterns: a map game, geography quiz, and world data puzzle in one."
+  }
+] as const;
 
+export function homeFaqJsonLd(origin = publicSiteOrigin()) {
   return {
     "@context": "https://schema.org",
     "@type": "FAQPage",
-    mainEntity: questions.map((question) => ({
+    mainEntity: HOME_FAQ_ITEMS.map((question) => ({
       "@type": "Question",
       name: question.name,
       acceptedAnswer: {

@@ -4,7 +4,7 @@ import Link from "next/link";
 import { useEffect, useMemo, useState } from "react";
 import { useEntitlement } from "@/features/account/useEntitlement";
 import { useSupabaseAccount } from "@/features/account/useSupabaseAccount";
-import { archiveDateRange, publicArchiveEntries, visibleArchiveEntries } from "@/features/worldprint/archiveAccess";
+import { publicArchiveEntries, visibleArchiveEntries } from "@/features/worldprint/archiveAccess";
 import { PlayerStatsPanel } from "@/features/worldprint/PlayerStatsPanel";
 import { fetchRemoteRunSummaries } from "@/lib/account/sync";
 import { loadDailyIndex } from "@/lib/content/loaders";
@@ -140,7 +140,7 @@ export function ArchiveCard({
       <div className="archive-card-action" data-state={hasCompletion ? "saved" : signedIn ? "open" : "guest"}>
         <Link
           className="button"
-          href={hasCompletion ? `/play/mystery-map/${entry.date}?review=1` : signedIn ? `/play/mystery-map/${entry.date}` : "/sign-in"}
+          href={hasCompletion ? `/play/mystery-map/${entry.date}?review=1` : signedIn ? `/play/mystery-map/${entry.date}` : "/sign-up"}
           onClick={() =>
             trackCanYouGeoEvent(signedIn ? "cgy_past_game_opened" : "cgy_sign_in_clicked", {
               source: "past_games_card",
@@ -217,7 +217,6 @@ export function ArchiveClient() {
     () => visibleArchiveEntries(entries, store, signedIn ? entitlement.capabilities.archiveLimitDays : 0),
     [entries, entitlement.capabilities.archiveLimitDays, signedIn, store]
   );
-  const publicRange = archiveDateRange(entries);
   const hiddenCount = Math.max(0, entries.length - visibleEntries.length);
   const accountRunByDate = useMemo(() => {
     const byDate = new Map<string, GameRunRow>();
@@ -257,10 +256,6 @@ export function ArchiveClient() {
       <div className="archive-hero">
         <p className="eyebrow">Past Games</p>
         <h1 className="page-title">Review Past Mystery Maps.</h1>
-        <p className="lead">
-          Each past date is a fixed 5-map set{publicRange ? ` from ${publicRange.start} to ${publicRange.end}` : ""}. Review your result, replay for
-          practice, or chase a personal best. Replays never change today&apos;s Daily score or streak.
-        </p>
       </div>
       <div className="archive-note surface map-texture-panel">
         <strong>Past Games are separate from today&apos;s Daily.</strong>
@@ -309,7 +304,7 @@ export function ArchiveClient() {
             <Link className="button" href="/upgrade">
               Start Pro
             </Link>
-            <Link className="button-secondary" href="/sign-in">
+            <Link className="button-secondary" href="/sign-up">
               Continue free
             </Link>
           </div>

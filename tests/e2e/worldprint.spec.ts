@@ -195,13 +195,15 @@ test("first visit starts the Analyst Daily", async ({ page }) => {
   await expect(page.locator(".hero-copy .lead")).toHaveText(
     "A new mystery map is waiting. Spot the pattern, spend your clues wisely, and guess what the planet is hiding."
   );
-  await expect(page.getByText("Try sample play without an account. Create a free account for the official 5-map Daily, saved results, progress, and streaks.")).toBeVisible();
+  await expect(page.getByText("No account needed to try out our sample maps.")).toBeVisible();
+  await expect(page.getByText("Free accounts get three fresh maps per day.")).toBeVisible();
+  await expect(page.getByText("Pro accounts get full gameplay.")).toBeVisible();
   await expect(page.getByRole("heading", { name: "Join the daily challenge" })).toBeVisible();
   await expect(page.getByText("The official 5-map Daily, saved progress, streaks, and basic stats start with a free account.")).toBeVisible();
   await expect(page.getByRole("link", { name: /Create free account/i }).first()).toHaveAttribute("href", /\/sign-in\/?$/);
   await expect(page.getByRole("heading", { name: "Read the map" })).toBeVisible();
-  await expect(page.getByRole("heading", { name: "Follow the signal." })).toBeVisible();
-  await expect(page.getByText("Every round is a tiny mystery: read the map, spend clues, make the call.")).toBeVisible();
+  await expect(page.getByRole("heading", { name: "Start with Mystery Map." })).toBeVisible();
+  await expect(page.getByText("The current featured game is a tiny mystery: read the map, spend clues, make the call.")).toBeVisible();
   await expect(page.locator(".game-loop-tile")).toHaveCount(3);
   for (const imageName of ["01-read-the-map", "02-use-your-clues", "03-make-the-call"]) {
     await expect(page.locator(`img[src*="${imageName}.png"]`)).toHaveCount(1);
@@ -1066,8 +1068,7 @@ test("past games page reads as player replay, not admin archive", async ({ page 
   await page.goto("/past-games");
   await expect(page.locator(".archive-hero .eyebrow")).toHaveText("Past Games");
   await expect(page.getByRole("heading", { name: /Review Past Mystery Maps/i })).toBeVisible();
-  await expect(page.getByText(/Each past date is a fixed 5-map set/i)).toBeVisible();
-  await expect(page.getByText(/replay for practice/i)).toBeVisible();
+  await expect(page.locator(".archive-hero")).not.toContainText(/Each past date is a fixed 5-map set/i);
   await expect(page.getByText(/Past Games are separate from today's Daily/i)).toBeVisible();
   await expect(page.getByRole("heading", { name: "Sign in to keep Past Games history." })).toBeVisible();
   await expect(page.getByText(/Sample replays are playable now/i)).toBeVisible();
@@ -1239,7 +1240,7 @@ test("captures deterministic visual screenshots", async ({ page }, testInfo) => 
   mkdirSync(dir, { recursive: true });
   await page.goto("/");
   await expect(page.getByRole("heading", { name: "Can you read the world?" })).toBeVisible();
-  await expect(page.getByRole("heading", { name: "Follow the signal." })).toBeVisible();
+  await expect(page.getByRole("heading", { name: "Start with Mystery Map." })).toBeVisible();
   await expect(page.locator(".game-loop-tile")).toHaveCount(3);
   await expect(page.locator(".mode-poster")).toHaveCount(3);
   await expect(page.getByTestId("cinematic-home-hero")).toBeVisible();
