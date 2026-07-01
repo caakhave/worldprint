@@ -19,9 +19,11 @@ Prefer Google Tag Manager for launch:
 
 ```text
 NEXT_PUBLIC_ANALYTICS_ENABLED=true
-NEXT_PUBLIC_GTM_ID=GTM-XXXXXXX
+NEXT_PUBLIC_GTM_ID=GTM-5CQ22953
 NEXT_PUBLIC_GA_MEASUREMENT_ID=
 ```
+
+Current launch setup: GA4 measurement ID `G-PQKXKN89W9` is configured inside the GTM container as a Google Tag. Do not also set `NEXT_PUBLIC_GA_MEASUREMENT_ID` in Production while GTM is configured, or page views may be counted twice.
 
 Direct GA4 is supported only when GTM is absent:
 
@@ -65,18 +67,21 @@ Cloudflare Web Analytics or Insights may still be injected from the Cloudflare d
 1. Create or confirm the production GA4 property for `canyougeo.com`.
 2. Create a production Google Tag Manager container if using GTM.
 3. In GTM, configure GA4 page view and custom event forwarding for the `cgy_*` events.
-4. Set Cloudflare Pages Production env:
+4. Publish the GTM container before production launch. The current launch container is `GTM-5CQ22953`.
+5. Set Cloudflare Pages Production env:
    - `NEXT_PUBLIC_SITE_URL=https://canyougeo.com`
    - `NEXT_PUBLIC_NO_INDEX=false`
    - `NEXT_PUBLIC_ANALYTICS_ENABLED=true`
-   - `NEXT_PUBLIC_GTM_ID=GTM-XXXXXXX` or `NEXT_PUBLIC_GA_MEASUREMENT_ID=G-XXXXXXXXXX`
-5. Keep Cloudflare Pages Preview env:
+   - `NEXT_PUBLIC_GTM_ID=GTM-5CQ22953`
+   - leave `NEXT_PUBLIC_GA_MEASUREMENT_ID` unset because GA4 is already inside GTM
+6. Keep Cloudflare Pages Preview env:
    - `NEXT_PUBLIC_SITE_URL=https://test.canyougeo.com`
    - `NEXT_PUBLIC_NO_INDEX=true`
    - `NEXT_PUBLIC_ANALYTICS_ENABLED=false`
-6. Deploy production and confirm the script appears only on `https://canyougeo.com`.
-7. Confirm no analytics script appears on `https://test.canyougeo.com`.
-8. Use GA4 DebugView or GTM Preview on production only after launch approval.
+   - `NEXT_PUBLIC_GTM_ID=GTM-5CQ22953` may be present, but the app will not load it while analytics is disabled/noindexed
+7. Deploy production and confirm the script appears only on `https://canyougeo.com`.
+8. Confirm no analytics script appears on `https://test.canyougeo.com`.
+9. Use GA4 DebugView or GTM Preview on production only after launch approval.
 
 ## Canonical `www` Redirect
 

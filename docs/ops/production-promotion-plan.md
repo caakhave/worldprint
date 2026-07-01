@@ -200,14 +200,17 @@ Before pushing `main`, confirm:
   - `NEXT_PUBLIC_SUPABASE_URL` has no `/rest/v1`, `/auth/v1`, path, query, or hash.
   - `NEXT_PUBLIC_SUPABASE_ANON_KEY` is present.
   - `NEXT_PUBLIC_NO_INDEX` is unset or `false` only when ready for public indexing.
-  - `NEXT_PUBLIC_ANALYTICS_ENABLED=false` unless production GTM or GA4 has been approved for launch.
-  - If analytics is enabled, set either `NEXT_PUBLIC_GTM_ID=GTM-XXXXXXX` or `NEXT_PUBLIC_GA_MEASUREMENT_ID=G-XXXXXXXXXX`; GTM is preferred.
+  - `NEXT_PUBLIC_ANALYTICS_ENABLED=true` after production analytics approval.
+  - `NEXT_PUBLIC_GTM_ID=GTM-5CQ22953`.
+  - Leave `NEXT_PUBLIC_GA_MEASUREMENT_ID` unset because GA4 `G-PQKXKN89W9` is configured inside GTM.
+  - Confirm the GTM container `GTM-5CQ22953` is published before production launch.
   - Add a 301 Redirect Rule from `https://www.canyougeo.com/*` to `https://canyougeo.com/*`, preserving path and query string.
 - Cloudflare Preview/staging:
   - `NEXT_PUBLIC_BILLING_MODE=test`
   - `NEXT_PUBLIC_SITE_URL=https://test.canyougeo.com`
   - staging remains noindexed.
   - `NEXT_PUBLIC_ANALYTICS_ENABLED=false`
+  - `NEXT_PUBLIC_GTM_ID=GTM-5CQ22953` may be present, but the app should not load it while analytics is disabled/noindexed.
 - Supabase Auth:
   - Redirect URLs include `https://canyougeo.com/auth/callback`, `https://canyougeo.com/reset-password`, `https://test.canyougeo.com/auth/callback`, and `https://test.canyougeo.com/reset-password`.
   - Email confirmation template is production-safe and points users back to the configured redirect.
