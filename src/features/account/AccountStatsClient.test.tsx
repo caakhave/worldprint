@@ -83,10 +83,14 @@ describe("AccountStatsClient", () => {
 
     expect(await screen.findByRole("heading", { name: "No account-saved runs yet." })).toBeVisible();
     expect(screen.getByText(/Account stats are private to you/i)).toBeVisible();
-    expect(screen.queryByRole("region", { name: "Save local progress" })).not.toBeInTheDocument();
+    expect(screen.getByRole("region", { name: "Save local progress" })).toBeVisible();
+    expect(screen.getByRole("heading", { name: "No local plays to import." })).toBeVisible();
+    expect(screen.getByText(/When this browser has guest plays that are not in your account/i)).toBeVisible();
+    expect(screen.getByRole("button", { name: "No previous plays found" })).toBeDisabled();
     expect(screen.queryByText("Stats sync")).not.toBeInTheDocument();
     expect(screen.queryByText("Account sync ready")).not.toBeInTheDocument();
     expect(screen.queryByRole("heading", { name: "Import local runs" })).not.toBeInTheDocument();
+    expect(screen.queryByText(/advanced stats/i)).not.toBeInTheDocument();
     expect(screen.queryByText("Saved in this browser.")).not.toBeInTheDocument();
     expect(screen.queryByText(/Create a free account/i)).not.toBeInTheDocument();
     expect(screen.queryByText(/Sign in when you want/i)).not.toBeInTheDocument();
@@ -136,8 +140,9 @@ describe("AccountStatsClient", () => {
     render(<AccountStatsClient />);
 
     expect(screen.getByRole("heading", { name: "Saved in this browser." })).toBeVisible();
-    expect(screen.getByRole("heading", { name: "Start Pro or continue free." })).toBeVisible();
-    expect(screen.getByText(/Pro unlocks full history and advanced stats/i)).toBeVisible();
-    expect(screen.getByRole("link", { name: "Continue free" })).toHaveAttribute("href", "/sign-in");
+    expect(screen.getByRole("heading", { name: "Sign in to save across devices." })).toBeVisible();
+    expect(screen.getByText(/A free account keeps your Daily record and saved results together/i)).toBeVisible();
+    expect(screen.getByRole("link", { name: "Sign in" })).toHaveAttribute("href", "/sign-in");
+    expect(screen.queryByText(/advanced stats/i)).not.toBeInTheDocument();
   });
 });

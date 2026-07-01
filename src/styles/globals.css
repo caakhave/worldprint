@@ -6578,11 +6578,33 @@ dd {
   background: rgb(217 77 115 / 0.1);
 }
 
-.account-stats-stack {
+.account-stats-layout {
   display: grid;
-  grid-template-columns: minmax(0, 1fr) minmax(18rem, 0.42fr);
+  grid-template-columns: repeat(2, minmax(0, 1fr));
   gap: 1rem;
   align-items: start;
+}
+
+.account-stats-layout > .stats-panel {
+  grid-column: 1 / -1;
+  width: 100%;
+}
+
+.account-stats-secondary-card {
+  display: grid;
+  gap: 1rem;
+  align-content: start;
+  min-height: 100%;
+}
+
+.account-stats-counts-card .account-checklist {
+  gap: 0.7rem;
+}
+
+.account-stats-counts-card .button-secondary,
+.account-stats-secondary-card .button,
+.account-stats-secondary-card .button-secondary {
+  justify-self: start;
 }
 
 .account-sync-card {
@@ -6692,7 +6714,12 @@ dd {
 }
 
 .upgrade-hero-action-panel .billing-actions {
+  align-content: stretch;
   justify-items: stretch;
+}
+
+.upgrade-hero-action-panel .checkout-option-buttons {
+  align-items: stretch;
 }
 
 .upgrade-hero-action-panel .billing-actions > .button,
@@ -6700,6 +6727,26 @@ dd {
 .upgrade-hero-action-panel .checkout-option-buttons .button,
 .upgrade-hero-action-panel .checkout-option-buttons .button-secondary {
   width: 100%;
+}
+
+.upgrade-hero-action-panel .checkout-option-buttons .button,
+.upgrade-hero-action-panel .checkout-option-buttons .button-secondary {
+  min-height: 4.6rem;
+}
+
+.pro-plan-card .billing-actions {
+  width: 100%;
+}
+
+.pro-plan-card .billing-actions .checkout-option-buttons {
+  justify-self: stretch;
+  width: 100%;
+  align-items: stretch;
+}
+
+.pro-plan-card .billing-actions .checkout-option-buttons .button,
+.pro-plan-card .billing-actions .checkout-option-buttons .button-secondary {
+  justify-self: stretch;
 }
 
 .upgrade-hero h2,
@@ -7897,7 +7944,7 @@ button.pro-price-option:focus-visible {
 @media (max-width: 980px) {
   .account-grid,
   .account-stats-grid,
-  .account-stats-stack,
+  .account-stats-layout,
   .account-profile-hero,
   .upgrade-hero,
   .plan-grid,

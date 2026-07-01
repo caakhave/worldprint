@@ -1,3 +1,5 @@
+import { readFileSync } from "node:fs";
+import { join } from "node:path";
 import { fireEvent, render, screen, waitFor, within } from "@testing-library/react";
 import { beforeEach, describe, expect, it, vi } from "vitest";
 import { UpgradeClient } from "@/features/account/UpgradeClient";
@@ -5,6 +7,7 @@ import { FREE_ENTITLEMENT, PRO_ENTITLEMENT, type PlayerEntitlement } from "@/lib
 import { CONTACT_LINKS } from "@/lib/contact";
 
 const TEST_USER = { id: "11111111-2222-4333-8444-555555555555", email: "reader@example.com" };
+const styles = readFileSync(join(process.cwd(), "src/styles/globals.css"), "utf8");
 
 type BillingMockClient = {
   auth: { getSession: ReturnType<typeof vi.fn> };
@@ -138,6 +141,26 @@ describe("UpgradeClient", () => {
       )
     ).toBeVisible();
     expect(screen.getAllByText("Best value").length).toBeGreaterThanOrEqual(1);
+  });
+
+  it("keeps the top Pro checkout buttons full-width and aligned with plan cards", () => {
+    process.env.NEXT_PUBLIC_BILLING_MODE = "test";
+    entitlementMock.state.signedIn = true;
+    accountMock.state.user = TEST_USER;
+
+    render(<UpgradeClient />);
+
+    const overview = screen.getByLabelText("Upgrade overview");
+    const actions = overview.querySelector(".upgrade-hero-action-panel");
+    expect(actions?.querySelector(".checkout-option-buttons")).toBeTruthy();
+    expect(within(overview).getByRole("button", { name: "Join monthly" })).toBeEnabled();
+    expect(within(overview).getByRole("button", { name: "Join yearly" })).toBeEnabled();
+    expect(styles).toContain(".upgrade-hero-action-panel .checkout-option-buttons");
+    expect(styles).toContain(".upgrade-hero-action-panel .checkout-option-buttons .button");
+    expect(styles).toContain(".pro-plan-card .billing-actions .checkout-option-buttons");
+    expect(styles).toContain("justify-self: stretch");
+    expect(styles).toContain("width: 100%");
+    expect(styles).toContain("min-height: 4.6rem");
   });
 
   it("shows a focused monthly Pro intent landing state after sign-in", async () => {

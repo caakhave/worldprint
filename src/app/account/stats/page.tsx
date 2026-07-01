@@ -1,7 +1,6 @@
 import type { Metadata } from "next";
 import Link from "next/link";
 import { AccountStatsClient } from "@/features/account/AccountStatsClient";
-import { AdvancedStatsGateClient } from "@/features/account/MembershipCardClient";
 
 export const metadata: Metadata = {
   title: "Saved Stats",
@@ -21,30 +20,29 @@ export default function AccountStatsPage() {
         </p>
       </div>
 
-      <div className="account-grid account-stats-grid">
+      <div className="account-stats-layout">
         <AccountStatsClient />
-        <article className="surface account-card">
+        <article className="surface account-card account-stats-secondary-card account-stats-counts-card" aria-label="What counts today">
           <h2>What counts today</h2>
           <ul className="account-checklist">
             <li>
               <strong>Daily</strong>
-              <span>Each date counts once toward the Daily record.</span>
+              <span>Each date counts once toward your Daily record.</span>
             </li>
             <li>
               <strong>Past Games</strong>
-              <span>Replayed days can be saved to your account without changing the live streak.</span>
+              <span>Dated replays can be saved without changing today&apos;s streak.</span>
             </li>
             <li>
               <strong>Challenges</strong>
-              <span>Completed challenge links count by challenge ID.</span>
+              <span>Friend challenge results stay separate from Daily scoring.</span>
             </li>
           </ul>
-          <p className="account-env-note">Practice warm-ups are kept out of the permanent local record for now.</p>
+          <p className="account-env-note">Practice warm-ups are for learning and do not affect your Daily record.</p>
           <Link className="button-secondary" href="/account">
             Back to account
           </Link>
         </article>
-        <AdvancedStatsGateClient />
       </div>
     </section>
   );

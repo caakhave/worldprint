@@ -22,7 +22,7 @@ function formatNumber(value: number | null | undefined): string {
 
 function AccountRemoteStatsPanel({ stats }: { stats: AccountCloudStats }) {
   return (
-    <section className="stats-panel surface player-stats-panel account-remote-stats" aria-label="Your stats">
+    <section className="stats-panel surface player-stats-panel account-remote-stats account-stats-primary-card" aria-label="Your stats">
       <div className="player-stats-heading">
         <p className="eyebrow">Your stats</p>
         <h2>Saved to your account.</h2>
@@ -73,8 +73,7 @@ function AccountRemoteStatsPanel({ stats }: { stats: AccountCloudStats }) {
         </div>
       ) : null}
       <p className="player-stats-note">
-        Saved privately to this account. Daily: {stats.daily_games}. Atlas: {stats.atlas_games}. Practice: {stats.practice_games}. Past Games: {stats.archive_games}.
-        Challenges: {stats.challenge_games}.
+        Private to this account. Daily: {stats.daily_games}. Atlas: {stats.atlas_games}. Past Games: {stats.archive_games}. Challenges: {stats.challenge_games}.
       </p>
     </section>
   );
@@ -82,15 +81,15 @@ function AccountRemoteStatsPanel({ stats }: { stats: AccountCloudStats }) {
 
 function AccountEmptyStatsPanel({ hasLocalHistory }: { hasLocalHistory: boolean }) {
   return (
-    <section className="stats-panel surface player-stats-panel account-remote-stats" aria-label="Your stats">
+    <section className="stats-panel surface player-stats-panel account-remote-stats account-stats-primary-card" aria-label="Your stats">
       <div className="player-stats-heading">
-        <p className="eyebrow">Account stats</p>
+        <p className="eyebrow">Your stats</p>
         <h2>No account-saved runs yet.</h2>
       </div>
       <p className="player-stats-empty">
         {hasLocalHistory
-          ? "This browser has completed runs ready to import into your account."
-          : "Complete a Daily, Practice run, Past Game, or Challenge while signed in and it will appear here."}
+          ? "This browser has previous plays ready to move into your account."
+          : "Play today's maps, a Past Game, or a Challenge while signed in and your results will appear here."}
       </p>
       <p className="player-stats-note">Signed in. Account stats are private to you; no leaderboard or public profile.</p>
     </section>
@@ -179,7 +178,6 @@ export function AccountStatsClient() {
   }
 
   const alreadyImported = syncStatus.toLowerCase().includes("already in your account");
-  const showLocalImportCard = loading || remoteLoading || !user || !configured || hasLocalHistory || Boolean(syncStatus || syncError);
   const importButtonLabel = syncing
     ? "Importing..."
     : !hasLocalHistory
@@ -189,7 +187,7 @@ export function AccountStatsClient() {
         : "Import plays";
 
   return (
-    <div className="account-stats-stack">
+    <>
       {user ? (
         remoteStats ? (
           <AccountRemoteStatsPanel stats={remoteStats} />
@@ -197,56 +195,63 @@ export function AccountStatsClient() {
           <AccountEmptyStatsPanel hasLocalHistory={hasLocalHistory} />
         )
       ) : (
-        <PlayerStatsPanel store={store} landmark={false} />
+        <PlayerStatsPanel
+          store={store}
+          landmark={false}
+          heading="Saved in this browser."
+          note="Local to this device. Sign in when you want your Daily record and account saves together."
+        />
       )}
 
-      {showLocalImportCard ? (
-        <section className="surface account-card account-sync-card" aria-label="Save local progress">
-          <p className="eyebrow">Save local progress</p>
-          {loading || remoteLoading ? (
-            <>
-              <h2>Checking account stats.</h2>
-              <p>Looking for saved stats on this account.</p>
-            </>
-          ) : user ? (
-            <>
-              <h2>Previous plays found</h2>
-              <p>Move previous guest plays from this browser into your account. Existing account saves are deduped, and local play still works.</p>
-              <button
-                className={hasLocalHistory && !alreadyImported ? "button" : "button-secondary"}
-                type="button"
-                onClick={() => void syncStats()}
-                disabled={syncing || !hasLocalHistory || alreadyImported}
-              >
-                {importButtonLabel}
-              </button>
-            </>
-          ) : configured ? (
-            <>
-              <h2>Start Pro or continue free.</h2>
-              <p>Pro unlocks full history and advanced stats. Free needs no card and saves your Daily progress. Local sample-play stats are still shown above.</p>
-              <Link className="button" href="/sign-in">
-                Continue free
-              </Link>
-            </>
-          ) : (
-            <>
-              <h2>Account sign-in is unavailable in this preview.</h2>
-              <p>Local stats still work in this browser.</p>
-            </>
-          )}
-          {syncStatus ? (
-            <p className="status-live" role="status">
-              {syncStatus}
+      <section className="surface account-card account-sync-card account-stats-secondary-card" aria-label="Save local progress">
+        <p className="eyebrow">Save local progress</p>
+        {loading || remoteLoading ? (
+          <>
+            <h2>Checking your saved plays.</h2>
+            <p>Looking for account saves and any previous plays from this browser.</p>
+          </>
+        ) : user ? (
+          <>
+            <h2>{hasLocalHistory ? "Previous plays found" : "No local plays to import."}</h2>
+            <p>
+              {hasLocalHistory
+                ? "Move previous guest plays from this browser into your account. We skip anything already saved."
+                : "When this browser has guest plays that are not in your account, you can move them here."}
             </p>
-          ) : null}
-          {syncError ? (
-            <p className="account-error" role="alert">
-              {syncError}
-            </p>
-          ) : null}
-        </section>
-      ) : null}
-    </div>
+            <button
+              className={hasLocalHistory && !alreadyImported ? "button" : "button-secondary"}
+              type="button"
+              onClick={() => void syncStats()}
+              disabled={syncing || !hasLocalHistory || alreadyImported}
+            >
+              {importButtonLabel}
+            </button>
+          </>
+        ) : configured ? (
+          <>
+            <h2>Sign in to save across devices.</h2>
+            <p>Your local stats stay in this browser. A free account keeps your Daily record and saved results together.</p>
+            <Link className="button" href="/sign-in">
+              Sign in
+            </Link>
+          </>
+        ) : (
+          <>
+            <h2>Account sign-in is unavailable in this preview.</h2>
+            <p>Local stats still work in this browser.</p>
+          </>
+        )}
+        {syncStatus ? (
+          <p className="status-live" role="status">
+            {syncStatus}
+          </p>
+        ) : null}
+        {syncError ? (
+          <p className="account-error" role="alert">
+            {syncError}
+          </p>
+        ) : null}
+      </section>
+    </>
   );
 }
