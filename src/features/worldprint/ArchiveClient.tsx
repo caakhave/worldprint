@@ -13,6 +13,7 @@ import { challengeNumber } from "@/lib/game/daily";
 import { localDateKey } from "@/lib/game/retention";
 import { TIER_CONFIGS } from "@/lib/game/scoring";
 import { defaultPersistedState, loadPersistedState, type CompletionHistory, type PersistedState } from "@/lib/persistence/storage";
+import { trackCanYouGeoEvent } from "@/lib/site/analytics";
 import type { GameRunRow } from "@/lib/supabase/database";
 
 function mixLabel(mix: Record<string, number>) {
@@ -137,11 +138,24 @@ export function ArchiveCard({
         </div>
       </dl>
       <div className="archive-card-action" data-state={hasCompletion ? "saved" : signedIn ? "open" : "guest"}>
-        <Link className="button" href={hasCompletion ? `/play/mystery-map/${entry.date}?review=1` : signedIn ? `/play/mystery-map/${entry.date}` : "/sign-in"}>
+        <Link
+          className="button"
+          href={hasCompletion ? `/play/mystery-map/${entry.date}?review=1` : signedIn ? `/play/mystery-map/${entry.date}` : "/sign-in"}
+          onClick={() =>
+            trackCanYouGeoEvent(signedIn ? "cgy_past_game_opened" : "cgy_sign_in_clicked", {
+              source: "past_games_card",
+              has_result: hasCompletion
+            })
+          }
+        >
           {actionLabel}
         </Link>
         {hasCompletion ? (
-          <Link className="button-secondary" href={`/play/mystery-map/${entry.date}`}>
+          <Link
+            className="button-secondary"
+            href={`/play/mystery-map/${entry.date}`}
+            onClick={() => trackCanYouGeoEvent("cgy_past_game_opened", { source: "past_games_replay", has_result: true })}
+          >
             Replay for practice
           </Link>
         ) : null}

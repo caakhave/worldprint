@@ -142,6 +142,18 @@ describe("WorldprintClient UI structure", () => {
     expect(source).toContain('run.mode === "challenge" ? "Replay this challenge" : "Replay for practice"');
   });
 
+  it("wires only high-level launch analytics events without answer labels", () => {
+    expect(source).toContain("trackCanYouGeoEvent");
+    expect(source).toContain('"cgy_game_start"');
+    expect(source).toContain('"cgy_round_answered"');
+    expect(source).toContain('"cgy_game_complete"');
+    expect(source).toContain('"cgy_share_clicked"');
+    expect(source).toContain('"cgy_challenge_created"');
+    expect(source).toContain("round_number: current.currentRoundIndex + 1");
+    expect(source).not.toContain('answer_label');
+    expect(source).not.toContain('indicator_id');
+  });
+
   it("keeps the challenge email modal padded and readable across widths", () => {
     expect(source).toContain('className="challenge-email-modal surface"');
     expect(source).toContain("Send challenge by email");

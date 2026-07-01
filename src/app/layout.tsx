@@ -2,6 +2,7 @@ import type { Metadata, Viewport } from "next";
 import { IBM_Plex_Mono, IBM_Plex_Sans, Literata } from "next/font/google";
 import Link from "next/link";
 import "@/styles/globals.css";
+import { AnalyticsScripts } from "@/components/AnalyticsScripts";
 import { BrandMark } from "@/components/BrandMark";
 import { AuthNavStatus } from "@/features/account/AuthNavStatus";
 import { BRAND_NAME } from "@/lib/brand";
@@ -113,6 +114,7 @@ export default function RootLayout({ children }: Readonly<{ children: React.Reac
   return (
     <html lang="en" className={`${plexSans.variable} ${literata.variable} ${plexMono.variable}`}>
       <body>
+        <AnalyticsScripts />
         <a className="skip-link" href="#main">
           Skip to content
         </a>

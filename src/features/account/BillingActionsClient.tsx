@@ -13,6 +13,7 @@ import type { PlayerEntitlement } from "@/lib/account/entitlements";
 import { signUpPathForReturn } from "@/lib/account/signInRedirect";
 import { publicBillingEnabled } from "@/lib/billing/publicBillingConfig";
 import { PRO_PRICE_OPTIONS, type ProBillingInterval } from "@/lib/billing/proPricing";
+import { trackCanYouGeoEvent } from "@/lib/site/analytics";
 
 type BillingActionsClientProps = {
   entitlement: PlayerEntitlement;
@@ -42,6 +43,9 @@ export function BillingActionsClient({ entitlement, context, selectedPlan = null
   ) {
     setPending(pendingState);
     setMessage("");
+    if (kind === "checkout") {
+      trackCanYouGeoEvent("cgy_upgrade_clicked", { source: context, plan: interval ?? "unknown" });
+    }
     const result = await requestBillingActionUrl({
       client,
       signedIn,
@@ -61,7 +65,11 @@ export function BillingActionsClient({ entitlement, context, selectedPlan = null
     if (!signedIn) {
       return (
         <div className="billing-actions" aria-label="Billing actions">
-          <Link className="button" href={signUpPathForReturn("/upgrade")}>
+          <Link
+            className="button"
+            href={signUpPathForReturn("/upgrade")}
+            onClick={() => trackCanYouGeoEvent("cgy_upgrade_clicked", { source: context })}
+          >
             Start Pro
           </Link>
           <Link className="button-secondary" href="/sign-up">
@@ -131,7 +139,12 @@ export function BillingActionsClient({ entitlement, context, selectedPlan = null
       <div className="billing-actions" aria-label="Billing actions">
         <div className="checkout-option-buttons" aria-label="Choose Pro billing cadence before sign-in">
           {signInOptions.map((option) => (
-            <Link className={option.featured ? "button" : "button-secondary"} href={signUpPathForPlan(option.interval)} key={option.interval}>
+            <Link
+              className={option.featured ? "button" : "button-secondary"}
+              href={signUpPathForPlan(option.interval)}
+              key={option.interval}
+              onClick={() => trackCanYouGeoEvent("cgy_upgrade_clicked", { source: context, plan: option.interval })}
+            >
               <span>{checkoutLabel ?? option.cta}</span>
               {option.badge ? (
                 <span className="checkout-button-badge" aria-hidden="true">

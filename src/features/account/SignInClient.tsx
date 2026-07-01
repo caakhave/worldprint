@@ -11,6 +11,7 @@ import {
   signUpPathForReturn,
   storeSignInReturnPath
 } from "@/lib/account/signInRedirect";
+import { trackCanYouGeoEvent } from "@/lib/site/analytics";
 
 const GENERIC_SIGN_IN_ERROR = "We could not sign you in. Check your email and password.";
 
@@ -76,6 +77,7 @@ export function SignInClient() {
     setSubmitting(true);
     setError("");
     setStatus("");
+    trackCanYouGeoEvent("cgy_sign_in_clicked", { source: "sign_in_form" });
 
     const nextPath = storeSignInReturnPath(nextSearchValue());
     const { data, error: signInError } = await client.auth.signInWithPassword({

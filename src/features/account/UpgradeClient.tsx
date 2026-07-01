@@ -11,6 +11,7 @@ import { signInPathForReturn } from "@/lib/account/signInRedirect";
 import { publicBillingEnabled } from "@/lib/billing/publicBillingConfig";
 import { proBillingIntervalFromSearch, proPriceOptionForInterval, PRO_PRICE_OPTIONS, type ProBillingInterval } from "@/lib/billing/proPricing";
 import { CONTACT_LINKS } from "@/lib/contact";
+import { trackCanYouGeoEvent } from "@/lib/site/analytics";
 
 export function UpgradeClient() {
   const [selectedPlan, setSelectedPlan] = useState<ProBillingInterval | null>(null);
@@ -51,6 +52,7 @@ export function UpgradeClient() {
 
   function choosePlan(interval: ProBillingInterval) {
     setSelectedPlan(interval);
+    trackCanYouGeoEvent("cgy_upgrade_clicked", { source: "plan_select", plan: interval });
     const params = new URLSearchParams(window.location.search);
     params.set("plan", interval);
     const search = params.toString();

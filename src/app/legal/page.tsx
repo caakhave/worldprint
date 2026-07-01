@@ -146,7 +146,10 @@ export default function LegalPage() {
                 subscription status, renewal period, and cancellation-at-period-end status.
               </li>
               <li>Support emails and related information you send to the support inbox.</li>
-              <li>Technical information, such as browser/device information, approximate location from IP address, logs, security events, and analytics.</li>
+              <li>
+                Technical information, such as browser/device information, approximate location from IP address, logs, security
+                events, and privacy-conscious analytics when enabled.
+              </li>
               <li>
                 Browser storage data, such as cookies, localStorage, or sessionStorage used for sign-in, gameplay state, preferences,
                 Pro purchase intent, and saved progress.
@@ -182,8 +185,10 @@ export default function LegalPage() {
             <h3>Cookies, Local Storage, and Session Storage</h3>
             <p>
               We use necessary cookies and browser storage for authentication, gameplay state, saved progress, account preferences,
-              Pro intent during sign-in, and security. If non-essential analytics, advertising cookies, or new tracking tools are
-              added later, this policy and consent controls should be updated where required.
+              Pro intent during sign-in, and security. We may use production analytics to understand page visits and game events
+              without sending account emails, user IDs, passwords, auth tokens, payment details, exact location, or answer spoilers.
+              If advertising cookies or materially different tracking tools are added later, this policy and consent controls should
+              be updated where required.
             </p>
 
             <h3>Data Retention and Deletion</h3>

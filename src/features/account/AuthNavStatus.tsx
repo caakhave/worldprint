@@ -8,6 +8,7 @@ import { requestBillingActionUrl } from "@/features/account/billingActionHelpers
 import { useEntitlement } from "@/features/account/useEntitlement";
 import { useSupabaseAccount } from "@/features/account/useSupabaseAccount";
 import { publicBillingEnabled } from "@/lib/billing/publicBillingConfig";
+import { trackCanYouGeoEvent } from "@/lib/site/analytics";
 
 export function AuthNavStatus() {
   const router = useRouter();
@@ -33,10 +34,18 @@ export function AuthNavStatus() {
   if (!user) {
     return (
       <div className="account-nav-signed-out-actions">
-        <Link className="account-nav-control account-nav-control-signed-out account-nav-control-primary" href="/upgrade">
+        <Link
+          className="account-nav-control account-nav-control-signed-out account-nav-control-primary"
+          href="/upgrade"
+          onClick={() => trackCanYouGeoEvent("cgy_upgrade_clicked", { source: "header" })}
+        >
           Start Pro
         </Link>
-        <Link className="account-nav-control account-nav-control-signed-out" href="/sign-in">
+        <Link
+          className="account-nav-control account-nav-control-signed-out"
+          href="/sign-in"
+          onClick={() => trackCanYouGeoEvent("cgy_sign_in_clicked", { source: "header" })}
+        >
           Sign in
         </Link>
       </div>

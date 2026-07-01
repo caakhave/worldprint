@@ -213,7 +213,11 @@ export default function SourcesPage() {
 
           <section>
             <h2>Local storage and privacy</h2>
-            <p>Can You Geo? stores no sensitive personal information and includes no trackers or analytics in this milestone.</p>
+            <p>
+              Can You Geo? keeps gameplay files static and same-origin. Production analytics, when enabled, are limited to
+              privacy-conscious page and game events and do not include account emails, user IDs, payment details, answer spoilers,
+              or precise location.
+            </p>
             <ul className="sources-storage-list">
               {storageDescription().map((item) => (
                 <li key={item}>{item}</li>

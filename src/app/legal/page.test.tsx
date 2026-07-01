@@ -22,6 +22,7 @@ describe("LegalPage", () => {
     expect(screen.getByText(/Password credentials are handled by Supabase Auth/i)).toBeVisible();
     expect(screen.getByText(/Billing and subscription state, when paid features are enabled/i)).toBeVisible();
     expect(screen.getByText(/Resend and Supabase SMTP for transactional email and owner\/admin billing notifications/i)).toBeVisible();
+    expect(screen.getByText(/without sending account emails, user IDs, passwords, auth tokens, payment details/i)).toBeVisible();
     expect(
       screen.getByText(
         "Marketing updates, such as product updates or new game announcements, are optional and are sent only when you opt in. Transactional messages needed for the service can still be sent even if marketing updates are off."
