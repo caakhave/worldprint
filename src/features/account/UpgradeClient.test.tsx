@@ -83,7 +83,8 @@ describe("UpgradeClient", () => {
     render(<UpgradeClient />);
 
     expect(screen.getByRole("heading", { name: "Choose Free or Pro." })).toBeVisible();
-    expect(screen.getByRole("link", { name: "Sign in for Free or Pro" })).toHaveAttribute("href", "/sign-in?next=%2Fupgrade");
+    expect(screen.queryByRole("link", { name: "Sign in for Free or Pro" })).not.toBeInTheDocument();
+    expect(screen.queryByRole("link", { name: "View account" })).not.toBeInTheDocument();
     expect(screen.getAllByRole("link", { name: "Start Pro" }).every((link) => link.getAttribute("href") === "/sign-up?next=%2Fupgrade")).toBe(true);
     expect(screen.getAllByRole("link", { name: "Continue free" }).some((link) => link.getAttribute("href") === "/sign-up")).toBe(true);
     expect(screen.getByRole("link", { name: "Email support for billing help" })).toHaveAttribute(
@@ -131,6 +132,7 @@ describe("UpgradeClient", () => {
     render(<UpgradeClient />);
 
     expect(screen.getByRole("heading", { name: "Choose monthly or yearly." })).toBeVisible();
+    expect(screen.queryByRole("link", { name: "Play today" })).not.toBeInTheDocument();
     expect(screen.getByText("Ready for secure checkout")).toBeVisible();
     const overview = screen.getByLabelText("Upgrade overview");
     expect(within(overview).getByRole("button", { name: "Join monthly" })).toBeEnabled();

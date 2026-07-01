@@ -7,7 +7,6 @@ import { BillingActionsClient } from "@/features/account/BillingActionsClient";
 import { BillingReturnNotice } from "@/features/account/BillingReturnNotice";
 import { useEntitlement } from "@/features/account/useEntitlement";
 import { ACCESS_PLAN_COPY } from "@/lib/account/accessCopy";
-import { signInPathForReturn } from "@/lib/account/signInRedirect";
 import { publicBillingEnabled } from "@/lib/billing/publicBillingConfig";
 import { proBillingIntervalFromSearch, proPriceOptionForInterval, PRO_PRICE_OPTIONS, type ProBillingInterval } from "@/lib/billing/proPricing";
 import { CONTACT_LINKS } from "@/lib/contact";
@@ -21,7 +20,6 @@ export function UpgradeClient() {
   const billingEnabled = configured && publicBillingEnabled();
   const selectedPlanOption = selectedPlan ? proPriceOptionForInterval(selectedPlan) : null;
   const showProIntentPanel = Boolean(billingEnabled && signedIn && !isPro && selectedPlanOption);
-  const signInForUpgrade = signInPathForReturn(selectedPlan ? `/upgrade?plan=${selectedPlan}` : "/upgrade");
   const heroTitle = loading ? "Checking your atlas plan." : isPro ? "You have the full atlas." : "Choose Free or Pro.";
   const heroLead = isPro
     ? "Can You Geo? Pro membership is enabled on this account. Unlimited Atlas play, the full Practice Atlas, complete Past Games archive, and advanced stats are unlocked."
@@ -67,24 +65,6 @@ export function UpgradeClient() {
           {heroTitle}
         </h1>
         <p className="lead">{heroLead}</p>
-        <div className="button-row">
-          {isPro ? (
-            <Link className="button" href="/account">
-              View account
-            </Link>
-          ) : signedIn ? (
-            <Link className="button" href="/play/mystery-map">
-              Play today
-            </Link>
-          ) : (
-            <Link className="button" href={signInForUpgrade}>
-              Sign in for Free or Pro
-            </Link>
-          )}
-          <Link className="button-secondary" href={isPro ? "/play/mystery-map" : "/account"}>
-            {isPro ? "Play Pro" : "View account"}
-          </Link>
-        </div>
       </div>
       <BillingReturnNotice context="upgrade" />
 

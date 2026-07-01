@@ -111,6 +111,14 @@ Post-deploy checks:
 - Public changelog for new game modes once there are multiple geography games.
 - A concise educational page about choropleth maps and how to read them.
 
+## Multi-Game Backlog Notes
+
+- Future `/how-to-play/` should support multiple Can You Geo games, likely with tabs or segmented navigation under the same route.
+- Mystery Map should keep the current detailed layout as the first game explainer.
+- Future games should get comparable rule, scoring, and strategy sections once they actually exist.
+- `/sources/` should get light updates when new games add new providers, geometry, source rules, or missing-data policies.
+- `/about/` remains indexable and sitemap-listed as public trust content, but it is no longer linked from the common footer navigation.
+
 ## Launch Checklist
 
 - Production Cloudflare env:

@@ -1,7 +1,11 @@
+import { readFileSync } from "node:fs";
+import { join } from "node:path";
 import { render, screen } from "@testing-library/react";
 import { describe, expect, it } from "vitest";
 import SupportPage from "@/app/support/page";
 import { CONTACT_LINKS, HELLO_EMAIL, SUPPORT_EMAIL } from "@/lib/contact";
+
+const styles = readFileSync(join(process.cwd(), "src/styles/globals.css"), "utf8");
 
 describe("SupportPage", () => {
   it("routes public support needs to the right inboxes", () => {
@@ -21,5 +25,7 @@ describe("SupportPage", () => {
     expect(screen.getByText(/Do not send passwords, full card details, or private Stripe card information by email/i)).toBeVisible();
     expect(screen.getByRole("link", { name: "Open account" })).toHaveAttribute("href", "/account");
     expect(screen.getByRole("link", { name: "Terms & Privacy" })).toHaveAttribute("href", "/legal");
+    expect(styles).toContain(".support-page .legal-hero");
+    expect(styles).toContain("margin-bottom: clamp(1.45rem, 3.8vw, 2.4rem)");
   });
 });

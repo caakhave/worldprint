@@ -505,6 +505,7 @@ button:disabled {
   min-height: 44px;
   border-radius: 6px;
   font-weight: 700;
+  text-decoration: none;
   transition:
     transform 160ms ease,
     background-color 160ms ease,
@@ -7795,6 +7796,10 @@ button.pro-price-option:focus-visible {
 
 .legal-hero {
   max-width: none;
+}
+
+.support-page .legal-hero {
+  margin-bottom: clamp(1.45rem, 3.8vw, 2.4rem);
 }
 
 .legal-hero .page-title {

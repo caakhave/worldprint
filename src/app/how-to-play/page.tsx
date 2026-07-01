@@ -31,7 +31,7 @@ export default function HowToPlayPage() {
           <h1 className="page-title">Read the pattern before the answer reads you.</h1>
         </div>
         <p className="lead">
-          Mystery Map is the first Can You Geo? mode: read the color-map pattern, spend points only when evidence helps, then choose
+          Mystery Map is the first Can You Geo? game: read the color-map pattern, spend points only when evidence helps, then choose
           the hidden indicator.
         </p>
       </div>

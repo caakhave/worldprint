@@ -106,8 +106,7 @@ const footerItems = [
   { href: "/past-games", label: "Past Games" },
   { href: "/sources", label: "Sources" },
   { href: "/legal", label: "Terms, Privacy & Accessibility" },
-  { href: "/support", label: "Support" },
-  { href: "/about", label: "About" }
+  { href: "/support", label: "Support" }
 ];
 
 export default function RootLayout({ children }: Readonly<{ children: React.ReactNode }>) {

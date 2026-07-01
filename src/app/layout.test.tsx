@@ -30,5 +30,7 @@ describe("RootLayout", () => {
     expect(markup).toContain(
       "Can You Geo? is a daily geography game. Play new games, replay past games, and check the data sources any time."
     );
+    expect(markup).toContain("href=\"/support\"");
+    expect(markup).not.toContain("href=\"/about\"");
   });
 });

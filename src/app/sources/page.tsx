@@ -55,8 +55,8 @@ export default function SourcesPage() {
           <p className="setup-kicker">Primary sources</p>
           <h2 id="data-sources-heading">World Bank data on a Natural Earth map.</h2>
           <p>
-            Indicator values come from World Bank World Development Indicators. Country boundaries come from Natural Earth Admin 0
-            country geometry. The live game loads prepared same-origin files, so play stays fast and stable.
+            Indicator values come from World Bank World Development Indicators, and Natural Earth provides the country map geometry
+            used for play.
           </p>
           <div className="source-list">
             {sourceEntries.map((source) => (

@@ -7,6 +7,8 @@ describe("HowToPlayPage", () => {
     render(<HowToPlayPage />);
 
     expect(screen.getByRole("heading", { name: /Read the pattern before the answer reads you/i })).toBeVisible();
+    expect(screen.getByText(/Mystery Map is the first Can You Geo\? game/i)).toBeVisible();
+    expect(screen.queryByText(/Mystery Map is the first Can You Geo\? mode/i)).not.toBeInTheDocument();
     expect(screen.getByRole("heading", { name: /Every clue spends points/i })).toBeVisible();
     expect(screen.getByText(/Start Pro for the full atlas, or continue free/i)).toBeVisible();
     expect(screen.getByRole("link", { name: /Start Pro/i })).toHaveAttribute("href", "/upgrade");

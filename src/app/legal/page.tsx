@@ -51,11 +51,6 @@ export default function LegalPage() {
               intended to unlock expanded features such as unlimited Atlas play, the full Practice Atlas, complete Past Games archive,
               advanced stats, and future premium surfaces. Pro details may change before or after paid launch.
             </p>
-            <p>
-              Live billing is not enabled until we explicitly launch paid checkout. The site may show Pro pricing or test-mode billing
-              during staging or QA, but public paid access should only be purchased through the official Stripe Checkout flow when
-              enabled.
-            </p>
 
             <h3>Billing, Renewal, and Cancellation</h3>
             <p>
@@ -167,12 +162,10 @@ export default function LegalPage() {
               Transactional messages needed for the service can still be sent even if marketing updates are off.
             </p>
 
-            <h3>Service Providers</h3>
+            <h3>Sharing and Legal Disclosures</h3>
             <p>
-              We do not sell personal information. We use service providers that help operate the site, including Cloudflare for
-              hosting and security, Supabase for authentication and database services, Stripe for checkout and billing management when
-              enabled, Resend and Supabase SMTP for transactional email and owner/admin billing notifications, and Google Workspace for
-              support email. We may also disclose information if required by law or to protect rights, safety, and security.
+              We do not sell personal information. We may disclose information if required by law or to protect rights, safety, and
+              security.
             </p>
 
             <h3>Owner and Admin Notifications</h3>

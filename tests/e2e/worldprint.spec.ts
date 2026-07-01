@@ -189,7 +189,7 @@ test("first visit starts the Analyst Daily", async ({ page }) => {
   await expect(footerNav.getByRole("link", { name: "Sources" })).toHaveAttribute("href", /\/sources\/?$/);
   await expect(footerNav.getByRole("link", { name: "Terms, Privacy & Accessibility" })).toHaveAttribute("href", /\/legal\/?$/);
   await expect(footerNav.getByRole("link", { name: "Beta" })).toHaveCount(0);
-  await expect(footerNav.getByRole("link", { name: "About" })).toHaveAttribute("href", /\/about\/?$/);
+  await expect(footerNav.getByRole("link", { name: "About" })).toHaveCount(0);
   await expect(page.getByRole("link", { name: /Internal/i })).toHaveCount(0);
   await expect(page.locator(".hero-copy .eyebrow")).toHaveText("Join the daily challenge");
   await expect(page.locator(".hero-copy .lead")).toHaveText(
