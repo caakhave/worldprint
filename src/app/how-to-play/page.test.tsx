@@ -1,6 +1,9 @@
 import { render, screen } from "@testing-library/react";
+import { readFileSync } from "node:fs";
 import { describe, expect, it } from "vitest";
 import HowToPlayPage from "@/app/how-to-play/page";
+
+const styles = readFileSync("src/styles/globals.css", "utf8");
 
 describe("HowToPlayPage", () => {
   it("uses player-facing scoring and account copy", () => {
@@ -15,5 +18,10 @@ describe("HowToPlayPage", () => {
     expect(screen.getByRole("link", { name: /Try Sample Run/i })).toHaveAttribute("href", "/play/mystery-map");
     expect(screen.getByRole("link", { name: /Continue free/i })).toHaveAttribute("href", "/sign-up");
     expect(screen.queryByText(/Open Beta|WORLDPRINT|spends score/i)).not.toBeInTheDocument();
+  });
+
+  it("keeps button-style links out of prose underline rules", () => {
+    expect(styles).toContain(".how-page a:not(.button):not(.button-secondary):not(.icon-button)");
+    expect(styles).not.toContain(".how-page a:not(.button),");
   });
 });

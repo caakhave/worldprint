@@ -5070,9 +5070,9 @@ dd {
 }
 
 .source-note a,
-.text-page a:not(.button),
-.how-page a:not(.button),
-.source-card a {
+.text-page a:not(.button):not(.button-secondary):not(.icon-button),
+.how-page a:not(.button):not(.button-secondary):not(.icon-button),
+.source-card a:not(.button):not(.button-secondary):not(.icon-button) {
   color: var(--signal-2);
   font-weight: 700;
   text-decoration: underline;
