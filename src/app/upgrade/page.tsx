@@ -1,10 +1,13 @@
 import type { Metadata } from "next";
 import { UpgradeClient } from "@/features/account/UpgradeClient";
+import { pageMetadata } from "@/lib/site/seo";
 
-export const metadata: Metadata = {
-  title: "Upgrade",
-  description: "Full atlas access for Can You Geo?."
-};
+export const metadata: Metadata = pageMetadata({
+  title: "Free and Pro - Can You Geo?",
+  description:
+    "Compare Free and Pro access for Can You Geo?: the 3-map Free Daily, saved progress, unlimited Atlas play, Past Games, and advanced stats.",
+  path: "/upgrade/"
+});
 
 export default function UpgradePage() {
   return (

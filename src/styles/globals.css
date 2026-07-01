@@ -2072,6 +2072,49 @@ button:disabled {
   color: var(--parchment);
 }
 
+.homepage-entity-section {
+  border-top: 1px solid rgb(242 234 220 / 0.08);
+  border-bottom: 1px solid rgb(242 234 220 / 0.08);
+}
+
+.homepage-answer-layout {
+  width: min(1560px, calc(100% - 2rem));
+  display: grid;
+  grid-template-columns: minmax(240px, 0.32fr) minmax(0, 1.68fr);
+  gap: clamp(1rem, 2.4vw, 2rem);
+  align-items: start;
+}
+
+.homepage-answer-grid {
+  display: grid;
+  grid-template-columns: repeat(5, minmax(0, 1fr));
+  gap: clamp(0.8rem, 1.2vw, 1rem);
+}
+
+.homepage-answer-card {
+  min-width: 0;
+  padding: clamp(1rem, 1.55vw, 1.3rem);
+  border-color: rgb(164 216 205 / 0.16);
+  background:
+    linear-gradient(135deg, rgb(104 183 170 / 0.08), transparent 46%),
+    var(--surface);
+}
+
+.homepage-answer-card h3 {
+  margin: 0 0 0.65rem;
+  color: var(--parchment);
+  font-family: var(--font-serif);
+  font-size: clamp(1.08rem, 1.35vw, 1.28rem);
+  line-height: 1.14;
+}
+
+.homepage-answer-card p {
+  margin: 0;
+  color: rgb(222 210 189 / 0.82);
+  font-size: 0.96rem;
+  line-height: 1.55;
+}
+
 .promise-layout,
 .tiers-preview,
 .plus-teaser,
@@ -7972,8 +8015,13 @@ button.pro-price-option:focus-visible {
 }
 
 @media (max-width: 1100px) {
-  .homepage-section-layout {
+  .homepage-section-layout,
+  .homepage-answer-layout {
     grid-template-columns: 1fr;
+  }
+
+  .homepage-answer-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
   }
 
   .homepage-section-heading {
@@ -8717,6 +8765,7 @@ button.pro-price-option:focus-visible {
   }
 
   .homepage-section-layout,
+  .homepage-answer-layout,
   .game-entry,
   .how-hero,
   .beta-hero,
@@ -8786,6 +8835,10 @@ button.pro-price-option:focus-visible {
 
   .homepage-section-heading {
     position: static;
+  }
+
+  .homepage-answer-grid {
+    grid-template-columns: 1fr;
   }
 
   .section-lede {

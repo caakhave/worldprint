@@ -6,11 +6,14 @@ import { EntitlementDiagnosticsClient } from "@/features/account/EntitlementDiag
 import { MembershipCardClient } from "@/features/account/MembershipCardClient";
 import { AccountStatusClient } from "@/features/account/AccountStatusClient";
 import { AccountStatsClient } from "@/features/account/AccountStatsClient";
+import { pageMetadata } from "@/lib/site/seo";
 
-export const metadata: Metadata = {
+export const metadata: Metadata = pageMetadata({
   title: "Account",
-  description: "Save your Can You Geo? progress."
-};
+  description: "Save your Can You Geo? progress.",
+  path: "/account/",
+  noIndex: true
+});
 
 export default function AccountPage() {
   return (

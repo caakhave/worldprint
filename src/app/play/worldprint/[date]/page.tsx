@@ -3,10 +3,14 @@ import path from "node:path";
 import type { Metadata } from "next";
 import { DailyIndexSchema } from "@/lib/content/schemas";
 import { LegacyRouteRedirect } from "@/components/routing/LegacyRouteRedirect";
+import { pageMetadata } from "@/lib/site/seo";
 
-export const metadata: Metadata = {
-  title: "Past Mystery Map"
-};
+export const metadata: Metadata = pageMetadata({
+  title: "Past Mystery Map Has Moved",
+  description: "Legacy dated Mystery Map links redirect to the current Can You Geo? Past Games route.",
+  path: "/play/worldprint/",
+  noIndex: true
+});
 
 export const dynamicParams = false;
 

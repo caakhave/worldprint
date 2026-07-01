@@ -1,9 +1,13 @@
 import type { Metadata } from "next";
 import { LegacyRouteRedirect } from "@/components/routing/LegacyRouteRedirect";
+import { pageMetadata } from "@/lib/site/seo";
 
-export const metadata: Metadata = {
-  title: "Can You Geo?"
-};
+export const metadata: Metadata = pageMetadata({
+  title: "Can You Geo? Preview Has Moved",
+  description: "This retired preview page redirects to the current Can You Geo? Mystery Map play page.",
+  path: "/beta/worldprint/",
+  noIndex: true
+});
 
 export default function RetiredPreviewPage() {
   return (

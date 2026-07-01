@@ -6,6 +6,7 @@ import { BrandMark } from "@/components/BrandMark";
 import { AuthNavStatus } from "@/features/account/AuthNavStatus";
 import { BRAND_NAME } from "@/lib/brand";
 import { publicSiteOrigin, robotsForSite, shouldNoIndexSite } from "@/lib/site/origin";
+import { openGraphImageUrl, SITE_DESCRIPTION, SITE_TITLE, siteJsonLd } from "@/lib/site/seo";
 
 const plexSans = IBM_Plex_Sans({
   subsets: ["latin"],
@@ -37,32 +38,53 @@ const robots = robotsForSite(
     process.env.CF_PAGES_URL
   )
 );
+const defaultOgImage = openGraphImageUrl(siteOrigin);
+const siteStructuredData = siteJsonLd(siteOrigin);
 
 export const metadata: Metadata = {
   metadataBase: new URL(siteOrigin),
   title: {
-    default: "Can You Geo? — Daily Geography Games & World Data Puzzles",
+    default: SITE_TITLE,
     template: "%s | Can You Geo?"
   },
-  description:
-    "Identify hidden data maps, find population centers, spot atlas anomalies, and follow water across the planet in geography games made for world-data nerds.",
+  description: SITE_DESCRIPTION,
+  applicationName: BRAND_NAME,
+  category: "game",
+  keywords: [
+    "Can You Geo",
+    "geography game",
+    "daily geography game",
+    "map game",
+    "world map game",
+    "geography quiz",
+    "data map game",
+    "choropleth game",
+    "country guessing game",
+    "atlas game",
+    "geography puzzle",
+    "world data quiz"
+  ],
   icons: {
     icon: "/favicon.svg",
     shortcut: "/favicon.svg",
     apple: "/favicon.svg"
   },
+  alternates: {
+    canonical: siteOrigin
+  },
   openGraph: {
-    title: "Can You Geo? — Daily Geography Games & World Data Puzzles",
-    description:
-      "Identify hidden data maps, find population centers, spot atlas anomalies, and follow water across the planet in geography games made for world-data nerds.",
+    title: SITE_TITLE,
+    description: SITE_DESCRIPTION,
     url: siteOrigin,
-    siteName: "Can You Geo?"
+    siteName: BRAND_NAME,
+    type: "website",
+    images: [{ url: defaultOgImage }]
   },
   twitter: {
-    card: "summary",
-    title: "Can You Geo? — Daily Geography Games & World Data Puzzles",
-    description:
-      "Identify hidden data maps, find population centers, spot atlas anomalies, and follow water across the planet in geography games made for world-data nerds."
+    card: "summary_large_image",
+    title: SITE_TITLE,
+    description: SITE_DESCRIPTION,
+    images: [defaultOgImage]
   },
   robots
 };
@@ -110,6 +132,11 @@ export default function RootLayout({ children }: Readonly<{ children: React.Reac
           </nav>
         </header>
         <main id="main">{children}</main>
+        <script
+          id="canyougeo-site-jsonld"
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{ __html: JSON.stringify(siteStructuredData) }}
+        />
         <footer className="site-footer">
           <p>Can You Geo? is a daily geography game. Play Mystery Map, replay past games, and check the data sources any time.</p>
           <nav className="footer-nav" aria-label="Footer navigation">

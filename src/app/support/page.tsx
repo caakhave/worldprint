@@ -1,11 +1,13 @@
 import type { Metadata } from "next";
 import Link from "next/link";
 import { CONTACT_LINKS, HELLO_EMAIL, SUPPORT_EMAIL } from "@/lib/contact";
+import { pageMetadata } from "@/lib/site/seo";
 
-export const metadata: Metadata = {
-  title: "Support",
-  description: "Get Can You Geo account, billing, bug, data source, privacy, and accessibility support."
-};
+export const metadata: Metadata = pageMetadata({
+  title: "Support - Can You Geo?",
+  description: "Get Can You Geo? account, billing, bug, data source, privacy, and accessibility support.",
+  path: "/support/"
+});
 
 export default function SupportPage() {
   return (

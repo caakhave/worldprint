@@ -1,10 +1,13 @@
 import type { Metadata } from "next";
 import { ResetPasswordClient } from "@/features/account/ResetPasswordClient";
+import { pageMetadata } from "@/lib/site/seo";
 
-export const metadata: Metadata = {
+export const metadata: Metadata = pageMetadata({
   title: "New Password",
-  description: "Choose a new Can You Geo? account password."
-};
+  description: "Choose a new Can You Geo? account password.",
+  path: "/reset-password/",
+  noIndex: true
+});
 
 export default function ResetPasswordPage() {
   return (

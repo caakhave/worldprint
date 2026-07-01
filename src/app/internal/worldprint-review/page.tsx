@@ -6,10 +6,14 @@ import { InternalReviewClient, type InternalReviewRow } from "@/features/worldpr
 import { getAuthShellStatus } from "@/lib/account/authConfig";
 import { EditorialReviewSchema, type EditorialReview } from "@/lib/content/schemas";
 import { paletteForIndicator } from "@/lib/geo/palette";
+import { pageMetadata } from "@/lib/site/seo";
 
-export const metadata: Metadata = {
-  title: "Internal Mystery Map Review"
-};
+export const metadata: Metadata = pageMetadata({
+  title: "Internal Mystery Map Review",
+  description: "Internal Can You Geo? editorial review tooling.",
+  path: "/internal/worldprint-review/",
+  noIndex: true
+});
 
 type EditorialRegistry = {
   contentVersion: string;

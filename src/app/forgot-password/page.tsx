@@ -2,11 +2,14 @@ import type { Metadata } from "next";
 import Link from "next/link";
 import { ForgotPasswordClient } from "@/features/account/ForgotPasswordClient";
 import { CONTACT_LINKS } from "@/lib/contact";
+import { pageMetadata } from "@/lib/site/seo";
 
-export const metadata: Metadata = {
+export const metadata: Metadata = pageMetadata({
   title: "Reset Password",
-  description: "Request a Can You Geo? password reset email."
-};
+  description: "Request a Can You Geo? password reset email.",
+  path: "/forgot-password/",
+  noIndex: true
+});
 
 export default function ForgotPasswordPage() {
   return (

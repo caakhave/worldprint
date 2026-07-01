@@ -2,10 +2,14 @@ import type { Metadata } from "next";
 import sources from "../../../public/data/v1/sources.json";
 import { CONTACT_LINKS } from "@/lib/contact";
 import { storageDescription } from "@/lib/persistence/storage";
+import { breadcrumbJsonLd, pageMetadata } from "@/lib/site/seo";
 
-export const metadata: Metadata = {
-  title: "Can You Geo? Data & Sources"
-};
+export const metadata: Metadata = pageMetadata({
+  title: "Data & Sources - Can You Geo?",
+  description:
+    "See how Can You Geo? builds data map games from World Bank indicators, Natural Earth country geometry, reviewed sources, and missing-data rules.",
+  path: "/sources/"
+});
 
 type SourceEntry = {
   id: string;
@@ -25,6 +29,18 @@ export default function SourcesPage() {
 
   return (
     <section className="sources-page page-shell info-page-shell">
+      <script
+        id="canyougeo-sources-breadcrumb-jsonld"
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{
+          __html: JSON.stringify(
+            breadcrumbJsonLd([
+              { name: "Can You Geo?", path: "/" },
+              { name: "Data & Sources", path: "/sources/" }
+            ])
+          )
+        }}
+      />
       <header className="sources-hero">
         <p className="eyebrow">Data &amp; sources</p>
         <h1 className="page-title">Real data, readable puzzles.</h1>

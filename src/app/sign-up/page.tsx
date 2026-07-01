@@ -1,11 +1,14 @@
 import type { Metadata } from "next";
 import Link from "next/link";
 import { SignUpClient } from "@/features/account/SignUpClient";
+import { pageMetadata } from "@/lib/site/seo";
 
-export const metadata: Metadata = {
+export const metadata: Metadata = pageMetadata({
   title: "Create Account",
-  description: "Create a Can You Geo? account with email and password."
-};
+  description: "Create a Can You Geo? account with email and password.",
+  path: "/sign-up/",
+  noIndex: true
+});
 
 export default function SignUpPage() {
   return (

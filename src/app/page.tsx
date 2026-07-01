@@ -1,8 +1,17 @@
 import Image from "next/image";
+import type { Metadata } from "next";
 import Link from "next/link";
 import { ArrowRight } from "lucide-react";
 import { HomepageHeroMedia } from "@/components/HomepageHeroMedia";
 import { ACCESS_PLAN_COPY } from "@/lib/account/accessCopy";
+import { homeFaqJsonLd, pageMetadata } from "@/lib/site/seo";
+
+export const metadata: Metadata = pageMetadata({
+  title: "Can You Geo? - Daily Geography Games & World Data Puzzles",
+  description:
+    "Play Can You Geo?, a daily geography game where Mystery Map turns real world data into map puzzles, choropleth clues, and country guessing challenges.",
+  path: "/"
+});
 
 const signalCards = [
   {
@@ -53,9 +62,38 @@ const modeCards = [
   }
 ] as const;
 
+const quickAnswers = [
+  {
+    question: "What is Can You Geo?",
+    answer:
+      "Can You Geo? is a geography game site built around Mystery Map, a daily world map puzzle where real data becomes the mystery."
+  },
+  {
+    question: "Is Can You Geo free?",
+    answer:
+      "Yes. Guests can try a fixed Sample Run, and Free accounts get a 3-map Free Daily with saved progress, streaks, and basic stats."
+  },
+  {
+    question: "How does Mystery Map work?",
+    answer:
+      "Mystery Map shows an unlabeled choropleth map. Read the color pattern, reveal country values only when needed, then guess the hidden indicator."
+  },
+  {
+    question: "What data sources does Can You Geo use?",
+    answer:
+      "The current game uses World Bank World Development Indicators on Natural Earth country geometry, with reviewed years, units, and missing-data rules."
+  },
+  {
+    question: "What makes it different from other geography games?",
+    answer:
+      "Instead of only naming places, Can You Geo? asks you to interpret real-world patterns: a map game, geography quiz, and world data puzzle in one."
+  }
+] as const;
+
 export default function HomePage() {
   return (
     <>
+      <script id="canyougeo-home-faq-jsonld" type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(homeFaqJsonLd()) }} />
       <section className="landing-hero" data-testid="cinematic-home-hero">
         <HomepageHeroMedia />
         <div className="landing-hero-backdrop" aria-hidden="true" />
@@ -86,6 +124,26 @@ export default function HomePage() {
               <ArrowRight size={18} aria-hidden="true" />
             </Link>
           </aside>
+        </div>
+      </section>
+
+      <section className="section-band homepage-section homepage-entity-section" aria-labelledby="what-is-canyougeo">
+        <div className="page-shell homepage-answer-layout">
+          <div className="homepage-section-heading">
+            <p className="eyebrow">Quick answers</p>
+            <h2 id="what-is-canyougeo">What is Can You Geo?</h2>
+            <p className="section-lede">
+              A human-first guide to the game for players, search engines, and answer engines trying to understand the atlas.
+            </p>
+          </div>
+          <div className="homepage-answer-grid">
+            {quickAnswers.map((item) => (
+              <article className="surface homepage-answer-card" key={item.question}>
+                <h3>{item.question}</h3>
+                <p>{item.answer}</p>
+              </article>
+            ))}
+          </div>
         </div>
       </section>
 

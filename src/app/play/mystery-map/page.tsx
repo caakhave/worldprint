@@ -1,10 +1,14 @@
 import { Suspense } from "react";
 import type { Metadata } from "next";
 import { WorldprintClient } from "@/features/worldprint/WorldprintClient";
+import { pageMetadata } from "@/lib/site/seo";
 
-export const metadata: Metadata = {
-  title: "Play Mystery Map"
-};
+export const metadata: Metadata = pageMetadata({
+  title: "Play Mystery Map - Daily Geography Game",
+  description:
+    "Start Mystery Map, the Can You Geo? choropleth geography game where you read an unlabeled world map and guess the hidden data indicator.",
+  path: "/play/mystery-map/"
+});
 
 export default function PlayMysteryMapPage() {
   return (

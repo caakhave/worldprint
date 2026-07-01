@@ -1,11 +1,14 @@
 import type { Metadata } from "next";
 import Link from "next/link";
 import { AccountStatsClient } from "@/features/account/AccountStatsClient";
+import { pageMetadata } from "@/lib/site/seo";
 
-export const metadata: Metadata = {
+export const metadata: Metadata = pageMetadata({
   title: "Saved Stats",
-  description: "Can You Geo? local and account-saved stats."
-};
+  description: "Can You Geo? local and account-saved stats.",
+  path: "/account/stats/",
+  noIndex: true
+});
 
 export default function AccountStatsPage() {
   return (

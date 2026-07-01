@@ -3,11 +3,14 @@ import Link from "next/link";
 import { SignInClient } from "@/features/account/SignInClient";
 import { BRAND_NAME } from "@/lib/brand";
 import { CONTACT_LINKS } from "@/lib/contact";
+import { pageMetadata } from "@/lib/site/seo";
 
-export const metadata: Metadata = {
+export const metadata: Metadata = pageMetadata({
   title: "Create Account or Sign In",
-  description: "Sign in to Can You Geo? with email and password, or create a new account."
-};
+  description: "Sign in to Can You Geo? with email and password, or create a new account.",
+  path: "/sign-in/",
+  noIndex: true
+});
 
 export default function SignInPage() {
   return (

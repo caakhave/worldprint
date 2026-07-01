@@ -1,14 +1,30 @@
 import Link from "next/link";
 import type { Metadata } from "next";
 import { TIER_CONFIGS } from "@/lib/game/scoring";
+import { breadcrumbJsonLd, pageMetadata } from "@/lib/site/seo";
 
-export const metadata: Metadata = {
-  title: "How to Play"
-};
+export const metadata: Metadata = pageMetadata({
+  title: "How to Play Mystery Map",
+  description:
+    "Learn how Can You Geo? Mystery Map works: read choropleth patterns, reveal country clues, manage points, and solve the hidden geography puzzle.",
+  path: "/how-to-play/"
+});
 
 export default function HowToPlayPage() {
   return (
     <section className="how-page page-shell info-page-shell">
+      <script
+        id="canyougeo-how-to-play-breadcrumb-jsonld"
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{
+          __html: JSON.stringify(
+            breadcrumbJsonLd([
+              { name: "Can You Geo?", path: "/" },
+              { name: "How to Play Mystery Map", path: "/how-to-play/" }
+            ])
+          )
+        }}
+      />
       <div className="how-hero map-texture-panel">
         <div>
           <p className="eyebrow">How to play</p>

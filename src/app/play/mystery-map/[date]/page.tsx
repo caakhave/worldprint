@@ -4,10 +4,14 @@ import { Suspense } from "react";
 import type { Metadata } from "next";
 import { DailyIndexSchema } from "@/lib/content/schemas";
 import { WorldprintClient } from "@/features/worldprint/WorldprintClient";
+import { pageMetadata } from "@/lib/site/seo";
 
-export const metadata: Metadata = {
-  title: "Past Mystery Map"
-};
+export const metadata: Metadata = pageMetadata({
+  title: "Past Mystery Map - Can You Geo?",
+  description: "Replay a dated Can You Geo? Mystery Map set. Past Games are separate from today's Daily score and streak.",
+  path: "/play/mystery-map/",
+  noIndex: true
+});
 
 export const dynamicParams = false;
 

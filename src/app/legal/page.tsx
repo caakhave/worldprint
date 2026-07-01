@@ -1,13 +1,15 @@
 import type { Metadata } from "next";
 import Link from "next/link";
 import { CONTACT_LINKS, SUPPORT_EMAIL } from "@/lib/contact";
+import { pageMetadata } from "@/lib/site/seo";
 
 const EFFECTIVE_DATE = "June 30, 2026";
 
-export const metadata: Metadata = {
-  title: "Terms & Privacy",
-  description: "Terms of use, privacy policy, cookies, local storage, accessibility, and support for Can You Geo."
-};
+export const metadata: Metadata = pageMetadata({
+  title: "Terms, Privacy & Accessibility - Can You Geo?",
+  description: "Terms of use, privacy policy, cookies, local storage, accessibility, and support for Can You Geo.",
+  path: "/legal/"
+});
 
 export default function LegalPage() {
   return (

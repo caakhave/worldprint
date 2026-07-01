@@ -1,14 +1,30 @@
 import Link from "next/link";
 import type { Metadata } from "next";
 import { CONTACT_LINKS } from "@/lib/contact";
+import { breadcrumbJsonLd, pageMetadata } from "@/lib/site/seo";
 
-export const metadata: Metadata = {
-  title: "About"
-};
+export const metadata: Metadata = pageMetadata({
+  title: "About Can You Geo?",
+  description:
+    "Learn why Can You Geo? is built for geography fans who want data-rich map games, transparent sources, and sharper daily world puzzles.",
+  path: "/about/"
+});
 
 export default function AboutPage() {
   return (
     <section className="about-page page-shell info-page-shell">
+      <script
+        id="canyougeo-about-breadcrumb-jsonld"
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{
+          __html: JSON.stringify(
+            breadcrumbJsonLd([
+              { name: "Can You Geo?", path: "/" },
+              { name: "About", path: "/about/" }
+            ])
+          )
+        }}
+      />
       <div className="about-hero">
         <p className="eyebrow">Mission</p>
         <h1 className="page-title">A game about seeing what maps are saying.</h1>
