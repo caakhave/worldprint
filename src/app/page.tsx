@@ -3,6 +3,7 @@ import type { Metadata } from "next";
 import Link from "next/link";
 import { ArrowRight } from "lucide-react";
 import { HomepageHeroMedia } from "@/components/HomepageHeroMedia";
+import { HomeHeroAccountPanel } from "@/features/home/HomeHeroAccountPanel";
 import { HOME_FAQ_ITEMS, homeFaqJsonLd, pageMetadata } from "@/lib/site/seo";
 
 export const metadata: Metadata = pageMetadata({
@@ -61,12 +62,6 @@ const modeCards = [
   }
 ] as const;
 
-const heroAccountLines = [
-  "No account needed to try out our sample maps.",
-  "Free accounts get three fresh maps per day.",
-  "Pro accounts get full gameplay."
-] as const;
-
 export default function HomePage() {
   return (
     <>
@@ -75,36 +70,7 @@ export default function HomePage() {
         <HomepageHeroMedia />
         <div className="landing-hero-backdrop" aria-hidden="true" />
         <div className="landing-hero-inner page-shell">
-          <div className="hero-copy">
-            <p className="eyebrow">Join the daily challenge</p>
-            <h1 className="hero-title">Can you read the world?</h1>
-            <p className="lead">
-              A new mystery map is waiting. Spot the pattern, spend your clues wisely, and guess what the planet is hiding.
-            </p>
-            <div className="button-row">
-              <Link className="button hero-primary-cta" href="/upgrade">
-                Start Pro
-                <ArrowRight size={18} aria-hidden="true" />
-              </Link>
-              <Link className="button-secondary hero-secondary-cta" href="/play/mystery-map">
-                Try Sample Run
-              </Link>
-            </div>
-            <p className="hero-note">
-              {heroAccountLines.map((line) => (
-                <span key={line}>{line}</span>
-              ))}
-            </p>
-          </div>
-          <aside className="hero-join-panel" aria-label="Join the daily challenge">
-            <p className="eyebrow">Join the game</p>
-            <h2>Start Pro or continue free</h2>
-            <p>Pro opens the full atlas. Free needs no card and includes the 3-map Free Daily, saved progress, streaks, and basic stats.</p>
-            <Link className="button hero-panel-button" href="/upgrade">
-              Start Pro
-              <ArrowRight size={18} aria-hidden="true" />
-            </Link>
-          </aside>
+          <HomeHeroAccountPanel />
         </div>
       </section>
 

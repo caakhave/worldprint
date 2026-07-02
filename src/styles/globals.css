@@ -3202,11 +3202,22 @@ button:disabled {
 }
 
 .practice-actions {
-  display: flex;
-  flex-wrap: wrap;
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
   gap: 0.7rem;
-  align-items: center;
-  justify-content: space-between;
+  align-items: stretch;
+}
+
+.practice-actions .button,
+.practice-actions .button-secondary {
+  min-height: 4.25rem;
+  height: 100%;
+  justify-content: center;
+}
+
+.practice-actions .practice-shuffle-button {
+  gap: 0.45rem;
+  white-space: nowrap;
 }
 
 .practice-actions span {
@@ -3215,6 +3226,13 @@ button:disabled {
   font-size: 0.78rem;
   font-weight: 700;
   text-transform: uppercase;
+}
+
+.practice-action-note {
+  margin: -0.15rem 0 0;
+  color: var(--muted);
+  font-size: 0.88rem;
+  line-height: 1.35;
 }
 
 .practice-set-card {
@@ -3758,7 +3776,7 @@ button:disabled {
   min-width: 0;
   border: 1px solid rgb(164 216 205 / 0.18);
   border-radius: 7px;
-  padding: 0.7rem;
+  padding: 0.82rem 0.88rem;
   background: rgb(242 234 220 / 0.035);
 }
 
@@ -3809,16 +3827,28 @@ button:disabled {
 }
 
 .score-hud-current strong {
-  display: flex;
-  flex-wrap: wrap;
-  align-items: baseline;
-  column-gap: 0.34rem;
+  display: grid;
+  gap: 0.06rem;
+  align-items: start;
   color: var(--gold);
-  font-size: clamp(1.25rem, 2.6vw, 1.78rem);
+  font-size: clamp(1.18rem, 2.1vw, 1.44rem);
+  line-height: 1;
+  overflow-wrap: normal;
   animation: score-pop 260ms ease-out both;
+  word-break: normal;
 }
 
 .score-hud-current strong .score-number {
+  font-size: clamp(1.48rem, 3vw, 2rem);
+  line-height: 0.98;
+  white-space: nowrap;
+}
+
+.score-hud-current strong .score-status-word {
+  display: inline-block;
+  max-width: 100%;
+  font-size: clamp(0.86rem, 1.45vw, 1.06rem);
+  line-height: 1.02;
   white-space: nowrap;
 }
 
@@ -4004,7 +4034,9 @@ button:disabled {
 
 .play-layout[data-layout="dashboard"] .play-action-dock {
   gap: 0.46rem;
+  border: 0;
   padding: 0.58rem 0.7rem;
+  box-shadow: none;
 }
 
 .play-action-dock[data-state="miss"] {
@@ -4016,7 +4048,7 @@ button:disabled {
 }
 
 .play-action-dock .primary-answer-box {
-  border-color: rgb(215 168 75 / 0.22);
+  border: 0;
   padding: 0;
   background: transparent;
 }
@@ -8370,6 +8402,10 @@ button.pro-price-option:focus-visible {
   }
 
   .account-actions-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .practice-actions {
     grid-template-columns: 1fr;
   }
 

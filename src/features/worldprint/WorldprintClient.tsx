@@ -58,6 +58,7 @@ import {
   normalizeGuess,
   reduceRun,
   type RunMode,
+  type RunSetupMetadata,
   type RunState
 } from "@/lib/game/state";
 import { trackCanYouGeoEvent } from "@/lib/site/analytics";
@@ -135,8 +136,37 @@ function practiceFlavor(difficulty: IndicatorDifficulty) {
   return "A quick Practice warm-up.";
 }
 
+function formatTopicLabel(topic?: string) {
+  if (!topic) return "All topics";
+  return topic
+    .replace(/[-_]+/g, " ")
+    .split(" ")
+    .filter(Boolean)
+    .map((part) => `${part.charAt(0).toUpperCase()}${part.slice(1)}`)
+    .join(" ");
+}
+
+function customAtlasSetup(topic: string, mapDifficulty: IndicatorDifficulty): RunSetupMetadata {
+  return {
+    kind: "custom-atlas",
+    ...(topic ? { topic } : {}),
+    mapDifficulty
+  };
+}
+
 function roundCountForFilters(rounds: RoundDefinition[], category: string, difficulty?: IndicatorDifficulty) {
   return rounds.filter((round) => (!category || round.category === category) && (!difficulty || round.difficulty === difficulty)).length;
+}
+
+function practiceFilterCombinations(rounds: RoundDefinition[]) {
+  const categories = ["", ...Array.from(new Set(rounds.map((round) => round.category))).sort()];
+  return categories.flatMap((category) =>
+    DIFFICULTY_ORDER.map((difficulty) => ({
+      category,
+      difficulty,
+      count: roundCountForFilters(rounds, category, difficulty)
+    })).filter((option) => option.count > 0)
+  );
 }
 
 function nearestPracticeDifficulty(current: IndicatorDifficulty, available: IndicatorDifficulty[]) {
@@ -148,6 +178,30 @@ function nearestPracticeDifficulty(current: IndicatorDifficulty, available: Indi
     const nextDistance = Math.abs(DIFFICULTY_ORDER.indexOf(difficulty) - currentIndex);
     return nextDistance < bestDistance ? difficulty : best;
   }, available[0]);
+}
+
+function runMatchesTier(run: RunState | null | undefined, tier: Tier) {
+  return Boolean(run && run.tier === tier);
+}
+
+function activeRunContextChips(run: RunState, rulesetLabel: string) {
+  const rulesChip = `${rulesetLabel} rules`;
+  if (run.mode === "practice") {
+    if (run.setup?.kind === "custom-atlas") {
+      const chips = ["Custom Atlas", formatTopicLabel(run.setup.topic)];
+      if (run.setup.mapDifficulty) {
+        chips.push(`${DIFFICULTY_LABELS[run.setup.mapDifficulty]} maps`);
+      }
+      chips.push(rulesChip);
+      return chips;
+    }
+    return ["Atlas Run", rulesChip];
+  }
+  if (run.mode === "atlas") return ["Atlas Run", rulesChip];
+  if (run.mode === "daily") return [`Free Daily #${challengeNumber(run.dateKey)}`, rulesChip];
+  if (run.mode === "sample") return ["Sample Run", rulesChip];
+  if (run.mode === "archive") return [`Past Mystery Map Replay ${run.dateKey}`, rulesChip];
+  return ["Mystery Map Challenge", rulesChip];
 }
 
 function runProgressStats(run: RunState) {
@@ -532,7 +586,12 @@ export function WorldprintClient({ dateOverride, entryMode = "standard" }: World
     if (!data) return;
     setPracticeSalt("starter");
     setPracticeSetRoundIds([]);
-  }, [data, practiceFilters]);
+  }, [data]);
+
+  function clearPreparedPracticeSet() {
+    setPracticeSalt("starter");
+    setPracticeSetRoundIds([]);
+  }
 
   useEffect(() => {
     if (!data || practiceDifficultyOptions.length === 0) return;
@@ -552,6 +611,7 @@ export function WorldprintClient({ dateOverride, entryMode = "standard" }: World
 
   function updatePracticeCategory(category: string) {
     setPracticeCategory(category);
+    clearPreparedPracticeSet();
     if (!data) return;
     const availableDifficulties = DIFFICULTY_ORDER.filter((difficulty) => roundCountForFilters(data.rounds, category, difficulty) > 0);
     const nextDifficulty = nearestPracticeDifficulty(practiceDifficulty, availableDifficulties);
@@ -560,18 +620,34 @@ export function WorldprintClient({ dateOverride, entryMode = "standard" }: World
     }
   }
 
-  function buildPracticeSet() {
+  function updatePracticeDifficulty(difficulty: IndicatorDifficulty) {
+    setPracticeDifficulty(difficulty);
+    clearPreparedPracticeSet();
+  }
+
+  function shufflePracticeMaps() {
     if (!signedIn) return;
     if (!canUseFullPractice) return;
     if (!data) return;
-    const nextSalt = `reroll:${Date.now()}:${practiceSalt}`;
+    const combinations = practiceFilterCombinations(data.rounds);
+    if (combinations.length === 0) return;
+    const alternatives = combinations.filter((option) => option.category !== practiceCategory || option.difficulty !== practiceDifficulty);
+    const pool = alternatives.length > 0 ? alternatives : combinations;
+    const selected = pool[Math.floor(Math.random() * pool.length)];
+    const nextFilters = {
+      category: selected.category || undefined,
+      difficulty: selected.difficulty
+    };
+    const nextSalt = `shuffle:${Date.now()}:${selected.category || "any"}:${selected.difficulty}`;
     const selectedIds = selectPracticeRoundIds(
       data.rounds,
       data.manifest.contentVersion,
       nextSalt,
-      practiceFilters,
-      practiceSetRoundIds
+      nextFilters,
+      []
     );
+    setPracticeCategory(selected.category);
+    setPracticeDifficulty(selected.difficulty);
     setPracticeSalt(nextSalt);
     setPracticeSetRoundIds(selectedIds);
   }
@@ -580,7 +656,7 @@ export function WorldprintClient({ dateOverride, entryMode = "standard" }: World
     if (!signedIn) return;
     if (!canUseFullPractice) return;
     if (!data || practiceMatches.length === 0) return;
-    if (currentPracticeRun?.status === "active") {
+    if (currentPracticeRun?.status === "active" && selectedPracticeRounds.length === 0 && runMatchesTier(currentPracticeRun, selectedTier)) {
       await startRun("practice");
       return;
     }
@@ -591,7 +667,11 @@ export function WorldprintClient({ dateOverride, entryMode = "standard" }: World
     if (selectedPracticeRounds.length === 0) {
       setPracticeSetRoundIds(selectedIds);
     }
-    await startRun("practice", undefined, { practiceRoundIds: selectedIds, practiceSalt });
+    await startRun("practice", undefined, {
+      practiceRoundIds: selectedIds,
+      practiceSalt,
+      setup: customAtlasSetup(practiceCategory, practiceDifficulty)
+    });
   }
 
   async function startArchivePracticeReplay() {
@@ -606,7 +686,7 @@ export function WorldprintClient({ dateOverride, entryMode = "standard" }: World
   async function startRun(
     mode: RunMode,
     challengePayload?: ChallengePayload,
-    options: { freshReplay?: boolean; practiceRoundIds?: string[]; practiceSalt?: string } = {}
+    options: { freshReplay?: boolean; practiceRoundIds?: string[]; practiceSalt?: string; setup?: RunSetupMetadata } = {}
   ) {
     if (!data) return;
     if (mode === "practice" && !signedIn) return;
@@ -614,28 +694,35 @@ export function WorldprintClient({ dateOverride, entryMode = "standard" }: World
     if (mode === "archive" && !signedIn) return;
     if (mode === "atlas" && !isProAccount) return;
     if (mode === "practice" && !canUseFullPractice) return;
-    if (mode === "daily" && currentDailyRun && !options.freshReplay) {
+    const targetTier = challengePayload?.tier ?? selectedTier;
+    if (mode === "daily" && currentDailyRun && runMatchesTier(currentDailyRun, targetTier) && !options.freshReplay) {
       setRun(currentDailyRun);
       setShowFirstRunIntro(!store.onboardingComplete && currentDailyRun.status === "active" && currentDailyRun.currentRoundIndex === 0);
       window.requestAnimationFrame(() => window.scrollTo(0, 0));
       await ensureIndicators(currentDailyRun.rounds.map((round) => round.correctIndicatorId));
       return;
     }
-    if (mode === "atlas" && currentAtlasRun?.status === "active" && !options.freshReplay) {
+    if (mode === "atlas" && currentAtlasRun?.status === "active" && runMatchesTier(currentAtlasRun, targetTier) && !options.freshReplay) {
       setRun(currentAtlasRun);
       setShowFirstRunIntro(!store.onboardingComplete && currentAtlasRun.currentRoundIndex === 0);
       window.requestAnimationFrame(() => window.scrollTo(0, 0));
       await ensureIndicators(currentAtlasRun.rounds.map((round) => round.correctIndicatorId));
       return;
     }
-    if (mode === "practice" && currentPracticeRun?.status === "active" && !options.freshReplay) {
+    if (
+      mode === "practice" &&
+      currentPracticeRun?.status === "active" &&
+      runMatchesTier(currentPracticeRun, targetTier) &&
+      !options.practiceRoundIds &&
+      !options.freshReplay
+    ) {
       setRun(currentPracticeRun);
       setShowFirstRunIntro(false);
       window.requestAnimationFrame(() => window.scrollTo(0, 0));
       await ensureIndicators(currentPracticeRun.rounds.map((round) => round.correctIndicatorId));
       return;
     }
-    if (mode === "archive" && currentArchiveRun && !options.freshReplay) {
+    if (mode === "archive" && currentArchiveRun && runMatchesTier(currentArchiveRun, targetTier) && !options.freshReplay) {
       setRun(currentArchiveRun);
       setShowFirstRunIntro(false);
       window.requestAnimationFrame(() => window.scrollTo(0, 0));
@@ -674,7 +761,7 @@ export function WorldprintClient({ dateOverride, entryMode = "standard" }: World
       mode,
       dateKey: challengePayload?.dateKey ?? todayKey,
       contentVersion: data.manifest.contentVersion,
-      tier: challengePayload?.tier ?? selectedTier,
+      tier: targetTier,
       roundIds,
       salt:
         mode === "sample"
@@ -685,7 +772,8 @@ export function WorldprintClient({ dateOverride, entryMode = "standard" }: World
               ? `atlas:${Date.now()}:${Object.keys(store.atlasHistoryById).length}`
               : mode === "challenge"
                 ? challengePayload?.checksum
-                : undefined
+                : undefined,
+      ...(mode === "practice" && options.setup ? { setup: options.setup } : {})
     });
     await ensureIndicators(nextRun.rounds.map((round) => round.correctIndicatorId));
     setRun(nextRun);
@@ -715,7 +803,8 @@ export function WorldprintClient({ dateOverride, entryMode = "standard" }: World
       contentVersion: sourceRun.contentVersion,
       tier: sourceRun.tier,
       roundIds,
-      salt: `replay:${Date.now()}:${sourceRun.id}`
+      salt: `replay:${Date.now()}:${sourceRun.id}`,
+      ...(replayMode === "practice" && sourceRun.setup ? { setup: sourceRun.setup } : {})
     });
     await ensureIndicators(replay.rounds.map((round) => round.correctIndicatorId));
     setRun(replay);
@@ -954,6 +1043,7 @@ export function WorldprintClient({ dateOverride, entryMode = "standard" }: World
     const archiveRecord = isArchiveDate ? savedArchiveRecord(store, todayKey) : null;
     const reviewRecord = isArchiveDate ? archiveReviewRecord(archiveRecord, currentAccountArchiveRun, todayKey) : null;
     const todayRecord = !isArchiveDate ? store.dailyHistoryByDate[todayKey] ?? null : null;
+    const activeDateRunMatchesTier = activeDateRun?.status === "active" && runMatchesTier(activeDateRun, selectedTier);
     const completedDailyRun = !isArchiveDate && activeDateRun?.status === "complete" ? activeDateRun : null;
     const todayCompleted = Boolean(!isArchiveDate && (completedDailyRun || todayRecord));
     const nextDaily = nextDailyUnlockCopy();
@@ -964,9 +1054,15 @@ export function WorldprintClient({ dateOverride, entryMode = "standard" }: World
         ? isArchiveDate
           ? "View result"
           : "View today's result"
-        : isArchiveDate
+        : activeDateRunMatchesTier
+          ? isArchiveDate
           ? "Continue replay"
           : "Continue today's 3 maps"
+          : isArchiveDate
+            ? archiveRecord
+              ? "Replay for practice"
+              : "Start dated replay"
+            : "Start today's 3 maps"
         : isArchiveDate
         ? archiveRecord
           ? "Replay for practice"
@@ -981,8 +1077,9 @@ export function WorldprintClient({ dateOverride, entryMode = "standard" }: World
       : "Pro feature";
     const availablePracticeCount = Math.min(3, practiceMatches.length);
     const practiceWarning = canUseFullPractice ? rarePracticeNote(practiceMatches.length) : "";
-    const currentAtlasActive = currentAtlasRun?.status === "active";
-    const currentPracticeActive = canUseFullPractice && currentPracticeRun?.status === "active";
+    const currentDailyActive = currentDailyRun?.status === "active" && runMatchesTier(currentDailyRun, selectedTier);
+    const currentAtlasActive = currentAtlasRun?.status === "active" && runMatchesTier(currentAtlasRun, selectedTier);
+    const currentPracticeActive = canUseFullPractice && currentPracticeRun?.status === "active" && runMatchesTier(currentPracticeRun, selectedTier);
     const primaryMode: "sample" | "daily" | "atlas" = isProAccount ? "atlas" : isFreeAccount ? "daily" : "sample";
     const primaryModeComplete = primaryMode === "daily" ? todayCompleted : false;
     const primaryKicker = primaryMode === "atlas" ? "Unlimited Atlas" : primaryMode === "daily" ? "Today's Free Maps" : "Sample Run";
@@ -992,7 +1089,7 @@ export function WorldprintClient({ dateOverride, entryMode = "standard" }: World
           ? "Continue Pro Atlas"
           : "Start Pro Atlas"
         : primaryMode === "daily"
-          ? currentDailyRun?.status === "active"
+          ? currentDailyActive
             ? "Resume today's 3 maps"
             : "Play today's 3 fresh maps"
           : "Try the 5-map Sample Run";
@@ -1010,7 +1107,7 @@ export function WorldprintClient({ dateOverride, entryMode = "standard" }: World
         : primaryModeComplete
           ? "Today's 3 maps complete"
           : primaryMode === "daily"
-            ? currentDailyRun?.status === "active"
+            ? currentDailyActive
               ? "Daily in progress"
               : "Ready today"
             : "5 fixed maps";
@@ -1043,25 +1140,25 @@ export function WorldprintClient({ dateOverride, entryMode = "standard" }: World
       : isFreeAccount
         ? "Practice by topic and difficulty is included with Pro. Free accounts include one fresh 3-map Daily each day."
         : "Try the Sample Run without an account, or start Pro for topic and difficulty practice.";
-    const practiceReadyText = currentPracticeActive
-      ? `Resume map ${(currentPracticeRun?.currentRoundIndex ?? 0) + 1} of ${currentPracticeRun?.rounds.length ?? PRO_ATLAS_ROUND_COUNT}`
-      : selectedCount > 0
-        ? practiceReadyLine(selectedCount)
+    const practiceReadyText = selectedCount > 0
+      ? practiceReadyLine(selectedCount)
+      : currentPracticeActive
+        ? `Resume map ${(currentPracticeRun?.currentRoundIndex ?? 0) + 1} of ${currentPracticeRun?.rounds.length ?? PRO_ATLAS_ROUND_COUNT}`
         : practiceMatches.length > 0
           ? practiceReadyLine(availablePracticeCount)
           : canUseFullPractice
             ? practiceReadyLine(0)
             : "Included with Pro";
-    const practiceStatusText = currentPracticeActive
-      ? "Practice in progress"
-      : canUseFullPractice
-        ? selectedCount > 0
-          ? practiceFlavor(practiceDifficulty)
-          : practiceMatches.length > 0
+    const practiceStatusText = selectedCount > 0
+      ? practiceFlavor(practiceDifficulty)
+      : currentPracticeActive
+        ? "Practice in progress"
+        : canUseFullPractice
+          ? practiceMatches.length > 0
             ? "Ready from these filters."
             : "Try another topic or difficulty."
-        : "Practice does not change Daily score or streak.";
-    const practiceActionLabel = currentPracticeActive ? "Resume practice" : "Start practice";
+          : "Practice does not change Daily score or streak.";
+    const practiceActionLabel = currentPracticeActive && selectedCount === 0 ? "Resume practice" : "Start practice";
     if (reviewRequested) {
       if (reviewRecord) {
         return (
@@ -1254,7 +1351,7 @@ export function WorldprintClient({ dateOverride, entryMode = "standard" }: World
                           <select
                             id="practice-difficulty"
                             value={practiceDifficulty}
-                            onChange={(event) => setPracticeDifficulty(event.target.value as IndicatorDifficulty)}
+                            onChange={(event) => updatePracticeDifficulty(event.target.value as IndicatorDifficulty)}
                           >
                             {practiceDifficultyOptions.map((option) => (
                               <option key={option.difficulty} value={option.difficulty}>
@@ -1286,9 +1383,16 @@ export function WorldprintClient({ dateOverride, entryMode = "standard" }: World
                         </Link>
                       )}
                       {canUseFullPractice ? (
-                        <button className="button-secondary" type="button" disabled={practiceMatches.length === 0} onClick={buildPracticeSet}>
+                        <button
+                          className="button-secondary practice-shuffle-button"
+                          type="button"
+                          aria-label="Shuffle practice maps"
+                          title="Shuffle practice maps"
+                          disabled={practiceMatches.length === 0}
+                          onClick={shufflePracticeMaps}
+                        >
                           <Shuffle size={17} aria-hidden="true" />
-                          Shuffle set
+                          Shuffle maps
                         </button>
                       ) : isGuest ? (
                         <Link className="button-secondary" href="/upgrade">
@@ -1296,6 +1400,7 @@ export function WorldprintClient({ dateOverride, entryMode = "standard" }: World
                         </Link>
                       ) : null}
                     </div>
+                    {canUseFullPractice ? <p className="practice-action-note">Picks a random topic and difficulty for your next practice set.</p> : null}
                   </article>
                   <article className="mode-card mode-card-past">
                     <div>
@@ -1494,6 +1599,7 @@ export function WorldprintClient({ dateOverride, entryMode = "standard" }: World
       : feedbackText.toLowerCase().includes("unit clue revealed")
       ? `-${config.scoring.unitCluePenalty}`
       : null;
+  const activeContextChips = activeRunContextChips(run, config.label);
 
   if (roundState.phase === "solved") {
     return (
@@ -1519,20 +1625,9 @@ export function WorldprintClient({ dateOverride, entryMode = "standard" }: World
             <span>
               Round {run.currentRoundIndex + 1} of {run.rounds.length}
             </span>
-            <span>{config.label}</span>
-            <span>
-              {run.mode === "daily"
-                ? `Free Daily #${challengeNumber(run.dateKey)}`
-                : run.mode === "sample"
-                  ? "Sample Run"
-                  : run.mode === "atlas"
-                    ? "Pro Atlas"
-                : run.mode === "archive"
-                  ? `Past Mystery Map Replay ${run.dateKey}`
-                  : run.mode === "challenge"
-                    ? "Mystery Map Challenge"
-                    : "Mystery Map Practice"}
-            </span>
+            {activeContextChips.map((label, index) => (
+              <span key={`${label}-${index}`}>{label}</span>
+            ))}
           </div>
           <div>
             <p className="eyebrow">Your task</p>
@@ -1572,7 +1667,7 @@ export function WorldprintClient({ dateOverride, entryMode = "standard" }: World
           <div className="score-hud-card score-hud-current">
             <span>This map</span>
             <strong key={roundState.score} data-score-tone={roundState.score < 0 ? "negative" : "positive"}>
-              <span className="score-number">{roundState.score}</span> available
+              <span className="score-number">{roundState.score}</span> <span className="score-status-word">available</span>
             </strong>
             <small>Not banked until solved.</small>
             {scoreSpendEvent ? (
@@ -2498,14 +2593,16 @@ function CompletionSummary({
     isSampleRun
       ? "Sample Run complete"
       : isDailyRun
-        ? `Today's Free Daily #${challengeNumber(run.dateKey)}`
-        : isAtlasRun
-          ? "Pro Atlas run complete"
-          : run.mode === "archive"
+      ? `Today's Free Daily #${challengeNumber(run.dateKey)}`
+      : isAtlasRun
+        ? "Atlas Run complete"
+        : run.mode === "archive"
         ? `Past Mystery Map Replay · ${run.dateKey}`
         : run.mode === "challenge"
           ? "Mystery Map Challenge complete"
-          : "Mystery Map Practice complete";
+          : run.setup?.kind === "custom-atlas"
+            ? "Custom Atlas complete"
+            : "Atlas Run complete";
   const reviewHref = run.mode === "daily" || run.mode === "archive" ? `/play/mystery-map/${run.dateKey}?review=1` : null;
   const nextDaily = nextDailyUnlockCopy();
   const bestDailyScore = bestDailyScoreForStore(store);

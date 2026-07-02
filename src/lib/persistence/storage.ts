@@ -1,5 +1,5 @@
 import { z } from "zod";
-import { TierSchema } from "@/lib/content/schemas";
+import { IndicatorDifficultySchema, TierSchema } from "@/lib/content/schemas";
 import { TIER_CONFIGS } from "@/lib/game/scoring";
 import { updateStreak, emptyStreak } from "@/lib/game/streak";
 import type { RunState } from "@/lib/game/state";
@@ -26,6 +26,12 @@ const RoundPlayStateSchema = z.object({
   feedback: z.string().nullable()
 });
 
+const RunSetupMetadataSchema = z.object({
+  kind: z.literal("custom-atlas"),
+  topic: z.string().optional(),
+  mapDifficulty: IndicatorDifficultySchema.optional()
+});
+
 const RunStateSchema: z.ZodType<RunState> = z.object({
   id: z.string(),
   mode: z.enum(["sample", "daily", "atlas", "practice", "archive", "challenge"]),
@@ -34,7 +40,8 @@ const RunStateSchema: z.ZodType<RunState> = z.object({
   tier: TierSchema,
   currentRoundIndex: z.number().int(),
   status: z.enum(["active", "complete"]),
-  rounds: z.array(RoundPlayStateSchema)
+  rounds: z.array(RoundPlayStateSchema),
+  setup: RunSetupMetadataSchema.optional()
 });
 
 const CompletedResultSchema = z.object({

@@ -2,6 +2,32 @@ import { render, screen } from "@testing-library/react";
 import { describe, expect, it, vi } from "vitest";
 import HomePage from "@/app/page";
 
+const entitlementMock = vi.hoisted(() => ({
+  state: {
+    entitlement: {
+      plan: "guest",
+      status: "guest",
+      source: "guest",
+      row: null,
+      capabilities: {
+        canSaveStats: false,
+        canUseFullPractice: false,
+        canUseFullArchive: false,
+        canViewAdvancedStats: false,
+        canCreateChallenges: true,
+        canViewChallengeHistory: false,
+        practiceLimit: 3,
+        archiveLimitDays: 14
+      }
+    },
+    loading: false,
+    error: null,
+    configured: true,
+    signedIn: false,
+    refresh: vi.fn()
+  }
+}));
+
 vi.mock("next/image", () => ({
   default: ({ alt = "", src, fill, ...props }: { alt?: string; src: string; fill?: boolean }) => {
     void fill;
@@ -12,6 +38,10 @@ vi.mock("next/image", () => ({
 
 vi.mock("@/components/HomepageHeroMedia", () => ({
   HomepageHeroMedia: () => <div data-testid="homepage-hero-media" />
+}));
+
+vi.mock("@/features/account/useEntitlement", () => ({
+  useEntitlement: () => entitlementMock.state
 }));
 
 describe("HomePage", () => {

@@ -1,0 +1,134 @@
+# Project State
+
+Snapshot date: July 2, 2026.
+
+## Current Goal
+
+Can You Geo is in pre-production staging polish. The immediate product focus is finishing local QA fixes for Mystery Map Custom Atlas setup, active gameplay context, and the account-aware homepage while preserving the strict Free vs Pro access model.
+
+## Current Status
+
+- Current branch: `staging`.
+- Latest local commit at inspection time: `68d733c Improve active Mystery Map gameplay dashboard`.
+- Local QA fixes are implemented but not committed or pushed yet.
+- `test.canyougeo.com` will not show these changes until the current local changes are committed, pushed to staging, and deployed by Cloudflare.
+- Working tree contains pre-existing uncommitted product edits plus this docs update.
+- Untracked `atd/` image/archive assets are present and must remain untouched unless explicitly needed.
+
+## Completed Local Changes
+
+### Custom Atlas / Former Practice Setup Polish
+
+- `Shuffle maps` updates the Topic and Map Difficulty dropdowns visibly.
+- The shuffle/status card shows the chosen topic and map difficulty combination.
+- Practice/Custom Atlas action buttons have matching height and aligned layout.
+- The `Available` score label fits inside the score card on desktop and mobile.
+
+### Active Gameplay Context
+
+- Active Custom Atlas gameplay now shows mode, selected topic, selected map difficulty, and challenge rules.
+- Confirmed example display includes `Custom Atlas`, `Health`, `Expert maps`, and `Cartographer rules`.
+- Active `Mystery Map Practice` language was replaced with `Custom Atlas` / `Atlas Run` language where appropriate.
+- Setup metadata persists across local resume/reload.
+
+### Homepage Account-Aware Hero
+
+- Logged out: keeps `Start Pro` and `Try Sample Run` acquisition CTAs.
+- Logged-in Free: shows Free Daily plus `Upgrade to Pro` messaging.
+- Logged-in Pro: no longer shows `Start Pro` or `Try Sample Run` as primary hero CTAs.
+- Logged-in Pro now shows Pro-aware Daily / Custom Atlas actions and `Pro Atlas unlocked` style copy.
+- Localhost QA confirmed guest, Free, and Pro homepage states work.
+
+## Validation Run
+
+Recent local validation passed:
+
+- Targeted Worldprint/Mystery Map tests:
+  - `pnpm test src/features/worldprint/WorldprintClient.structure.test.ts`
+  - Result: passed.
+  - `pnpm test src/components/PrimaryNav.test.tsx src/features/worldprint/WorldprintClient.structure.test.ts`
+  - Result: passed; jsdom emitted expected navigation-not-implemented warnings.
+- Persistence/game/account tests:
+  - `pnpm test src/features/worldprint/WorldprintClient.structure.test.ts src/lib/persistence/storage.test.ts src/lib/account/entitlements.test.ts src/lib/account/accessCopy.test.ts`
+  - Result: passed.
+- Homepage/account/nav tests:
+  - `pnpm test src/app/page.test.tsx src/features/home/HomeHeroAccountPanel.test.tsx src/features/account/AuthNavStatus.test.tsx src/components/PrimaryNav.test.tsx src/lib/account/entitlements.test.ts src/lib/account/accessCopy.test.ts`
+  - Result: passed; `6` test files and `21` tests. jsdom emitted navigation-not-implemented warnings, but there were no failures.
+- Lint:
+  - `pnpm lint`
+  - Result: passed.
+- Typecheck:
+  - `pnpm typecheck`
+  - Result: passed.
+- Build:
+  - `NEXT_PUBLIC_SUPABASE_URL=https://test.supabase.co NEXT_PUBLIC_SUPABASE_ANON_KEY=<fake anon JWT> pnpm build`
+  - Result: passed; static export generated `268/268` pages. `next-env.d.ts` churn was restored and now has no diff.
+- Diff hygiene:
+  - `git diff --check`
+  - Result: passed.
+- Browser QA, Custom Atlas:
+  - Pro setup with Topic `Health`, Map Difficulty `Expert`, and rules `Cartographer` was started/resumed locally.
+  - Active gameplay visibly showed `Custom Atlas`, `Health`, `Expert maps`, and `Cartographer rules`.
+  - Setup shuffle visibly updated dropdowns and the status card before play.
+  - `Available` score text and Custom Atlas action button alignment were visually checked locally.
+- Browser QA, homepage account states:
+  - Static preview served at `http://localhost:3001`.
+  - Logged out: hero showed `Start Pro` and `Try Sample Run`; right card kept `Join the game`.
+  - Logged-in Free: hero showed `Play today's Free Daily` and `Upgrade to Pro`; right card showed `Free Daily unlocked`.
+  - Logged-in Pro: hero showed `Play today's Daily` and `Start Custom Atlas`; right card showed `Pro Atlas unlocked` / `Daily plus Custom Atlas`; no primary hero `Start Pro` or `Try Sample Run`.
+  - Header/account menu opened correctly, and logo/header navigation back to the homepage preserved the correct account-aware state.
+
+## Known Remaining Issues / Follow-Ups
+
+- Custom Atlas topic+difficulty combos currently do not exhaust by play history; zero-match combos are handled, but the "played every map in this combo" exhaustion policy is not implemented.
+- The lower static homepage `Ways to play` section may still contain `Try Sample Run` copy/card.
+- Full e2e may need updating for the newer access model and Custom Atlas terminology.
+- Deployed staging QA is still needed after commit/push/Cloudflare build.
+- `atd/` remains untracked and should not be committed unless explicitly needed.
+- `next-env.d.ts` may churn during build and should remain restored/no diff.
+
+## Key Decisions To Preserve
+
+- Logged-out users get the fixed 5-map Sample Run only.
+- Signed-in Free users get the 3-map Free Daily only.
+- Custom Atlas, former Practice filters, shuffle/reroll/custom setup controls, resume, and replay-as-practice are Pro-only.
+- Pro users keep Daily plus Pro Atlas, Full Practice Atlas / Custom Atlas, Past Games archive, and Pro account stats where already implemented.
+- Daily affects Daily score and streak. Custom Atlas, Practice, Atlas, Past Games, and Challenge runs do not.
+- The Play nav on `/play/mystery-map/` must reset result/completed UI back to the lobby without changing the canonical URL.
+- Static export compatibility is required.
+- No private run state, answers, hidden indicators, user IDs, or emails belong in URLs.
+- `atd/` is unrelated and should not be touched.
+
+## Recently Touched Files
+
+Current local product/app files in the dirty tree include:
+
+- `src/app/page.tsx`
+- `src/app/page.test.tsx`
+- `src/features/home/HomeHeroAccountPanel.tsx`
+- `src/features/home/HomeHeroAccountPanel.test.tsx`
+- `src/features/worldprint/WorldprintClient.tsx`
+- `src/features/worldprint/WorldprintClient.structure.test.ts`
+- `src/lib/game/state.ts`
+- `src/lib/persistence/storage.ts`
+- `src/styles/globals.css`
+
+Docs currently present in the dirty tree:
+
+- `AGENTS.md`
+- `PROJECT_STATE.md`
+- `TESTING.md`
+
+## Next 3 Safest Tasks
+
+1. Review the full diff and commit the verified QA fixes to `staging`.
+2. Push `staging` and verify the Cloudflare deploy on `test.canyougeo.com`.
+3. Decide and implement the Custom Atlas exhaustion/replay policy separately.
+
+## Must Not Forget
+
+- Do not touch `atd/`.
+- Do not enable live billing.
+- Do not change Stripe, Supabase, Cloudflare, env files, migrations, or Edge Functions during UI polish unless explicitly requested.
+- Do not weaken Pro-only Custom Atlas / former Practice access.
+- Do not claim deployment, dashboard settings, or remote database state unless actually verified.

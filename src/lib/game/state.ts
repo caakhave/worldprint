@@ -1,4 +1,4 @@
-import type { Tier } from "@/lib/content/schemas";
+import type { IndicatorDifficulty, Tier } from "@/lib/content/schemas";
 import { deductScore, nextInvestigationPenalty, TIER_CONFIGS } from "@/lib/game/scoring";
 
 export type RunMode = "sample" | "daily" | "atlas" | "practice" | "archive" | "challenge";
@@ -31,6 +31,13 @@ export type RunState = {
   currentRoundIndex: number;
   status: "active" | "complete";
   rounds: RoundPlayState[];
+  setup?: RunSetupMetadata;
+};
+
+export type RunSetupMetadata = {
+  kind: "custom-atlas";
+  topic?: string;
+  mapDifficulty?: IndicatorDifficulty;
 };
 
 export type CreateRunInput = {
@@ -40,6 +47,7 @@ export type CreateRunInput = {
   tier: Tier;
   roundIds: Array<{ roundId: string; correctIndicatorId: string }>;
   salt?: string;
+  setup?: RunSetupMetadata;
 };
 
 export function createRun(input: CreateRunInput): RunState {
@@ -51,6 +59,7 @@ export function createRun(input: CreateRunInput): RunState {
     tier: input.tier,
     currentRoundIndex: 0,
     status: "active",
+    ...(input.setup ? { setup: input.setup } : {}),
     rounds: input.roundIds.map((round) => ({
       roundId: round.roundId,
       correctIndicatorId: round.correctIndicatorId,

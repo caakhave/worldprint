@@ -5,6 +5,8 @@ import { describe, expect, it } from "vitest";
 const source = readFileSync(join(process.cwd(), "src/features/worldprint/WorldprintClient.tsx"), "utf8");
 const primaryNavSource = readFileSync(join(process.cwd(), "src/components/PrimaryNav.tsx"), "utf8");
 const playLobbyNavigationSource = readFileSync(join(process.cwd(), "src/lib/site/playLobbyNavigation.ts"), "utf8");
+const runStateSource = readFileSync(join(process.cwd(), "src/lib/game/state.ts"), "utf8");
+const storageSource = readFileSync(join(process.cwd(), "src/lib/persistence/storage.ts"), "utf8");
 const styles = readFileSync(join(process.cwd(), "src/styles/globals.css"), "utf8");
 
 describe("WorldprintClient UI structure", () => {
@@ -67,7 +69,9 @@ describe("WorldprintClient UI structure", () => {
     expect(source).toContain("store.activePracticeRun");
     expect(source).toContain("store.activeArchiveRunsByDate[todayKey]");
     expect(source).toContain("if (!data || !canUseFullPractice) return null;");
-    expect(source).toContain("const currentPracticeActive = canUseFullPractice && currentPracticeRun?.status === \"active\";");
+    expect(source).toContain(
+      "const currentPracticeActive = canUseFullPractice && currentPracticeRun?.status === \"active\" && runMatchesTier(currentPracticeRun, selectedTier);",
+    );
     expect(source).toContain("currentPracticeRun?.status === \"active\"");
     expect(source).toContain("Resume practice");
     expect(source).toContain("Resume map");
@@ -75,6 +79,71 @@ describe("WorldprintClient UI structure", () => {
     expect(source).toContain("Resume today's 3 maps");
     expect(source).toContain("Continue Pro Atlas");
     expect(source).toContain("Continue replay");
+  });
+
+  it("keeps resumed runs aligned to the selected skill tier", () => {
+    expect(source).toContain("function runMatchesTier(run: RunState | null | undefined, tier: Tier)");
+    expect(source).toContain("const targetTier = challengePayload?.tier ?? selectedTier;");
+    expect(source).toContain("runMatchesTier(currentDailyRun, targetTier)");
+    expect(source).toContain("runMatchesTier(currentAtlasRun, targetTier)");
+    expect(source).toContain("runMatchesTier(currentPracticeRun, targetTier)");
+    expect(source).toContain("runMatchesTier(currentArchiveRun, targetTier)");
+    expect(source).toContain("tier: targetTier");
+    expect(source).toContain("const currentDailyActive = currentDailyRun?.status === \"active\" && runMatchesTier(currentDailyRun, selectedTier);");
+    expect(source).toContain("const currentAtlasActive = currentAtlasRun?.status === \"active\" && runMatchesTier(currentAtlasRun, selectedTier);");
+    expect(source).toContain("const activeDateRunMatchesTier = activeDateRun?.status === \"active\" && runMatchesTier(activeDateRun, selectedTier);");
+  });
+
+  it("ties the active tier pill and answer mode to the actual run tier", () => {
+    expect(source).toContain("const config = TIER_CONFIGS[run.tier]");
+    expect(source).toContain("function activeRunContextChips(run: RunState, rulesetLabel: string)");
+    expect(source).toContain("const rulesChip = `${rulesetLabel} rules`;");
+    expect(source).toContain("const activeContextChips = activeRunContextChips(run, config.label);");
+    expect(source).toContain("activeContextChips.map");
+    expect(source).toContain('run.tier === "atlasMaster" ? (');
+    expect(source).toContain('className="choice-list"');
+    expect(source).toContain('Search playable map catalog');
+  });
+
+  it("stores Custom Atlas setup metadata and renders it on active practice runs", () => {
+    expect(runStateSource).toContain("export type RunSetupMetadata");
+    expect(runStateSource).toContain('kind: "custom-atlas";');
+    expect(runStateSource).toContain("topic?: string;");
+    expect(runStateSource).toContain("mapDifficulty?: IndicatorDifficulty;");
+    expect(runStateSource).toContain("setup?: RunSetupMetadata;");
+    expect(storageSource).toContain("const RunSetupMetadataSchema");
+    expect(storageSource).toContain("mapDifficulty: IndicatorDifficultySchema.optional()");
+    expect(storageSource).toContain("setup: RunSetupMetadataSchema.optional()");
+    expect(source).toContain("function customAtlasSetup(topic: string, mapDifficulty: IndicatorDifficulty): RunSetupMetadata");
+    expect(source).toContain("setup: customAtlasSetup(practiceCategory, practiceDifficulty)");
+    expect(source).toContain('run.setup?.kind === "custom-atlas"');
+    expect(source).toContain('"Custom Atlas"');
+    expect(source).toContain("formatTopicLabel(run.setup.topic)");
+    expect(source).toContain("`${DIFFICULTY_LABELS[run.setup.mapDifficulty]} maps`");
+    expect(source).toContain('"Atlas Run"');
+    expect(source).not.toContain("Mystery Map Practice");
+  });
+
+  it("clarifies the Pro-only practice shuffle action", () => {
+    expect(source).toContain("function practiceFilterCombinations");
+    expect(source).toContain("function shufflePracticeMaps()");
+    expect(source).toContain("if (!canUseFullPractice) return;");
+    expect(source).toContain("const alternatives = combinations.filter");
+    expect(source).toContain("setPracticeCategory(selected.category);");
+    expect(source).toContain("setPracticeDifficulty(selected.difficulty);");
+    expect(source).toContain("setPracticeSetRoundIds(selectedIds);");
+    expect(source).toContain("!options.practiceRoundIds");
+    expect(source).toContain("selectedPracticeRounds.length === 0");
+    expect(source).toContain("onClick={shufflePracticeMaps}");
+    expect(source).toContain('aria-label="Shuffle practice maps"');
+    expect(source).toContain("Shuffle maps");
+    expect(source).toContain("Picks a random topic and difficulty for your next practice set.");
+    expect(source).not.toContain("Shuffle set");
+    expect(source).not.toContain("Gets a different mix for this topic and difficulty.");
+    expect(styles).toContain(".practice-action-note");
+    expect(styles).toContain(".practice-actions .practice-shuffle-button");
+    expect(styles).toContain("grid-template-columns: repeat(2, minmax(0, 1fr));");
+    expect(styles).toContain("min-height: 4.25rem");
   });
 
   it("moves the skill tier up into the start-page preview column", () => {
@@ -180,7 +249,19 @@ describe("WorldprintClient UI structure", () => {
     expect(answerBoxIndex).toBeGreaterThan(controlPanelIndex);
     expect(styles).toContain(".play-action-dock");
     expect(styles).toContain(".play-action-dock .choice-list");
+    expect(styles).toContain(".play-layout[data-layout=\"dashboard\"] .play-action-dock");
+    expect(styles).toContain("box-shadow: none");
+    expect(styles).toContain(".play-action-dock .primary-answer-box");
     expect(styles).toContain("position: sticky;");
+  });
+
+  it("keeps the current map score label from splitting inside available", () => {
+    expect(source).toContain('className="score-status-word"');
+    expect(styles).toContain(".score-hud-current strong .score-status-word");
+    expect(styles).toContain("display: inline-block");
+    expect(styles).toContain("white-space: nowrap");
+    expect(styles).toContain("overflow-wrap: normal");
+    expect(styles).toContain("font-size: clamp(0.86rem, 1.45vw, 1.06rem)");
   });
 
   it("places solved-round next action before the longer explanation", () => {
