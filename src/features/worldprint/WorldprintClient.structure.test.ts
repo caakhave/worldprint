@@ -147,20 +147,54 @@ describe("WorldprintClient UI structure", () => {
   });
 
   it("keeps the unit clue visible in the immediate answer flow", () => {
-    const answerBoxIndex = source.indexOf('className="answer-box primary-answer-box"');
-    const unitClueIndex = source.indexOf('className="answer-clue-row"');
-    const choiceListIndex = source.indexOf('className="choice-list"');
+    const mapPanelIndex = source.indexOf('className="play-map-panel"');
+    const actionDockIndex = source.indexOf('className="play-action-dock surface"');
+    const answerBoxIndex = source.indexOf('className="answer-box primary-answer-box"', actionDockIndex);
+    const unitClueIndex = source.indexOf('className="answer-clue-row"', actionDockIndex);
+    const choiceListIndex = source.indexOf('className="choice-list"', actionDockIndex);
     const lowerClueDashboardIndex = source.indexOf('className="clue-dashboard"');
 
+    expect(actionDockIndex).toBeGreaterThan(mapPanelIndex);
+    expect(answerBoxIndex).toBeGreaterThan(actionDockIndex);
+    expect(lowerClueDashboardIndex).toBeLessThan(actionDockIndex);
     expect(unitClueIndex).toBeGreaterThan(answerBoxIndex);
     expect(unitClueIndex).toBeLessThan(choiceListIndex);
-    expect(unitClueIndex).toBeLessThan(lowerClueDashboardIndex);
     expect(source).toContain('data-clue="unit"');
+    expect(source).toContain('data-placement="dock"');
     expect(source).toContain("Reveal units");
     expect(source).toContain("Reveal unit: -");
     expect(source).toContain('dispatch({ type: "unitClue" })');
     expect(styles).toContain(".answer-clue-row");
     expect(styles).toContain(".answer-unit-button");
+  });
+
+  it("renders active answers in a compact gameplay action dock", () => {
+    const actionDockIndex = source.indexOf('className="play-action-dock surface"');
+    const answerBoxIndex = source.indexOf('className="answer-box primary-answer-box"', actionDockIndex);
+    const choiceListIndex = source.indexOf('className="choice-list"', actionDockIndex);
+    const controlPanelIndex = source.indexOf('className="play-control-panel surface"');
+
+    expect(actionDockIndex).toBeGreaterThan(0);
+    expect(answerBoxIndex).toBeGreaterThan(actionDockIndex);
+    expect(choiceListIndex).toBeGreaterThan(answerBoxIndex);
+    expect(answerBoxIndex).toBeGreaterThan(controlPanelIndex);
+    expect(styles).toContain(".play-action-dock");
+    expect(styles).toContain(".play-action-dock .choice-list");
+    expect(styles).toContain("position: sticky;");
+  });
+
+  it("places solved-round next action before the longer explanation", () => {
+    const revealDockIndex = source.indexOf('className="reveal-action-dock"');
+    const nextButtonIndex = source.indexOf('className="button full-width next-map-button"', revealDockIndex);
+    const explanationIndex = source.indexOf('className="lesson-card lesson-card-strong reveal-key-evidence"', revealDockIndex);
+
+    expect(revealDockIndex).toBeGreaterThan(0);
+    expect(nextButtonIndex).toBeGreaterThan(revealDockIndex);
+    expect(nextButtonIndex).toBeLessThan(explanationIndex);
+    expect(source).toContain('<summary id="showing-heading">What the map was showing</summary>');
+    expect(styles).toContain(".reveal-action-dock");
+    expect(styles).toContain(".next-map-button");
+    expect(styles).toContain("next-button-ready");
   });
 
   it("shows every paid country reveal in a horizontal evidence strip", () => {

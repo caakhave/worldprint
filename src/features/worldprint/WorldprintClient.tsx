@@ -1595,111 +1595,6 @@ export function WorldprintClient({ dateOverride, entryMode = "standard" }: World
             </strong>
           </div>
         </div>
-        <div className="answer-box primary-answer-box">
-          {run.tier === "atlasMaster" ? (
-            <form
-              onSubmit={(event) => {
-                event.preventDefault();
-                const correct = isAcceptedAtlasGuess(masterGuess, round.acceptedAliases, indicator);
-                dispatch({
-                  type: "submit",
-                  answerId: `guess:${normalizeGuess(masterGuess)}`,
-                  label: masterGuess,
-                  correct
-                });
-                if (!correct) setMasterGuess("");
-              }}
-            >
-              <label htmlFor="master-search">Search playable map catalog</label>
-              <input
-                id="master-search"
-                list="indicator-catalog"
-                value={masterGuess}
-                onChange={(event) => setMasterGuess(event.target.value)}
-                placeholder="Type an indicator"
-                autoComplete="off"
-              />
-              <datalist id="indicator-catalog">
-                {Array.from(data.indicators.values())
-                  .filter((item) => item.editorialReview.challengeEligible)
-                  .map((item) => (
-                    <option key={item.id} value={item.shortTitle} />
-                  ))}
-              </datalist>
-              <button className="button full-width" type="submit" disabled={!masterGuess.trim()}>
-                Submit answer
-              </button>
-            </form>
-          ) : (
-            <>
-              <div className="answer-box-heading">
-                <div>
-                  <span>Pick one answer</span>
-                  <h2>Which indicator is this?</h2>
-                </div>
-                <small>Wrong answers cost {wrongAnswerPenalty} points.</small>
-              </div>
-              {config.unitClue && unitClue.eligible ? (
-                <div className="answer-clue-row" data-clue="unit">
-                  <div>
-                    <span>Optional clue</span>
-                    <p>{roundState.unitClueUsed ? unitClue.text : "Reveal the measurement units when the scale is the missing piece."}</p>
-                  </div>
-                  <button
-                    className="button-secondary answer-unit-button"
-                    type="button"
-                    aria-label={roundState.unitClueUsed ? "Unit clue revealed" : `Reveal unit: -${config.scoring.unitCluePenalty}`}
-                    disabled={roundState.unitClueUsed}
-                    onClick={() => dispatch({ type: "unitClue" })}
-                  >
-                    <Lightbulb size={18} aria-hidden="true" />
-                    <span>{roundState.unitClueUsed ? "Unit revealed" : "Reveal units"}</span>
-                    {!roundState.unitClueUsed ? <small>-{config.scoring.unitCluePenalty} points</small> : null}
-                  </button>
-                </div>
-              ) : null}
-              <div className="choice-list">
-                {currentChoices.map((choice) => {
-                  const rejected = roundState.rejectedAnswers.some((answer) => answer.id === choice.indicatorId);
-                  return (
-                    <button
-                      key={choice.indicatorId}
-                      type="button"
-                      className="choice-button"
-                      data-rejected={rejected ? "true" : "false"}
-                      disabled={rejected}
-                      onClick={() =>
-                        dispatch({
-                          type: "submit",
-                          answerId: choice.indicatorId,
-                          label: choice.label,
-                          correct: choice.indicatorId === round.correctIndicatorId
-                        })
-                      }
-                    >
-                      <span>{choice.label}</span>
-                      {rejected ? <small>Rejected</small> : null}
-                    </button>
-                  );
-                })}
-              </div>
-            </>
-          )}
-          {roundState.rejectedAnswers.length > 0 ? (
-            <div className="attempt-history">
-              <strong>Rejected</strong>
-              <span>{roundState.rejectedAnswers.map((answer) => answer.label).join(", ")}</span>
-            </div>
-          ) : null}
-        </div>
-        {showIncorrectFeedback ? (
-          <div className="answer-feedback-banner" data-result="incorrect" role="status" aria-live="polite">
-            <span>Incorrect</span>
-            <strong>{latestRejectedAnswer?.label}</strong>
-            <em>-{wrongAnswerPenalty} points</em>
-            <p>{feedbackText} Cross it off and read the remaining signal.</p>
-          </div>
-        ) : null}
         <div className="clue-dashboard" aria-label="Clue costs">
           <div className="clue-summary-card">
             <span>Country clue</span>
@@ -1809,6 +1704,113 @@ export function WorldprintClient({ dateOverride, entryMode = "standard" }: World
             </>
           )}
         </div>
+        <div className="play-action-dock surface" data-state={showIncorrectFeedback ? "miss" : "choosing"} aria-label="Answer actions">
+          <div className="answer-box primary-answer-box" data-placement="dock">
+            {run.tier === "atlasMaster" ? (
+              <form
+                onSubmit={(event) => {
+                  event.preventDefault();
+                  const correct = isAcceptedAtlasGuess(masterGuess, round.acceptedAliases, indicator);
+                  dispatch({
+                    type: "submit",
+                    answerId: `guess:${normalizeGuess(masterGuess)}`,
+                    label: masterGuess,
+                    correct
+                  });
+                  if (!correct) setMasterGuess("");
+                }}
+              >
+                <label htmlFor="master-search">Search playable map catalog</label>
+                <input
+                  id="master-search"
+                  list="indicator-catalog"
+                  value={masterGuess}
+                  onChange={(event) => setMasterGuess(event.target.value)}
+                  placeholder="Type an indicator"
+                  autoComplete="off"
+                />
+                <datalist id="indicator-catalog">
+                  {Array.from(data.indicators.values())
+                    .filter((item) => item.editorialReview.challengeEligible)
+                    .map((item) => (
+                      <option key={item.id} value={item.shortTitle} />
+                    ))}
+                </datalist>
+                <button className="button full-width" type="submit" disabled={!masterGuess.trim()}>
+                  Submit answer
+                </button>
+              </form>
+            ) : (
+              <>
+                <div className="answer-box-heading">
+                  <div>
+                    <span>Pick one answer</span>
+                    <h2>Which indicator is this?</h2>
+                  </div>
+                  <small>Wrong answers cost {wrongAnswerPenalty} points.</small>
+                </div>
+                {config.unitClue && unitClue.eligible ? (
+                  <div className="answer-clue-row" data-clue="unit">
+                    <div>
+                      <span>Optional clue</span>
+                      <p>{roundState.unitClueUsed ? unitClue.text : "Reveal the measurement units when the scale is the missing piece."}</p>
+                    </div>
+                    <button
+                      className="button-secondary answer-unit-button"
+                      type="button"
+                      aria-label={roundState.unitClueUsed ? "Unit clue revealed" : `Reveal unit: -${config.scoring.unitCluePenalty}`}
+                      disabled={roundState.unitClueUsed}
+                      onClick={() => dispatch({ type: "unitClue" })}
+                    >
+                      <Lightbulb size={18} aria-hidden="true" />
+                      <span>{roundState.unitClueUsed ? "Unit revealed" : "Reveal units"}</span>
+                      {!roundState.unitClueUsed ? <small>-{config.scoring.unitCluePenalty} points</small> : null}
+                    </button>
+                  </div>
+                ) : null}
+                <div className="choice-list">
+                  {currentChoices.map((choice) => {
+                    const rejected = roundState.rejectedAnswers.some((answer) => answer.id === choice.indicatorId);
+                    return (
+                      <button
+                        key={choice.indicatorId}
+                        type="button"
+                        className="choice-button"
+                        data-rejected={rejected ? "true" : "false"}
+                        disabled={rejected}
+                        onClick={() =>
+                          dispatch({
+                            type: "submit",
+                            answerId: choice.indicatorId,
+                            label: choice.label,
+                            correct: choice.indicatorId === round.correctIndicatorId
+                          })
+                        }
+                      >
+                        <span>{choice.label}</span>
+                        {rejected ? <small>Rejected</small> : null}
+                      </button>
+                    );
+                  })}
+                </div>
+              </>
+            )}
+            {roundState.rejectedAnswers.length > 0 ? (
+              <div className="attempt-history">
+                <strong>Rejected</strong>
+                <span>{roundState.rejectedAnswers.map((answer) => answer.label).join(", ")}</span>
+              </div>
+            ) : null}
+          </div>
+          {showIncorrectFeedback ? (
+            <div className="answer-feedback-banner" data-result="incorrect" role="status" aria-live="polite">
+              <span>Incorrect</span>
+              <strong>{latestRejectedAnswer?.label}</strong>
+              <em>-{wrongAnswerPenalty} points</em>
+              <p>{feedbackText} Cross it off and read the remaining signal.</p>
+            </div>
+          ) : null}
+        </div>
         {showIncorrectFeedback ? (
           <div className="miss-moment-overlay" key={latestRejectedAnswer?.id ?? feedbackText} aria-hidden="true">
             <span>Miss</span>
@@ -1908,6 +1910,22 @@ function RevealView({
             {scoreText} banked
           </div>
         </div>
+        <div className="reveal-action-dock" aria-label="Round action">
+          <div className="round-transition-card" data-final={finalRoundSolved ? "true" : "false"}>
+            <span>{finalRoundSolved ? "Daily complete" : `Map ${nextMapNumber} of ${run.rounds.length}`}</span>
+            <strong>{finalRoundSolved ? "Score locked. Opening results..." : "Next mystery loading."}</strong>
+            <em>Banked {scoreText}</em>
+            <div className="transition-pips" aria-hidden="true">
+              {transitionPips.map((index) => (
+                <i key={index} data-state={index <= run.currentRoundIndex ? "banked" : index === run.currentRoundIndex + 1 ? "next" : "locked"} />
+              ))}
+            </div>
+            <small>{finalRoundSolved ? "Every map is scored. Your result is opening now." : "Preparing the next hidden statistic."}</small>
+          </div>
+          <button className="button full-width next-map-button" type="button" onClick={onNext}>
+            {finalRoundSolved ? "Open results now" : "Next map"}
+          </button>
+        </div>
         <div className="reveal-dashboard-grid">
           <div className="reveal-scoreline">
             <span>Correct indicator</span>
@@ -1933,26 +1951,10 @@ function RevealView({
             </div>
           </dl>
         </div>
-        <section className="lesson-card lesson-card-strong reveal-key-evidence" aria-labelledby="showing-heading">
-          <p className="eyebrow" id="showing-heading">
-            What the map was showing
-          </p>
+        <details className="lesson-card lesson-card-strong reveal-key-evidence">
+          <summary id="showing-heading">What the map was showing</summary>
           <p>{indicator.editorial.patternNote}</p>
-        </section>
-        <div className="round-transition-card" data-final={finalRoundSolved ? "true" : "false"}>
-          <span>{finalRoundSolved ? "Daily complete" : `Map ${nextMapNumber} of ${run.rounds.length}`}</span>
-          <strong>{finalRoundSolved ? "Score locked. Opening results..." : "Next mystery loading."}</strong>
-          <em>Banked {scoreText}</em>
-          <div className="transition-pips" aria-hidden="true">
-            {transitionPips.map((index) => (
-              <i key={index} data-state={index <= run.currentRoundIndex ? "banked" : index === run.currentRoundIndex + 1 ? "next" : "locked"} />
-            ))}
-          </div>
-          <small>{finalRoundSolved ? "Every map is scored. Your result is opening now." : "Preparing the next hidden statistic."}</small>
-        </div>
-        <button className="button full-width next-map-button" type="button" onClick={onNext}>
-          {finalRoundSolved ? "Open results now" : "Next map"}
-        </button>
+        </details>
         <dl className="indicator-facts">
           <div>
             <dt>Unit</dt>
