@@ -172,6 +172,28 @@ describe("SignInClient", () => {
     expect(routerMock.push).not.toHaveBeenCalled();
   });
 
+  it("tells unconfirmed account holders to confirm email before signing in", async () => {
+    const user = userEvent.setup();
+    accountMock.state.client.auth.signInWithPassword.mockResolvedValue({
+      data: { user: null, session: null },
+      error: {
+        status: 400,
+        code: "email_not_confirmed",
+        message: "Email not confirmed"
+      }
+    });
+
+    render(<SignInClient />);
+
+    await user.type(screen.getByLabelText("Email"), "new@example.com");
+    await user.type(screen.getByLabelText("Password"), "strong-password");
+    await user.click(screen.getByRole("button", { name: "Sign in" }));
+
+    await screen.findByRole("alert");
+    expect(screen.getByText("Check your email to confirm this account, then sign in with your password.")).toBeVisible();
+    expect(routerMock.push).not.toHaveBeenCalled();
+  });
+
   it("shows signed-in actions instead of the password form", async () => {
     const user = userEvent.setup();
     accountMock.state.user = signedInUser;

@@ -17,6 +17,7 @@ describe("WorldprintClient UI structure", () => {
     expect(source).toContain('aria-label="Primary Mystery Map action"');
     expect(source).toContain('<small>{primaryActionLabel}</small>');
     expect(source).not.toContain("Compass size={20}");
+    expect(source).toContain("Sign up for Pro for the full atlas, or sign up for a free account to play 3 fresh maps every day.");
     expect(styles).toContain(".lobby-play-button");
     expect(styles).toContain(".lobby-play-main");
     expect(styles).toContain("min-height: 5rem");

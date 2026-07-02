@@ -16,6 +16,8 @@ import { siteOrigin } from "@/lib/supabase/env";
 
 const MIN_PASSWORD_LENGTH = 8;
 const GENERIC_SIGN_UP_ERROR = "We could not create that account. If you already have one, sign in instead.";
+const EXISTING_ACCOUNT_ERROR = "That email may already have an account. Sign in, or reset your password if you need help.";
+const CONFIRMATION_SENT_STATUS = "Account created and confirmation email sent. Open it, then sign in with your password to continue.";
 
 function nextSearchValue(): string | null {
   if (typeof window === "undefined") return null;
@@ -24,6 +26,10 @@ function nextSearchValue(): string | null {
 
 function signedInStatusForReturn(nextPath: string): string {
   return nextPath.startsWith("/upgrade") ? "Account created. Taking you back to Pro plans..." : "Account created. Taking you to your account...";
+}
+
+function isExistingAccountError(error: { code?: string; message: string }) {
+  return error.code === "user_already_exists" || /already (registered|exists)|user already/i.test(error.message);
 }
 
 export function SignUpClient() {
@@ -87,7 +93,7 @@ export function SignUpClient() {
         });
       }
       setSubmitting(false);
-      setError(GENERIC_SIGN_UP_ERROR);
+      setError(isExistingAccountError(signUpError) ? EXISTING_ACCOUNT_ERROR : GENERIC_SIGN_UP_ERROR);
       return;
     }
 
@@ -109,7 +115,7 @@ export function SignUpClient() {
 
     setSubmitting(false);
     setConfirmationSent(true);
-    setStatus("Account created. Check your email to confirm it, then sign in with your password to continue.");
+    setStatus(CONFIRMATION_SENT_STATUS);
   }
 
   async function handleSignOut() {

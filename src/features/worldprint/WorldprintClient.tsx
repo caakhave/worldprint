@@ -972,7 +972,7 @@ export function WorldprintClient({ dateOverride, entryMode = "standard" }: World
         ? `Unlimited Atlas uses ${PRO_ATLAS_ROUND_COUNT}-map runs and reshuffles after the full pool is complete.`
         : primaryMode === "daily"
           ? "Want more after today's 3 maps? Go Pro for unlimited Atlas play."
-          : "Start Pro for the full atlas, or continue free for 3 fresh maps every day.";
+          : "Sign up for Pro for the full atlas, or sign up for a free account to play 3 fresh maps every day.";
     const primaryActionLabel =
       primaryMode === "atlas"
         ? currentAtlasActive

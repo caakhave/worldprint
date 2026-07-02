@@ -14,6 +14,7 @@ import {
 import { trackCanYouGeoEvent } from "@/lib/site/analytics";
 
 const GENERIC_SIGN_IN_ERROR = "We could not sign you in. Check your email and password.";
+const EMAIL_NOT_CONFIRMED_ERROR = "Check your email to confirm this account, then sign in with your password.";
 
 type SupabaseAuthError = {
   message: string;
@@ -33,6 +34,10 @@ function warnAuthDetail(message: string, error: SupabaseAuthError | unknown) {
   if (process.env.NODE_ENV !== "production") {
     console.warn(`[auth] ${message}`, error);
   }
+}
+
+function isEmailNotConfirmed(error: SupabaseAuthError) {
+  return error.code === "email_not_confirmed" || /email not confirmed/i.test(error.message);
 }
 
 function nextSearchValue(): string | null {
@@ -88,7 +93,7 @@ export function SignInClient() {
     if (signInError) {
       warnAuthDetail("Could not sign in with password.", supabaseAuthErrorDiagnostic(signInError));
       setSubmitting(false);
-      setError(GENERIC_SIGN_IN_ERROR);
+      setError(isEmailNotConfirmed(signInError) ? EMAIL_NOT_CONFIRMED_ERROR : GENERIC_SIGN_IN_ERROR);
       return;
     }
 

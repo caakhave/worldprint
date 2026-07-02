@@ -87,7 +87,7 @@ describe("SignUpClient", () => {
         }
       })
     });
-    await screen.findByText("Account created. Check your email to confirm it, then sign in with your password to continue.");
+    await screen.findByText("Account created and confirmation email sent. Open it, then sign in with your password to continue.");
     expect(screen.getByRole("button", { name: "Check your email" })).toBeDisabled();
     expect(window.sessionStorage.getItem("canyougeo:sign-in-return")).toBe("/account");
   });
@@ -158,6 +158,52 @@ describe("SignUpClient", () => {
 
     expect(screen.getByText("The two passwords do not match.")).toBeVisible();
     expect(accountMock.state.client.auth.signUp).not.toHaveBeenCalled();
+  });
+
+  it("shows a helpful existing-account message when Supabase exposes a duplicate email", async () => {
+    const user = userEvent.setup();
+    accountMock.state.client.auth.signUp.mockResolvedValue({
+      data: { user: null, session: null },
+      error: {
+        status: 400,
+        code: "user_already_exists",
+        message: "User already registered"
+      }
+    });
+
+    render(<SignUpClient />);
+
+    await user.type(screen.getByLabelText("Email"), "existing@example.com");
+    await user.type(screen.getByLabelText("Password"), "strong-password");
+    await user.type(screen.getByLabelText("Confirm password"), "strong-password");
+    await user.click(screen.getByRole("button", { name: "Create account" }));
+
+    await screen.findByRole("alert");
+    expect(screen.getByText("That email may already have an account. Sign in, or reset your password if you need help.")).toBeVisible();
+    expect(routerMock.push).not.toHaveBeenCalled();
+  });
+
+  it("keeps a generic safe error for account creation failures", async () => {
+    const user = userEvent.setup();
+    accountMock.state.client.auth.signUp.mockResolvedValue({
+      data: { user: null, session: null },
+      error: {
+        status: 500,
+        code: "unexpected_failure",
+        message: "Database error saving new user"
+      }
+    });
+
+    render(<SignUpClient />);
+
+    await user.type(screen.getByLabelText("Email"), "new@example.com");
+    await user.type(screen.getByLabelText("Password"), "strong-password");
+    await user.type(screen.getByLabelText("Confirm password"), "strong-password");
+    await user.click(screen.getByRole("button", { name: "Create account" }));
+
+    await screen.findByRole("alert");
+    expect(screen.getByText("We could not create that account. If you already have one, sign in instead.")).toBeVisible();
+    expect(routerMock.push).not.toHaveBeenCalled();
   });
 
   it("redirects immediately when Supabase returns a session", async () => {
