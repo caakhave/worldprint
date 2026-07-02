@@ -35,6 +35,40 @@ describe("WorldprintClient UI structure", () => {
     expect(styles).toContain(".mode-card-grid-secondary .mode-card");
   });
 
+  it("gates Practice access by account tier without exposing full filters to Free players", () => {
+    expect(source).toContain("const canUseFullPractice = signedIn && entitlement.capabilities.canUseFullPractice;");
+    expect(source).toContain("const limitedPracticeLimit = entitlement.capabilities.practiceLimit ?? 3;");
+    expect(source).toContain("const fullPracticeMatches = useMemo");
+    expect(source).toContain("const limitedPracticeMatches = useMemo");
+    expect(source).toContain("const practiceMatches = canUseFullPractice ? fullPracticeMatches : limitedPracticeMatches;");
+    expect(source).toContain("function selectLimitedPracticeRoundIds");
+    expect(source).toContain('const LIMITED_PRACTICE_FILTERS: PracticeFilters = { difficulty: "intro" };');
+    expect(source).toContain("if (!canUseFullPractice) return;");
+    expect(source).toContain("if (mode === \"practice\" && !canUseFullPractice && !currentPracticeRun && !options.practiceRoundIds) return;");
+    expect(source).toContain('{canUseFullPractice ? (');
+    expect(source).toContain('className="practice-filters"');
+    expect(source).toContain("Limited Practice");
+    expect(source).toContain("Start limited practice");
+    expect(source).toContain("Practice requires an account");
+    expect(source).toContain('href="/sign-up"');
+    expect(source).toContain("Create free account");
+  });
+
+  it("surfaces resumable Daily, Atlas, Practice, and Past Game runs from local storage", () => {
+    expect(source).toContain("store.activeDailyRun");
+    expect(source).toContain("store.activeAtlasRun");
+    expect(source).toContain("store.activePracticeRun");
+    expect(source).toContain("store.activeArchiveRunsByDate[todayKey]");
+    expect(source).toContain("Let older local Practice runs finish once");
+    expect(source).toContain("currentPracticeRun?.status === \"active\"");
+    expect(source).toContain("Resume practice");
+    expect(source).toContain("Resume map");
+    expect(source).toContain("Daily in progress");
+    expect(source).toContain("Resume today's 3 maps");
+    expect(source).toContain("Continue Pro Atlas");
+    expect(source).toContain("Continue replay");
+  });
+
   it("moves the skill tier up into the start-page preview column", () => {
     const startPageIndex = source.indexOf(
       'data-entry-mode={isArchiveDate ? "archive" : "daily"}',

@@ -29,7 +29,7 @@ import type {
   RoundDefinition
 } from "@/lib/content/schemas";
 import type { Tier } from "@/lib/content/schemas";
-import { filterPracticeRounds, selectPracticeRoundIds, challengeNumber } from "@/lib/game/daily";
+import { filterPracticeRounds, selectPracticeRoundIds, challengeNumber, type PracticeFilters } from "@/lib/game/daily";
 import { selectDailyRoundIdsFromManifest } from "@/lib/game/dailyManifest";
 import {
   FREE_DAILY_ROUND_COUNT,
@@ -87,6 +87,8 @@ const DIFFICULTY_LABELS: Record<IndicatorDifficulty, string> = {
 const DIFFICULTY_ORDER: IndicatorDifficulty[] = ["intro", "standard", "expert"];
 const ENTRY_PREVIEW_INDICATOR_ID = "internet-users";
 const CHALLENGE_EMAIL_NOTE_MAX_LENGTH = 180;
+const LIMITED_PRACTICE_FILTERS: PracticeFilters = { difficulty: "intro" };
+const LIMITED_PRACTICE_SALT = "limited-practice-preview";
 
 type LoadedData = {
   manifest: Manifest;
@@ -132,6 +134,17 @@ function practiceFlavor(difficulty: IndicatorDifficulty) {
   if (difficulty === "expert") return "A quick warm-up with trickier patterns.";
   if (difficulty === "standard") return "A quick warm-up with sharper patterns.";
   return "A quick Practice warm-up.";
+}
+
+function limitedPracticeRounds(rounds: RoundDefinition[]): RoundDefinition[] {
+  const introRounds = filterPracticeRounds(rounds, LIMITED_PRACTICE_FILTERS);
+  return introRounds.length > 0 ? introRounds : filterPracticeRounds(rounds);
+}
+
+function selectLimitedPracticeRoundIds(rounds: RoundDefinition[], contentVersion: string, salt = LIMITED_PRACTICE_SALT): string[] {
+  const introIds = selectPracticeRoundIds(rounds, contentVersion, salt, LIMITED_PRACTICE_FILTERS, []);
+  if (introIds.length > 0) return introIds;
+  return selectPracticeRoundIds(rounds, contentVersion, salt, {}, []);
 }
 
 function roundCountForFilters(rounds: RoundDefinition[], category: string, difficulty?: IndicatorDifficulty) {
@@ -271,6 +284,8 @@ export function WorldprintClient({ dateOverride, entryMode = "standard" }: World
   const isProAccount = signedIn && entitlement.plan === "pro";
   const isFreeAccount = signedIn && entitlement.plan !== "pro";
   const isGuest = !signedIn;
+  const canUseFullPractice = signedIn && entitlement.capabilities.canUseFullPractice;
+  const limitedPracticeLimit = entitlement.capabilities.practiceLimit ?? 3;
   const account = useSupabaseAccount();
   const [data, setData] = useState<LoadedData | null>(null);
   const [loadError, setLoadError] = useState<string | null>(null);
@@ -286,7 +301,6 @@ export function WorldprintClient({ dateOverride, entryMode = "standard" }: World
   const [practiceDifficulty, setPracticeDifficulty] = useState<IndicatorDifficulty>("intro");
   const [practiceSalt, setPracticeSalt] = useState("starter");
   const [practiceSetRoundIds, setPracticeSetRoundIds] = useState<string[]>([]);
-  const [practiceSetStatus, setPracticeSetStatus] = useState<"idle" | "ready">("idle");
   const [cloudSaveStatus, setCloudSaveStatus] = useState("");
   const [accountRuns, setAccountRuns] = useState<GameRunRow[]>([]);
   const cloudSaveAttempts = useRef(new Set<string>());
@@ -464,6 +478,17 @@ export function WorldprintClient({ dateOverride, entryMode = "standard" }: World
     return null;
   }, [data, isProAccount, store.activeAtlasRun]);
 
+  const currentPracticeRun = useMemo(() => {
+    if (!data || !signedIn) return null;
+    const active = store.activePracticeRun;
+    if (!active || active.mode !== "practice" || active.status !== "active" || active.contentVersion !== data.manifest.contentVersion) {
+      return null;
+    }
+    if (canUseFullPractice) return active;
+    // Let older local Practice runs finish once; new Free Practice starts stay limited below.
+    return active;
+  }, [canUseFullPractice, data, signedIn, store.activePracticeRun]);
+
   const currentArchiveRun = useMemo(() => {
     if (!data) return null;
     const active = store.activeArchiveRunsByDate[todayKey];
@@ -485,10 +510,17 @@ export function WorldprintClient({ dateOverride, entryMode = "standard" }: World
     [practiceCategory, practiceDifficulty]
   );
 
-  const practiceMatches = useMemo(() => {
+  const fullPracticeMatches = useMemo(() => {
     if (!data) return [];
     return filterPracticeRounds(data.rounds, practiceFilters);
   }, [data, practiceFilters]);
+
+  const limitedPracticeMatches = useMemo(() => {
+    if (!data) return [];
+    return limitedPracticeRounds(data.rounds);
+  }, [data]);
+
+  const practiceMatches = canUseFullPractice ? fullPracticeMatches : limitedPracticeMatches;
 
   const practiceCategoryOptions = useMemo(() => {
     if (!data) return [];
@@ -520,7 +552,6 @@ export function WorldprintClient({ dateOverride, entryMode = "standard" }: World
     if (!data) return;
     setPracticeSalt("starter");
     setPracticeSetRoundIds([]);
-    setPracticeSetStatus("idle");
   }, [data, practiceFilters]);
 
   useEffect(() => {
@@ -551,6 +582,7 @@ export function WorldprintClient({ dateOverride, entryMode = "standard" }: World
 
   function buildPracticeSet() {
     if (!signedIn) return;
+    if (!canUseFullPractice) return;
     if (!data) return;
     const nextSalt = `reroll:${Date.now()}:${practiceSalt}`;
     const selectedIds = selectPracticeRoundIds(
@@ -562,19 +594,27 @@ export function WorldprintClient({ dateOverride, entryMode = "standard" }: World
     );
     setPracticeSalt(nextSalt);
     setPracticeSetRoundIds(selectedIds);
-    setPracticeSetStatus("ready");
   }
 
   async function startPracticeRun() {
     if (!signedIn) return;
     if (!data || practiceMatches.length === 0) return;
+    if (currentPracticeRun?.status === "active") {
+      await startRun("practice");
+      return;
+    }
+    if (!canUseFullPractice) {
+      const selectedIds = selectLimitedPracticeRoundIds(data.rounds, data.manifest.contentVersion);
+      if (selectedIds.length === 0) return;
+      await startRun("practice", undefined, { practiceRoundIds: selectedIds, practiceSalt: LIMITED_PRACTICE_SALT });
+      return;
+    }
     const selectedIds =
       selectedPracticeRounds.length > 0
         ? selectedPracticeRounds.map((round) => round.id)
         : selectPracticeRoundIds(data.rounds, data.manifest.contentVersion, practiceSalt, practiceFilters, []);
     if (selectedPracticeRounds.length === 0) {
       setPracticeSetRoundIds(selectedIds);
-      setPracticeSetStatus("ready");
     }
     await startRun("practice", undefined, { practiceRoundIds: selectedIds, practiceSalt });
   }
@@ -598,6 +638,7 @@ export function WorldprintClient({ dateOverride, entryMode = "standard" }: World
     if (mode === "daily" && !signedIn) return;
     if (mode === "archive" && !signedIn) return;
     if (mode === "atlas" && !isProAccount) return;
+    if (mode === "practice" && !canUseFullPractice && !currentPracticeRun && !options.practiceRoundIds) return;
     if (mode === "daily" && currentDailyRun && !options.freshReplay) {
       setRun(currentDailyRun);
       setShowFirstRunIntro(!store.onboardingComplete && currentDailyRun.status === "active" && currentDailyRun.currentRoundIndex === 0);
@@ -610,6 +651,13 @@ export function WorldprintClient({ dateOverride, entryMode = "standard" }: World
       setShowFirstRunIntro(!store.onboardingComplete && currentAtlasRun.currentRoundIndex === 0);
       window.requestAnimationFrame(() => window.scrollTo(0, 0));
       await ensureIndicators(currentAtlasRun.rounds.map((round) => round.correctIndicatorId));
+      return;
+    }
+    if (mode === "practice" && currentPracticeRun?.status === "active" && !options.freshReplay) {
+      setRun(currentPracticeRun);
+      setShowFirstRunIntro(false);
+      window.requestAnimationFrame(() => window.scrollTo(0, 0));
+      await ensureIndicators(currentPracticeRun.rounds.map((round) => round.correctIndicatorId));
       return;
     }
     if (mode === "archive" && currentArchiveRun && !options.freshReplay) {
@@ -905,8 +953,8 @@ export function WorldprintClient({ dateOverride, entryMode = "standard" }: World
             <Link className="button" href="/upgrade">
               Start Pro
             </Link>
-            <Link className="button-secondary" href="/sign-in">
-              Continue free
+            <Link className="button-secondary" href="/sign-up">
+              Create free account
             </Link>
             <Link className="button-secondary" href="/play/mystery-map">
               Try Sample Run
@@ -940,17 +988,30 @@ export function WorldprintClient({ dateOverride, entryMode = "standard" }: World
           ? "Replay for practice"
           : "Start dated replay"
         : "Start today's 3 maps";
-    const selectedCount = selectedPracticeRounds.length;
+    const selectedCount = canUseFullPractice ? selectedPracticeRounds.length : 0;
     const selectedDifficultyLabel = DIFFICULTY_LABELS[practiceDifficulty];
-    const setReadyLabel = practiceMatches.length > 0 ? practiceLabel(selectedDifficultyLabel, practiceCategory) : "Practice mode";
+    const setReadyLabel = canUseFullPractice
+      ? practiceMatches.length > 0
+        ? practiceLabel(selectedDifficultyLabel, practiceCategory)
+        : "Practice mode"
+      : "Limited practice";
     const availablePracticeCount = Math.min(3, practiceMatches.length);
-    const practiceWarning = rarePracticeNote(practiceMatches.length);
+    const practiceWarning = canUseFullPractice ? rarePracticeNote(practiceMatches.length) : "";
     const currentAtlasActive = currentAtlasRun?.status === "active";
+    const currentPracticeActive = currentPracticeRun?.status === "active";
     const primaryMode: "sample" | "daily" | "atlas" = isProAccount ? "atlas" : isFreeAccount ? "daily" : "sample";
     const primaryModeComplete = primaryMode === "daily" ? todayCompleted : false;
     const primaryKicker = primaryMode === "atlas" ? "Unlimited Atlas" : primaryMode === "daily" ? "Today's Free Maps" : "Sample Run";
     const primaryHeading =
-      primaryMode === "atlas" ? "Play the Pro Atlas" : primaryMode === "daily" ? "Play today's 3 fresh maps" : "Try the 5-map Sample Run";
+      primaryMode === "atlas"
+        ? currentAtlasActive
+          ? "Continue Pro Atlas"
+          : "Start Pro Atlas"
+        : primaryMode === "daily"
+          ? currentDailyRun?.status === "active"
+            ? "Resume today's 3 maps"
+            : "Play today's 3 fresh maps"
+          : "Try the 5-map Sample Run";
     const primaryCopy =
       primaryMode === "atlas"
         ? "5-map Atlas runs draw from the approved playable pool. Keep going after today's Free Daily."
@@ -965,7 +1026,9 @@ export function WorldprintClient({ dateOverride, entryMode = "standard" }: World
         : primaryModeComplete
           ? "Today's 3 maps complete"
           : primaryMode === "daily"
-            ? "Ready today"
+            ? currentDailyRun?.status === "active"
+              ? "Daily in progress"
+              : "Ready today"
             : "5 fixed maps";
     const primaryNote =
       primaryMode === "atlas"
@@ -984,9 +1047,43 @@ export function WorldprintClient({ dateOverride, entryMode = "standard" }: World
     const completedPrimaryLabel = signedIn && practiceMatches.length > 0 ? "Play" : "Play Sample Run";
     const completedPrimaryDetail =
       completedPrimaryLabel === "Play"
-        ? "Start a practice set. It will not change today's score or streak."
+        ? isProAccount
+          ? "Start or resume a Full Practice Atlas set. It will not change today's score or streak."
+          : "Start limited practice. It will not change today's score or streak."
         : "Replay the fixed sample maps while tomorrow's Daily unlocks.";
     const resultActionLabel = completedDailyRun ? "View today's result" : "View saved stats";
+    const practiceKicker = canUseFullPractice ? "Full Practice Atlas" : isFreeAccount ? "Limited Practice" : "Practice Preview";
+    const practiceTitle = canUseFullPractice ? "Full Practice Atlas" : isFreeAccount ? "Limited Practice" : "Practice requires an account";
+    const practiceCopy = canUseFullPractice
+      ? "Training sets by topic and difficulty. Never affects your Daily score or streak."
+      : isFreeAccount
+        ? "A simple 3-map warm-up. Pro unlocks topic and difficulty filters."
+        : "Create a free account for limited practice, or start Pro for topic and difficulty filters.";
+    const practiceReadyText = currentPracticeActive
+      ? `Resume map ${(currentPracticeRun?.currentRoundIndex ?? 0) + 1} of ${currentPracticeRun?.rounds.length ?? limitedPracticeLimit}`
+      : selectedCount > 0
+        ? practiceReadyLine(selectedCount)
+        : practiceMatches.length > 0
+          ? canUseFullPractice
+            ? practiceReadyLine(availablePracticeCount)
+            : "3 maps ready"
+          : practiceReadyLine(0);
+    const practiceStatusText = currentPracticeActive
+      ? "Practice in progress"
+      : canUseFullPractice
+        ? selectedCount > 0
+          ? practiceFlavor(practiceDifficulty)
+          : practiceMatches.length > 0
+            ? "Ready from these filters."
+            : "Try another topic or difficulty."
+        : isFreeAccount
+          ? "Ready for a simple practice set."
+          : "Sign up to practice.";
+    const practiceActionLabel = currentPracticeActive
+      ? "Resume practice"
+      : canUseFullPractice
+        ? "Start practice"
+        : "Start limited practice";
     if (reviewRequested) {
       if (reviewRecord) {
         return (
@@ -1100,9 +1197,19 @@ export function WorldprintClient({ dateOverride, entryMode = "standard" }: World
                       Play today&apos;s 3 maps
                     </button>
                   ) : null}
+                  {isGuest ? (
+                    <Link className="button-secondary" href="/sign-up">
+                      Create free account
+                    </Link>
+                  ) : null}
                   {!isProAccount ? (
                     <Link className="button-secondary" href="/upgrade">
-                      Go Pro for unlimited Atlas play
+                      {isGuest ? "Start Pro" : "Go Pro for unlimited Atlas play"}
+                    </Link>
+                  ) : null}
+                  {isGuest ? (
+                    <Link className="button-secondary" href="/sign-in">
+                      Sign in
                     </Link>
                   ) : null}
                 </div>
@@ -1141,76 +1248,65 @@ export function WorldprintClient({ dateOverride, entryMode = "standard" }: World
                 <div className="mode-card-grid mode-card-grid-secondary">
                   <article className="mode-card mode-card-practice" id="practice-atlas">
                     <div>
-                      <p className="setup-kicker">Practice Atlas</p>
-                      <h3>Practice Atlas</h3>
-                      <p>
-                        {isGuest
-                          ? "Continue free for 3-map Practice sets. Pro unlocks the full Practice Atlas."
-                          : "Training sets by topic and difficulty. Never affects your Daily score or streak."}
-                      </p>
+                      <p className="setup-kicker">{practiceKicker}</p>
+                      <h3>{practiceTitle}</h3>
+                      <p>{practiceCopy}</p>
                     </div>
-                    <div className="practice-filters">
-                      <label htmlFor="practice-category">
-                        Topic
-                        <select id="practice-category" value={practiceCategory} disabled={isGuest} onChange={(event) => updatePracticeCategory(event.target.value)}>
-                          <option value="">Any topic · {roundCountForFilters(data.rounds, "")} maps</option>
-                          {practiceCategoryOptions.map((option) => (
-                            <option key={option.category} value={option.category}>
-                              {option.category} · {option.count} maps
-                            </option>
-                          ))}
-                        </select>
-                      </label>
-                      <label htmlFor="practice-difficulty">
-                        Map difficulty
-                        <select
-                          id="practice-difficulty"
-                          value={practiceDifficulty}
-                          disabled={isGuest}
-                          onChange={(event) => setPracticeDifficulty(event.target.value as IndicatorDifficulty)}
-                        >
-                          {practiceDifficultyOptions.map((option) => (
-                            <option key={option.difficulty} value={option.difficulty}>
-                              {DIFFICULTY_LABELS[option.difficulty]} · {option.count} maps
-                            </option>
-                          ))}
-                        </select>
-                      </label>
-                    </div>
-                    <div className="practice-set-card" data-status={selectedCount > 0 ? practiceSetStatus : "empty"} aria-live="polite">
+                    {canUseFullPractice ? (
+                      <div className="practice-filters">
+                        <label htmlFor="practice-category">
+                          Topic
+                          <select id="practice-category" value={practiceCategory} onChange={(event) => updatePracticeCategory(event.target.value)}>
+                            <option value="">Any topic · {roundCountForFilters(data.rounds, "")} maps</option>
+                            {practiceCategoryOptions.map((option) => (
+                              <option key={option.category} value={option.category}>
+                                {option.category} · {option.count} maps
+                              </option>
+                            ))}
+                          </select>
+                        </label>
+                        <label htmlFor="practice-difficulty">
+                          Map difficulty
+                          <select
+                            id="practice-difficulty"
+                            value={practiceDifficulty}
+                            onChange={(event) => setPracticeDifficulty(event.target.value as IndicatorDifficulty)}
+                          >
+                            {practiceDifficultyOptions.map((option) => (
+                              <option key={option.difficulty} value={option.difficulty}>
+                                {DIFFICULTY_LABELS[option.difficulty]} · {option.count} maps
+                              </option>
+                            ))}
+                          </select>
+                        </label>
+                      </div>
+                    ) : null}
+                    <div className="practice-set-card" data-status={currentPracticeActive || selectedCount > 0 ? "ready" : "empty"} aria-live="polite">
                       <span>{setReadyLabel}</span>
-                      <strong>
-                        {selectedCount > 0
-                          ? practiceReadyLine(selectedCount)
-                          : practiceMatches.length > 0
-                            ? practiceReadyLine(availablePracticeCount)
-                            : practiceReadyLine(0)}
-                      </strong>
-                      <p>
-                        {isGuest
-                          ? "Sign in free to choose Practice sets."
-                          : selectedCount > 0
-                          ? practiceFlavor(practiceDifficulty)
-                          : practiceMatches.length > 0
-                            ? "Ready from these filters."
-                            : "Try another topic or difficulty."}
-                      </p>
+                      <strong>{practiceReadyText}</strong>
+                      <p>{practiceStatusText}</p>
                       {practiceWarning ? <p className="practice-warning">{practiceWarning}</p> : null}
                     </div>
                     <div className="practice-actions">
                       {isGuest ? (
-                        <Link className="button practice-start-button" href="/sign-in">
-                          Continue free
+                        <Link className="button practice-start-button" href="/sign-up">
+                          Create free account
                         </Link>
                       ) : (
                         <button className="button practice-start-button" type="button" disabled={practiceMatches.length === 0} onClick={() => void startPracticeRun()}>
-                          Start practice
+                          {practiceActionLabel}
                         </button>
                       )}
-                      <button className="button-secondary" type="button" disabled={isGuest || practiceMatches.length === 0} onClick={buildPracticeSet}>
-                        <Shuffle size={17} aria-hidden="true" />
-                        Shuffle set
-                      </button>
+                      {canUseFullPractice ? (
+                        <button className="button-secondary" type="button" disabled={practiceMatches.length === 0} onClick={buildPracticeSet}>
+                          <Shuffle size={17} aria-hidden="true" />
+                          Shuffle set
+                        </button>
+                      ) : (
+                        <Link className="button-secondary" href="/upgrade">
+                          Start Pro
+                        </Link>
+                      )}
                     </div>
                   </article>
                   <article className="mode-card mode-card-past">
@@ -1219,13 +1315,13 @@ export function WorldprintClient({ dateOverride, entryMode = "standard" }: World
                       <h3>Past Games</h3>
                       <p>
                         {isGuest
-                          ? "Continue free to replay recent dated sets. Pro unlocks the complete archive."
+                          ? "Create a free account to replay recent dated sets. Pro unlocks the complete archive."
                           : "Dated Daily replays. Replays never change today's Daily score or streak."}
                       </p>
                     </div>
                     <div className="mode-card-actions">
-                      <Link className="button-secondary" href={isGuest ? "/sign-in" : "/past-games"}>
-                        {isGuest ? "Continue free" : "Open past games"}
+                      <Link className="button-secondary" href={isGuest ? "/sign-up" : "/past-games"}>
+                        {isGuest ? "Create free account" : "Open past games"}
                       </Link>
                       {signedIn ? (
                         <Link className="button-secondary" href="/account/stats">
@@ -2477,7 +2573,7 @@ function CompletionSummary({
             <h2>{isSampleRun ? "Start Pro or continue free." : isAtlasRun ? "Start another Atlas run." : nextDaily.headline}</h2>
             <p>
               {isSampleRun
-                ? "Pro opens the full atlas. Free needs no card and saves your Free Daily progress, stats, and streaks."
+                ? "Pro opens the full atlas. A free account needs no card and saves Free Daily progress, stats, and streaks."
                 : isAtlasRun
                   ? "Pro Atlas runs keep going after the daily set and draw from the full approved pool."
                   : nextDaily.body}
@@ -2488,8 +2584,8 @@ function CompletionSummary({
               <Link className="button" href="/upgrade">
                 Start Pro
               </Link>
-              <Link className="button-secondary" href="/sign-in">
-                Continue free
+              <Link className="button-secondary" href="/sign-up">
+                Create free account
               </Link>
             </div>
           ) : isAtlasRun ? (
@@ -2714,8 +2810,8 @@ function CompletionSummary({
                     Past Games
                   </Link>
                 ) : null}
-                <Link className="button-secondary" href={isSampleRun ? "/sign-in" : "/account/stats"}>
-                  {isSampleRun ? "Continue free" : "View saved stats"}
+                <Link className="button-secondary" href={isSampleRun ? "/sign-up" : "/account/stats"}>
+                  {isSampleRun ? "Create free account" : "View saved stats"}
                 </Link>
               </div>
               <div className="status-live" role="status" aria-live="polite">
@@ -2750,8 +2846,8 @@ function CompletionSummary({
               {signedIn && !isSampleRun ? "View saved stats" : "Start Pro"}
             </Link>
             {signedIn && !isSampleRun ? null : (
-              <Link className="button-secondary" href="/sign-in">
-                Continue free
+              <Link className="button-secondary" href="/sign-up">
+                Create free account
               </Link>
             )}
             {!isSampleRun ? (
