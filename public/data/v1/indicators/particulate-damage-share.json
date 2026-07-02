@@ -188,12 +188,12 @@
     "valuesReference": "https://api.worldbank.org/v2/country/all/indicator/NY.ADJ.DPEM.GN.ZS?format=json&per_page=20000&page=1&date=2015%3A2025",
     "license": "Creative Commons Attribution 4.0 International unless specifically labeled otherwise by World Bank metadata",
     "licenseReference": "https://www.worldbank.org/en/about/legal/terms-of-use-for-datasets",
-    "retrievedAt": "2026-06-27T17:14:59.180268+00:00",
-    "checksum": "4f81284623ee10058813d7a0f9026cc51e5550429d2d39682986cc3e8cd39de3",
+    "retrievedAt": "2026-07-02T22:34:27.880154+00:00",
+    "checksum": "dbec2c5119a693a111bfeaea68f20ad4315bd2b9d7572519178f254b1d694bc9",
     "sourceOrganization": "Global Burden of Disease 2013 study, Institute for Health Metrics and Evaluation (IHME)"
   },
   "reviewStatus": "approved",
-  "contentVersion": "2026.06.22-exp2-qa1",
+  "contentVersion": "2026.07.02-exp4-content50",
   "editorial": {
     "shortHook": "A candidate map for particulate emission damage.",
     "patternNote": "The darkest countries include Somalia, Fed. Rep., Chad, Mali, while the lightest include Sweden, Norway, Finland; that contrast is the fastest way to read the particulate emission damage pattern.",
@@ -234,7 +234,7 @@
   },
   "editorialReview": {
     "status": "needs_review",
-    "reviewedAt": "2026-06-22",
+    "reviewedAt": "2026-07-02",
     "reviewedBy": "pipeline-default-needs-review",
     "qualityScore": 2,
     "funScore": 2,

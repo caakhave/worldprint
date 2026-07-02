@@ -208,12 +208,12 @@
     "valuesReference": "https://api.worldbank.org/v2/country/all/indicator/SP.DYN.CBRT.IN?format=json&per_page=20000&page=1&date=2015%3A2025",
     "license": "Creative Commons Attribution 4.0 International unless specifically labeled otherwise by World Bank metadata",
     "licenseReference": "https://www.worldbank.org/en/about/legal/terms-of-use-for-datasets",
-    "retrievedAt": "2026-06-27T17:13:50.055467+00:00",
-    "checksum": "be86f61fffc238c37a22ccd5c958f05e71c2be7a825edace99dfd960deab6b6c",
-    "sourceOrganization": "World Population Prospects, United Nations (UN), publisher: UN Population Division;\nStatistical databases and publications from national statistical offices, National statistical offices;\nDemographic Statistics, Eurostat (ESTAT);\nPopulation and Vital Statistics Report (various years), United Nations (UN), publisher: UN Statistical Division"
+    "retrievedAt": "2026-07-02T22:05:46.506898+00:00",
+    "checksum": "cb7fc7ff8e194b7450108fd7c1ef6d83787d2a07cb4ab3827456a79ad482f8ce",
+    "sourceOrganization": "World Population Prospects, United Nations (UN), publisher: UN Population Division;\nStatistical databases and publications from national statistical offices, National Statistical Offices (NSOs);\nDemographic Statistics, Eurostat (ESTAT);\nPopulation and Vital Statistics Report (various years), United Nations (UN), publisher: UN Statistical Division"
   },
   "reviewStatus": "approved",
-  "contentVersion": "2026.06.22-exp2-qa1",
+  "contentVersion": "2026.07.02-exp4-content50",
   "editorial": {
     "shortHook": "The broadest signal of where populations are adding children.",
     "patternNote": "The darkest countries include Central African Republic, Chad, Somalia, Fed. Rep., while the lightest include Korea, Rep., Ukraine, Japan; that contrast is the fastest way to read the birth rate pattern.",
@@ -254,7 +254,7 @@
   },
   "editorialReview": {
     "status": "practice_eligible",
-    "reviewedAt": "2026-06-22",
+    "reviewedAt": "2026-07-02",
     "reviewedBy": "Codex editorial QA",
     "qualityScore": 3,
     "funScore": 3,

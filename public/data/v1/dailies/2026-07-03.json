@@ -2,34 +2,32 @@
   "schemaVersion": "1.1.0",
   "game": "worldprint",
   "date": "2026-07-03",
-  "contentVersion": "2026.06.22-exp2-qa1",
+  "contentVersion": "2026.07.02-exp4-content50",
   "roundIds": [
-    "worldprint-arable-land-per-person",
-    "worldprint-gdp-per-capita",
-    "worldprint-internet-users",
-    "worldprint-youth-employment-ratio",
-    "worldprint-compulsory-education-duration"
+    "worldprint-basic-sanitation",
+    "worldprint-tourism-arrivals",
+    "worldprint-female-industry-employment",
+    "worldprint-electric-transmission-losses",
+    "worldprint-unemployment"
   ],
   "indicatorIds": [
-    "arable-land-per-person",
-    "gdp-per-capita",
-    "internet-users",
-    "youth-employment-ratio",
-    "compulsory-education-duration"
+    "basic-sanitation",
+    "tourism-arrivals",
+    "female-industry-employment",
+    "electric-transmission-losses",
+    "unemployment"
   ],
   "categoryMix": {
-    "land": 1,
-    "development": 1,
-    "connectivity": 1,
-    "labor": 1,
-    "education": 1
+    "health": 1,
+    "economy": 1,
+    "labor": 2,
+    "energy": 1
   },
   "mapDifficultyMix": {
-    "expert": 2,
-    "intro": 2,
-    "standard": 1
+    "standard": 4,
+    "expert": 1
   },
-  "generatedAt": "2026-06-27T17:16:22.618091+00:00",
+  "generatedAt": "2026-07-02T22:58:41.349194+00:00",
   "generatorVersion": "daily-manifest-v2",
   "varietyNotes": [
     "Selected with category, difficulty, repeat-cooldown, and same-day correlation safeguards."

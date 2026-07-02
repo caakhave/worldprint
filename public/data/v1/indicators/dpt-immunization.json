@@ -204,12 +204,12 @@
     "valuesReference": "https://api.worldbank.org/v2/country/all/indicator/SH.IMM.IDPT?format=json&per_page=20000&page=1&date=2015%3A2025",
     "license": "Creative Commons Attribution 4.0 International unless specifically labeled otherwise by World Bank metadata",
     "licenseReference": "https://www.worldbank.org/en/about/legal/terms-of-use-for-datasets",
-    "retrievedAt": "2026-06-27T17:14:21.929770+00:00",
-    "checksum": "77a4309c93189c04d802bd8ce614ce373c01b0eab4438e8b1d4b6e2d53d9de0d",
+    "retrievedAt": "2026-07-02T22:18:54.674288+00:00",
+    "checksum": "f625420d81a67ed2d139bd8c0ec086ab66aa4a59a69994bf89c0a044147e9b1e",
     "sourceOrganization": "World Health Organization (WHO), uri: http://www.who.int/immunization/monitoring_surveillance/en/;\nUN Children's Fund (UNICEF)"
   },
   "reviewStatus": "approved",
-  "contentVersion": "2026.06.22-exp2-qa1",
+  "contentVersion": "2026.07.02-exp4-content50",
   "editorial": {
     "shortHook": "A routine childhood-vaccine map.",
     "patternNote": "The darkest countries include Turkiye, Portugal, Korea, Dem. People's Rep., while the lightest include Sudan, Central African Republic, Papua New Guinea; that contrast is the fastest way to read the dpt immunization pattern.",
@@ -250,7 +250,7 @@
   },
   "editorialReview": {
     "status": "practice_eligible",
-    "reviewedAt": "2026-06-22",
+    "reviewedAt": "2026-07-02",
     "reviewedBy": "Codex editorial QA",
     "qualityScore": 3,
     "funScore": 3,

@@ -2,32 +2,31 @@
   "schemaVersion": "1.1.0",
   "game": "worldprint",
   "date": "2026-06-27",
-  "contentVersion": "2026.06.22-exp2-qa1",
+  "contentVersion": "2026.07.02-exp4-content50",
   "roundIds": [
-    "worldprint-coal-electricity-share",
-    "worldprint-manufacturing-share",
-    "worldprint-urban-population",
-    "worldprint-freshwater-per-capita",
-    "worldprint-tourism-arrivals"
+    "worldprint-account-ownership",
+    "worldprint-uhc-service-coverage",
+    "worldprint-under-five-mortality",
+    "worldprint-agriculture-value-added",
+    "worldprint-working-age-share"
   ],
   "indicatorIds": [
-    "coal-electricity-share",
-    "manufacturing-share",
-    "urban-population",
-    "freshwater-per-capita",
-    "tourism-arrivals"
+    "account-ownership",
+    "uhc-service-coverage",
+    "under-five-mortality",
+    "agriculture-value-added",
+    "working-age-share"
   ],
   "categoryMix": {
-    "energy": 1,
-    "economy": 2,
-    "settlement": 1,
-    "environment": 1
+    "development": 1,
+    "health": 2,
+    "economy": 1,
+    "demography": 1
   },
   "mapDifficultyMix": {
-    "standard": 4,
-    "intro": 1
+    "standard": 5
   },
-  "generatedAt": "2026-06-27T17:16:22.617217+00:00",
+  "generatedAt": "2026-07-02T22:58:41.348344+00:00",
   "generatorVersion": "daily-manifest-v2",
   "varietyNotes": [
     "Selected with category, difficulty, repeat-cooldown, and same-day correlation safeguards."

@@ -2,34 +2,32 @@
   "schemaVersion": "1.1.0",
   "game": "worldprint",
   "date": "2026-06-10",
-  "contentVersion": "2026.06.22-exp2-qa1",
+  "contentVersion": "2026.07.02-exp4-content50",
   "roundIds": [
-    "worldprint-electricity-access",
-    "worldprint-out-of-school-primary",
-    "worldprint-land-under-cereal",
-    "worldprint-urban-basic-drinking-water",
-    "worldprint-older-adults-share"
+    "worldprint-adolescent-fertility",
+    "worldprint-permanent-cropland",
+    "worldprint-population-density",
+    "worldprint-precipitation-depth",
+    "worldprint-co2-per-capita"
   ],
   "indicatorIds": [
-    "electricity-access",
-    "out-of-school-primary",
-    "land-under-cereal",
-    "urban-basic-drinking-water",
-    "older-adults-share"
+    "adolescent-fertility",
+    "permanent-cropland",
+    "population-density",
+    "precipitation-depth",
+    "co2-per-capita"
   ],
   "categoryMix": {
-    "energy": 1,
-    "education": 1,
+    "demography": 1,
     "land": 1,
     "settlement": 1,
-    "demography": 1
+    "environment": 2
   },
   "mapDifficultyMix": {
-    "intro": 2,
-    "standard": 2,
-    "expert": 1
+    "expert": 1,
+    "standard": 4
   },
-  "generatedAt": "2026-06-27T17:16:22.614348+00:00",
+  "generatedAt": "2026-07-02T22:58:41.345810+00:00",
   "generatorVersion": "daily-manifest-v2",
   "varietyNotes": [
     "Selected with category, difficulty, repeat-cooldown, and same-day correlation safeguards."

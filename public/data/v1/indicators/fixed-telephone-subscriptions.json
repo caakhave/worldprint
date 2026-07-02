@@ -168,12 +168,12 @@
     "valuesReference": "https://api.worldbank.org/v2/country/all/indicator/IT.MLT.MAIN.P2?format=json&per_page=20000&page=1&date=2015%3A2025",
     "license": "Creative Commons Attribution 4.0 International unless specifically labeled otherwise by World Bank metadata",
     "licenseReference": "https://www.worldbank.org/en/about/legal/terms-of-use-for-datasets",
-    "retrievedAt": "2026-06-27T17:15:17.114805+00:00",
-    "checksum": "c05b7d9bce1118a9d17262a9d39d56170dae5acdb2f91b19c45c4bb9b01c5b82",
+    "retrievedAt": "2026-07-02T22:38:42.954432+00:00",
+    "checksum": "529717bbf1245b3d7e8893d1cd9f27270f3d9d293b7c193c53f7e5df6f10510d",
     "sourceOrganization": "World Telecommunication/ICT Indicators Database, International Telecommunication Union (ITU)"
   },
   "reviewStatus": "approved",
-  "contentVersion": "2026.06.22-exp2-qa1",
+  "contentVersion": "2026.07.02-exp4-content50",
   "editorial": {
     "shortHook": "A candidate map for fixed telephone subscriptions.",
     "patternNote": "The darkest countries include Portugal, Greece, Belarus, while the lightest include Bhutan, Congo, Dem. Rep., Chad; that contrast is the fastest way to read the fixed telephone subscriptions pattern.",
@@ -202,8 +202,8 @@
         "reason": "GDP per capita, PPP can tempt players because it shares a strong country ranking with this map, but its unit and definition point to a different story."
       },
       {
-        "confusedWithIndicatorCode": "NY.GDP.PCAP.CD",
-        "reason": "GDP per capita can tempt players because it shares a strong country ranking with this map, but its unit and definition point to a different story."
+        "confusedWithIndicatorCode": "NY.GNP.PCAP.PP.CD",
+        "reason": "GNI per capita, PPP can tempt players because it shares a strong country ranking with this map, but its unit and definition point to a different story."
       }
     ],
     "difficultyReason": "Expert difficulty: the map can be mistaken for adjacent indicators unless players probe a high, low, and middle country.",
@@ -214,7 +214,7 @@
   },
   "editorialReview": {
     "status": "practice_eligible",
-    "reviewedAt": "2026-06-22",
+    "reviewedAt": "2026-07-02",
     "reviewedBy": "Codex editorial QA",
     "qualityScore": 3,
     "funScore": 4,

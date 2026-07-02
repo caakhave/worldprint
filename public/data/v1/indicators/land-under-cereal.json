@@ -206,12 +206,12 @@
     "valuesReference": "https://api.worldbank.org/v2/country/all/indicator/AG.LND.CREL.HA?format=json&per_page=20000&page=1&date=2015%3A2025",
     "license": "Creative Commons Attribution 4.0 International unless specifically labeled otherwise by World Bank metadata",
     "licenseReference": "https://www.worldbank.org/en/about/legal/terms-of-use-for-datasets",
-    "retrievedAt": "2026-06-27T17:15:34.063774+00:00",
-    "checksum": "01b2b28e7100ba134483a6efeb703c9bffe185bfdb9b451cd98355a572e68ffd",
+    "retrievedAt": "2026-07-02T22:42:40.889951+00:00",
+    "checksum": "980b9d9848298f754caa331dc6ea0afa36b0077b54053f557b83a9a834102143",
     "sourceOrganization": "FAO electronic files and web site, Food and Agriculture Organization of the United Nations (FAO), uri: https://www.fao.org/faostat/en/#data/QCL, note: Item code F1717, publisher: Food and Agriculture Organization of the United Nations (FAO)"
   },
   "reviewStatus": "approved",
-  "contentVersion": "2026.06.22-exp2-qa1",
+  "contentVersion": "2026.07.02-exp4-content50",
   "editorial": {
     "shortHook": "A raw grain-area map for expert review.",
     "patternNote": "The darkest countries include India, China, United States, while the lightest include Djibouti, Bahamas, The, Qatar; that contrast is the fastest way to read the land under cereal production pattern.",
@@ -253,7 +253,7 @@
   },
   "editorialReview": {
     "status": "daily_eligible",
-    "reviewedAt": "2026-06-22",
+    "reviewedAt": "2026-07-02",
     "reviewedBy": "Codex editorial QA",
     "qualityScore": 4,
     "funScore": 4,

@@ -2,33 +2,31 @@
   "schemaVersion": "1.1.0",
   "game": "worldprint",
   "date": "2026-07-14",
-  "contentVersion": "2026.06.22-exp2-qa1",
+  "contentVersion": "2026.07.02-exp4-content50",
   "roundIds": [
-    "worldprint-agriculture-value-added",
-    "worldprint-electric-power-use",
-    "worldprint-land-under-cereal",
-    "worldprint-cereal-yield",
-    "worldprint-precipitation-depth"
+    "worldprint-protected-land",
+    "worldprint-female-industry-employment",
+    "worldprint-pm25-exposure",
+    "worldprint-compulsory-education-duration",
+    "worldprint-secondary-enrollment"
   ],
   "indicatorIds": [
-    "agriculture-value-added",
-    "electric-power-use",
-    "land-under-cereal",
-    "cereal-yield",
-    "precipitation-depth"
+    "protected-land",
+    "female-industry-employment",
+    "pm25-exposure",
+    "compulsory-education-duration",
+    "secondary-enrollment"
   ],
   "categoryMix": {
-    "economy": 1,
-    "energy": 1,
-    "land": 1,
-    "agriculture": 1,
-    "environment": 1
+    "environment": 2,
+    "labor": 1,
+    "education": 2
   },
   "mapDifficultyMix": {
     "standard": 3,
     "expert": 2
   },
-  "generatedAt": "2026-06-27T17:16:22.620106+00:00",
+  "generatedAt": "2026-07-02T22:58:41.350813+00:00",
   "generatorVersion": "daily-manifest-v2",
   "varietyNotes": [
     "Selected with category, difficulty, repeat-cooldown, and same-day correlation safeguards."

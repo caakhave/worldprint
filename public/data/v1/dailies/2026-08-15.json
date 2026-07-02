@@ -2,32 +2,33 @@
   "schemaVersion": "1.1.0",
   "game": "worldprint",
   "date": "2026-08-15",
-  "contentVersion": "2026.06.22-exp2-qa1",
+  "contentVersion": "2026.07.02-exp4-content50",
   "roundIds": [
-    "worldprint-cereal-yield",
-    "worldprint-permanent-cropland",
-    "worldprint-coal-electricity-share",
-    "worldprint-compulsory-education-duration",
-    "worldprint-food-insecurity-moderate-severe"
+    "worldprint-women-parliament",
+    "worldprint-arable-land-per-person",
+    "worldprint-food-production-index",
+    "worldprint-freshwater-per-capita",
+    "worldprint-migrant-stock"
   ],
   "indicatorIds": [
-    "cereal-yield",
-    "permanent-cropland",
-    "coal-electricity-share",
-    "compulsory-education-duration",
-    "food-insecurity-moderate-severe"
+    "women-parliament",
+    "arable-land-per-person",
+    "food-production-index",
+    "freshwater-per-capita",
+    "migrant-stock"
   ],
   "categoryMix": {
-    "agriculture": 2,
+    "development": 1,
     "land": 1,
-    "energy": 1,
-    "education": 1
+    "agriculture": 1,
+    "environment": 1,
+    "demography": 1
   },
   "mapDifficultyMix": {
-    "expert": 2,
-    "standard": 3
+    "standard": 4,
+    "expert": 1
   },
-  "generatedAt": "2026-06-27T17:16:22.624726+00:00",
+  "generatedAt": "2026-07-02T22:58:41.355540+00:00",
   "generatorVersion": "daily-manifest-v2",
   "varietyNotes": [
     "Selected with category, difficulty, repeat-cooldown, and same-day correlation safeguards."

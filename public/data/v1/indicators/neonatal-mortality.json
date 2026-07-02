@@ -205,12 +205,12 @@
     "valuesReference": "https://api.worldbank.org/v2/country/all/indicator/SH.DYN.NMRT?format=json&per_page=20000&page=1&date=2015%3A2025",
     "license": "Creative Commons Attribution 4.0 International unless specifically labeled otherwise by World Bank metadata",
     "licenseReference": "https://www.worldbank.org/en/about/legal/terms-of-use-for-datasets",
-    "retrievedAt": "2026-06-27T17:14:42.059582+00:00",
-    "checksum": "1561e816058a31f36cdfd74d37df6c4ef4073130f06a1bf40d3301f33dbd4e33",
+    "retrievedAt": "2026-07-02T22:23:01.138375+00:00",
+    "checksum": "94bca9f57600cfeb8201f6557554757fd84c5cdda3ec2d42a20fe98f1b21d44f",
     "sourceOrganization": "UN Inter-agency Group for Child Mortality Estimation, UN Children's Fund (UNICEF), uri: www.childmortality.org;\nWorld Health Organization (WHO), uri: www.childmortality.org, note: UN Inter-agency Group for Child Mortality Estimation;\nWorld Bank (WB), uri: www.childmortality.org, note: UN Inter-agency Group for Child Mortality Estimation;\nUnited Nations (UN), uri: www.childmortality.org, note: UN Inter-agency Group for Child Mortality Estimation, publisher: UN Population Division"
   },
   "reviewStatus": "approved",
-  "contentVersion": "2026.06.22-exp2-qa1",
+  "contentVersion": "2026.07.02-exp4-content50",
   "editorial": {
     "shortHook": "A candidate map for neonatal mortality.",
     "patternNote": "The darkest countries include South Sudan, Nigeria, Pakistan, while the lightest include Belarus, Montenegro, Estonia; that contrast is the fastest way to read the neonatal mortality pattern.",
@@ -239,8 +239,8 @@
         "reason": "Under-5 mortality can tempt players because it shares a strong country ranking with this map, but its unit and definition point to a different story."
       },
       {
-        "confusedWithIndicatorCode": "SH.STA.MMRT",
-        "reason": "Maternal mortality can tempt players because it shares a strong country ranking with this map, but its unit and definition point to a different story."
+        "confusedWithIndicatorCode": "HD_HCIP_OVRL_TO",
+        "reason": "Human Capital Index can tempt players because it shares a strong country ranking with this map, but its unit and definition point to a different story."
       }
     ],
     "difficultyReason": "Standard difficulty: the map has readable regional structure, but the best answer still depends on checking the unit and country anchors.",
@@ -251,7 +251,7 @@
   },
   "editorialReview": {
     "status": "expert_only",
-    "reviewedAt": "2026-06-22",
+    "reviewedAt": "2026-07-02",
     "reviewedBy": "Codex editorial QA",
     "qualityScore": 3,
     "funScore": 3,

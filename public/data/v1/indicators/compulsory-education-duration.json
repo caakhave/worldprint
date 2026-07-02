@@ -197,12 +197,12 @@
     "valuesReference": "https://api.worldbank.org/v2/country/all/indicator/SE.COM.DURS?format=json&per_page=20000&page=1&date=2015%3A2025",
     "license": "Creative Commons Attribution 4.0 International unless specifically labeled otherwise by World Bank metadata",
     "licenseReference": "https://www.worldbank.org/en/about/legal/terms-of-use-for-datasets",
-    "retrievedAt": "2026-06-27T17:15:48.394579+00:00",
-    "checksum": "d0a9100d5f3980be58989bae602b7e4724c6a7ca44cfea08348803be9df8197d",
+    "retrievedAt": "2026-07-02T22:44:38.401222+00:00",
+    "checksum": "ee6f04382e19e15cb13625581a73c65cad763eb1072ba82380159852fcf756b3",
     "sourceOrganization": "Data API, UN Educational, Scientific and Cultural Organization (UNESCO), uri: https://databrowser.uis.unesco.org/resources, note: The data are obtained through the UIS API.  Detailed documentation is available at: https://api.uis.unesco.org/api/public/documentation/, publisher: UNESCO Institute for Statistics (UIS), date accessed: 2026-03-19, date published: 2026-02"
   },
   "reviewStatus": "approved",
-  "contentVersion": "2026.06.22-exp2-qa1",
+  "contentVersion": "2026.07.02-exp4-content50",
   "editorial": {
     "shortHook": "A school-policy duration map.",
     "patternNote": "The darkest countries include Venezuela, RB, Guatemala, El Salvador, while the lightest include New Caledonia, Bangladesh, Madagascar; that contrast is the fastest way to read the compulsory education duration pattern.",
@@ -243,7 +243,7 @@
   },
   "editorialReview": {
     "status": "daily_eligible",
-    "reviewedAt": "2026-06-22",
+    "reviewedAt": "2026-07-02",
     "reviewedBy": "Codex editorial QA",
     "qualityScore": 4,
     "funScore": 4,

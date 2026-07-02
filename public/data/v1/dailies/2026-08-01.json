@@ -2,32 +2,32 @@
   "schemaVersion": "1.1.0",
   "game": "worldprint",
   "date": "2026-08-01",
-  "contentVersion": "2026.06.22-exp2-qa1",
+  "contentVersion": "2026.07.02-exp4-content50",
   "roundIds": [
-    "worldprint-life-expectancy",
-    "worldprint-electricity-access",
-    "worldprint-energy-use",
-    "worldprint-food-production-index",
-    "worldprint-population-density"
+    "worldprint-population-growth",
+    "worldprint-human-capital-index",
+    "worldprint-secondary-enrollment",
+    "worldprint-food-insecurity-moderate-severe",
+    "worldprint-compulsory-education-duration"
   ],
   "indicatorIds": [
-    "life-expectancy",
-    "electricity-access",
-    "energy-use",
-    "food-production-index",
-    "population-density"
+    "population-growth",
+    "human-capital-index",
+    "secondary-enrollment",
+    "food-insecurity-moderate-severe",
+    "compulsory-education-duration"
   ],
   "categoryMix": {
-    "health": 1,
-    "energy": 2,
-    "agriculture": 1,
-    "settlement": 1
+    "demography": 1,
+    "development": 1,
+    "education": 2,
+    "agriculture": 1
   },
   "mapDifficultyMix": {
-    "intro": 2,
-    "standard": 3
+    "standard": 4,
+    "expert": 1
   },
-  "generatedAt": "2026-06-27T17:16:22.622684+00:00",
+  "generatedAt": "2026-07-02T22:58:41.353521+00:00",
   "generatorVersion": "daily-manifest-v2",
   "varietyNotes": [
     "Selected with category, difficulty, repeat-cooldown, and same-day correlation safeguards."

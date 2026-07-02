@@ -208,12 +208,12 @@
     "valuesReference": "https://api.worldbank.org/v2/country/all/indicator/EG.ELC.NUCL.ZS?format=json&per_page=20000&page=1&date=2015%3A2025",
     "license": "Creative Commons Attribution 4.0 International unless specifically labeled otherwise by World Bank metadata",
     "licenseReference": "https://www.worldbank.org/en/about/legal/terms-of-use-for-datasets",
-    "retrievedAt": "2026-06-27T17:15:01.660525+00:00",
-    "checksum": "a781fe4487b463ae2073822762cb024f233b8498db55b11b6eb45bce0f7ce5f7",
+    "retrievedAt": "2026-07-02T22:35:00.580859+00:00",
+    "checksum": "98de1d04762d0a616723a210b0b1b3135cd7eeb73adc47f4a472fdf3f9cefa6f",
     "sourceOrganization": "IEA Energy Statistics Data Browser, International Energy Agency (IEA), uri: https://www.iea.org/data-and-statistics/data-tools/energy-statistics-data-browser, publisher: International Energy Agency (IEA), date accessed: 2025-03-25"
   },
   "reviewStatus": "approved",
-  "contentVersion": "2026.06.22-exp2-qa1",
+  "contentVersion": "2026.07.02-exp4-content50",
   "editorial": {
     "shortHook": "A candidate map for nuclear electricity share.",
     "patternNote": "The darkest countries include France, Ukraine, Slovak Republic, while the lightest include Afghanistan, Angola, Albania; that contrast is the fastest way to read the nuclear electricity share pattern.",
@@ -234,16 +234,16 @@
     ],
     "commonConfusions": [
       {
+        "confusedWithIndicatorCode": "FX.OWN.TOTL.YG.ZS",
+        "reason": "Young-adult account ownership overlaps with part of the visible pattern, but the full country spread does not match."
+      },
+      {
         "confusedWithIndicatorCode": "ST.INT.ARVL",
         "reason": "Tourism arrivals overlaps with part of the visible pattern, but the full country spread does not match."
       },
       {
         "confusedWithIndicatorCode": "TM.VAL.FOOD.ZS.UN",
         "reason": "Food imports share overlaps with part of the visible pattern, but the full country spread does not match."
-      },
-      {
-        "confusedWithIndicatorCode": "IT.NET.SECR.P6",
-        "reason": "Secure internet servers overlaps with part of the visible pattern, but the full country spread does not match."
       }
     ],
     "difficultyReason": "Expert difficulty: the map can be mistaken for adjacent indicators unless players probe a high, low, and middle country.",
@@ -254,7 +254,7 @@
   },
   "editorialReview": {
     "status": "needs_review",
-    "reviewedAt": "2026-06-22",
+    "reviewedAt": "2026-07-02",
     "reviewedBy": "pipeline-default-needs-review",
     "qualityScore": 2,
     "funScore": 2,

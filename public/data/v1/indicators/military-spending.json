@@ -179,12 +179,12 @@
     "valuesReference": "https://api.worldbank.org/v2/country/all/indicator/MS.MIL.XPND.GD.ZS?format=json&per_page=20000&page=1&date=2015%3A2025",
     "license": "Creative Commons Attribution 4.0 International unless specifically labeled otherwise by World Bank metadata",
     "licenseReference": "https://www.worldbank.org/en/about/legal/terms-of-use-for-datasets",
-    "retrievedAt": "2026-06-27T17:14:28.208189+00:00",
-    "checksum": "c08ab07ae174a7f009e7a9f9b27a3e235bdabb03fc2602969493b969a860361c",
+    "retrievedAt": "2026-07-02T22:20:42.111602+00:00",
+    "checksum": "69a89f90de85c5052428e8b08215c74f4d27dada8a34a115d17e891f782a05b3",
     "sourceOrganization": "SIPRI Military Expenditure Database, Stockholm International Peace Research Institute (SIPRI), uri: https://www.sipri.org/databases"
   },
   "reviewStatus": "approved",
-  "contentVersion": "2026.06.22-exp2-qa1",
+  "contentVersion": "2026.07.02-exp4-content50",
   "editorial": {
     "shortHook": "A security-priority map, not a raw military-size map.",
     "patternNote": "The darkest countries include Ukraine, Israel, Algeria, while the lightest include Haiti, Ireland, Papua New Guinea; that contrast is the fastest way to read the military spending pattern.",
@@ -209,8 +209,8 @@
         "reason": "Net migration overlaps with part of the visible pattern, but the full country spread does not match."
       },
       {
-        "confusedWithIndicatorCode": "NE.CON.GOVT.ZS",
-        "reason": "Government consumption lives in the same category, so it can feel plausible until the high and low countries are checked."
+        "confusedWithIndicatorCode": "FB.AST.NPER.ZS",
+        "reason": "Nonperforming loans lives in the same category, so it can feel plausible until the high and low countries are checked."
       },
       {
         "confusedWithIndicatorCode": "AG.LND.PRCP.MM",
@@ -225,7 +225,7 @@
   },
   "editorialReview": {
     "status": "expert_only",
-    "reviewedAt": "2026-06-22",
+    "reviewedAt": "2026-07-02",
     "reviewedBy": "Codex editorial QA",
     "qualityScore": 3,
     "funScore": 4,

@@ -159,12 +159,12 @@
     "valuesReference": "https://api.worldbank.org/v2/country/all/indicator/SE.PRM.GINT.ZS?format=json&per_page=20000&page=1&date=2015%3A2025",
     "license": "Creative Commons Attribution 4.0 International unless specifically labeled otherwise by World Bank metadata",
     "licenseReference": "https://www.worldbank.org/en/about/legal/terms-of-use-for-datasets",
-    "retrievedAt": "2026-06-27T17:15:46.863578+00:00",
-    "checksum": "b3c3621b31b9fd69c80ca4f73e7c8d4fa296df1391e349540e53b5f7b463a2f7",
+    "retrievedAt": "2026-07-02T22:44:30.084209+00:00",
+    "checksum": "531a0b9c3490da8f6e1cb7271ba4d303f7eeb15cb2fc755e65a059067a650a9e",
     "sourceOrganization": "Stat Bulk Data Download Service, UN Educational, Scientific and Cultural Organization (UNESCO), uri: https://uis.unesco.org/bdds, publisher: UNESCO Institute for Statistics (UIS)"
   },
   "reviewStatus": "approved",
-  "contentVersion": "2026.06.22-exp2-qa1",
+  "contentVersion": "2026.07.02-exp4-content50",
   "editorial": {
     "shortHook": "A first-grade entry map.",
     "patternNote": "The darkest countries include Madagascar, Sierra Leone, Mozambique, while the lightest include Djibouti, Eritrea, Mali; that contrast is the fastest way to read the primary gross intake pattern.",
@@ -205,7 +205,7 @@
   },
   "editorialReview": {
     "status": "practice_eligible",
-    "reviewedAt": "2026-06-22",
+    "reviewedAt": "2026-07-02",
     "reviewedBy": "Codex editorial QA",
     "qualityScore": 3,
     "funScore": 3,

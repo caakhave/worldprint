@@ -2,32 +2,31 @@
   "schemaVersion": "1.1.0",
   "game": "worldprint",
   "date": "2026-08-10",
-  "contentVersion": "2026.06.22-exp2-qa1",
+  "contentVersion": "2026.07.02-exp4-content50",
   "roundIds": [
-    "worldprint-tuberculosis-incidence",
-    "worldprint-industry-share",
-    "worldprint-employment-agriculture",
-    "worldprint-manufacturing-share",
-    "worldprint-primary-female-teachers"
+    "worldprint-unemployment",
+    "worldprint-population-density",
+    "worldprint-mobile-subscriptions",
+    "worldprint-clean-fuels-access",
+    "worldprint-energy-use"
   ],
   "indicatorIds": [
-    "tuberculosis-incidence",
-    "industry-share",
-    "employment-agriculture",
-    "manufacturing-share",
-    "primary-female-teachers"
+    "unemployment",
+    "population-density",
+    "mobile-subscriptions",
+    "clean-fuels-access",
+    "energy-use"
   ],
   "categoryMix": {
-    "health": 1,
-    "economy": 2,
     "labor": 1,
-    "education": 1
+    "settlement": 1,
+    "connectivity": 1,
+    "energy": 2
   },
   "mapDifficultyMix": {
-    "expert": 1,
-    "standard": 4
+    "standard": 5
   },
-  "generatedAt": "2026-06-27T17:16:22.623995+00:00",
+  "generatedAt": "2026-07-02T22:58:41.354812+00:00",
   "generatorVersion": "daily-manifest-v2",
   "varietyNotes": [
     "Selected with category, difficulty, repeat-cooldown, and same-day correlation safeguards."

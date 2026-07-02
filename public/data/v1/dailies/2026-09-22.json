@@ -2,32 +2,31 @@
   "schemaVersion": "1.1.0",
   "game": "worldprint",
   "date": "2026-09-22",
-  "contentVersion": "2026.06.22-exp2-qa1",
+  "contentVersion": "2026.07.02-exp4-content50",
   "roundIds": [
-    "worldprint-female-industry-employment",
-    "worldprint-under-five-mortality",
-    "worldprint-adolescent-fertility",
-    "worldprint-older-adults-share",
-    "worldprint-undernourishment"
+    "worldprint-electric-transmission-losses",
+    "worldprint-fertility-rate",
+    "worldprint-account-ownership",
+    "worldprint-age-dependency",
+    "worldprint-secondary-enrollment"
   ],
   "indicatorIds": [
-    "female-industry-employment",
-    "under-five-mortality",
-    "adolescent-fertility",
-    "older-adults-share",
-    "undernourishment"
+    "electric-transmission-losses",
+    "fertility-rate",
+    "account-ownership",
+    "age-dependency",
+    "secondary-enrollment"
   ],
   "categoryMix": {
-    "labor": 1,
-    "health": 2,
-    "demography": 2
+    "energy": 1,
+    "demography": 2,
+    "development": 1,
+    "education": 1
   },
   "mapDifficultyMix": {
-    "expert": 2,
-    "standard": 2,
-    "intro": 1
+    "standard": 5
   },
-  "generatedAt": "2026-06-27T17:16:22.631033+00:00",
+  "generatedAt": "2026-07-02T22:58:41.361310+00:00",
   "generatorVersion": "daily-manifest-v2",
   "varietyNotes": [
     "Selected with category, difficulty, repeat-cooldown, and same-day correlation safeguards."

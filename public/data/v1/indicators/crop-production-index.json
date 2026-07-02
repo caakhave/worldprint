@@ -207,12 +207,12 @@
     "valuesReference": "https://api.worldbank.org/v2/country/all/indicator/AG.PRD.CROP.XD?format=json&per_page=20000&page=1&date=2015%3A2025",
     "license": "Creative Commons Attribution 4.0 International unless specifically labeled otherwise by World Bank metadata",
     "licenseReference": "https://www.worldbank.org/en/about/legal/terms-of-use-for-datasets",
-    "retrievedAt": "2026-06-27T17:14:37.302936+00:00",
-    "checksum": "b6fd20c51cf1cbc29a0088e951d7ce9615ba97e1da1d60ecc584f36975fc62bd",
+    "retrievedAt": "2026-07-02T22:21:32.340666+00:00",
+    "checksum": "3224086e01fc04313cf2de50da52b02e748e47be4af4201a7b8162c7e1486058",
     "sourceOrganization": "FAO electronic files and web site, Food and Agriculture Organization of the United Nations (FAO), publisher: Food and Agriculture Organization of the United Nations (FAO)"
   },
   "reviewStatus": "approved",
-  "contentVersion": "2026.06.22-exp2-qa1",
+  "contentVersion": "2026.07.02-exp4-content50",
   "editorial": {
     "shortHook": "A crop-output trend map close to the food index.",
     "patternNote": "The darkest countries include Senegal, Saudi Arabia, Central African Republic, while the lightest include Hungary, Cuba, Bhutan; that contrast is the fastest way to read the crop production index pattern.",
@@ -241,8 +241,8 @@
         "reason": "Population ages 65+ overlaps with part of the visible pattern, but the full country spread does not match."
       },
       {
-        "confusedWithIndicatorCode": "SH.H2O.BASW.RU.ZS",
-        "reason": "Rural basic drinking water overlaps with part of the visible pattern, but the full country spread does not match."
+        "confusedWithIndicatorCode": "SP.URB.GROW",
+        "reason": "Urban population growth overlaps with part of the visible pattern, but the full country spread does not match."
       }
     ],
     "difficultyReason": "Standard difficulty: the map has readable regional structure, but the best answer still depends on checking the unit and country anchors.",
@@ -253,7 +253,7 @@
   },
   "editorialReview": {
     "status": "retired",
-    "reviewedAt": "2026-06-22",
+    "reviewedAt": "2026-07-02",
     "reviewedBy": "Codex editorial QA",
     "qualityScore": 2,
     "funScore": 2,

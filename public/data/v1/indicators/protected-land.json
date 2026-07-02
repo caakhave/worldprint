@@ -208,12 +208,12 @@
     "valuesReference": "https://api.worldbank.org/v2/country/all/indicator/ER.LND.PTLD.ZS?format=json&per_page=20000&page=1&date=2015%3A2025",
     "license": "Creative Commons Attribution 4.0 International unless specifically labeled otherwise by World Bank metadata",
     "licenseReference": "https://www.worldbank.org/en/about/legal/terms-of-use-for-datasets",
-    "retrievedAt": "2026-06-27T17:14:33.983411+00:00",
-    "checksum": "f2a9f24a55421e3104853100b73d7eacd82cd78bb3b353e511efe6d870350616",
+    "retrievedAt": "2026-07-02T22:21:12.612660+00:00",
+    "checksum": "e39097d39eb37a1e9746a6d2f293e0dbc69b164498c50f00c89a05ce4c97825b",
     "sourceOrganization": "Protected Planet: The World Database on Protected Areas (WDPA) and World Database on Other Effective Area-based Conservation Measures (WD-OECM), UN Environment Programme World Conservation Monitoring Centre (UNEP-WCMC), uri: https://www.protectedplanet.net/en, publisher: Protected Planet, date accessed: 20240516, date published: 202405;\nInternational Union for Conservation of Nature (IUCN), uri: https://www.protectedplanet.net/en, publisher: Protected Planet, date accessed: 20240516"
   },
   "reviewStatus": "approved",
-  "contentVersion": "2026.06.22-exp2-qa1",
+  "contentVersion": "2026.07.02-exp4-content50",
   "editorial": {
     "shortHook": "A conservation-designation map.",
     "patternNote": "The darkest countries include New Caledonia, Venezuela, RB, Bhutan, while the lightest include Eritrea, Somalia, Fed. Rep., Libya; that contrast is the fastest way to read the protected land pattern.",
@@ -254,7 +254,7 @@
   },
   "editorialReview": {
     "status": "daily_eligible",
-    "reviewedAt": "2026-06-22",
+    "reviewedAt": "2026-07-02",
     "reviewedBy": "Codex editorial QA",
     "qualityScore": 4,
     "funScore": 4,

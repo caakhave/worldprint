@@ -206,12 +206,12 @@
     "valuesReference": "https://api.worldbank.org/v2/country/all/indicator/SH.DTH.NCOM.ZS?format=json&per_page=20000&page=1&date=2015%3A2025",
     "license": "Creative Commons Attribution 4.0 International unless specifically labeled otherwise by World Bank metadata",
     "licenseReference": "https://www.worldbank.org/en/about/legal/terms-of-use-for-datasets",
-    "retrievedAt": "2026-06-27T17:14:43.051616+00:00",
-    "checksum": "0f5cdb37396442bc5d586766f4ff9b003119ac45c8debb6d3c69ff0f235b3e44",
+    "retrievedAt": "2026-07-02T22:23:11.733777+00:00",
+    "checksum": "9864f34502dbe64f3eecdb978d9fe0a15dc61dccdd36ca8cdeb6b21f36a9f0ef",
     "sourceOrganization": "Global Health Estimates, World Health Organization (WHO), uri: https://www.who.int/data/gho/data/themes/mortality-and-global-health-estimates/ghe-leading-causes-of-death, note: Derived based on the data from Global Health Estimates  Deaths by Cause, Age, Sex, by Country and by Region, 2000-2021"
   },
   "reviewStatus": "approved",
-  "contentVersion": "2026.06.22-exp2-qa1",
+  "contentVersion": "2026.07.02-exp4-content50",
   "editorial": {
     "shortHook": "A candidate map for noncommunicable disease deaths.",
     "patternNote": "The darkest countries include Finland, China, Iceland, while the lightest include Central African Republic, Chad, Niger; that contrast is the fastest way to read the noncommunicable disease deaths pattern.",
@@ -236,12 +236,12 @@
         "reason": "Communicable disease deaths can tempt players because it shares a strong country ranking with this map, but its unit and definition point to a different story."
       },
       {
-        "confusedWithIndicatorCode": "SP.DYN.IMRT.IN",
-        "reason": "Infant mortality can tempt players because it shares a strong country ranking with this map, but its unit and definition point to a different story."
+        "confusedWithIndicatorCode": "HD_HCIP_EDUC_TO",
+        "reason": "Human capital education index can tempt players because it shares a strong country ranking with this map, but its unit and definition point to a different story."
       },
       {
-        "confusedWithIndicatorCode": "SH.DYN.MORT",
-        "reason": "Under-5 mortality can tempt players because it shares a strong country ranking with this map, but its unit and definition point to a different story."
+        "confusedWithIndicatorCode": "HD_HCIP_OVRL_TO",
+        "reason": "Human Capital Index can tempt players because it shares a strong country ranking with this map, but its unit and definition point to a different story."
       }
     ],
     "difficultyReason": "Expert difficulty: the map can be mistaken for adjacent indicators unless players probe a high, low, and middle country.",
@@ -252,7 +252,7 @@
   },
   "editorialReview": {
     "status": "retired",
-    "reviewedAt": "2026-06-22",
+    "reviewedAt": "2026-07-02",
     "reviewedBy": "Codex editorial QA",
     "qualityScore": 2,
     "funScore": 2,

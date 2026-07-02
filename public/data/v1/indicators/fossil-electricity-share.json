@@ -6,7 +6,7 @@
   "shortTitle": "Fossil electricity share",
   "category": "energy",
   "difficulty": "standard",
-  "definition": "The share of electricity production from oil. gas and coal sources of total electricity production. Sources of electricity refer to the inputs used to generate electricity. Oil refers to crude oil and petroleum products. Gas refers to natural gas but excludes natural gas liquids. Coal refers to all coal and brown coal, both primary (including hard coal and lignite-brown coal) and derived fuels (including patent fuel, coke oven coke, gas coke, coke oven gas, and blast furnace gas). Peat is also included in this category.",
+  "definition": "The share of electricity production from oil, gas and coal sources of total electricity production. Sources of electricity refer to the inputs used to generate electricity. Oil refers to crude oil and petroleum products. Gas refers to natural gas but excludes natural gas liquids. Coal refers to all coal and brown coal, both primary (including hard coal and lignite-brown coal) and derived fuels (including patent fuel, coke oven coke, gas coke, coke oven gas, and blast furnace gas). Peat is also included in this category.",
   "unit": "percent of electricity production",
   "year": 2022,
   "valuesByIso3": {
@@ -180,12 +180,12 @@
     "valuesReference": "https://api.worldbank.org/v2/country/all/indicator/EG.ELC.FOSL.ZS?format=json&per_page=20000&page=1&date=2015%3A2025",
     "license": "Creative Commons Attribution 4.0 International unless specifically labeled otherwise by World Bank metadata",
     "licenseReference": "https://www.worldbank.org/en/about/legal/terms-of-use-for-datasets",
-    "retrievedAt": "2026-06-27T17:15:02.179377+00:00",
-    "checksum": "887cd6f362d22cefc1c2f0c8f75887fbcc0f2d600f290679cad55166e67f3b98",
+    "retrievedAt": "2026-07-02T22:35:08.240394+00:00",
+    "checksum": "81a94dcf31525eeebfffefbe44f3965054e72d76ef69bc4460b53f4e2b8d0554",
     "sourceOrganization": "IEA Energy Statistics Data Browser, International Energy Agency (IEA), uri: https://www.iea.org/data-and-statistics/data-tools/energy-statistics-data-browser, publisher: International Energy Agency (IEA), date accessed: 2025-03-25"
   },
   "reviewStatus": "approved",
-  "contentVersion": "2026.06.22-exp2-qa1",
+  "contentVersion": "2026.07.02-exp4-content50",
   "editorial": {
     "shortHook": "A candidate map for fossil electricity share.",
     "patternNote": "The darkest countries include Turkmenistan, Libya, Trinidad and Tobago, while the lightest include Nepal, Paraguay, Iceland; that contrast is the fastest way to read the fossil electricity share pattern.",
@@ -210,12 +210,12 @@
         "reason": "Renewable electricity can tempt players because it shares a strong country ranking with this map, but its unit and definition point to a different story."
       },
       {
-        "confusedWithIndicatorCode": "EG.ELC.HYRO.ZS",
-        "reason": "Hydroelectricity share can tempt players because it shares a strong country ranking with this map, but its unit and definition point to a different story."
+        "confusedWithIndicatorCode": "EG.USE.COMM.CL.ZS",
+        "reason": "Alternative and nuclear energy can tempt players because it shares a strong country ranking with this map, but its unit and definition point to a different story."
       },
       {
-        "confusedWithIndicatorCode": "EG.ELC.NGAS.ZS",
-        "reason": "Natural gas electricity share lives in the same category, so it can feel plausible until the high and low countries are checked."
+        "confusedWithIndicatorCode": "EG.ELC.HYRO.ZS",
+        "reason": "Hydroelectricity share can tempt players because it shares a strong country ranking with this map, but its unit and definition point to a different story."
       }
     ],
     "difficultyReason": "Standard difficulty: the map has readable regional structure, but the best answer still depends on checking the unit and country anchors.",
@@ -226,7 +226,7 @@
   },
   "editorialReview": {
     "status": "needs_review",
-    "reviewedAt": "2026-06-22",
+    "reviewedAt": "2026-07-02",
     "reviewedBy": "pipeline-default-needs-review",
     "qualityScore": 2,
     "funScore": 2,

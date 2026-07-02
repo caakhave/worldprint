@@ -202,12 +202,12 @@
     "valuesReference": "https://api.worldbank.org/v2/country/all/indicator/SL.UEM.TOTL.FE.ZS?format=json&per_page=20000&page=1&date=2015%3A2025",
     "license": "Creative Commons Attribution 4.0 International unless specifically labeled otherwise by World Bank metadata",
     "licenseReference": "https://www.worldbank.org/en/about/legal/terms-of-use-for-datasets",
-    "retrievedAt": "2026-06-27T17:15:14.662811+00:00",
-    "checksum": "468f034a4cf3f85f77f21ff20861fbfcd1c360304366da01b6e303d9b116ab77",
+    "retrievedAt": "2026-07-02T22:38:16.869348+00:00",
+    "checksum": "f8ded271941fc3a5d51683e124b3a935bc2242e89aacc25c0674d4d696a33a3b",
     "sourceOrganization": "ILO Modelled Estimates database (ILOEST), International Labour Organization (ILO), uri: https://ilostat.ilo.org/data/bulk/, publisher: ILOSTAT, type: external database, date accessed: January 17, 2026"
   },
   "reviewStatus": "approved",
-  "contentVersion": "2026.06.22-exp2-qa1",
+  "contentVersion": "2026.07.02-exp4-content50",
   "editorial": {
     "shortHook": "A candidate map for female unemployment.",
     "patternNote": "The darkest countries include Eswatini, Djibouti, South Africa, while the lightest include Cambodia, Niger, Qatar; that contrast is the fastest way to read the female unemployment pattern.",
@@ -248,7 +248,7 @@
   },
   "editorialReview": {
     "status": "expert_only",
-    "reviewedAt": "2026-06-22",
+    "reviewedAt": "2026-07-02",
     "reviewedBy": "Codex editorial QA",
     "qualityScore": 3,
     "funScore": 3,

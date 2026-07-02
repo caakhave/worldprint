@@ -170,12 +170,12 @@
     "valuesReference": "https://api.worldbank.org/v2/country/all/indicator/LP.LPI.TRAC.XQ?format=json&per_page=20000&page=1&date=2015%3A2025",
     "license": "Creative Commons Attribution 4.0 International unless specifically labeled otherwise by World Bank metadata",
     "licenseReference": "https://www.worldbank.org/en/about/legal/terms-of-use-for-datasets",
-    "retrievedAt": "2026-06-27T17:15:39.370836+00:00",
-    "checksum": "69dbbb0a03221af2a4bb771a3a5345612f0519c6cd0d9241c6534627c0544860",
+    "retrievedAt": "2026-07-02T22:43:11.203685+00:00",
+    "checksum": "b33926b05fc02d0abef5296b862a140800fff6e7b687ef81bbba89930ff400a3",
     "sourceOrganization": "Connecting to Compete - Logistics Performance Index (LPI), World Bank (WB), uri: https://lpi.worldbank.org"
   },
   "reviewStatus": "approved",
-  "contentVersion": "2026.06.22-exp2-qa1",
+  "contentVersion": "2026.07.02-exp4-content50",
   "editorial": {
     "shortHook": "A shipment-tracking logistics map.",
     "patternNote": "The darkest countries include Denmark, United States, Netherlands, while the lightest include Afghanistan, Cameroon, Libya; that contrast is the fastest way to read the logistics tracking score pattern.",
@@ -216,7 +216,7 @@
   },
   "editorialReview": {
     "status": "needs_review",
-    "reviewedAt": "2026-06-22",
+    "reviewedAt": "2026-07-02",
     "reviewedBy": "pipeline-default-needs-review",
     "qualityScore": 2,
     "funScore": 2,

@@ -201,12 +201,12 @@
     "valuesReference": "https://api.worldbank.org/v2/country/all/indicator/EG.CFT.ACCS.RU.ZS?format=json&per_page=20000&page=1&date=2015%3A2025",
     "license": "Creative Commons Attribution 4.0 International unless specifically labeled otherwise by World Bank metadata",
     "licenseReference": "https://www.worldbank.org/en/about/legal/terms-of-use-for-datasets",
-    "retrievedAt": "2026-06-27T17:15:03.603811+00:00",
-    "checksum": "7c0986a9d4edecd39e9e959cc9309056dc1ddc00209d8dc2772cc00106c46d6d",
+    "retrievedAt": "2026-07-02T22:35:24.733088+00:00",
+    "checksum": "1302d47f8a903e5d9ec45f6b0858a46bc2b30f3ac20d42c0ddd686f1b9194c68",
     "sourceOrganization": "Tracking SDG 7: The Energy Progress Report, International Energy Agency (IEA), note: License: Creative Commons Attribution—NonCommercial 3.0 IGO (CC BY-NC 3.0 IGO);\nInternational Renewable Energy Agency (IRENA), note: Tracking SDG 7: The Energy Progress Report;\nUnited Nations (UN), note: Tracking SDG 7: The Energy Progress Report, publisher: UN Statistics Division;\nWorld Bank (WB), note: Tracking SDG 7: The Energy Progress Report;\nWorld Health Organization (WHO), note: Tracking SDG 7: The Energy Progress Report"
   },
   "reviewStatus": "approved",
-  "contentVersion": "2026.06.22-exp2-qa1",
+  "contentVersion": "2026.07.02-exp4-content50",
   "editorial": {
     "shortHook": "A candidate map for rural clean cooking access.",
     "patternNote": "The darkest countries include United States, Uruguay, Trinidad and Tobago, while the lightest include Central African Republic, Guinea-Bissau, Liberia; that contrast is the fastest way to read the rural clean cooking access pattern.",
@@ -247,7 +247,7 @@
   },
   "editorialReview": {
     "status": "retired",
-    "reviewedAt": "2026-06-22",
+    "reviewedAt": "2026-07-02",
     "reviewedBy": "Codex editorial QA",
     "qualityScore": 2,
     "funScore": 2,

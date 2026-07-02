@@ -202,12 +202,12 @@
     "valuesReference": "https://api.worldbank.org/v2/country/all/indicator/SL.AGR.EMPL.ZS?format=json&per_page=20000&page=1&date=2015%3A2025",
     "license": "Creative Commons Attribution 4.0 International unless specifically labeled otherwise by World Bank metadata",
     "licenseReference": "https://www.worldbank.org/en/about/legal/terms-of-use-for-datasets",
-    "retrievedAt": "2026-06-27T17:14:12.009782+00:00",
-    "checksum": "82c5fea5f12a231b7e6da8228c6e9357a63602fc54a95b559b3ba1dea5b61089",
+    "retrievedAt": "2026-07-02T22:13:56.086279+00:00",
+    "checksum": "20cb4145d0a42f86f6de332505eedd68baa084d17aa086d2e899ed10c2c7e4ea",
     "sourceOrganization": "ILO Modelled Estimates database (ILOEST), International Labour Organization (ILO), uri: https://ilostat.ilo.org/data/bulk/, publisher: ILOSTAT, type: external database, date accessed: January 17, 2026"
   },
   "reviewStatus": "approved",
-  "contentVersion": "2026.06.22-exp2-qa1",
+  "contentVersion": "2026.07.02-exp4-content50",
   "editorial": {
     "shortHook": "The farming-workforce map.",
     "patternNote": "The darkest countries include Burundi, Mozambique, Niger, while the lightest include Israel, Bahamas, The, United Kingdom; that contrast is the fastest way to read the employment in agriculture pattern.",
@@ -248,7 +248,7 @@
   },
   "editorialReview": {
     "status": "daily_eligible",
-    "reviewedAt": "2026-06-22",
+    "reviewedAt": "2026-07-02",
     "reviewedBy": "Codex editorial QA",
     "qualityScore": 4,
     "funScore": 4,

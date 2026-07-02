@@ -161,12 +161,12 @@
     "valuesReference": "https://api.worldbank.org/v2/country/all/indicator/SE.PRM.TCHR.FE.ZS?format=json&per_page=20000&page=1&date=2015%3A2025",
     "license": "Creative Commons Attribution 4.0 International unless specifically labeled otherwise by World Bank metadata",
     "licenseReference": "https://www.worldbank.org/en/about/legal/terms-of-use-for-datasets",
-    "retrievedAt": "2026-06-27T17:15:26.719754+00:00",
-    "checksum": "b0a378a6419b7f976aeacc3242a92bed36460bd7ce6146de68d6bfc5500a1a9b",
+    "retrievedAt": "2026-07-02T22:41:50.141465+00:00",
+    "checksum": "6a2a537f46f2fcdc5fa4d30bf6c531fc02bfbcefca5c6388f322149c2ee6d9d9",
     "sourceOrganization": "Data API, UN Educational, Scientific and Cultural Organization (UNESCO), uri: https://databrowser.uis.unesco.org/resources, note: The data are obtained through the UIS API.  Detailed documentation is available at: https://api.uis.unesco.org/api/public/documentation/, publisher: UNESCO Institute for Statistics (UIS), date accessed: 2026-03-19, date published: 2026-02"
   },
   "reviewStatus": "approved",
-  "contentVersion": "2026.06.22-exp2-qa1",
+  "contentVersion": "2026.07.02-exp4-content50",
   "editorial": {
     "shortHook": "A classroom-workforce map.",
     "patternNote": "The darkest countries include Belarus, Russian Federation, Ukraine, while the lightest include Chad, Togo, Mali; that contrast is the fastest way to read the female primary teachers pattern.",
@@ -207,7 +207,7 @@
   },
   "editorialReview": {
     "status": "daily_eligible",
-    "reviewedAt": "2026-06-22",
+    "reviewedAt": "2026-07-02",
     "reviewedBy": "Codex editorial QA",
     "qualityScore": 4,
     "funScore": 4,

@@ -162,12 +162,12 @@
     "valuesReference": "https://api.worldbank.org/v2/country/all/indicator/IS.AIR.GOOD.MT.K1?format=json&per_page=20000&page=1&date=2015%3A2025",
     "license": "Creative Commons Attribution 4.0 International unless specifically labeled otherwise by World Bank metadata",
     "licenseReference": "https://www.worldbank.org/en/about/legal/terms-of-use-for-datasets",
-    "retrievedAt": "2026-06-27T17:15:59.918100+00:00",
-    "checksum": "5de5b4940550b36904b24d2d2caa948be72fec59ef47808907081279ade57550",
+    "retrievedAt": "2026-07-02T22:48:05.524894+00:00",
+    "checksum": "adb78aa65d744143b775d8a08fbe613790d711e90aa909b256892d03c137d468",
     "sourceOrganization": "Civil Aviation Statistics of the World, International Civil Aviation Organization (ICAO), uri: https://data.icao.int/newdataplus/#:~:text=ICAO%20data%20is%20comprised%20of,information%20about%20commercial%20air%20carriers;\nICAO Staff estimates, International Civil Aviation Organization (ICAO), uri: https://data.icao.int/newdataplus/#:~:text=ICAO%20data%20is%20comprised%20of,information%20about%20commercial%20air%20carriers"
   },
   "reviewStatus": "approved",
-  "contentVersion": "2026.06.22-exp2-qa1",
+  "contentVersion": "2026.07.02-exp4-content50",
   "editorial": {
     "shortHook": "A high-value cargo network map.",
     "patternNote": "The darkest countries include United States, China, Qatar, while the lightest include Korea, Dem. People's Rep., Cameroon, Czechia; that contrast is the fastest way to read the air freight pattern.",
@@ -209,7 +209,7 @@
   },
   "editorialReview": {
     "status": "expert_only",
-    "reviewedAt": "2026-06-22",
+    "reviewedAt": "2026-07-02",
     "reviewedBy": "Codex editorial QA",
     "qualityScore": 3,
     "funScore": 4,

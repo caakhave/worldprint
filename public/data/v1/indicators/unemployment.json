@@ -202,12 +202,12 @@
     "valuesReference": "https://api.worldbank.org/v2/country/all/indicator/SL.UEM.TOTL.ZS?format=json&per_page=20000&page=1&date=2015%3A2025",
     "license": "Creative Commons Attribution 4.0 International unless specifically labeled otherwise by World Bank metadata",
     "licenseReference": "https://www.worldbank.org/en/about/legal/terms-of-use-for-datasets",
-    "retrievedAt": "2026-06-27T17:14:10.530060+00:00",
-    "checksum": "0d6474beb89c8e21eb19c4adf092c0861d1704b99555e96d7327b753d7df1c8a",
+    "retrievedAt": "2026-07-02T22:13:44.410094+00:00",
+    "checksum": "a4b12ae0b0cab89d066fa6e97e9da73a92f61210765ca8d4c7a8f82aae1c9905",
     "sourceOrganization": "ILO Modelled Estimates database (ILOEST), International Labour Organization (ILO), uri: https://ilostat.ilo.org/data/bulk/, publisher: ILOSTAT, type: external database, date accessed: January 17, 2026"
   },
   "reviewStatus": "approved",
-  "contentVersion": "2026.06.22-exp2-qa1",
+  "contentVersion": "2026.07.02-exp4-content50",
   "editorial": {
     "shortHook": "A labor-market map that is not just poverty.",
     "patternNote": "The darkest countries include Eswatini, South Africa, Djibouti, while the lightest include Qatar, Cambodia, Niger; that contrast is the fastest way to read the unemployment pattern.",
@@ -248,7 +248,7 @@
   },
   "editorialReview": {
     "status": "daily_eligible",
-    "reviewedAt": "2026-06-22",
+    "reviewedAt": "2026-07-02",
     "reviewedBy": "Codex editorial QA",
     "qualityScore": 4,
     "funScore": 4,

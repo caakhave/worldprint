@@ -203,12 +203,12 @@
     "valuesReference": "https://api.worldbank.org/v2/country/all/indicator/SH.XPD.GHED.CH.ZS?format=json&per_page=20000&page=1&date=2015%3A2025",
     "license": "Creative Commons Attribution 4.0 International unless specifically labeled otherwise by World Bank metadata",
     "licenseReference": "https://www.worldbank.org/en/about/legal/terms-of-use-for-datasets",
-    "retrievedAt": "2026-06-27T17:14:38.926014+00:00",
-    "checksum": "c771a88f19b2d51f110ab8905af1b6f550da715510510bb4817b0245e2a93527",
+    "retrievedAt": "2026-07-02T22:21:46.947220+00:00",
+    "checksum": "44c68d87e4d8e8008eb7cadcf9495f009972853bdad5ba5d0cc64c03587799d3",
     "sourceOrganization": "Global Health Expenditure Database, updated December 12th, 2025, World Health Organization (WHO), uri: http://apps.who.int/nha/database"
   },
   "reviewStatus": "approved",
-  "contentVersion": "2026.06.22-exp2-qa1",
+  "contentVersion": "2026.07.02-exp4-content50",
   "editorial": {
     "shortHook": "A candidate map for government health spending share.",
     "patternNote": "The darkest countries include Brunei Darussalam, Kuwait, Luxembourg, while the lightest include Afghanistan, South Sudan, Yemen, Rep.; that contrast is the fastest way to read the government health spending share pattern.",
@@ -229,16 +229,16 @@
     ],
     "commonConfusions": [
       {
-        "confusedWithIndicatorCode": "NY.GNP.PCAP.CD",
-        "reason": "GNI per capita can tempt players because it shares a strong country ranking with this map, but its unit and definition point to a different story."
-      },
-      {
         "confusedWithIndicatorCode": "NY.GDP.PCAP.CD",
         "reason": "GDP per capita can tempt players because it shares a strong country ranking with this map, but its unit and definition point to a different story."
       },
       {
-        "confusedWithIndicatorCode": "SH.XPD.PVTD.CH.ZS",
-        "reason": "Private health spending share can tempt players because it shares a strong country ranking with this map, but its unit and definition point to a different story."
+        "confusedWithIndicatorCode": "NV.AGR.TOTL.ZS",
+        "reason": "Agriculture value added can tempt players because it shares a strong country ranking with this map, but its unit and definition point to a different story."
+      },
+      {
+        "confusedWithIndicatorCode": "NY.GNP.PCAP.CD",
+        "reason": "GNI per capita can tempt players because it shares a strong country ranking with this map, but its unit and definition point to a different story."
       }
     ],
     "difficultyReason": "Expert difficulty: the map can be mistaken for adjacent indicators unless players probe a high, low, and middle country.",
@@ -249,7 +249,7 @@
   },
   "editorialReview": {
     "status": "expert_only",
-    "reviewedAt": "2026-06-22",
+    "reviewedAt": "2026-07-02",
     "reviewedBy": "Codex editorial QA",
     "qualityScore": 3,
     "funScore": 3,

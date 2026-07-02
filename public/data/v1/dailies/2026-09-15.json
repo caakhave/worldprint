@@ -2,33 +2,32 @@
   "schemaVersion": "1.1.0",
   "game": "worldprint",
   "date": "2026-09-15",
-  "contentVersion": "2026.06.22-exp2-qa1",
+  "contentVersion": "2026.07.02-exp4-content50",
   "roundIds": [
-    "worldprint-tourism-arrivals",
-    "worldprint-unemployment",
     "worldprint-urban-population",
-    "worldprint-renewable-electricity",
-    "worldprint-pm25-exposure"
+    "worldprint-permanent-cropland",
+    "worldprint-rural-basic-sanitation",
+    "worldprint-electricity-access",
+    "worldprint-land-under-cereal"
   ],
   "indicatorIds": [
-    "tourism-arrivals",
-    "unemployment",
     "urban-population",
-    "renewable-electricity",
-    "pm25-exposure"
+    "permanent-cropland",
+    "rural-basic-sanitation",
+    "electricity-access",
+    "land-under-cereal"
   ],
   "categoryMix": {
-    "economy": 1,
-    "labor": 1,
-    "settlement": 1,
-    "energy": 1,
-    "environment": 1
+    "settlement": 2,
+    "land": 2,
+    "energy": 1
   },
   "mapDifficultyMix": {
-    "standard": 4,
-    "intro": 1
+    "intro": 2,
+    "standard": 2,
+    "expert": 1
   },
-  "generatedAt": "2026-06-27T17:16:22.629874+00:00",
+  "generatedAt": "2026-07-02T22:58:41.360267+00:00",
   "generatorVersion": "daily-manifest-v2",
   "varietyNotes": [
     "Selected with category, difficulty, repeat-cooldown, and same-day correlation safeguards."

@@ -2,33 +2,31 @@
   "schemaVersion": "1.1.0",
   "game": "worldprint",
   "date": "2026-07-16",
-  "contentVersion": "2026.06.22-exp2-qa1",
+  "contentVersion": "2026.07.02-exp4-content50",
   "roundIds": [
-    "worldprint-internet-users",
-    "worldprint-life-expectancy",
-    "worldprint-women-parliament",
-    "worldprint-primary-female-teachers",
-    "worldprint-youth-employment-ratio"
+    "worldprint-freshwater-per-capita",
+    "worldprint-human-capital-index",
+    "worldprint-precipitation-depth",
+    "worldprint-youth-employment-ratio",
+    "worldprint-industry-share"
   ],
   "indicatorIds": [
-    "internet-users",
-    "life-expectancy",
-    "women-parliament",
-    "primary-female-teachers",
-    "youth-employment-ratio"
+    "freshwater-per-capita",
+    "human-capital-index",
+    "precipitation-depth",
+    "youth-employment-ratio",
+    "industry-share"
   ],
   "categoryMix": {
-    "connectivity": 1,
-    "health": 1,
+    "environment": 2,
     "development": 1,
-    "education": 1,
-    "labor": 1
+    "labor": 1,
+    "economy": 1
   },
   "mapDifficultyMix": {
-    "intro": 2,
-    "standard": 3
+    "standard": 5
   },
-  "generatedAt": "2026-06-27T17:16:22.620406+00:00",
+  "generatedAt": "2026-07-02T22:58:41.351120+00:00",
   "generatorVersion": "daily-manifest-v2",
   "varietyNotes": [
     "Selected with category, difficulty, repeat-cooldown, and same-day correlation safeguards."

@@ -190,12 +190,12 @@
     "valuesReference": "https://api.worldbank.org/v2/country/all/indicator/SH.H2O.BASW.UR.ZS?format=json&per_page=20000&page=1&date=2015%3A2025",
     "license": "Creative Commons Attribution 4.0 International unless specifically labeled otherwise by World Bank metadata",
     "licenseReference": "https://www.worldbank.org/en/about/legal/terms-of-use-for-datasets",
-    "retrievedAt": "2026-06-27T17:16:01.414465+00:00",
-    "checksum": "7354cb6780340e273082632a9a27542735ca65ec0c3ed97fce8dd9ef3594ddf6",
+    "retrievedAt": "2026-07-02T22:48:12.972301+00:00",
+    "checksum": "8a79fc497da756b40c4419cc42ef6f8f7964262ca7b5308ff38d6b3a049f2eec",
     "sourceOrganization": "WHO/UNICEF Joint Monitoring Programme (JMP) for Water Supply, Sanitation and Hygiene, World Health Organization (WHO), uri: washdata.org, publisher: WHO/UNICEF Joint Monitoring Programme (JMP) for Water Supply, Sanitation and Hygiene (washdata.org), date accessed: 2025-09-30, date published: 2025-08-25;\nUN Children's Fund (UNICEF), uri: washdata.org, note: WHO/UNICEF Joint Monitoring Programme (JMP) for Water Supply, Sanitation and Hygiene"
   },
   "reviewStatus": "approved",
-  "contentVersion": "2026.06.22-exp2-qa1",
+  "contentVersion": "2026.07.02-exp4-content50",
   "editorial": {
     "shortHook": "An urban water-access map.",
     "patternNote": "The darkest countries include Thailand, Romania, New Zealand, while the lightest include Central African Republic, Congo, Dem. Rep., South Sudan; that contrast is the fastest way to read the urban basic drinking water pattern.",
@@ -236,7 +236,7 @@
   },
   "editorialReview": {
     "status": "daily_eligible",
-    "reviewedAt": "2026-06-22",
+    "reviewedAt": "2026-07-02",
     "reviewedBy": "Codex editorial QA",
     "qualityScore": 4,
     "funScore": 4,

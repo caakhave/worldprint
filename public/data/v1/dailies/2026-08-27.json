@@ -2,33 +2,32 @@
   "schemaVersion": "1.1.0",
   "game": "worldprint",
   "date": "2026-08-27",
-  "contentVersion": "2026.06.22-exp2-qa1",
+  "contentVersion": "2026.07.02-exp4-content50",
   "roundIds": [
-    "worldprint-out-of-school-primary",
-    "worldprint-land-under-cereal",
-    "worldprint-female-industry-employment",
-    "worldprint-total-protected-areas",
-    "worldprint-undernourishment"
+    "worldprint-arable-land",
+    "worldprint-pm25-exposure",
+    "worldprint-health-expenditure",
+    "worldprint-life-expectancy",
+    "worldprint-food-production-index"
   ],
   "indicatorIds": [
-    "out-of-school-primary",
-    "land-under-cereal",
-    "female-industry-employment",
-    "total-protected-areas",
-    "undernourishment"
+    "arable-land",
+    "pm25-exposure",
+    "health-expenditure",
+    "life-expectancy",
+    "food-production-index"
   ],
   "categoryMix": {
-    "education": 1,
     "land": 1,
-    "labor": 1,
     "environment": 1,
-    "health": 1
+    "health": 2,
+    "agriculture": 1
   },
   "mapDifficultyMix": {
-    "standard": 3,
-    "expert": 2
+    "standard": 4,
+    "intro": 1
   },
-  "generatedAt": "2026-06-27T17:16:22.626444+00:00",
+  "generatedAt": "2026-07-02T22:58:41.357371+00:00",
   "generatorVersion": "daily-manifest-v2",
   "varietyNotes": [
     "Selected with category, difficulty, repeat-cooldown, and same-day correlation safeguards."

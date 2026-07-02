@@ -2,32 +2,32 @@
   "schemaVersion": "1.1.0",
   "game": "worldprint",
   "date": "2026-09-12",
-  "contentVersion": "2026.06.22-exp2-qa1",
+  "contentVersion": "2026.07.02-exp4-content50",
   "roundIds": [
-    "worldprint-tuberculosis-incidence",
-    "worldprint-rural-basic-sanitation",
-    "worldprint-coal-electricity-share",
-    "worldprint-adolescent-fertility",
-    "worldprint-urban-basic-drinking-water"
+    "worldprint-freshwater-per-capita",
+    "worldprint-youth-employment-ratio",
+    "worldprint-ncd-premature-mortality",
+    "worldprint-working-age-share",
+    "worldprint-arable-land"
   ],
   "indicatorIds": [
-    "tuberculosis-incidence",
-    "rural-basic-sanitation",
-    "coal-electricity-share",
-    "adolescent-fertility",
-    "urban-basic-drinking-water"
+    "freshwater-per-capita",
+    "youth-employment-ratio",
+    "ncd-premature-mortality",
+    "working-age-share",
+    "arable-land"
   ],
   "categoryMix": {
+    "environment": 1,
+    "labor": 1,
     "health": 1,
-    "settlement": 2,
-    "energy": 1,
-    "demography": 1
+    "demography": 1,
+    "land": 1
   },
   "mapDifficultyMix": {
-    "expert": 2,
-    "standard": 3
+    "standard": 5
   },
-  "generatedAt": "2026-06-27T17:16:22.629339+00:00",
+  "generatedAt": "2026-07-02T22:58:41.359808+00:00",
   "generatorVersion": "daily-manifest-v2",
   "varietyNotes": [
     "Selected with category, difficulty, repeat-cooldown, and same-day correlation safeguards."

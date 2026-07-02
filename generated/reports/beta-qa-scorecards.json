@@ -1,7 +1,7 @@
 {
   "schemaVersion": "1.0.0",
-  "contentVersion": "2026.06.22-exp2-qa1",
-  "generatedAt": "2026-06-22T21:38:47.108Z",
+  "contentVersion": "2026.07.02-exp4-content50",
+  "generatedAt": "2026-07-02T23:00:30.051Z",
   "sampleIndicatorIds": [
     "older-adults-share",
     "life-expectancy",
@@ -33,7 +33,7 @@
       "mapDifficulty": "intro",
       "palette": "teal",
       "paletteLabel": "Teal",
-      "latestYear": 2024,
+      "latestYear": 2025,
       "countryCoverage": 169,
       "mappedCountryCount": 169,
       "missingDataNotes": "No missing mapped countries in the selected reference year.",
@@ -56,9 +56,9 @@
           "indicatorId": "birth-rate",
           "title": "Birth rate",
           "warningLevel": "high",
-          "pearson": -0.8077198466044255,
-          "spearman": -0.9029980763228376,
-          "visualSimilarity": 0.07692307692307693,
+          "pearson": -0.8122035640480229,
+          "spearman": -0.9048453413202917,
+          "visualSimilarity": 0.07100591715976332,
           "overlapCount": 169
         }
       },
@@ -102,7 +102,7 @@
       },
       "answerChoiceFairness": {
         "fairnessWarningLevel": "review",
-        "note": "Review tier-level distractors: infant-mortality (high_correlation_or_visual_similarity); neonatal-mortality (high_correlation_or_visual_similarity); under-five-mortality (high_correlation_or_visual_similarity)"
+        "note": "Review tier-level distractors: infant-mortality (high_correlation_or_visual_similarity); neonatal-mortality (high_correlation_or_visual_similarity)"
       },
       "distractorAmbiguity": {
         "ambiguityRisk": "medium",
@@ -155,8 +155,8 @@
         "note": "Strong visual pattern for a country-level choropleth."
       },
       "answerChoiceFairness": {
-        "fairnessWarningLevel": "ok",
-        "note": "Generated distractor selection has no tier-level fairness warning."
+        "fairnessWarningLevel": "review",
+        "note": "Review tier-level distractors: arable-land-area (high_ambiguity_distractor)"
       },
       "distractorAmbiguity": {
         "ambiguityRisk": "medium",
@@ -178,9 +178,9 @@
       },
       "commonConfusionRisk": "AG.LND.ARBL.ZS: Arable land lives in the same category, so it can feel plausible until the high and low countries are checked.; AG.LND.FRST.ZS: Forest area overlaps with part of the visible pattern, but the full country spread does not match.; ER.H2O.INTR.PC: Freshwater per person overlaps with part of the visible pattern, but the full country spread does not match.",
       "mobileReadability": "Pass in smoke review: broad coverage and strong map-interest score should survive mobile scale.",
-      "decision": "pass",
-      "decisionLabel": "Pass",
-      "recommendedFix": "No immediate fix; include in outside beta and collect confusion notes."
+      "decision": "needs_tweak",
+      "decisionLabel": "Needs tweak",
+      "recommendedFix": "Keep close lookalikes out of Explorer/Analyst, avoid same-day pairing with correlated maps, and ask beta testers what they confused it with."
     },
     {
       "order": 4,
@@ -218,8 +218,8 @@
           "indicatorId": "freshwater-withdrawal",
           "title": "Freshwater withdrawal",
           "warningLevel": "review",
-          "pearson": -0.057432877747762436,
-          "spearman": -0.7813606000234383,
+          "pearson": -0.05743664066719547,
+          "spearman": -0.781788351107465,
           "visualSimilarity": 0.09375,
           "overlapCount": 160
         }
@@ -249,10 +249,10 @@
       "mapDifficulty": "standard",
       "palette": "gold",
       "paletteLabel": "Gold",
-      "latestYear": 2024,
-      "countryCoverage": 141,
+      "latestYear": 2025,
+      "countryCoverage": 124,
       "mappedCountryCount": 169,
-      "missingDataNotes": "28 of 169 mapped countries are missing (17%). Missing countries use the hatch pattern.",
+      "missingDataNotes": "45 of 169 mapped countries are missing (27%). Missing countries use the hatch pattern.",
       "unit": "percent of GDP",
       "unitClarity": {
         "score": 4,
@@ -264,7 +264,7 @@
       },
       "answerChoiceFairness": {
         "fairnessWarningLevel": "review",
-        "note": "Review tier-level distractors: services-share (high_ambiguity_distractor); imports-share (high_correlation_or_visual_similarity); exports-share (high_correlation_or_visual_similarity)"
+        "note": "Review tier-level distractors: None flagged."
       },
       "distractorAmbiguity": {
         "ambiguityRisk": "medium",
@@ -272,10 +272,10 @@
           "indicatorId": "exports-share",
           "title": "Exports",
           "warningLevel": "high",
-          "pearson": 0.962879940605117,
-          "spearman": 0.9377113746307633,
-          "visualSimilarity": 0.5815602836879432,
-          "overlapCount": 141
+          "pearson": 0.9674051566224416,
+          "spearman": 0.9407458693941776,
+          "visualSimilarity": 0.5725806451612904,
+          "overlapCount": 124
         }
       },
       "difficultyFit": {
@@ -284,8 +284,8 @@
       "revealCopyQuality": {
         "note": "Pass: reveal has pattern explanation and why-it-matters copy."
       },
-      "commonConfusionRisk": "NE.EXP.GNFS.ZS: Exports can tempt players because it shares a strong country ranking with this map, but its unit and definition point to a different story.; NE.IMP.GNFS.ZS: Imports can tempt players because it shares a strong country ranking with this map, but its unit and definition point to a different story.; ER.GDP.FWTL.M3.KD: Water productivity overlaps with part of the visible pattern, but the full country spread does not match.",
-      "mobileReadability": "Needs real-device spot check: coverage is acceptable, but missing-data density or subtle regional contrast may matter on small screens.",
+      "commonConfusionRisk": "NE.EXP.GNFS.ZS: Exports can tempt players because it shares a strong country ranking with this map, but its unit and definition point to a different story.; NE.IMP.GNFS.ZS: Imports can tempt players because it shares a strong country ranking with this map, but its unit and definition point to a different story.; TG.VAL.TOTL.GD.ZS: Merchandise trade share can tempt players because it shares a strong country ranking with this map, but its unit and definition point to a different story.",
+      "mobileReadability": "Needs careful mobile review: lower coverage can make the hatch pattern visually busy.",
       "decision": "needs_tweak",
       "decisionLabel": "Needs tweak",
       "recommendedFix": "Keep close lookalikes out of Explorer/Analyst, avoid same-day pairing with correlated maps, and ask beta testers what they confused it with."
@@ -318,7 +318,7 @@
       },
       "answerChoiceFairness": {
         "fairnessWarningLevel": "review",
-        "note": "Review tier-level distractors: electric-power-use (high_correlation_or_visual_similarity); gni-per-capita-ppp (high_correlation_or_visual_similarity)"
+        "note": "Review tier-level distractors: electric-power-use (high_correlation_or_visual_similarity)"
       },
       "distractorAmbiguity": {
         "ambiguityRisk": "medium",
@@ -326,8 +326,8 @@
           "indicatorId": "electric-power-use",
           "title": "Electric power use",
           "warningLevel": "high",
-          "pearson": 0.8641453299185242,
-          "spearman": 0.9538507641594246,
+          "pearson": 0.8641374242351841,
+          "spearman": 0.9538036731024444,
           "visualSimilarity": 0.6170212765957447,
           "overlapCount": 141
         }
@@ -392,7 +392,7 @@
       "revealCopyQuality": {
         "note": "Pass: reveal has pattern explanation and why-it-matters copy."
       },
-      "commonConfusionRisk": "NY.ADJ.DPEM.GN.ZS: Particulate emission damage can tempt players because it shares a strong country ranking with this map, but its unit and definition point to a different story.; SH.XPD.CHEX.PC.CD: Health spending per person can tempt players because it shares a strong country ranking with this map, but its unit and definition point to a different story.; IT.NET.USER.ZS: Internet users can tempt players because it shares a strong country ranking with this map, but its unit and definition point to a different story.",
+      "commonConfusionRisk": "NY.ADJ.DPEM.GN.ZS: Particulate emission damage can tempt players because it shares a strong country ranking with this map, but its unit and definition point to a different story.; HD_HCIP_EDUC_TO: Human capital education index can tempt players because it shares a strong country ranking with this map, but its unit and definition point to a different story.; SH.XPD.CHEX.PC.CD: Health spending per person can tempt players because it shares a strong country ranking with this map, but its unit and definition point to a different story.",
       "mobileReadability": "Needs careful mobile review: lower coverage can make the hatch pattern visually busy.",
       "decision": "pass",
       "decisionLabel": "Pass",
@@ -480,17 +480,17 @@
       },
       "answerChoiceFairness": {
         "fairnessWarningLevel": "review",
-        "note": "Review tier-level distractors: wage-salaried-workers (high_ambiguity_distractor); employment-agriculture (high_correlation_or_visual_similarity); services-share (high_ambiguity_distractor); employment-population-ratio (high_ambiguity_distractor); employment-agriculture (high_correlation_or_visual_similarity)"
+        "note": "Review tier-level distractors: female-self-employed (high_ambiguity_distractor); female-contributing-family-workers (high_ambiguity_distractor); contributing-family-workers (high_ambiguity_distractor); female-vulnerable-employment (high_ambiguity_distractor); wage-salaried-workers (high_ambiguity_distractor); employment-agriculture (high_correlation_or_visual_similarity); female-wage-salaried-workers (high_ambiguity_distractor); female-agricultural-employment (high_correlation_or_visual_similarity); employment-agriculture (high_correlation_or_visual_similarity); female-agricultural-employment (high_correlation_or_visual_similarity); female-services-employment (high_correlation_or_visual_similarity)"
       },
       "distractorAmbiguity": {
         "ambiguityRisk": "high",
         "topCorrelation": {
-          "indicatorId": "employment-agriculture",
-          "title": "Employment in agriculture",
+          "indicatorId": "male-services-employment",
+          "title": "Male services employment",
           "warningLevel": "high",
-          "pearson": -0.9375640644228916,
-          "spearman": -0.9393375119845268,
-          "visualSimilarity": 0.06134969325153374,
+          "pearson": 0.9646988118982138,
+          "spearman": 0.9679535138909672,
+          "visualSimilarity": 0.6932515337423313,
           "overlapCount": 163
         }
       },
@@ -500,7 +500,7 @@
       "revealCopyQuality": {
         "note": "Pass: reveal has pattern explanation and why-it-matters copy."
       },
-      "commonConfusionRisk": "SL.AGR.EMPL.ZS: Employment in agriculture can tempt players because it shares a strong country ranking with this map, but its unit and definition point to a different story.; NV.AGR.EMPL.KD: Agriculture value per worker can tempt players because it shares a strong country ranking with this map, but its unit and definition point to a different story.; NY.GNP.PCAP.CD: GNI per capita can tempt players because it shares a strong country ranking with this map, but its unit and definition point to a different story.",
+      "commonConfusionRisk": "SL.SRV.EMPL.MA.ZS: Male services employment can tempt players because it shares a strong country ranking with this map, but its unit and definition point to a different story.; SL.SRV.EMPL.FE.ZS: Female services employment can tempt players because it shares a strong country ranking with this map, but its unit and definition point to a different story.; SL.AGR.EMPL.ZS: Employment in agriculture can tempt players because it shares a strong country ranking with this map, but its unit and definition point to a different story.",
       "mobileReadability": "Pass in smoke review: broad coverage and strong map-interest score should survive mobile scale.",
       "decision": "needs_tweak",
       "decisionLabel": "Needs tweak",
@@ -533,19 +533,19 @@
         "note": "Strong visual pattern for a country-level choropleth."
       },
       "answerChoiceFairness": {
-        "fairnessWarningLevel": "review",
-        "note": "Review tier-level distractors: None flagged."
+        "fairnessWarningLevel": "ok",
+        "note": "Generated distractor selection has no tier-level fairness warning."
       },
       "distractorAmbiguity": {
         "ambiguityRisk": "medium",
         "topCorrelation": {
-          "indicatorId": "co2-per-capita",
-          "title": "CO2 emissions per capita",
-          "warningLevel": "review",
-          "pearson": 0.7285740539732549,
-          "spearman": 0.6010599207936547,
-          "visualSimilarity": 0.2727272727272727,
-          "overlapCount": 165
+          "indicatorId": "gni-per-capita-ppp",
+          "title": "GNI per capita, PPP",
+          "warningLevel": "ok",
+          "pearson": 0.7299131708740288,
+          "spearman": 0.6947583147050839,
+          "visualSimilarity": 0.33116883116883117,
+          "overlapCount": 154
         }
       },
       "difficultyFit": {
@@ -554,10 +554,10 @@
       "revealCopyQuality": {
         "note": "Pass: reveal has pattern explanation and why-it-matters copy."
       },
-      "commonConfusionRisk": "EN.GHG.CO2.PC.CE.AR5: CO2 emissions per capita overlaps with part of the visible pattern, but the full country spread does not match.; SH.H2O.SMDW.ZS: Safely managed drinking water can tempt players because it shares a strong country ranking with this map, but its unit and definition point to a different story.; NY.GDP.PCAP.CD: GDP per capita can tempt players because it shares a strong country ranking with this map, but its unit and definition point to a different story.",
+      "commonConfusionRisk": "NY.GNP.PCAP.PP.CD: GNI per capita, PPP can tempt players because it shares a strong country ranking with this map, but its unit and definition point to a different story.; EN.GHG.CO2.PC.CE.AR5: CO2 emissions per capita overlaps with part of the visible pattern, but the full country spread does not match.; SH.H2O.SMDW.ZS: Safely managed drinking water can tempt players because it shares a strong country ranking with this map, but its unit and definition point to a different story.",
       "mobileReadability": "Pass in smoke review: broad coverage and strong map-interest score should survive mobile scale.",
-      "decision": "needs_tweak",
-      "decisionLabel": "Needs tweak",
+      "decision": "pass",
+      "decisionLabel": "Pass",
       "recommendedFix": "No immediate fix; include in outside beta and collect confusion notes."
     },
     {
@@ -627,10 +627,10 @@
       "mapDifficulty": "standard",
       "palette": "gold",
       "paletteLabel": "Gold",
-      "latestYear": 2024,
-      "countryCoverage": 141,
+      "latestYear": 2025,
+      "countryCoverage": 124,
       "mappedCountryCount": 169,
-      "missingDataNotes": "28 of 169 mapped countries are missing (17%). Missing countries use the hatch pattern.",
+      "missingDataNotes": "45 of 169 mapped countries are missing (27%). Missing countries use the hatch pattern.",
       "unit": "percent of GDP",
       "unitClarity": {
         "score": 4,
@@ -650,10 +650,10 @@
           "indicatorId": "trade-share",
           "title": "Trade",
           "warningLevel": "high",
-          "pearson": 0.962879940605117,
-          "spearman": 0.9377113746307633,
-          "visualSimilarity": 0.5815602836879432,
-          "overlapCount": 141
+          "pearson": 0.9674051566224416,
+          "spearman": 0.9407458693941776,
+          "visualSimilarity": 0.5725806451612904,
+          "overlapCount": 124
         }
       },
       "difficultyFit": {
@@ -662,8 +662,8 @@
       "revealCopyQuality": {
         "note": "Pass: reveal has pattern explanation and why-it-matters copy."
       },
-      "commonConfusionRisk": "NE.TRD.GNFS.ZS: Trade can tempt players because it shares a strong country ranking with this map, but its unit and definition point to a different story.; NE.IMP.GNFS.ZS: Imports can tempt players because it shares a strong country ranking with this map, but its unit and definition point to a different story.; ER.GDP.FWTL.M3.KD: Water productivity overlaps with part of the visible pattern, but the full country spread does not match.",
-      "mobileReadability": "Needs real-device spot check: coverage is acceptable, but missing-data density or subtle regional contrast may matter on small screens.",
+      "commonConfusionRisk": "NE.TRD.GNFS.ZS: Trade can tempt players because it shares a strong country ranking with this map, but its unit and definition point to a different story.; TG.VAL.TOTL.GD.ZS: Merchandise trade share can tempt players because it shares a strong country ranking with this map, but its unit and definition point to a different story.; NE.IMP.GNFS.ZS: Imports can tempt players because it shares a strong country ranking with this map, but its unit and definition point to a different story.",
+      "mobileReadability": "Needs careful mobile review: lower coverage can make the hatch pattern visually busy.",
       "decision": "needs_tweak",
       "decisionLabel": "Needs tweak",
       "recommendedFix": "Keep close lookalikes out of Explorer/Analyst, avoid same-day pairing with correlated maps, and ask beta testers what they confused it with."
@@ -696,7 +696,7 @@
       },
       "answerChoiceFairness": {
         "fairnessWarningLevel": "review",
-        "note": "Review tier-level distractors: adult-mortality-female (high_ambiguity_distractor); energy-use (high_correlation_or_visual_similarity)"
+        "note": "Review tier-level distractors: co2-emissions-change (high_ambiguity_distractor); energy-use (high_correlation_or_visual_similarity)"
       },
       "distractorAmbiguity": {
         "ambiguityRisk": "high",
@@ -704,8 +704,8 @@
           "indicatorId": "co2-per-capita",
           "title": "CO2 emissions per capita",
           "warningLevel": "high",
-          "pearson": 0.9586628292183192,
-          "spearman": 0.9489648171399567,
+          "pearson": 0.95866272882049,
+          "spearman": 0.9487671306066839,
           "visualSimilarity": 0.6545454545454545,
           "overlapCount": 165
         }
@@ -749,8 +749,8 @@
         "note": "Strong visual pattern for a country-level choropleth."
       },
       "answerChoiceFairness": {
-        "fairnessWarningLevel": "review",
-        "note": "Review tier-level distractors: bank-branches (high_ambiguity_distractor)"
+        "fairnessWarningLevel": "ok",
+        "note": "Generated distractor selection has no tier-level fairness warning."
       },
       "distractorAmbiguity": {
         "ambiguityRisk": "medium",
@@ -770,7 +770,7 @@
       "revealCopyQuality": {
         "note": "Pass: reveal has pattern explanation and why-it-matters copy."
       },
-      "commonConfusionRisk": "SH.XPD.CHEX.PC.CD: Health spending per person can tempt players because it shares a strong country ranking with this map, but its unit and definition point to a different story.; NY.GNP.PCAP.PP.CD: GNI per capita, PPP can tempt players because it shares a strong country ranking with this map, but its unit and definition point to a different story.; NY.GDP.PCAP.PP.CD: GDP per capita, PPP can tempt players because it shares a strong country ranking with this map, but its unit and definition point to a different story.",
+      "commonConfusionRisk": "SH.XPD.CHEX.PC.CD: Health spending per person can tempt players because it shares a strong country ranking with this map, but its unit and definition point to a different story.; NY.GNP.PCAP.CD: GNI per capita can tempt players because it shares a strong country ranking with this map, but its unit and definition point to a different story.; NY.GNP.PCAP.PP.CD: GNI per capita, PPP can tempt players because it shares a strong country ranking with this map, but its unit and definition point to a different story.",
       "mobileReadability": "Needs careful mobile review: lower coverage can make the hatch pattern visually busy.",
       "decision": "needs_tweak",
       "decisionLabel": "Needs tweak",
@@ -789,10 +789,10 @@
       "mapDifficulty": "standard",
       "palette": "indigo",
       "paletteLabel": "Indigo",
-      "latestYear": 2024,
-      "countryCoverage": 157,
+      "latestYear": 2025,
+      "countryCoverage": 154,
       "mappedCountryCount": 169,
-      "missingDataNotes": "12 of 169 mapped countries are missing (7%). Missing countries use the hatch pattern.",
+      "missingDataNotes": "15 of 169 mapped countries are missing (9%). Missing countries use the hatch pattern.",
       "unit": "current international dollars",
       "unitClarity": {
         "score": 3,
@@ -804,7 +804,7 @@
       },
       "answerChoiceFairness": {
         "fairnessWarningLevel": "review",
-        "note": "Review tier-level distractors: gdp-per-capita (high_correlation_or_visual_similarity)"
+        "note": "Review tier-level distractors: young-adult-account-ownership (high_ambiguity_distractor); human-capital-index (high_correlation_or_visual_similarity); gdp-per-capita (high_correlation_or_visual_similarity)"
       },
       "distractorAmbiguity": {
         "ambiguityRisk": "high",
@@ -812,10 +812,10 @@
           "indicatorId": "gdp-per-capita-ppp",
           "title": "GDP per capita, PPP",
           "warningLevel": "high",
-          "pearson": 0.9850414126196095,
-          "spearman": 0.9971881737420847,
-          "visualSimilarity": 0.8980891719745223,
-          "overlapCount": 157
+          "pearson": 0.9859428842737026,
+          "spearman": 0.9978614633692197,
+          "visualSimilarity": 0.8758169934640523,
+          "overlapCount": 153
         }
       },
       "difficultyFit": {
@@ -825,7 +825,7 @@
         "note": "Pass: reveal has pattern explanation and why-it-matters copy."
       },
       "commonConfusionRisk": "NY.GDP.PCAP.PP.CD: GDP per capita, PPP can tempt players because it shares a strong country ranking with this map, but its unit and definition point to a different story.; NY.GNP.PCAP.CD: GNI per capita can tempt players because it shares a strong country ranking with this map, but its unit and definition point to a different story.; NY.GDP.PCAP.CD: GDP per capita can tempt players because it shares a strong country ranking with this map, but its unit and definition point to a different story.",
-      "mobileReadability": "Pass in smoke review: broad coverage and strong map-interest score should survive mobile scale.",
+      "mobileReadability": "Needs real-device spot check: coverage is acceptable, but missing-data density or subtle regional contrast may matter on small screens.",
       "decision": "needs_tweak",
       "decisionLabel": "Needs tweak",
       "recommendedFix": "Keep close lookalikes out of Explorer/Analyst, avoid same-day pairing with correlated maps, and ask beta testers what they confused it with."

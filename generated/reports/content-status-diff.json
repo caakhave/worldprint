@@ -1,282 +1,444 @@
 {
   "schemaVersion": "1.1.0",
-  "contentVersion": "2026.06.22-exp2-qa1",
-  "generatedAt": "2026-06-27T17:16:22.611998+00:00",
+  "contentVersion": "2026.07.02-exp4-content50",
+  "generatedAt": "2026-07-02T22:58:41.344067+00:00",
   "baselineContentVersion": "2026.06.22-exp2-qa1",
   "summaryDelta": {
-    "candidateCount": 0,
-    "approvedCount": 0,
+    "candidateCount": 50,
+    "approvedCount": 50,
     "draftCount": 0,
     "statusCounts": {
-      "daily_eligible": 12,
-      "expert_only": 25,
-      "needs_review": -50,
-      "practice_eligible": 13,
+      "daily_eligible": 7,
+      "expert_only": 26,
+      "needs_review": 0,
+      "practice_eligible": 17,
       "retired": 0
     },
     "approvedStatusCounts": {
-      "daily_eligible": 12,
-      "expert_only": 25,
-      "needs_review": -50,
-      "practice_eligible": 13,
+      "daily_eligible": 7,
+      "expert_only": 26,
+      "needs_review": 0,
+      "practice_eligible": 17,
       "retired": 0
     }
   },
-  "addedCandidates": [],
+  "addedCandidates": [
+    "account-ownership-poorest40",
+    "adjusted-net-savings",
+    "air-pollution-mortality",
+    "alternative-nuclear-energy",
+    "antiretroviral-therapy-coverage",
+    "atm-density",
+    "bank-capital-assets",
+    "broad-money-share",
+    "capture-fisheries-production",
+    "carbon-damage-share",
+    "co2-emissions-change",
+    "coal-rents",
+    "combustible-renewables-waste",
+    "deforestation-co2-flux",
+    "education-expenditure-savings",
+    "electric-transmission-losses",
+    "energy-depletion-share",
+    "energy-imports",
+    "energy-intensity",
+    "energy-productivity",
+    "exports-high-income-share",
+    "exports-within-region-share",
+    "external-balance-share",
+    "final-consumption-share",
+    "financial-service-imports-share",
+    "forest-land-co2-flux",
+    "ghg-emissions-change",
+    "hiv-incidence",
+    "human-capital-education-index",
+    "human-capital-index",
+    "imports-high-income-share",
+    "imports-within-region-share",
+    "income-tax-share",
+    "merchandise-trade-share",
+    "methane-emissions-change",
+    "mineral-depletion-share",
+    "mineral-rents",
+    "ncd-premature-mortality",
+    "nonperforming-loans",
+    "tb-case-detection",
+    "tb-treatment-success",
+    "threatened-bird-species",
+    "threatened-fish-species",
+    "threatened-mammal-species",
+    "threatened-plant-species",
+    "travel-service-exports-share",
+    "travel-service-imports-share",
+    "uhc-service-coverage",
+    "working-age-share",
+    "young-adult-account-ownership"
+  ],
   "removedCandidates": [],
   "approvalStatusChanges": [],
-  "editorialStatusChanges": [
+  "editorialStatusChanges": [],
+  "coverageChanges": [
     {
-      "id": "agriculture-methane-emissions",
-      "from": "needs_review",
-      "to": "expert_only"
+      "id": "agriculture-growth",
+      "from": 149,
+      "to": 142
     },
     {
-      "id": "agriculture-nitrous-oxide-emissions",
-      "from": "needs_review",
-      "to": "expert_only"
+      "id": "agriculture-value-added",
+      "from": 149,
+      "to": 139
     },
     {
-      "id": "air-departures",
-      "from": "needs_review",
-      "to": "expert_only"
+      "id": "agriculture-value-per-worker",
+      "from": 146,
+      "to": 139
     },
     {
-      "id": "air-freight",
-      "from": "needs_review",
-      "to": "expert_only"
+      "id": "bank-branches",
+      "from": 138,
+      "to": 128
     },
     {
-      "id": "air-passengers",
-      "from": "needs_review",
-      "to": "expert_only"
+      "id": "borrowers-commercial-banks",
+      "from": 64,
+      "to": 75
     },
     {
-      "id": "arable-land-area",
-      "from": "needs_review",
-      "to": "expert_only"
+      "id": "carbon-intensity-gdp",
+      "from": 156,
+      "to": 159
     },
     {
-      "id": "cereal-production",
-      "from": "needs_review",
-      "to": "expert_only"
+      "id": "central-government-debt",
+      "from": 26,
+      "to": 31
     },
     {
       "id": "communications-service-exports",
-      "from": "needs_review",
-      "to": "daily_eligible"
+      "from": 137,
+      "to": 139
     },
     {
       "id": "communications-service-imports",
-      "from": "needs_review",
-      "to": "practice_eligible"
-    },
-    {
-      "id": "compulsory-education-duration",
-      "from": "needs_review",
-      "to": "daily_eligible"
+      "from": 137,
+      "to": 139
     },
     {
       "id": "container-port-traffic",
-      "from": "needs_review",
-      "to": "expert_only"
+      "from": 128,
+      "to": 127
     },
     {
-      "id": "contributing-family-workers",
-      "from": "needs_review",
-      "to": "expert_only"
+      "id": "current-account",
+      "from": 139,
+      "to": 141
     },
     {
-      "id": "female-agricultural-employment",
-      "from": "needs_review",
-      "to": "expert_only"
+      "id": "domestic-credit-private-sector",
+      "from": 130,
+      "to": 132
     },
     {
-      "id": "female-contributing-family-workers",
-      "from": "needs_review",
-      "to": "expert_only"
+      "id": "domestic-savings",
+      "from": 139,
+      "to": 122
     },
     {
-      "id": "female-employment-population-ratio",
-      "from": "needs_review",
-      "to": "expert_only"
+      "id": "exports-share",
+      "from": 141,
+      "to": 124
     },
     {
-      "id": "female-industry-employment",
-      "from": "needs_review",
-      "to": "daily_eligible"
+      "id": "fdi-inflows",
+      "from": 156,
+      "to": 158
     },
     {
-      "id": "female-self-employed",
-      "from": "needs_review",
-      "to": "expert_only"
+      "id": "fdi-outflows",
+      "from": 141,
+      "to": 142
     },
     {
-      "id": "female-services-employment",
-      "from": "needs_review",
-      "to": "expert_only"
+      "id": "female-senior-management",
+      "from": 12,
+      "to": 29
     },
     {
-      "id": "female-vulnerable-employment",
-      "from": "needs_review",
-      "to": "expert_only"
+      "id": "female-youth-neet",
+      "from": 15,
+      "to": 35
     },
     {
-      "id": "female-wage-salaried-workers",
-      "from": "needs_review",
-      "to": "expert_only"
+      "id": "fixed-capital-formation",
+      "from": 139,
+      "to": 147
     },
     {
-      "id": "food-exports-share",
-      "from": "needs_review",
-      "to": "practice_eligible"
+      "id": "gdp-growth",
+      "from": 160,
+      "to": 157
     },
     {
-      "id": "food-imports-share",
-      "from": "needs_review",
-      "to": "practice_eligible"
+      "id": "gdp-per-capita",
+      "from": 159,
+      "to": 157
     },
     {
-      "id": "food-insecurity-moderate-severe",
-      "from": "needs_review",
-      "to": "daily_eligible"
+      "id": "gdp-per-capita-growth",
+      "from": 160,
+      "to": 151
     },
     {
-      "id": "government-education-spending-share",
-      "from": "needs_review",
-      "to": "daily_eligible"
+      "id": "gni-per-capita",
+      "from": 159,
+      "to": 155
+    },
+    {
+      "id": "gni-per-capita-ppp",
+      "from": 157,
+      "to": 154
+    },
+    {
+      "id": "government-consumption",
+      "from": 145,
+      "to": 121
+    },
+    {
+      "id": "gross-capital-formation",
+      "from": 139,
+      "to": 120
+    },
+    {
+      "id": "gross-savings-gdp",
+      "from": 122,
+      "to": 131
+    },
+    {
+      "id": "household-consumption",
+      "from": 144,
+      "to": 120
     },
     {
       "id": "ict-service-exports",
-      "from": "needs_review",
-      "to": "practice_eligible"
+      "from": 135,
+      "to": 137
     },
     {
-      "id": "land-under-cereal",
-      "from": "needs_review",
-      "to": "daily_eligible"
+      "id": "imports-share",
+      "from": 141,
+      "to": 124
     },
     {
-      "id": "male-employment-population-ratio",
-      "from": "needs_review",
-      "to": "expert_only"
+      "id": "industry-share",
+      "from": 149,
+      "to": 139
     },
     {
-      "id": "male-industry-employment",
-      "from": "needs_review",
-      "to": "expert_only"
+      "id": "inflation",
+      "from": 151,
+      "to": 143
     },
     {
-      "id": "out-of-school-primary",
-      "from": "needs_review",
-      "to": "daily_eligible"
+      "id": "manufacturing-share",
+      "from": 141,
+      "to": 147
     },
     {
-      "id": "primary-female-teachers",
-      "from": "needs_review",
-      "to": "daily_eligible"
+      "id": "part-time-employment",
+      "from": 17,
+      "to": 32
     },
     {
-      "id": "primary-gross-intake",
-      "from": "needs_review",
-      "to": "practice_eligible"
+      "id": "part-time-employment-female",
+      "from": 17,
+      "to": 32
     },
     {
-      "id": "primary-pupils-female-share",
-      "from": "needs_review",
-      "to": "practice_eligible"
+      "id": "private-fixed-capital-formation",
+      "from": 47,
+      "to": 40
     },
     {
-      "id": "rural-basic-drinking-water",
-      "from": "needs_review",
-      "to": "practice_eligible"
+      "id": "remittances",
+      "from": 135,
+      "to": 138
     },
     {
-      "id": "rural-basic-sanitation",
-      "from": "needs_review",
-      "to": "daily_eligible"
+      "id": "services-share",
+      "from": 149,
+      "to": 139
     },
     {
-      "id": "rural-low-elevation-land",
-      "from": "needs_review",
-      "to": "expert_only"
-    },
-    {
-      "id": "rural-low-elevation-population",
-      "from": "needs_review",
-      "to": "expert_only"
-    },
-    {
-      "id": "rural-open-defecation",
-      "from": "needs_review",
-      "to": "expert_only"
-    },
-    {
-      "id": "rural-population-growth",
-      "from": "needs_review",
-      "to": "daily_eligible"
-    },
-    {
-      "id": "secondary-pupils-female-share",
-      "from": "needs_review",
-      "to": "practice_eligible"
-    },
-    {
-      "id": "severe-food-insecurity",
-      "from": "needs_review",
-      "to": "expert_only"
+      "id": "trade-share",
+      "from": 141,
+      "to": 124
     },
     {
       "id": "transport-service-exports",
-      "from": "needs_review",
-      "to": "practice_eligible"
+      "from": 137,
+      "to": 139
     },
     {
       "id": "transport-service-imports",
-      "from": "needs_review",
-      "to": "practice_eligible"
+      "from": 137,
+      "to": 139
     },
     {
-      "id": "urban-basic-drinking-water",
-      "from": "needs_review",
-      "to": "daily_eligible"
-    },
-    {
-      "id": "urban-basic-sanitation",
-      "from": "needs_review",
-      "to": "practice_eligible"
-    },
-    {
-      "id": "urban-clean-cooking-access",
-      "from": "needs_review",
-      "to": "practice_eligible"
-    },
-    {
-      "id": "urban-electricity-access",
-      "from": "needs_review",
-      "to": "practice_eligible"
-    },
-    {
-      "id": "urban-low-elevation-land",
-      "from": "needs_review",
-      "to": "expert_only"
-    },
-    {
-      "id": "urban-low-elevation-population",
-      "from": "needs_review",
-      "to": "expert_only"
-    },
-    {
-      "id": "urban-open-defecation",
-      "from": "needs_review",
-      "to": "expert_only"
-    },
-    {
-      "id": "youth-employment-ratio",
-      "from": "needs_review",
-      "to": "daily_eligible"
+      "id": "youth-neet",
+      "from": 15,
+      "to": 35
     }
   ],
-  "coverageChanges": [],
-  "yearChanges": []
+  "yearChanges": [
+    {
+      "id": "age-dependency",
+      "from": 2024,
+      "to": 2025
+    },
+    {
+      "id": "agriculture-growth",
+      "from": 2024,
+      "to": 2025
+    },
+    {
+      "id": "agriculture-value-added",
+      "from": 2024,
+      "to": 2025
+    },
+    {
+      "id": "agriculture-value-per-worker",
+      "from": 2024,
+      "to": 2025
+    },
+    {
+      "id": "bank-branches",
+      "from": 2022,
+      "to": 2024
+    },
+    {
+      "id": "borrowers-commercial-banks",
+      "from": 2023,
+      "to": 2024
+    },
+    {
+      "id": "children-share",
+      "from": 2024,
+      "to": 2025
+    },
+    {
+      "id": "domestic-savings",
+      "from": 2024,
+      "to": 2025
+    },
+    {
+      "id": "exports-share",
+      "from": 2024,
+      "to": 2025
+    },
+    {
+      "id": "gdp-growth",
+      "from": 2024,
+      "to": 2025
+    },
+    {
+      "id": "gdp-per-capita",
+      "from": 2024,
+      "to": 2025
+    },
+    {
+      "id": "gdp-per-capita-growth",
+      "from": 2024,
+      "to": 2025
+    },
+    {
+      "id": "gni-per-capita",
+      "from": 2024,
+      "to": 2025
+    },
+    {
+      "id": "gni-per-capita-ppp",
+      "from": 2024,
+      "to": 2025
+    },
+    {
+      "id": "government-consumption",
+      "from": 2023,
+      "to": 2025
+    },
+    {
+      "id": "gross-capital-formation",
+      "from": 2024,
+      "to": 2025
+    },
+    {
+      "id": "household-consumption",
+      "from": 2023,
+      "to": 2025
+    },
+    {
+      "id": "imports-share",
+      "from": 2024,
+      "to": 2025
+    },
+    {
+      "id": "industry-share",
+      "from": 2024,
+      "to": 2025
+    },
+    {
+      "id": "inflation",
+      "from": 2024,
+      "to": 2025
+    },
+    {
+      "id": "older-adults-share",
+      "from": 2024,
+      "to": 2025
+    },
+    {
+      "id": "pm25-exposure",
+      "from": 2020,
+      "to": 2023
+    },
+    {
+      "id": "population-growth",
+      "from": 2024,
+      "to": 2025
+    },
+    {
+      "id": "private-fixed-capital-formation",
+      "from": 2024,
+      "to": 2025
+    },
+    {
+      "id": "rural-population",
+      "from": 2024,
+      "to": 2025
+    },
+    {
+      "id": "rural-population-growth",
+      "from": 2024,
+      "to": 2025
+    },
+    {
+      "id": "services-share",
+      "from": 2024,
+      "to": 2025
+    },
+    {
+      "id": "trade-share",
+      "from": 2024,
+      "to": 2025
+    },
+    {
+      "id": "urban-population",
+      "from": 2024,
+      "to": 2025
+    },
+    {
+      "id": "urban-population-growth",
+      "from": 2024,
+      "to": 2025
+    }
+  ]
 }

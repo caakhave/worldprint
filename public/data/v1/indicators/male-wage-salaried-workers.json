@@ -202,12 +202,12 @@
     "valuesReference": "https://api.worldbank.org/v2/country/all/indicator/SL.EMP.WORK.MA.ZS?format=json&per_page=20000&page=1&date=2015%3A2025",
     "license": "Creative Commons Attribution 4.0 International unless specifically labeled otherwise by World Bank metadata",
     "licenseReference": "https://www.worldbank.org/en/about/legal/terms-of-use-for-datasets",
-    "retrievedAt": "2026-06-27T17:15:50.891522+00:00",
-    "checksum": "93e729970f65f5430ff4a988bba1e84e42509f7e9f95e15f6c1c5d5a1f7046b2",
+    "retrievedAt": "2026-07-02T22:46:00.005770+00:00",
+    "checksum": "e0f57cc97c0a630da104a73610889f82fac4703d353a9bbefcb3124dd921b29c",
     "sourceOrganization": "ILO Modelled Estimates database (ILOEST), International Labour Organization (ILO), uri: https://ilostat.ilo.org/data/bulk/, publisher: ILOSTAT, type: external database, date accessed: January 17, 2026"
   },
   "reviewStatus": "approved",
-  "contentVersion": "2026.06.22-exp2-qa1",
+  "contentVersion": "2026.07.02-exp4-content50",
   "editorial": {
     "shortHook": "A formal-work map for men.",
     "patternNote": "The darkest countries include Qatar, Kuwait, Oman, while the lightest include Chad, Madagascar, Niger; that contrast is the fastest way to read the male wage workers pattern.",
@@ -248,7 +248,7 @@
   },
   "editorialReview": {
     "status": "needs_review",
-    "reviewedAt": "2026-06-22",
+    "reviewedAt": "2026-07-02",
     "reviewedBy": "pipeline-default-needs-review",
     "qualityScore": 2,
     "funScore": 2,

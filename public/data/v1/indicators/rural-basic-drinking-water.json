@@ -189,12 +189,12 @@
     "valuesReference": "https://api.worldbank.org/v2/country/all/indicator/SH.H2O.BASW.RU.ZS?format=json&per_page=20000&page=1&date=2015%3A2025",
     "license": "Creative Commons Attribution 4.0 International unless specifically labeled otherwise by World Bank metadata",
     "licenseReference": "https://www.worldbank.org/en/about/legal/terms-of-use-for-datasets",
-    "retrievedAt": "2026-06-27T17:16:02.024320+00:00",
-    "checksum": "7df47815ccd7f658194dedbdcbaeccf386a01c8101b29cb37875b022883e023f",
+    "retrievedAt": "2026-07-02T22:48:14.865222+00:00",
+    "checksum": "b208d646e080960f7c993e0071299bb0f0d8368612c870942eabf379e7abc2d2",
     "sourceOrganization": "WHO/UNICEF Joint Monitoring Programme (JMP) for Water Supply, Sanitation and Hygiene, World Health Organization (WHO), uri: washdata.org, publisher: WHO/UNICEF Joint Monitoring Programme (JMP) for Water Supply, Sanitation and Hygiene (washdata.org), date accessed: 2025-09-30, date published: 2025-08-25;\nUN Children's Fund (UNICEF), uri: washdata.org, note: WHO/UNICEF Joint Monitoring Programme (JMP) for Water Supply, Sanitation and Hygiene"
   },
   "reviewStatus": "approved",
-  "contentVersion": "2026.06.22-exp2-qa1",
+  "contentVersion": "2026.07.02-exp4-content50",
   "editorial": {
     "shortHook": "A rural water-access map.",
     "patternNote": "The darkest countries include United States, Turkmenistan, Thailand, while the lightest include Congo, Dem. Rep., Central African Republic, South Sudan; that contrast is the fastest way to read the rural basic drinking water pattern.",
@@ -235,7 +235,7 @@
   },
   "editorialReview": {
     "status": "practice_eligible",
-    "reviewedAt": "2026-06-22",
+    "reviewedAt": "2026-07-02",
     "reviewedBy": "Codex editorial QA",
     "qualityScore": 4,
     "funScore": 4,

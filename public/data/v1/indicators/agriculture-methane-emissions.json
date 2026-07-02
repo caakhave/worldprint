@@ -6,7 +6,7 @@
   "shortTitle": "Agriculture methane emissions",
   "category": "agriculture",
   "difficulty": "expert",
-  "definition": "A measure of annual emissions of methane (CH4), one of the six Kyoto greenhouse gases (GHG), from the agricultural sector. This includes emissions from livestock (IPCC 2006 codes 3.A.1 (enteric fermentation, 3.a.2 (manure management) and crops (IPCC 2006 codes 3.C.1 Emissions from biomass burning, 3.C.2 Liming, 3.C.3 Urea application, 3.C.4 Direct N2O Emissions from managed soils, 3.C.5 Indirect N2O Emissions from managed soils, 3.C.6 Indirect N2O Emissions from manure management, 3.C.7 Rice cultivations). The measure is standardized to carbon dioxide equivalent values using the Global Warming Potential (GWP) factors of IPCC's 5th Assessment Report (AR5).",
+  "definition": "A measure of annual emissions of methane (CH4), one of the six Kyoto greenhouse gases (GHG), from the agricultural sector. This includes emissions from livestock (IPCC 2006 codes 3.A.1 (enteric fermentation, 3.a.2 (manure management) and crops (IPCC 2006 codes 3.C.1 Emissions from biomass burning, 3.C.7 Rice cultivations). The measure is standardized to carbon dioxide equivalent values using the Global Warming Potential (GWP) factors of IPCC's 5th Assessment Report (AR5).",
   "unit": "million metric tons CO2e",
   "year": 2024,
   "valuesByIso3": {
@@ -204,12 +204,12 @@
     "valuesReference": "https://api.worldbank.org/v2/country/all/indicator/EN.GHG.CH4.AG.MT.CE.AR5?format=json&per_page=20000&page=1&date=2015%3A2025",
     "license": "Creative Commons Attribution 4.0 International unless specifically labeled otherwise by World Bank metadata",
     "licenseReference": "https://www.worldbank.org/en/about/legal/terms-of-use-for-datasets",
-    "retrievedAt": "2026-06-27T17:16:05.431999+00:00",
-    "checksum": "bfdc8c26a1ecf0e559e9cd20360cf0d1d3ff3360c0c43f1f151a2b517670efd6",
+    "retrievedAt": "2026-07-02T22:48:30.865676+00:00",
+    "checksum": "c7ad485ccc8796a853ee29c7a9523081baddd4fa9b2a6c372eef949c00a5c28f",
     "sourceOrganization": "EDGAR (Emissions Database for Global Atmospheric Research) Community GHG Database, Joint Research Centre (JRC) - European Commission, uri: https://edgar.jrc.ec.europa.eu/dataset_ghg2024, publisher: JRC European Commission, date published: 2024;\nInternational Energy Agency (IEA), uri: https://edgar.jrc.ec.europa.eu/dataset_ghg2024, publisher: JRC European Commission, date published: 2024"
   },
   "reviewStatus": "approved",
-  "contentVersion": "2026.06.22-exp2-qa1",
+  "contentVersion": "2026.07.02-exp4-content50",
   "editorial": {
     "shortHook": "A farming-emissions map.",
     "patternNote": "The darkest countries include India, China, Brazil, while the lightest include Greenland, Bahamas, The, Equatorial Guinea; that contrast is the fastest way to read the agriculture methane emissions pattern.",
@@ -251,7 +251,7 @@
   },
   "editorialReview": {
     "status": "expert_only",
-    "reviewedAt": "2026-06-22",
+    "reviewedAt": "2026-07-02",
     "reviewedBy": "Codex editorial QA",
     "qualityScore": 4,
     "funScore": 4,

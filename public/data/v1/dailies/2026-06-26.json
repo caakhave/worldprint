@@ -2,33 +2,32 @@
   "schemaVersion": "1.1.0",
   "game": "worldprint",
   "date": "2026-06-26",
-  "contentVersion": "2026.06.22-exp2-qa1",
+  "contentVersion": "2026.07.02-exp4-content50",
   "roundIds": [
-    "worldprint-older-adults-share",
-    "worldprint-population-growth",
-    "worldprint-tuberculosis-incidence",
-    "worldprint-food-insecurity-moderate-severe",
-    "worldprint-renewable-electricity"
+    "worldprint-energy-use",
+    "worldprint-education-expenditure-savings",
+    "worldprint-migrant-stock",
+    "worldprint-basic-sanitation",
+    "worldprint-women-parliament"
   ],
   "indicatorIds": [
-    "older-adults-share",
-    "population-growth",
-    "tuberculosis-incidence",
-    "food-insecurity-moderate-severe",
-    "renewable-electricity"
+    "energy-use",
+    "education-expenditure-savings",
+    "migrant-stock",
+    "basic-sanitation",
+    "women-parliament"
   ],
   "categoryMix": {
-    "demography": 2,
+    "energy": 1,
+    "education": 1,
+    "demography": 1,
     "health": 1,
-    "agriculture": 1,
-    "energy": 1
+    "development": 1
   },
   "mapDifficultyMix": {
-    "intro": 1,
-    "standard": 3,
-    "expert": 1
+    "standard": 5
   },
-  "generatedAt": "2026-06-27T17:16:22.617071+00:00",
+  "generatedAt": "2026-07-02T22:58:41.348198+00:00",
   "generatorVersion": "daily-manifest-v2",
   "varietyNotes": [
     "Selected with category, difficulty, repeat-cooldown, and same-day correlation safeguards."

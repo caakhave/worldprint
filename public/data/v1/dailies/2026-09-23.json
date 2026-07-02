@@ -2,32 +2,31 @@
   "schemaVersion": "1.1.0",
   "game": "worldprint",
   "date": "2026-09-23",
-  "contentVersion": "2026.06.22-exp2-qa1",
+  "contentVersion": "2026.07.02-exp4-content50",
   "roundIds": [
-    "worldprint-trade-share",
-    "worldprint-open-defecation",
-    "worldprint-youth-employment-ratio",
-    "worldprint-rural-basic-sanitation",
-    "worldprint-primary-female-teachers"
+    "worldprint-pm25-exposure",
+    "worldprint-renewable-electricity",
+    "worldprint-health-expenditure",
+    "worldprint-population-density",
+    "worldprint-basic-sanitation"
   ],
   "indicatorIds": [
-    "trade-share",
-    "open-defecation",
-    "youth-employment-ratio",
-    "rural-basic-sanitation",
-    "primary-female-teachers"
+    "pm25-exposure",
+    "renewable-electricity",
+    "health-expenditure",
+    "population-density",
+    "basic-sanitation"
   ],
   "categoryMix": {
-    "economy": 1,
-    "health": 1,
-    "labor": 1,
-    "settlement": 1,
-    "education": 1
+    "environment": 1,
+    "energy": 1,
+    "health": 2,
+    "settlement": 1
   },
   "mapDifficultyMix": {
     "standard": 5
   },
-  "generatedAt": "2026-06-27T17:16:22.631183+00:00",
+  "generatedAt": "2026-07-02T22:58:41.361460+00:00",
   "generatorVersion": "daily-manifest-v2",
   "varietyNotes": [
     "Selected with category, difficulty, repeat-cooldown, and same-day correlation safeguards."

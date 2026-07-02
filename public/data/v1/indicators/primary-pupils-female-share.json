@@ -173,12 +173,12 @@
     "valuesReference": "https://api.worldbank.org/v2/country/all/indicator/SE.PRM.ENRL.FE.ZS?format=json&per_page=20000&page=1&date=2015%3A2025",
     "license": "Creative Commons Attribution 4.0 International unless specifically labeled otherwise by World Bank metadata",
     "licenseReference": "https://www.worldbank.org/en/about/legal/terms-of-use-for-datasets",
-    "retrievedAt": "2026-06-27T17:15:45.349066+00:00",
-    "checksum": "c4702746a0ce7ca9e66953763c7c7de5cf1787d234cea77de26b4e185227637c",
+    "retrievedAt": "2026-07-02T22:44:20.274311+00:00",
+    "checksum": "b29400595faa676c78b06e59f9e3a7d193049de83fb63654e527e4192512fe45",
     "sourceOrganization": "Stat Bulk Data Download Service, UN Educational, Scientific and Cultural Organization (UNESCO), uri: https://uis.unesco.org/bdds, publisher: UNESCO Institute for Statistics (UIS)"
   },
   "reviewStatus": "approved",
-  "contentVersion": "2026.06.22-exp2-qa1",
+  "contentVersion": "2026.07.02-exp4-content50",
   "editorial": {
     "shortHook": "A gender-balance map inside primary classrooms.",
     "patternNote": "The darkest countries include Senegal, Gambia, The, Mauritania, while the lightest include Afghanistan, Pakistan, Eritrea; that contrast is the fastest way to read the female primary pupils pattern.",
@@ -207,8 +207,8 @@
         "reason": "Female secondary pupils lives in the same category, so it can feel plausible until the high and low countries are checked."
       },
       {
-        "confusedWithIndicatorCode": "SH.IMM.MEAS",
-        "reason": "Measles immunization overlaps with part of the visible pattern, but the full country spread does not match."
+        "confusedWithIndicatorCode": "SH.HIV.ARTC.ZS",
+        "reason": "Antiretroviral therapy coverage overlaps with part of the visible pattern, but the full country spread does not match."
       }
     ],
     "difficultyReason": "Standard difficulty: the map has readable regional structure, but the best answer still depends on checking the unit and country anchors.",
@@ -219,7 +219,7 @@
   },
   "editorialReview": {
     "status": "practice_eligible",
-    "reviewedAt": "2026-06-22",
+    "reviewedAt": "2026-07-02",
     "reviewedBy": "Codex editorial QA",
     "qualityScore": 3,
     "funScore": 3,

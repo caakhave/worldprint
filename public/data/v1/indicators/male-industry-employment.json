@@ -202,12 +202,12 @@
     "valuesReference": "https://api.worldbank.org/v2/country/all/indicator/SL.IND.EMPL.MA.ZS?format=json&per_page=20000&page=1&date=2015%3A2025",
     "license": "Creative Commons Attribution 4.0 International unless specifically labeled otherwise by World Bank metadata",
     "licenseReference": "https://www.worldbank.org/en/about/legal/terms-of-use-for-datasets",
-    "retrievedAt": "2026-06-27T17:15:53.877116+00:00",
-    "checksum": "b1a38a959a93c815a4f05e1dae29e738f033243dad1cbea44df1da14bc1d33ee",
+    "retrievedAt": "2026-07-02T22:47:08.134953+00:00",
+    "checksum": "61abaf0a8b230cc42b0b45a3fa505f3d93f92465376791d73ceb9676d2bbe372",
     "sourceOrganization": "ILO Modelled Estimates database (ILOEST), International Labour Organization (ILO), uri: https://ilostat.ilo.org/data/bulk/, publisher: ILOSTAT, type: external database, date accessed: January 17, 2026"
   },
   "reviewStatus": "approved",
-  "contentVersion": "2026.06.22-exp2-qa1",
+  "contentVersion": "2026.07.02-exp4-content50",
   "editorial": {
     "shortHook": "A men's industrial-work map.",
     "patternNote": "The darkest countries include Slovak Republic, Czechia, Qatar, while the lightest include Timor-Leste, Burundi, Niger; that contrast is the fastest way to read the male industry employment pattern.",
@@ -248,7 +248,7 @@
   },
   "editorialReview": {
     "status": "expert_only",
-    "reviewedAt": "2026-06-22",
+    "reviewedAt": "2026-07-02",
     "reviewedBy": "Codex editorial QA",
     "qualityScore": 4,
     "funScore": 4,

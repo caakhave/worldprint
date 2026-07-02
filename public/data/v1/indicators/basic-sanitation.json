@@ -6,7 +6,7 @@
   "shortTitle": "Basic sanitation access",
   "category": "health",
   "difficulty": "standard",
-  "definition": "The percentage of people using at least basic sanitation services, that is, improved sanitation facilities that are not shared with other households.  This indicator encompasses both people using basic sanitation services as well as those using safely managed sanitation services.   Improved sanitation facilities include flush/pour flush to piped sewer systems, septic tanks or pit latrines; ventilated improved pit latrines, compositing toilets or pit latrines with slabs.",
+  "definition": "The percentage of people using at least basic sanitation services, that is, improved sanitation facilities that are not shared with other households.  This indicator encompasses both people using basic sanitation services as well as those using safely managed sanitation services.   Improved sanitation facilities include flush/pour flush to piped sewer systems, septic tanks or pit latrines; ventilated improved pit latrines, composting toilets or pit latrines with slabs.",
   "unit": "percent of population",
   "year": 2024,
   "valuesByIso3": {
@@ -195,12 +195,12 @@
     "valuesReference": "https://api.worldbank.org/v2/country/all/indicator/SH.STA.BASS.ZS?format=json&per_page=20000&page=1&date=2015%3A2025",
     "license": "Creative Commons Attribution 4.0 International unless specifically labeled otherwise by World Bank metadata",
     "licenseReference": "https://www.worldbank.org/en/about/legal/terms-of-use-for-datasets",
-    "retrievedAt": "2026-06-27T17:14:00.003654+00:00",
-    "checksum": "4e36e0bac8830a63f7b67d930e7d221fb30dbae87b4d339267df18573330e487",
+    "retrievedAt": "2026-07-02T22:06:39.088453+00:00",
+    "checksum": "d036de897485cfedde11d23173e5b389a064c8dff842bec37dd54f69db181bb5",
     "sourceOrganization": "WHO/UNICEF Joint Monitoring Programme (JMP) for Water Supply, Sanitation and Hygiene, World Health Organization (WHO), uri: washdata.org, publisher: WHO/UNICEF Joint Monitoring Programme (JMP) for Water Supply, Sanitation and Hygiene (washdata.org), date accessed: 2025-09-30, date published: 2025-08-25;\nUN Children's Fund (UNICEF), uri: washdata.org, note: WHO/UNICEF Joint Monitoring Programme (JMP) for Water Supply, Sanitation and Hygiene"
   },
   "reviewStatus": "approved",
-  "contentVersion": "2026.06.22-exp2-qa1",
+  "contentVersion": "2026.07.02-exp4-content50",
   "editorial": {
     "shortHook": "A public-health infrastructure map.",
     "patternNote": "The darkest countries include Puerto Rico (US), New Zealand, New Caledonia, while the lightest include Ethiopia, Chad, Central African Republic; that contrast is the fastest way to read the basic sanitation access pattern.",
@@ -241,7 +241,7 @@
   },
   "editorialReview": {
     "status": "daily_eligible",
-    "reviewedAt": "2026-06-22",
+    "reviewedAt": "2026-07-02",
     "reviewedBy": "Codex editorial QA",
     "qualityScore": 4,
     "funScore": 4,

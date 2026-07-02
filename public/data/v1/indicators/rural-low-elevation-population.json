@@ -208,12 +208,12 @@
     "valuesReference": "https://api.worldbank.org/v2/country/all/indicator/EN.POP.EL5M.RU.ZS?format=json&per_page=20000&page=1&date=2015%3A2025",
     "license": "Creative Commons Attribution 4.0 International unless specifically labeled otherwise by World Bank metadata",
     "licenseReference": "https://www.worldbank.org/en/about/legal/terms-of-use-for-datasets",
-    "retrievedAt": "2026-06-27T17:15:35.035363+00:00",
-    "checksum": "276b6714e77a346f63a855e912a7ebb70f7341049a5ef64e82bd1e668ad9a8c8",
+    "retrievedAt": "2026-07-02T22:42:48.130756+00:00",
+    "checksum": "b6760d9e7f17f6186c9e638d39f6ff6cefd6219ac7077d4558f392f48395ba89",
     "sourceOrganization": "Low Elevation Coastal Zone (LECZ) Urban-Rural Population and Land Area Estimates, Version 3, Center For International Earth Science Information Network (CIESIN) - Columbia University, uri: https://doi.org/10.7927/d1x1-d702, publisher: NASA Earthdata GIS, date accessed: 202112, date published: 202112;\nCUNY Institute for Demographic Research (CIDR) - City University of New York, uri: https://doi.org/10.7927/d1x1-d702, publisher: NASA Earthdata GIS, date accessed: 202112"
   },
   "reviewStatus": "approved",
-  "contentVersion": "2026.06.22-exp2-qa1",
+  "contentVersion": "2026.07.02-exp4-content50",
   "editorial": {
     "shortHook": "A coastal rural exposure map.",
     "patternNote": "The darkest countries include Greenland, Guyana, Suriname, while the lightest include Afghanistan, Armenia, Austria; that contrast is the fastest way to read the rural low-elevation population pattern.",
@@ -254,7 +254,7 @@
   },
   "editorialReview": {
     "status": "expert_only",
-    "reviewedAt": "2026-06-22",
+    "reviewedAt": "2026-07-02",
     "reviewedBy": "Codex editorial QA",
     "qualityScore": 3,
     "funScore": 4,

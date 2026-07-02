@@ -4,15 +4,16 @@ Snapshot date: July 2, 2026.
 
 ## Current Goal
 
-Can You Geo is in pre-production staging polish. The immediate product focus is finishing local QA fixes for Mystery Map Custom Atlas setup, active gameplay context, and the account-aware homepage while preserving the strict Free vs Pro access model.
+Can You Geo is in pre-production staging polish. The current completed batch combines Mystery Map Custom Atlas QA fixes, account-aware homepage polish, a 50-indicator Mystery Map content expansion, and a planning-only pass for the next game, Pattern Atlas.
 
 ## Current Status
 
 - Current branch: `staging`.
-- Latest local commit at inspection time: `68d733c Improve active Mystery Map gameplay dashboard`.
-- Local QA fixes are implemented but not committed or pushed yet.
-- `test.canyougeo.com` will not show these changes until the current local changes are committed, pushed to staging, and deployed by Cloudflare.
-- Working tree contains pre-existing uncommitted product edits plus this docs update.
+- Latest local commit at inspection time: `ddd85b3 Polish Custom Atlas and account-aware homepage`.
+- The remaining content/data/report/docs batch is implemented locally but not yet committed or pushed at this snapshot.
+- The Custom Atlas and homepage product fixes are already in the latest staging commit listed above.
+- `test.canyougeo.com` will not show this batch until the current local changes are committed, pushed to `origin/staging`, and deployed by Cloudflare.
+- Working tree contains intended uncommitted content files, generated data artifacts, generated reports, targeted content tests, and this docs update.
 - Untracked `atd/` image/archive assets are present and must remain untouched unless explicitly needed.
 
 ## Completed Local Changes
@@ -20,13 +21,13 @@ Can You Geo is in pre-production staging polish. The immediate product focus is 
 ### Custom Atlas / Former Practice Setup Polish
 
 - `Shuffle maps` updates the Topic and Map Difficulty dropdowns visibly.
-- The shuffle/status card shows the chosen topic and map difficulty combination.
-- Practice/Custom Atlas action buttons have matching height and aligned layout.
+- The shuffle/status card reflects the selected topic and map difficulty combination.
+- Custom Atlas action buttons have matching height and aligned layout.
 - The `Available` score label fits inside the score card on desktop and mobile.
 
 ### Active Gameplay Context
 
-- Active Custom Atlas gameplay now shows mode, selected topic, selected map difficulty, and challenge rules.
+- Active Custom Atlas gameplay now shows mode, selected topic, selected map difficulty, and ruleset.
 - Confirmed example display includes `Custom Atlas`, `Health`, `Expert maps`, and `Cartographer rules`.
 - Active `Mystery Map Practice` language was replaced with `Custom Atlas` / `Atlas Run` language where appropriate.
 - Setup metadata persists across local resume/reload.
@@ -38,6 +39,26 @@ Can You Geo is in pre-production staging polish. The immediate product focus is 
 - Logged-in Pro: no longer shows `Start Pro` or `Try Sample Run` as primary hero CTAs.
 - Logged-in Pro now shows Pro-aware Daily / Custom Atlas actions and `Pro Atlas unlocked` style copy.
 - Localhost QA confirmed guest, Free, and Pro homepage states work.
+
+### Mystery Map Content Expansion
+
+- Added 50 new playable Mystery Map indicators.
+- New generated totals: 225 playable maps and 69 Daily-eligible maps.
+- Generated content audit reports:
+  - `generated/reports/mystery-map-content-batch-audit.md`
+  - `generated/reports/mystery-map-content-batch-audit.json`
+- Near-duplicate watch items documented in the audit:
+  - `final-consumption-share` vs `domestic-savings`
+  - `working-age-share` vs `age-dependency`
+- Daily route removals for `2026-05-28` through `2026-06-01` are expected under the current rolling Daily manifest window.
+- `public/maps/world-110m.v1.geojson` geometry checksum is unchanged; the diff is metadata churn only.
+
+### Pattern Atlas Planning
+
+- Planning pass for Pattern Atlas is complete.
+- No Pattern Atlas implementation files were modified during the planning pass.
+- Recommended next implementation is Phase 1 only: data model plus rule catalog validation.
+- Pattern Atlas should not start until this staging batch is committed, pushed, and verified.
 
 ## Validation Run
 
@@ -63,6 +84,21 @@ Recent local validation passed:
 - Build:
   - `NEXT_PUBLIC_SUPABASE_URL=https://test.supabase.co NEXT_PUBLIC_SUPABASE_ANON_KEY=<fake anon JWT> pnpm build`
   - Result: passed; static export generated `268/268` pages. `next-env.d.ts` churn was restored and now has no diff.
+- Content build:
+  - `pnpm data:build`
+  - Result: passed; generated content version `2026.07.02-exp4-content50`.
+- Beta QA generation:
+  - `pnpm beta:qa`
+  - Result: passed.
+- External beta generation:
+  - `pnpm beta:external`
+  - Result: passed.
+- Targeted content tests:
+  - `pnpm test src/lib/content/content.test.ts`
+  - Result: passed; `1` file and `9` tests.
+- Full unit test suite:
+  - `pnpm test`
+  - Result: passed; `61` files and `340` tests.
 - Diff hygiene:
   - `git diff --check`
   - Result: passed.
@@ -101,7 +137,7 @@ Recent local validation passed:
 
 ## Recently Touched Files
 
-Current local product/app files in the dirty tree include:
+Product/app files already included in the completed staging polish batch include:
 
 - `src/app/page.tsx`
 - `src/app/page.test.tsx`
@@ -113,21 +149,27 @@ Current local product/app files in the dirty tree include:
 - `src/lib/persistence/storage.ts`
 - `src/styles/globals.css`
 
-Docs currently present in the dirty tree:
+Content, data, pipeline, and report files in the dirty tree include:
 
-- `AGENTS.md`
 - `PROJECT_STATE.md`
-- `TESTING.md`
+- `content/candidates/worldprint-candidate-intake.json`
+- `content/editorial/worldprint-indicator-review.json`
+- `tools/data_pipeline/build.py`
+- `src/lib/content/content.test.ts`
+- `public/data/v1/**`
+- `public/maps/world-110m.v1.geojson`
+- `generated/reports/**`
 
 ## Next 3 Safest Tasks
 
-1. Review the full diff and commit the verified QA fixes to `staging`.
+1. Commit the verified staging batch to `staging`.
 2. Push `staging` and verify the Cloudflare deploy on `test.canyougeo.com`.
-3. Decide and implement the Custom Atlas exhaustion/replay policy separately.
+3. Start Pattern Atlas Phase 1 only: data model plus rule catalog validation.
 
 ## Must Not Forget
 
 - Do not touch `atd/`.
+- Do not start Pattern Atlas implementation until this staging batch is committed and pushed.
 - Do not enable live billing.
 - Do not change Stripe, Supabase, Cloudflare, env files, migrations, or Edge Functions during UI polish unless explicitly requested.
 - Do not weaken Pro-only Custom Atlas / former Practice access.

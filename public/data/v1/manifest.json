@@ -1,10 +1,10 @@
 {
   "schemaVersion": "1.1.0",
-  "contentVersion": "2026.06.22-exp2-qa1",
-  "generatedAt": "2026-06-27T17:16:22.644102+00:00",
+  "contentVersion": "2026.07.02-exp4-content50",
+  "generatedAt": "2026-07-02T22:58:41.376004+00:00",
   "map": {
     "path": "/maps/world-110m.v1.geojson",
-    "checksum": "b26bca7f628c6f40c7ff336529502bee839ca22f20622ad2bac69432f6511210"
+    "checksum": "63a8935946d7f21928dd290aff36403ae99932a78c46e8f31dd33386afe65766"
   },
   "entityRegistry": {
     "path": "/data/v1/entity-registry.json"
@@ -27,7 +27,7 @@
       "shortHook": "Where families are still growing fast.",
       "editorialReview": {
         "status": "daily_eligible",
-        "reviewedAt": "2026-06-22",
+        "reviewedAt": "2026-07-02",
         "reviewedBy": "Codex editorial QA",
         "qualityScore": 5,
         "funScore": 4,
@@ -61,7 +61,7 @@
       "shortHook": "A youth-pattern map with a sharper social signal.",
       "editorialReview": {
         "status": "daily_eligible",
-        "reviewedAt": "2026-06-22",
+        "reviewedAt": "2026-07-02",
         "reviewedBy": "Codex editorial QA",
         "qualityScore": 4,
         "funScore": 4,
@@ -92,7 +92,7 @@
       "shortHook": "The broadest signal of where populations are adding children.",
       "editorialReview": {
         "status": "practice_eligible",
-        "reviewedAt": "2026-06-22",
+        "reviewedAt": "2026-07-02",
         "reviewedBy": "Codex editorial QA",
         "qualityScore": 3,
         "funScore": 3,
@@ -123,7 +123,7 @@
       "shortHook": "A deceptively hard age-structure clue.",
       "editorialReview": {
         "status": "practice_eligible",
-        "reviewedAt": "2026-06-22",
+        "reviewedAt": "2026-07-02",
         "reviewedBy": "Codex editorial QA",
         "qualityScore": 3,
         "funScore": 3,
@@ -154,7 +154,7 @@
       "shortHook": "A familiar health map with strong regional anchors.",
       "editorialReview": {
         "status": "daily_eligible",
-        "reviewedAt": "2026-06-22",
+        "reviewedAt": "2026-07-02",
         "reviewedBy": "Codex editorial QA",
         "qualityScore": 5,
         "funScore": 4,
@@ -185,7 +185,7 @@
       "shortHook": "A child-health map with unmistakable low and high anchors.",
       "editorialReview": {
         "status": "practice_eligible",
-        "reviewedAt": "2026-06-22",
+        "reviewedAt": "2026-07-02",
         "reviewedBy": "Codex editorial QA",
         "qualityScore": 4,
         "funScore": 3,
@@ -216,7 +216,7 @@
       "shortHook": "A stark map of child survival.",
       "editorialReview": {
         "status": "daily_eligible",
-        "reviewedAt": "2026-06-22",
+        "reviewedAt": "2026-07-02",
         "reviewedBy": "Codex editorial QA",
         "qualityScore": 5,
         "funScore": 4,
@@ -249,7 +249,7 @@
       "shortHook": "A mortality map with conflict, health, and risk-behavior clues.",
       "editorialReview": {
         "status": "expert_only",
-        "reviewedAt": "2026-06-22",
+        "reviewedAt": "2026-07-02",
         "reviewedBy": "Codex editorial QA",
         "qualityScore": 3,
         "funScore": 4,
@@ -280,7 +280,7 @@
       "shortHook": "A parallel mortality map where gender differences matter.",
       "editorialReview": {
         "status": "expert_only",
-        "reviewedAt": "2026-06-22",
+        "reviewedAt": "2026-07-02",
         "reviewedBy": "Codex editorial QA",
         "qualityScore": 3,
         "funScore": 3,
@@ -304,14 +304,14 @@
       "shortTitle": "Population ages 0-14",
       "category": "demography",
       "difficulty": "intro",
-      "year": 2024,
+      "year": 2025,
       "coverage": 169,
       "path": "/data/v1/indicators/children-share.json",
       "reviewStatus": "approved",
       "shortHook": "The young-population map.",
       "editorialReview": {
         "status": "practice_eligible",
-        "reviewedAt": "2026-06-22",
+        "reviewedAt": "2026-07-02",
         "reviewedBy": "Codex editorial QA",
         "qualityScore": 3,
         "funScore": 3,
@@ -335,14 +335,14 @@
       "shortTitle": "Population ages 65+",
       "category": "demography",
       "difficulty": "intro",
-      "year": 2024,
+      "year": 2025,
       "coverage": 169,
       "path": "/data/v1/indicators/older-adults-share.json",
       "reviewStatus": "approved",
       "shortHook": "The aging map.",
       "editorialReview": {
         "status": "daily_eligible",
-        "reviewedAt": "2026-06-22",
+        "reviewedAt": "2026-07-02",
         "reviewedBy": "Codex editorial QA",
         "qualityScore": 5,
         "funScore": 4,
@@ -366,14 +366,14 @@
       "shortTitle": "Age dependency ratio",
       "category": "demography",
       "difficulty": "standard",
-      "year": 2024,
+      "year": 2025,
       "coverage": 169,
       "path": "/data/v1/indicators/age-dependency.json",
       "reviewStatus": "approved",
       "shortHook": "A map of who supports whom.",
       "editorialReview": {
         "status": "daily_eligible",
-        "reviewedAt": "2026-06-22",
+        "reviewedAt": "2026-07-02",
         "reviewedBy": "Codex editorial QA",
         "qualityScore": 4,
         "funScore": 4,
@@ -397,14 +397,14 @@
       "shortTitle": "Rural population",
       "category": "settlement",
       "difficulty": "intro",
-      "year": 2024,
+      "year": 2025,
       "coverage": 169,
       "path": "/data/v1/indicators/rural-population.json",
       "reviewStatus": "approved",
       "shortHook": "The inverse of the urban world.",
       "editorialReview": {
         "status": "retired",
-        "reviewedAt": "2026-06-22",
+        "reviewedAt": "2026-07-02",
         "reviewedBy": "Codex editorial QA",
         "qualityScore": 2,
         "funScore": 2,
@@ -428,14 +428,14 @@
       "shortTitle": "Urban population",
       "category": "settlement",
       "difficulty": "intro",
-      "year": 2024,
+      "year": 2025,
       "coverage": 169,
       "path": "/data/v1/indicators/urban-population.json",
       "reviewStatus": "approved",
       "shortHook": "The city-share map.",
       "editorialReview": {
         "status": "daily_eligible",
-        "reviewedAt": "2026-06-22",
+        "reviewedAt": "2026-07-02",
         "reviewedBy": "Codex editorial QA",
         "qualityScore": 5,
         "funScore": 4,
@@ -466,7 +466,7 @@
       "shortHook": "A map where small crowded places shout.",
       "editorialReview": {
         "status": "daily_eligible",
-        "reviewedAt": "2026-06-22",
+        "reviewedAt": "2026-07-02",
         "reviewedBy": "Codex editorial QA",
         "qualityScore": 5,
         "funScore": 5,
@@ -497,7 +497,7 @@
       "shortHook": "A schooling map with a surprisingly noisy edge.",
       "editorialReview": {
         "status": "needs_review",
-        "reviewedAt": "2026-06-22",
+        "reviewedAt": "2026-07-02",
         "reviewedBy": "Codex editorial QA",
         "qualityScore": 2,
         "funScore": 2,
@@ -528,7 +528,7 @@
       "shortHook": "The stronger education access map.",
       "editorialReview": {
         "status": "daily_eligible",
-        "reviewedAt": "2026-06-22",
+        "reviewedAt": "2026-07-02",
         "reviewedBy": "Codex editorial QA",
         "qualityScore": 4,
         "funScore": 4,
@@ -559,7 +559,7 @@
       "shortHook": "A higher-education map with rich-country and city-state clues.",
       "editorialReview": {
         "status": "expert_only",
-        "reviewedAt": "2026-06-22",
+        "reviewedAt": "2026-07-02",
         "reviewedBy": "Codex editorial QA",
         "qualityScore": 3,
         "funScore": 4,
@@ -590,7 +590,7 @@
       "shortHook": "A budget-priority map, not a wealth map.",
       "editorialReview": {
         "status": "expert_only",
-        "reviewedAt": "2026-06-22",
+        "reviewedAt": "2026-07-02",
         "reviewedBy": "Codex editorial QA",
         "qualityScore": 3,
         "funScore": 3,
@@ -621,7 +621,7 @@
       "shortHook": "A health-system spending map.",
       "editorialReview": {
         "status": "daily_eligible",
-        "reviewedAt": "2026-06-22",
+        "reviewedAt": "2026-07-02",
         "reviewedBy": "Codex editorial QA",
         "qualityScore": 4,
         "funScore": 4,
@@ -652,7 +652,7 @@
       "shortHook": "A map of who pays at the clinic.",
       "editorialReview": {
         "status": "expert_only",
-        "reviewedAt": "2026-06-22",
+        "reviewedAt": "2026-07-02",
         "reviewedBy": "Codex editorial QA",
         "qualityScore": 3,
         "funScore": 4,
@@ -683,7 +683,7 @@
       "shortHook": "A basic-infrastructure map with clear missing edges.",
       "editorialReview": {
         "status": "daily_eligible",
-        "reviewedAt": "2026-06-22",
+        "reviewedAt": "2026-07-02",
         "reviewedBy": "Codex editorial QA",
         "qualityScore": 4,
         "funScore": 4,
@@ -714,7 +714,7 @@
       "shortHook": "A public-health infrastructure map.",
       "editorialReview": {
         "status": "daily_eligible",
-        "reviewedAt": "2026-06-22",
+        "reviewedAt": "2026-07-02",
         "reviewedBy": "Codex editorial QA",
         "qualityScore": 4,
         "funScore": 4,
@@ -745,7 +745,7 @@
       "shortHook": "A disease-burden map with distinctive regional pockets.",
       "editorialReview": {
         "status": "daily_eligible",
-        "reviewedAt": "2026-06-22",
+        "reviewedAt": "2026-07-02",
         "reviewedBy": "Codex editorial QA",
         "qualityScore": 4,
         "funScore": 4,
@@ -776,7 +776,7 @@
       "shortHook": "The online-population map.",
       "editorialReview": {
         "status": "daily_eligible",
-        "reviewedAt": "2026-06-22",
+        "reviewedAt": "2026-07-02",
         "reviewedBy": "Codex editorial QA",
         "qualityScore": 5,
         "funScore": 4,
@@ -807,7 +807,7 @@
       "shortHook": "A connectivity map where values can exceed 100.",
       "editorialReview": {
         "status": "daily_eligible",
-        "reviewedAt": "2026-06-22",
+        "reviewedAt": "2026-07-02",
         "reviewedBy": "Codex editorial QA",
         "qualityScore": 4,
         "funScore": 4,
@@ -838,7 +838,7 @@
       "shortHook": "A wired-connectivity map.",
       "editorialReview": {
         "status": "expert_only",
-        "reviewedAt": "2026-06-22",
+        "reviewedAt": "2026-07-02",
         "reviewedBy": "Codex editorial QA",
         "qualityScore": 3,
         "funScore": 3,
@@ -869,7 +869,7 @@
       "shortHook": "A digital-infrastructure outlier map.",
       "editorialReview": {
         "status": "expert_only",
-        "reviewedAt": "2026-06-22",
+        "reviewedAt": "2026-07-02",
         "reviewedBy": "Codex editorial QA",
         "qualityScore": 3,
         "funScore": 4,
@@ -900,7 +900,7 @@
       "shortHook": "A foundational infrastructure map.",
       "editorialReview": {
         "status": "daily_eligible",
-        "reviewedAt": "2026-06-22",
+        "reviewedAt": "2026-07-02",
         "reviewedBy": "Codex editorial QA",
         "qualityScore": 5,
         "funScore": 4,
@@ -931,7 +931,7 @@
       "shortHook": "A household-energy map.",
       "editorialReview": {
         "status": "daily_eligible",
-        "reviewedAt": "2026-06-22",
+        "reviewedAt": "2026-07-02",
         "reviewedBy": "Codex editorial QA",
         "qualityScore": 4,
         "funScore": 4,
@@ -962,7 +962,7 @@
       "shortHook": "A map where low-income biomass and modern renewables can both matter.",
       "editorialReview": {
         "status": "expert_only",
-        "reviewedAt": "2026-06-22",
+        "reviewedAt": "2026-07-02",
         "reviewedBy": "Codex editorial QA",
         "qualityScore": 3,
         "funScore": 4,
@@ -993,7 +993,7 @@
       "shortHook": "The hydro-and-grid mix map.",
       "editorialReview": {
         "status": "daily_eligible",
-        "reviewedAt": "2026-06-22",
+        "reviewedAt": "2026-07-02",
         "reviewedBy": "Codex editorial QA",
         "qualityScore": 4,
         "funScore": 5,
@@ -1024,7 +1024,7 @@
       "shortHook": "The per-person carbon map.",
       "editorialReview": {
         "status": "daily_eligible",
-        "reviewedAt": "2026-06-22",
+        "reviewedAt": "2026-07-02",
         "reviewedBy": "Codex editorial QA",
         "qualityScore": 4,
         "funScore": 5,
@@ -1057,7 +1057,7 @@
       "shortHook": "A broader climate footprint map.",
       "editorialReview": {
         "status": "expert_only",
-        "reviewedAt": "2026-06-22",
+        "reviewedAt": "2026-07-02",
         "reviewedBy": "Codex editorial QA",
         "qualityScore": 3,
         "funScore": 4,
@@ -1081,14 +1081,14 @@
       "shortTitle": "PM2.5 exposure",
       "category": "environment",
       "difficulty": "standard",
-      "year": 2020,
+      "year": 2023,
       "coverage": 168,
       "path": "/data/v1/indicators/pm25-exposure.json",
       "reviewStatus": "approved",
       "shortHook": "A dirty-air exposure map.",
       "editorialReview": {
         "status": "daily_eligible",
-        "reviewedAt": "2026-06-22",
+        "reviewedAt": "2026-07-02",
         "reviewedBy": "Codex editorial QA",
         "qualityScore": 5,
         "funScore": 5,
@@ -1119,7 +1119,7 @@
       "shortHook": "The forest-cover map.",
       "editorialReview": {
         "status": "daily_eligible",
-        "reviewedAt": "2026-06-22",
+        "reviewedAt": "2026-07-02",
         "reviewedBy": "Codex editorial QA",
         "qualityScore": 5,
         "funScore": 5,
@@ -1150,7 +1150,7 @@
       "shortHook": "The crop-ready land map.",
       "editorialReview": {
         "status": "daily_eligible",
-        "reviewedAt": "2026-06-22",
+        "reviewedAt": "2026-07-02",
         "reviewedBy": "Codex editorial QA",
         "qualityScore": 4,
         "funScore": 4,
@@ -1181,7 +1181,7 @@
       "shortHook": "A wider farming-and-pasture map.",
       "editorialReview": {
         "status": "practice_eligible",
-        "reviewedAt": "2026-06-22",
+        "reviewedAt": "2026-07-02",
         "reviewedBy": "Codex editorial QA",
         "qualityScore": 3,
         "funScore": 3,
@@ -1212,7 +1212,7 @@
       "shortHook": "A farm-productivity map.",
       "editorialReview": {
         "status": "daily_eligible",
-        "reviewedAt": "2026-06-22",
+        "reviewedAt": "2026-07-02",
         "reviewedBy": "Codex editorial QA",
         "qualityScore": 4,
         "funScore": 4,
@@ -1236,14 +1236,14 @@
       "shortTitle": "Agriculture value added",
       "category": "economy",
       "difficulty": "standard",
-      "year": 2024,
-      "coverage": 149,
+      "year": 2025,
+      "coverage": 139,
       "path": "/data/v1/indicators/agriculture-value-added.json",
       "reviewStatus": "approved",
       "shortHook": "An economy-structure map.",
       "editorialReview": {
         "status": "daily_eligible",
-        "reviewedAt": "2026-06-22",
+        "reviewedAt": "2026-07-02",
         "reviewedBy": "Codex editorial QA",
         "qualityScore": 4,
         "funScore": 4,
@@ -1267,14 +1267,14 @@
       "shortTitle": "GDP per capita",
       "category": "development",
       "difficulty": "intro",
-      "year": 2024,
-      "coverage": 159,
+      "year": 2025,
+      "coverage": 157,
       "path": "/data/v1/indicators/gdp-per-capita.json",
       "reviewStatus": "approved",
       "shortHook": "The familiar income-per-person map.",
       "editorialReview": {
         "status": "daily_eligible",
-        "reviewedAt": "2026-06-22",
+        "reviewedAt": "2026-07-02",
         "reviewedBy": "Codex editorial QA",
         "qualityScore": 4,
         "funScore": 4,
@@ -1307,7 +1307,7 @@
       "shortHook": "Income per person adjusted for local prices.",
       "editorialReview": {
         "status": "practice_eligible",
-        "reviewedAt": "2026-06-22",
+        "reviewedAt": "2026-07-02",
         "reviewedBy": "Codex editorial QA",
         "qualityScore": 3,
         "funScore": 3,
@@ -1331,14 +1331,14 @@
       "shortTitle": "Inflation",
       "category": "economy",
       "difficulty": "expert",
-      "year": 2024,
-      "coverage": 151,
+      "year": 2025,
+      "coverage": 143,
       "path": "/data/v1/indicators/inflation.json",
       "reviewStatus": "approved",
       "shortHook": "A volatile economy map.",
       "editorialReview": {
         "status": "expert_only",
-        "reviewedAt": "2026-06-22",
+        "reviewedAt": "2026-07-02",
         "reviewedBy": "Codex editorial QA",
         "qualityScore": 3,
         "funScore": 4,
@@ -1369,7 +1369,7 @@
       "shortHook": "A labor-market map that is not just poverty.",
       "editorialReview": {
         "status": "daily_eligible",
-        "reviewedAt": "2026-06-22",
+        "reviewedAt": "2026-07-02",
         "reviewedBy": "Codex editorial QA",
         "qualityScore": 4,
         "funScore": 4,
@@ -1400,7 +1400,7 @@
       "shortHook": "A map of who is counted in the labor force.",
       "editorialReview": {
         "status": "practice_eligible",
-        "reviewedAt": "2026-06-22",
+        "reviewedAt": "2026-07-02",
         "reviewedBy": "Codex editorial QA",
         "qualityScore": 3,
         "funScore": 3,
@@ -1431,7 +1431,7 @@
       "shortHook": "A gendered work map.",
       "editorialReview": {
         "status": "expert_only",
-        "reviewedAt": "2026-06-22",
+        "reviewedAt": "2026-07-02",
         "reviewedBy": "Codex editorial QA",
         "qualityScore": 4,
         "funScore": 4,
@@ -1462,7 +1462,7 @@
       "shortHook": "The farming-workforce map.",
       "editorialReview": {
         "status": "daily_eligible",
-        "reviewedAt": "2026-06-22",
+        "reviewedAt": "2026-07-02",
         "reviewedBy": "Codex editorial QA",
         "qualityScore": 4,
         "funScore": 4,
@@ -1493,7 +1493,7 @@
       "shortHook": "The service-economy workforce map.",
       "editorialReview": {
         "status": "practice_eligible",
-        "reviewedAt": "2026-06-22",
+        "reviewedAt": "2026-07-02",
         "reviewedBy": "Codex editorial QA",
         "qualityScore": 3,
         "funScore": 3,
@@ -1524,7 +1524,7 @@
       "shortHook": "A labor-security map.",
       "editorialReview": {
         "status": "retired",
-        "reviewedAt": "2026-06-22",
+        "reviewedAt": "2026-07-02",
         "reviewedBy": "Codex editorial QA",
         "qualityScore": 2,
         "funScore": 2,
@@ -1555,7 +1555,7 @@
       "shortHook": "A work-structure map.",
       "editorialReview": {
         "status": "needs_review",
-        "reviewedAt": "2026-06-22",
+        "reviewedAt": "2026-07-02",
         "reviewedBy": "Codex editorial QA",
         "qualityScore": 2,
         "funScore": 2,
@@ -1579,14 +1579,14 @@
       "shortTitle": "Trade",
       "category": "economy",
       "difficulty": "standard",
-      "year": 2024,
-      "coverage": 141,
+      "year": 2025,
+      "coverage": 124,
       "path": "/data/v1/indicators/trade-share.json",
       "reviewStatus": "approved",
       "shortHook": "The open-economy map.",
       "editorialReview": {
         "status": "daily_eligible",
-        "reviewedAt": "2026-06-22",
+        "reviewedAt": "2026-07-02",
         "reviewedBy": "Codex editorial QA",
         "qualityScore": 4,
         "funScore": 4,
@@ -1613,14 +1613,14 @@
       "shortTitle": "Exports",
       "category": "economy",
       "difficulty": "standard",
-      "year": 2024,
-      "coverage": 141,
+      "year": 2025,
+      "coverage": 124,
       "path": "/data/v1/indicators/exports-share.json",
       "reviewStatus": "approved",
       "shortHook": "A map of economies selling outward.",
       "editorialReview": {
         "status": "expert_only",
-        "reviewedAt": "2026-06-22",
+        "reviewedAt": "2026-07-02",
         "reviewedBy": "Codex editorial QA",
         "qualityScore": 3,
         "funScore": 3,
@@ -1644,14 +1644,14 @@
       "shortTitle": "Imports",
       "category": "economy",
       "difficulty": "standard",
-      "year": 2024,
-      "coverage": 141,
+      "year": 2025,
+      "coverage": 124,
       "path": "/data/v1/indicators/imports-share.json",
       "reviewStatus": "approved",
       "shortHook": "A map of economies buying from abroad.",
       "editorialReview": {
         "status": "expert_only",
-        "reviewedAt": "2026-06-22",
+        "reviewedAt": "2026-07-02",
         "reviewedBy": "Codex editorial QA",
         "qualityScore": 3,
         "funScore": 3,
@@ -1676,13 +1676,13 @@
       "category": "economy",
       "difficulty": "expert",
       "year": 2024,
-      "coverage": 156,
+      "coverage": 158,
       "path": "/data/v1/indicators/fdi-inflows.json",
       "reviewStatus": "approved",
       "shortHook": "A volatile investment-flow map.",
       "editorialReview": {
         "status": "expert_only",
-        "reviewedAt": "2026-06-22",
+        "reviewedAt": "2026-07-02",
         "reviewedBy": "Codex editorial QA",
         "qualityScore": 3,
         "funScore": 3,
@@ -1707,13 +1707,13 @@
       "category": "economy",
       "difficulty": "expert",
       "year": 2024,
-      "coverage": 139,
+      "coverage": 141,
       "path": "/data/v1/indicators/current-account.json",
       "reviewStatus": "approved",
       "shortHook": "A surplus-and-deficit map.",
       "editorialReview": {
         "status": "expert_only",
-        "reviewedAt": "2026-06-22",
+        "reviewedAt": "2026-07-02",
         "reviewedBy": "Codex editorial QA",
         "qualityScore": 3,
         "funScore": 3,
@@ -1744,7 +1744,7 @@
       "shortHook": "A fiscal-capacity map.",
       "editorialReview": {
         "status": "needs_review",
-        "reviewedAt": "2026-06-22",
+        "reviewedAt": "2026-07-02",
         "reviewedBy": "Codex editorial QA",
         "qualityScore": 2,
         "funScore": 2,
@@ -1768,14 +1768,14 @@
       "shortTitle": "Population growth",
       "category": "demography",
       "difficulty": "standard",
-      "year": 2024,
+      "year": 2025,
       "coverage": 169,
       "path": "/data/v1/indicators/population-growth.json",
       "reviewStatus": "approved",
       "shortHook": "The momentum map after births, deaths, and migration all combine.",
       "editorialReview": {
         "status": "daily_eligible",
-        "reviewedAt": "2026-06-22",
+        "reviewedAt": "2026-07-02",
         "reviewedBy": "Codex editorial QA",
         "qualityScore": 4,
         "funScore": 4,
@@ -1806,7 +1806,7 @@
       "shortHook": "A stark map of childbirth risk.",
       "editorialReview": {
         "status": "daily_eligible",
-        "reviewedAt": "2026-06-22",
+        "reviewedAt": "2026-07-02",
         "reviewedBy": "Codex editorial QA",
         "qualityScore": 5,
         "funScore": 4,
@@ -1837,7 +1837,7 @@
       "shortHook": "A food-security map where missing and extreme values matter.",
       "editorialReview": {
         "status": "daily_eligible",
-        "reviewedAt": "2026-06-22",
+        "reviewedAt": "2026-07-02",
         "reviewedBy": "Codex editorial QA",
         "qualityScore": 4,
         "funScore": 4,
@@ -1868,7 +1868,7 @@
       "shortHook": "A vaccine-coverage map with conflict and health-capacity clues.",
       "editorialReview": {
         "status": "daily_eligible",
-        "reviewedAt": "2026-06-22",
+        "reviewedAt": "2026-07-02",
         "reviewedBy": "Codex editorial QA",
         "qualityScore": 4,
         "funScore": 4,
@@ -1901,7 +1901,7 @@
       "shortHook": "A routine childhood-vaccine map.",
       "editorialReview": {
         "status": "practice_eligible",
-        "reviewedAt": "2026-06-22",
+        "reviewedAt": "2026-07-02",
         "reviewedBy": "Codex editorial QA",
         "qualityScore": 3,
         "funScore": 3,
@@ -1934,7 +1934,7 @@
       "shortHook": "The doctor-density map.",
       "editorialReview": {
         "status": "daily_eligible",
-        "reviewedAt": "2026-06-22",
+        "reviewedAt": "2026-07-02",
         "reviewedBy": "Codex editorial QA",
         "qualityScore": 4,
         "funScore": 4,
@@ -1965,7 +1965,7 @@
       "shortHook": "A health-capacity map with post-Soviet and rich-country clues.",
       "editorialReview": {
         "status": "expert_only",
-        "reviewedAt": "2026-06-22",
+        "reviewedAt": "2026-07-02",
         "reviewedBy": "Codex editorial QA",
         "qualityScore": 3,
         "funScore": 4,
@@ -1989,14 +1989,14 @@
       "shortTitle": "Industry value added",
       "category": "economy",
       "difficulty": "standard",
-      "year": 2024,
-      "coverage": 149,
+      "year": 2025,
+      "coverage": 139,
       "path": "/data/v1/indicators/industry-share.json",
       "reviewStatus": "approved",
       "shortHook": "The industry-structure map.",
       "editorialReview": {
         "status": "daily_eligible",
-        "reviewedAt": "2026-06-22",
+        "reviewedAt": "2026-07-02",
         "reviewedBy": "Codex editorial QA",
         "qualityScore": 4,
         "funScore": 4,
@@ -2023,14 +2023,14 @@
       "shortTitle": "Services value added",
       "category": "economy",
       "difficulty": "standard",
-      "year": 2024,
-      "coverage": 149,
+      "year": 2025,
+      "coverage": 139,
       "path": "/data/v1/indicators/services-share.json",
       "reviewStatus": "approved",
       "shortHook": "The service-economy map.",
       "editorialReview": {
         "status": "practice_eligible",
-        "reviewedAt": "2026-06-22",
+        "reviewedAt": "2026-07-02",
         "reviewedBy": "Codex editorial QA",
         "qualityScore": 3,
         "funScore": 3,
@@ -2057,13 +2057,13 @@
       "category": "economy",
       "difficulty": "standard",
       "year": 2024,
-      "coverage": 141,
+      "coverage": 147,
       "path": "/data/v1/indicators/manufacturing-share.json",
       "reviewStatus": "approved",
       "shortHook": "A manufacturing-specific economy map.",
       "editorialReview": {
         "status": "daily_eligible",
-        "reviewedAt": "2026-06-22",
+        "reviewedAt": "2026-07-02",
         "reviewedBy": "Codex editorial QA",
         "qualityScore": 4,
         "funScore": 4,
@@ -2089,14 +2089,14 @@
       "shortTitle": "GDP growth",
       "category": "economy",
       "difficulty": "expert",
-      "year": 2024,
-      "coverage": 160,
+      "year": 2025,
+      "coverage": 157,
       "path": "/data/v1/indicators/gdp-growth.json",
       "reviewStatus": "approved",
       "shortHook": "A one-year macro momentum map.",
       "editorialReview": {
         "status": "expert_only",
-        "reviewedAt": "2026-06-22",
+        "reviewedAt": "2026-07-02",
         "reviewedBy": "Codex editorial QA",
         "qualityScore": 3,
         "funScore": 3,
@@ -2120,14 +2120,14 @@
       "shortTitle": "GNI per capita",
       "category": "development",
       "difficulty": "standard",
-      "year": 2024,
-      "coverage": 159,
+      "year": 2025,
+      "coverage": 155,
       "path": "/data/v1/indicators/gni-per-capita.json",
       "reviewStatus": "approved",
       "shortHook": "Income per person through national income.",
       "editorialReview": {
         "status": "practice_eligible",
-        "reviewedAt": "2026-06-22",
+        "reviewedAt": "2026-07-02",
         "reviewedBy": "Codex editorial QA",
         "qualityScore": 3,
         "funScore": 3,
@@ -2154,14 +2154,14 @@
       "shortTitle": "GNI per capita, PPP",
       "category": "development",
       "difficulty": "standard",
-      "year": 2024,
-      "coverage": 157,
+      "year": 2025,
+      "coverage": 154,
       "path": "/data/v1/indicators/gni-per-capita-ppp.json",
       "reviewStatus": "approved",
       "shortHook": "National income adjusted for local prices.",
       "editorialReview": {
         "status": "practice_eligible",
-        "reviewedAt": "2026-06-22",
+        "reviewedAt": "2026-07-02",
         "reviewedBy": "Codex editorial QA",
         "qualityScore": 3,
         "funScore": 3,
@@ -2189,13 +2189,13 @@
       "category": "economy",
       "difficulty": "expert",
       "year": 2024,
-      "coverage": 135,
+      "coverage": 138,
       "path": "/data/v1/indicators/remittances.json",
       "reviewStatus": "approved",
       "shortHook": "A migration-money map where small economies stand out.",
       "editorialReview": {
         "status": "expert_only",
-        "reviewedAt": "2026-06-22",
+        "reviewedAt": "2026-07-02",
         "reviewedBy": "Codex editorial QA",
         "qualityScore": 3,
         "funScore": 4,
@@ -2226,7 +2226,7 @@
       "shortHook": "A security-priority map, not a raw military-size map.",
       "editorialReview": {
         "status": "expert_only",
-        "reviewedAt": "2026-06-22",
+        "reviewedAt": "2026-07-02",
         "reviewedBy": "Codex editorial QA",
         "qualityScore": 3,
         "funScore": 4,
@@ -2257,7 +2257,7 @@
       "shortHook": "A manufacturing-composition map with export-hub outliers.",
       "editorialReview": {
         "status": "expert_only",
-        "reviewedAt": "2026-06-22",
+        "reviewedAt": "2026-07-02",
         "reviewedBy": "Codex editorial QA",
         "qualityScore": 3,
         "funScore": 4,
@@ -2288,7 +2288,7 @@
       "shortHook": "A political-representation map with non-obvious leaders.",
       "editorialReview": {
         "status": "daily_eligible",
-        "reviewedAt": "2026-06-22",
+        "reviewedAt": "2026-07-02",
         "reviewedBy": "Codex editorial QA",
         "qualityScore": 4,
         "funScore": 4,
@@ -2319,7 +2319,7 @@
       "shortHook": "The migrant-share map where Gulf states and small countries pop.",
       "editorialReview": {
         "status": "daily_eligible",
-        "reviewedAt": "2026-06-22",
+        "reviewedAt": "2026-07-02",
         "reviewedBy": "Codex editorial QA",
         "qualityScore": 4,
         "funScore": 5,
@@ -2350,7 +2350,7 @@
       "shortHook": "A volatile migration-balance map.",
       "editorialReview": {
         "status": "needs_review",
-        "reviewedAt": "2026-06-22",
+        "reviewedAt": "2026-07-02",
         "reviewedBy": "Codex editorial QA",
         "qualityScore": 2,
         "funScore": 3,
@@ -2381,7 +2381,7 @@
       "shortHook": "A travel-flow map where small and famous destinations stand out.",
       "editorialReview": {
         "status": "daily_eligible",
-        "reviewedAt": "2026-06-22",
+        "reviewedAt": "2026-07-02",
         "reviewedBy": "Codex editorial QA",
         "qualityScore": 4,
         "funScore": 5,
@@ -2412,7 +2412,7 @@
       "shortHook": "A tourism-dependence map, not a visitor-count map.",
       "editorialReview": {
         "status": "expert_only",
-        "reviewedAt": "2026-06-22",
+        "reviewedAt": "2026-07-02",
         "reviewedBy": "Codex editorial QA",
         "qualityScore": 3,
         "funScore": 4,
@@ -2443,7 +2443,7 @@
       "shortHook": "The electricity-consumption map.",
       "editorialReview": {
         "status": "daily_eligible",
-        "reviewedAt": "2026-06-22",
+        "reviewedAt": "2026-07-02",
         "reviewedBy": "Codex editorial QA",
         "qualityScore": 4,
         "funScore": 4,
@@ -2474,7 +2474,7 @@
       "shortHook": "The total-energy-consumption map.",
       "editorialReview": {
         "status": "daily_eligible",
-        "reviewedAt": "2026-06-22",
+        "reviewedAt": "2026-07-02",
         "reviewedBy": "Codex editorial QA",
         "qualityScore": 4,
         "funScore": 4,
@@ -2505,7 +2505,7 @@
       "shortHook": "The fossil-dependence map.",
       "editorialReview": {
         "status": "expert_only",
-        "reviewedAt": "2026-06-22",
+        "reviewedAt": "2026-07-02",
         "reviewedBy": "Codex editorial QA",
         "qualityScore": 3,
         "funScore": 4,
@@ -2536,7 +2536,7 @@
       "shortHook": "A conservation-designation map.",
       "editorialReview": {
         "status": "daily_eligible",
-        "reviewedAt": "2026-06-22",
+        "reviewedAt": "2026-07-02",
         "reviewedBy": "Codex editorial QA",
         "qualityScore": 4,
         "funScore": 4,
@@ -2567,7 +2567,7 @@
       "shortHook": "A marine-conservation map with island and coastal surprises.",
       "editorialReview": {
         "status": "practice_eligible",
-        "reviewedAt": "2026-06-22",
+        "reviewedAt": "2026-07-02",
         "reviewedBy": "Codex editorial QA",
         "qualityScore": 3,
         "funScore": 4,
@@ -2598,7 +2598,7 @@
       "shortHook": "A water-abundance map shaped by rivers, rainfall, and population.",
       "editorialReview": {
         "status": "daily_eligible",
-        "reviewedAt": "2026-06-22",
+        "reviewedAt": "2026-07-02",
         "reviewedBy": "Codex editorial QA",
         "qualityScore": 4,
         "funScore": 4,
@@ -2629,7 +2629,7 @@
       "shortHook": "A water-pressure map where arid countries can dominate.",
       "editorialReview": {
         "status": "expert_only",
-        "reviewedAt": "2026-06-22",
+        "reviewedAt": "2026-07-02",
         "reviewedBy": "Codex editorial QA",
         "qualityScore": 3,
         "funScore": 4,
@@ -2660,7 +2660,7 @@
       "shortHook": "The coastal-exposure map.",
       "editorialReview": {
         "status": "expert_only",
-        "reviewedAt": "2026-06-22",
+        "reviewedAt": "2026-07-02",
         "reviewedBy": "Codex editorial QA",
         "qualityScore": 3,
         "funScore": 4,
@@ -2691,7 +2691,7 @@
       "shortHook": "An intensive-farming input map.",
       "editorialReview": {
         "status": "needs_review",
-        "reviewedAt": "2026-06-22",
+        "reviewedAt": "2026-07-02",
         "reviewedBy": "Codex editorial QA",
         "qualityScore": 2,
         "funScore": 2,
@@ -2722,7 +2722,7 @@
       "shortHook": "A food-output trend map.",
       "editorialReview": {
         "status": "daily_eligible",
-        "reviewedAt": "2026-06-22",
+        "reviewedAt": "2026-07-02",
         "reviewedBy": "Codex editorial QA",
         "qualityScore": 4,
         "funScore": 4,
@@ -2753,7 +2753,7 @@
       "shortHook": "A crop-output trend map close to the food index.",
       "editorialReview": {
         "status": "retired",
-        "reviewedAt": "2026-06-22",
+        "reviewedAt": "2026-07-02",
         "reviewedBy": "Codex editorial QA",
         "qualityScore": 2,
         "funScore": 2,
@@ -2784,7 +2784,7 @@
       "shortHook": "A candidate map for health spending per person.",
       "editorialReview": {
         "status": "practice_eligible",
-        "reviewedAt": "2026-06-22",
+        "reviewedAt": "2026-07-02",
         "reviewedBy": "Codex editorial QA",
         "qualityScore": 3,
         "funScore": 4,
@@ -2815,7 +2815,7 @@
       "shortHook": "A candidate map for government health spending share.",
       "editorialReview": {
         "status": "expert_only",
-        "reviewedAt": "2026-06-22",
+        "reviewedAt": "2026-07-02",
         "reviewedBy": "Codex editorial QA",
         "qualityScore": 3,
         "funScore": 3,
@@ -2846,7 +2846,7 @@
       "shortHook": "A candidate map for private health spending share.",
       "editorialReview": {
         "status": "expert_only",
-        "reviewedAt": "2026-06-22",
+        "reviewedAt": "2026-07-02",
         "reviewedBy": "Codex editorial QA",
         "qualityScore": 3,
         "funScore": 3,
@@ -2877,7 +2877,7 @@
       "shortHook": "A candidate map for safely managed sanitation.",
       "editorialReview": {
         "status": "practice_eligible",
-        "reviewedAt": "2026-06-22",
+        "reviewedAt": "2026-07-02",
         "reviewedBy": "Codex editorial QA",
         "qualityScore": 3,
         "funScore": 4,
@@ -2908,7 +2908,7 @@
       "shortHook": "A candidate map for safely managed drinking water.",
       "editorialReview": {
         "status": "practice_eligible",
-        "reviewedAt": "2026-06-22",
+        "reviewedAt": "2026-07-02",
         "reviewedBy": "Codex editorial QA",
         "qualityScore": 3,
         "funScore": 4,
@@ -2939,7 +2939,7 @@
       "shortHook": "A candidate map for open defecation.",
       "editorialReview": {
         "status": "daily_eligible",
-        "reviewedAt": "2026-06-22",
+        "reviewedAt": "2026-07-02",
         "reviewedBy": "Codex editorial QA",
         "qualityScore": 4,
         "funScore": 4,
@@ -2970,7 +2970,7 @@
       "shortHook": "A candidate map for nurses and midwives.",
       "editorialReview": {
         "status": "needs_review",
-        "reviewedAt": "2026-06-22",
+        "reviewedAt": "2026-07-02",
         "reviewedBy": "Codex editorial QA",
         "qualityScore": 3,
         "funScore": 3,
@@ -3001,7 +3001,7 @@
       "shortHook": "A candidate map for neonatal mortality.",
       "editorialReview": {
         "status": "expert_only",
-        "reviewedAt": "2026-06-22",
+        "reviewedAt": "2026-07-02",
         "reviewedBy": "Codex editorial QA",
         "qualityScore": 3,
         "funScore": 3,
@@ -3032,7 +3032,7 @@
       "shortHook": "A candidate map for communicable disease deaths.",
       "editorialReview": {
         "status": "expert_only",
-        "reviewedAt": "2026-06-22",
+        "reviewedAt": "2026-07-02",
         "reviewedBy": "Codex editorial QA",
         "qualityScore": 3,
         "funScore": 3,
@@ -3063,7 +3063,7 @@
       "shortHook": "A candidate map for noncommunicable disease deaths.",
       "editorialReview": {
         "status": "retired",
-        "reviewedAt": "2026-06-22",
+        "reviewedAt": "2026-07-02",
         "reviewedBy": "Codex editorial QA",
         "qualityScore": 2,
         "funScore": 2,
@@ -3094,7 +3094,7 @@
       "shortHook": "A candidate map for hepatitis b immunization.",
       "editorialReview": {
         "status": "retired",
-        "reviewedAt": "2026-06-22",
+        "reviewedAt": "2026-07-02",
         "reviewedBy": "Codex editorial QA",
         "qualityScore": 2,
         "funScore": 2,
@@ -3125,7 +3125,7 @@
       "shortHook": "A candidate map for net primary enrollment.",
       "editorialReview": {
         "status": "needs_review",
-        "reviewedAt": "2026-06-22",
+        "reviewedAt": "2026-07-02",
         "reviewedBy": "pipeline-default-needs-review",
         "qualityScore": 2,
         "funScore": 2,
@@ -3155,7 +3155,7 @@
       "shortHook": "A candidate map for preprimary enrollment.",
       "editorialReview": {
         "status": "needs_review",
-        "reviewedAt": "2026-06-22",
+        "reviewedAt": "2026-07-02",
         "reviewedBy": "pipeline-default-needs-review",
         "qualityScore": 2,
         "funScore": 2,
@@ -3185,7 +3185,7 @@
       "shortHook": "A candidate map for private primary enrollment.",
       "editorialReview": {
         "status": "needs_review",
-        "reviewedAt": "2026-06-22",
+        "reviewedAt": "2026-07-02",
         "reviewedBy": "pipeline-default-needs-review",
         "qualityScore": 2,
         "funScore": 2,
@@ -3215,7 +3215,7 @@
       "shortHook": "A candidate map for primary enrollment gender parity.",
       "editorialReview": {
         "status": "needs_review",
-        "reviewedAt": "2026-06-22",
+        "reviewedAt": "2026-07-02",
         "reviewedBy": "pipeline-default-needs-review",
         "qualityScore": 2,
         "funScore": 2,
@@ -3245,7 +3245,7 @@
       "shortHook": "A candidate map for tertiary enrollment gender parity.",
       "editorialReview": {
         "status": "needs_review",
-        "reviewedAt": "2026-06-22",
+        "reviewedAt": "2026-07-02",
         "reviewedBy": "pipeline-default-needs-review",
         "qualityScore": 2,
         "funScore": 2,
@@ -3275,7 +3275,7 @@
       "shortHook": "A candidate map for permanent cropland.",
       "editorialReview": {
         "status": "daily_eligible",
-        "reviewedAt": "2026-06-22",
+        "reviewedAt": "2026-07-02",
         "reviewedBy": "Codex editorial QA",
         "qualityScore": 4,
         "funScore": 4,
@@ -3306,7 +3306,7 @@
       "shortHook": "A candidate map for arable land per person.",
       "editorialReview": {
         "status": "daily_eligible",
-        "reviewedAt": "2026-06-22",
+        "reviewedAt": "2026-07-02",
         "reviewedBy": "Codex editorial QA",
         "qualityScore": 4,
         "funScore": 4,
@@ -3337,7 +3337,7 @@
       "shortHook": "A candidate map for livestock production index.",
       "editorialReview": {
         "status": "needs_review",
-        "reviewedAt": "2026-06-22",
+        "reviewedAt": "2026-07-02",
         "reviewedBy": "Codex editorial QA",
         "qualityScore": 3,
         "funScore": 3,
@@ -3361,14 +3361,14 @@
       "shortTitle": "Agriculture value per worker",
       "category": "agriculture",
       "difficulty": "expert",
-      "year": 2024,
-      "coverage": 146,
+      "year": 2025,
+      "coverage": 139,
       "path": "/data/v1/indicators/agriculture-value-per-worker.json",
       "reviewStatus": "approved",
       "shortHook": "A candidate map for agriculture value per worker.",
       "editorialReview": {
         "status": "expert_only",
-        "reviewedAt": "2026-06-22",
+        "reviewedAt": "2026-07-02",
         "reviewedBy": "Codex editorial QA",
         "qualityScore": 3,
         "funScore": 3,
@@ -3392,14 +3392,14 @@
       "shortTitle": "Agriculture value growth",
       "category": "agriculture",
       "difficulty": "expert",
-      "year": 2024,
-      "coverage": 149,
+      "year": 2025,
+      "coverage": 142,
       "path": "/data/v1/indicators/agriculture-growth.json",
       "reviewStatus": "approved",
       "shortHook": "A candidate map for agriculture value growth.",
       "editorialReview": {
         "status": "needs_review",
-        "reviewedAt": "2026-06-22",
+        "reviewedAt": "2026-07-02",
         "reviewedBy": "Codex editorial QA",
         "qualityScore": 3,
         "funScore": 2,
@@ -3430,7 +3430,7 @@
       "shortHook": "A candidate map for net forest depletion.",
       "editorialReview": {
         "status": "needs_review",
-        "reviewedAt": "2026-06-22",
+        "reviewedAt": "2026-07-02",
         "reviewedBy": "pipeline-default-needs-review",
         "qualityScore": 2,
         "funScore": 2,
@@ -3460,7 +3460,7 @@
       "shortHook": "A candidate map for forest rents.",
       "editorialReview": {
         "status": "needs_review",
-        "reviewedAt": "2026-06-22",
+        "reviewedAt": "2026-07-02",
         "reviewedBy": "pipeline-default-needs-review",
         "qualityScore": 2,
         "funScore": 2,
@@ -3490,7 +3490,7 @@
       "shortHook": "A candidate map for agricultural raw material exports.",
       "editorialReview": {
         "status": "expert_only",
-        "reviewedAt": "2026-06-22",
+        "reviewedAt": "2026-07-02",
         "reviewedBy": "Codex editorial QA",
         "qualityScore": 3,
         "funScore": 3,
@@ -3521,7 +3521,7 @@
       "shortHook": "A candidate map for agricultural raw material imports.",
       "editorialReview": {
         "status": "retired",
-        "reviewedAt": "2026-06-22",
+        "reviewedAt": "2026-07-02",
         "reviewedBy": "Codex editorial QA",
         "qualityScore": 2,
         "funScore": 2,
@@ -3552,7 +3552,7 @@
       "shortHook": "A candidate map for average precipitation.",
       "editorialReview": {
         "status": "daily_eligible",
-        "reviewedAt": "2026-06-22",
+        "reviewedAt": "2026-07-02",
         "reviewedBy": "Codex editorial QA",
         "qualityScore": 4,
         "funScore": 4,
@@ -3583,7 +3583,7 @@
       "shortHook": "A candidate map for water stress.",
       "editorialReview": {
         "status": "expert_only",
-        "reviewedAt": "2026-06-22",
+        "reviewedAt": "2026-07-02",
         "reviewedBy": "Codex editorial QA",
         "qualityScore": 4,
         "funScore": 4,
@@ -3614,7 +3614,7 @@
       "shortHook": "A candidate map for agricultural water withdrawals.",
       "editorialReview": {
         "status": "practice_eligible",
-        "reviewedAt": "2026-06-22",
+        "reviewedAt": "2026-07-02",
         "reviewedBy": "Codex editorial QA",
         "qualityScore": 4,
         "funScore": 4,
@@ -3645,7 +3645,7 @@
       "shortHook": "A candidate map for industrial water withdrawals.",
       "editorialReview": {
         "status": "practice_eligible",
-        "reviewedAt": "2026-06-22",
+        "reviewedAt": "2026-07-02",
         "reviewedBy": "Codex editorial QA",
         "qualityScore": 3,
         "funScore": 4,
@@ -3676,7 +3676,7 @@
       "shortHook": "A candidate map for domestic water withdrawals.",
       "editorialReview": {
         "status": "practice_eligible",
-        "reviewedAt": "2026-06-22",
+        "reviewedAt": "2026-07-02",
         "reviewedBy": "Codex editorial QA",
         "qualityScore": 3,
         "funScore": 4,
@@ -3707,7 +3707,7 @@
       "shortHook": "A candidate map for water productivity.",
       "editorialReview": {
         "status": "expert_only",
-        "reviewedAt": "2026-06-22",
+        "reviewedAt": "2026-07-02",
         "reviewedBy": "Codex editorial QA",
         "qualityScore": 3,
         "funScore": 4,
@@ -3738,7 +3738,7 @@
       "shortHook": "A candidate map for protected land and seas.",
       "editorialReview": {
         "status": "daily_eligible",
-        "reviewedAt": "2026-06-22",
+        "reviewedAt": "2026-07-02",
         "reviewedBy": "Codex editorial QA",
         "qualityScore": 4,
         "funScore": 4,
@@ -3769,7 +3769,7 @@
       "shortHook": "A candidate map for population above pm2.5 guideline.",
       "editorialReview": {
         "status": "needs_review",
-        "reviewedAt": "2026-06-22",
+        "reviewedAt": "2026-07-02",
         "reviewedBy": "pipeline-default-needs-review",
         "qualityScore": 2,
         "funScore": 2,
@@ -3793,13 +3793,13 @@
       "category": "environment",
       "difficulty": "expert",
       "year": 2024,
-      "coverage": 156,
+      "coverage": 159,
       "path": "/data/v1/indicators/carbon-intensity-gdp.json",
       "reviewStatus": "approved",
       "shortHook": "A candidate map for carbon intensity of gdp.",
       "editorialReview": {
         "status": "expert_only",
-        "reviewedAt": "2026-06-22",
+        "reviewedAt": "2026-07-02",
         "reviewedBy": "Codex editorial QA",
         "qualityScore": 4,
         "funScore": 4,
@@ -3830,7 +3830,7 @@
       "shortHook": "A candidate map for natural resource rents.",
       "editorialReview": {
         "status": "practice_eligible",
-        "reviewedAt": "2026-06-22",
+        "reviewedAt": "2026-07-02",
         "reviewedBy": "Codex editorial QA",
         "qualityScore": 4,
         "funScore": 4,
@@ -3861,7 +3861,7 @@
       "shortHook": "A candidate map for natural resource depletion.",
       "editorialReview": {
         "status": "needs_review",
-        "reviewedAt": "2026-06-22",
+        "reviewedAt": "2026-07-02",
         "reviewedBy": "pipeline-default-needs-review",
         "qualityScore": 2,
         "funScore": 2,
@@ -3891,7 +3891,7 @@
       "shortHook": "A candidate map for particulate emission damage.",
       "editorialReview": {
         "status": "needs_review",
-        "reviewedAt": "2026-06-22",
+        "reviewedAt": "2026-07-02",
         "reviewedBy": "pipeline-default-needs-review",
         "qualityScore": 2,
         "funScore": 2,
@@ -3921,7 +3921,7 @@
       "shortHook": "A candidate map for hydroelectricity share.",
       "editorialReview": {
         "status": "practice_eligible",
-        "reviewedAt": "2026-06-22",
+        "reviewedAt": "2026-07-02",
         "reviewedBy": "Codex editorial QA",
         "qualityScore": 3,
         "funScore": 4,
@@ -3952,7 +3952,7 @@
       "shortHook": "A candidate map for coal electricity share.",
       "editorialReview": {
         "status": "daily_eligible",
-        "reviewedAt": "2026-06-22",
+        "reviewedAt": "2026-07-02",
         "reviewedBy": "Codex editorial QA",
         "qualityScore": 4,
         "funScore": 4,
@@ -3983,7 +3983,7 @@
       "shortHook": "A candidate map for natural gas electricity share.",
       "editorialReview": {
         "status": "practice_eligible",
-        "reviewedAt": "2026-06-22",
+        "reviewedAt": "2026-07-02",
         "reviewedBy": "Codex editorial QA",
         "qualityScore": 3,
         "funScore": 4,
@@ -4014,7 +4014,7 @@
       "shortHook": "A candidate map for oil electricity share.",
       "editorialReview": {
         "status": "needs_review",
-        "reviewedAt": "2026-06-22",
+        "reviewedAt": "2026-07-02",
         "reviewedBy": "pipeline-default-needs-review",
         "qualityScore": 2,
         "funScore": 2,
@@ -4044,7 +4044,7 @@
       "shortHook": "A candidate map for nuclear electricity share.",
       "editorialReview": {
         "status": "needs_review",
-        "reviewedAt": "2026-06-22",
+        "reviewedAt": "2026-07-02",
         "reviewedBy": "pipeline-default-needs-review",
         "qualityScore": 2,
         "funScore": 2,
@@ -4074,7 +4074,7 @@
       "shortHook": "A candidate map for fossil electricity share.",
       "editorialReview": {
         "status": "needs_review",
-        "reviewedAt": "2026-06-22",
+        "reviewedAt": "2026-07-02",
         "reviewedBy": "pipeline-default-needs-review",
         "qualityScore": 2,
         "funScore": 2,
@@ -4104,7 +4104,7 @@
       "shortHook": "A candidate map for non-hydro renewable electricity.",
       "editorialReview": {
         "status": "practice_eligible",
-        "reviewedAt": "2026-06-22",
+        "reviewedAt": "2026-07-02",
         "reviewedBy": "Codex editorial QA",
         "qualityScore": 3,
         "funScore": 4,
@@ -4135,7 +4135,7 @@
       "shortHook": "A candidate map for rural electricity access.",
       "editorialReview": {
         "status": "needs_review",
-        "reviewedAt": "2026-06-22",
+        "reviewedAt": "2026-07-02",
         "reviewedBy": "pipeline-default-needs-review",
         "qualityScore": 2,
         "funScore": 2,
@@ -4165,7 +4165,7 @@
       "shortHook": "A candidate map for rural clean cooking access.",
       "editorialReview": {
         "status": "retired",
-        "reviewedAt": "2026-06-22",
+        "reviewedAt": "2026-07-02",
         "reviewedBy": "Codex editorial QA",
         "qualityScore": 2,
         "funScore": 2,
@@ -4189,14 +4189,14 @@
       "shortTitle": "GDP per person growth",
       "category": "economy",
       "difficulty": "expert",
-      "year": 2024,
-      "coverage": 160,
+      "year": 2025,
+      "coverage": 151,
       "path": "/data/v1/indicators/gdp-per-capita-growth.json",
       "reviewStatus": "approved",
       "shortHook": "A candidate map for gdp per person growth.",
       "editorialReview": {
         "status": "retired",
-        "reviewedAt": "2026-06-22",
+        "reviewedAt": "2026-07-02",
         "reviewedBy": "Codex editorial QA",
         "qualityScore": 2,
         "funScore": 2,
@@ -4220,14 +4220,14 @@
       "shortTitle": "Government consumption",
       "category": "economy",
       "difficulty": "expert",
-      "year": 2023,
-      "coverage": 145,
+      "year": 2025,
+      "coverage": 121,
       "path": "/data/v1/indicators/government-consumption.json",
       "reviewStatus": "approved",
       "shortHook": "A candidate map for government consumption.",
       "editorialReview": {
         "status": "needs_review",
-        "reviewedAt": "2026-06-22",
+        "reviewedAt": "2026-07-02",
         "reviewedBy": "pipeline-default-needs-review",
         "qualityScore": 2,
         "funScore": 2,
@@ -4250,14 +4250,14 @@
       "shortTitle": "Household consumption",
       "category": "economy",
       "difficulty": "standard",
-      "year": 2023,
-      "coverage": 144,
+      "year": 2025,
+      "coverage": 120,
       "path": "/data/v1/indicators/household-consumption.json",
       "reviewStatus": "approved",
       "shortHook": "A candidate map for household consumption.",
       "editorialReview": {
         "status": "needs_review",
-        "reviewedAt": "2026-06-22",
+        "reviewedAt": "2026-07-02",
         "reviewedBy": "pipeline-default-needs-review",
         "qualityScore": 2,
         "funScore": 2,
@@ -4280,14 +4280,14 @@
       "shortTitle": "Gross capital formation",
       "category": "economy",
       "difficulty": "standard",
-      "year": 2024,
-      "coverage": 139,
+      "year": 2025,
+      "coverage": 120,
       "path": "/data/v1/indicators/gross-capital-formation.json",
       "reviewStatus": "approved",
       "shortHook": "A candidate map for gross capital formation.",
       "editorialReview": {
         "status": "needs_review",
-        "reviewedAt": "2026-06-22",
+        "reviewedAt": "2026-07-02",
         "reviewedBy": "pipeline-default-needs-review",
         "qualityScore": 2,
         "funScore": 2,
@@ -4311,13 +4311,13 @@
       "category": "economy",
       "difficulty": "standard",
       "year": 2024,
-      "coverage": 139,
+      "coverage": 147,
       "path": "/data/v1/indicators/fixed-capital-formation.json",
       "reviewStatus": "approved",
       "shortHook": "A candidate map for fixed capital formation.",
       "editorialReview": {
         "status": "expert_only",
-        "reviewedAt": "2026-06-22",
+        "reviewedAt": "2026-07-02",
         "reviewedBy": "Codex editorial QA",
         "qualityScore": 3,
         "funScore": 3,
@@ -4342,13 +4342,13 @@
       "category": "economy",
       "difficulty": "standard",
       "year": 2024,
-      "coverage": 122,
+      "coverage": 131,
       "path": "/data/v1/indicators/gross-savings-gdp.json",
       "reviewStatus": "approved",
       "shortHook": "A candidate map for gross savings.",
       "editorialReview": {
         "status": "expert_only",
-        "reviewedAt": "2026-06-22",
+        "reviewedAt": "2026-07-02",
         "reviewedBy": "Codex editorial QA",
         "qualityScore": 3,
         "funScore": 3,
@@ -4372,14 +4372,14 @@
       "shortTitle": "Domestic savings",
       "category": "economy",
       "difficulty": "expert",
-      "year": 2024,
-      "coverage": 139,
+      "year": 2025,
+      "coverage": 122,
       "path": "/data/v1/indicators/domestic-savings.json",
       "reviewStatus": "approved",
       "shortHook": "A candidate map for domestic savings.",
       "editorialReview": {
         "status": "expert_only",
-        "reviewedAt": "2026-06-22",
+        "reviewedAt": "2026-07-02",
         "reviewedBy": "Codex editorial QA",
         "qualityScore": 3,
         "funScore": 3,
@@ -4410,7 +4410,7 @@
       "shortHook": "A candidate map for government revenue excluding grants.",
       "editorialReview": {
         "status": "needs_review",
-        "reviewedAt": "2026-06-22",
+        "reviewedAt": "2026-07-02",
         "reviewedBy": "pipeline-default-needs-review",
         "qualityScore": 2,
         "funScore": 2,
@@ -4440,7 +4440,7 @@
       "shortHook": "A candidate map for government expense.",
       "editorialReview": {
         "status": "needs_review",
-        "reviewedAt": "2026-06-22",
+        "reviewedAt": "2026-07-02",
         "reviewedBy": "pipeline-default-needs-review",
         "qualityScore": 2,
         "funScore": 2,
@@ -4464,13 +4464,13 @@
       "category": "economy",
       "difficulty": "expert",
       "year": 2024,
-      "coverage": 141,
+      "coverage": 142,
       "path": "/data/v1/indicators/fdi-outflows.json",
       "reviewStatus": "approved",
       "shortHook": "A candidate map for foreign direct investment outflows.",
       "editorialReview": {
         "status": "expert_only",
-        "reviewedAt": "2026-06-22",
+        "reviewedAt": "2026-07-02",
         "reviewedBy": "Codex editorial QA",
         "qualityScore": 3,
         "funScore": 3,
@@ -4495,13 +4495,13 @@
       "category": "economy",
       "difficulty": "expert",
       "year": 2024,
-      "coverage": 130,
+      "coverage": 132,
       "path": "/data/v1/indicators/domestic-credit-private-sector.json",
       "reviewStatus": "approved",
       "shortHook": "A candidate map for private-sector bank credit.",
       "editorialReview": {
         "status": "needs_review",
-        "reviewedAt": "2026-06-22",
+        "reviewedAt": "2026-07-02",
         "reviewedBy": "pipeline-default-needs-review",
         "qualityScore": 2,
         "funScore": 2,
@@ -4531,7 +4531,7 @@
       "shortHook": "A candidate map for account ownership.",
       "editorialReview": {
         "status": "daily_eligible",
-        "reviewedAt": "2026-06-22",
+        "reviewedAt": "2026-07-02",
         "reviewedBy": "Codex editorial QA",
         "qualityScore": 4,
         "funScore": 4,
@@ -4562,7 +4562,7 @@
       "shortHook": "A candidate map for male labor force participation.",
       "editorialReview": {
         "status": "needs_review",
-        "reviewedAt": "2026-06-22",
+        "reviewedAt": "2026-07-02",
         "reviewedBy": "pipeline-default-needs-review",
         "qualityScore": 2,
         "funScore": 2,
@@ -4592,7 +4592,7 @@
       "shortHook": "A candidate map for female-to-male labor force ratio.",
       "editorialReview": {
         "status": "practice_eligible",
-        "reviewedAt": "2026-06-22",
+        "reviewedAt": "2026-07-02",
         "reviewedBy": "Codex editorial QA",
         "qualityScore": 4,
         "funScore": 4,
@@ -4623,7 +4623,7 @@
       "shortHook": "A candidate map for youth labor force participation.",
       "editorialReview": {
         "status": "expert_only",
-        "reviewedAt": "2026-06-22",
+        "reviewedAt": "2026-07-02",
         "reviewedBy": "Codex editorial QA",
         "qualityScore": 3,
         "funScore": 3,
@@ -4654,7 +4654,7 @@
       "shortHook": "A candidate map for youth unemployment.",
       "editorialReview": {
         "status": "practice_eligible",
-        "reviewedAt": "2026-06-22",
+        "reviewedAt": "2026-07-02",
         "reviewedBy": "Codex editorial QA",
         "qualityScore": 4,
         "funScore": 4,
@@ -4685,7 +4685,7 @@
       "shortHook": "A candidate map for male unemployment.",
       "editorialReview": {
         "status": "needs_review",
-        "reviewedAt": "2026-06-22",
+        "reviewedAt": "2026-07-02",
         "reviewedBy": "pipeline-default-needs-review",
         "qualityScore": 2,
         "funScore": 2,
@@ -4715,7 +4715,7 @@
       "shortHook": "A candidate map for female unemployment.",
       "editorialReview": {
         "status": "expert_only",
-        "reviewedAt": "2026-06-22",
+        "reviewedAt": "2026-07-02",
         "reviewedBy": "Codex editorial QA",
         "qualityScore": 3,
         "funScore": 3,
@@ -4746,7 +4746,7 @@
       "shortHook": "A candidate map for employment-to-population ratio.",
       "editorialReview": {
         "status": "expert_only",
-        "reviewedAt": "2026-06-22",
+        "reviewedAt": "2026-07-02",
         "reviewedBy": "Codex editorial QA",
         "qualityScore": 3,
         "funScore": 3,
@@ -4777,7 +4777,7 @@
       "shortHook": "A candidate map for wage and salaried workers.",
       "editorialReview": {
         "status": "expert_only",
-        "reviewedAt": "2026-06-22",
+        "reviewedAt": "2026-07-02",
         "reviewedBy": "Codex editorial QA",
         "qualityScore": 3,
         "funScore": 3,
@@ -4808,7 +4808,7 @@
       "shortHook": "A candidate map for employers share.",
       "editorialReview": {
         "status": "expert_only",
-        "reviewedAt": "2026-06-22",
+        "reviewedAt": "2026-07-02",
         "reviewedBy": "Codex editorial QA",
         "qualityScore": 4,
         "funScore": 3,
@@ -4839,7 +4839,7 @@
       "shortHook": "A candidate map for employment in industry.",
       "editorialReview": {
         "status": "practice_eligible",
-        "reviewedAt": "2026-06-22",
+        "reviewedAt": "2026-07-02",
         "reviewedBy": "Codex editorial QA",
         "qualityScore": 4,
         "funScore": 4,
@@ -4870,7 +4870,7 @@
       "shortHook": "A candidate map for fixed telephone subscriptions.",
       "editorialReview": {
         "status": "practice_eligible",
-        "reviewedAt": "2026-06-22",
+        "reviewedAt": "2026-07-02",
         "reviewedBy": "Codex editorial QA",
         "qualityScore": 3,
         "funScore": 4,
@@ -4894,14 +4894,14 @@
       "shortTitle": "Commercial bank branches",
       "category": "connectivity",
       "difficulty": "expert",
-      "year": 2022,
-      "coverage": 138,
+      "year": 2024,
+      "coverage": 128,
       "path": "/data/v1/indicators/bank-branches.json",
       "reviewStatus": "approved",
       "shortHook": "A candidate map for commercial bank branches.",
       "editorialReview": {
         "status": "expert_only",
-        "reviewedAt": "2026-06-22",
+        "reviewedAt": "2026-07-02",
         "reviewedBy": "Codex editorial QA",
         "qualityScore": 3,
         "funScore": 3,
@@ -4932,7 +4932,7 @@
       "shortHook": "A candidate map for logistics performance.",
       "editorialReview": {
         "status": "needs_review",
-        "reviewedAt": "2026-06-22",
+        "reviewedAt": "2026-07-02",
         "reviewedBy": "pipeline-default-needs-review",
         "qualityScore": 2,
         "funScore": 2,
@@ -4962,7 +4962,7 @@
       "shortHook": "A candidate map for logistics infrastructure quality.",
       "editorialReview": {
         "status": "needs_review",
-        "reviewedAt": "2026-06-22",
+        "reviewedAt": "2026-07-02",
         "reviewedBy": "Codex editorial QA",
         "qualityScore": 2,
         "funScore": 2,
@@ -4993,7 +4993,7 @@
       "shortHook": "A candidate map for largest city share.",
       "editorialReview": {
         "status": "practice_eligible",
-        "reviewedAt": "2026-06-22",
+        "reviewedAt": "2026-07-02",
         "reviewedBy": "Codex editorial QA",
         "qualityScore": 3,
         "funScore": 4,
@@ -5024,7 +5024,7 @@
       "shortHook": "A candidate map for urban slum population.",
       "editorialReview": {
         "status": "practice_eligible",
-        "reviewedAt": "2026-06-22",
+        "reviewedAt": "2026-07-02",
         "reviewedBy": "Codex editorial QA",
         "qualityScore": 4,
         "funScore": 4,
@@ -5048,14 +5048,14 @@
       "shortTitle": "Urban population growth",
       "category": "settlement",
       "difficulty": "standard",
-      "year": 2024,
+      "year": 2025,
       "coverage": 169,
       "path": "/data/v1/indicators/urban-population-growth.json",
       "reviewStatus": "approved",
       "shortHook": "A candidate map for urban population growth.",
       "editorialReview": {
         "status": "practice_eligible",
-        "reviewedAt": "2026-06-22",
+        "reviewedAt": "2026-07-02",
         "reviewedBy": "Codex editorial QA",
         "qualityScore": 4,
         "funScore": 4,
@@ -5086,7 +5086,7 @@
       "shortHook": "A candidate map for tourism expenditures.",
       "editorialReview": {
         "status": "needs_review",
-        "reviewedAt": "2026-06-22",
+        "reviewedAt": "2026-07-02",
         "reviewedBy": "pipeline-default-needs-review",
         "qualityScore": 2,
         "funScore": 2,
@@ -5116,7 +5116,7 @@
       "shortHook": "A candidate map for low-elevation land.",
       "editorialReview": {
         "status": "expert_only",
-        "reviewedAt": "2026-06-22",
+        "reviewedAt": "2026-07-02",
         "reviewedBy": "Codex editorial QA",
         "qualityScore": 3,
         "funScore": 3,
@@ -5147,7 +5147,7 @@
       "shortHook": "A candidate map for women, business and the law index.",
       "editorialReview": {
         "status": "expert_only",
-        "reviewedAt": "2026-06-22",
+        "reviewedAt": "2026-07-02",
         "reviewedBy": "Codex editorial QA",
         "qualityScore": 4,
         "funScore": 4,
@@ -5178,7 +5178,7 @@
       "shortHook": "A candidate map for statistical data infrastructure.",
       "editorialReview": {
         "status": "needs_review",
-        "reviewedAt": "2026-06-22",
+        "reviewedAt": "2026-07-02",
         "reviewedBy": "pipeline-default-needs-review",
         "qualityScore": 2,
         "funScore": 2,
@@ -5208,7 +5208,7 @@
       "shortHook": "A classroom-workforce map.",
       "editorialReview": {
         "status": "daily_eligible",
-        "reviewedAt": "2026-06-22",
+        "reviewedAt": "2026-07-02",
         "reviewedBy": "Codex editorial QA",
         "qualityScore": 4,
         "funScore": 4,
@@ -5239,7 +5239,7 @@
       "shortHook": "A budget-priority education map.",
       "editorialReview": {
         "status": "daily_eligible",
-        "reviewedAt": "2026-06-22",
+        "reviewedAt": "2026-07-02",
         "reviewedBy": "Codex editorial QA",
         "qualityScore": 4,
         "funScore": 4,
@@ -5270,7 +5270,7 @@
       "shortHook": "A raw grain-area map for expert review.",
       "editorialReview": {
         "status": "daily_eligible",
-        "reviewedAt": "2026-06-22",
+        "reviewedAt": "2026-07-02",
         "reviewedBy": "Codex editorial QA",
         "qualityScore": 4,
         "funScore": 4,
@@ -5301,7 +5301,7 @@
       "shortHook": "A coastal city exposure map.",
       "editorialReview": {
         "status": "expert_only",
-        "reviewedAt": "2026-06-22",
+        "reviewedAt": "2026-07-02",
         "reviewedBy": "Codex editorial QA",
         "qualityScore": 3,
         "funScore": 4,
@@ -5332,7 +5332,7 @@
       "shortHook": "A coastal rural exposure map.",
       "editorialReview": {
         "status": "expert_only",
-        "reviewedAt": "2026-06-22",
+        "reviewedAt": "2026-07-02",
         "reviewedBy": "Codex editorial QA",
         "qualityScore": 3,
         "funScore": 4,
@@ -5363,7 +5363,7 @@
       "shortHook": "A low-lying urban land map.",
       "editorialReview": {
         "status": "expert_only",
-        "reviewedAt": "2026-06-22",
+        "reviewedAt": "2026-07-02",
         "reviewedBy": "Codex editorial QA",
         "qualityScore": 3,
         "funScore": 4,
@@ -5394,7 +5394,7 @@
       "shortHook": "A low-lying rural land map.",
       "editorialReview": {
         "status": "expert_only",
-        "reviewedAt": "2026-06-22",
+        "reviewedAt": "2026-07-02",
         "reviewedBy": "Codex editorial QA",
         "qualityScore": 3,
         "funScore": 4,
@@ -5418,14 +5418,14 @@
       "shortTitle": "Rural population growth",
       "category": "settlement",
       "difficulty": "standard",
-      "year": 2024,
+      "year": 2025,
       "coverage": 168,
       "path": "/data/v1/indicators/rural-population-growth.json",
       "reviewStatus": "approved",
       "shortHook": "A rural-change map.",
       "editorialReview": {
         "status": "daily_eligible",
-        "reviewedAt": "2026-06-22",
+        "reviewedAt": "2026-07-02",
         "reviewedBy": "Codex editorial QA",
         "qualityScore": 4,
         "funScore": 4,
@@ -5450,13 +5450,13 @@
       "category": "connectivity",
       "difficulty": "expert",
       "year": 2024,
-      "coverage": 135,
+      "coverage": 137,
       "path": "/data/v1/indicators/ict-service-exports.json",
       "reviewStatus": "approved",
       "shortHook": "A digital-services export map.",
       "editorialReview": {
         "status": "practice_eligible",
-        "reviewedAt": "2026-06-22",
+        "reviewedAt": "2026-07-02",
         "reviewedBy": "Codex editorial QA",
         "qualityScore": 4,
         "funScore": 4,
@@ -5487,7 +5487,7 @@
       "shortHook": "A raw air-travel volume map.",
       "editorialReview": {
         "status": "expert_only",
-        "reviewedAt": "2026-06-22",
+        "reviewedAt": "2026-07-02",
         "reviewedBy": "Codex editorial QA",
         "qualityScore": 3,
         "funScore": 3,
@@ -5518,7 +5518,7 @@
       "shortHook": "A flight-network volume map.",
       "editorialReview": {
         "status": "expert_only",
-        "reviewedAt": "2026-06-22",
+        "reviewedAt": "2026-07-02",
         "reviewedBy": "Codex editorial QA",
         "qualityScore": 3,
         "funScore": 3,
@@ -5543,13 +5543,13 @@
       "category": "connectivity",
       "difficulty": "expert",
       "year": 2019,
-      "coverage": 128,
+      "coverage": 127,
       "path": "/data/v1/indicators/container-port-traffic.json",
       "reviewStatus": "approved",
       "shortHook": "A global shipping-hub map.",
       "editorialReview": {
         "status": "expert_only",
-        "reviewedAt": "2026-06-22",
+        "reviewedAt": "2026-07-02",
         "reviewedBy": "Codex editorial QA",
         "qualityScore": 3,
         "funScore": 4,
@@ -5580,7 +5580,7 @@
       "shortHook": "A border-clearance logistics map.",
       "editorialReview": {
         "status": "needs_review",
-        "reviewedAt": "2026-06-22",
+        "reviewedAt": "2026-07-02",
         "reviewedBy": "pipeline-default-needs-review",
         "qualityScore": 2,
         "funScore": 2,
@@ -5610,7 +5610,7 @@
       "shortHook": "A shipment-tracking logistics map.",
       "editorialReview": {
         "status": "needs_review",
-        "reviewedAt": "2026-06-22",
+        "reviewedAt": "2026-07-02",
         "reviewedBy": "pipeline-default-needs-review",
         "qualityScore": 2,
         "funScore": 2,
@@ -5640,7 +5640,7 @@
       "shortHook": "A delivery-reliability logistics map.",
       "editorialReview": {
         "status": "needs_review",
-        "reviewedAt": "2026-06-22",
+        "reviewedAt": "2026-07-02",
         "reviewedBy": "pipeline-default-needs-review",
         "qualityScore": 2,
         "funScore": 2,
@@ -5670,7 +5670,7 @@
       "shortHook": "A youth-work participation map.",
       "editorialReview": {
         "status": "daily_eligible",
-        "reviewedAt": "2026-06-22",
+        "reviewedAt": "2026-07-02",
         "reviewedBy": "Codex editorial QA",
         "qualityScore": 4,
         "funScore": 4,
@@ -5701,7 +5701,7 @@
       "shortHook": "A gender-balance map inside primary classrooms.",
       "editorialReview": {
         "status": "practice_eligible",
-        "reviewedAt": "2026-06-22",
+        "reviewedAt": "2026-07-02",
         "reviewedBy": "Codex editorial QA",
         "qualityScore": 3,
         "funScore": 3,
@@ -5732,7 +5732,7 @@
       "shortHook": "A harder gender-balance map in secondary school.",
       "editorialReview": {
         "status": "practice_eligible",
-        "reviewedAt": "2026-06-22",
+        "reviewedAt": "2026-07-02",
         "reviewedBy": "Codex editorial QA",
         "qualityScore": 3,
         "funScore": 3,
@@ -5763,7 +5763,7 @@
       "shortHook": "A first-grade entry map.",
       "editorialReview": {
         "status": "practice_eligible",
-        "reviewedAt": "2026-06-22",
+        "reviewedAt": "2026-07-02",
         "reviewedBy": "Codex editorial QA",
         "qualityScore": 3,
         "funScore": 3,
@@ -5794,7 +5794,7 @@
       "shortHook": "A map of who is missing from primary school.",
       "editorialReview": {
         "status": "daily_eligible",
-        "reviewedAt": "2026-06-22",
+        "reviewedAt": "2026-07-02",
         "reviewedBy": "Codex editorial QA",
         "qualityScore": 4,
         "funScore": 4,
@@ -5825,7 +5825,7 @@
       "shortHook": "A school-policy duration map.",
       "editorialReview": {
         "status": "daily_eligible",
-        "reviewedAt": "2026-06-22",
+        "reviewedAt": "2026-07-02",
         "reviewedBy": "Codex editorial QA",
         "qualityScore": 4,
         "funScore": 4,
@@ -5856,7 +5856,7 @@
       "shortHook": "A women's work participation map.",
       "editorialReview": {
         "status": "expert_only",
-        "reviewedAt": "2026-06-22",
+        "reviewedAt": "2026-07-02",
         "reviewedBy": "Codex editorial QA",
         "qualityScore": 4,
         "funScore": 4,
@@ -5887,7 +5887,7 @@
       "shortHook": "A men's work participation map.",
       "editorialReview": {
         "status": "expert_only",
-        "reviewedAt": "2026-06-22",
+        "reviewedAt": "2026-07-02",
         "reviewedBy": "Codex editorial QA",
         "qualityScore": 3,
         "funScore": 3,
@@ -5918,7 +5918,7 @@
       "shortHook": "A formal-work map for women.",
       "editorialReview": {
         "status": "expert_only",
-        "reviewedAt": "2026-06-22",
+        "reviewedAt": "2026-07-02",
         "reviewedBy": "Codex editorial QA",
         "qualityScore": 4,
         "funScore": 4,
@@ -5949,7 +5949,7 @@
       "shortHook": "A formal-work map for men.",
       "editorialReview": {
         "status": "needs_review",
-        "reviewedAt": "2026-06-22",
+        "reviewedAt": "2026-07-02",
         "reviewedBy": "pipeline-default-needs-review",
         "qualityScore": 2,
         "funScore": 2,
@@ -5979,7 +5979,7 @@
       "shortHook": "A women's informal-work risk map.",
       "editorialReview": {
         "status": "expert_only",
-        "reviewedAt": "2026-06-22",
+        "reviewedAt": "2026-07-02",
         "reviewedBy": "Codex editorial QA",
         "qualityScore": 4,
         "funScore": 4,
@@ -6010,7 +6010,7 @@
       "shortHook": "A men's informal-work risk map.",
       "editorialReview": {
         "status": "needs_review",
-        "reviewedAt": "2026-06-22",
+        "reviewedAt": "2026-07-02",
         "reviewedBy": "pipeline-default-needs-review",
         "qualityScore": 2,
         "funScore": 2,
@@ -6040,7 +6040,7 @@
       "shortHook": "A gendered farming-work map.",
       "editorialReview": {
         "status": "expert_only",
-        "reviewedAt": "2026-06-22",
+        "reviewedAt": "2026-07-02",
         "reviewedBy": "Codex editorial QA",
         "qualityScore": 4,
         "funScore": 4,
@@ -6071,7 +6071,7 @@
       "shortHook": "A men's farming-work map.",
       "editorialReview": {
         "status": "needs_review",
-        "reviewedAt": "2026-06-22",
+        "reviewedAt": "2026-07-02",
         "reviewedBy": "pipeline-default-needs-review",
         "qualityScore": 2,
         "funScore": 2,
@@ -6101,7 +6101,7 @@
       "shortHook": "A gendered industrial-work map.",
       "editorialReview": {
         "status": "daily_eligible",
-        "reviewedAt": "2026-06-22",
+        "reviewedAt": "2026-07-02",
         "reviewedBy": "Codex editorial QA",
         "qualityScore": 4,
         "funScore": 4,
@@ -6132,7 +6132,7 @@
       "shortHook": "A men's industrial-work map.",
       "editorialReview": {
         "status": "expert_only",
-        "reviewedAt": "2026-06-22",
+        "reviewedAt": "2026-07-02",
         "reviewedBy": "Codex editorial QA",
         "qualityScore": 4,
         "funScore": 4,
@@ -6163,7 +6163,7 @@
       "shortHook": "A gendered service-work map.",
       "editorialReview": {
         "status": "expert_only",
-        "reviewedAt": "2026-06-22",
+        "reviewedAt": "2026-07-02",
         "reviewedBy": "Codex editorial QA",
         "qualityScore": 4,
         "funScore": 4,
@@ -6194,7 +6194,7 @@
       "shortHook": "A men's service-work map.",
       "editorialReview": {
         "status": "needs_review",
-        "reviewedAt": "2026-06-22",
+        "reviewedAt": "2026-07-02",
         "reviewedBy": "pipeline-default-needs-review",
         "qualityScore": 2,
         "funScore": 2,
@@ -6224,7 +6224,7 @@
       "shortHook": "A family-work structure map.",
       "editorialReview": {
         "status": "expert_only",
-        "reviewedAt": "2026-06-22",
+        "reviewedAt": "2026-07-02",
         "reviewedBy": "Codex editorial QA",
         "qualityScore": 4,
         "funScore": 4,
@@ -6255,7 +6255,7 @@
       "shortHook": "A women's unpaid-family-work map.",
       "editorialReview": {
         "status": "expert_only",
-        "reviewedAt": "2026-06-22",
+        "reviewedAt": "2026-07-02",
         "reviewedBy": "Codex editorial QA",
         "qualityScore": 4,
         "funScore": 4,
@@ -6286,7 +6286,7 @@
       "shortHook": "A men's unpaid-family-work map.",
       "editorialReview": {
         "status": "needs_review",
-        "reviewedAt": "2026-06-22",
+        "reviewedAt": "2026-07-02",
         "reviewedBy": "pipeline-default-needs-review",
         "qualityScore": 2,
         "funScore": 2,
@@ -6316,7 +6316,7 @@
       "shortHook": "A women's self-employment map.",
       "editorialReview": {
         "status": "expert_only",
-        "reviewedAt": "2026-06-22",
+        "reviewedAt": "2026-07-02",
         "reviewedBy": "Codex editorial QA",
         "qualityScore": 4,
         "funScore": 4,
@@ -6347,7 +6347,7 @@
       "shortHook": "A men's self-employment map.",
       "editorialReview": {
         "status": "needs_review",
-        "reviewedAt": "2026-06-22",
+        "reviewedAt": "2026-07-02",
         "reviewedBy": "pipeline-default-needs-review",
         "qualityScore": 2,
         "funScore": 2,
@@ -6371,13 +6371,13 @@
       "category": "connectivity",
       "difficulty": "expert",
       "year": 2024,
-      "coverage": 137,
+      "coverage": 139,
       "path": "/data/v1/indicators/communications-service-exports.json",
       "reviewStatus": "approved",
       "shortHook": "A digital-and-communications export map.",
       "editorialReview": {
         "status": "daily_eligible",
-        "reviewedAt": "2026-06-22",
+        "reviewedAt": "2026-07-02",
         "reviewedBy": "Codex editorial QA",
         "qualityScore": 4,
         "funScore": 4,
@@ -6402,13 +6402,13 @@
       "category": "connectivity",
       "difficulty": "expert",
       "year": 2024,
-      "coverage": 137,
+      "coverage": 139,
       "path": "/data/v1/indicators/communications-service-imports.json",
       "reviewStatus": "approved",
       "shortHook": "A digital-service import map.",
       "editorialReview": {
         "status": "practice_eligible",
-        "reviewedAt": "2026-06-22",
+        "reviewedAt": "2026-07-02",
         "reviewedBy": "Codex editorial QA",
         "qualityScore": 4,
         "funScore": 3,
@@ -6433,13 +6433,13 @@
       "category": "connectivity",
       "difficulty": "expert",
       "year": 2024,
-      "coverage": 137,
+      "coverage": 139,
       "path": "/data/v1/indicators/transport-service-exports.json",
       "reviewStatus": "approved",
       "shortHook": "A transport-service trade map.",
       "editorialReview": {
         "status": "practice_eligible",
-        "reviewedAt": "2026-06-22",
+        "reviewedAt": "2026-07-02",
         "reviewedBy": "Codex editorial QA",
         "qualityScore": 4,
         "funScore": 4,
@@ -6464,13 +6464,13 @@
       "category": "connectivity",
       "difficulty": "expert",
       "year": 2024,
-      "coverage": 137,
+      "coverage": 139,
       "path": "/data/v1/indicators/transport-service-imports.json",
       "reviewStatus": "approved",
       "shortHook": "A transport-service import map.",
       "editorialReview": {
         "status": "practice_eligible",
-        "reviewedAt": "2026-06-22",
+        "reviewedAt": "2026-07-02",
         "reviewedBy": "Codex editorial QA",
         "qualityScore": 4,
         "funScore": 3,
@@ -6501,7 +6501,7 @@
       "shortHook": "A high-value cargo network map.",
       "editorialReview": {
         "status": "expert_only",
-        "reviewedAt": "2026-06-22",
+        "reviewedAt": "2026-07-02",
         "reviewedBy": "Codex editorial QA",
         "qualityScore": 3,
         "funScore": 4,
@@ -6532,7 +6532,7 @@
       "shortHook": "An urban infrastructure-access map.",
       "editorialReview": {
         "status": "practice_eligible",
-        "reviewedAt": "2026-06-22",
+        "reviewedAt": "2026-07-02",
         "reviewedBy": "Codex editorial QA",
         "qualityScore": 4,
         "funScore": 3,
@@ -6563,7 +6563,7 @@
       "shortHook": "An urban household-energy map.",
       "editorialReview": {
         "status": "practice_eligible",
-        "reviewedAt": "2026-06-22",
+        "reviewedAt": "2026-07-02",
         "reviewedBy": "Codex editorial QA",
         "qualityScore": 4,
         "funScore": 4,
@@ -6594,7 +6594,7 @@
       "shortHook": "An urban water-access map.",
       "editorialReview": {
         "status": "daily_eligible",
-        "reviewedAt": "2026-06-22",
+        "reviewedAt": "2026-07-02",
         "reviewedBy": "Codex editorial QA",
         "qualityScore": 4,
         "funScore": 4,
@@ -6625,7 +6625,7 @@
       "shortHook": "A rural water-access map.",
       "editorialReview": {
         "status": "practice_eligible",
-        "reviewedAt": "2026-06-22",
+        "reviewedAt": "2026-07-02",
         "reviewedBy": "Codex editorial QA",
         "qualityScore": 4,
         "funScore": 4,
@@ -6656,7 +6656,7 @@
       "shortHook": "An urban sanitation-access map.",
       "editorialReview": {
         "status": "practice_eligible",
-        "reviewedAt": "2026-06-22",
+        "reviewedAt": "2026-07-02",
         "reviewedBy": "Codex editorial QA",
         "qualityScore": 3,
         "funScore": 3,
@@ -6687,7 +6687,7 @@
       "shortHook": "A rural sanitation-access map.",
       "editorialReview": {
         "status": "daily_eligible",
-        "reviewedAt": "2026-06-22",
+        "reviewedAt": "2026-07-02",
         "reviewedBy": "Codex editorial QA",
         "qualityScore": 4,
         "funScore": 4,
@@ -6718,7 +6718,7 @@
       "shortHook": "A stark urban sanitation-risk map.",
       "editorialReview": {
         "status": "expert_only",
-        "reviewedAt": "2026-06-22",
+        "reviewedAt": "2026-07-02",
         "reviewedBy": "Codex editorial QA",
         "qualityScore": 3,
         "funScore": 4,
@@ -6749,7 +6749,7 @@
       "shortHook": "A rural sanitation-risk map.",
       "editorialReview": {
         "status": "expert_only",
-        "reviewedAt": "2026-06-22",
+        "reviewedAt": "2026-07-02",
         "reviewedBy": "Codex editorial QA",
         "qualityScore": 3,
         "funScore": 4,
@@ -6780,7 +6780,7 @@
       "shortHook": "A raw grain-output map.",
       "editorialReview": {
         "status": "expert_only",
-        "reviewedAt": "2026-06-22",
+        "reviewedAt": "2026-07-02",
         "reviewedBy": "Codex editorial QA",
         "qualityScore": 4,
         "funScore": 4,
@@ -6811,7 +6811,7 @@
       "shortHook": "A raw farmable-land map.",
       "editorialReview": {
         "status": "expert_only",
-        "reviewedAt": "2026-06-22",
+        "reviewedAt": "2026-07-02",
         "reviewedBy": "Codex editorial QA",
         "qualityScore": 3,
         "funScore": 4,
@@ -6842,7 +6842,7 @@
       "shortHook": "A farming-emissions map.",
       "editorialReview": {
         "status": "expert_only",
-        "reviewedAt": "2026-06-22",
+        "reviewedAt": "2026-07-02",
         "reviewedBy": "Codex editorial QA",
         "qualityScore": 4,
         "funScore": 4,
@@ -6873,7 +6873,7 @@
       "shortHook": "A fertilizer-and-soils emissions map.",
       "editorialReview": {
         "status": "expert_only",
-        "reviewedAt": "2026-06-22",
+        "reviewedAt": "2026-07-02",
         "reviewedBy": "Codex editorial QA",
         "qualityScore": 4,
         "funScore": 4,
@@ -6904,7 +6904,7 @@
       "shortHook": "A food-security hardship map.",
       "editorialReview": {
         "status": "daily_eligible",
-        "reviewedAt": "2026-06-22",
+        "reviewedAt": "2026-07-02",
         "reviewedBy": "Codex editorial QA",
         "qualityScore": 4,
         "funScore": 4,
@@ -6935,7 +6935,7 @@
       "shortHook": "A sharper food-security hardship map.",
       "editorialReview": {
         "status": "expert_only",
-        "reviewedAt": "2026-06-22",
+        "reviewedAt": "2026-07-02",
         "reviewedBy": "Codex editorial QA",
         "qualityScore": 4,
         "funScore": 4,
@@ -6966,7 +6966,7 @@
       "shortHook": "A food-dependence trade map.",
       "editorialReview": {
         "status": "practice_eligible",
-        "reviewedAt": "2026-06-22",
+        "reviewedAt": "2026-07-02",
         "reviewedBy": "Codex editorial QA",
         "qualityScore": 4,
         "funScore": 4,
@@ -6997,7 +6997,7 @@
       "shortHook": "A food-export specialization map.",
       "editorialReview": {
         "status": "practice_eligible",
-        "reviewedAt": "2026-06-22",
+        "reviewedAt": "2026-07-02",
         "reviewedBy": "Codex editorial QA",
         "qualityScore": 4,
         "funScore": 4,
@@ -7013,6 +7013,1556 @@
         ],
         "acceptableCloseDistractorIds": []
       }
+    },
+    {
+      "id": "capture-fisheries-production",
+      "providerCode": "ER.FSH.CAPT.MT",
+      "title": "Capture fisheries production (metric tons)",
+      "shortTitle": "Capture fisheries production",
+      "category": "agriculture",
+      "difficulty": "expert",
+      "year": 2024,
+      "coverage": 169,
+      "path": "/data/v1/indicators/capture-fisheries-production.json",
+      "reviewStatus": "approved",
+      "shortHook": "A wild-catch fisheries map.",
+      "editorialReview": {
+        "status": "expert_only",
+        "reviewedAt": "2026-07-02",
+        "reviewedBy": "Codex editorial QA",
+        "qualityScore": 3,
+        "funScore": 4,
+        "fairnessScore": 3,
+        "ambiguityRisk": "high",
+        "dailyEligible": false,
+        "practiceEligible": true,
+        "challengeEligible": true,
+        "expertOnly": true,
+        "reviewNotes": [
+          "Batch 4 QA: strong coastal and river-resource signal with excellent coverage.",
+          "Expert-only because raw tonnage favors large coastal producers and fishing fleets."
+        ],
+        "acceptableCloseDistractorIds": []
+      }
+    },
+    {
+      "id": "deforestation-co2-flux",
+      "providerCode": "EN.GHG.CO2.LU.DF.MT.CE.AR5",
+      "title": "Carbon dioxide (CO2) net fluxes from LULUCF - Deforestation (Mt CO2e)",
+      "shortTitle": "Deforestation CO2 flux",
+      "category": "environment",
+      "difficulty": "expert",
+      "year": 2023,
+      "coverage": 147,
+      "path": "/data/v1/indicators/deforestation-co2-flux.json",
+      "reviewStatus": "approved",
+      "shortHook": "A deforestation-emissions map.",
+      "editorialReview": {
+        "status": "expert_only",
+        "reviewedAt": "2026-07-02",
+        "reviewedBy": "Codex editorial QA",
+        "qualityScore": 4,
+        "funScore": 4,
+        "fairnessScore": 3,
+        "ambiguityRisk": "high",
+        "dailyEligible": false,
+        "practiceEligible": true,
+        "challengeEligible": true,
+        "expertOnly": true,
+        "reviewNotes": [
+          "Batch 4 QA: high-interest land-use climate map with adequate recent coverage.",
+          "Expert-only because raw emissions and land-frontier scale can dominate the map."
+        ],
+        "acceptableCloseDistractorIds": []
+      }
+    },
+    {
+      "id": "forest-land-co2-flux",
+      "providerCode": "EN.GHG.CO2.LU.FL.MT.CE.AR5",
+      "title": "Carbon dioxide (CO2) net fluxes from LULUCF - Forest Land (Mt CO2e)",
+      "shortTitle": "Forest land CO2 flux",
+      "category": "environment",
+      "difficulty": "expert",
+      "year": 2023,
+      "coverage": 156,
+      "path": "/data/v1/indicators/forest-land-co2-flux.json",
+      "reviewStatus": "approved",
+      "shortHook": "A forest-carbon flux map.",
+      "editorialReview": {
+        "status": "expert_only",
+        "reviewedAt": "2026-07-02",
+        "reviewedBy": "Codex editorial QA",
+        "qualityScore": 4,
+        "funScore": 4,
+        "fairnessScore": 3,
+        "ambiguityRisk": "high",
+        "dailyEligible": false,
+        "practiceEligible": true,
+        "challengeEligible": true,
+        "expertOnly": true,
+        "reviewNotes": [
+          "Batch 4 QA: useful forest-carbon source/sink map distinct from forest cover.",
+          "Expert-only because negative and positive flux values need careful reveal framing."
+        ],
+        "acceptableCloseDistractorIds": []
+      }
+    },
+    {
+      "id": "income-tax-share",
+      "providerCode": "GC.TAX.YPKG.ZS",
+      "title": "Taxes on income, profits and capital gains (% of total taxes)",
+      "shortTitle": "Income tax share",
+      "category": "economy",
+      "difficulty": "expert",
+      "year": 2017,
+      "coverage": 122,
+      "path": "/data/v1/indicators/income-tax-share.json",
+      "reviewStatus": "approved",
+      "shortHook": "A tax-mix map.",
+      "editorialReview": {
+        "status": "expert_only",
+        "reviewedAt": "2026-07-02",
+        "reviewedBy": "Codex editorial QA",
+        "qualityScore": 3,
+        "funScore": 3,
+        "fairnessScore": 3,
+        "ambiguityRisk": "high",
+        "dailyEligible": false,
+        "practiceEligible": true,
+        "challengeEligible": true,
+        "expertOnly": true,
+        "reviewNotes": [
+          "Batch 4 QA: useful fiscal-structure map with a clear percent-of-tax-revenue unit.",
+          "Expert-only because coverage is thinner and the selected year may be older than core macro indicators."
+        ],
+        "acceptableCloseDistractorIds": []
+      }
+    },
+    {
+      "id": "travel-service-imports-share",
+      "providerCode": "BM.GSR.TRVL.ZS",
+      "title": "Travel services (% of service imports, BoP)",
+      "shortTitle": "Travel service imports",
+      "category": "economy",
+      "difficulty": "expert",
+      "year": 2024,
+      "coverage": 138,
+      "path": "/data/v1/indicators/travel-service-imports-share.json",
+      "reviewStatus": "approved",
+      "shortHook": "An outbound-travel services map.",
+      "editorialReview": {
+        "status": "practice_eligible",
+        "reviewedAt": "2026-07-02",
+        "reviewedBy": "Codex editorial QA",
+        "qualityScore": 4,
+        "funScore": 4,
+        "fairnessScore": 3,
+        "ambiguityRisk": "medium",
+        "dailyEligible": false,
+        "practiceEligible": true,
+        "challengeEligible": true,
+        "expertOnly": false,
+        "reviewNotes": [
+          "Batch 4 promotion: outbound-travel services map adds a different tourism angle than export-side travel services.",
+          "Practice-only until tested against tourism and services-trade distractors."
+        ],
+        "acceptableCloseDistractorIds": []
+      }
+    },
+    {
+      "id": "imports-within-region-share",
+      "providerCode": "TM.VAL.MRCH.WR.ZS",
+      "title": "Merchandise imports from low- and middle-income economies within region (% of total merchandise imports)",
+      "shortTitle": "Imports within region",
+      "category": "economy",
+      "difficulty": "expert",
+      "year": 2023,
+      "coverage": 166,
+      "path": "/data/v1/indicators/imports-within-region-share.json",
+      "reviewStatus": "approved",
+      "shortHook": "A regional-trade import map.",
+      "editorialReview": {
+        "status": "practice_eligible",
+        "reviewedAt": "2026-07-02",
+        "reviewedBy": "Codex editorial QA",
+        "qualityScore": 4,
+        "funScore": 4,
+        "fairnessScore": 3,
+        "ambiguityRisk": "medium",
+        "dailyEligible": false,
+        "practiceEligible": true,
+        "challengeEligible": true,
+        "expertOnly": false,
+        "reviewNotes": [
+          "Batch 4 promotion: regional-import share gives a clear trade-bloc and neighbor-dependence puzzle.",
+          "Practice-only because partner-share maps are more abstract than total trade."
+        ],
+        "acceptableCloseDistractorIds": []
+      }
+    },
+    {
+      "id": "financial-service-imports-share",
+      "providerCode": "BM.GSR.INSF.ZS",
+      "title": "Insurance and financial services (% of service imports, BoP)",
+      "shortTitle": "Financial service imports",
+      "category": "economy",
+      "difficulty": "expert",
+      "year": 2024,
+      "coverage": 138,
+      "path": "/data/v1/indicators/financial-service-imports-share.json",
+      "reviewStatus": "approved",
+      "shortHook": "A finance-service import map.",
+      "editorialReview": {
+        "status": "expert_only",
+        "reviewedAt": "2026-07-02",
+        "reviewedBy": "Codex editorial QA",
+        "qualityScore": 3,
+        "funScore": 3,
+        "fairnessScore": 3,
+        "ambiguityRisk": "high",
+        "dailyEligible": false,
+        "practiceEligible": true,
+        "challengeEligible": true,
+        "expertOnly": true,
+        "reviewNotes": [
+          "Batch 4 QA: source-valid finance-services trade map, but the concept is niche.",
+          "Expert-only until the services-trade cluster is tuned."
+        ],
+        "acceptableCloseDistractorIds": []
+      }
+    },
+    {
+      "id": "broad-money-share",
+      "providerCode": "FM.LBL.BMNY.GD.ZS",
+      "title": "Broad money (% of GDP)",
+      "shortTitle": "Broad money share",
+      "category": "economy",
+      "difficulty": "expert",
+      "year": 2021,
+      "coverage": 120,
+      "path": "/data/v1/indicators/broad-money-share.json",
+      "reviewStatus": "approved",
+      "shortHook": "A monetary-depth map.",
+      "editorialReview": {
+        "status": "expert_only",
+        "reviewedAt": "2026-07-02",
+        "reviewedBy": "Codex editorial QA",
+        "qualityScore": 3,
+        "funScore": 3,
+        "fairnessScore": 3,
+        "ambiguityRisk": "high",
+        "dailyEligible": false,
+        "practiceEligible": true,
+        "challengeEligible": true,
+        "expertOnly": true,
+        "reviewNotes": [
+          "Batch 4 QA: useful monetary-depth map for advanced economy rounds.",
+          "Expert-only because the unit is technical and coverage is thinner than core macro rows."
+        ],
+        "acceptableCloseDistractorIds": []
+      }
+    },
+    {
+      "id": "nonperforming-loans",
+      "providerCode": "FB.AST.NPER.ZS",
+      "title": "Bank nonperforming loans to total gross loans (%)",
+      "shortTitle": "Nonperforming loans",
+      "category": "economy",
+      "difficulty": "expert",
+      "year": 2023,
+      "coverage": 120,
+      "path": "/data/v1/indicators/nonperforming-loans.json",
+      "reviewStatus": "approved",
+      "shortHook": "A banking-stress map.",
+      "editorialReview": {
+        "status": "expert_only",
+        "reviewedAt": "2026-07-02",
+        "reviewedBy": "Codex editorial QA",
+        "qualityScore": 3,
+        "funScore": 4,
+        "fairnessScore": 3,
+        "ambiguityRisk": "high",
+        "dailyEligible": false,
+        "practiceEligible": true,
+        "challengeEligible": true,
+        "expertOnly": true,
+        "reviewNotes": [
+          "Batch 4 QA: banking-stress map can produce interesting regional surprises.",
+          "Expert-only because coverage just clears the source gate and values can be volatile."
+        ],
+        "acceptableCloseDistractorIds": []
+      }
+    },
+    {
+      "id": "bank-capital-assets",
+      "providerCode": "FB.BNK.CAPA.ZS",
+      "title": "Bank capital to assets ratio (%)",
+      "shortTitle": "Bank capital to assets",
+      "category": "economy",
+      "difficulty": "expert",
+      "year": 2021,
+      "coverage": 121,
+      "path": "/data/v1/indicators/bank-capital-assets.json",
+      "reviewStatus": "approved",
+      "shortHook": "A banking-capital map.",
+      "editorialReview": {
+        "status": "expert_only",
+        "reviewedAt": "2026-07-02",
+        "reviewedBy": "Codex editorial QA",
+        "qualityScore": 3,
+        "funScore": 3,
+        "fairnessScore": 3,
+        "ambiguityRisk": "high",
+        "dailyEligible": false,
+        "practiceEligible": true,
+        "challengeEligible": true,
+        "expertOnly": true,
+        "reviewNotes": [
+          "Batch 4 QA: financial-system resilience indicator with passing but thin coverage.",
+          "Expert-only because banking definitions and selected years need careful interpretation."
+        ],
+        "acceptableCloseDistractorIds": []
+      }
+    },
+    {
+      "id": "external-balance-share",
+      "providerCode": "NE.RSB.GNFS.ZS",
+      "title": "External balance on goods and services (% of GDP)",
+      "shortTitle": "External balance",
+      "category": "economy",
+      "difficulty": "expert",
+      "year": 2025,
+      "coverage": 124,
+      "path": "/data/v1/indicators/external-balance-share.json",
+      "reviewStatus": "approved",
+      "shortHook": "A goods-and-services balance map.",
+      "editorialReview": {
+        "status": "practice_eligible",
+        "reviewedAt": "2026-07-02",
+        "reviewedBy": "Codex editorial QA",
+        "qualityScore": 4,
+        "funScore": 4,
+        "fairnessScore": 3,
+        "ambiguityRisk": "medium",
+        "dailyEligible": false,
+        "practiceEligible": true,
+        "challengeEligible": true,
+        "expertOnly": false,
+        "reviewNotes": [
+          "Batch 4 promotion: goods-and-services balance gives a compact surplus/deficit map with strong gameplay potential.",
+          "Practice-only because surplus/deficit maps can be volatile for small economies."
+        ],
+        "acceptableCloseDistractorIds": []
+      }
+    },
+    {
+      "id": "final-consumption-share",
+      "providerCode": "NE.CON.TOTL.ZS",
+      "title": "Final consumption expenditure (% of GDP)",
+      "shortTitle": "Final consumption share",
+      "category": "economy",
+      "difficulty": "expert",
+      "year": 2025,
+      "coverage": 122,
+      "path": "/data/v1/indicators/final-consumption-share.json",
+      "reviewStatus": "approved",
+      "shortHook": "A consumption-weight map.",
+      "editorialReview": {
+        "status": "practice_eligible",
+        "reviewedAt": "2026-07-02",
+        "reviewedBy": "Codex editorial QA",
+        "qualityScore": 4,
+        "funScore": 3,
+        "fairnessScore": 3,
+        "ambiguityRisk": "medium",
+        "dailyEligible": false,
+        "practiceEligible": true,
+        "challengeEligible": true,
+        "expertOnly": false,
+        "reviewNotes": [
+          "Batch 4 promotion: consumption share adds an economy-structure map distinct from trade and investment.",
+          "Practice-only because the GDP accounting concept is less intuitive for new players."
+        ],
+        "acceptableCloseDistractorIds": []
+      }
+    },
+    {
+      "id": "energy-intensity",
+      "providerCode": "EG.EGY.PRIM.PP.KD",
+      "title": "Energy intensity level of primary energy (MJ/$2021 PPP GDP)",
+      "shortTitle": "Energy intensity",
+      "category": "energy",
+      "difficulty": "expert",
+      "year": 2021,
+      "coverage": 167,
+      "path": "/data/v1/indicators/energy-intensity.json",
+      "reviewStatus": "approved",
+      "shortHook": "An energy-efficiency map.",
+      "editorialReview": {
+        "status": "practice_eligible",
+        "reviewedAt": "2026-07-02",
+        "reviewedBy": "Codex editorial QA",
+        "qualityScore": 4,
+        "funScore": 4,
+        "fairnessScore": 3,
+        "ambiguityRisk": "medium",
+        "dailyEligible": false,
+        "practiceEligible": true,
+        "challengeEligible": true,
+        "expertOnly": false,
+        "reviewNotes": [
+          "Batch 4 promotion: strong industry-and-efficiency signal that complements electricity mix maps.",
+          "Practice-only because the MJ-per-GDP unit is technical."
+        ],
+        "acceptableCloseDistractorIds": []
+      }
+    },
+    {
+      "id": "energy-imports",
+      "providerCode": "EG.IMP.CONS.ZS",
+      "title": "Energy imports, net (% of energy use)",
+      "shortTitle": "Net energy imports",
+      "category": "energy",
+      "difficulty": "expert",
+      "year": 2022,
+      "coverage": 135,
+      "path": "/data/v1/indicators/energy-imports.json",
+      "reviewStatus": "approved",
+      "shortHook": "An energy-dependence map.",
+      "editorialReview": {
+        "status": "practice_eligible",
+        "reviewedAt": "2026-07-02",
+        "reviewedBy": "Codex editorial QA",
+        "qualityScore": 4,
+        "funScore": 4,
+        "fairnessScore": 3,
+        "ambiguityRisk": "medium",
+        "dailyEligible": false,
+        "practiceEligible": true,
+        "challengeEligible": true,
+        "expertOnly": false,
+        "reviewNotes": [
+          "Batch 4 promotion: useful importer/exporter contrast with broad coverage.",
+          "Practice-only until negative net-exporter values are checked in reveal copy."
+        ],
+        "acceptableCloseDistractorIds": []
+      }
+    },
+    {
+      "id": "electric-transmission-losses",
+      "providerCode": "EG.ELC.LOSS.ZS",
+      "title": "Electric power transmission and distribution losses (% of output)",
+      "shortTitle": "Electric transmission losses",
+      "category": "energy",
+      "difficulty": "standard",
+      "year": 2023,
+      "coverage": 141,
+      "path": "/data/v1/indicators/electric-transmission-losses.json",
+      "reviewStatus": "approved",
+      "shortHook": "A power-grid loss map.",
+      "editorialReview": {
+        "status": "daily_eligible",
+        "reviewedAt": "2026-07-02",
+        "reviewedBy": "Codex editorial QA",
+        "qualityScore": 4,
+        "funScore": 4,
+        "fairnessScore": 4,
+        "ambiguityRisk": "medium",
+        "dailyEligible": true,
+        "practiceEligible": true,
+        "challengeEligible": true,
+        "expertOnly": false,
+        "reviewNotes": [
+          "Batch 4 promotion: intuitive grid-efficiency map that differs from electricity access and generation shares.",
+          "Daily-worthy with non-energy distractors or clearly separated infrastructure choices."
+        ],
+        "acceptableCloseDistractorIds": []
+      }
+    },
+    {
+      "id": "alternative-nuclear-energy",
+      "providerCode": "EG.USE.COMM.CL.ZS",
+      "title": "Alternative and nuclear energy (% of total energy use)",
+      "shortTitle": "Alternative and nuclear energy",
+      "category": "energy",
+      "difficulty": "expert",
+      "year": 2023,
+      "coverage": 142,
+      "path": "/data/v1/indicators/alternative-nuclear-energy.json",
+      "reviewStatus": "approved",
+      "shortHook": "A non-fossil energy-use map.",
+      "editorialReview": {
+        "status": "practice_eligible",
+        "reviewedAt": "2026-07-02",
+        "reviewedBy": "Codex editorial QA",
+        "qualityScore": 4,
+        "funScore": 4,
+        "fairnessScore": 3,
+        "ambiguityRisk": "medium",
+        "dailyEligible": false,
+        "practiceEligible": true,
+        "challengeEligible": true,
+        "expertOnly": false,
+        "reviewNotes": [
+          "Batch 4 promotion: interesting non-fossil energy-use signal with nuclear, hydro, and geothermal clues.",
+          "Practice-only because it overlaps partly with existing nuclear and hydro electricity shares."
+        ],
+        "acceptableCloseDistractorIds": []
+      }
+    },
+    {
+      "id": "combustible-renewables-waste",
+      "providerCode": "EG.USE.CRNW.ZS",
+      "title": "Combustible renewables and waste (% of total energy)",
+      "shortTitle": "Combustible renewables and waste",
+      "category": "energy",
+      "difficulty": "expert",
+      "year": 2023,
+      "coverage": 139,
+      "path": "/data/v1/indicators/combustible-renewables-waste.json",
+      "reviewStatus": "approved",
+      "shortHook": "A biomass-and-waste energy map.",
+      "editorialReview": {
+        "status": "practice_eligible",
+        "reviewedAt": "2026-07-02",
+        "reviewedBy": "Codex editorial QA",
+        "qualityScore": 4,
+        "funScore": 4,
+        "fairnessScore": 3,
+        "ambiguityRisk": "medium",
+        "dailyEligible": false,
+        "practiceEligible": true,
+        "challengeEligible": true,
+        "expertOnly": false,
+        "reviewNotes": [
+          "Batch 4 promotion: strong biomass-energy pattern that adds household-energy depth.",
+          "Practice-only because it can correlate with income and clean-cooking access."
+        ],
+        "acceptableCloseDistractorIds": []
+      }
+    },
+    {
+      "id": "energy-productivity",
+      "providerCode": "EG.GDP.PUSE.KO.PP.KD",
+      "title": "GDP per unit of energy use (constant 2021 PPP $ per kg of oil equivalent)",
+      "shortTitle": "Energy productivity",
+      "category": "energy",
+      "difficulty": "expert",
+      "year": 2023,
+      "coverage": 135,
+      "path": "/data/v1/indicators/energy-productivity.json",
+      "reviewStatus": "approved",
+      "shortHook": "A GDP-per-energy map.",
+      "editorialReview": {
+        "status": "expert_only",
+        "reviewedAt": "2026-07-02",
+        "reviewedBy": "Codex editorial QA",
+        "qualityScore": 3,
+        "funScore": 3,
+        "fairnessScore": 3,
+        "ambiguityRisk": "high",
+        "dailyEligible": false,
+        "practiceEligible": true,
+        "challengeEligible": true,
+        "expertOnly": true,
+        "reviewNotes": [
+          "Batch 4 QA: source-valid counterpart to energy intensity, but the concept is technical and close to efficiency maps.",
+          "Expert-only until distractors can keep it distinct from energy intensity."
+        ],
+        "acceptableCloseDistractorIds": []
+      }
+    },
+    {
+      "id": "co2-emissions-change",
+      "providerCode": "EN.GHG.CO2.ZG.AR5",
+      "title": "Carbon dioxide (CO2) emissions (total) excluding LULUCF (% change from 1990)",
+      "shortTitle": "CO2 emissions change",
+      "category": "environment",
+      "difficulty": "expert",
+      "year": 2024,
+      "coverage": 165,
+      "path": "/data/v1/indicators/co2-emissions-change.json",
+      "reviewStatus": "approved",
+      "shortHook": "A post-1990 carbon-change map.",
+      "editorialReview": {
+        "status": "expert_only",
+        "reviewedAt": "2026-07-02",
+        "reviewedBy": "Codex editorial QA",
+        "qualityScore": 4,
+        "funScore": 4,
+        "fairnessScore": 3,
+        "ambiguityRisk": "high",
+        "dailyEligible": false,
+        "practiceEligible": true,
+        "challengeEligible": true,
+        "expertOnly": true,
+        "reviewNotes": [
+          "Batch 4 QA: interesting post-1990 emissions-change map with broad coverage.",
+          "Expert-only because it can overlap with total GHG change and can be baseline-sensitive."
+        ],
+        "acceptableCloseDistractorIds": []
+      }
+    },
+    {
+      "id": "methane-emissions-change",
+      "providerCode": "EN.GHG.CH4.ZG.AR5",
+      "title": "Methane (CH4) emissions (total) excluding LULUCF (% change from 1990)",
+      "shortTitle": "Methane emissions change",
+      "category": "environment",
+      "difficulty": "expert",
+      "year": 2024,
+      "coverage": 165,
+      "path": "/data/v1/indicators/methane-emissions-change.json",
+      "reviewStatus": "approved",
+      "shortHook": "A methane-change map.",
+      "editorialReview": {
+        "status": "expert_only",
+        "reviewedAt": "2026-07-02",
+        "reviewedBy": "Codex editorial QA",
+        "qualityScore": 4,
+        "funScore": 4,
+        "fairnessScore": 3,
+        "ambiguityRisk": "medium",
+        "dailyEligible": false,
+        "practiceEligible": true,
+        "challengeEligible": true,
+        "expertOnly": true,
+        "reviewNotes": [
+          "Batch 4 QA: useful agriculture-and-energy emissions trend with a pattern distinct from CO2.",
+          "Expert-only until the emissions-change cluster is playtested."
+        ],
+        "acceptableCloseDistractorIds": []
+      }
+    },
+    {
+      "id": "ghg-emissions-change",
+      "providerCode": "EN.GHG.TOT.ZG.AR5",
+      "title": "Total greenhouse gas emissions excluding LULUCF (% change from 1990)",
+      "shortTitle": "Greenhouse gas emissions change",
+      "category": "environment",
+      "difficulty": "expert",
+      "year": 2024,
+      "coverage": 165,
+      "path": "/data/v1/indicators/ghg-emissions-change.json",
+      "reviewStatus": "approved",
+      "shortHook": "A total climate-emissions trend map.",
+      "editorialReview": {
+        "status": "practice_eligible",
+        "reviewedAt": "2026-07-02",
+        "reviewedBy": "Codex editorial QA",
+        "qualityScore": 4,
+        "funScore": 4,
+        "fairnessScore": 3,
+        "ambiguityRisk": "medium",
+        "dailyEligible": false,
+        "practiceEligible": true,
+        "challengeEligible": true,
+        "expertOnly": false,
+        "reviewNotes": [
+          "Batch 4 promotion: broad climate-emissions trend map with good coverage and high map interest.",
+          "Practice-only because change-from-1990 maps need careful distractor pairing."
+        ],
+        "acceptableCloseDistractorIds": []
+      }
+    },
+    {
+      "id": "carbon-damage-share",
+      "providerCode": "NY.ADJ.DCO2.GN.ZS",
+      "title": "Adjusted savings: carbon dioxide damage (% of GNI)",
+      "shortTitle": "CO2 damage share",
+      "category": "environment",
+      "difficulty": "expert",
+      "year": 2021,
+      "coverage": 156,
+      "path": "/data/v1/indicators/carbon-damage-share.json",
+      "reviewStatus": "approved",
+      "shortHook": "A carbon-damage intensity map.",
+      "editorialReview": {
+        "status": "practice_eligible",
+        "reviewedAt": "2026-07-02",
+        "reviewedBy": "Codex editorial QA",
+        "qualityScore": 4,
+        "funScore": 4,
+        "fairnessScore": 3,
+        "ambiguityRisk": "medium",
+        "dailyEligible": false,
+        "practiceEligible": true,
+        "challengeEligible": true,
+        "expertOnly": false,
+        "reviewNotes": [
+          "Batch 4 promotion: carbon-damage share gives a useful emissions-intensity clue that is not raw emissions.",
+          "Practice-only because adjusted-savings concepts are abstract for new players."
+        ],
+        "acceptableCloseDistractorIds": []
+      }
+    },
+    {
+      "id": "energy-depletion-share",
+      "providerCode": "NY.ADJ.DNGY.GN.ZS",
+      "title": "Adjusted savings: energy depletion (% of GNI)",
+      "shortTitle": "Energy depletion share",
+      "category": "energy",
+      "difficulty": "expert",
+      "year": 2021,
+      "coverage": 156,
+      "path": "/data/v1/indicators/energy-depletion-share.json",
+      "reviewStatus": "approved",
+      "shortHook": "An energy-resource depletion map.",
+      "editorialReview": {
+        "status": "expert_only",
+        "reviewedAt": "2026-07-02",
+        "reviewedBy": "Codex editorial QA",
+        "qualityScore": 3,
+        "funScore": 4,
+        "fairnessScore": 3,
+        "ambiguityRisk": "high",
+        "dailyEligible": false,
+        "practiceEligible": true,
+        "challengeEligible": true,
+        "expertOnly": true,
+        "reviewNotes": [
+          "Batch 4 QA: good resource-extraction map for advanced players.",
+          "Expert-only because many countries are zero or near-zero and the GNI unit is technical."
+        ],
+        "acceptableCloseDistractorIds": []
+      }
+    },
+    {
+      "id": "mineral-depletion-share",
+      "providerCode": "NY.ADJ.DMIN.GN.ZS",
+      "title": "Adjusted savings: mineral depletion (% of GNI)",
+      "shortTitle": "Mineral depletion share",
+      "category": "economy",
+      "difficulty": "expert",
+      "year": 2021,
+      "coverage": 156,
+      "path": "/data/v1/indicators/mineral-depletion-share.json",
+      "reviewStatus": "approved",
+      "shortHook": "A mining-depletion map.",
+      "editorialReview": {
+        "status": "expert_only",
+        "reviewedAt": "2026-07-02",
+        "reviewedBy": "Codex editorial QA",
+        "qualityScore": 3,
+        "funScore": 4,
+        "fairnessScore": 3,
+        "ambiguityRisk": "high",
+        "dailyEligible": false,
+        "practiceEligible": true,
+        "challengeEligible": true,
+        "expertOnly": true,
+        "reviewNotes": [
+          "Batch 4 QA: mining-depletion map has good country coverage and clear resource geography.",
+          "Expert-only because zero-heavy values and the adjusted-savings framing are advanced."
+        ],
+        "acceptableCloseDistractorIds": []
+      }
+    },
+    {
+      "id": "mineral-rents",
+      "providerCode": "NY.GDP.MINR.RT.ZS",
+      "title": "Mineral rents (% of GDP)",
+      "shortTitle": "Mineral rents",
+      "category": "economy",
+      "difficulty": "expert",
+      "year": 2021,
+      "coverage": 159,
+      "path": "/data/v1/indicators/mineral-rents.json",
+      "reviewStatus": "approved",
+      "shortHook": "A mining-rents map.",
+      "editorialReview": {
+        "status": "expert_only",
+        "reviewedAt": "2026-07-02",
+        "reviewedBy": "Codex editorial QA",
+        "qualityScore": 4,
+        "funScore": 4,
+        "fairnessScore": 3,
+        "ambiguityRisk": "high",
+        "dailyEligible": false,
+        "practiceEligible": true,
+        "challengeEligible": true,
+        "expertOnly": true,
+        "reviewNotes": [
+          "Batch 4 QA: strong mining-economy pattern with an understandable percent-of-GDP unit.",
+          "Expert-only because resource-rent maps can be zero-heavy and highly correlated with depletion rows."
+        ],
+        "acceptableCloseDistractorIds": []
+      }
+    },
+    {
+      "id": "coal-rents",
+      "providerCode": "NY.GDP.COAL.RT.ZS",
+      "title": "Coal rents (% of GDP)",
+      "shortTitle": "Coal rents",
+      "category": "energy",
+      "difficulty": "expert",
+      "year": 2021,
+      "coverage": 158,
+      "path": "/data/v1/indicators/coal-rents.json",
+      "reviewStatus": "approved",
+      "shortHook": "A coal-economy map.",
+      "editorialReview": {
+        "status": "expert_only",
+        "reviewedAt": "2026-07-02",
+        "reviewedBy": "Codex editorial QA",
+        "qualityScore": 3,
+        "funScore": 4,
+        "fairnessScore": 3,
+        "ambiguityRisk": "high",
+        "dailyEligible": false,
+        "practiceEligible": true,
+        "challengeEligible": true,
+        "expertOnly": true,
+        "reviewNotes": [
+          "Batch 4 QA: focused coal-economy clue with a clear pattern for advanced players.",
+          "Expert-only due to zero-heavy values and overlap with fossil-energy maps."
+        ],
+        "acceptableCloseDistractorIds": []
+      }
+    },
+    {
+      "id": "threatened-fish-species",
+      "providerCode": "EN.FSH.THRD.NO",
+      "title": "Fish species, threatened",
+      "shortTitle": "Threatened fish species",
+      "category": "environment",
+      "difficulty": "expert",
+      "year": 2022,
+      "coverage": 169,
+      "path": "/data/v1/indicators/threatened-fish-species.json",
+      "reviewStatus": "approved",
+      "shortHook": "A threatened aquatic biodiversity map.",
+      "editorialReview": {
+        "status": "expert_only",
+        "reviewedAt": "2026-07-02",
+        "reviewedBy": "Codex editorial QA",
+        "qualityScore": 4,
+        "funScore": 4,
+        "fairnessScore": 3,
+        "ambiguityRisk": "medium",
+        "dailyEligible": false,
+        "practiceEligible": true,
+        "challengeEligible": true,
+        "expertOnly": true,
+        "reviewNotes": [
+          "Batch 4 QA: high-interest biodiversity map with broad source coverage.",
+          "Expert-only because raw species counts favor biodiverse and larger countries."
+        ],
+        "acceptableCloseDistractorIds": []
+      }
+    },
+    {
+      "id": "threatened-bird-species",
+      "providerCode": "EN.BIR.THRD.NO",
+      "title": "Bird species, threatened",
+      "shortTitle": "Threatened bird species",
+      "category": "environment",
+      "difficulty": "expert",
+      "year": 2022,
+      "coverage": 169,
+      "path": "/data/v1/indicators/threatened-bird-species.json",
+      "reviewStatus": "approved",
+      "shortHook": "A threatened bird biodiversity map.",
+      "editorialReview": {
+        "status": "expert_only",
+        "reviewedAt": "2026-07-02",
+        "reviewedBy": "Codex editorial QA",
+        "qualityScore": 4,
+        "funScore": 4,
+        "fairnessScore": 3,
+        "ambiguityRisk": "medium",
+        "dailyEligible": false,
+        "practiceEligible": true,
+        "challengeEligible": true,
+        "expertOnly": true,
+        "reviewNotes": [
+          "Batch 4 QA: island and tropical biodiversity signals make this fun for advanced geography players.",
+          "Expert-only because raw species-count maps need careful framing."
+        ],
+        "acceptableCloseDistractorIds": []
+      }
+    },
+    {
+      "id": "threatened-mammal-species",
+      "providerCode": "EN.MAM.THRD.NO",
+      "title": "Mammal species, threatened",
+      "shortTitle": "Threatened mammal species",
+      "category": "environment",
+      "difficulty": "expert",
+      "year": 2022,
+      "coverage": 169,
+      "path": "/data/v1/indicators/threatened-mammal-species.json",
+      "reviewStatus": "approved",
+      "shortHook": "A threatened mammal biodiversity map.",
+      "editorialReview": {
+        "status": "expert_only",
+        "reviewedAt": "2026-07-02",
+        "reviewedBy": "Codex editorial QA",
+        "qualityScore": 4,
+        "funScore": 4,
+        "fairnessScore": 3,
+        "ambiguityRisk": "medium",
+        "dailyEligible": false,
+        "practiceEligible": true,
+        "challengeEligible": true,
+        "expertOnly": true,
+        "reviewNotes": [
+          "Batch 4 QA: useful biodiversity hotspot map that differs from protected-area shares.",
+          "Expert-only because it is a raw species count and can favor larger countries."
+        ],
+        "acceptableCloseDistractorIds": []
+      }
+    },
+    {
+      "id": "threatened-plant-species",
+      "providerCode": "EN.HPT.THRD.NO",
+      "title": "Plant species (higher), threatened",
+      "shortTitle": "Threatened plant species",
+      "category": "environment",
+      "difficulty": "expert",
+      "year": 2022,
+      "coverage": 169,
+      "path": "/data/v1/indicators/threatened-plant-species.json",
+      "reviewStatus": "approved",
+      "shortHook": "A threatened plant biodiversity map.",
+      "editorialReview": {
+        "status": "expert_only",
+        "reviewedAt": "2026-07-02",
+        "reviewedBy": "Codex editorial QA",
+        "qualityScore": 4,
+        "funScore": 4,
+        "fairnessScore": 3,
+        "ambiguityRisk": "medium",
+        "dailyEligible": false,
+        "practiceEligible": true,
+        "challengeEligible": true,
+        "expertOnly": true,
+        "reviewNotes": [
+          "Batch 4 QA: strong plant-endemism and biodiversity pattern with excellent coverage.",
+          "Expert-only because the raw count and extreme outliers are advanced."
+        ],
+        "acceptableCloseDistractorIds": []
+      }
+    },
+    {
+      "id": "ncd-premature-mortality",
+      "providerCode": "SH.DYN.NCOM.ZS",
+      "title": "Mortality from CVD, cancer, diabetes or CRD between exact ages 30 and 70 (%)",
+      "shortTitle": "NCD premature mortality",
+      "category": "health",
+      "difficulty": "standard",
+      "year": 2021,
+      "coverage": 167,
+      "path": "/data/v1/indicators/ncd-premature-mortality.json",
+      "reviewStatus": "approved",
+      "shortHook": "A chronic-disease mortality map.",
+      "editorialReview": {
+        "status": "daily_eligible",
+        "reviewedAt": "2026-07-02",
+        "reviewedBy": "Codex editorial QA",
+        "qualityScore": 4,
+        "funScore": 4,
+        "fairnessScore": 4,
+        "ambiguityRisk": "medium",
+        "dailyEligible": true,
+        "practiceEligible": true,
+        "challengeEligible": true,
+        "expertOnly": false,
+        "reviewNotes": [
+          "Batch 4 promotion: broad source-valid chronic-disease mortality map with a clear health-transition story.",
+          "Daily-worthy when not paired too closely with adult mortality or life-expectancy maps."
+        ],
+        "acceptableCloseDistractorIds": []
+      }
+    },
+    {
+      "id": "hiv-incidence",
+      "providerCode": "SH.HIV.INCD.ZS",
+      "title": "Incidence of HIV, ages 15-49 (per 1,000 uninfected population ages 15-49)",
+      "shortTitle": "HIV incidence",
+      "category": "health",
+      "difficulty": "expert",
+      "year": 2024,
+      "coverage": 126,
+      "path": "/data/v1/indicators/hiv-incidence.json",
+      "reviewStatus": "approved",
+      "shortHook": "A new-HIV-infections map.",
+      "editorialReview": {
+        "status": "expert_only",
+        "reviewedAt": "2026-07-02",
+        "reviewedBy": "Codex editorial QA",
+        "qualityScore": 4,
+        "funScore": 4,
+        "fairnessScore": 3,
+        "ambiguityRisk": "medium",
+        "dailyEligible": false,
+        "practiceEligible": true,
+        "challengeEligible": true,
+        "expertOnly": true,
+        "reviewNotes": [
+          "Batch 4 QA: distinct regional health pattern with adequate coverage and clear rate unit.",
+          "Expert-only because the topic is sensitive and should not appear in easy casual rounds."
+        ],
+        "acceptableCloseDistractorIds": []
+      }
+    },
+    {
+      "id": "antiretroviral-therapy-coverage",
+      "providerCode": "SH.HIV.ARTC.ZS",
+      "title": "Antiretroviral therapy coverage (% of people living with HIV)",
+      "shortTitle": "Antiretroviral therapy coverage",
+      "category": "health",
+      "difficulty": "expert",
+      "year": 2024,
+      "coverage": 120,
+      "path": "/data/v1/indicators/antiretroviral-therapy-coverage.json",
+      "reviewStatus": "approved",
+      "shortHook": "An HIV treatment-access map.",
+      "editorialReview": {
+        "status": "expert_only",
+        "reviewedAt": "2026-07-02",
+        "reviewedBy": "Codex editorial QA",
+        "qualityScore": 3,
+        "funScore": 3,
+        "fairnessScore": 3,
+        "ambiguityRisk": "medium",
+        "dailyEligible": false,
+        "practiceEligible": true,
+        "challengeEligible": true,
+        "expertOnly": true,
+        "reviewNotes": [
+          "Batch 4 QA: useful treatment-access map but narrower than broad health-system indicators.",
+          "Expert-only until HIV-related distractors and reveal wording are reviewed together."
+        ],
+        "acceptableCloseDistractorIds": []
+      }
+    },
+    {
+      "id": "uhc-service-coverage",
+      "providerCode": "SH_UHC_SCI",
+      "title": "UHC service coverage index",
+      "shortTitle": "UHC service coverage",
+      "category": "health",
+      "difficulty": "standard",
+      "year": 2023,
+      "coverage": 166,
+      "path": "/data/v1/indicators/uhc-service-coverage.json",
+      "reviewStatus": "approved",
+      "shortHook": "A health-service coverage map.",
+      "editorialReview": {
+        "status": "daily_eligible",
+        "reviewedAt": "2026-07-02",
+        "reviewedBy": "Codex editorial QA",
+        "qualityScore": 4,
+        "funScore": 4,
+        "fairnessScore": 4,
+        "ambiguityRisk": "medium",
+        "dailyEligible": true,
+        "practiceEligible": true,
+        "challengeEligible": true,
+        "expertOnly": false,
+        "reviewNotes": [
+          "Batch 4 promotion: broad health-service map with strong coverage and an understandable 0-100 index.",
+          "Daily-worthy if kept away from health-spending and life-expectancy distractors."
+        ],
+        "acceptableCloseDistractorIds": []
+      }
+    },
+    {
+      "id": "air-pollution-mortality",
+      "providerCode": "SH.STA.AIRP.P5",
+      "title": "Mortality rate attributed to household and ambient air pollution, age-standardized (per 100,000 population)",
+      "shortTitle": "Air pollution mortality",
+      "category": "health",
+      "difficulty": "expert",
+      "year": 2019,
+      "coverage": 165,
+      "path": "/data/v1/indicators/air-pollution-mortality.json",
+      "reviewStatus": "approved",
+      "shortHook": "A polluted-air health map.",
+      "editorialReview": {
+        "status": "practice_eligible",
+        "reviewedAt": "2026-07-02",
+        "reviewedBy": "Codex editorial QA",
+        "qualityScore": 4,
+        "funScore": 5,
+        "fairnessScore": 3,
+        "ambiguityRisk": "medium",
+        "dailyEligible": false,
+        "practiceEligible": true,
+        "challengeEligible": true,
+        "expertOnly": false,
+        "reviewNotes": [
+          "Batch 4 promotion: high-interest health/environment crossover with a strong spatial pattern.",
+          "Practice-only because mortality-rate maps need careful answer-choice framing."
+        ],
+        "acceptableCloseDistractorIds": []
+      }
+    },
+    {
+      "id": "tb-treatment-success",
+      "providerCode": "SH.TBS.CURE.ZS",
+      "title": "Tuberculosis treatment success rate (% of new cases)",
+      "shortTitle": "TB treatment success",
+      "category": "health",
+      "difficulty": "expert",
+      "year": 2023,
+      "coverage": 157,
+      "path": "/data/v1/indicators/tb-treatment-success.json",
+      "reviewStatus": "approved",
+      "shortHook": "A TB treatment-outcome map.",
+      "editorialReview": {
+        "status": "expert_only",
+        "reviewedAt": "2026-07-02",
+        "reviewedBy": "Codex editorial QA",
+        "qualityScore": 3,
+        "funScore": 3,
+        "fairnessScore": 3,
+        "ambiguityRisk": "medium",
+        "dailyEligible": false,
+        "practiceEligible": true,
+        "challengeEligible": true,
+        "expertOnly": true,
+        "reviewNotes": [
+          "Batch 4 QA: source-valid health-system outcome map with good coverage.",
+          "Expert-only because reporting, case mix, and disease burden can make interpretation subtle."
+        ],
+        "acceptableCloseDistractorIds": []
+      }
+    },
+    {
+      "id": "tb-case-detection",
+      "providerCode": "SH.TBS.DTEC.ZS",
+      "title": "Tuberculosis case detection rate (%, all forms)",
+      "shortTitle": "TB case detection",
+      "category": "health",
+      "difficulty": "expert",
+      "year": 2024,
+      "coverage": 163,
+      "path": "/data/v1/indicators/tb-case-detection.json",
+      "reviewStatus": "approved",
+      "shortHook": "A TB surveillance map.",
+      "editorialReview": {
+        "status": "expert_only",
+        "reviewedAt": "2026-07-02",
+        "reviewedBy": "Codex editorial QA",
+        "qualityScore": 3,
+        "funScore": 3,
+        "fairnessScore": 3,
+        "ambiguityRisk": "medium",
+        "dailyEligible": false,
+        "practiceEligible": true,
+        "challengeEligible": true,
+        "expertOnly": true,
+        "reviewNotes": [
+          "Batch 4 QA: useful surveillance/access map, but the modeled percentage can be unintuitive.",
+          "Expert-only until reveal text handles values over 100 percent clearly."
+        ],
+        "acceptableCloseDistractorIds": []
+      }
+    },
+    {
+      "id": "working-age-share",
+      "providerCode": "SP.POP.1564.TO.ZS",
+      "title": "Population ages 15-64 (% of total population)",
+      "shortTitle": "Working-age population share",
+      "category": "demography",
+      "difficulty": "standard",
+      "year": 2025,
+      "coverage": 169,
+      "path": "/data/v1/indicators/working-age-share.json",
+      "reviewStatus": "approved",
+      "shortHook": "An age-structure map.",
+      "editorialReview": {
+        "status": "daily_eligible",
+        "reviewedAt": "2026-07-02",
+        "reviewedBy": "Codex editorial QA",
+        "qualityScore": 4,
+        "funScore": 4,
+        "fairnessScore": 4,
+        "ambiguityRisk": "medium",
+        "dailyEligible": true,
+        "practiceEligible": true,
+        "challengeEligible": true,
+        "expertOnly": false,
+        "reviewNotes": [
+          "Batch 4 promotion: clean age-structure map with broad fresh coverage and an intuitive percent unit.",
+          "Daily-worthy when not paired with elderly share or children share in easy tiers."
+        ],
+        "acceptableCloseDistractorIds": []
+      }
+    },
+    {
+      "id": "education-expenditure-savings",
+      "providerCode": "NY.ADJ.AEDU.GN.ZS",
+      "title": "Adjusted savings: education expenditure (% of GNI)",
+      "shortTitle": "Education expenditure share",
+      "category": "education",
+      "difficulty": "standard",
+      "year": 2021,
+      "coverage": 164,
+      "path": "/data/v1/indicators/education-expenditure-savings.json",
+      "reviewStatus": "approved",
+      "shortHook": "An education-investment map.",
+      "editorialReview": {
+        "status": "daily_eligible",
+        "reviewedAt": "2026-07-02",
+        "reviewedBy": "Codex editorial QA",
+        "qualityScore": 4,
+        "funScore": 4,
+        "fairnessScore": 4,
+        "ambiguityRisk": "medium",
+        "dailyEligible": true,
+        "practiceEligible": true,
+        "challengeEligible": true,
+        "expertOnly": false,
+        "reviewNotes": [
+          "Batch 4 promotion: broad education-investment map with clear percent-of-GNI framing.",
+          "Daily-worthy, but reveal copy should distinguish spending share from school outcomes."
+        ],
+        "acceptableCloseDistractorIds": []
+      }
+    },
+    {
+      "id": "human-capital-index",
+      "providerCode": "HD_HCIP_OVRL_TO",
+      "title": "Human capital index plus (HCI+): overall score, total (scale 0–325)",
+      "shortTitle": "Human Capital Index",
+      "category": "development",
+      "difficulty": "standard",
+      "year": 2025,
+      "coverage": 143,
+      "path": "/data/v1/indicators/human-capital-index.json",
+      "reviewStatus": "approved",
+      "shortHook": "A human-capital map.",
+      "editorialReview": {
+        "status": "daily_eligible",
+        "reviewedAt": "2026-07-02",
+        "reviewedBy": "Codex editorial QA",
+        "qualityScore": 4,
+        "funScore": 4,
+        "fairnessScore": 4,
+        "ambiguityRisk": "medium",
+        "dailyEligible": true,
+        "practiceEligible": true,
+        "challengeEligible": true,
+        "expertOnly": false,
+        "reviewNotes": [
+          "Batch 4 promotion: current high-coverage composite with a readable development pattern.",
+          "Daily-worthy sparingly because it blends health and education into one index."
+        ],
+        "acceptableCloseDistractorIds": []
+      }
+    },
+    {
+      "id": "human-capital-education-index",
+      "providerCode": "HD_HCIP_EDUC_TO",
+      "title": "Human capital index plus (HCI+): education pillar score, total (scale 0–188)",
+      "shortTitle": "Human capital education index",
+      "category": "education",
+      "difficulty": "expert",
+      "year": 2025,
+      "coverage": 145,
+      "path": "/data/v1/indicators/human-capital-education-index.json",
+      "reviewStatus": "approved",
+      "shortHook": "An education-capital map.",
+      "editorialReview": {
+        "status": "practice_eligible",
+        "reviewedAt": "2026-07-02",
+        "reviewedBy": "Codex editorial QA",
+        "qualityScore": 4,
+        "funScore": 4,
+        "fairnessScore": 3,
+        "ambiguityRisk": "medium",
+        "dailyEligible": false,
+        "practiceEligible": true,
+        "challengeEligible": true,
+        "expertOnly": false,
+        "reviewNotes": [
+          "Batch 4 promotion: useful education component of human capital with strong coverage.",
+          "Practice-only because composite education indexes are less intuitive than enrollment or spending maps."
+        ],
+        "acceptableCloseDistractorIds": []
+      }
+    },
+    {
+      "id": "adjusted-net-savings",
+      "providerCode": "NY.ADJ.SVNG.GN.ZS",
+      "title": "Adjusted net savings, including particulate emission damage (% of GNI)",
+      "shortTitle": "Adjusted net savings",
+      "category": "development",
+      "difficulty": "expert",
+      "year": 2020,
+      "coverage": 134,
+      "path": "/data/v1/indicators/adjusted-net-savings.json",
+      "reviewStatus": "approved",
+      "shortHook": "A sustainable-savings map.",
+      "editorialReview": {
+        "status": "practice_eligible",
+        "reviewedAt": "2026-07-02",
+        "reviewedBy": "Codex editorial QA",
+        "qualityScore": 4,
+        "funScore": 4,
+        "fairnessScore": 3,
+        "ambiguityRisk": "medium",
+        "dailyEligible": false,
+        "practiceEligible": true,
+        "challengeEligible": true,
+        "expertOnly": false,
+        "reviewNotes": [
+          "Batch 4 promotion: sustainability-and-savings map adds development depth beyond GDP or income.",
+          "Practice-only because adjusted-savings concepts are advanced."
+        ],
+        "acceptableCloseDistractorIds": []
+      }
+    },
+    {
+      "id": "account-ownership-poorest40",
+      "providerCode": "FX.OWN.TOTL.40.ZS",
+      "title": "Account ownership at a financial institution or with a mobile-money-service provider, poorest 40% (% of population ages 15+)",
+      "shortTitle": "Account ownership, poorest 40%",
+      "category": "development",
+      "difficulty": "expert",
+      "year": 2024,
+      "coverage": 131,
+      "path": "/data/v1/indicators/account-ownership-poorest40.json",
+      "reviewStatus": "approved",
+      "shortHook": "A financial-inclusion map for poorer adults.",
+      "editorialReview": {
+        "status": "practice_eligible",
+        "reviewedAt": "2026-07-02",
+        "reviewedBy": "Codex editorial QA",
+        "qualityScore": 4,
+        "funScore": 4,
+        "fairnessScore": 3,
+        "ambiguityRisk": "medium",
+        "dailyEligible": false,
+        "practiceEligible": true,
+        "challengeEligible": true,
+        "expertOnly": false,
+        "reviewNotes": [
+          "Batch 4 promotion: meaningful financial-inclusion map for poorer adults with a clear percent unit.",
+          "Practice-only because survey-wave timing and financial-inclusion distractors need testing."
+        ],
+        "acceptableCloseDistractorIds": []
+      }
+    },
+    {
+      "id": "young-adult-account-ownership",
+      "providerCode": "FX.OWN.TOTL.YG.ZS",
+      "title": "Account ownership at a financial institution or with a mobile-money-service provider, young adults (% of population ages 15-24)",
+      "shortTitle": "Young-adult account ownership",
+      "category": "development",
+      "difficulty": "expert",
+      "year": 2024,
+      "coverage": 132,
+      "path": "/data/v1/indicators/young-adult-account-ownership.json",
+      "reviewStatus": "approved",
+      "shortHook": "A youth financial-inclusion map.",
+      "editorialReview": {
+        "status": "expert_only",
+        "reviewedAt": "2026-07-02",
+        "reviewedBy": "Codex editorial QA",
+        "qualityScore": 3,
+        "funScore": 3,
+        "fairnessScore": 3,
+        "ambiguityRisk": "high",
+        "dailyEligible": false,
+        "practiceEligible": true,
+        "challengeEligible": true,
+        "expertOnly": true,
+        "reviewNotes": [
+          "Batch 4 QA: useful youth financial-inclusion signal, but close to other account-ownership maps.",
+          "Expert-only until the financial-inclusion cluster is tuned."
+        ],
+        "acceptableCloseDistractorIds": []
+      }
+    },
+    {
+      "id": "merchandise-trade-share",
+      "providerCode": "TG.VAL.TOTL.GD.ZS",
+      "title": "Merchandise trade (% of GDP)",
+      "shortTitle": "Merchandise trade share",
+      "category": "economy",
+      "difficulty": "standard",
+      "year": 2025,
+      "coverage": 161,
+      "path": "/data/v1/indicators/merchandise-trade-share.json",
+      "reviewStatus": "approved",
+      "shortHook": "A goods-trade openness map.",
+      "editorialReview": {
+        "status": "daily_eligible",
+        "reviewedAt": "2026-07-02",
+        "reviewedBy": "Codex editorial QA",
+        "qualityScore": 4,
+        "funScore": 4,
+        "fairnessScore": 4,
+        "ambiguityRisk": "medium",
+        "dailyEligible": true,
+        "practiceEligible": true,
+        "challengeEligible": true,
+        "expertOnly": false,
+        "reviewNotes": [
+          "Batch 4 promotion: strong trade-openness map with broad coverage and a clear percent-of-GDP unit.",
+          "Daily-worthy if answer choices distinguish goods trade from services and tourism."
+        ],
+        "acceptableCloseDistractorIds": []
+      }
+    },
+    {
+      "id": "travel-service-exports-share",
+      "providerCode": "BX.GSR.TRVL.ZS",
+      "title": "Travel services (% of service exports, BoP)",
+      "shortTitle": "Travel service exports",
+      "category": "economy",
+      "difficulty": "expert",
+      "year": 2024,
+      "coverage": 139,
+      "path": "/data/v1/indicators/travel-service-exports-share.json",
+      "reviewStatus": "approved",
+      "shortHook": "A tourism-service export map.",
+      "editorialReview": {
+        "status": "practice_eligible",
+        "reviewedAt": "2026-07-02",
+        "reviewedBy": "Codex editorial QA",
+        "qualityScore": 4,
+        "funScore": 5,
+        "fairnessScore": 3,
+        "ambiguityRisk": "medium",
+        "dailyEligible": false,
+        "practiceEligible": true,
+        "challengeEligible": true,
+        "expertOnly": false,
+        "reviewNotes": [
+          "Batch 4 promotion: fun tourism-dependence map with a clear service-export share unit.",
+          "Practice-only because it can overlap with island, small-economy, and tourism distractors."
+        ],
+        "acceptableCloseDistractorIds": []
+      }
+    },
+    {
+      "id": "exports-high-income-share",
+      "providerCode": "TX.VAL.MRCH.HI.ZS",
+      "title": "Merchandise exports to high-income economies (% of total merchandise exports)",
+      "shortTitle": "Exports to high-income economies",
+      "category": "economy",
+      "difficulty": "expert",
+      "year": 2023,
+      "coverage": 168,
+      "path": "/data/v1/indicators/exports-high-income-share.json",
+      "reviewStatus": "approved",
+      "shortHook": "A trade-partner export map.",
+      "editorialReview": {
+        "status": "expert_only",
+        "reviewedAt": "2026-07-02",
+        "reviewedBy": "Codex editorial QA",
+        "qualityScore": 3,
+        "funScore": 3,
+        "fairnessScore": 3,
+        "ambiguityRisk": "high",
+        "dailyEligible": false,
+        "practiceEligible": true,
+        "challengeEligible": true,
+        "expertOnly": true,
+        "reviewNotes": [
+          "Batch 4 QA: source-valid trade-partner map, but the concept is abstract for broad play.",
+          "Expert-only and avoid pairing with import-side high-income trade maps."
+        ],
+        "acceptableCloseDistractorIds": []
+      }
+    },
+    {
+      "id": "imports-high-income-share",
+      "providerCode": "TM.VAL.MRCH.HI.ZS",
+      "title": "Merchandise imports from high-income economies (% of total merchandise imports)",
+      "shortTitle": "Imports from high-income economies",
+      "category": "economy",
+      "difficulty": "expert",
+      "year": 2023,
+      "coverage": 168,
+      "path": "/data/v1/indicators/imports-high-income-share.json",
+      "reviewStatus": "approved",
+      "shortHook": "A trade-partner import map.",
+      "editorialReview": {
+        "status": "expert_only",
+        "reviewedAt": "2026-07-02",
+        "reviewedBy": "Codex editorial QA",
+        "qualityScore": 3,
+        "funScore": 3,
+        "fairnessScore": 3,
+        "ambiguityRisk": "high",
+        "dailyEligible": false,
+        "practiceEligible": true,
+        "challengeEligible": true,
+        "expertOnly": true,
+        "reviewNotes": [
+          "Batch 4 QA: useful counterpart to export-partner geography, but less intuitive than total trade openness.",
+          "Expert-only until trade-partner distractors are reviewed."
+        ],
+        "acceptableCloseDistractorIds": []
+      }
+    },
+    {
+      "id": "exports-within-region-share",
+      "providerCode": "TX.VAL.MRCH.WR.ZS",
+      "title": "Merchandise exports to low- and middle-income economies within region (% of total merchandise exports)",
+      "shortTitle": "Exports within region",
+      "category": "economy",
+      "difficulty": "expert",
+      "year": 2023,
+      "coverage": 166,
+      "path": "/data/v1/indicators/exports-within-region-share.json",
+      "reviewStatus": "approved",
+      "shortHook": "A regional-trade export map.",
+      "editorialReview": {
+        "status": "practice_eligible",
+        "reviewedAt": "2026-07-02",
+        "reviewedBy": "Codex editorial QA",
+        "qualityScore": 4,
+        "funScore": 4,
+        "fairnessScore": 3,
+        "ambiguityRisk": "medium",
+        "dailyEligible": false,
+        "practiceEligible": true,
+        "challengeEligible": true,
+        "expertOnly": false,
+        "reviewNotes": [
+          "Batch 4 promotion: regional-integration map with good coverage and a distinct geography story.",
+          "Practice-only because partner-share maps are more abstract than sector shares."
+        ],
+        "acceptableCloseDistractorIds": []
+      }
+    },
+    {
+      "id": "atm-density",
+      "providerCode": "FB.ATM.TOTL.P5",
+      "title": "Automated teller machines (ATMs) (per 100,000 adults)",
+      "shortTitle": "ATM density",
+      "category": "connectivity",
+      "difficulty": "standard",
+      "year": 2024,
+      "coverage": 125,
+      "path": "/data/v1/indicators/atm-density.json",
+      "reviewStatus": "approved",
+      "shortHook": "A financial-infrastructure map.",
+      "editorialReview": {
+        "status": "practice_eligible",
+        "reviewedAt": "2026-07-02",
+        "reviewedBy": "Codex editorial QA",
+        "qualityScore": 4,
+        "funScore": 4,
+        "fairnessScore": 4,
+        "ambiguityRisk": "medium",
+        "dailyEligible": false,
+        "practiceEligible": true,
+        "challengeEligible": true,
+        "expertOnly": false,
+        "reviewNotes": [
+          "Batch 4 promotion: tangible financial-infrastructure clue with just enough coverage to pass the source gate.",
+          "Practice-only until checked against bank-branch and account-ownership maps."
+        ],
+        "acceptableCloseDistractorIds": []
+      }
     }
   ],
   "rounds": [
@@ -7025,6 +8575,34 @@
       "ambiguityRisk": "medium",
       "eligibility": {
         "daily": true,
+        "practice": true,
+        "challenge": true,
+        "expertOnly": false
+      }
+    },
+    {
+      "id": "worldprint-account-ownership-poorest40",
+      "correctIndicatorId": "account-ownership-poorest40",
+      "category": "development",
+      "difficulty": "expert",
+      "editorialStatus": "practice_eligible",
+      "ambiguityRisk": "medium",
+      "eligibility": {
+        "daily": false,
+        "practice": true,
+        "challenge": true,
+        "expertOnly": false
+      }
+    },
+    {
+      "id": "worldprint-adjusted-net-savings",
+      "correctIndicatorId": "adjusted-net-savings",
+      "category": "development",
+      "difficulty": "expert",
+      "editorialStatus": "practice_eligible",
+      "ambiguityRisk": "medium",
+      "eligibility": {
+        "daily": false,
         "practice": true,
         "challenge": true,
         "expertOnly": false
@@ -7227,6 +8805,48 @@
       }
     },
     {
+      "id": "worldprint-air-pollution-mortality",
+      "correctIndicatorId": "air-pollution-mortality",
+      "category": "health",
+      "difficulty": "expert",
+      "editorialStatus": "practice_eligible",
+      "ambiguityRisk": "medium",
+      "eligibility": {
+        "daily": false,
+        "practice": true,
+        "challenge": true,
+        "expertOnly": false
+      }
+    },
+    {
+      "id": "worldprint-alternative-nuclear-energy",
+      "correctIndicatorId": "alternative-nuclear-energy",
+      "category": "energy",
+      "difficulty": "expert",
+      "editorialStatus": "practice_eligible",
+      "ambiguityRisk": "medium",
+      "eligibility": {
+        "daily": false,
+        "practice": true,
+        "challenge": true,
+        "expertOnly": false
+      }
+    },
+    {
+      "id": "worldprint-antiretroviral-therapy-coverage",
+      "correctIndicatorId": "antiretroviral-therapy-coverage",
+      "category": "health",
+      "difficulty": "expert",
+      "editorialStatus": "expert_only",
+      "ambiguityRisk": "medium",
+      "eligibility": {
+        "daily": false,
+        "practice": true,
+        "challenge": true,
+        "expertOnly": true
+      }
+    },
+    {
       "id": "worldprint-arable-land",
       "correctIndicatorId": "arable-land",
       "category": "land",
@@ -7269,9 +8889,37 @@
       }
     },
     {
+      "id": "worldprint-atm-density",
+      "correctIndicatorId": "atm-density",
+      "category": "connectivity",
+      "difficulty": "standard",
+      "editorialStatus": "practice_eligible",
+      "ambiguityRisk": "medium",
+      "eligibility": {
+        "daily": false,
+        "practice": true,
+        "challenge": true,
+        "expertOnly": false
+      }
+    },
+    {
       "id": "worldprint-bank-branches",
       "correctIndicatorId": "bank-branches",
       "category": "connectivity",
+      "difficulty": "expert",
+      "editorialStatus": "expert_only",
+      "ambiguityRisk": "high",
+      "eligibility": {
+        "daily": false,
+        "practice": true,
+        "challenge": true,
+        "expertOnly": true
+      }
+    },
+    {
+      "id": "worldprint-bank-capital-assets",
+      "correctIndicatorId": "bank-capital-assets",
+      "category": "economy",
       "difficulty": "expert",
       "editorialStatus": "expert_only",
       "ambiguityRisk": "high",
@@ -7303,6 +8951,48 @@
       "difficulty": "intro",
       "editorialStatus": "practice_eligible",
       "ambiguityRisk": "high",
+      "eligibility": {
+        "daily": false,
+        "practice": true,
+        "challenge": true,
+        "expertOnly": false
+      }
+    },
+    {
+      "id": "worldprint-broad-money-share",
+      "correctIndicatorId": "broad-money-share",
+      "category": "economy",
+      "difficulty": "expert",
+      "editorialStatus": "expert_only",
+      "ambiguityRisk": "high",
+      "eligibility": {
+        "daily": false,
+        "practice": true,
+        "challenge": true,
+        "expertOnly": true
+      }
+    },
+    {
+      "id": "worldprint-capture-fisheries-production",
+      "correctIndicatorId": "capture-fisheries-production",
+      "category": "agriculture",
+      "difficulty": "expert",
+      "editorialStatus": "expert_only",
+      "ambiguityRisk": "high",
+      "eligibility": {
+        "daily": false,
+        "practice": true,
+        "challenge": true,
+        "expertOnly": true
+      }
+    },
+    {
+      "id": "worldprint-carbon-damage-share",
+      "correctIndicatorId": "carbon-damage-share",
+      "category": "environment",
+      "difficulty": "expert",
+      "editorialStatus": "practice_eligible",
+      "ambiguityRisk": "medium",
       "eligibility": {
         "daily": false,
         "practice": true,
@@ -7381,6 +9071,20 @@
       }
     },
     {
+      "id": "worldprint-co2-emissions-change",
+      "correctIndicatorId": "co2-emissions-change",
+      "category": "environment",
+      "difficulty": "expert",
+      "editorialStatus": "expert_only",
+      "ambiguityRisk": "high",
+      "eligibility": {
+        "daily": false,
+        "practice": true,
+        "challenge": true,
+        "expertOnly": true
+      }
+    },
+    {
       "id": "worldprint-co2-per-capita",
       "correctIndicatorId": "co2-per-capita",
       "category": "environment",
@@ -7403,6 +9107,34 @@
       "ambiguityRisk": "medium",
       "eligibility": {
         "daily": true,
+        "practice": true,
+        "challenge": true,
+        "expertOnly": false
+      }
+    },
+    {
+      "id": "worldprint-coal-rents",
+      "correctIndicatorId": "coal-rents",
+      "category": "energy",
+      "difficulty": "expert",
+      "editorialStatus": "expert_only",
+      "ambiguityRisk": "high",
+      "eligibility": {
+        "daily": false,
+        "practice": true,
+        "challenge": true,
+        "expertOnly": true
+      }
+    },
+    {
+      "id": "worldprint-combustible-renewables-waste",
+      "correctIndicatorId": "combustible-renewables-waste",
+      "category": "energy",
+      "difficulty": "expert",
+      "editorialStatus": "practice_eligible",
+      "ambiguityRisk": "medium",
+      "eligibility": {
+        "daily": false,
         "practice": true,
         "challenge": true,
         "expertOnly": false
@@ -7521,6 +9253,20 @@
       }
     },
     {
+      "id": "worldprint-deforestation-co2-flux",
+      "correctIndicatorId": "deforestation-co2-flux",
+      "category": "environment",
+      "difficulty": "expert",
+      "editorialStatus": "expert_only",
+      "ambiguityRisk": "high",
+      "eligibility": {
+        "daily": false,
+        "practice": true,
+        "challenge": true,
+        "expertOnly": true
+      }
+    },
+    {
       "id": "worldprint-domestic-savings",
       "correctIndicatorId": "domestic-savings",
       "category": "economy",
@@ -7563,6 +9309,20 @@
       }
     },
     {
+      "id": "worldprint-education-expenditure-savings",
+      "correctIndicatorId": "education-expenditure-savings",
+      "category": "education",
+      "difficulty": "standard",
+      "editorialStatus": "daily_eligible",
+      "ambiguityRisk": "medium",
+      "eligibility": {
+        "daily": true,
+        "practice": true,
+        "challenge": true,
+        "expertOnly": false
+      }
+    },
+    {
       "id": "worldprint-education-spending",
       "correctIndicatorId": "education-spending",
       "category": "education",
@@ -7579,6 +9339,20 @@
     {
       "id": "worldprint-electric-power-use",
       "correctIndicatorId": "electric-power-use",
+      "category": "energy",
+      "difficulty": "standard",
+      "editorialStatus": "daily_eligible",
+      "ambiguityRisk": "medium",
+      "eligibility": {
+        "daily": true,
+        "practice": true,
+        "challenge": true,
+        "expertOnly": false
+      }
+    },
+    {
+      "id": "worldprint-electric-transmission-losses",
+      "correctIndicatorId": "electric-transmission-losses",
       "category": "energy",
       "difficulty": "standard",
       "editorialStatus": "daily_eligible",
@@ -7675,6 +9449,62 @@
       }
     },
     {
+      "id": "worldprint-energy-depletion-share",
+      "correctIndicatorId": "energy-depletion-share",
+      "category": "energy",
+      "difficulty": "expert",
+      "editorialStatus": "expert_only",
+      "ambiguityRisk": "high",
+      "eligibility": {
+        "daily": false,
+        "practice": true,
+        "challenge": true,
+        "expertOnly": true
+      }
+    },
+    {
+      "id": "worldprint-energy-imports",
+      "correctIndicatorId": "energy-imports",
+      "category": "energy",
+      "difficulty": "expert",
+      "editorialStatus": "practice_eligible",
+      "ambiguityRisk": "medium",
+      "eligibility": {
+        "daily": false,
+        "practice": true,
+        "challenge": true,
+        "expertOnly": false
+      }
+    },
+    {
+      "id": "worldprint-energy-intensity",
+      "correctIndicatorId": "energy-intensity",
+      "category": "energy",
+      "difficulty": "expert",
+      "editorialStatus": "practice_eligible",
+      "ambiguityRisk": "medium",
+      "eligibility": {
+        "daily": false,
+        "practice": true,
+        "challenge": true,
+        "expertOnly": false
+      }
+    },
+    {
+      "id": "worldprint-energy-productivity",
+      "correctIndicatorId": "energy-productivity",
+      "category": "energy",
+      "difficulty": "expert",
+      "editorialStatus": "expert_only",
+      "ambiguityRisk": "high",
+      "eligibility": {
+        "daily": false,
+        "practice": true,
+        "challenge": true,
+        "expertOnly": true
+      }
+    },
+    {
       "id": "worldprint-energy-use",
       "correctIndicatorId": "energy-use",
       "category": "energy",
@@ -7689,6 +9519,20 @@
       }
     },
     {
+      "id": "worldprint-exports-high-income-share",
+      "correctIndicatorId": "exports-high-income-share",
+      "category": "economy",
+      "difficulty": "expert",
+      "editorialStatus": "expert_only",
+      "ambiguityRisk": "high",
+      "eligibility": {
+        "daily": false,
+        "practice": true,
+        "challenge": true,
+        "expertOnly": true
+      }
+    },
+    {
       "id": "worldprint-exports-share",
       "correctIndicatorId": "exports-share",
       "category": "economy",
@@ -7700,6 +9544,34 @@
         "practice": true,
         "challenge": true,
         "expertOnly": true
+      }
+    },
+    {
+      "id": "worldprint-exports-within-region-share",
+      "correctIndicatorId": "exports-within-region-share",
+      "category": "economy",
+      "difficulty": "expert",
+      "editorialStatus": "practice_eligible",
+      "ambiguityRisk": "medium",
+      "eligibility": {
+        "daily": false,
+        "practice": true,
+        "challenge": true,
+        "expertOnly": false
+      }
+    },
+    {
+      "id": "worldprint-external-balance-share",
+      "correctIndicatorId": "external-balance-share",
+      "category": "economy",
+      "difficulty": "expert",
+      "editorialStatus": "practice_eligible",
+      "ambiguityRisk": "medium",
+      "eligibility": {
+        "daily": false,
+        "practice": true,
+        "challenge": true,
+        "expertOnly": false
       }
     },
     {
@@ -7885,6 +9757,34 @@
       }
     },
     {
+      "id": "worldprint-final-consumption-share",
+      "correctIndicatorId": "final-consumption-share",
+      "category": "economy",
+      "difficulty": "expert",
+      "editorialStatus": "practice_eligible",
+      "ambiguityRisk": "medium",
+      "eligibility": {
+        "daily": false,
+        "practice": true,
+        "challenge": true,
+        "expertOnly": false
+      }
+    },
+    {
+      "id": "worldprint-financial-service-imports-share",
+      "correctIndicatorId": "financial-service-imports-share",
+      "category": "economy",
+      "difficulty": "expert",
+      "editorialStatus": "expert_only",
+      "ambiguityRisk": "high",
+      "eligibility": {
+        "daily": false,
+        "practice": true,
+        "challenge": true,
+        "expertOnly": true
+      }
+    },
+    {
       "id": "worldprint-fixed-broadband",
       "correctIndicatorId": "fixed-broadband",
       "category": "connectivity",
@@ -7997,6 +9897,20 @@
       }
     },
     {
+      "id": "worldprint-forest-land-co2-flux",
+      "correctIndicatorId": "forest-land-co2-flux",
+      "category": "environment",
+      "difficulty": "expert",
+      "editorialStatus": "expert_only",
+      "ambiguityRisk": "high",
+      "eligibility": {
+        "daily": false,
+        "practice": true,
+        "challenge": true,
+        "expertOnly": true
+      }
+    },
+    {
       "id": "worldprint-fossil-fuel-energy-share",
       "correctIndicatorId": "fossil-fuel-energy-share",
       "category": "energy",
@@ -8073,6 +9987,20 @@
       "difficulty": "standard",
       "editorialStatus": "practice_eligible",
       "ambiguityRisk": "high",
+      "eligibility": {
+        "daily": false,
+        "practice": true,
+        "challenge": true,
+        "expertOnly": false
+      }
+    },
+    {
+      "id": "worldprint-ghg-emissions-change",
+      "correctIndicatorId": "ghg-emissions-change",
+      "category": "environment",
+      "difficulty": "expert",
+      "editorialStatus": "practice_eligible",
+      "ambiguityRisk": "medium",
       "eligibility": {
         "daily": false,
         "practice": true,
@@ -8207,6 +10135,20 @@
       }
     },
     {
+      "id": "worldprint-hiv-incidence",
+      "correctIndicatorId": "hiv-incidence",
+      "category": "health",
+      "difficulty": "expert",
+      "editorialStatus": "expert_only",
+      "ambiguityRisk": "medium",
+      "eligibility": {
+        "daily": false,
+        "practice": true,
+        "challenge": true,
+        "expertOnly": true
+      }
+    },
+    {
       "id": "worldprint-hospital-beds",
       "correctIndicatorId": "hospital-beds",
       "category": "health",
@@ -8218,6 +10160,34 @@
         "practice": true,
         "challenge": true,
         "expertOnly": true
+      }
+    },
+    {
+      "id": "worldprint-human-capital-education-index",
+      "correctIndicatorId": "human-capital-education-index",
+      "category": "education",
+      "difficulty": "expert",
+      "editorialStatus": "practice_eligible",
+      "ambiguityRisk": "medium",
+      "eligibility": {
+        "daily": false,
+        "practice": true,
+        "challenge": true,
+        "expertOnly": false
+      }
+    },
+    {
+      "id": "worldprint-human-capital-index",
+      "correctIndicatorId": "human-capital-index",
+      "category": "development",
+      "difficulty": "standard",
+      "editorialStatus": "daily_eligible",
+      "ambiguityRisk": "medium",
+      "eligibility": {
+        "daily": true,
+        "practice": true,
+        "challenge": true,
+        "expertOnly": false
       }
     },
     {
@@ -8249,10 +10219,52 @@
       }
     },
     {
+      "id": "worldprint-imports-high-income-share",
+      "correctIndicatorId": "imports-high-income-share",
+      "category": "economy",
+      "difficulty": "expert",
+      "editorialStatus": "expert_only",
+      "ambiguityRisk": "high",
+      "eligibility": {
+        "daily": false,
+        "practice": true,
+        "challenge": true,
+        "expertOnly": true
+      }
+    },
+    {
       "id": "worldprint-imports-share",
       "correctIndicatorId": "imports-share",
       "category": "economy",
       "difficulty": "standard",
+      "editorialStatus": "expert_only",
+      "ambiguityRisk": "high",
+      "eligibility": {
+        "daily": false,
+        "practice": true,
+        "challenge": true,
+        "expertOnly": true
+      }
+    },
+    {
+      "id": "worldprint-imports-within-region-share",
+      "correctIndicatorId": "imports-within-region-share",
+      "category": "economy",
+      "difficulty": "expert",
+      "editorialStatus": "practice_eligible",
+      "ambiguityRisk": "medium",
+      "eligibility": {
+        "daily": false,
+        "practice": true,
+        "challenge": true,
+        "expertOnly": false
+      }
+    },
+    {
+      "id": "worldprint-income-tax-share",
+      "correctIndicatorId": "income-tax-share",
+      "category": "economy",
+      "difficulty": "expert",
       "editorialStatus": "expert_only",
       "ambiguityRisk": "high",
       "eligibility": {
@@ -8501,6 +10513,34 @@
       }
     },
     {
+      "id": "worldprint-merchandise-trade-share",
+      "correctIndicatorId": "merchandise-trade-share",
+      "category": "economy",
+      "difficulty": "standard",
+      "editorialStatus": "daily_eligible",
+      "ambiguityRisk": "medium",
+      "eligibility": {
+        "daily": true,
+        "practice": true,
+        "challenge": true,
+        "expertOnly": false
+      }
+    },
+    {
+      "id": "worldprint-methane-emissions-change",
+      "correctIndicatorId": "methane-emissions-change",
+      "category": "environment",
+      "difficulty": "expert",
+      "editorialStatus": "expert_only",
+      "ambiguityRisk": "medium",
+      "eligibility": {
+        "daily": false,
+        "practice": true,
+        "challenge": true,
+        "expertOnly": true
+      }
+    },
+    {
       "id": "worldprint-migrant-stock",
       "correctIndicatorId": "migrant-stock",
       "category": "demography",
@@ -8521,6 +10561,34 @@
       "difficulty": "expert",
       "editorialStatus": "expert_only",
       "ambiguityRisk": "medium",
+      "eligibility": {
+        "daily": false,
+        "practice": true,
+        "challenge": true,
+        "expertOnly": true
+      }
+    },
+    {
+      "id": "worldprint-mineral-depletion-share",
+      "correctIndicatorId": "mineral-depletion-share",
+      "category": "economy",
+      "difficulty": "expert",
+      "editorialStatus": "expert_only",
+      "ambiguityRisk": "high",
+      "eligibility": {
+        "daily": false,
+        "practice": true,
+        "challenge": true,
+        "expertOnly": true
+      }
+    },
+    {
+      "id": "worldprint-mineral-rents",
+      "correctIndicatorId": "mineral-rents",
+      "category": "economy",
+      "difficulty": "expert",
+      "editorialStatus": "expert_only",
+      "ambiguityRisk": "high",
       "eligibility": {
         "daily": false,
         "practice": true,
@@ -8571,6 +10639,20 @@
       }
     },
     {
+      "id": "worldprint-ncd-premature-mortality",
+      "correctIndicatorId": "ncd-premature-mortality",
+      "category": "health",
+      "difficulty": "standard",
+      "editorialStatus": "daily_eligible",
+      "ambiguityRisk": "medium",
+      "eligibility": {
+        "daily": true,
+        "practice": true,
+        "challenge": true,
+        "expertOnly": false
+      }
+    },
+    {
       "id": "worldprint-neonatal-mortality",
       "correctIndicatorId": "neonatal-mortality",
       "category": "health",
@@ -8596,6 +10678,20 @@
         "practice": true,
         "challenge": true,
         "expertOnly": false
+      }
+    },
+    {
+      "id": "worldprint-nonperforming-loans",
+      "correctIndicatorId": "nonperforming-loans",
+      "category": "economy",
+      "difficulty": "expert",
+      "editorialStatus": "expert_only",
+      "ambiguityRisk": "high",
+      "eligibility": {
+        "daily": false,
+        "practice": true,
+        "challenge": true,
+        "expertOnly": true
       }
     },
     {
@@ -9061,9 +11157,93 @@
       }
     },
     {
+      "id": "worldprint-tb-case-detection",
+      "correctIndicatorId": "tb-case-detection",
+      "category": "health",
+      "difficulty": "expert",
+      "editorialStatus": "expert_only",
+      "ambiguityRisk": "medium",
+      "eligibility": {
+        "daily": false,
+        "practice": true,
+        "challenge": true,
+        "expertOnly": true
+      }
+    },
+    {
+      "id": "worldprint-tb-treatment-success",
+      "correctIndicatorId": "tb-treatment-success",
+      "category": "health",
+      "difficulty": "expert",
+      "editorialStatus": "expert_only",
+      "ambiguityRisk": "medium",
+      "eligibility": {
+        "daily": false,
+        "practice": true,
+        "challenge": true,
+        "expertOnly": true
+      }
+    },
+    {
       "id": "worldprint-tertiary-enrollment",
       "correctIndicatorId": "tertiary-enrollment",
       "category": "education",
+      "difficulty": "expert",
+      "editorialStatus": "expert_only",
+      "ambiguityRisk": "medium",
+      "eligibility": {
+        "daily": false,
+        "practice": true,
+        "challenge": true,
+        "expertOnly": true
+      }
+    },
+    {
+      "id": "worldprint-threatened-bird-species",
+      "correctIndicatorId": "threatened-bird-species",
+      "category": "environment",
+      "difficulty": "expert",
+      "editorialStatus": "expert_only",
+      "ambiguityRisk": "medium",
+      "eligibility": {
+        "daily": false,
+        "practice": true,
+        "challenge": true,
+        "expertOnly": true
+      }
+    },
+    {
+      "id": "worldprint-threatened-fish-species",
+      "correctIndicatorId": "threatened-fish-species",
+      "category": "environment",
+      "difficulty": "expert",
+      "editorialStatus": "expert_only",
+      "ambiguityRisk": "medium",
+      "eligibility": {
+        "daily": false,
+        "practice": true,
+        "challenge": true,
+        "expertOnly": true
+      }
+    },
+    {
+      "id": "worldprint-threatened-mammal-species",
+      "correctIndicatorId": "threatened-mammal-species",
+      "category": "environment",
+      "difficulty": "expert",
+      "editorialStatus": "expert_only",
+      "ambiguityRisk": "medium",
+      "eligibility": {
+        "daily": false,
+        "practice": true,
+        "challenge": true,
+        "expertOnly": true
+      }
+    },
+    {
+      "id": "worldprint-threatened-plant-species",
+      "correctIndicatorId": "threatened-plant-species",
+      "category": "environment",
       "difficulty": "expert",
       "editorialStatus": "expert_only",
       "ambiguityRisk": "medium",
@@ -9159,10 +11339,52 @@
       }
     },
     {
+      "id": "worldprint-travel-service-exports-share",
+      "correctIndicatorId": "travel-service-exports-share",
+      "category": "economy",
+      "difficulty": "expert",
+      "editorialStatus": "practice_eligible",
+      "ambiguityRisk": "medium",
+      "eligibility": {
+        "daily": false,
+        "practice": true,
+        "challenge": true,
+        "expertOnly": false
+      }
+    },
+    {
+      "id": "worldprint-travel-service-imports-share",
+      "correctIndicatorId": "travel-service-imports-share",
+      "category": "economy",
+      "difficulty": "expert",
+      "editorialStatus": "practice_eligible",
+      "ambiguityRisk": "medium",
+      "eligibility": {
+        "daily": false,
+        "practice": true,
+        "challenge": true,
+        "expertOnly": false
+      }
+    },
+    {
       "id": "worldprint-tuberculosis-incidence",
       "correctIndicatorId": "tuberculosis-incidence",
       "category": "health",
       "difficulty": "expert",
+      "editorialStatus": "daily_eligible",
+      "ambiguityRisk": "medium",
+      "eligibility": {
+        "daily": true,
+        "practice": true,
+        "challenge": true,
+        "expertOnly": false
+      }
+    },
+    {
+      "id": "worldprint-uhc-service-coverage",
+      "correctIndicatorId": "uhc-service-coverage",
+      "category": "health",
+      "difficulty": "standard",
       "editorialStatus": "daily_eligible",
       "ambiguityRisk": "medium",
       "eligibility": {
@@ -9425,6 +11647,34 @@
       }
     },
     {
+      "id": "worldprint-working-age-share",
+      "correctIndicatorId": "working-age-share",
+      "category": "demography",
+      "difficulty": "standard",
+      "editorialStatus": "daily_eligible",
+      "ambiguityRisk": "medium",
+      "eligibility": {
+        "daily": true,
+        "practice": true,
+        "challenge": true,
+        "expertOnly": false
+      }
+    },
+    {
+      "id": "worldprint-young-adult-account-ownership",
+      "correctIndicatorId": "young-adult-account-ownership",
+      "category": "development",
+      "difficulty": "expert",
+      "editorialStatus": "expert_only",
+      "ambiguityRisk": "high",
+      "eligibility": {
+        "daily": false,
+        "practice": true,
+        "challenge": true,
+        "expertOnly": true
+      }
+    },
+    {
       "id": "worldprint-youth-employment-ratio",
       "correctIndicatorId": "youth-employment-ratio",
       "category": "labor",
@@ -9469,8 +11719,8 @@
   ],
   "dailies": {
     "path": "/data/v1/dailies/index.json",
-    "start": "2026-05-28",
-    "end": "2026-09-25",
+    "start": "2026-06-02",
+    "end": "2026-09-30",
     "count": 121,
     "generatorVersion": "daily-manifest-v2"
   }

@@ -202,12 +202,12 @@
     "valuesReference": "https://api.worldbank.org/v2/country/all/indicator/SL.UEM.TOTL.MA.ZS?format=json&per_page=20000&page=1&date=2015%3A2025",
     "license": "Creative Commons Attribution 4.0 International unless specifically labeled otherwise by World Bank metadata",
     "licenseReference": "https://www.worldbank.org/en/about/legal/terms-of-use-for-datasets",
-    "retrievedAt": "2026-06-27T17:15:14.169275+00:00",
-    "checksum": "94377236f233c96a111690cfc7404c6a613338348f83cb3c5bd0cd6245ff5ddc",
+    "retrievedAt": "2026-07-02T22:38:02.407041+00:00",
+    "checksum": "ad725d837ce4b50c6feac08b0aeb66714280387308a5c03203a1faebf02c7baa",
     "sourceOrganization": "ILO Modelled Estimates database (ILOEST), International Labour Organization (ILO), uri: https://ilostat.ilo.org/data/bulk/, publisher: ILOSTAT, type: external database, date accessed: January 17, 2026"
   },
   "reviewStatus": "approved",
-  "contentVersion": "2026.06.22-exp2-qa1",
+  "contentVersion": "2026.07.02-exp4-content50",
   "editorial": {
     "shortHook": "A candidate map for male unemployment.",
     "patternNote": "The darkest countries include Eswatini, South Africa, Djibouti, while the lightest include Qatar, Cambodia, Niger; that contrast is the fastest way to read the male unemployment pattern.",
@@ -248,7 +248,7 @@
   },
   "editorialReview": {
     "status": "needs_review",
-    "reviewedAt": "2026-06-22",
+    "reviewedAt": "2026-07-02",
     "reviewedBy": "pipeline-default-needs-review",
     "qualityScore": 2,
     "funScore": 2,

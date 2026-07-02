@@ -208,12 +208,12 @@
     "valuesReference": "https://api.worldbank.org/v2/country/all/indicator/EG.ELC.COAL.ZS?format=json&per_page=20000&page=1&date=2015%3A2025",
     "license": "Creative Commons Attribution 4.0 International unless specifically labeled otherwise by World Bank metadata",
     "licenseReference": "https://www.worldbank.org/en/about/legal/terms-of-use-for-datasets",
-    "retrievedAt": "2026-06-27T17:15:00.182112+00:00",
-    "checksum": "4c531f35d0552d0e2d96a148ded25fd409c46b915bd04dd3b2413403596130f9",
+    "retrievedAt": "2026-07-02T22:34:37.073512+00:00",
+    "checksum": "08bd064608255d04097eb79f670f214237e77e33c8e528d3bb44faf6fc1f3fd3",
     "sourceOrganization": "IEA Energy Statistics Data Browser, International Energy Agency (IEA), uri: https://www.iea.org/data-and-statistics/data-tools/energy-statistics-data-browser, publisher: International Energy Agency (IEA), date accessed: 2025-03-25"
   },
   "reviewStatus": "approved",
-  "contentVersion": "2026.06.22-exp2-qa1",
+  "contentVersion": "2026.07.02-exp4-content50",
   "editorial": {
     "shortHook": "A candidate map for coal electricity share.",
     "patternNote": "The darkest countries include Botswana, Mongolia, South Africa, while the lightest include Afghanistan, Angola, Albania; that contrast is the fastest way to read the coal electricity share pattern.",
@@ -234,16 +234,16 @@
     ],
     "commonConfusions": [
       {
+        "confusedWithIndicatorCode": "NY.GDP.COAL.RT.ZS",
+        "reason": "Coal rents lives in the same category, so it can feel plausible until the high and low countries are checked."
+      },
+      {
         "confusedWithIndicatorCode": "IS.SHP.GOOD.TU",
         "reason": "Container port traffic overlaps with part of the visible pattern, but the full country spread does not match."
       },
       {
         "confusedWithIndicatorCode": "ST.INT.ARVL",
         "reason": "Tourism arrivals overlaps with part of the visible pattern, but the full country spread does not match."
-      },
-      {
-        "confusedWithIndicatorCode": "SP.POP.65UP.TO.ZS",
-        "reason": "Population ages 65+ overlaps with part of the visible pattern, but the full country spread does not match."
       }
     ],
     "difficultyReason": "Standard difficulty: the map has readable regional structure, but the best answer still depends on checking the unit and country anchors.",
@@ -254,7 +254,7 @@
   },
   "editorialReview": {
     "status": "daily_eligible",
-    "reviewedAt": "2026-06-22",
+    "reviewedAt": "2026-07-02",
     "reviewedBy": "Codex editorial QA",
     "qualityScore": 4,
     "funScore": 4,

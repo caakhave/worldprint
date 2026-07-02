@@ -2,31 +2,32 @@
   "schemaVersion": "1.1.0",
   "game": "worldprint",
   "date": "2026-07-07",
-  "contentVersion": "2026.06.22-exp2-qa1",
+  "contentVersion": "2026.07.02-exp4-content50",
   "roundIds": [
-    "worldprint-population-density",
-    "worldprint-forest-area",
-    "worldprint-maternal-mortality",
-    "worldprint-freshwater-per-capita",
-    "worldprint-measles-immunization"
+    "worldprint-merchandise-trade-share",
+    "worldprint-land-under-cereal",
+    "worldprint-employment-agriculture",
+    "worldprint-ncd-premature-mortality",
+    "worldprint-health-expenditure"
   ],
   "indicatorIds": [
-    "population-density",
-    "forest-area",
-    "maternal-mortality",
-    "freshwater-per-capita",
-    "measles-immunization"
+    "merchandise-trade-share",
+    "land-under-cereal",
+    "employment-agriculture",
+    "ncd-premature-mortality",
+    "health-expenditure"
   ],
   "categoryMix": {
-    "settlement": 1,
-    "environment": 2,
+    "economy": 1,
+    "land": 1,
+    "labor": 1,
     "health": 2
   },
   "mapDifficultyMix": {
     "standard": 4,
-    "intro": 1
+    "expert": 1
   },
-  "generatedAt": "2026-06-27T17:16:22.618650+00:00",
+  "generatedAt": "2026-07-02T22:58:41.349781+00:00",
   "generatorVersion": "daily-manifest-v2",
   "varietyNotes": [
     "Selected with category, difficulty, repeat-cooldown, and same-day correlation safeguards."

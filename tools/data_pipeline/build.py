@@ -18,7 +18,7 @@ from pathlib import Path
 from typing import Any
 
 ROOT = Path(__file__).resolve().parents[2]
-CONTENT_VERSION = "2026.06.22-exp2-qa1"
+CONTENT_VERSION = "2026.07.02-exp4-content50"
 SCHEMA_VERSION = "1.1.0"
 MIN_MAPPED_COVERAGE = 120
 TARGET_APPROVED_INDICATORS = 150

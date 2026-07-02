@@ -202,12 +202,12 @@
     "valuesReference": "https://api.worldbank.org/v2/country/all/indicator/SL.EMP.VULN.MA.ZS?format=json&per_page=20000&page=1&date=2015%3A2025",
     "license": "Creative Commons Attribution 4.0 International unless specifically labeled otherwise by World Bank metadata",
     "licenseReference": "https://www.worldbank.org/en/about/legal/terms-of-use-for-datasets",
-    "retrievedAt": "2026-06-27T17:15:51.890439+00:00",
-    "checksum": "2f4aff610cf02f58776db17047b50315fec8cab5e404fdfdeb3d02eda037ce09",
+    "retrievedAt": "2026-07-02T22:46:13.773277+00:00",
+    "checksum": "60a3b0200a153b379a38515393a5c89a39f378e8c504b87a460227bb207c2c3a",
     "sourceOrganization": "ILO Modelled Estimates database (ILOEST), International Labour Organization (ILO), uri: https://ilostat.ilo.org/data/bulk/, publisher: ILOSTAT, type: estimates based on external database;\nStaff estimates, World Bank (WB)"
   },
   "reviewStatus": "approved",
-  "contentVersion": "2026.06.22-exp2-qa1",
+  "contentVersion": "2026.07.02-exp4-content50",
   "editorial": {
     "shortHook": "A men's informal-work risk map.",
     "patternNote": "The darkest countries include Chad, Ethiopia, Afghanistan, while the lightest include Qatar, Saudi Arabia, United Arab Emirates; that contrast is the fastest way to read the male vulnerable employment pattern.",
@@ -248,7 +248,7 @@
   },
   "editorialReview": {
     "status": "needs_review",
-    "reviewedAt": "2026-06-22",
+    "reviewedAt": "2026-07-02",
     "reviewedBy": "pipeline-default-needs-review",
     "qualityScore": 2,
     "funScore": 2,

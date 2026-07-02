@@ -2,31 +2,32 @@
   "schemaVersion": "1.1.0",
   "game": "worldprint",
   "date": "2026-08-08",
-  "contentVersion": "2026.06.22-exp2-qa1",
+  "contentVersion": "2026.07.02-exp4-content50",
   "roundIds": [
-    "worldprint-secondary-enrollment",
+    "worldprint-electric-transmission-losses",
     "worldprint-freshwater-per-capita",
-    "worldprint-total-protected-areas",
-    "worldprint-migrant-stock",
-    "worldprint-government-education-spending-share"
+    "worldprint-primary-female-teachers",
+    "worldprint-permanent-cropland",
+    "worldprint-working-age-share"
   ],
   "indicatorIds": [
-    "secondary-enrollment",
+    "electric-transmission-losses",
     "freshwater-per-capita",
-    "total-protected-areas",
-    "migrant-stock",
-    "government-education-spending-share"
+    "primary-female-teachers",
+    "permanent-cropland",
+    "working-age-share"
   ],
   "categoryMix": {
-    "education": 2,
-    "environment": 2,
+    "energy": 1,
+    "environment": 1,
+    "education": 1,
+    "land": 1,
     "demography": 1
   },
   "mapDifficultyMix": {
-    "standard": 4,
-    "expert": 1
+    "standard": 5
   },
-  "generatedAt": "2026-06-27T17:16:22.623730+00:00",
+  "generatedAt": "2026-07-02T22:58:41.354530+00:00",
   "generatorVersion": "daily-manifest-v2",
   "varietyNotes": [
     "Selected with category, difficulty, repeat-cooldown, and same-day correlation safeguards."

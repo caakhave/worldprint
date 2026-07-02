@@ -202,12 +202,12 @@
     "valuesReference": "https://api.worldbank.org/v2/country/all/indicator/SL.SRV.EMPL.MA.ZS?format=json&per_page=20000&page=1&date=2015%3A2025",
     "license": "Creative Commons Attribution 4.0 International unless specifically labeled otherwise by World Bank metadata",
     "licenseReference": "https://www.worldbank.org/en/about/legal/terms-of-use-for-datasets",
-    "retrievedAt": "2026-06-27T17:15:54.885434+00:00",
-    "checksum": "aec6016c901654fe3e13f9f37b0386f4b0f23b5a621b127057590cdeb6a6d8cc",
+    "retrievedAt": "2026-07-02T22:47:36.227288+00:00",
+    "checksum": "5ffc47718381cc1a45dd4bc5a4059c34575736e78dcd756e7f93215d5558820c",
     "sourceOrganization": "ILO Modelled Estimates database (ILOEST), International Labour Organization (ILO), uri: https://ilostat.ilo.org/data/bulk/, publisher: ILOSTAT, type: external database, date accessed: January 17, 2026"
   },
   "reviewStatus": "approved",
-  "contentVersion": "2026.06.22-exp2-qa1",
+  "contentVersion": "2026.07.02-exp4-content50",
   "editorial": {
     "shortHook": "A men's service-work map.",
     "patternNote": "The darkest countries include Djibouti, Luxembourg, Jordan, while the lightest include Burundi, Madagascar, Chad; that contrast is the fastest way to read the male services employment pattern.",
@@ -248,7 +248,7 @@
   },
   "editorialReview": {
     "status": "needs_review",
-    "reviewedAt": "2026-06-22",
+    "reviewedAt": "2026-07-02",
     "reviewedBy": "pipeline-default-needs-review",
     "qualityScore": 2,
     "funScore": 2,

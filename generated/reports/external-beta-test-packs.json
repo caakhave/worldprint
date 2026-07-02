@@ -1,14 +1,14 @@
 {
   "schemaVersion": "1.0.0",
-  "generatedAt": "2026-06-22T21:38:47.090Z",
-  "contentVersion": "2026.06.22-exp2-qa1",
+  "generatedAt": "2026-07-02T23:00:30.051Z",
+  "contentVersion": "2026.07.02-exp4-content50",
   "localBaseUrl": "http://localhost:3001",
   "contentCounts": {
-    "candidateCount": 198,
-    "sourceValidCount": 167,
-    "draftHeldCount": 31,
-    "playableCount": 125,
-    "dailyReadyCount": 50
+    "candidateCount": 335,
+    "sourceValidCount": 276,
+    "draftHeldCount": 59,
+    "playableCount": 225,
+    "dailyReadyCount": 69
   },
   "challengeLinkNotes": [
     "Challenge links use the existing static-safe /challenge/worldprint/?c=... route.",
@@ -115,12 +115,12 @@
           "latestYear": 2024,
           "coverage": 162,
           "scorecardSummary": {
-            "overall": 3.95,
+            "overall": 3.75,
             "coverage": 4,
             "freshness": 5,
             "unitClarity": 4,
             "mapInterest": 4,
-            "ambiguityCorrelation": 3,
+            "ambiguityCorrelation": 2,
             "recommendation": null
           }
         },
@@ -168,9 +168,9 @@
             "safe-drinking-water",
             "population-density"
           ],
-          "code": "eyJzY2hlbWFWZXJzaW9uIjoiMSIsImdhbWUiOiJ3b3JsZHByaW50Iiwia2luZCI6InByYWN0aWNlIiwiY29udGVudFZlcnNpb24iOiIyMDI2LjA2LjIyLWV4cDItcWExIiwidGllciI6ImFuYWx5c3QiLCJyb3VuZElkcyI6WyJ3b3JsZHByaW50LWxpZmUtZXhwZWN0YW5jeSIsIndvcmxkcHJpbnQtaW50ZXJuZXQtdXNlcnMiLCJ3b3JsZHByaW50LWVsZWN0cmljaXR5LWFjY2VzcyIsIndvcmxkcHJpbnQtc2FmZS1kcmlua2luZy13YXRlciIsIndvcmxkcHJpbnQtcG9wdWxhdGlvbi1kZW5zaXR5Il0sImNoZWNrc3VtIjoiMDd0NDZxbiJ9",
-          "path": "/challenge/worldprint/?c=eyJzY2hlbWFWZXJzaW9uIjoiMSIsImdhbWUiOiJ3b3JsZHByaW50Iiwia2luZCI6InByYWN0aWNlIiwiY29udGVudFZlcnNpb24iOiIyMDI2LjA2LjIyLWV4cDItcWExIiwidGllciI6ImFuYWx5c3QiLCJyb3VuZElkcyI6WyJ3b3JsZHByaW50LWxpZmUtZXhwZWN0YW5jeSIsIndvcmxkcHJpbnQtaW50ZXJuZXQtdXNlcnMiLCJ3b3JsZHByaW50LWVsZWN0cmljaXR5LWFjY2VzcyIsIndvcmxkcHJpbnQtc2FmZS1kcmlua2luZy13YXRlciIsIndvcmxkcHJpbnQtcG9wdWxhdGlvbi1kZW5zaXR5Il0sImNoZWNrc3VtIjoiMDd0NDZxbiJ9",
-          "localUrl": "http://localhost:3001/challenge/worldprint/?c=eyJzY2hlbWFWZXJzaW9uIjoiMSIsImdhbWUiOiJ3b3JsZHByaW50Iiwia2luZCI6InByYWN0aWNlIiwiY29udGVudFZlcnNpb24iOiIyMDI2LjA2LjIyLWV4cDItcWExIiwidGllciI6ImFuYWx5c3QiLCJyb3VuZElkcyI6WyJ3b3JsZHByaW50LWxpZmUtZXhwZWN0YW5jeSIsIndvcmxkcHJpbnQtaW50ZXJuZXQtdXNlcnMiLCJ3b3JsZHByaW50LWVsZWN0cmljaXR5LWFjY2VzcyIsIndvcmxkcHJpbnQtc2FmZS1kcmlua2luZy13YXRlciIsIndvcmxkcHJpbnQtcG9wdWxhdGlvbi1kZW5zaXR5Il0sImNoZWNrc3VtIjoiMDd0NDZxbiJ9",
+          "code": "eyJzY2hlbWFWZXJzaW9uIjoiMSIsImdhbWUiOiJ3b3JsZHByaW50Iiwia2luZCI6InByYWN0aWNlIiwiY29udGVudFZlcnNpb24iOiIyMDI2LjA3LjAyLWV4cDQtY29udGVudDUwIiwidGllciI6ImFuYWx5c3QiLCJyb3VuZElkcyI6WyJ3b3JsZHByaW50LWxpZmUtZXhwZWN0YW5jeSIsIndvcmxkcHJpbnQtaW50ZXJuZXQtdXNlcnMiLCJ3b3JsZHByaW50LWVsZWN0cmljaXR5LWFjY2VzcyIsIndvcmxkcHJpbnQtc2FmZS1kcmlua2luZy13YXRlciIsIndvcmxkcHJpbnQtcG9wdWxhdGlvbi1kZW5zaXR5Il0sImNoZWNrc3VtIjoiMXk3bHRqcCJ9",
+          "path": "/challenge/worldprint/?c=eyJzY2hlbWFWZXJzaW9uIjoiMSIsImdhbWUiOiJ3b3JsZHByaW50Iiwia2luZCI6InByYWN0aWNlIiwiY29udGVudFZlcnNpb24iOiIyMDI2LjA3LjAyLWV4cDQtY29udGVudDUwIiwidGllciI6ImFuYWx5c3QiLCJyb3VuZElkcyI6WyJ3b3JsZHByaW50LWxpZmUtZXhwZWN0YW5jeSIsIndvcmxkcHJpbnQtaW50ZXJuZXQtdXNlcnMiLCJ3b3JsZHByaW50LWVsZWN0cmljaXR5LWFjY2VzcyIsIndvcmxkcHJpbnQtc2FmZS1kcmlua2luZy13YXRlciIsIndvcmxkcHJpbnQtcG9wdWxhdGlvbi1kZW5zaXR5Il0sImNoZWNrc3VtIjoiMXk3bHRqcCJ9",
+          "localUrl": "http://localhost:3001/challenge/worldprint/?c=eyJzY2hlbWFWZXJzaW9uIjoiMSIsImdhbWUiOiJ3b3JsZHByaW50Iiwia2luZCI6InByYWN0aWNlIiwiY29udGVudFZlcnNpb24iOiIyMDI2LjA3LjAyLWV4cDQtY29udGVudDUwIiwidGllciI6ImFuYWx5c3QiLCJyb3VuZElkcyI6WyJ3b3JsZHByaW50LWxpZmUtZXhwZWN0YW5jeSIsIndvcmxkcHJpbnQtaW50ZXJuZXQtdXNlcnMiLCJ3b3JsZHByaW50LWVsZWN0cmljaXR5LWFjY2VzcyIsIndvcmxkcHJpbnQtc2FmZS1kcmlua2luZy13YXRlciIsIndvcmxkcHJpbnQtcG9wdWxhdGlvbi1kZW5zaXR5Il0sImNoZWNrc3VtIjoiMXk3bHRqcCJ9",
           "deploymentNote": "Replace http://localhost:3001 with the deployed site origin after static deployment."
         }
       ]
@@ -204,12 +204,12 @@
           "latestYear": 2024,
           "coverage": 132,
           "scorecardSummary": {
-            "overall": 3.75,
+            "overall": 3.55,
             "coverage": 3,
             "freshness": 5,
             "unitClarity": 4,
             "mapInterest": 4,
-            "ambiguityCorrelation": 3,
+            "ambiguityCorrelation": 2,
             "recommendation": null
           }
         },
@@ -273,12 +273,12 @@
           "latestYear": 2024,
           "coverage": 150,
           "scorecardSummary": {
-            "overall": 3.95,
+            "overall": 3.75,
             "coverage": 4,
             "freshness": 5,
             "unitClarity": 4,
             "mapInterest": 4,
-            "ambiguityCorrelation": 3,
+            "ambiguityCorrelation": 2,
             "recommendation": null
           }
         },
@@ -441,9 +441,9 @@
             "open-defecation",
             "permanent-cropland"
           ],
-          "code": "eyJzY2hlbWFWZXJzaW9uIjoiMSIsImdhbWUiOiJ3b3JsZHByaW50Iiwia2luZCI6InByYWN0aWNlIiwiY29udGVudFZlcnNpb24iOiIyMDI2LjA2LjIyLWV4cDItcWExIiwidGllciI6ImFuYWx5c3QiLCJyb3VuZElkcyI6WyJ3b3JsZHByaW50LWFjY291bnQtb3duZXJzaGlwIiwid29ybGRwcmludC1hcmFibGUtbGFuZC1wZXItcGVyc29uIiwid29ybGRwcmludC1jb2FsLWVsZWN0cmljaXR5LXNoYXJlIiwid29ybGRwcmludC1vcGVuLWRlZmVjYXRpb24iLCJ3b3JsZHByaW50LXBlcm1hbmVudC1jcm9wbGFuZCJdLCJjaGVja3N1bSI6IjBvOHgyOWEifQ",
-          "path": "/challenge/worldprint/?c=eyJzY2hlbWFWZXJzaW9uIjoiMSIsImdhbWUiOiJ3b3JsZHByaW50Iiwia2luZCI6InByYWN0aWNlIiwiY29udGVudFZlcnNpb24iOiIyMDI2LjA2LjIyLWV4cDItcWExIiwidGllciI6ImFuYWx5c3QiLCJyb3VuZElkcyI6WyJ3b3JsZHByaW50LWFjY291bnQtb3duZXJzaGlwIiwid29ybGRwcmludC1hcmFibGUtbGFuZC1wZXItcGVyc29uIiwid29ybGRwcmludC1jb2FsLWVsZWN0cmljaXR5LXNoYXJlIiwid29ybGRwcmludC1vcGVuLWRlZmVjYXRpb24iLCJ3b3JsZHByaW50LXBlcm1hbmVudC1jcm9wbGFuZCJdLCJjaGVja3N1bSI6IjBvOHgyOWEifQ",
-          "localUrl": "http://localhost:3001/challenge/worldprint/?c=eyJzY2hlbWFWZXJzaW9uIjoiMSIsImdhbWUiOiJ3b3JsZHByaW50Iiwia2luZCI6InByYWN0aWNlIiwiY29udGVudFZlcnNpb24iOiIyMDI2LjA2LjIyLWV4cDItcWExIiwidGllciI6ImFuYWx5c3QiLCJyb3VuZElkcyI6WyJ3b3JsZHByaW50LWFjY291bnQtb3duZXJzaGlwIiwid29ybGRwcmludC1hcmFibGUtbGFuZC1wZXItcGVyc29uIiwid29ybGRwcmludC1jb2FsLWVsZWN0cmljaXR5LXNoYXJlIiwid29ybGRwcmludC1vcGVuLWRlZmVjYXRpb24iLCJ3b3JsZHByaW50LXBlcm1hbmVudC1jcm9wbGFuZCJdLCJjaGVja3N1bSI6IjBvOHgyOWEifQ",
+          "code": "eyJzY2hlbWFWZXJzaW9uIjoiMSIsImdhbWUiOiJ3b3JsZHByaW50Iiwia2luZCI6InByYWN0aWNlIiwiY29udGVudFZlcnNpb24iOiIyMDI2LjA3LjAyLWV4cDQtY29udGVudDUwIiwidGllciI6ImFuYWx5c3QiLCJyb3VuZElkcyI6WyJ3b3JsZHByaW50LWFjY291bnQtb3duZXJzaGlwIiwid29ybGRwcmludC1hcmFibGUtbGFuZC1wZXItcGVyc29uIiwid29ybGRwcmludC1jb2FsLWVsZWN0cmljaXR5LXNoYXJlIiwid29ybGRwcmludC1vcGVuLWRlZmVjYXRpb24iLCJ3b3JsZHByaW50LXBlcm1hbmVudC1jcm9wbGFuZCJdLCJjaGVja3N1bSI6IjFuMzFwaWMifQ",
+          "path": "/challenge/worldprint/?c=eyJzY2hlbWFWZXJzaW9uIjoiMSIsImdhbWUiOiJ3b3JsZHByaW50Iiwia2luZCI6InByYWN0aWNlIiwiY29udGVudFZlcnNpb24iOiIyMDI2LjA3LjAyLWV4cDQtY29udGVudDUwIiwidGllciI6ImFuYWx5c3QiLCJyb3VuZElkcyI6WyJ3b3JsZHByaW50LWFjY291bnQtb3duZXJzaGlwIiwid29ybGRwcmludC1hcmFibGUtbGFuZC1wZXItcGVyc29uIiwid29ybGRwcmludC1jb2FsLWVsZWN0cmljaXR5LXNoYXJlIiwid29ybGRwcmludC1vcGVuLWRlZmVjYXRpb24iLCJ3b3JsZHByaW50LXBlcm1hbmVudC1jcm9wbGFuZCJdLCJjaGVja3N1bSI6IjFuMzFwaWMifQ",
+          "localUrl": "http://localhost:3001/challenge/worldprint/?c=eyJzY2hlbWFWZXJzaW9uIjoiMSIsImdhbWUiOiJ3b3JsZHByaW50Iiwia2luZCI6InByYWN0aWNlIiwiY29udGVudFZlcnNpb24iOiIyMDI2LjA3LjAyLWV4cDQtY29udGVudDUwIiwidGllciI6ImFuYWx5c3QiLCJyb3VuZElkcyI6WyJ3b3JsZHByaW50LWFjY291bnQtb3duZXJzaGlwIiwid29ybGRwcmludC1hcmFibGUtbGFuZC1wZXItcGVyc29uIiwid29ybGRwcmludC1jb2FsLWVsZWN0cmljaXR5LXNoYXJlIiwid29ybGRwcmludC1vcGVuLWRlZmVjYXRpb24iLCJ3b3JsZHByaW50LXBlcm1hbmVudC1jcm9wbGFuZCJdLCJjaGVja3N1bSI6IjFuMzFwaWMifQ",
           "deploymentNote": "Replace http://localhost:3001 with the deployed site origin after static deployment."
         },
         {
@@ -465,9 +465,9 @@
             "secondary-enrollment",
             "life-expectancy"
           ],
-          "code": "eyJzY2hlbWFWZXJzaW9uIjoiMSIsImdhbWUiOiJ3b3JsZHByaW50Iiwia2luZCI6InByYWN0aWNlIiwiY29udGVudFZlcnNpb24iOiIyMDI2LjA2LjIyLWV4cDItcWExIiwidGllciI6ImFuYWx5c3QiLCJyb3VuZElkcyI6WyJ3b3JsZHByaW50LXByZWNpcGl0YXRpb24tZGVwdGgiLCJ3b3JsZHByaW50LXRvdGFsLXByb3RlY3RlZC1hcmVhcyIsIndvcmxkcHJpbnQtZnJlc2h3YXRlci1wZXItY2FwaXRhIiwid29ybGRwcmludC1zZWNvbmRhcnktZW5yb2xsbWVudCIsIndvcmxkcHJpbnQtbGlmZS1leHBlY3RhbmN5Il0sImNoZWNrc3VtIjoiMWJjcDRmNSJ9",
-          "path": "/challenge/worldprint/?c=eyJzY2hlbWFWZXJzaW9uIjoiMSIsImdhbWUiOiJ3b3JsZHByaW50Iiwia2luZCI6InByYWN0aWNlIiwiY29udGVudFZlcnNpb24iOiIyMDI2LjA2LjIyLWV4cDItcWExIiwidGllciI6ImFuYWx5c3QiLCJyb3VuZElkcyI6WyJ3b3JsZHByaW50LXByZWNpcGl0YXRpb24tZGVwdGgiLCJ3b3JsZHByaW50LXRvdGFsLXByb3RlY3RlZC1hcmVhcyIsIndvcmxkcHJpbnQtZnJlc2h3YXRlci1wZXItY2FwaXRhIiwid29ybGRwcmludC1zZWNvbmRhcnktZW5yb2xsbWVudCIsIndvcmxkcHJpbnQtbGlmZS1leHBlY3RhbmN5Il0sImNoZWNrc3VtIjoiMWJjcDRmNSJ9",
-          "localUrl": "http://localhost:3001/challenge/worldprint/?c=eyJzY2hlbWFWZXJzaW9uIjoiMSIsImdhbWUiOiJ3b3JsZHByaW50Iiwia2luZCI6InByYWN0aWNlIiwiY29udGVudFZlcnNpb24iOiIyMDI2LjA2LjIyLWV4cDItcWExIiwidGllciI6ImFuYWx5c3QiLCJyb3VuZElkcyI6WyJ3b3JsZHByaW50LXByZWNpcGl0YXRpb24tZGVwdGgiLCJ3b3JsZHByaW50LXRvdGFsLXByb3RlY3RlZC1hcmVhcyIsIndvcmxkcHJpbnQtZnJlc2h3YXRlci1wZXItY2FwaXRhIiwid29ybGRwcmludC1zZWNvbmRhcnktZW5yb2xsbWVudCIsIndvcmxkcHJpbnQtbGlmZS1leHBlY3RhbmN5Il0sImNoZWNrc3VtIjoiMWJjcDRmNSJ9",
+          "code": "eyJzY2hlbWFWZXJzaW9uIjoiMSIsImdhbWUiOiJ3b3JsZHByaW50Iiwia2luZCI6InByYWN0aWNlIiwiY29udGVudFZlcnNpb24iOiIyMDI2LjA3LjAyLWV4cDQtY29udGVudDUwIiwidGllciI6ImFuYWx5c3QiLCJyb3VuZElkcyI6WyJ3b3JsZHByaW50LXByZWNpcGl0YXRpb24tZGVwdGgiLCJ3b3JsZHByaW50LXRvdGFsLXByb3RlY3RlZC1hcmVhcyIsIndvcmxkcHJpbnQtZnJlc2h3YXRlci1wZXItY2FwaXRhIiwid29ybGRwcmludC1zZWNvbmRhcnktZW5yb2xsbWVudCIsIndvcmxkcHJpbnQtbGlmZS1leHBlY3RhbmN5Il0sImNoZWNrc3VtIjoiMTJoNzlmNyJ9",
+          "path": "/challenge/worldprint/?c=eyJzY2hlbWFWZXJzaW9uIjoiMSIsImdhbWUiOiJ3b3JsZHByaW50Iiwia2luZCI6InByYWN0aWNlIiwiY29udGVudFZlcnNpb24iOiIyMDI2LjA3LjAyLWV4cDQtY29udGVudDUwIiwidGllciI6ImFuYWx5c3QiLCJyb3VuZElkcyI6WyJ3b3JsZHByaW50LXByZWNpcGl0YXRpb24tZGVwdGgiLCJ3b3JsZHByaW50LXRvdGFsLXByb3RlY3RlZC1hcmVhcyIsIndvcmxkcHJpbnQtZnJlc2h3YXRlci1wZXItY2FwaXRhIiwid29ybGRwcmludC1zZWNvbmRhcnktZW5yb2xsbWVudCIsIndvcmxkcHJpbnQtbGlmZS1leHBlY3RhbmN5Il0sImNoZWNrc3VtIjoiMTJoNzlmNyJ9",
+          "localUrl": "http://localhost:3001/challenge/worldprint/?c=eyJzY2hlbWFWZXJzaW9uIjoiMSIsImdhbWUiOiJ3b3JsZHByaW50Iiwia2luZCI6InByYWN0aWNlIiwiY29udGVudFZlcnNpb24iOiIyMDI2LjA3LjAyLWV4cDQtY29udGVudDUwIiwidGllciI6ImFuYWx5c3QiLCJyb3VuZElkcyI6WyJ3b3JsZHByaW50LXByZWNpcGl0YXRpb24tZGVwdGgiLCJ3b3JsZHByaW50LXRvdGFsLXByb3RlY3RlZC1hcmVhcyIsIndvcmxkcHJpbnQtZnJlc2h3YXRlci1wZXItY2FwaXRhIiwid29ybGRwcmludC1zZWNvbmRhcnktZW5yb2xsbWVudCIsIndvcmxkcHJpbnQtbGlmZS1leHBlY3RhbmN5Il0sImNoZWNrc3VtIjoiMTJoNzlmNyJ9",
           "deploymentNote": "Replace http://localhost:3001 with the deployed site origin after static deployment."
         }
       ]
@@ -567,7 +567,7 @@
           "editorialStatus": "practice_eligible",
           "editorialStatusLabel": "Practice-only",
           "expectedDifficulty": "standard",
-          "latestYear": 2024,
+          "latestYear": 2025,
           "coverage": 169,
           "scorecardSummary": {
             "overall": 3.95,
@@ -614,7 +614,7 @@
           "editorialStatusLabel": "Expert-only",
           "expectedDifficulty": "expert",
           "latestYear": 2024,
-          "coverage": 156,
+          "coverage": 159,
           "scorecardSummary": {
             "overall": 3.95,
             "coverage": 4,
@@ -738,9 +738,9 @@
             "urban-population-growth",
             "youth-unemployment"
           ],
-          "code": "eyJzY2hlbWFWZXJzaW9uIjoiMSIsImdhbWUiOiJ3b3JsZHByaW50Iiwia2luZCI6InByYWN0aWNlIiwiY29udGVudFZlcnNpb24iOiIyMDI2LjA2LjIyLWV4cDItcWExIiwidGllciI6ImFuYWx5c3QiLCJyb3VuZElkcyI6WyJ3b3JsZHByaW50LWFncmljdWx0dXJhbC13YXRlci13aXRoZHJhd2FscyIsIndvcmxkcHJpbnQtbGFib3ItZm9yY2UtZ2VuZGVyLXJhdGlvIiwid29ybGRwcmludC1uYXR1cmFsLXJlc291cmNlLXJlbnRzIiwid29ybGRwcmludC11cmJhbi1wb3B1bGF0aW9uLWdyb3d0aCIsIndvcmxkcHJpbnQteW91dGgtdW5lbXBsb3ltZW50Il0sImNoZWNrc3VtIjoiMWYzMTBidSJ9",
-          "path": "/challenge/worldprint/?c=eyJzY2hlbWFWZXJzaW9uIjoiMSIsImdhbWUiOiJ3b3JsZHByaW50Iiwia2luZCI6InByYWN0aWNlIiwiY29udGVudFZlcnNpb24iOiIyMDI2LjA2LjIyLWV4cDItcWExIiwidGllciI6ImFuYWx5c3QiLCJyb3VuZElkcyI6WyJ3b3JsZHByaW50LWFncmljdWx0dXJhbC13YXRlci13aXRoZHJhd2FscyIsIndvcmxkcHJpbnQtbGFib3ItZm9yY2UtZ2VuZGVyLXJhdGlvIiwid29ybGRwcmludC1uYXR1cmFsLXJlc291cmNlLXJlbnRzIiwid29ybGRwcmludC11cmJhbi1wb3B1bGF0aW9uLWdyb3d0aCIsIndvcmxkcHJpbnQteW91dGgtdW5lbXBsb3ltZW50Il0sImNoZWNrc3VtIjoiMWYzMTBidSJ9",
-          "localUrl": "http://localhost:3001/challenge/worldprint/?c=eyJzY2hlbWFWZXJzaW9uIjoiMSIsImdhbWUiOiJ3b3JsZHByaW50Iiwia2luZCI6InByYWN0aWNlIiwiY29udGVudFZlcnNpb24iOiIyMDI2LjA2LjIyLWV4cDItcWExIiwidGllciI6ImFuYWx5c3QiLCJyb3VuZElkcyI6WyJ3b3JsZHByaW50LWFncmljdWx0dXJhbC13YXRlci13aXRoZHJhd2FscyIsIndvcmxkcHJpbnQtbGFib3ItZm9yY2UtZ2VuZGVyLXJhdGlvIiwid29ybGRwcmludC1uYXR1cmFsLXJlc291cmNlLXJlbnRzIiwid29ybGRwcmludC11cmJhbi1wb3B1bGF0aW9uLWdyb3d0aCIsIndvcmxkcHJpbnQteW91dGgtdW5lbXBsb3ltZW50Il0sImNoZWNrc3VtIjoiMWYzMTBidSJ9",
+          "code": "eyJzY2hlbWFWZXJzaW9uIjoiMSIsImdhbWUiOiJ3b3JsZHByaW50Iiwia2luZCI6InByYWN0aWNlIiwiY29udGVudFZlcnNpb24iOiIyMDI2LjA3LjAyLWV4cDQtY29udGVudDUwIiwidGllciI6ImFuYWx5c3QiLCJyb3VuZElkcyI6WyJ3b3JsZHByaW50LWFncmljdWx0dXJhbC13YXRlci13aXRoZHJhd2FscyIsIndvcmxkcHJpbnQtbGFib3ItZm9yY2UtZ2VuZGVyLXJhdGlvIiwid29ybGRwcmludC1uYXR1cmFsLXJlc291cmNlLXJlbnRzIiwid29ybGRwcmludC11cmJhbi1wb3B1bGF0aW9uLWdyb3d0aCIsIndvcmxkcHJpbnQteW91dGgtdW5lbXBsb3ltZW50Il0sImNoZWNrc3VtIjoiMDM3bHphZyJ9",
+          "path": "/challenge/worldprint/?c=eyJzY2hlbWFWZXJzaW9uIjoiMSIsImdhbWUiOiJ3b3JsZHByaW50Iiwia2luZCI6InByYWN0aWNlIiwiY29udGVudFZlcnNpb24iOiIyMDI2LjA3LjAyLWV4cDQtY29udGVudDUwIiwidGllciI6ImFuYWx5c3QiLCJyb3VuZElkcyI6WyJ3b3JsZHByaW50LWFncmljdWx0dXJhbC13YXRlci13aXRoZHJhd2FscyIsIndvcmxkcHJpbnQtbGFib3ItZm9yY2UtZ2VuZGVyLXJhdGlvIiwid29ybGRwcmludC1uYXR1cmFsLXJlc291cmNlLXJlbnRzIiwid29ybGRwcmludC11cmJhbi1wb3B1bGF0aW9uLWdyb3d0aCIsIndvcmxkcHJpbnQteW91dGgtdW5lbXBsb3ltZW50Il0sImNoZWNrc3VtIjoiMDM3bHphZyJ9",
+          "localUrl": "http://localhost:3001/challenge/worldprint/?c=eyJzY2hlbWFWZXJzaW9uIjoiMSIsImdhbWUiOiJ3b3JsZHByaW50Iiwia2luZCI6InByYWN0aWNlIiwiY29udGVudFZlcnNpb24iOiIyMDI2LjA3LjAyLWV4cDQtY29udGVudDUwIiwidGllciI6ImFuYWx5c3QiLCJyb3VuZElkcyI6WyJ3b3JsZHByaW50LWFncmljdWx0dXJhbC13YXRlci13aXRoZHJhd2FscyIsIndvcmxkcHJpbnQtbGFib3ItZm9yY2UtZ2VuZGVyLXJhdGlvIiwid29ybGRwcmludC1uYXR1cmFsLXJlc291cmNlLXJlbnRzIiwid29ybGRwcmludC11cmJhbi1wb3B1bGF0aW9uLWdyb3d0aCIsIndvcmxkcHJpbnQteW91dGgtdW5lbXBsb3ltZW50Il0sImNoZWNrc3VtIjoiMDM3bHphZyJ9",
           "deploymentNote": "Replace http://localhost:3001 with the deployed site origin after static deployment."
         },
         {
@@ -762,9 +762,9 @@
             "women-business-law",
             "neonatal-mortality"
           ],
-          "code": "eyJzY2hlbWFWZXJzaW9uIjoiMSIsImdhbWUiOiJ3b3JsZHByaW50Iiwia2luZCI6InByYWN0aWNlIiwiY29udGVudFZlcnNpb24iOiIyMDI2LjA2LjIyLWV4cDItcWExIiwidGllciI6ImFuYWx5c3QiLCJyb3VuZElkcyI6WyJ3b3JsZHByaW50LWNhcmJvbi1pbnRlbnNpdHktZ2RwIiwid29ybGRwcmludC1lbXBsb3llcnMtc2hhcmUiLCJ3b3JsZHByaW50LXdhdGVyLXN0cmVzcyIsIndvcmxkcHJpbnQtd29tZW4tYnVzaW5lc3MtbGF3Iiwid29ybGRwcmludC1uZW9uYXRhbC1tb3J0YWxpdHkiXSwiY2hlY2tzdW0iOiIxNTh4cHFwIn0",
-          "path": "/challenge/worldprint/?c=eyJzY2hlbWFWZXJzaW9uIjoiMSIsImdhbWUiOiJ3b3JsZHByaW50Iiwia2luZCI6InByYWN0aWNlIiwiY29udGVudFZlcnNpb24iOiIyMDI2LjA2LjIyLWV4cDItcWExIiwidGllciI6ImFuYWx5c3QiLCJyb3VuZElkcyI6WyJ3b3JsZHByaW50LWNhcmJvbi1pbnRlbnNpdHktZ2RwIiwid29ybGRwcmludC1lbXBsb3llcnMtc2hhcmUiLCJ3b3JsZHByaW50LXdhdGVyLXN0cmVzcyIsIndvcmxkcHJpbnQtd29tZW4tYnVzaW5lc3MtbGF3Iiwid29ybGRwcmludC1uZW9uYXRhbC1tb3J0YWxpdHkiXSwiY2hlY2tzdW0iOiIxNTh4cHFwIn0",
-          "localUrl": "http://localhost:3001/challenge/worldprint/?c=eyJzY2hlbWFWZXJzaW9uIjoiMSIsImdhbWUiOiJ3b3JsZHByaW50Iiwia2luZCI6InByYWN0aWNlIiwiY29udGVudFZlcnNpb24iOiIyMDI2LjA2LjIyLWV4cDItcWExIiwidGllciI6ImFuYWx5c3QiLCJyb3VuZElkcyI6WyJ3b3JsZHByaW50LWNhcmJvbi1pbnRlbnNpdHktZ2RwIiwid29ybGRwcmludC1lbXBsb3llcnMtc2hhcmUiLCJ3b3JsZHByaW50LXdhdGVyLXN0cmVzcyIsIndvcmxkcHJpbnQtd29tZW4tYnVzaW5lc3MtbGF3Iiwid29ybGRwcmludC1uZW9uYXRhbC1tb3J0YWxpdHkiXSwiY2hlY2tzdW0iOiIxNTh4cHFwIn0",
+          "code": "eyJzY2hlbWFWZXJzaW9uIjoiMSIsImdhbWUiOiJ3b3JsZHByaW50Iiwia2luZCI6InByYWN0aWNlIiwiY29udGVudFZlcnNpb24iOiIyMDI2LjA3LjAyLWV4cDQtY29udGVudDUwIiwidGllciI6ImFuYWx5c3QiLCJyb3VuZElkcyI6WyJ3b3JsZHByaW50LWNhcmJvbi1pbnRlbnNpdHktZ2RwIiwid29ybGRwcmludC1lbXBsb3llcnMtc2hhcmUiLCJ3b3JsZHByaW50LXdhdGVyLXN0cmVzcyIsIndvcmxkcHJpbnQtd29tZW4tYnVzaW5lc3MtbGF3Iiwid29ybGRwcmludC1uZW9uYXRhbC1tb3J0YWxpdHkiXSwiY2hlY2tzdW0iOiIxYjE4NWJ6In0",
+          "path": "/challenge/worldprint/?c=eyJzY2hlbWFWZXJzaW9uIjoiMSIsImdhbWUiOiJ3b3JsZHByaW50Iiwia2luZCI6InByYWN0aWNlIiwiY29udGVudFZlcnNpb24iOiIyMDI2LjA3LjAyLWV4cDQtY29udGVudDUwIiwidGllciI6ImFuYWx5c3QiLCJyb3VuZElkcyI6WyJ3b3JsZHByaW50LWNhcmJvbi1pbnRlbnNpdHktZ2RwIiwid29ybGRwcmludC1lbXBsb3llcnMtc2hhcmUiLCJ3b3JsZHByaW50LXdhdGVyLXN0cmVzcyIsIndvcmxkcHJpbnQtd29tZW4tYnVzaW5lc3MtbGF3Iiwid29ybGRwcmludC1uZW9uYXRhbC1tb3J0YWxpdHkiXSwiY2hlY2tzdW0iOiIxYjE4NWJ6In0",
+          "localUrl": "http://localhost:3001/challenge/worldprint/?c=eyJzY2hlbWFWZXJzaW9uIjoiMSIsImdhbWUiOiJ3b3JsZHByaW50Iiwia2luZCI6InByYWN0aWNlIiwiY29udGVudFZlcnNpb24iOiIyMDI2LjA3LjAyLWV4cDQtY29udGVudDUwIiwidGllciI6ImFuYWx5c3QiLCJyb3VuZElkcyI6WyJ3b3JsZHByaW50LWNhcmJvbi1pbnRlbnNpdHktZ2RwIiwid29ybGRwcmludC1lbXBsb3llcnMtc2hhcmUiLCJ3b3JsZHByaW50LXdhdGVyLXN0cmVzcyIsIndvcmxkcHJpbnQtd29tZW4tYnVzaW5lc3MtbGF3Iiwid29ybGRwcmludC1uZW9uYXRhbC1tb3J0YWxpdHkiXSwiY2hlY2tzdW0iOiIxYjE4NWJ6In0",
           "deploymentNote": "Replace http://localhost:3001 with the deployed site origin after static deployment."
         }
       ]
@@ -841,12 +841,12 @@
           "editorialStatus": "expert_only",
           "editorialStatusLabel": "Expert-only",
           "expectedDifficulty": "expert",
-          "latestYear": 2022,
-          "coverage": 138,
+          "latestYear": 2024,
+          "coverage": 128,
           "scorecardSummary": {
-            "overall": 3.6,
+            "overall": 3.75,
             "coverage": 3,
-            "freshness": 4,
+            "freshness": 5,
             "unitClarity": 5,
             "mapInterest": 4,
             "ambiguityCorrelation": 2,
@@ -920,9 +920,9 @@
             "private-health-spending-share",
             "water-productivity"
           ],
-          "code": "eyJzY2hlbWFWZXJzaW9uIjoiMSIsImdhbWUiOiJ3b3JsZHByaW50Iiwia2luZCI6InByYWN0aWNlIiwiY29udGVudFZlcnNpb24iOiIyMDI2LjA2LjIyLWV4cDItcWExIiwidGllciI6ImNhcnRvZ3JhcGhlciIsInJvdW5kSWRzIjpbIndvcmxkcHJpbnQtZml4ZWQtYnJvYWRiYW5kIiwid29ybGRwcmludC1naGctcGVyLWNhcGl0YSIsIndvcmxkcHJpbnQtYmFuay1icmFuY2hlcyIsIndvcmxkcHJpbnQtcHJpdmF0ZS1oZWFsdGgtc3BlbmRpbmctc2hhcmUiLCJ3b3JsZHByaW50LXdhdGVyLXByb2R1Y3Rpdml0eSJdLCJjaGVja3N1bSI6IjA0YmcxdzcifQ",
-          "path": "/challenge/worldprint/?c=eyJzY2hlbWFWZXJzaW9uIjoiMSIsImdhbWUiOiJ3b3JsZHByaW50Iiwia2luZCI6InByYWN0aWNlIiwiY29udGVudFZlcnNpb24iOiIyMDI2LjA2LjIyLWV4cDItcWExIiwidGllciI6ImNhcnRvZ3JhcGhlciIsInJvdW5kSWRzIjpbIndvcmxkcHJpbnQtZml4ZWQtYnJvYWRiYW5kIiwid29ybGRwcmludC1naGctcGVyLWNhcGl0YSIsIndvcmxkcHJpbnQtYmFuay1icmFuY2hlcyIsIndvcmxkcHJpbnQtcHJpdmF0ZS1oZWFsdGgtc3BlbmRpbmctc2hhcmUiLCJ3b3JsZHByaW50LXdhdGVyLXByb2R1Y3Rpdml0eSJdLCJjaGVja3N1bSI6IjA0YmcxdzcifQ",
-          "localUrl": "http://localhost:3001/challenge/worldprint/?c=eyJzY2hlbWFWZXJzaW9uIjoiMSIsImdhbWUiOiJ3b3JsZHByaW50Iiwia2luZCI6InByYWN0aWNlIiwiY29udGVudFZlcnNpb24iOiIyMDI2LjA2LjIyLWV4cDItcWExIiwidGllciI6ImNhcnRvZ3JhcGhlciIsInJvdW5kSWRzIjpbIndvcmxkcHJpbnQtZml4ZWQtYnJvYWRiYW5kIiwid29ybGRwcmludC1naGctcGVyLWNhcGl0YSIsIndvcmxkcHJpbnQtYmFuay1icmFuY2hlcyIsIndvcmxkcHJpbnQtcHJpdmF0ZS1oZWFsdGgtc3BlbmRpbmctc2hhcmUiLCJ3b3JsZHByaW50LXdhdGVyLXByb2R1Y3Rpdml0eSJdLCJjaGVja3N1bSI6IjA0YmcxdzcifQ",
+          "code": "eyJzY2hlbWFWZXJzaW9uIjoiMSIsImdhbWUiOiJ3b3JsZHByaW50Iiwia2luZCI6InByYWN0aWNlIiwiY29udGVudFZlcnNpb24iOiIyMDI2LjA3LjAyLWV4cDQtY29udGVudDUwIiwidGllciI6ImNhcnRvZ3JhcGhlciIsInJvdW5kSWRzIjpbIndvcmxkcHJpbnQtZml4ZWQtYnJvYWRiYW5kIiwid29ybGRwcmludC1naGctcGVyLWNhcGl0YSIsIndvcmxkcHJpbnQtYmFuay1icmFuY2hlcyIsIndvcmxkcHJpbnQtcHJpdmF0ZS1oZWFsdGgtc3BlbmRpbmctc2hhcmUiLCJ3b3JsZHByaW50LXdhdGVyLXByb2R1Y3Rpdml0eSJdLCJjaGVja3N1bSI6IjF5eXJ2dTEifQ",
+          "path": "/challenge/worldprint/?c=eyJzY2hlbWFWZXJzaW9uIjoiMSIsImdhbWUiOiJ3b3JsZHByaW50Iiwia2luZCI6InByYWN0aWNlIiwiY29udGVudFZlcnNpb24iOiIyMDI2LjA3LjAyLWV4cDQtY29udGVudDUwIiwidGllciI6ImNhcnRvZ3JhcGhlciIsInJvdW5kSWRzIjpbIndvcmxkcHJpbnQtZml4ZWQtYnJvYWRiYW5kIiwid29ybGRwcmludC1naGctcGVyLWNhcGl0YSIsIndvcmxkcHJpbnQtYmFuay1icmFuY2hlcyIsIndvcmxkcHJpbnQtcHJpdmF0ZS1oZWFsdGgtc3BlbmRpbmctc2hhcmUiLCJ3b3JsZHByaW50LXdhdGVyLXByb2R1Y3Rpdml0eSJdLCJjaGVja3N1bSI6IjF5eXJ2dTEifQ",
+          "localUrl": "http://localhost:3001/challenge/worldprint/?c=eyJzY2hlbWFWZXJzaW9uIjoiMSIsImdhbWUiOiJ3b3JsZHByaW50Iiwia2luZCI6InByYWN0aWNlIiwiY29udGVudFZlcnNpb24iOiIyMDI2LjA3LjAyLWV4cDQtY29udGVudDUwIiwidGllciI6ImNhcnRvZ3JhcGhlciIsInJvdW5kSWRzIjpbIndvcmxkcHJpbnQtZml4ZWQtYnJvYWRiYW5kIiwid29ybGRwcmludC1naGctcGVyLWNhcGl0YSIsIndvcmxkcHJpbnQtYmFuay1icmFuY2hlcyIsIndvcmxkcHJpbnQtcHJpdmF0ZS1oZWFsdGgtc3BlbmRpbmctc2hhcmUiLCJ3b3JsZHByaW50LXdhdGVyLXByb2R1Y3Rpdml0eSJdLCJjaGVja3N1bSI6IjF5eXJ2dTEifQ",
           "deploymentNote": "Replace http://localhost:3001 with the deployed site origin after static deployment."
         }
       ]

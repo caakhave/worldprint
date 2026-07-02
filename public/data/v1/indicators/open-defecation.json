@@ -189,12 +189,12 @@
     "valuesReference": "https://api.worldbank.org/v2/country/all/indicator/SH.STA.ODFC.ZS?format=json&per_page=20000&page=1&date=2015%3A2025",
     "license": "Creative Commons Attribution 4.0 International unless specifically labeled otherwise by World Bank metadata",
     "licenseReference": "https://www.worldbank.org/en/about/legal/terms-of-use-for-datasets",
-    "retrievedAt": "2026-06-27T17:14:41.155291+00:00",
-    "checksum": "773fb1cc5157f04dcf386673cc107adc9581cf5520a9c397faf29a41fb262461",
+    "retrievedAt": "2026-07-02T22:22:52.936323+00:00",
+    "checksum": "63c09386c39543e44343c735a0d68a813c64b76903303058f1477de80612df4c",
     "sourceOrganization": "WHO/UNICEF Joint Monitoring Programme (JMP) for Water Supply, Sanitation and Hygiene, World Health Organization (WHO), uri: washdata.org, publisher: WHO/UNICEF Joint Monitoring Programme (JMP) for Water Supply, Sanitation and Hygiene (washdata.org), date accessed: 2025-09-30, date published: 2025-08-25;\nUN Children's Fund (UNICEF), uri: washdata.org, note: WHO/UNICEF Joint Monitoring Programme (JMP) for Water Supply, Sanitation and Hygiene"
   },
   "reviewStatus": "approved",
-  "contentVersion": "2026.06.22-exp2-qa1",
+  "contentVersion": "2026.07.02-exp4-content50",
   "editorial": {
     "shortHook": "A candidate map for open defecation.",
     "patternNote": "The darkest countries include Niger, South Sudan, Chad, while the lightest include Albania, United Arab Emirates, Australia; that contrast is the fastest way to read the open defecation pattern.",
@@ -235,7 +235,7 @@
   },
   "editorialReview": {
     "status": "daily_eligible",
-    "reviewedAt": "2026-06-22",
+    "reviewedAt": "2026-07-02",
     "reviewedBy": "Codex editorial QA",
     "qualityScore": 4,
     "funScore": 4,

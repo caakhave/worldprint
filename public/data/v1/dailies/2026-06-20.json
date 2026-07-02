@@ -2,32 +2,34 @@
   "schemaVersion": "1.1.0",
   "game": "worldprint",
   "date": "2026-06-20",
-  "contentVersion": "2026.06.22-exp2-qa1",
+  "contentVersion": "2026.07.02-exp4-content50",
   "roundIds": [
+    "worldprint-compulsory-education-duration",
     "worldprint-urban-population",
-    "worldprint-arable-land",
-    "worldprint-food-insecurity-moderate-severe",
-    "worldprint-co2-per-capita",
-    "worldprint-rural-population-growth"
+    "worldprint-communications-service-exports",
+    "worldprint-precipitation-depth",
+    "worldprint-arable-land"
   ],
   "indicatorIds": [
+    "compulsory-education-duration",
     "urban-population",
-    "arable-land",
-    "food-insecurity-moderate-severe",
-    "co2-per-capita",
-    "rural-population-growth"
+    "communications-service-exports",
+    "precipitation-depth",
+    "arable-land"
   ],
   "categoryMix": {
-    "settlement": 2,
-    "land": 1,
-    "agriculture": 1,
-    "environment": 1
+    "education": 1,
+    "settlement": 1,
+    "connectivity": 1,
+    "environment": 1,
+    "land": 1
   },
   "mapDifficultyMix": {
+    "expert": 2,
     "intro": 1,
-    "standard": 4
+    "standard": 2
   },
-  "generatedAt": "2026-06-27T17:16:22.615984+00:00",
+  "generatedAt": "2026-07-02T22:58:41.347330+00:00",
   "generatorVersion": "daily-manifest-v2",
   "varietyNotes": [
     "Selected with category, difficulty, repeat-cooldown, and same-day correlation safeguards."

@@ -201,12 +201,12 @@
     "valuesReference": "https://api.worldbank.org/v2/country/all/indicator/EG.CFT.ACCS.ZS?format=json&per_page=20000&page=1&date=2015%3A2025",
     "license": "Creative Commons Attribution 4.0 International unless specifically labeled otherwise by World Bank metadata",
     "licenseReference": "https://www.worldbank.org/en/about/legal/terms-of-use-for-datasets",
-    "retrievedAt": "2026-06-27T17:14:03.521275+00:00",
-    "checksum": "aff22180ce05dd09085d7693d294f233b3545a6b2ff10b8b1c05bf6a922cea95",
-    "sourceOrganization": "Tracking SDG 7: The Energy Progress Report, International Energy Agency (IEA), International Renewable Energy Agency (IRENA), United Nations Statistical Division (UNSD), World Bank, World Health Organization (WHO), uri: https://trackingsdg7.esmap.org/, note: License: Creative Commons Attribution—NonCommercial 3.0 IGO (CC BY-NC 3.0 IGO), publisher: International Energy Agency (IEA), International Renewable Energy Agency (IRENA), United Nations Statistical Division (UNSD), World Bank, World Health Organization (WHO), date published: 2025-06;\nInternational Renewable Energy Agency (IRENA), note: Tracking SDG 7: The Energy Progress Report;\nUnited Nations (UN), note: Tracking SDG 7: The Energy Progress Report, publisher: UN Statistics Division;\nWorld Bank (WB), note: Tracking SDG 7: The Energy Progress Report;\nWorld Health Organization (WHO), note: Tracking SDG 7: The Energy Progress Report"
+    "retrievedAt": "2026-07-02T22:10:20.127853+00:00",
+    "checksum": "f5bc76941999f03153dea87ee784c6ce6194ab1d5067faa51035f11a9f751843",
+    "sourceOrganization": "Tracking SDG 7: The Energy Progress Report, ACRA Europe, uri: https://trackingsdg7.esmap.org/, note: License: Creative Commons Attribution—NonCommercial 3.0 IGO (CC BY-NC 3.0 IGO), publisher: International Energy Agency (IEA), International Renewable Energy Agency (IRENA), United Nations Statistical Division (UNSD), World Bank, World Health Organization (WHO), date published: 2025-06;\nInternational Renewable Energy Agency (IRENA), note: Tracking SDG 7: The Energy Progress Report;\nUnited Nations (UN), note: Tracking SDG 7: The Energy Progress Report, publisher: UN Statistics Division;\nWorld Bank (WB), note: Tracking SDG 7: The Energy Progress Report;\nWorld Health Organization (WHO), note: Tracking SDG 7: The Energy Progress Report"
   },
   "reviewStatus": "approved",
-  "contentVersion": "2026.06.22-exp2-qa1",
+  "contentVersion": "2026.07.02-exp4-content50",
   "editorial": {
     "shortHook": "A household-energy map.",
     "patternNote": "The darkest countries include United States, Uruguay, Trinidad and Tobago, while the lightest include South Sudan, Burundi, Guinea-Bissau; that contrast is the fastest way to read the clean cooking fuels access pattern.",
@@ -247,7 +247,7 @@
   },
   "editorialReview": {
     "status": "daily_eligible",
-    "reviewedAt": "2026-06-22",
+    "reviewedAt": "2026-07-02",
     "reviewedBy": "Codex editorial QA",
     "qualityScore": 4,
     "funScore": 4,

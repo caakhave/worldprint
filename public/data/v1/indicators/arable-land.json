@@ -207,12 +207,12 @@
     "valuesReference": "https://api.worldbank.org/v2/country/all/indicator/AG.LND.ARBL.ZS?format=json&per_page=20000&page=1&date=2015%3A2025",
     "license": "Creative Commons Attribution 4.0 International unless specifically labeled otherwise by World Bank metadata",
     "licenseReference": "https://www.worldbank.org/en/about/legal/terms-of-use-for-datasets",
-    "retrievedAt": "2026-06-27T17:14:07.019382+00:00",
-    "checksum": "e83dbced38a7f0b250713c150348ceaf742f16e841dce4a16572b159ceff3a9a",
+    "retrievedAt": "2026-07-02T22:12:16.418023+00:00",
+    "checksum": "95eda34d484d9bce04efd2b567b8a94cfb9117bae533a09bcc8c11b5bfcfcbd6",
     "sourceOrganization": "FAO electronic files and website, Food and Agriculture Organization of the United Nations (FAO), publisher: Food and Agriculture Organization of the United Nations (FAO)"
   },
   "reviewStatus": "approved",
-  "contentVersion": "2026.06.22-exp2-qa1",
+  "contentVersion": "2026.07.02-exp4-content50",
   "editorial": {
     "shortHook": "The crop-ready land map.",
     "patternNote": "The darkest countries include Bangladesh, Denmark, Ukraine, while the lightest include Djibouti, Oman, New Caledonia; that contrast is the fastest way to read the arable land pattern.",
@@ -253,7 +253,7 @@
   },
   "editorialReview": {
     "status": "daily_eligible",
-    "reviewedAt": "2026-06-22",
+    "reviewedAt": "2026-07-02",
     "reviewedBy": "Codex editorial QA",
     "qualityScore": 4,
     "funScore": 4,

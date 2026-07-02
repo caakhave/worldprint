@@ -206,12 +206,12 @@
     "valuesReference": "https://api.worldbank.org/v2/country/all/indicator/SH.DTH.COMM.ZS?format=json&per_page=20000&page=1&date=2015%3A2025",
     "license": "Creative Commons Attribution 4.0 International unless specifically labeled otherwise by World Bank metadata",
     "licenseReference": "https://www.worldbank.org/en/about/legal/terms-of-use-for-datasets",
-    "retrievedAt": "2026-06-27T17:14:42.528793+00:00",
-    "checksum": "4ee73f17983ef0193655e7af23de17f253ec06bcb71c91daea01b5f68045ab18",
+    "retrievedAt": "2026-07-02T22:23:06.307673+00:00",
+    "checksum": "1cde05ce08d4a667b5c00f960f89b23790478fa17059496a2c66a5e47127dd05",
     "sourceOrganization": "Global Health Estimates, World Health Organization (WHO), uri: https://www.who.int/data/gho/data/themes/mortality-and-global-health-estimates/ghe-leading-causes-of-death, note: Derived based on the data from Global Health Estimates  Deaths by Cause, Age, Sex, by Country and by Region, 2000-2021"
   },
   "reviewStatus": "approved",
-  "contentVersion": "2026.06.22-exp2-qa1",
+  "contentVersion": "2026.07.02-exp4-content50",
   "editorial": {
     "shortHook": "A candidate map for communicable disease deaths.",
     "patternNote": "The darkest countries include Chad, Central African Republic, Niger, while the lightest include Finland, China, Australia; that contrast is the fastest way to read the communicable disease deaths pattern.",
@@ -252,7 +252,7 @@
   },
   "editorialReview": {
     "status": "expert_only",
-    "reviewedAt": "2026-06-22",
+    "reviewedAt": "2026-07-02",
     "reviewedBy": "Codex editorial QA",
     "qualityScore": 3,
     "funScore": 3,

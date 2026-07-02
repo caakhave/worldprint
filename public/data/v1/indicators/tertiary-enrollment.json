@@ -165,12 +165,12 @@
     "valuesReference": "https://api.worldbank.org/v2/country/all/indicator/SE.TER.ENRR?format=json&per_page=20000&page=1&date=2015%3A2025",
     "license": "Creative Commons Attribution 4.0 International unless specifically labeled otherwise by World Bank metadata",
     "licenseReference": "https://www.worldbank.org/en/about/legal/terms-of-use-for-datasets",
-    "retrievedAt": "2026-06-27T17:13:57.557871+00:00",
-    "checksum": "1897129c75291e3db7082f84b983f9b6f0fb6a2dcc20850676e5cb0bbc713160",
+    "retrievedAt": "2026-07-02T22:06:28.024879+00:00",
+    "checksum": "36f2940d0d859e4484e7255c8dd5cb7b41f48b5b9f658415dae100e6d3857833",
     "sourceOrganization": "Data API, UN Educational, Scientific and Cultural Organization (UNESCO), uri: https://databrowser.uis.unesco.org/resources, note: The data are obtained through the UIS API.  Detailed documentation is available at: https://api.uis.unesco.org/api/public/documentation/, publisher: UNESCO Institute for Statistics (UIS), type: Bulk file (csv), date accessed: 2026-03-19, date published: 2026-02"
   },
   "reviewStatus": "approved",
-  "contentVersion": "2026.06.22-exp2-qa1",
+  "contentVersion": "2026.07.02-exp4-content50",
   "editorial": {
     "shortHook": "A higher-education map with rich-country and city-state clues.",
     "patternNote": "The darkest countries include Australia, Puerto Rico (US), Turkiye, while the lightest include Malawi, Chad, Niger; that contrast is the fastest way to read the tertiary enrollment pattern.",
@@ -191,16 +191,16 @@
     ],
     "commonConfusions": [
       {
+        "confusedWithIndicatorCode": "HD_HCIP_EDUC_TO",
+        "reason": "Human capital education index can tempt players because it shares a strong country ranking with this map, but its unit and definition point to a different story."
+      },
+      {
+        "confusedWithIndicatorCode": "HD_HCIP_OVRL_TO",
+        "reason": "Human Capital Index can tempt players because it shares a strong country ranking with this map, but its unit and definition point to a different story."
+      },
+      {
         "confusedWithIndicatorCode": "SH.XPD.CHEX.PC.CD",
         "reason": "Health spending per person can tempt players because it shares a strong country ranking with this map, but its unit and definition point to a different story."
-      },
-      {
-        "confusedWithIndicatorCode": "SH.STA.MMRT",
-        "reason": "Maternal mortality can tempt players because it shares a strong country ranking with this map, but its unit and definition point to a different story."
-      },
-      {
-        "confusedWithIndicatorCode": "SP.DYN.IMRT.IN",
-        "reason": "Infant mortality can tempt players because it shares a strong country ranking with this map, but its unit and definition point to a different story."
       }
     ],
     "difficultyReason": "Expert difficulty: the map can be mistaken for adjacent indicators unless players probe a high, low, and middle country.",
@@ -211,7 +211,7 @@
   },
   "editorialReview": {
     "status": "expert_only",
-    "reviewedAt": "2026-06-22",
+    "reviewedAt": "2026-07-02",
     "reviewedBy": "Codex editorial QA",
     "qualityScore": 3,
     "funScore": 4,

@@ -202,12 +202,12 @@
     "valuesReference": "https://api.worldbank.org/v2/country/all/indicator/SL.EMP.MPYR.ZS?format=json&per_page=20000&page=1&date=2015%3A2025",
     "license": "Creative Commons Attribution 4.0 International unless specifically labeled otherwise by World Bank metadata",
     "licenseReference": "https://www.worldbank.org/en/about/legal/terms-of-use-for-datasets",
-    "retrievedAt": "2026-06-27T17:15:16.202562+00:00",
-    "checksum": "62dad90627fb1db1d3632ff1345eb63ef5cddbce048fdcf5e760e3324c64fc62",
+    "retrievedAt": "2026-07-02T22:38:38.375268+00:00",
+    "checksum": "27b6a7ebc2e90527708506e5d387e1c5259c565802f56a252d97dcf3d98c60dd",
     "sourceOrganization": "ILO Modelled Estimates database (ILOEST), International Labour Organization (ILO), uri: https://ilostat.ilo.org/data/bulk/, publisher: ILOSTAT, type: external database, date accessed: January 17, 2026"
   },
   "reviewStatus": "approved",
-  "contentVersion": "2026.06.22-exp2-qa1",
+  "contentVersion": "2026.07.02-exp4-content50",
   "editorial": {
     "shortHook": "A candidate map for employers share.",
     "patternNote": "The darkest countries include Djibouti, Nigeria, Timor-Leste, while the lightest include Moldova, Ethiopia, Qatar; that contrast is the fastest way to read the employers share pattern.",
@@ -228,16 +228,16 @@
     ],
     "commonConfusions": [
       {
-        "confusedWithIndicatorCode": "GC.REV.XGRT.GD.ZS",
-        "reason": "Government revenue excluding grants overlaps with part of the visible pattern, but the full country spread does not match."
+        "confusedWithIndicatorCode": "NY.ADJ.DNGY.GN.ZS",
+        "reason": "Energy depletion share overlaps with part of the visible pattern, but the full country spread does not match."
       },
       {
-        "confusedWithIndicatorCode": "IT.MLT.MAIN.P2",
-        "reason": "Fixed telephone subscriptions overlaps with part of the visible pattern, but the full country spread does not match."
+        "confusedWithIndicatorCode": "GC.TAX.YPKG.ZS",
+        "reason": "Income tax share overlaps with part of the visible pattern, but the full country spread does not match."
       },
       {
-        "confusedWithIndicatorCode": "NY.GDS.TOTL.ZS",
-        "reason": "Domestic savings overlaps with part of the visible pattern, but the full country spread does not match."
+        "confusedWithIndicatorCode": "NV.AGR.EMPL.KD",
+        "reason": "Agriculture value per worker overlaps with part of the visible pattern, but the full country spread does not match."
       }
     ],
     "difficultyReason": "Expert difficulty: the map can be mistaken for adjacent indicators unless players probe a high, low, and middle country.",
@@ -248,7 +248,7 @@
   },
   "editorialReview": {
     "status": "expert_only",
-    "reviewedAt": "2026-06-22",
+    "reviewedAt": "2026-07-02",
     "reviewedBy": "Codex editorial QA",
     "qualityScore": 4,
     "funScore": 3,

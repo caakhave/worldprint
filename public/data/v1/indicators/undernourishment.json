@@ -6,7 +6,7 @@
   "shortTitle": "Undernourishment",
   "category": "health",
   "difficulty": "standard",
-  "definition": "Prevalence of undernourishments is the percentage of the population whose habitual food consumption is insufficient to provide the dietary energy levels that are required to maintain a normal active and healthy life. Data showing as 2.5 may signify a prevalence of undernourishment below 2.5%.",
+  "definition": "Prevalence of undernourishment is the percentage of the population whose habitual food consumption is insufficient to provide the dietary energy levels that are required to maintain a normal active and healthy life. Data showing as 2.5 may signify a prevalence of undernourishment below 2.5%.",
   "unit": "percent of population",
   "year": 2023,
   "valuesByIso3": {
@@ -190,12 +190,12 @@
     "valuesReference": "https://api.worldbank.org/v2/country/all/indicator/SN.ITK.DEFC.ZS?format=json&per_page=20000&page=1&date=2015%3A2025",
     "license": "Creative Commons Attribution 4.0 International unless specifically labeled otherwise by World Bank metadata",
     "licenseReference": "https://www.worldbank.org/en/about/legal/terms-of-use-for-datasets",
-    "retrievedAt": "2026-06-27T17:14:19.506057+00:00",
-    "checksum": "c688d506ad460ca9ae7fd3c64d9672b550301ef0c9d510b15b6349a4d6a9d91e",
+    "retrievedAt": "2026-07-02T22:17:32.325193+00:00",
+    "checksum": "86df85549a44fe02583bd228bb214ba3c6ad9315da1363b6a04f342e181ea5b6",
     "sourceOrganization": "Food and Agriculture Organization of the United Nations (FAO), uri: http://www.fao.org/faostat/en/#home"
   },
   "reviewStatus": "approved",
-  "contentVersion": "2026.06.22-exp2-qa1",
+  "contentVersion": "2026.07.02-exp4-content50",
   "editorial": {
     "shortHook": "A food-security map where missing and extreme values matter.",
     "patternNote": "The darkest countries include Haiti, Somalia, Fed. Rep., Madagascar, while the lightest include United Arab Emirates, Armenia, Australia; that contrast is the fastest way to read the undernourishment pattern.",
@@ -220,12 +220,12 @@
         "reason": "Fixed broadband can tempt players because it shares a strong country ranking with this map, but its unit and definition point to a different story."
       },
       {
-        "confusedWithIndicatorCode": "NY.GDP.PCAP.PP.CD",
-        "reason": "GDP per capita, PPP can tempt players because it shares a strong country ranking with this map, but its unit and definition point to a different story."
-      },
-      {
         "confusedWithIndicatorCode": "NY.GNP.PCAP.PP.CD",
         "reason": "GNI per capita, PPP can tempt players because it shares a strong country ranking with this map, but its unit and definition point to a different story."
+      },
+      {
+        "confusedWithIndicatorCode": "NY.GDP.PCAP.PP.CD",
+        "reason": "GDP per capita, PPP can tempt players because it shares a strong country ranking with this map, but its unit and definition point to a different story."
       }
     ],
     "difficultyReason": "Standard difficulty: the map has readable regional structure, but the best answer still depends on checking the unit and country anchors.",
@@ -237,7 +237,7 @@
   },
   "editorialReview": {
     "status": "daily_eligible",
-    "reviewedAt": "2026-06-22",
+    "reviewedAt": "2026-07-02",
     "reviewedBy": "Codex editorial QA",
     "qualityScore": 4,
     "funScore": 4,

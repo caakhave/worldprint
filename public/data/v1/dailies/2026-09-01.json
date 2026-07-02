@@ -2,32 +2,33 @@
   "schemaVersion": "1.1.0",
   "game": "worldprint",
   "date": "2026-09-01",
-  "contentVersion": "2026.06.22-exp2-qa1",
+  "contentVersion": "2026.07.02-exp4-content50",
   "roundIds": [
-    "worldprint-precipitation-depth",
-    "worldprint-open-defecation",
-    "worldprint-migrant-stock",
-    "worldprint-mobile-subscriptions",
-    "worldprint-food-insecurity-moderate-severe"
+    "worldprint-rural-basic-sanitation",
+    "worldprint-ncd-premature-mortality",
+    "worldprint-female-industry-employment",
+    "worldprint-women-parliament",
+    "worldprint-secondary-enrollment"
   ],
   "indicatorIds": [
-    "precipitation-depth",
-    "open-defecation",
-    "migrant-stock",
-    "mobile-subscriptions",
-    "food-insecurity-moderate-severe"
+    "rural-basic-sanitation",
+    "ncd-premature-mortality",
+    "female-industry-employment",
+    "women-parliament",
+    "secondary-enrollment"
   ],
   "categoryMix": {
-    "environment": 1,
+    "settlement": 1,
     "health": 1,
-    "demography": 1,
-    "connectivity": 1,
-    "agriculture": 1
+    "labor": 1,
+    "development": 1,
+    "education": 1
   },
   "mapDifficultyMix": {
-    "standard": 5
+    "standard": 4,
+    "expert": 1
   },
-  "generatedAt": "2026-06-27T17:16:22.627467+00:00",
+  "generatedAt": "2026-07-02T22:58:41.358144+00:00",
   "generatorVersion": "daily-manifest-v2",
   "varietyNotes": [
     "Selected with category, difficulty, repeat-cooldown, and same-day correlation safeguards."

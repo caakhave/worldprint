@@ -2,32 +2,33 @@
   "schemaVersion": "1.1.0",
   "game": "worldprint",
   "date": "2026-08-09",
-  "contentVersion": "2026.06.22-exp2-qa1",
+  "contentVersion": "2026.07.02-exp4-content50",
   "roundIds": [
-    "worldprint-co2-per-capita",
-    "worldprint-age-dependency",
-    "worldprint-rural-basic-sanitation",
-    "worldprint-measles-immunization",
-    "worldprint-coal-electricity-share"
+    "worldprint-life-expectancy",
+    "worldprint-communications-service-exports",
+    "worldprint-coal-electricity-share",
+    "worldprint-basic-sanitation",
+    "worldprint-gdp-per-capita"
   ],
   "indicatorIds": [
-    "co2-per-capita",
-    "age-dependency",
-    "rural-basic-sanitation",
-    "measles-immunization",
-    "coal-electricity-share"
+    "life-expectancy",
+    "communications-service-exports",
+    "coal-electricity-share",
+    "basic-sanitation",
+    "gdp-per-capita"
   ],
   "categoryMix": {
-    "environment": 1,
-    "demography": 1,
-    "settlement": 1,
-    "health": 1,
-    "energy": 1
+    "health": 2,
+    "connectivity": 1,
+    "energy": 1,
+    "development": 1
   },
   "mapDifficultyMix": {
-    "standard": 5
+    "intro": 2,
+    "expert": 1,
+    "standard": 2
   },
-  "generatedAt": "2026-06-27T17:16:22.623864+00:00",
+  "generatedAt": "2026-07-02T22:58:41.354673+00:00",
   "generatorVersion": "daily-manifest-v2",
   "varietyNotes": [
     "Selected with category, difficulty, repeat-cooldown, and same-day correlation safeguards."

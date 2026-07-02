@@ -2,33 +2,33 @@
   "schemaVersion": "1.1.0",
   "game": "worldprint",
   "date": "2026-06-28",
-  "contentVersion": "2026.06.22-exp2-qa1",
+  "contentVersion": "2026.07.02-exp4-content50",
   "roundIds": [
-    "worldprint-cereal-yield",
-    "worldprint-rural-population-growth",
-    "worldprint-measles-immunization",
-    "worldprint-migrant-stock",
-    "worldprint-pm25-exposure"
+    "worldprint-population-density",
+    "worldprint-total-protected-areas",
+    "worldprint-safe-drinking-water",
+    "worldprint-industry-share",
+    "worldprint-youth-employment-ratio"
   ],
   "indicatorIds": [
-    "cereal-yield",
-    "rural-population-growth",
-    "measles-immunization",
-    "migrant-stock",
-    "pm25-exposure"
+    "population-density",
+    "total-protected-areas",
+    "safe-drinking-water",
+    "industry-share",
+    "youth-employment-ratio"
   ],
   "categoryMix": {
-    "agriculture": 1,
     "settlement": 1,
+    "environment": 1,
     "health": 1,
-    "demography": 1,
-    "environment": 1
+    "economy": 1,
+    "labor": 1
   },
   "mapDifficultyMix": {
-    "expert": 1,
-    "standard": 4
+    "standard": 4,
+    "intro": 1
   },
-  "generatedAt": "2026-06-27T17:16:22.617359+00:00",
+  "generatedAt": "2026-07-02T22:58:41.348482+00:00",
   "generatorVersion": "daily-manifest-v2",
   "varietyNotes": [
     "Selected with category, difficulty, repeat-cooldown, and same-day correlation safeguards."

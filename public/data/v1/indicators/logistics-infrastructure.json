@@ -170,12 +170,12 @@
     "valuesReference": "https://api.worldbank.org/v2/country/all/indicator/LP.LPI.INFR.XQ?format=json&per_page=20000&page=1&date=2015%3A2025",
     "license": "Creative Commons Attribution 4.0 International unless specifically labeled otherwise by World Bank metadata",
     "licenseReference": "https://www.worldbank.org/en/about/legal/terms-of-use-for-datasets",
-    "retrievedAt": "2026-06-27T17:15:18.962936+00:00",
-    "checksum": "0251fde46971b60a2baac7d80d16322ca267bea795b629ad78c1934f67f77dd9",
+    "retrievedAt": "2026-07-02T22:39:46.117255+00:00",
+    "checksum": "21c0435ab0a2d35a4bbcdbe9acfb2f6b1874500fb44f6534827ed54198818d39",
     "sourceOrganization": "Connecting to Compete - Logistics Performance Index (LPI), World Bank (WB), uri: https://lpi.worldbank.org"
   },
   "reviewStatus": "approved",
-  "contentVersion": "2026.06.22-exp2-qa1",
+  "contentVersion": "2026.07.02-exp4-content50",
   "editorial": {
     "shortHook": "A candidate map for logistics infrastructure quality.",
     "patternNote": "The darkest countries include Switzerland, Germany, Canada, while the lightest include Afghanistan, Libya, Haiti; that contrast is the fastest way to read the logistics infrastructure quality pattern.",
@@ -216,7 +216,7 @@
   },
   "editorialReview": {
     "status": "needs_review",
-    "reviewedAt": "2026-06-22",
+    "reviewedAt": "2026-07-02",
     "reviewedBy": "Codex editorial QA",
     "qualityScore": 2,
     "funScore": 2,

@@ -2,30 +2,34 @@
   "schemaVersion": "1.1.0",
   "game": "worldprint",
   "date": "2026-09-02",
-  "contentVersion": "2026.06.22-exp2-qa1",
+  "contentVersion": "2026.07.02-exp4-content50",
   "roundIds": [
-    "worldprint-urban-basic-drinking-water",
-    "worldprint-population-density",
-    "worldprint-permanent-cropland",
-    "worldprint-arable-land",
-    "worldprint-age-dependency"
+    "worldprint-urban-population",
+    "worldprint-tourism-arrivals",
+    "worldprint-compulsory-education-duration",
+    "worldprint-electric-transmission-losses",
+    "worldprint-uhc-service-coverage"
   ],
   "indicatorIds": [
-    "urban-basic-drinking-water",
-    "population-density",
-    "permanent-cropland",
-    "arable-land",
-    "age-dependency"
+    "urban-population",
+    "tourism-arrivals",
+    "compulsory-education-duration",
+    "electric-transmission-losses",
+    "uhc-service-coverage"
   ],
   "categoryMix": {
-    "settlement": 2,
-    "land": 2,
-    "demography": 1
+    "settlement": 1,
+    "economy": 1,
+    "education": 1,
+    "energy": 1,
+    "health": 1
   },
   "mapDifficultyMix": {
-    "standard": 5
+    "intro": 1,
+    "standard": 3,
+    "expert": 1
   },
-  "generatedAt": "2026-06-27T17:16:22.627626+00:00",
+  "generatedAt": "2026-07-02T22:58:41.358286+00:00",
   "generatorVersion": "daily-manifest-v2",
   "varietyNotes": [
     "Selected with category, difficulty, repeat-cooldown, and same-day correlation safeguards."

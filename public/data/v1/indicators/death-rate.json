@@ -208,12 +208,12 @@
     "valuesReference": "https://api.worldbank.org/v2/country/all/indicator/SP.DYN.CDRT.IN?format=json&per_page=20000&page=1&date=2015%3A2025",
     "license": "Creative Commons Attribution 4.0 International unless specifically labeled otherwise by World Bank metadata",
     "licenseReference": "https://www.worldbank.org/en/about/legal/terms-of-use-for-datasets",
-    "retrievedAt": "2026-06-27T17:13:50.551014+00:00",
-    "checksum": "83563adafc80524d8507336477e1469262e8e73abfc78827c5d3ddc8c6d117cf",
-    "sourceOrganization": "World Population Prospects, United Nations (UN), publisher: UN Population Division;\nStatistical databases and publications from national statistical offices, National statistical offices;\nDemographic Statistics, Eurostat (ESTAT);\nPopulation and Vital Statistics Report (various years), United Nations (UN), publisher: UN Statistical Division"
+    "retrievedAt": "2026-07-02T22:05:48.135383+00:00",
+    "checksum": "479d93d14923f45e9cc5b42f1efaa78ef7a238adb3017862a87c3a796544f553",
+    "sourceOrganization": "World Population Prospects, United Nations (UN), publisher: UN Population Division;\nStatistical databases and publications from national statistical offices, National Statistical Offices (NSOs);\nDemographic Statistics, Eurostat (ESTAT);\nPopulation and Vital Statistics Report (various years), United Nations (UN), publisher: UN Statistical Division"
   },
   "reviewStatus": "approved",
-  "contentVersion": "2026.06.22-exp2-qa1",
+  "contentVersion": "2026.07.02-exp4-content50",
   "editorial": {
     "shortHook": "A deceptively hard age-structure clue.",
     "patternNote": "The darkest countries include Bulgaria, Serbia, Latvia, while the lightest include United Arab Emirates, Qatar, Kuwait; that contrast is the fastest way to read the death rate pattern.",
@@ -242,8 +242,8 @@
         "reason": "Hospital beds overlaps with part of the visible pattern, but the full country spread does not match."
       },
       {
-        "confusedWithIndicatorCode": "ER.H2O.FWIN.ZS",
-        "reason": "Industrial water withdrawals overlaps with part of the visible pattern, but the full country spread does not match."
+        "confusedWithIndicatorCode": "EN.GHG.TOT.ZG.AR5",
+        "reason": "Greenhouse gas emissions change overlaps with part of the visible pattern, but the full country spread does not match."
       }
     ],
     "difficultyReason": "Expert difficulty: the map can be mistaken for adjacent indicators unless players probe a high, low, and middle country.",
@@ -254,7 +254,7 @@
   },
   "editorialReview": {
     "status": "practice_eligible",
-    "reviewedAt": "2026-06-22",
+    "reviewedAt": "2026-07-02",
     "reviewedBy": "Codex editorial QA",
     "qualityScore": 3,
     "funScore": 3,

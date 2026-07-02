@@ -1,193 +1,44 @@
 {
   "schemaVersion": "1.1.0",
   "game": "worldprint",
-  "contentVersion": "2026.06.22-exp2-qa1",
-  "generatedAt": "2026-06-27T17:16:22.631549+00:00",
+  "contentVersion": "2026.07.02-exp4-content50",
+  "generatedAt": "2026-07-02T22:58:41.362543+00:00",
   "generatorVersion": "daily-manifest-v2",
-  "buildDate": "2026-06-27",
+  "buildDate": "2026-07-02",
   "range": {
-    "start": "2026-05-28",
-    "end": "2026-09-25",
+    "start": "2026-06-02",
+    "end": "2026-09-30",
     "pastDays": 30,
     "futureDays": 90
   },
   "dates": [
     {
-      "date": "2026-05-28",
-      "path": "/data/v1/dailies/2026-05-28.json",
-      "roundCount": 5,
-      "roundIds": [
-        "worldprint-unemployment",
-        "worldprint-adolescent-fertility",
-        "worldprint-secondary-enrollment",
-        "worldprint-mobile-subscriptions",
-        "worldprint-arable-land-per-person"
-      ],
-      "indicatorIds": [
-        "unemployment",
-        "adolescent-fertility",
-        "secondary-enrollment",
-        "mobile-subscriptions",
-        "arable-land-per-person"
-      ],
-      "categoryMix": {
-        "labor": 1,
-        "demography": 1,
-        "education": 1,
-        "connectivity": 1,
-        "land": 1
-      },
-      "mapDifficultyMix": {
-        "standard": 3,
-        "expert": 2
-      }
-    },
-    {
-      "date": "2026-05-29",
-      "path": "/data/v1/dailies/2026-05-29.json",
-      "roundCount": 5,
-      "roundIds": [
-        "worldprint-under-five-mortality",
-        "worldprint-older-adults-share",
-        "worldprint-food-insecurity-moderate-severe",
-        "worldprint-clean-fuels-access",
-        "worldprint-electric-power-use"
-      ],
-      "indicatorIds": [
-        "under-five-mortality",
-        "older-adults-share",
-        "food-insecurity-moderate-severe",
-        "clean-fuels-access",
-        "electric-power-use"
-      ],
-      "categoryMix": {
-        "health": 1,
-        "demography": 1,
-        "agriculture": 1,
-        "energy": 2
-      },
-      "mapDifficultyMix": {
-        "standard": 4,
-        "intro": 1
-      }
-    },
-    {
-      "date": "2026-05-30",
-      "path": "/data/v1/dailies/2026-05-30.json",
-      "roundCount": 5,
-      "roundIds": [
-        "worldprint-communications-service-exports",
-        "worldprint-electricity-access",
-        "worldprint-undernourishment",
-        "worldprint-freshwater-per-capita",
-        "worldprint-renewable-electricity"
-      ],
-      "indicatorIds": [
-        "communications-service-exports",
-        "electricity-access",
-        "undernourishment",
-        "freshwater-per-capita",
-        "renewable-electricity"
-      ],
-      "categoryMix": {
-        "connectivity": 1,
-        "energy": 2,
-        "health": 1,
-        "environment": 1
-      },
-      "mapDifficultyMix": {
-        "expert": 1,
-        "intro": 1,
-        "standard": 3
-      }
-    },
-    {
-      "date": "2026-05-31",
-      "path": "/data/v1/dailies/2026-05-31.json",
-      "roundCount": 5,
-      "roundIds": [
-        "worldprint-industry-share",
-        "worldprint-permanent-cropland",
-        "worldprint-basic-sanitation",
-        "worldprint-age-dependency",
-        "worldprint-agriculture-value-added"
-      ],
-      "indicatorIds": [
-        "industry-share",
-        "permanent-cropland",
-        "basic-sanitation",
-        "age-dependency",
-        "agriculture-value-added"
-      ],
-      "categoryMix": {
-        "economy": 2,
-        "land": 1,
-        "health": 1,
-        "demography": 1
-      },
-      "mapDifficultyMix": {
-        "standard": 5
-      }
-    },
-    {
-      "date": "2026-06-01",
-      "path": "/data/v1/dailies/2026-06-01.json",
-      "roundCount": 5,
-      "roundIds": [
-        "worldprint-women-parliament",
-        "worldprint-life-expectancy",
-        "worldprint-energy-use",
-        "worldprint-land-under-cereal",
-        "worldprint-tourism-arrivals"
-      ],
-      "indicatorIds": [
-        "women-parliament",
-        "life-expectancy",
-        "energy-use",
-        "land-under-cereal",
-        "tourism-arrivals"
-      ],
-      "categoryMix": {
-        "development": 1,
-        "health": 1,
-        "energy": 1,
-        "land": 1,
-        "economy": 1
-      },
-      "mapDifficultyMix": {
-        "standard": 3,
-        "intro": 1,
-        "expert": 1
-      }
-    },
-    {
       "date": "2026-06-02",
       "path": "/data/v1/dailies/2026-06-02.json",
       "roundCount": 5,
       "roundIds": [
-        "worldprint-compulsory-education-duration",
-        "worldprint-account-ownership",
-        "worldprint-population-growth",
-        "worldprint-gdp-per-capita",
+        "worldprint-mobile-subscriptions",
+        "worldprint-protected-land",
+        "worldprint-female-industry-employment",
+        "worldprint-urban-basic-drinking-water",
         "worldprint-pm25-exposure"
       ],
       "indicatorIds": [
-        "compulsory-education-duration",
-        "account-ownership",
-        "population-growth",
-        "gdp-per-capita",
+        "mobile-subscriptions",
+        "protected-land",
+        "female-industry-employment",
+        "urban-basic-drinking-water",
         "pm25-exposure"
       ],
       "categoryMix": {
-        "education": 1,
-        "development": 2,
-        "demography": 1,
-        "environment": 1
+        "connectivity": 1,
+        "environment": 2,
+        "labor": 1,
+        "settlement": 1
       },
       "mapDifficultyMix": {
-        "expert": 1,
-        "standard": 3,
-        "intro": 1
+        "standard": 4,
+        "expert": 1
       }
     },
     {
@@ -195,28 +46,29 @@
       "path": "/data/v1/dailies/2026-06-03.json",
       "roundCount": 5,
       "roundIds": [
+        "worldprint-forest-area",
         "worldprint-health-expenditure",
-        "worldprint-precipitation-depth",
-        "worldprint-youth-employment-ratio",
-        "worldprint-food-production-index",
-        "worldprint-coal-electricity-share"
+        "worldprint-trade-share",
+        "worldprint-under-five-mortality",
+        "worldprint-compulsory-education-duration"
       ],
       "indicatorIds": [
+        "forest-area",
         "health-expenditure",
-        "precipitation-depth",
-        "youth-employment-ratio",
-        "food-production-index",
-        "coal-electricity-share"
+        "trade-share",
+        "under-five-mortality",
+        "compulsory-education-duration"
       ],
       "categoryMix": {
-        "health": 1,
         "environment": 1,
-        "labor": 1,
-        "agriculture": 1,
-        "energy": 1
+        "health": 2,
+        "economy": 1,
+        "education": 1
       },
       "mapDifficultyMix": {
-        "standard": 5
+        "intro": 1,
+        "standard": 3,
+        "expert": 1
       }
     },
     {
@@ -224,26 +76,28 @@
       "path": "/data/v1/dailies/2026-06-04.json",
       "roundCount": 5,
       "roundIds": [
-        "worldprint-rural-basic-sanitation",
-        "worldprint-co2-per-capita",
-        "worldprint-urban-basic-drinking-water",
-        "worldprint-total-protected-areas",
-        "worldprint-arable-land"
+        "worldprint-fertility-rate",
+        "worldprint-merchandise-trade-share",
+        "worldprint-out-of-school-primary",
+        "worldprint-internet-users",
+        "worldprint-primary-female-teachers"
       ],
       "indicatorIds": [
-        "rural-basic-sanitation",
-        "co2-per-capita",
-        "urban-basic-drinking-water",
-        "total-protected-areas",
-        "arable-land"
+        "fertility-rate",
+        "merchandise-trade-share",
+        "out-of-school-primary",
+        "internet-users",
+        "primary-female-teachers"
       ],
       "categoryMix": {
-        "settlement": 2,
-        "environment": 2,
-        "land": 1
+        "demography": 1,
+        "economy": 1,
+        "education": 2,
+        "connectivity": 1
       },
       "mapDifficultyMix": {
-        "standard": 5
+        "standard": 4,
+        "intro": 1
       }
     },
     {
@@ -251,29 +105,27 @@
       "path": "/data/v1/dailies/2026-06-05.json",
       "roundCount": 5,
       "roundIds": [
-        "worldprint-internet-users",
         "worldprint-migrant-stock",
+        "worldprint-employment-agriculture",
+        "worldprint-ncd-premature-mortality",
         "worldprint-government-education-spending-share",
-        "worldprint-rural-population-growth",
-        "worldprint-trade-share"
+        "worldprint-maternal-mortality"
       ],
       "indicatorIds": [
-        "internet-users",
         "migrant-stock",
+        "employment-agriculture",
+        "ncd-premature-mortality",
         "government-education-spending-share",
-        "rural-population-growth",
-        "trade-share"
+        "maternal-mortality"
       ],
       "categoryMix": {
-        "connectivity": 1,
         "demography": 1,
-        "education": 1,
-        "settlement": 1,
-        "economy": 1
+        "labor": 1,
+        "health": 2,
+        "education": 1
       },
       "mapDifficultyMix": {
-        "intro": 1,
-        "standard": 3,
+        "standard": 4,
         "expert": 1
       }
     },
@@ -282,28 +134,27 @@
       "path": "/data/v1/dailies/2026-06-06.json",
       "roundCount": 5,
       "roundIds": [
+        "worldprint-energy-use",
+        "worldprint-human-capital-index",
         "worldprint-physicians",
-        "worldprint-urban-population",
-        "worldprint-safe-drinking-water",
-        "worldprint-employment-agriculture",
-        "worldprint-out-of-school-primary"
+        "worldprint-population-growth",
+        "worldprint-renewable-electricity"
       ],
       "indicatorIds": [
+        "energy-use",
+        "human-capital-index",
         "physicians",
-        "urban-population",
-        "safe-drinking-water",
-        "employment-agriculture",
-        "out-of-school-primary"
+        "population-growth",
+        "renewable-electricity"
       ],
       "categoryMix": {
-        "health": 2,
-        "settlement": 1,
-        "labor": 1,
-        "education": 1
+        "energy": 2,
+        "development": 1,
+        "health": 1,
+        "demography": 1
       },
       "mapDifficultyMix": {
-        "standard": 3,
-        "intro": 2
+        "standard": 5
       }
     },
     {
@@ -311,27 +162,30 @@
       "path": "/data/v1/dailies/2026-06-07.json",
       "roundCount": 5,
       "roundIds": [
-        "worldprint-maternal-mortality",
-        "worldprint-fertility-rate",
-        "worldprint-protected-land",
-        "worldprint-open-defecation",
-        "worldprint-manufacturing-share"
+        "worldprint-coal-electricity-share",
+        "worldprint-communications-service-exports",
+        "worldprint-youth-employment-ratio",
+        "worldprint-urban-population",
+        "worldprint-freshwater-per-capita"
       ],
       "indicatorIds": [
-        "maternal-mortality",
-        "fertility-rate",
-        "protected-land",
-        "open-defecation",
-        "manufacturing-share"
+        "coal-electricity-share",
+        "communications-service-exports",
+        "youth-employment-ratio",
+        "urban-population",
+        "freshwater-per-capita"
       ],
       "categoryMix": {
-        "health": 2,
-        "demography": 1,
-        "environment": 1,
-        "economy": 1
+        "energy": 1,
+        "connectivity": 1,
+        "labor": 1,
+        "settlement": 1,
+        "environment": 1
       },
       "mapDifficultyMix": {
-        "standard": 5
+        "standard": 3,
+        "expert": 1,
+        "intro": 1
       }
     },
     {
@@ -339,29 +193,29 @@
       "path": "/data/v1/dailies/2026-06-08.json",
       "roundCount": 5,
       "roundIds": [
-        "worldprint-tuberculosis-incidence",
-        "worldprint-cereal-yield",
-        "worldprint-measles-immunization",
-        "worldprint-primary-female-teachers",
-        "worldprint-forest-area"
+        "worldprint-rural-population-growth",
+        "worldprint-basic-sanitation",
+        "worldprint-arable-land-per-person",
+        "worldprint-secondary-enrollment",
+        "worldprint-clean-fuels-access"
       ],
       "indicatorIds": [
-        "tuberculosis-incidence",
-        "cereal-yield",
-        "measles-immunization",
-        "primary-female-teachers",
-        "forest-area"
+        "rural-population-growth",
+        "basic-sanitation",
+        "arable-land-per-person",
+        "secondary-enrollment",
+        "clean-fuels-access"
       ],
       "categoryMix": {
-        "health": 2,
-        "agriculture": 1,
+        "settlement": 1,
+        "health": 1,
+        "land": 1,
         "education": 1,
-        "environment": 1
+        "energy": 1
       },
       "mapDifficultyMix": {
-        "expert": 2,
-        "standard": 2,
-        "intro": 1
+        "standard": 4,
+        "expert": 1
       }
     },
     {
@@ -369,29 +223,27 @@
       "path": "/data/v1/dailies/2026-06-09.json",
       "roundCount": 5,
       "roundIds": [
-        "worldprint-female-industry-employment",
-        "worldprint-population-density",
-        "worldprint-government-education-spending-share",
-        "worldprint-food-production-index",
-        "worldprint-health-expenditure"
+        "worldprint-manufacturing-share",
+        "worldprint-unemployment",
+        "worldprint-agriculture-value-added",
+        "worldprint-working-age-share",
+        "worldprint-open-defecation"
       ],
       "indicatorIds": [
-        "female-industry-employment",
-        "population-density",
-        "government-education-spending-share",
-        "food-production-index",
-        "health-expenditure"
+        "manufacturing-share",
+        "unemployment",
+        "agriculture-value-added",
+        "working-age-share",
+        "open-defecation"
       ],
       "categoryMix": {
+        "economy": 2,
         "labor": 1,
-        "settlement": 1,
-        "education": 1,
-        "agriculture": 1,
+        "demography": 1,
         "health": 1
       },
       "mapDifficultyMix": {
-        "expert": 2,
-        "standard": 3
+        "standard": 5
       }
     },
     {
@@ -399,30 +251,28 @@
       "path": "/data/v1/dailies/2026-06-10.json",
       "roundCount": 5,
       "roundIds": [
-        "worldprint-electricity-access",
-        "worldprint-out-of-school-primary",
-        "worldprint-land-under-cereal",
-        "worldprint-urban-basic-drinking-water",
-        "worldprint-older-adults-share"
+        "worldprint-adolescent-fertility",
+        "worldprint-permanent-cropland",
+        "worldprint-population-density",
+        "worldprint-precipitation-depth",
+        "worldprint-co2-per-capita"
       ],
       "indicatorIds": [
-        "electricity-access",
-        "out-of-school-primary",
-        "land-under-cereal",
-        "urban-basic-drinking-water",
-        "older-adults-share"
+        "adolescent-fertility",
+        "permanent-cropland",
+        "population-density",
+        "precipitation-depth",
+        "co2-per-capita"
       ],
       "categoryMix": {
-        "energy": 1,
-        "education": 1,
+        "demography": 1,
         "land": 1,
         "settlement": 1,
-        "demography": 1
+        "environment": 2
       },
       "mapDifficultyMix": {
-        "intro": 2,
-        "standard": 2,
-        "expert": 1
+        "expert": 1,
+        "standard": 4
       }
     },
     {
@@ -430,25 +280,25 @@
       "path": "/data/v1/dailies/2026-06-11.json",
       "roundCount": 5,
       "roundIds": [
-        "worldprint-women-parliament",
-        "worldprint-agriculture-value-added",
-        "worldprint-freshwater-per-capita",
-        "worldprint-energy-use",
-        "worldprint-employment-agriculture"
+        "worldprint-education-expenditure-savings",
+        "worldprint-arable-land",
+        "worldprint-food-insecurity-moderate-severe",
+        "worldprint-electric-transmission-losses",
+        "worldprint-uhc-service-coverage"
       ],
       "indicatorIds": [
-        "women-parliament",
-        "agriculture-value-added",
-        "freshwater-per-capita",
-        "energy-use",
-        "employment-agriculture"
+        "education-expenditure-savings",
+        "arable-land",
+        "food-insecurity-moderate-severe",
+        "electric-transmission-losses",
+        "uhc-service-coverage"
       ],
       "categoryMix": {
-        "development": 1,
-        "economy": 1,
-        "environment": 1,
+        "education": 1,
+        "land": 1,
+        "agriculture": 1,
         "energy": 1,
-        "labor": 1
+        "health": 1
       },
       "mapDifficultyMix": {
         "standard": 5
@@ -459,29 +309,29 @@
       "path": "/data/v1/dailies/2026-06-12.json",
       "roundCount": 5,
       "roundIds": [
-        "worldprint-maternal-mortality",
-        "worldprint-youth-employment-ratio",
-        "worldprint-gdp-per-capita",
-        "worldprint-arable-land-per-person",
-        "worldprint-total-protected-areas"
+        "worldprint-age-dependency",
+        "worldprint-electricity-access",
+        "worldprint-measles-immunization",
+        "worldprint-land-under-cereal",
+        "worldprint-gdp-per-capita"
       ],
       "indicatorIds": [
-        "maternal-mortality",
-        "youth-employment-ratio",
-        "gdp-per-capita",
-        "arable-land-per-person",
-        "total-protected-areas"
+        "age-dependency",
+        "electricity-access",
+        "measles-immunization",
+        "land-under-cereal",
+        "gdp-per-capita"
       ],
       "categoryMix": {
+        "demography": 1,
+        "energy": 1,
         "health": 1,
-        "labor": 1,
-        "development": 1,
         "land": 1,
-        "environment": 1
+        "development": 1
       },
       "mapDifficultyMix": {
-        "standard": 3,
-        "intro": 1,
+        "standard": 2,
+        "intro": 2,
         "expert": 1
       }
     },
@@ -490,27 +340,29 @@
       "path": "/data/v1/dailies/2026-06-13.json",
       "roundCount": 5,
       "roundIds": [
-        "worldprint-forest-area",
-        "worldprint-trade-share",
+        "worldprint-life-expectancy",
+        "worldprint-electric-power-use",
+        "worldprint-older-adults-share",
         "worldprint-industry-share",
-        "worldprint-mobile-subscriptions",
-        "worldprint-precipitation-depth"
+        "worldprint-total-protected-areas"
       ],
       "indicatorIds": [
-        "forest-area",
-        "trade-share",
+        "life-expectancy",
+        "electric-power-use",
+        "older-adults-share",
         "industry-share",
-        "mobile-subscriptions",
-        "precipitation-depth"
+        "total-protected-areas"
       ],
       "categoryMix": {
-        "environment": 2,
-        "economy": 2,
-        "connectivity": 1
+        "health": 1,
+        "energy": 1,
+        "demography": 1,
+        "economy": 1,
+        "environment": 1
       },
       "mapDifficultyMix": {
-        "intro": 1,
-        "standard": 4
+        "intro": 2,
+        "standard": 3
       }
     },
     {
@@ -518,24 +370,291 @@
       "path": "/data/v1/dailies/2026-06-14.json",
       "roundCount": 5,
       "roundIds": [
-        "worldprint-unemployment",
-        "worldprint-account-ownership",
-        "worldprint-adolescent-fertility",
-        "worldprint-rural-basic-sanitation",
-        "worldprint-undernourishment"
+        "worldprint-undernourishment",
+        "worldprint-tourism-arrivals",
+        "worldprint-women-parliament",
+        "worldprint-tuberculosis-incidence",
+        "worldprint-cereal-yield"
       ],
       "indicatorIds": [
-        "unemployment",
-        "account-ownership",
-        "adolescent-fertility",
-        "rural-basic-sanitation",
-        "undernourishment"
+        "undernourishment",
+        "tourism-arrivals",
+        "women-parliament",
+        "tuberculosis-incidence",
+        "cereal-yield"
       ],
       "categoryMix": {
-        "labor": 1,
+        "health": 2,
+        "economy": 1,
         "development": 1,
+        "agriculture": 1
+      },
+      "mapDifficultyMix": {
+        "standard": 3,
+        "expert": 2
+      }
+    },
+    {
+      "date": "2026-06-15",
+      "path": "/data/v1/dailies/2026-06-15.json",
+      "roundCount": 5,
+      "roundIds": [
+        "worldprint-account-ownership",
+        "worldprint-safe-drinking-water",
+        "worldprint-food-production-index",
+        "worldprint-rural-basic-sanitation",
+        "worldprint-human-capital-index"
+      ],
+      "indicatorIds": [
+        "account-ownership",
+        "safe-drinking-water",
+        "food-production-index",
+        "rural-basic-sanitation",
+        "human-capital-index"
+      ],
+      "categoryMix": {
+        "development": 2,
+        "health": 1,
+        "agriculture": 1,
+        "settlement": 1
+      },
+      "mapDifficultyMix": {
+        "standard": 4,
+        "intro": 1
+      }
+    },
+    {
+      "date": "2026-06-16",
+      "path": "/data/v1/dailies/2026-06-16.json",
+      "roundCount": 5,
+      "roundIds": [
+        "worldprint-electricity-access",
+        "worldprint-urban-basic-drinking-water",
+        "worldprint-rural-population-growth",
+        "worldprint-government-education-spending-share",
+        "worldprint-food-insecurity-moderate-severe"
+      ],
+      "indicatorIds": [
+        "electricity-access",
+        "urban-basic-drinking-water",
+        "rural-population-growth",
+        "government-education-spending-share",
+        "food-insecurity-moderate-severe"
+      ],
+      "categoryMix": {
+        "energy": 1,
+        "settlement": 2,
+        "education": 1,
+        "agriculture": 1
+      },
+      "mapDifficultyMix": {
+        "intro": 1,
+        "standard": 3,
+        "expert": 1
+      }
+    },
+    {
+      "date": "2026-06-17",
+      "path": "/data/v1/dailies/2026-06-17.json",
+      "roundCount": 5,
+      "roundIds": [
+        "worldprint-maternal-mortality",
+        "worldprint-older-adults-share",
+        "worldprint-primary-female-teachers",
+        "worldprint-forest-area",
+        "worldprint-permanent-cropland"
+      ],
+      "indicatorIds": [
+        "maternal-mortality",
+        "older-adults-share",
+        "primary-female-teachers",
+        "forest-area",
+        "permanent-cropland"
+      ],
+      "categoryMix": {
+        "health": 1,
         "demography": 1,
+        "education": 1,
+        "environment": 1,
+        "land": 1
+      },
+      "mapDifficultyMix": {
+        "standard": 3,
+        "intro": 2
+      }
+    },
+    {
+      "date": "2026-06-18",
+      "path": "/data/v1/dailies/2026-06-18.json",
+      "roundCount": 5,
+      "roundIds": [
+        "worldprint-life-expectancy",
+        "worldprint-electric-power-use",
+        "worldprint-arable-land-per-person",
+        "worldprint-coal-electricity-share",
+        "worldprint-pm25-exposure"
+      ],
+      "indicatorIds": [
+        "life-expectancy",
+        "electric-power-use",
+        "arable-land-per-person",
+        "coal-electricity-share",
+        "pm25-exposure"
+      ],
+      "categoryMix": {
+        "health": 1,
+        "energy": 2,
+        "land": 1,
+        "environment": 1
+      },
+      "mapDifficultyMix": {
+        "intro": 1,
+        "standard": 3,
+        "expert": 1
+      }
+    },
+    {
+      "date": "2026-06-19",
+      "path": "/data/v1/dailies/2026-06-19.json",
+      "roundCount": 5,
+      "roundIds": [
+        "worldprint-population-growth",
+        "worldprint-health-expenditure",
+        "worldprint-protected-land",
+        "worldprint-unemployment",
+        "worldprint-internet-users"
+      ],
+      "indicatorIds": [
+        "population-growth",
+        "health-expenditure",
+        "protected-land",
+        "unemployment",
+        "internet-users"
+      ],
+      "categoryMix": {
+        "demography": 1,
+        "health": 1,
+        "environment": 1,
+        "labor": 1,
+        "connectivity": 1
+      },
+      "mapDifficultyMix": {
+        "standard": 4,
+        "intro": 1
+      }
+    },
+    {
+      "date": "2026-06-20",
+      "path": "/data/v1/dailies/2026-06-20.json",
+      "roundCount": 5,
+      "roundIds": [
+        "worldprint-compulsory-education-duration",
+        "worldprint-urban-population",
+        "worldprint-communications-service-exports",
+        "worldprint-precipitation-depth",
+        "worldprint-arable-land"
+      ],
+      "indicatorIds": [
+        "compulsory-education-duration",
+        "urban-population",
+        "communications-service-exports",
+        "precipitation-depth",
+        "arable-land"
+      ],
+      "categoryMix": {
+        "education": 1,
         "settlement": 1,
+        "connectivity": 1,
+        "environment": 1,
+        "land": 1
+      },
+      "mapDifficultyMix": {
+        "expert": 2,
+        "intro": 1,
+        "standard": 2
+      }
+    },
+    {
+      "date": "2026-06-21",
+      "path": "/data/v1/dailies/2026-06-21.json",
+      "roundCount": 5,
+      "roundIds": [
+        "worldprint-food-production-index",
+        "worldprint-measles-immunization",
+        "worldprint-open-defecation",
+        "worldprint-cereal-yield",
+        "worldprint-merchandise-trade-share"
+      ],
+      "indicatorIds": [
+        "food-production-index",
+        "measles-immunization",
+        "open-defecation",
+        "cereal-yield",
+        "merchandise-trade-share"
+      ],
+      "categoryMix": {
+        "agriculture": 2,
+        "health": 2,
+        "economy": 1
+      },
+      "mapDifficultyMix": {
+        "standard": 4,
+        "expert": 1
+      }
+    },
+    {
+      "date": "2026-06-22",
+      "path": "/data/v1/dailies/2026-06-22.json",
+      "roundCount": 5,
+      "roundIds": [
+        "worldprint-co2-per-capita",
+        "worldprint-fertility-rate",
+        "worldprint-land-under-cereal",
+        "worldprint-clean-fuels-access",
+        "worldprint-trade-share"
+      ],
+      "indicatorIds": [
+        "co2-per-capita",
+        "fertility-rate",
+        "land-under-cereal",
+        "clean-fuels-access",
+        "trade-share"
+      ],
+      "categoryMix": {
+        "environment": 1,
+        "demography": 1,
+        "land": 1,
+        "energy": 1,
+        "economy": 1
+      },
+      "mapDifficultyMix": {
+        "standard": 4,
+        "expert": 1
+      }
+    },
+    {
+      "date": "2026-06-23",
+      "path": "/data/v1/dailies/2026-06-23.json",
+      "roundCount": 5,
+      "roundIds": [
+        "worldprint-manufacturing-share",
+        "worldprint-freshwater-per-capita",
+        "worldprint-employment-agriculture",
+        "worldprint-age-dependency",
+        "worldprint-tuberculosis-incidence"
+      ],
+      "indicatorIds": [
+        "manufacturing-share",
+        "freshwater-per-capita",
+        "employment-agriculture",
+        "age-dependency",
+        "tuberculosis-incidence"
+      ],
+      "categoryMix": {
+        "economy": 1,
+        "environment": 1,
+        "labor": 1,
+        "demography": 1,
         "health": 1
       },
       "mapDifficultyMix": {
@@ -544,298 +663,34 @@
       }
     },
     {
-      "date": "2026-06-15",
-      "path": "/data/v1/dailies/2026-06-15.json",
-      "roundCount": 5,
-      "roundIds": [
-        "worldprint-renewable-electricity",
-        "worldprint-life-expectancy",
-        "worldprint-compulsory-education-duration",
-        "worldprint-permanent-cropland",
-        "worldprint-fertility-rate"
-      ],
-      "indicatorIds": [
-        "renewable-electricity",
-        "life-expectancy",
-        "compulsory-education-duration",
-        "permanent-cropland",
-        "fertility-rate"
-      ],
-      "categoryMix": {
-        "energy": 1,
-        "health": 1,
-        "education": 1,
-        "land": 1,
-        "demography": 1
-      },
-      "mapDifficultyMix": {
-        "standard": 3,
-        "intro": 1,
-        "expert": 1
-      }
-    },
-    {
-      "date": "2026-06-16",
-      "path": "/data/v1/dailies/2026-06-16.json",
-      "roundCount": 5,
-      "roundIds": [
-        "worldprint-internet-users",
-        "worldprint-manufacturing-share",
-        "worldprint-population-density",
-        "worldprint-measles-immunization",
-        "worldprint-migrant-stock"
-      ],
-      "indicatorIds": [
-        "internet-users",
-        "manufacturing-share",
-        "population-density",
-        "measles-immunization",
-        "migrant-stock"
-      ],
-      "categoryMix": {
-        "connectivity": 1,
-        "economy": 1,
-        "settlement": 1,
-        "health": 1,
-        "demography": 1
-      },
-      "mapDifficultyMix": {
-        "intro": 1,
-        "standard": 4
-      }
-    },
-    {
-      "date": "2026-06-17",
-      "path": "/data/v1/dailies/2026-06-17.json",
-      "roundCount": 5,
-      "roundIds": [
-        "worldprint-cereal-yield",
-        "worldprint-population-growth",
-        "worldprint-clean-fuels-access",
-        "worldprint-safe-drinking-water",
-        "worldprint-under-five-mortality"
-      ],
-      "indicatorIds": [
-        "cereal-yield",
-        "population-growth",
-        "clean-fuels-access",
-        "safe-drinking-water",
-        "under-five-mortality"
-      ],
-      "categoryMix": {
-        "agriculture": 1,
-        "demography": 1,
-        "energy": 1,
-        "health": 2
-      },
-      "mapDifficultyMix": {
-        "expert": 1,
-        "standard": 3,
-        "intro": 1
-      }
-    },
-    {
-      "date": "2026-06-18",
-      "path": "/data/v1/dailies/2026-06-18.json",
-      "roundCount": 5,
-      "roundIds": [
-        "worldprint-physicians",
-        "worldprint-primary-female-teachers",
-        "worldprint-age-dependency",
-        "worldprint-protected-land",
-        "worldprint-tourism-arrivals"
-      ],
-      "indicatorIds": [
-        "physicians",
-        "primary-female-teachers",
-        "age-dependency",
-        "protected-land",
-        "tourism-arrivals"
-      ],
-      "categoryMix": {
-        "health": 1,
-        "education": 1,
-        "demography": 1,
-        "environment": 1,
-        "economy": 1
-      },
-      "mapDifficultyMix": {
-        "standard": 5
-      }
-    },
-    {
-      "date": "2026-06-19",
-      "path": "/data/v1/dailies/2026-06-19.json",
-      "roundCount": 5,
-      "roundIds": [
-        "worldprint-basic-sanitation",
-        "worldprint-secondary-enrollment",
-        "worldprint-open-defecation",
-        "worldprint-female-industry-employment",
-        "worldprint-electric-power-use"
-      ],
-      "indicatorIds": [
-        "basic-sanitation",
-        "secondary-enrollment",
-        "open-defecation",
-        "female-industry-employment",
-        "electric-power-use"
-      ],
-      "categoryMix": {
-        "health": 2,
-        "education": 1,
-        "labor": 1,
-        "energy": 1
-      },
-      "mapDifficultyMix": {
-        "standard": 4,
-        "expert": 1
-      }
-    },
-    {
-      "date": "2026-06-20",
-      "path": "/data/v1/dailies/2026-06-20.json",
-      "roundCount": 5,
-      "roundIds": [
-        "worldprint-urban-population",
-        "worldprint-arable-land",
-        "worldprint-food-insecurity-moderate-severe",
-        "worldprint-co2-per-capita",
-        "worldprint-rural-population-growth"
-      ],
-      "indicatorIds": [
-        "urban-population",
-        "arable-land",
-        "food-insecurity-moderate-severe",
-        "co2-per-capita",
-        "rural-population-growth"
-      ],
-      "categoryMix": {
-        "settlement": 2,
-        "land": 1,
-        "agriculture": 1,
-        "environment": 1
-      },
-      "mapDifficultyMix": {
-        "intro": 1,
-        "standard": 4
-      }
-    },
-    {
-      "date": "2026-06-21",
-      "path": "/data/v1/dailies/2026-06-21.json",
-      "roundCount": 5,
-      "roundIds": [
-        "worldprint-tuberculosis-incidence",
-        "worldprint-pm25-exposure",
-        "worldprint-coal-electricity-share",
-        "worldprint-communications-service-exports",
-        "worldprint-industry-share"
-      ],
-      "indicatorIds": [
-        "tuberculosis-incidence",
-        "pm25-exposure",
-        "coal-electricity-share",
-        "communications-service-exports",
-        "industry-share"
-      ],
-      "categoryMix": {
-        "health": 1,
-        "environment": 1,
-        "energy": 1,
-        "connectivity": 1,
-        "economy": 1
-      },
-      "mapDifficultyMix": {
-        "expert": 2,
-        "standard": 3
-      }
-    },
-    {
-      "date": "2026-06-22",
-      "path": "/data/v1/dailies/2026-06-22.json",
-      "roundCount": 5,
-      "roundIds": [
-        "worldprint-permanent-cropland",
-        "worldprint-undernourishment",
-        "worldprint-out-of-school-primary",
-        "worldprint-protected-land",
-        "worldprint-health-expenditure"
-      ],
-      "indicatorIds": [
-        "permanent-cropland",
-        "undernourishment",
-        "out-of-school-primary",
-        "protected-land",
-        "health-expenditure"
-      ],
-      "categoryMix": {
-        "land": 1,
-        "health": 2,
-        "education": 1,
-        "environment": 1
-      },
-      "mapDifficultyMix": {
-        "standard": 5
-      }
-    },
-    {
-      "date": "2026-06-23",
-      "path": "/data/v1/dailies/2026-06-23.json",
-      "roundCount": 5,
-      "roundIds": [
-        "worldprint-life-expectancy",
-        "worldprint-mobile-subscriptions",
-        "worldprint-energy-use",
-        "worldprint-population-density",
-        "worldprint-maternal-mortality"
-      ],
-      "indicatorIds": [
-        "life-expectancy",
-        "mobile-subscriptions",
-        "energy-use",
-        "population-density",
-        "maternal-mortality"
-      ],
-      "categoryMix": {
-        "health": 2,
-        "connectivity": 1,
-        "energy": 1,
-        "settlement": 1
-      },
-      "mapDifficultyMix": {
-        "intro": 1,
-        "standard": 4
-      }
-    },
-    {
       "date": "2026-06-24",
       "path": "/data/v1/dailies/2026-06-24.json",
       "roundCount": 5,
       "roundIds": [
-        "worldprint-government-education-spending-share",
-        "worldprint-electricity-access",
-        "worldprint-forest-area",
-        "worldprint-electric-power-use",
-        "worldprint-rural-basic-sanitation"
+        "worldprint-physicians",
+        "worldprint-secondary-enrollment",
+        "worldprint-gdp-per-capita",
+        "worldprint-adolescent-fertility",
+        "worldprint-female-industry-employment"
       ],
       "indicatorIds": [
-        "government-education-spending-share",
-        "electricity-access",
-        "forest-area",
-        "electric-power-use",
-        "rural-basic-sanitation"
+        "physicians",
+        "secondary-enrollment",
+        "gdp-per-capita",
+        "adolescent-fertility",
+        "female-industry-employment"
       ],
       "categoryMix": {
+        "health": 1,
         "education": 1,
-        "energy": 2,
-        "environment": 1,
-        "settlement": 1
+        "development": 1,
+        "demography": 1,
+        "labor": 1
       },
       "mapDifficultyMix": {
-        "expert": 1,
-        "intro": 2,
-        "standard": 2
+        "standard": 2,
+        "intro": 1,
+        "expert": 2
       }
     },
     {
@@ -843,24 +698,25 @@
       "path": "/data/v1/dailies/2026-06-25.json",
       "roundCount": 5,
       "roundIds": [
-        "worldprint-co2-per-capita",
-        "worldprint-age-dependency",
-        "worldprint-primary-female-teachers",
-        "worldprint-unemployment",
-        "worldprint-employment-agriculture"
+        "worldprint-rural-basic-sanitation",
+        "worldprint-mobile-subscriptions",
+        "worldprint-out-of-school-primary",
+        "worldprint-tourism-arrivals",
+        "worldprint-undernourishment"
       ],
       "indicatorIds": [
-        "co2-per-capita",
-        "age-dependency",
-        "primary-female-teachers",
-        "unemployment",
-        "employment-agriculture"
+        "rural-basic-sanitation",
+        "mobile-subscriptions",
+        "out-of-school-primary",
+        "tourism-arrivals",
+        "undernourishment"
       ],
       "categoryMix": {
-        "environment": 1,
-        "demography": 1,
+        "settlement": 1,
+        "connectivity": 1,
         "education": 1,
-        "labor": 2
+        "economy": 1,
+        "health": 1
       },
       "mapDifficultyMix": {
         "standard": 5
@@ -871,29 +727,28 @@
       "path": "/data/v1/dailies/2026-06-26.json",
       "roundCount": 5,
       "roundIds": [
-        "worldprint-older-adults-share",
-        "worldprint-population-growth",
-        "worldprint-tuberculosis-incidence",
-        "worldprint-food-insecurity-moderate-severe",
-        "worldprint-renewable-electricity"
+        "worldprint-energy-use",
+        "worldprint-education-expenditure-savings",
+        "worldprint-migrant-stock",
+        "worldprint-basic-sanitation",
+        "worldprint-women-parliament"
       ],
       "indicatorIds": [
-        "older-adults-share",
-        "population-growth",
-        "tuberculosis-incidence",
-        "food-insecurity-moderate-severe",
-        "renewable-electricity"
+        "energy-use",
+        "education-expenditure-savings",
+        "migrant-stock",
+        "basic-sanitation",
+        "women-parliament"
       ],
       "categoryMix": {
-        "demography": 2,
+        "energy": 1,
+        "education": 1,
+        "demography": 1,
         "health": 1,
-        "agriculture": 1,
-        "energy": 1
+        "development": 1
       },
       "mapDifficultyMix": {
-        "intro": 1,
-        "standard": 3,
-        "expert": 1
+        "standard": 5
       }
     },
     {
@@ -901,28 +756,27 @@
       "path": "/data/v1/dailies/2026-06-27.json",
       "roundCount": 5,
       "roundIds": [
-        "worldprint-coal-electricity-share",
-        "worldprint-manufacturing-share",
-        "worldprint-urban-population",
-        "worldprint-freshwater-per-capita",
-        "worldprint-tourism-arrivals"
+        "worldprint-account-ownership",
+        "worldprint-uhc-service-coverage",
+        "worldprint-under-five-mortality",
+        "worldprint-agriculture-value-added",
+        "worldprint-working-age-share"
       ],
       "indicatorIds": [
-        "coal-electricity-share",
-        "manufacturing-share",
-        "urban-population",
-        "freshwater-per-capita",
-        "tourism-arrivals"
+        "account-ownership",
+        "uhc-service-coverage",
+        "under-five-mortality",
+        "agriculture-value-added",
+        "working-age-share"
       ],
       "categoryMix": {
-        "energy": 1,
-        "economy": 2,
-        "settlement": 1,
-        "environment": 1
+        "development": 1,
+        "health": 2,
+        "economy": 1,
+        "demography": 1
       },
       "mapDifficultyMix": {
-        "standard": 4,
-        "intro": 1
+        "standard": 5
       }
     },
     {
@@ -930,29 +784,29 @@
       "path": "/data/v1/dailies/2026-06-28.json",
       "roundCount": 5,
       "roundIds": [
-        "worldprint-cereal-yield",
-        "worldprint-rural-population-growth",
-        "worldprint-measles-immunization",
-        "worldprint-migrant-stock",
-        "worldprint-pm25-exposure"
+        "worldprint-population-density",
+        "worldprint-total-protected-areas",
+        "worldprint-safe-drinking-water",
+        "worldprint-industry-share",
+        "worldprint-youth-employment-ratio"
       ],
       "indicatorIds": [
-        "cereal-yield",
-        "rural-population-growth",
-        "measles-immunization",
-        "migrant-stock",
-        "pm25-exposure"
+        "population-density",
+        "total-protected-areas",
+        "safe-drinking-water",
+        "industry-share",
+        "youth-employment-ratio"
       ],
       "categoryMix": {
-        "agriculture": 1,
         "settlement": 1,
+        "environment": 1,
         "health": 1,
-        "demography": 1,
-        "environment": 1
+        "economy": 1,
+        "labor": 1
       },
       "mapDifficultyMix": {
-        "expert": 1,
-        "standard": 4
+        "standard": 4,
+        "intro": 1
       }
     },
     {
@@ -960,28 +814,26 @@
       "path": "/data/v1/dailies/2026-06-29.json",
       "roundCount": 5,
       "roundIds": [
-        "worldprint-agriculture-value-added",
-        "worldprint-physicians",
-        "worldprint-adolescent-fertility",
-        "worldprint-food-production-index",
-        "worldprint-open-defecation"
+        "worldprint-electric-transmission-losses",
+        "worldprint-renewable-electricity",
+        "worldprint-ncd-premature-mortality",
+        "worldprint-permanent-cropland",
+        "worldprint-maternal-mortality"
       ],
       "indicatorIds": [
-        "agriculture-value-added",
-        "physicians",
-        "adolescent-fertility",
-        "food-production-index",
-        "open-defecation"
+        "electric-transmission-losses",
+        "renewable-electricity",
+        "ncd-premature-mortality",
+        "permanent-cropland",
+        "maternal-mortality"
       ],
       "categoryMix": {
-        "economy": 1,
+        "energy": 2,
         "health": 2,
-        "demography": 1,
-        "agriculture": 1
+        "land": 1
       },
       "mapDifficultyMix": {
-        "standard": 4,
-        "expert": 1
+        "standard": 5
       }
     },
     {
@@ -989,29 +841,27 @@
       "path": "/data/v1/dailies/2026-06-30.json",
       "roundCount": 5,
       "roundIds": [
-        "worldprint-land-under-cereal",
-        "worldprint-communications-service-exports",
-        "worldprint-secondary-enrollment",
-        "worldprint-total-protected-areas",
-        "worldprint-urban-basic-drinking-water"
+        "worldprint-protected-land",
+        "worldprint-food-production-index",
+        "worldprint-undernourishment",
+        "worldprint-rural-population-growth",
+        "worldprint-freshwater-per-capita"
       ],
       "indicatorIds": [
-        "land-under-cereal",
-        "communications-service-exports",
-        "secondary-enrollment",
-        "total-protected-areas",
-        "urban-basic-drinking-water"
+        "protected-land",
+        "food-production-index",
+        "undernourishment",
+        "rural-population-growth",
+        "freshwater-per-capita"
       ],
       "categoryMix": {
-        "land": 1,
-        "connectivity": 1,
-        "education": 1,
-        "environment": 1,
+        "environment": 2,
+        "agriculture": 1,
+        "health": 1,
         "settlement": 1
       },
       "mapDifficultyMix": {
-        "expert": 2,
-        "standard": 3
+        "standard": 5
       }
     },
     {
@@ -1019,29 +869,28 @@
       "path": "/data/v1/dailies/2026-07-01.json",
       "roundCount": 5,
       "roundIds": [
-        "worldprint-account-ownership",
-        "worldprint-safe-drinking-water",
-        "worldprint-female-industry-employment",
-        "worldprint-arable-land",
-        "worldprint-under-five-mortality"
+        "worldprint-primary-female-teachers",
+        "worldprint-precipitation-depth",
+        "worldprint-electricity-access",
+        "worldprint-coal-electricity-share",
+        "worldprint-migrant-stock"
       ],
       "indicatorIds": [
-        "account-ownership",
-        "safe-drinking-water",
-        "female-industry-employment",
-        "arable-land",
-        "under-five-mortality"
+        "primary-female-teachers",
+        "precipitation-depth",
+        "electricity-access",
+        "coal-electricity-share",
+        "migrant-stock"
       ],
       "categoryMix": {
-        "development": 1,
-        "health": 2,
-        "labor": 1,
-        "land": 1
+        "education": 1,
+        "environment": 1,
+        "energy": 2,
+        "demography": 1
       },
       "mapDifficultyMix": {
-        "standard": 3,
-        "intro": 1,
-        "expert": 1
+        "standard": 4,
+        "intro": 1
       }
     },
     {
@@ -1049,28 +898,29 @@
       "path": "/data/v1/dailies/2026-07-02.json",
       "roundCount": 5,
       "roundIds": [
-        "worldprint-fertility-rate",
-        "worldprint-trade-share",
-        "worldprint-precipitation-depth",
-        "worldprint-women-parliament",
-        "worldprint-clean-fuels-access"
+        "worldprint-pm25-exposure",
+        "worldprint-arable-land",
+        "worldprint-agriculture-value-added",
+        "worldprint-compulsory-education-duration",
+        "worldprint-energy-use"
       ],
       "indicatorIds": [
-        "fertility-rate",
-        "trade-share",
-        "precipitation-depth",
-        "women-parliament",
-        "clean-fuels-access"
+        "pm25-exposure",
+        "arable-land",
+        "agriculture-value-added",
+        "compulsory-education-duration",
+        "energy-use"
       ],
       "categoryMix": {
-        "demography": 1,
-        "economy": 1,
         "environment": 1,
-        "development": 1,
+        "land": 1,
+        "economy": 1,
+        "education": 1,
         "energy": 1
       },
       "mapDifficultyMix": {
-        "standard": 5
+        "standard": 4,
+        "expert": 1
       }
     },
     {
@@ -1078,30 +928,28 @@
       "path": "/data/v1/dailies/2026-07-03.json",
       "roundCount": 5,
       "roundIds": [
-        "worldprint-arable-land-per-person",
-        "worldprint-gdp-per-capita",
-        "worldprint-internet-users",
-        "worldprint-youth-employment-ratio",
-        "worldprint-compulsory-education-duration"
+        "worldprint-basic-sanitation",
+        "worldprint-tourism-arrivals",
+        "worldprint-female-industry-employment",
+        "worldprint-electric-transmission-losses",
+        "worldprint-unemployment"
       ],
       "indicatorIds": [
-        "arable-land-per-person",
-        "gdp-per-capita",
-        "internet-users",
-        "youth-employment-ratio",
-        "compulsory-education-duration"
+        "basic-sanitation",
+        "tourism-arrivals",
+        "female-industry-employment",
+        "electric-transmission-losses",
+        "unemployment"
       ],
       "categoryMix": {
-        "land": 1,
-        "development": 1,
-        "connectivity": 1,
-        "labor": 1,
-        "education": 1
+        "health": 1,
+        "economy": 1,
+        "labor": 2,
+        "energy": 1
       },
       "mapDifficultyMix": {
-        "expert": 2,
-        "intro": 2,
-        "standard": 1
+        "standard": 4,
+        "expert": 1
       }
     },
     {
@@ -1109,29 +957,28 @@
       "path": "/data/v1/dailies/2026-07-04.json",
       "roundCount": 5,
       "roundIds": [
-        "worldprint-basic-sanitation",
-        "worldprint-electricity-access",
-        "worldprint-pm25-exposure",
-        "worldprint-population-growth",
-        "worldprint-mobile-subscriptions"
+        "worldprint-older-adults-share",
+        "worldprint-uhc-service-coverage",
+        "worldprint-safe-drinking-water",
+        "worldprint-trade-share",
+        "worldprint-out-of-school-primary"
       ],
       "indicatorIds": [
-        "basic-sanitation",
-        "electricity-access",
-        "pm25-exposure",
-        "population-growth",
-        "mobile-subscriptions"
+        "older-adults-share",
+        "uhc-service-coverage",
+        "safe-drinking-water",
+        "trade-share",
+        "out-of-school-primary"
       ],
       "categoryMix": {
-        "health": 1,
-        "energy": 1,
-        "environment": 1,
         "demography": 1,
-        "connectivity": 1
+        "health": 2,
+        "economy": 1,
+        "education": 1
       },
       "mapDifficultyMix": {
-        "standard": 4,
-        "intro": 1
+        "intro": 2,
+        "standard": 3
       }
     },
     {
@@ -1141,22 +988,22 @@
       "roundIds": [
         "worldprint-physicians",
         "worldprint-under-five-mortality",
-        "worldprint-rural-basic-sanitation",
-        "worldprint-total-protected-areas",
-        "worldprint-manufacturing-share"
+        "worldprint-clean-fuels-access",
+        "worldprint-food-insecurity-moderate-severe",
+        "worldprint-working-age-share"
       ],
       "indicatorIds": [
         "physicians",
         "under-five-mortality",
-        "rural-basic-sanitation",
-        "total-protected-areas",
-        "manufacturing-share"
+        "clean-fuels-access",
+        "food-insecurity-moderate-severe",
+        "working-age-share"
       ],
       "categoryMix": {
         "health": 2,
-        "settlement": 1,
-        "environment": 1,
-        "economy": 1
+        "energy": 1,
+        "agriculture": 1,
+        "demography": 1
       },
       "mapDifficultyMix": {
         "standard": 5
@@ -1167,29 +1014,29 @@
       "path": "/data/v1/dailies/2026-07-06.json",
       "roundCount": 5,
       "roundIds": [
-        "worldprint-urban-population",
-        "worldprint-rural-population-growth",
-        "worldprint-renewable-electricity",
-        "worldprint-government-education-spending-share",
-        "worldprint-older-adults-share"
+        "worldprint-life-expectancy",
+        "worldprint-population-growth",
+        "worldprint-forest-area",
+        "worldprint-women-parliament",
+        "worldprint-manufacturing-share"
       ],
       "indicatorIds": [
-        "urban-population",
-        "rural-population-growth",
-        "renewable-electricity",
-        "government-education-spending-share",
-        "older-adults-share"
+        "life-expectancy",
+        "population-growth",
+        "forest-area",
+        "women-parliament",
+        "manufacturing-share"
       ],
       "categoryMix": {
-        "settlement": 2,
-        "energy": 1,
-        "education": 1,
-        "demography": 1
+        "health": 1,
+        "demography": 1,
+        "environment": 1,
+        "development": 1,
+        "economy": 1
       },
       "mapDifficultyMix": {
         "intro": 2,
-        "standard": 2,
-        "expert": 1
+        "standard": 3
       }
     },
     {
@@ -1197,27 +1044,28 @@
       "path": "/data/v1/dailies/2026-07-07.json",
       "roundCount": 5,
       "roundIds": [
-        "worldprint-population-density",
-        "worldprint-forest-area",
-        "worldprint-maternal-mortality",
-        "worldprint-freshwater-per-capita",
-        "worldprint-measles-immunization"
+        "worldprint-merchandise-trade-share",
+        "worldprint-land-under-cereal",
+        "worldprint-employment-agriculture",
+        "worldprint-ncd-premature-mortality",
+        "worldprint-health-expenditure"
       ],
       "indicatorIds": [
-        "population-density",
-        "forest-area",
-        "maternal-mortality",
-        "freshwater-per-capita",
-        "measles-immunization"
+        "merchandise-trade-share",
+        "land-under-cereal",
+        "employment-agriculture",
+        "ncd-premature-mortality",
+        "health-expenditure"
       ],
       "categoryMix": {
-        "settlement": 1,
-        "environment": 2,
+        "economy": 1,
+        "land": 1,
+        "labor": 1,
         "health": 2
       },
       "mapDifficultyMix": {
         "standard": 4,
-        "intro": 1
+        "expert": 1
       }
     },
     {
@@ -1225,29 +1073,29 @@
       "path": "/data/v1/dailies/2026-07-08.json",
       "roundCount": 5,
       "roundIds": [
-        "worldprint-arable-land-per-person",
-        "worldprint-open-defecation",
-        "worldprint-protected-land",
-        "worldprint-tourism-arrivals",
-        "worldprint-energy-use"
+        "worldprint-age-dependency",
+        "worldprint-human-capital-index",
+        "worldprint-secondary-enrollment",
+        "worldprint-co2-per-capita",
+        "worldprint-internet-users"
       ],
       "indicatorIds": [
-        "arable-land-per-person",
-        "open-defecation",
-        "protected-land",
-        "tourism-arrivals",
-        "energy-use"
+        "age-dependency",
+        "human-capital-index",
+        "secondary-enrollment",
+        "co2-per-capita",
+        "internet-users"
       ],
       "categoryMix": {
-        "land": 1,
-        "health": 1,
+        "demography": 1,
+        "development": 1,
+        "education": 1,
         "environment": 1,
-        "economy": 1,
-        "energy": 1
+        "connectivity": 1
       },
       "mapDifficultyMix": {
-        "expert": 1,
-        "standard": 4
+        "standard": 4,
+        "intro": 1
       }
     },
     {
@@ -1255,24 +1103,25 @@
       "path": "/data/v1/dailies/2026-07-09.json",
       "roundCount": 5,
       "roundIds": [
-        "worldprint-trade-share",
-        "worldprint-primary-female-teachers",
-        "worldprint-female-industry-employment",
-        "worldprint-co2-per-capita",
-        "worldprint-unemployment"
+        "worldprint-youth-employment-ratio",
+        "worldprint-renewable-electricity",
+        "worldprint-tuberculosis-incidence",
+        "worldprint-population-density",
+        "worldprint-mobile-subscriptions"
       ],
       "indicatorIds": [
-        "trade-share",
-        "primary-female-teachers",
-        "female-industry-employment",
-        "co2-per-capita",
-        "unemployment"
+        "youth-employment-ratio",
+        "renewable-electricity",
+        "tuberculosis-incidence",
+        "population-density",
+        "mobile-subscriptions"
       ],
       "categoryMix": {
-        "economy": 1,
-        "education": 1,
-        "labor": 2,
-        "environment": 1
+        "labor": 1,
+        "energy": 1,
+        "health": 1,
+        "settlement": 1,
+        "connectivity": 1
       },
       "mapDifficultyMix": {
         "standard": 4,
@@ -1284,24 +1133,24 @@
       "path": "/data/v1/dailies/2026-07-10.json",
       "roundCount": 5,
       "roundIds": [
-        "worldprint-age-dependency",
-        "worldprint-undernourishment",
-        "worldprint-compulsory-education-duration",
-        "worldprint-communications-service-exports",
-        "worldprint-basic-sanitation"
+        "worldprint-account-ownership",
+        "worldprint-adolescent-fertility",
+        "worldprint-government-education-spending-share",
+        "worldprint-education-expenditure-savings",
+        "worldprint-urban-basic-drinking-water"
       ],
       "indicatorIds": [
-        "age-dependency",
-        "undernourishment",
-        "compulsory-education-duration",
-        "communications-service-exports",
-        "basic-sanitation"
+        "account-ownership",
+        "adolescent-fertility",
+        "government-education-spending-share",
+        "education-expenditure-savings",
+        "urban-basic-drinking-water"
       ],
       "categoryMix": {
+        "development": 1,
         "demography": 1,
-        "health": 2,
-        "education": 1,
-        "connectivity": 1
+        "education": 2,
+        "settlement": 1
       },
       "mapDifficultyMix": {
         "standard": 3,
@@ -1313,85 +1162,25 @@
       "path": "/data/v1/dailies/2026-07-11.json",
       "roundCount": 5,
       "roundIds": [
-        "worldprint-youth-employment-ratio",
-        "worldprint-tuberculosis-incidence",
-        "worldprint-permanent-cropland",
-        "worldprint-clean-fuels-access",
-        "worldprint-industry-share"
-      ],
-      "indicatorIds": [
-        "youth-employment-ratio",
-        "tuberculosis-incidence",
-        "permanent-cropland",
-        "clean-fuels-access",
-        "industry-share"
-      ],
-      "categoryMix": {
-        "labor": 1,
-        "health": 1,
-        "land": 1,
-        "energy": 1,
-        "economy": 1
-      },
-      "mapDifficultyMix": {
-        "standard": 4,
-        "expert": 1
-      }
-    },
-    {
-      "date": "2026-07-12",
-      "path": "/data/v1/dailies/2026-07-12.json",
-      "roundCount": 5,
-      "roundIds": [
-        "worldprint-secondary-enrollment",
-        "worldprint-gdp-per-capita",
-        "worldprint-urban-basic-drinking-water",
-        "worldprint-employment-agriculture",
+        "worldprint-electric-power-use",
+        "worldprint-open-defecation",
+        "worldprint-cereal-yield",
+        "worldprint-urban-population",
         "worldprint-fertility-rate"
       ],
       "indicatorIds": [
-        "secondary-enrollment",
-        "gdp-per-capita",
-        "urban-basic-drinking-water",
-        "employment-agriculture",
+        "electric-power-use",
+        "open-defecation",
+        "cereal-yield",
+        "urban-population",
         "fertility-rate"
       ],
       "categoryMix": {
-        "education": 1,
-        "development": 1,
-        "settlement": 1,
-        "labor": 1,
-        "demography": 1
-      },
-      "mapDifficultyMix": {
-        "standard": 4,
-        "intro": 1
-      }
-    },
-    {
-      "date": "2026-07-13",
-      "path": "/data/v1/dailies/2026-07-13.json",
-      "roundCount": 5,
-      "roundIds": [
-        "worldprint-arable-land",
-        "worldprint-coal-electricity-share",
-        "worldprint-adolescent-fertility",
-        "worldprint-safe-drinking-water",
-        "worldprint-food-production-index"
-      ],
-      "indicatorIds": [
-        "arable-land",
-        "coal-electricity-share",
-        "adolescent-fertility",
-        "safe-drinking-water",
-        "food-production-index"
-      ],
-      "categoryMix": {
-        "land": 1,
         "energy": 1,
-        "demography": 1,
         "health": 1,
-        "agriculture": 1
+        "agriculture": 1,
+        "settlement": 1,
+        "demography": 1
       },
       "mapDifficultyMix": {
         "standard": 3,
@@ -1400,29 +1189,87 @@
       }
     },
     {
+      "date": "2026-07-12",
+      "path": "/data/v1/dailies/2026-07-12.json",
+      "roundCount": 5,
+      "roundIds": [
+        "worldprint-arable-land-per-person",
+        "worldprint-gdp-per-capita",
+        "worldprint-industry-share",
+        "worldprint-measles-immunization",
+        "worldprint-communications-service-exports"
+      ],
+      "indicatorIds": [
+        "arable-land-per-person",
+        "gdp-per-capita",
+        "industry-share",
+        "measles-immunization",
+        "communications-service-exports"
+      ],
+      "categoryMix": {
+        "land": 1,
+        "development": 1,
+        "economy": 1,
+        "health": 1,
+        "connectivity": 1
+      },
+      "mapDifficultyMix": {
+        "expert": 2,
+        "intro": 1,
+        "standard": 2
+      }
+    },
+    {
+      "date": "2026-07-13",
+      "path": "/data/v1/dailies/2026-07-13.json",
+      "roundCount": 5,
+      "roundIds": [
+        "worldprint-total-protected-areas",
+        "worldprint-rural-basic-sanitation",
+        "worldprint-maternal-mortality",
+        "worldprint-tuberculosis-incidence",
+        "worldprint-agriculture-value-added"
+      ],
+      "indicatorIds": [
+        "total-protected-areas",
+        "rural-basic-sanitation",
+        "maternal-mortality",
+        "tuberculosis-incidence",
+        "agriculture-value-added"
+      ],
+      "categoryMix": {
+        "environment": 1,
+        "settlement": 1,
+        "health": 2,
+        "economy": 1
+      },
+      "mapDifficultyMix": {
+        "standard": 4,
+        "expert": 1
+      }
+    },
+    {
       "date": "2026-07-14",
       "path": "/data/v1/dailies/2026-07-14.json",
       "roundCount": 5,
       "roundIds": [
-        "worldprint-agriculture-value-added",
-        "worldprint-electric-power-use",
-        "worldprint-land-under-cereal",
-        "worldprint-cereal-yield",
-        "worldprint-precipitation-depth"
+        "worldprint-protected-land",
+        "worldprint-female-industry-employment",
+        "worldprint-pm25-exposure",
+        "worldprint-compulsory-education-duration",
+        "worldprint-secondary-enrollment"
       ],
       "indicatorIds": [
-        "agriculture-value-added",
-        "electric-power-use",
-        "land-under-cereal",
-        "cereal-yield",
-        "precipitation-depth"
+        "protected-land",
+        "female-industry-employment",
+        "pm25-exposure",
+        "compulsory-education-duration",
+        "secondary-enrollment"
       ],
       "categoryMix": {
-        "economy": 1,
-        "energy": 1,
-        "land": 1,
-        "agriculture": 1,
-        "environment": 1
+        "environment": 2,
+        "labor": 1,
+        "education": 2
       },
       "mapDifficultyMix": {
         "standard": 3,
@@ -1434,25 +1281,23 @@
       "path": "/data/v1/dailies/2026-07-15.json",
       "roundCount": 5,
       "roundIds": [
-        "worldprint-health-expenditure",
-        "worldprint-food-insecurity-moderate-severe",
-        "worldprint-account-ownership",
-        "worldprint-migrant-stock",
-        "worldprint-out-of-school-primary"
+        "worldprint-clean-fuels-access",
+        "worldprint-under-five-mortality",
+        "worldprint-women-parliament",
+        "worldprint-uhc-service-coverage",
+        "worldprint-electric-transmission-losses"
       ],
       "indicatorIds": [
-        "health-expenditure",
-        "food-insecurity-moderate-severe",
-        "account-ownership",
-        "migrant-stock",
-        "out-of-school-primary"
+        "clean-fuels-access",
+        "under-five-mortality",
+        "women-parliament",
+        "uhc-service-coverage",
+        "electric-transmission-losses"
       ],
       "categoryMix": {
-        "health": 1,
-        "agriculture": 1,
-        "development": 1,
-        "demography": 1,
-        "education": 1
+        "energy": 2,
+        "health": 2,
+        "development": 1
       },
       "mapDifficultyMix": {
         "standard": 5
@@ -1463,29 +1308,27 @@
       "path": "/data/v1/dailies/2026-07-16.json",
       "roundCount": 5,
       "roundIds": [
-        "worldprint-internet-users",
-        "worldprint-life-expectancy",
-        "worldprint-women-parliament",
-        "worldprint-primary-female-teachers",
-        "worldprint-youth-employment-ratio"
+        "worldprint-freshwater-per-capita",
+        "worldprint-human-capital-index",
+        "worldprint-precipitation-depth",
+        "worldprint-youth-employment-ratio",
+        "worldprint-industry-share"
       ],
       "indicatorIds": [
-        "internet-users",
-        "life-expectancy",
-        "women-parliament",
-        "primary-female-teachers",
-        "youth-employment-ratio"
+        "freshwater-per-capita",
+        "human-capital-index",
+        "precipitation-depth",
+        "youth-employment-ratio",
+        "industry-share"
       ],
       "categoryMix": {
-        "connectivity": 1,
-        "health": 1,
+        "environment": 2,
         "development": 1,
-        "education": 1,
-        "labor": 1
+        "labor": 1,
+        "economy": 1
       },
       "mapDifficultyMix": {
-        "intro": 2,
-        "standard": 3
+        "standard": 5
       }
     },
     {
@@ -1493,26 +1336,28 @@
       "path": "/data/v1/dailies/2026-07-17.json",
       "roundCount": 5,
       "roundIds": [
+        "worldprint-forest-area",
         "worldprint-co2-per-capita",
-        "worldprint-adolescent-fertility",
-        "worldprint-freshwater-per-capita",
-        "worldprint-fertility-rate",
-        "worldprint-permanent-cropland"
+        "worldprint-working-age-share",
+        "worldprint-trade-share",
+        "worldprint-arable-land-per-person"
       ],
       "indicatorIds": [
+        "forest-area",
         "co2-per-capita",
-        "adolescent-fertility",
-        "freshwater-per-capita",
-        "fertility-rate",
-        "permanent-cropland"
+        "working-age-share",
+        "trade-share",
+        "arable-land-per-person"
       ],
       "categoryMix": {
         "environment": 2,
-        "demography": 2,
+        "demography": 1,
+        "economy": 1,
         "land": 1
       },
       "mapDifficultyMix": {
-        "standard": 4,
+        "intro": 1,
+        "standard": 3,
         "expert": 1
       }
     },
@@ -1521,28 +1366,28 @@
       "path": "/data/v1/dailies/2026-07-18.json",
       "roundCount": 5,
       "roundIds": [
-        "worldprint-manufacturing-share",
-        "worldprint-physicians",
-        "worldprint-population-density",
-        "worldprint-electric-power-use",
-        "worldprint-arable-land"
+        "worldprint-health-expenditure",
+        "worldprint-basic-sanitation",
+        "worldprint-government-education-spending-share",
+        "worldprint-cereal-yield",
+        "worldprint-manufacturing-share"
       ],
       "indicatorIds": [
-        "manufacturing-share",
-        "physicians",
-        "population-density",
-        "electric-power-use",
-        "arable-land"
+        "health-expenditure",
+        "basic-sanitation",
+        "government-education-spending-share",
+        "cereal-yield",
+        "manufacturing-share"
       ],
       "categoryMix": {
-        "economy": 1,
-        "health": 1,
-        "settlement": 1,
-        "energy": 1,
-        "land": 1
+        "health": 2,
+        "education": 1,
+        "agriculture": 1,
+        "economy": 1
       },
       "mapDifficultyMix": {
-        "standard": 5
+        "standard": 3,
+        "expert": 2
       }
     },
     {
@@ -1550,261 +1395,24 @@
       "path": "/data/v1/dailies/2026-07-19.json",
       "roundCount": 5,
       "roundIds": [
-        "worldprint-food-production-index",
-        "worldprint-undernourishment",
-        "worldprint-older-adults-share",
-        "worldprint-tuberculosis-incidence",
-        "worldprint-account-ownership"
-      ],
-      "indicatorIds": [
-        "food-production-index",
-        "undernourishment",
-        "older-adults-share",
-        "tuberculosis-incidence",
-        "account-ownership"
-      ],
-      "categoryMix": {
-        "agriculture": 1,
-        "health": 2,
-        "demography": 1,
-        "development": 1
-      },
-      "mapDifficultyMix": {
-        "standard": 3,
-        "intro": 1,
-        "expert": 1
-      }
-    },
-    {
-      "date": "2026-07-20",
-      "path": "/data/v1/dailies/2026-07-20.json",
-      "roundCount": 5,
-      "roundIds": [
-        "worldprint-electricity-access",
-        "worldprint-life-expectancy",
-        "worldprint-compulsory-education-duration",
-        "worldprint-arable-land-per-person",
-        "worldprint-basic-sanitation"
-      ],
-      "indicatorIds": [
-        "electricity-access",
-        "life-expectancy",
-        "compulsory-education-duration",
-        "arable-land-per-person",
-        "basic-sanitation"
-      ],
-      "categoryMix": {
-        "energy": 1,
-        "health": 2,
-        "education": 1,
-        "land": 1
-      },
-      "mapDifficultyMix": {
-        "intro": 2,
-        "expert": 2,
-        "standard": 1
-      }
-    },
-    {
-      "date": "2026-07-21",
-      "path": "/data/v1/dailies/2026-07-21.json",
-      "roundCount": 5,
-      "roundIds": [
+        "worldprint-physicians",
+        "worldprint-communications-service-exports",
         "worldprint-total-protected-areas",
-        "worldprint-out-of-school-primary",
-        "worldprint-population-growth",
-        "worldprint-food-insecurity-moderate-severe",
-        "worldprint-unemployment"
+        "worldprint-primary-female-teachers",
+        "worldprint-internet-users"
       ],
       "indicatorIds": [
+        "physicians",
+        "communications-service-exports",
         "total-protected-areas",
-        "out-of-school-primary",
-        "population-growth",
-        "food-insecurity-moderate-severe",
-        "unemployment"
+        "primary-female-teachers",
+        "internet-users"
       ],
       "categoryMix": {
-        "environment": 1,
-        "education": 1,
-        "demography": 1,
-        "agriculture": 1,
-        "labor": 1
-      },
-      "mapDifficultyMix": {
-        "standard": 5
-      }
-    },
-    {
-      "date": "2026-07-22",
-      "path": "/data/v1/dailies/2026-07-22.json",
-      "roundCount": 5,
-      "roundIds": [
-        "worldprint-forest-area",
-        "worldprint-precipitation-depth",
-        "worldprint-clean-fuels-access",
-        "worldprint-mobile-subscriptions",
-        "worldprint-communications-service-exports"
-      ],
-      "indicatorIds": [
-        "forest-area",
-        "precipitation-depth",
-        "clean-fuels-access",
-        "mobile-subscriptions",
-        "communications-service-exports"
-      ],
-      "categoryMix": {
-        "environment": 2,
-        "energy": 1,
-        "connectivity": 2
-      },
-      "mapDifficultyMix": {
-        "intro": 1,
-        "standard": 3,
-        "expert": 1
-      }
-    },
-    {
-      "date": "2026-07-23",
-      "path": "/data/v1/dailies/2026-07-23.json",
-      "roundCount": 5,
-      "roundIds": [
-        "worldprint-industry-share",
-        "worldprint-measles-immunization",
-        "worldprint-secondary-enrollment",
-        "worldprint-under-five-mortality",
-        "worldprint-migrant-stock"
-      ],
-      "indicatorIds": [
-        "industry-share",
-        "measles-immunization",
-        "secondary-enrollment",
-        "under-five-mortality",
-        "migrant-stock"
-      ],
-      "categoryMix": {
-        "economy": 1,
-        "health": 2,
-        "education": 1,
-        "demography": 1
-      },
-      "mapDifficultyMix": {
-        "standard": 5
-      }
-    },
-    {
-      "date": "2026-07-24",
-      "path": "/data/v1/dailies/2026-07-24.json",
-      "roundCount": 5,
-      "roundIds": [
-        "worldprint-urban-population",
-        "worldprint-women-parliament",
-        "worldprint-employment-agriculture",
-        "worldprint-health-expenditure",
-        "worldprint-pm25-exposure"
-      ],
-      "indicatorIds": [
-        "urban-population",
-        "women-parliament",
-        "employment-agriculture",
-        "health-expenditure",
-        "pm25-exposure"
-      ],
-      "categoryMix": {
-        "settlement": 1,
-        "development": 1,
-        "labor": 1,
         "health": 1,
-        "environment": 1
-      },
-      "mapDifficultyMix": {
-        "intro": 1,
-        "standard": 4
-      }
-    },
-    {
-      "date": "2026-07-25",
-      "path": "/data/v1/dailies/2026-07-25.json",
-      "roundCount": 5,
-      "roundIds": [
-        "worldprint-land-under-cereal",
-        "worldprint-safe-drinking-water",
-        "worldprint-rural-basic-sanitation",
-        "worldprint-government-education-spending-share",
-        "worldprint-open-defecation"
-      ],
-      "indicatorIds": [
-        "land-under-cereal",
-        "safe-drinking-water",
-        "rural-basic-sanitation",
-        "government-education-spending-share",
-        "open-defecation"
-      ],
-      "categoryMix": {
-        "land": 1,
-        "health": 2,
-        "settlement": 1,
+        "connectivity": 2,
+        "environment": 1,
         "education": 1
-      },
-      "mapDifficultyMix": {
-        "expert": 2,
-        "intro": 1,
-        "standard": 2
-      }
-    },
-    {
-      "date": "2026-07-26",
-      "path": "/data/v1/dailies/2026-07-26.json",
-      "roundCount": 5,
-      "roundIds": [
-        "worldprint-protected-land",
-        "worldprint-renewable-electricity",
-        "worldprint-internet-users",
-        "worldprint-age-dependency",
-        "worldprint-rural-population-growth"
-      ],
-      "indicatorIds": [
-        "protected-land",
-        "renewable-electricity",
-        "internet-users",
-        "age-dependency",
-        "rural-population-growth"
-      ],
-      "categoryMix": {
-        "environment": 1,
-        "energy": 1,
-        "connectivity": 1,
-        "demography": 1,
-        "settlement": 1
-      },
-      "mapDifficultyMix": {
-        "standard": 4,
-        "intro": 1
-      }
-    },
-    {
-      "date": "2026-07-27",
-      "path": "/data/v1/dailies/2026-07-27.json",
-      "roundCount": 5,
-      "roundIds": [
-        "worldprint-maternal-mortality",
-        "worldprint-cereal-yield",
-        "worldprint-agriculture-value-added",
-        "worldprint-energy-use",
-        "worldprint-gdp-per-capita"
-      ],
-      "indicatorIds": [
-        "maternal-mortality",
-        "cereal-yield",
-        "agriculture-value-added",
-        "energy-use",
-        "gdp-per-capita"
-      ],
-      "categoryMix": {
-        "health": 1,
-        "agriculture": 1,
-        "economy": 1,
-        "energy": 1,
-        "development": 1
       },
       "mapDifficultyMix": {
         "standard": 3,
@@ -1813,28 +1421,260 @@
       }
     },
     {
+      "date": "2026-07-20",
+      "path": "/data/v1/dailies/2026-07-20.json",
+      "roundCount": 5,
+      "roundIds": [
+        "worldprint-out-of-school-primary",
+        "worldprint-arable-land",
+        "worldprint-mobile-subscriptions",
+        "worldprint-adolescent-fertility",
+        "worldprint-urban-population"
+      ],
+      "indicatorIds": [
+        "out-of-school-primary",
+        "arable-land",
+        "mobile-subscriptions",
+        "adolescent-fertility",
+        "urban-population"
+      ],
+      "categoryMix": {
+        "education": 1,
+        "land": 1,
+        "connectivity": 1,
+        "demography": 1,
+        "settlement": 1
+      },
+      "mapDifficultyMix": {
+        "standard": 3,
+        "expert": 1,
+        "intro": 1
+      }
+    },
+    {
+      "date": "2026-07-21",
+      "path": "/data/v1/dailies/2026-07-21.json",
+      "roundCount": 5,
+      "roundIds": [
+        "worldprint-energy-use",
+        "worldprint-electricity-access",
+        "worldprint-merchandise-trade-share",
+        "worldprint-tourism-arrivals",
+        "worldprint-rural-basic-sanitation"
+      ],
+      "indicatorIds": [
+        "energy-use",
+        "electricity-access",
+        "merchandise-trade-share",
+        "tourism-arrivals",
+        "rural-basic-sanitation"
+      ],
+      "categoryMix": {
+        "energy": 2,
+        "economy": 2,
+        "settlement": 1
+      },
+      "mapDifficultyMix": {
+        "standard": 4,
+        "intro": 1
+      }
+    },
+    {
+      "date": "2026-07-22",
+      "path": "/data/v1/dailies/2026-07-22.json",
+      "roundCount": 5,
+      "roundIds": [
+        "worldprint-unemployment",
+        "worldprint-population-density",
+        "worldprint-food-insecurity-moderate-severe",
+        "worldprint-electric-power-use",
+        "worldprint-measles-immunization"
+      ],
+      "indicatorIds": [
+        "unemployment",
+        "population-density",
+        "food-insecurity-moderate-severe",
+        "electric-power-use",
+        "measles-immunization"
+      ],
+      "categoryMix": {
+        "labor": 1,
+        "settlement": 1,
+        "agriculture": 1,
+        "energy": 1,
+        "health": 1
+      },
+      "mapDifficultyMix": {
+        "standard": 5
+      }
+    },
+    {
+      "date": "2026-07-23",
+      "path": "/data/v1/dailies/2026-07-23.json",
+      "roundCount": 5,
+      "roundIds": [
+        "worldprint-safe-drinking-water",
+        "worldprint-renewable-electricity",
+        "worldprint-rural-population-growth",
+        "worldprint-older-adults-share",
+        "worldprint-food-production-index"
+      ],
+      "indicatorIds": [
+        "safe-drinking-water",
+        "renewable-electricity",
+        "rural-population-growth",
+        "older-adults-share",
+        "food-production-index"
+      ],
+      "categoryMix": {
+        "health": 1,
+        "energy": 1,
+        "settlement": 1,
+        "demography": 1,
+        "agriculture": 1
+      },
+      "mapDifficultyMix": {
+        "intro": 2,
+        "standard": 3
+      }
+    },
+    {
+      "date": "2026-07-24",
+      "path": "/data/v1/dailies/2026-07-24.json",
+      "roundCount": 5,
+      "roundIds": [
+        "worldprint-employment-agriculture",
+        "worldprint-migrant-stock",
+        "worldprint-land-under-cereal",
+        "worldprint-urban-basic-drinking-water",
+        "worldprint-fertility-rate"
+      ],
+      "indicatorIds": [
+        "employment-agriculture",
+        "migrant-stock",
+        "land-under-cereal",
+        "urban-basic-drinking-water",
+        "fertility-rate"
+      ],
+      "categoryMix": {
+        "labor": 1,
+        "demography": 2,
+        "land": 1,
+        "settlement": 1
+      },
+      "mapDifficultyMix": {
+        "standard": 4,
+        "expert": 1
+      }
+    },
+    {
+      "date": "2026-07-25",
+      "path": "/data/v1/dailies/2026-07-25.json",
+      "roundCount": 5,
+      "roundIds": [
+        "worldprint-permanent-cropland",
+        "worldprint-coal-electricity-share",
+        "worldprint-gdp-per-capita",
+        "worldprint-population-growth",
+        "worldprint-account-ownership"
+      ],
+      "indicatorIds": [
+        "permanent-cropland",
+        "coal-electricity-share",
+        "gdp-per-capita",
+        "population-growth",
+        "account-ownership"
+      ],
+      "categoryMix": {
+        "land": 1,
+        "energy": 1,
+        "development": 2,
+        "demography": 1
+      },
+      "mapDifficultyMix": {
+        "standard": 4,
+        "intro": 1
+      }
+    },
+    {
+      "date": "2026-07-26",
+      "path": "/data/v1/dailies/2026-07-26.json",
+      "roundCount": 5,
+      "roundIds": [
+        "worldprint-ncd-premature-mortality",
+        "worldprint-open-defecation",
+        "worldprint-education-expenditure-savings",
+        "worldprint-age-dependency",
+        "worldprint-arable-land"
+      ],
+      "indicatorIds": [
+        "ncd-premature-mortality",
+        "open-defecation",
+        "education-expenditure-savings",
+        "age-dependency",
+        "arable-land"
+      ],
+      "categoryMix": {
+        "health": 2,
+        "education": 1,
+        "demography": 1,
+        "land": 1
+      },
+      "mapDifficultyMix": {
+        "standard": 5
+      }
+    },
+    {
+      "date": "2026-07-27",
+      "path": "/data/v1/dailies/2026-07-27.json",
+      "roundCount": 5,
+      "roundIds": [
+        "worldprint-life-expectancy",
+        "worldprint-undernourishment",
+        "worldprint-population-density",
+        "worldprint-out-of-school-primary",
+        "worldprint-manufacturing-share"
+      ],
+      "indicatorIds": [
+        "life-expectancy",
+        "undernourishment",
+        "population-density",
+        "out-of-school-primary",
+        "manufacturing-share"
+      ],
+      "categoryMix": {
+        "health": 2,
+        "settlement": 1,
+        "education": 1,
+        "economy": 1
+      },
+      "mapDifficultyMix": {
+        "intro": 1,
+        "standard": 4
+      }
+    },
+    {
       "date": "2026-07-28",
       "path": "/data/v1/dailies/2026-07-28.json",
       "roundCount": 5,
       "roundIds": [
-        "worldprint-tourism-arrivals",
-        "worldprint-female-industry-employment",
-        "worldprint-urban-basic-drinking-water",
-        "worldprint-coal-electricity-share",
-        "worldprint-trade-share"
+        "worldprint-agriculture-value-added",
+        "worldprint-total-protected-areas",
+        "worldprint-tuberculosis-incidence",
+        "worldprint-merchandise-trade-share",
+        "worldprint-pm25-exposure"
       ],
       "indicatorIds": [
-        "tourism-arrivals",
-        "female-industry-employment",
-        "urban-basic-drinking-water",
-        "coal-electricity-share",
-        "trade-share"
+        "agriculture-value-added",
+        "total-protected-areas",
+        "tuberculosis-incidence",
+        "merchandise-trade-share",
+        "pm25-exposure"
       ],
       "categoryMix": {
         "economy": 2,
-        "labor": 1,
-        "settlement": 1,
-        "energy": 1
+        "environment": 2,
+        "health": 1
       },
       "mapDifficultyMix": {
         "standard": 4,
@@ -1846,28 +1686,29 @@
       "path": "/data/v1/dailies/2026-07-29.json",
       "roundCount": 5,
       "roundIds": [
-        "worldprint-women-parliament",
-        "worldprint-basic-sanitation",
-        "worldprint-forest-area",
-        "worldprint-employment-agriculture",
-        "worldprint-unemployment"
+        "worldprint-measles-immunization",
+        "worldprint-internet-users",
+        "worldprint-uhc-service-coverage",
+        "worldprint-fertility-rate",
+        "worldprint-cereal-yield"
       ],
       "indicatorIds": [
-        "women-parliament",
-        "basic-sanitation",
-        "forest-area",
-        "employment-agriculture",
-        "unemployment"
+        "measles-immunization",
+        "internet-users",
+        "uhc-service-coverage",
+        "fertility-rate",
+        "cereal-yield"
       ],
       "categoryMix": {
-        "development": 1,
-        "health": 1,
-        "environment": 1,
-        "labor": 2
+        "health": 2,
+        "connectivity": 1,
+        "demography": 1,
+        "agriculture": 1
       },
       "mapDifficultyMix": {
-        "standard": 4,
-        "intro": 1
+        "standard": 3,
+        "intro": 1,
+        "expert": 1
       }
     },
     {
@@ -1875,27 +1716,27 @@
       "path": "/data/v1/dailies/2026-07-30.json",
       "roundCount": 5,
       "roundIds": [
-        "worldprint-renewable-electricity",
-        "worldprint-population-growth",
-        "worldprint-primary-female-teachers",
-        "worldprint-food-insecurity-moderate-severe",
-        "worldprint-electric-power-use"
+        "worldprint-urban-population",
+        "worldprint-health-expenditure",
+        "worldprint-education-expenditure-savings",
+        "worldprint-maternal-mortality",
+        "worldprint-rural-population-growth"
       ],
       "indicatorIds": [
-        "renewable-electricity",
-        "population-growth",
-        "primary-female-teachers",
-        "food-insecurity-moderate-severe",
-        "electric-power-use"
+        "urban-population",
+        "health-expenditure",
+        "education-expenditure-savings",
+        "maternal-mortality",
+        "rural-population-growth"
       ],
       "categoryMix": {
-        "energy": 2,
-        "demography": 1,
-        "education": 1,
-        "agriculture": 1
+        "settlement": 2,
+        "health": 2,
+        "education": 1
       },
       "mapDifficultyMix": {
-        "standard": 5
+        "intro": 1,
+        "standard": 4
       }
     },
     {
@@ -1903,114 +1744,23 @@
       "path": "/data/v1/dailies/2026-07-31.json",
       "roundCount": 5,
       "roundIds": [
-        "worldprint-agriculture-value-added",
-        "worldprint-compulsory-education-duration",
-        "worldprint-cereal-yield",
-        "worldprint-internet-users",
-        "worldprint-undernourishment"
+        "worldprint-electric-power-use",
+        "worldprint-age-dependency",
+        "worldprint-adolescent-fertility",
+        "worldprint-renewable-electricity",
+        "worldprint-industry-share"
       ],
       "indicatorIds": [
-        "agriculture-value-added",
-        "compulsory-education-duration",
-        "cereal-yield",
-        "internet-users",
-        "undernourishment"
+        "electric-power-use",
+        "age-dependency",
+        "adolescent-fertility",
+        "renewable-electricity",
+        "industry-share"
       ],
       "categoryMix": {
-        "economy": 1,
-        "education": 1,
-        "agriculture": 1,
-        "connectivity": 1,
-        "health": 1
-      },
-      "mapDifficultyMix": {
-        "standard": 2,
-        "expert": 2,
-        "intro": 1
-      }
-    },
-    {
-      "date": "2026-08-01",
-      "path": "/data/v1/dailies/2026-08-01.json",
-      "roundCount": 5,
-      "roundIds": [
-        "worldprint-life-expectancy",
-        "worldprint-electricity-access",
-        "worldprint-energy-use",
-        "worldprint-food-production-index",
-        "worldprint-population-density"
-      ],
-      "indicatorIds": [
-        "life-expectancy",
-        "electricity-access",
-        "energy-use",
-        "food-production-index",
-        "population-density"
-      ],
-      "categoryMix": {
-        "health": 1,
         "energy": 2,
-        "agriculture": 1,
-        "settlement": 1
-      },
-      "mapDifficultyMix": {
-        "intro": 2,
-        "standard": 3
-      }
-    },
-    {
-      "date": "2026-08-02",
-      "path": "/data/v1/dailies/2026-08-02.json",
-      "roundCount": 5,
-      "roundIds": [
-        "worldprint-permanent-cropland",
-        "worldprint-rural-population-growth",
-        "worldprint-mobile-subscriptions",
-        "worldprint-fertility-rate",
-        "worldprint-open-defecation"
-      ],
-      "indicatorIds": [
-        "permanent-cropland",
-        "rural-population-growth",
-        "mobile-subscriptions",
-        "fertility-rate",
-        "open-defecation"
-      ],
-      "categoryMix": {
-        "land": 1,
-        "settlement": 1,
-        "connectivity": 1,
-        "demography": 1,
-        "health": 1
-      },
-      "mapDifficultyMix": {
-        "standard": 5
-      }
-    },
-    {
-      "date": "2026-08-03",
-      "path": "/data/v1/dailies/2026-08-03.json",
-      "roundCount": 5,
-      "roundIds": [
-        "worldprint-arable-land",
-        "worldprint-youth-employment-ratio",
-        "worldprint-under-five-mortality",
-        "worldprint-clean-fuels-access",
-        "worldprint-adolescent-fertility"
-      ],
-      "indicatorIds": [
-        "arable-land",
-        "youth-employment-ratio",
-        "under-five-mortality",
-        "clean-fuels-access",
-        "adolescent-fertility"
-      ],
-      "categoryMix": {
-        "land": 1,
-        "labor": 1,
-        "health": 1,
-        "energy": 1,
-        "demography": 1
+        "demography": 2,
+        "economy": 1
       },
       "mapDifficultyMix": {
         "standard": 4,
@@ -2018,89 +1768,58 @@
       }
     },
     {
-      "date": "2026-08-04",
-      "path": "/data/v1/dailies/2026-08-04.json",
+      "date": "2026-08-01",
+      "path": "/data/v1/dailies/2026-08-01.json",
       "roundCount": 5,
       "roundIds": [
-        "worldprint-urban-population",
-        "worldprint-safe-drinking-water",
-        "worldprint-arable-land-per-person",
-        "worldprint-manufacturing-share",
-        "worldprint-trade-share"
+        "worldprint-population-growth",
+        "worldprint-human-capital-index",
+        "worldprint-secondary-enrollment",
+        "worldprint-food-insecurity-moderate-severe",
+        "worldprint-compulsory-education-duration"
       ],
       "indicatorIds": [
-        "urban-population",
-        "safe-drinking-water",
-        "arable-land-per-person",
-        "manufacturing-share",
-        "trade-share"
+        "population-growth",
+        "human-capital-index",
+        "secondary-enrollment",
+        "food-insecurity-moderate-severe",
+        "compulsory-education-duration"
       ],
       "categoryMix": {
-        "settlement": 1,
-        "health": 1,
-        "land": 1,
-        "economy": 2
-      },
-      "mapDifficultyMix": {
-        "intro": 2,
-        "expert": 1,
-        "standard": 2
-      }
-    },
-    {
-      "date": "2026-08-05",
-      "path": "/data/v1/dailies/2026-08-05.json",
-      "roundCount": 5,
-      "roundIds": [
-        "worldprint-health-expenditure",
-        "worldprint-communications-service-exports",
-        "worldprint-gdp-per-capita",
-        "worldprint-protected-land",
-        "worldprint-tourism-arrivals"
-      ],
-      "indicatorIds": [
-        "health-expenditure",
-        "communications-service-exports",
-        "gdp-per-capita",
-        "protected-land",
-        "tourism-arrivals"
-      ],
-      "categoryMix": {
-        "health": 1,
-        "connectivity": 1,
+        "demography": 1,
         "development": 1,
-        "environment": 1,
-        "economy": 1
+        "education": 2,
+        "agriculture": 1
       },
       "mapDifficultyMix": {
-        "standard": 3,
-        "expert": 1,
-        "intro": 1
+        "standard": 4,
+        "expert": 1
       }
     },
     {
-      "date": "2026-08-06",
-      "path": "/data/v1/dailies/2026-08-06.json",
+      "date": "2026-08-02",
+      "path": "/data/v1/dailies/2026-08-02.json",
       "roundCount": 5,
       "roundIds": [
-        "worldprint-physicians",
-        "worldprint-land-under-cereal",
-        "worldprint-female-industry-employment",
-        "worldprint-maternal-mortality",
-        "worldprint-precipitation-depth"
+        "worldprint-youth-employment-ratio",
+        "worldprint-account-ownership",
+        "worldprint-rural-basic-sanitation",
+        "worldprint-arable-land-per-person",
+        "worldprint-government-education-spending-share"
       ],
       "indicatorIds": [
-        "physicians",
-        "land-under-cereal",
-        "female-industry-employment",
-        "maternal-mortality",
-        "precipitation-depth"
+        "youth-employment-ratio",
+        "account-ownership",
+        "rural-basic-sanitation",
+        "arable-land-per-person",
+        "government-education-spending-share"
       ],
       "categoryMix": {
-        "health": 2,
-        "land": 1,
         "labor": 1,
-        "environment": 1
+        "development": 1,
+        "settlement": 1,
+        "land": 1,
+        "education": 1
       },
       "mapDifficultyMix": {
         "standard": 3,
@@ -2108,29 +1827,145 @@
       }
     },
     {
+      "date": "2026-08-03",
+      "path": "/data/v1/dailies/2026-08-03.json",
+      "roundCount": 5,
+      "roundIds": [
+        "worldprint-protected-land",
+        "worldprint-food-production-index",
+        "worldprint-safe-drinking-water",
+        "worldprint-older-adults-share",
+        "worldprint-migrant-stock"
+      ],
+      "indicatorIds": [
+        "protected-land",
+        "food-production-index",
+        "safe-drinking-water",
+        "older-adults-share",
+        "migrant-stock"
+      ],
+      "categoryMix": {
+        "environment": 1,
+        "agriculture": 1,
+        "health": 1,
+        "demography": 2
+      },
+      "mapDifficultyMix": {
+        "standard": 3,
+        "intro": 2
+      }
+    },
+    {
+      "date": "2026-08-04",
+      "path": "/data/v1/dailies/2026-08-04.json",
+      "roundCount": 5,
+      "roundIds": [
+        "worldprint-tourism-arrivals",
+        "worldprint-mobile-subscriptions",
+        "worldprint-electricity-access",
+        "worldprint-open-defecation",
+        "worldprint-employment-agriculture"
+      ],
+      "indicatorIds": [
+        "tourism-arrivals",
+        "mobile-subscriptions",
+        "electricity-access",
+        "open-defecation",
+        "employment-agriculture"
+      ],
+      "categoryMix": {
+        "economy": 1,
+        "connectivity": 1,
+        "energy": 1,
+        "health": 1,
+        "labor": 1
+      },
+      "mapDifficultyMix": {
+        "standard": 4,
+        "intro": 1
+      }
+    },
+    {
+      "date": "2026-08-05",
+      "path": "/data/v1/dailies/2026-08-05.json",
+      "roundCount": 5,
+      "roundIds": [
+        "worldprint-clean-fuels-access",
+        "worldprint-undernourishment",
+        "worldprint-trade-share",
+        "worldprint-female-industry-employment",
+        "worldprint-energy-use"
+      ],
+      "indicatorIds": [
+        "clean-fuels-access",
+        "undernourishment",
+        "trade-share",
+        "female-industry-employment",
+        "energy-use"
+      ],
+      "categoryMix": {
+        "energy": 2,
+        "health": 1,
+        "economy": 1,
+        "labor": 1
+      },
+      "mapDifficultyMix": {
+        "standard": 4,
+        "expert": 1
+      }
+    },
+    {
+      "date": "2026-08-06",
+      "path": "/data/v1/dailies/2026-08-06.json",
+      "roundCount": 5,
+      "roundIds": [
+        "worldprint-precipitation-depth",
+        "worldprint-under-five-mortality",
+        "worldprint-physicians",
+        "worldprint-land-under-cereal",
+        "worldprint-unemployment"
+      ],
+      "indicatorIds": [
+        "precipitation-depth",
+        "under-five-mortality",
+        "physicians",
+        "land-under-cereal",
+        "unemployment"
+      ],
+      "categoryMix": {
+        "environment": 1,
+        "health": 2,
+        "land": 1,
+        "labor": 1
+      },
+      "mapDifficultyMix": {
+        "standard": 4,
+        "expert": 1
+      }
+    },
+    {
       "date": "2026-08-07",
       "path": "/data/v1/dailies/2026-08-07.json",
       "roundCount": 5,
       "roundIds": [
+        "worldprint-co2-per-capita",
         "worldprint-urban-basic-drinking-water",
-        "worldprint-older-adults-share",
-        "worldprint-pm25-exposure",
-        "worldprint-out-of-school-primary",
-        "worldprint-account-ownership"
+        "worldprint-women-parliament",
+        "worldprint-forest-area",
+        "worldprint-ncd-premature-mortality"
       ],
       "indicatorIds": [
+        "co2-per-capita",
         "urban-basic-drinking-water",
-        "older-adults-share",
-        "pm25-exposure",
-        "out-of-school-primary",
-        "account-ownership"
+        "women-parliament",
+        "forest-area",
+        "ncd-premature-mortality"
       ],
       "categoryMix": {
+        "environment": 2,
         "settlement": 1,
-        "demography": 1,
-        "environment": 1,
-        "education": 1,
-        "development": 1
+        "development": 1,
+        "health": 1
       },
       "mapDifficultyMix": {
         "standard": 4,
@@ -2142,27 +1977,28 @@
       "path": "/data/v1/dailies/2026-08-08.json",
       "roundCount": 5,
       "roundIds": [
-        "worldprint-secondary-enrollment",
+        "worldprint-electric-transmission-losses",
         "worldprint-freshwater-per-capita",
-        "worldprint-total-protected-areas",
-        "worldprint-migrant-stock",
-        "worldprint-government-education-spending-share"
+        "worldprint-primary-female-teachers",
+        "worldprint-permanent-cropland",
+        "worldprint-working-age-share"
       ],
       "indicatorIds": [
-        "secondary-enrollment",
+        "electric-transmission-losses",
         "freshwater-per-capita",
-        "total-protected-areas",
-        "migrant-stock",
-        "government-education-spending-share"
+        "primary-female-teachers",
+        "permanent-cropland",
+        "working-age-share"
       ],
       "categoryMix": {
-        "education": 2,
-        "environment": 2,
+        "energy": 1,
+        "environment": 1,
+        "education": 1,
+        "land": 1,
         "demography": 1
       },
       "mapDifficultyMix": {
-        "standard": 4,
-        "expert": 1
+        "standard": 5
       }
     },
     {
@@ -2170,28 +2006,29 @@
       "path": "/data/v1/dailies/2026-08-09.json",
       "roundCount": 5,
       "roundIds": [
-        "worldprint-co2-per-capita",
-        "worldprint-age-dependency",
-        "worldprint-rural-basic-sanitation",
-        "worldprint-measles-immunization",
-        "worldprint-coal-electricity-share"
+        "worldprint-life-expectancy",
+        "worldprint-communications-service-exports",
+        "worldprint-coal-electricity-share",
+        "worldprint-basic-sanitation",
+        "worldprint-gdp-per-capita"
       ],
       "indicatorIds": [
-        "co2-per-capita",
-        "age-dependency",
-        "rural-basic-sanitation",
-        "measles-immunization",
-        "coal-electricity-share"
+        "life-expectancy",
+        "communications-service-exports",
+        "coal-electricity-share",
+        "basic-sanitation",
+        "gdp-per-capita"
       ],
       "categoryMix": {
-        "environment": 1,
-        "demography": 1,
-        "settlement": 1,
-        "health": 1,
-        "energy": 1
+        "health": 2,
+        "connectivity": 1,
+        "energy": 1,
+        "development": 1
       },
       "mapDifficultyMix": {
-        "standard": 5
+        "intro": 2,
+        "expert": 1,
+        "standard": 2
       }
     },
     {
@@ -2199,28 +2036,27 @@
       "path": "/data/v1/dailies/2026-08-10.json",
       "roundCount": 5,
       "roundIds": [
-        "worldprint-tuberculosis-incidence",
-        "worldprint-industry-share",
-        "worldprint-employment-agriculture",
-        "worldprint-manufacturing-share",
-        "worldprint-primary-female-teachers"
+        "worldprint-unemployment",
+        "worldprint-population-density",
+        "worldprint-mobile-subscriptions",
+        "worldprint-clean-fuels-access",
+        "worldprint-energy-use"
       ],
       "indicatorIds": [
-        "tuberculosis-incidence",
-        "industry-share",
-        "employment-agriculture",
-        "manufacturing-share",
-        "primary-female-teachers"
+        "unemployment",
+        "population-density",
+        "mobile-subscriptions",
+        "clean-fuels-access",
+        "energy-use"
       ],
       "categoryMix": {
-        "health": 1,
-        "economy": 2,
         "labor": 1,
-        "education": 1
+        "settlement": 1,
+        "connectivity": 1,
+        "energy": 2
       },
       "mapDifficultyMix": {
-        "expert": 1,
-        "standard": 4
+        "standard": 5
       }
     },
     {
@@ -2228,24 +2064,25 @@
       "path": "/data/v1/dailies/2026-08-11.json",
       "roundCount": 5,
       "roundIds": [
-        "worldprint-undernourishment",
-        "worldprint-youth-employment-ratio",
-        "worldprint-women-parliament",
-        "worldprint-arable-land-per-person",
-        "worldprint-basic-sanitation"
+        "worldprint-protected-land",
+        "worldprint-adolescent-fertility",
+        "worldprint-education-expenditure-savings",
+        "worldprint-open-defecation",
+        "worldprint-trade-share"
       ],
       "indicatorIds": [
-        "undernourishment",
-        "youth-employment-ratio",
-        "women-parliament",
-        "arable-land-per-person",
-        "basic-sanitation"
+        "protected-land",
+        "adolescent-fertility",
+        "education-expenditure-savings",
+        "open-defecation",
+        "trade-share"
       ],
       "categoryMix": {
-        "health": 2,
-        "labor": 1,
-        "development": 1,
-        "land": 1
+        "environment": 1,
+        "demography": 1,
+        "education": 1,
+        "health": 1,
+        "economy": 1
       },
       "mapDifficultyMix": {
         "standard": 4,
@@ -2257,143 +2094,25 @@
       "path": "/data/v1/dailies/2026-08-12.json",
       "roundCount": 5,
       "roundIds": [
-        "worldprint-adolescent-fertility",
-        "worldprint-female-industry-employment",
-        "worldprint-safe-drinking-water",
-        "worldprint-mobile-subscriptions",
-        "worldprint-open-defecation"
-      ],
-      "indicatorIds": [
-        "adolescent-fertility",
-        "female-industry-employment",
-        "safe-drinking-water",
-        "mobile-subscriptions",
-        "open-defecation"
-      ],
-      "categoryMix": {
-        "demography": 1,
-        "labor": 1,
-        "health": 2,
-        "connectivity": 1
-      },
-      "mapDifficultyMix": {
-        "expert": 2,
-        "intro": 1,
-        "standard": 2
-      }
-    },
-    {
-      "date": "2026-08-13",
-      "path": "/data/v1/dailies/2026-08-13.json",
-      "roundCount": 5,
-      "roundIds": [
-        "worldprint-urban-population",
-        "worldprint-account-ownership",
-        "worldprint-pm25-exposure",
         "worldprint-electricity-access",
+        "worldprint-primary-female-teachers",
+        "worldprint-land-under-cereal",
+        "worldprint-health-expenditure",
         "worldprint-population-growth"
       ],
       "indicatorIds": [
-        "urban-population",
-        "account-ownership",
-        "pm25-exposure",
         "electricity-access",
+        "primary-female-teachers",
+        "land-under-cereal",
+        "health-expenditure",
         "population-growth"
       ],
       "categoryMix": {
-        "settlement": 1,
-        "development": 1,
-        "environment": 1,
         "energy": 1,
-        "demography": 1
-      },
-      "mapDifficultyMix": {
-        "intro": 2,
-        "standard": 3
-      }
-    },
-    {
-      "date": "2026-08-14",
-      "path": "/data/v1/dailies/2026-08-14.json",
-      "roundCount": 5,
-      "roundIds": [
-        "worldprint-gdp-per-capita",
-        "worldprint-land-under-cereal",
-        "worldprint-industry-share",
-        "worldprint-tourism-arrivals",
-        "worldprint-renewable-electricity"
-      ],
-      "indicatorIds": [
-        "gdp-per-capita",
-        "land-under-cereal",
-        "industry-share",
-        "tourism-arrivals",
-        "renewable-electricity"
-      ],
-      "categoryMix": {
-        "development": 1,
+        "education": 1,
         "land": 1,
-        "economy": 2,
-        "energy": 1
-      },
-      "mapDifficultyMix": {
-        "intro": 1,
-        "expert": 1,
-        "standard": 3
-      }
-    },
-    {
-      "date": "2026-08-15",
-      "path": "/data/v1/dailies/2026-08-15.json",
-      "roundCount": 5,
-      "roundIds": [
-        "worldprint-cereal-yield",
-        "worldprint-permanent-cropland",
-        "worldprint-coal-electricity-share",
-        "worldprint-compulsory-education-duration",
-        "worldprint-food-insecurity-moderate-severe"
-      ],
-      "indicatorIds": [
-        "cereal-yield",
-        "permanent-cropland",
-        "coal-electricity-share",
-        "compulsory-education-duration",
-        "food-insecurity-moderate-severe"
-      ],
-      "categoryMix": {
-        "agriculture": 2,
-        "land": 1,
-        "energy": 1,
-        "education": 1
-      },
-      "mapDifficultyMix": {
-        "expert": 2,
-        "standard": 3
-      }
-    },
-    {
-      "date": "2026-08-16",
-      "path": "/data/v1/dailies/2026-08-16.json",
-      "roundCount": 5,
-      "roundIds": [
-        "worldprint-life-expectancy",
-        "worldprint-energy-use",
-        "worldprint-government-education-spending-share",
-        "worldprint-trade-share",
-        "worldprint-secondary-enrollment"
-      ],
-      "indicatorIds": [
-        "life-expectancy",
-        "energy-use",
-        "government-education-spending-share",
-        "trade-share",
-        "secondary-enrollment"
-      ],
-      "categoryMix": {
         "health": 1,
-        "energy": 1,
-        "education": 2,
-        "economy": 1
+        "demography": 1
       },
       "mapDifficultyMix": {
         "intro": 1,
@@ -2402,28 +2121,144 @@
       }
     },
     {
+      "date": "2026-08-13",
+      "path": "/data/v1/dailies/2026-08-13.json",
+      "roundCount": 5,
+      "roundIds": [
+        "worldprint-total-protected-areas",
+        "worldprint-ncd-premature-mortality",
+        "worldprint-youth-employment-ratio",
+        "worldprint-tuberculosis-incidence",
+        "worldprint-pm25-exposure"
+      ],
+      "indicatorIds": [
+        "total-protected-areas",
+        "ncd-premature-mortality",
+        "youth-employment-ratio",
+        "tuberculosis-incidence",
+        "pm25-exposure"
+      ],
+      "categoryMix": {
+        "environment": 2,
+        "health": 2,
+        "labor": 1
+      },
+      "mapDifficultyMix": {
+        "standard": 4,
+        "expert": 1
+      }
+    },
+    {
+      "date": "2026-08-14",
+      "path": "/data/v1/dailies/2026-08-14.json",
+      "roundCount": 5,
+      "roundIds": [
+        "worldprint-food-insecurity-moderate-severe",
+        "worldprint-renewable-electricity",
+        "worldprint-precipitation-depth",
+        "worldprint-co2-per-capita",
+        "worldprint-account-ownership"
+      ],
+      "indicatorIds": [
+        "food-insecurity-moderate-severe",
+        "renewable-electricity",
+        "precipitation-depth",
+        "co2-per-capita",
+        "account-ownership"
+      ],
+      "categoryMix": {
+        "agriculture": 1,
+        "energy": 1,
+        "environment": 2,
+        "development": 1
+      },
+      "mapDifficultyMix": {
+        "standard": 5
+      }
+    },
+    {
+      "date": "2026-08-15",
+      "path": "/data/v1/dailies/2026-08-15.json",
+      "roundCount": 5,
+      "roundIds": [
+        "worldprint-women-parliament",
+        "worldprint-arable-land-per-person",
+        "worldprint-food-production-index",
+        "worldprint-freshwater-per-capita",
+        "worldprint-migrant-stock"
+      ],
+      "indicatorIds": [
+        "women-parliament",
+        "arable-land-per-person",
+        "food-production-index",
+        "freshwater-per-capita",
+        "migrant-stock"
+      ],
+      "categoryMix": {
+        "development": 1,
+        "land": 1,
+        "agriculture": 1,
+        "environment": 1,
+        "demography": 1
+      },
+      "mapDifficultyMix": {
+        "standard": 4,
+        "expert": 1
+      }
+    },
+    {
+      "date": "2026-08-16",
+      "path": "/data/v1/dailies/2026-08-16.json",
+      "roundCount": 5,
+      "roundIds": [
+        "worldprint-life-expectancy",
+        "worldprint-measles-immunization",
+        "worldprint-communications-service-exports",
+        "worldprint-manufacturing-share",
+        "worldprint-forest-area"
+      ],
+      "indicatorIds": [
+        "life-expectancy",
+        "measles-immunization",
+        "communications-service-exports",
+        "manufacturing-share",
+        "forest-area"
+      ],
+      "categoryMix": {
+        "health": 2,
+        "connectivity": 1,
+        "economy": 1,
+        "environment": 1
+      },
+      "mapDifficultyMix": {
+        "intro": 2,
+        "standard": 2,
+        "expert": 1
+      }
+    },
+    {
       "date": "2026-08-17",
       "path": "/data/v1/dailies/2026-08-17.json",
       "roundCount": 5,
       "roundIds": [
-        "worldprint-urban-basic-drinking-water",
-        "worldprint-protected-land",
-        "worldprint-electric-power-use",
-        "worldprint-population-density",
-        "worldprint-internet-users"
+        "worldprint-industry-share",
+        "worldprint-working-age-share",
+        "worldprint-out-of-school-primary",
+        "worldprint-secondary-enrollment",
+        "worldprint-safe-drinking-water"
       ],
       "indicatorIds": [
-        "urban-basic-drinking-water",
-        "protected-land",
-        "electric-power-use",
-        "population-density",
-        "internet-users"
+        "industry-share",
+        "working-age-share",
+        "out-of-school-primary",
+        "secondary-enrollment",
+        "safe-drinking-water"
       ],
       "categoryMix": {
-        "settlement": 2,
-        "environment": 1,
-        "energy": 1,
-        "connectivity": 1
+        "economy": 1,
+        "demography": 1,
+        "education": 2,
+        "health": 1
       },
       "mapDifficultyMix": {
         "standard": 4,
@@ -2435,28 +2270,28 @@
       "path": "/data/v1/dailies/2026-08-18.json",
       "roundCount": 5,
       "roundIds": [
-        "worldprint-age-dependency",
-        "worldprint-unemployment",
-        "worldprint-co2-per-capita",
-        "worldprint-health-expenditure",
-        "worldprint-agriculture-value-added"
+        "worldprint-urban-population",
+        "worldprint-gdp-per-capita",
+        "worldprint-urban-basic-drinking-water",
+        "worldprint-merchandise-trade-share",
+        "worldprint-arable-land"
       ],
       "indicatorIds": [
-        "age-dependency",
-        "unemployment",
-        "co2-per-capita",
-        "health-expenditure",
-        "agriculture-value-added"
+        "urban-population",
+        "gdp-per-capita",
+        "urban-basic-drinking-water",
+        "merchandise-trade-share",
+        "arable-land"
       ],
       "categoryMix": {
-        "demography": 1,
-        "labor": 1,
-        "environment": 1,
-        "health": 1,
-        "economy": 1
+        "settlement": 2,
+        "development": 1,
+        "economy": 1,
+        "land": 1
       },
       "mapDifficultyMix": {
-        "standard": 5
+        "intro": 2,
+        "standard": 3
       }
     },
     {
@@ -2464,28 +2299,28 @@
       "path": "/data/v1/dailies/2026-08-19.json",
       "roundCount": 5,
       "roundIds": [
-        "worldprint-total-protected-areas",
-        "worldprint-rural-population-growth",
+        "worldprint-female-industry-employment",
+        "worldprint-undernourishment",
         "worldprint-under-five-mortality",
-        "worldprint-physicians",
-        "worldprint-communications-service-exports"
+        "worldprint-age-dependency",
+        "worldprint-compulsory-education-duration"
       ],
       "indicatorIds": [
-        "total-protected-areas",
-        "rural-population-growth",
+        "female-industry-employment",
+        "undernourishment",
         "under-five-mortality",
-        "physicians",
-        "communications-service-exports"
+        "age-dependency",
+        "compulsory-education-duration"
       ],
       "categoryMix": {
-        "environment": 1,
-        "settlement": 1,
+        "labor": 1,
         "health": 2,
-        "connectivity": 1
+        "demography": 1,
+        "education": 1
       },
       "mapDifficultyMix": {
-        "standard": 4,
-        "expert": 1
+        "expert": 2,
+        "standard": 3
       }
     },
     {
@@ -2493,28 +2328,30 @@
       "path": "/data/v1/dailies/2026-08-20.json",
       "roundCount": 5,
       "roundIds": [
-        "worldprint-freshwater-per-capita",
-        "worldprint-tuberculosis-incidence",
-        "worldprint-arable-land",
-        "worldprint-measles-immunization",
-        "worldprint-clean-fuels-access"
+        "worldprint-physicians",
+        "worldprint-government-education-spending-share",
+        "worldprint-electric-transmission-losses",
+        "worldprint-internet-users",
+        "worldprint-employment-agriculture"
       ],
       "indicatorIds": [
-        "freshwater-per-capita",
-        "tuberculosis-incidence",
-        "arable-land",
-        "measles-immunization",
-        "clean-fuels-access"
+        "physicians",
+        "government-education-spending-share",
+        "electric-transmission-losses",
+        "internet-users",
+        "employment-agriculture"
       ],
       "categoryMix": {
-        "environment": 1,
-        "health": 2,
-        "land": 1,
-        "energy": 1
+        "health": 1,
+        "education": 1,
+        "energy": 1,
+        "connectivity": 1,
+        "labor": 1
       },
       "mapDifficultyMix": {
-        "standard": 4,
-        "expert": 1
+        "standard": 3,
+        "expert": 1,
+        "intro": 1
       }
     },
     {
@@ -2522,27 +2359,28 @@
       "path": "/data/v1/dailies/2026-08-21.json",
       "roundCount": 5,
       "roundIds": [
-        "worldprint-older-adults-share",
-        "worldprint-out-of-school-primary",
-        "worldprint-rural-basic-sanitation",
-        "worldprint-migrant-stock",
-        "worldprint-precipitation-depth"
+        "worldprint-cereal-yield",
+        "worldprint-rural-population-growth",
+        "worldprint-uhc-service-coverage",
+        "worldprint-tourism-arrivals",
+        "worldprint-human-capital-index"
       ],
       "indicatorIds": [
-        "older-adults-share",
-        "out-of-school-primary",
-        "rural-basic-sanitation",
-        "migrant-stock",
-        "precipitation-depth"
+        "cereal-yield",
+        "rural-population-growth",
+        "uhc-service-coverage",
+        "tourism-arrivals",
+        "human-capital-index"
       ],
       "categoryMix": {
-        "demography": 2,
-        "education": 1,
+        "agriculture": 1,
         "settlement": 1,
-        "environment": 1
+        "health": 1,
+        "economy": 1,
+        "development": 1
       },
       "mapDifficultyMix": {
-        "intro": 1,
+        "expert": 1,
         "standard": 4
       }
     },
@@ -2551,25 +2389,23 @@
       "path": "/data/v1/dailies/2026-08-22.json",
       "roundCount": 5,
       "roundIds": [
-        "worldprint-food-production-index",
-        "worldprint-maternal-mortality",
-        "worldprint-fertility-rate",
-        "worldprint-forest-area",
-        "worldprint-women-parliament"
+        "worldprint-permanent-cropland",
+        "worldprint-older-adults-share",
+        "worldprint-coal-electricity-share",
+        "worldprint-electric-power-use",
+        "worldprint-fertility-rate"
       ],
       "indicatorIds": [
-        "food-production-index",
-        "maternal-mortality",
-        "fertility-rate",
-        "forest-area",
-        "women-parliament"
+        "permanent-cropland",
+        "older-adults-share",
+        "coal-electricity-share",
+        "electric-power-use",
+        "fertility-rate"
       ],
       "categoryMix": {
-        "agriculture": 1,
-        "health": 1,
-        "demography": 1,
-        "environment": 1,
-        "development": 1
+        "land": 1,
+        "demography": 2,
+        "energy": 2
       },
       "mapDifficultyMix": {
         "standard": 4,
@@ -2581,28 +2417,26 @@
       "path": "/data/v1/dailies/2026-08-23.json",
       "roundCount": 5,
       "roundIds": [
-        "worldprint-account-ownership",
-        "worldprint-life-expectancy",
-        "worldprint-industry-share",
         "worldprint-basic-sanitation",
-        "worldprint-urban-population"
+        "worldprint-agriculture-value-added",
+        "worldprint-maternal-mortality",
+        "worldprint-total-protected-areas",
+        "worldprint-manufacturing-share"
       ],
       "indicatorIds": [
-        "account-ownership",
-        "life-expectancy",
-        "industry-share",
         "basic-sanitation",
-        "urban-population"
+        "agriculture-value-added",
+        "maternal-mortality",
+        "total-protected-areas",
+        "manufacturing-share"
       ],
       "categoryMix": {
-        "development": 1,
         "health": 2,
-        "economy": 1,
-        "settlement": 1
+        "economy": 2,
+        "environment": 1
       },
       "mapDifficultyMix": {
-        "standard": 3,
-        "intro": 2
+        "standard": 5
       }
     },
     {
@@ -2610,29 +2444,29 @@
       "path": "/data/v1/dailies/2026-08-24.json",
       "roundCount": 5,
       "roundIds": [
-        "worldprint-communications-service-exports",
-        "worldprint-cereal-yield",
-        "worldprint-population-growth",
-        "worldprint-agriculture-value-added",
-        "worldprint-youth-employment-ratio"
+        "worldprint-rural-basic-sanitation",
+        "worldprint-education-expenditure-savings",
+        "worldprint-gdp-per-capita",
+        "worldprint-working-age-share",
+        "worldprint-co2-per-capita"
       ],
       "indicatorIds": [
-        "communications-service-exports",
-        "cereal-yield",
-        "population-growth",
-        "agriculture-value-added",
-        "youth-employment-ratio"
+        "rural-basic-sanitation",
+        "education-expenditure-savings",
+        "gdp-per-capita",
+        "working-age-share",
+        "co2-per-capita"
       ],
       "categoryMix": {
-        "connectivity": 1,
-        "agriculture": 1,
+        "settlement": 1,
+        "education": 1,
+        "development": 1,
         "demography": 1,
-        "economy": 1,
-        "labor": 1
+        "environment": 1
       },
       "mapDifficultyMix": {
-        "expert": 2,
-        "standard": 3
+        "standard": 4,
+        "intro": 1
       }
     },
     {
@@ -2640,81 +2474,25 @@
       "path": "/data/v1/dailies/2026-08-25.json",
       "roundCount": 5,
       "roundIds": [
-        "worldprint-secondary-enrollment",
-        "worldprint-health-expenditure",
-        "worldprint-coal-electricity-share",
-        "worldprint-physicians",
-        "worldprint-primary-female-teachers"
+        "worldprint-precipitation-depth",
+        "worldprint-cereal-yield",
+        "worldprint-communications-service-exports",
+        "worldprint-population-density",
+        "worldprint-human-capital-index"
       ],
       "indicatorIds": [
-        "secondary-enrollment",
-        "health-expenditure",
-        "coal-electricity-share",
-        "physicians",
-        "primary-female-teachers"
+        "precipitation-depth",
+        "cereal-yield",
+        "communications-service-exports",
+        "population-density",
+        "human-capital-index"
       ],
       "categoryMix": {
-        "education": 2,
-        "health": 2,
-        "energy": 1
-      },
-      "mapDifficultyMix": {
-        "standard": 5
-      }
-    },
-    {
-      "date": "2026-08-26",
-      "path": "/data/v1/dailies/2026-08-26.json",
-      "roundCount": 5,
-      "roundIds": [
-        "worldprint-energy-use",
-        "worldprint-under-five-mortality",
-        "worldprint-unemployment",
-        "worldprint-trade-share",
-        "worldprint-protected-land"
-      ],
-      "indicatorIds": [
-        "energy-use",
-        "under-five-mortality",
-        "unemployment",
-        "trade-share",
-        "protected-land"
-      ],
-      "categoryMix": {
-        "energy": 1,
-        "health": 1,
-        "labor": 1,
-        "economy": 1,
-        "environment": 1
-      },
-      "mapDifficultyMix": {
-        "standard": 5
-      }
-    },
-    {
-      "date": "2026-08-27",
-      "path": "/data/v1/dailies/2026-08-27.json",
-      "roundCount": 5,
-      "roundIds": [
-        "worldprint-out-of-school-primary",
-        "worldprint-land-under-cereal",
-        "worldprint-female-industry-employment",
-        "worldprint-total-protected-areas",
-        "worldprint-undernourishment"
-      ],
-      "indicatorIds": [
-        "out-of-school-primary",
-        "land-under-cereal",
-        "female-industry-employment",
-        "total-protected-areas",
-        "undernourishment"
-      ],
-      "categoryMix": {
-        "education": 1,
-        "land": 1,
-        "labor": 1,
         "environment": 1,
-        "health": 1
+        "agriculture": 1,
+        "connectivity": 1,
+        "settlement": 1,
+        "development": 1
       },
       "mapDifficultyMix": {
         "standard": 3,
@@ -2722,33 +2500,92 @@
       }
     },
     {
+      "date": "2026-08-26",
+      "path": "/data/v1/dailies/2026-08-26.json",
+      "roundCount": 5,
+      "roundIds": [
+        "worldprint-urban-basic-drinking-water",
+        "worldprint-out-of-school-primary",
+        "worldprint-tuberculosis-incidence",
+        "worldprint-protected-land",
+        "worldprint-employment-agriculture"
+      ],
+      "indicatorIds": [
+        "urban-basic-drinking-water",
+        "out-of-school-primary",
+        "tuberculosis-incidence",
+        "protected-land",
+        "employment-agriculture"
+      ],
+      "categoryMix": {
+        "settlement": 1,
+        "education": 1,
+        "health": 1,
+        "environment": 1,
+        "labor": 1
+      },
+      "mapDifficultyMix": {
+        "standard": 4,
+        "expert": 1
+      }
+    },
+    {
+      "date": "2026-08-27",
+      "path": "/data/v1/dailies/2026-08-27.json",
+      "roundCount": 5,
+      "roundIds": [
+        "worldprint-arable-land",
+        "worldprint-pm25-exposure",
+        "worldprint-health-expenditure",
+        "worldprint-life-expectancy",
+        "worldprint-food-production-index"
+      ],
+      "indicatorIds": [
+        "arable-land",
+        "pm25-exposure",
+        "health-expenditure",
+        "life-expectancy",
+        "food-production-index"
+      ],
+      "categoryMix": {
+        "land": 1,
+        "environment": 1,
+        "health": 2,
+        "agriculture": 1
+      },
+      "mapDifficultyMix": {
+        "standard": 4,
+        "intro": 1
+      }
+    },
+    {
       "date": "2026-08-28",
       "path": "/data/v1/dailies/2026-08-28.json",
       "roundCount": 5,
       "roundIds": [
-        "worldprint-food-production-index",
-        "worldprint-safe-drinking-water",
-        "worldprint-gdp-per-capita",
-        "worldprint-employment-agriculture",
-        "worldprint-freshwater-per-capita"
+        "worldprint-forest-area",
+        "worldprint-agriculture-value-added",
+        "worldprint-industry-share",
+        "worldprint-adolescent-fertility",
+        "worldprint-maternal-mortality"
       ],
       "indicatorIds": [
-        "food-production-index",
-        "safe-drinking-water",
-        "gdp-per-capita",
-        "employment-agriculture",
-        "freshwater-per-capita"
+        "forest-area",
+        "agriculture-value-added",
+        "industry-share",
+        "adolescent-fertility",
+        "maternal-mortality"
       ],
       "categoryMix": {
-        "agriculture": 1,
-        "health": 1,
-        "development": 1,
-        "labor": 1,
-        "environment": 1
+        "environment": 1,
+        "economy": 2,
+        "demography": 1,
+        "health": 1
       },
       "mapDifficultyMix": {
+        "intro": 1,
         "standard": 3,
-        "intro": 2
+        "expert": 1
       }
     },
     {
@@ -2756,30 +2593,29 @@
       "path": "/data/v1/dailies/2026-08-29.json",
       "roundCount": 5,
       "roundIds": [
-        "worldprint-government-education-spending-share",
         "worldprint-rural-population-growth",
-        "worldprint-renewable-electricity",
-        "worldprint-older-adults-share",
-        "worldprint-measles-immunization"
+        "worldprint-government-education-spending-share",
+        "worldprint-unemployment",
+        "worldprint-arable-land-per-person",
+        "worldprint-population-growth"
       ],
       "indicatorIds": [
-        "government-education-spending-share",
         "rural-population-growth",
-        "renewable-electricity",
-        "older-adults-share",
-        "measles-immunization"
+        "government-education-spending-share",
+        "unemployment",
+        "arable-land-per-person",
+        "population-growth"
       ],
       "categoryMix": {
-        "education": 1,
         "settlement": 1,
-        "energy": 1,
-        "demography": 1,
-        "health": 1
+        "education": 1,
+        "labor": 1,
+        "land": 1,
+        "demography": 1
       },
       "mapDifficultyMix": {
-        "expert": 1,
         "standard": 3,
-        "intro": 1
+        "expert": 2
       }
     },
     {
@@ -2787,28 +2623,27 @@
       "path": "/data/v1/dailies/2026-08-30.json",
       "roundCount": 5,
       "roundIds": [
-        "worldprint-adolescent-fertility",
-        "worldprint-arable-land-per-person",
-        "worldprint-rural-basic-sanitation",
-        "worldprint-electric-power-use",
+        "worldprint-undernourishment",
+        "worldprint-fertility-rate",
+        "worldprint-primary-female-teachers",
+        "worldprint-energy-use",
         "worldprint-electricity-access"
       ],
       "indicatorIds": [
-        "adolescent-fertility",
-        "arable-land-per-person",
-        "rural-basic-sanitation",
-        "electric-power-use",
+        "undernourishment",
+        "fertility-rate",
+        "primary-female-teachers",
+        "energy-use",
         "electricity-access"
       ],
       "categoryMix": {
+        "health": 1,
         "demography": 1,
-        "land": 1,
-        "settlement": 1,
+        "education": 1,
         "energy": 2
       },
       "mapDifficultyMix": {
-        "expert": 2,
-        "standard": 2,
+        "standard": 4,
         "intro": 1
       }
     },
@@ -2817,82 +2652,23 @@
       "path": "/data/v1/dailies/2026-08-31.json",
       "roundCount": 5,
       "roundIds": [
-        "worldprint-tourism-arrivals",
-        "worldprint-co2-per-capita",
-        "worldprint-internet-users",
-        "worldprint-fertility-rate",
-        "worldprint-compulsory-education-duration"
-      ],
-      "indicatorIds": [
-        "tourism-arrivals",
-        "co2-per-capita",
-        "internet-users",
-        "fertility-rate",
-        "compulsory-education-duration"
-      ],
-      "categoryMix": {
-        "economy": 1,
-        "environment": 1,
-        "connectivity": 1,
-        "demography": 1,
-        "education": 1
-      },
-      "mapDifficultyMix": {
-        "standard": 3,
-        "intro": 1,
-        "expert": 1
-      }
-    },
-    {
-      "date": "2026-09-01",
-      "path": "/data/v1/dailies/2026-09-01.json",
-      "roundCount": 5,
-      "roundIds": [
-        "worldprint-precipitation-depth",
-        "worldprint-open-defecation",
+        "worldprint-account-ownership",
+        "worldprint-coal-electricity-share",
+        "worldprint-merchandise-trade-share",
         "worldprint-migrant-stock",
-        "worldprint-mobile-subscriptions",
-        "worldprint-food-insecurity-moderate-severe"
+        "worldprint-electric-power-use"
       ],
       "indicatorIds": [
-        "precipitation-depth",
-        "open-defecation",
+        "account-ownership",
+        "coal-electricity-share",
+        "merchandise-trade-share",
         "migrant-stock",
-        "mobile-subscriptions",
-        "food-insecurity-moderate-severe"
+        "electric-power-use"
       ],
       "categoryMix": {
-        "environment": 1,
-        "health": 1,
-        "demography": 1,
-        "connectivity": 1,
-        "agriculture": 1
-      },
-      "mapDifficultyMix": {
-        "standard": 5
-      }
-    },
-    {
-      "date": "2026-09-02",
-      "path": "/data/v1/dailies/2026-09-02.json",
-      "roundCount": 5,
-      "roundIds": [
-        "worldprint-urban-basic-drinking-water",
-        "worldprint-population-density",
-        "worldprint-permanent-cropland",
-        "worldprint-arable-land",
-        "worldprint-age-dependency"
-      ],
-      "indicatorIds": [
-        "urban-basic-drinking-water",
-        "population-density",
-        "permanent-cropland",
-        "arable-land",
-        "age-dependency"
-      ],
-      "categoryMix": {
-        "settlement": 2,
-        "land": 2,
+        "development": 1,
+        "energy": 2,
+        "economy": 1,
         "demography": 1
       },
       "mapDifficultyMix": {
@@ -2900,33 +2676,92 @@
       }
     },
     {
+      "date": "2026-09-01",
+      "path": "/data/v1/dailies/2026-09-01.json",
+      "roundCount": 5,
+      "roundIds": [
+        "worldprint-rural-basic-sanitation",
+        "worldprint-ncd-premature-mortality",
+        "worldprint-female-industry-employment",
+        "worldprint-women-parliament",
+        "worldprint-secondary-enrollment"
+      ],
+      "indicatorIds": [
+        "rural-basic-sanitation",
+        "ncd-premature-mortality",
+        "female-industry-employment",
+        "women-parliament",
+        "secondary-enrollment"
+      ],
+      "categoryMix": {
+        "settlement": 1,
+        "health": 1,
+        "labor": 1,
+        "development": 1,
+        "education": 1
+      },
+      "mapDifficultyMix": {
+        "standard": 4,
+        "expert": 1
+      }
+    },
+    {
+      "date": "2026-09-02",
+      "path": "/data/v1/dailies/2026-09-02.json",
+      "roundCount": 5,
+      "roundIds": [
+        "worldprint-urban-population",
+        "worldprint-tourism-arrivals",
+        "worldprint-compulsory-education-duration",
+        "worldprint-electric-transmission-losses",
+        "worldprint-uhc-service-coverage"
+      ],
+      "indicatorIds": [
+        "urban-population",
+        "tourism-arrivals",
+        "compulsory-education-duration",
+        "electric-transmission-losses",
+        "uhc-service-coverage"
+      ],
+      "categoryMix": {
+        "settlement": 1,
+        "economy": 1,
+        "education": 1,
+        "energy": 1,
+        "health": 1
+      },
+      "mapDifficultyMix": {
+        "intro": 1,
+        "standard": 3,
+        "expert": 1
+      }
+    },
+    {
       "date": "2026-09-03",
       "path": "/data/v1/dailies/2026-09-03.json",
       "roundCount": 5,
       "roundIds": [
-        "worldprint-tuberculosis-incidence",
-        "worldprint-maternal-mortality",
-        "worldprint-forest-area",
-        "worldprint-clean-fuels-access",
-        "worldprint-manufacturing-share"
+        "worldprint-basic-sanitation",
+        "worldprint-under-five-mortality",
+        "worldprint-age-dependency",
+        "worldprint-mobile-subscriptions",
+        "worldprint-renewable-electricity"
       ],
       "indicatorIds": [
-        "tuberculosis-incidence",
-        "maternal-mortality",
-        "forest-area",
-        "clean-fuels-access",
-        "manufacturing-share"
+        "basic-sanitation",
+        "under-five-mortality",
+        "age-dependency",
+        "mobile-subscriptions",
+        "renewable-electricity"
       ],
       "categoryMix": {
         "health": 2,
-        "environment": 1,
-        "energy": 1,
-        "economy": 1
+        "demography": 1,
+        "connectivity": 1,
+        "energy": 1
       },
       "mapDifficultyMix": {
-        "expert": 1,
-        "standard": 3,
-        "intro": 1
+        "standard": 5
       }
     },
     {
@@ -2934,23 +2769,25 @@
       "path": "/data/v1/dailies/2026-09-04.json",
       "roundCount": 5,
       "roundIds": [
-        "worldprint-pm25-exposure",
-        "worldprint-safe-drinking-water",
-        "worldprint-agriculture-value-added",
-        "worldprint-undernourishment",
-        "worldprint-industry-share"
+        "worldprint-food-insecurity-moderate-severe",
+        "worldprint-youth-employment-ratio",
+        "worldprint-trade-share",
+        "worldprint-older-adults-share",
+        "worldprint-clean-fuels-access"
       ],
       "indicatorIds": [
-        "pm25-exposure",
-        "safe-drinking-water",
-        "agriculture-value-added",
-        "undernourishment",
-        "industry-share"
+        "food-insecurity-moderate-severe",
+        "youth-employment-ratio",
+        "trade-share",
+        "older-adults-share",
+        "clean-fuels-access"
       ],
       "categoryMix": {
-        "environment": 1,
-        "health": 2,
-        "economy": 2
+        "agriculture": 1,
+        "labor": 1,
+        "economy": 1,
+        "demography": 1,
+        "energy": 1
       },
       "mapDifficultyMix": {
         "standard": 4,
@@ -2962,28 +2799,28 @@
       "path": "/data/v1/dailies/2026-09-05.json",
       "roundCount": 5,
       "roundIds": [
-        "worldprint-older-adults-share",
+        "worldprint-measles-immunization",
         "worldprint-internet-users",
-        "worldprint-health-expenditure",
-        "worldprint-cereal-yield",
-        "worldprint-population-growth"
+        "worldprint-freshwater-per-capita",
+        "worldprint-open-defecation",
+        "worldprint-land-under-cereal"
       ],
       "indicatorIds": [
-        "older-adults-share",
+        "measles-immunization",
         "internet-users",
-        "health-expenditure",
-        "cereal-yield",
-        "population-growth"
+        "freshwater-per-capita",
+        "open-defecation",
+        "land-under-cereal"
       ],
       "categoryMix": {
-        "demography": 2,
+        "health": 2,
         "connectivity": 1,
-        "health": 1,
-        "agriculture": 1
+        "environment": 1,
+        "land": 1
       },
       "mapDifficultyMix": {
-        "intro": 2,
-        "standard": 2,
+        "standard": 3,
+        "intro": 1,
         "expert": 1
       }
     },
@@ -2992,52 +2829,24 @@
       "path": "/data/v1/dailies/2026-09-06.json",
       "roundCount": 5,
       "roundIds": [
-        "worldprint-precipitation-depth",
-        "worldprint-total-protected-areas",
-        "worldprint-rural-population-growth",
-        "worldprint-arable-land",
-        "worldprint-population-density"
-      ],
-      "indicatorIds": [
-        "precipitation-depth",
-        "total-protected-areas",
-        "rural-population-growth",
-        "arable-land",
-        "population-density"
-      ],
-      "categoryMix": {
-        "environment": 2,
-        "settlement": 2,
-        "land": 1
-      },
-      "mapDifficultyMix": {
-        "standard": 5
-      }
-    },
-    {
-      "date": "2026-09-07",
-      "path": "/data/v1/dailies/2026-09-07.json",
-      "roundCount": 5,
-      "roundIds": [
-        "worldprint-gdp-per-capita",
-        "worldprint-fertility-rate",
-        "worldprint-employment-agriculture",
+        "worldprint-safe-drinking-water",
+        "worldprint-physicians",
         "worldprint-permanent-cropland",
-        "worldprint-measles-immunization"
+        "worldprint-tourism-arrivals",
+        "worldprint-human-capital-index"
       ],
       "indicatorIds": [
-        "gdp-per-capita",
-        "fertility-rate",
-        "employment-agriculture",
+        "safe-drinking-water",
+        "physicians",
         "permanent-cropland",
-        "measles-immunization"
+        "tourism-arrivals",
+        "human-capital-index"
       ],
       "categoryMix": {
-        "development": 1,
-        "demography": 1,
-        "labor": 1,
+        "health": 2,
         "land": 1,
-        "health": 1
+        "economy": 1,
+        "development": 1
       },
       "mapDifficultyMix": {
         "intro": 1,
@@ -3045,32 +2854,62 @@
       }
     },
     {
+      "date": "2026-09-07",
+      "path": "/data/v1/dailies/2026-09-07.json",
+      "roundCount": 5,
+      "roundIds": [
+        "worldprint-rural-population-growth",
+        "worldprint-population-growth",
+        "worldprint-food-production-index",
+        "worldprint-population-density",
+        "worldprint-tuberculosis-incidence"
+      ],
+      "indicatorIds": [
+        "rural-population-growth",
+        "population-growth",
+        "food-production-index",
+        "population-density",
+        "tuberculosis-incidence"
+      ],
+      "categoryMix": {
+        "settlement": 2,
+        "demography": 1,
+        "agriculture": 1,
+        "health": 1
+      },
+      "mapDifficultyMix": {
+        "standard": 4,
+        "expert": 1
+      }
+    },
+    {
       "date": "2026-09-08",
       "path": "/data/v1/dailies/2026-09-08.json",
       "roundCount": 5,
       "roundIds": [
-        "worldprint-electricity-access",
-        "worldprint-women-parliament",
-        "worldprint-forest-area",
-        "worldprint-youth-employment-ratio",
-        "worldprint-energy-use"
+        "worldprint-protected-land",
+        "worldprint-under-five-mortality",
+        "worldprint-adolescent-fertility",
+        "worldprint-urban-basic-drinking-water",
+        "worldprint-primary-female-teachers"
       ],
       "indicatorIds": [
-        "electricity-access",
-        "women-parliament",
-        "forest-area",
-        "youth-employment-ratio",
-        "energy-use"
+        "protected-land",
+        "under-five-mortality",
+        "adolescent-fertility",
+        "urban-basic-drinking-water",
+        "primary-female-teachers"
       ],
       "categoryMix": {
-        "energy": 2,
-        "development": 1,
         "environment": 1,
-        "labor": 1
+        "health": 1,
+        "demography": 1,
+        "settlement": 1,
+        "education": 1
       },
       "mapDifficultyMix": {
-        "intro": 2,
-        "standard": 3
+        "standard": 4,
+        "expert": 1
       }
     },
     {
@@ -3078,25 +2917,81 @@
       "path": "/data/v1/dailies/2026-09-09.json",
       "roundCount": 5,
       "roundIds": [
-        "worldprint-clean-fuels-access",
-        "worldprint-food-insecurity-moderate-severe",
-        "worldprint-out-of-school-primary",
-        "worldprint-arable-land-per-person",
-        "worldprint-life-expectancy"
+        "worldprint-open-defecation",
+        "worldprint-migrant-stock",
+        "worldprint-gdp-per-capita",
+        "worldprint-measles-immunization",
+        "worldprint-forest-area"
       ],
       "indicatorIds": [
-        "clean-fuels-access",
-        "food-insecurity-moderate-severe",
-        "out-of-school-primary",
-        "arable-land-per-person",
-        "life-expectancy"
+        "open-defecation",
+        "migrant-stock",
+        "gdp-per-capita",
+        "measles-immunization",
+        "forest-area"
       ],
       "categoryMix": {
-        "energy": 1,
-        "agriculture": 1,
-        "education": 1,
-        "land": 1,
-        "health": 1
+        "health": 2,
+        "demography": 1,
+        "development": 1,
+        "environment": 1
+      },
+      "mapDifficultyMix": {
+        "standard": 3,
+        "intro": 2
+      }
+    },
+    {
+      "date": "2026-09-10",
+      "path": "/data/v1/dailies/2026-09-10.json",
+      "roundCount": 5,
+      "roundIds": [
+        "worldprint-account-ownership",
+        "worldprint-fertility-rate",
+        "worldprint-trade-share",
+        "worldprint-agriculture-value-added",
+        "worldprint-government-education-spending-share"
+      ],
+      "indicatorIds": [
+        "account-ownership",
+        "fertility-rate",
+        "trade-share",
+        "agriculture-value-added",
+        "government-education-spending-share"
+      ],
+      "categoryMix": {
+        "development": 1,
+        "demography": 1,
+        "economy": 2,
+        "education": 1
+      },
+      "mapDifficultyMix": {
+        "standard": 4,
+        "expert": 1
+      }
+    },
+    {
+      "date": "2026-09-11",
+      "path": "/data/v1/dailies/2026-09-11.json",
+      "roundCount": 5,
+      "roundIds": [
+        "worldprint-undernourishment",
+        "worldprint-total-protected-areas",
+        "worldprint-female-industry-employment",
+        "worldprint-unemployment",
+        "worldprint-safe-drinking-water"
+      ],
+      "indicatorIds": [
+        "undernourishment",
+        "total-protected-areas",
+        "female-industry-employment",
+        "unemployment",
+        "safe-drinking-water"
+      ],
+      "categoryMix": {
+        "health": 2,
+        "environment": 1,
+        "labor": 2
       },
       "mapDifficultyMix": {
         "standard": 3,
@@ -3105,90 +3000,32 @@
       }
     },
     {
-      "date": "2026-09-10",
-      "path": "/data/v1/dailies/2026-09-10.json",
-      "roundCount": 5,
-      "roundIds": [
-        "worldprint-trade-share",
-        "worldprint-female-industry-employment",
-        "worldprint-primary-female-teachers",
-        "worldprint-communications-service-exports",
-        "worldprint-under-five-mortality"
-      ],
-      "indicatorIds": [
-        "trade-share",
-        "female-industry-employment",
-        "primary-female-teachers",
-        "communications-service-exports",
-        "under-five-mortality"
-      ],
-      "categoryMix": {
-        "economy": 1,
-        "labor": 1,
-        "education": 1,
-        "connectivity": 1,
-        "health": 1
-      },
-      "mapDifficultyMix": {
-        "standard": 3,
-        "expert": 2
-      }
-    },
-    {
-      "date": "2026-09-11",
-      "path": "/data/v1/dailies/2026-09-11.json",
-      "roundCount": 5,
-      "roundIds": [
-        "worldprint-basic-sanitation",
-        "worldprint-freshwater-per-capita",
-        "worldprint-protected-land",
-        "worldprint-electric-power-use",
-        "worldprint-age-dependency"
-      ],
-      "indicatorIds": [
-        "basic-sanitation",
-        "freshwater-per-capita",
-        "protected-land",
-        "electric-power-use",
-        "age-dependency"
-      ],
-      "categoryMix": {
-        "health": 1,
-        "environment": 2,
-        "energy": 1,
-        "demography": 1
-      },
-      "mapDifficultyMix": {
-        "standard": 5
-      }
-    },
-    {
       "date": "2026-09-12",
       "path": "/data/v1/dailies/2026-09-12.json",
       "roundCount": 5,
       "roundIds": [
-        "worldprint-tuberculosis-incidence",
-        "worldprint-rural-basic-sanitation",
-        "worldprint-coal-electricity-share",
-        "worldprint-adolescent-fertility",
-        "worldprint-urban-basic-drinking-water"
+        "worldprint-freshwater-per-capita",
+        "worldprint-youth-employment-ratio",
+        "worldprint-ncd-premature-mortality",
+        "worldprint-working-age-share",
+        "worldprint-arable-land"
       ],
       "indicatorIds": [
-        "tuberculosis-incidence",
-        "rural-basic-sanitation",
-        "coal-electricity-share",
-        "adolescent-fertility",
-        "urban-basic-drinking-water"
+        "freshwater-per-capita",
+        "youth-employment-ratio",
+        "ncd-premature-mortality",
+        "working-age-share",
+        "arable-land"
       ],
       "categoryMix": {
+        "environment": 1,
+        "labor": 1,
         "health": 1,
-        "settlement": 2,
-        "energy": 1,
-        "demography": 1
+        "demography": 1,
+        "land": 1
       },
       "mapDifficultyMix": {
-        "expert": 2,
-        "standard": 3
+        "standard": 5
       }
     },
     {
@@ -3196,28 +3033,30 @@
       "path": "/data/v1/dailies/2026-09-13.json",
       "roundCount": 5,
       "roundIds": [
-        "worldprint-compulsory-education-duration",
-        "worldprint-food-production-index",
-        "worldprint-migrant-stock",
-        "worldprint-land-under-cereal",
-        "worldprint-secondary-enrollment"
+        "worldprint-women-parliament",
+        "worldprint-industry-share",
+        "worldprint-life-expectancy",
+        "worldprint-food-insecurity-moderate-severe",
+        "worldprint-communications-service-exports"
       ],
       "indicatorIds": [
-        "compulsory-education-duration",
-        "food-production-index",
-        "migrant-stock",
-        "land-under-cereal",
-        "secondary-enrollment"
+        "women-parliament",
+        "industry-share",
+        "life-expectancy",
+        "food-insecurity-moderate-severe",
+        "communications-service-exports"
       ],
       "categoryMix": {
-        "education": 2,
+        "development": 1,
+        "economy": 1,
+        "health": 1,
         "agriculture": 1,
-        "demography": 1,
-        "land": 1
+        "connectivity": 1
       },
       "mapDifficultyMix": {
-        "expert": 2,
-        "standard": 3
+        "standard": 3,
+        "intro": 1,
+        "expert": 1
       }
     },
     {
@@ -3225,25 +3064,24 @@
       "path": "/data/v1/dailies/2026-09-14.json",
       "roundCount": 5,
       "roundIds": [
-        "worldprint-manufacturing-share",
-        "worldprint-mobile-subscriptions",
-        "worldprint-physicians",
-        "worldprint-government-education-spending-share",
-        "worldprint-co2-per-capita"
+        "worldprint-clean-fuels-access",
+        "worldprint-secondary-enrollment",
+        "worldprint-employment-agriculture",
+        "worldprint-cereal-yield",
+        "worldprint-electric-power-use"
       ],
       "indicatorIds": [
-        "manufacturing-share",
-        "mobile-subscriptions",
-        "physicians",
-        "government-education-spending-share",
-        "co2-per-capita"
+        "clean-fuels-access",
+        "secondary-enrollment",
+        "employment-agriculture",
+        "cereal-yield",
+        "electric-power-use"
       ],
       "categoryMix": {
-        "economy": 1,
-        "connectivity": 1,
-        "health": 1,
+        "energy": 2,
         "education": 1,
-        "environment": 1
+        "labor": 1,
+        "agriculture": 1
       },
       "mapDifficultyMix": {
         "standard": 4,
@@ -3255,29 +3093,28 @@
       "path": "/data/v1/dailies/2026-09-15.json",
       "roundCount": 5,
       "roundIds": [
-        "worldprint-tourism-arrivals",
-        "worldprint-unemployment",
         "worldprint-urban-population",
-        "worldprint-renewable-electricity",
-        "worldprint-pm25-exposure"
+        "worldprint-permanent-cropland",
+        "worldprint-rural-basic-sanitation",
+        "worldprint-electricity-access",
+        "worldprint-land-under-cereal"
       ],
       "indicatorIds": [
-        "tourism-arrivals",
-        "unemployment",
         "urban-population",
-        "renewable-electricity",
-        "pm25-exposure"
+        "permanent-cropland",
+        "rural-basic-sanitation",
+        "electricity-access",
+        "land-under-cereal"
       ],
       "categoryMix": {
-        "economy": 1,
-        "labor": 1,
-        "settlement": 1,
-        "energy": 1,
-        "environment": 1
+        "settlement": 2,
+        "land": 2,
+        "energy": 1
       },
       "mapDifficultyMix": {
-        "standard": 4,
-        "intro": 1
+        "intro": 2,
+        "standard": 2,
+        "expert": 1
       }
     },
     {
@@ -3285,27 +3122,30 @@
       "path": "/data/v1/dailies/2026-09-16.json",
       "roundCount": 5,
       "roundIds": [
-        "worldprint-open-defecation",
-        "worldprint-maternal-mortality",
-        "worldprint-account-ownership",
-        "worldprint-urban-basic-drinking-water",
-        "worldprint-population-growth"
+        "worldprint-manufacturing-share",
+        "worldprint-basic-sanitation",
+        "worldprint-pm25-exposure",
+        "worldprint-older-adults-share",
+        "worldprint-compulsory-education-duration"
       ],
       "indicatorIds": [
-        "open-defecation",
-        "maternal-mortality",
-        "account-ownership",
-        "urban-basic-drinking-water",
-        "population-growth"
+        "manufacturing-share",
+        "basic-sanitation",
+        "pm25-exposure",
+        "older-adults-share",
+        "compulsory-education-duration"
       ],
       "categoryMix": {
-        "health": 2,
-        "development": 1,
-        "settlement": 1,
-        "demography": 1
+        "economy": 1,
+        "health": 1,
+        "environment": 1,
+        "demography": 1,
+        "education": 1
       },
       "mapDifficultyMix": {
-        "standard": 5
+        "standard": 3,
+        "intro": 1,
+        "expert": 1
       }
     },
     {
@@ -3313,27 +3153,28 @@
       "path": "/data/v1/dailies/2026-09-17.json",
       "roundCount": 5,
       "roundIds": [
-        "worldprint-permanent-cropland",
-        "worldprint-arable-land",
-        "worldprint-gdp-per-capita",
-        "worldprint-women-parliament",
-        "worldprint-precipitation-depth"
+        "worldprint-co2-per-capita",
+        "worldprint-mobile-subscriptions",
+        "worldprint-health-expenditure",
+        "worldprint-coal-electricity-share",
+        "worldprint-merchandise-trade-share"
       ],
       "indicatorIds": [
-        "permanent-cropland",
-        "arable-land",
-        "gdp-per-capita",
-        "women-parliament",
-        "precipitation-depth"
+        "co2-per-capita",
+        "mobile-subscriptions",
+        "health-expenditure",
+        "coal-electricity-share",
+        "merchandise-trade-share"
       ],
       "categoryMix": {
-        "land": 2,
-        "development": 2,
-        "environment": 1
+        "environment": 1,
+        "connectivity": 1,
+        "health": 1,
+        "energy": 1,
+        "economy": 1
       },
       "mapDifficultyMix": {
-        "standard": 4,
-        "intro": 1
+        "standard": 5
       }
     },
     {
@@ -3341,29 +3182,29 @@
       "path": "/data/v1/dailies/2026-09-18.json",
       "roundCount": 5,
       "roundIds": [
-        "worldprint-life-expectancy",
+        "worldprint-electric-transmission-losses",
+        "worldprint-internet-users",
+        "worldprint-out-of-school-primary",
         "worldprint-age-dependency",
-        "worldprint-measles-immunization",
-        "worldprint-secondary-enrollment",
-        "worldprint-arable-land-per-person"
+        "worldprint-uhc-service-coverage"
       ],
       "indicatorIds": [
-        "life-expectancy",
+        "electric-transmission-losses",
+        "internet-users",
+        "out-of-school-primary",
         "age-dependency",
-        "measles-immunization",
-        "secondary-enrollment",
-        "arable-land-per-person"
+        "uhc-service-coverage"
       ],
       "categoryMix": {
-        "health": 2,
-        "demography": 1,
+        "energy": 1,
+        "connectivity": 1,
         "education": 1,
-        "land": 1
+        "demography": 1,
+        "health": 1
       },
       "mapDifficultyMix": {
-        "intro": 1,
-        "standard": 3,
-        "expert": 1
+        "standard": 4,
+        "intro": 1
       }
     },
     {
@@ -3371,27 +3212,27 @@
       "path": "/data/v1/dailies/2026-09-19.json",
       "roundCount": 5,
       "roundIds": [
-        "worldprint-basic-sanitation",
-        "worldprint-safe-drinking-water",
-        "worldprint-forest-area",
-        "worldprint-clean-fuels-access",
-        "worldprint-total-protected-areas"
+        "worldprint-education-expenditure-savings",
+        "worldprint-physicians",
+        "worldprint-renewable-electricity",
+        "worldprint-precipitation-depth",
+        "worldprint-energy-use"
       ],
       "indicatorIds": [
-        "basic-sanitation",
-        "safe-drinking-water",
-        "forest-area",
-        "clean-fuels-access",
-        "total-protected-areas"
+        "education-expenditure-savings",
+        "physicians",
+        "renewable-electricity",
+        "precipitation-depth",
+        "energy-use"
       ],
       "categoryMix": {
-        "health": 2,
-        "environment": 2,
-        "energy": 1
+        "education": 1,
+        "health": 1,
+        "energy": 2,
+        "environment": 1
       },
       "mapDifficultyMix": {
-        "standard": 3,
-        "intro": 2
+        "standard": 5
       }
     },
     {
@@ -3399,25 +3240,25 @@
       "path": "/data/v1/dailies/2026-09-20.json",
       "roundCount": 5,
       "roundIds": [
-        "worldprint-land-under-cereal",
-        "worldprint-electric-power-use",
-        "worldprint-food-production-index",
-        "worldprint-manufacturing-share",
-        "worldprint-pm25-exposure"
+        "worldprint-arable-land-per-person",
+        "worldprint-maternal-mortality",
+        "worldprint-primary-female-teachers",
+        "worldprint-total-protected-areas",
+        "worldprint-clean-fuels-access"
       ],
       "indicatorIds": [
-        "land-under-cereal",
-        "electric-power-use",
-        "food-production-index",
-        "manufacturing-share",
-        "pm25-exposure"
+        "arable-land-per-person",
+        "maternal-mortality",
+        "primary-female-teachers",
+        "total-protected-areas",
+        "clean-fuels-access"
       ],
       "categoryMix": {
         "land": 1,
-        "energy": 1,
-        "agriculture": 1,
-        "economy": 1,
-        "environment": 1
+        "health": 1,
+        "education": 1,
+        "environment": 1,
+        "energy": 1
       },
       "mapDifficultyMix": {
         "expert": 1,
@@ -3429,28 +3270,28 @@
       "path": "/data/v1/dailies/2026-09-21.json",
       "roundCount": 5,
       "roundIds": [
-        "worldprint-government-education-spending-share",
-        "worldprint-internet-users",
-        "worldprint-population-density",
-        "worldprint-co2-per-capita",
-        "worldprint-compulsory-education-duration"
+        "worldprint-tuberculosis-incidence",
+        "worldprint-older-adults-share",
+        "worldprint-urban-population",
+        "worldprint-measles-immunization",
+        "worldprint-youth-employment-ratio"
       ],
       "indicatorIds": [
-        "government-education-spending-share",
-        "internet-users",
-        "population-density",
-        "co2-per-capita",
-        "compulsory-education-duration"
+        "tuberculosis-incidence",
+        "older-adults-share",
+        "urban-population",
+        "measles-immunization",
+        "youth-employment-ratio"
       ],
       "categoryMix": {
-        "education": 2,
-        "connectivity": 1,
+        "health": 2,
+        "demography": 1,
         "settlement": 1,
-        "environment": 1
+        "labor": 1
       },
       "mapDifficultyMix": {
-        "expert": 2,
-        "intro": 1,
+        "expert": 1,
+        "intro": 2,
         "standard": 2
       }
     },
@@ -3459,28 +3300,27 @@
       "path": "/data/v1/dailies/2026-09-22.json",
       "roundCount": 5,
       "roundIds": [
-        "worldprint-female-industry-employment",
-        "worldprint-under-five-mortality",
-        "worldprint-adolescent-fertility",
-        "worldprint-older-adults-share",
-        "worldprint-undernourishment"
+        "worldprint-electric-transmission-losses",
+        "worldprint-fertility-rate",
+        "worldprint-account-ownership",
+        "worldprint-age-dependency",
+        "worldprint-secondary-enrollment"
       ],
       "indicatorIds": [
-        "female-industry-employment",
-        "under-five-mortality",
-        "adolescent-fertility",
-        "older-adults-share",
-        "undernourishment"
+        "electric-transmission-losses",
+        "fertility-rate",
+        "account-ownership",
+        "age-dependency",
+        "secondary-enrollment"
       ],
       "categoryMix": {
-        "labor": 1,
-        "health": 2,
-        "demography": 2
+        "energy": 1,
+        "demography": 2,
+        "development": 1,
+        "education": 1
       },
       "mapDifficultyMix": {
-        "expert": 2,
-        "standard": 2,
-        "intro": 1
+        "standard": 5
       }
     },
     {
@@ -3488,25 +3328,24 @@
       "path": "/data/v1/dailies/2026-09-23.json",
       "roundCount": 5,
       "roundIds": [
-        "worldprint-trade-share",
-        "worldprint-open-defecation",
-        "worldprint-youth-employment-ratio",
-        "worldprint-rural-basic-sanitation",
-        "worldprint-primary-female-teachers"
+        "worldprint-pm25-exposure",
+        "worldprint-renewable-electricity",
+        "worldprint-health-expenditure",
+        "worldprint-population-density",
+        "worldprint-basic-sanitation"
       ],
       "indicatorIds": [
-        "trade-share",
-        "open-defecation",
-        "youth-employment-ratio",
-        "rural-basic-sanitation",
-        "primary-female-teachers"
+        "pm25-exposure",
+        "renewable-electricity",
+        "health-expenditure",
+        "population-density",
+        "basic-sanitation"
       ],
       "categoryMix": {
-        "economy": 1,
-        "health": 1,
-        "labor": 1,
-        "settlement": 1,
-        "education": 1
+        "environment": 1,
+        "energy": 1,
+        "health": 2,
+        "settlement": 1
       },
       "mapDifficultyMix": {
         "standard": 5
@@ -3517,28 +3356,29 @@
       "path": "/data/v1/dailies/2026-09-24.json",
       "roundCount": 5,
       "roundIds": [
-        "worldprint-migrant-stock",
-        "worldprint-tuberculosis-incidence",
-        "worldprint-industry-share",
-        "worldprint-fertility-rate",
-        "worldprint-protected-land"
+        "worldprint-rural-population-growth",
+        "worldprint-internet-users",
+        "worldprint-out-of-school-primary",
+        "worldprint-manufacturing-share",
+        "worldprint-migrant-stock"
       ],
       "indicatorIds": [
-        "migrant-stock",
-        "tuberculosis-incidence",
-        "industry-share",
-        "fertility-rate",
-        "protected-land"
+        "rural-population-growth",
+        "internet-users",
+        "out-of-school-primary",
+        "manufacturing-share",
+        "migrant-stock"
       ],
       "categoryMix": {
-        "demography": 2,
-        "health": 1,
+        "settlement": 1,
+        "connectivity": 1,
+        "education": 1,
         "economy": 1,
-        "environment": 1
+        "demography": 1
       },
       "mapDifficultyMix": {
         "standard": 4,
-        "expert": 1
+        "intro": 1
       }
     },
     {
@@ -3546,25 +3386,173 @@
       "path": "/data/v1/dailies/2026-09-25.json",
       "roundCount": 5,
       "roundIds": [
-        "worldprint-health-expenditure",
-        "worldprint-employment-agriculture",
-        "worldprint-freshwater-per-capita",
-        "worldprint-renewable-electricity",
-        "worldprint-rural-population-growth"
+        "worldprint-under-five-mortality",
+        "worldprint-protected-land",
+        "worldprint-mobile-subscriptions",
+        "worldprint-urban-basic-drinking-water",
+        "worldprint-co2-per-capita"
       ],
       "indicatorIds": [
-        "health-expenditure",
-        "employment-agriculture",
-        "freshwater-per-capita",
-        "renewable-electricity",
-        "rural-population-growth"
+        "under-five-mortality",
+        "protected-land",
+        "mobile-subscriptions",
+        "urban-basic-drinking-water",
+        "co2-per-capita"
       ],
       "categoryMix": {
         "health": 1,
-        "labor": 1,
-        "environment": 1,
-        "energy": 1,
+        "environment": 2,
+        "connectivity": 1,
         "settlement": 1
+      },
+      "mapDifficultyMix": {
+        "standard": 5
+      }
+    },
+    {
+      "date": "2026-09-26",
+      "path": "/data/v1/dailies/2026-09-26.json",
+      "roundCount": 5,
+      "roundIds": [
+        "worldprint-cereal-yield",
+        "worldprint-safe-drinking-water",
+        "worldprint-merchandise-trade-share",
+        "worldprint-physicians",
+        "worldprint-women-parliament"
+      ],
+      "indicatorIds": [
+        "cereal-yield",
+        "safe-drinking-water",
+        "merchandise-trade-share",
+        "physicians",
+        "women-parliament"
+      ],
+      "categoryMix": {
+        "agriculture": 1,
+        "health": 2,
+        "economy": 1,
+        "development": 1
+      },
+      "mapDifficultyMix": {
+        "expert": 1,
+        "intro": 1,
+        "standard": 3
+      }
+    },
+    {
+      "date": "2026-09-27",
+      "path": "/data/v1/dailies/2026-09-27.json",
+      "roundCount": 5,
+      "roundIds": [
+        "worldprint-adolescent-fertility",
+        "worldprint-unemployment",
+        "worldprint-open-defecation",
+        "worldprint-coal-electricity-share",
+        "worldprint-energy-use"
+      ],
+      "indicatorIds": [
+        "adolescent-fertility",
+        "unemployment",
+        "open-defecation",
+        "coal-electricity-share",
+        "energy-use"
+      ],
+      "categoryMix": {
+        "demography": 1,
+        "labor": 1,
+        "health": 1,
+        "energy": 2
+      },
+      "mapDifficultyMix": {
+        "expert": 1,
+        "standard": 4
+      }
+    },
+    {
+      "date": "2026-09-28",
+      "path": "/data/v1/dailies/2026-09-28.json",
+      "roundCount": 5,
+      "roundIds": [
+        "worldprint-human-capital-index",
+        "worldprint-life-expectancy",
+        "worldprint-trade-share",
+        "worldprint-government-education-spending-share",
+        "worldprint-electricity-access"
+      ],
+      "indicatorIds": [
+        "human-capital-index",
+        "life-expectancy",
+        "trade-share",
+        "government-education-spending-share",
+        "electricity-access"
+      ],
+      "categoryMix": {
+        "development": 1,
+        "health": 1,
+        "economy": 1,
+        "education": 1,
+        "energy": 1
+      },
+      "mapDifficultyMix": {
+        "standard": 2,
+        "intro": 2,
+        "expert": 1
+      }
+    },
+    {
+      "date": "2026-09-29",
+      "path": "/data/v1/dailies/2026-09-29.json",
+      "roundCount": 5,
+      "roundIds": [
+        "worldprint-arable-land",
+        "worldprint-land-under-cereal",
+        "worldprint-food-production-index",
+        "worldprint-communications-service-exports",
+        "worldprint-forest-area"
+      ],
+      "indicatorIds": [
+        "arable-land",
+        "land-under-cereal",
+        "food-production-index",
+        "communications-service-exports",
+        "forest-area"
+      ],
+      "categoryMix": {
+        "land": 2,
+        "agriculture": 1,
+        "connectivity": 1,
+        "environment": 1
+      },
+      "mapDifficultyMix": {
+        "standard": 2,
+        "expert": 2,
+        "intro": 1
+      }
+    },
+    {
+      "date": "2026-09-30",
+      "path": "/data/v1/dailies/2026-09-30.json",
+      "roundCount": 5,
+      "roundIds": [
+        "worldprint-education-expenditure-savings",
+        "worldprint-permanent-cropland",
+        "worldprint-working-age-share",
+        "worldprint-freshwater-per-capita",
+        "worldprint-uhc-service-coverage"
+      ],
+      "indicatorIds": [
+        "education-expenditure-savings",
+        "permanent-cropland",
+        "working-age-share",
+        "freshwater-per-capita",
+        "uhc-service-coverage"
+      ],
+      "categoryMix": {
+        "education": 1,
+        "land": 1,
+        "demography": 1,
+        "environment": 1,
+        "health": 1
       },
       "mapDifficultyMix": {
         "standard": 5

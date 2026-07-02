@@ -170,12 +170,12 @@
     "valuesReference": "https://api.worldbank.org/v2/country/all/indicator/LP.LPI.OVRL.XQ?format=json&per_page=20000&page=1&date=2015%3A2025",
     "license": "Creative Commons Attribution 4.0 International unless specifically labeled otherwise by World Bank metadata",
     "licenseReference": "https://www.worldbank.org/en/about/legal/terms-of-use-for-datasets",
-    "retrievedAt": "2026-06-27T17:15:18.485570+00:00",
-    "checksum": "0f921bd213e9414a1a85262112e9654ec22f468d2be2f7f1dde5c8b3f46d4657",
+    "retrievedAt": "2026-07-02T22:38:49.315112+00:00",
+    "checksum": "7c2f71742e3ef2c9e7495839565fe4fcd5039ad62328a4e753d1a3940ded1867",
     "sourceOrganization": "Connecting to Compete - Logistics Performance Index (LPI), World Bank (WB), uri: https://lpi.worldbank.org"
   },
   "reviewStatus": "approved",
-  "contentVersion": "2026.06.22-exp2-qa1",
+  "contentVersion": "2026.07.02-exp4-content50",
   "editorial": {
     "shortHook": "A candidate map for logistics performance.",
     "patternNote": "The darkest countries include Finland, Netherlands, Denmark, while the lightest include Afghanistan, Libya, Somalia, Fed. Rep.; that contrast is the fastest way to read the logistics performance pattern.",
@@ -216,7 +216,7 @@
   },
   "editorialReview": {
     "status": "needs_review",
-    "reviewedAt": "2026-06-22",
+    "reviewedAt": "2026-07-02",
     "reviewedBy": "pipeline-default-needs-review",
     "qualityScore": 2,
     "funScore": 2,

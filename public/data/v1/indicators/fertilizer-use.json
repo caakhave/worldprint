@@ -204,12 +204,12 @@
     "valuesReference": "https://api.worldbank.org/v2/country/all/indicator/AG.CON.FERT.ZS?format=json&per_page=20000&page=1&date=2015%3A2025",
     "license": "Creative Commons Attribution 4.0 International unless specifically labeled otherwise by World Bank metadata",
     "licenseReference": "https://www.worldbank.org/en/about/legal/terms-of-use-for-datasets",
-    "retrievedAt": "2026-06-27T17:14:36.349374+00:00",
-    "checksum": "1db0330fae7097483c17bf702c04b43fc3fb21c19e938c7dcdd5625537e805ec",
+    "retrievedAt": "2026-07-02T22:21:27.210570+00:00",
+    "checksum": "cc242b594ea6ac21734f1f7b5b8ac5d137e4b61d3bee7fea89acd72cc27a9c11",
     "sourceOrganization": "FAO electronic files and web site, Food and Agriculture Organization of the United Nations (FAO), publisher: Food and Agriculture Organization of the United Nations (FAO)"
   },
   "reviewStatus": "approved",
-  "contentVersion": "2026.06.22-exp2-qa1",
+  "contentVersion": "2026.07.02-exp4-content50",
   "editorial": {
     "shortHook": "An intensive-farming input map.",
     "patternNote": "The darkest countries include Malaysia, Kuwait, New Zealand, while the lightest include Solomon Islands, Central African Republic, South Sudan; that contrast is the fastest way to read the fertilizer use per hectare pattern.",
@@ -251,7 +251,7 @@
   },
   "editorialReview": {
     "status": "needs_review",
-    "reviewedAt": "2026-06-22",
+    "reviewedAt": "2026-07-02",
     "reviewedBy": "Codex editorial QA",
     "qualityScore": 2,
     "funScore": 2,

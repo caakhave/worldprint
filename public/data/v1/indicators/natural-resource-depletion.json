@@ -191,12 +191,12 @@
     "valuesReference": "https://api.worldbank.org/v2/country/all/indicator/NY.ADJ.DRES.GN.ZS?format=json&per_page=20000&page=1&date=2015%3A2025",
     "license": "Creative Commons Attribution 4.0 International unless specifically labeled otherwise by World Bank metadata",
     "licenseReference": "https://www.worldbank.org/en/about/legal/terms-of-use-for-datasets",
-    "retrievedAt": "2026-06-27T17:14:58.632888+00:00",
-    "checksum": "b532672db13a50fe47fdefd78e20a93f74c406d1423fcddebc2d8580febeaec6",
+    "retrievedAt": "2026-07-02T22:33:36.940529+00:00",
+    "checksum": "5d3c6ef14d773d9cf495a7734fec521a19a1e78cb037e5794d1daf42183ff0a4",
     "sourceOrganization": "Staff estimates, World Bank (WB);\nThe Changing Wealth of Nations: Measuring Sustainable Development in the New Millennium, World Bank (WB)"
   },
   "reviewStatus": "approved",
-  "contentVersion": "2026.06.22-exp2-qa1",
+  "contentVersion": "2026.07.02-exp4-content50",
   "editorial": {
     "shortHook": "A candidate map for natural resource depletion.",
     "patternNote": "The darkest countries include Timor-Leste, Congo, Dem. Rep., Guyana, while the lightest include Benin, Lebanon, Solomon Islands; that contrast is the fastest way to read the natural resource depletion pattern.",
@@ -221,12 +221,12 @@
         "reason": "Natural resource rents can tempt players because it shares a strong country ranking with this map, but its unit and definition point to a different story."
       },
       {
-        "confusedWithIndicatorCode": "NV.SRV.TOTL.ZS",
-        "reason": "Services value added overlaps with part of the visible pattern, but the full country spread does not match."
+        "confusedWithIndicatorCode": "NY.ADJ.DNGY.GN.ZS",
+        "reason": "Energy depletion share overlaps with part of the visible pattern, but the full country spread does not match."
       },
       {
-        "confusedWithIndicatorCode": "SP.POP.65UP.TO.ZS",
-        "reason": "Population ages 65+ overlaps with part of the visible pattern, but the full country spread does not match."
+        "confusedWithIndicatorCode": "EG.IMP.CONS.ZS",
+        "reason": "Net energy imports can tempt players because it shares a strong country ranking with this map, but its unit and definition point to a different story."
       }
     ],
     "difficultyReason": "Expert difficulty: the map can be mistaken for adjacent indicators unless players probe a high, low, and middle country.",
@@ -237,7 +237,7 @@
   },
   "editorialReview": {
     "status": "needs_review",
-    "reviewedAt": "2026-06-22",
+    "reviewedAt": "2026-07-02",
     "reviewedBy": "pipeline-default-needs-review",
     "qualityScore": 2,
     "funScore": 2,

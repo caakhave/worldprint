@@ -208,12 +208,12 @@
     "valuesReference": "https://api.worldbank.org/v2/country/all/indicator/EG.ELC.NGAS.ZS?format=json&per_page=20000&page=1&date=2015%3A2025",
     "license": "Creative Commons Attribution 4.0 International unless specifically labeled otherwise by World Bank metadata",
     "licenseReference": "https://www.worldbank.org/en/about/legal/terms-of-use-for-datasets",
-    "retrievedAt": "2026-06-27T17:15:00.639405+00:00",
-    "checksum": "fb0ef52c3f9daf6a49107dbbabf597cba1d09d3fc8081b300cbc159c46675b2e",
+    "retrievedAt": "2026-07-02T22:34:41.195027+00:00",
+    "checksum": "ddd3d23e1b73bb32b225060160db673e334d4ab48a4a5659ec0d2f60a2fde416",
     "sourceOrganization": "IEA Energy Statistics Data Browser, International Energy Agency (IEA), uri: https://www.iea.org/data-and-statistics/data-tools/energy-statistics-data-browser, publisher: International Energy Agency (IEA), date accessed: 2025-03-25"
   },
   "reviewStatus": "approved",
-  "contentVersion": "2026.06.22-exp2-qa1",
+  "contentVersion": "2026.07.02-exp4-content50",
   "editorial": {
     "shortHook": "A candidate map for natural gas electricity share.",
     "patternNote": "The darkest countries include Qatar, Turkmenistan, Trinidad and Tobago, while the lightest include Afghanistan, Albania, Burundi; that contrast is the fastest way to read the natural gas electricity share pattern.",
@@ -238,12 +238,12 @@
         "reason": "Fossil electricity share lives in the same category, so it can feel plausible until the high and low countries are checked."
       },
       {
-        "confusedWithIndicatorCode": "EG.ELC.RNEW.ZS",
-        "reason": "Renewable electricity lives in the same category, so it can feel plausible until the high and low countries are checked."
+        "confusedWithIndicatorCode": "NY.ADJ.DNGY.GN.ZS",
+        "reason": "Energy depletion share lives in the same category, so it can feel plausible until the high and low countries are checked."
       },
       {
-        "confusedWithIndicatorCode": "EG.ELC.HYRO.ZS",
-        "reason": "Hydroelectricity share lives in the same category, so it can feel plausible until the high and low countries are checked."
+        "confusedWithIndicatorCode": "EG.ELC.RNEW.ZS",
+        "reason": "Renewable electricity lives in the same category, so it can feel plausible until the high and low countries are checked."
       }
     ],
     "difficultyReason": "Standard difficulty: the map has readable regional structure, but the best answer still depends on checking the unit and country anchors.",
@@ -254,7 +254,7 @@
   },
   "editorialReview": {
     "status": "practice_eligible",
-    "reviewedAt": "2026-06-22",
+    "reviewedAt": "2026-07-02",
     "reviewedBy": "Codex editorial QA",
     "qualityScore": 3,
     "funScore": 4,

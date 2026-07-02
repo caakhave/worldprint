@@ -207,12 +207,12 @@
     "valuesReference": "https://api.worldbank.org/v2/country/all/indicator/AG.PRD.LVSK.XD?format=json&per_page=20000&page=1&date=2015%3A2025",
     "license": "Creative Commons Attribution 4.0 International unless specifically labeled otherwise by World Bank metadata",
     "licenseReference": "https://www.worldbank.org/en/about/legal/terms-of-use-for-datasets",
-    "retrievedAt": "2026-06-27T17:14:50.044289+00:00",
-    "checksum": "c61668d3c95a0a4477964913573131a8094b5482d069e88f52ad81fe87ffb45b",
+    "retrievedAt": "2026-07-02T22:28:33.539716+00:00",
+    "checksum": "6afad9312baef388c7fb5e38ab27bf43f4ff7f9bf1e27c30411d29385f43b8d1",
     "sourceOrganization": "FAO electronic files and web site, Food and Agriculture Organization of the United Nations (FAO), publisher: Food and Agriculture Organization of the United Nations (FAO)"
   },
   "reviewStatus": "approved",
-  "contentVersion": "2026.06.22-exp2-qa1",
+  "contentVersion": "2026.07.02-exp4-content50",
   "editorial": {
     "shortHook": "A candidate map for livestock production index.",
     "patternNote": "The darkest countries include Malawi, Indonesia, Oman, while the lightest include Myanmar, Gambia, The, Vanuatu; that contrast is the fastest way to read the livestock production index pattern.",
@@ -237,12 +237,12 @@
         "reason": "Food production index can tempt players because it shares a strong country ranking with this map, but its unit and definition point to a different story."
       },
       {
-        "confusedWithIndicatorCode": "SP.DYN.CDRT.IN",
-        "reason": "Death rate overlaps with part of the visible pattern, but the full country spread does not match."
+        "confusedWithIndicatorCode": "EN.GHG.TOT.ZG.AR5",
+        "reason": "Greenhouse gas emissions change overlaps with part of the visible pattern, but the full country spread does not match."
       },
       {
-        "confusedWithIndicatorCode": "AG.PRD.CROP.XD",
-        "reason": "Crop production index lives in the same category, so it can feel plausible until the high and low countries are checked."
+        "confusedWithIndicatorCode": "EN.GHG.CH4.ZG.AR5",
+        "reason": "Methane emissions change overlaps with part of the visible pattern, but the full country spread does not match."
       }
     ],
     "difficultyReason": "Standard difficulty: the map has readable regional structure, but the best answer still depends on checking the unit and country anchors.",
@@ -253,7 +253,7 @@
   },
   "editorialReview": {
     "status": "needs_review",
-    "reviewedAt": "2026-06-22",
+    "reviewedAt": "2026-07-02",
     "reviewedBy": "Codex editorial QA",
     "qualityScore": 3,
     "funScore": 3,

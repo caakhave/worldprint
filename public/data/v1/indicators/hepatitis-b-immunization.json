@@ -200,12 +200,12 @@
     "valuesReference": "https://api.worldbank.org/v2/country/all/indicator/SH.IMM.HEPB?format=json&per_page=20000&page=1&date=2015%3A2025",
     "license": "Creative Commons Attribution 4.0 International unless specifically labeled otherwise by World Bank metadata",
     "licenseReference": "https://www.worldbank.org/en/about/legal/terms-of-use-for-datasets",
-    "retrievedAt": "2026-06-27T17:14:43.516548+00:00",
-    "checksum": "656f2816fea266f20c4d7af60d4b568bb06fa152a1ba786afc3ee756ed4d41d0",
+    "retrievedAt": "2026-07-02T22:23:16.596349+00:00",
+    "checksum": "646064677115a92cdb80f69ba9d52d7f00ad886d0a7503de7e7b09ad3627d470",
     "sourceOrganization": "World Health Organization (WHO), uri: http://www.who.int/immunization/monitoring_surveillance/en/;\nUN Children's Fund (UNICEF)"
   },
   "reviewStatus": "approved",
-  "contentVersion": "2026.06.22-exp2-qa1",
+  "contentVersion": "2026.07.02-exp4-content50",
   "editorial": {
     "shortHook": "A candidate map for hepatitis b immunization.",
     "patternNote": "The darkest countries include Turkiye, Turkmenistan, Portugal, while the lightest include Sudan, Central African Republic, Papua New Guinea; that contrast is the fastest way to read the hepatitis b immunization pattern.",
@@ -246,7 +246,7 @@
   },
   "editorialReview": {
     "status": "retired",
-    "reviewedAt": "2026-06-22",
+    "reviewedAt": "2026-07-02",
     "reviewedBy": "Codex editorial QA",
     "qualityScore": 2,
     "funScore": 2,

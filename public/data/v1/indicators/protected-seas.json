@@ -171,12 +171,12 @@
     "valuesReference": "https://api.worldbank.org/v2/country/all/indicator/ER.MRN.PTMR.ZS?format=json&per_page=20000&page=1&date=2015%3A2025",
     "license": "Creative Commons Attribution 4.0 International unless specifically labeled otherwise by World Bank metadata",
     "licenseReference": "https://www.worldbank.org/en/about/legal/terms-of-use-for-datasets",
-    "retrievedAt": "2026-06-27T17:14:34.455494+00:00",
-    "checksum": "236adb166cf47c4a81be6d8e2cc081faeec6686843a621de9bcd069126d6b162",
+    "retrievedAt": "2026-07-02T22:21:16.189686+00:00",
+    "checksum": "2d6659a3a5740137cc47351a5b448a08ddcb8ff20c32ea627133052306881b12",
     "sourceOrganization": "Protected Planet: The World Database on Protected Areas (WDPA) and World Database on Other Effective Area-based Conservation Measures (WD-OECM), UN Environment Programme World Conservation Monitoring Centre (UNEP-WCMC), uri: https://www.protectedplanet.net/en, note: Only the latest data can be retrieved from the Protected Planet website. The time series are provided directly to WDI by Protected Planet., publisher: Protected Planet, date accessed: 20240516, date published: 202405;\nInternational Union for Conservation of Nature (IUCN), uri: https://www.protectedplanet.net/en, publisher: Protected Planet, date accessed: 20240516"
   },
   "reviewStatus": "approved",
-  "contentVersion": "2026.06.22-exp2-qa1",
+  "contentVersion": "2026.07.02-exp4-content50",
   "editorial": {
     "shortHook": "A marine-conservation map with island and coastal surprises.",
     "patternNote": "The darkest countries include New Caledonia, Kazakhstan, France, while the lightest include Angola, Bosnia and Herzegovina, Brunei Darussalam; that contrast is the fastest way to read the protected seas pattern.",
@@ -205,8 +205,8 @@
         "reason": "Safely managed sanitation overlaps with part of the visible pattern, but the full country spread does not match."
       },
       {
-        "confusedWithIndicatorCode": "IT.NET.SECR.P6",
-        "reason": "Secure internet servers overlaps with part of the visible pattern, but the full country spread does not match."
+        "confusedWithIndicatorCode": "SH.STA.AIRP.P5",
+        "reason": "Air pollution mortality overlaps with part of the visible pattern, but the full country spread does not match."
       }
     ],
     "difficultyReason": "Expert difficulty: the map can be mistaken for adjacent indicators unless players probe a high, low, and middle country.",
@@ -217,7 +217,7 @@
   },
   "editorialReview": {
     "status": "practice_eligible",
-    "reviewedAt": "2026-06-22",
+    "reviewedAt": "2026-07-02",
     "reviewedBy": "Codex editorial QA",
     "qualityScore": 3,
     "funScore": 4,

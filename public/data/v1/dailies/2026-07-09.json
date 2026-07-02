@@ -2,32 +2,33 @@
   "schemaVersion": "1.1.0",
   "game": "worldprint",
   "date": "2026-07-09",
-  "contentVersion": "2026.06.22-exp2-qa1",
+  "contentVersion": "2026.07.02-exp4-content50",
   "roundIds": [
-    "worldprint-trade-share",
-    "worldprint-primary-female-teachers",
-    "worldprint-female-industry-employment",
-    "worldprint-co2-per-capita",
-    "worldprint-unemployment"
+    "worldprint-youth-employment-ratio",
+    "worldprint-renewable-electricity",
+    "worldprint-tuberculosis-incidence",
+    "worldprint-population-density",
+    "worldprint-mobile-subscriptions"
   ],
   "indicatorIds": [
-    "trade-share",
-    "primary-female-teachers",
-    "female-industry-employment",
-    "co2-per-capita",
-    "unemployment"
+    "youth-employment-ratio",
+    "renewable-electricity",
+    "tuberculosis-incidence",
+    "population-density",
+    "mobile-subscriptions"
   ],
   "categoryMix": {
-    "economy": 1,
-    "education": 1,
-    "labor": 2,
-    "environment": 1
+    "labor": 1,
+    "energy": 1,
+    "health": 1,
+    "settlement": 1,
+    "connectivity": 1
   },
   "mapDifficultyMix": {
     "standard": 4,
     "expert": 1
   },
-  "generatedAt": "2026-06-27T17:16:22.618948+00:00",
+  "generatedAt": "2026-07-02T22:58:41.350079+00:00",
   "generatorVersion": "daily-manifest-v2",
   "varietyNotes": [
     "Selected with category, difficulty, repeat-cooldown, and same-day correlation safeguards."

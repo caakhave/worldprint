@@ -1,22 +1,22 @@
 {
   "schemaVersion": "1.1.0",
-  "contentVersion": "2026.06.22-exp2-qa1",
-  "generatedAt": "2026-06-27T17:16:22.610178+00:00",
-  "candidateCount": 285,
-  "approvedCount": 226,
+  "contentVersion": "2026.07.02-exp4-content50",
+  "generatedAt": "2026-07-02T22:58:41.341972+00:00",
+  "candidateCount": 335,
+  "approvedCount": 276,
   "draftCount": 59,
   "statusCounts": {
-    "daily_eligible": 65,
-    "expert_only": 73,
+    "daily_eligible": 72,
+    "expert_only": 99,
     "needs_review": 91,
-    "practice_eligible": 47,
+    "practice_eligible": 64,
     "retired": 9
   },
   "approvedStatusCounts": {
-    "daily_eligible": 62,
-    "expert_only": 70,
+    "daily_eligible": 69,
+    "expert_only": 96,
     "needs_review": 43,
-    "practice_eligible": 43,
+    "practice_eligible": 60,
     "retired": 8
   },
   "indicators": [
@@ -34,7 +34,7 @@
       "dataFailures": [],
       "editorialReview": {
         "status": "daily_eligible",
-        "reviewedAt": "2026-06-22",
+        "reviewedAt": "2026-07-02",
         "reviewedBy": "Codex editorial QA",
         "qualityScore": 4,
         "funScore": 4,
@@ -47,6 +47,68 @@
         "reviewNotes": [
           "Batch 2 promotion: Account ownership passed the source gate with broad enough coverage and a readable map pattern.",
           "Daily-eligible, but keep close same-topic distractors out of easier tiers during outside beta."
+        ],
+        "acceptableCloseDistractorIds": []
+      }
+    },
+    {
+      "id": "account-ownership-poorest40",
+      "providerCode": "FX.OWN.TOTL.40.ZS",
+      "shortTitle": "Account ownership, poorest 40%",
+      "category": "development",
+      "difficulty": "expert",
+      "year": 2024,
+      "coverage": 131,
+      "sourceReference": "https://api.worldbank.org/v2/indicator/FX.OWN.TOTL.40.ZS?format=json&per_page=1",
+      "approvalStatus": "approved",
+      "dataWarnings": [],
+      "dataFailures": [],
+      "editorialReview": {
+        "status": "practice_eligible",
+        "reviewedAt": "2026-07-02",
+        "reviewedBy": "Codex editorial QA",
+        "qualityScore": 4,
+        "funScore": 4,
+        "fairnessScore": 3,
+        "ambiguityRisk": "medium",
+        "dailyEligible": false,
+        "practiceEligible": true,
+        "challengeEligible": true,
+        "expertOnly": false,
+        "reviewNotes": [
+          "Batch 4 promotion: meaningful financial-inclusion map for poorer adults with a clear percent unit.",
+          "Practice-only because survey-wave timing and financial-inclusion distractors need testing."
+        ],
+        "acceptableCloseDistractorIds": []
+      }
+    },
+    {
+      "id": "adjusted-net-savings",
+      "providerCode": "NY.ADJ.SVNG.GN.ZS",
+      "shortTitle": "Adjusted net savings",
+      "category": "development",
+      "difficulty": "expert",
+      "year": 2020,
+      "coverage": 134,
+      "sourceReference": "https://api.worldbank.org/v2/indicator/NY.ADJ.SVNG.GN.ZS?format=json&per_page=1",
+      "approvalStatus": "approved",
+      "dataWarnings": [],
+      "dataFailures": [],
+      "editorialReview": {
+        "status": "practice_eligible",
+        "reviewedAt": "2026-07-02",
+        "reviewedBy": "Codex editorial QA",
+        "qualityScore": 4,
+        "funScore": 4,
+        "fairnessScore": 3,
+        "ambiguityRisk": "medium",
+        "dailyEligible": false,
+        "practiceEligible": true,
+        "challengeEligible": true,
+        "expertOnly": false,
+        "reviewNotes": [
+          "Batch 4 promotion: sustainability-and-savings map adds development depth beyond GDP or income.",
+          "Practice-only because adjusted-savings concepts are advanced."
         ],
         "acceptableCloseDistractorIds": []
       }
@@ -65,7 +127,7 @@
       "dataFailures": [],
       "editorialReview": {
         "status": "daily_eligible",
-        "reviewedAt": "2026-06-22",
+        "reviewedAt": "2026-07-02",
         "reviewedBy": "Codex editorial QA",
         "qualityScore": 4,
         "funScore": 4,
@@ -99,7 +161,7 @@
       ],
       "editorialReview": {
         "status": "daily_eligible",
-        "reviewedAt": "2026-06-22",
+        "reviewedAt": "2026-07-02",
         "reviewedBy": "Codex editorial QA",
         "qualityScore": 4,
         "funScore": 3,
@@ -130,7 +192,7 @@
       "dataFailures": [],
       "editorialReview": {
         "status": "expert_only",
-        "reviewedAt": "2026-06-22",
+        "reviewedAt": "2026-07-02",
         "reviewedBy": "Codex editorial QA",
         "qualityScore": 3,
         "funScore": 3,
@@ -161,7 +223,7 @@
       "dataFailures": [],
       "editorialReview": {
         "status": "expert_only",
-        "reviewedAt": "2026-06-22",
+        "reviewedAt": "2026-07-02",
         "reviewedBy": "Codex editorial QA",
         "qualityScore": 3,
         "funScore": 4,
@@ -184,7 +246,7 @@
       "shortTitle": "Age dependency ratio",
       "category": "demography",
       "difficulty": "standard",
-      "year": 2024,
+      "year": 2025,
       "coverage": 169,
       "sourceReference": "https://api.worldbank.org/v2/indicator/SP.POP.DPND?format=json&per_page=1",
       "approvalStatus": "approved",
@@ -192,7 +254,7 @@
       "dataFailures": [],
       "editorialReview": {
         "status": "daily_eligible",
-        "reviewedAt": "2026-06-22",
+        "reviewedAt": "2026-07-02",
         "reviewedBy": "Codex editorial QA",
         "qualityScore": 4,
         "funScore": 4,
@@ -223,7 +285,7 @@
       "dataFailures": [],
       "editorialReview": {
         "status": "practice_eligible",
-        "reviewedAt": "2026-06-22",
+        "reviewedAt": "2026-07-02",
         "reviewedBy": "Codex editorial QA",
         "qualityScore": 3,
         "funScore": 3,
@@ -254,7 +316,7 @@
       "dataFailures": [],
       "editorialReview": {
         "status": "expert_only",
-        "reviewedAt": "2026-06-22",
+        "reviewedAt": "2026-07-02",
         "reviewedBy": "Codex editorial QA",
         "qualityScore": 3,
         "funScore": 3,
@@ -285,7 +347,7 @@
       "dataFailures": [],
       "editorialReview": {
         "status": "retired",
-        "reviewedAt": "2026-06-22",
+        "reviewedAt": "2026-07-02",
         "reviewedBy": "Codex editorial QA",
         "qualityScore": 2,
         "funScore": 2,
@@ -316,7 +378,7 @@
       "dataFailures": [],
       "editorialReview": {
         "status": "practice_eligible",
-        "reviewedAt": "2026-06-22",
+        "reviewedAt": "2026-07-02",
         "reviewedBy": "Codex editorial QA",
         "qualityScore": 4,
         "funScore": 4,
@@ -339,15 +401,15 @@
       "shortTitle": "Agriculture value growth",
       "category": "agriculture",
       "difficulty": "expert",
-      "year": 2024,
-      "coverage": 149,
+      "year": 2025,
+      "coverage": 142,
       "sourceReference": "https://api.worldbank.org/v2/indicator/NV.AGR.TOTL.KD.ZG?format=json&per_page=1",
       "approvalStatus": "approved",
       "dataWarnings": [],
       "dataFailures": [],
       "editorialReview": {
         "status": "needs_review",
-        "reviewedAt": "2026-06-22",
+        "reviewedAt": "2026-07-02",
         "reviewedBy": "Codex editorial QA",
         "qualityScore": 3,
         "funScore": 2,
@@ -378,7 +440,7 @@
       "dataFailures": [],
       "editorialReview": {
         "status": "expert_only",
-        "reviewedAt": "2026-06-22",
+        "reviewedAt": "2026-07-02",
         "reviewedBy": "Codex editorial QA",
         "qualityScore": 4,
         "funScore": 4,
@@ -409,7 +471,7 @@
       "dataFailures": [],
       "editorialReview": {
         "status": "expert_only",
-        "reviewedAt": "2026-06-22",
+        "reviewedAt": "2026-07-02",
         "reviewedBy": "Codex editorial QA",
         "qualityScore": 4,
         "funScore": 4,
@@ -432,15 +494,15 @@
       "shortTitle": "Agriculture value added",
       "category": "economy",
       "difficulty": "standard",
-      "year": 2024,
-      "coverage": 149,
+      "year": 2025,
+      "coverage": 139,
       "sourceReference": "https://api.worldbank.org/v2/indicator/NV.AGR.TOTL.ZS?format=json&per_page=1",
       "approvalStatus": "approved",
       "dataWarnings": [],
       "dataFailures": [],
       "editorialReview": {
         "status": "daily_eligible",
-        "reviewedAt": "2026-06-22",
+        "reviewedAt": "2026-07-02",
         "reviewedBy": "Codex editorial QA",
         "qualityScore": 4,
         "funScore": 4,
@@ -463,15 +525,15 @@
       "shortTitle": "Agriculture value per worker",
       "category": "agriculture",
       "difficulty": "expert",
-      "year": 2024,
-      "coverage": 146,
+      "year": 2025,
+      "coverage": 139,
       "sourceReference": "https://api.worldbank.org/v2/indicator/NV.AGR.EMPL.KD?format=json&per_page=1",
       "approvalStatus": "approved",
       "dataWarnings": [],
       "dataFailures": [],
       "editorialReview": {
         "status": "expert_only",
-        "reviewedAt": "2026-06-22",
+        "reviewedAt": "2026-07-02",
         "reviewedBy": "Codex editorial QA",
         "qualityScore": 3,
         "funScore": 3,
@@ -502,7 +564,7 @@
       "dataFailures": [],
       "editorialReview": {
         "status": "expert_only",
-        "reviewedAt": "2026-06-22",
+        "reviewedAt": "2026-07-02",
         "reviewedBy": "Codex editorial QA",
         "qualityScore": 3,
         "funScore": 3,
@@ -533,7 +595,7 @@
       "dataFailures": [],
       "editorialReview": {
         "status": "expert_only",
-        "reviewedAt": "2026-06-22",
+        "reviewedAt": "2026-07-02",
         "reviewedBy": "Codex editorial QA",
         "qualityScore": 3,
         "funScore": 4,
@@ -564,7 +626,7 @@
       "dataFailures": [],
       "editorialReview": {
         "status": "expert_only",
-        "reviewedAt": "2026-06-22",
+        "reviewedAt": "2026-07-02",
         "reviewedBy": "Codex editorial QA",
         "qualityScore": 3,
         "funScore": 3,
@@ -577,6 +639,99 @@
         "reviewNotes": [
           "Batch 3 QA: source-valid transport-volume map with recognizable hubs.",
           "Expert-only because raw passenger counts favor population, tourism, and hub-country size."
+        ],
+        "acceptableCloseDistractorIds": []
+      }
+    },
+    {
+      "id": "air-pollution-mortality",
+      "providerCode": "SH.STA.AIRP.P5",
+      "shortTitle": "Air pollution mortality",
+      "category": "health",
+      "difficulty": "expert",
+      "year": 2019,
+      "coverage": 165,
+      "sourceReference": "https://api.worldbank.org/v2/indicator/SH.STA.AIRP.P5?format=json&per_page=1",
+      "approvalStatus": "approved",
+      "dataWarnings": [],
+      "dataFailures": [],
+      "editorialReview": {
+        "status": "practice_eligible",
+        "reviewedAt": "2026-07-02",
+        "reviewedBy": "Codex editorial QA",
+        "qualityScore": 4,
+        "funScore": 5,
+        "fairnessScore": 3,
+        "ambiguityRisk": "medium",
+        "dailyEligible": false,
+        "practiceEligible": true,
+        "challengeEligible": true,
+        "expertOnly": false,
+        "reviewNotes": [
+          "Batch 4 promotion: high-interest health/environment crossover with a strong spatial pattern.",
+          "Practice-only because mortality-rate maps need careful answer-choice framing."
+        ],
+        "acceptableCloseDistractorIds": []
+      }
+    },
+    {
+      "id": "alternative-nuclear-energy",
+      "providerCode": "EG.USE.COMM.CL.ZS",
+      "shortTitle": "Alternative and nuclear energy",
+      "category": "energy",
+      "difficulty": "expert",
+      "year": 2023,
+      "coverage": 142,
+      "sourceReference": "https://api.worldbank.org/v2/indicator/EG.USE.COMM.CL.ZS?format=json&per_page=1",
+      "approvalStatus": "approved",
+      "dataWarnings": [],
+      "dataFailures": [],
+      "editorialReview": {
+        "status": "practice_eligible",
+        "reviewedAt": "2026-07-02",
+        "reviewedBy": "Codex editorial QA",
+        "qualityScore": 4,
+        "funScore": 4,
+        "fairnessScore": 3,
+        "ambiguityRisk": "medium",
+        "dailyEligible": false,
+        "practiceEligible": true,
+        "challengeEligible": true,
+        "expertOnly": false,
+        "reviewNotes": [
+          "Batch 4 promotion: interesting non-fossil energy-use signal with nuclear, hydro, and geothermal clues.",
+          "Practice-only because it overlaps partly with existing nuclear and hydro electricity shares."
+        ],
+        "acceptableCloseDistractorIds": []
+      }
+    },
+    {
+      "id": "antiretroviral-therapy-coverage",
+      "providerCode": "SH.HIV.ARTC.ZS",
+      "shortTitle": "Antiretroviral therapy coverage",
+      "category": "health",
+      "difficulty": "expert",
+      "year": 2024,
+      "coverage": 120,
+      "sourceReference": "https://api.worldbank.org/v2/indicator/SH.HIV.ARTC.ZS?format=json&per_page=1",
+      "approvalStatus": "approved",
+      "dataWarnings": [],
+      "dataFailures": [],
+      "editorialReview": {
+        "status": "expert_only",
+        "reviewedAt": "2026-07-02",
+        "reviewedBy": "Codex editorial QA",
+        "qualityScore": 3,
+        "funScore": 3,
+        "fairnessScore": 3,
+        "ambiguityRisk": "medium",
+        "dailyEligible": false,
+        "practiceEligible": true,
+        "challengeEligible": true,
+        "expertOnly": true,
+        "reviewNotes": [
+          "Batch 4 QA: useful treatment-access map but narrower than broad health-system indicators.",
+          "Expert-only until HIV-related distractors and reveal wording are reviewed together."
         ],
         "acceptableCloseDistractorIds": []
       }
@@ -595,7 +750,7 @@
       "dataFailures": [],
       "editorialReview": {
         "status": "daily_eligible",
-        "reviewedAt": "2026-06-22",
+        "reviewedAt": "2026-07-02",
         "reviewedBy": "Codex editorial QA",
         "qualityScore": 4,
         "funScore": 4,
@@ -626,7 +781,7 @@
       "dataFailures": [],
       "editorialReview": {
         "status": "expert_only",
-        "reviewedAt": "2026-06-22",
+        "reviewedAt": "2026-07-02",
         "reviewedBy": "Codex editorial QA",
         "qualityScore": 3,
         "funScore": 4,
@@ -657,7 +812,7 @@
       "dataFailures": [],
       "editorialReview": {
         "status": "daily_eligible",
-        "reviewedAt": "2026-06-22",
+        "reviewedAt": "2026-07-02",
         "reviewedBy": "Codex editorial QA",
         "qualityScore": 4,
         "funScore": 4,
@@ -675,20 +830,51 @@
       }
     },
     {
+      "id": "atm-density",
+      "providerCode": "FB.ATM.TOTL.P5",
+      "shortTitle": "ATM density",
+      "category": "connectivity",
+      "difficulty": "standard",
+      "year": 2024,
+      "coverage": 125,
+      "sourceReference": "https://api.worldbank.org/v2/indicator/FB.ATM.TOTL.P5?format=json&per_page=1",
+      "approvalStatus": "approved",
+      "dataWarnings": [],
+      "dataFailures": [],
+      "editorialReview": {
+        "status": "practice_eligible",
+        "reviewedAt": "2026-07-02",
+        "reviewedBy": "Codex editorial QA",
+        "qualityScore": 4,
+        "funScore": 4,
+        "fairnessScore": 4,
+        "ambiguityRisk": "medium",
+        "dailyEligible": false,
+        "practiceEligible": true,
+        "challengeEligible": true,
+        "expertOnly": false,
+        "reviewNotes": [
+          "Batch 4 promotion: tangible financial-infrastructure clue with just enough coverage to pass the source gate.",
+          "Practice-only until checked against bank-branch and account-ownership maps."
+        ],
+        "acceptableCloseDistractorIds": []
+      }
+    },
+    {
       "id": "bank-branches",
       "providerCode": "FB.CBK.BRCH.P5",
       "shortTitle": "Commercial bank branches",
       "category": "connectivity",
       "difficulty": "expert",
-      "year": 2022,
-      "coverage": 138,
+      "year": 2024,
+      "coverage": 128,
       "sourceReference": "https://api.worldbank.org/v2/indicator/FB.CBK.BRCH.P5?format=json&per_page=1",
       "approvalStatus": "approved",
       "dataWarnings": [],
       "dataFailures": [],
       "editorialReview": {
         "status": "expert_only",
-        "reviewedAt": "2026-06-22",
+        "reviewedAt": "2026-07-02",
         "reviewedBy": "Codex editorial QA",
         "qualityScore": 3,
         "funScore": 3,
@@ -701,6 +887,37 @@
         "reviewNotes": [
           "Batch 2 promotion: Commercial bank branches is source-valid but more technical or correlated than a default Daily map.",
           "Keep to advanced tiers and review confusion notes before broader promotion."
+        ],
+        "acceptableCloseDistractorIds": []
+      }
+    },
+    {
+      "id": "bank-capital-assets",
+      "providerCode": "FB.BNK.CAPA.ZS",
+      "shortTitle": "Bank capital to assets",
+      "category": "economy",
+      "difficulty": "expert",
+      "year": 2021,
+      "coverage": 121,
+      "sourceReference": "https://api.worldbank.org/v2/indicator/FB.BNK.CAPA.ZS?format=json&per_page=1",
+      "approvalStatus": "approved",
+      "dataWarnings": [],
+      "dataFailures": [],
+      "editorialReview": {
+        "status": "expert_only",
+        "reviewedAt": "2026-07-02",
+        "reviewedBy": "Codex editorial QA",
+        "qualityScore": 3,
+        "funScore": 3,
+        "fairnessScore": 3,
+        "ambiguityRisk": "high",
+        "dailyEligible": false,
+        "practiceEligible": true,
+        "challengeEligible": true,
+        "expertOnly": true,
+        "reviewNotes": [
+          "Batch 4 QA: financial-system resilience indicator with passing but thin coverage.",
+          "Expert-only because banking definitions and selected years need careful interpretation."
         ],
         "acceptableCloseDistractorIds": []
       }
@@ -719,7 +936,7 @@
       "dataFailures": [],
       "editorialReview": {
         "status": "daily_eligible",
-        "reviewedAt": "2026-06-22",
+        "reviewedAt": "2026-07-02",
         "reviewedBy": "Codex editorial QA",
         "qualityScore": 4,
         "funScore": 4,
@@ -750,7 +967,7 @@
       "dataFailures": [],
       "editorialReview": {
         "status": "practice_eligible",
-        "reviewedAt": "2026-06-22",
+        "reviewedAt": "2026-07-02",
         "reviewedBy": "Codex editorial QA",
         "qualityScore": 3,
         "funScore": 3,
@@ -773,18 +990,18 @@
       "shortTitle": "Commercial bank borrowers",
       "category": "connectivity",
       "difficulty": "expert",
-      "year": 2023,
-      "coverage": 64,
+      "year": 2024,
+      "coverage": 75,
       "sourceReference": "https://api.worldbank.org/v2/indicator/FB.CBK.BRWR.P3?format=json&per_page=1",
       "approvalStatus": "draft",
       "dataWarnings": [],
       "dataFailures": [
-        "borrowers-commercial-banks: no year in 2015:2025 met 120 mapped countries; best coverage was 88",
-        "borrowers-commercial-banks: selected coverage 64 is below 120"
+        "borrowers-commercial-banks: no year in 2015:2025 met 120 mapped countries; best coverage was 89",
+        "borrowers-commercial-banks: selected coverage 75 is below 120"
       ],
       "editorialReview": {
         "status": "needs_review",
-        "reviewedAt": "2026-06-22",
+        "reviewedAt": "2026-07-02",
         "reviewedBy": "pipeline-default-needs-review",
         "qualityScore": 2,
         "funScore": 2,
@@ -796,6 +1013,37 @@
         "expertOnly": false,
         "reviewNotes": [
           "Loaded from the candidate intake queue and default-held as Needs review until a human editor classifies it."
+        ],
+        "acceptableCloseDistractorIds": []
+      }
+    },
+    {
+      "id": "broad-money-share",
+      "providerCode": "FM.LBL.BMNY.GD.ZS",
+      "shortTitle": "Broad money share",
+      "category": "economy",
+      "difficulty": "expert",
+      "year": 2021,
+      "coverage": 120,
+      "sourceReference": "https://api.worldbank.org/v2/indicator/FM.LBL.BMNY.GD.ZS?format=json&per_page=1",
+      "approvalStatus": "approved",
+      "dataWarnings": [],
+      "dataFailures": [],
+      "editorialReview": {
+        "status": "expert_only",
+        "reviewedAt": "2026-07-02",
+        "reviewedBy": "Codex editorial QA",
+        "qualityScore": 3,
+        "funScore": 3,
+        "fairnessScore": 3,
+        "ambiguityRisk": "high",
+        "dailyEligible": false,
+        "practiceEligible": true,
+        "challengeEligible": true,
+        "expertOnly": true,
+        "reviewNotes": [
+          "Batch 4 QA: useful monetary-depth map for advanced economy rounds.",
+          "Expert-only because the unit is technical and coverage is thinner than core macro rows."
         ],
         "acceptableCloseDistractorIds": []
       }
@@ -816,7 +1064,7 @@
       ],
       "editorialReview": {
         "status": "needs_review",
-        "reviewedAt": "2026-06-22",
+        "reviewedAt": "2026-07-02",
         "reviewedBy": "pipeline-default-needs-review",
         "qualityScore": 2,
         "funScore": 2,
@@ -833,20 +1081,82 @@
       }
     },
     {
+      "id": "capture-fisheries-production",
+      "providerCode": "ER.FSH.CAPT.MT",
+      "shortTitle": "Capture fisheries production",
+      "category": "agriculture",
+      "difficulty": "expert",
+      "year": 2024,
+      "coverage": 169,
+      "sourceReference": "https://api.worldbank.org/v2/indicator/ER.FSH.CAPT.MT?format=json&per_page=1",
+      "approvalStatus": "approved",
+      "dataWarnings": [],
+      "dataFailures": [],
+      "editorialReview": {
+        "status": "expert_only",
+        "reviewedAt": "2026-07-02",
+        "reviewedBy": "Codex editorial QA",
+        "qualityScore": 3,
+        "funScore": 4,
+        "fairnessScore": 3,
+        "ambiguityRisk": "high",
+        "dailyEligible": false,
+        "practiceEligible": true,
+        "challengeEligible": true,
+        "expertOnly": true,
+        "reviewNotes": [
+          "Batch 4 QA: strong coastal and river-resource signal with excellent coverage.",
+          "Expert-only because raw tonnage favors large coastal producers and fishing fleets."
+        ],
+        "acceptableCloseDistractorIds": []
+      }
+    },
+    {
+      "id": "carbon-damage-share",
+      "providerCode": "NY.ADJ.DCO2.GN.ZS",
+      "shortTitle": "CO2 damage share",
+      "category": "environment",
+      "difficulty": "expert",
+      "year": 2021,
+      "coverage": 156,
+      "sourceReference": "https://api.worldbank.org/v2/indicator/NY.ADJ.DCO2.GN.ZS?format=json&per_page=1",
+      "approvalStatus": "approved",
+      "dataWarnings": [],
+      "dataFailures": [],
+      "editorialReview": {
+        "status": "practice_eligible",
+        "reviewedAt": "2026-07-02",
+        "reviewedBy": "Codex editorial QA",
+        "qualityScore": 4,
+        "funScore": 4,
+        "fairnessScore": 3,
+        "ambiguityRisk": "medium",
+        "dailyEligible": false,
+        "practiceEligible": true,
+        "challengeEligible": true,
+        "expertOnly": false,
+        "reviewNotes": [
+          "Batch 4 promotion: carbon-damage share gives a useful emissions-intensity clue that is not raw emissions.",
+          "Practice-only because adjusted-savings concepts are abstract for new players."
+        ],
+        "acceptableCloseDistractorIds": []
+      }
+    },
+    {
       "id": "carbon-intensity-gdp",
       "providerCode": "EN.GHG.CO2.RT.GDP.KD",
       "shortTitle": "Carbon intensity of GDP",
       "category": "environment",
       "difficulty": "expert",
       "year": 2024,
-      "coverage": 156,
+      "coverage": 159,
       "sourceReference": "https://api.worldbank.org/v2/indicator/EN.GHG.CO2.RT.GDP.KD?format=json&per_page=1",
       "approvalStatus": "approved",
       "dataWarnings": [],
       "dataFailures": [],
       "editorialReview": {
         "status": "expert_only",
-        "reviewedAt": "2026-06-22",
+        "reviewedAt": "2026-07-02",
         "reviewedBy": "Codex editorial QA",
         "qualityScore": 4,
         "funScore": 4,
@@ -870,17 +1180,17 @@
       "category": "economy",
       "difficulty": "expert",
       "year": 2024,
-      "coverage": 26,
+      "coverage": 31,
       "sourceReference": "https://api.worldbank.org/v2/indicator/GC.DOD.TOTL.GD.ZS?format=json&per_page=1",
       "approvalStatus": "draft",
       "dataWarnings": [],
       "dataFailures": [
         "central-government-debt: no year in 2015:2025 met 120 mapped countries; best coverage was 47",
-        "central-government-debt: selected coverage 26 is below 120"
+        "central-government-debt: selected coverage 31 is below 120"
       ],
       "editorialReview": {
         "status": "needs_review",
-        "reviewedAt": "2026-06-22",
+        "reviewedAt": "2026-07-02",
         "reviewedBy": "pipeline-default-needs-review",
         "qualityScore": 2,
         "funScore": 2,
@@ -915,7 +1225,7 @@
       ],
       "editorialReview": {
         "status": "needs_review",
-        "reviewedAt": "2026-06-22",
+        "reviewedAt": "2026-07-02",
         "reviewedBy": "pipeline-default-needs-review",
         "qualityScore": 2,
         "funScore": 2,
@@ -945,7 +1255,7 @@
       "dataFailures": [],
       "editorialReview": {
         "status": "expert_only",
-        "reviewedAt": "2026-06-22",
+        "reviewedAt": "2026-07-02",
         "reviewedBy": "Codex editorial QA",
         "qualityScore": 4,
         "funScore": 4,
@@ -976,7 +1286,7 @@
       "dataFailures": [],
       "editorialReview": {
         "status": "daily_eligible",
-        "reviewedAt": "2026-06-22",
+        "reviewedAt": "2026-07-02",
         "reviewedBy": "Codex editorial QA",
         "qualityScore": 4,
         "funScore": 4,
@@ -1010,7 +1320,7 @@
       ],
       "editorialReview": {
         "status": "practice_eligible",
-        "reviewedAt": "2026-06-22",
+        "reviewedAt": "2026-07-02",
         "reviewedBy": "Codex editorial QA",
         "qualityScore": 3,
         "funScore": 3,
@@ -1044,7 +1354,7 @@
       ],
       "editorialReview": {
         "status": "daily_eligible",
-        "reviewedAt": "2026-06-22",
+        "reviewedAt": "2026-07-02",
         "reviewedBy": "Codex editorial QA",
         "qualityScore": 4,
         "funScore": 4,
@@ -1078,7 +1388,7 @@
       ],
       "editorialReview": {
         "status": "practice_eligible",
-        "reviewedAt": "2026-06-22",
+        "reviewedAt": "2026-07-02",
         "reviewedBy": "Codex editorial QA",
         "qualityScore": 3,
         "funScore": 3,
@@ -1101,7 +1411,7 @@
       "shortTitle": "Population ages 0-14",
       "category": "demography",
       "difficulty": "intro",
-      "year": 2024,
+      "year": 2025,
       "coverage": 169,
       "sourceReference": "https://api.worldbank.org/v2/indicator/SP.POP.0014.TO.ZS?format=json&per_page=1",
       "approvalStatus": "approved",
@@ -1109,7 +1419,7 @@
       "dataFailures": [],
       "editorialReview": {
         "status": "practice_eligible",
-        "reviewedAt": "2026-06-22",
+        "reviewedAt": "2026-07-02",
         "reviewedBy": "Codex editorial QA",
         "qualityScore": 3,
         "funScore": 3,
@@ -1140,7 +1450,7 @@
       "dataFailures": [],
       "editorialReview": {
         "status": "daily_eligible",
-        "reviewedAt": "2026-06-22",
+        "reviewedAt": "2026-07-02",
         "reviewedBy": "Codex editorial QA",
         "qualityScore": 4,
         "funScore": 4,
@@ -1153,6 +1463,37 @@
         "reviewNotes": [
           "A household-energy map with a real public-health story.",
           "High income correlation requires careful distractors."
+        ],
+        "acceptableCloseDistractorIds": []
+      }
+    },
+    {
+      "id": "co2-emissions-change",
+      "providerCode": "EN.GHG.CO2.ZG.AR5",
+      "shortTitle": "CO2 emissions change",
+      "category": "environment",
+      "difficulty": "expert",
+      "year": 2024,
+      "coverage": 165,
+      "sourceReference": "https://api.worldbank.org/v2/indicator/EN.GHG.CO2.ZG.AR5?format=json&per_page=1",
+      "approvalStatus": "approved",
+      "dataWarnings": [],
+      "dataFailures": [],
+      "editorialReview": {
+        "status": "expert_only",
+        "reviewedAt": "2026-07-02",
+        "reviewedBy": "Codex editorial QA",
+        "qualityScore": 4,
+        "funScore": 4,
+        "fairnessScore": 3,
+        "ambiguityRisk": "high",
+        "dailyEligible": false,
+        "practiceEligible": true,
+        "challengeEligible": true,
+        "expertOnly": true,
+        "reviewNotes": [
+          "Batch 4 QA: interesting post-1990 emissions-change map with broad coverage.",
+          "Expert-only because it can overlap with total GHG change and can be baseline-sensitive."
         ],
         "acceptableCloseDistractorIds": []
       }
@@ -1171,7 +1512,7 @@
       "dataFailures": [],
       "editorialReview": {
         "status": "daily_eligible",
-        "reviewedAt": "2026-06-22",
+        "reviewedAt": "2026-07-02",
         "reviewedBy": "Codex editorial QA",
         "qualityScore": 4,
         "funScore": 5,
@@ -1204,7 +1545,7 @@
       "dataFailures": [],
       "editorialReview": {
         "status": "daily_eligible",
-        "reviewedAt": "2026-06-22",
+        "reviewedAt": "2026-07-02",
         "reviewedBy": "Codex editorial QA",
         "qualityScore": 4,
         "funScore": 4,
@@ -1217,6 +1558,68 @@
         "reviewNotes": [
           "Batch 2 promotion: Coal electricity share passed the source gate with broad enough coverage and a readable map pattern.",
           "Daily-eligible, but keep close same-topic distractors out of easier tiers during outside beta."
+        ],
+        "acceptableCloseDistractorIds": []
+      }
+    },
+    {
+      "id": "coal-rents",
+      "providerCode": "NY.GDP.COAL.RT.ZS",
+      "shortTitle": "Coal rents",
+      "category": "energy",
+      "difficulty": "expert",
+      "year": 2021,
+      "coverage": 158,
+      "sourceReference": "https://api.worldbank.org/v2/indicator/NY.GDP.COAL.RT.ZS?format=json&per_page=1",
+      "approvalStatus": "approved",
+      "dataWarnings": [],
+      "dataFailures": [],
+      "editorialReview": {
+        "status": "expert_only",
+        "reviewedAt": "2026-07-02",
+        "reviewedBy": "Codex editorial QA",
+        "qualityScore": 3,
+        "funScore": 4,
+        "fairnessScore": 3,
+        "ambiguityRisk": "high",
+        "dailyEligible": false,
+        "practiceEligible": true,
+        "challengeEligible": true,
+        "expertOnly": true,
+        "reviewNotes": [
+          "Batch 4 QA: focused coal-economy clue with a clear pattern for advanced players.",
+          "Expert-only due to zero-heavy values and overlap with fossil-energy maps."
+        ],
+        "acceptableCloseDistractorIds": []
+      }
+    },
+    {
+      "id": "combustible-renewables-waste",
+      "providerCode": "EG.USE.CRNW.ZS",
+      "shortTitle": "Combustible renewables and waste",
+      "category": "energy",
+      "difficulty": "expert",
+      "year": 2023,
+      "coverage": 139,
+      "sourceReference": "https://api.worldbank.org/v2/indicator/EG.USE.CRNW.ZS?format=json&per_page=1",
+      "approvalStatus": "approved",
+      "dataWarnings": [],
+      "dataFailures": [],
+      "editorialReview": {
+        "status": "practice_eligible",
+        "reviewedAt": "2026-07-02",
+        "reviewedBy": "Codex editorial QA",
+        "qualityScore": 4,
+        "funScore": 4,
+        "fairnessScore": 3,
+        "ambiguityRisk": "medium",
+        "dailyEligible": false,
+        "practiceEligible": true,
+        "challengeEligible": true,
+        "expertOnly": false,
+        "reviewNotes": [
+          "Batch 4 promotion: strong biomass-energy pattern that adds household-energy depth.",
+          "Practice-only because it can correlate with income and clean-cooking access."
         ],
         "acceptableCloseDistractorIds": []
       }
@@ -1235,7 +1638,7 @@
       "dataFailures": [],
       "editorialReview": {
         "status": "expert_only",
-        "reviewedAt": "2026-06-22",
+        "reviewedAt": "2026-07-02",
         "reviewedBy": "Codex editorial QA",
         "qualityScore": 3,
         "funScore": 3,
@@ -1259,14 +1662,14 @@
       "category": "connectivity",
       "difficulty": "expert",
       "year": 2024,
-      "coverage": 137,
+      "coverage": 139,
       "sourceReference": "https://api.worldbank.org/v2/indicator/BX.GSR.CMCP.ZS?format=json&per_page=1",
       "approvalStatus": "approved",
       "dataWarnings": [],
       "dataFailures": [],
       "editorialReview": {
         "status": "daily_eligible",
-        "reviewedAt": "2026-06-22",
+        "reviewedAt": "2026-07-02",
         "reviewedBy": "Codex editorial QA",
         "qualityScore": 4,
         "funScore": 4,
@@ -1290,14 +1693,14 @@
       "category": "connectivity",
       "difficulty": "expert",
       "year": 2024,
-      "coverage": 137,
+      "coverage": 139,
       "sourceReference": "https://api.worldbank.org/v2/indicator/BM.GSR.CMCP.ZS?format=json&per_page=1",
       "approvalStatus": "approved",
       "dataWarnings": [],
       "dataFailures": [],
       "editorialReview": {
         "status": "practice_eligible",
-        "reviewedAt": "2026-06-22",
+        "reviewedAt": "2026-07-02",
         "reviewedBy": "Codex editorial QA",
         "qualityScore": 4,
         "funScore": 3,
@@ -1328,7 +1731,7 @@
       "dataFailures": [],
       "editorialReview": {
         "status": "daily_eligible",
-        "reviewedAt": "2026-06-22",
+        "reviewedAt": "2026-07-02",
         "reviewedBy": "Codex editorial QA",
         "qualityScore": 4,
         "funScore": 4,
@@ -1352,14 +1755,14 @@
       "category": "connectivity",
       "difficulty": "expert",
       "year": 2019,
-      "coverage": 128,
+      "coverage": 127,
       "sourceReference": "https://api.worldbank.org/v2/indicator/IS.SHP.GOOD.TU?format=json&per_page=1",
       "approvalStatus": "approved",
       "dataWarnings": [],
       "dataFailures": [],
       "editorialReview": {
         "status": "expert_only",
-        "reviewedAt": "2026-06-22",
+        "reviewedAt": "2026-07-02",
         "reviewedBy": "Codex editorial QA",
         "qualityScore": 3,
         "funScore": 4,
@@ -1396,7 +1799,7 @@
       ],
       "editorialReview": {
         "status": "practice_eligible",
-        "reviewedAt": "2026-06-22",
+        "reviewedAt": "2026-07-02",
         "reviewedBy": "Codex editorial QA",
         "qualityScore": 3,
         "funScore": 3,
@@ -1427,7 +1830,7 @@
       "dataFailures": [],
       "editorialReview": {
         "status": "expert_only",
-        "reviewedAt": "2026-06-22",
+        "reviewedAt": "2026-07-02",
         "reviewedBy": "Codex editorial QA",
         "qualityScore": 4,
         "funScore": 4,
@@ -1458,7 +1861,7 @@
       "dataFailures": [],
       "editorialReview": {
         "status": "retired",
-        "reviewedAt": "2026-06-22",
+        "reviewedAt": "2026-07-02",
         "reviewedBy": "Codex editorial QA",
         "qualityScore": 2,
         "funScore": 2,
@@ -1482,14 +1885,14 @@
       "category": "economy",
       "difficulty": "expert",
       "year": 2024,
-      "coverage": 139,
+      "coverage": 141,
       "sourceReference": "https://api.worldbank.org/v2/indicator/BN.CAB.XOKA.GD.ZS?format=json&per_page=1",
       "approvalStatus": "approved",
       "dataWarnings": [],
       "dataFailures": [],
       "editorialReview": {
         "status": "expert_only",
-        "reviewedAt": "2026-06-22",
+        "reviewedAt": "2026-07-02",
         "reviewedBy": "Codex editorial QA",
         "qualityScore": 3,
         "funScore": 3,
@@ -1520,7 +1923,7 @@
       "dataFailures": [],
       "editorialReview": {
         "status": "practice_eligible",
-        "reviewedAt": "2026-06-22",
+        "reviewedAt": "2026-07-02",
         "reviewedBy": "Codex editorial QA",
         "qualityScore": 3,
         "funScore": 3,
@@ -1538,20 +1941,51 @@
       }
     },
     {
+      "id": "deforestation-co2-flux",
+      "providerCode": "EN.GHG.CO2.LU.DF.MT.CE.AR5",
+      "shortTitle": "Deforestation CO2 flux",
+      "category": "environment",
+      "difficulty": "expert",
+      "year": 2023,
+      "coverage": 147,
+      "sourceReference": "https://api.worldbank.org/v2/indicator/EN.GHG.CO2.LU.DF.MT.CE.AR5?format=json&per_page=1",
+      "approvalStatus": "approved",
+      "dataWarnings": [],
+      "dataFailures": [],
+      "editorialReview": {
+        "status": "expert_only",
+        "reviewedAt": "2026-07-02",
+        "reviewedBy": "Codex editorial QA",
+        "qualityScore": 4,
+        "funScore": 4,
+        "fairnessScore": 3,
+        "ambiguityRisk": "high",
+        "dailyEligible": false,
+        "practiceEligible": true,
+        "challengeEligible": true,
+        "expertOnly": true,
+        "reviewNotes": [
+          "Batch 4 QA: high-interest land-use climate map with adequate recent coverage.",
+          "Expert-only because raw emissions and land-frontier scale can dominate the map."
+        ],
+        "acceptableCloseDistractorIds": []
+      }
+    },
+    {
       "id": "domestic-credit-private-sector",
       "providerCode": "FD.AST.PRVT.GD.ZS",
       "shortTitle": "Private-sector bank credit",
       "category": "economy",
       "difficulty": "expert",
       "year": 2024,
-      "coverage": 130,
+      "coverage": 132,
       "sourceReference": "https://api.worldbank.org/v2/indicator/FD.AST.PRVT.GD.ZS?format=json&per_page=1",
       "approvalStatus": "approved",
       "dataWarnings": [],
       "dataFailures": [],
       "editorialReview": {
         "status": "needs_review",
-        "reviewedAt": "2026-06-22",
+        "reviewedAt": "2026-07-02",
         "reviewedBy": "pipeline-default-needs-review",
         "qualityScore": 2,
         "funScore": 2,
@@ -1573,15 +2007,15 @@
       "shortTitle": "Domestic savings",
       "category": "economy",
       "difficulty": "expert",
-      "year": 2024,
-      "coverage": 139,
+      "year": 2025,
+      "coverage": 122,
       "sourceReference": "https://api.worldbank.org/v2/indicator/NY.GDS.TOTL.ZS?format=json&per_page=1",
       "approvalStatus": "approved",
       "dataWarnings": [],
       "dataFailures": [],
       "editorialReview": {
         "status": "expert_only",
-        "reviewedAt": "2026-06-22",
+        "reviewedAt": "2026-07-02",
         "reviewedBy": "Codex editorial QA",
         "qualityScore": 3,
         "funScore": 3,
@@ -1612,7 +2046,7 @@
       "dataFailures": [],
       "editorialReview": {
         "status": "practice_eligible",
-        "reviewedAt": "2026-06-22",
+        "reviewedAt": "2026-07-02",
         "reviewedBy": "Codex editorial QA",
         "qualityScore": 3,
         "funScore": 4,
@@ -1643,7 +2077,7 @@
       "dataFailures": [],
       "editorialReview": {
         "status": "practice_eligible",
-        "reviewedAt": "2026-06-22",
+        "reviewedAt": "2026-07-02",
         "reviewedBy": "Codex editorial QA",
         "qualityScore": 3,
         "funScore": 3,
@@ -1663,6 +2097,37 @@
       }
     },
     {
+      "id": "education-expenditure-savings",
+      "providerCode": "NY.ADJ.AEDU.GN.ZS",
+      "shortTitle": "Education expenditure share",
+      "category": "education",
+      "difficulty": "standard",
+      "year": 2021,
+      "coverage": 164,
+      "sourceReference": "https://api.worldbank.org/v2/indicator/NY.ADJ.AEDU.GN.ZS?format=json&per_page=1",
+      "approvalStatus": "approved",
+      "dataWarnings": [],
+      "dataFailures": [],
+      "editorialReview": {
+        "status": "daily_eligible",
+        "reviewedAt": "2026-07-02",
+        "reviewedBy": "Codex editorial QA",
+        "qualityScore": 4,
+        "funScore": 4,
+        "fairnessScore": 4,
+        "ambiguityRisk": "medium",
+        "dailyEligible": true,
+        "practiceEligible": true,
+        "challengeEligible": true,
+        "expertOnly": false,
+        "reviewNotes": [
+          "Batch 4 promotion: broad education-investment map with clear percent-of-GNI framing.",
+          "Daily-worthy, but reveal copy should distinguish spending share from school outcomes."
+        ],
+        "acceptableCloseDistractorIds": []
+      }
+    },
+    {
       "id": "education-spending",
       "providerCode": "SE.XPD.TOTL.GD.ZS",
       "shortTitle": "Education spending",
@@ -1676,7 +2141,7 @@
       "dataFailures": [],
       "editorialReview": {
         "status": "expert_only",
-        "reviewedAt": "2026-06-22",
+        "reviewedAt": "2026-07-02",
         "reviewedBy": "Codex editorial QA",
         "qualityScore": 3,
         "funScore": 3,
@@ -1707,7 +2172,7 @@
       "dataFailures": [],
       "editorialReview": {
         "status": "daily_eligible",
-        "reviewedAt": "2026-06-22",
+        "reviewedAt": "2026-07-02",
         "reviewedBy": "Codex editorial QA",
         "qualityScore": 4,
         "funScore": 4,
@@ -1720,6 +2185,37 @@
         "reviewNotes": [
           "Useful consumption-intensity map if the data is recent enough.",
           "Pipeline freshness will decide whether this can actually remain Daily-eligible."
+        ],
+        "acceptableCloseDistractorIds": []
+      }
+    },
+    {
+      "id": "electric-transmission-losses",
+      "providerCode": "EG.ELC.LOSS.ZS",
+      "shortTitle": "Electric transmission losses",
+      "category": "energy",
+      "difficulty": "standard",
+      "year": 2023,
+      "coverage": 141,
+      "sourceReference": "https://api.worldbank.org/v2/indicator/EG.ELC.LOSS.ZS?format=json&per_page=1",
+      "approvalStatus": "approved",
+      "dataWarnings": [],
+      "dataFailures": [],
+      "editorialReview": {
+        "status": "daily_eligible",
+        "reviewedAt": "2026-07-02",
+        "reviewedBy": "Codex editorial QA",
+        "qualityScore": 4,
+        "funScore": 4,
+        "fairnessScore": 4,
+        "ambiguityRisk": "medium",
+        "dailyEligible": true,
+        "practiceEligible": true,
+        "challengeEligible": true,
+        "expertOnly": false,
+        "reviewNotes": [
+          "Batch 4 promotion: intuitive grid-efficiency map that differs from electricity access and generation shares.",
+          "Daily-worthy with non-energy distractors or clearly separated infrastructure choices."
         ],
         "acceptableCloseDistractorIds": []
       }
@@ -1738,7 +2234,7 @@
       "dataFailures": [],
       "editorialReview": {
         "status": "daily_eligible",
-        "reviewedAt": "2026-06-22",
+        "reviewedAt": "2026-07-02",
         "reviewedBy": "Codex editorial QA",
         "qualityScore": 5,
         "funScore": 4,
@@ -1769,7 +2265,7 @@
       "dataFailures": [],
       "editorialReview": {
         "status": "expert_only",
-        "reviewedAt": "2026-06-22",
+        "reviewedAt": "2026-07-02",
         "reviewedBy": "Codex editorial QA",
         "qualityScore": 4,
         "funScore": 3,
@@ -1800,7 +2296,7 @@
       "dataFailures": [],
       "editorialReview": {
         "status": "daily_eligible",
-        "reviewedAt": "2026-06-22",
+        "reviewedAt": "2026-07-02",
         "reviewedBy": "Codex editorial QA",
         "qualityScore": 4,
         "funScore": 4,
@@ -1831,7 +2327,7 @@
       "dataFailures": [],
       "editorialReview": {
         "status": "practice_eligible",
-        "reviewedAt": "2026-06-22",
+        "reviewedAt": "2026-07-02",
         "reviewedBy": "Codex editorial QA",
         "qualityScore": 4,
         "funScore": 4,
@@ -1862,7 +2358,7 @@
       "dataFailures": [],
       "editorialReview": {
         "status": "expert_only",
-        "reviewedAt": "2026-06-22",
+        "reviewedAt": "2026-07-02",
         "reviewedBy": "Codex editorial QA",
         "qualityScore": 3,
         "funScore": 3,
@@ -1893,7 +2389,7 @@
       "dataFailures": [],
       "editorialReview": {
         "status": "practice_eligible",
-        "reviewedAt": "2026-06-22",
+        "reviewedAt": "2026-07-02",
         "reviewedBy": "Codex editorial QA",
         "qualityScore": 3,
         "funScore": 3,
@@ -1906,6 +2402,130 @@
         "reviewNotes": [
           "Nearly inverse of agricultural employment.",
           "Useful in Practice, not Daily."
+        ],
+        "acceptableCloseDistractorIds": []
+      }
+    },
+    {
+      "id": "energy-depletion-share",
+      "providerCode": "NY.ADJ.DNGY.GN.ZS",
+      "shortTitle": "Energy depletion share",
+      "category": "energy",
+      "difficulty": "expert",
+      "year": 2021,
+      "coverage": 156,
+      "sourceReference": "https://api.worldbank.org/v2/indicator/NY.ADJ.DNGY.GN.ZS?format=json&per_page=1",
+      "approvalStatus": "approved",
+      "dataWarnings": [],
+      "dataFailures": [],
+      "editorialReview": {
+        "status": "expert_only",
+        "reviewedAt": "2026-07-02",
+        "reviewedBy": "Codex editorial QA",
+        "qualityScore": 3,
+        "funScore": 4,
+        "fairnessScore": 3,
+        "ambiguityRisk": "high",
+        "dailyEligible": false,
+        "practiceEligible": true,
+        "challengeEligible": true,
+        "expertOnly": true,
+        "reviewNotes": [
+          "Batch 4 QA: good resource-extraction map for advanced players.",
+          "Expert-only because many countries are zero or near-zero and the GNI unit is technical."
+        ],
+        "acceptableCloseDistractorIds": []
+      }
+    },
+    {
+      "id": "energy-imports",
+      "providerCode": "EG.IMP.CONS.ZS",
+      "shortTitle": "Net energy imports",
+      "category": "energy",
+      "difficulty": "expert",
+      "year": 2022,
+      "coverage": 135,
+      "sourceReference": "https://api.worldbank.org/v2/indicator/EG.IMP.CONS.ZS?format=json&per_page=1",
+      "approvalStatus": "approved",
+      "dataWarnings": [],
+      "dataFailures": [],
+      "editorialReview": {
+        "status": "practice_eligible",
+        "reviewedAt": "2026-07-02",
+        "reviewedBy": "Codex editorial QA",
+        "qualityScore": 4,
+        "funScore": 4,
+        "fairnessScore": 3,
+        "ambiguityRisk": "medium",
+        "dailyEligible": false,
+        "practiceEligible": true,
+        "challengeEligible": true,
+        "expertOnly": false,
+        "reviewNotes": [
+          "Batch 4 promotion: useful importer/exporter contrast with broad coverage.",
+          "Practice-only until negative net-exporter values are checked in reveal copy."
+        ],
+        "acceptableCloseDistractorIds": []
+      }
+    },
+    {
+      "id": "energy-intensity",
+      "providerCode": "EG.EGY.PRIM.PP.KD",
+      "shortTitle": "Energy intensity",
+      "category": "energy",
+      "difficulty": "expert",
+      "year": 2021,
+      "coverage": 167,
+      "sourceReference": "https://api.worldbank.org/v2/indicator/EG.EGY.PRIM.PP.KD?format=json&per_page=1",
+      "approvalStatus": "approved",
+      "dataWarnings": [],
+      "dataFailures": [],
+      "editorialReview": {
+        "status": "practice_eligible",
+        "reviewedAt": "2026-07-02",
+        "reviewedBy": "Codex editorial QA",
+        "qualityScore": 4,
+        "funScore": 4,
+        "fairnessScore": 3,
+        "ambiguityRisk": "medium",
+        "dailyEligible": false,
+        "practiceEligible": true,
+        "challengeEligible": true,
+        "expertOnly": false,
+        "reviewNotes": [
+          "Batch 4 promotion: strong industry-and-efficiency signal that complements electricity mix maps.",
+          "Practice-only because the MJ-per-GDP unit is technical."
+        ],
+        "acceptableCloseDistractorIds": []
+      }
+    },
+    {
+      "id": "energy-productivity",
+      "providerCode": "EG.GDP.PUSE.KO.PP.KD",
+      "shortTitle": "Energy productivity",
+      "category": "energy",
+      "difficulty": "expert",
+      "year": 2023,
+      "coverage": 135,
+      "sourceReference": "https://api.worldbank.org/v2/indicator/EG.GDP.PUSE.KO.PP.KD?format=json&per_page=1",
+      "approvalStatus": "approved",
+      "dataWarnings": [],
+      "dataFailures": [],
+      "editorialReview": {
+        "status": "expert_only",
+        "reviewedAt": "2026-07-02",
+        "reviewedBy": "Codex editorial QA",
+        "qualityScore": 3,
+        "funScore": 3,
+        "fairnessScore": 3,
+        "ambiguityRisk": "high",
+        "dailyEligible": false,
+        "practiceEligible": true,
+        "challengeEligible": true,
+        "expertOnly": true,
+        "reviewNotes": [
+          "Batch 4 QA: source-valid counterpart to energy intensity, but the concept is technical and close to efficiency maps.",
+          "Expert-only until distractors can keep it distinct from energy intensity."
         ],
         "acceptableCloseDistractorIds": []
       }
@@ -1924,7 +2544,7 @@
       "dataFailures": [],
       "editorialReview": {
         "status": "daily_eligible",
-        "reviewedAt": "2026-06-22",
+        "reviewedAt": "2026-07-02",
         "reviewedBy": "Codex editorial QA",
         "qualityScore": 4,
         "funScore": 4,
@@ -1942,20 +2562,51 @@
       }
     },
     {
+      "id": "exports-high-income-share",
+      "providerCode": "TX.VAL.MRCH.HI.ZS",
+      "shortTitle": "Exports to high-income economies",
+      "category": "economy",
+      "difficulty": "expert",
+      "year": 2023,
+      "coverage": 168,
+      "sourceReference": "https://api.worldbank.org/v2/indicator/TX.VAL.MRCH.HI.ZS?format=json&per_page=1",
+      "approvalStatus": "approved",
+      "dataWarnings": [],
+      "dataFailures": [],
+      "editorialReview": {
+        "status": "expert_only",
+        "reviewedAt": "2026-07-02",
+        "reviewedBy": "Codex editorial QA",
+        "qualityScore": 3,
+        "funScore": 3,
+        "fairnessScore": 3,
+        "ambiguityRisk": "high",
+        "dailyEligible": false,
+        "practiceEligible": true,
+        "challengeEligible": true,
+        "expertOnly": true,
+        "reviewNotes": [
+          "Batch 4 QA: source-valid trade-partner map, but the concept is abstract for broad play.",
+          "Expert-only and avoid pairing with import-side high-income trade maps."
+        ],
+        "acceptableCloseDistractorIds": []
+      }
+    },
+    {
       "id": "exports-share",
       "providerCode": "NE.EXP.GNFS.ZS",
       "shortTitle": "Exports",
       "category": "economy",
       "difficulty": "standard",
-      "year": 2024,
-      "coverage": 141,
+      "year": 2025,
+      "coverage": 124,
       "sourceReference": "https://api.worldbank.org/v2/indicator/NE.EXP.GNFS.ZS?format=json&per_page=1",
       "approvalStatus": "approved",
       "dataWarnings": [],
       "dataFailures": [],
       "editorialReview": {
         "status": "expert_only",
-        "reviewedAt": "2026-06-22",
+        "reviewedAt": "2026-07-02",
         "reviewedBy": "Codex editorial QA",
         "qualityScore": 3,
         "funScore": 3,
@@ -1968,6 +2619,68 @@
         "reviewNotes": [
           "Close to trade share and imports share.",
           "Playable only as a hard open-economy distinction."
+        ],
+        "acceptableCloseDistractorIds": []
+      }
+    },
+    {
+      "id": "exports-within-region-share",
+      "providerCode": "TX.VAL.MRCH.WR.ZS",
+      "shortTitle": "Exports within region",
+      "category": "economy",
+      "difficulty": "expert",
+      "year": 2023,
+      "coverage": 166,
+      "sourceReference": "https://api.worldbank.org/v2/indicator/TX.VAL.MRCH.WR.ZS?format=json&per_page=1",
+      "approvalStatus": "approved",
+      "dataWarnings": [],
+      "dataFailures": [],
+      "editorialReview": {
+        "status": "practice_eligible",
+        "reviewedAt": "2026-07-02",
+        "reviewedBy": "Codex editorial QA",
+        "qualityScore": 4,
+        "funScore": 4,
+        "fairnessScore": 3,
+        "ambiguityRisk": "medium",
+        "dailyEligible": false,
+        "practiceEligible": true,
+        "challengeEligible": true,
+        "expertOnly": false,
+        "reviewNotes": [
+          "Batch 4 promotion: regional-integration map with good coverage and a distinct geography story.",
+          "Practice-only because partner-share maps are more abstract than sector shares."
+        ],
+        "acceptableCloseDistractorIds": []
+      }
+    },
+    {
+      "id": "external-balance-share",
+      "providerCode": "NE.RSB.GNFS.ZS",
+      "shortTitle": "External balance",
+      "category": "economy",
+      "difficulty": "expert",
+      "year": 2025,
+      "coverage": 124,
+      "sourceReference": "https://api.worldbank.org/v2/indicator/NE.RSB.GNFS.ZS?format=json&per_page=1",
+      "approvalStatus": "approved",
+      "dataWarnings": [],
+      "dataFailures": [],
+      "editorialReview": {
+        "status": "practice_eligible",
+        "reviewedAt": "2026-07-02",
+        "reviewedBy": "Codex editorial QA",
+        "qualityScore": 4,
+        "funScore": 4,
+        "fairnessScore": 3,
+        "ambiguityRisk": "medium",
+        "dailyEligible": false,
+        "practiceEligible": true,
+        "challengeEligible": true,
+        "expertOnly": false,
+        "reviewNotes": [
+          "Batch 4 promotion: goods-and-services balance gives a compact surplus/deficit map with strong gameplay potential.",
+          "Practice-only because surplus/deficit maps can be volatile for small economies."
         ],
         "acceptableCloseDistractorIds": []
       }
@@ -1989,7 +2702,7 @@
       ],
       "editorialReview": {
         "status": "expert_only",
-        "reviewedAt": "2026-06-22",
+        "reviewedAt": "2026-07-02",
         "reviewedBy": "Codex editorial QA",
         "qualityScore": 3,
         "funScore": 4,
@@ -2013,14 +2726,14 @@
       "category": "economy",
       "difficulty": "expert",
       "year": 2024,
-      "coverage": 156,
+      "coverage": 158,
       "sourceReference": "https://api.worldbank.org/v2/indicator/BX.KLT.DINV.WD.GD.ZS?format=json&per_page=1",
       "approvalStatus": "approved",
       "dataWarnings": [],
       "dataFailures": [],
       "editorialReview": {
         "status": "expert_only",
-        "reviewedAt": "2026-06-22",
+        "reviewedAt": "2026-07-02",
         "reviewedBy": "Codex editorial QA",
         "qualityScore": 3,
         "funScore": 3,
@@ -2044,14 +2757,14 @@
       "category": "economy",
       "difficulty": "expert",
       "year": 2024,
-      "coverage": 141,
+      "coverage": 142,
       "sourceReference": "https://api.worldbank.org/v2/indicator/BM.KLT.DINV.WD.GD.ZS?format=json&per_page=1",
       "approvalStatus": "approved",
       "dataWarnings": [],
       "dataFailures": [],
       "editorialReview": {
         "status": "expert_only",
-        "reviewedAt": "2026-06-22",
+        "reviewedAt": "2026-07-02",
         "reviewedBy": "Codex editorial QA",
         "qualityScore": 3,
         "funScore": 3,
@@ -2082,7 +2795,7 @@
       "dataFailures": [],
       "editorialReview": {
         "status": "expert_only",
-        "reviewedAt": "2026-06-22",
+        "reviewedAt": "2026-07-02",
         "reviewedBy": "Codex editorial QA",
         "qualityScore": 4,
         "funScore": 4,
@@ -2113,7 +2826,7 @@
       "dataFailures": [],
       "editorialReview": {
         "status": "expert_only",
-        "reviewedAt": "2026-06-22",
+        "reviewedAt": "2026-07-02",
         "reviewedBy": "Codex editorial QA",
         "qualityScore": 4,
         "funScore": 4,
@@ -2144,7 +2857,7 @@
       "dataFailures": [],
       "editorialReview": {
         "status": "expert_only",
-        "reviewedAt": "2026-06-22",
+        "reviewedAt": "2026-07-02",
         "reviewedBy": "Codex editorial QA",
         "qualityScore": 4,
         "funScore": 4,
@@ -2175,7 +2888,7 @@
       "dataFailures": [],
       "editorialReview": {
         "status": "daily_eligible",
-        "reviewedAt": "2026-06-22",
+        "reviewedAt": "2026-07-02",
         "reviewedBy": "Codex editorial QA",
         "qualityScore": 4,
         "funScore": 4,
@@ -2206,7 +2919,7 @@
       "dataFailures": [],
       "editorialReview": {
         "status": "expert_only",
-        "reviewedAt": "2026-06-22",
+        "reviewedAt": "2026-07-02",
         "reviewedBy": "Codex editorial QA",
         "qualityScore": 4,
         "funScore": 4,
@@ -2237,7 +2950,7 @@
       "dataFailures": [],
       "editorialReview": {
         "status": "expert_only",
-        "reviewedAt": "2026-06-22",
+        "reviewedAt": "2026-07-02",
         "reviewedBy": "Codex editorial QA",
         "qualityScore": 4,
         "funScore": 4,
@@ -2261,17 +2974,17 @@
       "category": "labor",
       "difficulty": "expert",
       "year": 2025,
-      "coverage": 12,
+      "coverage": 29,
       "sourceReference": "https://api.worldbank.org/v2/indicator/SL.EMP.SMGT.FE.ZS?format=json&per_page=1",
       "approvalStatus": "draft",
       "dataWarnings": [],
       "dataFailures": [
-        "female-senior-management: no year in 2015:2025 met 120 mapped countries; best coverage was 90",
-        "female-senior-management: selected coverage 12 is below 120"
+        "female-senior-management: no year in 2015:2025 met 120 mapped countries; best coverage was 89",
+        "female-senior-management: selected coverage 29 is below 120"
       ],
       "editorialReview": {
         "status": "needs_review",
-        "reviewedAt": "2026-06-22",
+        "reviewedAt": "2026-07-02",
         "reviewedBy": "pipeline-default-needs-review",
         "qualityScore": 2,
         "funScore": 2,
@@ -2301,7 +3014,7 @@
       "dataFailures": [],
       "editorialReview": {
         "status": "expert_only",
-        "reviewedAt": "2026-06-22",
+        "reviewedAt": "2026-07-02",
         "reviewedBy": "Codex editorial QA",
         "qualityScore": 4,
         "funScore": 4,
@@ -2332,7 +3045,7 @@
       "dataFailures": [],
       "editorialReview": {
         "status": "expert_only",
-        "reviewedAt": "2026-06-22",
+        "reviewedAt": "2026-07-02",
         "reviewedBy": "Codex editorial QA",
         "qualityScore": 3,
         "funScore": 3,
@@ -2363,7 +3076,7 @@
       "dataFailures": [],
       "editorialReview": {
         "status": "expert_only",
-        "reviewedAt": "2026-06-22",
+        "reviewedAt": "2026-07-02",
         "reviewedBy": "Codex editorial QA",
         "qualityScore": 4,
         "funScore": 4,
@@ -2394,7 +3107,7 @@
       "dataFailures": [],
       "editorialReview": {
         "status": "expert_only",
-        "reviewedAt": "2026-06-22",
+        "reviewedAt": "2026-07-02",
         "reviewedBy": "Codex editorial QA",
         "qualityScore": 4,
         "funScore": 4,
@@ -2418,17 +3131,17 @@
       "category": "labor",
       "difficulty": "expert",
       "year": 2025,
-      "coverage": 15,
+      "coverage": 35,
       "sourceReference": "https://api.worldbank.org/v2/indicator/SL.UEM.NEET.FE.ZS?format=json&per_page=1",
       "approvalStatus": "draft",
       "dataWarnings": [],
       "dataFailures": [
         "female-youth-neet: no year in 2015:2025 met 120 mapped countries; best coverage was 108",
-        "female-youth-neet: selected coverage 15 is below 120"
+        "female-youth-neet: selected coverage 35 is below 120"
       ],
       "editorialReview": {
         "status": "needs_review",
-        "reviewedAt": "2026-06-22",
+        "reviewedAt": "2026-07-02",
         "reviewedBy": "pipeline-default-needs-review",
         "qualityScore": 2,
         "funScore": 2,
@@ -2458,7 +3171,7 @@
       "dataFailures": [],
       "editorialReview": {
         "status": "daily_eligible",
-        "reviewedAt": "2026-06-22",
+        "reviewedAt": "2026-07-02",
         "reviewedBy": "Codex editorial QA",
         "qualityScore": 5,
         "funScore": 4,
@@ -2492,7 +3205,7 @@
       "dataFailures": [],
       "editorialReview": {
         "status": "needs_review",
-        "reviewedAt": "2026-06-22",
+        "reviewedAt": "2026-07-02",
         "reviewedBy": "Codex editorial QA",
         "qualityScore": 2,
         "funScore": 2,
@@ -2505,6 +3218,68 @@
         "reviewNotes": [
           "The requested code is a percent-of-production measure, not fertilizer applied per hectare.",
           "Needs manual decision before exposing a likely unit trap to players."
+        ],
+        "acceptableCloseDistractorIds": []
+      }
+    },
+    {
+      "id": "final-consumption-share",
+      "providerCode": "NE.CON.TOTL.ZS",
+      "shortTitle": "Final consumption share",
+      "category": "economy",
+      "difficulty": "expert",
+      "year": 2025,
+      "coverage": 122,
+      "sourceReference": "https://api.worldbank.org/v2/indicator/NE.CON.TOTL.ZS?format=json&per_page=1",
+      "approvalStatus": "approved",
+      "dataWarnings": [],
+      "dataFailures": [],
+      "editorialReview": {
+        "status": "practice_eligible",
+        "reviewedAt": "2026-07-02",
+        "reviewedBy": "Codex editorial QA",
+        "qualityScore": 4,
+        "funScore": 3,
+        "fairnessScore": 3,
+        "ambiguityRisk": "medium",
+        "dailyEligible": false,
+        "practiceEligible": true,
+        "challengeEligible": true,
+        "expertOnly": false,
+        "reviewNotes": [
+          "Batch 4 promotion: consumption share adds an economy-structure map distinct from trade and investment.",
+          "Practice-only because the GDP accounting concept is less intuitive for new players."
+        ],
+        "acceptableCloseDistractorIds": []
+      }
+    },
+    {
+      "id": "financial-service-imports-share",
+      "providerCode": "BM.GSR.INSF.ZS",
+      "shortTitle": "Financial service imports",
+      "category": "economy",
+      "difficulty": "expert",
+      "year": 2024,
+      "coverage": 138,
+      "sourceReference": "https://api.worldbank.org/v2/indicator/BM.GSR.INSF.ZS?format=json&per_page=1",
+      "approvalStatus": "approved",
+      "dataWarnings": [],
+      "dataFailures": [],
+      "editorialReview": {
+        "status": "expert_only",
+        "reviewedAt": "2026-07-02",
+        "reviewedBy": "Codex editorial QA",
+        "qualityScore": 3,
+        "funScore": 3,
+        "fairnessScore": 3,
+        "ambiguityRisk": "high",
+        "dailyEligible": false,
+        "practiceEligible": true,
+        "challengeEligible": true,
+        "expertOnly": true,
+        "reviewNotes": [
+          "Batch 4 QA: source-valid finance-services trade map, but the concept is niche.",
+          "Expert-only until the services-trade cluster is tuned."
         ],
         "acceptableCloseDistractorIds": []
       }
@@ -2523,7 +3298,7 @@
       "dataFailures": [],
       "editorialReview": {
         "status": "expert_only",
-        "reviewedAt": "2026-06-22",
+        "reviewedAt": "2026-07-02",
         "reviewedBy": "Codex editorial QA",
         "qualityScore": 3,
         "funScore": 3,
@@ -2547,14 +3322,14 @@
       "category": "economy",
       "difficulty": "standard",
       "year": 2024,
-      "coverage": 139,
+      "coverage": 147,
       "sourceReference": "https://api.worldbank.org/v2/indicator/NE.GDI.FTOT.ZS?format=json&per_page=1",
       "approvalStatus": "approved",
       "dataWarnings": [],
       "dataFailures": [],
       "editorialReview": {
         "status": "expert_only",
-        "reviewedAt": "2026-06-22",
+        "reviewedAt": "2026-07-02",
         "reviewedBy": "Codex editorial QA",
         "qualityScore": 3,
         "funScore": 3,
@@ -2585,7 +3360,7 @@
       "dataFailures": [],
       "editorialReview": {
         "status": "practice_eligible",
-        "reviewedAt": "2026-06-22",
+        "reviewedAt": "2026-07-02",
         "reviewedBy": "Codex editorial QA",
         "qualityScore": 3,
         "funScore": 4,
@@ -2616,7 +3391,7 @@
       "dataFailures": [],
       "editorialReview": {
         "status": "practice_eligible",
-        "reviewedAt": "2026-06-22",
+        "reviewedAt": "2026-07-02",
         "reviewedBy": "Codex editorial QA",
         "qualityScore": 4,
         "funScore": 4,
@@ -2647,7 +3422,7 @@
       "dataFailures": [],
       "editorialReview": {
         "status": "practice_eligible",
-        "reviewedAt": "2026-06-22",
+        "reviewedAt": "2026-07-02",
         "reviewedBy": "Codex editorial QA",
         "qualityScore": 4,
         "funScore": 4,
@@ -2678,7 +3453,7 @@
       "dataFailures": [],
       "editorialReview": {
         "status": "daily_eligible",
-        "reviewedAt": "2026-06-22",
+        "reviewedAt": "2026-07-02",
         "reviewedBy": "Codex editorial QA",
         "qualityScore": 4,
         "funScore": 4,
@@ -2709,7 +3484,7 @@
       "dataFailures": [],
       "editorialReview": {
         "status": "daily_eligible",
-        "reviewedAt": "2026-06-22",
+        "reviewedAt": "2026-07-02",
         "reviewedBy": "Codex editorial QA",
         "qualityScore": 4,
         "funScore": 4,
@@ -2740,7 +3515,7 @@
       "dataFailures": [],
       "editorialReview": {
         "status": "daily_eligible",
-        "reviewedAt": "2026-06-22",
+        "reviewedAt": "2026-07-02",
         "reviewedBy": "Codex editorial QA",
         "qualityScore": 5,
         "funScore": 5,
@@ -2753,6 +3528,37 @@
         "reviewNotes": [
           "Excellent map-led geography puzzle.",
           "Strong contrast among humid tropics, boreal regions, islands, and arid states."
+        ],
+        "acceptableCloseDistractorIds": []
+      }
+    },
+    {
+      "id": "forest-land-co2-flux",
+      "providerCode": "EN.GHG.CO2.LU.FL.MT.CE.AR5",
+      "shortTitle": "Forest land CO2 flux",
+      "category": "environment",
+      "difficulty": "expert",
+      "year": 2023,
+      "coverage": 156,
+      "sourceReference": "https://api.worldbank.org/v2/indicator/EN.GHG.CO2.LU.FL.MT.CE.AR5?format=json&per_page=1",
+      "approvalStatus": "approved",
+      "dataWarnings": [],
+      "dataFailures": [],
+      "editorialReview": {
+        "status": "expert_only",
+        "reviewedAt": "2026-07-02",
+        "reviewedBy": "Codex editorial QA",
+        "qualityScore": 4,
+        "funScore": 4,
+        "fairnessScore": 3,
+        "ambiguityRisk": "high",
+        "dailyEligible": false,
+        "practiceEligible": true,
+        "challengeEligible": true,
+        "expertOnly": true,
+        "reviewNotes": [
+          "Batch 4 QA: useful forest-carbon source/sink map distinct from forest cover.",
+          "Expert-only because negative and positive flux values need careful reveal framing."
         ],
         "acceptableCloseDistractorIds": []
       }
@@ -2771,7 +3577,7 @@
       "dataFailures": [],
       "editorialReview": {
         "status": "needs_review",
-        "reviewedAt": "2026-06-22",
+        "reviewedAt": "2026-07-02",
         "reviewedBy": "pipeline-default-needs-review",
         "qualityScore": 2,
         "funScore": 2,
@@ -2801,7 +3607,7 @@
       "dataFailures": [],
       "editorialReview": {
         "status": "needs_review",
-        "reviewedAt": "2026-06-22",
+        "reviewedAt": "2026-07-02",
         "reviewedBy": "pipeline-default-needs-review",
         "qualityScore": 2,
         "funScore": 2,
@@ -2834,7 +3640,7 @@
       "dataFailures": [],
       "editorialReview": {
         "status": "expert_only",
-        "reviewedAt": "2026-06-22",
+        "reviewedAt": "2026-07-02",
         "reviewedBy": "Codex editorial QA",
         "qualityScore": 3,
         "funScore": 4,
@@ -2865,7 +3671,7 @@
       "dataFailures": [],
       "editorialReview": {
         "status": "daily_eligible",
-        "reviewedAt": "2026-06-22",
+        "reviewedAt": "2026-07-02",
         "reviewedBy": "Codex editorial QA",
         "qualityScore": 4,
         "funScore": 4,
@@ -2896,7 +3702,7 @@
       "dataFailures": [],
       "editorialReview": {
         "status": "expert_only",
-        "reviewedAt": "2026-06-22",
+        "reviewedAt": "2026-07-02",
         "reviewedBy": "Codex editorial QA",
         "qualityScore": 3,
         "funScore": 4,
@@ -2919,15 +3725,15 @@
       "shortTitle": "GDP growth",
       "category": "economy",
       "difficulty": "expert",
-      "year": 2024,
-      "coverage": 160,
+      "year": 2025,
+      "coverage": 157,
       "sourceReference": "https://api.worldbank.org/v2/indicator/NY.GDP.MKTP.KD.ZG?format=json&per_page=1",
       "approvalStatus": "approved",
       "dataWarnings": [],
       "dataFailures": [],
       "editorialReview": {
         "status": "expert_only",
-        "reviewedAt": "2026-06-22",
+        "reviewedAt": "2026-07-02",
         "reviewedBy": "Codex editorial QA",
         "qualityScore": 3,
         "funScore": 3,
@@ -2950,15 +3756,15 @@
       "shortTitle": "GDP per capita",
       "category": "development",
       "difficulty": "intro",
-      "year": 2024,
-      "coverage": 159,
+      "year": 2025,
+      "coverage": 157,
       "sourceReference": "https://api.worldbank.org/v2/indicator/NY.GDP.PCAP.CD?format=json&per_page=1",
       "approvalStatus": "approved",
       "dataWarnings": [],
       "dataFailures": [],
       "editorialReview": {
         "status": "daily_eligible",
-        "reviewedAt": "2026-06-22",
+        "reviewedAt": "2026-07-02",
         "reviewedBy": "Codex editorial QA",
         "qualityScore": 4,
         "funScore": 4,
@@ -2983,15 +3789,15 @@
       "shortTitle": "GDP per person growth",
       "category": "economy",
       "difficulty": "expert",
-      "year": 2024,
-      "coverage": 160,
+      "year": 2025,
+      "coverage": 151,
       "sourceReference": "https://api.worldbank.org/v2/indicator/NY.GDP.PCAP.KD.ZG?format=json&per_page=1",
       "approvalStatus": "approved",
       "dataWarnings": [],
       "dataFailures": [],
       "editorialReview": {
         "status": "retired",
-        "reviewedAt": "2026-06-22",
+        "reviewedAt": "2026-07-02",
         "reviewedBy": "Codex editorial QA",
         "qualityScore": 2,
         "funScore": 2,
@@ -3022,7 +3828,7 @@
       "dataFailures": [],
       "editorialReview": {
         "status": "practice_eligible",
-        "reviewedAt": "2026-06-22",
+        "reviewedAt": "2026-07-02",
         "reviewedBy": "Codex editorial QA",
         "qualityScore": 3,
         "funScore": 3,
@@ -3035,6 +3841,37 @@
         "reviewNotes": [
           "Too close to nominal GDP per capita for default Daily.",
           "Good Practice comparison for purchasing-power nuance."
+        ],
+        "acceptableCloseDistractorIds": []
+      }
+    },
+    {
+      "id": "ghg-emissions-change",
+      "providerCode": "EN.GHG.TOT.ZG.AR5",
+      "shortTitle": "Greenhouse gas emissions change",
+      "category": "environment",
+      "difficulty": "expert",
+      "year": 2024,
+      "coverage": 165,
+      "sourceReference": "https://api.worldbank.org/v2/indicator/EN.GHG.TOT.ZG.AR5?format=json&per_page=1",
+      "approvalStatus": "approved",
+      "dataWarnings": [],
+      "dataFailures": [],
+      "editorialReview": {
+        "status": "practice_eligible",
+        "reviewedAt": "2026-07-02",
+        "reviewedBy": "Codex editorial QA",
+        "qualityScore": 4,
+        "funScore": 4,
+        "fairnessScore": 3,
+        "ambiguityRisk": "medium",
+        "dailyEligible": false,
+        "practiceEligible": true,
+        "challengeEligible": true,
+        "expertOnly": false,
+        "reviewNotes": [
+          "Batch 4 promotion: broad climate-emissions trend map with good coverage and high map interest.",
+          "Practice-only because change-from-1990 maps need careful distractor pairing."
         ],
         "acceptableCloseDistractorIds": []
       }
@@ -3053,7 +3890,7 @@
       "dataFailures": [],
       "editorialReview": {
         "status": "expert_only",
-        "reviewedAt": "2026-06-22",
+        "reviewedAt": "2026-07-02",
         "reviewedBy": "Codex editorial QA",
         "qualityScore": 3,
         "funScore": 4,
@@ -3087,7 +3924,7 @@
       ],
       "editorialReview": {
         "status": "needs_review",
-        "reviewedAt": "2026-06-22",
+        "reviewedAt": "2026-07-02",
         "reviewedBy": "pipeline-default-needs-review",
         "qualityScore": 2,
         "funScore": 2,
@@ -3109,15 +3946,15 @@
       "shortTitle": "GNI per capita",
       "category": "development",
       "difficulty": "standard",
-      "year": 2024,
-      "coverage": 159,
+      "year": 2025,
+      "coverage": 155,
       "sourceReference": "https://api.worldbank.org/v2/indicator/NY.GNP.PCAP.CD?format=json&per_page=1",
       "approvalStatus": "approved",
       "dataWarnings": [],
       "dataFailures": [],
       "editorialReview": {
         "status": "practice_eligible",
-        "reviewedAt": "2026-06-22",
+        "reviewedAt": "2026-07-02",
         "reviewedBy": "Codex editorial QA",
         "qualityScore": 3,
         "funScore": 3,
@@ -3143,15 +3980,15 @@
       "shortTitle": "GNI per capita, PPP",
       "category": "development",
       "difficulty": "standard",
-      "year": 2024,
-      "coverage": 157,
+      "year": 2025,
+      "coverage": 154,
       "sourceReference": "https://api.worldbank.org/v2/indicator/NY.GNP.PCAP.PP.CD?format=json&per_page=1",
       "approvalStatus": "approved",
       "dataWarnings": [],
       "dataFailures": [],
       "editorialReview": {
         "status": "practice_eligible",
-        "reviewedAt": "2026-06-22",
+        "reviewedAt": "2026-07-02",
         "reviewedBy": "Codex editorial QA",
         "qualityScore": 3,
         "funScore": 3,
@@ -3177,15 +4014,15 @@
       "shortTitle": "Government consumption",
       "category": "economy",
       "difficulty": "expert",
-      "year": 2023,
-      "coverage": 145,
+      "year": 2025,
+      "coverage": 121,
       "sourceReference": "https://api.worldbank.org/v2/indicator/NE.CON.GOVT.ZS?format=json&per_page=1",
       "approvalStatus": "approved",
       "dataWarnings": [],
       "dataFailures": [],
       "editorialReview": {
         "status": "needs_review",
-        "reviewedAt": "2026-06-22",
+        "reviewedAt": "2026-07-02",
         "reviewedBy": "pipeline-default-needs-review",
         "qualityScore": 2,
         "funScore": 2,
@@ -3215,7 +4052,7 @@
       "dataFailures": [],
       "editorialReview": {
         "status": "daily_eligible",
-        "reviewedAt": "2026-06-22",
+        "reviewedAt": "2026-07-02",
         "reviewedBy": "Codex editorial QA",
         "qualityScore": 4,
         "funScore": 4,
@@ -3246,7 +4083,7 @@
       "dataFailures": [],
       "editorialReview": {
         "status": "needs_review",
-        "reviewedAt": "2026-06-22",
+        "reviewedAt": "2026-07-02",
         "reviewedBy": "pipeline-default-needs-review",
         "qualityScore": 2,
         "funScore": 2,
@@ -3276,7 +4113,7 @@
       "dataFailures": [],
       "editorialReview": {
         "status": "expert_only",
-        "reviewedAt": "2026-06-22",
+        "reviewedAt": "2026-07-02",
         "reviewedBy": "Codex editorial QA",
         "qualityScore": 3,
         "funScore": 3,
@@ -3299,15 +4136,15 @@
       "shortTitle": "Gross capital formation",
       "category": "economy",
       "difficulty": "standard",
-      "year": 2024,
-      "coverage": 139,
+      "year": 2025,
+      "coverage": 120,
       "sourceReference": "https://api.worldbank.org/v2/indicator/NE.GDI.TOTL.ZS?format=json&per_page=1",
       "approvalStatus": "approved",
       "dataWarnings": [],
       "dataFailures": [],
       "editorialReview": {
         "status": "needs_review",
-        "reviewedAt": "2026-06-22",
+        "reviewedAt": "2026-07-02",
         "reviewedBy": "pipeline-default-needs-review",
         "qualityScore": 2,
         "funScore": 2,
@@ -3330,14 +4167,14 @@
       "category": "economy",
       "difficulty": "standard",
       "year": 2024,
-      "coverage": 122,
+      "coverage": 131,
       "sourceReference": "https://api.worldbank.org/v2/indicator/NY.GNS.ICTR.ZS?format=json&per_page=1",
       "approvalStatus": "approved",
       "dataWarnings": [],
       "dataFailures": [],
       "editorialReview": {
         "status": "expert_only",
-        "reviewedAt": "2026-06-22",
+        "reviewedAt": "2026-07-02",
         "reviewedBy": "Codex editorial QA",
         "qualityScore": 3,
         "funScore": 3,
@@ -3368,7 +4205,7 @@
       "dataFailures": [],
       "editorialReview": {
         "status": "daily_eligible",
-        "reviewedAt": "2026-06-22",
+        "reviewedAt": "2026-07-02",
         "reviewedBy": "Codex editorial QA",
         "qualityScore": 4,
         "funScore": 4,
@@ -3399,7 +4236,7 @@
       "dataFailures": [],
       "editorialReview": {
         "status": "practice_eligible",
-        "reviewedAt": "2026-06-22",
+        "reviewedAt": "2026-07-02",
         "reviewedBy": "Codex editorial QA",
         "qualityScore": 3,
         "funScore": 4,
@@ -3430,7 +4267,7 @@
       "dataFailures": [],
       "editorialReview": {
         "status": "retired",
-        "reviewedAt": "2026-06-22",
+        "reviewedAt": "2026-07-02",
         "reviewedBy": "Codex editorial QA",
         "qualityScore": 2,
         "funScore": 2,
@@ -3461,7 +4298,7 @@
       "dataFailures": [],
       "editorialReview": {
         "status": "expert_only",
-        "reviewedAt": "2026-06-22",
+        "reviewedAt": "2026-07-02",
         "reviewedBy": "Codex editorial QA",
         "qualityScore": 3,
         "funScore": 4,
@@ -3474,6 +4311,37 @@
         "reviewNotes": [
           "Interesting export-composition puzzle with non-obvious winners.",
           "Expert-only because it depends on manufactured-export denominator, not total exports."
+        ],
+        "acceptableCloseDistractorIds": []
+      }
+    },
+    {
+      "id": "hiv-incidence",
+      "providerCode": "SH.HIV.INCD.ZS",
+      "shortTitle": "HIV incidence",
+      "category": "health",
+      "difficulty": "expert",
+      "year": 2024,
+      "coverage": 126,
+      "sourceReference": "https://api.worldbank.org/v2/indicator/SH.HIV.INCD.ZS?format=json&per_page=1",
+      "approvalStatus": "approved",
+      "dataWarnings": [],
+      "dataFailures": [],
+      "editorialReview": {
+        "status": "expert_only",
+        "reviewedAt": "2026-07-02",
+        "reviewedBy": "Codex editorial QA",
+        "qualityScore": 4,
+        "funScore": 4,
+        "fairnessScore": 3,
+        "ambiguityRisk": "medium",
+        "dailyEligible": false,
+        "practiceEligible": true,
+        "challengeEligible": true,
+        "expertOnly": true,
+        "reviewNotes": [
+          "Batch 4 QA: distinct regional health pattern with adequate coverage and clear rate unit.",
+          "Expert-only because the topic is sensitive and should not appear in easy casual rounds."
         ],
         "acceptableCloseDistractorIds": []
       }
@@ -3492,7 +4360,7 @@
       "dataFailures": [],
       "editorialReview": {
         "status": "expert_only",
-        "reviewedAt": "2026-06-22",
+        "reviewedAt": "2026-07-02",
         "reviewedBy": "Codex editorial QA",
         "qualityScore": 3,
         "funScore": 4,
@@ -3515,15 +4383,15 @@
       "shortTitle": "Household consumption",
       "category": "economy",
       "difficulty": "standard",
-      "year": 2023,
-      "coverage": 144,
+      "year": 2025,
+      "coverage": 120,
       "sourceReference": "https://api.worldbank.org/v2/indicator/NE.CON.PRVT.ZS?format=json&per_page=1",
       "approvalStatus": "approved",
       "dataWarnings": [],
       "dataFailures": [],
       "editorialReview": {
         "status": "needs_review",
-        "reviewedAt": "2026-06-22",
+        "reviewedAt": "2026-07-02",
         "reviewedBy": "pipeline-default-needs-review",
         "qualityScore": 2,
         "funScore": 2,
@@ -3535,6 +4403,68 @@
         "expertOnly": false,
         "reviewNotes": [
           "Loaded from the candidate intake queue and default-held as Needs review until a human editor classifies it."
+        ],
+        "acceptableCloseDistractorIds": []
+      }
+    },
+    {
+      "id": "human-capital-education-index",
+      "providerCode": "HD_HCIP_EDUC_TO",
+      "shortTitle": "Human capital education index",
+      "category": "education",
+      "difficulty": "expert",
+      "year": 2025,
+      "coverage": 145,
+      "sourceReference": "https://api.worldbank.org/v2/indicator/HD_HCIP_EDUC_TO?format=json&per_page=1",
+      "approvalStatus": "approved",
+      "dataWarnings": [],
+      "dataFailures": [],
+      "editorialReview": {
+        "status": "practice_eligible",
+        "reviewedAt": "2026-07-02",
+        "reviewedBy": "Codex editorial QA",
+        "qualityScore": 4,
+        "funScore": 4,
+        "fairnessScore": 3,
+        "ambiguityRisk": "medium",
+        "dailyEligible": false,
+        "practiceEligible": true,
+        "challengeEligible": true,
+        "expertOnly": false,
+        "reviewNotes": [
+          "Batch 4 promotion: useful education component of human capital with strong coverage.",
+          "Practice-only because composite education indexes are less intuitive than enrollment or spending maps."
+        ],
+        "acceptableCloseDistractorIds": []
+      }
+    },
+    {
+      "id": "human-capital-index",
+      "providerCode": "HD_HCIP_OVRL_TO",
+      "shortTitle": "Human Capital Index",
+      "category": "development",
+      "difficulty": "standard",
+      "year": 2025,
+      "coverage": 143,
+      "sourceReference": "https://api.worldbank.org/v2/indicator/HD_HCIP_OVRL_TO?format=json&per_page=1",
+      "approvalStatus": "approved",
+      "dataWarnings": [],
+      "dataFailures": [],
+      "editorialReview": {
+        "status": "daily_eligible",
+        "reviewedAt": "2026-07-02",
+        "reviewedBy": "Codex editorial QA",
+        "qualityScore": 4,
+        "funScore": 4,
+        "fairnessScore": 4,
+        "ambiguityRisk": "medium",
+        "dailyEligible": true,
+        "practiceEligible": true,
+        "challengeEligible": true,
+        "expertOnly": false,
+        "reviewNotes": [
+          "Batch 4 promotion: current high-coverage composite with a readable development pattern.",
+          "Daily-worthy sparingly because it blends health and education into one index."
         ],
         "acceptableCloseDistractorIds": []
       }
@@ -3553,7 +4483,7 @@
       "dataFailures": [],
       "editorialReview": {
         "status": "practice_eligible",
-        "reviewedAt": "2026-06-22",
+        "reviewedAt": "2026-07-02",
         "reviewedBy": "Codex editorial QA",
         "qualityScore": 3,
         "funScore": 4,
@@ -3577,14 +4507,14 @@
       "category": "connectivity",
       "difficulty": "expert",
       "year": 2024,
-      "coverage": 135,
+      "coverage": 137,
       "sourceReference": "https://api.worldbank.org/v2/indicator/BX.GSR.CCIS.ZS?format=json&per_page=1",
       "approvalStatus": "approved",
       "dataWarnings": [],
       "dataFailures": [],
       "editorialReview": {
         "status": "practice_eligible",
-        "reviewedAt": "2026-06-22",
+        "reviewedAt": "2026-07-02",
         "reviewedBy": "Codex editorial QA",
         "qualityScore": 4,
         "funScore": 4,
@@ -3602,20 +4532,51 @@
       }
     },
     {
+      "id": "imports-high-income-share",
+      "providerCode": "TM.VAL.MRCH.HI.ZS",
+      "shortTitle": "Imports from high-income economies",
+      "category": "economy",
+      "difficulty": "expert",
+      "year": 2023,
+      "coverage": 168,
+      "sourceReference": "https://api.worldbank.org/v2/indicator/TM.VAL.MRCH.HI.ZS?format=json&per_page=1",
+      "approvalStatus": "approved",
+      "dataWarnings": [],
+      "dataFailures": [],
+      "editorialReview": {
+        "status": "expert_only",
+        "reviewedAt": "2026-07-02",
+        "reviewedBy": "Codex editorial QA",
+        "qualityScore": 3,
+        "funScore": 3,
+        "fairnessScore": 3,
+        "ambiguityRisk": "high",
+        "dailyEligible": false,
+        "practiceEligible": true,
+        "challengeEligible": true,
+        "expertOnly": true,
+        "reviewNotes": [
+          "Batch 4 QA: useful counterpart to export-partner geography, but less intuitive than total trade openness.",
+          "Expert-only until trade-partner distractors are reviewed."
+        ],
+        "acceptableCloseDistractorIds": []
+      }
+    },
+    {
       "id": "imports-share",
       "providerCode": "NE.IMP.GNFS.ZS",
       "shortTitle": "Imports",
       "category": "economy",
       "difficulty": "standard",
-      "year": 2024,
-      "coverage": 141,
+      "year": 2025,
+      "coverage": 124,
       "sourceReference": "https://api.worldbank.org/v2/indicator/NE.IMP.GNFS.ZS?format=json&per_page=1",
       "approvalStatus": "approved",
       "dataWarnings": [],
       "dataFailures": [],
       "editorialReview": {
         "status": "expert_only",
-        "reviewedAt": "2026-06-22",
+        "reviewedAt": "2026-07-02",
         "reviewedBy": "Codex editorial QA",
         "qualityScore": 3,
         "funScore": 3,
@@ -3628,6 +4589,68 @@
         "reviewNotes": [
           "Close to trade and exports share.",
           "Keep as Expert Practice until open-economy distractors are hand-tuned."
+        ],
+        "acceptableCloseDistractorIds": []
+      }
+    },
+    {
+      "id": "imports-within-region-share",
+      "providerCode": "TM.VAL.MRCH.WR.ZS",
+      "shortTitle": "Imports within region",
+      "category": "economy",
+      "difficulty": "expert",
+      "year": 2023,
+      "coverage": 166,
+      "sourceReference": "https://api.worldbank.org/v2/indicator/TM.VAL.MRCH.WR.ZS?format=json&per_page=1",
+      "approvalStatus": "approved",
+      "dataWarnings": [],
+      "dataFailures": [],
+      "editorialReview": {
+        "status": "practice_eligible",
+        "reviewedAt": "2026-07-02",
+        "reviewedBy": "Codex editorial QA",
+        "qualityScore": 4,
+        "funScore": 4,
+        "fairnessScore": 3,
+        "ambiguityRisk": "medium",
+        "dailyEligible": false,
+        "practiceEligible": true,
+        "challengeEligible": true,
+        "expertOnly": false,
+        "reviewNotes": [
+          "Batch 4 promotion: regional-import share gives a clear trade-bloc and neighbor-dependence puzzle.",
+          "Practice-only because partner-share maps are more abstract than total trade."
+        ],
+        "acceptableCloseDistractorIds": []
+      }
+    },
+    {
+      "id": "income-tax-share",
+      "providerCode": "GC.TAX.YPKG.ZS",
+      "shortTitle": "Income tax share",
+      "category": "economy",
+      "difficulty": "expert",
+      "year": 2017,
+      "coverage": 122,
+      "sourceReference": "https://api.worldbank.org/v2/indicator/GC.TAX.YPKG.ZS?format=json&per_page=1",
+      "approvalStatus": "approved",
+      "dataWarnings": [],
+      "dataFailures": [],
+      "editorialReview": {
+        "status": "expert_only",
+        "reviewedAt": "2026-07-02",
+        "reviewedBy": "Codex editorial QA",
+        "qualityScore": 3,
+        "funScore": 3,
+        "fairnessScore": 3,
+        "ambiguityRisk": "high",
+        "dailyEligible": false,
+        "practiceEligible": true,
+        "challengeEligible": true,
+        "expertOnly": true,
+        "reviewNotes": [
+          "Batch 4 QA: useful fiscal-structure map with a clear percent-of-tax-revenue unit.",
+          "Expert-only because coverage is thinner and the selected year may be older than core macro indicators."
         ],
         "acceptableCloseDistractorIds": []
       }
@@ -3646,7 +4669,7 @@
       "dataFailures": [],
       "editorialReview": {
         "status": "practice_eligible",
-        "reviewedAt": "2026-06-22",
+        "reviewedAt": "2026-07-02",
         "reviewedBy": "Codex editorial QA",
         "qualityScore": 3,
         "funScore": 4,
@@ -3669,15 +4692,15 @@
       "shortTitle": "Industry value added",
       "category": "economy",
       "difficulty": "standard",
-      "year": 2024,
-      "coverage": 149,
+      "year": 2025,
+      "coverage": 139,
       "sourceReference": "https://api.worldbank.org/v2/indicator/NV.IND.TOTL.ZS?format=json&per_page=1",
       "approvalStatus": "approved",
       "dataWarnings": [],
       "dataFailures": [],
       "editorialReview": {
         "status": "daily_eligible",
-        "reviewedAt": "2026-06-22",
+        "reviewedAt": "2026-07-02",
         "reviewedBy": "Codex editorial QA",
         "qualityScore": 4,
         "funScore": 4,
@@ -3711,7 +4734,7 @@
       "dataFailures": [],
       "editorialReview": {
         "status": "practice_eligible",
-        "reviewedAt": "2026-06-22",
+        "reviewedAt": "2026-07-02",
         "reviewedBy": "Codex editorial QA",
         "qualityScore": 4,
         "funScore": 3,
@@ -3734,15 +4757,15 @@
       "shortTitle": "Inflation",
       "category": "economy",
       "difficulty": "expert",
-      "year": 2024,
-      "coverage": 151,
+      "year": 2025,
+      "coverage": 143,
       "sourceReference": "https://api.worldbank.org/v2/indicator/FP.CPI.TOTL.ZG?format=json&per_page=1",
       "approvalStatus": "approved",
       "dataWarnings": [],
       "dataFailures": [],
       "editorialReview": {
         "status": "expert_only",
-        "reviewedAt": "2026-06-22",
+        "reviewedAt": "2026-07-02",
         "reviewedBy": "Codex editorial QA",
         "qualityScore": 3,
         "funScore": 4,
@@ -3773,7 +4796,7 @@
       "dataFailures": [],
       "editorialReview": {
         "status": "daily_eligible",
-        "reviewedAt": "2026-06-22",
+        "reviewedAt": "2026-07-02",
         "reviewedBy": "Codex editorial QA",
         "qualityScore": 5,
         "funScore": 4,
@@ -3807,7 +4830,7 @@
       ],
       "editorialReview": {
         "status": "needs_review",
-        "reviewedAt": "2026-06-22",
+        "reviewedAt": "2026-07-02",
         "reviewedBy": "pipeline-default-needs-review",
         "qualityScore": 2,
         "funScore": 2,
@@ -3839,7 +4862,7 @@
       ],
       "editorialReview": {
         "status": "needs_review",
-        "reviewedAt": "2026-06-22",
+        "reviewedAt": "2026-07-02",
         "reviewedBy": "pipeline-default-needs-review",
         "qualityScore": 2,
         "funScore": 2,
@@ -3872,7 +4895,7 @@
       ],
       "editorialReview": {
         "status": "needs_review",
-        "reviewedAt": "2026-06-22",
+        "reviewedAt": "2026-07-02",
         "reviewedBy": "pipeline-default-needs-review",
         "qualityScore": 2,
         "funScore": 2,
@@ -3902,7 +4925,7 @@
       "dataFailures": [],
       "editorialReview": {
         "status": "practice_eligible",
-        "reviewedAt": "2026-06-22",
+        "reviewedAt": "2026-07-02",
         "reviewedBy": "Codex editorial QA",
         "qualityScore": 4,
         "funScore": 4,
@@ -3933,7 +4956,7 @@
       "dataFailures": [],
       "editorialReview": {
         "status": "practice_eligible",
-        "reviewedAt": "2026-06-22",
+        "reviewedAt": "2026-07-02",
         "reviewedBy": "Codex editorial QA",
         "qualityScore": 3,
         "funScore": 3,
@@ -3966,7 +4989,7 @@
       ],
       "editorialReview": {
         "status": "needs_review",
-        "reviewedAt": "2026-06-22",
+        "reviewedAt": "2026-07-02",
         "reviewedBy": "pipeline-default-needs-review",
         "qualityScore": 2,
         "funScore": 2,
@@ -3996,7 +5019,7 @@
       "dataFailures": [],
       "editorialReview": {
         "status": "daily_eligible",
-        "reviewedAt": "2026-06-22",
+        "reviewedAt": "2026-07-02",
         "reviewedBy": "Codex editorial QA",
         "qualityScore": 4,
         "funScore": 4,
@@ -4027,7 +5050,7 @@
       "dataFailures": [],
       "editorialReview": {
         "status": "practice_eligible",
-        "reviewedAt": "2026-06-22",
+        "reviewedAt": "2026-07-02",
         "reviewedBy": "Codex editorial QA",
         "qualityScore": 3,
         "funScore": 4,
@@ -4058,7 +5081,7 @@
       "dataFailures": [],
       "editorialReview": {
         "status": "daily_eligible",
-        "reviewedAt": "2026-06-22",
+        "reviewedAt": "2026-07-02",
         "reviewedBy": "Codex editorial QA",
         "qualityScore": 5,
         "funScore": 4,
@@ -4089,7 +5112,7 @@
       "dataFailures": [],
       "editorialReview": {
         "status": "needs_review",
-        "reviewedAt": "2026-06-22",
+        "reviewedAt": "2026-07-02",
         "reviewedBy": "Codex editorial QA",
         "qualityScore": 3,
         "funScore": 3,
@@ -4120,7 +5143,7 @@
       "dataFailures": [],
       "editorialReview": {
         "status": "needs_review",
-        "reviewedAt": "2026-06-22",
+        "reviewedAt": "2026-07-02",
         "reviewedBy": "Codex editorial QA",
         "qualityScore": 2,
         "funScore": 2,
@@ -4151,7 +5174,7 @@
       "dataFailures": [],
       "editorialReview": {
         "status": "needs_review",
-        "reviewedAt": "2026-06-22",
+        "reviewedAt": "2026-07-02",
         "reviewedBy": "pipeline-default-needs-review",
         "qualityScore": 2,
         "funScore": 2,
@@ -4181,7 +5204,7 @@
       "dataFailures": [],
       "editorialReview": {
         "status": "expert_only",
-        "reviewedAt": "2026-06-22",
+        "reviewedAt": "2026-07-02",
         "reviewedBy": "Codex editorial QA",
         "qualityScore": 3,
         "funScore": 4,
@@ -4212,7 +5235,7 @@
       "dataFailures": [],
       "editorialReview": {
         "status": "expert_only",
-        "reviewedAt": "2026-06-22",
+        "reviewedAt": "2026-07-02",
         "reviewedBy": "Codex editorial QA",
         "qualityScore": 3,
         "funScore": 3,
@@ -4246,7 +5269,7 @@
       ],
       "editorialReview": {
         "status": "needs_review",
-        "reviewedAt": "2026-06-22",
+        "reviewedAt": "2026-07-02",
         "reviewedBy": "pipeline-default-needs-review",
         "qualityScore": 2,
         "funScore": 2,
@@ -4279,7 +5302,7 @@
       ],
       "editorialReview": {
         "status": "needs_review",
-        "reviewedAt": "2026-06-22",
+        "reviewedAt": "2026-07-02",
         "reviewedBy": "pipeline-default-needs-review",
         "qualityScore": 2,
         "funScore": 2,
@@ -4309,7 +5332,7 @@
       "dataFailures": [],
       "editorialReview": {
         "status": "needs_review",
-        "reviewedAt": "2026-06-22",
+        "reviewedAt": "2026-07-02",
         "reviewedBy": "pipeline-default-needs-review",
         "qualityScore": 2,
         "funScore": 2,
@@ -4339,7 +5362,7 @@
       "dataFailures": [],
       "editorialReview": {
         "status": "needs_review",
-        "reviewedAt": "2026-06-22",
+        "reviewedAt": "2026-07-02",
         "reviewedBy": "pipeline-default-needs-review",
         "qualityScore": 2,
         "funScore": 2,
@@ -4369,7 +5392,7 @@
       "dataFailures": [],
       "editorialReview": {
         "status": "needs_review",
-        "reviewedAt": "2026-06-22",
+        "reviewedAt": "2026-07-02",
         "reviewedBy": "pipeline-default-needs-review",
         "qualityScore": 2,
         "funScore": 2,
@@ -4399,7 +5422,7 @@
       "dataFailures": [],
       "editorialReview": {
         "status": "needs_review",
-        "reviewedAt": "2026-06-22",
+        "reviewedAt": "2026-07-02",
         "reviewedBy": "pipeline-default-needs-review",
         "qualityScore": 2,
         "funScore": 2,
@@ -4429,7 +5452,7 @@
       "dataFailures": [],
       "editorialReview": {
         "status": "needs_review",
-        "reviewedAt": "2026-06-22",
+        "reviewedAt": "2026-07-02",
         "reviewedBy": "pipeline-default-needs-review",
         "qualityScore": 2,
         "funScore": 2,
@@ -4459,7 +5482,7 @@
       "dataFailures": [],
       "editorialReview": {
         "status": "expert_only",
-        "reviewedAt": "2026-06-22",
+        "reviewedAt": "2026-07-02",
         "reviewedBy": "Codex editorial QA",
         "qualityScore": 3,
         "funScore": 3,
@@ -4490,7 +5513,7 @@
       "dataFailures": [],
       "editorialReview": {
         "status": "expert_only",
-        "reviewedAt": "2026-06-22",
+        "reviewedAt": "2026-07-02",
         "reviewedBy": "Codex editorial QA",
         "qualityScore": 4,
         "funScore": 4,
@@ -4521,7 +5544,7 @@
       "dataFailures": [],
       "editorialReview": {
         "status": "needs_review",
-        "reviewedAt": "2026-06-22",
+        "reviewedAt": "2026-07-02",
         "reviewedBy": "pipeline-default-needs-review",
         "qualityScore": 2,
         "funScore": 2,
@@ -4551,7 +5574,7 @@
       "dataFailures": [],
       "editorialReview": {
         "status": "needs_review",
-        "reviewedAt": "2026-06-22",
+        "reviewedAt": "2026-07-02",
         "reviewedBy": "pipeline-default-needs-review",
         "qualityScore": 2,
         "funScore": 2,
@@ -4581,7 +5604,7 @@
       "dataFailures": [],
       "editorialReview": {
         "status": "needs_review",
-        "reviewedAt": "2026-06-22",
+        "reviewedAt": "2026-07-02",
         "reviewedBy": "pipeline-default-needs-review",
         "qualityScore": 2,
         "funScore": 2,
@@ -4611,7 +5634,7 @@
       "dataFailures": [],
       "editorialReview": {
         "status": "needs_review",
-        "reviewedAt": "2026-06-22",
+        "reviewedAt": "2026-07-02",
         "reviewedBy": "pipeline-default-needs-review",
         "qualityScore": 2,
         "funScore": 2,
@@ -4641,7 +5664,7 @@
       "dataFailures": [],
       "editorialReview": {
         "status": "needs_review",
-        "reviewedAt": "2026-06-22",
+        "reviewedAt": "2026-07-02",
         "reviewedBy": "pipeline-default-needs-review",
         "qualityScore": 2,
         "funScore": 2,
@@ -4671,7 +5694,7 @@
       "dataFailures": [],
       "editorialReview": {
         "status": "needs_review",
-        "reviewedAt": "2026-06-22",
+        "reviewedAt": "2026-07-02",
         "reviewedBy": "pipeline-default-needs-review",
         "qualityScore": 2,
         "funScore": 2,
@@ -4694,14 +5717,14 @@
       "category": "economy",
       "difficulty": "standard",
       "year": 2024,
-      "coverage": 141,
+      "coverage": 147,
       "sourceReference": "https://api.worldbank.org/v2/indicator/NV.IND.MANF.ZS?format=json&per_page=1",
       "approvalStatus": "approved",
       "dataWarnings": [],
       "dataFailures": [],
       "editorialReview": {
         "status": "daily_eligible",
-        "reviewedAt": "2026-06-22",
+        "reviewedAt": "2026-07-02",
         "reviewedBy": "Codex editorial QA",
         "qualityScore": 4,
         "funScore": 4,
@@ -4734,7 +5757,7 @@
       "dataFailures": [],
       "editorialReview": {
         "status": "daily_eligible",
-        "reviewedAt": "2026-06-22",
+        "reviewedAt": "2026-07-02",
         "reviewedBy": "Codex editorial QA",
         "qualityScore": 5,
         "funScore": 4,
@@ -4765,7 +5788,7 @@
       "dataFailures": [],
       "editorialReview": {
         "status": "daily_eligible",
-        "reviewedAt": "2026-06-22",
+        "reviewedAt": "2026-07-02",
         "reviewedBy": "Codex editorial QA",
         "qualityScore": 4,
         "funScore": 4,
@@ -4785,6 +5808,68 @@
       }
     },
     {
+      "id": "merchandise-trade-share",
+      "providerCode": "TG.VAL.TOTL.GD.ZS",
+      "shortTitle": "Merchandise trade share",
+      "category": "economy",
+      "difficulty": "standard",
+      "year": 2025,
+      "coverage": 161,
+      "sourceReference": "https://api.worldbank.org/v2/indicator/TG.VAL.TOTL.GD.ZS?format=json&per_page=1",
+      "approvalStatus": "approved",
+      "dataWarnings": [],
+      "dataFailures": [],
+      "editorialReview": {
+        "status": "daily_eligible",
+        "reviewedAt": "2026-07-02",
+        "reviewedBy": "Codex editorial QA",
+        "qualityScore": 4,
+        "funScore": 4,
+        "fairnessScore": 4,
+        "ambiguityRisk": "medium",
+        "dailyEligible": true,
+        "practiceEligible": true,
+        "challengeEligible": true,
+        "expertOnly": false,
+        "reviewNotes": [
+          "Batch 4 promotion: strong trade-openness map with broad coverage and a clear percent-of-GDP unit.",
+          "Daily-worthy if answer choices distinguish goods trade from services and tourism."
+        ],
+        "acceptableCloseDistractorIds": []
+      }
+    },
+    {
+      "id": "methane-emissions-change",
+      "providerCode": "EN.GHG.CH4.ZG.AR5",
+      "shortTitle": "Methane emissions change",
+      "category": "environment",
+      "difficulty": "expert",
+      "year": 2024,
+      "coverage": 165,
+      "sourceReference": "https://api.worldbank.org/v2/indicator/EN.GHG.CH4.ZG.AR5?format=json&per_page=1",
+      "approvalStatus": "approved",
+      "dataWarnings": [],
+      "dataFailures": [],
+      "editorialReview": {
+        "status": "expert_only",
+        "reviewedAt": "2026-07-02",
+        "reviewedBy": "Codex editorial QA",
+        "qualityScore": 4,
+        "funScore": 4,
+        "fairnessScore": 3,
+        "ambiguityRisk": "medium",
+        "dailyEligible": false,
+        "practiceEligible": true,
+        "challengeEligible": true,
+        "expertOnly": true,
+        "reviewNotes": [
+          "Batch 4 QA: useful agriculture-and-energy emissions trend with a pattern distinct from CO2.",
+          "Expert-only until the emissions-change cluster is playtested."
+        ],
+        "acceptableCloseDistractorIds": []
+      }
+    },
+    {
       "id": "migrant-stock",
       "providerCode": "SM.POP.TOTL.ZS",
       "shortTitle": "International migrant stock",
@@ -4798,7 +5883,7 @@
       "dataFailures": [],
       "editorialReview": {
         "status": "daily_eligible",
-        "reviewedAt": "2026-06-22",
+        "reviewedAt": "2026-07-02",
         "reviewedBy": "Codex editorial QA",
         "qualityScore": 4,
         "funScore": 5,
@@ -4829,7 +5914,7 @@
       "dataFailures": [],
       "editorialReview": {
         "status": "expert_only",
-        "reviewedAt": "2026-06-22",
+        "reviewedAt": "2026-07-02",
         "reviewedBy": "Codex editorial QA",
         "qualityScore": 3,
         "funScore": 4,
@@ -4842,6 +5927,68 @@
         "reviewNotes": [
           "High-interest but politically and contextually tricky map.",
           "Expert-only because GDP-share spending is not raw military power."
+        ],
+        "acceptableCloseDistractorIds": []
+      }
+    },
+    {
+      "id": "mineral-depletion-share",
+      "providerCode": "NY.ADJ.DMIN.GN.ZS",
+      "shortTitle": "Mineral depletion share",
+      "category": "economy",
+      "difficulty": "expert",
+      "year": 2021,
+      "coverage": 156,
+      "sourceReference": "https://api.worldbank.org/v2/indicator/NY.ADJ.DMIN.GN.ZS?format=json&per_page=1",
+      "approvalStatus": "approved",
+      "dataWarnings": [],
+      "dataFailures": [],
+      "editorialReview": {
+        "status": "expert_only",
+        "reviewedAt": "2026-07-02",
+        "reviewedBy": "Codex editorial QA",
+        "qualityScore": 3,
+        "funScore": 4,
+        "fairnessScore": 3,
+        "ambiguityRisk": "high",
+        "dailyEligible": false,
+        "practiceEligible": true,
+        "challengeEligible": true,
+        "expertOnly": true,
+        "reviewNotes": [
+          "Batch 4 QA: mining-depletion map has good country coverage and clear resource geography.",
+          "Expert-only because zero-heavy values and the adjusted-savings framing are advanced."
+        ],
+        "acceptableCloseDistractorIds": []
+      }
+    },
+    {
+      "id": "mineral-rents",
+      "providerCode": "NY.GDP.MINR.RT.ZS",
+      "shortTitle": "Mineral rents",
+      "category": "economy",
+      "difficulty": "expert",
+      "year": 2021,
+      "coverage": 159,
+      "sourceReference": "https://api.worldbank.org/v2/indicator/NY.GDP.MINR.RT.ZS?format=json&per_page=1",
+      "approvalStatus": "approved",
+      "dataWarnings": [],
+      "dataFailures": [],
+      "editorialReview": {
+        "status": "expert_only",
+        "reviewedAt": "2026-07-02",
+        "reviewedBy": "Codex editorial QA",
+        "qualityScore": 4,
+        "funScore": 4,
+        "fairnessScore": 3,
+        "ambiguityRisk": "high",
+        "dailyEligible": false,
+        "practiceEligible": true,
+        "challengeEligible": true,
+        "expertOnly": true,
+        "reviewNotes": [
+          "Batch 4 QA: strong mining-economy pattern with an understandable percent-of-GDP unit.",
+          "Expert-only because resource-rent maps can be zero-heavy and highly correlated with depletion rows."
         ],
         "acceptableCloseDistractorIds": []
       }
@@ -4860,7 +6007,7 @@
       "dataFailures": [],
       "editorialReview": {
         "status": "daily_eligible",
-        "reviewedAt": "2026-06-22",
+        "reviewedAt": "2026-07-02",
         "reviewedBy": "Codex editorial QA",
         "qualityScore": 4,
         "funScore": 4,
@@ -4897,7 +6044,7 @@
       ],
       "editorialReview": {
         "status": "retired",
-        "reviewedAt": "2026-06-22",
+        "reviewedAt": "2026-07-02",
         "reviewedBy": "Codex editorial QA",
         "qualityScore": 2,
         "funScore": 2,
@@ -4928,7 +6075,7 @@
       "dataFailures": [],
       "editorialReview": {
         "status": "practice_eligible",
-        "reviewedAt": "2026-06-22",
+        "reviewedAt": "2026-07-02",
         "reviewedBy": "Codex editorial QA",
         "qualityScore": 3,
         "funScore": 4,
@@ -4959,7 +6106,7 @@
       "dataFailures": [],
       "editorialReview": {
         "status": "needs_review",
-        "reviewedAt": "2026-06-22",
+        "reviewedAt": "2026-07-02",
         "reviewedBy": "pipeline-default-needs-review",
         "qualityScore": 2,
         "funScore": 2,
@@ -4989,7 +6136,7 @@
       "dataFailures": [],
       "editorialReview": {
         "status": "practice_eligible",
-        "reviewedAt": "2026-06-22",
+        "reviewedAt": "2026-07-02",
         "reviewedBy": "Codex editorial QA",
         "qualityScore": 4,
         "funScore": 4,
@@ -5002,6 +6149,37 @@
         "reviewNotes": [
           "Batch 2 QA: distinctive resource-economy map, but the unit is abstract and strongly overlaps with resource-depletion concepts.",
           "Practice-only for beta; not broad enough for the shared Daily yet."
+        ],
+        "acceptableCloseDistractorIds": []
+      }
+    },
+    {
+      "id": "ncd-premature-mortality",
+      "providerCode": "SH.DYN.NCOM.ZS",
+      "shortTitle": "NCD premature mortality",
+      "category": "health",
+      "difficulty": "standard",
+      "year": 2021,
+      "coverage": 167,
+      "sourceReference": "https://api.worldbank.org/v2/indicator/SH.DYN.NCOM.ZS?format=json&per_page=1",
+      "approvalStatus": "approved",
+      "dataWarnings": [],
+      "dataFailures": [],
+      "editorialReview": {
+        "status": "daily_eligible",
+        "reviewedAt": "2026-07-02",
+        "reviewedBy": "Codex editorial QA",
+        "qualityScore": 4,
+        "funScore": 4,
+        "fairnessScore": 4,
+        "ambiguityRisk": "medium",
+        "dailyEligible": true,
+        "practiceEligible": true,
+        "challengeEligible": true,
+        "expertOnly": false,
+        "reviewNotes": [
+          "Batch 4 promotion: broad source-valid chronic-disease mortality map with a clear health-transition story.",
+          "Daily-worthy when not paired too closely with adult mortality or life-expectancy maps."
         ],
         "acceptableCloseDistractorIds": []
       }
@@ -5020,7 +6198,7 @@
       "dataFailures": [],
       "editorialReview": {
         "status": "expert_only",
-        "reviewedAt": "2026-06-22",
+        "reviewedAt": "2026-07-02",
         "reviewedBy": "Codex editorial QA",
         "qualityScore": 3,
         "funScore": 3,
@@ -5051,7 +6229,7 @@
       "dataFailures": [],
       "editorialReview": {
         "status": "needs_review",
-        "reviewedAt": "2026-06-22",
+        "reviewedAt": "2026-07-02",
         "reviewedBy": "pipeline-default-needs-review",
         "qualityScore": 2,
         "funScore": 2,
@@ -5081,7 +6259,7 @@
       "dataFailures": [],
       "editorialReview": {
         "status": "needs_review",
-        "reviewedAt": "2026-06-22",
+        "reviewedAt": "2026-07-02",
         "reviewedBy": "Codex editorial QA",
         "qualityScore": 2,
         "funScore": 3,
@@ -5112,7 +6290,7 @@
       "dataFailures": [],
       "editorialReview": {
         "status": "needs_review",
-        "reviewedAt": "2026-06-22",
+        "reviewedAt": "2026-07-02",
         "reviewedBy": "pipeline-default-needs-review",
         "qualityScore": 2,
         "funScore": 2,
@@ -5145,7 +6323,7 @@
       ],
       "editorialReview": {
         "status": "needs_review",
-        "reviewedAt": "2026-06-22",
+        "reviewedAt": "2026-07-02",
         "reviewedBy": "pipeline-default-needs-review",
         "qualityScore": 2,
         "funScore": 2,
@@ -5175,7 +6353,7 @@
       "dataFailures": [],
       "editorialReview": {
         "status": "retired",
-        "reviewedAt": "2026-06-22",
+        "reviewedAt": "2026-07-02",
         "reviewedBy": "Codex editorial QA",
         "qualityScore": 2,
         "funScore": 2,
@@ -5206,7 +6384,7 @@
       "dataFailures": [],
       "editorialReview": {
         "status": "practice_eligible",
-        "reviewedAt": "2026-06-22",
+        "reviewedAt": "2026-07-02",
         "reviewedBy": "Codex editorial QA",
         "qualityScore": 3,
         "funScore": 4,
@@ -5219,6 +6397,37 @@
         "reviewNotes": [
           "Batch 2 promotion: Non-hydro renewable electricity adds useful practice depth with an understandable unit.",
           "Practice-only until distractor ambiguity and new-player comprehension are checked in playtests."
+        ],
+        "acceptableCloseDistractorIds": []
+      }
+    },
+    {
+      "id": "nonperforming-loans",
+      "providerCode": "FB.AST.NPER.ZS",
+      "shortTitle": "Nonperforming loans",
+      "category": "economy",
+      "difficulty": "expert",
+      "year": 2023,
+      "coverage": 120,
+      "sourceReference": "https://api.worldbank.org/v2/indicator/FB.AST.NPER.ZS?format=json&per_page=1",
+      "approvalStatus": "approved",
+      "dataWarnings": [],
+      "dataFailures": [],
+      "editorialReview": {
+        "status": "expert_only",
+        "reviewedAt": "2026-07-02",
+        "reviewedBy": "Codex editorial QA",
+        "qualityScore": 3,
+        "funScore": 4,
+        "fairnessScore": 3,
+        "ambiguityRisk": "high",
+        "dailyEligible": false,
+        "practiceEligible": true,
+        "challengeEligible": true,
+        "expertOnly": true,
+        "reviewNotes": [
+          "Batch 4 QA: banking-stress map can produce interesting regional surprises.",
+          "Expert-only because coverage just clears the source gate and values can be volatile."
         ],
         "acceptableCloseDistractorIds": []
       }
@@ -5239,7 +6448,7 @@
       "dataFailures": [],
       "editorialReview": {
         "status": "needs_review",
-        "reviewedAt": "2026-06-22",
+        "reviewedAt": "2026-07-02",
         "reviewedBy": "pipeline-default-needs-review",
         "qualityScore": 2,
         "funScore": 2,
@@ -5269,7 +6478,7 @@
       "dataFailures": [],
       "editorialReview": {
         "status": "needs_review",
-        "reviewedAt": "2026-06-22",
+        "reviewedAt": "2026-07-02",
         "reviewedBy": "Codex editorial QA",
         "qualityScore": 3,
         "funScore": 3,
@@ -5300,7 +6509,7 @@
       "dataFailures": [],
       "editorialReview": {
         "status": "needs_review",
-        "reviewedAt": "2026-06-22",
+        "reviewedAt": "2026-07-02",
         "reviewedBy": "pipeline-default-needs-review",
         "qualityScore": 2,
         "funScore": 2,
@@ -5322,7 +6531,7 @@
       "shortTitle": "Population ages 65+",
       "category": "demography",
       "difficulty": "intro",
-      "year": 2024,
+      "year": 2025,
       "coverage": 169,
       "sourceReference": "https://api.worldbank.org/v2/indicator/SP.POP.65UP.TO.ZS?format=json&per_page=1",
       "approvalStatus": "approved",
@@ -5330,7 +6539,7 @@
       "dataFailures": [],
       "editorialReview": {
         "status": "daily_eligible",
-        "reviewedAt": "2026-06-22",
+        "reviewedAt": "2026-07-02",
         "reviewedBy": "Codex editorial QA",
         "qualityScore": 5,
         "funScore": 4,
@@ -5361,7 +6570,7 @@
       "dataFailures": [],
       "editorialReview": {
         "status": "daily_eligible",
-        "reviewedAt": "2026-06-22",
+        "reviewedAt": "2026-07-02",
         "reviewedBy": "Codex editorial QA",
         "qualityScore": 4,
         "funScore": 4,
@@ -5392,7 +6601,7 @@
       "dataFailures": [],
       "editorialReview": {
         "status": "expert_only",
-        "reviewedAt": "2026-06-22",
+        "reviewedAt": "2026-07-02",
         "reviewedBy": "Codex editorial QA",
         "qualityScore": 3,
         "funScore": 4,
@@ -5423,7 +6632,7 @@
       "dataFailures": [],
       "editorialReview": {
         "status": "daily_eligible",
-        "reviewedAt": "2026-06-22",
+        "reviewedAt": "2026-07-02",
         "reviewedBy": "Codex editorial QA",
         "qualityScore": 4,
         "funScore": 4,
@@ -5456,7 +6665,7 @@
       ],
       "editorialReview": {
         "status": "needs_review",
-        "reviewedAt": "2026-06-22",
+        "reviewedAt": "2026-07-02",
         "reviewedBy": "pipeline-default-needs-review",
         "qualityScore": 2,
         "funScore": 2,
@@ -5491,7 +6700,7 @@
       ],
       "editorialReview": {
         "status": "needs_review",
-        "reviewedAt": "2026-06-22",
+        "reviewedAt": "2026-07-02",
         "reviewedBy": "pipeline-default-needs-review",
         "qualityScore": 2,
         "funScore": 2,
@@ -5514,17 +6723,17 @@
       "category": "labor",
       "difficulty": "expert",
       "year": 2025,
-      "coverage": 17,
+      "coverage": 32,
       "sourceReference": "https://api.worldbank.org/v2/indicator/SL.TLF.PART.ZS?format=json&per_page=1",
       "approvalStatus": "draft",
       "dataWarnings": [],
       "dataFailures": [
-        "part-time-employment: no year in 2015:2025 met 120 mapped countries; best coverage was 113",
-        "part-time-employment: selected coverage 17 is below 120"
+        "part-time-employment: no year in 2015:2025 met 120 mapped countries; best coverage was 106",
+        "part-time-employment: selected coverage 32 is below 120"
       ],
       "editorialReview": {
         "status": "needs_review",
-        "reviewedAt": "2026-06-22",
+        "reviewedAt": "2026-07-02",
         "reviewedBy": "pipeline-default-needs-review",
         "qualityScore": 2,
         "funScore": 2,
@@ -5547,17 +6756,17 @@
       "category": "labor",
       "difficulty": "expert",
       "year": 2025,
-      "coverage": 17,
+      "coverage": 32,
       "sourceReference": "https://api.worldbank.org/v2/indicator/SL.TLF.PART.FE.ZS?format=json&per_page=1",
       "approvalStatus": "draft",
       "dataWarnings": [],
       "dataFailures": [
-        "part-time-employment-female: no year in 2015:2025 met 120 mapped countries; best coverage was 113",
-        "part-time-employment-female: selected coverage 17 is below 120"
+        "part-time-employment-female: no year in 2015:2025 met 120 mapped countries; best coverage was 106",
+        "part-time-employment-female: selected coverage 32 is below 120"
       ],
       "editorialReview": {
         "status": "needs_review",
-        "reviewedAt": "2026-06-22",
+        "reviewedAt": "2026-07-02",
         "reviewedBy": "pipeline-default-needs-review",
         "qualityScore": 2,
         "funScore": 2,
@@ -5587,7 +6796,7 @@
       "dataFailures": [],
       "editorialReview": {
         "status": "needs_review",
-        "reviewedAt": "2026-06-22",
+        "reviewedAt": "2026-07-02",
         "reviewedBy": "pipeline-default-needs-review",
         "qualityScore": 2,
         "funScore": 2,
@@ -5617,7 +6826,7 @@
       "dataFailures": [],
       "editorialReview": {
         "status": "daily_eligible",
-        "reviewedAt": "2026-06-22",
+        "reviewedAt": "2026-07-02",
         "reviewedBy": "Codex editorial QA",
         "qualityScore": 4,
         "funScore": 4,
@@ -5650,7 +6859,7 @@
       ],
       "editorialReview": {
         "status": "needs_review",
-        "reviewedAt": "2026-06-22",
+        "reviewedAt": "2026-07-02",
         "reviewedBy": "pipeline-default-needs-review",
         "qualityScore": 2,
         "funScore": 2,
@@ -5680,7 +6889,7 @@
       "dataFailures": [],
       "editorialReview": {
         "status": "daily_eligible",
-        "reviewedAt": "2026-06-22",
+        "reviewedAt": "2026-07-02",
         "reviewedBy": "Codex editorial QA",
         "qualityScore": 4,
         "funScore": 4,
@@ -5703,7 +6912,7 @@
       "shortTitle": "PM2.5 exposure",
       "category": "environment",
       "difficulty": "standard",
-      "year": 2020,
+      "year": 2023,
       "coverage": 168,
       "sourceReference": "https://api.worldbank.org/v2/indicator/EN.ATM.PM25.MC.M3?format=json&per_page=1",
       "approvalStatus": "approved",
@@ -5711,7 +6920,7 @@
       "dataFailures": [],
       "editorialReview": {
         "status": "daily_eligible",
-        "reviewedAt": "2026-06-22",
+        "reviewedAt": "2026-07-02",
         "reviewedBy": "Codex editorial QA",
         "qualityScore": 5,
         "funScore": 5,
@@ -5742,7 +6951,7 @@
       "dataFailures": [],
       "editorialReview": {
         "status": "needs_review",
-        "reviewedAt": "2026-06-22",
+        "reviewedAt": "2026-07-02",
         "reviewedBy": "pipeline-default-needs-review",
         "qualityScore": 2,
         "funScore": 2,
@@ -5772,7 +6981,7 @@
       "dataFailures": [],
       "editorialReview": {
         "status": "daily_eligible",
-        "reviewedAt": "2026-06-22",
+        "reviewedAt": "2026-07-02",
         "reviewedBy": "Codex editorial QA",
         "qualityScore": 5,
         "funScore": 5,
@@ -5795,7 +7004,7 @@
       "shortTitle": "Population growth",
       "category": "demography",
       "difficulty": "standard",
-      "year": 2024,
+      "year": 2025,
       "coverage": 169,
       "sourceReference": "https://api.worldbank.org/v2/indicator/SP.POP.GROW?format=json&per_page=1",
       "approvalStatus": "approved",
@@ -5803,7 +7012,7 @@
       "dataFailures": [],
       "editorialReview": {
         "status": "daily_eligible",
-        "reviewedAt": "2026-06-22",
+        "reviewedAt": "2026-07-02",
         "reviewedBy": "Codex editorial QA",
         "qualityScore": 4,
         "funScore": 4,
@@ -5837,7 +7046,7 @@
       ],
       "editorialReview": {
         "status": "needs_review",
-        "reviewedAt": "2026-06-22",
+        "reviewedAt": "2026-07-02",
         "reviewedBy": "pipeline-default-needs-review",
         "qualityScore": 2,
         "funScore": 2,
@@ -5867,7 +7076,7 @@
       "dataFailures": [],
       "editorialReview": {
         "status": "daily_eligible",
-        "reviewedAt": "2026-06-22",
+        "reviewedAt": "2026-07-02",
         "reviewedBy": "Codex editorial QA",
         "qualityScore": 4,
         "funScore": 4,
@@ -5898,7 +7107,7 @@
       "dataFailures": [],
       "editorialReview": {
         "status": "needs_review",
-        "reviewedAt": "2026-06-22",
+        "reviewedAt": "2026-07-02",
         "reviewedBy": "pipeline-default-needs-review",
         "qualityScore": 2,
         "funScore": 2,
@@ -5934,7 +7143,7 @@
       ],
       "editorialReview": {
         "status": "needs_review",
-        "reviewedAt": "2026-06-22",
+        "reviewedAt": "2026-07-02",
         "reviewedBy": "pipeline-default-needs-review",
         "qualityScore": 2,
         "funScore": 2,
@@ -5967,7 +7176,7 @@
       ],
       "editorialReview": {
         "status": "needs_review",
-        "reviewedAt": "2026-06-22",
+        "reviewedAt": "2026-07-02",
         "reviewedBy": "pipeline-default-needs-review",
         "qualityScore": 2,
         "funScore": 2,
@@ -6003,7 +7212,7 @@
       ],
       "editorialReview": {
         "status": "needs_review",
-        "reviewedAt": "2026-06-22",
+        "reviewedAt": "2026-07-02",
         "reviewedBy": "pipeline-default-needs-review",
         "qualityScore": 2,
         "funScore": 2,
@@ -6033,7 +7242,7 @@
       "dataFailures": [],
       "editorialReview": {
         "status": "needs_review",
-        "reviewedAt": "2026-06-22",
+        "reviewedAt": "2026-07-02",
         "reviewedBy": "Codex editorial QA",
         "qualityScore": 2,
         "funScore": 2,
@@ -6064,7 +7273,7 @@
       "dataFailures": [],
       "editorialReview": {
         "status": "daily_eligible",
-        "reviewedAt": "2026-06-22",
+        "reviewedAt": "2026-07-02",
         "reviewedBy": "Codex editorial QA",
         "qualityScore": 4,
         "funScore": 4,
@@ -6095,7 +7304,7 @@
       "dataFailures": [],
       "editorialReview": {
         "status": "needs_review",
-        "reviewedAt": "2026-06-22",
+        "reviewedAt": "2026-07-02",
         "reviewedBy": "pipeline-default-needs-review",
         "qualityScore": 2,
         "funScore": 2,
@@ -6125,7 +7334,7 @@
       "dataFailures": [],
       "editorialReview": {
         "status": "practice_eligible",
-        "reviewedAt": "2026-06-22",
+        "reviewedAt": "2026-07-02",
         "reviewedBy": "Codex editorial QA",
         "qualityScore": 3,
         "funScore": 3,
@@ -6156,7 +7365,7 @@
       "dataFailures": [],
       "editorialReview": {
         "status": "needs_review",
-        "reviewedAt": "2026-06-22",
+        "reviewedAt": "2026-07-02",
         "reviewedBy": "pipeline-default-needs-review",
         "qualityScore": 2,
         "funScore": 2,
@@ -6186,7 +7395,7 @@
       "dataFailures": [],
       "editorialReview": {
         "status": "practice_eligible",
-        "reviewedAt": "2026-06-22",
+        "reviewedAt": "2026-07-02",
         "reviewedBy": "Codex editorial QA",
         "qualityScore": 3,
         "funScore": 3,
@@ -6220,7 +7429,7 @@
       ],
       "editorialReview": {
         "status": "needs_review",
-        "reviewedAt": "2026-06-22",
+        "reviewedAt": "2026-07-02",
         "reviewedBy": "pipeline-default-needs-review",
         "qualityScore": 2,
         "funScore": 2,
@@ -6255,7 +7464,7 @@
       ],
       "editorialReview": {
         "status": "needs_review",
-        "reviewedAt": "2026-06-22",
+        "reviewedAt": "2026-07-02",
         "reviewedBy": "pipeline-default-needs-review",
         "qualityScore": 2,
         "funScore": 2,
@@ -6277,18 +7486,18 @@
       "shortTitle": "Private fixed capital formation",
       "category": "economy",
       "difficulty": "expert",
-      "year": 2024,
-      "coverage": 47,
+      "year": 2025,
+      "coverage": 40,
       "sourceReference": "https://api.worldbank.org/v2/indicator/NE.GDI.FPRV.ZS?format=json&per_page=1",
       "approvalStatus": "draft",
       "dataWarnings": [],
       "dataFailures": [
-        "private-fixed-capital-formation: no year in 2015:2025 met 120 mapped countries; best coverage was 59",
-        "private-fixed-capital-formation: selected coverage 47 is below 120"
+        "private-fixed-capital-formation: no year in 2015:2025 met 120 mapped countries; best coverage was 61",
+        "private-fixed-capital-formation: selected coverage 40 is below 120"
       ],
       "editorialReview": {
         "status": "needs_review",
-        "reviewedAt": "2026-06-22",
+        "reviewedAt": "2026-07-02",
         "reviewedBy": "pipeline-default-needs-review",
         "qualityScore": 2,
         "funScore": 2,
@@ -6318,7 +7527,7 @@
       "dataFailures": [],
       "editorialReview": {
         "status": "expert_only",
-        "reviewedAt": "2026-06-22",
+        "reviewedAt": "2026-07-02",
         "reviewedBy": "Codex editorial QA",
         "qualityScore": 3,
         "funScore": 3,
@@ -6349,7 +7558,7 @@
       "dataFailures": [],
       "editorialReview": {
         "status": "daily_eligible",
-        "reviewedAt": "2026-06-22",
+        "reviewedAt": "2026-07-02",
         "reviewedBy": "Codex editorial QA",
         "qualityScore": 4,
         "funScore": 4,
@@ -6380,7 +7589,7 @@
       "dataFailures": [],
       "editorialReview": {
         "status": "practice_eligible",
-        "reviewedAt": "2026-06-22",
+        "reviewedAt": "2026-07-02",
         "reviewedBy": "Codex editorial QA",
         "qualityScore": 3,
         "funScore": 4,
@@ -6414,7 +7623,7 @@
       ],
       "editorialReview": {
         "status": "expert_only",
-        "reviewedAt": "2026-06-22",
+        "reviewedAt": "2026-07-02",
         "reviewedBy": "Codex editorial QA",
         "qualityScore": 3,
         "funScore": 4,
@@ -6447,7 +7656,7 @@
       ],
       "editorialReview": {
         "status": "needs_review",
-        "reviewedAt": "2026-06-22",
+        "reviewedAt": "2026-07-02",
         "reviewedBy": "Codex editorial QA",
         "qualityScore": 2,
         "funScore": 3,
@@ -6471,14 +7680,14 @@
       "category": "economy",
       "difficulty": "expert",
       "year": 2024,
-      "coverage": 135,
+      "coverage": 138,
       "sourceReference": "https://api.worldbank.org/v2/indicator/BX.TRF.PWKR.DT.GD.ZS?format=json&per_page=1",
       "approvalStatus": "approved",
       "dataWarnings": [],
       "dataFailures": [],
       "editorialReview": {
         "status": "expert_only",
-        "reviewedAt": "2026-06-22",
+        "reviewedAt": "2026-07-02",
         "reviewedBy": "Codex editorial QA",
         "qualityScore": 3,
         "funScore": 4,
@@ -6509,7 +7718,7 @@
       "dataFailures": [],
       "editorialReview": {
         "status": "daily_eligible",
-        "reviewedAt": "2026-06-22",
+        "reviewedAt": "2026-07-02",
         "reviewedBy": "Codex editorial QA",
         "qualityScore": 4,
         "funScore": 5,
@@ -6540,7 +7749,7 @@
       "dataFailures": [],
       "editorialReview": {
         "status": "expert_only",
-        "reviewedAt": "2026-06-22",
+        "reviewedAt": "2026-07-02",
         "reviewedBy": "Codex editorial QA",
         "qualityScore": 3,
         "funScore": 4,
@@ -6574,7 +7783,7 @@
       ],
       "editorialReview": {
         "status": "expert_only",
-        "reviewedAt": "2026-06-22",
+        "reviewedAt": "2026-07-02",
         "reviewedBy": "Codex editorial QA",
         "qualityScore": 3,
         "funScore": 4,
@@ -6605,7 +7814,7 @@
       "dataFailures": [],
       "editorialReview": {
         "status": "needs_review",
-        "reviewedAt": "2026-06-22",
+        "reviewedAt": "2026-07-02",
         "reviewedBy": "pipeline-default-needs-review",
         "qualityScore": 2,
         "funScore": 2,
@@ -6640,7 +7849,7 @@
       ],
       "editorialReview": {
         "status": "needs_review",
-        "reviewedAt": "2026-06-22",
+        "reviewedAt": "2026-07-02",
         "reviewedBy": "pipeline-default-needs-review",
         "qualityScore": 2,
         "funScore": 2,
@@ -6670,7 +7879,7 @@
       "dataFailures": [],
       "editorialReview": {
         "status": "practice_eligible",
-        "reviewedAt": "2026-06-22",
+        "reviewedAt": "2026-07-02",
         "reviewedBy": "Codex editorial QA",
         "qualityScore": 4,
         "funScore": 4,
@@ -6701,7 +7910,7 @@
       "dataFailures": [],
       "editorialReview": {
         "status": "daily_eligible",
-        "reviewedAt": "2026-06-22",
+        "reviewedAt": "2026-07-02",
         "reviewedBy": "Codex editorial QA",
         "qualityScore": 4,
         "funScore": 4,
@@ -6732,7 +7941,7 @@
       "dataFailures": [],
       "editorialReview": {
         "status": "retired",
-        "reviewedAt": "2026-06-22",
+        "reviewedAt": "2026-07-02",
         "reviewedBy": "Codex editorial QA",
         "qualityScore": 2,
         "funScore": 2,
@@ -6768,7 +7977,7 @@
       ],
       "editorialReview": {
         "status": "needs_review",
-        "reviewedAt": "2026-06-22",
+        "reviewedAt": "2026-07-02",
         "reviewedBy": "pipeline-default-needs-review",
         "qualityScore": 2,
         "funScore": 2,
@@ -6798,7 +8007,7 @@
       "dataFailures": [],
       "editorialReview": {
         "status": "needs_review",
-        "reviewedAt": "2026-06-22",
+        "reviewedAt": "2026-07-02",
         "reviewedBy": "pipeline-default-needs-review",
         "qualityScore": 2,
         "funScore": 2,
@@ -6828,7 +8037,7 @@
       "dataFailures": [],
       "editorialReview": {
         "status": "expert_only",
-        "reviewedAt": "2026-06-22",
+        "reviewedAt": "2026-07-02",
         "reviewedBy": "Codex editorial QA",
         "qualityScore": 3,
         "funScore": 4,
@@ -6859,7 +8068,7 @@
       "dataFailures": [],
       "editorialReview": {
         "status": "expert_only",
-        "reviewedAt": "2026-06-22",
+        "reviewedAt": "2026-07-02",
         "reviewedBy": "Codex editorial QA",
         "qualityScore": 3,
         "funScore": 4,
@@ -6890,7 +8099,7 @@
       "dataFailures": [],
       "editorialReview": {
         "status": "expert_only",
-        "reviewedAt": "2026-06-22",
+        "reviewedAt": "2026-07-02",
         "reviewedBy": "Codex editorial QA",
         "qualityScore": 3,
         "funScore": 4,
@@ -6913,7 +8122,7 @@
       "shortTitle": "Rural population",
       "category": "settlement",
       "difficulty": "intro",
-      "year": 2024,
+      "year": 2025,
       "coverage": 169,
       "sourceReference": "https://api.worldbank.org/v2/indicator/SP.RUR.TOTL.ZS?format=json&per_page=1",
       "approvalStatus": "approved",
@@ -6921,7 +8130,7 @@
       "dataFailures": [],
       "editorialReview": {
         "status": "retired",
-        "reviewedAt": "2026-06-22",
+        "reviewedAt": "2026-07-02",
         "reviewedBy": "Codex editorial QA",
         "qualityScore": 2,
         "funScore": 2,
@@ -6944,7 +8153,7 @@
       "shortTitle": "Rural population growth",
       "category": "settlement",
       "difficulty": "standard",
-      "year": 2024,
+      "year": 2025,
       "coverage": 168,
       "sourceReference": "https://api.worldbank.org/v2/indicator/SP.RUR.TOTL.ZG?format=json&per_page=1",
       "approvalStatus": "approved",
@@ -6952,7 +8161,7 @@
       "dataFailures": [],
       "editorialReview": {
         "status": "daily_eligible",
-        "reviewedAt": "2026-06-22",
+        "reviewedAt": "2026-07-02",
         "reviewedBy": "Codex editorial QA",
         "qualityScore": 4,
         "funScore": 4,
@@ -6983,7 +8192,7 @@
       "dataFailures": [],
       "editorialReview": {
         "status": "daily_eligible",
-        "reviewedAt": "2026-06-22",
+        "reviewedAt": "2026-07-02",
         "reviewedBy": "Codex editorial QA",
         "qualityScore": 4,
         "funScore": 4,
@@ -7014,7 +8223,7 @@
       "dataFailures": [],
       "editorialReview": {
         "status": "practice_eligible",
-        "reviewedAt": "2026-06-22",
+        "reviewedAt": "2026-07-02",
         "reviewedBy": "Codex editorial QA",
         "qualityScore": 3,
         "funScore": 4,
@@ -7045,7 +8254,7 @@
       "dataFailures": [],
       "editorialReview": {
         "status": "practice_eligible",
-        "reviewedAt": "2026-06-22",
+        "reviewedAt": "2026-07-02",
         "reviewedBy": "Codex editorial QA",
         "qualityScore": 3,
         "funScore": 4,
@@ -7078,7 +8287,7 @@
       ],
       "editorialReview": {
         "status": "needs_review",
-        "reviewedAt": "2026-06-22",
+        "reviewedAt": "2026-07-02",
         "reviewedBy": "pipeline-default-needs-review",
         "qualityScore": 2,
         "funScore": 2,
@@ -7114,7 +8323,7 @@
       ],
       "editorialReview": {
         "status": "needs_review",
-        "reviewedAt": "2026-06-22",
+        "reviewedAt": "2026-07-02",
         "reviewedBy": "pipeline-default-needs-review",
         "qualityScore": 2,
         "funScore": 2,
@@ -7144,7 +8353,7 @@
       "dataFailures": [],
       "editorialReview": {
         "status": "daily_eligible",
-        "reviewedAt": "2026-06-22",
+        "reviewedAt": "2026-07-02",
         "reviewedBy": "Codex editorial QA",
         "qualityScore": 4,
         "funScore": 4,
@@ -7178,7 +8387,7 @@
       ],
       "editorialReview": {
         "status": "needs_review",
-        "reviewedAt": "2026-06-22",
+        "reviewedAt": "2026-07-02",
         "reviewedBy": "pipeline-default-needs-review",
         "qualityScore": 2,
         "funScore": 2,
@@ -7213,7 +8422,7 @@
       ],
       "editorialReview": {
         "status": "needs_review",
-        "reviewedAt": "2026-06-22",
+        "reviewedAt": "2026-07-02",
         "reviewedBy": "pipeline-default-needs-review",
         "qualityScore": 2,
         "funScore": 2,
@@ -7249,7 +8458,7 @@
       ],
       "editorialReview": {
         "status": "needs_review",
-        "reviewedAt": "2026-06-22",
+        "reviewedAt": "2026-07-02",
         "reviewedBy": "pipeline-default-needs-review",
         "qualityScore": 2,
         "funScore": 2,
@@ -7282,7 +8491,7 @@
       ],
       "editorialReview": {
         "status": "needs_review",
-        "reviewedAt": "2026-06-22",
+        "reviewedAt": "2026-07-02",
         "reviewedBy": "pipeline-default-needs-review",
         "qualityScore": 2,
         "funScore": 2,
@@ -7312,7 +8521,7 @@
       "dataFailures": [],
       "editorialReview": {
         "status": "practice_eligible",
-        "reviewedAt": "2026-06-22",
+        "reviewedAt": "2026-07-02",
         "reviewedBy": "Codex editorial QA",
         "qualityScore": 3,
         "funScore": 3,
@@ -7345,7 +8554,7 @@
       ],
       "editorialReview": {
         "status": "needs_review",
-        "reviewedAt": "2026-06-22",
+        "reviewedAt": "2026-07-02",
         "reviewedBy": "pipeline-default-needs-review",
         "qualityScore": 2,
         "funScore": 2,
@@ -7381,7 +8590,7 @@
       ],
       "editorialReview": {
         "status": "needs_review",
-        "reviewedAt": "2026-06-22",
+        "reviewedAt": "2026-07-02",
         "reviewedBy": "pipeline-default-needs-review",
         "qualityScore": 2,
         "funScore": 2,
@@ -7411,7 +8620,7 @@
       "dataFailures": [],
       "editorialReview": {
         "status": "expert_only",
-        "reviewedAt": "2026-06-22",
+        "reviewedAt": "2026-07-02",
         "reviewedBy": "Codex editorial QA",
         "qualityScore": 3,
         "funScore": 4,
@@ -7442,7 +8651,7 @@
       "dataFailures": [],
       "editorialReview": {
         "status": "needs_review",
-        "reviewedAt": "2026-06-22",
+        "reviewedAt": "2026-07-02",
         "reviewedBy": "Codex editorial QA",
         "qualityScore": 2,
         "funScore": 2,
@@ -7465,15 +8674,15 @@
       "shortTitle": "Services value added",
       "category": "economy",
       "difficulty": "standard",
-      "year": 2024,
-      "coverage": 149,
+      "year": 2025,
+      "coverage": 139,
       "sourceReference": "https://api.worldbank.org/v2/indicator/NV.SRV.TOTL.ZS?format=json&per_page=1",
       "approvalStatus": "approved",
       "dataWarnings": [],
       "dataFailures": [],
       "editorialReview": {
         "status": "practice_eligible",
-        "reviewedAt": "2026-06-22",
+        "reviewedAt": "2026-07-02",
         "reviewedBy": "Codex editorial QA",
         "qualityScore": 3,
         "funScore": 3,
@@ -7506,7 +8715,7 @@
       "dataFailures": [],
       "editorialReview": {
         "status": "expert_only",
-        "reviewedAt": "2026-06-22",
+        "reviewedAt": "2026-07-02",
         "reviewedBy": "Codex editorial QA",
         "qualityScore": 4,
         "funScore": 4,
@@ -7540,7 +8749,7 @@
       ],
       "editorialReview": {
         "status": "daily_eligible",
-        "reviewedAt": "2026-06-22",
+        "reviewedAt": "2026-07-02",
         "reviewedBy": "Codex editorial QA",
         "qualityScore": 4,
         "funScore": 4,
@@ -7571,7 +8780,7 @@
       "dataFailures": [],
       "editorialReview": {
         "status": "needs_review",
-        "reviewedAt": "2026-06-22",
+        "reviewedAt": "2026-07-02",
         "reviewedBy": "pipeline-default-needs-review",
         "qualityScore": 2,
         "funScore": 2,
@@ -7601,7 +8810,7 @@
       "dataFailures": [],
       "editorialReview": {
         "status": "needs_review",
-        "reviewedAt": "2026-06-22",
+        "reviewedAt": "2026-07-02",
         "reviewedBy": "Codex editorial QA",
         "qualityScore": 2,
         "funScore": 2,
@@ -7614,6 +8823,68 @@
         "reviewNotes": [
           "Coverage is exactly at the floor and reference year is older than most catalog items.",
           "Hold until fiscal-capacity copy and data caveat are reviewed."
+        ],
+        "acceptableCloseDistractorIds": []
+      }
+    },
+    {
+      "id": "tb-case-detection",
+      "providerCode": "SH.TBS.DTEC.ZS",
+      "shortTitle": "TB case detection",
+      "category": "health",
+      "difficulty": "expert",
+      "year": 2024,
+      "coverage": 163,
+      "sourceReference": "https://api.worldbank.org/v2/indicator/SH.TBS.DTEC.ZS?format=json&per_page=1",
+      "approvalStatus": "approved",
+      "dataWarnings": [],
+      "dataFailures": [],
+      "editorialReview": {
+        "status": "expert_only",
+        "reviewedAt": "2026-07-02",
+        "reviewedBy": "Codex editorial QA",
+        "qualityScore": 3,
+        "funScore": 3,
+        "fairnessScore": 3,
+        "ambiguityRisk": "medium",
+        "dailyEligible": false,
+        "practiceEligible": true,
+        "challengeEligible": true,
+        "expertOnly": true,
+        "reviewNotes": [
+          "Batch 4 QA: useful surveillance/access map, but the modeled percentage can be unintuitive.",
+          "Expert-only until reveal text handles values over 100 percent clearly."
+        ],
+        "acceptableCloseDistractorIds": []
+      }
+    },
+    {
+      "id": "tb-treatment-success",
+      "providerCode": "SH.TBS.CURE.ZS",
+      "shortTitle": "TB treatment success",
+      "category": "health",
+      "difficulty": "expert",
+      "year": 2023,
+      "coverage": 157,
+      "sourceReference": "https://api.worldbank.org/v2/indicator/SH.TBS.CURE.ZS?format=json&per_page=1",
+      "approvalStatus": "approved",
+      "dataWarnings": [],
+      "dataFailures": [],
+      "editorialReview": {
+        "status": "expert_only",
+        "reviewedAt": "2026-07-02",
+        "reviewedBy": "Codex editorial QA",
+        "qualityScore": 3,
+        "funScore": 3,
+        "fairnessScore": 3,
+        "ambiguityRisk": "medium",
+        "dailyEligible": false,
+        "practiceEligible": true,
+        "challengeEligible": true,
+        "expertOnly": true,
+        "reviewNotes": [
+          "Batch 4 QA: source-valid health-system outcome map with good coverage.",
+          "Expert-only because reporting, case mix, and disease burden can make interpretation subtle."
         ],
         "acceptableCloseDistractorIds": []
       }
@@ -7632,7 +8903,7 @@
       "dataFailures": [],
       "editorialReview": {
         "status": "expert_only",
-        "reviewedAt": "2026-06-22",
+        "reviewedAt": "2026-07-02",
         "reviewedBy": "Codex editorial QA",
         "qualityScore": 3,
         "funScore": 4,
@@ -7663,7 +8934,7 @@
       "dataFailures": [],
       "editorialReview": {
         "status": "needs_review",
-        "reviewedAt": "2026-06-22",
+        "reviewedAt": "2026-07-02",
         "reviewedBy": "pipeline-default-needs-review",
         "qualityScore": 2,
         "funScore": 2,
@@ -7675,6 +8946,130 @@
         "expertOnly": false,
         "reviewNotes": [
           "Loaded from the candidate intake queue and default-held as Needs review until a human editor classifies it."
+        ],
+        "acceptableCloseDistractorIds": []
+      }
+    },
+    {
+      "id": "threatened-bird-species",
+      "providerCode": "EN.BIR.THRD.NO",
+      "shortTitle": "Threatened bird species",
+      "category": "environment",
+      "difficulty": "expert",
+      "year": 2022,
+      "coverage": 169,
+      "sourceReference": "https://api.worldbank.org/v2/indicator/EN.BIR.THRD.NO?format=json&per_page=1",
+      "approvalStatus": "approved",
+      "dataWarnings": [],
+      "dataFailures": [],
+      "editorialReview": {
+        "status": "expert_only",
+        "reviewedAt": "2026-07-02",
+        "reviewedBy": "Codex editorial QA",
+        "qualityScore": 4,
+        "funScore": 4,
+        "fairnessScore": 3,
+        "ambiguityRisk": "medium",
+        "dailyEligible": false,
+        "practiceEligible": true,
+        "challengeEligible": true,
+        "expertOnly": true,
+        "reviewNotes": [
+          "Batch 4 QA: island and tropical biodiversity signals make this fun for advanced geography players.",
+          "Expert-only because raw species-count maps need careful framing."
+        ],
+        "acceptableCloseDistractorIds": []
+      }
+    },
+    {
+      "id": "threatened-fish-species",
+      "providerCode": "EN.FSH.THRD.NO",
+      "shortTitle": "Threatened fish species",
+      "category": "environment",
+      "difficulty": "expert",
+      "year": 2022,
+      "coverage": 169,
+      "sourceReference": "https://api.worldbank.org/v2/indicator/EN.FSH.THRD.NO?format=json&per_page=1",
+      "approvalStatus": "approved",
+      "dataWarnings": [],
+      "dataFailures": [],
+      "editorialReview": {
+        "status": "expert_only",
+        "reviewedAt": "2026-07-02",
+        "reviewedBy": "Codex editorial QA",
+        "qualityScore": 4,
+        "funScore": 4,
+        "fairnessScore": 3,
+        "ambiguityRisk": "medium",
+        "dailyEligible": false,
+        "practiceEligible": true,
+        "challengeEligible": true,
+        "expertOnly": true,
+        "reviewNotes": [
+          "Batch 4 QA: high-interest biodiversity map with broad source coverage.",
+          "Expert-only because raw species counts favor biodiverse and larger countries."
+        ],
+        "acceptableCloseDistractorIds": []
+      }
+    },
+    {
+      "id": "threatened-mammal-species",
+      "providerCode": "EN.MAM.THRD.NO",
+      "shortTitle": "Threatened mammal species",
+      "category": "environment",
+      "difficulty": "expert",
+      "year": 2022,
+      "coverage": 169,
+      "sourceReference": "https://api.worldbank.org/v2/indicator/EN.MAM.THRD.NO?format=json&per_page=1",
+      "approvalStatus": "approved",
+      "dataWarnings": [],
+      "dataFailures": [],
+      "editorialReview": {
+        "status": "expert_only",
+        "reviewedAt": "2026-07-02",
+        "reviewedBy": "Codex editorial QA",
+        "qualityScore": 4,
+        "funScore": 4,
+        "fairnessScore": 3,
+        "ambiguityRisk": "medium",
+        "dailyEligible": false,
+        "practiceEligible": true,
+        "challengeEligible": true,
+        "expertOnly": true,
+        "reviewNotes": [
+          "Batch 4 QA: useful biodiversity hotspot map that differs from protected-area shares.",
+          "Expert-only because it is a raw species count and can favor larger countries."
+        ],
+        "acceptableCloseDistractorIds": []
+      }
+    },
+    {
+      "id": "threatened-plant-species",
+      "providerCode": "EN.HPT.THRD.NO",
+      "shortTitle": "Threatened plant species",
+      "category": "environment",
+      "difficulty": "expert",
+      "year": 2022,
+      "coverage": 169,
+      "sourceReference": "https://api.worldbank.org/v2/indicator/EN.HPT.THRD.NO?format=json&per_page=1",
+      "approvalStatus": "approved",
+      "dataWarnings": [],
+      "dataFailures": [],
+      "editorialReview": {
+        "status": "expert_only",
+        "reviewedAt": "2026-07-02",
+        "reviewedBy": "Codex editorial QA",
+        "qualityScore": 4,
+        "funScore": 4,
+        "fairnessScore": 3,
+        "ambiguityRisk": "medium",
+        "dailyEligible": false,
+        "practiceEligible": true,
+        "challengeEligible": true,
+        "expertOnly": true,
+        "reviewNotes": [
+          "Batch 4 QA: strong plant-endemism and biodiversity pattern with excellent coverage.",
+          "Expert-only because the raw count and extreme outliers are advanced."
         ],
         "acceptableCloseDistractorIds": []
       }
@@ -7693,7 +9088,7 @@
       "dataFailures": [],
       "editorialReview": {
         "status": "daily_eligible",
-        "reviewedAt": "2026-06-22",
+        "reviewedAt": "2026-07-02",
         "reviewedBy": "Codex editorial QA",
         "qualityScore": 4,
         "funScore": 4,
@@ -7724,7 +9119,7 @@
       "dataFailures": [],
       "editorialReview": {
         "status": "daily_eligible",
-        "reviewedAt": "2026-06-22",
+        "reviewedAt": "2026-07-02",
         "reviewedBy": "Codex editorial QA",
         "qualityScore": 4,
         "funScore": 5,
@@ -7755,7 +9150,7 @@
       "dataFailures": [],
       "editorialReview": {
         "status": "needs_review",
-        "reviewedAt": "2026-06-22",
+        "reviewedAt": "2026-07-02",
         "reviewedBy": "pipeline-default-needs-review",
         "qualityScore": 2,
         "funScore": 2,
@@ -7785,7 +9180,7 @@
       "dataFailures": [],
       "editorialReview": {
         "status": "expert_only",
-        "reviewedAt": "2026-06-22",
+        "reviewedAt": "2026-07-02",
         "reviewedBy": "Codex editorial QA",
         "qualityScore": 3,
         "funScore": 4,
@@ -7818,7 +9213,7 @@
       ],
       "editorialReview": {
         "status": "needs_review",
-        "reviewedAt": "2026-06-22",
+        "reviewedAt": "2026-07-02",
         "reviewedBy": "pipeline-default-needs-review",
         "qualityScore": 2,
         "funScore": 2,
@@ -7840,15 +9235,15 @@
       "shortTitle": "Trade",
       "category": "economy",
       "difficulty": "standard",
-      "year": 2024,
-      "coverage": 141,
+      "year": 2025,
+      "coverage": 124,
       "sourceReference": "https://api.worldbank.org/v2/indicator/NE.TRD.GNFS.ZS?format=json&per_page=1",
       "approvalStatus": "approved",
       "dataWarnings": [],
       "dataFailures": [],
       "editorialReview": {
         "status": "daily_eligible",
-        "reviewedAt": "2026-06-22",
+        "reviewedAt": "2026-07-02",
         "reviewedBy": "Codex editorial QA",
         "qualityScore": 4,
         "funScore": 4,
@@ -7875,14 +9270,14 @@
       "category": "connectivity",
       "difficulty": "expert",
       "year": 2024,
-      "coverage": 137,
+      "coverage": 139,
       "sourceReference": "https://api.worldbank.org/v2/indicator/BX.GSR.TRAN.ZS?format=json&per_page=1",
       "approvalStatus": "approved",
       "dataWarnings": [],
       "dataFailures": [],
       "editorialReview": {
         "status": "practice_eligible",
-        "reviewedAt": "2026-06-22",
+        "reviewedAt": "2026-07-02",
         "reviewedBy": "Codex editorial QA",
         "qualityScore": 4,
         "funScore": 4,
@@ -7906,14 +9301,14 @@
       "category": "connectivity",
       "difficulty": "expert",
       "year": 2024,
-      "coverage": 137,
+      "coverage": 139,
       "sourceReference": "https://api.worldbank.org/v2/indicator/BM.GSR.TRAN.ZS?format=json&per_page=1",
       "approvalStatus": "approved",
       "dataWarnings": [],
       "dataFailures": [],
       "editorialReview": {
         "status": "practice_eligible",
-        "reviewedAt": "2026-06-22",
+        "reviewedAt": "2026-07-02",
         "reviewedBy": "Codex editorial QA",
         "qualityScore": 4,
         "funScore": 3,
@@ -7926,6 +9321,68 @@
         "reviewNotes": [
           "Batch 3 QA: source-valid import-side service map, but the story is less direct for new players.",
           "Practice-only for beta."
+        ],
+        "acceptableCloseDistractorIds": []
+      }
+    },
+    {
+      "id": "travel-service-exports-share",
+      "providerCode": "BX.GSR.TRVL.ZS",
+      "shortTitle": "Travel service exports",
+      "category": "economy",
+      "difficulty": "expert",
+      "year": 2024,
+      "coverage": 139,
+      "sourceReference": "https://api.worldbank.org/v2/indicator/BX.GSR.TRVL.ZS?format=json&per_page=1",
+      "approvalStatus": "approved",
+      "dataWarnings": [],
+      "dataFailures": [],
+      "editorialReview": {
+        "status": "practice_eligible",
+        "reviewedAt": "2026-07-02",
+        "reviewedBy": "Codex editorial QA",
+        "qualityScore": 4,
+        "funScore": 5,
+        "fairnessScore": 3,
+        "ambiguityRisk": "medium",
+        "dailyEligible": false,
+        "practiceEligible": true,
+        "challengeEligible": true,
+        "expertOnly": false,
+        "reviewNotes": [
+          "Batch 4 promotion: fun tourism-dependence map with a clear service-export share unit.",
+          "Practice-only because it can overlap with island, small-economy, and tourism distractors."
+        ],
+        "acceptableCloseDistractorIds": []
+      }
+    },
+    {
+      "id": "travel-service-imports-share",
+      "providerCode": "BM.GSR.TRVL.ZS",
+      "shortTitle": "Travel service imports",
+      "category": "economy",
+      "difficulty": "expert",
+      "year": 2024,
+      "coverage": 138,
+      "sourceReference": "https://api.worldbank.org/v2/indicator/BM.GSR.TRVL.ZS?format=json&per_page=1",
+      "approvalStatus": "approved",
+      "dataWarnings": [],
+      "dataFailures": [],
+      "editorialReview": {
+        "status": "practice_eligible",
+        "reviewedAt": "2026-07-02",
+        "reviewedBy": "Codex editorial QA",
+        "qualityScore": 4,
+        "funScore": 4,
+        "fairnessScore": 3,
+        "ambiguityRisk": "medium",
+        "dailyEligible": false,
+        "practiceEligible": true,
+        "challengeEligible": true,
+        "expertOnly": false,
+        "reviewNotes": [
+          "Batch 4 promotion: outbound-travel services map adds a different tourism angle than export-side travel services.",
+          "Practice-only until tested against tourism and services-trade distractors."
         ],
         "acceptableCloseDistractorIds": []
       }
@@ -7944,7 +9401,7 @@
       "dataFailures": [],
       "editorialReview": {
         "status": "daily_eligible",
-        "reviewedAt": "2026-06-22",
+        "reviewedAt": "2026-07-02",
         "reviewedBy": "Codex editorial QA",
         "qualityScore": 4,
         "funScore": 4,
@@ -7957,6 +9414,37 @@
         "reviewNotes": [
           "Distinct disease-burden map that is not just GDP.",
           "Good expert-style Daily with clear source/year."
+        ],
+        "acceptableCloseDistractorIds": []
+      }
+    },
+    {
+      "id": "uhc-service-coverage",
+      "providerCode": "SH_UHC_SCI",
+      "shortTitle": "UHC service coverage",
+      "category": "health",
+      "difficulty": "standard",
+      "year": 2023,
+      "coverage": 166,
+      "sourceReference": "https://api.worldbank.org/v2/indicator/SH_UHC_SCI?format=json&per_page=1",
+      "approvalStatus": "approved",
+      "dataWarnings": [],
+      "dataFailures": [],
+      "editorialReview": {
+        "status": "daily_eligible",
+        "reviewedAt": "2026-07-02",
+        "reviewedBy": "Codex editorial QA",
+        "qualityScore": 4,
+        "funScore": 4,
+        "fairnessScore": 4,
+        "ambiguityRisk": "medium",
+        "dailyEligible": true,
+        "practiceEligible": true,
+        "challengeEligible": true,
+        "expertOnly": false,
+        "reviewNotes": [
+          "Batch 4 promotion: broad health-service map with strong coverage and an understandable 0-100 index.",
+          "Daily-worthy if kept away from health-spending and life-expectancy distractors."
         ],
         "acceptableCloseDistractorIds": []
       }
@@ -7975,7 +9463,7 @@
       "dataFailures": [],
       "editorialReview": {
         "status": "daily_eligible",
-        "reviewedAt": "2026-06-22",
+        "reviewedAt": "2026-07-02",
         "reviewedBy": "Codex editorial QA",
         "qualityScore": 5,
         "funScore": 4,
@@ -8008,7 +9496,7 @@
       "dataFailures": [],
       "editorialReview": {
         "status": "daily_eligible",
-        "reviewedAt": "2026-06-22",
+        "reviewedAt": "2026-07-02",
         "reviewedBy": "Codex editorial QA",
         "qualityScore": 4,
         "funScore": 4,
@@ -8039,7 +9527,7 @@
       "dataFailures": [],
       "editorialReview": {
         "status": "daily_eligible",
-        "reviewedAt": "2026-06-22",
+        "reviewedAt": "2026-07-02",
         "reviewedBy": "Codex editorial QA",
         "qualityScore": 4,
         "funScore": 4,
@@ -8073,7 +9561,7 @@
       ],
       "editorialReview": {
         "status": "needs_review",
-        "reviewedAt": "2026-06-22",
+        "reviewedAt": "2026-07-02",
         "reviewedBy": "pipeline-default-needs-review",
         "qualityScore": 2,
         "funScore": 2,
@@ -8109,7 +9597,7 @@
       ],
       "editorialReview": {
         "status": "needs_review",
-        "reviewedAt": "2026-06-22",
+        "reviewedAt": "2026-07-02",
         "reviewedBy": "pipeline-default-needs-review",
         "qualityScore": 2,
         "funScore": 2,
@@ -8142,7 +9630,7 @@
       ],
       "editorialReview": {
         "status": "needs_review",
-        "reviewedAt": "2026-06-22",
+        "reviewedAt": "2026-07-02",
         "reviewedBy": "pipeline-default-needs-review",
         "qualityScore": 2,
         "funScore": 2,
@@ -8172,7 +9660,7 @@
       "dataFailures": [],
       "editorialReview": {
         "status": "daily_eligible",
-        "reviewedAt": "2026-06-22",
+        "reviewedAt": "2026-07-02",
         "reviewedBy": "Codex editorial QA",
         "qualityScore": 4,
         "funScore": 4,
@@ -8203,7 +9691,7 @@
       "dataFailures": [],
       "editorialReview": {
         "status": "practice_eligible",
-        "reviewedAt": "2026-06-22",
+        "reviewedAt": "2026-07-02",
         "reviewedBy": "Codex editorial QA",
         "qualityScore": 3,
         "funScore": 3,
@@ -8234,7 +9722,7 @@
       "dataFailures": [],
       "editorialReview": {
         "status": "practice_eligible",
-        "reviewedAt": "2026-06-22",
+        "reviewedAt": "2026-07-02",
         "reviewedBy": "Codex editorial QA",
         "qualityScore": 4,
         "funScore": 4,
@@ -8265,7 +9753,7 @@
       "dataFailures": [],
       "editorialReview": {
         "status": "practice_eligible",
-        "reviewedAt": "2026-06-22",
+        "reviewedAt": "2026-07-02",
         "reviewedBy": "Codex editorial QA",
         "qualityScore": 4,
         "funScore": 3,
@@ -8296,7 +9784,7 @@
       "dataFailures": [],
       "editorialReview": {
         "status": "expert_only",
-        "reviewedAt": "2026-06-22",
+        "reviewedAt": "2026-07-02",
         "reviewedBy": "Codex editorial QA",
         "qualityScore": 3,
         "funScore": 4,
@@ -8327,7 +9815,7 @@
       "dataFailures": [],
       "editorialReview": {
         "status": "expert_only",
-        "reviewedAt": "2026-06-22",
+        "reviewedAt": "2026-07-02",
         "reviewedBy": "Codex editorial QA",
         "qualityScore": 3,
         "funScore": 4,
@@ -8358,7 +9846,7 @@
       "dataFailures": [],
       "editorialReview": {
         "status": "expert_only",
-        "reviewedAt": "2026-06-22",
+        "reviewedAt": "2026-07-02",
         "reviewedBy": "Codex editorial QA",
         "qualityScore": 3,
         "funScore": 4,
@@ -8381,7 +9869,7 @@
       "shortTitle": "Urban population",
       "category": "settlement",
       "difficulty": "intro",
-      "year": 2024,
+      "year": 2025,
       "coverage": 169,
       "sourceReference": "https://api.worldbank.org/v2/indicator/SP.URB.TOTL.IN.ZS?format=json&per_page=1",
       "approvalStatus": "approved",
@@ -8389,7 +9877,7 @@
       "dataFailures": [],
       "editorialReview": {
         "status": "daily_eligible",
-        "reviewedAt": "2026-06-22",
+        "reviewedAt": "2026-07-02",
         "reviewedBy": "Codex editorial QA",
         "qualityScore": 5,
         "funScore": 4,
@@ -8412,7 +9900,7 @@
       "shortTitle": "Urban population growth",
       "category": "settlement",
       "difficulty": "standard",
-      "year": 2024,
+      "year": 2025,
       "coverage": 169,
       "sourceReference": "https://api.worldbank.org/v2/indicator/SP.URB.GROW?format=json&per_page=1",
       "approvalStatus": "approved",
@@ -8420,7 +9908,7 @@
       "dataFailures": [],
       "editorialReview": {
         "status": "practice_eligible",
-        "reviewedAt": "2026-06-22",
+        "reviewedAt": "2026-07-02",
         "reviewedBy": "Codex editorial QA",
         "qualityScore": 4,
         "funScore": 4,
@@ -8451,7 +9939,7 @@
       "dataFailures": [],
       "editorialReview": {
         "status": "practice_eligible",
-        "reviewedAt": "2026-06-22",
+        "reviewedAt": "2026-07-02",
         "reviewedBy": "Codex editorial QA",
         "qualityScore": 4,
         "funScore": 4,
@@ -8482,7 +9970,7 @@
       "dataFailures": [],
       "editorialReview": {
         "status": "retired",
-        "reviewedAt": "2026-06-22",
+        "reviewedAt": "2026-07-02",
         "reviewedBy": "Codex editorial QA",
         "qualityScore": 2,
         "funScore": 2,
@@ -8513,7 +10001,7 @@
       "dataFailures": [],
       "editorialReview": {
         "status": "expert_only",
-        "reviewedAt": "2026-06-22",
+        "reviewedAt": "2026-07-02",
         "reviewedBy": "Codex editorial QA",
         "qualityScore": 3,
         "funScore": 3,
@@ -8544,7 +10032,7 @@
       "dataFailures": [],
       "editorialReview": {
         "status": "expert_only",
-        "reviewedAt": "2026-06-22",
+        "reviewedAt": "2026-07-02",
         "reviewedBy": "Codex editorial QA",
         "qualityScore": 3,
         "funScore": 4,
@@ -8575,7 +10063,7 @@
       "dataFailures": [],
       "editorialReview": {
         "status": "expert_only",
-        "reviewedAt": "2026-06-22",
+        "reviewedAt": "2026-07-02",
         "reviewedBy": "Codex editorial QA",
         "qualityScore": 4,
         "funScore": 4,
@@ -8608,7 +10096,7 @@
       ],
       "editorialReview": {
         "status": "needs_review",
-        "reviewedAt": "2026-06-22",
+        "reviewedAt": "2026-07-02",
         "reviewedBy": "pipeline-default-needs-review",
         "qualityScore": 2,
         "funScore": 2,
@@ -8640,7 +10128,7 @@
       ],
       "editorialReview": {
         "status": "needs_review",
-        "reviewedAt": "2026-06-22",
+        "reviewedAt": "2026-07-02",
         "reviewedBy": "pipeline-default-needs-review",
         "qualityScore": 2,
         "funScore": 2,
@@ -8672,7 +10160,7 @@
       ],
       "editorialReview": {
         "status": "needs_review",
-        "reviewedAt": "2026-06-22",
+        "reviewedAt": "2026-07-02",
         "reviewedBy": "pipeline-default-needs-review",
         "qualityScore": 2,
         "funScore": 2,
@@ -8704,7 +10192,7 @@
       ],
       "editorialReview": {
         "status": "needs_review",
-        "reviewedAt": "2026-06-22",
+        "reviewedAt": "2026-07-02",
         "reviewedBy": "pipeline-default-needs-review",
         "qualityScore": 2,
         "funScore": 2,
@@ -8736,7 +10224,7 @@
       ],
       "editorialReview": {
         "status": "needs_review",
-        "reviewedAt": "2026-06-22",
+        "reviewedAt": "2026-07-02",
         "reviewedBy": "pipeline-default-needs-review",
         "qualityScore": 2,
         "funScore": 2,
@@ -8768,7 +10256,7 @@
       ],
       "editorialReview": {
         "status": "needs_review",
-        "reviewedAt": "2026-06-22",
+        "reviewedAt": "2026-07-02",
         "reviewedBy": "pipeline-default-needs-review",
         "qualityScore": 2,
         "funScore": 2,
@@ -8798,7 +10286,7 @@
       "dataFailures": [],
       "editorialReview": {
         "status": "expert_only",
-        "reviewedAt": "2026-06-22",
+        "reviewedAt": "2026-07-02",
         "reviewedBy": "Codex editorial QA",
         "qualityScore": 4,
         "funScore": 4,
@@ -8829,7 +10317,7 @@
       "dataFailures": [],
       "editorialReview": {
         "status": "daily_eligible",
-        "reviewedAt": "2026-06-22",
+        "reviewedAt": "2026-07-02",
         "reviewedBy": "Codex editorial QA",
         "qualityScore": 4,
         "funScore": 4,
@@ -8842,6 +10330,68 @@
         "reviewNotes": [
           "Adds a governance/society map that broadens the catalog beyond economics and health.",
           "Good Daily candidate because the geography is not a simple income gradient."
+        ],
+        "acceptableCloseDistractorIds": []
+      }
+    },
+    {
+      "id": "working-age-share",
+      "providerCode": "SP.POP.1564.TO.ZS",
+      "shortTitle": "Working-age population share",
+      "category": "demography",
+      "difficulty": "standard",
+      "year": 2025,
+      "coverage": 169,
+      "sourceReference": "https://api.worldbank.org/v2/indicator/SP.POP.1564.TO.ZS?format=json&per_page=1",
+      "approvalStatus": "approved",
+      "dataWarnings": [],
+      "dataFailures": [],
+      "editorialReview": {
+        "status": "daily_eligible",
+        "reviewedAt": "2026-07-02",
+        "reviewedBy": "Codex editorial QA",
+        "qualityScore": 4,
+        "funScore": 4,
+        "fairnessScore": 4,
+        "ambiguityRisk": "medium",
+        "dailyEligible": true,
+        "practiceEligible": true,
+        "challengeEligible": true,
+        "expertOnly": false,
+        "reviewNotes": [
+          "Batch 4 promotion: clean age-structure map with broad fresh coverage and an intuitive percent unit.",
+          "Daily-worthy when not paired with elderly share or children share in easy tiers."
+        ],
+        "acceptableCloseDistractorIds": []
+      }
+    },
+    {
+      "id": "young-adult-account-ownership",
+      "providerCode": "FX.OWN.TOTL.YG.ZS",
+      "shortTitle": "Young-adult account ownership",
+      "category": "development",
+      "difficulty": "expert",
+      "year": 2024,
+      "coverage": 132,
+      "sourceReference": "https://api.worldbank.org/v2/indicator/FX.OWN.TOTL.YG.ZS?format=json&per_page=1",
+      "approvalStatus": "approved",
+      "dataWarnings": [],
+      "dataFailures": [],
+      "editorialReview": {
+        "status": "expert_only",
+        "reviewedAt": "2026-07-02",
+        "reviewedBy": "Codex editorial QA",
+        "qualityScore": 3,
+        "funScore": 3,
+        "fairnessScore": 3,
+        "ambiguityRisk": "high",
+        "dailyEligible": false,
+        "practiceEligible": true,
+        "challengeEligible": true,
+        "expertOnly": true,
+        "reviewNotes": [
+          "Batch 4 QA: useful youth financial-inclusion signal, but close to other account-ownership maps.",
+          "Expert-only until the financial-inclusion cluster is tuned."
         ],
         "acceptableCloseDistractorIds": []
       }
@@ -8860,7 +10410,7 @@
       "dataFailures": [],
       "editorialReview": {
         "status": "daily_eligible",
-        "reviewedAt": "2026-06-22",
+        "reviewedAt": "2026-07-02",
         "reviewedBy": "Codex editorial QA",
         "qualityScore": 4,
         "funScore": 4,
@@ -8891,7 +10441,7 @@
       "dataFailures": [],
       "editorialReview": {
         "status": "expert_only",
-        "reviewedAt": "2026-06-22",
+        "reviewedAt": "2026-07-02",
         "reviewedBy": "Codex editorial QA",
         "qualityScore": 3,
         "funScore": 3,
@@ -8925,7 +10475,7 @@
       ],
       "editorialReview": {
         "status": "practice_eligible",
-        "reviewedAt": "2026-06-22",
+        "reviewedAt": "2026-07-02",
         "reviewedBy": "Codex editorial QA",
         "qualityScore": 3,
         "funScore": 3,
@@ -8949,17 +10499,17 @@
       "category": "labor",
       "difficulty": "standard",
       "year": 2025,
-      "coverage": 15,
+      "coverage": 35,
       "sourceReference": "https://api.worldbank.org/v2/indicator/SL.UEM.NEET.ZS?format=json&per_page=1",
       "approvalStatus": "draft",
       "dataWarnings": [],
       "dataFailures": [
         "youth-neet: no year in 2015:2025 met 120 mapped countries; best coverage was 108",
-        "youth-neet: selected coverage 15 is below 120"
+        "youth-neet: selected coverage 35 is below 120"
       ],
       "editorialReview": {
         "status": "needs_review",
-        "reviewedAt": "2026-06-22",
+        "reviewedAt": "2026-07-02",
         "reviewedBy": "pipeline-default-needs-review",
         "qualityScore": 2,
         "funScore": 2,
@@ -8989,7 +10539,7 @@
       "dataFailures": [],
       "editorialReview": {
         "status": "practice_eligible",
-        "reviewedAt": "2026-06-22",
+        "reviewedAt": "2026-07-02",
         "reviewedBy": "Codex editorial QA",
         "qualityScore": 4,
         "funScore": 4,

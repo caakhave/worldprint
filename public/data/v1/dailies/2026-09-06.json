@@ -2,30 +2,32 @@
   "schemaVersion": "1.1.0",
   "game": "worldprint",
   "date": "2026-09-06",
-  "contentVersion": "2026.06.22-exp2-qa1",
+  "contentVersion": "2026.07.02-exp4-content50",
   "roundIds": [
-    "worldprint-precipitation-depth",
-    "worldprint-total-protected-areas",
-    "worldprint-rural-population-growth",
-    "worldprint-arable-land",
-    "worldprint-population-density"
+    "worldprint-safe-drinking-water",
+    "worldprint-physicians",
+    "worldprint-permanent-cropland",
+    "worldprint-tourism-arrivals",
+    "worldprint-human-capital-index"
   ],
   "indicatorIds": [
-    "precipitation-depth",
-    "total-protected-areas",
-    "rural-population-growth",
-    "arable-land",
-    "population-density"
+    "safe-drinking-water",
+    "physicians",
+    "permanent-cropland",
+    "tourism-arrivals",
+    "human-capital-index"
   ],
   "categoryMix": {
-    "environment": 2,
-    "settlement": 2,
-    "land": 1
+    "health": 2,
+    "land": 1,
+    "economy": 1,
+    "development": 1
   },
   "mapDifficultyMix": {
-    "standard": 5
+    "intro": 1,
+    "standard": 4
   },
-  "generatedAt": "2026-06-27T17:16:22.628235+00:00",
+  "generatedAt": "2026-07-02T22:58:41.358884+00:00",
   "generatorVersion": "daily-manifest-v2",
   "varietyNotes": [
     "Selected with category, difficulty, repeat-cooldown, and same-day correlation safeguards."

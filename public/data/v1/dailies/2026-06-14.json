@@ -2,33 +2,32 @@
   "schemaVersion": "1.1.0",
   "game": "worldprint",
   "date": "2026-06-14",
-  "contentVersion": "2026.06.22-exp2-qa1",
+  "contentVersion": "2026.07.02-exp4-content50",
   "roundIds": [
-    "worldprint-unemployment",
-    "worldprint-account-ownership",
-    "worldprint-adolescent-fertility",
-    "worldprint-rural-basic-sanitation",
-    "worldprint-undernourishment"
+    "worldprint-undernourishment",
+    "worldprint-tourism-arrivals",
+    "worldprint-women-parliament",
+    "worldprint-tuberculosis-incidence",
+    "worldprint-cereal-yield"
   ],
   "indicatorIds": [
-    "unemployment",
-    "account-ownership",
-    "adolescent-fertility",
-    "rural-basic-sanitation",
-    "undernourishment"
+    "undernourishment",
+    "tourism-arrivals",
+    "women-parliament",
+    "tuberculosis-incidence",
+    "cereal-yield"
   ],
   "categoryMix": {
-    "labor": 1,
+    "health": 2,
+    "economy": 1,
     "development": 1,
-    "demography": 1,
-    "settlement": 1,
-    "health": 1
+    "agriculture": 1
   },
   "mapDifficultyMix": {
-    "standard": 4,
-    "expert": 1
+    "standard": 3,
+    "expert": 2
   },
-  "generatedAt": "2026-06-27T17:16:22.614895+00:00",
+  "generatedAt": "2026-07-02T22:58:41.346453+00:00",
   "generatorVersion": "daily-manifest-v2",
   "varietyNotes": [
     "Selected with category, difficulty, repeat-cooldown, and same-day correlation safeguards."

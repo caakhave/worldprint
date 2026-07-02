@@ -202,12 +202,12 @@
     "valuesReference": "https://api.worldbank.org/v2/country/all/indicator/SL.EMP.WORK.FE.ZS?format=json&per_page=20000&page=1&date=2015%3A2025",
     "license": "Creative Commons Attribution 4.0 International unless specifically labeled otherwise by World Bank metadata",
     "licenseReference": "https://www.worldbank.org/en/about/legal/terms-of-use-for-datasets",
-    "retrievedAt": "2026-06-27T17:15:50.381478+00:00",
-    "checksum": "64c102a08a880cab3dc116fbb6ce5e09f9484ad112ea6e6c51b2fbd7bf3d30bd",
+    "retrievedAt": "2026-07-02T22:45:53.133750+00:00",
+    "checksum": "f3ea40aa8c95d86f451203571130a41dcd8634ed2181830beeaa1ccc7509163f",
     "sourceOrganization": "ILO Modelled Estimates database (ILOEST), International Labour Organization (ILO), uri: https://ilostat.ilo.org/data/bulk/, publisher: ILOSTAT, type: external database, date accessed: January 17, 2026"
   },
   "reviewStatus": "approved",
-  "contentVersion": "2026.06.22-exp2-qa1",
+  "contentVersion": "2026.07.02-exp4-content50",
   "editorial": {
     "shortHook": "A formal-work map for women.",
     "patternNote": "The darkest countries include Qatar, Kuwait, Jordan, while the lightest include Chad, Niger, Sierra Leone; that contrast is the fastest way to read the female wage workers pattern.",
@@ -248,7 +248,7 @@
   },
   "editorialReview": {
     "status": "expert_only",
-    "reviewedAt": "2026-06-22",
+    "reviewedAt": "2026-07-02",
     "reviewedBy": "Codex editorial QA",
     "qualityScore": 4,
     "funScore": 4,

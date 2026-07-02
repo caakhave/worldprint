@@ -1,0 +1,37 @@
+{
+  "schemaVersion": "1.1.0",
+  "game": "worldprint",
+  "date": "2026-09-28",
+  "contentVersion": "2026.07.02-exp4-content50",
+  "roundIds": [
+    "worldprint-human-capital-index",
+    "worldprint-life-expectancy",
+    "worldprint-trade-share",
+    "worldprint-government-education-spending-share",
+    "worldprint-electricity-access"
+  ],
+  "indicatorIds": [
+    "human-capital-index",
+    "life-expectancy",
+    "trade-share",
+    "government-education-spending-share",
+    "electricity-access"
+  ],
+  "categoryMix": {
+    "development": 1,
+    "health": 1,
+    "economy": 1,
+    "education": 1,
+    "energy": 1
+  },
+  "mapDifficultyMix": {
+    "standard": 2,
+    "intro": 2,
+    "expert": 1
+  },
+  "generatedAt": "2026-07-02T22:58:41.362174+00:00",
+  "generatorVersion": "daily-manifest-v2",
+  "varietyNotes": [
+    "Selected with category, difficulty, repeat-cooldown, and same-day correlation safeguards."
+  ]
+}

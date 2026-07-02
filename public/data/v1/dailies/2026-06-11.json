@@ -2,32 +2,32 @@
   "schemaVersion": "1.1.0",
   "game": "worldprint",
   "date": "2026-06-11",
-  "contentVersion": "2026.06.22-exp2-qa1",
+  "contentVersion": "2026.07.02-exp4-content50",
   "roundIds": [
-    "worldprint-women-parliament",
-    "worldprint-agriculture-value-added",
-    "worldprint-freshwater-per-capita",
-    "worldprint-energy-use",
-    "worldprint-employment-agriculture"
+    "worldprint-education-expenditure-savings",
+    "worldprint-arable-land",
+    "worldprint-food-insecurity-moderate-severe",
+    "worldprint-electric-transmission-losses",
+    "worldprint-uhc-service-coverage"
   ],
   "indicatorIds": [
-    "women-parliament",
-    "agriculture-value-added",
-    "freshwater-per-capita",
-    "energy-use",
-    "employment-agriculture"
+    "education-expenditure-savings",
+    "arable-land",
+    "food-insecurity-moderate-severe",
+    "electric-transmission-losses",
+    "uhc-service-coverage"
   ],
   "categoryMix": {
-    "development": 1,
-    "economy": 1,
-    "environment": 1,
+    "education": 1,
+    "land": 1,
+    "agriculture": 1,
     "energy": 1,
-    "labor": 1
+    "health": 1
   },
   "mapDifficultyMix": {
     "standard": 5
   },
-  "generatedAt": "2026-06-27T17:16:22.614480+00:00",
+  "generatedAt": "2026-07-02T22:58:41.345983+00:00",
   "generatorVersion": "daily-manifest-v2",
   "varietyNotes": [
     "Selected with category, difficulty, repeat-cooldown, and same-day correlation safeguards."

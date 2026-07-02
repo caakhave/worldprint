@@ -2,33 +2,32 @@
   "schemaVersion": "1.1.0",
   "game": "worldprint",
   "date": "2026-07-01",
-  "contentVersion": "2026.06.22-exp2-qa1",
+  "contentVersion": "2026.07.02-exp4-content50",
   "roundIds": [
-    "worldprint-account-ownership",
-    "worldprint-safe-drinking-water",
-    "worldprint-female-industry-employment",
-    "worldprint-arable-land",
-    "worldprint-under-five-mortality"
+    "worldprint-primary-female-teachers",
+    "worldprint-precipitation-depth",
+    "worldprint-electricity-access",
+    "worldprint-coal-electricity-share",
+    "worldprint-migrant-stock"
   ],
   "indicatorIds": [
-    "account-ownership",
-    "safe-drinking-water",
-    "female-industry-employment",
-    "arable-land",
-    "under-five-mortality"
+    "primary-female-teachers",
+    "precipitation-depth",
+    "electricity-access",
+    "coal-electricity-share",
+    "migrant-stock"
   ],
   "categoryMix": {
-    "development": 1,
-    "health": 2,
-    "labor": 1,
-    "land": 1
+    "education": 1,
+    "environment": 1,
+    "energy": 2,
+    "demography": 1
   },
   "mapDifficultyMix": {
-    "standard": 3,
-    "intro": 1,
-    "expert": 1
+    "standard": 4,
+    "intro": 1
   },
-  "generatedAt": "2026-06-27T17:16:22.617791+00:00",
+  "generatedAt": "2026-07-02T22:58:41.348902+00:00",
   "generatorVersion": "daily-manifest-v2",
   "varietyNotes": [
     "Selected with category, difficulty, repeat-cooldown, and same-day correlation safeguards."

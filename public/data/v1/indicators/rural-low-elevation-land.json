@@ -208,12 +208,12 @@
     "valuesReference": "https://api.worldbank.org/v2/country/all/indicator/AG.LND.EL5M.RU.ZS?format=json&per_page=20000&page=1&date=2015%3A2025",
     "license": "Creative Commons Attribution 4.0 International unless specifically labeled otherwise by World Bank metadata",
     "licenseReference": "https://www.worldbank.org/en/about/legal/terms-of-use-for-datasets",
-    "retrievedAt": "2026-06-27T17:15:35.964271+00:00",
-    "checksum": "d1c23180440cbd9bf12840bd8ba12b68310751eff58254302492d3c6c526e97a",
+    "retrievedAt": "2026-07-02T22:42:53.400664+00:00",
+    "checksum": "ba15739978d99934217dcb72f84efd25ba5c70ff54462ae07e9d277926f7bf24",
     "sourceOrganization": "Low Elevation Coastal Zone (LECZ) Urban-Rural Population and Land Area Estimates, Version 3, Center For International Earth Science Information Network (CIESIN) - Columbia University, uri: https://www.earthdata.nasa.gov/data/catalog/sedac-ciesin-sedac-lecz-urplaev3-3.00, publisher: NASA Socioeconomic Data and Applications Center (SEDAC), date published: 2021"
   },
   "reviewStatus": "approved",
-  "contentVersion": "2026.06.22-exp2-qa1",
+  "contentVersion": "2026.07.02-exp4-content50",
   "editorial": {
     "shortHook": "A low-lying rural land map.",
     "patternNote": "The darkest countries include Bahamas, The, Netherlands, Gambia, The, while the lightest include Afghanistan, Armenia, Austria; that contrast is the fastest way to read the rural low-elevation land pattern.",
@@ -254,7 +254,7 @@
   },
   "editorialReview": {
     "status": "expert_only",
-    "reviewedAt": "2026-06-22",
+    "reviewedAt": "2026-07-02",
     "reviewedBy": "Codex editorial QA",
     "qualityScore": 3,
     "funScore": 4,

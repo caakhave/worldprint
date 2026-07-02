@@ -207,12 +207,12 @@
     "valuesReference": "https://api.worldbank.org/v2/country/all/indicator/AG.LND.ARBL.HA?format=json&per_page=20000&page=1&date=2015%3A2025",
     "license": "Creative Commons Attribution 4.0 International unless specifically labeled otherwise by World Bank metadata",
     "licenseReference": "https://www.worldbank.org/en/about/legal/terms-of-use-for-datasets",
-    "retrievedAt": "2026-06-27T17:16:04.951671+00:00",
-    "checksum": "33767249f2a65be71dc46a9d6bf25a75d9252e945b82d853a90975c53482068d",
+    "retrievedAt": "2026-07-02T22:48:27.810296+00:00",
+    "checksum": "514e95c4a291da8d3fe33491577ff4399fd50633bb9e4cdcc3a150a7df3ceef4",
     "sourceOrganization": "FAO electronic files and web site, Food and Agriculture Organization of the United Nations (FAO), publisher: Food and Agriculture Organization of the United Nations (FAO)"
   },
   "reviewStatus": "approved",
-  "contentVersion": "2026.06.22-exp2-qa1",
+  "contentVersion": "2026.07.02-exp4-content50",
   "editorial": {
     "shortHook": "A raw farmable-land map.",
     "patternNote": "The darkest countries include India, United States, Russian Federation, while the lightest include Djibouti, Brunei Darussalam, New Caledonia; that contrast is the fastest way to read the arable land area pattern.",
@@ -254,7 +254,7 @@
   },
   "editorialReview": {
     "status": "expert_only",
-    "reviewedAt": "2026-06-22",
+    "reviewedAt": "2026-07-02",
     "reviewedBy": "Codex editorial QA",
     "qualityScore": 3,
     "funScore": 4,

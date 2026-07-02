@@ -1,26 +1,26 @@
 {
   "schemaVersion": "1.1.0",
-  "contentVersion": "2026.06.22-exp2-qa1",
-  "generatedAt": "2026-06-27T17:16:22.054510+00:00",
+  "contentVersion": "2026.07.02-exp4-content50",
+  "generatedAt": "2026-07-02T22:58:40.380997+00:00",
   "summary": {
-    "candidateCount": 285,
-    "sourceValidCount": 226,
+    "candidateCount": 335,
+    "sourceValidCount": 276,
     "draftHeldCount": 59,
-    "playableCount": 175,
-    "dailyEligibleCount": 62,
+    "playableCount": 225,
+    "dailyEligibleCount": 69,
     "recommendationCounts": {
       "hold_for_data": 59,
-      "keep_daily_eligible": 42,
-      "keep_expert_only": 28,
+      "keep_daily_eligible": 45,
+      "keep_expert_only": 37,
       "keep_needs_review": 43,
-      "keep_practice_eligible": 27,
+      "keep_practice_eligible": 41,
       "keep_retired": 8,
-      "review_ambiguity": 74,
-      "review_for_demotion": 4
+      "review_ambiguity": 96,
+      "review_for_demotion": 6
     },
     "dataGateCounts": {
       "held": 59,
-      "passed": 226
+      "passed": 276
     }
   },
   "scorecards": [
@@ -57,21 +57,127 @@
         "freshness": 5,
         "unitClarity": 4,
         "mapInterest": 4,
-        "ambiguityCorrelation": 3,
-        "overall": 3.75
+        "ambiguityCorrelation": 2,
+        "overall": 3.55
       },
       "topCorrelation": {
-        "indicatorId": "secure-internet-servers",
-        "title": "Secure internet servers",
-        "warningLevel": "ok",
-        "pearson": 0.4123156232887583,
-        "spearman": 0.8079028243753033,
-        "visualSimilarity": 0.3106060606060606,
-        "overlapCount": 132
+        "indicatorId": "account-ownership-poorest40",
+        "title": "Account ownership, poorest 40%",
+        "warningLevel": "high",
+        "pearson": 0.9831260916808359,
+        "spearman": 0.9892541998443402,
+        "visualSimilarity": 0.8091603053435115,
+        "overlapCount": 131
       },
       "statusRecommendation": {
-        "recommendedAction": "keep_daily_eligible",
+        "recommendedAction": "review_ambiguity",
         "recommendedEditorialStatus": "daily_eligible",
+        "reason": [
+          "High correlation or visual-similarity risk; review distractor placement and Daily same-day pairing."
+        ]
+      }
+    },
+    {
+      "id": "account-ownership-poorest40",
+      "providerCode": "FX.OWN.TOTL.40.ZS",
+      "shortTitle": "Account ownership, poorest 40%",
+      "category": "development",
+      "difficulty": "expert",
+      "source": {
+        "selectedYear": 2024,
+        "coverage": 131,
+        "approvalStatus": "approved"
+      },
+      "dataGate": {
+        "status": "passed",
+        "reasons": [
+          "Source data passed the coverage gate."
+        ]
+      },
+      "editorial": {
+        "currentStatus": "practice_eligible",
+        "dailyEligible": false,
+        "practiceEligible": true,
+        "challengeEligible": true,
+        "expertOnly": false,
+        "ambiguityRisk": "medium",
+        "qualityScore": 4,
+        "funScore": 4,
+        "fairnessScore": 3
+      },
+      "scores": {
+        "coverage": 3,
+        "freshness": 5,
+        "unitClarity": 4,
+        "mapInterest": 4,
+        "ambiguityCorrelation": 2,
+        "overall": 3.55
+      },
+      "topCorrelation": {
+        "indicatorId": "account-ownership",
+        "title": "Account ownership",
+        "warningLevel": "high",
+        "pearson": 0.9831260916808359,
+        "spearman": 0.9892541998443402,
+        "visualSimilarity": 0.8091603053435115,
+        "overlapCount": 131
+      },
+      "statusRecommendation": {
+        "recommendedAction": "review_ambiguity",
+        "recommendedEditorialStatus": "practice_eligible",
+        "reason": [
+          "High correlation or visual-similarity risk; review distractor placement and Daily same-day pairing."
+        ]
+      }
+    },
+    {
+      "id": "adjusted-net-savings",
+      "providerCode": "NY.ADJ.SVNG.GN.ZS",
+      "shortTitle": "Adjusted net savings",
+      "category": "development",
+      "difficulty": "expert",
+      "source": {
+        "selectedYear": 2020,
+        "coverage": 134,
+        "approvalStatus": "approved"
+      },
+      "dataGate": {
+        "status": "passed",
+        "reasons": [
+          "Source data passed the coverage gate."
+        ]
+      },
+      "editorial": {
+        "currentStatus": "practice_eligible",
+        "dailyEligible": false,
+        "practiceEligible": true,
+        "challengeEligible": true,
+        "expertOnly": false,
+        "ambiguityRisk": "medium",
+        "qualityScore": 4,
+        "funScore": 4,
+        "fairnessScore": 3
+      },
+      "scores": {
+        "coverage": 3,
+        "freshness": 3,
+        "unitClarity": 4,
+        "mapInterest": 4,
+        "ambiguityCorrelation": 3,
+        "overall": 3.45
+      },
+      "topCorrelation": {
+        "indicatorId": "gross-savings-gdp",
+        "title": "Gross savings",
+        "warningLevel": "review",
+        "pearson": 0.5841600179375156,
+        "spearman": 0.510944009492977,
+        "visualSimilarity": 0.23577235772357724,
+        "overlapCount": 123
+      },
+      "statusRecommendation": {
+        "recommendedAction": "keep_practice_eligible",
+        "recommendedEditorialStatus": "practice_eligible",
         "reason": [
           "Automated scorecard supports the current curated editorial status."
         ]
@@ -290,7 +396,7 @@
       "category": "demography",
       "difficulty": "standard",
       "source": {
-        "selectedYear": 2024,
+        "selectedYear": 2025,
         "coverage": 169,
         "approvalStatus": "approved"
       },
@@ -316,23 +422,23 @@
         "freshness": 5,
         "unitClarity": 5,
         "mapInterest": 4,
-        "ambiguityCorrelation": 3,
-        "overall": 4.15
+        "ambiguityCorrelation": 2,
+        "overall": 3.95
       },
       "topCorrelation": {
-        "indicatorId": "fertility-rate",
-        "title": "Fertility rate",
-        "warningLevel": "review",
-        "pearson": 0.858630295725625,
-        "spearman": 0.6858640631243951,
-        "visualSimilarity": 0.3668639053254438,
+        "indicatorId": "working-age-share",
+        "title": "Working-age population share",
+        "warningLevel": "high",
+        "pearson": -0.9898140246990407,
+        "spearman": -0.9999999999999999,
+        "visualSimilarity": 0.13609467455621302,
         "overlapCount": 169
       },
       "statusRecommendation": {
-        "recommendedAction": "keep_daily_eligible",
+        "recommendedAction": "review_ambiguity",
         "recommendedEditorialStatus": "daily_eligible",
         "reason": [
-          "Automated scorecard supports the current curated editorial status."
+          "High correlation or visual-similarity risk; review distractor placement and Daily same-day pairing."
         ]
       }
     },
@@ -479,13 +585,13 @@
         "overall": 3.15
       },
       "topCorrelation": {
-        "indicatorId": "arable-land",
-        "title": "Arable land",
+        "indicatorId": "co2-emissions-change",
+        "title": "CO2 emissions change",
         "warningLevel": "ok",
-        "pearson": 0.25167332258900066,
-        "spearman": 0.371506711221461,
-        "visualSimilarity": 0.23357664233576642,
-        "overlapCount": 137
+        "pearson": 0.3774194502884443,
+        "spearman": 0.009233245537020778,
+        "visualSimilarity": 0.15555555555555556,
+        "overlapCount": 135
       },
       "statusRecommendation": {
         "recommendedAction": "keep_retired",
@@ -555,8 +661,8 @@
       "category": "agriculture",
       "difficulty": "expert",
       "source": {
-        "selectedYear": 2024,
-        "coverage": 149,
+        "selectedYear": 2025,
+        "coverage": 142,
         "approvalStatus": "approved"
       },
       "dataGate": {
@@ -585,13 +691,13 @@
         "overall": 3.3
       },
       "topCorrelation": {
-        "indicatorId": "gdp-growth",
-        "title": "GDP growth",
-        "warningLevel": "review",
-        "pearson": 0.2738480391682888,
-        "spearman": 0.3464356974424089,
-        "visualSimilarity": 0.24161073825503357,
-        "overlapCount": 149
+        "indicatorId": "mineral-rents",
+        "title": "Mineral rents",
+        "warningLevel": "ok",
+        "pearson": 0.5422303866505029,
+        "spearman": 0.18013612405702142,
+        "visualSimilarity": 0.20714285714285716,
+        "overlapCount": 140
       },
       "statusRecommendation": {
         "recommendedAction": "keep_needs_review",
@@ -714,8 +820,8 @@
       "category": "economy",
       "difficulty": "standard",
       "source": {
-        "selectedYear": 2024,
-        "coverage": 149,
+        "selectedYear": 2025,
+        "coverage": 139,
         "approvalStatus": "approved"
       },
       "dataGate": {
@@ -747,10 +853,10 @@
         "indicatorId": "gni-per-capita",
         "title": "GNI per capita",
         "warningLevel": "ok",
-        "pearson": -0.5578234985356352,
-        "spearman": -0.8982798463461349,
-        "visualSimilarity": 0.08108108108108109,
-        "overlapCount": 148
+        "pearson": -0.5496268871988012,
+        "spearman": -0.8946384651023614,
+        "visualSimilarity": 0.029197080291970802,
+        "overlapCount": 137
       },
       "statusRecommendation": {
         "recommendedAction": "keep_daily_eligible",
@@ -767,8 +873,8 @@
       "category": "agriculture",
       "difficulty": "expert",
       "source": {
-        "selectedYear": 2024,
-        "coverage": 146,
+        "selectedYear": 2025,
+        "coverage": 139,
         "approvalStatus": "approved"
       },
       "dataGate": {
@@ -800,10 +906,10 @@
         "indicatorId": "employment-agriculture",
         "title": "Employment in agriculture",
         "warningLevel": "high",
-        "pearson": -0.5598241222779675,
-        "spearman": -0.9447736014575883,
-        "visualSimilarity": 0.0958904109589041,
-        "overlapCount": 146
+        "pearson": -0.5680917702623501,
+        "spearman": -0.9496000714955984,
+        "visualSimilarity": 0.08633093525179857,
+        "overlapCount": 139
       },
       "statusRecommendation": {
         "recommendedAction": "review_ambiguity",
@@ -973,6 +1079,165 @@
       }
     },
     {
+      "id": "air-pollution-mortality",
+      "providerCode": "SH.STA.AIRP.P5",
+      "shortTitle": "Air pollution mortality",
+      "category": "health",
+      "difficulty": "expert",
+      "source": {
+        "selectedYear": 2019,
+        "coverage": 165,
+        "approvalStatus": "approved"
+      },
+      "dataGate": {
+        "status": "passed",
+        "reasons": [
+          "Source data passed the coverage gate."
+        ]
+      },
+      "editorial": {
+        "currentStatus": "practice_eligible",
+        "dailyEligible": false,
+        "practiceEligible": true,
+        "challengeEligible": true,
+        "expertOnly": false,
+        "ambiguityRisk": "medium",
+        "qualityScore": 4,
+        "funScore": 5,
+        "fairnessScore": 3
+      },
+      "scores": {
+        "coverage": 4,
+        "freshness": 2,
+        "unitClarity": 5,
+        "mapInterest": 5,
+        "ambiguityCorrelation": 3,
+        "overall": 3.95
+      },
+      "topCorrelation": {
+        "indicatorId": "particulate-damage-share",
+        "title": "Particulate emission damage",
+        "warningLevel": "high",
+        "pearson": 0.7234890385682892,
+        "spearman": 0.9254197665993079,
+        "visualSimilarity": 0.49324324324324326,
+        "overlapCount": 148
+      },
+      "statusRecommendation": {
+        "recommendedAction": "keep_practice_eligible",
+        "recommendedEditorialStatus": "practice_eligible",
+        "reason": [
+          "Automated scorecard supports the current curated editorial status."
+        ]
+      }
+    },
+    {
+      "id": "alternative-nuclear-energy",
+      "providerCode": "EG.USE.COMM.CL.ZS",
+      "shortTitle": "Alternative and nuclear energy",
+      "category": "energy",
+      "difficulty": "expert",
+      "source": {
+        "selectedYear": 2023,
+        "coverage": 142,
+        "approvalStatus": "approved"
+      },
+      "dataGate": {
+        "status": "passed",
+        "reasons": [
+          "Source data passed the coverage gate."
+        ]
+      },
+      "editorial": {
+        "currentStatus": "practice_eligible",
+        "dailyEligible": false,
+        "practiceEligible": true,
+        "challengeEligible": true,
+        "expertOnly": false,
+        "ambiguityRisk": "medium",
+        "qualityScore": 4,
+        "funScore": 4,
+        "fairnessScore": 3
+      },
+      "scores": {
+        "coverage": 3,
+        "freshness": 4,
+        "unitClarity": 4,
+        "mapInterest": 4,
+        "ambiguityCorrelation": 3,
+        "overall": 3.6
+      },
+      "topCorrelation": {
+        "indicatorId": "fossil-electricity-share",
+        "title": "Fossil electricity share",
+        "warningLevel": "review",
+        "pearson": -0.625185392536288,
+        "spearman": -0.7459067801572384,
+        "visualSimilarity": 0.06382978723404255,
+        "overlapCount": 141
+      },
+      "statusRecommendation": {
+        "recommendedAction": "keep_practice_eligible",
+        "recommendedEditorialStatus": "practice_eligible",
+        "reason": [
+          "Automated scorecard supports the current curated editorial status."
+        ]
+      }
+    },
+    {
+      "id": "antiretroviral-therapy-coverage",
+      "providerCode": "SH.HIV.ARTC.ZS",
+      "shortTitle": "Antiretroviral therapy coverage",
+      "category": "health",
+      "difficulty": "expert",
+      "source": {
+        "selectedYear": 2024,
+        "coverage": 120,
+        "approvalStatus": "approved"
+      },
+      "dataGate": {
+        "status": "passed",
+        "reasons": [
+          "Source data passed the coverage gate."
+        ]
+      },
+      "editorial": {
+        "currentStatus": "expert_only",
+        "dailyEligible": false,
+        "practiceEligible": true,
+        "challengeEligible": true,
+        "expertOnly": true,
+        "ambiguityRisk": "medium",
+        "qualityScore": 3,
+        "funScore": 3,
+        "fairnessScore": 3
+      },
+      "scores": {
+        "coverage": 3,
+        "freshness": 5,
+        "unitClarity": 4,
+        "mapInterest": 4,
+        "ambiguityCorrelation": 3,
+        "overall": 3.75
+      },
+      "topCorrelation": {
+        "indicatorId": "primary-pupils-female-share",
+        "title": "Female primary pupils",
+        "warningLevel": "ok",
+        "pearson": 0.3969582404286147,
+        "spearman": 0.2576361224836071,
+        "visualSimilarity": 0.14736842105263157,
+        "overlapCount": 95
+      },
+      "statusRecommendation": {
+        "recommendedAction": "keep_expert_only",
+        "recommendedEditorialStatus": "expert_only",
+        "reason": [
+          "Automated scorecard supports the current curated editorial status."
+        ]
+      }
+    },
+    {
       "id": "arable-land",
       "providerCode": "AG.LND.ARBL.ZS",
       "shortTitle": "Arable land",
@@ -1012,8 +1277,8 @@
         "indicatorId": "population-density",
         "title": "Population density",
         "warningLevel": "ok",
-        "pearson": 0.4806598724658646,
-        "spearman": 0.6151922697293495,
+        "pearson": 0.4790134140520229,
+        "spearman": 0.6150429487601299,
         "visualSimilarity": 0.2976190476190476,
         "overlapCount": 168
       },
@@ -1118,8 +1383,8 @@
         "indicatorId": "arable-land-area",
         "title": "Arable land area",
         "warningLevel": "review",
-        "pearson": 0.2932076735815742,
-        "spearman": 0.5628850872457664,
+        "pearson": 0.29284971084984457,
+        "spearman": 0.5629635441254857,
         "visualSimilarity": 0.25,
         "overlapCount": 168
       },
@@ -1132,14 +1397,67 @@
       }
     },
     {
+      "id": "atm-density",
+      "providerCode": "FB.ATM.TOTL.P5",
+      "shortTitle": "ATM density",
+      "category": "connectivity",
+      "difficulty": "standard",
+      "source": {
+        "selectedYear": 2024,
+        "coverage": 125,
+        "approvalStatus": "approved"
+      },
+      "dataGate": {
+        "status": "passed",
+        "reasons": [
+          "Source data passed the coverage gate."
+        ]
+      },
+      "editorial": {
+        "currentStatus": "practice_eligible",
+        "dailyEligible": false,
+        "practiceEligible": true,
+        "challengeEligible": true,
+        "expertOnly": false,
+        "ambiguityRisk": "medium",
+        "qualityScore": 4,
+        "funScore": 4,
+        "fairnessScore": 4
+      },
+      "scores": {
+        "coverage": 3,
+        "freshness": 5,
+        "unitClarity": 5,
+        "mapInterest": 4,
+        "ambiguityCorrelation": 3,
+        "overall": 3.95
+      },
+      "topCorrelation": {
+        "indicatorId": "children-share",
+        "title": "Population ages 0-14",
+        "warningLevel": "ok",
+        "pearson": -0.6102101138394065,
+        "spearman": -0.7611551459293395,
+        "visualSimilarity": 0.088,
+        "overlapCount": 125
+      },
+      "statusRecommendation": {
+        "recommendedAction": "keep_practice_eligible",
+        "recommendedEditorialStatus": "practice_eligible",
+        "reason": [
+          "Automated scorecard supports the current curated editorial status."
+        ]
+      }
+    },
+    {
       "id": "bank-branches",
       "providerCode": "FB.CBK.BRCH.P5",
       "shortTitle": "Commercial bank branches",
       "category": "connectivity",
       "difficulty": "expert",
       "source": {
-        "selectedYear": 2022,
-        "coverage": 138,
+        "selectedYear": 2024,
+        "coverage": 128,
         "approvalStatus": "approved"
       },
       "dataGate": {
@@ -1161,20 +1479,73 @@
       },
       "scores": {
         "coverage": 3,
-        "freshness": 4,
+        "freshness": 5,
         "unitClarity": 5,
         "mapInterest": 4,
         "ambiguityCorrelation": 2,
-        "overall": 3.6
+        "overall": 3.75
       },
       "topCorrelation": {
-        "indicatorId": "rural-electricity-access",
-        "title": "Rural electricity access",
+        "indicatorId": "atm-density",
+        "title": "ATM density",
+        "warningLevel": "review",
+        "pearson": 0.3623549402014311,
+        "spearman": 0.6702896034446838,
+        "visualSimilarity": 0.3,
+        "overlapCount": 120
+      },
+      "statusRecommendation": {
+        "recommendedAction": "review_ambiguity",
+        "recommendedEditorialStatus": "expert_only",
+        "reason": [
+          "High correlation or visual-similarity risk; review distractor placement and Daily same-day pairing."
+        ]
+      }
+    },
+    {
+      "id": "bank-capital-assets",
+      "providerCode": "FB.BNK.CAPA.ZS",
+      "shortTitle": "Bank capital to assets",
+      "category": "economy",
+      "difficulty": "expert",
+      "source": {
+        "selectedYear": 2021,
+        "coverage": 121,
+        "approvalStatus": "approved"
+      },
+      "dataGate": {
+        "status": "passed",
+        "reasons": [
+          "Source data passed the coverage gate."
+        ]
+      },
+      "editorial": {
+        "currentStatus": "expert_only",
+        "dailyEligible": false,
+        "practiceEligible": true,
+        "challengeEligible": true,
+        "expertOnly": true,
+        "ambiguityRisk": "high",
+        "qualityScore": 3,
+        "funScore": 3,
+        "fairnessScore": 3
+      },
+      "scores": {
+        "coverage": 3,
+        "freshness": 3,
+        "unitClarity": 4,
+        "mapInterest": 4,
+        "ambiguityCorrelation": 2,
+        "overall": 3.25
+      },
+      "topCorrelation": {
+        "indicatorId": "logistics-overall",
+        "title": "Logistics performance",
         "warningLevel": "ok",
-        "pearson": 0.44062051565194127,
-        "spearman": 0.6524077941997979,
-        "visualSimilarity": 0.25925925925925924,
-        "overlapCount": 135
+        "pearson": -0.3923139118914308,
+        "spearman": -0.398925580664574,
+        "visualSimilarity": 0.04854368932038835,
+        "overlapCount": 103
       },
       "statusRecommendation": {
         "recommendedAction": "review_ambiguity",
@@ -1277,9 +1648,9 @@
         "indicatorId": "children-share",
         "title": "Population ages 0-14",
         "warningLevel": "high",
-        "pearson": 0.9831010930854945,
-        "spearman": 0.9853381110714072,
-        "visualSimilarity": 0.7810650887573964,
+        "pearson": 0.9848115370360362,
+        "spearman": 0.9868223872537494,
+        "visualSimilarity": 0.7928994082840237,
         "overlapCount": 169
       },
       "statusRecommendation": {
@@ -1297,15 +1668,15 @@
       "category": "connectivity",
       "difficulty": "expert",
       "source": {
-        "selectedYear": 2023,
-        "coverage": 64,
+        "selectedYear": 2024,
+        "coverage": 75,
         "approvalStatus": "draft"
       },
       "dataGate": {
         "status": "held",
         "reasons": [
-          "borrowers-commercial-banks: no year in 2015:2025 met 120 mapped countries; best coverage was 88",
-          "borrowers-commercial-banks: selected coverage 64 is below 120"
+          "borrowers-commercial-banks: no year in 2015:2025 met 120 mapped countries; best coverage was 89",
+          "borrowers-commercial-banks: selected coverage 75 is below 120"
         ]
       },
       "editorial": {
@@ -1321,19 +1692,72 @@
       },
       "scores": {
         "coverage": 1,
-        "freshness": 4,
+        "freshness": 5,
         "unitClarity": 2,
         "mapInterest": 1,
         "ambiguityCorrelation": 2,
-        "overall": 1.85
+        "overall": 2.0
       },
       "topCorrelation": null,
       "statusRecommendation": {
         "recommendedAction": "hold_for_data",
         "recommendedEditorialStatus": "needs_review",
         "reason": [
-          "borrowers-commercial-banks: no year in 2015:2025 met 120 mapped countries; best coverage was 88",
-          "borrowers-commercial-banks: selected coverage 64 is below 120"
+          "borrowers-commercial-banks: no year in 2015:2025 met 120 mapped countries; best coverage was 89",
+          "borrowers-commercial-banks: selected coverage 75 is below 120"
+        ]
+      }
+    },
+    {
+      "id": "broad-money-share",
+      "providerCode": "FM.LBL.BMNY.GD.ZS",
+      "shortTitle": "Broad money share",
+      "category": "economy",
+      "difficulty": "expert",
+      "source": {
+        "selectedYear": 2021,
+        "coverage": 120,
+        "approvalStatus": "approved"
+      },
+      "dataGate": {
+        "status": "passed",
+        "reasons": [
+          "Source data passed the coverage gate."
+        ]
+      },
+      "editorial": {
+        "currentStatus": "expert_only",
+        "dailyEligible": false,
+        "practiceEligible": true,
+        "challengeEligible": true,
+        "expertOnly": true,
+        "ambiguityRisk": "high",
+        "qualityScore": 3,
+        "funScore": 3,
+        "fairnessScore": 3
+      },
+      "scores": {
+        "coverage": 3,
+        "freshness": 3,
+        "unitClarity": 4,
+        "mapInterest": 4,
+        "ambiguityCorrelation": 2,
+        "overall": 3.25
+      },
+      "topCorrelation": {
+        "indicatorId": "domestic-credit-private-sector",
+        "title": "Private-sector bank credit",
+        "warningLevel": "review",
+        "pearson": 0.7590451224752536,
+        "spearman": 0.7644343259022158,
+        "visualSimilarity": 0.38181818181818183,
+        "overlapCount": 110
+      },
+      "statusRecommendation": {
+        "recommendedAction": "review_ambiguity",
+        "recommendedEditorialStatus": "expert_only",
+        "reason": [
+          "High correlation or visual-similarity risk; review distractor placement and Daily same-day pairing."
         ]
       }
     },
@@ -1383,6 +1807,112 @@
       }
     },
     {
+      "id": "capture-fisheries-production",
+      "providerCode": "ER.FSH.CAPT.MT",
+      "shortTitle": "Capture fisheries production",
+      "category": "agriculture",
+      "difficulty": "expert",
+      "source": {
+        "selectedYear": 2024,
+        "coverage": 169,
+        "approvalStatus": "approved"
+      },
+      "dataGate": {
+        "status": "passed",
+        "reasons": [
+          "Source data passed the coverage gate."
+        ]
+      },
+      "editorial": {
+        "currentStatus": "expert_only",
+        "dailyEligible": false,
+        "practiceEligible": true,
+        "challengeEligible": true,
+        "expertOnly": true,
+        "ambiguityRisk": "high",
+        "qualityScore": 3,
+        "funScore": 4,
+        "fairnessScore": 3
+      },
+      "scores": {
+        "coverage": 4,
+        "freshness": 5,
+        "unitClarity": 3,
+        "mapInterest": 4,
+        "ambiguityCorrelation": 2,
+        "overall": 3.55
+      },
+      "topCorrelation": {
+        "indicatorId": "cereal-production",
+        "title": "Cereal production",
+        "warningLevel": "review",
+        "pearson": 0.7844332746832074,
+        "spearman": 0.5385981976647539,
+        "visualSimilarity": 0.31137724550898205,
+        "overlapCount": 167
+      },
+      "statusRecommendation": {
+        "recommendedAction": "review_ambiguity",
+        "recommendedEditorialStatus": "expert_only",
+        "reason": [
+          "High correlation or visual-similarity risk; review distractor placement and Daily same-day pairing."
+        ]
+      }
+    },
+    {
+      "id": "carbon-damage-share",
+      "providerCode": "NY.ADJ.DCO2.GN.ZS",
+      "shortTitle": "CO2 damage share",
+      "category": "environment",
+      "difficulty": "expert",
+      "source": {
+        "selectedYear": 2021,
+        "coverage": 156,
+        "approvalStatus": "approved"
+      },
+      "dataGate": {
+        "status": "passed",
+        "reasons": [
+          "Source data passed the coverage gate."
+        ]
+      },
+      "editorial": {
+        "currentStatus": "practice_eligible",
+        "dailyEligible": false,
+        "practiceEligible": true,
+        "challengeEligible": true,
+        "expertOnly": false,
+        "ambiguityRisk": "medium",
+        "qualityScore": 4,
+        "funScore": 4,
+        "fairnessScore": 3
+      },
+      "scores": {
+        "coverage": 4,
+        "freshness": 3,
+        "unitClarity": 4,
+        "mapInterest": 4,
+        "ambiguityCorrelation": 3,
+        "overall": 3.65
+      },
+      "topCorrelation": {
+        "indicatorId": "carbon-intensity-gdp",
+        "title": "Carbon intensity of GDP",
+        "warningLevel": "review",
+        "pearson": 0.8723469484572147,
+        "spearman": 0.8980707115382038,
+        "visualSimilarity": 0.5555555555555556,
+        "overlapCount": 153
+      },
+      "statusRecommendation": {
+        "recommendedAction": "keep_practice_eligible",
+        "recommendedEditorialStatus": "practice_eligible",
+        "reason": [
+          "Automated scorecard supports the current curated editorial status."
+        ]
+      }
+    },
+    {
       "id": "carbon-intensity-gdp",
       "providerCode": "EN.GHG.CO2.RT.GDP.KD",
       "shortTitle": "Carbon intensity of GDP",
@@ -1390,7 +1920,7 @@
       "difficulty": "expert",
       "source": {
         "selectedYear": 2024,
-        "coverage": 156,
+        "coverage": 159,
         "approvalStatus": "approved"
       },
       "dataGate": {
@@ -1419,13 +1949,13 @@
         "overall": 3.95
       },
       "topCorrelation": {
-        "indicatorId": "fossil-electricity-share",
-        "title": "Fossil electricity share",
-        "warningLevel": "ok",
-        "pearson": 0.39633468385396015,
-        "spearman": 0.5239795554013936,
-        "visualSimilarity": 0.3082706766917293,
-        "overlapCount": 133
+        "indicatorId": "carbon-damage-share",
+        "title": "CO2 damage share",
+        "warningLevel": "review",
+        "pearson": 0.8723469484572147,
+        "spearman": 0.8980707115382038,
+        "visualSimilarity": 0.5555555555555556,
+        "overlapCount": 153
       },
       "statusRecommendation": {
         "recommendedAction": "keep_expert_only",
@@ -1443,14 +1973,14 @@
       "difficulty": "expert",
       "source": {
         "selectedYear": 2024,
-        "coverage": 26,
+        "coverage": 31,
         "approvalStatus": "draft"
       },
       "dataGate": {
         "status": "held",
         "reasons": [
           "central-government-debt: no year in 2015:2025 met 120 mapped countries; best coverage was 47",
-          "central-government-debt: selected coverage 26 is below 120"
+          "central-government-debt: selected coverage 31 is below 120"
         ]
       },
       "editorial": {
@@ -1478,7 +2008,7 @@
         "recommendedEditorialStatus": "needs_review",
         "reason": [
           "central-government-debt: no year in 2015:2025 met 120 mapped countries; best coverage was 47",
-          "central-government-debt: selected coverage 26 is below 120"
+          "central-government-debt: selected coverage 31 is below 120"
         ]
       }
     },
@@ -1622,8 +2152,8 @@
         "indicatorId": "children-share",
         "title": "Population ages 0-14",
         "warningLevel": "ok",
-        "pearson": -0.47788631013875127,
-        "spearman": -0.7110572314922651,
+        "pearson": -0.47624377732029877,
+        "spearman": -0.7082435816834489,
         "visualSimilarity": 0.05389221556886228,
         "overlapCount": 167
       },
@@ -1783,7 +2313,7 @@
       "category": "demography",
       "difficulty": "intro",
       "source": {
-        "selectedYear": 2024,
+        "selectedYear": 2025,
         "coverage": 169,
         "approvalStatus": "approved"
       },
@@ -1816,9 +2346,9 @@
         "indicatorId": "birth-rate",
         "title": "Birth rate",
         "warningLevel": "high",
-        "pearson": 0.9831010930854945,
-        "spearman": 0.9853381110714072,
-        "visualSimilarity": 0.7810650887573964,
+        "pearson": 0.9848115370360362,
+        "spearman": 0.9868223872537494,
+        "visualSimilarity": 0.7928994082840237,
         "overlapCount": 169
       },
       "statusRecommendation": {
@@ -1883,6 +2413,59 @@
       }
     },
     {
+      "id": "co2-emissions-change",
+      "providerCode": "EN.GHG.CO2.ZG.AR5",
+      "shortTitle": "CO2 emissions change",
+      "category": "environment",
+      "difficulty": "expert",
+      "source": {
+        "selectedYear": 2024,
+        "coverage": 165,
+        "approvalStatus": "approved"
+      },
+      "dataGate": {
+        "status": "passed",
+        "reasons": [
+          "Source data passed the coverage gate."
+        ]
+      },
+      "editorial": {
+        "currentStatus": "expert_only",
+        "dailyEligible": false,
+        "practiceEligible": true,
+        "challengeEligible": true,
+        "expertOnly": true,
+        "ambiguityRisk": "high",
+        "qualityScore": 4,
+        "funScore": 4,
+        "fairnessScore": 3
+      },
+      "scores": {
+        "coverage": 4,
+        "freshness": 5,
+        "unitClarity": 4,
+        "mapInterest": 4,
+        "ambiguityCorrelation": 2,
+        "overall": 3.75
+      },
+      "topCorrelation": {
+        "indicatorId": "ghg-emissions-change",
+        "title": "Greenhouse gas emissions change",
+        "warningLevel": "high",
+        "pearson": 0.32522820870669744,
+        "spearman": 0.9184195763096733,
+        "visualSimilarity": 0.5696969696969697,
+        "overlapCount": 165
+      },
+      "statusRecommendation": {
+        "recommendedAction": "review_ambiguity",
+        "recommendedEditorialStatus": "expert_only",
+        "reason": [
+          "High correlation or visual-similarity risk; review distractor placement and Daily same-day pairing."
+        ]
+      }
+    },
+    {
       "id": "co2-per-capita",
       "providerCode": "EN.GHG.CO2.PC.CE.AR5",
       "shortTitle": "CO2 emissions per capita",
@@ -1922,8 +2505,8 @@
         "indicatorId": "ghg-per-capita",
         "title": "Greenhouse gas emissions per capita",
         "warningLevel": "high",
-        "pearson": 0.9586628292183192,
-        "spearman": 0.9489648171399567,
+        "pearson": 0.95866272882049,
+        "spearman": 0.9487671306066839,
         "visualSimilarity": 0.6545454545454545,
         "overlapCount": 165
       },
@@ -1972,17 +2555,123 @@
         "overall": 3.65
       },
       "topCorrelation": {
-        "indicatorId": "container-port-traffic",
-        "title": "Container port traffic",
-        "warningLevel": "ok",
-        "pearson": 0.34560884254962354,
-        "spearman": 0.5625944399671152,
-        "visualSimilarity": 0.2421875,
-        "overlapCount": 128
+        "indicatorId": "coal-rents",
+        "title": "Coal rents",
+        "warningLevel": "review",
+        "pearson": 0.44766057149777505,
+        "spearman": 0.6064909550256968,
+        "visualSimilarity": 0.569620253164557,
+        "overlapCount": 158
       },
       "statusRecommendation": {
         "recommendedAction": "keep_daily_eligible",
         "recommendedEditorialStatus": "daily_eligible",
+        "reason": [
+          "Automated scorecard supports the current curated editorial status."
+        ]
+      }
+    },
+    {
+      "id": "coal-rents",
+      "providerCode": "NY.GDP.COAL.RT.ZS",
+      "shortTitle": "Coal rents",
+      "category": "energy",
+      "difficulty": "expert",
+      "source": {
+        "selectedYear": 2021,
+        "coverage": 158,
+        "approvalStatus": "approved"
+      },
+      "dataGate": {
+        "status": "passed",
+        "reasons": [
+          "Source data passed the coverage gate."
+        ]
+      },
+      "editorial": {
+        "currentStatus": "expert_only",
+        "dailyEligible": false,
+        "practiceEligible": true,
+        "challengeEligible": true,
+        "expertOnly": true,
+        "ambiguityRisk": "high",
+        "qualityScore": 3,
+        "funScore": 4,
+        "fairnessScore": 3
+      },
+      "scores": {
+        "coverage": 4,
+        "freshness": 3,
+        "unitClarity": 4,
+        "mapInterest": 4,
+        "ambiguityCorrelation": 2,
+        "overall": 3.45
+      },
+      "topCorrelation": {
+        "indicatorId": "coal-electricity-share",
+        "title": "Coal electricity share",
+        "warningLevel": "review",
+        "pearson": 0.44766057149777505,
+        "spearman": 0.6064909550256968,
+        "visualSimilarity": 0.569620253164557,
+        "overlapCount": 158
+      },
+      "statusRecommendation": {
+        "recommendedAction": "review_ambiguity",
+        "recommendedEditorialStatus": "expert_only",
+        "reason": [
+          "High correlation or visual-similarity risk; review distractor placement and Daily same-day pairing."
+        ]
+      }
+    },
+    {
+      "id": "combustible-renewables-waste",
+      "providerCode": "EG.USE.CRNW.ZS",
+      "shortTitle": "Combustible renewables and waste",
+      "category": "energy",
+      "difficulty": "expert",
+      "source": {
+        "selectedYear": 2023,
+        "coverage": 139,
+        "approvalStatus": "approved"
+      },
+      "dataGate": {
+        "status": "passed",
+        "reasons": [
+          "Source data passed the coverage gate."
+        ]
+      },
+      "editorial": {
+        "currentStatus": "practice_eligible",
+        "dailyEligible": false,
+        "practiceEligible": true,
+        "challengeEligible": true,
+        "expertOnly": false,
+        "ambiguityRisk": "medium",
+        "qualityScore": 4,
+        "funScore": 4,
+        "fairnessScore": 3
+      },
+      "scores": {
+        "coverage": 3,
+        "freshness": 4,
+        "unitClarity": 4,
+        "mapInterest": 4,
+        "ambiguityCorrelation": 3,
+        "overall": 3.6
+      },
+      "topCorrelation": {
+        "indicatorId": "renewable-energy-consumption",
+        "title": "Renewable energy consumption",
+        "warningLevel": "high",
+        "pearson": 0.9029143170254497,
+        "spearman": 0.8838048979749716,
+        "visualSimilarity": 0.5179856115107914,
+        "overlapCount": 139
+      },
+      "statusRecommendation": {
+        "recommendedAction": "keep_practice_eligible",
+        "recommendedEditorialStatus": "practice_eligible",
         "reason": [
           "Automated scorecard supports the current curated editorial status."
         ]
@@ -2049,7 +2738,7 @@
       "difficulty": "expert",
       "source": {
         "selectedYear": 2024,
-        "coverage": 137,
+        "coverage": 139,
         "approvalStatus": "approved"
       },
       "dataGate": {
@@ -2078,13 +2767,13 @@
         "overall": 3.75
       },
       "topCorrelation": {
-        "indicatorId": "ict-service-exports",
-        "title": "ICT service exports",
+        "indicatorId": "travel-service-exports-share",
+        "title": "Travel service exports",
         "warningLevel": "review",
-        "pearson": 0.6164837309080915,
-        "spearman": 0.6185981855428738,
-        "visualSimilarity": 0.2518518518518518,
-        "overlapCount": 135
+        "pearson": -0.664005521000844,
+        "spearman": -0.6743420170695741,
+        "visualSimilarity": 0.050359712230215826,
+        "overlapCount": 139
       },
       "statusRecommendation": {
         "recommendedAction": "keep_daily_eligible",
@@ -2102,7 +2791,7 @@
       "difficulty": "expert",
       "source": {
         "selectedYear": 2024,
-        "coverage": 137,
+        "coverage": 139,
         "approvalStatus": "approved"
       },
       "dataGate": {
@@ -2134,10 +2823,10 @@
         "indicatorId": "transport-service-imports",
         "title": "Transport service imports",
         "warningLevel": "review",
-        "pearson": -0.6378957814344929,
-        "spearman": -0.6263791140067579,
-        "visualSimilarity": 0.08029197080291971,
-        "overlapCount": 137
+        "pearson": -0.6332848683007598,
+        "spearman": -0.6142097502122524,
+        "visualSimilarity": 0.06474820143884892,
+        "overlapCount": 139
       },
       "statusRecommendation": {
         "recommendedAction": "keep_practice_eligible",
@@ -2187,8 +2876,8 @@
         "indicatorId": "rural-population",
         "title": "Rural population",
         "warningLevel": "ok",
-        "pearson": -0.45435035171238963,
-        "spearman": -0.503249057890797,
+        "pearson": -0.45313873278352784,
+        "spearman": -0.5026537207994052,
         "visualSimilarity": 0.08860759493670886,
         "overlapCount": 158
       },
@@ -2208,7 +2897,7 @@
       "difficulty": "expert",
       "source": {
         "selectedYear": 2019,
-        "coverage": 128,
+        "coverage": 127,
         "approvalStatus": "approved"
       },
       "dataGate": {
@@ -2240,10 +2929,10 @@
         "indicatorId": "air-passengers",
         "title": "Air passengers carried",
         "warningLevel": "review",
-        "pearson": 0.7003697894355069,
-        "spearman": 0.8367758455137095,
-        "visualSimilarity": 0.3942307692307692,
-        "overlapCount": 104
+        "pearson": 0.6962864659088304,
+        "spearman": 0.8375104335983833,
+        "visualSimilarity": 0.4174757281553398,
+        "overlapCount": 103
       },
       "statusRecommendation": {
         "recommendedAction": "keep_expert_only",
@@ -2414,7 +3103,7 @@
       "difficulty": "expert",
       "source": {
         "selectedYear": 2024,
-        "coverage": 139,
+        "coverage": 141,
         "approvalStatus": "approved"
       },
       "dataGate": {
@@ -2443,13 +3132,13 @@
         "overall": 3.75
       },
       "topCorrelation": {
-        "indicatorId": "domestic-savings",
-        "title": "Domestic savings",
+        "indicatorId": "external-balance-share",
+        "title": "External balance",
         "warningLevel": "review",
-        "pearson": 0.6114270397405704,
-        "spearman": 0.48143717719523754,
-        "visualSimilarity": 0.2540983606557377,
-        "overlapCount": 122
+        "pearson": 0.6433354370399973,
+        "spearman": 0.6481301985889142,
+        "visualSimilarity": 0.38181818181818183,
+        "overlapCount": 110
       },
       "statusRecommendation": {
         "recommendedAction": "keep_expert_only",
@@ -2499,9 +3188,9 @@
         "indicatorId": "older-adults-share",
         "title": "Population ages 65+",
         "warningLevel": "review",
-        "pearson": 0.6730281054822473,
-        "spearman": 0.5431942379572793,
-        "visualSimilarity": 0.26627218934911245,
+        "pearson": 0.6702198114763507,
+        "spearman": 0.5426286242850846,
+        "visualSimilarity": 0.2781065088757396,
         "overlapCount": 169
       },
       "statusRecommendation": {
@@ -2513,6 +3202,59 @@
       }
     },
     {
+      "id": "deforestation-co2-flux",
+      "providerCode": "EN.GHG.CO2.LU.DF.MT.CE.AR5",
+      "shortTitle": "Deforestation CO2 flux",
+      "category": "environment",
+      "difficulty": "expert",
+      "source": {
+        "selectedYear": 2023,
+        "coverage": 147,
+        "approvalStatus": "approved"
+      },
+      "dataGate": {
+        "status": "passed",
+        "reasons": [
+          "Source data passed the coverage gate."
+        ]
+      },
+      "editorial": {
+        "currentStatus": "expert_only",
+        "dailyEligible": false,
+        "practiceEligible": true,
+        "challengeEligible": true,
+        "expertOnly": true,
+        "ambiguityRisk": "high",
+        "qualityScore": 4,
+        "funScore": 4,
+        "fairnessScore": 3
+      },
+      "scores": {
+        "coverage": 3,
+        "freshness": 4,
+        "unitClarity": 3,
+        "mapInterest": 4,
+        "ambiguityCorrelation": 2,
+        "overall": 3.2
+      },
+      "topCorrelation": {
+        "indicatorId": "threatened-mammal-species",
+        "title": "Threatened mammal species",
+        "warningLevel": "review",
+        "pearson": 0.3262119494624751,
+        "spearman": 0.529046062653267,
+        "visualSimilarity": 0.2108843537414966,
+        "overlapCount": 147
+      },
+      "statusRecommendation": {
+        "recommendedAction": "review_ambiguity",
+        "recommendedEditorialStatus": "expert_only",
+        "reason": [
+          "High correlation or visual-similarity risk; review distractor placement and Daily same-day pairing."
+        ]
+      }
+    },
+    {
       "id": "domestic-credit-private-sector",
       "providerCode": "FD.AST.PRVT.GD.ZS",
       "shortTitle": "Private-sector bank credit",
@@ -2520,7 +3262,7 @@
       "difficulty": "expert",
       "source": {
         "selectedYear": 2024,
-        "coverage": 130,
+        "coverage": 132,
         "approvalStatus": "approved"
       },
       "dataGate": {
@@ -2549,13 +3291,13 @@
         "overall": 3.5
       },
       "topCorrelation": {
-        "indicatorId": "logistics-infrastructure",
-        "title": "Logistics infrastructure quality",
-        "warningLevel": "ok",
-        "pearson": 0.6567897597279247,
-        "spearman": 0.6367689006702675,
-        "visualSimilarity": 0.2692307692307692,
-        "overlapCount": 104
+        "indicatorId": "broad-money-share",
+        "title": "Broad money share",
+        "warningLevel": "review",
+        "pearson": 0.7590451224752536,
+        "spearman": 0.7644343259022158,
+        "visualSimilarity": 0.38181818181818183,
+        "overlapCount": 110
       },
       "statusRecommendation": {
         "recommendedAction": "keep_needs_review",
@@ -2572,8 +3314,8 @@
       "category": "economy",
       "difficulty": "expert",
       "source": {
-        "selectedYear": 2024,
-        "coverage": 139,
+        "selectedYear": 2025,
+        "coverage": 122,
         "approvalStatus": "approved"
       },
       "dataGate": {
@@ -2602,13 +3344,13 @@
         "overall": 3.55
       },
       "topCorrelation": {
-        "indicatorId": "household-consumption",
-        "title": "Household consumption",
-        "warningLevel": "review",
-        "pearson": -0.8508531303808571,
-        "spearman": -0.8884275365029489,
-        "visualSimilarity": 0.04477611940298507,
-        "overlapCount": 134
+        "indicatorId": "final-consumption-share",
+        "title": "Final consumption share",
+        "warningLevel": "high",
+        "pearson": -1.0,
+        "spearman": -0.9999999999999998,
+        "visualSimilarity": 0.14754098360655737,
+        "overlapCount": 122
       },
       "statusRecommendation": {
         "recommendedAction": "review_ambiguity",
@@ -2725,6 +3467,59 @@
       }
     },
     {
+      "id": "education-expenditure-savings",
+      "providerCode": "NY.ADJ.AEDU.GN.ZS",
+      "shortTitle": "Education expenditure share",
+      "category": "education",
+      "difficulty": "standard",
+      "source": {
+        "selectedYear": 2021,
+        "coverage": 164,
+        "approvalStatus": "approved"
+      },
+      "dataGate": {
+        "status": "passed",
+        "reasons": [
+          "Source data passed the coverage gate."
+        ]
+      },
+      "editorial": {
+        "currentStatus": "daily_eligible",
+        "dailyEligible": true,
+        "practiceEligible": true,
+        "challengeEligible": true,
+        "expertOnly": false,
+        "ambiguityRisk": "medium",
+        "qualityScore": 4,
+        "funScore": 4,
+        "fairnessScore": 4
+      },
+      "scores": {
+        "coverage": 4,
+        "freshness": 3,
+        "unitClarity": 4,
+        "mapInterest": 4,
+        "ambiguityCorrelation": 3,
+        "overall": 3.65
+      },
+      "topCorrelation": {
+        "indicatorId": "education-spending",
+        "title": "Education spending",
+        "warningLevel": "review",
+        "pearson": 0.6707907511194269,
+        "spearman": 0.7370583631484794,
+        "visualSimilarity": 0.3953488372093023,
+        "overlapCount": 129
+      },
+      "statusRecommendation": {
+        "recommendedAction": "keep_daily_eligible",
+        "recommendedEditorialStatus": "daily_eligible",
+        "reason": [
+          "Automated scorecard supports the current curated editorial status."
+        ]
+      }
+    },
+    {
       "id": "education-spending",
       "providerCode": "SE.XPD.TOTL.GD.ZS",
       "shortTitle": "Education spending",
@@ -2761,13 +3556,13 @@
         "overall": 3.6
       },
       "topCorrelation": {
-        "indicatorId": "government-consumption",
-        "title": "Government consumption",
-        "warningLevel": "ok",
-        "pearson": 0.6935158054988909,
-        "spearman": 0.6710016470734317,
-        "visualSimilarity": 0.3305084745762712,
-        "overlapCount": 118
+        "indicatorId": "education-expenditure-savings",
+        "title": "Education expenditure share",
+        "warningLevel": "review",
+        "pearson": 0.6707907511194269,
+        "spearman": 0.7370583631484794,
+        "visualSimilarity": 0.3953488372093023,
+        "overlapCount": 129
       },
       "statusRecommendation": {
         "recommendedAction": "keep_expert_only",
@@ -2817,8 +3612,8 @@
         "indicatorId": "energy-use",
         "title": "Energy use",
         "warningLevel": "high",
-        "pearson": 0.8641453299185242,
-        "spearman": 0.9538507641594246,
+        "pearson": 0.8641374242351841,
+        "spearman": 0.9538036731024444,
         "visualSimilarity": 0.6170212765957447,
         "overlapCount": 141
       },
@@ -2827,6 +3622,59 @@
         "recommendedEditorialStatus": "daily_eligible",
         "reason": [
           "High correlation or visual-similarity risk; review distractor placement and Daily same-day pairing."
+        ]
+      }
+    },
+    {
+      "id": "electric-transmission-losses",
+      "providerCode": "EG.ELC.LOSS.ZS",
+      "shortTitle": "Electric transmission losses",
+      "category": "energy",
+      "difficulty": "standard",
+      "source": {
+        "selectedYear": 2023,
+        "coverage": 141,
+        "approvalStatus": "approved"
+      },
+      "dataGate": {
+        "status": "passed",
+        "reasons": [
+          "Source data passed the coverage gate."
+        ]
+      },
+      "editorial": {
+        "currentStatus": "daily_eligible",
+        "dailyEligible": true,
+        "practiceEligible": true,
+        "challengeEligible": true,
+        "expertOnly": false,
+        "ambiguityRisk": "medium",
+        "qualityScore": 4,
+        "funScore": 4,
+        "fairnessScore": 4
+      },
+      "scores": {
+        "coverage": 3,
+        "freshness": 4,
+        "unitClarity": 4,
+        "mapInterest": 4,
+        "ambiguityCorrelation": 3,
+        "overall": 3.6
+      },
+      "topCorrelation": {
+        "indicatorId": "gdp-per-capita-ppp",
+        "title": "GDP per capita, PPP",
+        "warningLevel": "ok",
+        "pearson": -0.47476969328430324,
+        "spearman": -0.6719529488578978,
+        "visualSimilarity": 0.10526315789473684,
+        "overlapCount": 133
+      },
+      "statusRecommendation": {
+        "recommendedAction": "keep_daily_eligible",
+        "recommendedEditorialStatus": "daily_eligible",
+        "reason": [
+          "Automated scorecard supports the current curated editorial status."
         ]
       }
     },
@@ -2920,13 +3768,13 @@
         "overall": 3.95
       },
       "topCorrelation": {
-        "indicatorId": "revenue-excluding-grants",
-        "title": "Government revenue excluding grants",
-        "warningLevel": "ok",
-        "pearson": 0.23917822036161687,
-        "spearman": 0.22339939887297813,
-        "visualSimilarity": 0.211864406779661,
-        "overlapCount": 118
+        "indicatorId": "energy-depletion-share",
+        "title": "Energy depletion share",
+        "warningLevel": "review",
+        "pearson": 0.30612519180802766,
+        "spearman": 0.1801675898296599,
+        "visualSimilarity": 0.21052631578947367,
+        "overlapCount": 152
       },
       "statusRecommendation": {
         "recommendedAction": "keep_expert_only",
@@ -3149,6 +3997,218 @@
       }
     },
     {
+      "id": "energy-depletion-share",
+      "providerCode": "NY.ADJ.DNGY.GN.ZS",
+      "shortTitle": "Energy depletion share",
+      "category": "energy",
+      "difficulty": "expert",
+      "source": {
+        "selectedYear": 2021,
+        "coverage": 156,
+        "approvalStatus": "approved"
+      },
+      "dataGate": {
+        "status": "passed",
+        "reasons": [
+          "Source data passed the coverage gate."
+        ]
+      },
+      "editorial": {
+        "currentStatus": "expert_only",
+        "dailyEligible": false,
+        "practiceEligible": true,
+        "challengeEligible": true,
+        "expertOnly": true,
+        "ambiguityRisk": "high",
+        "qualityScore": 3,
+        "funScore": 4,
+        "fairnessScore": 3
+      },
+      "scores": {
+        "coverage": 4,
+        "freshness": 3,
+        "unitClarity": 4,
+        "mapInterest": 4,
+        "ambiguityCorrelation": 2,
+        "overall": 3.45
+      },
+      "topCorrelation": {
+        "indicatorId": "natural-resource-depletion",
+        "title": "Natural resource depletion",
+        "warningLevel": "review",
+        "pearson": 0.8088651105611648,
+        "spearman": 0.4546072796680818,
+        "visualSimilarity": 0.21710526315789475,
+        "overlapCount": 152
+      },
+      "statusRecommendation": {
+        "recommendedAction": "review_ambiguity",
+        "recommendedEditorialStatus": "expert_only",
+        "reason": [
+          "High correlation or visual-similarity risk; review distractor placement and Daily same-day pairing."
+        ]
+      }
+    },
+    {
+      "id": "energy-imports",
+      "providerCode": "EG.IMP.CONS.ZS",
+      "shortTitle": "Net energy imports",
+      "category": "energy",
+      "difficulty": "expert",
+      "source": {
+        "selectedYear": 2022,
+        "coverage": 135,
+        "approvalStatus": "approved"
+      },
+      "dataGate": {
+        "status": "passed",
+        "reasons": [
+          "Source data passed the coverage gate."
+        ]
+      },
+      "editorial": {
+        "currentStatus": "practice_eligible",
+        "dailyEligible": false,
+        "practiceEligible": true,
+        "challengeEligible": true,
+        "expertOnly": false,
+        "ambiguityRisk": "medium",
+        "qualityScore": 4,
+        "funScore": 4,
+        "fairnessScore": 3
+      },
+      "scores": {
+        "coverage": 3,
+        "freshness": 4,
+        "unitClarity": 3,
+        "mapInterest": 4,
+        "ambiguityCorrelation": 3,
+        "overall": 3.4
+      },
+      "topCorrelation": {
+        "indicatorId": "natural-resource-rents",
+        "title": "Natural resource rents",
+        "warningLevel": "ok",
+        "pearson": -0.6717774568006188,
+        "spearman": -0.8184113704536933,
+        "visualSimilarity": 0.06299212598425197,
+        "overlapCount": 127
+      },
+      "statusRecommendation": {
+        "recommendedAction": "keep_practice_eligible",
+        "recommendedEditorialStatus": "practice_eligible",
+        "reason": [
+          "Automated scorecard supports the current curated editorial status."
+        ]
+      }
+    },
+    {
+      "id": "energy-intensity",
+      "providerCode": "EG.EGY.PRIM.PP.KD",
+      "shortTitle": "Energy intensity",
+      "category": "energy",
+      "difficulty": "expert",
+      "source": {
+        "selectedYear": 2021,
+        "coverage": 167,
+        "approvalStatus": "approved"
+      },
+      "dataGate": {
+        "status": "passed",
+        "reasons": [
+          "Source data passed the coverage gate."
+        ]
+      },
+      "editorial": {
+        "currentStatus": "practice_eligible",
+        "dailyEligible": false,
+        "practiceEligible": true,
+        "challengeEligible": true,
+        "expertOnly": false,
+        "ambiguityRisk": "medium",
+        "qualityScore": 4,
+        "funScore": 4,
+        "fairnessScore": 3
+      },
+      "scores": {
+        "coverage": 4,
+        "freshness": 3,
+        "unitClarity": 4,
+        "mapInterest": 4,
+        "ambiguityCorrelation": 3,
+        "overall": 3.65
+      },
+      "topCorrelation": {
+        "indicatorId": "energy-productivity",
+        "title": "Energy productivity",
+        "warningLevel": "high",
+        "pearson": -0.6978414508414335,
+        "spearman": -0.9240595857691987,
+        "visualSimilarity": 0.08148148148148149,
+        "overlapCount": 135
+      },
+      "statusRecommendation": {
+        "recommendedAction": "keep_practice_eligible",
+        "recommendedEditorialStatus": "practice_eligible",
+        "reason": [
+          "Automated scorecard supports the current curated editorial status."
+        ]
+      }
+    },
+    {
+      "id": "energy-productivity",
+      "providerCode": "EG.GDP.PUSE.KO.PP.KD",
+      "shortTitle": "Energy productivity",
+      "category": "energy",
+      "difficulty": "expert",
+      "source": {
+        "selectedYear": 2023,
+        "coverage": 135,
+        "approvalStatus": "approved"
+      },
+      "dataGate": {
+        "status": "passed",
+        "reasons": [
+          "Source data passed the coverage gate."
+        ]
+      },
+      "editorial": {
+        "currentStatus": "expert_only",
+        "dailyEligible": false,
+        "practiceEligible": true,
+        "challengeEligible": true,
+        "expertOnly": true,
+        "ambiguityRisk": "high",
+        "qualityScore": 3,
+        "funScore": 3,
+        "fairnessScore": 3
+      },
+      "scores": {
+        "coverage": 3,
+        "freshness": 4,
+        "unitClarity": 4,
+        "mapInterest": 4,
+        "ambiguityCorrelation": 2,
+        "overall": 3.4
+      },
+      "topCorrelation": {
+        "indicatorId": "energy-intensity",
+        "title": "Energy intensity",
+        "warningLevel": "high",
+        "pearson": -0.6978414508414335,
+        "spearman": -0.9240595857691987,
+        "visualSimilarity": 0.08148148148148149,
+        "overlapCount": 135
+      },
+      "statusRecommendation": {
+        "recommendedAction": "review_ambiguity",
+        "recommendedEditorialStatus": "expert_only",
+        "reason": [
+          "High correlation or visual-similarity risk; review distractor placement and Daily same-day pairing."
+        ]
+      }
+    },
+    {
       "id": "energy-use",
       "providerCode": "EG.USE.PCAP.KG.OE",
       "shortTitle": "Energy use",
@@ -3188,8 +4248,8 @@
         "indicatorId": "electric-power-use",
         "title": "Electric power use",
         "warningLevel": "high",
-        "pearson": 0.8641453299185242,
-        "spearman": 0.9538507641594246,
+        "pearson": 0.8641374242351841,
+        "spearman": 0.9538036731024444,
         "visualSimilarity": 0.6170212765957447,
         "overlapCount": 141
       },
@@ -3202,14 +4262,67 @@
       }
     },
     {
+      "id": "exports-high-income-share",
+      "providerCode": "TX.VAL.MRCH.HI.ZS",
+      "shortTitle": "Exports to high-income economies",
+      "category": "economy",
+      "difficulty": "expert",
+      "source": {
+        "selectedYear": 2023,
+        "coverage": 168,
+        "approvalStatus": "approved"
+      },
+      "dataGate": {
+        "status": "passed",
+        "reasons": [
+          "Source data passed the coverage gate."
+        ]
+      },
+      "editorial": {
+        "currentStatus": "expert_only",
+        "dailyEligible": false,
+        "practiceEligible": true,
+        "challengeEligible": true,
+        "expertOnly": true,
+        "ambiguityRisk": "high",
+        "qualityScore": 3,
+        "funScore": 3,
+        "fairnessScore": 3
+      },
+      "scores": {
+        "coverage": 4,
+        "freshness": 4,
+        "unitClarity": 4,
+        "mapInterest": 4,
+        "ambiguityCorrelation": 2,
+        "overall": 3.6
+      },
+      "topCorrelation": {
+        "indicatorId": "exports-within-region-share",
+        "title": "Exports within region",
+        "warningLevel": "review",
+        "pearson": -0.6237755336195513,
+        "spearman": -0.6081746692813714,
+        "visualSimilarity": 0.12650602409638553,
+        "overlapCount": 166
+      },
+      "statusRecommendation": {
+        "recommendedAction": "review_ambiguity",
+        "recommendedEditorialStatus": "expert_only",
+        "reason": [
+          "High correlation or visual-similarity risk; review distractor placement and Daily same-day pairing."
+        ]
+      }
+    },
+    {
       "id": "exports-share",
       "providerCode": "NE.EXP.GNFS.ZS",
       "shortTitle": "Exports",
       "category": "economy",
       "difficulty": "standard",
       "source": {
-        "selectedYear": 2024,
-        "coverage": 141,
+        "selectedYear": 2025,
+        "coverage": 124,
         "approvalStatus": "approved"
       },
       "dataGate": {
@@ -3241,16 +4354,122 @@
         "indicatorId": "trade-share",
         "title": "Trade",
         "warningLevel": "high",
-        "pearson": 0.962879940605117,
-        "spearman": 0.9377113746307633,
-        "visualSimilarity": 0.5815602836879432,
-        "overlapCount": 141
+        "pearson": 0.9674051566224416,
+        "spearman": 0.9407458693941776,
+        "visualSimilarity": 0.5725806451612904,
+        "overlapCount": 124
       },
       "statusRecommendation": {
         "recommendedAction": "review_ambiguity",
         "recommendedEditorialStatus": "expert_only",
         "reason": [
           "High correlation or visual-similarity risk; review distractor placement and Daily same-day pairing."
+        ]
+      }
+    },
+    {
+      "id": "exports-within-region-share",
+      "providerCode": "TX.VAL.MRCH.WR.ZS",
+      "shortTitle": "Exports within region",
+      "category": "economy",
+      "difficulty": "expert",
+      "source": {
+        "selectedYear": 2023,
+        "coverage": 166,
+        "approvalStatus": "approved"
+      },
+      "dataGate": {
+        "status": "passed",
+        "reasons": [
+          "Source data passed the coverage gate."
+        ]
+      },
+      "editorial": {
+        "currentStatus": "practice_eligible",
+        "dailyEligible": false,
+        "practiceEligible": true,
+        "challengeEligible": true,
+        "expertOnly": false,
+        "ambiguityRisk": "medium",
+        "qualityScore": 4,
+        "funScore": 4,
+        "fairnessScore": 3
+      },
+      "scores": {
+        "coverage": 4,
+        "freshness": 4,
+        "unitClarity": 4,
+        "mapInterest": 4,
+        "ambiguityCorrelation": 3,
+        "overall": 3.8
+      },
+      "topCorrelation": {
+        "indicatorId": "imports-within-region-share",
+        "title": "Imports within region",
+        "warningLevel": "review",
+        "pearson": 0.6893983518543544,
+        "spearman": 0.7266942566127328,
+        "visualSimilarity": 0.42771084337349397,
+        "overlapCount": 166
+      },
+      "statusRecommendation": {
+        "recommendedAction": "keep_practice_eligible",
+        "recommendedEditorialStatus": "practice_eligible",
+        "reason": [
+          "Automated scorecard supports the current curated editorial status."
+        ]
+      }
+    },
+    {
+      "id": "external-balance-share",
+      "providerCode": "NE.RSB.GNFS.ZS",
+      "shortTitle": "External balance",
+      "category": "economy",
+      "difficulty": "expert",
+      "source": {
+        "selectedYear": 2025,
+        "coverage": 124,
+        "approvalStatus": "approved"
+      },
+      "dataGate": {
+        "status": "passed",
+        "reasons": [
+          "Source data passed the coverage gate."
+        ]
+      },
+      "editorial": {
+        "currentStatus": "practice_eligible",
+        "dailyEligible": false,
+        "practiceEligible": true,
+        "challengeEligible": true,
+        "expertOnly": false,
+        "ambiguityRisk": "medium",
+        "qualityScore": 4,
+        "funScore": 4,
+        "fairnessScore": 3
+      },
+      "scores": {
+        "coverage": 3,
+        "freshness": 5,
+        "unitClarity": 3,
+        "mapInterest": 4,
+        "ambiguityCorrelation": 3,
+        "overall": 3.55
+      },
+      "topCorrelation": {
+        "indicatorId": "domestic-savings",
+        "title": "Domestic savings",
+        "warningLevel": "review",
+        "pearson": 0.8442965539186427,
+        "spearman": 0.7254098360655737,
+        "visualSimilarity": 0.4049586776859504,
+        "overlapCount": 121
+      },
+      "statusRecommendation": {
+        "recommendedAction": "keep_practice_eligible",
+        "recommendedEditorialStatus": "practice_eligible",
+        "reason": [
+          "Automated scorecard supports the current curated editorial status."
         ]
       }
     },
@@ -3309,7 +4528,7 @@
       "difficulty": "expert",
       "source": {
         "selectedYear": 2024,
-        "coverage": 156,
+        "coverage": 158,
         "approvalStatus": "approved"
       },
       "dataGate": {
@@ -3341,10 +4560,10 @@
         "indicatorId": "fdi-outflows",
         "title": "Foreign direct investment outflows",
         "warningLevel": "high",
-        "pearson": 0.9533063891051887,
-        "spearman": 0.18918457938816122,
-        "visualSimilarity": 0.21428571428571427,
-        "overlapCount": 140
+        "pearson": 0.9511034048625255,
+        "spearman": 0.17829530373731753,
+        "visualSimilarity": 0.18439716312056736,
+        "overlapCount": 141
       },
       "statusRecommendation": {
         "recommendedAction": "review_ambiguity",
@@ -3362,7 +4581,7 @@
       "difficulty": "expert",
       "source": {
         "selectedYear": 2024,
-        "coverage": 141,
+        "coverage": 142,
         "approvalStatus": "approved"
       },
       "dataGate": {
@@ -3394,10 +4613,10 @@
         "indicatorId": "fdi-inflows",
         "title": "Foreign direct investment inflows",
         "warningLevel": "high",
-        "pearson": 0.9533063891051887,
-        "spearman": 0.18918457938816122,
-        "visualSimilarity": 0.21428571428571427,
-        "overlapCount": 140
+        "pearson": 0.9511034048625255,
+        "spearman": 0.17829530373731753,
+        "visualSimilarity": 0.18439716312056736,
+        "overlapCount": 141
       },
       "statusRecommendation": {
         "recommendedAction": "review_ambiguity",
@@ -3733,14 +4952,14 @@
       "difficulty": "expert",
       "source": {
         "selectedYear": 2025,
-        "coverage": 12,
+        "coverage": 29,
         "approvalStatus": "draft"
       },
       "dataGate": {
         "status": "held",
         "reasons": [
-          "female-senior-management: no year in 2015:2025 met 120 mapped countries; best coverage was 90",
-          "female-senior-management: selected coverage 12 is below 120"
+          "female-senior-management: no year in 2015:2025 met 120 mapped countries; best coverage was 89",
+          "female-senior-management: selected coverage 29 is below 120"
         ]
       },
       "editorial": {
@@ -3767,8 +4986,8 @@
         "recommendedAction": "hold_for_data",
         "recommendedEditorialStatus": "needs_review",
         "reason": [
-          "female-senior-management: no year in 2015:2025 met 120 mapped countries; best coverage was 90",
-          "female-senior-management: selected coverage 12 is below 120"
+          "female-senior-management: no year in 2015:2025 met 120 mapped countries; best coverage was 89",
+          "female-senior-management: selected coverage 29 is below 120"
         ]
       }
     },
@@ -3992,14 +5211,14 @@
       "difficulty": "expert",
       "source": {
         "selectedYear": 2025,
-        "coverage": 15,
+        "coverage": 35,
         "approvalStatus": "draft"
       },
       "dataGate": {
         "status": "held",
         "reasons": [
           "female-youth-neet: no year in 2015:2025 met 120 mapped countries; best coverage was 108",
-          "female-youth-neet: selected coverage 15 is below 120"
+          "female-youth-neet: selected coverage 35 is below 120"
         ]
       },
       "editorial": {
@@ -4027,7 +5246,7 @@
         "recommendedEditorialStatus": "needs_review",
         "reason": [
           "female-youth-neet: no year in 2015:2025 met 120 mapped countries; best coverage was 108",
-          "female-youth-neet: selected coverage 15 is below 120"
+          "female-youth-neet: selected coverage 35 is below 120"
         ]
       }
     },
@@ -4138,6 +5357,112 @@
       }
     },
     {
+      "id": "final-consumption-share",
+      "providerCode": "NE.CON.TOTL.ZS",
+      "shortTitle": "Final consumption share",
+      "category": "economy",
+      "difficulty": "expert",
+      "source": {
+        "selectedYear": 2025,
+        "coverage": 122,
+        "approvalStatus": "approved"
+      },
+      "dataGate": {
+        "status": "passed",
+        "reasons": [
+          "Source data passed the coverage gate."
+        ]
+      },
+      "editorial": {
+        "currentStatus": "practice_eligible",
+        "dailyEligible": false,
+        "practiceEligible": true,
+        "challengeEligible": true,
+        "expertOnly": false,
+        "ambiguityRisk": "medium",
+        "qualityScore": 4,
+        "funScore": 3,
+        "fairnessScore": 3
+      },
+      "scores": {
+        "coverage": 3,
+        "freshness": 5,
+        "unitClarity": 4,
+        "mapInterest": 4,
+        "ambiguityCorrelation": 2,
+        "overall": 3.55
+      },
+      "topCorrelation": {
+        "indicatorId": "domestic-savings",
+        "title": "Domestic savings",
+        "warningLevel": "high",
+        "pearson": -1.0,
+        "spearman": -0.9999999999999998,
+        "visualSimilarity": 0.14754098360655737,
+        "overlapCount": 122
+      },
+      "statusRecommendation": {
+        "recommendedAction": "review_ambiguity",
+        "recommendedEditorialStatus": "practice_eligible",
+        "reason": [
+          "High correlation or visual-similarity risk; review distractor placement and Daily same-day pairing."
+        ]
+      }
+    },
+    {
+      "id": "financial-service-imports-share",
+      "providerCode": "BM.GSR.INSF.ZS",
+      "shortTitle": "Financial service imports",
+      "category": "economy",
+      "difficulty": "expert",
+      "source": {
+        "selectedYear": 2024,
+        "coverage": 138,
+        "approvalStatus": "approved"
+      },
+      "dataGate": {
+        "status": "passed",
+        "reasons": [
+          "Source data passed the coverage gate."
+        ]
+      },
+      "editorial": {
+        "currentStatus": "expert_only",
+        "dailyEligible": false,
+        "practiceEligible": true,
+        "challengeEligible": true,
+        "expertOnly": true,
+        "ambiguityRisk": "high",
+        "qualityScore": 3,
+        "funScore": 3,
+        "fairnessScore": 3
+      },
+      "scores": {
+        "coverage": 3,
+        "freshness": 5,
+        "unitClarity": 4,
+        "mapInterest": 4,
+        "ambiguityCorrelation": 2,
+        "overall": 3.55
+      },
+      "topCorrelation": {
+        "indicatorId": "water-productivity",
+        "title": "Water productivity",
+        "warningLevel": "ok",
+        "pearson": 0.43284201805739125,
+        "spearman": -0.022691055998204465,
+        "visualSimilarity": 0.1417910447761194,
+        "overlapCount": 134
+      },
+      "statusRecommendation": {
+        "recommendedAction": "review_ambiguity",
+        "recommendedEditorialStatus": "expert_only",
+        "reason": [
+          "High correlation or visual-similarity risk; review distractor placement and Daily same-day pairing."
+        ]
+      }
+    },
+    {
       "id": "fixed-broadband",
       "providerCode": "IT.NET.BBND.P2",
       "shortTitle": "Fixed broadband",
@@ -4198,7 +5523,7 @@
       "difficulty": "standard",
       "source": {
         "selectedYear": 2024,
-        "coverage": 139,
+        "coverage": 147,
         "approvalStatus": "approved"
       },
       "dataGate": {
@@ -4230,10 +5555,10 @@
         "indicatorId": "gross-capital-formation",
         "title": "Gross capital formation",
         "warningLevel": "review",
-        "pearson": 0.8525155502800974,
-        "spearman": 0.871750203772241,
-        "visualSimilarity": 0.5652173913043478,
-        "overlapCount": 138
+        "pearson": 0.857420010709523,
+        "spearman": 0.8776125834949364,
+        "visualSimilarity": 0.4745762711864407,
+        "overlapCount": 118
       },
       "statusRecommendation": {
         "recommendedAction": "review_ambiguity",
@@ -4336,10 +5661,10 @@
         "indicatorId": "household-consumption",
         "title": "Household consumption",
         "warningLevel": "ok",
-        "pearson": 0.38376303834525494,
-        "spearman": 0.521404264185013,
-        "visualSimilarity": 0.25833333333333336,
-        "overlapCount": 120
+        "pearson": 0.4312893873412799,
+        "spearman": 0.4827057805723463,
+        "visualSimilarity": 0.23529411764705882,
+        "overlapCount": 102
       },
       "statusRecommendation": {
         "recommendedAction": "keep_practice_eligible",
@@ -4386,13 +5711,13 @@
         "overall": 3.6
       },
       "topCorrelation": {
-        "indicatorId": "high-tech-exports",
-        "title": "High-tech exports",
+        "indicatorId": "electric-transmission-losses",
+        "title": "Electric transmission losses",
         "warningLevel": "ok",
-        "pearson": -0.3916404591849682,
-        "spearman": -0.5343168368585137,
-        "visualSimilarity": 0.11678832116788321,
-        "overlapCount": 137
+        "pearson": 0.5924798045695069,
+        "spearman": 0.48751996666435177,
+        "visualSimilarity": 0.21666666666666667,
+        "overlapCount": 120
       },
       "statusRecommendation": {
         "recommendedAction": "keep_practice_eligible",
@@ -4548,8 +5873,8 @@
         "indicatorId": "freshwater-per-capita",
         "title": "Freshwater per person",
         "warningLevel": "review",
-        "pearson": 0.25317562832058527,
-        "spearman": 0.6948349271557412,
+        "pearson": 0.2531680671969604,
+        "spearman": 0.6945846312897039,
         "visualSimilarity": 0.3048780487804878,
         "overlapCount": 164
       },
@@ -4558,6 +5883,59 @@
         "recommendedEditorialStatus": "daily_eligible",
         "reason": [
           "Automated scorecard supports the current curated editorial status."
+        ]
+      }
+    },
+    {
+      "id": "forest-land-co2-flux",
+      "providerCode": "EN.GHG.CO2.LU.FL.MT.CE.AR5",
+      "shortTitle": "Forest land CO2 flux",
+      "category": "environment",
+      "difficulty": "expert",
+      "source": {
+        "selectedYear": 2023,
+        "coverage": 156,
+        "approvalStatus": "approved"
+      },
+      "dataGate": {
+        "status": "passed",
+        "reasons": [
+          "Source data passed the coverage gate."
+        ]
+      },
+      "editorial": {
+        "currentStatus": "expert_only",
+        "dailyEligible": false,
+        "practiceEligible": true,
+        "challengeEligible": true,
+        "expertOnly": true,
+        "ambiguityRisk": "high",
+        "qualityScore": 4,
+        "funScore": 4,
+        "fairnessScore": 3
+      },
+      "scores": {
+        "coverage": 4,
+        "freshness": 4,
+        "unitClarity": 2,
+        "mapInterest": 4,
+        "ambiguityCorrelation": 2,
+        "overall": 3.2
+      },
+      "topCorrelation": {
+        "indicatorId": "arable-land-area",
+        "title": "Arable land area",
+        "warningLevel": "review",
+        "pearson": -0.6800793279462598,
+        "spearman": -0.2568716424141319,
+        "visualSimilarity": 0.14743589743589744,
+        "overlapCount": 156
+      },
+      "statusRecommendation": {
+        "recommendedAction": "review_for_demotion",
+        "recommendedEditorialStatus": "expert_only",
+        "reason": [
+          "Weak scorecard component; keep out of broad Daily use until manually reviewed."
         ]
       }
     },
@@ -4598,13 +5976,13 @@
         "overall": 3.65
       },
       "topCorrelation": {
-        "indicatorId": "net-forest-depletion",
-        "title": "Net forest depletion",
-        "warningLevel": "review",
-        "pearson": 0.773212041458431,
-        "spearman": 0.44118283022372135,
-        "visualSimilarity": 0.25,
-        "overlapCount": 152
+        "indicatorId": "combustible-renewables-waste",
+        "title": "Combustible renewables and waste",
+        "warningLevel": "ok",
+        "pearson": 0.7836363546139645,
+        "spearman": 0.7171867937392064,
+        "visualSimilarity": 0.38461538461538464,
+        "overlapCount": 130
       },
       "statusRecommendation": {
         "recommendedAction": "keep_needs_review",
@@ -4761,8 +6139,8 @@
         "indicatorId": "freshwater-withdrawal",
         "title": "Freshwater withdrawal",
         "warningLevel": "review",
-        "pearson": -0.057432877747762436,
-        "spearman": -0.7813606000234383,
+        "pearson": -0.05743664066719547,
+        "spearman": -0.781788351107465,
         "visualSimilarity": 0.09375,
         "overlapCount": 160
       },
@@ -4834,8 +6212,8 @@
       "category": "economy",
       "difficulty": "expert",
       "source": {
-        "selectedYear": 2024,
-        "coverage": 160,
+        "selectedYear": 2025,
+        "coverage": 157,
         "approvalStatus": "approved"
       },
       "dataGate": {
@@ -4867,10 +6245,10 @@
         "indicatorId": "gdp-per-capita-growth",
         "title": "GDP per person growth",
         "warningLevel": "high",
-        "pearson": 0.9678268221292571,
-        "spearman": 0.8472899332005155,
-        "visualSimilarity": 0.4125,
-        "overlapCount": 160
+        "pearson": 0.9258495125719092,
+        "spearman": 0.8541303590101079,
+        "visualSimilarity": 0.41721854304635764,
+        "overlapCount": 151
       },
       "statusRecommendation": {
         "recommendedAction": "review_ambiguity",
@@ -4887,8 +6265,8 @@
       "category": "development",
       "difficulty": "intro",
       "source": {
-        "selectedYear": 2024,
-        "coverage": 159,
+        "selectedYear": 2025,
+        "coverage": 157,
         "approvalStatus": "approved"
       },
       "dataGate": {
@@ -4920,10 +6298,10 @@
         "indicatorId": "gni-per-capita",
         "title": "GNI per capita",
         "warningLevel": "high",
-        "pearson": 0.9790146408894668,
-        "spearman": 0.9973310126578355,
-        "visualSimilarity": 0.8867924528301887,
-        "overlapCount": 159
+        "pearson": 0.9818958138817091,
+        "spearman": 0.9978408618557886,
+        "visualSimilarity": 0.9096774193548387,
+        "overlapCount": 155
       },
       "statusRecommendation": {
         "recommendedAction": "review_ambiguity",
@@ -4940,8 +6318,8 @@
       "category": "economy",
       "difficulty": "expert",
       "source": {
-        "selectedYear": 2024,
-        "coverage": 160,
+        "selectedYear": 2025,
+        "coverage": 151,
         "approvalStatus": "approved"
       },
       "dataGate": {
@@ -4973,10 +6351,10 @@
         "indicatorId": "gdp-growth",
         "title": "GDP growth",
         "warningLevel": "high",
-        "pearson": 0.9678268221292571,
-        "spearman": 0.8472899332005155,
-        "visualSimilarity": 0.4125,
-        "overlapCount": 160
+        "pearson": 0.9258495125719092,
+        "spearman": 0.8541303590101079,
+        "visualSimilarity": 0.41721854304635764,
+        "overlapCount": 151
       },
       "statusRecommendation": {
         "recommendedAction": "keep_retired",
@@ -5026,16 +6404,69 @@
         "indicatorId": "gni-per-capita-ppp",
         "title": "GNI per capita, PPP",
         "warningLevel": "high",
-        "pearson": 0.9850414126196095,
-        "spearman": 0.9971881737420847,
-        "visualSimilarity": 0.8980891719745223,
-        "overlapCount": 157
+        "pearson": 0.9859428842737026,
+        "spearman": 0.9978614633692197,
+        "visualSimilarity": 0.8758169934640523,
+        "overlapCount": 153
       },
       "statusRecommendation": {
         "recommendedAction": "review_ambiguity",
         "recommendedEditorialStatus": "practice_eligible",
         "reason": [
           "High correlation or visual-similarity risk; review distractor placement and Daily same-day pairing."
+        ]
+      }
+    },
+    {
+      "id": "ghg-emissions-change",
+      "providerCode": "EN.GHG.TOT.ZG.AR5",
+      "shortTitle": "Greenhouse gas emissions change",
+      "category": "environment",
+      "difficulty": "expert",
+      "source": {
+        "selectedYear": 2024,
+        "coverage": 165,
+        "approvalStatus": "approved"
+      },
+      "dataGate": {
+        "status": "passed",
+        "reasons": [
+          "Source data passed the coverage gate."
+        ]
+      },
+      "editorial": {
+        "currentStatus": "practice_eligible",
+        "dailyEligible": false,
+        "practiceEligible": true,
+        "challengeEligible": true,
+        "expertOnly": false,
+        "ambiguityRisk": "medium",
+        "qualityScore": 4,
+        "funScore": 4,
+        "fairnessScore": 3
+      },
+      "scores": {
+        "coverage": 4,
+        "freshness": 5,
+        "unitClarity": 4,
+        "mapInterest": 4,
+        "ambiguityCorrelation": 3,
+        "overall": 3.95
+      },
+      "topCorrelation": {
+        "indicatorId": "methane-emissions-change",
+        "title": "Methane emissions change",
+        "warningLevel": "high",
+        "pearson": 0.9396570627948208,
+        "spearman": 0.8371543824967275,
+        "visualSimilarity": 0.3939393939393939,
+        "overlapCount": 165
+      },
+      "statusRecommendation": {
+        "recommendedAction": "keep_practice_eligible",
+        "recommendedEditorialStatus": "practice_eligible",
+        "reason": [
+          "Automated scorecard supports the current curated editorial status."
         ]
       }
     },
@@ -5079,8 +6510,8 @@
         "indicatorId": "co2-per-capita",
         "title": "CO2 emissions per capita",
         "warningLevel": "high",
-        "pearson": 0.9586628292183192,
-        "spearman": 0.9489648171399567,
+        "pearson": 0.95866272882049,
+        "spearman": 0.9487671306066839,
         "visualSimilarity": 0.6545454545454545,
         "overlapCount": 165
       },
@@ -5146,8 +6577,8 @@
       "category": "development",
       "difficulty": "standard",
       "source": {
-        "selectedYear": 2024,
-        "coverage": 159,
+        "selectedYear": 2025,
+        "coverage": 155,
         "approvalStatus": "approved"
       },
       "dataGate": {
@@ -5179,10 +6610,10 @@
         "indicatorId": "gdp-per-capita",
         "title": "GDP per capita",
         "warningLevel": "high",
-        "pearson": 0.9790146408894668,
-        "spearman": 0.9973310126578355,
-        "visualSimilarity": 0.8867924528301887,
-        "overlapCount": 159
+        "pearson": 0.9818958138817091,
+        "spearman": 0.9978408618557886,
+        "visualSimilarity": 0.9096774193548387,
+        "overlapCount": 155
       },
       "statusRecommendation": {
         "recommendedAction": "review_ambiguity",
@@ -5199,8 +6630,8 @@
       "category": "development",
       "difficulty": "standard",
       "source": {
-        "selectedYear": 2024,
-        "coverage": 157,
+        "selectedYear": 2025,
+        "coverage": 154,
         "approvalStatus": "approved"
       },
       "dataGate": {
@@ -5232,10 +6663,10 @@
         "indicatorId": "gdp-per-capita-ppp",
         "title": "GDP per capita, PPP",
         "warningLevel": "high",
-        "pearson": 0.9850414126196095,
-        "spearman": 0.9971881737420847,
-        "visualSimilarity": 0.8980891719745223,
-        "overlapCount": 157
+        "pearson": 0.9859428842737026,
+        "spearman": 0.9978614633692197,
+        "visualSimilarity": 0.8758169934640523,
+        "overlapCount": 153
       },
       "statusRecommendation": {
         "recommendedAction": "review_ambiguity",
@@ -5252,8 +6683,8 @@
       "category": "economy",
       "difficulty": "expert",
       "source": {
-        "selectedYear": 2023,
-        "coverage": 145,
+        "selectedYear": 2025,
+        "coverage": 121,
         "approvalStatus": "approved"
       },
       "dataGate": {
@@ -5275,20 +6706,20 @@
       },
       "scores": {
         "coverage": 3,
-        "freshness": 4,
+        "freshness": 5,
         "unitClarity": 4,
         "mapInterest": 3,
         "ambiguityCorrelation": 3,
-        "overall": 3.35
+        "overall": 3.5
       },
       "topCorrelation": {
-        "indicatorId": "education-spending",
-        "title": "Education spending",
-        "warningLevel": "ok",
-        "pearson": 0.6935158054988909,
-        "spearman": 0.6710016470734317,
-        "visualSimilarity": 0.3305084745762712,
-        "overlapCount": 118
+        "indicatorId": "revenue-excluding-grants",
+        "title": "Government revenue excluding grants",
+        "warningLevel": "review",
+        "pearson": 0.640131089579239,
+        "spearman": 0.7135844028332984,
+        "visualSimilarity": 0.3673469387755102,
+        "overlapCount": 98
       },
       "statusRecommendation": {
         "recommendedAction": "keep_needs_review",
@@ -5391,9 +6822,9 @@
         "indicatorId": "revenue-excluding-grants",
         "title": "Government revenue excluding grants",
         "warningLevel": "high",
-        "pearson": 0.94747682718599,
-        "spearman": 0.949711305643509,
-        "visualSimilarity": 0.5338983050847458,
+        "pearson": 0.9476721169125485,
+        "spearman": 0.94996694896994,
+        "visualSimilarity": 0.559322033898305,
         "overlapCount": 118
       },
       "statusRecommendation": {
@@ -5441,13 +6872,13 @@
         "overall": 3.6
       },
       "topCorrelation": {
-        "indicatorId": "gni-per-capita",
-        "title": "GNI per capita",
+        "indicatorId": "gdp-per-capita",
+        "title": "GDP per capita",
         "warningLevel": "ok",
-        "pearson": 0.5775266274999363,
-        "spearman": 0.7851074826192597,
-        "visualSimilarity": 0.33974358974358976,
-        "overlapCount": 156
+        "pearson": 0.5517888279356369,
+        "spearman": 0.7884567045857368,
+        "visualSimilarity": 0.33548387096774196,
+        "overlapCount": 155
       },
       "statusRecommendation": {
         "recommendedAction": "review_ambiguity",
@@ -5464,8 +6895,8 @@
       "category": "economy",
       "difficulty": "standard",
       "source": {
-        "selectedYear": 2024,
-        "coverage": 139,
+        "selectedYear": 2025,
+        "coverage": 120,
         "approvalStatus": "approved"
       },
       "dataGate": {
@@ -5497,10 +6928,10 @@
         "indicatorId": "fixed-capital-formation",
         "title": "Fixed capital formation",
         "warningLevel": "review",
-        "pearson": 0.8525155502800974,
-        "spearman": 0.871750203772241,
-        "visualSimilarity": 0.5652173913043478,
-        "overlapCount": 138
+        "pearson": 0.857420010709523,
+        "spearman": 0.8776125834949364,
+        "visualSimilarity": 0.4745762711864407,
+        "overlapCount": 118
       },
       "statusRecommendation": {
         "recommendedAction": "keep_needs_review",
@@ -5518,7 +6949,7 @@
       "difficulty": "standard",
       "source": {
         "selectedYear": 2024,
-        "coverage": 122,
+        "coverage": 131,
         "approvalStatus": "approved"
       },
       "dataGate": {
@@ -5550,10 +6981,10 @@
         "indicatorId": "domestic-savings",
         "title": "Domestic savings",
         "warningLevel": "review",
-        "pearson": 0.7954689055229609,
-        "spearman": 0.7613252219773247,
-        "visualSimilarity": 0.45901639344262296,
-        "overlapCount": 122
+        "pearson": 0.6593727519531196,
+        "spearman": 0.723788342136966,
+        "visualSimilarity": 0.45871559633027525,
+        "overlapCount": 109
       },
       "statusRecommendation": {
         "recommendedAction": "review_ambiguity",
@@ -5656,10 +7087,10 @@
         "indicatorId": "gni-per-capita",
         "title": "GNI per capita",
         "warningLevel": "high",
-        "pearson": 0.9325003764944729,
-        "spearman": 0.9695119542013846,
-        "visualSimilarity": 0.6602564102564102,
-        "overlapCount": 156
+        "pearson": 0.9468162798974178,
+        "spearman": 0.9694053630298578,
+        "visualSimilarity": 0.6797385620915033,
+        "overlapCount": 153
       },
       "statusRecommendation": {
         "recommendedAction": "review_ambiguity",
@@ -5776,6 +7207,59 @@
       }
     },
     {
+      "id": "hiv-incidence",
+      "providerCode": "SH.HIV.INCD.ZS",
+      "shortTitle": "HIV incidence",
+      "category": "health",
+      "difficulty": "expert",
+      "source": {
+        "selectedYear": 2024,
+        "coverage": 126,
+        "approvalStatus": "approved"
+      },
+      "dataGate": {
+        "status": "passed",
+        "reasons": [
+          "Source data passed the coverage gate."
+        ]
+      },
+      "editorial": {
+        "currentStatus": "expert_only",
+        "dailyEligible": false,
+        "practiceEligible": true,
+        "challengeEligible": true,
+        "expertOnly": true,
+        "ambiguityRisk": "medium",
+        "qualityScore": 4,
+        "funScore": 4,
+        "fairnessScore": 3
+      },
+      "scores": {
+        "coverage": 3,
+        "freshness": 5,
+        "unitClarity": 5,
+        "mapInterest": 4,
+        "ambiguityCorrelation": 3,
+        "overall": 3.95
+      },
+      "topCorrelation": {
+        "indicatorId": "adult-mortality-male",
+        "title": "Male adult mortality",
+        "warningLevel": "review",
+        "pearson": 0.48258016764529815,
+        "spearman": 0.6715062190700364,
+        "visualSimilarity": 0.2905982905982906,
+        "overlapCount": 117
+      },
+      "statusRecommendation": {
+        "recommendedAction": "keep_expert_only",
+        "recommendedEditorialStatus": "expert_only",
+        "reason": [
+          "Automated scorecard supports the current curated editorial status."
+        ]
+      }
+    },
+    {
       "id": "hospital-beds",
       "providerCode": "SH.MED.BEDS.ZS",
       "shortTitle": "Hospital beds",
@@ -5835,8 +7319,8 @@
       "category": "economy",
       "difficulty": "standard",
       "source": {
-        "selectedYear": 2023,
-        "coverage": 144,
+        "selectedYear": 2025,
+        "coverage": 120,
         "approvalStatus": "approved"
       },
       "dataGate": {
@@ -5858,26 +7342,132 @@
       },
       "scores": {
         "coverage": 3,
-        "freshness": 4,
+        "freshness": 5,
         "unitClarity": 4,
         "mapInterest": 3,
         "ambiguityCorrelation": 3,
-        "overall": 3.35
+        "overall": 3.5
       },
       "topCorrelation": {
         "indicatorId": "domestic-savings",
         "title": "Domestic savings",
-        "warningLevel": "review",
-        "pearson": -0.8508531303808571,
-        "spearman": -0.8884275365029489,
-        "visualSimilarity": 0.04477611940298507,
-        "overlapCount": 134
+        "warningLevel": "high",
+        "pearson": -0.9140683162858744,
+        "spearman": -0.8935134384332247,
+        "visualSimilarity": 0.11666666666666667,
+        "overlapCount": 120
       },
       "statusRecommendation": {
         "recommendedAction": "keep_needs_review",
         "recommendedEditorialStatus": "needs_review",
         "reason": [
           "Curated editorial status still requires human review before play."
+        ]
+      }
+    },
+    {
+      "id": "human-capital-education-index",
+      "providerCode": "HD_HCIP_EDUC_TO",
+      "shortTitle": "Human capital education index",
+      "category": "education",
+      "difficulty": "expert",
+      "source": {
+        "selectedYear": 2025,
+        "coverage": 145,
+        "approvalStatus": "approved"
+      },
+      "dataGate": {
+        "status": "passed",
+        "reasons": [
+          "Source data passed the coverage gate."
+        ]
+      },
+      "editorial": {
+        "currentStatus": "practice_eligible",
+        "dailyEligible": false,
+        "practiceEligible": true,
+        "challengeEligible": true,
+        "expertOnly": false,
+        "ambiguityRisk": "medium",
+        "qualityScore": 4,
+        "funScore": 4,
+        "fairnessScore": 3
+      },
+      "scores": {
+        "coverage": 3,
+        "freshness": 5,
+        "unitClarity": 3,
+        "mapInterest": 4,
+        "ambiguityCorrelation": 2,
+        "overall": 3.35
+      },
+      "topCorrelation": {
+        "indicatorId": "human-capital-index",
+        "title": "Human Capital Index",
+        "warningLevel": "high",
+        "pearson": 0.978247220411914,
+        "spearman": 0.978770642503037,
+        "visualSimilarity": 0.6433566433566433,
+        "overlapCount": 143
+      },
+      "statusRecommendation": {
+        "recommendedAction": "review_ambiguity",
+        "recommendedEditorialStatus": "practice_eligible",
+        "reason": [
+          "High correlation or visual-similarity risk; review distractor placement and Daily same-day pairing."
+        ]
+      }
+    },
+    {
+      "id": "human-capital-index",
+      "providerCode": "HD_HCIP_OVRL_TO",
+      "shortTitle": "Human Capital Index",
+      "category": "development",
+      "difficulty": "standard",
+      "source": {
+        "selectedYear": 2025,
+        "coverage": 143,
+        "approvalStatus": "approved"
+      },
+      "dataGate": {
+        "status": "passed",
+        "reasons": [
+          "Source data passed the coverage gate."
+        ]
+      },
+      "editorial": {
+        "currentStatus": "daily_eligible",
+        "dailyEligible": true,
+        "practiceEligible": true,
+        "challengeEligible": true,
+        "expertOnly": false,
+        "ambiguityRisk": "medium",
+        "qualityScore": 4,
+        "funScore": 4,
+        "fairnessScore": 4
+      },
+      "scores": {
+        "coverage": 3,
+        "freshness": 5,
+        "unitClarity": 3,
+        "mapInterest": 4,
+        "ambiguityCorrelation": 2,
+        "overall": 3.35
+      },
+      "topCorrelation": {
+        "indicatorId": "human-capital-education-index",
+        "title": "Human capital education index",
+        "warningLevel": "high",
+        "pearson": 0.978247220411914,
+        "spearman": 0.978770642503037,
+        "visualSimilarity": 0.6433566433566433,
+        "overlapCount": 143
+      },
+      "statusRecommendation": {
+        "recommendedAction": "review_ambiguity",
+        "recommendedEditorialStatus": "daily_eligible",
+        "reason": [
+          "High correlation or visual-similarity risk; review distractor placement and Daily same-day pairing."
         ]
       }
     },
@@ -5942,7 +7532,7 @@
       "difficulty": "expert",
       "source": {
         "selectedYear": 2024,
-        "coverage": 135,
+        "coverage": 137,
         "approvalStatus": "approved"
       },
       "dataGate": {
@@ -5974,10 +7564,10 @@
         "indicatorId": "communications-service-exports",
         "title": "Communications service exports",
         "warningLevel": "review",
-        "pearson": 0.6164837309080915,
-        "spearman": 0.6185981855428738,
-        "visualSimilarity": 0.2518518518518518,
-        "overlapCount": 135
+        "pearson": 0.6146068497865961,
+        "spearman": 0.6201999365280864,
+        "visualSimilarity": 0.23357664233576642,
+        "overlapCount": 137
       },
       "statusRecommendation": {
         "recommendedAction": "keep_practice_eligible",
@@ -5988,14 +7578,67 @@
       }
     },
     {
+      "id": "imports-high-income-share",
+      "providerCode": "TM.VAL.MRCH.HI.ZS",
+      "shortTitle": "Imports from high-income economies",
+      "category": "economy",
+      "difficulty": "expert",
+      "source": {
+        "selectedYear": 2023,
+        "coverage": 168,
+        "approvalStatus": "approved"
+      },
+      "dataGate": {
+        "status": "passed",
+        "reasons": [
+          "Source data passed the coverage gate."
+        ]
+      },
+      "editorial": {
+        "currentStatus": "expert_only",
+        "dailyEligible": false,
+        "practiceEligible": true,
+        "challengeEligible": true,
+        "expertOnly": true,
+        "ambiguityRisk": "high",
+        "qualityScore": 3,
+        "funScore": 3,
+        "fairnessScore": 3
+      },
+      "scores": {
+        "coverage": 4,
+        "freshness": 4,
+        "unitClarity": 4,
+        "mapInterest": 4,
+        "ambiguityCorrelation": 2,
+        "overall": 3.6
+      },
+      "topCorrelation": {
+        "indicatorId": "imports-within-region-share",
+        "title": "Imports within region",
+        "warningLevel": "review",
+        "pearson": -0.7232800037307271,
+        "spearman": -0.6911097848115378,
+        "visualSimilarity": 0.08433734939759036,
+        "overlapCount": 166
+      },
+      "statusRecommendation": {
+        "recommendedAction": "review_ambiguity",
+        "recommendedEditorialStatus": "expert_only",
+        "reason": [
+          "High correlation or visual-similarity risk; review distractor placement and Daily same-day pairing."
+        ]
+      }
+    },
+    {
       "id": "imports-share",
       "providerCode": "NE.IMP.GNFS.ZS",
       "shortTitle": "Imports",
       "category": "economy",
       "difficulty": "standard",
       "source": {
-        "selectedYear": 2024,
-        "coverage": 141,
+        "selectedYear": 2025,
+        "coverage": 124,
         "approvalStatus": "approved"
       },
       "dataGate": {
@@ -6027,16 +7670,122 @@
         "indicatorId": "trade-share",
         "title": "Trade",
         "warningLevel": "high",
-        "pearson": 0.9534101436301039,
-        "spearman": 0.9538721691853247,
-        "visualSimilarity": 0.6028368794326241,
-        "overlapCount": 141
+        "pearson": 0.9582253293304949,
+        "spearman": 0.9621274586939416,
+        "visualSimilarity": 0.6532258064516129,
+        "overlapCount": 124
       },
       "statusRecommendation": {
         "recommendedAction": "review_ambiguity",
         "recommendedEditorialStatus": "expert_only",
         "reason": [
           "High correlation or visual-similarity risk; review distractor placement and Daily same-day pairing."
+        ]
+      }
+    },
+    {
+      "id": "imports-within-region-share",
+      "providerCode": "TM.VAL.MRCH.WR.ZS",
+      "shortTitle": "Imports within region",
+      "category": "economy",
+      "difficulty": "expert",
+      "source": {
+        "selectedYear": 2023,
+        "coverage": 166,
+        "approvalStatus": "approved"
+      },
+      "dataGate": {
+        "status": "passed",
+        "reasons": [
+          "Source data passed the coverage gate."
+        ]
+      },
+      "editorial": {
+        "currentStatus": "practice_eligible",
+        "dailyEligible": false,
+        "practiceEligible": true,
+        "challengeEligible": true,
+        "expertOnly": false,
+        "ambiguityRisk": "medium",
+        "qualityScore": 4,
+        "funScore": 4,
+        "fairnessScore": 3
+      },
+      "scores": {
+        "coverage": 4,
+        "freshness": 4,
+        "unitClarity": 4,
+        "mapInterest": 4,
+        "ambiguityCorrelation": 3,
+        "overall": 3.8
+      },
+      "topCorrelation": {
+        "indicatorId": "exports-within-region-share",
+        "title": "Exports within region",
+        "warningLevel": "review",
+        "pearson": 0.6893983518543544,
+        "spearman": 0.7266942566127328,
+        "visualSimilarity": 0.42771084337349397,
+        "overlapCount": 166
+      },
+      "statusRecommendation": {
+        "recommendedAction": "keep_practice_eligible",
+        "recommendedEditorialStatus": "practice_eligible",
+        "reason": [
+          "Automated scorecard supports the current curated editorial status."
+        ]
+      }
+    },
+    {
+      "id": "income-tax-share",
+      "providerCode": "GC.TAX.YPKG.ZS",
+      "shortTitle": "Income tax share",
+      "category": "economy",
+      "difficulty": "expert",
+      "source": {
+        "selectedYear": 2017,
+        "coverage": 122,
+        "approvalStatus": "approved"
+      },
+      "dataGate": {
+        "status": "passed",
+        "reasons": [
+          "Source data passed the coverage gate."
+        ]
+      },
+      "editorial": {
+        "currentStatus": "expert_only",
+        "dailyEligible": false,
+        "practiceEligible": true,
+        "challengeEligible": true,
+        "expertOnly": true,
+        "ambiguityRisk": "high",
+        "qualityScore": 3,
+        "funScore": 3,
+        "fairnessScore": 3
+      },
+      "scores": {
+        "coverage": 3,
+        "freshness": 1,
+        "unitClarity": 4,
+        "mapInterest": 4,
+        "ambiguityCorrelation": 2,
+        "overall": 2.95
+      },
+      "topCorrelation": {
+        "indicatorId": "lpi-tracking",
+        "title": "Logistics tracking score",
+        "warningLevel": "ok",
+        "pearson": 0.4286203549400852,
+        "spearman": 0.4306841847885222,
+        "visualSimilarity": 0.22,
+        "overlapCount": 100
+      },
+      "statusRecommendation": {
+        "recommendedAction": "review_for_demotion",
+        "recommendedEditorialStatus": "expert_only",
+        "reason": [
+          "Weak scorecard component; keep out of broad Daily use until manually reviewed."
         ]
       }
     },
@@ -6100,8 +7849,8 @@
       "category": "economy",
       "difficulty": "standard",
       "source": {
-        "selectedYear": 2024,
-        "coverage": 149,
+        "selectedYear": 2025,
+        "coverage": 139,
         "approvalStatus": "approved"
       },
       "dataGate": {
@@ -6133,10 +7882,10 @@
         "indicatorId": "natural-resource-rents",
         "title": "Natural resource rents",
         "warningLevel": "review",
-        "pearson": 0.6294511556301379,
-        "spearman": 0.46524635361938826,
-        "visualSimilarity": 0.22602739726027396,
-        "overlapCount": 146
+        "pearson": 0.6543598842409846,
+        "spearman": 0.45832788843877764,
+        "visualSimilarity": 0.24087591240875914,
+        "overlapCount": 137
       },
       "statusRecommendation": {
         "recommendedAction": "keep_daily_eligible",
@@ -6206,8 +7955,8 @@
       "category": "economy",
       "difficulty": "expert",
       "source": {
-        "selectedYear": 2024,
-        "coverage": 151,
+        "selectedYear": 2025,
+        "coverage": 143,
         "approvalStatus": "approved"
       },
       "dataGate": {
@@ -6228,21 +7977,21 @@
         "fairnessScore": 3
       },
       "scores": {
-        "coverage": 4,
+        "coverage": 3,
         "freshness": 5,
         "unitClarity": 3,
         "mapInterest": 4,
         "ambiguityCorrelation": 3,
-        "overall": 3.75
+        "overall": 3.55
       },
       "topCorrelation": {
-        "indicatorId": "agriculture-value-added",
-        "title": "Agriculture value added",
-        "warningLevel": "review",
-        "pearson": 0.11484659976351429,
-        "spearman": 0.45754099062459863,
-        "visualSimilarity": 0.15602836879432624,
-        "overlapCount": 141
+        "indicatorId": "severe-food-insecurity",
+        "title": "Severe food insecurity",
+        "warningLevel": "ok",
+        "pearson": 0.392011770386228,
+        "spearman": 0.185949253441529,
+        "visualSimilarity": 0.16071428571428573,
+        "overlapCount": 112
       },
       "statusRecommendation": {
         "recommendedAction": "keep_expert_only",
@@ -6688,8 +8437,8 @@
         "indicatorId": "cereal-production",
         "title": "Cereal production",
         "warningLevel": "ok",
-        "pearson": -0.31044035295665373,
-        "spearman": -0.49454906214254246,
+        "pearson": -0.3093567410263555,
+        "spearman": -0.4947045388080863,
         "visualSimilarity": 0.11486486486486487,
         "overlapCount": 148
       },
@@ -7810,7 +9559,7 @@
       "difficulty": "standard",
       "source": {
         "selectedYear": 2024,
-        "coverage": 141,
+        "coverage": 147,
         "approvalStatus": "approved"
       },
       "dataGate": {
@@ -7842,10 +9591,10 @@
         "indicatorId": "female-industry-employment",
         "title": "Female industry employment",
         "warningLevel": "ok",
-        "pearson": 0.39320087881681426,
-        "spearman": 0.4885701165511361,
-        "visualSimilarity": 0.3142857142857143,
-        "overlapCount": 140
+        "pearson": 0.39489178232217836,
+        "spearman": 0.47022122500393637,
+        "visualSimilarity": 0.30344827586206896,
+        "overlapCount": 145
       },
       "statusRecommendation": {
         "recommendedAction": "keep_daily_eligible",
@@ -7962,6 +9711,112 @@
       }
     },
     {
+      "id": "merchandise-trade-share",
+      "providerCode": "TG.VAL.TOTL.GD.ZS",
+      "shortTitle": "Merchandise trade share",
+      "category": "economy",
+      "difficulty": "standard",
+      "source": {
+        "selectedYear": 2025,
+        "coverage": 161,
+        "approvalStatus": "approved"
+      },
+      "dataGate": {
+        "status": "passed",
+        "reasons": [
+          "Source data passed the coverage gate."
+        ]
+      },
+      "editorial": {
+        "currentStatus": "daily_eligible",
+        "dailyEligible": true,
+        "practiceEligible": true,
+        "challengeEligible": true,
+        "expertOnly": false,
+        "ambiguityRisk": "medium",
+        "qualityScore": 4,
+        "funScore": 4,
+        "fairnessScore": 4
+      },
+      "scores": {
+        "coverage": 4,
+        "freshness": 5,
+        "unitClarity": 4,
+        "mapInterest": 4,
+        "ambiguityCorrelation": 3,
+        "overall": 3.95
+      },
+      "topCorrelation": {
+        "indicatorId": "trade-share",
+        "title": "Trade",
+        "warningLevel": "review",
+        "pearson": 0.6822673996520429,
+        "spearman": 0.8960349744399759,
+        "visualSimilarity": 0.5409836065573771,
+        "overlapCount": 122
+      },
+      "statusRecommendation": {
+        "recommendedAction": "keep_daily_eligible",
+        "recommendedEditorialStatus": "daily_eligible",
+        "reason": [
+          "Automated scorecard supports the current curated editorial status."
+        ]
+      }
+    },
+    {
+      "id": "methane-emissions-change",
+      "providerCode": "EN.GHG.CH4.ZG.AR5",
+      "shortTitle": "Methane emissions change",
+      "category": "environment",
+      "difficulty": "expert",
+      "source": {
+        "selectedYear": 2024,
+        "coverage": 165,
+        "approvalStatus": "approved"
+      },
+      "dataGate": {
+        "status": "passed",
+        "reasons": [
+          "Source data passed the coverage gate."
+        ]
+      },
+      "editorial": {
+        "currentStatus": "expert_only",
+        "dailyEligible": false,
+        "practiceEligible": true,
+        "challengeEligible": true,
+        "expertOnly": true,
+        "ambiguityRisk": "medium",
+        "qualityScore": 4,
+        "funScore": 4,
+        "fairnessScore": 3
+      },
+      "scores": {
+        "coverage": 4,
+        "freshness": 5,
+        "unitClarity": 4,
+        "mapInterest": 4,
+        "ambiguityCorrelation": 3,
+        "overall": 3.95
+      },
+      "topCorrelation": {
+        "indicatorId": "ghg-emissions-change",
+        "title": "Greenhouse gas emissions change",
+        "warningLevel": "high",
+        "pearson": 0.9396570627948208,
+        "spearman": 0.8371543824967275,
+        "visualSimilarity": 0.3939393939393939,
+        "overlapCount": 165
+      },
+      "statusRecommendation": {
+        "recommendedAction": "keep_expert_only",
+        "recommendedEditorialStatus": "expert_only",
+        "reason": [
+          "Automated scorecard supports the current curated editorial status."
+        ]
+      }
+    },
+    {
       "id": "migrant-stock",
       "providerCode": "SM.POP.TOTL.ZS",
       "shortTitle": "International migrant stock",
@@ -7998,13 +9853,13 @@
         "overall": 4.2
       },
       "topCorrelation": {
-        "indicatorId": "co2-per-capita",
-        "title": "CO2 emissions per capita",
-        "warningLevel": "review",
-        "pearson": 0.7285740539732549,
-        "spearman": 0.6010599207936547,
-        "visualSimilarity": 0.2727272727272727,
-        "overlapCount": 165
+        "indicatorId": "gni-per-capita-ppp",
+        "title": "GNI per capita, PPP",
+        "warningLevel": "ok",
+        "pearson": 0.7299131708740288,
+        "spearman": 0.6947583147050839,
+        "visualSimilarity": 0.33116883116883117,
+        "overlapCount": 154
       },
       "statusRecommendation": {
         "recommendedAction": "keep_daily_eligible",
@@ -8064,6 +9919,112 @@
         "recommendedEditorialStatus": "expert_only",
         "reason": [
           "Automated scorecard supports the current curated editorial status."
+        ]
+      }
+    },
+    {
+      "id": "mineral-depletion-share",
+      "providerCode": "NY.ADJ.DMIN.GN.ZS",
+      "shortTitle": "Mineral depletion share",
+      "category": "economy",
+      "difficulty": "expert",
+      "source": {
+        "selectedYear": 2021,
+        "coverage": 156,
+        "approvalStatus": "approved"
+      },
+      "dataGate": {
+        "status": "passed",
+        "reasons": [
+          "Source data passed the coverage gate."
+        ]
+      },
+      "editorial": {
+        "currentStatus": "expert_only",
+        "dailyEligible": false,
+        "practiceEligible": true,
+        "challengeEligible": true,
+        "expertOnly": true,
+        "ambiguityRisk": "high",
+        "qualityScore": 3,
+        "funScore": 4,
+        "fairnessScore": 3
+      },
+      "scores": {
+        "coverage": 4,
+        "freshness": 3,
+        "unitClarity": 4,
+        "mapInterest": 4,
+        "ambiguityCorrelation": 2,
+        "overall": 3.45
+      },
+      "topCorrelation": {
+        "indicatorId": "mineral-rents",
+        "title": "Mineral rents",
+        "warningLevel": "high",
+        "pearson": 0.9737921481884576,
+        "spearman": 0.998283396026444,
+        "visualSimilarity": 0.9487179487179487,
+        "overlapCount": 156
+      },
+      "statusRecommendation": {
+        "recommendedAction": "review_ambiguity",
+        "recommendedEditorialStatus": "expert_only",
+        "reason": [
+          "High correlation or visual-similarity risk; review distractor placement and Daily same-day pairing."
+        ]
+      }
+    },
+    {
+      "id": "mineral-rents",
+      "providerCode": "NY.GDP.MINR.RT.ZS",
+      "shortTitle": "Mineral rents",
+      "category": "economy",
+      "difficulty": "expert",
+      "source": {
+        "selectedYear": 2021,
+        "coverage": 159,
+        "approvalStatus": "approved"
+      },
+      "dataGate": {
+        "status": "passed",
+        "reasons": [
+          "Source data passed the coverage gate."
+        ]
+      },
+      "editorial": {
+        "currentStatus": "expert_only",
+        "dailyEligible": false,
+        "practiceEligible": true,
+        "challengeEligible": true,
+        "expertOnly": true,
+        "ambiguityRisk": "high",
+        "qualityScore": 4,
+        "funScore": 4,
+        "fairnessScore": 3
+      },
+      "scores": {
+        "coverage": 4,
+        "freshness": 3,
+        "unitClarity": 4,
+        "mapInterest": 4,
+        "ambiguityCorrelation": 2,
+        "overall": 3.45
+      },
+      "topCorrelation": {
+        "indicatorId": "mineral-depletion-share",
+        "title": "Mineral depletion share",
+        "warningLevel": "high",
+        "pearson": 0.9737921481884576,
+        "spearman": 0.998283396026444,
+        "visualSimilarity": 0.9487179487179487,
+        "overlapCount": 156
+      },
+      "statusRecommendation": {
+        "recommendedAction": "review_ambiguity",
+        "recommendedEditorialStatus": "expert_only",
+        "reason": [
+          "High correlation or visual-similarity risk; review distractor placement and Daily same-day pairing."
         ]
       }
     },
@@ -8321,6 +10282,59 @@
       "statusRecommendation": {
         "recommendedAction": "keep_practice_eligible",
         "recommendedEditorialStatus": "practice_eligible",
+        "reason": [
+          "Automated scorecard supports the current curated editorial status."
+        ]
+      }
+    },
+    {
+      "id": "ncd-premature-mortality",
+      "providerCode": "SH.DYN.NCOM.ZS",
+      "shortTitle": "NCD premature mortality",
+      "category": "health",
+      "difficulty": "standard",
+      "source": {
+        "selectedYear": 2021,
+        "coverage": 167,
+        "approvalStatus": "approved"
+      },
+      "dataGate": {
+        "status": "passed",
+        "reasons": [
+          "Source data passed the coverage gate."
+        ]
+      },
+      "editorial": {
+        "currentStatus": "daily_eligible",
+        "dailyEligible": true,
+        "practiceEligible": true,
+        "challengeEligible": true,
+        "expertOnly": false,
+        "ambiguityRisk": "medium",
+        "qualityScore": 4,
+        "funScore": 4,
+        "fairnessScore": 4
+      },
+      "scores": {
+        "coverage": 4,
+        "freshness": 3,
+        "unitClarity": 4,
+        "mapInterest": 4,
+        "ambiguityCorrelation": 3,
+        "overall": 3.65
+      },
+      "topCorrelation": {
+        "indicatorId": "life-expectancy",
+        "title": "Life expectancy",
+        "warningLevel": "review",
+        "pearson": -0.7543664012590001,
+        "spearman": -0.8167234521150328,
+        "visualSimilarity": 0.04790419161676647,
+        "overlapCount": 167
+      },
+      "statusRecommendation": {
+        "recommendedAction": "keep_daily_eligible",
+        "recommendedEditorialStatus": "daily_eligible",
         "reason": [
           "Automated scorecard supports the current curated editorial status."
         ]
@@ -8692,6 +10706,59 @@
       }
     },
     {
+      "id": "nonperforming-loans",
+      "providerCode": "FB.AST.NPER.ZS",
+      "shortTitle": "Nonperforming loans",
+      "category": "economy",
+      "difficulty": "expert",
+      "source": {
+        "selectedYear": 2023,
+        "coverage": 120,
+        "approvalStatus": "approved"
+      },
+      "dataGate": {
+        "status": "passed",
+        "reasons": [
+          "Source data passed the coverage gate."
+        ]
+      },
+      "editorial": {
+        "currentStatus": "expert_only",
+        "dailyEligible": false,
+        "practiceEligible": true,
+        "challengeEligible": true,
+        "expertOnly": true,
+        "ambiguityRisk": "high",
+        "qualityScore": 3,
+        "funScore": 4,
+        "fairnessScore": 3
+      },
+      "scores": {
+        "coverage": 3,
+        "freshness": 4,
+        "unitClarity": 3,
+        "mapInterest": 4,
+        "ambiguityCorrelation": 2,
+        "overall": 3.2
+      },
+      "topCorrelation": {
+        "indicatorId": "gni-per-capita",
+        "title": "GNI per capita",
+        "warningLevel": "ok",
+        "pearson": -0.3645571908812182,
+        "spearman": -0.6921057052540878,
+        "visualSimilarity": 0.1016949152542373,
+        "overlapCount": 118
+      },
+      "statusRecommendation": {
+        "recommendedAction": "review_ambiguity",
+        "recommendedEditorialStatus": "expert_only",
+        "reason": [
+          "High correlation or visual-similarity risk; review distractor placement and Daily same-day pairing."
+        ]
+      }
+    },
+    {
       "id": "nuclear-electricity-share",
       "providerCode": "EG.ELC.NUCL.ZS",
       "shortTitle": "Nuclear electricity share",
@@ -8728,13 +10795,13 @@
         "overall": 3.15
       },
       "topCorrelation": {
-        "indicatorId": "tourism-arrivals",
-        "title": "Tourism arrivals",
+        "indicatorId": "young-adult-account-ownership",
+        "title": "Young-adult account ownership",
         "warningLevel": "ok",
-        "pearson": 0.4207769189639121,
-        "spearman": 0.5140011782279481,
-        "visualSimilarity": 0.22302158273381295,
-        "overlapCount": 139
+        "pearson": 0.44528855145686425,
+        "spearman": 0.514992590003347,
+        "visualSimilarity": 0.22727272727272727,
+        "overlapCount": 132
       },
       "statusRecommendation": {
         "recommendedAction": "keep_needs_review",
@@ -8781,13 +10848,13 @@
         "overall": 3.7
       },
       "topCorrelation": {
-        "indicatorId": "health-spending-per-person",
-        "title": "Health spending per person",
-        "warningLevel": "review",
-        "pearson": 0.8312620859858975,
-        "spearman": 0.8639331891494281,
-        "visualSimilarity": 0.4105960264900662,
-        "overlapCount": 151
+        "indicatorId": "human-capital-education-index",
+        "title": "Human capital education index",
+        "warningLevel": "ok",
+        "pearson": 0.7946456052860644,
+        "spearman": 0.88065664962955,
+        "visualSimilarity": 0.5147058823529411,
+        "overlapCount": 136
       },
       "statusRecommendation": {
         "recommendedAction": "keep_needs_review",
@@ -8857,7 +10924,7 @@
       "category": "demography",
       "difficulty": "intro",
       "source": {
-        "selectedYear": 2024,
+        "selectedYear": 2025,
         "coverage": 169,
         "approvalStatus": "approved"
       },
@@ -8890,9 +10957,9 @@
         "indicatorId": "birth-rate",
         "title": "Birth rate",
         "warningLevel": "high",
-        "pearson": -0.8077198466044255,
-        "spearman": -0.9029980763228376,
-        "visualSimilarity": 0.07692307692307693,
+        "pearson": -0.8122035640480229,
+        "spearman": -0.9048453413202917,
+        "visualSimilarity": 0.07100591715976332,
         "overlapCount": 169
       },
       "statusRecommendation": {
@@ -9162,14 +11229,14 @@
       "difficulty": "expert",
       "source": {
         "selectedYear": 2025,
-        "coverage": 17,
+        "coverage": 32,
         "approvalStatus": "draft"
       },
       "dataGate": {
         "status": "held",
         "reasons": [
-          "part-time-employment: no year in 2015:2025 met 120 mapped countries; best coverage was 113",
-          "part-time-employment: selected coverage 17 is below 120"
+          "part-time-employment: no year in 2015:2025 met 120 mapped countries; best coverage was 106",
+          "part-time-employment: selected coverage 32 is below 120"
         ]
       },
       "editorial": {
@@ -9196,8 +11263,8 @@
         "recommendedAction": "hold_for_data",
         "recommendedEditorialStatus": "needs_review",
         "reason": [
-          "part-time-employment: no year in 2015:2025 met 120 mapped countries; best coverage was 113",
-          "part-time-employment: selected coverage 17 is below 120"
+          "part-time-employment: no year in 2015:2025 met 120 mapped countries; best coverage was 106",
+          "part-time-employment: selected coverage 32 is below 120"
         ]
       }
     },
@@ -9209,14 +11276,14 @@
       "difficulty": "expert",
       "source": {
         "selectedYear": 2025,
-        "coverage": 17,
+        "coverage": 32,
         "approvalStatus": "draft"
       },
       "dataGate": {
         "status": "held",
         "reasons": [
-          "part-time-employment-female: no year in 2015:2025 met 120 mapped countries; best coverage was 113",
-          "part-time-employment-female: selected coverage 17 is below 120"
+          "part-time-employment-female: no year in 2015:2025 met 120 mapped countries; best coverage was 106",
+          "part-time-employment-female: selected coverage 32 is below 120"
         ]
       },
       "editorial": {
@@ -9243,8 +11310,8 @@
         "recommendedAction": "hold_for_data",
         "recommendedEditorialStatus": "needs_review",
         "reason": [
-          "part-time-employment-female: no year in 2015:2025 met 120 mapped countries; best coverage was 113",
-          "part-time-employment-female: selected coverage 17 is below 120"
+          "part-time-employment-female: no year in 2015:2025 met 120 mapped countries; best coverage was 106",
+          "part-time-employment-female: selected coverage 32 is below 120"
         ]
       }
     },
@@ -9288,10 +11355,10 @@
         "indicatorId": "gni-per-capita",
         "title": "GNI per capita",
         "warningLevel": "high",
-        "pearson": -0.44772986951364413,
-        "spearman": -0.9380640298861572,
-        "visualSimilarity": 0.06802721088435375,
-        "overlapCount": 147
+        "pearson": -0.4483800619507111,
+        "spearman": -0.9381139583961405,
+        "visualSimilarity": 0.04794520547945205,
+        "overlapCount": 146
       },
       "statusRecommendation": {
         "recommendedAction": "keep_needs_review",
@@ -9341,8 +11408,8 @@
         "indicatorId": "population-density",
         "title": "Population density",
         "warningLevel": "ok",
-        "pearson": 0.3958636868576013,
-        "spearman": 0.6495614622733878,
+        "pearson": 0.39593420224679193,
+        "spearman": 0.6496439135498366,
         "visualSimilarity": 0.30538922155688625,
         "overlapCount": 167
       },
@@ -9459,7 +11526,7 @@
       "category": "environment",
       "difficulty": "standard",
       "source": {
-        "selectedYear": 2020,
+        "selectedYear": 2023,
         "coverage": 168,
         "approvalStatus": "approved"
       },
@@ -9482,19 +11549,19 @@
       },
       "scores": {
         "coverage": 4,
-        "freshness": 3,
+        "freshness": 4,
         "unitClarity": 4,
         "mapInterest": 5,
         "ambiguityCorrelation": 5,
-        "overall": 4.3
+        "overall": 4.45
       },
       "topCorrelation": {
         "indicatorId": "pm25-guideline-exposure",
         "title": "Population above PM2.5 guideline",
         "warningLevel": "review",
-        "pearson": 0.4519055753701395,
-        "spearman": 0.7761258628734833,
-        "visualSimilarity": 0.2916666666666667,
+        "pearson": 0.4061487532649523,
+        "spearman": 0.6908309618595108,
+        "visualSimilarity": 0.23214285714285715,
         "overlapCount": 168
       },
       "statusRecommendation": {
@@ -9542,13 +11609,13 @@
         "overall": 3.35
       },
       "topCorrelation": {
-        "indicatorId": "pm25-exposure",
-        "title": "PM2.5 exposure",
+        "indicatorId": "particulate-damage-share",
+        "title": "Particulate emission damage",
         "warningLevel": "review",
-        "pearson": 0.4519055753701395,
-        "spearman": 0.7761258628734833,
-        "visualSimilarity": 0.2916666666666667,
-        "overlapCount": 168
+        "pearson": 0.2986523159513066,
+        "spearman": 0.7163470523919293,
+        "visualSimilarity": 0.26174496644295303,
+        "overlapCount": 149
       },
       "statusRecommendation": {
         "recommendedAction": "keep_needs_review",
@@ -9598,8 +11665,8 @@
         "indicatorId": "permanent-cropland",
         "title": "Permanent cropland",
         "warningLevel": "ok",
-        "pearson": 0.3958636868576013,
-        "spearman": 0.6495614622733878,
+        "pearson": 0.39593420224679193,
+        "spearman": 0.6496439135498366,
         "visualSimilarity": 0.30538922155688625,
         "overlapCount": 167
       },
@@ -9618,7 +11685,7 @@
       "category": "demography",
       "difficulty": "standard",
       "source": {
-        "selectedYear": 2024,
+        "selectedYear": 2025,
         "coverage": 169,
         "approvalStatus": "approved"
       },
@@ -9651,9 +11718,9 @@
         "indicatorId": "urban-population-growth",
         "title": "Urban population growth",
         "warningLevel": "high",
-        "pearson": 0.9063175362219066,
-        "spearman": 0.9457858883198248,
-        "visualSimilarity": 0.591715976331361,
+        "pearson": 0.9161589646172689,
+        "spearman": 0.9496345283675599,
+        "visualSimilarity": 0.5857988165680473,
         "overlapCount": 169
       },
       "statusRecommendation": {
@@ -9801,13 +11868,13 @@
         "overall": 3.05
       },
       "topCorrelation": {
-        "indicatorId": "particulate-damage-share",
-        "title": "Particulate emission damage",
+        "indicatorId": "human-capital-index",
+        "title": "Human Capital Index",
         "warningLevel": "ok",
-        "pearson": -0.605033017545857,
-        "spearman": -0.7157530224175291,
-        "visualSimilarity": 0.11403508771929824,
-        "overlapCount": 114
+        "pearson": 0.7645453962895978,
+        "spearman": 0.7340225563909775,
+        "visualSimilarity": 0.3185840707964602,
+        "overlapCount": 113
       },
       "statusRecommendation": {
         "recommendedAction": "keep_needs_review",
@@ -10377,15 +12444,15 @@
       "category": "economy",
       "difficulty": "expert",
       "source": {
-        "selectedYear": 2024,
-        "coverage": 47,
+        "selectedYear": 2025,
+        "coverage": 40,
         "approvalStatus": "draft"
       },
       "dataGate": {
         "status": "held",
         "reasons": [
-          "private-fixed-capital-formation: no year in 2015:2025 met 120 mapped countries; best coverage was 59",
-          "private-fixed-capital-formation: selected coverage 47 is below 120"
+          "private-fixed-capital-formation: no year in 2015:2025 met 120 mapped countries; best coverage was 61",
+          "private-fixed-capital-formation: selected coverage 40 is below 120"
         ]
       },
       "editorial": {
@@ -10412,8 +12479,8 @@
         "recommendedAction": "hold_for_data",
         "recommendedEditorialStatus": "needs_review",
         "reason": [
-          "private-fixed-capital-formation: no year in 2015:2025 met 120 mapped countries; best coverage was 59",
-          "private-fixed-capital-formation: selected coverage 47 is below 120"
+          "private-fixed-capital-formation: no year in 2015:2025 met 120 mapped countries; best coverage was 61",
+          "private-fixed-capital-formation: selected coverage 40 is below 120"
         ]
       }
     },
@@ -10676,7 +12743,7 @@
       "difficulty": "expert",
       "source": {
         "selectedYear": 2024,
-        "coverage": 135,
+        "coverage": 138,
         "approvalStatus": "approved"
       },
       "dataGate": {
@@ -10705,13 +12772,13 @@
         "overall": 3.75
       },
       "topCorrelation": {
-        "indicatorId": "household-consumption",
-        "title": "Household consumption",
+        "indicatorId": "external-balance-share",
+        "title": "External balance",
         "warningLevel": "review",
-        "pearson": 0.6114258311323579,
-        "spearman": 0.7011178999474589,
-        "visualSimilarity": 0.29508196721311475,
-        "overlapCount": 122
+        "pearson": -0.650453007277646,
+        "spearman": -0.6662760677165205,
+        "visualSimilarity": 0.07407407407407407,
+        "overlapCount": 108
       },
       "statusRecommendation": {
         "recommendedAction": "keep_expert_only",
@@ -10811,13 +12878,13 @@
         "overall": 3.65
       },
       "topCorrelation": {
-        "indicatorId": "internet-users",
-        "title": "Internet users",
-        "warningLevel": "ok",
-        "pearson": -0.7461871569546661,
-        "spearman": -0.6273778221594505,
-        "visualSimilarity": 0.11688311688311688,
-        "overlapCount": 154
+        "indicatorId": "combustible-renewables-waste",
+        "title": "Combustible renewables and waste",
+        "warningLevel": "high",
+        "pearson": 0.9029143170254497,
+        "spearman": 0.8838048979749716,
+        "visualSimilarity": 0.5179856115107914,
+        "overlapCount": 139
       },
       "statusRecommendation": {
         "recommendedAction": "keep_expert_only",
@@ -10914,9 +12981,9 @@
         "indicatorId": "government-expense",
         "title": "Government expense",
         "warningLevel": "high",
-        "pearson": 0.94747682718599,
-        "spearman": 0.949711305643509,
-        "visualSimilarity": 0.5338983050847458,
+        "pearson": 0.9476721169125485,
+        "spearman": 0.94996694896994,
+        "visualSimilarity": 0.559322033898305,
         "overlapCount": 118
       },
       "statusRecommendation": {
@@ -11399,7 +13466,7 @@
       "category": "settlement",
       "difficulty": "intro",
       "source": {
-        "selectedYear": 2024,
+        "selectedYear": 2025,
         "coverage": 169,
         "approvalStatus": "approved"
       },
@@ -11432,7 +13499,7 @@
         "indicatorId": "urban-population",
         "title": "Urban population",
         "warningLevel": "high",
-        "pearson": -1.0,
+        "pearson": -1.0000000000000002,
         "spearman": -0.9999999999999999,
         "visualSimilarity": 0.13609467455621302,
         "overlapCount": 169
@@ -11452,7 +13519,7 @@
       "category": "settlement",
       "difficulty": "standard",
       "source": {
-        "selectedYear": 2024,
+        "selectedYear": 2025,
         "coverage": 168,
         "approvalStatus": "approved"
       },
@@ -11485,9 +13552,9 @@
         "indicatorId": "population-growth",
         "title": "Population growth",
         "warningLevel": "review",
-        "pearson": 0.792493290026982,
-        "spearman": 0.8436533526353887,
-        "visualSimilarity": 0.36904761904761907,
+        "pearson": 0.7819761521974705,
+        "spearman": 0.8278202681703374,
+        "visualSimilarity": 0.39285714285714285,
         "overlapCount": 168
       },
       "statusRecommendation": {
@@ -12172,13 +14239,13 @@
         "overall": 4.15
       },
       "topCorrelation": {
-        "indicatorId": "under-five-mortality",
-        "title": "Under-5 mortality",
-        "warningLevel": "ok",
-        "pearson": -0.30106428673038976,
-        "spearman": -0.8801962921035472,
-        "visualSimilarity": 0.08433734939759036,
-        "overlapCount": 166
+        "indicatorId": "human-capital-education-index",
+        "title": "Human capital education index",
+        "warningLevel": "high",
+        "pearson": 0.5443715051395972,
+        "spearman": 0.9098449063139663,
+        "visualSimilarity": 0.503448275862069,
+        "overlapCount": 145
       },
       "statusRecommendation": {
         "recommendedAction": "keep_expert_only",
@@ -12248,8 +14315,8 @@
       "category": "economy",
       "difficulty": "standard",
       "source": {
-        "selectedYear": 2024,
-        "coverage": 149,
+        "selectedYear": 2025,
+        "coverage": 139,
         "approvalStatus": "approved"
       },
       "dataGate": {
@@ -12278,13 +14345,13 @@
         "overall": 3.55
       },
       "topCorrelation": {
-        "indicatorId": "employment-services",
-        "title": "Employment in services",
-        "warningLevel": "review",
-        "pearson": 0.6675140291079478,
-        "spearman": 0.700651308283402,
-        "visualSimilarity": 0.32653061224489793,
-        "overlapCount": 147
+        "indicatorId": "health-spending-per-person",
+        "title": "Health spending per person",
+        "warningLevel": "ok",
+        "pearson": 0.539416760311862,
+        "spearman": 0.7124722310377659,
+        "visualSimilarity": 0.32116788321167883,
+        "overlapCount": 137
       },
       "statusRecommendation": {
         "recommendedAction": "review_ambiguity",
@@ -12431,13 +14498,13 @@
         "overall": 3.75
       },
       "topCorrelation": {
-        "indicatorId": "undernourishment",
-        "title": "Undernourishment",
-        "warningLevel": "ok",
-        "pearson": -0.5084563289571997,
-        "spearman": -0.6772169990000027,
-        "visualSimilarity": 0.04,
-        "overlapCount": 150
+        "indicatorId": "human-capital-index",
+        "title": "Human Capital Index",
+        "warningLevel": "review",
+        "pearson": 0.6684303997317641,
+        "spearman": 0.6813662546874756,
+        "visualSimilarity": 0.2517482517482518,
+        "overlapCount": 143
       },
       "statusRecommendation": {
         "recommendedAction": "keep_needs_review",
@@ -12487,9 +14554,9 @@
         "indicatorId": "revenue-excluding-grants",
         "title": "Government revenue excluding grants",
         "warningLevel": "review",
-        "pearson": 0.7794572383802558,
-        "spearman": 0.8082227932495314,
-        "visualSimilarity": 0.35,
+        "pearson": 0.7802293321986664,
+        "spearman": 0.8069796513646783,
+        "visualSimilarity": 0.35833333333333334,
         "overlapCount": 120
       },
       "statusRecommendation": {
@@ -12497,6 +14564,112 @@
         "recommendedEditorialStatus": "needs_review",
         "reason": [
           "Curated editorial status still requires human review before play."
+        ]
+      }
+    },
+    {
+      "id": "tb-case-detection",
+      "providerCode": "SH.TBS.DTEC.ZS",
+      "shortTitle": "TB case detection",
+      "category": "health",
+      "difficulty": "expert",
+      "source": {
+        "selectedYear": 2024,
+        "coverage": 163,
+        "approvalStatus": "approved"
+      },
+      "dataGate": {
+        "status": "passed",
+        "reasons": [
+          "Source data passed the coverage gate."
+        ]
+      },
+      "editorial": {
+        "currentStatus": "expert_only",
+        "dailyEligible": false,
+        "practiceEligible": true,
+        "challengeEligible": true,
+        "expertOnly": true,
+        "ambiguityRisk": "medium",
+        "qualityScore": 3,
+        "funScore": 3,
+        "fairnessScore": 3
+      },
+      "scores": {
+        "coverage": 4,
+        "freshness": 5,
+        "unitClarity": 4,
+        "mapInterest": 4,
+        "ambiguityCorrelation": 3,
+        "overall": 3.95
+      },
+      "topCorrelation": {
+        "indicatorId": "logistics-infrastructure",
+        "title": "Logistics infrastructure quality",
+        "warningLevel": "ok",
+        "pearson": 0.5262785502575925,
+        "spearman": 0.5884665933124916,
+        "visualSimilarity": 0.203125,
+        "overlapCount": 128
+      },
+      "statusRecommendation": {
+        "recommendedAction": "keep_expert_only",
+        "recommendedEditorialStatus": "expert_only",
+        "reason": [
+          "Automated scorecard supports the current curated editorial status."
+        ]
+      }
+    },
+    {
+      "id": "tb-treatment-success",
+      "providerCode": "SH.TBS.CURE.ZS",
+      "shortTitle": "TB treatment success",
+      "category": "health",
+      "difficulty": "expert",
+      "source": {
+        "selectedYear": 2023,
+        "coverage": 157,
+        "approvalStatus": "approved"
+      },
+      "dataGate": {
+        "status": "passed",
+        "reasons": [
+          "Source data passed the coverage gate."
+        ]
+      },
+      "editorial": {
+        "currentStatus": "expert_only",
+        "dailyEligible": false,
+        "practiceEligible": true,
+        "challengeEligible": true,
+        "expertOnly": true,
+        "ambiguityRisk": "medium",
+        "qualityScore": 3,
+        "funScore": 3,
+        "fairnessScore": 3
+      },
+      "scores": {
+        "coverage": 4,
+        "freshness": 4,
+        "unitClarity": 4,
+        "mapInterest": 4,
+        "ambiguityCorrelation": 3,
+        "overall": 3.8
+      },
+      "topCorrelation": {
+        "indicatorId": "health-spending-per-person",
+        "title": "Health spending per person",
+        "warningLevel": "review",
+        "pearson": -0.42045446865196806,
+        "spearman": -0.5728789443788993,
+        "visualSimilarity": 0.13725490196078433,
+        "overlapCount": 153
+      },
+      "statusRecommendation": {
+        "recommendedAction": "keep_expert_only",
+        "recommendedEditorialStatus": "expert_only",
+        "reason": [
+          "Automated scorecard supports the current curated editorial status."
         ]
       }
     },
@@ -12537,13 +14710,13 @@
         "overall": 3.15
       },
       "topCorrelation": {
-        "indicatorId": "health-spending-per-person",
-        "title": "Health spending per person",
-        "warningLevel": "ok",
-        "pearson": 0.5904656287829123,
-        "spearman": 0.8245858681320859,
-        "visualSimilarity": 0.4016393442622951,
-        "overlapCount": 122
+        "indicatorId": "human-capital-education-index",
+        "title": "Human capital education index",
+        "warningLevel": "review",
+        "pearson": 0.8647292148732842,
+        "spearman": 0.8715101380209505,
+        "visualSimilarity": 0.4188034188034188,
+        "overlapCount": 117
       },
       "statusRecommendation": {
         "recommendedAction": "keep_expert_only",
@@ -12593,16 +14766,228 @@
         "indicatorId": "agriculture-value-added",
         "title": "Agriculture value added",
         "warningLevel": "ok",
-        "pearson": -0.7648493798998388,
-        "spearman": -0.5894973565848656,
-        "visualSimilarity": 0.06956521739130435,
-        "overlapCount": 115
+        "pearson": -0.7459788266979591,
+        "spearman": -0.6021201353059761,
+        "visualSimilarity": 0.0625,
+        "overlapCount": 112
       },
       "statusRecommendation": {
         "recommendedAction": "keep_needs_review",
         "recommendedEditorialStatus": "needs_review",
         "reason": [
           "Curated editorial status still requires human review before play."
+        ]
+      }
+    },
+    {
+      "id": "threatened-bird-species",
+      "providerCode": "EN.BIR.THRD.NO",
+      "shortTitle": "Threatened bird species",
+      "category": "environment",
+      "difficulty": "expert",
+      "source": {
+        "selectedYear": 2022,
+        "coverage": 169,
+        "approvalStatus": "approved"
+      },
+      "dataGate": {
+        "status": "passed",
+        "reasons": [
+          "Source data passed the coverage gate."
+        ]
+      },
+      "editorial": {
+        "currentStatus": "expert_only",
+        "dailyEligible": false,
+        "practiceEligible": true,
+        "challengeEligible": true,
+        "expertOnly": true,
+        "ambiguityRisk": "medium",
+        "qualityScore": 4,
+        "funScore": 4,
+        "fairnessScore": 3
+      },
+      "scores": {
+        "coverage": 4,
+        "freshness": 4,
+        "unitClarity": 3,
+        "mapInterest": 4,
+        "ambiguityCorrelation": 3,
+        "overall": 3.6
+      },
+      "topCorrelation": {
+        "indicatorId": "threatened-mammal-species",
+        "title": "Threatened mammal species",
+        "warningLevel": "review",
+        "pearson": 0.8215783077940841,
+        "spearman": 0.8019177781757251,
+        "visualSimilarity": 0.3905325443786982,
+        "overlapCount": 169
+      },
+      "statusRecommendation": {
+        "recommendedAction": "keep_expert_only",
+        "recommendedEditorialStatus": "expert_only",
+        "reason": [
+          "Automated scorecard supports the current curated editorial status."
+        ]
+      }
+    },
+    {
+      "id": "threatened-fish-species",
+      "providerCode": "EN.FSH.THRD.NO",
+      "shortTitle": "Threatened fish species",
+      "category": "environment",
+      "difficulty": "expert",
+      "source": {
+        "selectedYear": 2022,
+        "coverage": 169,
+        "approvalStatus": "approved"
+      },
+      "dataGate": {
+        "status": "passed",
+        "reasons": [
+          "Source data passed the coverage gate."
+        ]
+      },
+      "editorial": {
+        "currentStatus": "expert_only",
+        "dailyEligible": false,
+        "practiceEligible": true,
+        "challengeEligible": true,
+        "expertOnly": true,
+        "ambiguityRisk": "medium",
+        "qualityScore": 4,
+        "funScore": 4,
+        "fairnessScore": 3
+      },
+      "scores": {
+        "coverage": 4,
+        "freshness": 4,
+        "unitClarity": 3,
+        "mapInterest": 4,
+        "ambiguityCorrelation": 3,
+        "overall": 3.6
+      },
+      "topCorrelation": {
+        "indicatorId": "threatened-mammal-species",
+        "title": "Threatened mammal species",
+        "warningLevel": "review",
+        "pearson": 0.7792576710324322,
+        "spearman": 0.6469972482074703,
+        "visualSimilarity": 0.31952662721893493,
+        "overlapCount": 169
+      },
+      "statusRecommendation": {
+        "recommendedAction": "keep_expert_only",
+        "recommendedEditorialStatus": "expert_only",
+        "reason": [
+          "Automated scorecard supports the current curated editorial status."
+        ]
+      }
+    },
+    {
+      "id": "threatened-mammal-species",
+      "providerCode": "EN.MAM.THRD.NO",
+      "shortTitle": "Threatened mammal species",
+      "category": "environment",
+      "difficulty": "expert",
+      "source": {
+        "selectedYear": 2022,
+        "coverage": 169,
+        "approvalStatus": "approved"
+      },
+      "dataGate": {
+        "status": "passed",
+        "reasons": [
+          "Source data passed the coverage gate."
+        ]
+      },
+      "editorial": {
+        "currentStatus": "expert_only",
+        "dailyEligible": false,
+        "practiceEligible": true,
+        "challengeEligible": true,
+        "expertOnly": true,
+        "ambiguityRisk": "medium",
+        "qualityScore": 4,
+        "funScore": 4,
+        "fairnessScore": 3
+      },
+      "scores": {
+        "coverage": 4,
+        "freshness": 4,
+        "unitClarity": 3,
+        "mapInterest": 4,
+        "ambiguityCorrelation": 3,
+        "overall": 3.6
+      },
+      "topCorrelation": {
+        "indicatorId": "threatened-bird-species",
+        "title": "Threatened bird species",
+        "warningLevel": "review",
+        "pearson": 0.8215783077940841,
+        "spearman": 0.8019177781757251,
+        "visualSimilarity": 0.3905325443786982,
+        "overlapCount": 169
+      },
+      "statusRecommendation": {
+        "recommendedAction": "keep_expert_only",
+        "recommendedEditorialStatus": "expert_only",
+        "reason": [
+          "Automated scorecard supports the current curated editorial status."
+        ]
+      }
+    },
+    {
+      "id": "threatened-plant-species",
+      "providerCode": "EN.HPT.THRD.NO",
+      "shortTitle": "Threatened plant species",
+      "category": "environment",
+      "difficulty": "expert",
+      "source": {
+        "selectedYear": 2022,
+        "coverage": 169,
+        "approvalStatus": "approved"
+      },
+      "dataGate": {
+        "status": "passed",
+        "reasons": [
+          "Source data passed the coverage gate."
+        ]
+      },
+      "editorial": {
+        "currentStatus": "expert_only",
+        "dailyEligible": false,
+        "practiceEligible": true,
+        "challengeEligible": true,
+        "expertOnly": true,
+        "ambiguityRisk": "medium",
+        "qualityScore": 4,
+        "funScore": 4,
+        "fairnessScore": 3
+      },
+      "scores": {
+        "coverage": 4,
+        "freshness": 4,
+        "unitClarity": 3,
+        "mapInterest": 4,
+        "ambiguityCorrelation": 3,
+        "overall": 3.6
+      },
+      "topCorrelation": {
+        "indicatorId": "threatened-mammal-species",
+        "title": "Threatened mammal species",
+        "warningLevel": "review",
+        "pearson": 0.7257163897870539,
+        "spearman": 0.6434337235231244,
+        "visualSimilarity": 0.35502958579881655,
+        "overlapCount": 169
+      },
+      "statusRecommendation": {
+        "recommendedAction": "keep_expert_only",
+        "recommendedEditorialStatus": "expert_only",
+        "reason": [
+          "Automated scorecard supports the current curated editorial status."
         ]
       }
     },
@@ -12749,13 +15134,13 @@
         "overall": 3.05
       },
       "topCorrelation": {
-        "indicatorId": "water-stress",
-        "title": "Water stress",
-        "warningLevel": "ok",
-        "pearson": 0.38351054018619485,
-        "spearman": 0.06446016634668446,
-        "visualSimilarity": 0.1721311475409836,
-        "overlapCount": 122
+        "indicatorId": "travel-service-imports-share",
+        "title": "Travel service imports",
+        "warningLevel": "review",
+        "pearson": 0.6390010160062953,
+        "spearman": 0.5668494516450648,
+        "visualSimilarity": 0.35294117647058826,
+        "overlapCount": 119
       },
       "statusRecommendation": {
         "recommendedAction": "keep_needs_review",
@@ -12802,13 +15187,13 @@
         "overall": 3.3
       },
       "topCorrelation": {
-        "indicatorId": "communications-service-exports",
-        "title": "Communications service exports",
-        "warningLevel": "ok",
-        "pearson": -0.4430261619644956,
-        "spearman": -0.43602492887142663,
-        "visualSimilarity": 0.06611570247933884,
-        "overlapCount": 121
+        "indicatorId": "travel-service-exports-share",
+        "title": "Travel service exports",
+        "warningLevel": "review",
+        "pearson": 0.619878631307107,
+        "spearman": 0.6419819169106551,
+        "visualSimilarity": 0.3089430894308943,
+        "overlapCount": 123
       },
       "statusRecommendation": {
         "recommendedAction": "keep_expert_only",
@@ -12870,8 +15255,8 @@
       "category": "economy",
       "difficulty": "standard",
       "source": {
-        "selectedYear": 2024,
-        "coverage": 141,
+        "selectedYear": 2025,
+        "coverage": 124,
         "approvalStatus": "approved"
       },
       "dataGate": {
@@ -12903,10 +15288,10 @@
         "indicatorId": "exports-share",
         "title": "Exports",
         "warningLevel": "high",
-        "pearson": 0.962879940605117,
-        "spearman": 0.9377113746307633,
-        "visualSimilarity": 0.5815602836879432,
-        "overlapCount": 141
+        "pearson": 0.9674051566224416,
+        "spearman": 0.9407458693941776,
+        "visualSimilarity": 0.5725806451612904,
+        "overlapCount": 124
       },
       "statusRecommendation": {
         "recommendedAction": "review_ambiguity",
@@ -12924,7 +15309,7 @@
       "difficulty": "expert",
       "source": {
         "selectedYear": 2024,
-        "coverage": 137,
+        "coverage": 139,
         "approvalStatus": "approved"
       },
       "dataGate": {
@@ -12956,10 +15341,10 @@
         "indicatorId": "communications-service-exports",
         "title": "Communications service exports",
         "warningLevel": "review",
-        "pearson": -0.37666905243614607,
-        "spearman": -0.3184003210932104,
-        "visualSimilarity": 0.0948905109489051,
-        "overlapCount": 137
+        "pearson": -0.3763415971492677,
+        "spearman": -0.31182358461057236,
+        "visualSimilarity": 0.1079136690647482,
+        "overlapCount": 139
       },
       "statusRecommendation": {
         "recommendedAction": "keep_practice_eligible",
@@ -12977,7 +15362,7 @@
       "difficulty": "expert",
       "source": {
         "selectedYear": 2024,
-        "coverage": 137,
+        "coverage": 139,
         "approvalStatus": "approved"
       },
       "dataGate": {
@@ -13006,13 +15391,119 @@
         "overall": 3.75
       },
       "topCorrelation": {
-        "indicatorId": "nurses-midwives",
-        "title": "Nurses and midwives",
-        "warningLevel": "ok",
-        "pearson": -0.568734801880382,
-        "spearman": -0.6461009875919919,
-        "visualSimilarity": 0.06153846153846154,
-        "overlapCount": 130
+        "indicatorId": "communications-service-imports",
+        "title": "Communications service imports",
+        "warningLevel": "review",
+        "pearson": -0.6332848683007598,
+        "spearman": -0.6142097502122524,
+        "visualSimilarity": 0.06474820143884892,
+        "overlapCount": 139
+      },
+      "statusRecommendation": {
+        "recommendedAction": "keep_practice_eligible",
+        "recommendedEditorialStatus": "practice_eligible",
+        "reason": [
+          "Automated scorecard supports the current curated editorial status."
+        ]
+      }
+    },
+    {
+      "id": "travel-service-exports-share",
+      "providerCode": "BX.GSR.TRVL.ZS",
+      "shortTitle": "Travel service exports",
+      "category": "economy",
+      "difficulty": "expert",
+      "source": {
+        "selectedYear": 2024,
+        "coverage": 139,
+        "approvalStatus": "approved"
+      },
+      "dataGate": {
+        "status": "passed",
+        "reasons": [
+          "Source data passed the coverage gate."
+        ]
+      },
+      "editorial": {
+        "currentStatus": "practice_eligible",
+        "dailyEligible": false,
+        "practiceEligible": true,
+        "challengeEligible": true,
+        "expertOnly": false,
+        "ambiguityRisk": "medium",
+        "qualityScore": 4,
+        "funScore": 5,
+        "fairnessScore": 3
+      },
+      "scores": {
+        "coverage": 3,
+        "freshness": 5,
+        "unitClarity": 4,
+        "mapInterest": 4,
+        "ambiguityCorrelation": 3,
+        "overall": 3.75
+      },
+      "topCorrelation": {
+        "indicatorId": "communications-service-exports",
+        "title": "Communications service exports",
+        "warningLevel": "review",
+        "pearson": -0.664005521000844,
+        "spearman": -0.6743420170695741,
+        "visualSimilarity": 0.050359712230215826,
+        "overlapCount": 139
+      },
+      "statusRecommendation": {
+        "recommendedAction": "keep_practice_eligible",
+        "recommendedEditorialStatus": "practice_eligible",
+        "reason": [
+          "Automated scorecard supports the current curated editorial status."
+        ]
+      }
+    },
+    {
+      "id": "travel-service-imports-share",
+      "providerCode": "BM.GSR.TRVL.ZS",
+      "shortTitle": "Travel service imports",
+      "category": "economy",
+      "difficulty": "expert",
+      "source": {
+        "selectedYear": 2024,
+        "coverage": 138,
+        "approvalStatus": "approved"
+      },
+      "dataGate": {
+        "status": "passed",
+        "reasons": [
+          "Source data passed the coverage gate."
+        ]
+      },
+      "editorial": {
+        "currentStatus": "practice_eligible",
+        "dailyEligible": false,
+        "practiceEligible": true,
+        "challengeEligible": true,
+        "expertOnly": false,
+        "ambiguityRisk": "medium",
+        "qualityScore": 4,
+        "funScore": 4,
+        "fairnessScore": 3
+      },
+      "scores": {
+        "coverage": 3,
+        "freshness": 5,
+        "unitClarity": 4,
+        "mapInterest": 4,
+        "ambiguityCorrelation": 3,
+        "overall": 3.75
+      },
+      "topCorrelation": {
+        "indicatorId": "tourism-expenditures-share",
+        "title": "Tourism expenditures",
+        "warningLevel": "review",
+        "pearson": 0.6390010160062953,
+        "spearman": 0.5668494516450648,
+        "visualSimilarity": 0.35294117647058826,
+        "overlapCount": 119
       },
       "statusRecommendation": {
         "recommendedAction": "keep_practice_eligible",
@@ -13066,6 +15557,59 @@
         "spearman": -0.8210280556362842,
         "visualSimilarity": 0.09836065573770492,
         "overlapCount": 122
+      },
+      "statusRecommendation": {
+        "recommendedAction": "keep_daily_eligible",
+        "recommendedEditorialStatus": "daily_eligible",
+        "reason": [
+          "Automated scorecard supports the current curated editorial status."
+        ]
+      }
+    },
+    {
+      "id": "uhc-service-coverage",
+      "providerCode": "SH_UHC_SCI",
+      "shortTitle": "UHC service coverage",
+      "category": "health",
+      "difficulty": "standard",
+      "source": {
+        "selectedYear": 2023,
+        "coverage": 166,
+        "approvalStatus": "approved"
+      },
+      "dataGate": {
+        "status": "passed",
+        "reasons": [
+          "Source data passed the coverage gate."
+        ]
+      },
+      "editorial": {
+        "currentStatus": "daily_eligible",
+        "dailyEligible": true,
+        "practiceEligible": true,
+        "challengeEligible": true,
+        "expertOnly": false,
+        "ambiguityRisk": "medium",
+        "qualityScore": 4,
+        "funScore": 4,
+        "fairnessScore": 4
+      },
+      "scores": {
+        "coverage": 4,
+        "freshness": 4,
+        "unitClarity": 3,
+        "mapInterest": 4,
+        "ambiguityCorrelation": 3,
+        "overall": 3.6
+      },
+      "topCorrelation": {
+        "indicatorId": "particulate-damage-share",
+        "title": "Particulate emission damage",
+        "warningLevel": "high",
+        "pearson": -0.7549580457976323,
+        "spearman": -0.9031012357039067,
+        "visualSimilarity": 0.10135135135135136,
+        "overlapCount": 148
       },
       "statusRecommendation": {
         "recommendedAction": "keep_daily_eligible",
@@ -13753,7 +16297,7 @@
       "category": "settlement",
       "difficulty": "intro",
       "source": {
-        "selectedYear": 2024,
+        "selectedYear": 2025,
         "coverage": 169,
         "approvalStatus": "approved"
       },
@@ -13786,7 +16330,7 @@
         "indicatorId": "rural-population",
         "title": "Rural population",
         "warningLevel": "high",
-        "pearson": -1.0,
+        "pearson": -1.0000000000000002,
         "spearman": -0.9999999999999999,
         "visualSimilarity": 0.13609467455621302,
         "overlapCount": 169
@@ -13806,7 +16350,7 @@
       "category": "settlement",
       "difficulty": "standard",
       "source": {
-        "selectedYear": 2024,
+        "selectedYear": 2025,
         "coverage": 169,
         "approvalStatus": "approved"
       },
@@ -13839,9 +16383,9 @@
         "indicatorId": "population-growth",
         "title": "Population growth",
         "warningLevel": "high",
-        "pearson": 0.9063175362219066,
-        "spearman": 0.9457858883198248,
-        "visualSimilarity": 0.591715976331361,
+        "pearson": 0.9161589646172689,
+        "spearman": 0.9496345283675599,
+        "visualSimilarity": 0.5857988165680473,
         "overlapCount": 169
       },
       "statusRecommendation": {
@@ -14051,9 +16595,9 @@
         "indicatorId": "domestic-water-withdrawals",
         "title": "Domestic water withdrawals",
         "warningLevel": "review",
-        "pearson": 0.5137205943030047,
-        "spearman": 0.7452322328965075,
-        "visualSimilarity": 0.31210191082802546,
+        "pearson": 0.5135727509223846,
+        "spearman": 0.7454834128219598,
+        "visualSimilarity": 0.3184713375796178,
         "overlapCount": 157
       },
       "statusRecommendation": {
@@ -14427,9 +16971,9 @@
         "indicatorId": "older-adults-share",
         "title": "Population ages 65+",
         "warningLevel": "ok",
-        "pearson": 0.6984916930613745,
-        "spearman": 0.7476592416428678,
-        "visualSimilarity": 0.2682926829268293,
+        "pearson": 0.6994381359199746,
+        "spearman": 0.7469736439553838,
+        "visualSimilarity": 0.25609756097560976,
         "overlapCount": 164
       },
       "statusRecommendation": {
@@ -14490,6 +17034,112 @@
         "recommendedEditorialStatus": "daily_eligible",
         "reason": [
           "Automated scorecard supports the current curated editorial status."
+        ]
+      }
+    },
+    {
+      "id": "working-age-share",
+      "providerCode": "SP.POP.1564.TO.ZS",
+      "shortTitle": "Working-age population share",
+      "category": "demography",
+      "difficulty": "standard",
+      "source": {
+        "selectedYear": 2025,
+        "coverage": 169,
+        "approvalStatus": "approved"
+      },
+      "dataGate": {
+        "status": "passed",
+        "reasons": [
+          "Source data passed the coverage gate."
+        ]
+      },
+      "editorial": {
+        "currentStatus": "daily_eligible",
+        "dailyEligible": true,
+        "practiceEligible": true,
+        "challengeEligible": true,
+        "expertOnly": false,
+        "ambiguityRisk": "medium",
+        "qualityScore": 4,
+        "funScore": 4,
+        "fairnessScore": 4
+      },
+      "scores": {
+        "coverage": 4,
+        "freshness": 5,
+        "unitClarity": 4,
+        "mapInterest": 4,
+        "ambiguityCorrelation": 2,
+        "overall": 3.75
+      },
+      "topCorrelation": {
+        "indicatorId": "age-dependency",
+        "title": "Age dependency ratio",
+        "warningLevel": "high",
+        "pearson": -0.9898140246990407,
+        "spearman": -0.9999999999999999,
+        "visualSimilarity": 0.13609467455621302,
+        "overlapCount": 169
+      },
+      "statusRecommendation": {
+        "recommendedAction": "review_ambiguity",
+        "recommendedEditorialStatus": "daily_eligible",
+        "reason": [
+          "High correlation or visual-similarity risk; review distractor placement and Daily same-day pairing."
+        ]
+      }
+    },
+    {
+      "id": "young-adult-account-ownership",
+      "providerCode": "FX.OWN.TOTL.YG.ZS",
+      "shortTitle": "Young-adult account ownership",
+      "category": "development",
+      "difficulty": "expert",
+      "source": {
+        "selectedYear": 2024,
+        "coverage": 132,
+        "approvalStatus": "approved"
+      },
+      "dataGate": {
+        "status": "passed",
+        "reasons": [
+          "Source data passed the coverage gate."
+        ]
+      },
+      "editorial": {
+        "currentStatus": "expert_only",
+        "dailyEligible": false,
+        "practiceEligible": true,
+        "challengeEligible": true,
+        "expertOnly": true,
+        "ambiguityRisk": "high",
+        "qualityScore": 3,
+        "funScore": 3,
+        "fairnessScore": 3
+      },
+      "scores": {
+        "coverage": 3,
+        "freshness": 5,
+        "unitClarity": 4,
+        "mapInterest": 4,
+        "ambiguityCorrelation": 2,
+        "overall": 3.55
+      },
+      "topCorrelation": {
+        "indicatorId": "account-ownership",
+        "title": "Account ownership",
+        "warningLevel": "high",
+        "pearson": 0.9234614876434999,
+        "spearman": 0.9301493149795508,
+        "visualSimilarity": 0.5909090909090909,
+        "overlapCount": 132
+      },
+      "statusRecommendation": {
+        "recommendedAction": "review_ambiguity",
+        "recommendedEditorialStatus": "expert_only",
+        "reason": [
+          "High correlation or visual-similarity risk; review distractor placement and Daily same-day pairing."
         ]
       }
     },
@@ -14654,14 +17304,14 @@
       "difficulty": "standard",
       "source": {
         "selectedYear": 2025,
-        "coverage": 15,
+        "coverage": 35,
         "approvalStatus": "draft"
       },
       "dataGate": {
         "status": "held",
         "reasons": [
           "youth-neet: no year in 2015:2025 met 120 mapped countries; best coverage was 108",
-          "youth-neet: selected coverage 15 is below 120"
+          "youth-neet: selected coverage 35 is below 120"
         ]
       },
       "editorial": {
@@ -14689,7 +17339,7 @@
         "recommendedEditorialStatus": "needs_review",
         "reason": [
           "youth-neet: no year in 2015:2025 met 120 mapped countries; best coverage was 108",
-          "youth-neet: selected coverage 15 is below 120"
+          "youth-neet: selected coverage 35 is below 120"
         ]
       }
     },

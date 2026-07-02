@@ -159,12 +159,12 @@
     "valuesReference": "https://api.worldbank.org/v2/country/all/indicator/SE.PRM.NENR?format=json&per_page=20000&page=1&date=2015%3A2025",
     "license": "Creative Commons Attribution 4.0 International unless specifically labeled otherwise by World Bank metadata",
     "licenseReference": "https://www.worldbank.org/en/about/legal/terms-of-use-for-datasets",
-    "retrievedAt": "2026-06-27T17:14:45.006688+00:00",
-    "checksum": "d952acfc1e46270f3829354c6edccbd3af4ece233f160485ef59ff2b03ee8916",
+    "retrievedAt": "2026-07-02T22:24:25.329839+00:00",
+    "checksum": "1bfbeae22305f33183931c817b961f06a740e6c90e3efdf4de51ec88cb3b1f4f",
     "sourceOrganization": "Stat Bulk Data Download Service, UN Educational, Scientific and Cultural Organization (UNESCO), uri: https://uis.unesco.org/bdds, publisher: UNESCO Institute for Statistics (UIS)"
   },
   "reviewStatus": "approved",
-  "contentVersion": "2026.06.22-exp2-qa1",
+  "contentVersion": "2026.07.02-exp4-content50",
   "editorial": {
     "shortHook": "A candidate map for net primary enrollment.",
     "patternNote": "The darkest countries include Norway, Canada, Iceland, while the lightest include Liberia, Eritrea, Djibouti; that contrast is the fastest way to read the net primary enrollment pattern.",
@@ -205,7 +205,7 @@
   },
   "editorialReview": {
     "status": "needs_review",
-    "reviewedAt": "2026-06-22",
+    "reviewedAt": "2026-07-02",
     "reviewedBy": "pipeline-default-needs-review",
     "qualityScore": 2,
     "funScore": 2,

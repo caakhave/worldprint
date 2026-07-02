@@ -207,12 +207,12 @@
     "valuesReference": "https://api.worldbank.org/v2/country/all/indicator/EG.ELC.ACCS.UR.ZS?format=json&per_page=20000&page=1&date=2015%3A2025",
     "license": "Creative Commons Attribution 4.0 International unless specifically labeled otherwise by World Bank metadata",
     "licenseReference": "https://www.worldbank.org/en/about/legal/terms-of-use-for-datasets",
-    "retrievedAt": "2026-06-27T17:16:00.413368+00:00",
-    "checksum": "63d7198324ed04bf5c4f59717666055190da756a5ef91a8c3f4aeb3f8f6a7b10",
+    "retrievedAt": "2026-07-02T22:48:08.429517+00:00",
+    "checksum": "aa657e5f7e1f640c15682bfb27e21fa42e9c8d8e221c053f8c875b2ba1e49561",
     "sourceOrganization": "SDG 7.1.1 Electrification Dataset, World Bank (WB), uri: https://trackingsdg7.esmap.org/downloads, note: Data is downloaded from ESMAP website. Data is released when a new Tracking SDG7 report is released., publisher: World Bank (WB), date accessed: 2024-05-16, date published: 2023"
   },
   "reviewStatus": "approved",
-  "contentVersion": "2026.06.22-exp2-qa1",
+  "contentVersion": "2026.07.02-exp4-content50",
   "editorial": {
     "shortHook": "An urban infrastructure-access map.",
     "patternNote": "The darkest countries include Viet Nam, Venezuela, RB, Uzbekistan, while the lightest include South Sudan, Central African Republic, Chad; that contrast is the fastest way to read the urban electricity access pattern.",
@@ -253,7 +253,7 @@
   },
   "editorialReview": {
     "status": "practice_eligible",
-    "reviewedAt": "2026-06-22",
+    "reviewedAt": "2026-07-02",
     "reviewedBy": "Codex editorial QA",
     "qualityScore": 4,
     "funScore": 3,

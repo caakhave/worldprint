@@ -2,33 +2,32 @@
   "schemaVersion": "1.1.0",
   "game": "worldprint",
   "date": "2026-08-03",
-  "contentVersion": "2026.06.22-exp2-qa1",
+  "contentVersion": "2026.07.02-exp4-content50",
   "roundIds": [
-    "worldprint-arable-land",
-    "worldprint-youth-employment-ratio",
-    "worldprint-under-five-mortality",
-    "worldprint-clean-fuels-access",
-    "worldprint-adolescent-fertility"
+    "worldprint-protected-land",
+    "worldprint-food-production-index",
+    "worldprint-safe-drinking-water",
+    "worldprint-older-adults-share",
+    "worldprint-migrant-stock"
   ],
   "indicatorIds": [
-    "arable-land",
-    "youth-employment-ratio",
-    "under-five-mortality",
-    "clean-fuels-access",
-    "adolescent-fertility"
+    "protected-land",
+    "food-production-index",
+    "safe-drinking-water",
+    "older-adults-share",
+    "migrant-stock"
   ],
   "categoryMix": {
-    "land": 1,
-    "labor": 1,
+    "environment": 1,
+    "agriculture": 1,
     "health": 1,
-    "energy": 1,
-    "demography": 1
+    "demography": 2
   },
   "mapDifficultyMix": {
-    "standard": 4,
-    "expert": 1
+    "standard": 3,
+    "intro": 2
   },
-  "generatedAt": "2026-06-27T17:16:22.623023+00:00",
+  "generatedAt": "2026-07-02T22:58:41.353811+00:00",
   "generatorVersion": "daily-manifest-v2",
   "varietyNotes": [
     "Selected with category, difficulty, repeat-cooldown, and same-day correlation safeguards."

@@ -198,12 +198,12 @@
     "valuesReference": "https://api.worldbank.org/v2/country/all/indicator/NY.GDP.TOTL.RT.ZS?format=json&per_page=20000&page=1&date=2015%3A2025",
     "license": "Creative Commons Attribution 4.0 International unless specifically labeled otherwise by World Bank metadata",
     "licenseReference": "https://www.worldbank.org/en/about/legal/terms-of-use-for-datasets",
-    "retrievedAt": "2026-06-27T17:14:58.163550+00:00",
-    "checksum": "4e4f3f71759df89afa08700ffbe6aa8601d7f7dfec8756513d9f800229d0f696",
+    "retrievedAt": "2026-07-02T22:32:24.835937+00:00",
+    "checksum": "ec8a94c3c5688555ccf5223dcb828132876d18989377a3feda6418b47871380e",
     "sourceOrganization": "The Changing Wealth of Nations, World Bank (WB), uri: https://www.worldbank.org/en/publication/changing-wealth-of-nations/data, note: World Bank staff estimates based on sources and methods described in the World Bank's The Changing Wealth of Nations., publisher: World Bank (WB);\nStaff estimates, World Bank (WB), note: World Bank staff estimates based on sources and methods described in the World Bank's The Changing Wealth of Nations."
   },
   "reviewStatus": "approved",
-  "contentVersion": "2026.06.22-exp2-qa1",
+  "contentVersion": "2026.07.02-exp4-content50",
   "editorial": {
     "shortHook": "A candidate map for natural resource rents.",
     "patternNote": "The darkest countries include Libya, Iraq, Congo, Dem. Rep., while the lightest include Puerto Rico (US), West Bank and Gaza, Iceland; that contrast is the fastest way to read the natural resource rents pattern.",
@@ -228,8 +228,8 @@
         "reason": "Natural resource depletion can tempt players because it shares a strong country ranking with this map, but its unit and definition point to a different story."
       },
       {
-        "confusedWithIndicatorCode": "NV.SRV.TOTL.ZS",
-        "reason": "Services value added can tempt players because it shares a strong country ranking with this map, but its unit and definition point to a different story."
+        "confusedWithIndicatorCode": "EG.IMP.CONS.ZS",
+        "reason": "Net energy imports can tempt players because it shares a strong country ranking with this map, but its unit and definition point to a different story."
       },
       {
         "confusedWithIndicatorCode": "NV.IND.TOTL.ZS",
@@ -244,7 +244,7 @@
   },
   "editorialReview": {
     "status": "practice_eligible",
-    "reviewedAt": "2026-06-22",
+    "reviewedAt": "2026-07-02",
     "reviewedBy": "Codex editorial QA",
     "qualityScore": 4,
     "funScore": 4,

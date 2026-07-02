@@ -203,12 +203,12 @@
     "valuesReference": "https://api.worldbank.org/v2/country/all/indicator/IQ.SPI.PIL5?format=json&per_page=20000&page=1&date=2015%3A2025",
     "license": "Creative Commons Attribution 4.0 International unless specifically labeled otherwise by World Bank metadata",
     "licenseReference": "https://www.worldbank.org/en/about/legal/terms-of-use-for-datasets",
-    "retrievedAt": "2026-06-27T17:15:25.748750+00:00",
-    "checksum": "dccce09c5bb1b18cdca06e4d91ec6ae6a88c9823b3af72e2e86b107edec3b29a",
+    "retrievedAt": "2026-07-02T22:40:21.884645+00:00",
+    "checksum": "05caecc59d10482083844536438230157f3713c59ef31d868da13527a9689cf1",
     "sourceOrganization": "Statistical Performance Indicators, World Bank (WB), uri: https://datacatalog.worldbank.org/dataset/statistical-performance-indicators"
   },
   "reviewStatus": "approved",
-  "contentVersion": "2026.06.22-exp2-qa1",
+  "contentVersion": "2026.07.02-exp4-content50",
   "editorial": {
     "shortHook": "A candidate map for statistical data infrastructure.",
     "patternNote": "The darkest countries include Turkiye, Russian Federation, New Zealand, while the lightest include Eritrea, Turkmenistan, Papua New Guinea; that contrast is the fastest way to read the statistical data infrastructure pattern.",
@@ -229,16 +229,16 @@
     ],
     "commonConfusions": [
       {
+        "confusedWithIndicatorCode": "HD_HCIP_OVRL_TO",
+        "reason": "Human Capital Index can tempt players because it shares a strong country ranking with this map, but its unit and definition point to a different story."
+      },
+      {
+        "confusedWithIndicatorCode": "HD_HCIP_EDUC_TO",
+        "reason": "Human capital education index can tempt players because it shares a strong country ranking with this map, but its unit and definition point to a different story."
+      },
+      {
         "confusedWithIndicatorCode": "SN.ITK.DEFC.ZS",
         "reason": "Undernourishment can tempt players because it shares a strong country ranking with this map, but its unit and definition point to a different story."
-      },
-      {
-        "confusedWithIndicatorCode": "SH.MED.NUMW.P3",
-        "reason": "Nurses and midwives can tempt players because it shares a strong country ranking with this map, but its unit and definition point to a different story."
-      },
-      {
-        "confusedWithIndicatorCode": "IT.NET.SECR.P6",
-        "reason": "Secure internet servers can tempt players because it shares a strong country ranking with this map, but its unit and definition point to a different story."
       }
     ],
     "difficultyReason": "Expert difficulty: the map can be mistaken for adjacent indicators unless players probe a high, low, and middle country.",
@@ -249,7 +249,7 @@
   },
   "editorialReview": {
     "status": "needs_review",
-    "reviewedAt": "2026-06-22",
+    "reviewedAt": "2026-07-02",
     "reviewedBy": "pipeline-default-needs-review",
     "qualityScore": 2,
     "funScore": 2,

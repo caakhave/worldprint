@@ -191,12 +191,12 @@
     "valuesReference": "https://api.worldbank.org/v2/country/all/indicator/SH.MED.NUMW.P3?format=json&per_page=20000&page=1&date=2015%3A2025",
     "license": "Creative Commons Attribution 4.0 International unless specifically labeled otherwise by World Bank metadata",
     "licenseReference": "https://www.worldbank.org/en/about/legal/terms-of-use-for-datasets",
-    "retrievedAt": "2026-06-27T17:14:41.606931+00:00",
-    "checksum": "8d1bbb989ca8a9408b284dc365fadbaacc4d309bb6e6053ddf142f8fd035f6c7",
+    "retrievedAt": "2026-07-02T22:22:54.956855+00:00",
+    "checksum": "a3da18768393e87e97a0123d649c592fc39b9d7c941fb2496a2ba8871340f96a",
     "sourceOrganization": "Global Health Workforce Statistics, World Health Organization (WHO);\nOrganisation for Economic Co-operation and Development (OECD);\nCountry data"
   },
   "reviewStatus": "approved",
-  "contentVersion": "2026.06.22-exp2-qa1",
+  "contentVersion": "2026.07.02-exp4-content50",
   "editorial": {
     "shortHook": "A candidate map for nurses and midwives.",
     "patternNote": "The darkest countries include Switzerland, Norway, Iceland, while the lightest include Niger, Central African Republic, Madagascar; that contrast is the fastest way to read the nurses and midwives pattern.",
@@ -217,16 +217,16 @@
     ],
     "commonConfusions": [
       {
+        "confusedWithIndicatorCode": "HD_HCIP_EDUC_TO",
+        "reason": "Human capital education index can tempt players because it shares a strong country ranking with this map, but its unit and definition point to a different story."
+      },
+      {
+        "confusedWithIndicatorCode": "HD_HCIP_OVRL_TO",
+        "reason": "Human Capital Index can tempt players because it shares a strong country ranking with this map, but its unit and definition point to a different story."
+      },
+      {
         "confusedWithIndicatorCode": "SH.XPD.CHEX.PC.CD",
         "reason": "Health spending per person can tempt players because it shares a strong country ranking with this map, but its unit and definition point to a different story."
-      },
-      {
-        "confusedWithIndicatorCode": "NY.GNP.PCAP.PP.CD",
-        "reason": "GNI per capita, PPP can tempt players because it shares a strong country ranking with this map, but its unit and definition point to a different story."
-      },
-      {
-        "confusedWithIndicatorCode": "SH.DYN.MORT",
-        "reason": "Under-5 mortality can tempt players because it shares a strong country ranking with this map, but its unit and definition point to a different story."
       }
     ],
     "difficultyReason": "Standard difficulty: the map has readable regional structure, but the best answer still depends on checking the unit and country anchors.",
@@ -237,7 +237,7 @@
   },
   "editorialReview": {
     "status": "needs_review",
-    "reviewedAt": "2026-06-22",
+    "reviewedAt": "2026-07-02",
     "reviewedBy": "Codex editorial QA",
     "qualityScore": 3,
     "funScore": 3,

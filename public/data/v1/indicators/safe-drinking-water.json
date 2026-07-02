@@ -201,12 +201,12 @@
     "valuesReference": "https://api.worldbank.org/v2/country/all/indicator/SH.H2O.BASW.ZS?format=json&per_page=20000&page=1&date=2015%3A2025",
     "license": "Creative Commons Attribution 4.0 International unless specifically labeled otherwise by World Bank metadata",
     "licenseReference": "https://www.worldbank.org/en/about/legal/terms-of-use-for-datasets",
-    "retrievedAt": "2026-06-27T17:13:59.513286+00:00",
-    "checksum": "ef8a96ece28e1be9506996065ebe0b5173378a2bdb2fe2b94a483148734a7de6",
+    "retrievedAt": "2026-07-02T22:06:37.343157+00:00",
+    "checksum": "37018fe2bc61e4b18de1b06fd25bdcd91a04f555a0eb53ea5fe080eb83df6f2f",
     "sourceOrganization": "WHO/UNICEF Joint Monitoring Programme (JMP) for Water Supply, Sanitation and Hygiene, World Health Organization (WHO), uri: washdata.org, publisher: WHO/UNICEF Joint Monitoring Programme (JMP) for Water Supply, Sanitation and Hygiene (washdata.org), date accessed: 2025-09-30, date published: 2025-08-25;\nUN Children's Fund (UNICEF), uri: washdata.org, note: WHO/UNICEF Joint Monitoring Programme (JMP) for Water Supply, Sanitation and Hygiene"
   },
   "reviewStatus": "approved",
-  "contentVersion": "2026.06.22-exp2-qa1",
+  "contentVersion": "2026.07.02-exp4-content50",
   "editorial": {
     "shortHook": "A basic-infrastructure map with clear missing edges.",
     "patternNote": "The darkest countries include Thailand, Puerto Rico (US), New Zealand, while the lightest include Congo, Dem. Rep., Central African Republic, South Sudan; that contrast is the fastest way to read the basic drinking water access pattern.",
@@ -247,7 +247,7 @@
   },
   "editorialReview": {
     "status": "daily_eligible",
-    "reviewedAt": "2026-06-22",
+    "reviewedAt": "2026-07-02",
     "reviewedBy": "Codex editorial QA",
     "qualityScore": 4,
     "funScore": 4,

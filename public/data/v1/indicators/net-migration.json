@@ -207,12 +207,12 @@
     "valuesReference": "https://api.worldbank.org/v2/country/all/indicator/SM.POP.NETM?format=json&per_page=20000&page=1&date=2015%3A2025",
     "license": "Creative Commons Attribution 4.0 International unless specifically labeled otherwise by World Bank metadata",
     "licenseReference": "https://www.worldbank.org/en/about/legal/terms-of-use-for-datasets",
-    "retrievedAt": "2026-06-27T17:14:30.999699+00:00",
-    "checksum": "14c3482cd0b7f0f75f5bef3676f9c960d3f6db7fcf6809333b1e618ab39c8f20",
+    "retrievedAt": "2026-07-02T22:20:54.356274+00:00",
+    "checksum": "cb8d396df4b1fb576e05dae4582dd31b9ea0febdd1bb3783b58e5c3e3aa9e0b8",
     "sourceOrganization": "World Population Prospects, United Nations (UN), publisher: UN Population Division"
   },
   "reviewStatus": "approved",
-  "contentVersion": "2026.06.22-exp2-qa1",
+  "contentVersion": "2026.07.02-exp4-content50",
   "editorial": {
     "shortHook": "A volatile migration-balance map.",
     "patternNote": "The darkest countries include Ukraine, United States, Syrian Arab Republic, while the lightest include Pakistan, India, Bangladesh; that contrast is the fastest way to read the net migration pattern.",
@@ -254,7 +254,7 @@
   },
   "editorialReview": {
     "status": "needs_review",
-    "reviewedAt": "2026-06-22",
+    "reviewedAt": "2026-07-02",
     "reviewedBy": "Codex editorial QA",
     "qualityScore": 2,
     "funScore": 3,

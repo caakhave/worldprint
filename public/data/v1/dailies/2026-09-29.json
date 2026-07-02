@@ -1,0 +1,36 @@
+{
+  "schemaVersion": "1.1.0",
+  "game": "worldprint",
+  "date": "2026-09-29",
+  "contentVersion": "2026.07.02-exp4-content50",
+  "roundIds": [
+    "worldprint-arable-land",
+    "worldprint-land-under-cereal",
+    "worldprint-food-production-index",
+    "worldprint-communications-service-exports",
+    "worldprint-forest-area"
+  ],
+  "indicatorIds": [
+    "arable-land",
+    "land-under-cereal",
+    "food-production-index",
+    "communications-service-exports",
+    "forest-area"
+  ],
+  "categoryMix": {
+    "land": 2,
+    "agriculture": 1,
+    "connectivity": 1,
+    "environment": 1
+  },
+  "mapDifficultyMix": {
+    "standard": 2,
+    "expert": 2,
+    "intro": 1
+  },
+  "generatedAt": "2026-07-02T22:58:41.362341+00:00",
+  "generatorVersion": "daily-manifest-v2",
+  "varietyNotes": [
+    "Selected with category, difficulty, repeat-cooldown, and same-day correlation safeguards."
+  ]
+}

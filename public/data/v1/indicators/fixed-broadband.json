@@ -173,12 +173,12 @@
     "valuesReference": "https://api.worldbank.org/v2/country/all/indicator/IT.NET.BBND.P2?format=json&per_page=20000&page=1&date=2015%3A2025",
     "license": "Creative Commons Attribution 4.0 International unless specifically labeled otherwise by World Bank metadata",
     "licenseReference": "https://www.worldbank.org/en/about/legal/terms-of-use-for-datasets",
-    "retrievedAt": "2026-06-27T17:14:01.991031+00:00",
-    "checksum": "b6f069268630d64910a520d9929a972437dd5faf26cd8dacd9ffea5169b1b915",
+    "retrievedAt": "2026-07-02T22:08:55.770265+00:00",
+    "checksum": "c94133a5af06139174b83cd9c481f5ce2e1a16d5deaf5b0b06711285698ad66d",
     "sourceOrganization": "World Telecommunication/ICT Indicators Database, International Telecommunication Union (ITU)"
   },
   "reviewStatus": "approved",
-  "contentVersion": "2026.06.22-exp2-qa1",
+  "contentVersion": "2026.07.02-exp4-content50",
   "editorial": {
     "shortHook": "A wired-connectivity map.",
     "patternNote": "The darkest countries include France, Korea, Rep., China, while the lightest include Chad, Timor-Leste, Congo, Dem. Rep.; that contrast is the fastest way to read the fixed broadband pattern.",
@@ -203,12 +203,12 @@
         "reason": "Health spending per person can tempt players because it shares a strong country ranking with this map, but its unit and definition point to a different story."
       },
       {
-        "confusedWithIndicatorCode": "NY.GNP.PCAP.PP.CD",
-        "reason": "GNI per capita, PPP can tempt players because it shares a strong country ranking with this map, but its unit and definition point to a different story."
+        "confusedWithIndicatorCode": "NY.GNP.PCAP.CD",
+        "reason": "GNI per capita can tempt players because it shares a strong country ranking with this map, but its unit and definition point to a different story."
       },
       {
-        "confusedWithIndicatorCode": "NY.GDP.PCAP.PP.CD",
-        "reason": "GDP per capita, PPP can tempt players because it shares a strong country ranking with this map, but its unit and definition point to a different story."
+        "confusedWithIndicatorCode": "NY.GNP.PCAP.PP.CD",
+        "reason": "GNI per capita, PPP can tempt players because it shares a strong country ranking with this map, but its unit and definition point to a different story."
       }
     ],
     "difficultyReason": "Expert difficulty: the map can be mistaken for adjacent indicators unless players probe a high, low, and middle country.",
@@ -219,7 +219,7 @@
   },
   "editorialReview": {
     "status": "expert_only",
-    "reviewedAt": "2026-06-22",
+    "reviewedAt": "2026-07-02",
     "reviewedBy": "Codex editorial QA",
     "qualityScore": 3,
     "funScore": 3,

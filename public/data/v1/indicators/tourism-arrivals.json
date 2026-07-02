@@ -177,12 +177,12 @@
     "valuesReference": "https://api.worldbank.org/v2/country/all/indicator/ST.INT.ARVL?format=json&per_page=20000&page=1&date=2015%3A2025",
     "license": "Creative Commons Attribution 4.0 International unless specifically labeled otherwise by World Bank metadata",
     "licenseReference": "https://www.worldbank.org/en/about/legal/terms-of-use-for-datasets",
-    "retrievedAt": "2026-06-27T17:14:31.465840+00:00",
-    "checksum": "bec541475cb97d03eac8526b464afa5dba3ce147d5156ac3923f9bcb4f61963b",
+    "retrievedAt": "2026-07-02T22:20:56.955083+00:00",
+    "checksum": "68544de1dbde3365c5005621dc501c8591f17445b93b5c848947ace304c03632",
     "sourceOrganization": "Yearbook of Tourism Statistics, Compendium of Tourism Statistics and data files, UN Tourism"
   },
   "reviewStatus": "approved",
-  "contentVersion": "2026.06.22-exp2-qa1",
+  "contentVersion": "2026.07.02-exp4-content50",
   "editorial": {
     "shortHook": "A travel-flow map where small and famous destinations stand out.",
     "patternNote": "The darkest countries include France, United States, China, while the lightest include Solomon Islands, Guinea-Bissau, Sierra Leone; that contrast is the fastest way to read the tourism arrivals pattern.",
@@ -207,12 +207,12 @@
         "reason": "Air passengers carried can tempt players because it shares a strong country ranking with this map, but its unit and definition point to a different story."
       },
       {
-        "confusedWithIndicatorCode": "IS.SHP.GOOD.TU",
-        "reason": "Container port traffic can tempt players because it shares a strong country ranking with this map, but its unit and definition point to a different story."
+        "confusedWithIndicatorCode": "SH_UHC_SCI",
+        "reason": "UHC service coverage can tempt players because it shares a strong country ranking with this map, but its unit and definition point to a different story."
       },
       {
-        "confusedWithIndicatorCode": "SH.STA.SMSS.ZS",
-        "reason": "Safely managed sanitation can tempt players because it shares a strong country ranking with this map, but its unit and definition point to a different story."
+        "confusedWithIndicatorCode": "IS.SHP.GOOD.TU",
+        "reason": "Container port traffic can tempt players because it shares a strong country ranking with this map, but its unit and definition point to a different story."
       }
     ],
     "difficultyReason": "Standard difficulty: the map has readable regional structure, but the best answer still depends on checking the unit and country anchors.",
@@ -224,7 +224,7 @@
   },
   "editorialReview": {
     "status": "daily_eligible",
-    "reviewedAt": "2026-06-22",
+    "reviewedAt": "2026-07-02",
     "reviewedBy": "Codex editorial QA",
     "qualityScore": 4,
     "funScore": 5,

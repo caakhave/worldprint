@@ -2,32 +2,32 @@
   "schemaVersion": "1.1.0",
   "game": "worldprint",
   "date": "2026-08-19",
-  "contentVersion": "2026.06.22-exp2-qa1",
+  "contentVersion": "2026.07.02-exp4-content50",
   "roundIds": [
-    "worldprint-total-protected-areas",
-    "worldprint-rural-population-growth",
+    "worldprint-female-industry-employment",
+    "worldprint-undernourishment",
     "worldprint-under-five-mortality",
-    "worldprint-physicians",
-    "worldprint-communications-service-exports"
+    "worldprint-age-dependency",
+    "worldprint-compulsory-education-duration"
   ],
   "indicatorIds": [
-    "total-protected-areas",
-    "rural-population-growth",
+    "female-industry-employment",
+    "undernourishment",
     "under-five-mortality",
-    "physicians",
-    "communications-service-exports"
+    "age-dependency",
+    "compulsory-education-duration"
   ],
   "categoryMix": {
-    "environment": 1,
-    "settlement": 1,
+    "labor": 1,
     "health": 2,
-    "connectivity": 1
+    "demography": 1,
+    "education": 1
   },
   "mapDifficultyMix": {
-    "standard": 4,
-    "expert": 1
+    "expert": 2,
+    "standard": 3
   },
-  "generatedAt": "2026-06-27T17:16:22.625296+00:00",
+  "generatedAt": "2026-07-02T22:58:41.356180+00:00",
   "generatorVersion": "daily-manifest-v2",
   "varietyNotes": [
     "Selected with category, difficulty, repeat-cooldown, and same-day correlation safeguards."

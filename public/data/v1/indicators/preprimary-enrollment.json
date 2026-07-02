@@ -162,12 +162,12 @@
     "valuesReference": "https://api.worldbank.org/v2/country/all/indicator/SE.PRE.ENRR?format=json&per_page=20000&page=1&date=2015%3A2025",
     "license": "Creative Commons Attribution 4.0 International unless specifically labeled otherwise by World Bank metadata",
     "licenseReference": "https://www.worldbank.org/en/about/legal/terms-of-use-for-datasets",
-    "retrievedAt": "2026-06-27T17:14:46.081773+00:00",
-    "checksum": "a388e868acfba7f8d5d31b3b25de38343cd60a78530d43848c2f839f7da6955e",
+    "retrievedAt": "2026-07-02T22:24:28.928124+00:00",
+    "checksum": "9ca082d0b1b96152a8842654957298e4b5d86a44d3e4a647b65b77df55f5d397",
     "sourceOrganization": "Stat Bulk Data Download Service, UN Educational, Scientific and Cultural Organization (UNESCO), uri: https://uis.unesco.org/bdds, publisher: UNESCO Institute for Statistics (UIS)"
   },
   "reviewStatus": "approved",
-  "contentVersion": "2026.06.22-exp2-qa1",
+  "contentVersion": "2026.07.02-exp4-content50",
   "editorial": {
     "shortHook": "A candidate map for preprimary enrollment.",
     "patternNote": "The darkest countries include Australia, Ghana, Belgium, while the lightest include Somalia, Fed. Rep., Chad, Burkina Faso; that contrast is the fastest way to read the preprimary enrollment pattern.",
@@ -188,16 +188,16 @@
     ],
     "commonConfusions": [
       {
+        "confusedWithIndicatorCode": "HD_HCIP_OVRL_TO",
+        "reason": "Human Capital Index can tempt players because it shares a strong country ranking with this map, but its unit and definition point to a different story."
+      },
+      {
+        "confusedWithIndicatorCode": "HD_HCIP_EDUC_TO",
+        "reason": "Human capital education index can tempt players because it shares a strong country ranking with this map, but its unit and definition point to a different story."
+      },
+      {
         "confusedWithIndicatorCode": "NY.ADJ.DPEM.GN.ZS",
         "reason": "Particulate emission damage can tempt players because it shares a strong country ranking with this map, but its unit and definition point to a different story."
-      },
-      {
-        "confusedWithIndicatorCode": "SE.SEC.ENRR",
-        "reason": "Secondary enrollment can tempt players because it shares a strong country ranking with this map, but its unit and definition point to a different story."
-      },
-      {
-        "confusedWithIndicatorCode": "SP.DYN.LE00.IN",
-        "reason": "Life expectancy can tempt players because it shares a strong country ranking with this map, but its unit and definition point to a different story."
       }
     ],
     "difficultyReason": "Standard difficulty: the map has readable regional structure, but the best answer still depends on checking the unit and country anchors.",
@@ -208,7 +208,7 @@
   },
   "editorialReview": {
     "status": "needs_review",
-    "reviewedAt": "2026-06-22",
+    "reviewedAt": "2026-07-02",
     "reviewedBy": "pipeline-default-needs-review",
     "qualityScore": 2,
     "funScore": 2,

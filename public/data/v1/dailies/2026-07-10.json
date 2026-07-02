@@ -2,32 +2,32 @@
   "schemaVersion": "1.1.0",
   "game": "worldprint",
   "date": "2026-07-10",
-  "contentVersion": "2026.06.22-exp2-qa1",
+  "contentVersion": "2026.07.02-exp4-content50",
   "roundIds": [
-    "worldprint-age-dependency",
-    "worldprint-undernourishment",
-    "worldprint-compulsory-education-duration",
-    "worldprint-communications-service-exports",
-    "worldprint-basic-sanitation"
+    "worldprint-account-ownership",
+    "worldprint-adolescent-fertility",
+    "worldprint-government-education-spending-share",
+    "worldprint-education-expenditure-savings",
+    "worldprint-urban-basic-drinking-water"
   ],
   "indicatorIds": [
-    "age-dependency",
-    "undernourishment",
-    "compulsory-education-duration",
-    "communications-service-exports",
-    "basic-sanitation"
+    "account-ownership",
+    "adolescent-fertility",
+    "government-education-spending-share",
+    "education-expenditure-savings",
+    "urban-basic-drinking-water"
   ],
   "categoryMix": {
+    "development": 1,
     "demography": 1,
-    "health": 2,
-    "education": 1,
-    "connectivity": 1
+    "education": 2,
+    "settlement": 1
   },
   "mapDifficultyMix": {
     "standard": 3,
     "expert": 2
   },
-  "generatedAt": "2026-06-27T17:16:22.619106+00:00",
+  "generatedAt": "2026-07-02T22:58:41.350229+00:00",
   "generatorVersion": "daily-manifest-v2",
   "varietyNotes": [
     "Selected with category, difficulty, repeat-cooldown, and same-day correlation safeguards."

@@ -2,33 +2,33 @@
   "schemaVersion": "1.1.0",
   "game": "worldprint",
   "date": "2026-06-17",
-  "contentVersion": "2026.06.22-exp2-qa1",
+  "contentVersion": "2026.07.02-exp4-content50",
   "roundIds": [
-    "worldprint-cereal-yield",
-    "worldprint-population-growth",
-    "worldprint-clean-fuels-access",
-    "worldprint-safe-drinking-water",
-    "worldprint-under-five-mortality"
+    "worldprint-maternal-mortality",
+    "worldprint-older-adults-share",
+    "worldprint-primary-female-teachers",
+    "worldprint-forest-area",
+    "worldprint-permanent-cropland"
   ],
   "indicatorIds": [
-    "cereal-yield",
-    "population-growth",
-    "clean-fuels-access",
-    "safe-drinking-water",
-    "under-five-mortality"
+    "maternal-mortality",
+    "older-adults-share",
+    "primary-female-teachers",
+    "forest-area",
+    "permanent-cropland"
   ],
   "categoryMix": {
-    "agriculture": 1,
+    "health": 1,
     "demography": 1,
-    "energy": 1,
-    "health": 2
+    "education": 1,
+    "environment": 1,
+    "land": 1
   },
   "mapDifficultyMix": {
-    "expert": 1,
     "standard": 3,
-    "intro": 1
+    "intro": 2
   },
-  "generatedAt": "2026-06-27T17:16:22.615522+00:00",
+  "generatedAt": "2026-07-02T22:58:41.346897+00:00",
   "generatorVersion": "daily-manifest-v2",
   "varietyNotes": [
     "Selected with category, difficulty, repeat-cooldown, and same-day correlation safeguards."

@@ -168,12 +168,12 @@
     "valuesReference": "https://api.worldbank.org/v2/country/all/indicator/SE.ENR.PRIM.FM.ZS?format=json&per_page=20000&page=1&date=2015%3A2025",
     "license": "Creative Commons Attribution 4.0 International unless specifically labeled otherwise by World Bank metadata",
     "licenseReference": "https://www.worldbank.org/en/about/legal/terms-of-use-for-datasets",
-    "retrievedAt": "2026-06-27T17:14:47.590711+00:00",
-    "checksum": "dd865bbdd824f54782e119922959314cf16c2dddac71cc344fae3c0c058a5ee6",
+    "retrievedAt": "2026-07-02T22:25:52.291289+00:00",
+    "checksum": "13091e7e62f845937c79d48885b196a3d390452db6ee00851ba3686ac9b4d1e2",
     "sourceOrganization": "Stat Bulk Data Download Service, UN Educational, Scientific and Cultural Organization (UNESCO), uri: https://uis.unesco.org/bdds, publisher: UNESCO Institute for Statistics (UIS)"
   },
   "reviewStatus": "approved",
-  "contentVersion": "2026.06.22-exp2-qa1",
+  "contentVersion": "2026.07.02-exp4-content50",
   "editorial": {
     "shortHook": "A candidate map for primary enrollment gender parity.",
     "patternNote": "The darkest countries include Kuwait, Senegal, Gambia, The, while the lightest include Afghanistan, Chad, Guinea; that contrast is the fastest way to read the primary enrollment gender parity pattern.",
@@ -202,8 +202,8 @@
         "reason": "Female secondary pupils lives in the same category, so it can feel plausible until the high and low countries are checked."
       },
       {
-        "confusedWithIndicatorCode": "SP.DYN.IMRT.IN",
-        "reason": "Infant mortality overlaps with part of the visible pattern, but the full country spread does not match."
+        "confusedWithIndicatorCode": "FB.AST.NPER.ZS",
+        "reason": "Nonperforming loans overlaps with part of the visible pattern, but the full country spread does not match."
       }
     ],
     "difficultyReason": "Expert difficulty: the map can be mistaken for adjacent indicators unless players probe a high, low, and middle country.",
@@ -214,7 +214,7 @@
   },
   "editorialReview": {
     "status": "needs_review",
-    "reviewedAt": "2026-06-22",
+    "reviewedAt": "2026-07-02",
     "reviewedBy": "pipeline-default-needs-review",
     "qualityScore": 2,
     "funScore": 2,

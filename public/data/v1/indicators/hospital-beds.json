@@ -159,12 +159,12 @@
     "valuesReference": "https://api.worldbank.org/v2/country/all/indicator/SH.MED.BEDS.ZS?format=json&per_page=20000&page=1&date=2015%3A2025",
     "license": "Creative Commons Attribution 4.0 International unless specifically labeled otherwise by World Bank metadata",
     "licenseReference": "https://www.worldbank.org/en/about/legal/terms-of-use-for-datasets",
-    "retrievedAt": "2026-06-27T17:14:22.944968+00:00",
-    "checksum": "3e733605fe7e8094788b8ebe820f8c6caa27b2233282d3bc51f2f63696e5dd0b",
+    "retrievedAt": "2026-07-02T22:19:04.016651+00:00",
+    "checksum": "abea3050ef67a9ed6ce2ea8d8bd24f29200d639691864e94d7b461f19ea9b81c",
     "sourceOrganization": "WHO data, supplemented by country data, World Health Organization (WHO)"
   },
   "reviewStatus": "approved",
-  "contentVersion": "2026.06.22-exp2-qa1",
+  "contentVersion": "2026.07.02-exp4-content50",
   "editorial": {
     "shortHook": "A health-capacity map with post-Soviet and rich-country clues.",
     "patternNote": "The darkest countries include Korea, Rep., Japan, Belarus, while the lightest include Chad, Burkina Faso, Niger; that contrast is the fastest way to read the hospital beds pattern.",
@@ -189,12 +189,12 @@
         "reason": "Female primary teachers can tempt players because it shares a strong country ranking with this map, but its unit and definition point to a different story."
       },
       {
-        "confusedWithIndicatorCode": "SP.DYN.CBRT.IN",
-        "reason": "Birth rate can tempt players because it shares a strong country ranking with this map, but its unit and definition point to a different story."
+        "confusedWithIndicatorCode": "EN.GHG.CO2.ZG.AR5",
+        "reason": "CO2 emissions change can tempt players because it shares a strong country ranking with this map, but its unit and definition point to a different story."
       },
       {
-        "confusedWithIndicatorCode": "SH.MED.PHYS.ZS",
-        "reason": "Physicians can tempt players because it shares a strong country ranking with this map, but its unit and definition point to a different story."
+        "confusedWithIndicatorCode": "SP.DYN.CBRT.IN",
+        "reason": "Birth rate can tempt players because it shares a strong country ranking with this map, but its unit and definition point to a different story."
       }
     ],
     "difficultyReason": "Expert difficulty: the map can be mistaken for adjacent indicators unless players probe a high, low, and middle country.",
@@ -205,7 +205,7 @@
   },
   "editorialReview": {
     "status": "expert_only",
-    "reviewedAt": "2026-06-22",
+    "reviewedAt": "2026-07-02",
     "reviewedBy": "Codex editorial QA",
     "qualityScore": 3,
     "funScore": 4,

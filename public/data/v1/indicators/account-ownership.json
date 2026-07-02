@@ -171,12 +171,12 @@
     "valuesReference": "https://api.worldbank.org/v2/country/all/indicator/FX.OWN.TOTL.ZS?format=json&per_page=20000&page=1&date=2015%3A2025",
     "license": "Creative Commons Attribution 4.0 International unless specifically labeled otherwise by World Bank metadata",
     "licenseReference": "https://www.worldbank.org/en/about/legal/terms-of-use-for-datasets",
-    "retrievedAt": "2026-06-27T17:15:10.747328+00:00",
-    "checksum": "050a67757e3500fe93a919c4b1a548c0fe14567d0ac481e5b0b51789b3f4ef45",
+    "retrievedAt": "2026-07-02T22:36:14.389934+00:00",
+    "checksum": "7d2661c0301cb730cc7a08c8f9ce07b70a442717e1c82e1c1c7544a5748183a3",
     "sourceOrganization": "Global Findex Database, World Bank (WB), uri: https://www.worldbank.org/en/publication/globalfindex"
   },
   "reviewStatus": "approved",
-  "contentVersion": "2026.06.22-exp2-qa1",
+  "contentVersion": "2026.07.02-exp4-content50",
   "editorial": {
     "shortHook": "A candidate map for account ownership.",
     "patternNote": "The darkest countries include Iceland, Finland, Austria, while the lightest include Niger, Chad, Lebanon; that contrast is the fastest way to read the account ownership pattern.",
@@ -197,16 +197,16 @@
     ],
     "commonConfusions": [
       {
-        "confusedWithIndicatorCode": "IT.NET.SECR.P6",
-        "reason": "Secure internet servers can tempt players because it shares a strong country ranking with this map, but its unit and definition point to a different story."
+        "confusedWithIndicatorCode": "FX.OWN.TOTL.40.ZS",
+        "reason": "Account ownership, poorest 40% can tempt players because it shares a strong country ranking with this map, but its unit and definition point to a different story."
       },
       {
-        "confusedWithIndicatorCode": "LP.LPI.CUST.XQ",
-        "reason": "Logistics customs score can tempt players because it shares a strong country ranking with this map, but its unit and definition point to a different story."
+        "confusedWithIndicatorCode": "FX.OWN.TOTL.YG.ZS",
+        "reason": "Young-adult account ownership can tempt players because it shares a strong country ranking with this map, but its unit and definition point to a different story."
       },
       {
-        "confusedWithIndicatorCode": "NY.GDP.PCAP.PP.CD",
-        "reason": "GDP per capita, PPP can tempt players because it shares a strong country ranking with this map, but its unit and definition point to a different story."
+        "confusedWithIndicatorCode": "HD_HCIP_OVRL_TO",
+        "reason": "Human Capital Index can tempt players because it shares a strong country ranking with this map, but its unit and definition point to a different story."
       }
     ],
     "difficultyReason": "Standard difficulty: the map has readable regional structure, but the best answer still depends on checking the unit and country anchors.",
@@ -217,7 +217,7 @@
   },
   "editorialReview": {
     "status": "daily_eligible",
-    "reviewedAt": "2026-06-22",
+    "reviewedAt": "2026-07-02",
     "reviewedBy": "Codex editorial QA",
     "qualityScore": 4,
     "funScore": 4,

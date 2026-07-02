@@ -208,12 +208,12 @@
     "valuesReference": "https://api.worldbank.org/v2/country/all/indicator/EG.ELC.RNWX.ZS?format=json&per_page=20000&page=1&date=2015%3A2025",
     "license": "Creative Commons Attribution 4.0 International unless specifically labeled otherwise by World Bank metadata",
     "licenseReference": "https://www.worldbank.org/en/about/legal/terms-of-use-for-datasets",
-    "retrievedAt": "2026-06-27T17:15:02.665410+00:00",
-    "checksum": "233fb13cf363f420b077532e9fc2315528ec2caefcedff7140c4ca9a6214fbbb",
+    "retrievedAt": "2026-07-02T22:35:12.259762+00:00",
+    "checksum": "7c21e519f0a200296996998d2cb2199f5547fdc40c7db43eab385ae2d132aa3b",
     "sourceOrganization": "IEA Energy Statistics Data Browser, International Energy Agency (IEA), uri: https://www.iea.org/data-and-statistics/data-tools/energy-statistics-data-browser, publisher: International Energy Agency (IEA), date accessed: 2025-03-25"
   },
   "reviewStatus": "approved",
-  "contentVersion": "2026.06.22-exp2-qa1",
+  "contentVersion": "2026.07.02-exp4-content50",
   "editorial": {
     "shortHook": "A candidate map for non-hydro renewable electricity.",
     "patternNote": "The darkest countries include Denmark, El Salvador, Belize, while the lightest include Equatorial Guinea, Gabon, Nepal; that contrast is the fastest way to read the non-hydro renewable electricity pattern.",
@@ -238,12 +238,12 @@
         "reason": "Logistics timeliness score overlaps with part of the visible pattern, but the full country spread does not match."
       },
       {
-        "confusedWithIndicatorCode": "IT.NET.SECR.P6",
-        "reason": "Secure internet servers overlaps with part of the visible pattern, but the full country spread does not match."
+        "confusedWithIndicatorCode": "NV.SRV.TOTL.ZS",
+        "reason": "Services value added overlaps with part of the visible pattern, but the full country spread does not match."
       },
       {
-        "confusedWithIndicatorCode": "LP.LPI.OVRL.XQ",
-        "reason": "Logistics performance overlaps with part of the visible pattern, but the full country spread does not match."
+        "confusedWithIndicatorCode": "EG.IMP.CONS.ZS",
+        "reason": "Net energy imports lives in the same category, so it can feel plausible until the high and low countries are checked."
       }
     ],
     "difficultyReason": "Expert difficulty: the map can be mistaken for adjacent indicators unless players probe a high, low, and middle country.",
@@ -254,7 +254,7 @@
   },
   "editorialReview": {
     "status": "practice_eligible",
-    "reviewedAt": "2026-06-22",
+    "reviewedAt": "2026-07-02",
     "reviewedBy": "Codex editorial QA",
     "qualityScore": 3,
     "funScore": 4,

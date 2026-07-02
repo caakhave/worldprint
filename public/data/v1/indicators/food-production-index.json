@@ -207,12 +207,12 @@
     "valuesReference": "https://api.worldbank.org/v2/country/all/indicator/AG.PRD.FOOD.XD?format=json&per_page=20000&page=1&date=2015%3A2025",
     "license": "Creative Commons Attribution 4.0 International unless specifically labeled otherwise by World Bank metadata",
     "licenseReference": "https://www.worldbank.org/en/about/legal/terms-of-use-for-datasets",
-    "retrievedAt": "2026-06-27T17:14:36.810687+00:00",
-    "checksum": "27ae7da0d3b388b6e4df349cc143041df77e3416fc9d9370bbe80bcb0d0347b0",
+    "retrievedAt": "2026-07-02T22:21:29.352926+00:00",
+    "checksum": "1c824c25da24a5fbe3deaf7723f7c0fa3edb273e4d1a683b6145b76fd3d3e1dc",
     "sourceOrganization": "FAO electronic files and web site, Food and Agriculture Organization of the United Nations (FAO), publisher: Food and Agriculture Organization of the United Nations (FAO)"
   },
   "reviewStatus": "approved",
-  "contentVersion": "2026.06.22-exp2-qa1",
+  "contentVersion": "2026.07.02-exp4-content50",
   "editorial": {
     "shortHook": "A food-output trend map.",
     "patternNote": "The darkest countries include Senegal, Saudi Arabia, Oman, while the lightest include Gambia, The, Cuba, Hungary; that contrast is the fastest way to read the food production index pattern.",
@@ -253,7 +253,7 @@
   },
   "editorialReview": {
     "status": "daily_eligible",
-    "reviewedAt": "2026-06-22",
+    "reviewedAt": "2026-07-02",
     "reviewedBy": "Codex editorial QA",
     "qualityScore": 4,
     "funScore": 4,

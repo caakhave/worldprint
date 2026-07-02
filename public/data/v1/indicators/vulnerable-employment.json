@@ -202,12 +202,12 @@
     "valuesReference": "https://api.worldbank.org/v2/country/all/indicator/SL.EMP.VULN.ZS?format=json&per_page=20000&page=1&date=2015%3A2025",
     "license": "Creative Commons Attribution 4.0 International unless specifically labeled otherwise by World Bank metadata",
     "licenseReference": "https://www.worldbank.org/en/about/legal/terms-of-use-for-datasets",
-    "retrievedAt": "2026-06-27T17:14:12.998822+00:00",
-    "checksum": "ba1ef1d17ab39a7e8fc0b1ee118d7b084bf1bd980dc65c471e5b353a5253a752",
+    "retrievedAt": "2026-07-02T22:14:02.295441+00:00",
+    "checksum": "da3783dd1e849ec7be76a795588d57d3766708be982e017c179d525ef97fd413",
     "sourceOrganization": "ILO Modelled Estimates database (ILOEST), International Labour Organization (ILO), uri: https://ilostat.ilo.org/data/bulk/, publisher: ILOSTAT, type: estimates based on external database;\nStaff estimates, World Bank (WB)"
   },
   "reviewStatus": "approved",
-  "contentVersion": "2026.06.22-exp2-qa1",
+  "contentVersion": "2026.07.02-exp4-content50",
   "editorial": {
     "shortHook": "A labor-security map.",
     "patternNote": "The darkest countries include Chad, Sierra Leone, Madagascar, while the lightest include Qatar, United Arab Emirates, Saudi Arabia; that contrast is the fastest way to read the vulnerable employment pattern.",
@@ -248,7 +248,7 @@
   },
   "editorialReview": {
     "status": "retired",
-    "reviewedAt": "2026-06-22",
+    "reviewedAt": "2026-07-02",
     "reviewedBy": "Codex editorial QA",
     "qualityScore": 2,
     "funScore": 2,

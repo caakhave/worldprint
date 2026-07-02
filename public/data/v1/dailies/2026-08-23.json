@@ -2,32 +2,30 @@
   "schemaVersion": "1.1.0",
   "game": "worldprint",
   "date": "2026-08-23",
-  "contentVersion": "2026.06.22-exp2-qa1",
+  "contentVersion": "2026.07.02-exp4-content50",
   "roundIds": [
-    "worldprint-account-ownership",
-    "worldprint-life-expectancy",
-    "worldprint-industry-share",
     "worldprint-basic-sanitation",
-    "worldprint-urban-population"
+    "worldprint-agriculture-value-added",
+    "worldprint-maternal-mortality",
+    "worldprint-total-protected-areas",
+    "worldprint-manufacturing-share"
   ],
   "indicatorIds": [
-    "account-ownership",
-    "life-expectancy",
-    "industry-share",
     "basic-sanitation",
-    "urban-population"
+    "agriculture-value-added",
+    "maternal-mortality",
+    "total-protected-areas",
+    "manufacturing-share"
   ],
   "categoryMix": {
-    "development": 1,
     "health": 2,
-    "economy": 1,
-    "settlement": 1
+    "economy": 2,
+    "environment": 1
   },
   "mapDifficultyMix": {
-    "standard": 3,
-    "intro": 2
+    "standard": 5
   },
-  "generatedAt": "2026-06-27T17:16:22.625834+00:00",
+  "generatedAt": "2026-07-02T22:58:41.356772+00:00",
   "generatorVersion": "daily-manifest-v2",
   "varietyNotes": [
     "Selected with category, difficulty, repeat-cooldown, and same-day correlation safeguards."

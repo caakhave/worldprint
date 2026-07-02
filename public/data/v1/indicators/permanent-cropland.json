@@ -206,12 +206,12 @@
     "valuesReference": "https://api.worldbank.org/v2/country/all/indicator/AG.LND.CROP.ZS?format=json&per_page=20000&page=1&date=2015%3A2025",
     "license": "Creative Commons Attribution 4.0 International unless specifically labeled otherwise by World Bank metadata",
     "licenseReference": "https://www.worldbank.org/en/about/legal/terms-of-use-for-datasets",
-    "retrievedAt": "2026-06-27T17:14:48.555799+00:00",
-    "checksum": "5096211b79af15572b748763b0ff3167ae88be1e6cc88994052054894d97237e",
+    "retrievedAt": "2026-07-02T22:26:24.626337+00:00",
+    "checksum": "16cd1c4ba78bbc9d71bb2aa66e7cf3fe49fb53a2409e6d4fcde6118adfca5056",
     "sourceOrganization": "FAO electronic files and web site, Food and Agriculture Organization of the United Nations (FAO), publisher: Food and Agriculture Organization of the United Nations (FAO)"
   },
   "reviewStatus": "approved",
-  "contentVersion": "2026.06.22-exp2-qa1",
+  "contentVersion": "2026.07.02-exp4-content50",
   "editorial": {
     "shortHook": "A candidate map for permanent cropland.",
     "patternNote": "The darkest countries include Cote d'Ivoire, Malaysia, Sri Lanka, while the lightest include Botswana, Mongolia, Sweden; that contrast is the fastest way to read the permanent cropland pattern.",
@@ -252,7 +252,7 @@
   },
   "editorialReview": {
     "status": "daily_eligible",
-    "reviewedAt": "2026-06-22",
+    "reviewedAt": "2026-07-02",
     "reviewedBy": "Codex editorial QA",
     "qualityScore": 4,
     "funScore": 4,

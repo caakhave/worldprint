@@ -204,12 +204,12 @@
     "valuesReference": "https://api.worldbank.org/v2/country/all/indicator/SH.IMM.MEAS?format=json&per_page=20000&page=1&date=2015%3A2025",
     "license": "Creative Commons Attribution 4.0 International unless specifically labeled otherwise by World Bank metadata",
     "licenseReference": "https://www.worldbank.org/en/about/legal/terms-of-use-for-datasets",
-    "retrievedAt": "2026-06-27T17:14:21.454494+00:00",
-    "checksum": "dec055e946404953c5fefa707b96977566cec52ebd268563899fe1837b53f50e",
+    "retrievedAt": "2026-07-02T22:17:49.269684+00:00",
+    "checksum": "95a749d97c7dc4d0caccc15b3ad16f89463419783ffed85988552dfb94bc0441",
     "sourceOrganization": "World Health Organization (WHO), uri: http://www.who.int/immunization/monitoring_surveillance/en/;\nUN Children's Fund (UNICEF), uri: https://data.unicef.org/topic/child-health/immunization/"
   },
   "reviewStatus": "approved",
-  "contentVersion": "2026.06.22-exp2-qa1",
+  "contentVersion": "2026.07.02-exp4-content50",
   "editorial": {
     "shortHook": "A vaccine-coverage map with conflict and health-capacity clues.",
     "patternNote": "The darkest countries include Uzbekistan, Turkmenistan, Qatar, while the lightest include Montenegro, Central African Republic, Yemen, Rep.; that contrast is the fastest way to read the measles immunization pattern.",
@@ -238,8 +238,8 @@
         "reason": "DPT immunization can tempt players because it shares a strong country ranking with this map, but its unit and definition point to a different story."
       },
       {
-        "confusedWithIndicatorCode": "SH.STA.ODFC.ZS",
-        "reason": "Open defecation lives in the same category, so it can feel plausible until the high and low countries are checked."
+        "confusedWithIndicatorCode": "SH_UHC_SCI",
+        "reason": "UHC service coverage lives in the same category, so it can feel plausible until the high and low countries are checked."
       }
     ],
     "difficultyReason": "Standard difficulty: the map has readable regional structure, but the best answer still depends on checking the unit and country anchors.",
@@ -250,7 +250,7 @@
   },
   "editorialReview": {
     "status": "daily_eligible",
-    "reviewedAt": "2026-06-22",
+    "reviewedAt": "2026-07-02",
     "reviewedBy": "Codex editorial QA",
     "qualityScore": 4,
     "funScore": 4,

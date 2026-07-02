@@ -202,12 +202,12 @@
     "valuesReference": "https://api.worldbank.org/v2/country/all/indicator/SL.UEM.1524.ZS?format=json&per_page=20000&page=1&date=2015%3A2025",
     "license": "Creative Commons Attribution 4.0 International unless specifically labeled otherwise by World Bank metadata",
     "licenseReference": "https://www.worldbank.org/en/about/legal/terms-of-use-for-datasets",
-    "retrievedAt": "2026-06-27T17:15:13.652081+00:00",
-    "checksum": "f4121fb0193072d544ad10735194adb8f674c334245a62652f145454746616a6",
+    "retrievedAt": "2026-07-02T22:38:00.107051+00:00",
+    "checksum": "3dd9f60d640baec5cc5dff1714f04f5bdce4d4861ccd71e6cb35eb3916da30e8",
     "sourceOrganization": "ILO Modelled Estimates database (ILOEST), International Labour Organization (ILO), uri: https://ilostat.ilo.org/data/bulk/, publisher: ILOSTAT, type: external database, date accessed: January 17, 2026"
   },
   "reviewStatus": "approved",
-  "contentVersion": "2026.06.22-exp2-qa1",
+  "contentVersion": "2026.07.02-exp4-content50",
   "editorial": {
     "shortHook": "A candidate map for youth unemployment.",
     "patternNote": "The darkest countries include Djibouti, South Africa, Eswatini, while the lightest include Niger, Qatar, Cambodia; that contrast is the fastest way to read the youth unemployment pattern.",
@@ -248,7 +248,7 @@
   },
   "editorialReview": {
     "status": "practice_eligible",
-    "reviewedAt": "2026-06-22",
+    "reviewedAt": "2026-07-02",
     "reviewedBy": "Codex editorial QA",
     "qualityScore": 4,
     "funScore": 4,

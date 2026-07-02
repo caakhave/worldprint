@@ -208,12 +208,12 @@
     "valuesReference": "https://api.worldbank.org/v2/country/all/indicator/SM.POP.TOTL.ZS?format=json&per_page=20000&page=1&date=2015%3A2025",
     "license": "Creative Commons Attribution 4.0 International unless specifically labeled otherwise by World Bank metadata",
     "licenseReference": "https://www.worldbank.org/en/about/legal/terms-of-use-for-datasets",
-    "retrievedAt": "2026-06-27T17:14:30.225789+00:00",
-    "checksum": "128cc7673b919d7799fc84a45c696121cfa1ed81e15d46b55d93b974e820884f",
+    "retrievedAt": "2026-07-02T22:20:50.236417+00:00",
+    "checksum": "5d31c39ee62aea9204e0b4cb01e0630618c786bbd99624f40634e09c7ed63ebc",
     "sourceOrganization": "International Migrant Stock, United Nations (UN), publisher: UN Population Division"
   },
   "reviewStatus": "approved",
-  "contentVersion": "2026.06.22-exp2-qa1",
+  "contentVersion": "2026.07.02-exp4-content50",
   "editorial": {
     "shortHook": "The migrant-share map where Gulf states and small countries pop.",
     "patternNote": "The darkest countries include Qatar, United Arab Emirates, Kuwait, while the lightest include Cuba, China, Madagascar; that contrast is the fastest way to read the international migrant stock pattern.",
@@ -234,16 +234,16 @@
     ],
     "commonConfusions": [
       {
+        "confusedWithIndicatorCode": "NY.GNP.PCAP.PP.CD",
+        "reason": "GNI per capita, PPP can tempt players because it shares a strong country ranking with this map, but its unit and definition point to a different story."
+      },
+      {
         "confusedWithIndicatorCode": "EN.GHG.CO2.PC.CE.AR5",
         "reason": "CO2 emissions per capita overlaps with part of the visible pattern, but the full country spread does not match."
       },
       {
         "confusedWithIndicatorCode": "SH.H2O.SMDW.ZS",
         "reason": "Safely managed drinking water can tempt players because it shares a strong country ranking with this map, but its unit and definition point to a different story."
-      },
-      {
-        "confusedWithIndicatorCode": "NY.GDP.PCAP.CD",
-        "reason": "GDP per capita can tempt players because it shares a strong country ranking with this map, but its unit and definition point to a different story."
       }
     ],
     "difficultyReason": "Standard difficulty: the map has readable regional structure, but the best answer still depends on checking the unit and country anchors.",
@@ -254,7 +254,7 @@
   },
   "editorialReview": {
     "status": "daily_eligible",
-    "reviewedAt": "2026-06-22",
+    "reviewedAt": "2026-07-02",
     "reviewedBy": "Codex editorial QA",
     "qualityScore": 4,
     "funScore": 5,

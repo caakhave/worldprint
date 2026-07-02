@@ -1,8 +1,8 @@
 # Can You Geo? Beta QA Scorecards
 
-Generated: 2026-06-22T21:38:47.108Z
+Generated: 2026-07-02T23:00:30.051Z
 
-Content version: `2026.06.22-exp2-qa1`
+Content version: `2026.07.02-exp4-content50`
 
 ## 1. Population ages 65+
 
@@ -11,7 +11,7 @@ Content version: `2026.06.22-exp2-qa1`
 - Editorial status: Daily-ready
 - Category/topic: demography
 - Palette: Teal
-- Latest year: 2024
+- Latest year: 2025
 - Country coverage: 169 of 169
 - Missing-data notes: No missing mapped countries in the selected reference year.
 - Unit clarity: 4/5. Clear enough for play: percent of population.
@@ -37,7 +37,7 @@ Content version: `2026.06.22-exp2-qa1`
 - Missing-data notes: No missing mapped countries in the selected reference year.
 - Unit clarity: 4/5. Clear enough for play: years.
 - Map readability: 4/5. Strong visual pattern for a country-level choropleth.
-- Answer choice fairness: review. Review tier-level distractors: infant-mortality (high_correlation_or_visual_similarity); neonatal-mortality (high_correlation_or_visual_similarity); under-five-mortality (high_correlation_or_visual_similarity)
+- Answer choice fairness: review. Review tier-level distractors: infant-mortality (high_correlation_or_visual_similarity); neonatal-mortality (high_correlation_or_visual_similarity)
 - Distractor ambiguity: medium; top correlation Female adult mortality (high, Pearson -0.96, Spearman -0.98)
 - Difficulty fit: Daily fit: strong enough for ordinary Daily with balanced distractors.
 - Reveal copy quality: Pass: reveal has pattern explanation and why-it-matters copy.
@@ -58,14 +58,14 @@ Content version: `2026.06.22-exp2-qa1`
 - Missing-data notes: No missing mapped countries in the selected reference year.
 - Unit clarity: 4/5. Clear enough for play: percent of land area.
 - Map readability: 4/5. Strong visual pattern for a country-level choropleth.
-- Answer choice fairness: ok. Generated distractor selection has no tier-level fairness warning.
+- Answer choice fairness: review. Review tier-level distractors: arable-land-area (high_ambiguity_distractor)
 - Distractor ambiguity: medium; top correlation Arable land (review, Pearson 0.54, Spearman 0.57)
 - Difficulty fit: Practice fit: useful learning map, but not strong enough for default Daily.
 - Reveal copy quality: Pass: reveal has pattern explanation and why-it-matters copy.
 - Common confusion risk: AG.LND.ARBL.ZS: Arable land lives in the same category, so it can feel plausible until the high and low countries are checked.; AG.LND.FRST.ZS: Forest area overlaps with part of the visible pattern, but the full country spread does not match.; ER.H2O.INTR.PC: Freshwater per person overlaps with part of the visible pattern, but the full country spread does not match.
 - Mobile readability: Pass in smoke review: broad coverage and strong map-interest score should survive mobile scale.
-- Decision: Pass
-- Recommended fix: No immediate fix; include in outside beta and collect confusion notes.
+- Decision: Needs tweak
+- Recommended fix: Keep close lookalikes out of Explorer/Analyst, avoid same-day pairing with correlated maps, and ask beta testers what they confused it with.
 
 ## 4. Freshwater per person
 
@@ -95,17 +95,17 @@ Content version: `2026.06.22-exp2-qa1`
 - Editorial status: Daily-ready
 - Category/topic: economy
 - Palette: Gold
-- Latest year: 2024
-- Country coverage: 141 of 169
-- Missing-data notes: 28 of 169 mapped countries are missing (17%). Missing countries use the hatch pattern.
+- Latest year: 2025
+- Country coverage: 124 of 169
+- Missing-data notes: 45 of 169 mapped countries are missing (27%). Missing countries use the hatch pattern.
 - Unit clarity: 4/5. Clear enough for play: percent of GDP.
 - Map readability: 4/5. Strong visual pattern for a country-level choropleth.
-- Answer choice fairness: review. Review tier-level distractors: services-share (high_ambiguity_distractor); imports-share (high_correlation_or_visual_similarity); exports-share (high_correlation_or_visual_similarity)
-- Distractor ambiguity: medium; top correlation Exports (high, Pearson 0.96, Spearman 0.94)
+- Answer choice fairness: review. Review tier-level distractors: None flagged.
+- Distractor ambiguity: medium; top correlation Exports (high, Pearson 0.97, Spearman 0.94)
 - Difficulty fit: Daily fit: strong enough for ordinary Daily with balanced distractors.
 - Reveal copy quality: Pass: reveal has pattern explanation and why-it-matters copy.
-- Common confusion risk: NE.EXP.GNFS.ZS: Exports can tempt players because it shares a strong country ranking with this map, but its unit and definition point to a different story.; NE.IMP.GNFS.ZS: Imports can tempt players because it shares a strong country ranking with this map, but its unit and definition point to a different story.; ER.GDP.FWTL.M3.KD: Water productivity overlaps with part of the visible pattern, but the full country spread does not match.
-- Mobile readability: Needs real-device spot check: coverage is acceptable, but missing-data density or subtle regional contrast may matter on small screens.
+- Common confusion risk: NE.EXP.GNFS.ZS: Exports can tempt players because it shares a strong country ranking with this map, but its unit and definition point to a different story.; NE.IMP.GNFS.ZS: Imports can tempt players because it shares a strong country ranking with this map, but its unit and definition point to a different story.; TG.VAL.TOTL.GD.ZS: Merchandise trade share can tempt players because it shares a strong country ranking with this map, but its unit and definition point to a different story.
+- Mobile readability: Needs careful mobile review: lower coverage can make the hatch pattern visually busy.
 - Decision: Needs tweak
 - Recommended fix: Keep close lookalikes out of Explorer/Analyst, avoid same-day pairing with correlated maps, and ask beta testers what they confused it with.
 
@@ -121,7 +121,7 @@ Content version: `2026.06.22-exp2-qa1`
 - Missing-data notes: 27 of 169 mapped countries are missing (16%). Missing countries use the hatch pattern.
 - Unit clarity: 5/5. Clear enough for play: kg of oil equivalent per person.
 - Map readability: 4/5. Strong visual pattern for a country-level choropleth.
-- Answer choice fairness: review. Review tier-level distractors: electric-power-use (high_correlation_or_visual_similarity); gni-per-capita-ppp (high_correlation_or_visual_similarity)
+- Answer choice fairness: review. Review tier-level distractors: electric-power-use (high_correlation_or_visual_similarity)
 - Distractor ambiguity: medium; top correlation Electric power use (high, Pearson 0.86, Spearman 0.95)
 - Difficulty fit: Daily fit: strong enough for ordinary Daily with balanced distractors.
 - Reveal copy quality: Pass: reveal has pattern explanation and why-it-matters copy.
@@ -146,7 +146,7 @@ Content version: `2026.06.22-exp2-qa1`
 - Distractor ambiguity: low; top correlation Particulate emission damage (ok, Pearson -0.73, Spearman -0.84)
 - Difficulty fit: Daily fit: strong enough for ordinary Daily with balanced distractors.
 - Reveal copy quality: Pass: reveal has pattern explanation and why-it-matters copy.
-- Common confusion risk: NY.ADJ.DPEM.GN.ZS: Particulate emission damage can tempt players because it shares a strong country ranking with this map, but its unit and definition point to a different story.; SH.XPD.CHEX.PC.CD: Health spending per person can tempt players because it shares a strong country ranking with this map, but its unit and definition point to a different story.; IT.NET.USER.ZS: Internet users can tempt players because it shares a strong country ranking with this map, but its unit and definition point to a different story.
+- Common confusion risk: NY.ADJ.DPEM.GN.ZS: Particulate emission damage can tempt players because it shares a strong country ranking with this map, but its unit and definition point to a different story.; HD_HCIP_EDUC_TO: Human capital education index can tempt players because it shares a strong country ranking with this map, but its unit and definition point to a different story.; SH.XPD.CHEX.PC.CD: Health spending per person can tempt players because it shares a strong country ranking with this map, but its unit and definition point to a different story.
 - Mobile readability: Needs careful mobile review: lower coverage can make the hatch pattern visually busy.
 - Decision: Pass
 - Recommended fix: No immediate fix; include in outside beta and collect confusion notes.
@@ -184,11 +184,11 @@ Content version: `2026.06.22-exp2-qa1`
 - Missing-data notes: 6 of 169 mapped countries are missing (4%). Missing countries use the hatch pattern.
 - Unit clarity: 4/5. Clear enough for play: percent of total employment.
 - Map readability: 4/5. Strong visual pattern for a country-level choropleth.
-- Answer choice fairness: review. Review tier-level distractors: wage-salaried-workers (high_ambiguity_distractor); employment-agriculture (high_correlation_or_visual_similarity); services-share (high_ambiguity_distractor); employment-population-ratio (high_ambiguity_distractor); employment-agriculture (high_correlation_or_visual_similarity)
-- Distractor ambiguity: high; top correlation Employment in agriculture (high, Pearson -0.94, Spearman -0.94)
+- Answer choice fairness: review. Review tier-level distractors: female-self-employed (high_ambiguity_distractor); female-contributing-family-workers (high_ambiguity_distractor); contributing-family-workers (high_ambiguity_distractor); female-vulnerable-employment (high_ambiguity_distractor); wage-salaried-workers (high_ambiguity_distractor); employment-agriculture (high_correlation_or_visual_similarity); female-wage-salaried-workers (high_ambiguity_distractor); female-agricultural-employment (high_correlation_or_visual_similarity); employment-agriculture (high_correlation_or_visual_similarity); female-agricultural-employment (high_correlation_or_visual_similarity); female-services-employment (high_correlation_or_visual_similarity)
+- Distractor ambiguity: high; top correlation Male services employment (high, Pearson 0.96, Spearman 0.97)
 - Difficulty fit: Practice fit: useful learning map, but not strong enough for default Daily.
 - Reveal copy quality: Pass: reveal has pattern explanation and why-it-matters copy.
-- Common confusion risk: SL.AGR.EMPL.ZS: Employment in agriculture can tempt players because it shares a strong country ranking with this map, but its unit and definition point to a different story.; NV.AGR.EMPL.KD: Agriculture value per worker can tempt players because it shares a strong country ranking with this map, but its unit and definition point to a different story.; NY.GNP.PCAP.CD: GNI per capita can tempt players because it shares a strong country ranking with this map, but its unit and definition point to a different story.
+- Common confusion risk: SL.SRV.EMPL.MA.ZS: Male services employment can tempt players because it shares a strong country ranking with this map, but its unit and definition point to a different story.; SL.SRV.EMPL.FE.ZS: Female services employment can tempt players because it shares a strong country ranking with this map, but its unit and definition point to a different story.; SL.AGR.EMPL.ZS: Employment in agriculture can tempt players because it shares a strong country ranking with this map, but its unit and definition point to a different story.
 - Mobile readability: Pass in smoke review: broad coverage and strong map-interest score should survive mobile scale.
 - Decision: Needs tweak
 - Recommended fix: Keep close lookalikes out of Explorer/Analyst, avoid same-day pairing with correlated maps, and ask beta testers what they confused it with.
@@ -205,13 +205,13 @@ Content version: `2026.06.22-exp2-qa1`
 - Missing-data notes: No missing mapped countries in the selected reference year.
 - Unit clarity: 4/5. Clear enough for play: percent of population.
 - Map readability: 5/5. Strong visual pattern for a country-level choropleth.
-- Answer choice fairness: review. Review tier-level distractors: None flagged.
-- Distractor ambiguity: medium; top correlation CO2 emissions per capita (review, Pearson 0.73, Spearman 0.60)
+- Answer choice fairness: ok. Generated distractor selection has no tier-level fairness warning.
+- Distractor ambiguity: medium; top correlation GNI per capita, PPP (ok, Pearson 0.73, Spearman 0.69)
 - Difficulty fit: Daily fit: strong enough for ordinary Daily with balanced distractors.
 - Reveal copy quality: Pass: reveal has pattern explanation and why-it-matters copy.
-- Common confusion risk: EN.GHG.CO2.PC.CE.AR5: CO2 emissions per capita overlaps with part of the visible pattern, but the full country spread does not match.; SH.H2O.SMDW.ZS: Safely managed drinking water can tempt players because it shares a strong country ranking with this map, but its unit and definition point to a different story.; NY.GDP.PCAP.CD: GDP per capita can tempt players because it shares a strong country ranking with this map, but its unit and definition point to a different story.
+- Common confusion risk: NY.GNP.PCAP.PP.CD: GNI per capita, PPP can tempt players because it shares a strong country ranking with this map, but its unit and definition point to a different story.; EN.GHG.CO2.PC.CE.AR5: CO2 emissions per capita overlaps with part of the visible pattern, but the full country spread does not match.; SH.H2O.SMDW.ZS: Safely managed drinking water can tempt players because it shares a strong country ranking with this map, but its unit and definition point to a different story.
 - Mobile readability: Pass in smoke review: broad coverage and strong map-interest score should survive mobile scale.
-- Decision: Needs tweak
+- Decision: Pass
 - Recommended fix: No immediate fix; include in outside beta and collect confusion notes.
 
 ## 11. Female adult mortality
@@ -242,17 +242,17 @@ Content version: `2026.06.22-exp2-qa1`
 - Editorial status: Expert-only
 - Category/topic: economy
 - Palette: Gold
-- Latest year: 2024
-- Country coverage: 141 of 169
-- Missing-data notes: 28 of 169 mapped countries are missing (17%). Missing countries use the hatch pattern.
+- Latest year: 2025
+- Country coverage: 124 of 169
+- Missing-data notes: 45 of 169 mapped countries are missing (27%). Missing countries use the hatch pattern.
 - Unit clarity: 4/5. Clear enough for play: percent of GDP.
 - Map readability: 4/5. Strong visual pattern for a country-level choropleth.
 - Answer choice fairness: review. Review tier-level distractors: imports-share (high_ambiguity_distractor)
-- Distractor ambiguity: high; top correlation Trade (high, Pearson 0.96, Spearman 0.94)
+- Distractor ambiguity: high; top correlation Trade (high, Pearson 0.97, Spearman 0.94)
 - Difficulty fit: Expert-only fit: subtle or correlated enough to keep out of ordinary Daily.
 - Reveal copy quality: Pass: reveal has pattern explanation and why-it-matters copy.
-- Common confusion risk: NE.TRD.GNFS.ZS: Trade can tempt players because it shares a strong country ranking with this map, but its unit and definition point to a different story.; NE.IMP.GNFS.ZS: Imports can tempt players because it shares a strong country ranking with this map, but its unit and definition point to a different story.; ER.GDP.FWTL.M3.KD: Water productivity overlaps with part of the visible pattern, but the full country spread does not match.
-- Mobile readability: Needs real-device spot check: coverage is acceptable, but missing-data density or subtle regional contrast may matter on small screens.
+- Common confusion risk: NE.TRD.GNFS.ZS: Trade can tempt players because it shares a strong country ranking with this map, but its unit and definition point to a different story.; TG.VAL.TOTL.GD.ZS: Merchandise trade share can tempt players because it shares a strong country ranking with this map, but its unit and definition point to a different story.; NE.IMP.GNFS.ZS: Imports can tempt players because it shares a strong country ranking with this map, but its unit and definition point to a different story.
+- Mobile readability: Needs careful mobile review: lower coverage can make the hatch pattern visually busy.
 - Decision: Needs tweak
 - Recommended fix: Keep close lookalikes out of Explorer/Analyst, avoid same-day pairing with correlated maps, and ask beta testers what they confused it with.
 
@@ -268,7 +268,7 @@ Content version: `2026.06.22-exp2-qa1`
 - Missing-data notes: 4 of 169 mapped countries are missing (2%). Missing countries use the hatch pattern.
 - Unit clarity: 5/5. Clear enough for play: metric tons CO2e per capita.
 - Map readability: 4/5. Strong visual pattern for a country-level choropleth.
-- Answer choice fairness: review. Review tier-level distractors: adult-mortality-female (high_ambiguity_distractor); energy-use (high_correlation_or_visual_similarity)
+- Answer choice fairness: review. Review tier-level distractors: co2-emissions-change (high_ambiguity_distractor); energy-use (high_correlation_or_visual_similarity)
 - Distractor ambiguity: high; top correlation CO2 emissions per capita (high, Pearson 0.96, Spearman 0.95)
 - Difficulty fit: Expert-only fit: subtle or correlated enough to keep out of ordinary Daily.
 - Reveal copy quality: Pass: reveal has pattern explanation and why-it-matters copy.
@@ -289,11 +289,11 @@ Content version: `2026.06.22-exp2-qa1`
 - Missing-data notes: 35 of 169 mapped countries are missing (21%). Missing countries use the hatch pattern.
 - Unit clarity: 5/5. Clear enough for play: subscriptions per 100 people.
 - Map readability: 4/5. Strong visual pattern for a country-level choropleth.
-- Answer choice fairness: review. Review tier-level distractors: bank-branches (high_ambiguity_distractor)
+- Answer choice fairness: ok. Generated distractor selection has no tier-level fairness warning.
 - Distractor ambiguity: medium; top correlation Health spending per person (high, Pearson 0.70, Spearman 0.91)
 - Difficulty fit: Expert-only fit: subtle or correlated enough to keep out of ordinary Daily.
 - Reveal copy quality: Pass: reveal has pattern explanation and why-it-matters copy.
-- Common confusion risk: SH.XPD.CHEX.PC.CD: Health spending per person can tempt players because it shares a strong country ranking with this map, but its unit and definition point to a different story.; NY.GNP.PCAP.PP.CD: GNI per capita, PPP can tempt players because it shares a strong country ranking with this map, but its unit and definition point to a different story.; NY.GDP.PCAP.PP.CD: GDP per capita, PPP can tempt players because it shares a strong country ranking with this map, but its unit and definition point to a different story.
+- Common confusion risk: SH.XPD.CHEX.PC.CD: Health spending per person can tempt players because it shares a strong country ranking with this map, but its unit and definition point to a different story.; NY.GNP.PCAP.CD: GNI per capita can tempt players because it shares a strong country ranking with this map, but its unit and definition point to a different story.; NY.GNP.PCAP.PP.CD: GNI per capita, PPP can tempt players because it shares a strong country ranking with this map, but its unit and definition point to a different story.
 - Mobile readability: Needs careful mobile review: lower coverage can make the hatch pattern visually busy.
 - Decision: Needs tweak
 - Recommended fix: Keep close lookalikes out of Explorer/Analyst, avoid same-day pairing with correlated maps, and ask beta testers what they confused it with.
@@ -305,17 +305,17 @@ Content version: `2026.06.22-exp2-qa1`
 - Editorial status: Practice-only
 - Category/topic: development
 - Palette: Indigo
-- Latest year: 2024
-- Country coverage: 157 of 169
-- Missing-data notes: 12 of 169 mapped countries are missing (7%). Missing countries use the hatch pattern.
+- Latest year: 2025
+- Country coverage: 154 of 169
+- Missing-data notes: 15 of 169 mapped countries are missing (9%). Missing countries use the hatch pattern.
 - Unit clarity: 3/5. Needs wording review: current international dollars.
 - Map readability: 4/5. Strong visual pattern for a country-level choropleth.
-- Answer choice fairness: review. Review tier-level distractors: gdp-per-capita (high_correlation_or_visual_similarity)
+- Answer choice fairness: review. Review tier-level distractors: young-adult-account-ownership (high_ambiguity_distractor); human-capital-index (high_correlation_or_visual_similarity); gdp-per-capita (high_correlation_or_visual_similarity)
 - Distractor ambiguity: high; top correlation GDP per capita, PPP (high, Pearson 0.99, Spearman 1.00)
 - Difficulty fit: Practice fit: useful learning map, but not strong enough for default Daily.
 - Reveal copy quality: Pass: reveal has pattern explanation and why-it-matters copy.
 - Common confusion risk: NY.GDP.PCAP.PP.CD: GDP per capita, PPP can tempt players because it shares a strong country ranking with this map, but its unit and definition point to a different story.; NY.GNP.PCAP.CD: GNI per capita can tempt players because it shares a strong country ranking with this map, but its unit and definition point to a different story.; NY.GDP.PCAP.CD: GDP per capita can tempt players because it shares a strong country ranking with this map, but its unit and definition point to a different story.
-- Mobile readability: Pass in smoke review: broad coverage and strong map-interest score should survive mobile scale.
+- Mobile readability: Needs real-device spot check: coverage is acceptable, but missing-data density or subtle regional contrast may matter on small screens.
 - Decision: Needs tweak
 - Recommended fix: Keep close lookalikes out of Explorer/Analyst, avoid same-day pairing with correlated maps, and ask beta testers what they confused it with.
 

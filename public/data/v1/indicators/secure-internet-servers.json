@@ -16,7 +16,7 @@
     "ARE": 4192.27408432243,
     "ARG": 5453.43428098629,
     "ARM": 1735.28926982034,
-    "AUS": 44295.1916570222,
+    "AUS": 44299.3061115854,
     "AUT": 47132.0383936251,
     "AZE": 541.026362293599,
     "BDI": 10.6066536036355,
@@ -35,7 +35,7 @@
     "BTN": 1339.18870432229,
     "BWA": 471.215589461747,
     "CAF": 1.68833678191754,
-    "CAN": 39712.7546032744,
+    "CAN": 39738.0380540323,
     "CHE": 167357.645513638,
     "CHL": 11912.6095617298,
     "CHN": 1413.32103124612,
@@ -63,8 +63,8 @@
     "FJI": 221.795379765371,
     "FRA": 57274.6363971705,
     "GAB": 87.0437881456601,
-    "GBR": 68449.1953890157,
-    "GEO": 5454.97744729977,
+    "GBR": 68394.8557324519,
+    "GEO": 5293.35205761652,
     "GHA": 48.9145074910361,
     "GIN": 12.2672068756,
     "GMB": 58.6959073735103,
@@ -84,7 +84,7 @@
     "IRN": 7225.71087209777,
     "IRQ": 34.5119560905403,
     "ISL": 88084.0142197016,
-    "ISR": 12353.0237407764,
+    "ISR": 12318.6898882246,
     "ITA": 30647.1608155582,
     "JAM": 191.957170656969,
     "JOR": 212.241523236292,
@@ -125,7 +125,7 @@
     "NLD": 198682.41199523,
     "NOR": 35469.8678942673,
     "NPL": 541.228652445205,
-    "NZL": 18718.2978723404,
+    "NZL": 18709.4517958412,
     "OMN": 286.658923972525,
     "PAK": 109.651337877655,
     "PAN": 2234.48741988012,
@@ -133,14 +133,14 @@
     "PHL": 131.556605552984,
     "PNG": 88.1198717685677,
     "POL": 41131.8530670488,
-    "PRI": 471.077437451125,
+    "PRI": 471.191289612152,
     "PRK": 10.4155569475671,
     "PRT": 28710.2532558007,
     "PRY": 775.275131029723,
     "PSE": 427.100601381847,
     "QAT": 445.444117933167,
     "ROU": 27229.5998846093,
-    "RUS": 26130.0172319629,
+    "RUS": 26105.3190580658,
     "RWA": 160.978445933022,
     "SAU": 482.77237461006,
     "SDN": 2.3984635719866,
@@ -158,7 +158,7 @@
     "SWZ": 116.669965610522,
     "SYR": 113.89078481694,
     "TCD": 1.23158030029179,
-    "TGO": 90.0660792858947,
+    "TGO": 101.944220214742,
     "THA": 3149.99672587537,
     "TJK": 152.489012529309,
     "TKM": 188.271449268517,
@@ -170,7 +170,7 @@
     "UGA": 53.7637719430767,
     "UKR": 9936.86751062547,
     "URY": 4640.65897593684,
-    "USA": 196554.134852003,
+    "USA": 196616.101319598,
     "UZB": 966.617245834433,
     "VEN": 246.677206628298,
     "VNM": 5733.7485681175,
@@ -192,7 +192,7 @@
       388.564024255174,
       1339.18870432229,
       7475.46106293289,
-      39712.7546032744,
+      39738.0380540323,
       464560.075958108
     ]
   },
@@ -208,12 +208,12 @@
     "valuesReference": "https://api.worldbank.org/v2/country/all/indicator/IT.NET.SECR.P6?format=json&per_page=20000&page=1&date=2015%3A2025",
     "license": "Creative Commons Attribution 4.0 International unless specifically labeled otherwise by World Bank metadata",
     "licenseReference": "https://www.worldbank.org/en/about/legal/terms-of-use-for-datasets",
-    "retrievedAt": "2026-06-27T17:14:02.501136+00:00",
-    "checksum": "efef0e0520c47a12edce66c8839e2a931cbf46c376d1543b6ce745b040226b1a",
+    "retrievedAt": "2026-07-02T22:08:58.559492+00:00",
+    "checksum": "eb4e98037d677b937e4b6e01019a260f4bf91e3bef65d4180889dbe31a23c2d0",
     "sourceOrganization": "Secure Server Survey, Netcraft, uri: http://www.netcraft.com/;\nWorld Bank population estimates, World Bank (WB)"
   },
   "reviewStatus": "approved",
-  "contentVersion": "2026.06.22-exp2-qa1",
+  "contentVersion": "2026.07.02-exp4-content50",
   "editorial": {
     "shortHook": "A digital-infrastructure outlier map.",
     "patternNote": "The darkest countries include Belize, Denmark, Cyprus, while the lightest include Chad, Central African Republic, Eritrea; that contrast is the fastest way to read the secure internet servers pattern.",
@@ -234,16 +234,16 @@
     ],
     "commonConfusions": [
       {
+        "confusedWithIndicatorCode": "HD_HCIP_EDUC_TO",
+        "reason": "Human capital education index can tempt players because it shares a strong country ranking with this map, but its unit and definition point to a different story."
+      },
+      {
+        "confusedWithIndicatorCode": "HD_HCIP_OVRL_TO",
+        "reason": "Human Capital Index can tempt players because it shares a strong country ranking with this map, but its unit and definition point to a different story."
+      },
+      {
         "confusedWithIndicatorCode": "SH.DYN.MORT",
         "reason": "Under-5 mortality can tempt players because it shares a strong country ranking with this map, but its unit and definition point to a different story."
-      },
-      {
-        "confusedWithIndicatorCode": "SP.DYN.IMRT.IN",
-        "reason": "Infant mortality can tempt players because it shares a strong country ranking with this map, but its unit and definition point to a different story."
-      },
-      {
-        "confusedWithIndicatorCode": "SH.XPD.CHEX.PC.CD",
-        "reason": "Health spending per person can tempt players because it shares a strong country ranking with this map, but its unit and definition point to a different story."
       }
     ],
     "difficultyReason": "Expert difficulty: the map can be mistaken for adjacent indicators unless players probe a high, low, and middle country.",
@@ -255,7 +255,7 @@
   },
   "editorialReview": {
     "status": "expert_only",
-    "reviewedAt": "2026-06-22",
+    "reviewedAt": "2026-07-02",
     "reviewedBy": "Codex editorial QA",
     "qualityScore": 3,
     "funScore": 4,

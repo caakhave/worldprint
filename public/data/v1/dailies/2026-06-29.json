@@ -2,32 +2,30 @@
   "schemaVersion": "1.1.0",
   "game": "worldprint",
   "date": "2026-06-29",
-  "contentVersion": "2026.06.22-exp2-qa1",
+  "contentVersion": "2026.07.02-exp4-content50",
   "roundIds": [
-    "worldprint-agriculture-value-added",
-    "worldprint-physicians",
-    "worldprint-adolescent-fertility",
-    "worldprint-food-production-index",
-    "worldprint-open-defecation"
+    "worldprint-electric-transmission-losses",
+    "worldprint-renewable-electricity",
+    "worldprint-ncd-premature-mortality",
+    "worldprint-permanent-cropland",
+    "worldprint-maternal-mortality"
   ],
   "indicatorIds": [
-    "agriculture-value-added",
-    "physicians",
-    "adolescent-fertility",
-    "food-production-index",
-    "open-defecation"
+    "electric-transmission-losses",
+    "renewable-electricity",
+    "ncd-premature-mortality",
+    "permanent-cropland",
+    "maternal-mortality"
   ],
   "categoryMix": {
-    "economy": 1,
+    "energy": 2,
     "health": 2,
-    "demography": 1,
-    "agriculture": 1
+    "land": 1
   },
   "mapDifficultyMix": {
-    "standard": 4,
-    "expert": 1
+    "standard": 5
   },
-  "generatedAt": "2026-06-27T17:16:22.617497+00:00",
+  "generatedAt": "2026-07-02T22:58:41.348624+00:00",
   "generatorVersion": "daily-manifest-v2",
   "varietyNotes": [
     "Selected with category, difficulty, repeat-cooldown, and same-day correlation safeguards."

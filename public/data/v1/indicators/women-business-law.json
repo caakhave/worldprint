@@ -203,12 +203,12 @@
     "valuesReference": "https://api.worldbank.org/v2/country/all/indicator/GD_WBL_OVL_LAW?format=json&per_page=20000&page=1&date=2015%3A2025",
     "license": "Creative Commons Attribution 4.0 International unless specifically labeled otherwise by World Bank metadata",
     "licenseReference": "https://www.worldbank.org/en/about/legal/terms-of-use-for-datasets",
-    "retrievedAt": "2026-06-27T17:15:25.270225+00:00",
-    "checksum": "d53e4eeb766b89e3269062b87f591c9245d8a7c9aa685cbf7f4cc1687ea7e8d4",
+    "retrievedAt": "2026-07-02T22:40:19.179823+00:00",
+    "checksum": "254acfd8509b276d23f8d844ba287f30d0bceae9216b130d4689c1ef675b7bfd",
     "sourceOrganization": "Women, Business and the Law, World Bank (WB), uri: https://wbl.worldbank.org/en/wbl-data, date accessed: 2026-03-24, date published: 2026-02-24"
   },
   "reviewStatus": "approved",
-  "contentVersion": "2026.06.22-exp2-qa1",
+  "contentVersion": "2026.07.02-exp4-content50",
   "editorial": {
     "shortHook": "A candidate map for women, business and the law index.",
     "patternNote": "The darkest countries include Spain, Croatia, Slovenia, while the lightest include Afghanistan, Yemen, Rep., West Bank and Gaza; that contrast is the fastest way to read the women, business and the law index pattern.",
@@ -249,7 +249,7 @@
   },
   "editorialReview": {
     "status": "expert_only",
-    "reviewedAt": "2026-06-22",
+    "reviewedAt": "2026-07-02",
     "reviewedBy": "Codex editorial QA",
     "qualityScore": 4,
     "funScore": 4,

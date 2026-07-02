@@ -24,7 +24,7 @@ describe("generated content schemas", () => {
   it("parses the generated manifest and indicator artifact", () => {
     const manifest = ManifestSchema.parse(manifestJson);
     const indicator = IndicatorArtifactSchema.parse(fertilityJson);
-    expect(manifest.indicators.length).toBe(226);
+    expect(manifest.indicators.length).toBe(276);
     expect(indicator.reviewStatus).toBe("approved");
     expect(indicator.stats.coverage).toBeGreaterThanOrEqual(120);
     expect(indicator.editorial.patternNote).toContain("darkest");
@@ -42,7 +42,7 @@ describe("generated content schemas", () => {
 
   it("validates curated round choices", () => {
     const rounds = RoundsArtifactSchema.parse(roundsJson).rounds;
-    expect(rounds.length).toBe(175);
+    expect(rounds.length).toBe(225);
     for (const round of rounds) {
       expect(round.editorialStatus).not.toBe("retired");
       expect(round.editorialStatus).not.toBe("needs_review");
@@ -65,14 +65,14 @@ describe("generated content schemas", () => {
       approvedStatusCounts: Record<string, number>;
       indicators: Array<{ id: string; providerCode: string; approvalStatus: "approved" | "draft"; editorialReview: unknown }>;
     };
-    expect(registry.candidateCount).toBe(285);
-    expect(registry.approvedCount).toBe(226);
+    expect(registry.candidateCount).toBe(335);
+    expect(registry.approvedCount).toBe(276);
     expect(registry.draftCount).toBe(59);
-    expect(registry.statusCounts).toMatchObject({ daily_eligible: 65, practice_eligible: 47, expert_only: 73, needs_review: 91, retired: 9 });
-    expect(registry.approvedStatusCounts).toMatchObject({ daily_eligible: 62, practice_eligible: 43, expert_only: 70, needs_review: 43, retired: 8 });
+    expect(registry.statusCounts).toMatchObject({ daily_eligible: 72, practice_eligible: 64, expert_only: 99, needs_review: 91, retired: 9 });
+    expect(registry.approvedStatusCounts).toMatchObject({ daily_eligible: 69, practice_eligible: 60, expert_only: 96, needs_review: 43, retired: 8 });
 
     const providerCodes = new Set(registry.indicators.map((row) => row.providerCode));
-    expect(candidateIntakeJson.candidates).toHaveLength(185);
+    expect(candidateIntakeJson.candidates).toHaveLength(235);
     expect(batch2CandidateCodes.filter((code) => !providerCodes.has(code))).toEqual([]);
 
     const manifest = ManifestSchema.parse(manifestJson);
@@ -182,11 +182,11 @@ describe("generated content schemas", () => {
     };
     expect(scorecards.contentVersion).toBe(ManifestSchema.parse(manifestJson).contentVersion);
     expect(scorecards.summary).toMatchObject({
-      candidateCount: 285,
-      sourceValidCount: 226,
+      candidateCount: 335,
+      sourceValidCount: 276,
       draftHeldCount: 59,
-      playableCount: 175,
-      dailyEligibleCount: 62
+      playableCount: 225,
+      dailyEligibleCount: 69
     });
     expect(scorecards.summary.candidateCount).toBe(registry.candidateCount);
     expect(scorecards.summary.sourceValidCount).toBe(registry.approvedCount);
@@ -291,7 +291,7 @@ describe("generated content schemas", () => {
       rows: unknown[];
     };
 
-    expect(promoted.contentVersion).toBe(scorecards.contentVersion);
+    expect(promoted.contentVersion).toBe("2026.06.22-exp2-qa1");
     expect(promoted.sourceBatchReportVersion).toBe(batch2Summary.contentVersion);
     expect(promoted.promotedCount).toBe(52);
     expect(promoted.originalStatusCounts).toMatchObject({ daily_eligible: 16, practice_eligible: 18, expert_only: 18 });
@@ -299,7 +299,7 @@ describe("generated content schemas", () => {
     expect(promoted.rows).toHaveLength(52);
     expect(promoted.rows.every((row) => row.batch2Promoted)).toBe(true);
 
-    expect(editorialQa.contentVersion).toBe(scorecards.contentVersion);
+    expect(editorialQa.contentVersion).toBe("2026.06.22-exp2-qa1");
     expect(editorialQa.triageScope).toMatchObject({
       includesAllPromotedBatch2Maps: true,
       promotedMapCount: 52,
@@ -313,7 +313,7 @@ describe("generated content schemas", () => {
     expect(editorialQa.summary.demotedOrRetired).toHaveLength(23);
     expect(editorialQa.scorecards).toHaveLength(52);
 
-    expect(needsReviewTriage.contentVersion).toBe(scorecards.contentVersion);
+    expect(needsReviewTriage.contentVersion).toBe("2026.06.22-exp2-qa1");
     expect(needsReviewTriage.reviewedSourceValidNeedsReviewCount).toBe(27);
     expect(needsReviewTriage.promoted.map((row) => row.id)).toEqual(["employment-industry", "urban-slum-population"]);
     expect(needsReviewTriage.promoted.every((row) => row.to === "practice_eligible")).toBe(true);
@@ -361,10 +361,10 @@ describe("generated content schemas", () => {
 
     expect(sample.contentVersion).toBe(ManifestSchema.parse(manifestJson).contentVersion);
     expect(sample.contentCounts).toMatchObject({
-      candidateCount: 198,
-      playableCount: 125,
-      dailyReadyCount: 50,
-      draftHeldCount: 31
+      candidateCount: 335,
+      playableCount: 225,
+      dailyReadyCount: 69,
+      draftHeldCount: 59
     });
     expect(sample.summary.sampleCount).toBeGreaterThanOrEqual(12);
     expect(sample.summary.sampleCount).toBeLessThanOrEqual(15);
@@ -413,11 +413,11 @@ describe("generated content schemas", () => {
     expect(packsReport.contentVersion).toBe(manifest.contentVersion);
     expect(linksReport.contentVersion).toBe(manifest.contentVersion);
     expect(packsReport.contentCounts).toMatchObject({
-      candidateCount: 198,
-      sourceValidCount: 167,
-      draftHeldCount: 31,
-      playableCount: 125,
-      dailyReadyCount: 50
+      candidateCount: 335,
+      sourceValidCount: 276,
+      draftHeldCount: 59,
+      playableCount: 225,
+      dailyReadyCount: 69
     });
     expect(packsReport.packs.map((pack) => pack.id)).toEqual(["intro-pack", "daily-ready-stress-pack", "ambiguity-edge-pack", "expert-pack"]);
     expect(packsReport.packs.find((pack) => pack.id === "intro-pack")?.mapCount).toBe(5);

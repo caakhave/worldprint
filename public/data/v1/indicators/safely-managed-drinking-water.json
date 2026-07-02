@@ -6,7 +6,7 @@
   "shortTitle": "Safely managed drinking water",
   "category": "health",
   "difficulty": "standard",
-  "definition": "The percentage of people using drinking water from an improved source that is accessible on premises, available when needed and free from faecal and priority chemical contamination. Improved water sources include piped water, boreholes or tubewells, protected dug wells, protected springs, and packaged or delivered water.",
+  "definition": "The percentage of people using drinking water from an improved source that is accessible on premises, available when needed and free from fecal and priority chemical contamination. Improved water sources include piped water, boreholes or tubewells, protected dug wells, protected springs, and packaged or delivered water.",
   "unit": "percent of population",
   "year": 2024,
   "valuesByIso3": {
@@ -161,12 +161,12 @@
     "valuesReference": "https://api.worldbank.org/v2/country/all/indicator/SH.H2O.SMDW.ZS?format=json&per_page=20000&page=1&date=2015%3A2025",
     "license": "Creative Commons Attribution 4.0 International unless specifically labeled otherwise by World Bank metadata",
     "licenseReference": "https://www.worldbank.org/en/about/legal/terms-of-use-for-datasets",
-    "retrievedAt": "2026-06-27T17:14:40.484070+00:00",
-    "checksum": "84422ee69b0335a7d3c13861467b49d09100914115460e27a27700789f18f973",
+    "retrievedAt": "2026-07-02T22:22:50.044887+00:00",
+    "checksum": "19744a902cb52ac7b8458da262798f1964d638a4633db31677f5bb2e0410fd1d",
     "sourceOrganization": "WHO/UNICEF Joint Monitoring Programme (JMP) for Water Supply, Sanitation and Hygiene, World Health Organization (WHO), uri: washdata.org, note: Aggregate data by groups are computed based on the groupings for the World Bank fiscal year in which the data was released by the WHO/UNICEF Joint Monitoring Programme (JMP) for Water Supply, Sanitation and Hygiene., publisher: WHO/UNICEF Joint Monitoring Programme (JMP) for Water Supply, Sanitation and Hygiene (washdata.org), date accessed: 2025-09-30, date published: 2025-08-25;\nUN Children's Fund (UNICEF), uri: washdata.org, note: WHO/UNICEF Joint Monitoring Programme (JMP) for Water Supply, Sanitation and Hygiene"
   },
   "reviewStatus": "approved",
-  "contentVersion": "2026.06.22-exp2-qa1",
+  "contentVersion": "2026.07.02-exp4-content50",
   "editorial": {
     "shortHook": "A candidate map for safely managed drinking water.",
     "patternNote": "The darkest countries include New Zealand, Kuwait, Iceland, while the lightest include Central African Republic, Chad, Sierra Leone; that contrast is the fastest way to read the safely managed drinking water pattern.",
@@ -207,7 +207,7 @@
   },
   "editorialReview": {
     "status": "practice_eligible",
-    "reviewedAt": "2026-06-22",
+    "reviewedAt": "2026-07-02",
     "reviewedBy": "Codex editorial QA",
     "qualityScore": 3,
     "funScore": 4,

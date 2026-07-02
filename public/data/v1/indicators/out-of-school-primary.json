@@ -159,12 +159,12 @@
     "valuesReference": "https://api.worldbank.org/v2/country/all/indicator/SE.PRM.UNER.ZS?format=json&per_page=20000&page=1&date=2015%3A2025",
     "license": "Creative Commons Attribution 4.0 International unless specifically labeled otherwise by World Bank metadata",
     "licenseReference": "https://www.worldbank.org/en/about/legal/terms-of-use-for-datasets",
-    "retrievedAt": "2026-06-27T17:15:47.877738+00:00",
-    "checksum": "2f237bf25bd3664751527ec565d41cacf7a5509fc7a546591a1800ea7d47b575",
+    "retrievedAt": "2026-07-02T22:44:36.328080+00:00",
+    "checksum": "9b97e4d6cb9fd8a34f72e3ae7a5205913ffd6a7bdcddc8f8531152b2fa62a0ba",
     "sourceOrganization": "Data API, UN Educational, Scientific and Cultural Organization (UNESCO), uri: https://databrowser.uis.unesco.org/resources, note: The data are obtained through the UIS API.  Detailed documentation is available at: https://api.uis.unesco.org/api/public/documentation/, publisher: UNESCO Institute for Statistics (UIS), type: Bulk file (csv), date accessed: 2026-03-19, date published: 2026-02"
   },
   "reviewStatus": "approved",
-  "contentVersion": "2026.06.22-exp2-qa1",
+  "contentVersion": "2026.07.02-exp4-content50",
   "editorial": {
     "shortHook": "A map of who is missing from primary school.",
     "patternNote": "The darkest countries include Burkina Faso, Suriname, Niger, while the lightest include Korea, Rep., Uruguay, Switzerland; that contrast is the fastest way to read the out-of-school primary age pattern.",
@@ -193,8 +193,8 @@
         "reason": "Net primary enrollment lives in the same category, so it can feel plausible until the high and low countries are checked."
       },
       {
-        "confusedWithIndicatorCode": "SE.SEC.ENRR",
-        "reason": "Secondary enrollment lives in the same category, so it can feel plausible until the high and low countries are checked."
+        "confusedWithIndicatorCode": "HD_HCIP_EDUC_TO",
+        "reason": "Human capital education index can tempt players because it shares a strong country ranking with this map, but its unit and definition point to a different story."
       }
     ],
     "difficultyReason": "Standard difficulty: the map has readable regional structure, but the best answer still depends on checking the unit and country anchors.",
@@ -205,7 +205,7 @@
   },
   "editorialReview": {
     "status": "daily_eligible",
-    "reviewedAt": "2026-06-22",
+    "reviewedAt": "2026-07-02",
     "reviewedBy": "Codex editorial QA",
     "qualityScore": 4,
     "funScore": 4,

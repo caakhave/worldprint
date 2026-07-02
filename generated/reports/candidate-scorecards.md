@@ -1,13 +1,13 @@
 # WORLDPRINT Candidate Scorecards
 
-Generated: 2026-06-27T17:16:22.054510+00:00
-Content version: 2026.06.22-exp2-qa1
+Generated: 2026-07-02T22:58:40.380997+00:00
+Content version: 2026.07.02-exp4-content50
 
-- Candidate count: 285
-- Source-valid count: 226
+- Candidate count: 335
+- Source-valid count: 276
 - Draft-held/data-failed count: 59
-- Playable count: 175
-- Daily-eligible count: 62
+- Playable count: 225
+- Daily-eligible count: 69
 
 Scores are automated triage signals from 0-5. They do not auto-approve indicators; curated editorial status remains the source of truth.
 
@@ -15,12 +15,14 @@ Scores are automated triage signals from 0-5. They do not auto-approve indicator
 
 | Indicator | Gate | Editorial status | Coverage | Fresh | Unit | Interest | Ambiguity | Overall | Recommendation |
 | --- | --- | --- | ---: | ---: | ---: | ---: | ---: | ---: | --- |
-| Account ownership (`FX.OWN.TOTL.ZS`) | passed | daily_eligible | 3 | 5 | 4 | 4 | 3 | 3.75 | keep_daily_eligible |
+| Account ownership (`FX.OWN.TOTL.ZS`) | passed | daily_eligible | 3 | 5 | 4 | 4 | 2 | 3.55 | review_ambiguity |
+| Account ownership, poorest 40% (`FX.OWN.TOTL.40.ZS`) | passed | practice_eligible | 3 | 5 | 4 | 4 | 2 | 3.55 | review_ambiguity |
+| Adjusted net savings (`NY.ADJ.SVNG.GN.ZS`) | passed | practice_eligible | 3 | 3 | 4 | 4 | 3 | 3.45 | keep_practice_eligible |
 | Adolescent fertility (`SP.ADO.TFRT`) | passed | daily_eligible | 4 | 5 | 5 | 4 | 3 | 4.15 | keep_daily_eligible |
 | Adult literacy (`SE.ADT.LITR.ZS`) | held | daily_eligible | 1 | 5 | 2 | 1 | 2 | 2.0 | hold_for_data |
 | Female adult mortality (`SP.DYN.AMRT.FE`) | passed | expert_only | 3 | 5 | 5 | 4 | 2 | 3.75 | review_ambiguity |
 | Male adult mortality (`SP.DYN.AMRT.MA`) | passed | expert_only | 3 | 5 | 5 | 4 | 2 | 3.75 | review_ambiguity |
-| Age dependency ratio (`SP.POP.DPND`) | passed | daily_eligible | 4 | 5 | 5 | 4 | 3 | 4.15 | keep_daily_eligible |
+| Age dependency ratio (`SP.POP.DPND`) | passed | daily_eligible | 4 | 5 | 5 | 4 | 2 | 3.95 | review_ambiguity |
 | Agricultural land (`AG.LND.AGRI.ZS`) | passed | practice_eligible | 4 | 4 | 4 | 4 | 3 | 3.8 | keep_practice_eligible |
 | Agricultural raw material exports (`TX.VAL.AGRI.ZS.UN`) | passed | expert_only | 3 | 4 | 4 | 4 | 2 | 3.4 | review_ambiguity |
 | Agricultural raw material imports (`TM.VAL.AGRI.ZS.UN`) | passed | retired | 3 | 4 | 4 | 3 | 2 | 3.15 | keep_retired |
@@ -33,14 +35,22 @@ Scores are automated triage signals from 0-5. They do not auto-approve indicator
 | Air carrier departures (`IS.AIR.DPRT`) | passed | expert_only | 3 | 4 | 3 | 4 | 2 | 3.2 | review_ambiguity |
 | Air freight (`IS.AIR.GOOD.MT.K1`) | passed | expert_only | 3 | 4 | 3 | 4 | 3 | 3.4 | keep_expert_only |
 | Air passengers carried (`IS.AIR.PSGR`) | passed | expert_only | 3 | 4 | 1 | 4 | 2 | 2.8 | review_for_demotion |
+| Air pollution mortality (`SH.STA.AIRP.P5`) | passed | practice_eligible | 4 | 2 | 5 | 5 | 3 | 3.95 | keep_practice_eligible |
+| Alternative and nuclear energy (`EG.USE.COMM.CL.ZS`) | passed | practice_eligible | 3 | 4 | 4 | 4 | 3 | 3.6 | keep_practice_eligible |
+| Antiretroviral therapy coverage (`SH.HIV.ARTC.ZS`) | passed | expert_only | 3 | 5 | 4 | 4 | 3 | 3.75 | keep_expert_only |
 | Arable land (`AG.LND.ARBL.ZS`) | passed | daily_eligible | 4 | 4 | 4 | 4 | 3 | 3.8 | keep_daily_eligible |
 | Arable land area (`AG.LND.ARBL.HA`) | passed | expert_only | 4 | 4 | 3 | 4 | 2 | 3.4 | review_ambiguity |
 | Arable land per person (`AG.LND.ARBL.HA.PC`) | passed | daily_eligible | 4 | 4 | 5 | 4 | 3 | 4.0 | keep_daily_eligible |
-| Commercial bank branches (`FB.CBK.BRCH.P5`) | passed | expert_only | 3 | 4 | 5 | 4 | 2 | 3.6 | review_ambiguity |
+| ATM density (`FB.ATM.TOTL.P5`) | passed | practice_eligible | 3 | 5 | 5 | 4 | 3 | 3.95 | keep_practice_eligible |
+| Commercial bank branches (`FB.CBK.BRCH.P5`) | passed | expert_only | 3 | 5 | 5 | 4 | 2 | 3.75 | review_ambiguity |
+| Bank capital to assets (`FB.BNK.CAPA.ZS`) | passed | expert_only | 3 | 3 | 4 | 4 | 2 | 3.25 | review_ambiguity |
 | Basic sanitation access (`SH.STA.BASS.ZS`) | passed | daily_eligible | 4 | 5 | 4 | 4 | 2 | 3.75 | review_ambiguity |
 | Birth rate (`SP.DYN.CBRT.IN`) | passed | practice_eligible | 4 | 5 | 5 | 4 | 2 | 3.95 | review_ambiguity |
-| Commercial bank borrowers (`FB.CBK.BRWR.P3`) | held | needs_review | 1 | 4 | 2 | 1 | 2 | 1.85 | hold_for_data |
+| Commercial bank borrowers (`FB.CBK.BRWR.P3`) | held | needs_review | 1 | 5 | 2 | 1 | 2 | 2.0 | hold_for_data |
+| Broad money share (`FM.LBL.BMNY.GD.ZS`) | passed | expert_only | 3 | 3 | 4 | 4 | 2 | 3.25 | review_ambiguity |
 | Fixed broadband tariff (`IT.BBD.USEC.CD`) | held | needs_review | 0 | 0 | 2 | 0 | 2 | 0.8 | hold_for_data |
+| Capture fisheries production (`ER.FSH.CAPT.MT`) | passed | expert_only | 4 | 5 | 3 | 4 | 2 | 3.55 | review_ambiguity |
+| CO2 damage share (`NY.ADJ.DCO2.GN.ZS`) | passed | practice_eligible | 4 | 3 | 4 | 4 | 3 | 3.65 | keep_practice_eligible |
 | Carbon intensity of GDP (`EN.GHG.CO2.RT.GDP.KD`) | passed | expert_only | 4 | 5 | 4 | 4 | 3 | 3.95 | keep_expert_only |
 | Central government debt (`GC.DOD.TOTL.GD.ZS`) | held | needs_review | 1 | 5 | 2 | 1 | 2 | 2.0 | hold_for_data |
 | Cereal cropland (`AG.LND.CERE.ZS`) | held | needs_review | 0 | 0 | 2 | 0 | 2 | 0.8 | hold_for_data |
@@ -51,8 +61,11 @@ Scores are automated triage signals from 0-5. They do not auto-approve indicator
 | Child wasting (`SH.STA.WAST.ZS`) | held | practice_eligible | 1 | 5 | 2 | 1 | 2 | 2.0 | hold_for_data |
 | Population ages 0-14 (`SP.POP.0014.TO.ZS`) | passed | practice_eligible | 4 | 5 | 4 | 4 | 2 | 3.75 | review_ambiguity |
 | Clean cooking fuels access (`EG.CFT.ACCS.ZS`) | passed | daily_eligible | 4 | 4 | 4 | 4 | 2 | 3.6 | review_ambiguity |
+| CO2 emissions change (`EN.GHG.CO2.ZG.AR5`) | passed | expert_only | 4 | 5 | 4 | 4 | 2 | 3.75 | review_ambiguity |
 | CO2 emissions per capita (`EN.GHG.CO2.PC.CE.AR5`) | passed | daily_eligible | 4 | 5 | 5 | 5 | 2 | 4.2 | review_ambiguity |
 | Coal electricity share (`EG.ELC.COAL.ZS`) | passed | daily_eligible | 4 | 3 | 4 | 4 | 3 | 3.65 | keep_daily_eligible |
+| Coal rents (`NY.GDP.COAL.RT.ZS`) | passed | expert_only | 4 | 3 | 4 | 4 | 2 | 3.45 | review_ambiguity |
+| Combustible renewables and waste (`EG.USE.CRNW.ZS`) | passed | practice_eligible | 3 | 4 | 4 | 4 | 3 | 3.6 | keep_practice_eligible |
 | Communicable disease deaths (`SH.DTH.COMM.ZS`) | passed | expert_only | 4 | 3 | 4 | 4 | 2 | 3.45 | review_ambiguity |
 | Communications service exports (`BX.GSR.CMCP.ZS`) | passed | daily_eligible | 3 | 5 | 4 | 4 | 3 | 3.75 | keep_daily_eligible |
 | Communications service imports (`BM.GSR.CMCP.ZS`) | passed | practice_eligible | 3 | 5 | 4 | 4 | 3 | 3.75 | keep_practice_eligible |
@@ -63,20 +76,30 @@ Scores are automated triage signals from 0-5. They do not auto-approve indicator
 | Crop production index (`AG.PRD.CROP.XD`) | passed | retired | 4 | 4 | 3 | 4 | 2 | 3.4 | keep_retired |
 | Current account balance (`BN.CAB.XOKA.GD.ZS`) | passed | expert_only | 3 | 5 | 4 | 4 | 3 | 3.75 | keep_expert_only |
 | Death rate (`SP.DYN.CDRT.IN`) | passed | practice_eligible | 4 | 5 | 5 | 4 | 3 | 4.15 | keep_practice_eligible |
+| Deforestation CO2 flux (`EN.GHG.CO2.LU.DF.MT.CE.AR5`) | passed | expert_only | 3 | 4 | 3 | 4 | 2 | 3.2 | review_ambiguity |
 | Private-sector bank credit (`FD.AST.PRVT.GD.ZS`) | passed | needs_review | 3 | 5 | 4 | 3 | 3 | 3.5 | keep_needs_review |
 | Domestic savings (`NY.GDS.TOTL.ZS`) | passed | expert_only | 3 | 5 | 4 | 4 | 2 | 3.55 | review_ambiguity |
 | Domestic water withdrawals (`ER.H2O.FWDM.ZS`) | passed | practice_eligible | 4 | 4 | 4 | 4 | 3 | 3.8 | keep_practice_eligible |
 | DPT immunization (`SH.IMM.IDPT`) | passed | practice_eligible | 4 | 5 | 4 | 4 | 2 | 3.75 | review_ambiguity |
+| Education expenditure share (`NY.ADJ.AEDU.GN.ZS`) | passed | daily_eligible | 4 | 3 | 4 | 4 | 3 | 3.65 | keep_daily_eligible |
 | Education spending (`SE.XPD.TOTL.GD.ZS`) | passed | expert_only | 3 | 4 | 4 | 4 | 3 | 3.6 | keep_expert_only |
 | Electric power use (`EG.USE.ELEC.KH.PC`) | passed | daily_eligible | 3 | 4 | 5 | 4 | 2 | 3.6 | review_ambiguity |
+| Electric transmission losses (`EG.ELC.LOSS.ZS`) | passed | daily_eligible | 3 | 4 | 4 | 4 | 3 | 3.6 | keep_daily_eligible |
 | Electricity access (`EG.ELC.ACCS.ZS`) | passed | daily_eligible | 4 | 4 | 4 | 4 | 2 | 3.6 | review_ambiguity |
 | Employers share (`SL.EMP.MPYR.ZS`) | passed | expert_only | 4 | 5 | 4 | 4 | 3 | 3.95 | keep_expert_only |
 | Employment in agriculture (`SL.AGR.EMPL.ZS`) | passed | daily_eligible | 4 | 5 | 4 | 4 | 2 | 3.75 | review_ambiguity |
 | Employment in industry (`SL.IND.EMPL.ZS`) | passed | practice_eligible | 4 | 5 | 4 | 4 | 3 | 3.95 | keep_practice_eligible |
 | Employment-to-population ratio (`SL.EMP.TOTL.SP.ZS`) | passed | expert_only | 4 | 5 | 4 | 4 | 2 | 3.75 | review_ambiguity |
 | Employment in services (`SL.SRV.EMPL.ZS`) | passed | practice_eligible | 4 | 5 | 4 | 4 | 2 | 3.75 | review_ambiguity |
+| Energy depletion share (`NY.ADJ.DNGY.GN.ZS`) | passed | expert_only | 4 | 3 | 4 | 4 | 2 | 3.45 | review_ambiguity |
+| Net energy imports (`EG.IMP.CONS.ZS`) | passed | practice_eligible | 3 | 4 | 3 | 4 | 3 | 3.4 | keep_practice_eligible |
+| Energy intensity (`EG.EGY.PRIM.PP.KD`) | passed | practice_eligible | 4 | 3 | 4 | 4 | 3 | 3.65 | keep_practice_eligible |
+| Energy productivity (`EG.GDP.PUSE.KO.PP.KD`) | passed | expert_only | 3 | 4 | 4 | 4 | 2 | 3.4 | review_ambiguity |
 | Energy use (`EG.USE.PCAP.KG.OE`) | passed | daily_eligible | 3 | 4 | 5 | 4 | 2 | 3.6 | review_ambiguity |
+| Exports to high-income economies (`TX.VAL.MRCH.HI.ZS`) | passed | expert_only | 4 | 4 | 4 | 4 | 2 | 3.6 | review_ambiguity |
 | Exports (`NE.EXP.GNFS.ZS`) | passed | expert_only | 3 | 5 | 4 | 4 | 2 | 3.55 | review_ambiguity |
+| Exports within region (`TX.VAL.MRCH.WR.ZS`) | passed | practice_eligible | 4 | 4 | 4 | 4 | 3 | 3.8 | keep_practice_eligible |
+| External balance (`NE.RSB.GNFS.ZS`) | passed | practice_eligible | 3 | 5 | 3 | 4 | 3 | 3.55 | keep_practice_eligible |
 | External debt burden (`DT.DOD.DECT.GN.ZS`) | held | expert_only | 2 | 5 | 2 | 2 | 2 | 2.45 | hold_for_data |
 | Foreign direct investment inflows (`BX.KLT.DINV.WD.GD.ZS`) | passed | expert_only | 4 | 5 | 4 | 4 | 2 | 3.75 | review_ambiguity |
 | Foreign direct investment outflows (`BM.KLT.DINV.WD.GD.ZS`) | passed | expert_only | 3 | 5 | 4 | 4 | 2 | 3.55 | review_ambiguity |
@@ -94,6 +117,8 @@ Scores are automated triage signals from 0-5. They do not auto-approve indicator
 | Female youth not in education or work (`SL.UEM.NEET.FE.ZS`) | held | needs_review | 1 | 5 | 2 | 1 | 2 | 2.0 | hold_for_data |
 | Fertility rate (`SP.DYN.TFRT.IN`) | passed | daily_eligible | 4 | 5 | 4 | 4 | 2 | 3.75 | review_ambiguity |
 | Fertilizer use per hectare (`AG.CON.FERT.ZS`) | passed | needs_review | 4 | 4 | 4 | 4 | 2 | 3.6 | keep_needs_review |
+| Final consumption share (`NE.CON.TOTL.ZS`) | passed | practice_eligible | 3 | 5 | 4 | 4 | 2 | 3.55 | review_ambiguity |
+| Financial service imports (`BM.GSR.INSF.ZS`) | passed | expert_only | 3 | 5 | 4 | 4 | 2 | 3.55 | review_ambiguity |
 | Fixed broadband (`IT.NET.BBND.P2`) | passed | expert_only | 3 | 5 | 5 | 4 | 3 | 3.95 | keep_expert_only |
 | Fixed capital formation (`NE.GDI.FTOT.ZS`) | passed | expert_only | 3 | 5 | 4 | 4 | 2 | 3.55 | review_ambiguity |
 | Fixed telephone subscriptions (`IT.MLT.MAIN.P2`) | passed | practice_eligible | 3 | 5 | 5 | 4 | 3 | 3.95 | keep_practice_eligible |
@@ -102,6 +127,7 @@ Scores are automated triage signals from 0-5. They do not auto-approve indicator
 | Moderate or severe food insecurity (`SN.ITK.MSFI.ZS`) | passed | daily_eligible | 3 | 4 | 4 | 4 | 3 | 3.6 | keep_daily_eligible |
 | Food production index (`AG.PRD.FOOD.XD`) | passed | daily_eligible | 4 | 4 | 3 | 4 | 3 | 3.6 | keep_daily_eligible |
 | Forest area (`AG.LND.FRST.ZS`) | passed | daily_eligible | 4 | 4 | 4 | 5 | 5 | 4.45 | keep_daily_eligible |
+| Forest land CO2 flux (`EN.GHG.CO2.LU.FL.MT.CE.AR5`) | passed | expert_only | 4 | 4 | 2 | 4 | 2 | 3.2 | review_for_demotion |
 | Forest rents (`NY.GDP.FRST.RT.ZS`) | passed | needs_review | 4 | 3 | 4 | 4 | 3 | 3.65 | keep_needs_review |
 | Fossil electricity share (`EG.ELC.FOSL.ZS`) | passed | needs_review | 3 | 4 | 4 | 3 | 3 | 3.35 | keep_needs_review |
 | Fossil-fuel energy share (`EG.USE.COMM.FO.ZS`) | passed | expert_only | 3 | 4 | 4 | 2 | 3 | 3.1 | keep_expert_only |
@@ -111,11 +137,12 @@ Scores are automated triage signals from 0-5. They do not auto-approve indicator
 | GDP per capita (`NY.GDP.PCAP.CD`) | passed | daily_eligible | 4 | 5 | 3 | 4 | 2 | 3.55 | review_ambiguity |
 | GDP per person growth (`NY.GDP.PCAP.KD.ZG`) | passed | retired | 4 | 5 | 4 | 4 | 2 | 3.75 | keep_retired |
 | GDP per capita, PPP (`NY.GDP.PCAP.PP.CD`) | passed | practice_eligible | 4 | 5 | 3 | 4 | 2 | 3.55 | review_ambiguity |
+| Greenhouse gas emissions change (`EN.GHG.TOT.ZG.AR5`) | passed | practice_eligible | 4 | 5 | 4 | 4 | 3 | 3.95 | keep_practice_eligible |
 | Greenhouse gas emissions per capita (`EN.GHG.ALL.PC.CE.AR5`) | passed | expert_only | 4 | 5 | 5 | 4 | 2 | 3.95 | review_ambiguity |
 | Gini index (`SI.POV.GINI`) | held | needs_review | 1 | 5 | 2 | 1 | 2 | 2.0 | hold_for_data |
 | GNI per capita (`NY.GNP.PCAP.CD`) | passed | practice_eligible | 4 | 5 | 3 | 4 | 2 | 3.55 | review_ambiguity |
 | GNI per capita, PPP (`NY.GNP.PCAP.PP.CD`) | passed | practice_eligible | 4 | 5 | 3 | 4 | 2 | 3.55 | review_ambiguity |
-| Government consumption (`NE.CON.GOVT.ZS`) | passed | needs_review | 3 | 4 | 4 | 3 | 3 | 3.35 | keep_needs_review |
+| Government consumption (`NE.CON.GOVT.ZS`) | passed | needs_review | 3 | 5 | 4 | 3 | 3 | 3.5 | keep_needs_review |
 | Education spending share (`SE.XPD.TOTL.GB.ZS`) | passed | daily_eligible | 3 | 4 | 4 | 4 | 3 | 3.6 | keep_daily_eligible |
 | Government expense (`GC.XPN.TOTL.GD.ZS`) | passed | needs_review | 3 | 3 | 4 | 3 | 3 | 3.2 | keep_needs_review |
 | Government health spending share (`SH.XPD.GHED.CH.ZS`) | passed | expert_only | 4 | 4 | 4 | 4 | 2 | 3.6 | review_ambiguity |
@@ -125,15 +152,21 @@ Scores are automated triage signals from 0-5. They do not auto-approve indicator
 | Health spending per person (`SH.XPD.CHEX.PC.CD`) | passed | practice_eligible | 4 | 4 | 4 | 4 | 2 | 3.6 | review_ambiguity |
 | Hepatitis B immunization (`SH.IMM.HEPB`) | passed | retired | 4 | 5 | 4 | 3 | 2 | 3.5 | keep_retired |
 | High-tech exports (`TX.VAL.TECH.MF.ZS`) | passed | expert_only | 3 | 4 | 4 | 4 | 3 | 3.6 | keep_expert_only |
+| HIV incidence (`SH.HIV.INCD.ZS`) | passed | expert_only | 3 | 5 | 5 | 4 | 3 | 3.95 | keep_expert_only |
 | Hospital beds (`SH.MED.BEDS.ZS`) | passed | expert_only | 3 | 3 | 5 | 4 | 3 | 3.65 | keep_expert_only |
-| Household consumption (`NE.CON.PRVT.ZS`) | passed | needs_review | 3 | 4 | 4 | 3 | 3 | 3.35 | keep_needs_review |
+| Household consumption (`NE.CON.PRVT.ZS`) | passed | needs_review | 3 | 5 | 4 | 3 | 3 | 3.5 | keep_needs_review |
+| Human capital education index (`HD_HCIP_EDUC_TO`) | passed | practice_eligible | 3 | 5 | 3 | 4 | 2 | 3.35 | review_ambiguity |
+| Human Capital Index (`HD_HCIP_OVRL_TO`) | passed | daily_eligible | 3 | 5 | 3 | 4 | 2 | 3.35 | review_ambiguity |
 | Hydroelectricity share (`EG.ELC.HYRO.ZS`) | passed | practice_eligible | 3 | 4 | 4 | 4 | 3 | 3.6 | keep_practice_eligible |
 | ICT service exports (`BX.GSR.CCIS.ZS`) | passed | practice_eligible | 3 | 5 | 4 | 4 | 3 | 3.75 | keep_practice_eligible |
+| Imports from high-income economies (`TM.VAL.MRCH.HI.ZS`) | passed | expert_only | 4 | 4 | 4 | 4 | 2 | 3.6 | review_ambiguity |
 | Imports (`NE.IMP.GNFS.ZS`) | passed | expert_only | 3 | 5 | 4 | 4 | 2 | 3.55 | review_ambiguity |
+| Imports within region (`TM.VAL.MRCH.WR.ZS`) | passed | practice_eligible | 4 | 4 | 4 | 4 | 3 | 3.8 | keep_practice_eligible |
+| Income tax share (`GC.TAX.YPKG.ZS`) | passed | expert_only | 3 | 1 | 4 | 4 | 2 | 2.95 | review_for_demotion |
 | Industrial water withdrawals (`ER.H2O.FWIN.ZS`) | passed | practice_eligible | 4 | 4 | 4 | 4 | 3 | 3.8 | keep_practice_eligible |
 | Industry value added (`NV.IND.TOTL.ZS`) | passed | daily_eligible | 3 | 5 | 4 | 4 | 3 | 3.75 | keep_daily_eligible |
 | Infant mortality (`SP.DYN.IMRT.IN`) | passed | practice_eligible | 4 | 5 | 5 | 4 | 2 | 3.95 | review_ambiguity |
-| Inflation (`FP.CPI.TOTL.ZG`) | passed | expert_only | 4 | 5 | 3 | 4 | 3 | 3.75 | keep_expert_only |
+| Inflation (`FP.CPI.TOTL.ZG`) | passed | expert_only | 3 | 5 | 3 | 4 | 3 | 3.55 | keep_expert_only |
 | Internet users (`IT.NET.USER.ZS`) | passed | daily_eligible | 4 | 5 | 4 | 4 | 3 | 3.95 | keep_daily_eligible |
 | Irrigated agricultural land (`AG.LND.IRIG.AG.ZS`) | held | needs_review | 1 | 4 | 2 | 1 | 2 | 1.85 | hold_for_data |
 | Irrigated cropland (`AG.LND.IRIG.ZS`) | held | needs_review | 0 | 0 | 2 | 0 | 2 | 0.8 | hold_for_data |
@@ -167,13 +200,18 @@ Scores are automated triage signals from 0-5. They do not auto-approve indicator
 | Manufacturing value added (`NV.IND.MANF.ZS`) | passed | daily_eligible | 3 | 5 | 4 | 4 | 3 | 3.75 | keep_daily_eligible |
 | Maternal mortality (`SH.STA.MMRT`) | passed | daily_eligible | 4 | 4 | 5 | 4 | 3 | 4.0 | keep_daily_eligible |
 | Measles immunization (`SH.IMM.MEAS`) | passed | daily_eligible | 4 | 5 | 4 | 4 | 3 | 3.95 | keep_daily_eligible |
+| Merchandise trade share (`TG.VAL.TOTL.GD.ZS`) | passed | daily_eligible | 4 | 5 | 4 | 4 | 3 | 3.95 | keep_daily_eligible |
+| Methane emissions change (`EN.GHG.CH4.ZG.AR5`) | passed | expert_only | 4 | 5 | 4 | 4 | 3 | 3.95 | keep_expert_only |
 | International migrant stock (`SM.POP.TOTL.ZS`) | passed | daily_eligible | 4 | 5 | 4 | 5 | 3 | 4.2 | keep_daily_eligible |
 | Military spending (`MS.MIL.XPND.GD.ZS`) | passed | expert_only | 3 | 5 | 4 | 4 | 3 | 3.75 | keep_expert_only |
+| Mineral depletion share (`NY.ADJ.DMIN.GN.ZS`) | passed | expert_only | 4 | 3 | 4 | 4 | 2 | 3.45 | review_ambiguity |
+| Mineral rents (`NY.GDP.MINR.RT.ZS`) | passed | expert_only | 4 | 3 | 4 | 4 | 2 | 3.45 | review_ambiguity |
 | Mobile subscriptions (`IT.CEL.SETS.P2`) | passed | daily_eligible | 3 | 5 | 5 | 4 | 5 | 4.35 | keep_daily_eligible |
 | Modern contraceptive use (`SP.DYN.CONM.ZS`) | held | retired | 1 | 5 | 2 | 1 | 2 | 2.0 | hold_for_data |
 | Natural gas electricity share (`EG.ELC.NGAS.ZS`) | passed | practice_eligible | 4 | 3 | 4 | 4 | 3 | 3.65 | keep_practice_eligible |
 | Natural resource depletion (`NY.ADJ.DRES.GN.ZS`) | passed | needs_review | 4 | 3 | 4 | 4 | 3 | 3.65 | keep_needs_review |
 | Natural resource rents (`NY.GDP.TOTL.RT.ZS`) | passed | practice_eligible | 4 | 3 | 4 | 4 | 3 | 3.65 | keep_practice_eligible |
+| NCD premature mortality (`SH.DYN.NCOM.ZS`) | passed | daily_eligible | 4 | 3 | 4 | 4 | 3 | 3.65 | keep_daily_eligible |
 | Neonatal mortality (`SH.DYN.NMRT`) | passed | expert_only | 4 | 5 | 5 | 4 | 2 | 3.95 | review_ambiguity |
 | Net forest depletion (`NY.ADJ.DFOR.GN.ZS`) | passed | needs_review | 4 | 3 | 4 | 4 | 3 | 3.65 | keep_needs_review |
 | Net migration (`SM.POP.NETM`) | passed | needs_review | 4 | 5 | 0 | 4 | 2 | 2.95 | keep_needs_review |
@@ -181,6 +219,7 @@ Scores are automated triage signals from 0-5. They do not auto-approve indicator
 | Net secondary enrollment (`SE.SEC.NENR`) | held | needs_review | 1 | 2 | 2 | 1 | 2 | 1.55 | hold_for_data |
 | Noncommunicable disease deaths (`SH.DTH.NCOM.ZS`) | passed | retired | 4 | 3 | 4 | 4 | 2 | 3.45 | keep_retired |
 | Non-hydro renewable electricity (`EG.ELC.RNWX.ZS`) | passed | practice_eligible | 4 | 3 | 4 | 4 | 3 | 3.65 | keep_practice_eligible |
+| Nonperforming loans (`FB.AST.NPER.ZS`) | passed | expert_only | 3 | 4 | 3 | 4 | 2 | 3.2 | review_ambiguity |
 | Nuclear electricity share (`EG.ELC.NUCL.ZS`) | passed | needs_review | 4 | 3 | 4 | 2 | 3 | 3.15 | keep_needs_review |
 | Nurses and midwives (`SH.MED.NUMW.P3`) | passed | needs_review | 4 | 2 | 5 | 4 | 3 | 3.7 | keep_needs_review |
 | Oil electricity share (`EG.ELC.PETR.ZS`) | passed | needs_review | 3 | 4 | 4 | 3 | 3 | 3.35 | keep_needs_review |
@@ -196,7 +235,7 @@ Scores are automated triage signals from 0-5. They do not auto-approve indicator
 | Permanent cropland (`AG.LND.CROP.ZS`) | passed | daily_eligible | 4 | 4 | 4 | 4 | 3 | 3.8 | keep_daily_eligible |
 | Permanent pasture (`EN.LAND.PPS.ZS`) | held | needs_review | 0 | 0 | 2 | 0 | 2 | 0.8 | hold_for_data |
 | Physicians (`SH.MED.PHYS.ZS`) | passed | daily_eligible | 3 | 3 | 5 | 4 | 3 | 3.65 | keep_daily_eligible |
-| PM2.5 exposure (`EN.ATM.PM25.MC.M3`) | passed | daily_eligible | 4 | 3 | 4 | 5 | 5 | 4.3 | keep_daily_eligible |
+| PM2.5 exposure (`EN.ATM.PM25.MC.M3`) | passed | daily_eligible | 4 | 4 | 4 | 5 | 5 | 4.45 | keep_daily_eligible |
 | Population above PM2.5 guideline (`EN.ATM.PM25.MC.ZS`) | passed | needs_review | 4 | 1 | 4 | 4 | 3 | 3.35 | keep_needs_review |
 | Population density (`EN.POP.DNST`) | passed | daily_eligible | 4 | 4 | 4 | 5 | 5 | 4.45 | keep_daily_eligible |
 | Population growth (`SP.POP.GROW`) | passed | daily_eligible | 4 | 5 | 4 | 4 | 3 | 3.95 | keep_daily_eligible |
@@ -256,8 +295,14 @@ Scores are automated triage signals from 0-5. They do not auto-approve indicator
 | Skilled birth attendance (`SH.STA.BRTC.ZS`) | held | daily_eligible | 1 | 4 | 2 | 1 | 2 | 1.85 | hold_for_data |
 | Statistical data infrastructure (`IQ.SPI.PIL5`) | passed | needs_review | 4 | 5 | 3 | 4 | 3 | 3.75 | keep_needs_review |
 | Tax revenue (`GC.TAX.TOTL.GD.ZS`) | passed | needs_review | 3 | 3 | 4 | 3 | 3 | 3.2 | keep_needs_review |
+| TB case detection (`SH.TBS.DTEC.ZS`) | passed | expert_only | 4 | 5 | 4 | 4 | 3 | 3.95 | keep_expert_only |
+| TB treatment success (`SH.TBS.CURE.ZS`) | passed | expert_only | 4 | 4 | 4 | 4 | 3 | 3.8 | keep_expert_only |
 | Tertiary enrollment (`SE.TER.ENRR`) | passed | expert_only | 3 | 1 | 4 | 4 | 3 | 3.15 | keep_expert_only |
 | Tertiary enrollment gender parity (`SE.ENR.TERT.FM.ZS`) | passed | needs_review | 3 | 1 | 4 | 3 | 3 | 2.9 | keep_needs_review |
+| Threatened bird species (`EN.BIR.THRD.NO`) | passed | expert_only | 4 | 4 | 3 | 4 | 3 | 3.6 | keep_expert_only |
+| Threatened fish species (`EN.FSH.THRD.NO`) | passed | expert_only | 4 | 4 | 3 | 4 | 3 | 3.6 | keep_expert_only |
+| Threatened mammal species (`EN.MAM.THRD.NO`) | passed | expert_only | 4 | 4 | 3 | 4 | 3 | 3.6 | keep_expert_only |
+| Threatened plant species (`EN.HPT.THRD.NO`) | passed | expert_only | 4 | 4 | 3 | 4 | 3 | 3.6 | keep_expert_only |
 | Protected land and seas (`ER.PTD.TOTL.ZS`) | passed | daily_eligible | 4 | 5 | 4 | 4 | 3 | 3.95 | keep_daily_eligible |
 | Tourism arrivals (`ST.INT.ARVL`) | passed | daily_eligible | 3 | 2 | 1 | 4 | 3 | 2.7 | review_for_demotion |
 | Tourism expenditures (`ST.INT.XPND.MP.ZS`) | passed | needs_review | 3 | 2 | 4 | 3 | 3 | 3.05 | keep_needs_review |
@@ -266,7 +311,10 @@ Scores are automated triage signals from 0-5. They do not auto-approve indicator
 | Trade (`NE.TRD.GNFS.ZS`) | passed | daily_eligible | 3 | 5 | 4 | 4 | 2 | 3.55 | review_ambiguity |
 | Transport service exports (`BX.GSR.TRAN.ZS`) | passed | practice_eligible | 3 | 5 | 4 | 4 | 3 | 3.75 | keep_practice_eligible |
 | Transport service imports (`BM.GSR.TRAN.ZS`) | passed | practice_eligible | 3 | 5 | 4 | 4 | 3 | 3.75 | keep_practice_eligible |
+| Travel service exports (`BX.GSR.TRVL.ZS`) | passed | practice_eligible | 3 | 5 | 4 | 4 | 3 | 3.75 | keep_practice_eligible |
+| Travel service imports (`BM.GSR.TRVL.ZS`) | passed | practice_eligible | 3 | 5 | 4 | 4 | 3 | 3.75 | keep_practice_eligible |
 | Tuberculosis incidence (`SH.TBS.INCD`) | passed | daily_eligible | 4 | 5 | 5 | 4 | 3 | 4.15 | keep_daily_eligible |
+| UHC service coverage (`SH_UHC_SCI`) | passed | daily_eligible | 4 | 4 | 3 | 4 | 3 | 3.6 | keep_daily_eligible |
 | Under-5 mortality (`SH.DYN.MORT`) | passed | daily_eligible | 4 | 5 | 5 | 4 | 2 | 3.95 | review_ambiguity |
 | Undernourishment (`SN.ITK.DEFC.ZS`) | passed | daily_eligible | 4 | 4 | 4 | 4 | 3 | 3.8 | keep_daily_eligible |
 | Unemployment (`SL.UEM.TOTL.ZS`) | passed | daily_eligible | 4 | 5 | 4 | 4 | 2 | 3.75 | review_ambiguity |
@@ -295,6 +343,8 @@ Scores are automated triage signals from 0-5. They do not auto-approve indicator
 | Voice and accountability rank (`VA.PER.RNK`) | held | needs_review | 0 | 0 | 2 | 0 | 2 | 0.8 | hold_for_data |
 | Women, Business and the Law index (`GD_WBL_OVL_LAW`) | passed | expert_only | 4 | 5 | 3 | 4 | 3 | 3.75 | keep_expert_only |
 | Women in parliament (`SG.GEN.PARL.ZS`) | passed | daily_eligible | 4 | 5 | 4 | 4 | 5 | 4.35 | keep_daily_eligible |
+| Working-age population share (`SP.POP.1564.TO.ZS`) | passed | daily_eligible | 4 | 5 | 4 | 4 | 2 | 3.75 | review_ambiguity |
+| Young-adult account ownership (`FX.OWN.TOTL.YG.ZS`) | passed | expert_only | 3 | 5 | 4 | 4 | 2 | 3.55 | review_ambiguity |
 | Youth employment-to-population ratio (`SL.EMP.1524.SP.ZS`) | passed | daily_eligible | 4 | 5 | 4 | 4 | 2 | 3.75 | review_ambiguity |
 | Youth labor force participation (`SL.TLF.ACTI.1524.ZS`) | passed | expert_only | 4 | 5 | 4 | 4 | 2 | 3.75 | review_ambiguity |
 | Youth literacy (`SE.ADT.1524.LT.ZS`) | held | practice_eligible | 1 | 5 | 2 | 1 | 2 | 2.0 | hold_for_data |
@@ -304,17 +354,17 @@ Scores are automated triage signals from 0-5. They do not auto-approve indicator
 ## Draft-Held Or Data-Failed Candidates
 
 - `adult-literacy` (`SE.ADT.LITR.ZS`): adult-literacy: no year in 2015:2025 met 120 mapped countries; best coverage was 50 adult-literacy: selected coverage 27 is below 120
-- `borrowers-commercial-banks` (`FB.CBK.BRWR.P3`): borrowers-commercial-banks: no year in 2015:2025 met 120 mapped countries; best coverage was 88 borrowers-commercial-banks: selected coverage 64 is below 120
+- `borrowers-commercial-banks` (`FB.CBK.BRWR.P3`): borrowers-commercial-banks: no year in 2015:2025 met 120 mapped countries; best coverage was 89 borrowers-commercial-banks: selected coverage 75 is below 120
 - `broadband-monthly-tariff` (`IT.BBD.USEC.CD`): Unexpected World Bank response for https://api.worldbank.org/v2/country/all/indicator/IT.BBD.USEC.CD?format=json&per_page=20000&page=1&date=2015%3A2025
-- `central-government-debt` (`GC.DOD.TOTL.GD.ZS`): central-government-debt: no year in 2015:2025 met 120 mapped countries; best coverage was 47 central-government-debt: selected coverage 26 is below 120
+- `central-government-debt` (`GC.DOD.TOTL.GD.ZS`): central-government-debt: no year in 2015:2025 met 120 mapped countries; best coverage was 47 central-government-debt: selected coverage 31 is below 120
 - `cereal-cropland` (`AG.LND.CERE.ZS`): cereal-cropland: no year in 2015:2025 met 120 mapped countries; best coverage was 0 cereal-cropland: selected coverage 0 is below 120
 - `child-overweight` (`SH.STA.OWGH.ZS`): child-overweight: no year in 2015:2025 met 120 mapped countries; best coverage was 45 child-overweight: selected coverage 5 is below 120
 - `child-stunting` (`SH.STA.STNT.ZS`): child-stunting: no year in 2015:2025 met 120 mapped countries; best coverage was 46 child-stunting: selected coverage 6 is below 120
 - `child-wasting` (`SH.STA.WAST.ZS`): child-wasting: no year in 2015:2025 met 120 mapped countries; best coverage was 46 child-wasting: selected coverage 6 is below 120
 - `contraceptive-use` (`SP.DYN.CONU.ZS`): contraceptive-use: no year in 2015:2025 met 120 mapped countries; best coverage was 39 contraceptive-use: selected coverage 1 is below 120
 - `external-debt-burden` (`DT.DOD.DECT.GN.ZS`): external-debt-burden: no year in 2015:2025 met 120 mapped countries; best coverage was 108 external-debt-burden: selected coverage 99 is below 120
-- `female-senior-management` (`SL.EMP.SMGT.FE.ZS`): female-senior-management: no year in 2015:2025 met 120 mapped countries; best coverage was 90 female-senior-management: selected coverage 12 is below 120
-- `female-youth-neet` (`SL.UEM.NEET.FE.ZS`): female-youth-neet: no year in 2015:2025 met 120 mapped countries; best coverage was 108 female-youth-neet: selected coverage 15 is below 120
+- `female-senior-management` (`SL.EMP.SMGT.FE.ZS`): female-senior-management: no year in 2015:2025 met 120 mapped countries; best coverage was 89 female-senior-management: selected coverage 29 is below 120
+- `female-youth-neet` (`SL.UEM.NEET.FE.ZS`): female-youth-neet: no year in 2015:2025 met 120 mapped countries; best coverage was 108 female-youth-neet: selected coverage 35 is below 120
 - `gini-index` (`SI.POV.GINI`): gini-index: no year in 2015:2025 met 120 mapped countries; best coverage was 89 gini-index: selected coverage 4 is below 120
 - `irrigated-agricultural-land` (`AG.LND.IRIG.AG.ZS`): irrigated-agricultural-land: no year in 2015:2025 met 120 mapped countries; best coverage was 59 irrigated-agricultural-land: selected coverage 59 is below 120
 - `irrigated-cropland` (`AG.LND.IRIG.ZS`): Unexpected World Bank response for https://api.worldbank.org/v2/country/all/indicator/AG.LND.IRIG.ZS?format=json&per_page=20000&page=1&date=2015%3A2025
@@ -326,8 +376,8 @@ Scores are automated triage signals from 0-5. They do not auto-approve indicator
 - `net-secondary-enrollment` (`SE.SEC.NENR`): net-secondary-enrollment: no year in 2015:2025 met 120 mapped countries; best coverage was 103 net-secondary-enrollment: selected coverage 3 is below 120
 - `out-of-school-secondary` (`SE.SEC.UNER.ZS`): Unexpected World Bank response for https://api.worldbank.org/v2/country/all/indicator/SE.SEC.UNER.ZS?format=json&per_page=20000&page=1&date=2015%3A2025
 - `own-account-workers` (`SL.EMP.OWAC.ZS`): own-account-workers: no year in 2015:2025 met 120 mapped countries; best coverage was 0 own-account-workers: selected coverage 0 is below 120
-- `part-time-employment` (`SL.TLF.PART.ZS`): part-time-employment: no year in 2015:2025 met 120 mapped countries; best coverage was 113 part-time-employment: selected coverage 17 is below 120
-- `part-time-employment-female` (`SL.TLF.PART.FE.ZS`): part-time-employment-female: no year in 2015:2025 met 120 mapped countries; best coverage was 113 part-time-employment-female: selected coverage 17 is below 120
+- `part-time-employment` (`SL.TLF.PART.ZS`): part-time-employment: no year in 2015:2025 met 120 mapped countries; best coverage was 106 part-time-employment: selected coverage 32 is below 120
+- `part-time-employment-female` (`SL.TLF.PART.FE.ZS`): part-time-employment-female: no year in 2015:2025 met 120 mapped countries; best coverage was 106 part-time-employment-female: selected coverage 32 is below 120
 - `permanent-pasture` (`EN.LAND.PPS.ZS`): Unexpected World Bank response for https://api.worldbank.org/v2/country/all/indicator/EN.LAND.PPS.ZS?format=json&per_page=20000&page=1&date=2015%3A2025
 - `poverty-headcount-420` (`SI.POV.LMIC`): poverty-headcount-420: no year in 2015:2025 met 120 mapped countries; best coverage was 89 poverty-headcount-420: selected coverage 4 is below 120
 - `primary-attainment` (`SE.PRM.CUAT.ZS`): primary-attainment: no year in 2015:2025 met 120 mapped countries; best coverage was 109 primary-attainment: selected coverage 1 is below 120
@@ -335,7 +385,7 @@ Scores are automated triage signals from 0-5. They do not auto-approve indicator
 - `primary-education-spending-share` (`SE.XPD.PRIM.ZS`): primary-education-spending-share: no year in 2015:2025 met 120 mapped countries; best coverage was 67 primary-education-spending-share: selected coverage 1 is below 120
 - `primary-repeaters` (`SE.PRM.REPT.ZS`): primary-repeaters: no year in 2015:2025 met 120 mapped countries; best coverage was 118 primary-repeaters: selected coverage 2 is below 120
 - `primary-secondary-gender-parity` (`SE.ENR.PRSC.FM.ZS`): primary-secondary-gender-parity: no year in 2015:2025 met 120 mapped countries; best coverage was 113 primary-secondary-gender-parity: selected coverage 2 is below 120
-- `private-fixed-capital-formation` (`NE.GDI.FPRV.ZS`): private-fixed-capital-formation: no year in 2015:2025 met 120 mapped countries; best coverage was 59 private-fixed-capital-formation: selected coverage 47 is below 120
+- `private-fixed-capital-formation` (`NE.GDI.FPRV.ZS`): private-fixed-capital-formation: no year in 2015:2025 met 120 mapped countries; best coverage was 61 private-fixed-capital-formation: selected coverage 40 is below 120
 - `pupil-teacher-ratio` (`SE.PRM.ENRL.TC.ZS`): pupil-teacher-ratio: no year in 2015:2025 met 120 mapped countries; best coverage was 118 pupil-teacher-ratio: selected coverage 3 is below 120
 - `refugees-hosted` (`SM.POP.REFG`): Unexpected World Bank response for https://api.worldbank.org/v2/country/all/indicator/SM.POP.REFG?format=json&per_page=20000&page=1&date=2015%3A2025
 - `research-development-spending` (`GB.XPD.RSDV.GD.ZS`): research-development-spending: no year in 2015:2025 met 120 mapped countries; best coverage was 97 research-development-spending: selected coverage 26 is below 120
@@ -361,4 +411,4 @@ Scores are automated triage signals from 0-5. They do not auto-approve indicator
 - `wgi-rule-of-law-rank` (`RL.PER.RNK`): Unexpected World Bank response for https://api.worldbank.org/v2/country/all/indicator/RL.PER.RNK?format=json&per_page=20000&page=1&date=2015%3A2025
 - `wgi-voice-accountability-rank` (`VA.PER.RNK`): Unexpected World Bank response for https://api.worldbank.org/v2/country/all/indicator/VA.PER.RNK?format=json&per_page=20000&page=1&date=2015%3A2025
 - `youth-literacy` (`SE.ADT.1524.LT.ZS`): youth-literacy: no year in 2015:2025 met 120 mapped countries; best coverage was 54 youth-literacy: selected coverage 27 is below 120
-- `youth-neet` (`SL.UEM.NEET.ZS`): youth-neet: no year in 2015:2025 met 120 mapped countries; best coverage was 108 youth-neet: selected coverage 15 is below 120
+- `youth-neet` (`SL.UEM.NEET.ZS`): youth-neet: no year in 2015:2025 met 120 mapped countries; best coverage was 108 youth-neet: selected coverage 35 is below 120

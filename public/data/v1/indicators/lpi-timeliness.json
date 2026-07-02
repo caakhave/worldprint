@@ -170,12 +170,12 @@
     "valuesReference": "https://api.worldbank.org/v2/country/all/indicator/LP.LPI.TIME.XQ?format=json&per_page=20000&page=1&date=2015%3A2025",
     "license": "Creative Commons Attribution 4.0 International unless specifically labeled otherwise by World Bank metadata",
     "licenseReference": "https://www.worldbank.org/en/about/legal/terms-of-use-for-datasets",
-    "retrievedAt": "2026-06-27T17:15:39.903144+00:00",
-    "checksum": "93391c349249c154b4a1aa90578349a7935d51c6ca18b76f63b0d43882986ab3",
+    "retrievedAt": "2026-07-02T22:43:14.217909+00:00",
+    "checksum": "700f04fa3df6ba51036f70832d0ea563f2b1cd6a32cd582f1c7ef4aa84642880",
     "sourceOrganization": "Connecting to Compete - Logistics Performance Index (LPI), World Bank (WB), uri: https://lpi.worldbank.org"
   },
   "reviewStatus": "approved",
-  "contentVersion": "2026.06.22-exp2-qa1",
+  "contentVersion": "2026.07.02-exp4-content50",
   "editorial": {
     "shortHook": "A delivery-reliability logistics map.",
     "patternNote": "The darkest countries include Finland, Austria, Sweden, while the lightest include Angola, Cameroon, Libya; that contrast is the fastest way to read the logistics timeliness score pattern.",
@@ -216,7 +216,7 @@
   },
   "editorialReview": {
     "status": "needs_review",
-    "reviewedAt": "2026-06-22",
+    "reviewedAt": "2026-07-02",
     "reviewedBy": "pipeline-default-needs-review",
     "qualityScore": 2,
     "funScore": 2,

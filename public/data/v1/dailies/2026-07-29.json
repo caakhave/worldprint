@@ -2,32 +2,33 @@
   "schemaVersion": "1.1.0",
   "game": "worldprint",
   "date": "2026-07-29",
-  "contentVersion": "2026.06.22-exp2-qa1",
+  "contentVersion": "2026.07.02-exp4-content50",
   "roundIds": [
-    "worldprint-women-parliament",
-    "worldprint-basic-sanitation",
-    "worldprint-forest-area",
-    "worldprint-employment-agriculture",
-    "worldprint-unemployment"
+    "worldprint-measles-immunization",
+    "worldprint-internet-users",
+    "worldprint-uhc-service-coverage",
+    "worldprint-fertility-rate",
+    "worldprint-cereal-yield"
   ],
   "indicatorIds": [
-    "women-parliament",
-    "basic-sanitation",
-    "forest-area",
-    "employment-agriculture",
-    "unemployment"
+    "measles-immunization",
+    "internet-users",
+    "uhc-service-coverage",
+    "fertility-rate",
+    "cereal-yield"
   ],
   "categoryMix": {
-    "development": 1,
-    "health": 1,
-    "environment": 1,
-    "labor": 2
+    "health": 2,
+    "connectivity": 1,
+    "demography": 1,
+    "agriculture": 1
   },
   "mapDifficultyMix": {
-    "standard": 4,
-    "intro": 1
+    "standard": 3,
+    "intro": 1,
+    "expert": 1
   },
-  "generatedAt": "2026-06-27T17:16:22.622255+00:00",
+  "generatedAt": "2026-07-02T22:58:41.353101+00:00",
   "generatorVersion": "daily-manifest-v2",
   "varietyNotes": [
     "Selected with category, difficulty, repeat-cooldown, and same-day correlation safeguards."
