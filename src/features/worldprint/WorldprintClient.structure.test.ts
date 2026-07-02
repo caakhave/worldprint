@@ -3,6 +3,8 @@ import { join } from "node:path";
 import { describe, expect, it } from "vitest";
 
 const source = readFileSync(join(process.cwd(), "src/features/worldprint/WorldprintClient.tsx"), "utf8");
+const primaryNavSource = readFileSync(join(process.cwd(), "src/components/PrimaryNav.tsx"), "utf8");
+const playLobbyNavigationSource = readFileSync(join(process.cwd(), "src/lib/site/playLobbyNavigation.ts"), "utf8");
 const styles = readFileSync(join(process.cwd(), "src/styles/globals.css"), "utf8");
 
 describe("WorldprintClient UI structure", () => {
@@ -35,31 +37,37 @@ describe("WorldprintClient UI structure", () => {
     expect(styles).toContain(".mode-card-grid-secondary .mode-card");
   });
 
-  it("gates Practice access by account tier without exposing full filters to Free players", () => {
+  it("gates Practice access as Pro-only and hides filters from Free players", () => {
     expect(source).toContain("const canUseFullPractice = signedIn && entitlement.capabilities.canUseFullPractice;");
-    expect(source).toContain("const limitedPracticeLimit = entitlement.capabilities.practiceLimit ?? 3;");
     expect(source).toContain("const fullPracticeMatches = useMemo");
-    expect(source).toContain("const limitedPracticeMatches = useMemo");
-    expect(source).toContain("const practiceMatches = canUseFullPractice ? fullPracticeMatches : limitedPracticeMatches;");
-    expect(source).toContain("function selectLimitedPracticeRoundIds");
-    expect(source).toContain('const LIMITED_PRACTICE_FILTERS: PracticeFilters = { difficulty: "intro" };');
+    expect(source).toContain("const practiceMatches = canUseFullPractice ? fullPracticeMatches : [];");
+    expect(source).not.toContain("const limitedPracticeLimit");
+    expect(source).not.toContain("const limitedPracticeMatches");
+    expect(source).not.toContain("function selectLimitedPracticeRoundIds");
+    expect(source).not.toContain("LIMITED_PRACTICE_FILTERS");
     expect(source).toContain("if (!canUseFullPractice) return;");
-    expect(source).toContain("if (mode === \"practice\" && !canUseFullPractice && !currentPracticeRun && !options.practiceRoundIds) return;");
+    expect(source).toContain('if (mode === "practice" && !canUseFullPractice) return;');
     expect(source).toContain('{canUseFullPractice ? (');
     expect(source).toContain('className="practice-filters"');
-    expect(source).toContain("Limited Practice");
-    expect(source).toContain("Start limited practice");
-    expect(source).toContain("Practice requires an account");
+    expect(source).not.toContain("Limited Practice");
+    expect(source).not.toContain("Start limited practice");
+    expect(source).toContain("Pro feature");
+    expect(source).toContain("Practice by topic and difficulty is included with Pro.");
+    expect(source).toContain("Free accounts include one fresh 3-map Daily each day.");
+    expect(source).toContain("Full Practice Atlas");
     expect(source).toContain('href="/sign-up"');
     expect(source).toContain("Create free account");
+    expect(source).toContain('href="/upgrade"');
+    expect(source).toContain("Start Pro");
   });
 
-  it("surfaces resumable Daily, Atlas, Practice, and Past Game runs from local storage", () => {
+  it("surfaces resumable Daily, Atlas, Pro Practice, and Past Game runs from local storage", () => {
     expect(source).toContain("store.activeDailyRun");
     expect(source).toContain("store.activeAtlasRun");
     expect(source).toContain("store.activePracticeRun");
     expect(source).toContain("store.activeArchiveRunsByDate[todayKey]");
-    expect(source).toContain("Let older local Practice runs finish once");
+    expect(source).toContain("if (!data || !canUseFullPractice) return null;");
+    expect(source).toContain("const currentPracticeActive = canUseFullPractice && currentPracticeRun?.status === \"active\";");
     expect(source).toContain("currentPracticeRun?.status === \"active\"");
     expect(source).toContain("Resume practice");
     expect(source).toContain("Resume map");
@@ -116,10 +124,26 @@ describe("WorldprintClient UI structure", () => {
 
   it("gives completed Daily players a clear next action and makes result viewing explicit", () => {
     expect(source).toContain("Today's maps complete");
-    expect(source).toContain('const completedPrimaryLabel = signedIn && practiceMatches.length > 0 ? "Play" : "Play Sample Run";');
+    expect(source).toContain('const completedPrimaryLabel = isFreeAccount ? "Start Pro" : signedIn && practiceMatches.length > 0 ? "Play" : "Play Sample Run";');
+    expect(source).toContain("canReplayForPractice");
+    expect(source).toContain("canUseFullPractice={canUseFullPractice}");
+    expect(source).toContain('if (sourceRun.mode === "daily" && !canUseFullPractice) return;');
     expect(source).toContain(`const resultActionLabel = completedDailyRun ? "View today's result" : "View saved stats";`);
     expect(source).toContain("setRun(completedDailyRun);");
     expect(source).toContain("window.requestAnimationFrame(() => window.scrollTo(0, 0));");
+  });
+
+  it("lets the active Play nav return completed Mystery Map views to the lobby without private URLs", () => {
+    expect(primaryNavSource).toContain('href: "/play/mystery-map"');
+    expect(primaryNavSource).toContain("isMysteryMapPlayPath(pathname)");
+    expect(primaryNavSource).toContain("event.preventDefault();");
+    expect(primaryNavSource).toContain("dispatchPlayLobbyRequest();");
+    expect(playLobbyNavigationSource).toContain('PLAY_LOBBY_REQUEST_EVENT = "canyougeo:play-lobby-request"');
+    expect(source).toContain("window.addEventListener(PLAY_LOBBY_REQUEST_EVENT, handlePlayLobbyRequest)");
+    expect(source).toContain("returnToLobby();");
+    expect(source).not.toContain("runState=");
+    expect(source).not.toContain("answerIds=");
+    expect(source).not.toContain("hiddenIndicator");
   });
 
   it("keeps the unit clue visible in the immediate answer flow", () => {

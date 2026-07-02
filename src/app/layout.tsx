@@ -4,6 +4,7 @@ import Link from "next/link";
 import "@/styles/globals.css";
 import { AnalyticsScripts } from "@/components/AnalyticsScripts";
 import { BrandMark } from "@/components/BrandMark";
+import { PrimaryNav } from "@/components/PrimaryNav";
 import { AuthNavStatus } from "@/features/account/AuthNavStatus";
 import { BRAND_NAME } from "@/lib/brand";
 import { publicSiteOrigin, robotsForSite, shouldNoIndexSite } from "@/lib/site/origin";
@@ -97,11 +98,6 @@ export const viewport: Viewport = {
   themeColor: "#08181D"
 };
 
-const navItems = [
-  { href: "/play/mystery-map", label: "Play", primary: true },
-  { href: "/how-to-play", label: "How it works" }
-];
-
 const footerItems = [
   { href: "/past-games", label: "Past Games" },
   { href: "/sources", label: "Sources" },
@@ -121,13 +117,7 @@ export default function RootLayout({ children }: Readonly<{ children: React.Reac
           <Link className="brand-link" href="/" aria-label={`${BRAND_NAME} home`}>
             <BrandMark />
           </Link>
-          <nav className="site-nav" aria-label="Primary navigation">
-            {navItems.map((item) => (
-              <Link key={item.href} href={item.href} data-primary={"primary" in item && item.primary ? "true" : undefined}>
-                {item.label}
-              </Link>
-            ))}
-          </nav>
+          <PrimaryNav />
           <nav className="site-account-nav" aria-label="Account">
             <AuthNavStatus />
           </nav>

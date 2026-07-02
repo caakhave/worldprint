@@ -29,7 +29,7 @@ import type {
   RoundDefinition
 } from "@/lib/content/schemas";
 import type { Tier } from "@/lib/content/schemas";
-import { filterPracticeRounds, selectPracticeRoundIds, challengeNumber, type PracticeFilters } from "@/lib/game/daily";
+import { filterPracticeRounds, selectPracticeRoundIds, challengeNumber } from "@/lib/game/daily";
 import { selectDailyRoundIdsFromManifest } from "@/lib/game/dailyManifest";
 import {
   FREE_DAILY_ROUND_COUNT,
@@ -61,6 +61,7 @@ import {
   type RunState
 } from "@/lib/game/state";
 import { trackCanYouGeoEvent } from "@/lib/site/analytics";
+import { PLAY_LOBBY_REQUEST_EVENT } from "@/lib/site/playLobbyNavigation";
 import {
   defaultPersistedState,
   loadPersistedState,
@@ -87,8 +88,6 @@ const DIFFICULTY_LABELS: Record<IndicatorDifficulty, string> = {
 const DIFFICULTY_ORDER: IndicatorDifficulty[] = ["intro", "standard", "expert"];
 const ENTRY_PREVIEW_INDICATOR_ID = "internet-users";
 const CHALLENGE_EMAIL_NOTE_MAX_LENGTH = 180;
-const LIMITED_PRACTICE_FILTERS: PracticeFilters = { difficulty: "intro" };
-const LIMITED_PRACTICE_SALT = "limited-practice-preview";
 
 type LoadedData = {
   manifest: Manifest;
@@ -134,17 +133,6 @@ function practiceFlavor(difficulty: IndicatorDifficulty) {
   if (difficulty === "expert") return "A quick warm-up with trickier patterns.";
   if (difficulty === "standard") return "A quick warm-up with sharper patterns.";
   return "A quick Practice warm-up.";
-}
-
-function limitedPracticeRounds(rounds: RoundDefinition[]): RoundDefinition[] {
-  const introRounds = filterPracticeRounds(rounds, LIMITED_PRACTICE_FILTERS);
-  return introRounds.length > 0 ? introRounds : filterPracticeRounds(rounds);
-}
-
-function selectLimitedPracticeRoundIds(rounds: RoundDefinition[], contentVersion: string, salt = LIMITED_PRACTICE_SALT): string[] {
-  const introIds = selectPracticeRoundIds(rounds, contentVersion, salt, LIMITED_PRACTICE_FILTERS, []);
-  if (introIds.length > 0) return introIds;
-  return selectPracticeRoundIds(rounds, contentVersion, salt, {}, []);
 }
 
 function roundCountForFilters(rounds: RoundDefinition[], category: string, difficulty?: IndicatorDifficulty) {
@@ -285,7 +273,6 @@ export function WorldprintClient({ dateOverride, entryMode = "standard" }: World
   const isFreeAccount = signedIn && entitlement.plan !== "pro";
   const isGuest = !signedIn;
   const canUseFullPractice = signedIn && entitlement.capabilities.canUseFullPractice;
-  const limitedPracticeLimit = entitlement.capabilities.practiceLimit ?? 3;
   const account = useSupabaseAccount();
   const [data, setData] = useState<LoadedData | null>(null);
   const [loadError, setLoadError] = useState<string | null>(null);
@@ -479,15 +466,13 @@ export function WorldprintClient({ dateOverride, entryMode = "standard" }: World
   }, [data, isProAccount, store.activeAtlasRun]);
 
   const currentPracticeRun = useMemo(() => {
-    if (!data || !signedIn) return null;
+    if (!data || !canUseFullPractice) return null;
     const active = store.activePracticeRun;
     if (!active || active.mode !== "practice" || active.status !== "active" || active.contentVersion !== data.manifest.contentVersion) {
       return null;
     }
-    if (canUseFullPractice) return active;
-    // Let older local Practice runs finish once; new Free Practice starts stay limited below.
     return active;
-  }, [canUseFullPractice, data, signedIn, store.activePracticeRun]);
+  }, [canUseFullPractice, data, store.activePracticeRun]);
 
   const currentArchiveRun = useMemo(() => {
     if (!data) return null;
@@ -515,12 +500,7 @@ export function WorldprintClient({ dateOverride, entryMode = "standard" }: World
     return filterPracticeRounds(data.rounds, practiceFilters);
   }, [data, practiceFilters]);
 
-  const limitedPracticeMatches = useMemo(() => {
-    if (!data) return [];
-    return limitedPracticeRounds(data.rounds);
-  }, [data]);
-
-  const practiceMatches = canUseFullPractice ? fullPracticeMatches : limitedPracticeMatches;
+  const practiceMatches = canUseFullPractice ? fullPracticeMatches : [];
 
   const practiceCategoryOptions = useMemo(() => {
     if (!data) return [];
@@ -598,15 +578,10 @@ export function WorldprintClient({ dateOverride, entryMode = "standard" }: World
 
   async function startPracticeRun() {
     if (!signedIn) return;
+    if (!canUseFullPractice) return;
     if (!data || practiceMatches.length === 0) return;
     if (currentPracticeRun?.status === "active") {
       await startRun("practice");
-      return;
-    }
-    if (!canUseFullPractice) {
-      const selectedIds = selectLimitedPracticeRoundIds(data.rounds, data.manifest.contentVersion);
-      if (selectedIds.length === 0) return;
-      await startRun("practice", undefined, { practiceRoundIds: selectedIds, practiceSalt: LIMITED_PRACTICE_SALT });
       return;
     }
     const selectedIds =
@@ -638,7 +613,7 @@ export function WorldprintClient({ dateOverride, entryMode = "standard" }: World
     if (mode === "daily" && !signedIn) return;
     if (mode === "archive" && !signedIn) return;
     if (mode === "atlas" && !isProAccount) return;
-    if (mode === "practice" && !canUseFullPractice && !currentPracticeRun && !options.practiceRoundIds) return;
+    if (mode === "practice" && !canUseFullPractice) return;
     if (mode === "daily" && currentDailyRun && !options.freshReplay) {
       setRun(currentDailyRun);
       setShowFirstRunIntro(!store.onboardingComplete && currentDailyRun.status === "active" && currentDailyRun.currentRoundIndex === 0);
@@ -728,6 +703,7 @@ export function WorldprintClient({ dateOverride, entryMode = "standard" }: World
 
   async function replayCompletedRun(sourceRun: RunState) {
     if (!data) return;
+    if (sourceRun.mode === "daily" && !canUseFullPractice) return;
     const replayMode: RunMode = sourceRun.mode === "daily" ? "practice" : sourceRun.mode;
     const roundIds = sourceRun.rounds.map((round) => ({
       roundId: round.roundId,
@@ -756,7 +732,7 @@ export function WorldprintClient({ dateOverride, entryMode = "standard" }: World
     window.requestAnimationFrame(() => window.scrollTo(0, 0));
   }
 
-  function returnToLobby(targetId?: string) {
+  const returnToLobby = useCallback((targetId?: string) => {
     setRun(null);
     setShowFirstRunIntro(false);
     setShareStatus("");
@@ -767,7 +743,15 @@ export function WorldprintClient({ dateOverride, entryMode = "standard" }: World
       }
       window.scrollTo(0, 0);
     });
-  }
+  }, []);
+
+  useEffect(() => {
+    function handlePlayLobbyRequest() {
+      returnToLobby();
+    }
+    window.addEventListener(PLAY_LOBBY_REQUEST_EVENT, handlePlayLobbyRequest);
+    return () => window.removeEventListener(PLAY_LOBBY_REQUEST_EVENT, handlePlayLobbyRequest);
+  }, [returnToLobby]);
 
   function dispatch(action: Parameters<typeof reduceRun>[1]) {
     setRun((current) => {
@@ -994,11 +978,11 @@ export function WorldprintClient({ dateOverride, entryMode = "standard" }: World
       ? practiceMatches.length > 0
         ? practiceLabel(selectedDifficultyLabel, practiceCategory)
         : "Practice mode"
-      : "Limited practice";
+      : "Pro feature";
     const availablePracticeCount = Math.min(3, practiceMatches.length);
     const practiceWarning = canUseFullPractice ? rarePracticeNote(practiceMatches.length) : "";
     const currentAtlasActive = currentAtlasRun?.status === "active";
-    const currentPracticeActive = currentPracticeRun?.status === "active";
+    const currentPracticeActive = canUseFullPractice && currentPracticeRun?.status === "active";
     const primaryMode: "sample" | "daily" | "atlas" = isProAccount ? "atlas" : isFreeAccount ? "daily" : "sample";
     const primaryModeComplete = primaryMode === "daily" ? todayCompleted : false;
     const primaryKicker = primaryMode === "atlas" ? "Unlimited Atlas" : primaryMode === "daily" ? "Today's Free Maps" : "Sample Run";
@@ -1044,30 +1028,30 @@ export function WorldprintClient({ dateOverride, entryMode = "standard" }: World
         : primaryMode === "daily"
           ? dailyLabel
           : "Try the 5-map Sample Run";
-    const completedPrimaryLabel = signedIn && practiceMatches.length > 0 ? "Play" : "Play Sample Run";
+    const completedPrimaryLabel = isFreeAccount ? "Start Pro" : signedIn && practiceMatches.length > 0 ? "Play" : "Play Sample Run";
     const completedPrimaryDetail =
-      completedPrimaryLabel === "Play"
-        ? isProAccount
+      completedPrimaryLabel === "Start Pro"
+        ? "Go Pro for Full Practice Atlas, Pro Atlas, and more maps after today's Daily is complete."
+        : completedPrimaryLabel === "Play"
           ? "Start or resume a Full Practice Atlas set. It will not change today's score or streak."
-          : "Start limited practice. It will not change today's score or streak."
-        : "Replay the fixed sample maps while tomorrow's Daily unlocks.";
+          : "Replay the fixed sample maps while tomorrow's Daily unlocks.";
     const resultActionLabel = completedDailyRun ? "View today's result" : "View saved stats";
-    const practiceKicker = canUseFullPractice ? "Full Practice Atlas" : isFreeAccount ? "Limited Practice" : "Practice Preview";
-    const practiceTitle = canUseFullPractice ? "Full Practice Atlas" : isFreeAccount ? "Limited Practice" : "Practice requires an account";
+    const practiceKicker = canUseFullPractice ? "Full Practice Atlas" : "Pro feature";
+    const practiceTitle = "Full Practice Atlas";
     const practiceCopy = canUseFullPractice
       ? "Training sets by topic and difficulty. Never affects your Daily score or streak."
       : isFreeAccount
-        ? "A simple 3-map warm-up. Pro unlocks topic and difficulty filters."
-        : "Create a free account for limited practice, or start Pro for topic and difficulty filters.";
+        ? "Practice by topic and difficulty is included with Pro. Free accounts include one fresh 3-map Daily each day."
+        : "Try the Sample Run without an account, or start Pro for topic and difficulty practice.";
     const practiceReadyText = currentPracticeActive
-      ? `Resume map ${(currentPracticeRun?.currentRoundIndex ?? 0) + 1} of ${currentPracticeRun?.rounds.length ?? limitedPracticeLimit}`
+      ? `Resume map ${(currentPracticeRun?.currentRoundIndex ?? 0) + 1} of ${currentPracticeRun?.rounds.length ?? PRO_ATLAS_ROUND_COUNT}`
       : selectedCount > 0
         ? practiceReadyLine(selectedCount)
         : practiceMatches.length > 0
-          ? canUseFullPractice
-            ? practiceReadyLine(availablePracticeCount)
-            : "3 maps ready"
-          : practiceReadyLine(0);
+          ? practiceReadyLine(availablePracticeCount)
+          : canUseFullPractice
+            ? practiceReadyLine(0)
+            : "Included with Pro";
     const practiceStatusText = currentPracticeActive
       ? "Practice in progress"
       : canUseFullPractice
@@ -1076,14 +1060,8 @@ export function WorldprintClient({ dateOverride, entryMode = "standard" }: World
           : practiceMatches.length > 0
             ? "Ready from these filters."
             : "Try another topic or difficulty."
-        : isFreeAccount
-          ? "Ready for a simple practice set."
-          : "Sign up to practice.";
-    const practiceActionLabel = currentPracticeActive
-      ? "Resume practice"
-      : canUseFullPractice
-        ? "Start practice"
-        : "Start limited practice";
+        : "Practice does not change Daily score or streak.";
+    const practiceActionLabel = currentPracticeActive ? "Resume practice" : "Start practice";
     if (reviewRequested) {
       if (reviewRecord) {
         return (
@@ -1176,16 +1154,22 @@ export function WorldprintClient({ dateOverride, entryMode = "standard" }: World
                 )}
                 <div className="lobby-primary-actions">
                   {primaryModeComplete ? (
-                    <button
-                      className="button lobby-play-button"
-                      type="button"
-                      onClick={() => {
-                        if (completedPrimaryLabel === "Play") void startPracticeRun();
-                        else void startRun("sample");
-                      }}
-                    >
-                      <span className="lobby-play-main">{completedPrimaryLabel}</span>
-                    </button>
+                    completedPrimaryLabel === "Start Pro" ? (
+                      <Link className="button lobby-play-button" href="/upgrade">
+                        <span className="lobby-play-main">{completedPrimaryLabel}</span>
+                      </Link>
+                    ) : (
+                      <button
+                        className="button lobby-play-button"
+                        type="button"
+                        onClick={() => {
+                          if (completedPrimaryLabel === "Play") void startPracticeRun();
+                          else void startRun("sample");
+                        }}
+                      >
+                        <span className="lobby-play-main">{completedPrimaryLabel}</span>
+                      </button>
+                    )
                   ) : (
                     <button className="button lobby-play-button" type="button" onClick={() => void startRun(primaryMode)}>
                       <span className="lobby-play-main">PLAY</span>
@@ -1202,7 +1186,7 @@ export function WorldprintClient({ dateOverride, entryMode = "standard" }: World
                       Create free account
                     </Link>
                   ) : null}
-                  {!isProAccount ? (
+                  {!isProAccount && !primaryModeComplete ? (
                     <Link className="button-secondary" href="/upgrade">
                       {isGuest ? "Start Pro" : "Go Pro for unlimited Atlas play"}
                     </Link>
@@ -1239,7 +1223,7 @@ export function WorldprintClient({ dateOverride, entryMode = "standard" }: World
                       </Link>
                     ) : null
                   ) : null}
-                  {completedDailyRun ? (
+                  {completedDailyRun && canUseFullPractice ? (
                     <button className="button-secondary" type="button" onClick={() => void replayCompletedRun(completedDailyRun)}>
                       Replay for practice
                     </button>
@@ -1288,25 +1272,29 @@ export function WorldprintClient({ dateOverride, entryMode = "standard" }: World
                       {practiceWarning ? <p className="practice-warning">{practiceWarning}</p> : null}
                     </div>
                     <div className="practice-actions">
-                      {isGuest ? (
+                      {canUseFullPractice ? (
+                        <button className="button practice-start-button" type="button" disabled={practiceMatches.length === 0} onClick={() => void startPracticeRun()}>
+                          {practiceActionLabel}
+                        </button>
+                      ) : isGuest ? (
                         <Link className="button practice-start-button" href="/sign-up">
                           Create free account
                         </Link>
                       ) : (
-                        <button className="button practice-start-button" type="button" disabled={practiceMatches.length === 0} onClick={() => void startPracticeRun()}>
-                          {practiceActionLabel}
-                        </button>
+                        <Link className="button practice-start-button" href="/upgrade">
+                          Start Pro
+                        </Link>
                       )}
                       {canUseFullPractice ? (
                         <button className="button-secondary" type="button" disabled={practiceMatches.length === 0} onClick={buildPracticeSet}>
                           <Shuffle size={17} aria-hidden="true" />
                           Shuffle set
                         </button>
-                      ) : (
+                      ) : isGuest ? (
                         <Link className="button-secondary" href="/upgrade">
                           Start Pro
                         </Link>
-                      )}
+                      ) : null}
                     </div>
                   </article>
                   <article className="mode-card mode-card-past">
@@ -1314,14 +1302,16 @@ export function WorldprintClient({ dateOverride, entryMode = "standard" }: World
                       <p className="setup-kicker">Past Games</p>
                       <h3>Past Games</h3>
                       <p>
-                        {isGuest
-                          ? "Create a free account to replay recent dated sets. Pro unlocks the complete archive."
-                          : "Dated Daily replays. Replays never change today's Daily score or streak."}
+                        {isProAccount
+                          ? "Dated Daily replays. Replays never change today's Daily score or streak."
+                          : isGuest
+                            ? "Create an account for today's Daily. Pro unlocks Past Games."
+                            : "Pro unlocks dated Daily replays. Free stays focused on today's 3-map Daily."}
                       </p>
                     </div>
                     <div className="mode-card-actions">
-                      <Link className="button-secondary" href={isGuest ? "/sign-up" : "/past-games"}>
-                        {isGuest ? "Create free account" : "Open past games"}
+                      <Link className="button-secondary" href={isProAccount ? "/past-games" : isGuest ? "/sign-up" : "/upgrade"}>
+                        {isProAccount ? "Open past games" : isGuest ? "Create free account" : "Start Pro"}
                       </Link>
                       {signedIn ? (
                         <Link className="button-secondary" href="/account/stats">
@@ -1402,6 +1392,7 @@ export function WorldprintClient({ dateOverride, entryMode = "standard" }: World
         cloudSaveStatus={cloudSaveStatus}
         accountClient={account.client}
         signedIn={signedIn}
+        canUseFullPractice={canUseFullPractice}
         challengeTarget={entryMode === "challenge" && challengeResult.ok ? challengeResult.payload.challenger : undefined}
       />
     );
@@ -2336,6 +2327,7 @@ function CompletionSummary({
   cloudSaveStatus,
   accountClient,
   signedIn,
+  canUseFullPractice,
   challengeTarget
 }: {
   run: RunState;
@@ -2348,12 +2340,14 @@ function CompletionSummary({
   cloudSaveStatus: string;
   accountClient: CanYouGeoSupabaseClient | null;
   signedIn: boolean;
+  canUseFullPractice: boolean;
   challengeTarget?: ChallengePayload["challenger"];
 }) {
   const isSampleRun = run.mode === "sample";
   const isDailyRun = run.mode === "daily";
   const isAtlasRun = run.mode === "atlas";
   const isPastRecord = run.mode === "archive";
+  const canReplayForPractice = !isDailyRun || canUseFullPractice;
   const canCreateChallenge = !isSampleRun;
   const challengeCode = canCreateChallenge ? encodeChallenge(challengePayloadFromRun(run)) : "";
   const challengeUrl = canCreateChallenge
@@ -2802,9 +2796,11 @@ function CompletionSummary({
                     Play another set
                   </button>
                 )}
-                <button className="button-secondary" type="button" onClick={onReplay}>
-                  {run.mode === "challenge" ? "Replay this challenge" : "Replay for practice"}
-                </button>
+                {canReplayForPractice ? (
+                  <button className="button-secondary" type="button" onClick={onReplay}>
+                    {run.mode === "challenge" ? "Replay this challenge" : "Replay for practice"}
+                  </button>
+                ) : null}
                 {!isSampleRun ? (
                   <Link className="button-secondary" href="/past-games">
                     Past Games
