@@ -273,6 +273,7 @@ function logChallengeEmail(event: string, details: Record<string, string | numbe
 function corsHeadersFor(request: Request | null, env: Env | null = null): Record<string, string> {
   return billingCorsHeaders(request?.headers.get("origin") ?? null, {
     siteOrigin: env?.siteUrl ?? Deno.env.get("NEXT_PUBLIC_SITE_URL") ?? Deno.env.get("SITE_URL") ?? null,
-    allowPreviewUrls: Deno.env.get("ALLOW_BILLING_PREVIEW_URLS") === "true"
+    allowPreviewUrls: true,
+    allowLocalOrigins: true
   });
 }

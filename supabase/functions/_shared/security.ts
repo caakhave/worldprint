@@ -12,6 +12,7 @@ export type BillingPriceConfig = {
 export type CorsConfig = {
   siteOrigin: string | null;
   allowPreviewUrls?: boolean;
+  allowLocalOrigins?: boolean;
 };
 
 export const BILLING_JSON_MAX_BYTES = 4096;
@@ -141,7 +142,7 @@ export function allowedCorsOrigin(requestOrigin: string | null, config: CorsConf
     return requestUrl.origin;
   }
 
-  if (siteOrigin && isLocalOrigin(siteOrigin) && isLocalHostname(requestUrl.hostname)) {
+  if ((config.allowLocalOrigins || (siteOrigin && isLocalOrigin(siteOrigin))) && isLocalHostname(requestUrl.hostname)) {
     return requestUrl.origin;
   }
 

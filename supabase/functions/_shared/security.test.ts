@@ -73,6 +73,38 @@ describe("billing security helpers", () => {
     ).toBe("https://abc.canyougeo.pages.dev");
   });
 
+  it("supports challenge-email preview and localhost CORS without wildcard origins", () => {
+    const config = { siteOrigin: "https://test.canyougeo.com", allowPreviewUrls: true, allowLocalOrigins: true };
+    expect(allowedCorsOrigin("https://66ceb54b.canyougeo.pages.dev", config)).toBe("https://66ceb54b.canyougeo.pages.dev");
+    expect(allowedCorsOrigin("https://canyougeo.pages.dev", config)).toBe("https://canyougeo.pages.dev");
+    expect(allowedCorsOrigin("http://localhost:3000", config)).toBe("http://localhost:3000");
+    expect(allowedCorsOrigin("http://127.0.0.1:3000", config)).toBe("http://127.0.0.1:3000");
+    expect(allowedCorsOrigin("https://evil.example.com", config)).toBeNull();
+  });
+
+  it("echoes only allowed challenge-email origins in preflight headers", () => {
+    const headers = billingCorsHeaders("https://66ceb54b.canyougeo.pages.dev", {
+      siteOrigin: "https://test.canyougeo.com",
+      allowPreviewUrls: true,
+      allowLocalOrigins: true
+    });
+    expect(headers["Access-Control-Allow-Origin"]).toBe("https://66ceb54b.canyougeo.pages.dev");
+    expect(headers["Access-Control-Allow-Methods"]).toContain("POST");
+    expect(headers["Access-Control-Allow-Methods"]).toContain("OPTIONS");
+    expect(headers["Access-Control-Allow-Headers"]).toContain("authorization");
+    expect(headers["Access-Control-Allow-Headers"]).toContain("x-client-info");
+    expect(headers["Access-Control-Allow-Headers"]).toContain("apikey");
+    expect(headers["Access-Control-Allow-Headers"]).toContain("content-type");
+
+    expect(
+      billingCorsHeaders("https://evil.example.com", {
+        siteOrigin: "https://test.canyougeo.com",
+        allowPreviewUrls: true,
+        allowLocalOrigins: true
+      })["Access-Control-Allow-Origin"]
+    ).not.toBe("https://evil.example.com");
+  });
+
   it("returns a nonmatching CORS origin for rejected browser origins", () => {
     expect(billingCorsHeaders("https://evil.example", { siteOrigin: "https://canyougeo.com" })["Access-Control-Allow-Origin"]).toBe(
       "https://canyougeo.com"

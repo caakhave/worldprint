@@ -53,4 +53,10 @@ describe("send-challenge-email Edge Function structure", () => {
     expect(source).toContain("Deno.env.get(\"OWNER_NOTIFICATION_FROM_EMAIL\")");
     expect(source).toContain("\"CHALLENGE_EMAIL_FROM or OWNER_NOTIFICATION_FROM_EMAIL\"");
   });
+
+  it("allows Can You Geo Cloudflare previews and localhost for challenge-email CORS", () => {
+    expect(source).toContain("allowPreviewUrls: true");
+    expect(source).toContain("allowLocalOrigins: true");
+    expect(source).not.toContain("Access-Control-Allow-Origin\": \"*\"");
+  });
 });

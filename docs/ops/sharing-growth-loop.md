@@ -85,8 +85,13 @@ Optional:
 
 ```bash
 CHALLENGE_EMAIL_DAILY_LIMIT=5
-ALLOW_BILLING_PREVIEW_URLS=true
 ```
+
+Challenge email CORS allows only strict Can You Geo origins: `https://canyougeo.com`,
+`https://www.canyougeo.com`, `https://test.canyougeo.com`, Cloudflare Pages previews
+under `https://*.canyougeo.pages.dev`, and localhost dev origins. It echoes the
+request origin only when it matches one of those origins; it does not use wildcard
+CORS for browser requests with auth headers.
 
 `CHALLENGE_EMAIL_FROM` must be a verified Resend sender. If `challenge@mail.canyougeo.com` is not verified yet, use a verified sender on `mail.canyougeo.com`, such as `notify@mail.canyougeo.com`.
 
