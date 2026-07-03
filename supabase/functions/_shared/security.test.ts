@@ -82,6 +82,14 @@ describe("billing security helpers", () => {
     expect(allowedCorsOrigin("https://evil.example.com", config)).toBeNull();
   });
 
+  it("keeps Cloudflare preview CORS scoped to exact Can You Geo Pages hosts", () => {
+    const config = { siteOrigin: "https://test.canyougeo.com", allowPreviewUrls: true, allowLocalOrigins: true };
+    expect(allowedCorsOrigin("https://325e0252.canyougeo.pages.dev", config)).toBe("https://325e0252.canyougeo.pages.dev");
+    expect(allowedCorsOrigin("https://nested.preview.canyougeo.pages.dev", config)).toBeNull();
+    expect(allowedCorsOrigin("https://canyougeo.pages.dev.evil.example.com", config)).toBeNull();
+    expect(allowedCorsOrigin("http://325e0252.canyougeo.pages.dev", config)).toBeNull();
+  });
+
   it("echoes only allowed challenge-email origins in preflight headers", () => {
     const headers = billingCorsHeaders("https://66ceb54b.canyougeo.pages.dev", {
       siteOrigin: "https://test.canyougeo.com",

@@ -41,7 +41,8 @@ export function corsHeadersFor(request: Request | null, env: Env | null = null):
   const siteOrigin = env?.siteUrl ?? Deno.env.get("NEXT_PUBLIC_SITE_URL") ?? Deno.env.get("SITE_URL") ?? null;
   return billingCorsHeaders(request?.headers.get("origin") ?? null, {
     siteOrigin,
-    allowPreviewUrls: Deno.env.get("ALLOW_BILLING_PREVIEW_URLS") === "true"
+    allowPreviewUrls: true,
+    allowLocalOrigins: true
   });
 }
 

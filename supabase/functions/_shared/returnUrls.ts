@@ -81,7 +81,7 @@ function isLocalHostname(hostname: string): boolean {
 }
 
 function isAllowedCloudflarePreview(hostname: string): boolean {
-  return hostname === "canyougeo.pages.dev" || hostname.endsWith(".canyougeo.pages.dev");
+  return hostname === "canyougeo.pages.dev" || /^[a-z0-9-]+\.canyougeo\.pages\.dev$/i.test(hostname);
 }
 
 function isAllowedCanYouGeoHost(hostname: string): boolean {

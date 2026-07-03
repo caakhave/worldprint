@@ -141,8 +141,9 @@ Optional:
 
 ```text
 STRIPE_PRO_PRICE_ID=price_<legacy_fallback>
-ALLOW_BILLING_PREVIEW_URLS=true
 ```
+
+Billing CORS allows the production, www, test, strict Cloudflare Pages preview, and localhost browser origins without using a wildcard. Billing return URLs still come from `NEXT_PUBLIC_SITE_URL`; keep staging/test billing returns on `https://test.canyougeo.com` unless a preview return URL is intentionally configured and allowed.
 
 Hosted Supabase functions provide `SUPABASE_URL`, `SUPABASE_ANON_KEY`, and `SUPABASE_SERVICE_ROLE_KEY` through the platform. Do not print or commit those values.
 

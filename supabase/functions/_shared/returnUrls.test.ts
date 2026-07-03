@@ -73,6 +73,29 @@ describe("billing return URLs", () => {
     });
   });
 
+  it("keeps Cloudflare preview return URLs scoped to exact Can You Geo Pages hosts", () => {
+    expect(
+      resolveBillingSiteOrigin({
+        configuredSiteUrl: "https://nested.preview.canyougeo.pages.dev",
+        supabaseUrl: "https://jquebthneczqdxagagof.supabase.co",
+        allowPreviewUrls: true
+      })
+    ).toEqual({
+      origin: null,
+      error: "NEXT_PUBLIC_SITE_URL host is not allowed for billing returns."
+    });
+    expect(
+      resolveBillingSiteOrigin({
+        configuredSiteUrl: "https://canyougeo.pages.dev.evil.example.com",
+        supabaseUrl: "https://jquebthneczqdxagagof.supabase.co",
+        allowPreviewUrls: true
+      })
+    ).toEqual({
+      origin: null,
+      error: "NEXT_PUBLIC_SITE_URL host is not allowed for billing returns."
+    });
+  });
+
   it("rejects URLs with paths or query strings", () => {
     expect(
       resolveBillingSiteOrigin({
