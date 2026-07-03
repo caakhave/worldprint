@@ -1724,6 +1724,21 @@ button:disabled {
   opacity: 0.7;
 }
 
+.country-path[data-value-class="base"] {
+  fill: rgb(104 183 170 / 0.14);
+  opacity: 0.46;
+}
+
+.country-path[data-highlighted="true"] {
+  fill: var(--gold);
+  stroke: var(--parchment);
+  stroke-width: 1.45;
+  opacity: 1;
+  filter:
+    drop-shadow(0 0 4px rgb(215 168 75 / 0.5))
+    drop-shadow(0 0 10px rgb(104 183 170 / 0.16));
+}
+
 .country-path[data-investigated="true"] {
   stroke: var(--gold);
   stroke-width: 2.2;
@@ -3922,6 +3937,10 @@ button:disabled {
   gap: 0.65rem;
 }
 
+.pattern-atlas-clues {
+  grid-template-columns: repeat(auto-fit, minmax(min(100%, 10rem), 1fr));
+}
+
 .clue-summary-card,
 .clue-action-card {
   display: grid;
@@ -4393,6 +4412,11 @@ textarea,
 .choice-button:hover {
   border-color: var(--signal);
   background: rgb(104 183 170 / 0.1);
+}
+
+.choice-button > span {
+  min-width: 0;
+  overflow-wrap: anywhere;
 }
 
 .choice-button[data-rejected="true"] {
@@ -5210,6 +5234,42 @@ dd {
 .confusion-list span {
   color: var(--muted);
   line-height: 1.5;
+}
+
+.pattern-atlas-country-list,
+.pattern-atlas-source-list {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(min(100%, 10rem), 1fr));
+  gap: 0.45rem;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.pattern-atlas-country-list li,
+.pattern-atlas-source-list li {
+  display: grid;
+  gap: 0.18rem;
+  min-width: 0;
+  border: 1px solid rgb(164 216 205 / 0.22);
+  border-radius: 7px;
+  padding: 0.62rem;
+  background: rgb(5 18 22 / 0.38);
+}
+
+.pattern-atlas-country-list strong,
+.pattern-atlas-source-list a {
+  color: var(--parchment);
+  font-weight: 800;
+  overflow-wrap: anywhere;
+}
+
+.pattern-atlas-country-list span,
+.pattern-atlas-source-list span {
+  color: var(--muted);
+  font-family: var(--font-mono);
+  font-size: 0.76rem;
+  font-weight: 700;
 }
 
 .caveat-card {

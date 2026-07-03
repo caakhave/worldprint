@@ -12,11 +12,13 @@ type WorldMapProps = {
   map: MapFeatureCollection;
   indicator?: IndicatorArtifact;
   countryNames?: Map<string, string>;
+  highlightedIso3?: string[];
   investigatedIso3?: string[];
   selectedIso3?: string | null;
   fit?: "contain" | "cover";
   interactive?: boolean;
   zoomable?: boolean;
+  showCountryTooltip?: boolean;
   onCountryClick?: (country: { iso3: string; name: string }) => void;
   labelledBy?: string;
 };
@@ -25,11 +27,13 @@ export function WorldMap({
   map,
   indicator,
   countryNames,
+  highlightedIso3 = [],
   investigatedIso3 = [],
   selectedIso3,
   fit = "contain",
   interactive = true,
   zoomable = true,
+  showCountryTooltip = true,
   onCountryClick,
   labelledBy
 }: WorldMapProps) {
@@ -43,6 +47,7 @@ export function WorldMap({
   const projection = useMemo(() => geoEqualEarth().fitExtent([[18, 14], [942, 506]], map as never), [map]);
   const path = useMemo(() => geoPath(projection), [projection]);
   const graticulePath = path(geoGraticule10() as never);
+  const highlighted = new Set(highlightedIso3);
   const investigated = new Set(investigatedIso3);
   const isZoomed = !isDefaultMapView(view);
   const palette = paletteForIndicator(indicator);
@@ -156,12 +161,14 @@ export function WorldMap({
               const iso3 = feature.properties.iso3;
               const countryName = (iso3 ? countryNames?.get(iso3) : undefined) ?? feature.properties.name ?? "Unknown country";
               const value = iso3 && indicator ? indicator.valuesByIso3[iso3] : undefined;
-              const klass = valueClass(value, indicator?.stats.quantileBreaks ?? []);
+              const klass = indicator ? valueClass(value, indicator.stats.quantileBreaks) : null;
               const d = path(feature as never);
               if (!d) return null;
+              const isHighlighted = iso3 ? highlighted.has(iso3) : false;
               const isInvestigated = iso3 ? investigated.has(iso3) : false;
               const isSelected = iso3 && selectedIso3 === iso3;
               const isHovered = hovered?.mapId === feature.properties.mapId;
+              const valueClassName = indicator ? (klass ?? "missing") : isHighlighted ? "highlighted" : "base";
               return (
                 <path
                   key={feature.properties.mapId}
@@ -169,17 +176,19 @@ export function WorldMap({
                   className="country-path"
                   data-iso3={iso3 ?? ""}
                   data-country-name={countryName}
-                  data-value-class={klass ?? "missing"}
-                  data-has-data={value === undefined ? "false" : "true"}
+                  data-value-class={valueClassName}
+                  data-has-data={indicator ? (value === undefined ? "false" : "true") : isHighlighted ? "true" : "false"}
+                  data-highlighted={isHighlighted ? "true" : "false"}
                   data-investigated={isInvestigated ? "true" : "false"}
                   data-selected={isSelected ? "true" : "false"}
                   data-hovered={isHovered ? "true" : "false"}
-                  style={klass === null ? undefined : { fill: valueClassColor(klass, indicator) }}
+                  style={indicator && klass !== null ? { fill: valueClassColor(klass, indicator) } : undefined}
                   vectorEffect="non-scaling-stroke"
                   tabIndex={interactive && iso3 ? 0 : -1}
                   role={interactive && iso3 ? "button" : "presentation"}
                   aria-label={interactive && iso3 ? `${countryName}. Click to select.` : undefined}
                   onPointerMove={(event) => {
+                    if (!showCountryTooltip) return;
                     setHovered({
                       mapId: feature.properties.mapId,
                       name: countryName,
@@ -190,6 +199,7 @@ export function WorldMap({
                   }}
                   onPointerLeave={() => setHovered(null)}
                   onFocus={(event) => {
+                    if (!showCountryTooltip) return;
                     const rect = event.currentTarget.getBoundingClientRect();
                     setHovered({
                       mapId: feature.properties.mapId,

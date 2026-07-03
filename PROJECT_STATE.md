@@ -8,7 +8,8 @@ Snapshot date: July 3, 2026.
 - Latest completed checkpoints:
   - `b5950022774228f6f24c1c42d755962ddd383b4a` - Challenge email CORS fix.
   - `c5482e0bbe60c3b1800e7875d252a03fbc27bfbd` - Pattern Atlas Phase 1 rule catalog foundation.
-- The working tree should remain docs/product-code clean except for untracked `atd/` assets.
+- Pattern Atlas Phase 2 playable route is complete for this checkpoint.
+- The working tree should remain docs/product-code clean except for untracked `atd/` assets and explicitly requested checkpoint work.
 - `atd/` remains untracked and must not be committed unless explicitly requested.
 
 ## Completed Work
@@ -37,24 +38,34 @@ Snapshot date: July 3, 2026.
   - Pattern Atlas Phase 1 uses mapped-country wording and validation guards for scoped rules.
   - Future gameplay UI must surface scope notes on reveal so geography-savvy players understand omitted small states.
 
+### Pattern Atlas Phase 2
+
+- Playable route completed: `/play/pattern-atlas/`.
+- The route is a local 3-rule sample run using the approved Phase 1 Pattern Atlas catalog.
+- It reuses the Mystery Map / Can You Geo visual system rather than introducing a new design system.
+- Implemented gameplay slice:
+  - Highlighted-country map mode.
+  - Multiple-choice answer buttons using the correct rule answer plus decoys.
+  - Wrong-answer penalty.
+  - Clues with one-time clue penalties.
+  - Reveal state with correct rule, explanation, sources, highlighted countries, and mapped-country scope note.
+  - Next-round flow through the 3-rule sample run.
+  - End-of-run summary.
+- Minimal `WorldMap` generalization now supports highlighted-country mode while preserving existing choropleth behavior for Mystery Map.
+- Manual QA looked good in the initial runthrough.
+- Not included in Phase 2:
+  - Daily, archive, custom, or Pro gating.
+  - Persistence or resume behavior.
+  - Challenge links.
+  - Stats saving.
+  - Homepage changes.
+  - `/play` hub integration or redesign.
+
 ## Current Next Task
 
-Pattern Atlas Phase 2: build a minimal playable `/play/pattern-atlas/` route.
+Pattern Atlas Phase 3: add account-aware run modes and persistence.
 
-Phase 2 should:
-
-- Reuse the existing Can You Geo / Mystery Map visual system.
-- Provide a minimal playable Pattern Atlas experience from the Phase 1 rule catalog.
-- Surface mapped-country/small-state scope notes in the answer/reveal experience.
-
-Phase 2 should not add these unless explicitly requested later:
-
-- Daily, archive, custom, or Pro gating.
-- Persistence or resume behavior.
-- Challenge links.
-- Stats saving.
-- Homepage changes.
-- `/play` hub redesign.
+Phase 3 should still avoid homepage or `/play` hub redesign unless explicitly requested later.
 
 ## Validation Summary
 
@@ -92,13 +103,36 @@ Phase 2 should not add these unless explicitly requested later:
 - `git diff --check`
   - Result: passed.
 
+### Pattern Atlas Phase 2
+
+- `pnpm test src/app/play/pattern-atlas/page.test.tsx src/features/pattern-atlas/PatternAtlasClient.test.tsx src/lib/pattern-atlas/catalog.test.ts src/components/WorldMap.test.tsx`
+  - Result: passed; 4 files and 23 tests.
+- `pnpm test src/features/worldprint/WorldprintClient.structure.test.ts src/components/WorldMap.test.tsx`
+  - Result: passed; 2 files and 35 tests.
+- `pnpm lint`
+  - Result: passed.
+- `pnpm typecheck`
+  - Result: passed.
+- `pnpm build`
+  - Result: passed; static export generated 269 pages and included `/play/pattern-atlas`.
+- `git diff --check`
+  - Result: passed.
+- Manual QA:
+  - `/play/pattern-atlas/` loaded locally.
+  - Answer cards had visible labels.
+  - Metadata chips were display-formatted.
+  - Wrong-answer penalty and one-time clue penalties worked.
+  - Reveal showed explanation, sources, highlighted countries, and mapped-country scope note.
+  - Next-round flow reached the summary.
+  - `/play/mystery-map/` still loaded locally with its map.
+
 ## Known Remaining Issues / Follow-Ups
 
 - Custom Atlas topic+difficulty combo exhaustion by play history is not implemented.
 - The lower static homepage `Ways to play` section may still include `Try Sample Run`.
 - Full e2e may need updating for the newer access model and Custom Atlas naming.
 - `atd/` remains untracked and should not be committed.
-- Pattern Atlas small-state/map-coverage scope notes must be visible in future reveal UI.
+- Pattern Atlas Phase 3 should add account-aware run modes and persistence without homepage or `/play` hub redesign unless requested.
 
 ## Key Decisions To Preserve
 

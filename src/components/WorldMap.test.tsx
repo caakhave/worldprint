@@ -84,4 +84,23 @@ describe("WorldMap", () => {
     expect(missing!.getAttribute("style") ?? "").not.toContain("fill");
     expect(container.querySelector("#missing-hatch rect")).toHaveAttribute("fill", MISSING_DATA_FILL);
   });
+
+  it("renders highlighted country mode without an indicator", () => {
+    const { container } = render(<WorldMap map={map} highlightedIso3={["MEX", "CAN"]} interactive={false} labelledBy="map-title" />);
+    expect(container.querySelector(".map-frame")).toHaveAttribute("data-palette", paletteForIndicator(undefined).name);
+    expect(container.querySelector(".country-path[data-iso3='MEX']")).toHaveAttribute("data-highlighted", "true");
+    expect(container.querySelector(".country-path[data-iso3='MEX']")).toHaveAttribute("data-value-class", "highlighted");
+    expect(container.querySelector(".country-path[data-iso3='BRA']")).toHaveAttribute("data-highlighted", "false");
+    expect(container.querySelector(".country-path[data-iso3='BRA']")).toHaveAttribute("data-value-class", "base");
+  });
+
+  it("can suppress hover country names for hidden-pattern maps", () => {
+    const { container } = render(
+      <WorldMap map={map} highlightedIso3={["MEX", "CAN"]} showCountryTooltip={false} interactive={false} labelledBy="map-title" />
+    );
+    const country = container.querySelector<SVGPathElement>(".country-path[data-country-name='Mexico']");
+    expect(country).not.toBeNull();
+    fireEvent.pointerMove(country!, { clientX: 30, clientY: 40 });
+    expect(screen.queryByText("Mexico")).not.toBeInTheDocument();
+  });
 });
