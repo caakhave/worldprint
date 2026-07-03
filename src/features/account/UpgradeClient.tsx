@@ -3,6 +3,7 @@
 import Link from "next/link";
 import { useEffect, useState } from "react";
 import { CheckCircle2, ShieldCheck, Sparkles } from "lucide-react";
+import { GameLibraryShowcase } from "@/components/GameLibraryShowcase";
 import { BillingActionsClient } from "@/features/account/BillingActionsClient";
 import { BillingReturnNotice } from "@/features/account/BillingReturnNotice";
 import { useEntitlement } from "@/features/account/useEntitlement";
@@ -22,10 +23,10 @@ export function UpgradeClient() {
   const showProIntentPanel = Boolean(billingEnabled && signedIn && !isPro && selectedPlanOption);
   const heroTitle = loading ? "Checking your atlas plan." : isPro ? "You have the full atlas." : "Choose Free or Pro.";
   const heroLead = isPro
-    ? "Can You Geo? Pro membership is enabled on this account. Unlimited Atlas play, the full Practice Atlas, complete Past Games archive, and advanced stats are unlocked."
+    ? "Can You Geo? Pro membership is enabled on this account. Mystery Map Custom Atlas, Pattern Atlas Pattern Runs, the complete Past Games archive, and advanced stats are unlocked."
     : billingEnabled
-      ? "Start Free with no card needed, or sign in and choose monthly or yearly Pro through secure Stripe checkout."
-      : "Pro pricing is visible for planning. Checkout is coming soon and billing is disabled for now; Free accounts still get 3 fresh maps every day.";
+      ? "Start Free with no card needed, or sign in and choose monthly or yearly Pro for the growing Can You Geo game library."
+      : "Pro pricing is visible for planning. Checkout is coming soon and billing is disabled for now; Free accounts still get fresh Daily games.";
   const overviewHeading = loading ? "Checking your plan." : isPro ? "Can You Geo? Pro." : "Choose monthly or yearly.";
   const statusTitle = isPro
     ? "Can You Geo? Pro"
@@ -123,8 +124,8 @@ export function UpgradeClient() {
           <p className="eyebrow">Full atlas access</p>
           <h2>{overviewHeading}</h2>
           <p>
-            Free accounts unlock 3 fresh maps every day and saved progress. Pro opens unlimited Atlas play, the full Practice Atlas,
-            complete Past Games archive, advanced stats, and future premium updates.
+            Free accounts unlock fresh Daily games and saved Mystery Map progress. Pro opens Mystery Map Custom Atlas, Pattern Atlas
+            Pattern Runs, the complete Past Games archive, advanced stats, and future premium games.
           </p>
         </div>
         <div className="upgrade-hero-action-panel">
@@ -137,14 +138,26 @@ export function UpgradeClient() {
         </div>
       </section>
 
+      <section className="upgrade-library-showcase" aria-labelledby="upgrade-library-title">
+        <div className="upgrade-library-heading">
+          <p className="eyebrow">Game library</p>
+          <h2 id="upgrade-library-title">Free and Pro now cover more than one game.</h2>
+          <p>
+            Mystery Map is the flagship daily map puzzle. Pattern Atlas is playable now with its own Daily and Pro Pattern Run.
+            Rank Run is planned as the next library game.
+          </p>
+        </div>
+        <GameLibraryShowcase ariaLabel="Games included in Can You Geo Free and Pro" />
+      </section>
+
       <div className="plan-grid">
         <article className="surface plan-card pro-plan-card" data-featured="true">
           <p className="eyebrow">Pro</p>
           <h2>{isPro ? "Full atlas unlocked." : "Open the whole atlas."}</h2>
           <p>
             {isPro
-              ? "Your account already has the full Practice Atlas, complete Past Games archive, and deeper personal history."
-              : "For players who want the full Practice Atlas, complete Past Games archive, and deeper personal history."}
+              ? "Your account already has Mystery Map Custom Atlas, Pattern Atlas Pattern Runs, the complete Past Games archive, and deeper personal history."
+              : "For players who want Mystery Map Custom Atlas, Pattern Atlas Pattern Runs, the complete Past Games archive, and deeper personal history."}
           </p>
           <div className="pro-price-options" aria-label="Pro pricing options">
             {PRO_PRICE_OPTIONS.map((option) => (
@@ -173,11 +186,11 @@ export function UpgradeClient() {
             </li>
             <li>
               <CheckCircle2 size={18} aria-hidden="true" />
-              Unlimited Atlas play
+              Mystery Map Custom Atlas
             </li>
             <li>
               <CheckCircle2 size={18} aria-hidden="true" />
-              Full Practice Atlas
+              Pattern Atlas Pattern Runs
             </li>
             <li>
               <CheckCircle2 size={18} aria-hidden="true" />
@@ -185,7 +198,7 @@ export function UpgradeClient() {
             </li>
             <li>
               <CheckCircle2 size={18} aria-hidden="true" />
-              Future premium surfaces
+              Future premium games
             </li>
             <li>
               <CheckCircle2 size={18} aria-hidden="true" />
@@ -210,7 +223,7 @@ export function UpgradeClient() {
             </li>
             <li>
               <CheckCircle2 size={18} aria-hidden="true" />
-              Limited Practice Atlas
+              Pattern Atlas Free Daily
             </li>
             <li>
               <CheckCircle2 size={18} aria-hidden="true" />

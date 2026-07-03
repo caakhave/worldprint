@@ -94,6 +94,13 @@ describe("UpgradeClient", () => {
     expect(screen.getAllByText("Checkout coming soon").length).toBeGreaterThan(0);
     expect(screen.getByText(/Checkout is coming soon and billing is disabled for now/i)).toBeVisible();
     expect(screen.getByText(/Billing is disabled right now/i)).toBeVisible();
+    expect(screen.getByRole("heading", { name: "Free and Pro now cover more than one game." })).toBeVisible();
+    expect(screen.getByRole("heading", { name: "Mystery Map" })).toBeVisible();
+    expect(screen.getByRole("heading", { name: "Pattern Atlas" })).toBeVisible();
+    expect(screen.getByRole("heading", { name: "Rank Run" })).toBeVisible();
+    expect(screen.getByRole("link", { name: /Play Pattern Atlas/i })).toHaveAttribute("href", "/play/pattern-atlas");
+    expect(screen.getAllByText("Coming soon").length).toBeGreaterThan(0);
+    expect(screen.queryByText("Full Practice Atlas")).not.toBeInTheDocument();
   });
 
   it("leads with active Pro copy for players who already have Pro", () => {
@@ -139,7 +146,7 @@ describe("UpgradeClient", () => {
     expect(within(overview).getByRole("button", { name: "Join yearly" })).toBeEnabled();
     expect(
       within(overview).getByText(
-        "Free accounts unlock 3 fresh maps every day and saved progress. Pro opens unlimited Atlas play, the full Practice Atlas, complete Past Games archive, advanced stats, and future premium updates."
+        "Free accounts unlock fresh Daily games and saved Mystery Map progress. Pro opens Mystery Map Custom Atlas, Pattern Atlas Pattern Runs, the complete Past Games archive, advanced stats, and future premium games."
       )
     ).toBeVisible();
     expect(screen.getAllByText("Best value").length).toBeGreaterThanOrEqual(1);

@@ -1,12 +1,13 @@
 import Link from "next/link";
 import type { Metadata } from "next";
+import { GameLibraryShowcase } from "@/components/GameLibraryShowcase";
 import { TIER_CONFIGS } from "@/lib/game/scoring";
 import { breadcrumbJsonLd, pageMetadata } from "@/lib/site/seo";
 
 export const metadata: Metadata = pageMetadata({
-  title: "How to Play Mystery Map",
+  title: "How to Play Can You Geo?",
   description:
-    "Learn how Can You Geo? Mystery Map works: read choropleth patterns, reveal country clues, manage points, and solve the hidden geography puzzle.",
+    "Learn how Can You Geo? games work: play Mystery Map choropleth puzzles, Pattern Atlas hidden-rule rounds, and future geography challenges.",
   path: "/how-to-play/"
 });
 
@@ -20,7 +21,7 @@ export default function HowToPlayPage() {
           __html: JSON.stringify(
             breadcrumbJsonLd([
               { name: "Can You Geo?", path: "/" },
-              { name: "How to Play Mystery Map", path: "/how-to-play/" }
+              { name: "How to Play Can You Geo?", path: "/how-to-play/" }
             ])
           )
         }}
@@ -31,10 +32,22 @@ export default function HowToPlayPage() {
           <h1 className="page-title">Read the pattern before the answer reads you.</h1>
         </div>
         <p className="lead">
-          Mystery Map is the first Can You Geo? game: read the color-map pattern, spend points only when evidence helps, then choose
-          the hidden indicator.
+          Can You Geo? is a library of geography games about reading patterns. Mystery Map asks you to solve an unlabeled choropleth;
+          Pattern Atlas asks you to identify the rule connecting highlighted countries.
         </p>
       </div>
+
+      <section className="how-section how-library" aria-labelledby="how-library-title">
+        <div className="section-heading">
+          <p className="eyebrow">Games</p>
+          <h2 id="how-library-title">Two games are playable now.</h2>
+          <p>
+            Mystery Map remains the flagship Daily game. Pattern Atlas uses the same atlas feel with highlighted countries instead of
+            choropleth values. Rank Run is a planned future game and is not playable yet.
+          </p>
+        </div>
+        <GameLibraryShowcase className="how-library-grid" ariaLabel="Can You Geo games explained" />
+      </section>
 
       <div className="rules-grid how-steps" aria-label="How a round works">
         <article>
@@ -94,11 +107,14 @@ export default function HowToPlayPage() {
       <div className="how-cta surface map-texture-panel">
         <div>
           <p className="eyebrow">Start playing</p>
-          <h2>Start Pro for the full atlas, or continue free with 3 fresh maps every day.</h2>
+          <h2>Pick a game, continue free, or start Pro for deeper custom runs.</h2>
         </div>
         <div className="button-row">
           <Link className="button" href="/upgrade">
             Start Pro
+          </Link>
+          <Link className="button-secondary" href="/play">
+            Open game library
           </Link>
           <Link className="button-secondary" href="/play/mystery-map">
             Try Sample Run

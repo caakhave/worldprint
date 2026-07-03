@@ -10,7 +10,8 @@ Snapshot date: July 3, 2026.
   - `c5482e0bbe60c3b1800e7875d252a03fbc27bfbd` - Pattern Atlas Phase 1 rule catalog foundation.
   - `30d6969` - Pattern Atlas Phase 2 playable sample route.
   - `6ce8aa064cd5f1b40cd3253c665168d3452ae135` - Pattern Atlas Phase 3 account modes and persistence.
-- Pattern Atlas QA polish is complete for this checkpoint.
+- `728d8d3` - Pattern Atlas QA polish for clue clarity and sample conversion.
+- Phase 4 site integration is complete for this checkpoint.
 - The working tree should remain docs/product-code clean except for untracked `atd/` assets and explicitly requested checkpoint work.
 - `atd/` remains untracked and must not be committed unless explicitly requested.
 
@@ -92,11 +93,28 @@ Snapshot date: July 3, 2026.
 - CTA routes are valid:
   - `Start Pro` uses `/upgrade`, backed by `src/app/upgrade/page.tsx`.
   - `Create free account` uses `/sign-up`, backed by `src/app/sign-up/page.tsx`.
-- `/upgrade` visual game-card work is still pending for Phase 4 or a later explicit upgrade-page polish task.
+
+### Phase 4 Site Integration
+
+- `/play/` now acts as a multi-game Can You Geo library hub.
+- Mystery Map and Pattern Atlas are shown as playable game cards.
+- Rank Run is shown as `Coming soon` only; no Rank Run gameplay route or mechanic exists yet.
+- Homepage surfaces now reference the multi-game library while preserving account-aware behavior:
+  - Logged-out users still see `Start Pro` and `Try Sample Run`.
+  - Logged-in Free users still see Free Daily and upgrade messaging.
+  - Logged-in Pro users do not get primary hero `Start Pro` or `Try Sample Run` CTAs.
+- `/upgrade/` now includes a visual 3-game library section near the top for Mystery Map, Pattern Atlas, and Rank Run.
+- Billing and checkout-return copy no longer uses the old `Practice Atlas` wording on the upgrade path.
+- `How it works` now has concise multi-game framing while still explaining Mystery Map clearly.
+- Sitemap and public metadata now include `/play/` and `/play/pattern-atlas/`.
+- No auth, payment, Supabase, Edge Function, Stripe config, or deployment config changes were made.
+- Free/Pro real browser QA status:
+  - Mocked entitlement tests passed for homepage account-aware branches.
+  - Real authenticated Free/Pro browser QA still needs staging verification after deploy.
 
 ## Current Next Task
 
-Pattern Atlas Phase 4: site integration. Add Pattern Atlas to `/play` hub, navigation, and home surfaces without redesigning the site.
+Staging-wide QA pass before more feature work.
 
 ## Validation Summary
 
@@ -202,15 +220,36 @@ Pattern Atlas Phase 4: site integration. Add Pattern Atlas to `/play` hub, navig
   - Signed-out Sample Run completion shows the join/upgrade CTA.
   - `/play/mystery-map/` still loaded locally with its map.
 
+### Phase 4 Site Integration
+
+- `pnpm test src/app/play/page.test.tsx src/app/page.test.tsx src/features/home/HomeHeroAccountPanel.test.tsx src/features/account/UpgradeClient.test.tsx src/features/account/BillingReturnNotice.test.tsx src/app/how-to-play/page.test.tsx src/app/sitemap.test.ts src/app/play/pattern-atlas/page.test.tsx src/features/pattern-atlas/PatternAtlasClient.test.tsx src/features/worldprint/WorldprintClient.structure.test.ts src/components/PrimaryNav.test.tsx`
+  - Result: passed; 11 files and 73 tests.
+- `pnpm lint`
+  - Result: passed.
+- `pnpm typecheck`
+  - Result: passed.
+- `pnpm build`
+  - Result: passed; static export generated 270 pages and included `/play`, `/play/mystery-map`, and `/play/pattern-atlas`.
+- `git diff --check`
+  - Result: passed.
+- Static preview manual QA:
+  - `/play/` showed Mystery Map and Pattern Atlas as playable cards and Rank Run as coming soon with no gameplay link.
+  - `/play/mystery-map/` loaded normally.
+  - `/play/pattern-atlas/` loaded normally.
+  - `/upgrade/` showed the 3-game library section and no old `Practice Atlas` wording in upgrade-visible copy.
+  - Logged-out homepage retained `Start Pro` and `Try Sample Run` while showing the multi-game library.
+  - `/how-to-play/` framed Can You Geo as a multi-game library and did not overpromise Rank Run.
+  - Mobile `/play/` and `/upgrade/` had no horizontal overflow in the static preview smoke.
+  - Real authenticated Free/Pro homepage browser QA was not performed locally; mocked entitlement coverage passed and staging QA with real accounts is still needed.
+
 ## Known Remaining Issues / Follow-Ups
 
 - Custom Atlas topic+difficulty combo exhaustion by play history is not implemented.
-- The lower static homepage `Ways to play` section may still include `Try Sample Run`.
 - Full e2e may need updating for the newer access model and Custom Atlas naming.
 - `atd/` remains untracked and should not be committed.
 - Pattern Atlas Free/Pro real-browser QA needs staging verification with authenticated accounts after deploy.
-- `/upgrade` visual game-card work is still pending.
-- Pattern Atlas Phase 4 should integrate the game into site surfaces without redesigning homepage or `/play` hub.
+- Rank Run is represented only as coming soon; no gameplay exists yet.
+- Staging-wide QA should run before more feature work.
 
 ## Key Decisions To Preserve
 

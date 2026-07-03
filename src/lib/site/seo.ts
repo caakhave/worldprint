@@ -5,7 +5,7 @@ import { publicSiteOrigin, robotsForSite, shouldNoIndexSite } from "@/lib/site/o
 
 export const SITE_TITLE = "Can You Geo? - Daily Geography Games & World Data Puzzles";
 export const SITE_DESCRIPTION =
-  "Play Can You Geo?, a daily geography game where Mystery Map turns real world data into map puzzles, choropleth clues, and country guessing challenges.";
+  "Play Can You Geo?, a growing geography game library where Mystery Map, Pattern Atlas, and future world puzzles turn maps and patterns into daily challenges.";
 export const OG_IMAGE_PATH = "/images/homepage/01-read-the-map.png";
 
 export type PublicRouteMetadata = {
@@ -25,6 +25,14 @@ export const PUBLIC_INDEXED_ROUTES: PublicRouteMetadata[] = [
     priority: 1
   },
   {
+    path: "/play/",
+    title: "Play Can You Geo? - Geography Game Library",
+    description:
+      "Choose a Can You Geo? geography game: Mystery Map choropleth puzzles, Pattern Atlas hidden-rule rounds, and future Rank Run challenges.",
+    changeFrequency: "daily",
+    priority: 0.97
+  },
+  {
     path: "/play/mystery-map/",
     title: "Play Mystery Map - Daily Geography Game",
     description:
@@ -33,10 +41,17 @@ export const PUBLIC_INDEXED_ROUTES: PublicRouteMetadata[] = [
     priority: 0.95
   },
   {
+    path: "/play/pattern-atlas/",
+    title: "Play Pattern Atlas - Geography Pattern Game",
+    description: "Play Pattern Atlas, a Can You Geo? geography game where you identify the rule connecting highlighted countries.",
+    changeFrequency: "daily",
+    priority: 0.9
+  },
+  {
     path: "/how-to-play/",
-    title: "How to Play Mystery Map",
+    title: "How to Play Can You Geo?",
     description:
-      "Learn how Can You Geo? Mystery Map works: read the color pattern, reveal country clues, manage points, and solve the hidden geography puzzle.",
+      "Learn how Can You Geo? games work: play Mystery Map choropleth puzzles, Pattern Atlas hidden-rule rounds, and future geography challenges.",
     changeFrequency: "monthly",
     priority: 0.82
   },
@@ -68,7 +83,7 @@ export const PUBLIC_INDEXED_ROUTES: PublicRouteMetadata[] = [
     path: "/upgrade/",
     title: "Free and Pro - Can You Geo?",
     description:
-      "Compare Free and Pro access for Can You Geo?: the 3-map Free Daily, saved progress, unlimited Atlas play, Past Games, and advanced stats.",
+      "Compare Free and Pro access for the Can You Geo game library: Mystery Map, Pattern Atlas, Rank Run planning, saved progress, custom runs, Past Games, and advanced stats.",
     changeFrequency: "monthly",
     priority: 0.6
   },
@@ -181,7 +196,7 @@ export function siteJsonLd(origin = publicSiteOrigin()) {
         "@type": "WebSite",
         "@id": `${origin}/#website`,
         name: BRAND_NAME,
-        alternateName: ["Can You Geo", "Mystery Map"],
+        alternateName: ["Can You Geo", "Mystery Map", "Pattern Atlas"],
         url: origin,
         description: SITE_DESCRIPTION,
         inLanguage: "en-US",
@@ -209,6 +224,18 @@ export function siteJsonLd(origin = publicSiteOrigin()) {
         description:
           "Mystery Map is a choropleth geography puzzle where players read an unlabeled world map, reveal country clues, and guess the hidden data indicator.",
         publisher: { "@id": `${origin}/#organization` }
+      },
+      {
+        "@type": "VideoGame",
+        "@id": `${origin}/#pattern-atlas`,
+        name: "Can You Geo? Pattern Atlas",
+        url: `${origin}/play/pattern-atlas/`,
+        gamePlatform: "Web browser",
+        genre: ["Geography game", "Map game", "Puzzle game"],
+        isAccessibleForFree: true,
+        description:
+          "Pattern Atlas is a highlighted-country geography puzzle where players identify the shared rule connecting countries on the map.",
+        publisher: { "@id": `${origin}/#organization` }
       }
     ]
   };
@@ -231,7 +258,7 @@ export const HOME_FAQ_ITEMS = [
   {
     name: "What is Can You Geo?",
     acceptedAnswer:
-      "Can You Geo? is a geography game site for daily map puzzles. Mystery Map is the first game: a world data challenge where real patterns become the mystery."
+      "Can You Geo? is a geography game site for daily map puzzles and world pattern challenges. Mystery Map and Pattern Atlas are playable now, with more games planned."
   },
   {
     name: "Is Can You Geo free?",
@@ -242,6 +269,11 @@ export const HOME_FAQ_ITEMS = [
     name: "How does Mystery Map work?",
     acceptedAnswer:
       "Mystery Map is the current featured game. It shows an unlabeled choropleth map; read the color pattern, reveal country values only when needed, then guess the hidden indicator."
+  },
+  {
+    name: "What games can I play?",
+    acceptedAnswer:
+      "Mystery Map is the choropleth indicator guessing game. Pattern Atlas is the highlighted-country hidden-rule game. Rank Run is planned as a future game."
   },
   {
     name: "What data sources does Can You Geo use?",

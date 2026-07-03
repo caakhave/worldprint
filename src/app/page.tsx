@@ -9,7 +9,7 @@ import { HOME_FAQ_ITEMS, homeFaqJsonLd, pageMetadata } from "@/lib/site/seo";
 export const metadata: Metadata = pageMetadata({
   title: "Can You Geo? - Daily Geography Games & World Data Puzzles",
   description:
-    "Play Can You Geo?, a daily geography game where Mystery Map turns real world data into map puzzles, choropleth clues, and country guessing challenges.",
+    "Play Can You Geo?, a growing geography game library with Mystery Map data puzzles, Pattern Atlas rule challenges, and more world games in planning.",
   path: "/"
 });
 
@@ -41,24 +41,25 @@ const modeCards = [
   {
     image: "/images/homepage/04-daily-mystery-map.png",
     objectPosition: "50% 50%",
-    title: "Free Daily",
-    copy: "3 fresh maps every day with saved progress on a free account.",
-    cta: "Continue free",
-    href: "/sign-up"
+    title: "Mystery Map",
+    copy: "Read choropleth patterns, spend clues, and solve the hidden indicator.",
+    cta: "Play Mystery Map",
+    href: "/play/mystery-map"
   },
   {
     image: "/images/homepage/05-practice.png",
     objectPosition: "50% 50%",
-    title: "Practice",
-    copy: "Train by topic and difficulty.",
-    cta: "Try Sample Run",
-    href: "/play/mystery-map"
+    title: "Pattern Atlas",
+    copy: "Find the shared rule connecting highlighted countries.",
+    cta: "Play Pattern Atlas",
+    href: "/play/pattern-atlas"
   },
   {
     image: "/images/homepage/06-challenge-friends.png",
     objectPosition: "48% 50%",
-    title: "Challenge friends",
-    copy: "Send a map and compare scores."
+    title: "Rank Run",
+    copy: "A future game about ordering countries by hidden world signals.",
+    badge: "Coming soon"
   }
 ] as const;
 
@@ -97,9 +98,9 @@ export default function HomePage() {
       <section className="section-band homepage-section" id="how-it-works">
         <div className="page-shell homepage-section-layout">
           <div className="homepage-section-heading">
-            <p className="eyebrow">How Mystery Map works</p>
-            <h2>Start with Mystery Map.</h2>
-            <p className="section-lede">The current featured game is a tiny mystery: read the map, spend clues, make the call.</p>
+            <p className="eyebrow">How the library starts</p>
+            <h2>Read patterns. Make the call.</h2>
+            <p className="section-lede">Start with Mystery Map, then try Pattern Atlas for a different kind of world-reading puzzle.</p>
           </div>
           <div className="game-loop-grid" aria-label="How Can You Geo works">
             {signalCards.map((card) => (
@@ -128,10 +129,10 @@ export default function HomePage() {
       <section className="section-band homepage-section">
         <div className="page-shell homepage-section-layout">
           <div className="homepage-section-heading">
-            <p className="eyebrow">Ways to play</p>
-            <h2>Choose your atlas run.</h2>
+            <p className="eyebrow">Game library</p>
+            <h2>Choose your geography game.</h2>
             <p className="section-lede">
-              Play the daily, warm up in practice, or send a map to someone who thinks they know the world.
+              Mystery Map and Pattern Atlas are playable now. Rank Run is planned as the next library challenge.
             </p>
           </div>
           <div className="mode-poster-grid" aria-label="Ways to play Can You Geo">
@@ -155,6 +156,7 @@ export default function HomePage() {
                         <ArrowRight size={16} aria-hidden="true" />
                       </Link>
                     ) : null}
+                    {"badge" in card ? <span className="mode-poster-badge">{card.badge}</span> : null}
                   </div>
                 </div>
               </article>

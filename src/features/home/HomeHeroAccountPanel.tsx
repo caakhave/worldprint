@@ -22,48 +22,48 @@ const heroCopy: Record<
 > = {
   guest: {
     eyebrow: "Join the daily challenge",
-    lead: "A new mystery map is waiting. Spot the pattern, spend your clues wisely, and guess what the planet is hiding.",
+    lead: "A new mystery map is waiting, and Pattern Atlas adds another way to read the world. Spot the pattern, spend clues wisely, and make the call.",
     primary: { label: "Start Pro", href: "/upgrade" },
     secondary: { label: "Try Sample Run", href: "/play/mystery-map" },
     noteLines: [
       "No account needed to try out our sample maps.",
       "Free accounts get three fresh maps per day.",
-      "Pro accounts get full gameplay."
+      "Pro accounts get Custom Atlas and Pattern Runs."
     ],
     panelEyebrow: "Join the game",
     panelHeading: "Start Pro or continue free",
-    panelBody: "Pro opens the full atlas. Free needs no card and includes the 3-map Free Daily, saved progress, streaks, and basic stats.",
+    panelBody: "Pro opens the growing game library. Free needs no card and includes the 3-map Free Daily, saved progress, streaks, and basic stats.",
     panelCta: { label: "Start Pro", href: "/upgrade" }
   },
   free: {
     eyebrow: "Free account active",
-    lead: "Your Daily is ready. Play today's three fresh maps, save your progress, and upgrade when you want the full Custom Atlas.",
+    lead: "Your Daily is ready. Play today's three fresh maps, try Pattern Atlas, and upgrade when you want Custom Atlas and Pattern Runs.",
     primary: { label: "Play today's Free Daily", href: "/play/mystery-map" },
     secondary: { label: "Upgrade to Pro", href: "/upgrade" },
     noteLines: [
       "You are signed in on Free.",
       "Free accounts save Daily progress, streaks, and basic stats.",
-      "Pro unlocks Custom Atlas, full atlas access, and Past Games."
+      "Pro unlocks Custom Atlas, Pattern Runs, and Past Games."
     ],
     panelEyebrow: "Free Daily unlocked",
-    panelHeading: "Play today's Daily or unlock the atlas",
-    panelBody: "Free keeps your Daily progress saved. Pro adds Custom Atlas runs, topic and difficulty practice, and the complete Past Games archive.",
+    panelHeading: "Play today's Daily or unlock more games",
+    panelBody: "Free keeps your Daily progress saved. Pro adds Custom Atlas runs, Pattern Atlas filters, and the complete Past Games archive.",
     panelCta: { label: "Upgrade to Pro", href: "/upgrade" }
   },
   pro: {
     eyebrow: "Pro Atlas unlocked",
-    lead: "Your full atlas is open. Play today's Daily, start a Custom Atlas set, or jump back into deeper map practice whenever you want.",
+    lead: "Your full atlas is open. Play today's Daily, start a Custom Atlas set, or jump into Pattern Atlas whenever you want.",
     primary: { label: "Play today's Daily", href: "/play/mystery-map" },
     secondary: { label: "Start Custom Atlas", href: "/play/mystery-map#practice-atlas" },
     noteLines: [
       "Pro is active on this account.",
       "Daily maps still count for streaks and score.",
-      "Custom Atlas and Past Games are unlocked for deeper play."
+      "Custom Atlas, Pattern Runs, and Past Games are unlocked for deeper play."
     ],
     panelEyebrow: "Pro Atlas unlocked",
-    panelHeading: "Daily plus Custom Atlas",
-    panelBody: "Pro can play the Daily, build Custom Atlas runs by topic and map difficulty, replay Past Games, and review advanced stats.",
-    panelCta: { label: "Start Custom Atlas", href: "/play/mystery-map#practice-atlas" }
+    panelHeading: "Daily, Custom Atlas, Pattern Atlas",
+    panelBody: "Pro can play the Daily, build Custom Atlas runs, start Pattern Atlas Pattern Runs, replay Past Games, and review advanced stats.",
+    panelCta: { label: "Play Pattern Atlas", href: "/play/pattern-atlas" }
   },
   loading: {
     eyebrow: "Checking atlas access",
@@ -73,11 +73,11 @@ const heroCopy: Record<
     noteLines: [
       "Looking for a signed-in account.",
       "Free accounts get today's Daily.",
-      "Pro accounts get Daily plus Custom Atlas."
+      "Pro accounts get Daily, Custom Atlas, and Pattern Runs."
     ],
     panelEyebrow: "Account check",
     panelHeading: "Loading your atlas",
-    panelBody: "This only takes a moment. Signed-in players will see Daily, Custom Atlas, and account-aware actions here.",
+    panelBody: "This only takes a moment. Signed-in players will see Daily, Custom Atlas, Pattern Atlas, and account-aware actions here.",
     panelCta: { label: "Open account", href: "/account" }
   }
 };

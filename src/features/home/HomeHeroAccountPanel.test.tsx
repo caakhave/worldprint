@@ -52,6 +52,7 @@ describe("HomeHeroAccountPanel", () => {
     expect(screen.getByRole("link", { name: "Try Sample Run" })).toHaveAttribute("href", "/play/mystery-map");
     expect(screen.getByRole("complementary", { name: "Join the game" })).toBeVisible();
     expect(screen.getByRole("heading", { name: "Start Pro or continue free" })).toBeVisible();
+    expect(screen.getByText("Pro accounts get Custom Atlas and Pattern Runs.")).toBeVisible();
   });
 
   it("shows Daily and upgrade actions for logged-in Free players", () => {
@@ -63,6 +64,7 @@ describe("HomeHeroAccountPanel", () => {
     expect(screen.getAllByRole("link", { name: /Upgrade to Pro/i }).every((link) => link.getAttribute("href") === "/upgrade")).toBe(true);
     expect(screen.getByRole("complementary", { name: "Free Daily unlocked" })).toBeVisible();
     expect(screen.getByText("You are signed in on Free.")).toBeVisible();
+    expect(screen.getByText("Pro unlocks Custom Atlas, Pattern Runs, and Past Games.")).toBeVisible();
     expect(screen.queryByRole("link", { name: "Try Sample Run" })).not.toBeInTheDocument();
   });
 
@@ -72,9 +74,10 @@ describe("HomeHeroAccountPanel", () => {
     render(<HomeHeroAccountPanel />);
 
     expect(screen.getByRole("link", { name: /Play today's Daily/i })).toHaveAttribute("href", "/play/mystery-map");
-    expect(screen.getAllByRole("link", { name: /Start Custom Atlas/i }).every((link) => link.getAttribute("href") === "/play/mystery-map#practice-atlas")).toBe(true);
+    expect(screen.getByRole("link", { name: /Start Custom Atlas/i })).toHaveAttribute("href", "/play/mystery-map#practice-atlas");
+    expect(screen.getByRole("link", { name: /Play Pattern Atlas/i })).toHaveAttribute("href", "/play/pattern-atlas");
     expect(screen.getByRole("complementary", { name: "Pro Atlas unlocked" })).toBeVisible();
-    expect(screen.getByRole("heading", { name: "Daily plus Custom Atlas" })).toBeVisible();
+    expect(screen.getByRole("heading", { name: "Daily, Custom Atlas, Pattern Atlas" })).toBeVisible();
     expect(screen.getByText("Pro is active on this account.")).toBeVisible();
     expect(screen.queryByRole("link", { name: /Start Pro/i })).not.toBeInTheDocument();
     expect(screen.queryByRole("link", { name: "Try Sample Run" })).not.toBeInTheDocument();

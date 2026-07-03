@@ -67,7 +67,8 @@ describe("BillingReturnNotice", () => {
     render(<BillingReturnNotice context="account" />);
 
     expect(await screen.findByRole("heading", { name: "Can You Geo? Pro" })).toBeVisible();
-    expect(screen.getByText(/full practice atlas/i)).toBeVisible();
+    expect(screen.getByText(/Mystery Map Custom Atlas, Pattern Atlas Pattern Runs/i)).toBeVisible();
+    expect(screen.queryByText(/full practice atlas/i)).not.toBeInTheDocument();
   });
 
   it("shows a safe cancelled checkout notice", async () => {
