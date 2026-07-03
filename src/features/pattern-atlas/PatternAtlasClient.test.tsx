@@ -209,12 +209,24 @@ describe("PatternAtlasClient", () => {
     expect(screen.getAllByText("All Difficulties").length).toBeGreaterThanOrEqual(1);
   });
 
-  it("handles narrow Pro filters by disabling runs that cannot fill three patterns", async () => {
+  it("enables Pro filters that can fill three patterns", async () => {
     const user = userEvent.setup();
     setAccount(PRO_ENTITLEMENT, true);
     renderPatternAtlas();
 
     await user.selectOptions(screen.getByRole("combobox", { name: /Family/i }), "borders");
+    await user.selectOptions(screen.getByRole("combobox", { name: /Difficulty/i }), "expert");
+
+    expect(screen.getByText("3 rules available for this setup.")).toBeVisible();
+    expect(screen.getByRole("button", { name: "Start Pattern Run" })).toBeEnabled();
+  });
+
+  it("handles narrow Pro filters by disabling runs that cannot fill three patterns", async () => {
+    const user = userEvent.setup();
+    setAccount(PRO_ENTITLEMENT, true);
+    renderPatternAtlas();
+
+    await user.selectOptions(screen.getByRole("combobox", { name: /Family/i }), "physical_geography");
     await user.selectOptions(screen.getByRole("combobox", { name: /Difficulty/i }), "expert");
 
     expect(screen.getByText("Try broader filters for a full 3-pattern run.")).toBeVisible();
