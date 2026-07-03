@@ -1,13 +1,23 @@
 "use client";
 
 import { Compass, Lightbulb, MapPin, XCircle } from "lucide-react";
+import Link from "next/link";
 import { useEffect, useMemo, useState } from "react";
 import { WorldMap } from "@/components/WorldMap";
+import { useEntitlement } from "@/features/account/useEntitlement";
 import { getPatternAtlasSampleRules } from "@/features/pattern-atlas/sampleRun";
 import { loadEntityRegistry, loadManifest, loadMap } from "@/lib/content/loaders";
 import type { Entity, MapFeatureCollection } from "@/lib/content/schemas";
+import { localDateKey } from "@/lib/game/retention";
 import { countryNameByIso3 } from "@/lib/geo/format";
-import { PATTERN_ATLAS_CATALOG } from "@/lib/pattern-atlas/catalog";
+import { PATTERN_ATLAS_CATALOG, PATTERN_ATLAS_RULES } from "@/lib/pattern-atlas/catalog";
+import {
+  PATTERN_ATLAS_RUN_RULE_COUNT,
+  practiceEligiblePatternAtlasRules,
+  selectPatternAtlasDailyRuleIds,
+  selectPatternAtlasPracticeRuleIds,
+  type PatternAtlasRuleFilters
+} from "@/lib/pattern-atlas/selection";
 import type {
   PatternAtlasDecoy,
   PatternAtlasDifficulty,
@@ -15,11 +25,25 @@ import type {
   PatternAtlasRule,
   PatternAtlasSource
 } from "@/lib/pattern-atlas/schemas";
+import {
+  PATTERN_ATLAS_CLUE_PENALTY,
+  PATTERN_ATLAS_STARTING_SCORE,
+  PATTERN_ATLAS_WRONG_ANSWER_PENALTY,
+  createPatternAtlasRun,
+  defaultPatternAtlasPersistedState,
+  loadPatternAtlasPersistedState,
+  persistPatternAtlasRun,
+  savePatternAtlasPersistedState,
+  type PatternAtlasPersistedState,
+  type PatternAtlasRoundState,
+  type PatternAtlasRunMode,
+  type PatternAtlasRunSetup,
+  type PatternAtlasRunState
+} from "@/lib/pattern-atlas/storage";
 
-const STARTING_SCORE = 1000;
-const WRONG_ANSWER_PENALTY = 300;
-const CLUE_PENALTY = 100;
 const SAMPLE_RULES = getPatternAtlasSampleRules();
+const FAMILY_ORDER: PatternAtlasFamily[] = ["language", "borders", "physical_geography", "organizations", "economy", "indicators"];
+const DIFFICULTY_ORDER: PatternAtlasDifficulty[] = ["intro", "standard", "expert"];
 const DIFFICULTY_LABELS: Record<PatternAtlasDifficulty, string> = {
   intro: "Intro",
   standard: "Standard",
@@ -39,31 +63,10 @@ type AnswerChoice = {
   decoy?: PatternAtlasDecoy;
 };
 
-type RoundState = {
-  score: number;
-  solved: boolean;
-  rejectedAnswerIds: string[];
-  feedback: string;
-  clues: {
-    family: boolean;
-    highlightedCountry: boolean;
-    counterexample: boolean;
-  };
+type PatternAtlasClientProps = {
+  initialData?: PatternAtlasLoadedData;
+  todayOverride?: string;
 };
-
-function initialRoundState(): RoundState {
-  return {
-    score: STARTING_SCORE,
-    solved: false,
-    rejectedAnswerIds: [],
-    feedback: "",
-    clues: {
-      family: false,
-      highlightedCountry: false,
-      counterexample: false
-    }
-  };
-}
 
 function answerChoicesForRule(rule: PatternAtlasRule, roundIndex: number): AnswerChoice[] {
   const choices: AnswerChoice[] = [
@@ -113,17 +116,77 @@ function mappedScopeNote(rule: PatternAtlasRule) {
   return null;
 }
 
-function updateRoundState(states: RoundState[], index: number, updater: (round: RoundState) => RoundState) {
-  return states.map((round, roundIndex) => (roundIndex === index ? updater(round) : round));
+function runModeLabel(runOrMode: PatternAtlasRunState | PatternAtlasRunMode) {
+  const mode = typeof runOrMode === "string" ? runOrMode : runOrMode.mode;
+  if (mode === "daily") return "Pattern Atlas Daily";
+  if (mode === "practice") return "Pro Pattern Run";
+  return "Pattern Atlas Sample Run";
 }
 
-export function PatternAtlasClient({ initialData }: { initialData?: PatternAtlasLoadedData }) {
+function runContextChips(run: PatternAtlasRunState) {
+  if (run.mode === "practice") {
+    return [
+      runModeLabel(run),
+      run.setup?.family ? familyLabel(run.setup.family) : "All Families",
+      run.setup?.difficulty ? difficultyLabel(run.setup.difficulty) : "All Difficulties"
+    ];
+  }
+  if (run.mode === "daily") return ["Free Daily"];
+  return ["Sample Run"];
+}
+
+function runSummaryCopy(run: PatternAtlasRunState) {
+  if (run.mode === "daily") return "Your Pattern Atlas Daily progress is saved locally and isolated from Mystery Map.";
+  if (run.mode === "practice") return "This Pro Pattern Run is saved locally as Pattern Atlas progress only.";
+  return "Sample Run progress stays local. No account or profile stats are saved.";
+}
+
+function validStoredRun(
+  run: PatternAtlasRunState | null,
+  mode: PatternAtlasRunMode,
+  contentVersion: string,
+  ruleById: Map<string, PatternAtlasRule>,
+  dateKey?: string
+) {
+  if (!run || run.mode !== mode || run.contentVersion !== contentVersion) return null;
+  if (dateKey && run.dateKey !== dateKey) return null;
+  if (run.ruleIds.length !== run.rounds.length) return null;
+  if (run.ruleIds.some((ruleId) => !ruleById.has(ruleId))) return null;
+  return run;
+}
+
+function updateCurrentRound(run: PatternAtlasRunState, updater: (round: PatternAtlasRoundState) => PatternAtlasRoundState): PatternAtlasRunState {
+  if (run.status === "complete") return run;
+  const currentRound = run.rounds[run.currentRoundIndex];
+  if (!currentRound) return run;
+  const rounds = [...run.rounds];
+  rounds[run.currentRoundIndex] = updater(currentRound);
+  return { ...run, rounds };
+}
+
+function scrollToTop() {
+  window.requestAnimationFrame(() => window.scrollTo(0, 0));
+}
+
+export function PatternAtlasClient({ initialData, todayOverride }: PatternAtlasClientProps) {
+  const { entitlement, loading: entitlementLoading, signedIn } = useEntitlement();
+  const todayKey = todayOverride ?? localDateKey(new Date());
+  const isProAccount = signedIn && entitlement.plan === "pro";
+  const isFreeAccount = signedIn && entitlement.plan !== "pro";
   const [data, setData] = useState<PatternAtlasLoadedData | null>(initialData ?? null);
   const [loadError, setLoadError] = useState<string | null>(null);
-  const [currentRoundIndex, setCurrentRoundIndex] = useState(0);
-  const [runComplete, setRunComplete] = useState(false);
-  const [roundStates, setRoundStates] = useState<RoundState[]>(() => SAMPLE_RULES.map(() => initialRoundState()));
+  const [storeLoaded, setStoreLoaded] = useState(false);
+  const [store, setStore] = useState<PatternAtlasPersistedState>(() => defaultPatternAtlasPersistedState());
+  const [run, setRun] = useState<PatternAtlasRunState | null>(null);
+  const [practiceFamily, setPracticeFamily] = useState<PatternAtlasFamily | "">("");
+  const [practiceDifficulty, setPracticeDifficulty] = useState<PatternAtlasDifficulty | "">("");
   const sourceById = useMemo(() => new Map(PATTERN_ATLAS_CATALOG.sourceRegistry.map((source) => [source.id, source])), []);
+  const ruleById = useMemo(() => new Map(PATTERN_ATLAS_RULES.map((rule) => [rule.id, rule])), []);
+
+  useEffect(() => {
+    setStore(loadPatternAtlasPersistedState());
+    setStoreLoaded(true);
+  }, []);
 
   useEffect(() => {
     if (initialData) return;
@@ -144,63 +207,143 @@ export function PatternAtlasClient({ initialData }: { initialData?: PatternAtlas
     };
   }, [initialData]);
 
-  const currentRule = SAMPLE_RULES[currentRoundIndex];
-  const currentState = roundStates[currentRoundIndex];
-  const answerChoices = useMemo(() => answerChoicesForRule(currentRule, currentRoundIndex), [currentRule, currentRoundIndex]);
-  const savedScore = roundStates.slice(0, currentRoundIndex).reduce((total, round) => total + (round.solved ? round.score : 0), 0);
-  const possibleTotal = savedScore + currentState.score;
-  const finalScore = roundStates.reduce((total, round) => total + (round.solved ? round.score : 0), 0);
+  useEffect(() => {
+    if (!run || !storeLoaded) return;
+    setStore((current) => {
+      const next = persistPatternAtlasRun(current, run);
+      savePatternAtlasPersistedState(next);
+      return next;
+    });
+  }, [run, storeLoaded]);
 
-  function revealClue(clue: keyof RoundState["clues"]) {
-    setRoundStates((current) =>
-      updateRoundState(current, currentRoundIndex, (round) => {
+  const currentSampleRun = useMemo(
+    () => validStoredRun(store.activeSampleRun, "sample", PATTERN_ATLAS_CATALOG.contentVersion, ruleById),
+    [ruleById, store.activeSampleRun]
+  );
+  const currentDailyRun = useMemo(
+    () => validStoredRun(store.activeDailyRun, "daily", PATTERN_ATLAS_CATALOG.contentVersion, ruleById, todayKey),
+    [ruleById, store.activeDailyRun, todayKey]
+  );
+  const currentPracticeRun = useMemo(
+    () => validStoredRun(store.activePracticeRun, "practice", PATTERN_ATLAS_CATALOG.contentVersion, ruleById),
+    [ruleById, store.activePracticeRun]
+  );
+
+  const practiceFilters = useMemo<PatternAtlasRuleFilters>(
+    () => ({
+      ...(practiceFamily ? { family: practiceFamily } : {}),
+      ...(practiceDifficulty ? { difficulty: practiceDifficulty } : {})
+    }),
+    [practiceDifficulty, practiceFamily]
+  );
+  const practiceMatches = useMemo(() => practiceEligiblePatternAtlasRules(PATTERN_ATLAS_RULES, practiceFilters), [practiceFilters]);
+  const hasFullPracticeRun = practiceMatches.length >= PATTERN_ATLAS_RUN_RULE_COUNT;
+  const familyOptions = useMemo(
+    () =>
+      FAMILY_ORDER.map((family) => ({
+        family,
+        count: practiceEligiblePatternAtlasRules(PATTERN_ATLAS_RULES, { ...practiceFilters, family }).length
+      })).filter((option) => option.count > 0),
+    [practiceFilters]
+  );
+  const difficultyOptions = useMemo(
+    () =>
+      DIFFICULTY_ORDER.map((difficulty) => ({
+        difficulty,
+        count: practiceEligiblePatternAtlasRules(PATTERN_ATLAS_RULES, { ...practiceFilters, difficulty }).length
+      })).filter((option) => option.count > 0),
+    [practiceFilters]
+  );
+
+  function startPatternRun(mode: PatternAtlasRunMode, options: { fresh?: boolean; setup?: PatternAtlasRunSetup } = {}) {
+    if (mode === "daily" && !signedIn) return;
+    if (mode === "practice" && !isProAccount) return;
+
+    const existing = mode === "sample" ? currentSampleRun : mode === "daily" ? currentDailyRun : currentPracticeRun;
+    if (!options.fresh && existing) {
+      setRun(existing);
+      scrollToTop();
+      return;
+    }
+
+    const setup = mode === "practice" ? options.setup ?? practiceSetupFromFilters(practiceFilters) : undefined;
+    const selectedRuleIds =
+      mode === "sample"
+        ? SAMPLE_RULES.map((rule) => rule.id)
+        : mode === "daily"
+          ? selectPatternAtlasDailyRuleIds(PATTERN_ATLAS_RULES, PATTERN_ATLAS_CATALOG.contentVersion, todayKey)
+          : selectPatternAtlasPracticeRuleIds(
+              PATTERN_ATLAS_RULES,
+              PATTERN_ATLAS_CATALOG.contentVersion,
+              `run:${Date.now()}`,
+              setup ? { family: setup.family, difficulty: setup.difficulty } : practiceFilters
+            );
+    if (selectedRuleIds.length === 0) return;
+    if (mode === "practice" && selectedRuleIds.length < PATTERN_ATLAS_RUN_RULE_COUNT) return;
+
+    const nextRun = createPatternAtlasRun({
+      mode,
+      dateKey: todayKey,
+      contentVersion: PATTERN_ATLAS_CATALOG.contentVersion,
+      ruleIds: selectedRuleIds,
+      salt: mode === "sample" ? "evergreen" : mode === "daily" ? todayKey : `pro:${Date.now()}`,
+      ...(setup ? { setup } : {})
+    });
+    setRun(nextRun);
+    scrollToTop();
+  }
+
+  function revealClue(clue: keyof PatternAtlasRoundState["clues"]) {
+    setRun((current) => {
+      if (!current) return current;
+      return updateCurrentRound(current, (round) => {
         if (round.solved || round.clues[clue]) return round;
         return {
           ...round,
-          score: round.score - CLUE_PENALTY,
-          feedback: `Clue revealed. -${CLUE_PENALTY} points.`,
+          score: round.score - PATTERN_ATLAS_CLUE_PENALTY,
+          feedback: `Clue revealed. -${PATTERN_ATLAS_CLUE_PENALTY} points.`,
           clues: { ...round.clues, [clue]: true }
         };
-      })
-    );
+      });
+    });
   }
 
-  function submitAnswer(choice: AnswerChoice) {
-    setRoundStates((current) =>
-      updateRoundState(current, currentRoundIndex, (round) => {
+  function submitAnswer(choice: AnswerChoice, rule: PatternAtlasRule) {
+    setRun((current) => {
+      if (!current) return current;
+      return updateCurrentRound(current, (round) => {
         if (round.solved || round.rejectedAnswerIds.includes(choice.id)) return round;
         if (choice.correct) {
           return {
             ...round,
             solved: true,
-            feedback: `Correct. ${currentRule.displayAnswer}.`
+            feedback: `Correct. ${rule.displayAnswer}.`
           };
         }
         return {
           ...round,
-          score: round.score - WRONG_ANSWER_PENALTY,
+          score: round.score - PATTERN_ATLAS_WRONG_ANSWER_PENALTY,
           rejectedAnswerIds: [...round.rejectedAnswerIds, choice.id],
-          feedback: `${choice.label} is not the pattern. -${WRONG_ANSWER_PENALTY} points.`
+          feedback: `${choice.label} is not the pattern. -${PATTERN_ATLAS_WRONG_ANSWER_PENALTY} points.`
         };
-      })
-    );
+      });
+    });
   }
 
   function nextRound() {
-    if (currentRoundIndex + 1 >= SAMPLE_RULES.length) {
-      setRunComplete(true);
-      window.requestAnimationFrame(() => window.scrollTo(0, 0));
-      return;
-    }
-    setCurrentRoundIndex((current) => current + 1);
-    window.requestAnimationFrame(() => window.scrollTo(0, 0));
+    setRun((current) => {
+      if (!current) return current;
+      const nextIndex = current.currentRoundIndex + 1;
+      if (nextIndex >= current.rounds.length) {
+        return { ...current, status: "complete" };
+      }
+      return { ...current, currentRoundIndex: nextIndex };
+    });
+    scrollToTop();
   }
 
-  function restartRun() {
-    setCurrentRoundIndex(0);
-    setRunComplete(false);
-    setRoundStates(SAMPLE_RULES.map(() => initialRoundState()));
-    window.requestAnimationFrame(() => window.scrollTo(0, 0));
+  function restartRun(sourceRun: PatternAtlasRunState) {
+    startPatternRun(sourceRun.mode, { fresh: true, ...(sourceRun.setup ? { setup: sourceRun.setup } : {}) });
   }
 
   if (loadError) {
@@ -225,17 +368,57 @@ export function PatternAtlasClient({ initialData }: { initialData?: PatternAtlas
     );
   }
 
-  if (runComplete) {
-    return <PatternAtlasSummary finalScore={finalScore} roundStates={roundStates} onRestart={restartRun} />;
+  if (!run) {
+    return (
+      <PatternAtlasLobby
+        entitlementLoading={entitlementLoading}
+        signedIn={signedIn}
+        isFreeAccount={isFreeAccount}
+        isProAccount={isProAccount}
+        todayKey={todayKey}
+        currentSampleRun={currentSampleRun}
+        currentDailyRun={currentDailyRun}
+        currentPracticeRun={currentPracticeRun}
+        practiceFamily={practiceFamily}
+        practiceDifficulty={practiceDifficulty}
+        practiceMatches={practiceMatches}
+        hasFullPracticeRun={hasFullPracticeRun}
+        familyOptions={familyOptions}
+        difficultyOptions={difficultyOptions}
+        onFamilyChange={setPracticeFamily}
+        onDifficultyChange={setPracticeDifficulty}
+        onStart={startPatternRun}
+      />
+    );
+  }
+
+  if (run.status === "complete") {
+    return <PatternAtlasSummary run={run} onRestart={() => restartRun(run)} onLobby={() => setRun(null)} />;
+  }
+
+  const currentRule = ruleById.get(run.ruleIds[run.currentRoundIndex]);
+  const currentState = run.rounds[run.currentRoundIndex];
+  if (!currentRule || !currentState) {
+    return (
+      <section className="game-shell page-shell">
+        <div className="empty-state surface">
+          <h1>Pattern Atlas run is unavailable</h1>
+          <p>This saved Pattern Atlas run references a rule that is no longer in the catalog.</p>
+          <button className="button" type="button" onClick={() => setRun(null)}>
+            Choose another run
+          </button>
+        </div>
+      </section>
+    );
   }
 
   if (currentState.solved) {
     return (
       <PatternAtlasReveal
+        run={run}
         rule={currentRule}
-        roundIndex={currentRoundIndex}
         roundState={currentState}
-        finalRound={currentRoundIndex + 1 >= SAMPLE_RULES.length}
+        finalRound={run.currentRoundIndex + 1 >= run.rounds.length}
         map={data.map}
         countryNames={data.countryNames}
         sourceById={sourceById}
@@ -246,8 +429,14 @@ export function PatternAtlasClient({ initialData }: { initialData?: PatternAtlas
 
   const highlightedCountry = currentRule.includedIso3[0];
   const counterexample = currentRule.counterexampleIso3[0];
+  const answerChoices = answerChoicesForRule(currentRule, run.currentRoundIndex);
   const rejectedChoices = new Set(currentState.rejectedAnswerIds);
   const latestRejectedChoice = answerChoices.find((choice) => currentState.rejectedAnswerIds.at(-1) === choice.id);
+  const savedScore = run.rounds.slice(0, run.currentRoundIndex).reduce((total, round) => total + (round.solved ? round.score : 0), 0);
+  const possibleTotal = savedScore + currentState.score;
+  const solvedCount = run.rounds.filter((round) => round.solved).length;
+  const activeContextChips = runContextChips(run);
+  const ruleContextChips = [familyLabel(currentRule.family), difficultyLabel(currentRule.difficulty)].filter((chip) => !activeContextChips.includes(chip));
 
   return (
     <section className="play-layout page-shell" data-layout="dashboard">
@@ -255,11 +444,14 @@ export function PatternAtlasClient({ initialData }: { initialData?: PatternAtlas
         <div className="game-task-header">
           <div className="round-kicker">
             <span>
-              Round {currentRoundIndex + 1} of {SAMPLE_RULES.length}
+              Round {run.currentRoundIndex + 1} of {run.rounds.length}
             </span>
-            <span>Pattern Atlas</span>
-            <span>{familyLabel(currentRule.family)}</span>
-            <span>{difficultyLabel(currentRule.difficulty)}</span>
+            {activeContextChips.map((chip) => (
+              <span key={chip}>{chip}</span>
+            ))}
+            {ruleContextChips.map((chip) => (
+              <span key={chip}>{chip}</span>
+            ))}
           </div>
           <div>
             <p className="eyebrow">Your task</p>
@@ -274,7 +466,7 @@ export function PatternAtlasClient({ initialData }: { initialData?: PatternAtlas
               <span className="score-number">{currentState.score}</span> <span className="score-status-word">available</span>
             </strong>
             <small>
-              Wrong answers cost {WRONG_ANSWER_PENALTY}. Clues cost {CLUE_PENALTY}.
+              Wrong answers cost {PATTERN_ATLAS_WRONG_ANSWER_PENALTY}. Clues cost {PATTERN_ATLAS_CLUE_PENALTY}.
             </small>
           </div>
           <div className="score-hud-card score-hud-banked">
@@ -296,7 +488,7 @@ export function PatternAtlasClient({ initialData }: { initialData?: PatternAtlas
             label="Category"
             text={currentState.clues.family ? familyLabel(currentRule.family) : "Reveal the family this pattern belongs to."}
             used={currentState.clues.family}
-            cost={CLUE_PENALTY}
+            cost={PATTERN_ATLAS_CLUE_PENALTY}
             icon="family"
             onClick={() => revealClue("family")}
           />
@@ -304,7 +496,7 @@ export function PatternAtlasClient({ initialData }: { initialData?: PatternAtlas
             label="Highlighted country"
             text={currentState.clues.highlightedCountry ? countryName(highlightedCountry, data.countryNames) : "Reveal one country in the highlighted set."}
             used={currentState.clues.highlightedCountry}
-            cost={CLUE_PENALTY}
+            cost={PATTERN_ATLAS_CLUE_PENALTY}
             icon="highlight"
             onClick={() => revealClue("highlightedCountry")}
           />
@@ -312,21 +504,21 @@ export function PatternAtlasClient({ initialData }: { initialData?: PatternAtlas
             label="Counterexample"
             text={currentState.clues.counterexample ? `${countryName(counterexample, data.countryNames)} is not highlighted.` : "Reveal one country that does not fit."}
             used={currentState.clues.counterexample}
-            cost={CLUE_PENALTY}
+            cost={PATTERN_ATLAS_CLUE_PENALTY}
             icon="counterexample"
             onClick={() => revealClue("counterexample")}
           />
         </div>
         <div className="run-stats-card" aria-label="Run details">
-          <span>Sample run</span>
+          <span>{runModeLabel(run)}</span>
           <dl>
             <div>
               <dt>Patterns</dt>
-              <dd>{SAMPLE_RULES.length}</dd>
+              <dd>{run.rounds.length}</dd>
             </div>
             <div>
               <dt>Solved</dt>
-              <dd>{currentRoundIndex}</dd>
+              <dd>{solvedCount}</dd>
             </div>
             <div>
               <dt>Misses</dt>
@@ -334,7 +526,7 @@ export function PatternAtlasClient({ initialData }: { initialData?: PatternAtlas
             </div>
             <div>
               <dt>Start</dt>
-              <dd>{STARTING_SCORE}</dd>
+              <dd>{PATTERN_ATLAS_STARTING_SCORE}</dd>
             </div>
           </dl>
         </div>
@@ -370,11 +562,11 @@ export function PatternAtlasClient({ initialData }: { initialData?: PatternAtlas
           <div className="answer-box primary-answer-box" data-placement="dock">
             <div className="answer-box-heading">
               <div>
-              <span>Pick one answer</span>
-              <h2>Which rule is shown?</h2>
-            </div>
+                <span>Pick one answer</span>
+                <h2>Which rule is shown?</h2>
+              </div>
               <small>
-                Wrong answers cost {WRONG_ANSWER_PENALTY}. Clues cost {CLUE_PENALTY}.
+                Wrong answers cost {PATTERN_ATLAS_WRONG_ANSWER_PENALTY}. Clues cost {PATTERN_ATLAS_CLUE_PENALTY}.
               </small>
             </div>
             <div className="choice-list">
@@ -387,7 +579,7 @@ export function PatternAtlasClient({ initialData }: { initialData?: PatternAtlas
                     className="choice-button"
                     data-rejected={rejected ? "true" : "false"}
                     disabled={rejected}
-                    onClick={() => submitAnswer(choice)}
+                    onClick={() => submitAnswer(choice, currentRule)}
                   >
                     <span>{choice.label}</span>
                     {rejected ? <small>Rejected</small> : null}
@@ -406,11 +598,196 @@ export function PatternAtlasClient({ initialData }: { initialData?: PatternAtlas
             <div className="answer-feedback-banner" data-result="incorrect" role="status" aria-live="polite">
               <span>Incorrect</span>
               <strong>{latestRejectedChoice.label}</strong>
-              <em>-{WRONG_ANSWER_PENALTY} points</em>
+              <em>-{PATTERN_ATLAS_WRONG_ANSWER_PENALTY} points</em>
               <p>Cross it off and read the remaining geography.</p>
             </div>
           ) : null}
         </div>
+      </div>
+    </section>
+  );
+}
+
+function practiceSetupFromFilters(filters: PatternAtlasRuleFilters): PatternAtlasRunSetup {
+  return {
+    kind: "pro-pattern-run",
+    ...(filters.family ? { family: filters.family } : {}),
+    ...(filters.difficulty ? { difficulty: filters.difficulty } : {})
+  };
+}
+
+function PatternAtlasLobby({
+  entitlementLoading,
+  signedIn,
+  isFreeAccount,
+  isProAccount,
+  todayKey,
+  currentSampleRun,
+  currentDailyRun,
+  currentPracticeRun,
+  practiceFamily,
+  practiceDifficulty,
+  practiceMatches,
+  hasFullPracticeRun,
+  familyOptions,
+  difficultyOptions,
+  onFamilyChange,
+  onDifficultyChange,
+  onStart
+}: {
+  entitlementLoading: boolean;
+  signedIn: boolean;
+  isFreeAccount: boolean;
+  isProAccount: boolean;
+  todayKey: string;
+  currentSampleRun: PatternAtlasRunState | null;
+  currentDailyRun: PatternAtlasRunState | null;
+  currentPracticeRun: PatternAtlasRunState | null;
+  practiceFamily: PatternAtlasFamily | "";
+  practiceDifficulty: PatternAtlasDifficulty | "";
+  practiceMatches: PatternAtlasRule[];
+  hasFullPracticeRun: boolean;
+  familyOptions: Array<{ family: PatternAtlasFamily; count: number }>;
+  difficultyOptions: Array<{ difficulty: PatternAtlasDifficulty; count: number }>;
+  onFamilyChange: (family: PatternAtlasFamily | "") => void;
+  onDifficultyChange: (difficulty: PatternAtlasDifficulty | "") => void;
+  onStart: (mode: PatternAtlasRunMode, options?: { fresh?: boolean; setup?: PatternAtlasRunSetup }) => void;
+}) {
+  const dailyActionLabel = currentDailyRun?.status === "complete" ? "View Pattern Atlas Daily" : currentDailyRun ? "Resume Pattern Atlas Daily" : "Start Pattern Atlas Daily";
+  const sampleActionLabel = currentSampleRun?.status === "complete" ? "View Sample Run" : currentSampleRun ? "Resume Sample Run" : "Start sample run";
+  const practiceActionLabel = currentPracticeRun?.status === "active" ? "Start new Pattern Run" : "Start Pattern Run";
+
+  return (
+    <section className="game-entry page-shell">
+      <div className="entry-copy">
+        <p className="eyebrow">Pattern Atlas</p>
+        <h1 className="page-title">What pattern connects these countries?</h1>
+        <p className="lead">
+          Read highlighted country sets, spot the shared rule, and spend clues carefully. Pattern Atlas uses its own local progress and does not affect
+          Mystery Map scores or streaks.
+        </p>
+        <div className="entry-facts" aria-label="Pattern Atlas facts">
+          <span>3 patterns per run</span>
+          <span>Country names hidden</span>
+          <span>{entitlementLoading ? "Checking account" : signedIn ? "Account-aware" : "No account needed"}</span>
+        </div>
+      </div>
+      <div className="entry-panel surface" aria-label="Pattern Atlas modes">
+        <div className="mode-panel-heading lobby-heading">
+          <p className="setup-kicker">Choose your game mode</p>
+          <h2>Ready to find the rule?</h2>
+          <p>
+            {isProAccount
+              ? "Play today's Daily or start a Pro Pattern Run from the broader rule catalog."
+              : isFreeAccount
+                ? "Your free account gets today's Pattern Atlas Daily with local progress."
+                : "Try the fixed Pattern Atlas Sample Run. No account needed and no account stats saved."}
+          </p>
+        </div>
+        {!signedIn ? (
+          <article className="lobby-primary-card" data-state="ready" aria-label="Pattern Atlas Sample Run">
+            <div className="lobby-primary-copy">
+              <p className="setup-kicker">Sample Run</p>
+              <h3>Pattern Atlas Sample Run</h3>
+              <p>No account needed. These three starter patterns stay fixed, and no account stats are saved.</p>
+              <span className="mode-state-pill">Sample run / no account needed</span>
+            </div>
+            <p className="mode-card-note">Use the sample to learn the clue and reveal rhythm before signing in.</p>
+            <div className="lobby-primary-actions">
+              <button className="button lobby-play-button" type="button" onClick={() => onStart("sample")}>
+                <span className="lobby-play-main">PLAY</span>
+                <small>{sampleActionLabel}</small>
+              </button>
+              <Link className="button-secondary" href="/sign-up">
+                Create free account
+              </Link>
+              <Link className="button-secondary" href="/upgrade">
+                Start Pro
+              </Link>
+            </div>
+          </article>
+        ) : (
+          <article className="lobby-primary-card" data-state={currentDailyRun?.status === "complete" ? "complete" : "ready"} aria-label="Pattern Atlas Free Daily">
+            <div className="lobby-primary-copy">
+              <p className="setup-kicker">Free Daily</p>
+              <h3>Pattern Atlas Daily</h3>
+              <p>Three deterministic rules for {todayKey}. Local progress resumes safely if you reload.</p>
+              <span className="mode-state-pill">{currentDailyRun?.status === "active" ? "Daily in progress" : "Free Daily"}</span>
+            </div>
+            <p className="mode-card-note">Pattern Atlas Daily is separate from Mystery Map Daily score and streaks.</p>
+            <div className="lobby-primary-actions">
+              <button className="button lobby-play-button" type="button" onClick={() => onStart("daily")}>
+                <span className="lobby-play-main">PLAY</span>
+                <small>{dailyActionLabel}</small>
+              </button>
+              {!isProAccount ? (
+                <Link className="button-secondary" href="/upgrade">
+                  Go Pro for Pattern Runs
+                </Link>
+              ) : null}
+            </div>
+          </article>
+        )}
+        {isProAccount ? (
+          <section className="lobby-secondary" aria-label="Pro Pattern Atlas options">
+            <div className="mode-panel-heading mode-panel-heading-secondary">
+              <p className="setup-kicker">Pro option</p>
+              <h2>Start a Pattern Run.</h2>
+              <p>Choose a light filter or leave everything open. This does not add archives, sharing, leaderboards, or stats sync yet.</p>
+            </div>
+            <div className="mode-card-grid mode-card-grid-secondary">
+              <article className="mode-card mode-card-practice" aria-label="Pro Pattern Run">
+                <p className="setup-kicker">Pro Pattern Run</p>
+                <h3>Custom rule set</h3>
+                <p>Draw three rules from practice-eligible Pattern Atlas content.</p>
+                <div className="practice-filters" aria-label="Pattern Run filters">
+                  <label>
+                    Family
+                    <select value={practiceFamily} onChange={(event) => onFamilyChange(event.target.value as PatternAtlasFamily | "")}>
+                      <option value="">All families</option>
+                      {familyOptions.map((option) => (
+                        <option key={option.family} value={option.family}>
+                          {familyLabel(option.family)} ({option.count})
+                        </option>
+                      ))}
+                    </select>
+                  </label>
+                  <label>
+                    Difficulty
+                    <select value={practiceDifficulty} onChange={(event) => onDifficultyChange(event.target.value as PatternAtlasDifficulty | "")}>
+                      <option value="">All difficulties</option>
+                      {difficultyOptions.map((option) => (
+                        <option key={option.difficulty} value={option.difficulty}>
+                          {difficultyLabel(option.difficulty)} ({option.count})
+                        </option>
+                      ))}
+                    </select>
+                  </label>
+                </div>
+                <p className="mode-card-note">
+                  {hasFullPracticeRun
+                    ? `${practiceMatches.length} rules available for this setup.`
+                    : "Try broader filters for a full 3-pattern run."}
+                </p>
+                <div className="mode-card-actions">
+                  {currentPracticeRun?.status === "active" ? (
+                    <button className="button-secondary" type="button" onClick={() => onStart("practice")}>
+                      Resume Pattern Run
+                    </button>
+                  ) : null}
+                  <button
+                    className="button"
+                    type="button"
+                    disabled={!hasFullPracticeRun}
+                    onClick={() => onStart("practice", { fresh: true, setup: practiceSetupFromFilters({ family: practiceFamily || undefined, difficulty: practiceDifficulty || undefined }) })}
+                  >
+                    {practiceActionLabel}
+                  </button>
+                </div>
+              </article>
+            </div>
+          </section>
+        ) : null}
       </div>
     </section>
   );
@@ -445,8 +822,8 @@ function ClueButton({
 }
 
 function PatternAtlasReveal({
+  run,
   rule,
-  roundIndex,
   roundState,
   finalRound,
   map,
@@ -454,9 +831,9 @@ function PatternAtlasReveal({
   sourceById,
   onNext
 }: {
+  run: PatternAtlasRunState;
   rule: PatternAtlasRule;
-  roundIndex: number;
-  roundState: RoundState;
+  roundState: PatternAtlasRoundState;
   finalRound: boolean;
   map: MapFeatureCollection;
   countryNames: Map<string, string>;
@@ -469,7 +846,7 @@ function PatternAtlasReveal({
   const highlightedCountries = countryRows(rule.includedIso3, countryNames);
   const sources = rule.sources.map((sourceId) => sourceById.get(sourceId)).filter((source): source is PatternAtlasSource => Boolean(source));
   const clueCount = Object.values(roundState.clues).filter(Boolean).length;
-  const clueSpend = clueCount * CLUE_PENALTY;
+  const clueSpend = clueCount * PATTERN_ATLAS_CLUE_PENALTY;
 
   return (
     <section className="reveal-layout page-shell">
@@ -482,15 +859,15 @@ function PatternAtlasReveal({
         </div>
         <div className="reveal-action-dock" aria-label="Round action">
           <div className="round-transition-card" data-final={finalRound ? "true" : "false"}>
-            <span>{finalRound ? "Sample complete" : `Pattern ${roundIndex + 2} of ${SAMPLE_RULES.length}`}</span>
-            <strong>{finalRound ? "All sample patterns scored." : "Next pattern ready."}</strong>
+            <span>{finalRound ? `${runModeLabel(run)} complete` : `Pattern ${run.currentRoundIndex + 2} of ${run.rounds.length}`}</span>
+            <strong>{finalRound ? "All patterns scored." : "Next pattern ready."}</strong>
             <em>Banked {scoreText}</em>
             <div className="transition-pips" aria-hidden="true">
-              {SAMPLE_RULES.map((ruleItem, index) => (
-                <i key={ruleItem.id} data-state={index <= roundIndex ? "banked" : index === roundIndex + 1 ? "next" : "locked"} />
+              {run.ruleIds.map((ruleId, index) => (
+                <i key={ruleId} data-state={index <= run.currentRoundIndex ? "banked" : index === run.currentRoundIndex + 1 ? "next" : "locked"} />
               ))}
             </div>
-            <small>{finalRound ? "Open the local sample summary." : "Keep reading country sets, not labels."}</small>
+            <small>{finalRound ? "Open the local run summary." : "Keep reading country sets, not labels."}</small>
           </div>
           <button className="button full-width next-map-button" type="button" onClick={onNext}>
             {finalRound ? "Open summary" : "Next pattern"}
@@ -505,11 +882,11 @@ function PatternAtlasReveal({
           <dl className="point-breakdown" aria-label="Point breakdown">
             <div>
               <dt>Started</dt>
-              <dd>{STARTING_SCORE.toLocaleString("en-US")}</dd>
+              <dd>{PATTERN_ATLAS_STARTING_SCORE.toLocaleString("en-US")}</dd>
             </div>
             <div>
               <dt>Misses</dt>
-              <dd>{roundState.rejectedAnswerIds.length ? `-${roundState.rejectedAnswerIds.length * WRONG_ANSWER_PENALTY}` : "0"}</dd>
+              <dd>{roundState.rejectedAnswerIds.length ? `-${roundState.rejectedAnswerIds.length * PATTERN_ATLAS_WRONG_ANSWER_PENALTY}` : "0"}</dd>
             </div>
             <div>
               <dt>Clues</dt>
@@ -570,6 +947,7 @@ function PatternAtlasReveal({
         <h1 id="pattern-reveal-map-title">{rule.displayAnswer}</h1>
         <p className="full-indicator-title">{rule.explanation}</p>
         <div className="source-badges" aria-label="Pattern metadata">
+          <span>{runModeLabel(run)}</span>
           <span>{familyLabel(rule.family)}</span>
           <span>{difficultyLabel(rule.difficulty)}</span>
           <span>{highlightedCountries.length} highlighted</span>
@@ -592,32 +970,38 @@ function PatternAtlasReveal({
 }
 
 function PatternAtlasSummary({
-  finalScore,
-  roundStates,
-  onRestart
+  run,
+  onRestart,
+  onLobby
 }: {
-  finalScore: number;
-  roundStates: RoundState[];
+  run: PatternAtlasRunState;
   onRestart: () => void;
+  onLobby: () => void;
 }) {
+  const finalScore = run.rounds.reduce((total, round) => total + (round.solved ? round.score : 0), 0);
   return (
     <section className="game-shell page-shell pattern-atlas-summary">
       <div className="empty-state surface">
-        <p className="eyebrow">Pattern Atlas sample complete</p>
+        <p className="eyebrow">{runModeLabel(run)} complete</p>
         <h1>{finalScore.toLocaleString("en-US")} points</h1>
-        <p>This local sample run is not saved yet. Daily, archive, custom runs, stats, and sharing are intentionally out of scope for this phase.</p>
+        <p>{runSummaryCopy(run)}</p>
         <div className="result-cells" aria-label="Per-round scores">
-          {roundStates.map((round, index) => (
-            <span key={SAMPLE_RULES[index].id}>
+          {run.rounds.map((round, index) => (
+            <span key={run.ruleIds[index]}>
               <small>Pattern {index + 1}</small>
               <strong>{round.score}</strong>
             </span>
           ))}
         </div>
-        <button className="button" type="button" onClick={onRestart}>
-          <Compass size={18} aria-hidden="true" />
-          Play sample again
-        </button>
+        <div className="button-row">
+          <button className="button" type="button" onClick={onRestart}>
+            <Compass size={18} aria-hidden="true" />
+            Play again
+          </button>
+          <button className="button-secondary" type="button" onClick={onLobby}>
+            Choose mode
+          </button>
+        </div>
       </div>
     </section>
   );

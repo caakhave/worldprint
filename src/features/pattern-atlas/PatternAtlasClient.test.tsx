@@ -1,12 +1,39 @@
-import { render, screen, within } from "@testing-library/react";
+import { render, screen, waitFor, within } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
 import { readFileSync } from "node:fs";
 import path from "node:path";
 import { beforeEach, describe, expect, it, vi } from "vitest";
 import { PatternAtlasClient, type PatternAtlasLoadedData } from "@/features/pattern-atlas/PatternAtlasClient";
 import { PATTERN_ATLAS_SAMPLE_RULE_IDS, getPatternAtlasSampleRules } from "@/features/pattern-atlas/sampleRun";
+import { FREE_ENTITLEMENT, GUEST_ENTITLEMENT, PRO_ENTITLEMENT, type PlayerEntitlement } from "@/lib/account/entitlements";
 import { EntityRegistrySchema, type MapFeatureCollection } from "@/lib/content/schemas";
 import { countryNameByIso3 } from "@/lib/geo/format";
+import { PATTERN_ATLAS_CATALOG, PATTERN_ATLAS_RULES } from "@/lib/pattern-atlas/catalog";
+import { selectPatternAtlasDailyRuleIds, selectPatternAtlasPracticeRuleIds } from "@/lib/pattern-atlas/selection";
+import {
+  PATTERN_ATLAS_STORAGE_KEY,
+  createPatternAtlasRun,
+  defaultPatternAtlasPersistedState,
+  persistPatternAtlasRun,
+  savePatternAtlasPersistedState
+} from "@/lib/pattern-atlas/storage";
+
+type MockEntitlementState = {
+  entitlement: PlayerEntitlement;
+  loading: boolean;
+  error: string | null;
+  configured: boolean;
+  signedIn: boolean;
+  refresh: () => Promise<void>;
+};
+
+const entitlementMock = vi.hoisted(() => ({
+  state: null as unknown as MockEntitlementState
+}));
+
+vi.mock("@/features/account/useEntitlement", () => ({
+  useEntitlement: () => entitlementMock.state
+}));
 
 const map = JSON.parse(readFileSync(path.join(process.cwd(), "public/maps/world-110m.v1.geojson"), "utf8")) as MapFeatureCollection;
 const registry = EntityRegistrySchema.parse(
@@ -19,8 +46,30 @@ const initialData: PatternAtlasLoadedData = {
   countryNames: countryNameByIso3(registry.entities)
 };
 
+function setAccount(entitlement: PlayerEntitlement, signedIn: boolean) {
+  entitlementMock.state = {
+    entitlement,
+    loading: false,
+    error: null,
+    configured: true,
+    signedIn,
+    refresh: async () => undefined
+  };
+}
+
+function renderPatternAtlas() {
+  return render(<PatternAtlasClient initialData={initialData} todayOverride="2026-07-03" />);
+}
+
+async function startSampleRun(user = userEvent.setup()) {
+  await user.click(screen.getByRole("button", { name: /Start sample run/i }));
+  return user;
+}
+
 describe("PatternAtlasClient", () => {
   beforeEach(() => {
+    window.localStorage.clear();
+    setAccount(GUEST_ENTITLEMENT, false);
     vi.spyOn(window, "requestAnimationFrame").mockImplementation((callback: FrameRequestCallback) => {
       callback(0);
       return 0;
@@ -39,15 +88,165 @@ describe("PatternAtlasClient", () => {
     expect(rules.map((rule) => rule.id)).toEqual([...PATTERN_ATLAS_SAMPLE_RULE_IDS]);
   });
 
-  it("renders highlighted countries without revealing country names by default", () => {
-    const { container } = render(<PatternAtlasClient initialData={initialData} />);
+  it("shows logged-out players the fixed Sample Run with no-account copy", async () => {
+    const user = userEvent.setup();
+    renderPatternAtlas();
+
+    expect(screen.getByRole("heading", { name: "Pattern Atlas Sample Run" })).toBeVisible();
+    expect(screen.getAllByText(/No account needed/i).length).toBeGreaterThanOrEqual(1);
+    expect(screen.getAllByText(/no account stats are saved/i).length).toBeGreaterThanOrEqual(1);
+
+    await startSampleRun(user);
+
+    expect(screen.getByRole("heading", { name: "What pattern connects these countries?" })).toBeVisible();
+    expect(screen.getByText("Sample Run")).toBeVisible();
+  });
+
+  it("shows Free users a deterministic Pattern Atlas Daily and saves local progress", async () => {
+    const user = userEvent.setup();
+    setAccount(FREE_ENTITLEMENT, true);
+    renderPatternAtlas();
+    const dailyIds = selectPatternAtlasDailyRuleIds(PATTERN_ATLAS_RULES, PATTERN_ATLAS_CATALOG.contentVersion, "2026-07-03");
+
+    expect(screen.getByRole("heading", { name: "Pattern Atlas Daily" })).toBeVisible();
+    expect(screen.getAllByText("Free Daily").length).toBeGreaterThanOrEqual(1);
+    expect(screen.queryByRole("heading", { name: "Start a Pattern Run." })).not.toBeInTheDocument();
+
+    await user.click(screen.getByRole("button", { name: /Start Pattern Atlas Daily/i }));
+
+    expect(screen.getByText("Free Daily")).toBeVisible();
+    await waitFor(() => {
+      const saved = JSON.parse(window.localStorage.getItem(PATTERN_ATLAS_STORAGE_KEY) ?? "{}") as {
+        activeDailyRun?: { ruleIds?: string[] };
+      };
+      expect(saved.activeDailyRun?.ruleIds).toEqual(dailyIds);
+    });
+  });
+
+  it("uses the same deterministic Pattern Atlas Daily for Free and Pro users", async () => {
+    const user = userEvent.setup();
+    setAccount(FREE_ENTITLEMENT, true);
+    const freeRender = renderPatternAtlas();
+
+    await user.click(screen.getByRole("button", { name: /Start Pattern Atlas Daily/i }));
+
+    let freeDailyIds: string[] = [];
+    await waitFor(() => {
+      const saved = JSON.parse(window.localStorage.getItem(PATTERN_ATLAS_STORAGE_KEY) ?? "{}") as {
+        activeDailyRun?: { ruleIds?: string[] };
+      };
+      expect(saved.activeDailyRun?.ruleIds).toHaveLength(3);
+      freeDailyIds = saved.activeDailyRun?.ruleIds ?? [];
+    });
+
+    freeRender.unmount();
+    window.localStorage.clear();
+    setAccount(PRO_ENTITLEMENT, true);
+    renderPatternAtlas();
+
+    await user.click(screen.getByRole("button", { name: /Start Pattern Atlas Daily/i }));
+
+    await waitFor(() => {
+      const saved = JSON.parse(window.localStorage.getItem(PATTERN_ATLAS_STORAGE_KEY) ?? "{}") as {
+        activeDailyRun?: { ruleIds?: string[] };
+      };
+      expect(saved.activeDailyRun?.ruleIds).toEqual(freeDailyIds);
+    });
+  });
+
+  it("shows Pro users Daily plus a Pro Pattern Run option", async () => {
+    const user = userEvent.setup();
+    setAccount(PRO_ENTITLEMENT, true);
+    renderPatternAtlas();
+
+    expect(screen.getByRole("heading", { name: "Pattern Atlas Daily" })).toBeVisible();
+    expect(screen.getByRole("heading", { name: "Start a Pattern Run." })).toBeVisible();
+    expect(screen.getByRole("combobox", { name: /Family/i })).toBeVisible();
+    expect(screen.getByRole("combobox", { name: /Difficulty/i })).toBeVisible();
+
+    await user.click(screen.getByRole("button", { name: "Start Pattern Run" }));
+
+    expect(screen.getAllByText("Pro Pattern Run").length).toBeGreaterThanOrEqual(1);
+    expect(screen.getAllByText("All Families").length).toBeGreaterThanOrEqual(1);
+    expect(screen.getAllByText("All Difficulties").length).toBeGreaterThanOrEqual(1);
+  });
+
+  it("handles narrow Pro filters by disabling runs that cannot fill three patterns", async () => {
+    const user = userEvent.setup();
+    setAccount(PRO_ENTITLEMENT, true);
+    renderPatternAtlas();
+
+    await user.selectOptions(screen.getByRole("combobox", { name: /Family/i }), "borders");
+    await user.selectOptions(screen.getByRole("combobox", { name: /Difficulty/i }), "expert");
+
+    expect(screen.getByText("Try broader filters for a full 3-pattern run.")).toBeVisible();
+    expect(screen.getByRole("button", { name: "Start Pattern Run" })).toBeDisabled();
+  });
+
+  it("resumes a persisted Pro Pattern Run with selected filters intact", async () => {
+    const user = userEvent.setup();
+    setAccount(PRO_ENTITLEMENT, true);
+    const ruleIds = selectPatternAtlasPracticeRuleIds(PATTERN_ATLAS_RULES, PATTERN_ATLAS_CATALOG.contentVersion, "unit-test", {
+      family: "organizations",
+      difficulty: "standard"
+    });
+    const run = {
+      ...createPatternAtlasRun({
+        mode: "practice",
+        dateKey: "2026-07-03",
+        contentVersion: PATTERN_ATLAS_CATALOG.contentVersion,
+        ruleIds,
+        salt: "pro:resume",
+        setup: { kind: "pro-pattern-run" as const, family: "organizations" as const, difficulty: "standard" as const }
+      }),
+      currentRoundIndex: 1
+    };
+    savePatternAtlasPersistedState(persistPatternAtlasRun(defaultPatternAtlasPersistedState(), run));
+
+    renderPatternAtlas();
+    await user.click(screen.getByRole("button", { name: /Resume Pattern Run/i }));
+
+    expect(screen.getByText("Round 2 of 3")).toBeVisible();
+    expect(screen.getAllByText("Pro Pattern Run").length).toBeGreaterThanOrEqual(1);
+    expect(screen.getAllByText("Organizations").length).toBeGreaterThanOrEqual(1);
+    expect(screen.getAllByText("Standard").length).toBeGreaterThanOrEqual(1);
+  });
+
+  it("resumes a persisted Pattern Atlas Daily without touching Mystery Map storage", async () => {
+    const user = userEvent.setup();
+    setAccount(FREE_ENTITLEMENT, true);
+    const ruleIds = selectPatternAtlasDailyRuleIds(PATTERN_ATLAS_RULES, PATTERN_ATLAS_CATALOG.contentVersion, "2026-07-03");
+    const run = {
+      ...createPatternAtlasRun({
+        mode: "daily",
+        dateKey: "2026-07-03",
+        contentVersion: PATTERN_ATLAS_CATALOG.contentVersion,
+        ruleIds,
+        salt: "2026-07-03"
+      }),
+      currentRoundIndex: 1
+    };
+    window.localStorage.setItem("worldprint:v1", '{"schemaVersion":"mystery-map-sentinel"}');
+    savePatternAtlasPersistedState(persistPatternAtlasRun(defaultPatternAtlasPersistedState(), run));
+
+    renderPatternAtlas();
+    await user.click(screen.getByRole("button", { name: /Resume Pattern Atlas Daily/i }));
+
+    expect(screen.getByText("Round 2 of 3")).toBeVisible();
+    expect(window.localStorage.getItem("worldprint:v1")).toBe('{"schemaVersion":"mystery-map-sentinel"}');
+  });
+
+  it("renders highlighted countries without revealing country names by default", async () => {
+    const { container } = renderPatternAtlas();
+    await startSampleRun();
     expect(screen.getByRole("heading", { name: "What pattern connects these countries?" })).toBeVisible();
     expect(container.querySelectorAll(".country-path[data-highlighted='true']")).toHaveLength(2);
     expect(screen.queryByText("Bolivia")).not.toBeInTheDocument();
   });
 
-  it("display-formats the active metadata chips", () => {
-    render(<PatternAtlasClient initialData={initialData} />);
+  it("display-formats the active metadata chips", async () => {
+    renderPatternAtlas();
+    await startSampleRun();
     expect(screen.getByText("Borders")).toBeVisible();
     expect(screen.getByText("Intro")).toBeVisible();
     expect(screen.queryByText("borders")).not.toBeInTheDocument();
@@ -57,7 +256,8 @@ describe("PatternAtlasClient", () => {
   it("shows visible non-empty answer choices from every sample rule and decoy", async () => {
     const user = userEvent.setup();
     const rules = getPatternAtlasSampleRules();
-    const { container } = render(<PatternAtlasClient initialData={initialData} />);
+    const { container } = renderPatternAtlas();
+    await startSampleRun(user);
 
     for (const [index, rule] of rules.entries()) {
       expect(container.querySelectorAll(".country-path[data-highlighted='true']")).toHaveLength(rule.includedIso3.length);
@@ -77,8 +277,9 @@ describe("PatternAtlasClient", () => {
     }
   });
 
-  it("shows answer choices from the correct rule and decoys", () => {
-    render(<PatternAtlasClient initialData={initialData} />);
+  it("shows answer choices from the correct rule and decoys", async () => {
+    renderPatternAtlas();
+    await startSampleRun();
     const dock = screen.getByLabelText("Answer actions");
     expect(within(dock).getByRole("button", { name: "Landlocked countries in South America" })).toBeVisible();
     expect(within(dock).getByRole("button", { name: "Countries crossed by the Tropic of Capricorn" })).toBeVisible();
@@ -88,7 +289,8 @@ describe("PatternAtlasClient", () => {
 
   it("applies the wrong answer penalty", async () => {
     const user = userEvent.setup();
-    render(<PatternAtlasClient initialData={initialData} />);
+    renderPatternAtlas();
+    await startSampleRun(user);
     await user.click(screen.getByRole("button", { name: "Countries crossed by the Tropic of Capricorn" }));
     expect(screen.getAllByText("700").length).toBeGreaterThanOrEqual(1);
     expect(screen.getByText("-300 points")).toBeVisible();
@@ -96,7 +298,8 @@ describe("PatternAtlasClient", () => {
 
   it("reveals a clue country only after using the clue button", async () => {
     const user = userEvent.setup();
-    render(<PatternAtlasClient initialData={initialData} />);
+    renderPatternAtlas();
+    await startSampleRun(user);
     expect(screen.queryByText("Bolivia")).not.toBeInTheDocument();
     await user.click(screen.getByRole("button", { name: /Reveal highlighted country -100/i }));
     expect(screen.getByText("Bolivia")).toBeVisible();
@@ -104,7 +307,8 @@ describe("PatternAtlasClient", () => {
 
   it("applies clue penalties once and disables used clue buttons", async () => {
     const user = userEvent.setup();
-    render(<PatternAtlasClient initialData={initialData} />);
+    renderPatternAtlas();
+    await startSampleRun(user);
     const categoryClue = screen.getByRole("button", { name: /Reveal category -100/i });
 
     await user.click(categoryClue);
@@ -123,7 +327,8 @@ describe("PatternAtlasClient", () => {
 
   it("shows explanation, sources, highlighted countries, and mapped-country scope on reveal", async () => {
     const user = userEvent.setup();
-    render(<PatternAtlasClient initialData={initialData} />);
+    renderPatternAtlas();
+    await startSampleRun(user);
 
     await user.click(screen.getByRole("button", { name: "Landlocked countries in South America" }));
     await user.click(screen.getByRole("button", { name: "Next pattern" }));

@@ -8,7 +8,8 @@ Snapshot date: July 3, 2026.
 - Latest completed checkpoints:
   - `b5950022774228f6f24c1c42d755962ddd383b4a` - Challenge email CORS fix.
   - `c5482e0bbe60c3b1800e7875d252a03fbc27bfbd` - Pattern Atlas Phase 1 rule catalog foundation.
-- Pattern Atlas Phase 2 playable route is complete for this checkpoint.
+  - `30d6969` - Pattern Atlas Phase 2 playable sample route.
+- Pattern Atlas Phase 3 account-aware modes and persistence are complete for this checkpoint.
 - The working tree should remain docs/product-code clean except for untracked `atd/` assets and explicitly requested checkpoint work.
 - `atd/` remains untracked and must not be committed unless explicitly requested.
 
@@ -61,11 +62,29 @@ Snapshot date: July 3, 2026.
   - Homepage changes.
   - `/play` hub integration or redesign.
 
+### Pattern Atlas Phase 3
+
+- `/play/pattern-atlas/` now has account-aware modes:
+  - Signed-out users get the fixed Pattern Atlas Sample Run.
+  - Logged-in Free users get Pattern Atlas Daily.
+  - Logged-in Pro users get Daily plus Pro Pattern Run with family and difficulty filters.
+- Pro Pattern Run requires a full 3-rule eligible set before starting.
+- Narrow Pro filter combinations disable the start button and show broader-filter copy.
+- Pattern Atlas persistence is isolated under `pattern-atlas:v1`.
+- Mystery Map storage remains separate under `worldprint:v1`.
+- Resume/reload works for Pattern Atlas active runs.
+- Guest sample copy says no account stats are saved while allowing local in-browser resume.
+- Not included in Phase 3:
+  - Homepage integration.
+  - `/play` hub integration.
+  - Daily archive.
+  - Challenge/share links.
+  - Stats saving.
+  - Rank Run integration.
+
 ## Current Next Task
 
-Pattern Atlas Phase 3: add account-aware run modes and persistence.
-
-Phase 3 should still avoid homepage or `/play` hub redesign unless explicitly requested later.
+Pattern Atlas Phase 4: site integration. Add Pattern Atlas to `/play` hub, navigation, and home surfaces without redesigning the site.
 
 ## Validation Summary
 
@@ -126,13 +145,37 @@ Phase 3 should still avoid homepage or `/play` hub redesign unless explicitly re
   - Next-round flow reached the summary.
   - `/play/mystery-map/` still loaded locally with its map.
 
+### Pattern Atlas Phase 3
+
+- `pnpm test src/features/pattern-atlas/PatternAtlasClient.test.tsx src/lib/pattern-atlas/selection.test.ts src/lib/pattern-atlas/storage.test.ts src/lib/pattern-atlas/catalog.test.ts src/app/play/pattern-atlas/page.test.tsx src/components/WorldMap.test.tsx`
+  - Result: passed; 6 files and 40 tests.
+- `pnpm test src/lib/account/entitlements.test.ts src/lib/account/accessCopy.test.ts`
+  - Result: passed; 2 files and 9 tests.
+- `pnpm test src/lib/persistence/storage.test.ts src/lib/pattern-atlas/storage.test.ts`
+  - Result: passed; 2 files and 15 tests.
+- `pnpm test src/features/worldprint/WorldprintClient.structure.test.ts src/components/WorldMap.test.tsx`
+  - Result: passed; 2 files and 35 tests.
+- `pnpm lint`
+  - Result: passed.
+- `pnpm typecheck`
+  - Result: passed.
+- `pnpm build`
+  - Result: passed; static export generated 269 pages and included `/play/pattern-atlas`.
+- `git diff --check`
+  - Result: passed.
+- Real browser QA:
+  - Signed-out Pattern Atlas QA passed locally.
+  - Mystery Map smoke QA passed locally.
+  - Free/Pro Pattern Atlas browser QA was not done with real authenticated Supabase sessions; those branches are covered by mocked entitlement tests and need staging QA with real accounts after deploy.
+
 ## Known Remaining Issues / Follow-Ups
 
 - Custom Atlas topic+difficulty combo exhaustion by play history is not implemented.
 - The lower static homepage `Ways to play` section may still include `Try Sample Run`.
 - Full e2e may need updating for the newer access model and Custom Atlas naming.
 - `atd/` remains untracked and should not be committed.
-- Pattern Atlas Phase 3 should add account-aware run modes and persistence without homepage or `/play` hub redesign unless requested.
+- Pattern Atlas Free/Pro real-browser QA needs staging verification with authenticated accounts after deploy.
+- Pattern Atlas Phase 4 should integrate the game into site surfaces without redesigning homepage or `/play` hub.
 
 ## Key Decisions To Preserve
 
@@ -144,11 +187,13 @@ Phase 3 should still avoid homepage or `/play` hub redesign unless explicitly re
 - Pattern Atlas Phase 2 should be minimal playable route work only until broader access, Daily, persistence, stats, and sharing requirements are requested.
 - Static export compatibility is required.
 - No private run state, answers, hidden indicators, user IDs, or emails belong in URLs.
+- Pattern Atlas uses `pattern-atlas:v1`; Mystery Map uses `worldprint:v1`.
 - Do not enable live billing.
 - Do not touch `atd/`.
 
 ## Recently Completed Commits
 
+- `30d6969 Add playable Pattern Atlas sample route`
 - `c5482e0 Add Pattern Atlas rule catalog foundation`
 - `b595002 Allow challenge emails from preview deployments`
 - `02a9e23 Polish Custom Atlas and expand Mystery Map content`
