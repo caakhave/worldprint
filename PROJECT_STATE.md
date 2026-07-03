@@ -89,6 +89,38 @@ Snapshot date: July 3, 2026.
   - Stats saving.
   - Rank Run integration.
 
+### Pattern Atlas Content Expansion
+
+- Pattern Atlas rule catalog expansion is complete for this checkpoint.
+- Previous catalog: 32 rules.
+- New rules added: 46.
+- New total: 78 rules.
+- Family distribution after expansion:
+  - language 9.
+  - borders 15.
+  - physical geography 17.
+  - organizations 14.
+  - economy 7.
+  - indicators 16.
+- Difficulty distribution after expansion:
+  - intro 14.
+  - standard 40.
+  - expert 24.
+- Eligibility distribution after expansion:
+  - sample 5.
+  - daily 29.
+  - practice 42.
+  - expert-only 2.
+- Held/rejected candidates:
+  - Swahili official/national wording: held because official, national, and lingua-franca status would be easy to overclaim.
+  - Tropic of Cancer countries: held because edge cases make the mapped-country answer brittle.
+  - Arab League members: held because current membership/small-state scope needs extra dated wording and overlaps heavily with Arabic-official-language.
+- Added official source registry entries inside `content/pattern-atlas/rules.json` for ICPDR Danube countries, NATO, OECD, SAARC, EAC, SADC, CARICOM, and the European Commission Schengen Area page.
+- Indicator-derived rules use existing approved Mystery Map artifacts only.
+- Mapped-country/small-state risks remain handled with mapped wording and scope notes for affected rules.
+- No gameplay, UI, site, auth, billing, Supabase, Stripe, or deployment config changes were made.
+- Next safest task: Rank Run planning / Phase 1 data model, or staging QA of expanded Pattern Atlas content.
+
 ### Pattern Atlas QA Polish
 
 - Clue cards now clearly explain what category, highlighted-country, and counterexample clues do before use.
@@ -255,6 +287,23 @@ Next safest tasks:
   - Signed-out Pattern Atlas QA passed locally.
   - Mystery Map smoke QA passed locally.
   - Free/Pro Pattern Atlas browser QA was not done with real authenticated Supabase sessions; those branches are covered by mocked entitlement tests and need staging QA with real accounts after deploy.
+
+### Pattern Atlas Content Expansion
+
+- `pnpm test src/lib/pattern-atlas/catalog.test.ts`
+  - Result: passed; 1 file and 5 tests.
+- `pnpm test src/lib/content/content.test.ts src/lib/pattern-atlas/catalog.test.ts`
+  - Result: passed; 2 files and 14 tests.
+- `pnpm test src/lib/pattern-atlas/selection.test.ts`
+  - Result: passed; 1 file and 5 tests.
+- `pnpm lint`
+  - Result: passed.
+- `pnpm typecheck`
+  - Result: passed.
+- `git diff --check`
+  - Result: passed.
+- `pnpm build`
+  - Result: passed; static export generated 270 pages and included `/play/pattern-atlas`.
 
 ### Pattern Atlas QA Polish
 

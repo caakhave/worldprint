@@ -1,7 +1,7 @@
 {
   "schemaVersion": "0.1.0",
   "game": "pattern-atlas",
-  "contentVersion": "2026.07.02-pattern-atlas-phase1",
+  "contentVersion": "2026.07.03-pattern-atlas-expansion1",
   "sourceRegistry": [
     {
       "id": "natural-earth-admin0-110m",
@@ -124,6 +124,78 @@
       "licenseReference": "https://www.worldbank.org/en/about/legal/terms-of-use-for-datasets",
       "retrievedAt": "2026-07-02",
       "notes": "Indicator-derived Pattern Atlas rules must reference existing approved Mystery Map indicator artifacts."
+    },
+    {
+      "id": "icpdr-danube-countries",
+      "provider": "International Commission for the Protection of the Danube River",
+      "dataset": "Countries of the Danube River Basin",
+      "attribution": "International Commission for the Protection of the Danube River",
+      "sourceReference": "https://www.icpdr.org/tasks-topics/river-basin/countries-danube-river-basin",
+      "license": "Official public informational page; used for factual rule validation.",
+      "retrievedAt": "2026-07-03"
+    },
+    {
+      "id": "nato-member-countries",
+      "provider": "NATO",
+      "dataset": "Member countries",
+      "attribution": "North Atlantic Treaty Organization",
+      "sourceReference": "https://www.nato.int/cps/en/natohq/topics_52044.htm",
+      "license": "Official public informational page; used for factual rule validation.",
+      "retrievedAt": "2026-07-03"
+    },
+    {
+      "id": "oecd-members",
+      "provider": "OECD",
+      "dataset": "Members and partners",
+      "attribution": "Organisation for Economic Co-operation and Development",
+      "sourceReference": "https://www.oecd.org/en/about/members-partners.html",
+      "license": "Official public informational page; used for factual rule validation.",
+      "retrievedAt": "2026-07-03"
+    },
+    {
+      "id": "saarc-member-states",
+      "provider": "SAARC",
+      "dataset": "Member States",
+      "attribution": "South Asian Association for Regional Cooperation",
+      "sourceReference": "https://saarc-sec.org/index.php/about-saarc/member-states",
+      "license": "Official public informational page; used for factual rule validation.",
+      "retrievedAt": "2026-07-03"
+    },
+    {
+      "id": "eac-partner-states",
+      "provider": "East African Community",
+      "dataset": "Partner States",
+      "attribution": "East African Community",
+      "sourceReference": "https://www.eac.int/eac-partner-states",
+      "license": "Official public informational page; used for factual rule validation.",
+      "retrievedAt": "2026-07-03"
+    },
+    {
+      "id": "sadc-member-states",
+      "provider": "SADC",
+      "dataset": "Member States",
+      "attribution": "Southern African Development Community",
+      "sourceReference": "https://www.sadc.int/member-states",
+      "license": "Official public informational page; used for factual rule validation.",
+      "retrievedAt": "2026-07-03"
+    },
+    {
+      "id": "caricom-member-states",
+      "provider": "CARICOM",
+      "dataset": "Member States and Associate Members",
+      "attribution": "Caribbean Community",
+      "sourceReference": "https://caricom.org/member-states-and-associate-members/",
+      "license": "Official public informational page; used for factual rule validation.",
+      "retrievedAt": "2026-07-03"
+    },
+    {
+      "id": "european-commission-schengen-area",
+      "provider": "European Commission",
+      "dataset": "Schengen Area",
+      "attribution": "European Commission",
+      "sourceReference": "https://home-affairs.ec.europa.eu/policies/schengen/schengen-area_en",
+      "license": "Official public informational page; used for factual rule validation.",
+      "retrievedAt": "2026-07-03"
     }
   ],
   "rules": [
@@ -131,11 +203,26 @@
       "id": "mapped-portuguese-official-language",
       "displayAnswer": "Mapped countries where Portuguese is an official language",
       "family": "language",
-      "includedIso3": ["AGO", "BRA", "GNQ", "GNB", "MOZ", "PRT", "TLS"],
-      "counterexampleIso3": ["ESP", "FRA", "ITA"],
+      "includedIso3": [
+        "AGO",
+        "BRA",
+        "GNQ",
+        "GNB",
+        "MOZ",
+        "PRT",
+        "TLS"
+      ],
+      "counterexampleIso3": [
+        "ESP",
+        "FRA",
+        "ITA"
+      ],
       "difficulty": "standard",
       "eligibility": "daily",
-      "sources": ["cia-world-factbook", "natural-earth-admin0-110m"],
+      "sources": [
+        "cia-world-factbook",
+        "natural-earth-admin0-110m"
+      ],
       "explanation": "The highlighted countries share Portuguese as an official language, with a Lusophone Atlantic pattern plus Mozambique and Timor-Leste.",
       "decoys": [
         {
@@ -161,11 +248,28 @@
       "id": "spanish-official-language-south-america",
       "displayAnswer": "South American countries where Spanish is an official language",
       "family": "language",
-      "includedIso3": ["ARG", "BOL", "CHL", "COL", "ECU", "PRY", "PER", "URY", "VEN"],
-      "counterexampleIso3": ["BRA", "GUY", "SUR"],
+      "includedIso3": [
+        "ARG",
+        "BOL",
+        "CHL",
+        "COL",
+        "ECU",
+        "PRY",
+        "PER",
+        "URY",
+        "VEN"
+      ],
+      "counterexampleIso3": [
+        "BRA",
+        "GUY",
+        "SUR"
+      ],
       "difficulty": "intro",
       "eligibility": "sample",
-      "sources": ["cia-world-factbook", "natural-earth-admin0-110m"],
+      "sources": [
+        "cia-world-factbook",
+        "natural-earth-admin0-110m"
+      ],
       "explanation": "This rule highlights the Spanish-speaking mainland arc of South America, excluding Portuguese-speaking Brazil and the Guianas.",
       "decoys": [
         {
@@ -190,11 +294,27 @@
       "id": "french-official-language-west-africa",
       "displayAnswer": "Mapped West African countries where French is an official language",
       "family": "language",
-      "includedIso3": ["BEN", "BFA", "CIV", "GIN", "MLI", "NER", "SEN", "TGO"],
-      "counterexampleIso3": ["GHA", "LBR", "NGA"],
+      "includedIso3": [
+        "BEN",
+        "BFA",
+        "CIV",
+        "GIN",
+        "MLI",
+        "NER",
+        "SEN",
+        "TGO"
+      ],
+      "counterexampleIso3": [
+        "GHA",
+        "LBR",
+        "NGA"
+      ],
       "difficulty": "standard",
       "eligibility": "practice",
-      "sources": ["cia-world-factbook", "natural-earth-admin0-110m"],
+      "sources": [
+        "cia-world-factbook",
+        "natural-earth-admin0-110m"
+      ],
       "explanation": "The highlighted countries form a mostly contiguous Francophone West African pattern from Senegal and Guinea through the Sahel and Gulf of Guinea.",
       "decoys": [
         {
@@ -219,11 +339,24 @@
       "id": "mapped-german-official-language",
       "displayAnswer": "Mapped countries where German is an official language",
       "family": "language",
-      "includedIso3": ["AUT", "BEL", "CHE", "DEU", "LUX"],
-      "counterexampleIso3": ["CZE", "DNK", "NLD"],
+      "includedIso3": [
+        "AUT",
+        "BEL",
+        "CHE",
+        "DEU",
+        "LUX"
+      ],
+      "counterexampleIso3": [
+        "CZE",
+        "DNK",
+        "NLD"
+      ],
       "difficulty": "standard",
       "eligibility": "practice",
-      "sources": ["cia-world-factbook", "natural-earth-admin0-110m"],
+      "sources": [
+        "cia-world-factbook",
+        "natural-earth-admin0-110m"
+      ],
       "explanation": "The highlighted countries share official German status, producing a compact Central European cluster plus multilingual Belgium and Luxembourg.",
       "decoys": [
         {
@@ -249,11 +382,21 @@
       "id": "landlocked-south-america",
       "displayAnswer": "Landlocked countries in South America",
       "family": "borders",
-      "includedIso3": ["BOL", "PRY"],
-      "counterexampleIso3": ["ARG", "BRA", "PER"],
+      "includedIso3": [
+        "BOL",
+        "PRY"
+      ],
+      "counterexampleIso3": [
+        "ARG",
+        "BRA",
+        "PER"
+      ],
       "difficulty": "intro",
       "eligibility": "sample",
-      "sources": ["cia-world-factbook", "natural-earth-admin0-110m"],
+      "sources": [
+        "cia-world-factbook",
+        "natural-earth-admin0-110m"
+      ],
       "explanation": "Bolivia and Paraguay are the two South American countries without a coastline.",
       "decoys": [
         {
@@ -279,11 +422,38 @@
       "id": "mapped-mediterranean-coast",
       "displayAnswer": "Mapped countries with a Mediterranean Sea coastline",
       "family": "borders",
-      "includedIso3": ["ALB", "DZA", "BIH", "HRV", "CYP", "EGY", "FRA", "GRC", "ISR", "ITA", "LBN", "LBY", "MNE", "MAR", "SVN", "ESP", "SYR", "TUN", "TUR"],
-      "counterexampleIso3": ["DEU", "PRT", "ROU"],
+      "includedIso3": [
+        "ALB",
+        "DZA",
+        "BIH",
+        "HRV",
+        "CYP",
+        "EGY",
+        "FRA",
+        "GRC",
+        "ISR",
+        "ITA",
+        "LBN",
+        "LBY",
+        "MNE",
+        "MAR",
+        "SVN",
+        "ESP",
+        "SYR",
+        "TUN",
+        "TUR"
+      ],
+      "counterexampleIso3": [
+        "DEU",
+        "PRT",
+        "ROU"
+      ],
       "difficulty": "standard",
       "eligibility": "daily",
-      "sources": ["cia-world-factbook", "natural-earth-admin0-110m"],
+      "sources": [
+        "cia-world-factbook",
+        "natural-earth-admin0-110m"
+      ],
       "explanation": "The highlighted set wraps the northern, eastern, and southern Mediterranean coastline.",
       "decoys": [
         {
@@ -309,11 +479,24 @@
       "id": "caspian-sea-coast",
       "displayAnswer": "Countries with a Caspian Sea coastline",
       "family": "borders",
-      "includedIso3": ["AZE", "IRN", "KAZ", "RUS", "TKM"],
-      "counterexampleIso3": ["ARM", "GEO", "UZB"],
+      "includedIso3": [
+        "AZE",
+        "IRN",
+        "KAZ",
+        "RUS",
+        "TKM"
+      ],
+      "counterexampleIso3": [
+        "ARM",
+        "GEO",
+        "UZB"
+      ],
       "difficulty": "standard",
       "eligibility": "daily",
-      "sources": ["cia-world-factbook", "natural-earth-admin0-110m"],
+      "sources": [
+        "cia-world-factbook",
+        "natural-earth-admin0-110m"
+      ],
       "explanation": "These five countries border the enclosed Caspian Sea.",
       "decoys": [
         {
@@ -338,11 +521,28 @@
       "id": "countries-bordering-germany",
       "displayAnswer": "Countries that border Germany",
       "family": "borders",
-      "includedIso3": ["AUT", "BEL", "CHE", "CZE", "DNK", "FRA", "LUX", "NLD", "POL"],
-      "counterexampleIso3": ["ESP", "HUN", "ITA"],
+      "includedIso3": [
+        "AUT",
+        "BEL",
+        "CHE",
+        "CZE",
+        "DNK",
+        "FRA",
+        "LUX",
+        "NLD",
+        "POL"
+      ],
+      "counterexampleIso3": [
+        "ESP",
+        "HUN",
+        "ITA"
+      ],
       "difficulty": "intro",
       "eligibility": "sample",
-      "sources": ["cia-world-factbook", "natural-earth-admin0-110m"],
+      "sources": [
+        "cia-world-factbook",
+        "natural-earth-admin0-110m"
+      ],
       "explanation": "The highlighted countries are Germany's nine land neighbors.",
       "decoys": [
         {
@@ -367,11 +567,33 @@
       "id": "countries-bordering-china",
       "displayAnswer": "Countries that border China",
       "family": "borders",
-      "includedIso3": ["AFG", "BTN", "IND", "KAZ", "KGZ", "LAO", "MNG", "MMR", "NPL", "PAK", "PRK", "RUS", "TJK", "VNM"],
-      "counterexampleIso3": ["BGD", "KOR", "THA"],
+      "includedIso3": [
+        "AFG",
+        "BTN",
+        "IND",
+        "KAZ",
+        "KGZ",
+        "LAO",
+        "MNG",
+        "MMR",
+        "NPL",
+        "PAK",
+        "PRK",
+        "RUS",
+        "TJK",
+        "VNM"
+      ],
+      "counterexampleIso3": [
+        "BGD",
+        "KOR",
+        "THA"
+      ],
       "difficulty": "expert",
       "eligibility": "practice",
-      "sources": ["cia-world-factbook", "natural-earth-admin0-110m"],
+      "sources": [
+        "cia-world-factbook",
+        "natural-earth-admin0-110m"
+      ],
       "explanation": "The highlighted countries are China's land neighbors, spanning Central, South, Southeast, and Northeast Asia.",
       "decoys": [
         {
@@ -396,11 +618,29 @@
       "id": "mapped-equator-crossed",
       "displayAnswer": "Mapped countries crossed by the Equator",
       "family": "physical_geography",
-      "includedIso3": ["BRA", "COD", "COG", "COL", "ECU", "GAB", "IDN", "KEN", "SOM", "UGA"],
-      "counterexampleIso3": ["ETH", "PER", "TZA"],
+      "includedIso3": [
+        "BRA",
+        "COD",
+        "COG",
+        "COL",
+        "ECU",
+        "GAB",
+        "IDN",
+        "KEN",
+        "SOM",
+        "UGA"
+      ],
+      "counterexampleIso3": [
+        "ETH",
+        "PER",
+        "TZA"
+      ],
       "difficulty": "intro",
       "eligibility": "daily",
-      "sources": ["cia-world-factbook", "natural-earth-admin0-110m"],
+      "sources": [
+        "cia-world-factbook",
+        "natural-earth-admin0-110m"
+      ],
       "explanation": "The highlighted countries sit along the Equator in South America, Central Africa, East Africa, and Indonesia.",
       "decoys": [
         {
@@ -426,11 +666,30 @@
       "id": "tropic-of-capricorn-crossed",
       "displayAnswer": "Countries crossed by the Tropic of Capricorn",
       "family": "physical_geography",
-      "includedIso3": ["ARG", "AUS", "BWA", "BRA", "CHL", "MDG", "MOZ", "NAM", "PRY", "ZAF"],
-      "counterexampleIso3": ["BOL", "COL", "KEN", "MEX"],
+      "includedIso3": [
+        "ARG",
+        "AUS",
+        "BWA",
+        "BRA",
+        "CHL",
+        "MDG",
+        "MOZ",
+        "NAM",
+        "PRY",
+        "ZAF"
+      ],
+      "counterexampleIso3": [
+        "BOL",
+        "COL",
+        "KEN",
+        "MEX"
+      ],
       "difficulty": "standard",
       "eligibility": "daily",
-      "sources": ["cia-world-factbook", "natural-earth-admin0-110m"],
+      "sources": [
+        "cia-world-factbook",
+        "natural-earth-admin0-110m"
+      ],
       "explanation": "The highlighted countries follow the southern tropic across South America, southern Africa, Madagascar, and Australia.",
       "decoys": [
         {
@@ -455,11 +714,27 @@
       "id": "mapped-arctic-circle-crossed",
       "displayAnswer": "Mapped countries and territories crossed by the Arctic Circle",
       "family": "physical_geography",
-      "includedIso3": ["CAN", "FIN", "GRL", "ISL", "NOR", "RUS", "SWE", "USA"],
-      "counterexampleIso3": ["DEU", "EST", "POL"],
+      "includedIso3": [
+        "CAN",
+        "FIN",
+        "GRL",
+        "ISL",
+        "NOR",
+        "RUS",
+        "SWE",
+        "USA"
+      ],
+      "counterexampleIso3": [
+        "DEU",
+        "EST",
+        "POL"
+      ],
       "difficulty": "standard",
       "eligibility": "practice",
-      "sources": ["cia-world-factbook", "natural-earth-admin0-110m"],
+      "sources": [
+        "cia-world-factbook",
+        "natural-earth-admin0-110m"
+      ],
       "explanation": "The highlighted set follows the Arctic Circle across North America, Greenland, the Nordic region, and Russia.",
       "decoys": [
         {
@@ -485,11 +760,29 @@
       "id": "sahara-desert-countries",
       "displayAnswer": "Countries containing part of the Sahara Desert",
       "family": "physical_geography",
-      "includedIso3": ["DZA", "EGY", "LBY", "MLI", "MAR", "MRT", "NER", "SDN", "TCD", "TUN"],
-      "counterexampleIso3": ["ETH", "NGA", "SEN"],
+      "includedIso3": [
+        "DZA",
+        "EGY",
+        "LBY",
+        "MLI",
+        "MAR",
+        "MRT",
+        "NER",
+        "SDN",
+        "TCD",
+        "TUN"
+      ],
+      "counterexampleIso3": [
+        "ETH",
+        "NGA",
+        "SEN"
+      ],
       "difficulty": "standard",
       "eligibility": "practice",
-      "sources": ["cia-world-factbook", "natural-earth-admin0-110m"],
+      "sources": [
+        "cia-world-factbook",
+        "natural-earth-admin0-110m"
+      ],
       "explanation": "The highlighted countries span the Sahara from the Atlantic edge across North Africa into Sudan and Chad.",
       "decoys": [
         {
@@ -514,11 +807,23 @@
       "id": "greater-antilles-countries",
       "displayAnswer": "Countries of the Greater Antilles",
       "family": "physical_geography",
-      "includedIso3": ["CUB", "DOM", "HTI", "JAM"],
-      "counterexampleIso3": ["BHS", "TTO", "PRI"],
+      "includedIso3": [
+        "CUB",
+        "DOM",
+        "HTI",
+        "JAM"
+      ],
+      "counterexampleIso3": [
+        "BHS",
+        "TTO",
+        "PRI"
+      ],
       "difficulty": "intro",
       "eligibility": "sample",
-      "sources": ["cia-world-factbook", "natural-earth-admin0-110m"],
+      "sources": [
+        "cia-world-factbook",
+        "natural-earth-admin0-110m"
+      ],
       "explanation": "Cuba, Jamaica, Haiti, and the Dominican Republic occupy the major island group known as the Greater Antilles.",
       "decoys": [
         {
@@ -543,11 +848,26 @@
       "id": "andes-countries",
       "displayAnswer": "Countries containing part of the Andes",
       "family": "physical_geography",
-      "includedIso3": ["ARG", "BOL", "CHL", "COL", "ECU", "PER", "VEN"],
-      "counterexampleIso3": ["BRA", "PRY", "URY"],
+      "includedIso3": [
+        "ARG",
+        "BOL",
+        "CHL",
+        "COL",
+        "ECU",
+        "PER",
+        "VEN"
+      ],
+      "counterexampleIso3": [
+        "BRA",
+        "PRY",
+        "URY"
+      ],
       "difficulty": "intro",
       "eligibility": "daily",
-      "sources": ["cia-world-factbook", "natural-earth-admin0-110m"],
+      "sources": [
+        "cia-world-factbook",
+        "natural-earth-admin0-110m"
+      ],
       "explanation": "The highlighted countries trace the Andes along western South America and into Venezuela.",
       "decoys": [
         {
@@ -572,11 +892,25 @@
       "id": "mekong-river-countries",
       "displayAnswer": "Countries the Mekong River flows through",
       "family": "physical_geography",
-      "includedIso3": ["CHN", "KHM", "LAO", "MMR", "THA", "VNM"],
-      "counterexampleIso3": ["BGD", "MYS", "PHL"],
+      "includedIso3": [
+        "CHN",
+        "KHM",
+        "LAO",
+        "MMR",
+        "THA",
+        "VNM"
+      ],
+      "counterexampleIso3": [
+        "BGD",
+        "MYS",
+        "PHL"
+      ],
       "difficulty": "standard",
       "eligibility": "practice",
-      "sources": ["cia-world-factbook", "natural-earth-admin0-110m"],
+      "sources": [
+        "cia-world-factbook",
+        "natural-earth-admin0-110m"
+      ],
       "explanation": "The highlighted countries follow the Mekong from China through mainland Southeast Asia to Vietnam.",
       "decoys": [
         {
@@ -601,11 +935,27 @@
       "id": "amazon-rainforest-countries",
       "displayAnswer": "Countries containing part of the Amazon rainforest",
       "family": "physical_geography",
-      "includedIso3": ["BOL", "BRA", "COL", "ECU", "GUY", "PER", "SUR", "VEN"],
-      "counterexampleIso3": ["ARG", "CHL", "PRY"],
+      "includedIso3": [
+        "BOL",
+        "BRA",
+        "COL",
+        "ECU",
+        "GUY",
+        "PER",
+        "SUR",
+        "VEN"
+      ],
+      "counterexampleIso3": [
+        "ARG",
+        "CHL",
+        "PRY"
+      ],
       "difficulty": "standard",
       "eligibility": "practice",
-      "sources": ["cia-world-factbook", "natural-earth-admin0-110m"],
+      "sources": [
+        "cia-world-factbook",
+        "natural-earth-admin0-110m"
+      ],
       "explanation": "The highlighted countries contain Amazon rainforest territory in northern and central South America.",
       "decoys": [
         {
@@ -630,11 +980,28 @@
       "id": "mapped-asean-members",
       "displayAnswer": "Mapped ASEAN member countries",
       "family": "organizations",
-      "includedIso3": ["BRN", "IDN", "KHM", "LAO", "MMR", "MYS", "PHL", "THA", "VNM"],
-      "counterexampleIso3": ["CHN", "KOR", "TLS"],
+      "includedIso3": [
+        "BRN",
+        "IDN",
+        "KHM",
+        "LAO",
+        "MMR",
+        "MYS",
+        "PHL",
+        "THA",
+        "VNM"
+      ],
+      "counterexampleIso3": [
+        "CHN",
+        "KOR",
+        "TLS"
+      ],
       "difficulty": "intro",
       "eligibility": "daily",
-      "sources": ["asean-member-states", "natural-earth-admin0-110m"],
+      "sources": [
+        "asean-member-states",
+        "natural-earth-admin0-110m"
+      ],
       "explanation": "The highlighted countries are ASEAN members represented in the current country registry.",
       "decoys": [
         {
@@ -660,11 +1027,24 @@
       "id": "mapped-gcc-members",
       "displayAnswer": "Mapped Gulf Cooperation Council members",
       "family": "organizations",
-      "includedIso3": ["ARE", "KWT", "OMN", "QAT", "SAU"],
-      "counterexampleIso3": ["IRQ", "IRN", "YEM"],
+      "includedIso3": [
+        "ARE",
+        "KWT",
+        "OMN",
+        "QAT",
+        "SAU"
+      ],
+      "counterexampleIso3": [
+        "IRQ",
+        "IRN",
+        "YEM"
+      ],
       "difficulty": "standard",
       "eligibility": "practice",
-      "sources": ["gcc-member-states", "natural-earth-admin0-110m"],
+      "sources": [
+        "gcc-member-states",
+        "natural-earth-admin0-110m"
+      ],
       "explanation": "The highlighted countries are GCC members present in the current map registry.",
       "decoys": [
         {
@@ -690,11 +1070,24 @@
       "id": "nordic-council-sovereign-members",
       "displayAnswer": "Nordic Council sovereign member countries",
       "family": "organizations",
-      "includedIso3": ["DNK", "FIN", "ISL", "NOR", "SWE"],
-      "counterexampleIso3": ["EST", "DEU", "GBR"],
+      "includedIso3": [
+        "DNK",
+        "FIN",
+        "ISL",
+        "NOR",
+        "SWE"
+      ],
+      "counterexampleIso3": [
+        "EST",
+        "DEU",
+        "GBR"
+      ],
       "difficulty": "intro",
       "eligibility": "daily",
-      "sources": ["nordic-council-countries", "natural-earth-admin0-110m"],
+      "sources": [
+        "nordic-council-countries",
+        "natural-earth-admin0-110m"
+      ],
       "explanation": "Denmark, Finland, Iceland, Norway, and Sweden are the sovereign Nordic Council countries.",
       "decoys": [
         {
@@ -719,11 +1112,23 @@
       "id": "pacific-alliance-members",
       "displayAnswer": "Pacific Alliance member countries",
       "family": "organizations",
-      "includedIso3": ["CHL", "COL", "MEX", "PER"],
-      "counterexampleIso3": ["ARG", "BRA", "ECU"],
+      "includedIso3": [
+        "CHL",
+        "COL",
+        "MEX",
+        "PER"
+      ],
+      "counterexampleIso3": [
+        "ARG",
+        "BRA",
+        "ECU"
+      ],
       "difficulty": "standard",
       "eligibility": "practice",
-      "sources": ["pacific-alliance-members", "natural-earth-admin0-110m"],
+      "sources": [
+        "pacific-alliance-members",
+        "natural-earth-admin0-110m"
+      ],
       "explanation": "Chile, Colombia, Mexico, and Peru are the Pacific Alliance members.",
       "decoys": [
         {
@@ -748,11 +1153,26 @@
       "id": "g7-members",
       "displayAnswer": "G7 member countries",
       "family": "organizations",
-      "includedIso3": ["CAN", "FRA", "DEU", "ITA", "JPN", "GBR", "USA"],
-      "counterexampleIso3": ["AUS", "CHN", "ESP"],
+      "includedIso3": [
+        "CAN",
+        "FRA",
+        "DEU",
+        "ITA",
+        "JPN",
+        "GBR",
+        "USA"
+      ],
+      "counterexampleIso3": [
+        "AUS",
+        "CHN",
+        "ESP"
+      ],
       "difficulty": "standard",
       "eligibility": "daily",
-      "sources": ["g7-members", "natural-earth-admin0-110m"],
+      "sources": [
+        "g7-members",
+        "natural-earth-admin0-110m"
+      ],
       "explanation": "The highlighted countries are the Group of Seven members.",
       "decoys": [
         {
@@ -777,11 +1197,25 @@
       "id": "eu-founding-members",
       "displayAnswer": "European Union founding member countries",
       "family": "organizations",
-      "includedIso3": ["BEL", "DEU", "FRA", "ITA", "LUX", "NLD"],
-      "counterexampleIso3": ["AUT", "ESP", "POL"],
+      "includedIso3": [
+        "BEL",
+        "DEU",
+        "FRA",
+        "ITA",
+        "LUX",
+        "NLD"
+      ],
+      "counterexampleIso3": [
+        "AUT",
+        "ESP",
+        "POL"
+      ],
       "difficulty": "standard",
       "eligibility": "daily",
-      "sources": ["european-union-countries", "natural-earth-admin0-110m"],
+      "sources": [
+        "european-union-countries",
+        "natural-earth-admin0-110m"
+      ],
       "explanation": "The highlighted countries are the six founding states of the European integration project that became the EU.",
       "decoys": [
         {
@@ -806,11 +1240,23 @@
       "id": "mercosur-founding-members",
       "displayAnswer": "MERCOSUR founding member countries",
       "family": "organizations",
-      "includedIso3": ["ARG", "BRA", "PRY", "URY"],
-      "counterexampleIso3": ["BOL", "CHL", "PER"],
+      "includedIso3": [
+        "ARG",
+        "BRA",
+        "PRY",
+        "URY"
+      ],
+      "counterexampleIso3": [
+        "BOL",
+        "CHL",
+        "PER"
+      ],
       "difficulty": "standard",
       "eligibility": "practice",
-      "sources": ["mercosur-member-states", "natural-earth-admin0-110m"],
+      "sources": [
+        "mercosur-member-states",
+        "natural-earth-admin0-110m"
+      ],
       "explanation": "Argentina, Brazil, Paraguay, and Uruguay founded MERCOSUR under the Treaty of Asuncion.",
       "decoys": [
         {
@@ -835,11 +1281,38 @@
       "id": "mapped-euro-area-members",
       "displayAnswer": "Mapped euro area member countries",
       "family": "economy",
-      "includedIso3": ["AUT", "BEL", "HRV", "CYP", "EST", "FIN", "FRA", "DEU", "GRC", "IRL", "ITA", "LVA", "LTU", "LUX", "NLD", "PRT", "SVK", "SVN", "ESP"],
-      "counterexampleIso3": ["CZE", "DNK", "POL"],
+      "includedIso3": [
+        "AUT",
+        "BEL",
+        "HRV",
+        "CYP",
+        "EST",
+        "FIN",
+        "FRA",
+        "DEU",
+        "GRC",
+        "IRL",
+        "ITA",
+        "LVA",
+        "LTU",
+        "LUX",
+        "NLD",
+        "PRT",
+        "SVK",
+        "SVN",
+        "ESP"
+      ],
+      "counterexampleIso3": [
+        "CZE",
+        "DNK",
+        "POL"
+      ],
       "difficulty": "expert",
       "eligibility": "practice",
-      "sources": ["european-central-bank-euro-area", "natural-earth-admin0-110m"],
+      "sources": [
+        "european-central-bank-euro-area",
+        "natural-earth-admin0-110m"
+      ],
       "explanation": "The highlighted countries are euro area members represented in the current entity registry.",
       "decoys": [
         {
@@ -865,11 +1338,34 @@
       "id": "cfa-franc-countries",
       "displayAnswer": "Countries using a CFA franc currency",
       "family": "economy",
-      "includedIso3": ["BEN", "BFA", "CAF", "CIV", "CMR", "COG", "GAB", "GNB", "GNQ", "MLI", "NER", "SEN", "TCD", "TGO"],
-      "counterexampleIso3": ["GIN", "GHA", "NGA"],
+      "includedIso3": [
+        "BEN",
+        "BFA",
+        "CAF",
+        "CIV",
+        "CMR",
+        "COG",
+        "GAB",
+        "GNB",
+        "GNQ",
+        "MLI",
+        "NER",
+        "SEN",
+        "TCD",
+        "TGO"
+      ],
+      "counterexampleIso3": [
+        "GIN",
+        "GHA",
+        "NGA"
+      ],
       "difficulty": "expert",
       "eligibility": "practice",
-      "sources": ["bceao-waemu-members", "beac-cemac-members", "natural-earth-admin0-110m"],
+      "sources": [
+        "bceao-waemu-members",
+        "beac-cemac-members",
+        "natural-earth-admin0-110m"
+      ],
       "explanation": "The highlighted countries use either the West African CFA franc or the Central African CFA franc.",
       "decoys": [
         {
@@ -894,11 +1390,61 @@
       "id": "top-quartile-renewable-electricity-share",
       "displayAnswer": "Mapped countries in the top quartile for renewable electricity share",
       "family": "indicators",
-      "includedIso3": ["BTN", "LSO", "CRI", "NOR", "CAF", "SLV", "TJK", "NAM", "BLZ", "ZMB", "AGO", "COD", "UGA", "LUX", "ZWE", "GIN", "KGZ", "URY", "NPL", "SWZ", "MOZ", "VEN", "NZL", "GEO", "ECU", "MWI", "AUT", "PAN", "DNK", "AFG", "KEN", "BRA", "GRL", "SLE", "COL", "HRV", "NIC", "CHE", "SWE", "CAN", "LTU", "PRT"],
-      "counterexampleIso3": ["AUS", "DEU", "USA"],
+      "includedIso3": [
+        "BTN",
+        "LSO",
+        "CRI",
+        "NOR",
+        "CAF",
+        "SLV",
+        "TJK",
+        "NAM",
+        "BLZ",
+        "ZMB",
+        "AGO",
+        "COD",
+        "UGA",
+        "LUX",
+        "ZWE",
+        "GIN",
+        "KGZ",
+        "URY",
+        "NPL",
+        "SWZ",
+        "MOZ",
+        "VEN",
+        "NZL",
+        "GEO",
+        "ECU",
+        "MWI",
+        "AUT",
+        "PAN",
+        "DNK",
+        "AFG",
+        "KEN",
+        "BRA",
+        "GRL",
+        "SLE",
+        "COL",
+        "HRV",
+        "NIC",
+        "CHE",
+        "SWE",
+        "CAN",
+        "LTU",
+        "PRT"
+      ],
+      "counterexampleIso3": [
+        "AUS",
+        "DEU",
+        "USA"
+      ],
       "difficulty": "expert",
       "eligibility": "practice",
-      "sources": ["world-bank-wdi", "natural-earth-admin0-110m"],
+      "sources": [
+        "world-bank-wdi",
+        "natural-earth-admin0-110m"
+      ],
       "explanation": "This rule highlights mapped countries in the highest quartile of the approved Mystery Map renewable electricity share indicator.",
       "decoys": [
         {
@@ -928,11 +1474,62 @@
       "id": "top-quartile-forest-area-share",
       "displayAnswer": "Mapped countries in the top quartile for forest area share",
       "family": "indicators",
-      "includedIso3": ["SUR", "GAB", "SLB", "GUY", "GNQ", "PNG", "LBR", "FIN", "BRN", "BTN", "LAO", "GNB", "SWE", "JPN", "COG", "KOR", "FJI", "TLS", "MNE", "SVN", "CRI", "ZMB", "BRA", "MYS", "EST", "PAN", "HND", "JAM", "PRI", "PER", "LVA", "BLZ", "COD", "COL", "VEN", "AGO", "BHS", "TZA", "RUS", "PRK", "ECU", "IDN", "VNM"],
-      "counterexampleIso3": ["DZA", "EGY", "SAU"],
+      "includedIso3": [
+        "SUR",
+        "GAB",
+        "SLB",
+        "GUY",
+        "GNQ",
+        "PNG",
+        "LBR",
+        "FIN",
+        "BRN",
+        "BTN",
+        "LAO",
+        "GNB",
+        "SWE",
+        "JPN",
+        "COG",
+        "KOR",
+        "FJI",
+        "TLS",
+        "MNE",
+        "SVN",
+        "CRI",
+        "ZMB",
+        "BRA",
+        "MYS",
+        "EST",
+        "PAN",
+        "HND",
+        "JAM",
+        "PRI",
+        "PER",
+        "LVA",
+        "BLZ",
+        "COD",
+        "COL",
+        "VEN",
+        "AGO",
+        "BHS",
+        "TZA",
+        "RUS",
+        "PRK",
+        "ECU",
+        "IDN",
+        "VNM"
+      ],
+      "counterexampleIso3": [
+        "DZA",
+        "EGY",
+        "SAU"
+      ],
       "difficulty": "standard",
       "eligibility": "daily",
-      "sources": ["world-bank-wdi", "natural-earth-admin0-110m"],
+      "sources": [
+        "world-bank-wdi",
+        "natural-earth-admin0-110m"
+      ],
       "explanation": "This rule highlights mapped countries in the highest quartile of the approved Mystery Map forest area share indicator.",
       "decoys": [
         {
@@ -962,11 +1559,61 @@
       "id": "bottom-quartile-pm25-exposure",
       "displayAnswer": "Mapped countries in the bottom quartile for PM2.5 exposure",
       "family": "indicators",
-      "includedIso3": ["GRL", "FIN", "ISL", "SWE", "BHS", "NOR", "EST", "AUS", "FJI", "CAN", "NZL", "USA", "VUT", "LUX", "DNK", "IRL", "BRN", "PRI", "FRA", "CHE", "BEL", "NLD", "PRT", "DEU", "CUB", "GBR", "SLB", "AUT", "ESP", "LTU", "URY", "JPN", "RUS", "BLR", "TLS", "MDG", "SVN", "CZE", "LVA", "BWA", "BRA", "DOM"],
-      "counterexampleIso3": ["BGD", "IND", "PAK"],
+      "includedIso3": [
+        "GRL",
+        "FIN",
+        "ISL",
+        "SWE",
+        "BHS",
+        "NOR",
+        "EST",
+        "AUS",
+        "FJI",
+        "CAN",
+        "NZL",
+        "USA",
+        "VUT",
+        "LUX",
+        "DNK",
+        "IRL",
+        "BRN",
+        "PRI",
+        "FRA",
+        "CHE",
+        "BEL",
+        "NLD",
+        "PRT",
+        "DEU",
+        "CUB",
+        "GBR",
+        "SLB",
+        "AUT",
+        "ESP",
+        "LTU",
+        "URY",
+        "JPN",
+        "RUS",
+        "BLR",
+        "TLS",
+        "MDG",
+        "SVN",
+        "CZE",
+        "LVA",
+        "BWA",
+        "BRA",
+        "DOM"
+      ],
+      "counterexampleIso3": [
+        "BGD",
+        "IND",
+        "PAK"
+      ],
       "difficulty": "expert",
       "eligibility": "practice",
-      "sources": ["world-bank-wdi", "natural-earth-admin0-110m"],
+      "sources": [
+        "world-bank-wdi",
+        "natural-earth-admin0-110m"
+      ],
       "explanation": "This rule highlights mapped countries in the lowest quartile of the approved Mystery Map PM2.5 exposure indicator.",
       "decoys": [
         {
@@ -996,11 +1643,58 @@
       "id": "top-quartile-internet-users",
       "displayAnswer": "Mapped countries in the top quartile for internet users",
       "family": "indicators",
-      "includedIso3": ["ARE", "SAU", "DNK", "KWT", "NOR", "LUX", "ISL", "QAT", "MYS", "KOR", "CHE", "IRL", "NLD", "BRN", "AUS", "BEL", "ESP", "JOR", "CHL", "SWE", "GBR", "OMN", "AUT", "USA", "RUS", "CAN", "BLR", "HUN", "FIN", "MKD", "NZL", "DEU", "KAZ", "LVA", "BHS", "EST", "KGZ", "CHN", "URY"],
-      "counterexampleIso3": ["IND", "IDN", "NGA"],
+      "includedIso3": [
+        "ARE",
+        "SAU",
+        "DNK",
+        "KWT",
+        "NOR",
+        "LUX",
+        "ISL",
+        "QAT",
+        "MYS",
+        "KOR",
+        "CHE",
+        "IRL",
+        "NLD",
+        "BRN",
+        "AUS",
+        "BEL",
+        "ESP",
+        "JOR",
+        "CHL",
+        "SWE",
+        "GBR",
+        "OMN",
+        "AUT",
+        "USA",
+        "RUS",
+        "CAN",
+        "BLR",
+        "HUN",
+        "FIN",
+        "MKD",
+        "NZL",
+        "DEU",
+        "KAZ",
+        "LVA",
+        "BHS",
+        "EST",
+        "KGZ",
+        "CHN",
+        "URY"
+      ],
+      "counterexampleIso3": [
+        "IND",
+        "IDN",
+        "NGA"
+      ],
       "difficulty": "expert",
       "eligibility": "practice",
-      "sources": ["world-bank-wdi", "natural-earth-admin0-110m"],
+      "sources": [
+        "world-bank-wdi",
+        "natural-earth-admin0-110m"
+      ],
       "explanation": "This rule highlights mapped countries in the highest quartile of the approved Mystery Map internet users indicator.",
       "decoys": [
         {
@@ -1030,11 +1724,60 @@
       "id": "top-quartile-water-stress",
       "displayAnswer": "Mapped countries in the top quartile for water stress",
       "family": "indicators",
-      "includedIso3": ["KWT", "ARE", "SAU", "LBY", "QAT", "YEM", "DZA", "EGY", "TKM", "SYR", "UZB", "SDN", "OMN", "PAK", "JOR", "TUN", "LKA", "KOR", "IRN", "SWZ", "TJK", "ZAF", "IND", "ARM", "IRQ", "LBN", "AZE", "AFG", "BEL", "MKD", "MAR", "KGZ", "TUR", "ZWE", "MEX", "ESP", "CHN", "BGR", "DOM", "JPN", "DEU"],
-      "counterexampleIso3": ["BRA", "CAN", "NOR"],
+      "includedIso3": [
+        "KWT",
+        "ARE",
+        "SAU",
+        "LBY",
+        "QAT",
+        "YEM",
+        "DZA",
+        "EGY",
+        "TKM",
+        "SYR",
+        "UZB",
+        "SDN",
+        "OMN",
+        "PAK",
+        "JOR",
+        "TUN",
+        "LKA",
+        "KOR",
+        "IRN",
+        "SWZ",
+        "TJK",
+        "ZAF",
+        "IND",
+        "ARM",
+        "IRQ",
+        "LBN",
+        "AZE",
+        "AFG",
+        "BEL",
+        "MKD",
+        "MAR",
+        "KGZ",
+        "TUR",
+        "ZWE",
+        "MEX",
+        "ESP",
+        "CHN",
+        "BGR",
+        "DOM",
+        "JPN",
+        "DEU"
+      ],
+      "counterexampleIso3": [
+        "BRA",
+        "CAN",
+        "NOR"
+      ],
       "difficulty": "expert",
       "eligibility": "expert-only",
-      "sources": ["world-bank-wdi", "natural-earth-admin0-110m"],
+      "sources": [
+        "world-bank-wdi",
+        "natural-earth-admin0-110m"
+      ],
       "explanation": "This rule highlights mapped countries in the highest quartile of the approved Mystery Map water stress indicator.",
       "decoys": [
         {
@@ -1064,11 +1807,53 @@
       "id": "top-quartile-tourism-receipts-share",
       "displayAnswer": "Mapped countries in the top quartile for tourism receipts as a share of exports",
       "family": "indicators",
-      "includedIso3": ["VUT", "BHS", "TLS", "MNE", "FJI", "ALB", "GMB", "ETH", "LBN", "JOR", "GEO", "DOM", "HRV", "HTI", "TZA", "LKA", "NPL", "ARM", "RWA", "GRC", "KHM", "UGA", "PAN", "EGY", "PRT", "MAR", "SDN", "MDG", "CRI", "KGZ", "NZL", "THA", "SLV", "CYP"],
-      "counterexampleIso3": ["CHN", "DEU", "USA"],
+      "includedIso3": [
+        "VUT",
+        "BHS",
+        "TLS",
+        "MNE",
+        "FJI",
+        "ALB",
+        "GMB",
+        "ETH",
+        "LBN",
+        "JOR",
+        "GEO",
+        "DOM",
+        "HRV",
+        "HTI",
+        "TZA",
+        "LKA",
+        "NPL",
+        "ARM",
+        "RWA",
+        "GRC",
+        "KHM",
+        "UGA",
+        "PAN",
+        "EGY",
+        "PRT",
+        "MAR",
+        "SDN",
+        "MDG",
+        "CRI",
+        "KGZ",
+        "NZL",
+        "THA",
+        "SLV",
+        "CYP"
+      ],
+      "counterexampleIso3": [
+        "CHN",
+        "DEU",
+        "USA"
+      ],
       "difficulty": "expert",
       "eligibility": "expert-only",
-      "sources": ["world-bank-wdi", "natural-earth-admin0-110m"],
+      "sources": [
+        "world-bank-wdi",
+        "natural-earth-admin0-110m"
+      ],
       "explanation": "This rule highlights mapped countries in the highest quartile of the approved Mystery Map tourism receipts share indicator.",
       "decoys": [
         {
@@ -1092,6 +1877,2507 @@
         "indicatorId": "tourism-receipts-share",
         "selection": "top_quartile",
         "year": 2018
+      }
+    },
+    {
+      "id": "mapped-arabic-official-language",
+      "displayAnswer": "Mapped countries where Arabic is an official language",
+      "family": "language",
+      "includedIso3": [
+        "DZA",
+        "TCD",
+        "DJI",
+        "EGY",
+        "IRQ",
+        "JOR",
+        "KWT",
+        "LBN",
+        "LBY",
+        "MRT",
+        "MAR",
+        "OMN",
+        "PSE",
+        "QAT",
+        "SAU",
+        "SOM",
+        "SDN",
+        "SYR",
+        "TUN",
+        "ARE",
+        "YEM"
+      ],
+      "counterexampleIso3": [
+        "IRN",
+        "ISR",
+        "TUR"
+      ],
+      "difficulty": "standard",
+      "eligibility": "daily",
+      "sources": [
+        "natural-earth-admin0-110m",
+        "cia-world-factbook"
+      ],
+      "explanation": "The highlighted mapped countries use Arabic as an official language, creating a broad North Africa, Horn of Africa, and West Asia pattern.",
+      "decoys": [
+        {
+          "displayAnswer": "Arab League member countries",
+          "whyPlausible": "It shares enough regional texture with mapped countries where arabic is an official language to be tempting.",
+          "whyWrong": "The highlighted set is defined by language status, not by arab league member countries."
+        },
+        {
+          "displayAnswer": "Countries bordering the Red Sea",
+          "whyPlausible": "It shares enough regional texture with mapped countries where arabic is an official language to be tempting.",
+          "whyWrong": "The highlighted set is defined by language status, not by countries bordering the red sea."
+        },
+        {
+          "displayAnswer": "Countries with desert majority land cover",
+          "whyPlausible": "It shares enough regional texture with mapped countries where arabic is an official language to be tempting.",
+          "whyWrong": "The highlighted set is defined by language status, not by countries with desert majority land cover."
+        }
+      ],
+      "dateVintage": "Factbook country profiles reviewed 2026-07-03",
+      "scopeNote": "Bahrain and Comoros are not present in the current mapped-country registry and are omitted from this playable rule."
+    },
+    {
+      "id": "mapped-english-official-caribbean",
+      "displayAnswer": "Mapped Caribbean-region countries where English is an official language",
+      "family": "language",
+      "includedIso3": [
+        "BHS",
+        "BLZ",
+        "GUY",
+        "JAM",
+        "TTO"
+      ],
+      "counterexampleIso3": [
+        "CUB",
+        "DOM",
+        "SUR"
+      ],
+      "difficulty": "standard",
+      "eligibility": "practice",
+      "sources": [
+        "natural-earth-admin0-110m",
+        "cia-world-factbook"
+      ],
+      "explanation": "This maps the larger Caribbean-basin countries in the current registry where English has official status.",
+      "decoys": [
+        {
+          "displayAnswer": "CARICOM member countries",
+          "whyPlausible": "It shares enough regional texture with mapped caribbean-region countries where english is an official language to be tempting.",
+          "whyWrong": "The highlighted set is defined by language status, not by caricom member countries."
+        },
+        {
+          "displayAnswer": "Island countries in the Caribbean",
+          "whyPlausible": "It shares enough regional texture with mapped caribbean-region countries where english is an official language to be tempting.",
+          "whyWrong": "The highlighted set is defined by language status, not by island countries in the caribbean."
+        },
+        {
+          "displayAnswer": "Countries using the US dollar",
+          "whyPlausible": "It shares enough regional texture with mapped caribbean-region countries where english is an official language to be tempting.",
+          "whyWrong": "The highlighted set is defined by language status, not by countries using the us dollar."
+        }
+      ],
+      "dateVintage": "Factbook country profiles reviewed 2026-07-03",
+      "scopeNote": "Several English-official Caribbean small states are not present in the current mapped-country registry and are omitted."
+    },
+    {
+      "id": "spanish-official-central-america",
+      "displayAnswer": "Central American countries where Spanish is an official language",
+      "family": "language",
+      "includedIso3": [
+        "MEX",
+        "GTM",
+        "HND",
+        "SLV",
+        "NIC",
+        "CRI",
+        "PAN"
+      ],
+      "counterexampleIso3": [
+        "BLZ",
+        "USA",
+        "BRA"
+      ],
+      "difficulty": "intro",
+      "eligibility": "daily",
+      "sources": [
+        "natural-earth-admin0-110m",
+        "cia-world-factbook"
+      ],
+      "explanation": "The highlighted countries trace the Spanish-official mainland chain from Mexico through Panama while excluding Belize.",
+      "decoys": [
+        {
+          "displayAnswer": "Countries in North America",
+          "whyPlausible": "It shares enough regional texture with central american countries where spanish is an official language to be tempting.",
+          "whyWrong": "The highlighted set is defined by language status, not by countries in north america."
+        },
+        {
+          "displayAnswer": "Countries bordering the Caribbean Sea",
+          "whyPlausible": "It shares enough regional texture with central american countries where spanish is an official language to be tempting.",
+          "whyWrong": "The highlighted set is defined by language status, not by countries bordering the caribbean sea."
+        },
+        {
+          "displayAnswer": "Former British colonies in Central America",
+          "whyPlausible": "It shares enough regional texture with central american countries where spanish is an official language to be tempting.",
+          "whyWrong": "The highlighted set is defined by language status, not by former british colonies in central america."
+        }
+      ],
+      "dateVintage": "Factbook country profiles reviewed 2026-07-03"
+    },
+    {
+      "id": "mapped-russian-official-language",
+      "displayAnswer": "Mapped countries where Russian is an official language",
+      "family": "language",
+      "includedIso3": [
+        "RUS",
+        "BLR",
+        "KAZ",
+        "KGZ"
+      ],
+      "counterexampleIso3": [
+        "UKR",
+        "POL",
+        "MNG"
+      ],
+      "difficulty": "standard",
+      "eligibility": "practice",
+      "sources": [
+        "natural-earth-admin0-110m",
+        "cia-world-factbook"
+      ],
+      "explanation": "The highlighted countries are the mapped states where Russian has official status, not simply places where Russian is widely spoken.",
+      "decoys": [
+        {
+          "displayAnswer": "Former Soviet republics",
+          "whyPlausible": "It shares enough regional texture with mapped countries where russian is an official language to be tempting.",
+          "whyWrong": "The highlighted set is defined by language status, not by former soviet republics."
+        },
+        {
+          "displayAnswer": "Countries bordering Russia",
+          "whyPlausible": "It shares enough regional texture with mapped countries where russian is an official language to be tempting.",
+          "whyWrong": "The highlighted set is defined by language status, not by countries bordering russia."
+        },
+        {
+          "displayAnswer": "Cyrillic-script official-language countries",
+          "whyPlausible": "It shares enough regional texture with mapped countries where russian is an official language to be tempting.",
+          "whyWrong": "The highlighted set is defined by language status, not by cyrillic-script official-language countries."
+        }
+      ],
+      "dateVintage": "Factbook country profiles reviewed 2026-07-03",
+      "allowSmallHighlightSet": true
+    },
+    {
+      "id": "mapped-french-official-central-africa",
+      "displayAnswer": "Mapped Central African countries where French is an official language",
+      "family": "language",
+      "includedIso3": [
+        "BDI",
+        "CMR",
+        "CAF",
+        "TCD",
+        "COD",
+        "COG",
+        "GNQ",
+        "GAB",
+        "RWA"
+      ],
+      "counterexampleIso3": [
+        "NGA",
+        "GHA",
+        "AGO"
+      ],
+      "difficulty": "standard",
+      "eligibility": "daily",
+      "sources": [
+        "natural-earth-admin0-110m",
+        "cia-world-factbook"
+      ],
+      "explanation": "The highlighted countries form a Central African belt where French has official status, including bilingual and multilingual states.",
+      "decoys": [
+        {
+          "displayAnswer": "CEMAC member countries",
+          "whyPlausible": "It shares enough regional texture with mapped central african countries where french is an official language to be tempting.",
+          "whyWrong": "The highlighted set is defined by language status, not by cemac member countries."
+        },
+        {
+          "displayAnswer": "Congo Basin rainforest countries",
+          "whyPlausible": "It shares enough regional texture with mapped central african countries where french is an official language to be tempting.",
+          "whyWrong": "The highlighted set is defined by language status, not by congo basin rainforest countries."
+        },
+        {
+          "displayAnswer": "Countries using the CFA franc",
+          "whyPlausible": "It shares enough regional texture with mapped central african countries where french is an official language to be tempting.",
+          "whyWrong": "The highlighted set is defined by language status, not by countries using the cfa franc."
+        }
+      ],
+      "dateVintage": "Factbook country profiles reviewed 2026-07-03"
+    },
+    {
+      "id": "black-sea-coast",
+      "displayAnswer": "Countries with a Black Sea coast",
+      "family": "borders",
+      "includedIso3": [
+        "BGR",
+        "ROU",
+        "UKR",
+        "RUS",
+        "GEO",
+        "TUR"
+      ],
+      "counterexampleIso3": [
+        "GRC",
+        "AZE",
+        "MDA"
+      ],
+      "difficulty": "intro",
+      "eligibility": "daily",
+      "sources": [
+        "natural-earth-admin0-110m",
+        "cia-world-factbook"
+      ],
+      "explanation": "These six mapped countries touch the Black Sea coastline.",
+      "decoys": [
+        {
+          "displayAnswer": "Countries with a Mediterranean coast",
+          "whyPlausible": "It shares enough regional texture with countries with a black sea coast to be tempting.",
+          "whyWrong": "The highlighted set is defined by border or coastline geography, not by countries with a mediterranean coast."
+        },
+        {
+          "displayAnswer": "Countries bordering Russia",
+          "whyPlausible": "It shares enough regional texture with countries with a black sea coast to be tempting.",
+          "whyWrong": "The highlighted set is defined by border or coastline geography, not by countries bordering russia."
+        },
+        {
+          "displayAnswer": "Countries on the Caspian Sea",
+          "whyPlausible": "It shares enough regional texture with countries with a black sea coast to be tempting.",
+          "whyWrong": "The highlighted set is defined by border or coastline geography, not by countries on the caspian sea."
+        }
+      ]
+    },
+    {
+      "id": "red-sea-coast",
+      "displayAnswer": "Countries with a Red Sea coast",
+      "family": "borders",
+      "includedIso3": [
+        "DJI",
+        "EGY",
+        "ERI",
+        "ISR",
+        "JOR",
+        "SAU",
+        "SDN",
+        "YEM"
+      ],
+      "counterexampleIso3": [
+        "OMN",
+        "SOM",
+        "KWT"
+      ],
+      "difficulty": "standard",
+      "eligibility": "daily",
+      "sources": [
+        "natural-earth-admin0-110m",
+        "cia-world-factbook"
+      ],
+      "explanation": "The highlighted countries line both African and Arabian sides of the Red Sea, including the Gulf of Aqaba edge.",
+      "decoys": [
+        {
+          "displayAnswer": "Countries on the Persian Gulf",
+          "whyPlausible": "It shares enough regional texture with countries with a red sea coast to be tempting.",
+          "whyWrong": "The highlighted set is defined by border or coastline geography, not by countries on the persian gulf."
+        },
+        {
+          "displayAnswer": "Arabic-official countries",
+          "whyPlausible": "It shares enough regional texture with countries with a red sea coast to be tempting.",
+          "whyWrong": "The highlighted set is defined by border or coastline geography, not by arabic-official countries."
+        },
+        {
+          "displayAnswer": "Countries bordering the Indian Ocean",
+          "whyPlausible": "It shares enough regional texture with countries with a red sea coast to be tempting.",
+          "whyWrong": "The highlighted set is defined by border or coastline geography, not by countries bordering the indian ocean."
+        }
+      ]
+    },
+    {
+      "id": "baltic-sea-coast",
+      "displayAnswer": "Countries with a Baltic Sea coast",
+      "family": "borders",
+      "includedIso3": [
+        "DNK",
+        "EST",
+        "FIN",
+        "DEU",
+        "LVA",
+        "LTU",
+        "POL",
+        "RUS",
+        "SWE"
+      ],
+      "counterexampleIso3": [
+        "NOR",
+        "NLD",
+        "BEL"
+      ],
+      "difficulty": "intro",
+      "eligibility": "daily",
+      "sources": [
+        "natural-earth-admin0-110m",
+        "cia-world-factbook"
+      ],
+      "explanation": "The highlighted countries all touch the Baltic Sea, from Scandinavia and the Baltic states through Germany, Poland, and Russia.",
+      "decoys": [
+        {
+          "displayAnswer": "Nordic Council countries",
+          "whyPlausible": "It shares enough regional texture with countries with a baltic sea coast to be tempting.",
+          "whyWrong": "The highlighted set is defined by border or coastline geography, not by nordic council countries."
+        },
+        {
+          "displayAnswer": "European Union member countries",
+          "whyPlausible": "It shares enough regional texture with countries with a baltic sea coast to be tempting.",
+          "whyWrong": "The highlighted set is defined by border or coastline geography, not by european union member countries."
+        },
+        {
+          "displayAnswer": "Countries on the North Sea",
+          "whyPlausible": "It shares enough regional texture with countries with a baltic sea coast to be tempting.",
+          "whyWrong": "The highlighted set is defined by border or coastline geography, not by countries on the north sea."
+        }
+      ]
+    },
+    {
+      "id": "adriatic-sea-coast",
+      "displayAnswer": "Countries with an Adriatic Sea coast",
+      "family": "borders",
+      "includedIso3": [
+        "ALB",
+        "BIH",
+        "HRV",
+        "ITA",
+        "MNE",
+        "SVN"
+      ],
+      "counterexampleIso3": [
+        "GRC",
+        "AUT",
+        "HUN"
+      ],
+      "difficulty": "standard",
+      "eligibility": "practice",
+      "sources": [
+        "natural-earth-admin0-110m",
+        "cia-world-factbook"
+      ],
+      "explanation": "The highlighted set follows the Adriatic shoreline on the Italian and Balkan sides.",
+      "decoys": [
+        {
+          "displayAnswer": "Balkan countries",
+          "whyPlausible": "It shares enough regional texture with countries with an adriatic sea coast to be tempting.",
+          "whyWrong": "The highlighted set is defined by border or coastline geography, not by balkan countries."
+        },
+        {
+          "displayAnswer": "Countries with a Mediterranean coast",
+          "whyPlausible": "It shares enough regional texture with countries with an adriatic sea coast to be tempting.",
+          "whyWrong": "The highlighted set is defined by border or coastline geography, not by countries with a mediterranean coast."
+        },
+        {
+          "displayAnswer": "Former Yugoslav republics",
+          "whyPlausible": "It shares enough regional texture with countries with an adriatic sea coast to be tempting.",
+          "whyWrong": "The highlighted set is defined by border or coastline geography, not by former yugoslav republics."
+        }
+      ]
+    },
+    {
+      "id": "south-american-states-bordering-brazil",
+      "displayAnswer": "South American countries bordering Brazil",
+      "family": "borders",
+      "includedIso3": [
+        "ARG",
+        "BOL",
+        "COL",
+        "GUY",
+        "PRY",
+        "PER",
+        "SUR",
+        "URY",
+        "VEN"
+      ],
+      "counterexampleIso3": [
+        "CHL",
+        "ECU",
+        "PAN"
+      ],
+      "difficulty": "standard",
+      "eligibility": "daily",
+      "sources": [
+        "natural-earth-admin0-110m",
+        "cia-world-factbook"
+      ],
+      "explanation": "Brazil touches nearly every South American neighbor except Chile and Ecuador, creating a distinctive ring around it.",
+      "decoys": [
+        {
+          "displayAnswer": "Amazon Basin countries",
+          "whyPlausible": "It shares enough regional texture with south american countries bordering brazil to be tempting.",
+          "whyWrong": "The highlighted set is defined by border or coastline geography, not by amazon basin countries."
+        },
+        {
+          "displayAnswer": "MERCOSUR member countries",
+          "whyPlausible": "It shares enough regional texture with south american countries bordering brazil to be tempting.",
+          "whyWrong": "The highlighted set is defined by border or coastline geography, not by mercosur member countries."
+        },
+        {
+          "displayAnswer": "Countries with an Atlantic coast in South America",
+          "whyPlausible": "It shares enough regional texture with south american countries bordering brazil to be tempting.",
+          "whyWrong": "The highlighted set is defined by border or coastline geography, not by countries with an atlantic coast in south america."
+        }
+      ]
+    },
+    {
+      "id": "countries-bordering-russia",
+      "displayAnswer": "Countries sharing a land border with Russia",
+      "family": "borders",
+      "includedIso3": [
+        "AZE",
+        "BLR",
+        "CHN",
+        "EST",
+        "FIN",
+        "GEO",
+        "KAZ",
+        "PRK",
+        "LVA",
+        "LTU",
+        "MNG",
+        "NOR",
+        "POL",
+        "UKR"
+      ],
+      "counterexampleIso3": [
+        "SWE",
+        "ROU",
+        "JPN"
+      ],
+      "difficulty": "expert",
+      "eligibility": "practice",
+      "sources": [
+        "natural-earth-admin0-110m",
+        "cia-world-factbook"
+      ],
+      "explanation": "The highlighted countries share a land border with Russia, including short borders at Kaliningrad and the Caucasus.",
+      "decoys": [
+        {
+          "displayAnswer": "Former Soviet republics",
+          "whyPlausible": "It shares enough regional texture with countries sharing a land border with russia to be tempting.",
+          "whyWrong": "The highlighted set is defined by border or coastline geography, not by former soviet republics."
+        },
+        {
+          "displayAnswer": "Countries on the Baltic Sea",
+          "whyPlausible": "It shares enough regional texture with countries sharing a land border with russia to be tempting.",
+          "whyWrong": "The highlighted set is defined by border or coastline geography, not by countries on the baltic sea."
+        },
+        {
+          "displayAnswer": "NATO member countries bordering Russia",
+          "whyPlausible": "It shares enough regional texture with countries sharing a land border with russia to be tempting.",
+          "whyWrong": "The highlighted set is defined by border or coastline geography, not by nato member countries bordering russia."
+        }
+      ],
+      "dateVintage": "Land-border reference reviewed 2026-07-03"
+    },
+    {
+      "id": "countries-bordering-india",
+      "displayAnswer": "Countries sharing a land border with India",
+      "family": "borders",
+      "includedIso3": [
+        "BGD",
+        "BTN",
+        "CHN",
+        "MMR",
+        "NPL",
+        "PAK"
+      ],
+      "counterexampleIso3": [
+        "AFG",
+        "LKA",
+        "THA"
+      ],
+      "difficulty": "standard",
+      "eligibility": "practice",
+      "sources": [
+        "natural-earth-admin0-110m",
+        "cia-world-factbook"
+      ],
+      "explanation": "The highlighted countries are India’s mapped land neighbors; Afghanistan is intentionally excluded because the recognized mapped border set here does not use the disputed claim.",
+      "decoys": [
+        {
+          "displayAnswer": "SAARC member countries",
+          "whyPlausible": "It shares enough regional texture with countries sharing a land border with india to be tempting.",
+          "whyWrong": "The highlighted set is defined by border or coastline geography, not by saarc member countries."
+        },
+        {
+          "displayAnswer": "Countries in the Himalayas",
+          "whyPlausible": "It shares enough regional texture with countries sharing a land border with india to be tempting.",
+          "whyWrong": "The highlighted set is defined by border or coastline geography, not by countries in the himalayas."
+        },
+        {
+          "displayAnswer": "Countries bordering the Bay of Bengal",
+          "whyPlausible": "It shares enough regional texture with countries sharing a land border with india to be tempting.",
+          "whyWrong": "The highlighted set is defined by border or coastline geography, not by countries bordering the bay of bengal."
+        }
+      ],
+      "dateVintage": "Land-border reference reviewed 2026-07-03"
+    },
+    {
+      "id": "landlocked-africa",
+      "displayAnswer": "Landlocked countries in Africa",
+      "family": "borders",
+      "includedIso3": [
+        "BWA",
+        "BFA",
+        "BDI",
+        "CAF",
+        "TCD",
+        "ETH",
+        "LSO",
+        "MWI",
+        "MLI",
+        "NER",
+        "RWA",
+        "SSD",
+        "SWZ",
+        "UGA",
+        "ZMB",
+        "ZWE"
+      ],
+      "counterexampleIso3": [
+        "KEN",
+        "GHA",
+        "MOZ"
+      ],
+      "difficulty": "standard",
+      "eligibility": "daily",
+      "sources": [
+        "natural-earth-admin0-110m",
+        "cia-world-factbook"
+      ],
+      "explanation": "The highlighted African countries do not have a coastline, including the enclaved states Lesotho and Eswatini.",
+      "decoys": [
+        {
+          "displayAnswer": "Countries in the Sahel",
+          "whyPlausible": "It shares enough regional texture with landlocked countries in africa to be tempting.",
+          "whyWrong": "The highlighted set is defined by border or coastline geography, not by countries in the sahel."
+        },
+        {
+          "displayAnswer": "Countries using the CFA franc",
+          "whyPlausible": "It shares enough regional texture with landlocked countries in africa to be tempting.",
+          "whyWrong": "The highlighted set is defined by border or coastline geography, not by countries using the cfa franc."
+        },
+        {
+          "displayAnswer": "African Union founding members",
+          "whyPlausible": "It shares enough regional texture with landlocked countries in africa to be tempting.",
+          "whyWrong": "The highlighted set is defined by border or coastline geography, not by african union founding members."
+        }
+      ]
+    },
+    {
+      "id": "americas-pacific-atlantic-coasts",
+      "displayAnswer": "Countries in the Americas with both Pacific and Atlantic or Caribbean coasts",
+      "family": "borders",
+      "includedIso3": [
+        "CAN",
+        "COL",
+        "CRI",
+        "GTM",
+        "HND",
+        "MEX",
+        "NIC",
+        "PAN",
+        "USA"
+      ],
+      "counterexampleIso3": [
+        "BLZ",
+        "SLV",
+        "CHL"
+      ],
+      "difficulty": "expert",
+      "eligibility": "practice",
+      "sources": [
+        "natural-earth-admin0-110m",
+        "cia-world-factbook"
+      ],
+      "explanation": "These mapped American countries have coastlines on the Pacific and also on the Atlantic side or Caribbean Sea.",
+      "decoys": [
+        {
+          "displayAnswer": "Countries crossed by the Tropic of Cancer",
+          "whyPlausible": "It shares enough regional texture with countries in the americas with both pacific and atlantic or caribbean coasts to be tempting.",
+          "whyWrong": "The highlighted set is defined by border or coastline geography, not by countries crossed by the tropic of cancer."
+        },
+        {
+          "displayAnswer": "Countries in North America",
+          "whyPlausible": "It shares enough regional texture with countries in the americas with both pacific and atlantic or caribbean coasts to be tempting.",
+          "whyWrong": "The highlighted set is defined by border or coastline geography, not by countries in north america."
+        },
+        {
+          "displayAnswer": "Countries bordering the Caribbean Sea",
+          "whyPlausible": "It shares enough regional texture with countries in the americas with both pacific and atlantic or caribbean coasts to be tempting.",
+          "whyWrong": "The highlighted set is defined by border or coastline geography, not by countries bordering the caribbean sea."
+        }
+      ]
+    },
+    {
+      "id": "countries-bordering-south-africa",
+      "displayAnswer": "Countries sharing a land border with South Africa",
+      "family": "borders",
+      "includedIso3": [
+        "BWA",
+        "LSO",
+        "MOZ",
+        "NAM",
+        "SWZ",
+        "ZWE"
+      ],
+      "counterexampleIso3": [
+        "ZMB",
+        "AGO",
+        "MDG"
+      ],
+      "difficulty": "intro",
+      "eligibility": "sample",
+      "sources": [
+        "natural-earth-admin0-110m",
+        "cia-world-factbook"
+      ],
+      "explanation": "The highlighted countries are South Africa’s land neighbors, including Lesotho, which is completely surrounded by South Africa.",
+      "decoys": [
+        {
+          "displayAnswer": "SADC member countries",
+          "whyPlausible": "It shares enough regional texture with countries sharing a land border with south africa to be tempting.",
+          "whyWrong": "The highlighted set is defined by border or coastline geography, not by sadc member countries."
+        },
+        {
+          "displayAnswer": "Landlocked countries in Africa",
+          "whyPlausible": "It shares enough regional texture with countries sharing a land border with south africa to be tempting.",
+          "whyWrong": "The highlighted set is defined by border or coastline geography, not by landlocked countries in africa."
+        },
+        {
+          "displayAnswer": "Countries using the rand",
+          "whyPlausible": "It shares enough regional texture with countries sharing a land border with south africa to be tempting.",
+          "whyWrong": "The highlighted set is defined by border or coastline geography, not by countries using the rand."
+        }
+      ]
+    },
+    {
+      "id": "prime-meridian-crossed",
+      "displayAnswer": "Countries crossed by the Prime Meridian",
+      "family": "physical_geography",
+      "includedIso3": [
+        "GBR",
+        "FRA",
+        "ESP",
+        "DZA",
+        "MLI",
+        "BFA",
+        "GHA",
+        "TGO"
+      ],
+      "counterexampleIso3": [
+        "PRT",
+        "MAR",
+        "BEN"
+      ],
+      "difficulty": "standard",
+      "eligibility": "daily",
+      "sources": [
+        "natural-earth-admin0-110m",
+        "cia-world-factbook"
+      ],
+      "explanation": "The highlighted countries are crossed by 0 degrees longitude, from Greenwich through western Europe and West Africa.",
+      "decoys": [
+        {
+          "displayAnswer": "Countries crossed by the Equator",
+          "whyPlausible": "It shares enough regional texture with countries crossed by the prime meridian to be tempting.",
+          "whyWrong": "The highlighted set is defined by physical geography, not by countries crossed by the equator."
+        },
+        {
+          "displayAnswer": "Countries with an Atlantic coast",
+          "whyPlausible": "It shares enough regional texture with countries crossed by the prime meridian to be tempting.",
+          "whyWrong": "The highlighted set is defined by physical geography, not by countries with an atlantic coast."
+        },
+        {
+          "displayAnswer": "Francophone African countries",
+          "whyPlausible": "It shares enough regional texture with countries crossed by the prime meridian to be tempting.",
+          "whyWrong": "The highlighted set is defined by physical geography, not by francophone african countries."
+        }
+      ]
+    },
+    {
+      "id": "mapped-alps-countries",
+      "displayAnswer": "Mapped countries that contain part of the Alps",
+      "family": "physical_geography",
+      "includedIso3": [
+        "AUT",
+        "FRA",
+        "DEU",
+        "ITA",
+        "SVN",
+        "CHE"
+      ],
+      "counterexampleIso3": [
+        "CZE",
+        "HRV",
+        "HUN"
+      ],
+      "difficulty": "standard",
+      "eligibility": "practice",
+      "sources": [
+        "natural-earth-admin0-110m",
+        "cia-world-factbook"
+      ],
+      "explanation": "These mapped countries include Alpine terrain, making a compact central-European mountain pattern.",
+      "decoys": [
+        {
+          "displayAnswer": "Countries with a Danube River section",
+          "whyPlausible": "It shares enough regional texture with mapped countries that contain part of the alps to be tempting.",
+          "whyWrong": "The highlighted set is defined by physical geography, not by countries with a danube river section."
+        },
+        {
+          "displayAnswer": "Euro area countries",
+          "whyPlausible": "It shares enough regional texture with mapped countries that contain part of the alps to be tempting.",
+          "whyWrong": "The highlighted set is defined by physical geography, not by euro area countries."
+        },
+        {
+          "displayAnswer": "Countries bordering Switzerland",
+          "whyPlausible": "It shares enough regional texture with mapped countries that contain part of the alps to be tempting.",
+          "whyWrong": "The highlighted set is defined by physical geography, not by countries bordering switzerland."
+        }
+      ],
+      "scopeNote": "Liechtenstein is not present in the current mapped-country registry and is omitted."
+    },
+    {
+      "id": "carpathian-countries",
+      "displayAnswer": "Countries that contain part of the Carpathian Mountains",
+      "family": "physical_geography",
+      "includedIso3": [
+        "AUT",
+        "CZE",
+        "HUN",
+        "POL",
+        "ROU",
+        "SRB",
+        "SVK",
+        "UKR"
+      ],
+      "counterexampleIso3": [
+        "BGR",
+        "DEU",
+        "LTU"
+      ],
+      "difficulty": "expert",
+      "eligibility": "practice",
+      "sources": [
+        "natural-earth-admin0-110m",
+        "cia-world-factbook"
+      ],
+      "explanation": "The highlighted set follows the Carpathian arc through Central and Eastern Europe.",
+      "decoys": [
+        {
+          "displayAnswer": "Countries with a Danube River section",
+          "whyPlausible": "It shares enough regional texture with countries that contain part of the carpathian mountains to be tempting.",
+          "whyWrong": "The highlighted set is defined by physical geography, not by countries with a danube river section."
+        },
+        {
+          "displayAnswer": "Countries bordering Ukraine",
+          "whyPlausible": "It shares enough regional texture with countries that contain part of the carpathian mountains to be tempting.",
+          "whyWrong": "The highlighted set is defined by physical geography, not by countries bordering ukraine."
+        },
+        {
+          "displayAnswer": "Former Warsaw Pact countries",
+          "whyPlausible": "It shares enough regional texture with countries that contain part of the carpathian mountains to be tempting.",
+          "whyWrong": "The highlighted set is defined by physical geography, not by former warsaw pact countries."
+        }
+      ]
+    },
+    {
+      "id": "danube-river-countries",
+      "displayAnswer": "Countries with the Danube River flowing through or along them",
+      "family": "physical_geography",
+      "includedIso3": [
+        "DEU",
+        "AUT",
+        "SVK",
+        "HUN",
+        "HRV",
+        "SRB",
+        "ROU",
+        "BGR",
+        "MDA",
+        "UKR"
+      ],
+      "counterexampleIso3": [
+        "CZE",
+        "POL",
+        "SVN"
+      ],
+      "difficulty": "standard",
+      "eligibility": "daily",
+      "sources": [
+        "icpdr-danube-countries",
+        "natural-earth-admin0-110m"
+      ],
+      "explanation": "The highlighted countries are touched by the Danube’s main course, including border stretches in southeastern Europe.",
+      "decoys": [
+        {
+          "displayAnswer": "Carpathian Mountain countries",
+          "whyPlausible": "It shares enough regional texture with countries with the danube river flowing through or along them to be tempting.",
+          "whyWrong": "The highlighted set is defined by physical geography, not by carpathian mountain countries."
+        },
+        {
+          "displayAnswer": "Black Sea countries",
+          "whyPlausible": "It shares enough regional texture with countries with the danube river flowing through or along them to be tempting.",
+          "whyWrong": "The highlighted set is defined by physical geography, not by black sea countries."
+        },
+        {
+          "displayAnswer": "European Union member countries",
+          "whyPlausible": "It shares enough regional texture with countries with the danube river flowing through or along them to be tempting.",
+          "whyWrong": "The highlighted set is defined by physical geography, not by european union member countries."
+        }
+      ]
+    },
+    {
+      "id": "congo-basin-rainforest-countries",
+      "displayAnswer": "Countries in the Congo Basin rainforest core",
+      "family": "physical_geography",
+      "includedIso3": [
+        "CMR",
+        "CAF",
+        "COG",
+        "COD",
+        "GNQ",
+        "GAB"
+      ],
+      "counterexampleIso3": [
+        "NGA",
+        "KEN",
+        "ZAF"
+      ],
+      "difficulty": "standard",
+      "eligibility": "practice",
+      "sources": [
+        "natural-earth-admin0-110m",
+        "cia-world-factbook"
+      ],
+      "explanation": "The highlighted countries form the central African rainforest core commonly associated with the Congo Basin.",
+      "decoys": [
+        {
+          "displayAnswer": "CEMAC member countries",
+          "whyPlausible": "It shares enough regional texture with countries in the congo basin rainforest core to be tempting.",
+          "whyWrong": "The highlighted set is defined by physical geography, not by cemac member countries."
+        },
+        {
+          "displayAnswer": "French-official Central African countries",
+          "whyPlausible": "It shares enough regional texture with countries in the congo basin rainforest core to be tempting.",
+          "whyWrong": "The highlighted set is defined by physical geography, not by french-official central african countries."
+        },
+        {
+          "displayAnswer": "Countries on the Equator",
+          "whyPlausible": "It shares enough regional texture with countries in the congo basin rainforest core to be tempting.",
+          "whyWrong": "The highlighted set is defined by physical geography, not by countries on the equator."
+        }
+      ]
+    },
+    {
+      "id": "core-horn-of-africa",
+      "displayAnswer": "Core Horn of Africa countries",
+      "family": "physical_geography",
+      "includedIso3": [
+        "DJI",
+        "ERI",
+        "ETH",
+        "SOM"
+      ],
+      "counterexampleIso3": [
+        "KEN",
+        "SDN",
+        "YEM"
+      ],
+      "difficulty": "intro",
+      "eligibility": "practice",
+      "sources": [
+        "natural-earth-admin0-110m",
+        "cia-world-factbook"
+      ],
+      "explanation": "The highlighted countries form the commonly recognized core Horn of Africa grouping.",
+      "decoys": [
+        {
+          "displayAnswer": "Countries with a Red Sea coast",
+          "whyPlausible": "It shares enough regional texture with core horn of africa countries to be tempting.",
+          "whyWrong": "The highlighted set is defined by physical geography, not by countries with a red sea coast."
+        },
+        {
+          "displayAnswer": "East African Community partner states",
+          "whyPlausible": "It shares enough regional texture with core horn of africa countries to be tempting.",
+          "whyWrong": "The highlighted set is defined by physical geography, not by east african community partner states."
+        },
+        {
+          "displayAnswer": "Arabic-official countries in Africa",
+          "whyPlausible": "It shares enough regional texture with core horn of africa countries to be tempting.",
+          "whyWrong": "The highlighted set is defined by physical geography, not by arabic-official countries in africa."
+        }
+      ],
+      "allowSmallHighlightSet": true
+    },
+    {
+      "id": "mapped-caribbean-island-countries",
+      "displayAnswer": "Mapped island countries in the Caribbean",
+      "family": "physical_geography",
+      "includedIso3": [
+        "BHS",
+        "CUB",
+        "DOM",
+        "HTI",
+        "JAM",
+        "TTO"
+      ],
+      "counterexampleIso3": [
+        "BLZ",
+        "GUY",
+        "SUR"
+      ],
+      "difficulty": "standard",
+      "eligibility": "practice",
+      "sources": [
+        "natural-earth-admin0-110m",
+        "cia-world-factbook"
+      ],
+      "explanation": "The highlighted mapped countries are sovereign island states in the Caribbean region.",
+      "decoys": [
+        {
+          "displayAnswer": "CARICOM member countries",
+          "whyPlausible": "It shares enough regional texture with mapped island countries in the caribbean to be tempting.",
+          "whyWrong": "The highlighted set is defined by physical geography, not by caricom member countries."
+        },
+        {
+          "displayAnswer": "English-official Caribbean countries",
+          "whyPlausible": "It shares enough regional texture with mapped island countries in the caribbean to be tempting.",
+          "whyWrong": "The highlighted set is defined by physical geography, not by english-official caribbean countries."
+        },
+        {
+          "displayAnswer": "Countries using the dollar in the Caribbean",
+          "whyPlausible": "It shares enough regional texture with mapped island countries in the caribbean to be tempting.",
+          "whyWrong": "The highlighted set is defined by physical geography, not by countries using the dollar in the caribbean."
+        }
+      ],
+      "scopeNote": "Many smaller Caribbean island countries are not present in the current mapped-country registry and are omitted."
+    },
+    {
+      "id": "himalayas-countries",
+      "displayAnswer": "Countries containing part of the Himalayas",
+      "family": "physical_geography",
+      "includedIso3": [
+        "BTN",
+        "CHN",
+        "IND",
+        "NPL",
+        "PAK"
+      ],
+      "counterexampleIso3": [
+        "AFG",
+        "BGD",
+        "MMR"
+      ],
+      "difficulty": "standard",
+      "eligibility": "daily",
+      "sources": [
+        "natural-earth-admin0-110m",
+        "cia-world-factbook"
+      ],
+      "explanation": "The highlighted countries share the Himalayan mountain system across South and East Asia.",
+      "decoys": [
+        {
+          "displayAnswer": "Countries bordering India",
+          "whyPlausible": "It shares enough regional texture with countries containing part of the himalayas to be tempting.",
+          "whyWrong": "The highlighted set is defined by physical geography, not by countries bordering india."
+        },
+        {
+          "displayAnswer": "SAARC member countries",
+          "whyPlausible": "It shares enough regional texture with countries containing part of the himalayas to be tempting.",
+          "whyWrong": "The highlighted set is defined by physical geography, not by saarc member countries."
+        },
+        {
+          "displayAnswer": "Countries crossed by the Tropic of Cancer",
+          "whyPlausible": "It shares enough regional texture with countries containing part of the himalayas to be tempting.",
+          "whyWrong": "The highlighted set is defined by physical geography, not by countries crossed by the tropic of cancer."
+        }
+      ]
+    },
+    {
+      "id": "mapped-arabian-peninsula-countries",
+      "displayAnswer": "Mapped countries on the Arabian Peninsula",
+      "family": "physical_geography",
+      "includedIso3": [
+        "KWT",
+        "OMN",
+        "QAT",
+        "SAU",
+        "ARE",
+        "YEM"
+      ],
+      "counterexampleIso3": [
+        "IRQ",
+        "JOR",
+        "EGY"
+      ],
+      "difficulty": "intro",
+      "eligibility": "practice",
+      "sources": [
+        "natural-earth-admin0-110m",
+        "cia-world-factbook"
+      ],
+      "explanation": "The highlighted mapped countries sit on the Arabian Peninsula, spanning the Gulf, Red Sea, and Arabian Sea sides.",
+      "decoys": [
+        {
+          "displayAnswer": "Gulf Cooperation Council member countries",
+          "whyPlausible": "It shares enough regional texture with mapped countries on the arabian peninsula to be tempting.",
+          "whyWrong": "The highlighted set is defined by physical geography, not by gulf cooperation council member countries."
+        },
+        {
+          "displayAnswer": "Countries with a Red Sea coast",
+          "whyPlausible": "It shares enough regional texture with mapped countries on the arabian peninsula to be tempting.",
+          "whyWrong": "The highlighted set is defined by physical geography, not by countries with a red sea coast."
+        },
+        {
+          "displayAnswer": "Arabic-official countries in Asia",
+          "whyPlausible": "It shares enough regional texture with mapped countries on the arabian peninsula to be tempting.",
+          "whyWrong": "The highlighted set is defined by physical geography, not by arabic-official countries in asia."
+        }
+      ],
+      "scopeNote": "Bahrain is not present in the current mapped-country registry and is omitted."
+    },
+    {
+      "id": "nato-members",
+      "displayAnswer": "NATO member countries",
+      "family": "organizations",
+      "includedIso3": [
+        "ALB",
+        "BEL",
+        "BGR",
+        "CAN",
+        "HRV",
+        "CZE",
+        "DNK",
+        "EST",
+        "FIN",
+        "FRA",
+        "DEU",
+        "GRC",
+        "HUN",
+        "ISL",
+        "ITA",
+        "LVA",
+        "LTU",
+        "LUX",
+        "MNE",
+        "NLD",
+        "MKD",
+        "NOR",
+        "POL",
+        "PRT",
+        "ROU",
+        "SVK",
+        "SVN",
+        "ESP",
+        "SWE",
+        "TUR",
+        "GBR",
+        "USA"
+      ],
+      "counterexampleIso3": [
+        "IRL",
+        "AUT",
+        "UKR"
+      ],
+      "difficulty": "expert",
+      "eligibility": "practice",
+      "sources": [
+        "nato-member-countries",
+        "natural-earth-admin0-110m"
+      ],
+      "explanation": "The highlighted countries are NATO members as listed by NATO, including recent northern enlargement.",
+      "decoys": [
+        {
+          "displayAnswer": "European Union member countries",
+          "whyPlausible": "It shares enough regional texture with nato member countries to be tempting.",
+          "whyWrong": "The highlighted set is defined by organization membership, not by european union member countries."
+        },
+        {
+          "displayAnswer": "OECD member countries",
+          "whyPlausible": "It shares enough regional texture with nato member countries to be tempting.",
+          "whyWrong": "The highlighted set is defined by organization membership, not by oecd member countries."
+        },
+        {
+          "displayAnswer": "Countries bordering Russia",
+          "whyPlausible": "It shares enough regional texture with nato member countries to be tempting.",
+          "whyWrong": "The highlighted set is defined by organization membership, not by countries bordering russia."
+        }
+      ],
+      "dateVintage": "NATO membership page reviewed 2026-07-03"
+    },
+    {
+      "id": "oecd-members",
+      "displayAnswer": "OECD member countries",
+      "family": "organizations",
+      "includedIso3": [
+        "AUS",
+        "AUT",
+        "BEL",
+        "CAN",
+        "CHL",
+        "COL",
+        "CRI",
+        "CZE",
+        "DNK",
+        "EST",
+        "FIN",
+        "FRA",
+        "DEU",
+        "GRC",
+        "HUN",
+        "ISL",
+        "IRL",
+        "ISR",
+        "ITA",
+        "JPN",
+        "KOR",
+        "LVA",
+        "LTU",
+        "LUX",
+        "MEX",
+        "NLD",
+        "NZL",
+        "NOR",
+        "POL",
+        "PRT",
+        "SVK",
+        "SVN",
+        "ESP",
+        "SWE",
+        "CHE",
+        "TUR",
+        "GBR",
+        "USA"
+      ],
+      "counterexampleIso3": [
+        "BRA",
+        "ARG",
+        "CHN"
+      ],
+      "difficulty": "expert",
+      "eligibility": "practice",
+      "sources": [
+        "oecd-members",
+        "natural-earth-admin0-110m"
+      ],
+      "explanation": "The highlighted countries are current OECD members in the mapped registry.",
+      "decoys": [
+        {
+          "displayAnswer": "NATO member countries",
+          "whyPlausible": "It shares enough regional texture with oecd member countries to be tempting.",
+          "whyWrong": "The highlighted set is defined by organization membership, not by nato member countries."
+        },
+        {
+          "displayAnswer": "European Union member countries",
+          "whyPlausible": "It shares enough regional texture with oecd member countries to be tempting.",
+          "whyWrong": "The highlighted set is defined by organization membership, not by european union member countries."
+        },
+        {
+          "displayAnswer": "G7 member countries",
+          "whyPlausible": "It shares enough regional texture with oecd member countries to be tempting.",
+          "whyWrong": "The highlighted set is defined by organization membership, not by g7 member countries."
+        }
+      ],
+      "dateVintage": "OECD members page reviewed 2026-07-03"
+    },
+    {
+      "id": "mapped-saarc-members",
+      "displayAnswer": "Mapped SAARC member states",
+      "family": "organizations",
+      "includedIso3": [
+        "AFG",
+        "BGD",
+        "BTN",
+        "IND",
+        "NPL",
+        "PAK",
+        "LKA"
+      ],
+      "counterexampleIso3": [
+        "MMR",
+        "IRN",
+        "THA"
+      ],
+      "difficulty": "standard",
+      "eligibility": "daily",
+      "sources": [
+        "saarc-member-states",
+        "natural-earth-admin0-110m"
+      ],
+      "explanation": "The highlighted mapped countries are South Asian Association for Regional Cooperation member states.",
+      "decoys": [
+        {
+          "displayAnswer": "Countries bordering India",
+          "whyPlausible": "It shares enough regional texture with mapped saarc member states to be tempting.",
+          "whyWrong": "The highlighted set is defined by organization membership, not by countries bordering india."
+        },
+        {
+          "displayAnswer": "Countries containing part of the Himalayas",
+          "whyPlausible": "It shares enough regional texture with mapped saarc member states to be tempting.",
+          "whyWrong": "The highlighted set is defined by organization membership, not by countries containing part of the himalayas."
+        },
+        {
+          "displayAnswer": "Bay of Bengal countries",
+          "whyPlausible": "It shares enough regional texture with mapped saarc member states to be tempting.",
+          "whyWrong": "The highlighted set is defined by organization membership, not by bay of bengal countries."
+        }
+      ],
+      "dateVintage": "SAARC member states page reviewed 2026-07-03",
+      "scopeNote": "Maldives is not present in the current mapped-country registry and is omitted."
+    },
+    {
+      "id": "eac-partner-states",
+      "displayAnswer": "East African Community partner states",
+      "family": "organizations",
+      "includedIso3": [
+        "BDI",
+        "COD",
+        "KEN",
+        "RWA",
+        "SOM",
+        "SSD",
+        "TZA",
+        "UGA"
+      ],
+      "counterexampleIso3": [
+        "ETH",
+        "ZMB",
+        "MOZ"
+      ],
+      "difficulty": "standard",
+      "eligibility": "daily",
+      "sources": [
+        "eac-partner-states",
+        "natural-earth-admin0-110m"
+      ],
+      "explanation": "The highlighted countries are EAC partner states, including recent additions in the Horn and central Africa.",
+      "decoys": [
+        {
+          "displayAnswer": "Core Horn of Africa countries",
+          "whyPlausible": "It shares enough regional texture with east african community partner states to be tempting.",
+          "whyWrong": "The highlighted set is defined by organization membership, not by core horn of africa countries."
+        },
+        {
+          "displayAnswer": "Countries crossed by the Equator",
+          "whyPlausible": "It shares enough regional texture with east african community partner states to be tempting.",
+          "whyWrong": "The highlighted set is defined by organization membership, not by countries crossed by the equator."
+        },
+        {
+          "displayAnswer": "Commonwealth countries in East Africa",
+          "whyPlausible": "It shares enough regional texture with east african community partner states to be tempting.",
+          "whyWrong": "The highlighted set is defined by organization membership, not by commonwealth countries in east africa."
+        }
+      ],
+      "dateVintage": "EAC partner states page reviewed 2026-07-03"
+    },
+    {
+      "id": "mapped-sadc-members",
+      "displayAnswer": "Mapped SADC member states",
+      "family": "organizations",
+      "includedIso3": [
+        "AGO",
+        "BWA",
+        "COD",
+        "SWZ",
+        "LSO",
+        "MDG",
+        "MWI",
+        "MOZ",
+        "NAM",
+        "ZAF",
+        "TZA",
+        "ZMB",
+        "ZWE"
+      ],
+      "counterexampleIso3": [
+        "KEN",
+        "UGA",
+        "ETH"
+      ],
+      "difficulty": "standard",
+      "eligibility": "practice",
+      "sources": [
+        "sadc-member-states",
+        "natural-earth-admin0-110m"
+      ],
+      "explanation": "The highlighted mapped countries are members of the Southern African Development Community.",
+      "decoys": [
+        {
+          "displayAnswer": "Countries bordering South Africa",
+          "whyPlausible": "It shares enough regional texture with mapped sadc member states to be tempting.",
+          "whyWrong": "The highlighted set is defined by organization membership, not by countries bordering south africa."
+        },
+        {
+          "displayAnswer": "Landlocked countries in Africa",
+          "whyPlausible": "It shares enough regional texture with mapped sadc member states to be tempting.",
+          "whyWrong": "The highlighted set is defined by organization membership, not by landlocked countries in africa."
+        },
+        {
+          "displayAnswer": "Countries using the rand",
+          "whyPlausible": "It shares enough regional texture with mapped sadc member states to be tempting.",
+          "whyWrong": "The highlighted set is defined by organization membership, not by countries using the rand."
+        }
+      ],
+      "dateVintage": "SADC member states page reviewed 2026-07-03",
+      "scopeNote": "Comoros, Mauritius, and Seychelles are not present in the current mapped-country registry and are omitted."
+    },
+    {
+      "id": "mapped-caricom-members",
+      "displayAnswer": "Mapped CARICOM member states",
+      "family": "organizations",
+      "includedIso3": [
+        "BHS",
+        "BLZ",
+        "GUY",
+        "HTI",
+        "JAM",
+        "SUR",
+        "TTO"
+      ],
+      "counterexampleIso3": [
+        "CUB",
+        "DOM",
+        "MEX"
+      ],
+      "difficulty": "expert",
+      "eligibility": "practice",
+      "sources": [
+        "caricom-member-states",
+        "natural-earth-admin0-110m"
+      ],
+      "explanation": "The highlighted mapped countries are CARICOM member states, spanning island and mainland Caribbean communities.",
+      "decoys": [
+        {
+          "displayAnswer": "English-official Caribbean countries",
+          "whyPlausible": "It shares enough regional texture with mapped caricom member states to be tempting.",
+          "whyWrong": "The highlighted set is defined by organization membership, not by english-official caribbean countries."
+        },
+        {
+          "displayAnswer": "Mapped island countries in the Caribbean",
+          "whyPlausible": "It shares enough regional texture with mapped caricom member states to be tempting.",
+          "whyWrong": "The highlighted set is defined by organization membership, not by mapped island countries in the caribbean."
+        },
+        {
+          "displayAnswer": "Countries with a Caribbean Sea coast",
+          "whyPlausible": "It shares enough regional texture with mapped caricom member states to be tempting.",
+          "whyWrong": "The highlighted set is defined by organization membership, not by countries with a caribbean sea coast."
+        }
+      ],
+      "dateVintage": "CARICOM member states page reviewed 2026-07-03",
+      "scopeNote": "Several smaller CARICOM member states are not present in the current mapped-country registry and are omitted."
+    },
+    {
+      "id": "mapped-schengen-area-members",
+      "displayAnswer": "Mapped Schengen Area member countries",
+      "family": "organizations",
+      "includedIso3": [
+        "AUT",
+        "BEL",
+        "BGR",
+        "HRV",
+        "CZE",
+        "DNK",
+        "EST",
+        "FIN",
+        "FRA",
+        "DEU",
+        "GRC",
+        "HUN",
+        "ISL",
+        "ITA",
+        "LVA",
+        "LTU",
+        "LUX",
+        "NLD",
+        "NOR",
+        "POL",
+        "PRT",
+        "ROU",
+        "SVK",
+        "SVN",
+        "ESP",
+        "SWE",
+        "CHE"
+      ],
+      "counterexampleIso3": [
+        "IRL",
+        "GBR",
+        "TUR"
+      ],
+      "difficulty": "expert",
+      "eligibility": "practice",
+      "sources": [
+        "european-commission-schengen-area",
+        "natural-earth-admin0-110m"
+      ],
+      "explanation": "The highlighted mapped countries participate in the Schengen Area, including non-EU participants Iceland, Norway, and Switzerland.",
+      "decoys": [
+        {
+          "displayAnswer": "European Union member countries",
+          "whyPlausible": "It shares enough regional texture with mapped schengen area member countries to be tempting.",
+          "whyWrong": "The highlighted set is defined by organization membership, not by european union member countries."
+        },
+        {
+          "displayAnswer": "Euro area countries",
+          "whyPlausible": "It shares enough regional texture with mapped schengen area member countries to be tempting.",
+          "whyWrong": "The highlighted set is defined by organization membership, not by euro area countries."
+        },
+        {
+          "displayAnswer": "NATO member countries",
+          "whyPlausible": "It shares enough regional texture with mapped schengen area member countries to be tempting.",
+          "whyWrong": "The highlighted set is defined by organization membership, not by nato member countries."
+        }
+      ],
+      "dateVintage": "European Commission Schengen Area page reviewed 2026-07-03",
+      "scopeNote": "Malta and Liechtenstein are not present in the current mapped-country registry and are omitted."
+    },
+    {
+      "id": "peso-currency-countries",
+      "displayAnswer": "Countries using a peso-named currency",
+      "family": "economy",
+      "includedIso3": [
+        "ARG",
+        "CHL",
+        "COL",
+        "CUB",
+        "DOM",
+        "MEX",
+        "PHL",
+        "URY"
+      ],
+      "counterexampleIso3": [
+        "BRA",
+        "PER",
+        "ESP"
+      ],
+      "difficulty": "standard",
+      "eligibility": "daily",
+      "sources": [
+        "natural-earth-admin0-110m",
+        "cia-world-factbook"
+      ],
+      "explanation": "The highlighted countries use a currency named peso, creating a Spanish-colonial and Philippine geography puzzle.",
+      "decoys": [
+        {
+          "displayAnswer": "Spanish-official countries",
+          "whyPlausible": "It shares enough regional texture with countries using a peso-named currency to be tempting.",
+          "whyWrong": "The highlighted set is defined by currency or economic geography, not by spanish-official countries."
+        },
+        {
+          "displayAnswer": "Pacific Alliance members",
+          "whyPlausible": "It shares enough regional texture with countries using a peso-named currency to be tempting.",
+          "whyWrong": "The highlighted set is defined by currency or economic geography, not by pacific alliance members."
+        },
+        {
+          "displayAnswer": "Countries using the US dollar",
+          "whyPlausible": "It shares enough regional texture with countries using a peso-named currency to be tempting.",
+          "whyWrong": "The highlighted set is defined by currency or economic geography, not by countries using the us dollar."
+        }
+      ],
+      "dateVintage": "Factbook currency entries reviewed 2026-07-03"
+    },
+    {
+      "id": "mapped-dinar-currency-countries",
+      "displayAnswer": "Mapped countries using a dinar-named currency",
+      "family": "economy",
+      "includedIso3": [
+        "DZA",
+        "IRQ",
+        "JOR",
+        "KWT",
+        "LBY",
+        "SRB",
+        "TUN"
+      ],
+      "counterexampleIso3": [
+        "MAR",
+        "EGY",
+        "HRV"
+      ],
+      "difficulty": "expert",
+      "eligibility": "practice",
+      "sources": [
+        "natural-earth-admin0-110m",
+        "cia-world-factbook"
+      ],
+      "explanation": "The highlighted mapped countries use dinar-named national currencies across North Africa, West Asia, and Serbia.",
+      "decoys": [
+        {
+          "displayAnswer": "Arabic-official countries",
+          "whyPlausible": "It shares enough regional texture with mapped countries using a dinar-named currency to be tempting.",
+          "whyWrong": "The highlighted set is defined by currency or economic geography, not by arabic-official countries."
+        },
+        {
+          "displayAnswer": "Countries with a Mediterranean coast",
+          "whyPlausible": "It shares enough regional texture with mapped countries using a dinar-named currency to be tempting.",
+          "whyWrong": "The highlighted set is defined by currency or economic geography, not by countries with a mediterranean coast."
+        },
+        {
+          "displayAnswer": "Former Yugoslav republics",
+          "whyPlausible": "It shares enough regional texture with mapped countries using a dinar-named currency to be tempting.",
+          "whyWrong": "The highlighted set is defined by currency or economic geography, not by former yugoslav republics."
+        }
+      ],
+      "dateVintage": "Factbook currency entries reviewed 2026-07-03",
+      "scopeNote": "Bahrain is not present in the current mapped-country registry and is omitted."
+    },
+    {
+      "id": "shilling-currency-countries",
+      "displayAnswer": "Countries using a shilling-named currency",
+      "family": "economy",
+      "includedIso3": [
+        "KEN",
+        "SOM",
+        "TZA",
+        "UGA"
+      ],
+      "counterexampleIso3": [
+        "RWA",
+        "ETH",
+        "ZMB"
+      ],
+      "difficulty": "standard",
+      "eligibility": "practice",
+      "sources": [
+        "natural-earth-admin0-110m",
+        "cia-world-factbook"
+      ],
+      "explanation": "Kenya, Somalia, Tanzania, and Uganda use shilling-named currencies, making a compact East African economic pattern.",
+      "decoys": [
+        {
+          "displayAnswer": "East African Community partner states",
+          "whyPlausible": "It shares enough regional texture with countries using a shilling-named currency to be tempting.",
+          "whyWrong": "The highlighted set is defined by currency or economic geography, not by east african community partner states."
+        },
+        {
+          "displayAnswer": "Core Horn of Africa countries",
+          "whyPlausible": "It shares enough regional texture with countries using a shilling-named currency to be tempting.",
+          "whyWrong": "The highlighted set is defined by currency or economic geography, not by core horn of africa countries."
+        },
+        {
+          "displayAnswer": "Countries crossed by the Equator",
+          "whyPlausible": "It shares enough regional texture with countries using a shilling-named currency to be tempting.",
+          "whyWrong": "The highlighted set is defined by currency or economic geography, not by countries crossed by the equator."
+        }
+      ],
+      "dateVintage": "Factbook currency entries reviewed 2026-07-03",
+      "allowSmallHighlightSet": true
+    },
+    {
+      "id": "mapped-rupee-currency-countries",
+      "displayAnswer": "Mapped countries using a rupee-named currency",
+      "family": "economy",
+      "includedIso3": [
+        "IND",
+        "NPL",
+        "PAK",
+        "LKA"
+      ],
+      "counterexampleIso3": [
+        "BGD",
+        "BTN",
+        "MMR"
+      ],
+      "difficulty": "standard",
+      "eligibility": "practice",
+      "sources": [
+        "natural-earth-admin0-110m",
+        "cia-world-factbook"
+      ],
+      "explanation": "The highlighted mapped countries use rupee-named currencies in South Asia and the Indian Ocean region.",
+      "decoys": [
+        {
+          "displayAnswer": "SAARC member states",
+          "whyPlausible": "It shares enough regional texture with mapped countries using a rupee-named currency to be tempting.",
+          "whyWrong": "The highlighted set is defined by currency or economic geography, not by saarc member states."
+        },
+        {
+          "displayAnswer": "Countries bordering India",
+          "whyPlausible": "It shares enough regional texture with mapped countries using a rupee-named currency to be tempting.",
+          "whyWrong": "The highlighted set is defined by currency or economic geography, not by countries bordering india."
+        },
+        {
+          "displayAnswer": "Countries containing part of the Himalayas",
+          "whyPlausible": "It shares enough regional texture with mapped countries using a rupee-named currency to be tempting.",
+          "whyWrong": "The highlighted set is defined by currency or economic geography, not by countries containing part of the himalayas."
+        }
+      ],
+      "dateVintage": "Factbook currency entries reviewed 2026-07-03",
+      "scopeNote": "Mauritius and Seychelles are not present in the current mapped-country registry and are omitted.",
+      "allowSmallHighlightSet": true
+    },
+    {
+      "id": "mapped-pacific-dollar-currency-countries",
+      "displayAnswer": "Mapped Pacific countries using a dollar-named currency",
+      "family": "economy",
+      "includedIso3": [
+        "AUS",
+        "FJI",
+        "NZL",
+        "SLB"
+      ],
+      "counterexampleIso3": [
+        "PNG",
+        "VUT",
+        "IDN"
+      ],
+      "difficulty": "expert",
+      "eligibility": "practice",
+      "sources": [
+        "natural-earth-admin0-110m",
+        "cia-world-factbook"
+      ],
+      "explanation": "The highlighted mapped Pacific countries use currencies named dollar, producing a sparse Oceania pattern.",
+      "decoys": [
+        {
+          "displayAnswer": "Commonwealth countries in Oceania",
+          "whyPlausible": "It shares enough regional texture with mapped pacific countries using a dollar-named currency to be tempting.",
+          "whyWrong": "The highlighted set is defined by currency or economic geography, not by commonwealth countries in oceania."
+        },
+        {
+          "displayAnswer": "Pacific island countries",
+          "whyPlausible": "It shares enough regional texture with mapped pacific countries using a dollar-named currency to be tempting.",
+          "whyWrong": "The highlighted set is defined by currency or economic geography, not by pacific island countries."
+        },
+        {
+          "displayAnswer": "Countries using the Australian dollar",
+          "whyPlausible": "It shares enough regional texture with mapped pacific countries using a dollar-named currency to be tempting.",
+          "whyWrong": "The highlighted set is defined by currency or economic geography, not by countries using the australian dollar."
+        }
+      ],
+      "dateVintage": "Factbook currency entries reviewed 2026-07-03",
+      "scopeNote": "Several Pacific small states using dollar-named currencies are not present in the current mapped-country registry and are omitted.",
+      "allowSmallHighlightSet": true
+    },
+    {
+      "id": "top-quartile-urban-population",
+      "displayAnswer": "Mapped countries in the top quartile for urban population share",
+      "family": "indicators",
+      "includedIso3": [
+        "KWT",
+        "QAT",
+        "NLD",
+        "URY",
+        "LUX",
+        "PRI",
+        "ISL",
+        "JOR",
+        "ARG",
+        "JPN",
+        "GAB",
+        "ISR",
+        "LBN",
+        "TUR",
+        "VEN",
+        "CHL",
+        "SWE",
+        "DNK",
+        "GRL",
+        "BRA",
+        "LBY",
+        "AUS",
+        "BEL",
+        "PSE",
+        "ARE",
+        "CHE",
+        "PER",
+        "SAU",
+        "NZL",
+        "NOR",
+        "GBR",
+        "CAN",
+        "DEU",
+        "BHS",
+        "KOR",
+        "ESP",
+        "USA",
+        "MEX",
+        "CRI",
+        "BLR",
+        "OMN",
+        "GRC",
+        "FRA"
+      ],
+      "counterexampleIso3": [
+        "IND",
+        "ETH",
+        "NPL"
+      ],
+      "difficulty": "expert",
+      "eligibility": "daily",
+      "sources": [
+        "world-bank-wdi"
+      ],
+      "explanation": "The highlighted countries have the highest mapped shares of people living in urban areas in the approved Mystery Map artifact.",
+      "decoys": [
+        {
+          "displayAnswer": "Mapped countries in the top quartile for internet users",
+          "whyPlausible": "It shares enough regional texture with mapped countries in the top quartile for urban population share to be tempting.",
+          "whyWrong": "The highlighted set is defined by the approved Mystery Map indicator artifact, not by mapped countries in the top quartile for internet users."
+        },
+        {
+          "displayAnswer": "Mapped countries in the top quartile for GDP per capita",
+          "whyPlausible": "It shares enough regional texture with mapped countries in the top quartile for urban population share to be tempting.",
+          "whyWrong": "The highlighted set is defined by the approved Mystery Map indicator artifact, not by mapped countries in the top quartile for gdp per capita."
+        },
+        {
+          "displayAnswer": "Mapped countries in the bottom quartile for fertility rate",
+          "whyPlausible": "It shares enough regional texture with mapped countries in the top quartile for urban population share to be tempting.",
+          "whyWrong": "The highlighted set is defined by the approved Mystery Map indicator artifact, not by mapped countries in the bottom quartile for fertility rate."
+        }
+      ],
+      "dateVintage": "2025",
+      "indicatorRef": {
+        "indicatorId": "urban-population",
+        "selection": "top_quartile",
+        "year": 2025
+      }
+    },
+    {
+      "id": "bottom-quartile-fertility-rate",
+      "displayAnswer": "Mapped countries in the bottom quartile for fertility rate",
+      "family": "indicators",
+      "includedIso3": [
+        "KOR",
+        "PRI",
+        "UKR",
+        "CHN",
+        "ESP",
+        "LTU",
+        "CHL",
+        "POL",
+        "JPN",
+        "EST",
+        "ITA",
+        "THA",
+        "ARE",
+        "BLR",
+        "GRC",
+        "LVA",
+        "CAN",
+        "FIN",
+        "LUX",
+        "CHE",
+        "AUT",
+        "CRI",
+        "ALB",
+        "JAM",
+        "CZE",
+        "DEU",
+        "BHS",
+        "CYP",
+        "ROU",
+        "URY",
+        "MKD",
+        "HUN",
+        "PRT",
+        "RUS",
+        "AZE",
+        "NLD",
+        "SWE",
+        "BEL",
+        "CUB",
+        "BTN",
+        "NOR",
+        "HRV",
+        "SVK"
+      ],
+      "counterexampleIso3": [
+        "NER",
+        "TCD",
+        "COD"
+      ],
+      "difficulty": "expert",
+      "eligibility": "daily",
+      "sources": [
+        "world-bank-wdi"
+      ],
+      "explanation": "The highlighted countries have the lowest mapped fertility rates in the approved Mystery Map artifact, a pattern concentrated in Europe and parts of East Asia.",
+      "decoys": [
+        {
+          "displayAnswer": "Mapped countries in the top quartile for older adults share",
+          "whyPlausible": "It shares enough regional texture with mapped countries in the bottom quartile for fertility rate to be tempting.",
+          "whyWrong": "The highlighted set is defined by the approved Mystery Map indicator artifact, not by mapped countries in the top quartile for older adults share."
+        },
+        {
+          "displayAnswer": "European Union member countries",
+          "whyPlausible": "It shares enough regional texture with mapped countries in the bottom quartile for fertility rate to be tempting.",
+          "whyWrong": "The highlighted set is defined by the approved Mystery Map indicator artifact, not by european union member countries."
+        },
+        {
+          "displayAnswer": "Mapped countries in the top quartile for internet users",
+          "whyPlausible": "It shares enough regional texture with mapped countries in the bottom quartile for fertility rate to be tempting.",
+          "whyWrong": "The highlighted set is defined by the approved Mystery Map indicator artifact, not by mapped countries in the top quartile for internet users."
+        }
+      ],
+      "dateVintage": "2024",
+      "indicatorRef": {
+        "indicatorId": "fertility-rate",
+        "selection": "bottom_quartile",
+        "year": 2024
+      }
+    },
+    {
+      "id": "top-quartile-children-share",
+      "displayAnswer": "Mapped countries in the top quartile for children share",
+      "family": "indicators",
+      "includedIso3": [
+        "CAF",
+        "SOM",
+        "NER",
+        "TCD",
+        "COD",
+        "MLI",
+        "MOZ",
+        "AGO",
+        "BDI",
+        "UGA",
+        "AFG",
+        "MRT",
+        "TZA",
+        "BEN",
+        "BFA",
+        "CMR",
+        "YEM",
+        "ZMB",
+        "GIN",
+        "NGA",
+        "CIV",
+        "TGO",
+        "ZWE",
+        "SDN",
+        "MWI",
+        "COG",
+        "GMB",
+        "LBR",
+        "MDG",
+        "ETH",
+        "GNB",
+        "SSD",
+        "VUT",
+        "SEN",
+        "SLE",
+        "PSE",
+        "ERI",
+        "GNQ",
+        "RWA",
+        "NAM",
+        "SLB",
+        "KEN",
+        "PAK"
+      ],
+      "counterexampleIso3": [
+        "JPN",
+        "ITA",
+        "DEU"
+      ],
+      "difficulty": "standard",
+      "eligibility": "practice",
+      "sources": [
+        "world-bank-wdi"
+      ],
+      "explanation": "The highlighted countries have the highest mapped shares of population ages 0-14 in the approved Mystery Map artifact.",
+      "decoys": [
+        {
+          "displayAnswer": "Mapped countries in the top quartile for fertility rate",
+          "whyPlausible": "It shares enough regional texture with mapped countries in the top quartile for children share to be tempting.",
+          "whyWrong": "The highlighted set is defined by the approved Mystery Map indicator artifact, not by mapped countries in the top quartile for fertility rate."
+        },
+        {
+          "displayAnswer": "Landlocked countries in Africa",
+          "whyPlausible": "It shares enough regional texture with mapped countries in the top quartile for children share to be tempting.",
+          "whyWrong": "The highlighted set is defined by the approved Mystery Map indicator artifact, not by landlocked countries in africa."
+        },
+        {
+          "displayAnswer": "Mapped countries in the bottom quartile for GDP per capita",
+          "whyPlausible": "It shares enough regional texture with mapped countries in the top quartile for children share to be tempting.",
+          "whyWrong": "The highlighted set is defined by the approved Mystery Map indicator artifact, not by mapped countries in the bottom quartile for gdp per capita."
+        }
+      ],
+      "dateVintage": "2025",
+      "indicatorRef": {
+        "indicatorId": "children-share",
+        "selection": "top_quartile",
+        "year": 2025
+      }
+    },
+    {
+      "id": "top-quartile-older-adults-share",
+      "displayAnswer": "Mapped countries in the top quartile for older adults share",
+      "family": "indicators",
+      "includedIso3": [
+        "JPN",
+        "PRI",
+        "ITA",
+        "PRT",
+        "GRC",
+        "FIN",
+        "DEU",
+        "HRV",
+        "SRB",
+        "BIH",
+        "FRA",
+        "BGR",
+        "SVN",
+        "LVA",
+        "EST",
+        "ESP",
+        "CZE",
+        "HUN",
+        "DNK",
+        "AUT",
+        "BEL",
+        "SWE",
+        "NLD",
+        "POL",
+        "LTU",
+        "CHE",
+        "KOR",
+        "CAN",
+        "ROU",
+        "GBR",
+        "NOR",
+        "SVK",
+        "UKR",
+        "MKD",
+        "USA",
+        "MNE",
+        "BLR",
+        "AUS",
+        "RUS",
+        "ALB",
+        "NZL",
+        "CUB",
+        "MDA"
+      ],
+      "counterexampleIso3": [
+        "NGA",
+        "KEN",
+        "PAK"
+      ],
+      "difficulty": "expert",
+      "eligibility": "practice",
+      "sources": [
+        "world-bank-wdi"
+      ],
+      "explanation": "The highlighted countries have the highest mapped shares of people age 65 and older in the approved Mystery Map artifact.",
+      "decoys": [
+        {
+          "displayAnswer": "Mapped countries in the bottom quartile for fertility rate",
+          "whyPlausible": "It shares enough regional texture with mapped countries in the top quartile for older adults share to be tempting.",
+          "whyWrong": "The highlighted set is defined by the approved Mystery Map indicator artifact, not by mapped countries in the bottom quartile for fertility rate."
+        },
+        {
+          "displayAnswer": "OECD member countries",
+          "whyPlausible": "It shares enough regional texture with mapped countries in the top quartile for older adults share to be tempting.",
+          "whyWrong": "The highlighted set is defined by the approved Mystery Map indicator artifact, not by oecd member countries."
+        },
+        {
+          "displayAnswer": "European Union member countries",
+          "whyPlausible": "It shares enough regional texture with mapped countries in the top quartile for older adults share to be tempting.",
+          "whyWrong": "The highlighted set is defined by the approved Mystery Map indicator artifact, not by european union member countries."
+        }
+      ],
+      "dateVintage": "2025",
+      "indicatorRef": {
+        "indicatorId": "older-adults-share",
+        "selection": "top_quartile",
+        "year": 2025
+      }
+    },
+    {
+      "id": "top-quartile-remittances-share",
+      "displayAnswer": "Mapped countries in the top quartile for remittances share of GDP",
+      "family": "indicators",
+      "includedIso3": [
+        "TJK",
+        "NIC",
+        "NPL",
+        "HND",
+        "SLV",
+        "GMB",
+        "LBR",
+        "LSO",
+        "GTM",
+        "KGZ",
+        "HTI",
+        "JAM",
+        "UZB",
+        "GEO",
+        "TLS",
+        "MDA",
+        "BIH",
+        "MNE",
+        "GNB",
+        "PAK",
+        "DOM",
+        "NGA",
+        "PHL",
+        "ZWE",
+        "ALB",
+        "BDI",
+        "MAR",
+        "EGY",
+        "JOR",
+        "HRV",
+        "FJI",
+        "LKA",
+        "SRB",
+        "TUN",
+        "UKR"
+      ],
+      "counterexampleIso3": [
+        "USA",
+        "CHN",
+        "DEU"
+      ],
+      "difficulty": "expert",
+      "eligibility": "practice",
+      "sources": [
+        "world-bank-wdi"
+      ],
+      "explanation": "The highlighted countries have the highest mapped personal remittances as a share of GDP in the approved Mystery Map artifact.",
+      "decoys": [
+        {
+          "displayAnswer": "Mapped countries in the top quartile for tourism receipts share",
+          "whyPlausible": "It shares enough regional texture with mapped countries in the top quartile for remittances share of gdp to be tempting.",
+          "whyWrong": "The highlighted set is defined by the approved Mystery Map indicator artifact, not by mapped countries in the top quartile for tourism receipts share."
+        },
+        {
+          "displayAnswer": "Landlocked countries in Europe and Asia",
+          "whyPlausible": "It shares enough regional texture with mapped countries in the top quartile for remittances share of gdp to be tempting.",
+          "whyWrong": "The highlighted set is defined by the approved Mystery Map indicator artifact, not by landlocked countries in europe and asia."
+        },
+        {
+          "displayAnswer": "Mapped countries in the bottom quartile for population",
+          "whyPlausible": "It shares enough regional texture with mapped countries in the top quartile for remittances share of gdp to be tempting.",
+          "whyWrong": "The highlighted set is defined by the approved Mystery Map indicator artifact, not by mapped countries in the bottom quartile for population."
+        }
+      ],
+      "dateVintage": "2024",
+      "indicatorRef": {
+        "indicatorId": "remittances",
+        "selection": "top_quartile",
+        "year": 2024
+      }
+    },
+    {
+      "id": "top-quartile-hydro-electricity-share",
+      "displayAnswer": "Mapped countries in the top quartile for hydroelectricity share",
+      "family": "indicators",
+      "includedIso3": [
+        "PRY",
+        "COD",
+        "NPL",
+        "ALB",
+        "ETH",
+        "TJK",
+        "VEN",
+        "UGA",
+        "NOR",
+        "ZMB",
+        "KGZ",
+        "MOZ",
+        "SDN",
+        "LAO",
+        "GEO",
+        "CMR",
+        "ECU",
+        "AGO",
+        "ISL",
+        "NAM",
+        "CRI",
+        "COL",
+        "PRK",
+        "SUR",
+        "BRA",
+        "NZL",
+        "LVA",
+        "AUT",
+        "CAN",
+        "CHE",
+        "SWZ"
+      ],
+      "counterexampleIso3": [
+        "SAU",
+        "QAT",
+        "KWT"
+      ],
+      "difficulty": "expert",
+      "eligibility": "daily",
+      "sources": [
+        "world-bank-wdi"
+      ],
+      "explanation": "The highlighted countries have the highest mapped shares of electricity generated from hydropower in the approved Mystery Map artifact.",
+      "decoys": [
+        {
+          "displayAnswer": "Mapped countries in the top quartile for renewable electricity share",
+          "whyPlausible": "It shares enough regional texture with mapped countries in the top quartile for hydroelectricity share to be tempting.",
+          "whyWrong": "The highlighted set is defined by the approved Mystery Map indicator artifact, not by mapped countries in the top quartile for renewable electricity share."
+        },
+        {
+          "displayAnswer": "Countries containing part of the Himalayas",
+          "whyPlausible": "It shares enough regional texture with mapped countries in the top quartile for hydroelectricity share to be tempting.",
+          "whyWrong": "The highlighted set is defined by the approved Mystery Map indicator artifact, not by countries containing part of the himalayas."
+        },
+        {
+          "displayAnswer": "Mapped countries in the top quartile for freshwater per capita",
+          "whyPlausible": "It shares enough regional texture with mapped countries in the top quartile for hydroelectricity share to be tempting.",
+          "whyWrong": "The highlighted set is defined by the approved Mystery Map indicator artifact, not by mapped countries in the top quartile for freshwater per capita."
+        }
+      ],
+      "dateVintage": "2023",
+      "indicatorRef": {
+        "indicatorId": "hydro-electricity-share",
+        "selection": "top_quartile",
+        "year": 2023
+      }
+    },
+    {
+      "id": "top-quartile-coal-electricity-share",
+      "displayAnswer": "Mapped countries in the top quartile for coal electricity share",
+      "family": "indicators",
+      "includedIso3": [
+        "BWA",
+        "MNG",
+        "ZAF",
+        "POL",
+        "IND",
+        "IDN",
+        "MAR",
+        "KAZ",
+        "CHN",
+        "SRB",
+        "BIH",
+        "PHL",
+        "EST",
+        "AUS",
+        "MYS",
+        "VNM",
+        "CZE",
+        "MKD",
+        "NCL",
+        "MNE",
+        "KHM",
+        "BGR",
+        "ZWE",
+        "KOR",
+        "LKA",
+        "PRK",
+        "TUR",
+        "JPN",
+        "CHL",
+        "DEU",
+        "DOM",
+        "LAO",
+        "SVN",
+        "UKR",
+        "ISR",
+        "USA",
+        "BRN",
+        "GTM",
+        "THA",
+        "MDG",
+        "ROU",
+        "PRI",
+        "PAK"
+      ],
+      "counterexampleIso3": [
+        "NOR",
+        "BRA",
+        "FRA"
+      ],
+      "difficulty": "expert",
+      "eligibility": "practice",
+      "sources": [
+        "world-bank-wdi"
+      ],
+      "explanation": "The highlighted countries have the highest mapped shares of electricity generated from coal in the approved Mystery Map artifact.",
+      "decoys": [
+        {
+          "displayAnswer": "Mapped countries in the top quartile for fossil fuel energy use",
+          "whyPlausible": "It shares enough regional texture with mapped countries in the top quartile for coal electricity share to be tempting.",
+          "whyWrong": "The highlighted set is defined by the approved Mystery Map indicator artifact, not by mapped countries in the top quartile for fossil fuel energy use."
+        },
+        {
+          "displayAnswer": "Mapped countries in the top quartile for carbon dioxide emissions per person",
+          "whyPlausible": "It shares enough regional texture with mapped countries in the top quartile for coal electricity share to be tempting.",
+          "whyWrong": "The highlighted set is defined by the approved Mystery Map indicator artifact, not by mapped countries in the top quartile for carbon dioxide emissions per person."
+        },
+        {
+          "displayAnswer": "Countries with large coal reserves",
+          "whyPlausible": "It shares enough regional texture with mapped countries in the top quartile for coal electricity share to be tempting.",
+          "whyWrong": "The highlighted set is defined by the approved Mystery Map indicator artifact, not by countries with large coal reserves."
+        }
+      ],
+      "dateVintage": "2021",
+      "indicatorRef": {
+        "indicatorId": "coal-electricity-share",
+        "selection": "top_quartile",
+        "year": 2021
+      }
+    },
+    {
+      "id": "top-quartile-freshwater-per-capita",
+      "displayAnswer": "Mapped countries in the top quartile for renewable freshwater per person",
+      "family": "indicators",
+      "includedIso3": [
+        "ISL",
+        "GUY",
+        "SUR",
+        "BTN",
+        "PNG",
+        "CAN",
+        "NOR",
+        "GAB",
+        "NZL",
+        "SLB",
+        "PER",
+        "CHL",
+        "COL",
+        "BLZ",
+        "LBR",
+        "COG",
+        "VUT",
+        "FJI",
+        "PAN",
+        "RUS",
+        "VEN",
+        "CAF",
+        "URY",
+        "BRA",
+        "LAO",
+        "BOL",
+        "ECU",
+        "NIC",
+        "CRI",
+        "SLE",
+        "FIN",
+        "AUS",
+        "BRN",
+        "MMR",
+        "PRY",
+        "MYS",
+        "SWE",
+        "GIN",
+        "GEO",
+        "GNQ",
+        "BIH"
+      ],
+      "counterexampleIso3": [
+        "EGY",
+        "SAU",
+        "IND"
+      ],
+      "difficulty": "standard",
+      "eligibility": "daily",
+      "sources": [
+        "world-bank-wdi"
+      ],
+      "explanation": "The highlighted countries have the highest mapped renewable internal freshwater resources per person in the approved Mystery Map artifact.",
+      "decoys": [
+        {
+          "displayAnswer": "Mapped countries in the top quartile for forest area share",
+          "whyPlausible": "It shares enough regional texture with mapped countries in the top quartile for renewable freshwater per person to be tempting.",
+          "whyWrong": "The highlighted set is defined by the approved Mystery Map indicator artifact, not by mapped countries in the top quartile for forest area share."
+        },
+        {
+          "displayAnswer": "Countries with Arctic Circle territory",
+          "whyPlausible": "It shares enough regional texture with mapped countries in the top quartile for renewable freshwater per person to be tempting.",
+          "whyWrong": "The highlighted set is defined by the approved Mystery Map indicator artifact, not by countries with arctic circle territory."
+        },
+        {
+          "displayAnswer": "Mapped countries in the bottom quartile for population density",
+          "whyPlausible": "It shares enough regional texture with mapped countries in the top quartile for renewable freshwater per person to be tempting.",
+          "whyWrong": "The highlighted set is defined by the approved Mystery Map indicator artifact, not by mapped countries in the bottom quartile for population density."
+        }
+      ],
+      "dateVintage": "2022",
+      "indicatorRef": {
+        "indicatorId": "freshwater-per-capita",
+        "selection": "top_quartile",
+        "year": 2022
+      }
+    },
+    {
+      "id": "top-quartile-low-elevation-land-share",
+      "displayAnswer": "Mapped countries in the top quartile for low-elevation coastal land share",
+      "family": "indicators",
+      "includedIso3": [
+        "BHS",
+        "NLD",
+        "GMB",
+        "GNB",
+        "VNM",
+        "BGD",
+        "CUB",
+        "DNK",
+        "BLZ",
+        "QAT",
+        "KWT",
+        "FJI",
+        "IDN",
+        "TTO",
+        "SLB",
+        "MYS",
+        "PRI",
+        "SUR",
+        "NIC",
+        "BRN",
+        "NCL",
+        "BEL",
+        "SLE",
+        "GUY",
+        "GRL",
+        "JAM",
+        "PHL",
+        "NZL",
+        "MMR",
+        "HND",
+        "PAN",
+        "SEN",
+        "THA",
+        "VUT",
+        "ARE",
+        "GBR",
+        "PNG",
+        "ALB",
+        "SLV",
+        "LKA",
+        "EST",
+        "GRC",
+        "DEU"
+      ],
+      "counterexampleIso3": [
+        "BOL",
+        "ETH",
+        "NPL"
+      ],
+      "difficulty": "expert",
+      "eligibility": "practice",
+      "sources": [
+        "world-bank-wdi"
+      ],
+      "explanation": "The highlighted countries have the highest mapped shares of land in low-elevation coastal zones in the approved Mystery Map artifact.",
+      "decoys": [
+        {
+          "displayAnswer": "Countries with a long coastline",
+          "whyPlausible": "It shares enough regional texture with mapped countries in the top quartile for low-elevation coastal land share to be tempting.",
+          "whyWrong": "The highlighted set is defined by the approved Mystery Map indicator artifact, not by countries with a long coastline."
+        },
+        {
+          "displayAnswer": "Small island countries",
+          "whyPlausible": "It shares enough regional texture with mapped countries in the top quartile for low-elevation coastal land share to be tempting.",
+          "whyWrong": "The highlighted set is defined by the approved Mystery Map indicator artifact, not by small island countries."
+        },
+        {
+          "displayAnswer": "Mapped countries in the top quartile for flood risk",
+          "whyPlausible": "It shares enough regional texture with mapped countries in the top quartile for low-elevation coastal land share to be tempting.",
+          "whyWrong": "The highlighted set is defined by the approved Mystery Map indicator artifact, not by mapped countries in the top quartile for flood risk."
+        }
+      ],
+      "dateVintage": "2015",
+      "indicatorRef": {
+        "indicatorId": "low-elevation-land-share",
+        "selection": "top_quartile",
+        "year": 2015
+      }
+    },
+    {
+      "id": "top-quartile-agricultural-water-withdrawals",
+      "displayAnswer": "Mapped countries in the top quartile for agricultural water withdrawals share",
+      "family": "indicators",
+      "includedIso3": [
+        "SOM",
+        "AFG",
+        "NPL",
+        "MLI",
+        "SDN",
+        "LAO",
+        "MDG",
+        "VNM",
+        "ERI",
+        "GUY",
+        "SWZ",
+        "BTN",
+        "KHM",
+        "PAK",
+        "TKM",
+        "KGZ",
+        "AZE",
+        "IRN",
+        "UZB",
+        "ETH",
+        "TLS",
+        "SEN",
+        "NER",
+        "CHL",
+        "YEM",
+        "MRT",
+        "IND",
+        "THA",
+        "TZA",
+        "MMR",
+        "BGD",
+        "MAR",
+        "SYR",
+        "LKA",
+        "ZWE",
+        "BOL",
+        "TUR",
+        "MWI",
+        "IDN",
+        "NIC",
+        "HTI"
+      ],
+      "counterexampleIso3": [
+        "GBR",
+        "DEU",
+        "CAN"
+      ],
+      "difficulty": "standard",
+      "eligibility": "practice",
+      "sources": [
+        "world-bank-wdi"
+      ],
+      "explanation": "The highlighted countries have the highest mapped shares of freshwater withdrawals used by agriculture in the approved Mystery Map artifact.",
+      "decoys": [
+        {
+          "displayAnswer": "Mapped countries in the top quartile for freshwater withdrawals per person",
+          "whyPlausible": "It shares enough regional texture with mapped countries in the top quartile for agricultural water withdrawals share to be tempting.",
+          "whyWrong": "The highlighted set is defined by the approved Mystery Map indicator artifact, not by mapped countries in the top quartile for freshwater withdrawals per person."
+        },
+        {
+          "displayAnswer": "Countries with high irrigation area",
+          "whyPlausible": "It shares enough regional texture with mapped countries in the top quartile for agricultural water withdrawals share to be tempting.",
+          "whyWrong": "The highlighted set is defined by the approved Mystery Map indicator artifact, not by countries with high irrigation area."
+        },
+        {
+          "displayAnswer": "Mapped countries in the top quartile for rural population share",
+          "whyPlausible": "It shares enough regional texture with mapped countries in the top quartile for agricultural water withdrawals share to be tempting.",
+          "whyWrong": "The highlighted set is defined by the approved Mystery Map indicator artifact, not by mapped countries in the top quartile for rural population share."
+        }
+      ],
+      "dateVintage": "2022",
+      "indicatorRef": {
+        "indicatorId": "agricultural-water-withdrawals",
+        "selection": "top_quartile",
+        "year": 2022
       }
     }
   ]

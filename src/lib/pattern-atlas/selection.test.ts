@@ -41,7 +41,7 @@ describe("Pattern Atlas rule selection", () => {
 
   it("returns no Pro practice rules for impossible filters", () => {
     const ids = selectPatternAtlasPracticeRuleIds(PATTERN_ATLAS_RULES, PATTERN_ATLAS_CATALOG.contentVersion, "unit-test", {
-      family: "language",
+      family: "economy",
       difficulty: "intro"
     });
 

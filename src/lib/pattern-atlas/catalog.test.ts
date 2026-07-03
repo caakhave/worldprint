@@ -1,11 +1,21 @@
 import { describe, expect, it } from "vitest";
+import agriculturalWaterWithdrawalsJson from "../../../public/data/v1/indicators/agricultural-water-withdrawals.json";
+import childrenShareJson from "../../../public/data/v1/indicators/children-share.json";
+import coalElectricityShareJson from "../../../public/data/v1/indicators/coal-electricity-share.json";
 import entityRegistryJson from "../../../public/data/v1/entity-registry.json";
+import fertilityRateJson from "../../../public/data/v1/indicators/fertility-rate.json";
 import forestAreaJson from "../../../public/data/v1/indicators/forest-area.json";
+import freshwaterPerCapitaJson from "../../../public/data/v1/indicators/freshwater-per-capita.json";
+import hydroElectricityShareJson from "../../../public/data/v1/indicators/hydro-electricity-share.json";
 import internetUsersJson from "../../../public/data/v1/indicators/internet-users.json";
+import lowElevationLandShareJson from "../../../public/data/v1/indicators/low-elevation-land-share.json";
 import manifestJson from "../../../public/data/v1/manifest.json";
+import olderAdultsShareJson from "../../../public/data/v1/indicators/older-adults-share.json";
 import pm25ExposureJson from "../../../public/data/v1/indicators/pm25-exposure.json";
 import renewableElectricityJson from "../../../public/data/v1/indicators/renewable-electricity.json";
+import remittancesJson from "../../../public/data/v1/indicators/remittances.json";
 import tourismReceiptsShareJson from "../../../public/data/v1/indicators/tourism-receipts-share.json";
+import urbanPopulationJson from "../../../public/data/v1/indicators/urban-population.json";
 import waterStressJson from "../../../public/data/v1/indicators/water-stress.json";
 import { EntityRegistrySchema, IndicatorArtifactSchema, ManifestSchema } from "@/lib/content/schemas";
 import { PATTERN_ATLAS_CATALOG, getPatternAtlasRuleById, getPatternAtlasRulesByFamily } from "@/lib/pattern-atlas/catalog";
@@ -20,41 +30,51 @@ const indicatorArtifacts = [
   IndicatorArtifactSchema.parse(pm25ExposureJson),
   IndicatorArtifactSchema.parse(internetUsersJson),
   IndicatorArtifactSchema.parse(waterStressJson),
-  IndicatorArtifactSchema.parse(tourismReceiptsShareJson)
+  IndicatorArtifactSchema.parse(tourismReceiptsShareJson),
+  IndicatorArtifactSchema.parse(urbanPopulationJson),
+  IndicatorArtifactSchema.parse(fertilityRateJson),
+  IndicatorArtifactSchema.parse(childrenShareJson),
+  IndicatorArtifactSchema.parse(olderAdultsShareJson),
+  IndicatorArtifactSchema.parse(remittancesJson),
+  IndicatorArtifactSchema.parse(hydroElectricityShareJson),
+  IndicatorArtifactSchema.parse(coalElectricityShareJson),
+  IndicatorArtifactSchema.parse(freshwaterPerCapitaJson),
+  IndicatorArtifactSchema.parse(lowElevationLandShareJson),
+  IndicatorArtifactSchema.parse(agriculturalWaterWithdrawalsJson)
 ];
 
 describe("Pattern Atlas catalog", () => {
-  it("parses the starter catalog and keeps a balanced Phase 1 inventory", () => {
+  it("parses the catalog and keeps a balanced inventory", () => {
     const catalog = PatternAtlasCatalogSchema.parse(PATTERN_ATLAS_CATALOG);
     expect(catalog.game).toBe("pattern-atlas");
-    expect(catalog.rules).toHaveLength(32);
-    expect(catalog.sourceRegistry.length).toBeGreaterThanOrEqual(8);
+    expect(catalog.rules).toHaveLength(78);
+    expect(catalog.sourceRegistry.length).toBeGreaterThanOrEqual(21);
 
     expect(countBy(catalog.rules, "family")).toMatchObject({
-      language: 4,
-      borders: 5,
-      physical_geography: 8,
-      organizations: 7,
-      economy: 2,
-      indicators: 6
+      language: 9,
+      borders: 15,
+      physical_geography: 17,
+      organizations: 14,
+      economy: 7,
+      indicators: 16
     });
     expect(countBy(catalog.rules, "difficulty")).toMatchObject({
-      intro: 8,
-      standard: 16,
-      expert: 8
+      intro: 14,
+      standard: 40,
+      expert: 24
     });
     expect(countBy(catalog.rules, "eligibility")).toMatchObject({
-      sample: 4,
-      daily: 11,
-      practice: 15,
+      sample: 5,
+      daily: 29,
+      practice: 42,
       "expert-only": 2
     });
 
-    expect(getPatternAtlasRulesByFamily("indicators")).toHaveLength(6);
+    expect(getPatternAtlasRulesByFamily("indicators")).toHaveLength(16);
     expect(getPatternAtlasRuleById("countries-bordering-germany")?.includedIso3).toContain("POL");
   });
 
-  it("validates starter rules against the current entity registry and approved indicator artifacts", () => {
+  it("validates rules against the current entity registry and approved indicator artifacts", () => {
     const issues = validatePatternAtlasCatalog(PATTERN_ATLAS_CATALOG, {
       entityRegistry,
       indicators: indicatorArtifacts
