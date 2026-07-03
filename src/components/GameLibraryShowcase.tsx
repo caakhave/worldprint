@@ -2,7 +2,7 @@ import Link from "next/link";
 import { ArrowRight } from "lucide-react";
 
 export type GameLibraryItem = {
-  id: "mystery-map" | "pattern-atlas" | "rank-run";
+  id: "mystery-map" | "pattern-atlas" | "order-atlas";
   eyebrow: string;
   title: string;
   description: string;
@@ -10,7 +10,7 @@ export type GameLibraryItem = {
   href?: string;
   ctaLabel: string;
   statusLabel: string;
-  visual: "choropleth" | "pattern" | "rank";
+  visual: "choropleth" | "pattern" | "order";
   featured?: boolean;
 };
 
@@ -39,14 +39,14 @@ export const GAME_LIBRARY_ITEMS: readonly GameLibraryItem[] = [
     visual: "pattern"
   },
   {
-    id: "rank-run",
+    id: "order-atlas",
     eyebrow: "Coming soon",
-    title: "Rank Run",
-    description: "A future ranking challenge about ordering countries by a hidden geography signal.",
+    title: "Order Atlas",
+    description: "A future ordering challenge about arranging countries by a hidden geography signal.",
     access: ["Planned game", "Library expansion", "No gameplay yet"],
     ctaLabel: "Coming soon",
     statusLabel: "Coming soon",
-    visual: "rank"
+    visual: "order"
   }
 ];
 
@@ -131,16 +131,16 @@ function GameLibraryVisual({ kind }: { kind: GameLibraryItem["visual"] }) {
   }
 
   return (
-    <div className="game-library-visual game-library-visual-rank" aria-hidden="true">
-      <span className="mini-rank-row" data-rank="1">
+    <div className="game-library-visual game-library-visual-order" aria-hidden="true">
+      <span className="mini-order-row" data-order="1">
         <strong>1</strong>
         <em>Country A</em>
       </span>
-      <span className="mini-rank-row" data-rank="2">
+      <span className="mini-order-row" data-order="2">
         <strong>2</strong>
         <em>Country B</em>
       </span>
-      <span className="mini-rank-row" data-rank="3">
+      <span className="mini-order-row" data-order="3">
         <strong>3</strong>
         <em>Country C</em>
       </span>

@@ -87,7 +87,7 @@ Snapshot date: July 3, 2026.
   - Daily archive.
   - Challenge/share links.
   - Stats saving.
-  - Rank Run integration.
+  - Order Atlas integration.
 
 ### Pattern Atlas Content Expansion
 
@@ -119,7 +119,7 @@ Snapshot date: July 3, 2026.
 - Indicator-derived rules use existing approved Mystery Map artifacts only.
 - Mapped-country/small-state risks remain handled with mapped wording and scope notes for affected rules.
 - No gameplay, UI, site, auth, billing, Supabase, Stripe, or deployment config changes were made.
-- Next safest task: Rank Run planning / Phase 1 data model, or staging QA of expanded Pattern Atlas content.
+- Next safest task: Order Atlas planning / Phase 1 data model, or staging QA of expanded Pattern Atlas content.
 
 ### Pattern Atlas QA Polish
 
@@ -135,12 +135,12 @@ Snapshot date: July 3, 2026.
 
 - `/play/` now acts as a multi-game Can You Geo library hub.
 - Mystery Map and Pattern Atlas are shown as playable game cards.
-- Rank Run is shown as `Coming soon` only; no Rank Run gameplay route or mechanic exists yet.
+- Order Atlas is shown as `Coming soon` on public surfaces and remains unpromoted there.
 - Homepage surfaces now reference the multi-game library while preserving account-aware behavior:
   - Logged-out users still see `Start Pro` and `Try Sample Run`.
   - Logged-in Free users still see Free Daily and upgrade messaging.
   - Logged-in Pro users do not get primary hero `Start Pro` or `Try Sample Run` CTAs.
-- `/upgrade/` now includes a visual 3-game library section near the top for Mystery Map, Pattern Atlas, and Rank Run.
+- `/upgrade/` now includes a visual 3-game library section near the top for Mystery Map, Pattern Atlas, and Order Atlas.
 - Billing and checkout-return copy no longer uses the old `Practice Atlas` wording on the upgrade path.
 - `How it works` now has concise multi-game framing while still explaining Mystery Map clearly.
 - Sitemap and public metadata now include `/play/` and `/play/pattern-atlas/`.
@@ -162,8 +162,8 @@ Snapshot date: July 3, 2026.
   - Daily Challenge is today's fixed 3-map streak/history run.
 - `/play/` headline now says `Choose your geography game.`
 - Free-account copy now clarifies `3 Daily rounds per playable game`.
-- Rank Run remains clearly marked as coming soon; copy does not overpromise Rank Run as playable.
-- No Rank Run gameplay, auth/payment/Supabase/Stripe, Edge Function, or deployment config changes were made.
+- Order Atlas remains clearly marked as coming soon on public surfaces; copy does not overpromise Order Atlas as publicly playable.
+- No Order Atlas public promotion, auth/payment/Supabase/Stripe, Edge Function, or deployment config changes were made.
 
 ### Billing Portal CORS Fix
 
@@ -181,12 +181,12 @@ Snapshot date: July 3, 2026.
 
 ## Latest Staging QA Status
 
-- `/play/`: corrected `Choose your geography game.` headline; Mystery Map and Pattern Atlas are playable cards; Rank Run is coming soon only.
+- `/play/`: corrected `Choose your geography game.` headline; Mystery Map and Pattern Atlas are playable cards; Order Atlas is coming soon only.
 - `/play/mystery-map/`: loads normally; Pro lobby distinguishes Unlimited/Pro Atlas from Daily Challenge; Free Daily completion pushes upgrade instead of replay.
 - `/play/pattern-atlas/`: loads normally; clue copy is clearer; revealed clue values stand out; Free Daily and sample completion flows use the updated upgrade/library actions.
-- `/upgrade/`: shows the multi-game library near the top; Free copy says `3 Daily rounds per playable game`; Rank Run is not presented as playable yet.
+- `/upgrade/`: shows the multi-game library near the top; Free copy says `3 Daily rounds per playable game`; Order Atlas is not presented as playable yet.
 - `/account Manage Billing`: `stripe-portal` CORS is fixed and deployed; OPTIONS preflight now echoes the Cloudflare preview origin exactly.
-- Homepage: logged-out acquisition copy remains intact; multi-game library copy is present; Free-account copy does not count Rank Run as playable.
+- Homepage: logged-out acquisition copy remains intact; multi-game library copy is present; Free-account copy does not count Order Atlas as playable.
 - `/how-to-play/`: frames Can You Geo as a multi-game library while keeping Mystery Map instructions concise.
 - Signed-out checks:
   - Pattern Atlas sample, Mystery Map sample, homepage, `/play/`, `/upgrade/`, and `/how-to-play/` have passed smoke/manual QA.
@@ -202,7 +202,7 @@ Snapshot date: July 3, 2026.
 
 Next safest tasks:
 
-1. Start Rank Run planning / Phase 1 data model.
+1. Start Order Atlas planning / Phase 1 data model.
 2. Do a production-readiness audit before more feature work.
 3. Later reconfigure a stable staging domain if desired.
 
@@ -340,12 +340,12 @@ Next safest tasks:
 - `git diff --check`
   - Result: passed.
 - Static preview manual QA:
-  - `/play/` showed Mystery Map and Pattern Atlas as playable cards and Rank Run as coming soon with no gameplay link.
+  - `/play/` showed Mystery Map and Pattern Atlas as playable cards and Order Atlas as coming soon with no gameplay link.
   - `/play/mystery-map/` loaded normally.
   - `/play/pattern-atlas/` loaded normally.
   - `/upgrade/` showed the 3-game library section and no old `Practice Atlas` wording in upgrade-visible copy.
   - Logged-out homepage retained `Start Pro` and `Try Sample Run` while showing the multi-game library.
-  - `/how-to-play/` framed Can You Geo as a multi-game library and did not overpromise Rank Run.
+  - `/how-to-play/` framed Can You Geo as a multi-game library and did not overpromise Order Atlas.
   - Mobile `/play/` and `/upgrade/` had no horizontal overflow in the static preview smoke.
   - Real authenticated Free/Pro homepage browser QA was not performed locally; mocked entitlement coverage passed and staging QA with real accounts is still needed.
 
@@ -366,10 +366,10 @@ Next safest tasks:
 - `git diff --check`
   - Result: passed.
 - Static preview manual QA:
-  - `/play/` showed the corrected `Choose your geography game.` headline, playable Mystery Map and Pattern Atlas cards, and Rank Run as coming soon with no gameplay link.
+  - `/play/` showed the corrected `Choose your geography game.` headline, playable Mystery Map and Pattern Atlas cards, and Order Atlas as coming soon with no gameplay link.
   - `/play/pattern-atlas/` clue cards were understandable before use, used clue buttons stayed disabled, revealed clue values were emphasized, `Data & statistics` replaced raw `Indicators`, and the signed-out sample completion actions had no mobile horizontal overflow.
   - `/play/mystery-map/` loaded normally and showed updated signed-out Free-account copy.
-  - `/upgrade/` showed the multi-game library, per-playable-game Free copy, and Rank Run as coming soon.
+  - `/upgrade/` showed the multi-game library, per-playable-game Free copy, and Order Atlas as coming soon.
   - Logged-out homepage retained `Start Pro` and `Try Sample Run` while showing the updated per-playable-game Free copy.
   - Mobile `/play/`, `/upgrade/`, and Pattern Atlas sample-complete checks had no horizontal overflow.
   - Real authenticated Free/Pro browser QA was not performed locally; mocked entitlement/structure coverage passed and staging QA with real accounts is still needed.
@@ -399,10 +399,10 @@ Next safest tasks:
 - Full e2e may need updating for the newer access model and Custom Atlas naming.
 - `atd/` remains untracked and should not be committed.
 - `test.canyougeo.com` may still point to production/main unless reconfigured.
-- Free-account copy should say `3 Daily rounds per playable game`, not `9`, until Rank Run is live.
+- Free-account copy should say `3 Daily rounds per playable game`, not `9`, until Order Atlas is live.
 - Pattern Atlas small-state omissions rely on mapped-country scope notes.
 - Pattern Atlas Free/Pro real-browser QA should continue on staging with authenticated accounts.
-- Rank Run is represented only as coming soon; no gameplay exists yet.
+- Order Atlas remains coming soon on public surfaces; hidden local MVP routes now exist at `/play/order-atlas/` and `/internal/order-atlas-review/`.
 - Full final public launch still needs Stripe live mode, production Supabase/Stripe settings, SEO/analytics checks, and production deploy.
 
 ## Key Decisions To Preserve
@@ -418,7 +418,7 @@ Next safest tasks:
 - Pattern Atlas uses `pattern-atlas:v1`; Mystery Map uses `worldprint:v1`.
 - Do not enable live billing.
 - Do not touch `atd/`.
-- Rank Run is coming soon only; no gameplay exists yet.
+- Order Atlas is coming soon on public surfaces; hidden local MVP routes exist but are not in public navigation, `/play/`, or sitemap.
 - Free-account copy should count only playable games.
 
 ## Recently Completed Commits

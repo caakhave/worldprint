@@ -57,7 +57,7 @@ const modeCards = [
   {
     image: "/images/homepage/06-challenge-friends.png",
     objectPosition: "48% 50%",
-    title: "Rank Run",
+    title: "Order Atlas",
     copy: "A future game about ordering countries by hidden world signals.",
     badge: "Coming soon"
   }
@@ -132,7 +132,7 @@ export default function HomePage() {
             <p className="eyebrow">Game library</p>
             <h2>Choose your geography game.</h2>
             <p className="section-lede">
-              Mystery Map and Pattern Atlas are playable now. Rank Run is planned as the next library challenge.
+              Mystery Map and Pattern Atlas are playable now. Order Atlas is planned as the next library challenge.
             </p>
           </div>
           <div className="mode-poster-grid" aria-label="Ways to play Can You Geo">

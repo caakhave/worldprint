@@ -28,7 +28,7 @@ export const PUBLIC_INDEXED_ROUTES: PublicRouteMetadata[] = [
     path: "/play/",
     title: "Play Can You Geo? - Geography Game Library",
     description:
-      "Choose a Can You Geo? geography game: Mystery Map choropleth puzzles, Pattern Atlas hidden-rule rounds, and future Rank Run challenges.",
+      "Choose a Can You Geo? geography game: Mystery Map choropleth puzzles, Pattern Atlas hidden-rule rounds, and future Order Atlas challenges.",
     changeFrequency: "daily",
     priority: 0.97
   },
@@ -83,7 +83,7 @@ export const PUBLIC_INDEXED_ROUTES: PublicRouteMetadata[] = [
     path: "/upgrade/",
     title: "Free and Pro - Can You Geo?",
     description:
-      "Compare Free and Pro access for the Can You Geo game library: Mystery Map, Pattern Atlas, Rank Run planning, saved progress, custom runs, Past Games, and advanced stats.",
+      "Compare Free and Pro access for the Can You Geo game library: Mystery Map, Pattern Atlas, Order Atlas planning, saved progress, custom runs, Past Games, and advanced stats.",
     changeFrequency: "monthly",
     priority: 0.6
   },
@@ -273,7 +273,7 @@ export const HOME_FAQ_ITEMS = [
   {
     name: "What games can I play?",
     acceptedAnswer:
-      "Mystery Map is the choropleth indicator guessing game. Pattern Atlas is the highlighted-country hidden-rule game. Rank Run is planned as a future game."
+      "Mystery Map is the choropleth indicator guessing game. Pattern Atlas is the highlighted-country hidden-rule game. Order Atlas is planned as a future game."
   },
   {
     name: "What data sources does Can You Geo use?",

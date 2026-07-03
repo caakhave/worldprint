@@ -43,7 +43,7 @@ export default function HowToPlayPage() {
           <h2 id="how-library-title">Two games are playable now.</h2>
           <p>
             Mystery Map remains the flagship Daily game. Pattern Atlas uses the same atlas feel with highlighted countries instead of
-            choropleth values. Free accounts get 3 Daily rounds per playable game. Rank Run is a planned future game and is not
+            choropleth values. Free accounts get 3 Daily rounds per playable game. Order Atlas is a planned future game and is not
             playable yet.
           </p>
         </div>

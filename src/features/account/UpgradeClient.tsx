@@ -144,7 +144,7 @@ export function UpgradeClient() {
           <h2 id="upgrade-library-title">Free and Pro now cover more than one game.</h2>
           <p>
             Mystery Map is the flagship daily map puzzle. Pattern Atlas is playable now with its own Daily and Pro Pattern Run.
-            Rank Run is planned as the next library game, so Free currently applies to the two playable games.
+            Order Atlas is planned as the next library game, so Free currently applies to the two playable games.
           </p>
         </div>
         <GameLibraryShowcase ariaLabel="Games included in Can You Geo Free and Pro" />

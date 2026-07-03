@@ -14,10 +14,10 @@ describe("HowToPlayPage", () => {
     expect(screen.queryByText(/Mystery Map is the first Can You Geo\? mode/i)).not.toBeInTheDocument();
     expect(screen.getByRole("heading", { name: "Two games are playable now." })).toBeVisible();
     expect(screen.getByText(/Free accounts get 3 Daily rounds per playable game/i)).toBeVisible();
-    expect(screen.getByText(/Rank Run is a planned future game and is not playable yet/i)).toBeVisible();
+    expect(screen.getByText(/Order Atlas is a planned future game and is not playable yet/i)).toBeVisible();
     expect(screen.getByRole("heading", { name: "Mystery Map" })).toBeVisible();
     expect(screen.getByRole("heading", { name: "Pattern Atlas" })).toBeVisible();
-    expect(screen.getByRole("heading", { name: "Rank Run" })).toBeVisible();
+    expect(screen.getByRole("heading", { name: "Order Atlas" })).toBeVisible();
     expect(screen.getByRole("link", { name: /Play Pattern Atlas/i })).toHaveAttribute("href", "/play/pattern-atlas");
     expect(screen.getByRole("heading", { name: /Every clue spends points/i })).toBeVisible();
     expect(screen.getByText(/Pick a game, continue free for 3 Daily rounds per playable game/i)).toBeVisible();

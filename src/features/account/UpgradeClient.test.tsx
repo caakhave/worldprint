@@ -98,7 +98,7 @@ describe("UpgradeClient", () => {
     expect(screen.getByRole("heading", { name: "Free and Pro now cover more than one game." })).toBeVisible();
     expect(screen.getByRole("heading", { name: "Mystery Map" })).toBeVisible();
     expect(screen.getByRole("heading", { name: "Pattern Atlas" })).toBeVisible();
-    expect(screen.getByRole("heading", { name: "Rank Run" })).toBeVisible();
+    expect(screen.getByRole("heading", { name: "Order Atlas" })).toBeVisible();
     expect(screen.getByRole("link", { name: /Play Pattern Atlas/i })).toHaveAttribute("href", "/play/pattern-atlas");
     expect(screen.getAllByText("Coming soon").length).toBeGreaterThan(0);
     expect(screen.queryByText("Full Practice Atlas")).not.toBeInTheDocument();

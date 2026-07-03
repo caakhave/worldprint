@@ -66,7 +66,7 @@ describe("HomeHeroAccountPanel", () => {
     expect(screen.getByRole("complementary", { name: "Free Daily unlocked" })).toBeVisible();
     expect(screen.getByText("You are signed in on Free.")).toBeVisible();
     expect(screen.getByText(/Mystery Map and Pattern Atlas are playable now/i)).toBeVisible();
-    expect(screen.getByText(/Rank Run is coming soon/i)).toBeVisible();
+    expect(screen.getByText(/Order Atlas is coming soon/i)).toBeVisible();
     expect(screen.getByText("Pro unlocks Custom Atlas, Pattern Runs, and Past Games.")).toBeVisible();
     expect(screen.queryByRole("link", { name: "Try Sample Run" })).not.toBeInTheDocument();
   });

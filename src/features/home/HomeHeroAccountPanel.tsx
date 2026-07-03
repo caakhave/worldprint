@@ -39,7 +39,7 @@ const heroCopy: Record<
   free: {
     eyebrow: "Free account active",
     lead:
-      "Your Daily is ready. Free accounts get 3 Daily rounds per playable game: Mystery Map and Pattern Atlas are playable now, and Rank Run is coming soon.",
+      "Your Daily is ready. Free accounts get 3 Daily rounds per playable game: Mystery Map and Pattern Atlas are playable now, and Order Atlas is coming soon.",
     primary: { label: "Play today's Free Daily", href: "/play/mystery-map" },
     secondary: { label: "Upgrade to Pro", href: "/upgrade" },
     noteLines: [

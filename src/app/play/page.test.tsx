@@ -8,20 +8,20 @@ describe("PlayHubPage", () => {
 
     expect(screen.getByRole("heading", { name: "Choose your geography game." })).toBeVisible();
     expect(screen.getByText(/Free accounts get 3 Daily rounds per playable game/i)).toBeVisible();
-    expect(screen.getByText(/Rank Run is coming soon/i)).toBeVisible();
+    expect(screen.getByText(/Order Atlas is coming soon/i)).toBeVisible();
     expect(screen.getByRole("heading", { name: "Mystery Map" })).toBeVisible();
     expect(screen.getByRole("heading", { name: "Pattern Atlas" })).toBeVisible();
-    expect(screen.getByRole("heading", { name: "Rank Run" })).toBeVisible();
+    expect(screen.getByRole("heading", { name: "Order Atlas" })).toBeVisible();
     expect(screen.getAllByRole("link", { name: /Play Mystery Map/i }).every((link) => link.getAttribute("href") === "/play/mystery-map")).toBe(true);
     expect(screen.getAllByRole("link", { name: /Play Pattern Atlas/i }).every((link) => link.getAttribute("href") === "/play/pattern-atlas")).toBe(true);
   });
 
-  it("marks Rank Run as coming soon without exposing a gameplay link", () => {
+  it("marks Order Atlas as coming soon without exposing a gameplay link", () => {
     render(<PlayHubPage />);
 
-    const rankRunCard = screen.getByRole("heading", { name: "Rank Run" }).closest("article");
-    expect(rankRunCard).toBeTruthy();
-    expect(within(rankRunCard as HTMLElement).getAllByText("Coming soon").length).toBeGreaterThanOrEqual(1);
-    expect(within(rankRunCard as HTMLElement).queryByRole("link")).not.toBeInTheDocument();
+    const orderAtlasCard = screen.getByRole("heading", { name: "Order Atlas" }).closest("article");
+    expect(orderAtlasCard).toBeTruthy();
+    expect(within(orderAtlasCard as HTMLElement).getAllByText("Coming soon").length).toBeGreaterThanOrEqual(1);
+    expect(within(orderAtlasCard as HTMLElement).queryByRole("link")).not.toBeInTheDocument();
   });
 });

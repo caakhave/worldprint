@@ -6,7 +6,7 @@ import { pageMetadata } from "@/lib/site/seo";
 export const metadata: Metadata = pageMetadata({
   title: "Play Can You Geo? - Geography Game Library",
   description:
-    "Choose a Can You Geo? geography game: Mystery Map choropleth puzzles, Pattern Atlas hidden-rule rounds, and future Rank Run challenges.",
+    "Choose a Can You Geo? geography game: Mystery Map choropleth puzzles, Pattern Atlas hidden-rule rounds, and future Order Atlas challenges.",
   path: "/play/"
 });
 
@@ -22,7 +22,7 @@ export default function PlayHubPage() {
         </div>
         <p className="lead">
           Can You Geo? now has two playable games: solve data-map mysteries in Mystery Map, or identify shared rules in Pattern Atlas.
-          Rank Run is planned as the next game in the library.
+          Order Atlas is planned as the next game in the library.
         </p>
       </div>
 
@@ -31,7 +31,7 @@ export default function PlayHubPage() {
           <p className="eyebrow">Playable now</p>
           <h2 id="play-library-title">Mystery Map and Pattern Atlas.</h2>
           <p>
-            Free accounts get 3 Daily rounds per playable game. Mystery Map and Pattern Atlas are playable now; Rank Run is coming
+            Free accounts get 3 Daily rounds per playable game. Mystery Map and Pattern Atlas are playable now; Order Atlas is coming
             soon.
           </p>
         </div>
