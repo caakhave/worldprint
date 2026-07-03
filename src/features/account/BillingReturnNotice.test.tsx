@@ -77,7 +77,7 @@ describe("BillingReturnNotice", () => {
     render(<BillingReturnNotice context="upgrade" />);
 
     expect(await screen.findByRole("heading", { name: "No charge was made." })).toBeVisible();
-    expect(screen.getByRole("link", { name: "Keep playing" })).toHaveAttribute("href", "/play/mystery-map");
+    expect(screen.getByRole("link", { name: "Open game library" })).toHaveAttribute("href", "/play");
     expect(screen.getByRole("link", { name: "Email support for billing help" })).toHaveAttribute(
       "href",
       CONTACT_LINKS.billingHelp.href

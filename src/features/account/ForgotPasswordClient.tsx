@@ -52,9 +52,9 @@ export function ForgotPasswordClient() {
       <article className="surface account-card account-primary-card">
         <p className="eyebrow">Password reset</p>
         <h2>Password reset is not available in this preview.</h2>
-        <p>You can still try the Sample Run on this device.</p>
-        <Link className="button-secondary" href="/play/mystery-map">
-          Try Sample Run
+        <p>You can still try sample runs on this device.</p>
+        <Link className="button-secondary" href="/play">
+          Explore games
         </Link>
       </article>
     );

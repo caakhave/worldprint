@@ -1,4 +1,5 @@
 import { render, screen } from "@testing-library/react";
+import { readFileSync } from "node:fs";
 import { describe, expect, it } from "vitest";
 import { ArchiveCard } from "@/features/worldprint/ArchiveClient";
 import type { DailyIndexEntry } from "@/lib/content/schemas";
@@ -98,5 +99,15 @@ describe("ArchiveCard", () => {
     expect(screen.getByRole("link", { name: "Continue free" })).toHaveAttribute("href", "/sign-up");
     expect(screen.queryByRole("link", { name: "Try sample replay" })).not.toBeInTheDocument();
     expect(screen.getByText(/Start Pro for the complete archive, or continue free/i)).toBeVisible();
+  });
+});
+
+describe("ArchiveClient copy", () => {
+  it("documents that Past Games currently archives Mystery Map only", () => {
+    const source = readFileSync("src/features/worldprint/ArchiveClient.tsx", "utf8");
+
+    expect(source).toContain("Past Games currently archives Mystery Map Daily games.");
+    expect(source).toContain("Pattern Atlas and Order Atlas archives may come later.");
+    expect(source).toContain("Past Mystery Maps are separate from today&apos;s Daily.");
   });
 });

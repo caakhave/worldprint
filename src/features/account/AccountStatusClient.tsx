@@ -106,9 +106,9 @@ export function AccountStatusClient() {
       <article className="surface account-card account-primary-card">
         <p className="eyebrow">Account status</p>
         <h2>Account sign-in is unavailable in this preview.</h2>
-        <p>The 5-map Sample Run is available in this browser. The 3-map Free Daily and saved progress start with a free account.</p>
-        <Link className="button-secondary" href="/play/mystery-map">
-          Try Sample Run
+        <p>Sample runs are available in this browser. Daily games and saved progress start with a free account where supported.</p>
+        <Link className="button-secondary" href="/play">
+          Explore games
         </Link>
       </article>
     );
@@ -129,7 +129,7 @@ export function AccountStatusClient() {
       <article className="surface account-card account-primary-card">
         <p className="eyebrow">Signed out</p>
         <h2>Start Pro or continue free.</h2>
-        <p>Pro unlocks the full atlas. Free needs no card and still saves your 3-map Daily progress and basic stats.</p>
+        <p>Pro unlocks supported custom runs and the full Mystery Map archive. Free needs no card and saves Daily progress where supported.</p>
         <div className="button-row">
           <Link className="button" href="/upgrade">
             Start Pro

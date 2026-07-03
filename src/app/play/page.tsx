@@ -6,7 +6,7 @@ import { pageMetadata } from "@/lib/site/seo";
 export const metadata: Metadata = pageMetadata({
   title: "Play Can You Geo? - Geography Game Library",
   description:
-    "Choose a Can You Geo? geography game: Mystery Map choropleth puzzles, Pattern Atlas hidden-rule rounds, and future Order Atlas challenges.",
+    "Choose a Can You Geo? geography game: Mystery Map choropleth puzzles, Pattern Atlas hidden-rule rounds, and the Order Atlas intro sample.",
   path: "/play/"
 });
 
@@ -21,34 +21,37 @@ export default function PlayHubPage() {
           </h1>
         </div>
         <p className="lead">
-          Can You Geo? now has two playable games: solve data-map mysteries in Mystery Map, or identify shared rules in Pattern Atlas.
-          Order Atlas is planned as the next game in the library.
+          Three ways to read the world: solve data-map mysteries, identify shared country rules, or order countries by a known
+          signal.
         </p>
       </div>
 
       <section className="play-hub-library" aria-labelledby="play-library-title">
         <div className="section-heading">
-          <p className="eyebrow">Playable now</p>
-          <h2 id="play-library-title">Mystery Map and Pattern Atlas.</h2>
+          <p className="eyebrow">Can You Geo v1</p>
+          <h2 id="play-library-title">Three games, one atlas.</h2>
           <p>
-            Free accounts get 3 Daily rounds per playable game. Mystery Map and Pattern Atlas are playable now; Order Atlas is coming
-            soon.
+            No account is needed for samples. Create a free account for Daily games and saved progress. Pro unlocks deeper custom
+            runs where a game already supports them.
           </p>
         </div>
-        <GameLibraryShowcase ariaLabel="Can You Geo playable games and planned games" />
+        <GameLibraryShowcase ariaLabel="Can You Geo public game library" />
       </section>
 
       <div className="play-hub-cta surface map-texture-panel">
         <div>
-          <p className="eyebrow">Need a starting point?</p>
-          <h2>Mystery Map remains the flagship daily game.</h2>
+          <p className="eyebrow">Pick your route</p>
+          <h2>Start with a map, a rule, or an ordering challenge.</h2>
         </div>
         <div className="button-row">
           <Link className="button" href="/play/mystery-map">
-            Play Mystery Map
+            Open Mystery Map
           </Link>
           <Link className="button-secondary" href="/play/pattern-atlas">
-            Play Pattern Atlas
+            Open Pattern Atlas
+          </Link>
+          <Link className="button-secondary" href="/play/order-atlas">
+            Try Order Atlas
           </Link>
         </div>
       </div>

@@ -38,7 +38,7 @@ export function MembershipCardClient() {
         </div>
       </dl>
       <div className="membership-unlocks" aria-label="Unlocked today">
-        <span>{signedIn ? "3-map Free Daily" : "5-map Sample Run"}</span>
+        <span>{signedIn ? "Daily games where supported" : "Sample runs"}</span>
         <span>{capabilities.canSaveStats ? "Saved progress" : "Browser-only progress"}</span>
         <span>{capabilities.canCreateChallenges ? "Basic challenges" : "Challenge links later"}</span>
       </div>
@@ -59,7 +59,7 @@ export function AdvancedStatsGateClient() {
       <p>
         {hasAdvancedStats
           ? "Can You Geo? Pro membership is enabled. Deeper trends and Challenge history can appear here as the atlas grows."
-          : "Free stats keep your 3-map Daily score and streak. Pro adds full history, richer trends, and Challenge comparisons later."}
+          : "Free stats keep supported Daily scores and streaks. Pro adds full history, richer trends, and Challenge comparisons later."}
       </p>
       <Link className={hasAdvancedStats ? "button-secondary" : "button"} href="/upgrade">
         {hasAdvancedStats ? "Manage plan" : "See full atlas plan"}

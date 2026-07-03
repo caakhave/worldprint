@@ -8,9 +8,9 @@ describe("NotFound", () => {
 
     expect(screen.getByText("Lost coordinates")).toBeVisible();
     expect(screen.getByRole("heading", { name: "Lost?" })).toBeVisible();
-    expect(screen.getByText("This map does not exist. The atlas has no record of this route.")).toBeVisible();
-    expect(screen.getByText("Head back to today's Mystery Map or return to safer ground.")).toBeVisible();
-    expect(screen.getByRole("link", { name: "Play Mystery Map" })).toHaveAttribute("href", "/play/mystery-map");
+    expect(screen.getByText("This route does not exist. The atlas has no record of these coordinates.")).toBeVisible();
+    expect(screen.getByText("Head back to the game library or return to safer ground.")).toBeVisible();
+    expect(screen.getByRole("link", { name: "Open game library" })).toHaveAttribute("href", "/play");
     expect(screen.getByRole("link", { name: "Go home" })).toHaveAttribute("href", "/");
     expect(screen.getByRole("link", { name: "View account" })).toHaveAttribute("href", "/account");
     expect(screen.queryByText(/stack trace|digest|unhandled|internal server error/i)).not.toBeInTheDocument();

@@ -77,6 +77,16 @@ describe("SignInClient", () => {
     expect(screen.queryByText("We'll email a secure link.")).not.toBeInTheDocument();
   });
 
+  it("routes preview fallback players to the game library", () => {
+    accountMock.state.configured = false;
+
+    render(<SignInClient />);
+
+    expect(screen.getByText(/Sample runs are still available in this browser/i)).toBeVisible();
+    expect(screen.getByText(/Daily games and saved progress start with a free account where supported/i)).toBeVisible();
+    expect(screen.getByRole("link", { name: "Explore games" })).toHaveAttribute("href", "/play");
+  });
+
   it("shows a signed-out confirmation after redirect", async () => {
     window.history.pushState({}, "", "/sign-in?signedOut=1");
 
@@ -203,7 +213,7 @@ describe("SignInClient", () => {
     expect(screen.getByText("You're signed in as player@example.com.")).toBeVisible();
     expect(screen.getByText("Use this same email and password next time.")).toBeVisible();
     expect(screen.getByRole("link", { name: "Go to account" })).toHaveAttribute("href", "/account");
-    expect(screen.getByRole("link", { name: "Keep playing" })).toHaveAttribute("href", "/play/mystery-map");
+    expect(screen.getByRole("link", { name: "Open game library" })).toHaveAttribute("href", "/play");
     expect(screen.getByRole("button", { name: "Sign out" })).toBeVisible();
     expect(screen.queryByLabelText("Email")).not.toBeInTheDocument();
 

@@ -92,6 +92,16 @@ describe("SignUpClient", () => {
     expect(window.sessionStorage.getItem("canyougeo:sign-in-return")).toBe("/account");
   });
 
+  it("routes preview fallback players to the game library", () => {
+    accountMock.state.configured = false;
+
+    render(<SignUpClient />);
+
+    expect(screen.getByText(/Sample runs are still available in this browser/i)).toBeVisible();
+    expect(screen.getByText(/Daily games and saved progress start with a free account where supported/i)).toBeVisible();
+    expect(screen.getByRole("link", { name: "Explore games" })).toHaveAttribute("href", "/play");
+  });
+
   it("keeps Pro yearly intent for the confirmation callback", async () => {
     const user = userEvent.setup();
     window.history.pushState({}, "", "/sign-up?next=%2Fupgrade%3Fplan%3Dyearly");

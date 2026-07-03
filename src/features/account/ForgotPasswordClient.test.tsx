@@ -50,6 +50,15 @@ describe("ForgotPasswordClient", () => {
     expect(screen.getByRole("link", { name: "Get account help" })).toBeVisible();
   });
 
+  it("routes unavailable-preview players to the game library", () => {
+    accountMock.state.configured = false;
+
+    render(<ForgotPasswordClient />);
+
+    expect(screen.getByText("You can still try sample runs on this device.")).toBeVisible();
+    expect(screen.getByRole("link", { name: "Explore games" })).toHaveAttribute("href", "/play");
+  });
+
   it("shows a safe generic error when reset email fails", async () => {
     const user = userEvent.setup();
     accountMock.state.client.auth.resetPasswordForEmail.mockResolvedValue({

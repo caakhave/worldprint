@@ -60,7 +60,7 @@ describe("BillingActionsClient", () => {
     expect(screen.getByRole("button", { name: "Checkout coming soon" })).toBeDisabled();
     expect(screen.getByText(/Pricing is visible now\./)).toBeVisible();
     expect(screen.getByText(/billing is disabled for now\./)).toBeVisible();
-    expect(screen.getByText(/Continue free for 3 Daily rounds per playable game\./)).toBeVisible();
+    expect(screen.getByText(/Continue free for Daily rounds in Daily-enabled games\./)).toBeVisible();
     expect(screen.queryByRole("button", { name: /Join/i })).not.toBeInTheDocument();
   });
 

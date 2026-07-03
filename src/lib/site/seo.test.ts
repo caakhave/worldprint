@@ -21,9 +21,13 @@ describe("site SEO helpers", () => {
     const indexedPaths = PUBLIC_INDEXED_ROUTES.map((route) => route.path);
     expect(indexedPaths).toContain("/");
     expect(indexedPaths).toContain("/play/mystery-map/");
+    expect(indexedPaths).toContain("/play/pattern-atlas/");
+    expect(indexedPaths).toContain("/play/order-atlas/");
     expect(indexedPaths).toContain("/sources/");
+    expect(indexedPaths).not.toContain("/internal/order-atlas-review/");
     expect(indexedPaths).not.toContain("/sign-in/");
     expect(indexedPaths).not.toContain("/account/");
+    expect(NON_INDEXED_ROUTE_PREFIXES).toContain("/internal/");
     expect(NON_INDEXED_ROUTE_PREFIXES).toContain("/challenge/");
   });
 
@@ -34,13 +38,25 @@ describe("site SEO helpers", () => {
     expect(noindexed.robots).toMatchObject({ index: false, follow: false });
   });
 
-  it("describes Can You Geo as a website, app, organization, and game", () => {
+  it("describes Can You Geo as a website, app, organization, and three public games", () => {
     const graph = siteJsonLd("https://canyougeo.com")["@graph"];
-    expect(graph.map((entry) => entry["@type"])).toEqual(["Organization", "WebSite", "WebApplication", "VideoGame"]);
+    expect(graph.map((entry) => entry["@type"])).toEqual(["Organization", "WebSite", "WebApplication", "VideoGame", "VideoGame", "VideoGame"]);
+    expect(graph[1]).toMatchObject({
+      alternateName: ["Can You Geo", "Mystery Map", "Pattern Atlas", "Order Atlas"]
+    });
     expect(graph[3]).toMatchObject({
       name: "Can You Geo? Mystery Map",
       gamePlatform: "Web browser",
       isAccessibleForFree: true
+    });
+    expect(graph[4]).toMatchObject({
+      name: "Can You Geo? Pattern Atlas",
+      url: "https://canyougeo.com/play/pattern-atlas/"
+    });
+    expect(graph[5]).toMatchObject({
+      name: "Can You Geo? Order Atlas",
+      url: "https://canyougeo.com/play/order-atlas/",
+      description: expect.stringContaining("intro country-ordering geography puzzle")
     });
   });
 
@@ -49,7 +65,10 @@ describe("site SEO helpers", () => {
     expect(faq["@type"]).toBe("FAQPage");
     expect(faq.mainEntity.map((item) => item.name)).toEqual(HOME_FAQ_ITEMS.map((item) => item.name));
     expect(faq.mainEntity[0].acceptedAnswer.text).toContain("geography game site");
-    expect(faq.mainEntity[0].acceptedAnswer.text).toContain("Mystery Map is the first game");
+    expect(faq.mainEntity[0].acceptedAnswer.text).toContain("Mystery Map and Pattern Atlas have Daily play");
+    expect(faq.mainEntity[0].acceptedAnswer.text).toContain("Order Atlas has a playable intro sample");
     expect(faq.mainEntity[2].acceptedAnswer.text).toContain("current featured game");
+    expect(faq.mainEntity[3].acceptedAnswer.text).toContain("Order Atlas is the country-ordering intro sample");
+    expect(faq.mainEntity[4].acceptedAnswer.text).toContain("Order Atlas reuses approved Mystery Map indicator artifacts");
   });
 });

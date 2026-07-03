@@ -34,8 +34,8 @@ export default function LegalPage() {
             <h3>Service</h3>
             <p>
               Can You Geo provides geography and world-data games, including sample play, a Free account tier, account-saved stats,
-              Past Games, Practice Atlas features, and Pro membership features when available. The service is for personal,
-              non-commercial entertainment and learning.
+              Mystery Map Past Games, supported custom/practice modes, and Pro membership features when available. The service is for
+              personal, non-commercial entertainment and learning.
             </p>
 
             <h3>Accounts and Passwords</h3>
@@ -47,9 +47,9 @@ export default function LegalPage() {
 
             <h3>Free and Pro Access</h3>
             <p>
-              Free accounts include the currently offered Free Daily, saved progress, streaks, and basic stats. Can You Geo? Pro is
-              intended to unlock expanded features such as unlimited Atlas play, the full Practice Atlas, complete Past Games archive,
-              advanced stats, and future premium surfaces. Pro details may change before or after paid launch.
+              Free accounts include Daily play in supported games, saved progress, streaks, and basic stats. Can You Geo? Pro is
+              intended to unlock expanded features such as Mystery Map Custom Atlas, Pattern Atlas Pattern Runs, the complete Mystery
+              Map Past Games archive, advanced stats, and future premium surfaces. Pro details may change before or after paid launch.
             </p>
 
             <h3>Billing, Renewal, and Cancellation</h3>

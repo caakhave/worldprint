@@ -1,6 +1,6 @@
 import { render, screen } from "@testing-library/react";
 import { describe, expect, it, vi } from "vitest";
-import InternalOrderAtlasReviewPage from "@/app/internal/order-atlas-review/page";
+import InternalOrderAtlasReviewPage, { metadata } from "@/app/internal/order-atlas-review/page";
 
 vi.mock("@/features/order-atlas/InternalOrderAtlasReviewClient", () => ({
   InternalOrderAtlasReviewClient: ({ rows, contentVersion }: { rows: unknown[]; contentVersion: string }) => (
@@ -15,5 +15,9 @@ describe("InternalOrderAtlasReviewPage", () => {
     render(<InternalOrderAtlasReviewPage />);
 
     expect(screen.getByText(/Order Atlas review client 80 2026.07.03-order-atlas-expanded/)).toBeVisible();
+  });
+
+  it("keeps the internal Order Atlas review route noindexed", () => {
+    expect(metadata.robots).toMatchObject({ index: false, follow: false });
   });
 });

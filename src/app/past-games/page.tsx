@@ -5,7 +5,7 @@ import { pageMetadata } from "@/lib/site/seo";
 export const metadata: Metadata = pageMetadata({
   title: "Past Games - Can You Geo?",
   description:
-    "Replay recent Mystery Map daily geography puzzles, review saved results, and practice dated map sets without changing today's Daily score.",
+    "Replay recent Mystery Map Daily games and review saved results. Pattern Atlas and Order Atlas archives may come later.",
   path: "/past-games/"
 });
 

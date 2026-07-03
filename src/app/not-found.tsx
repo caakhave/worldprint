@@ -9,11 +9,11 @@ export default function NotFound() {
           <h1 id="not-found-title" className="page-title">
             Lost?
           </h1>
-          <p className="lead">This map does not exist. The atlas has no record of this route.</p>
-          <p className="not-found-note">Head back to today&apos;s Mystery Map or return to safer ground.</p>
+          <p className="lead">This route does not exist. The atlas has no record of these coordinates.</p>
+          <p className="not-found-note">Head back to the game library or return to safer ground.</p>
           <div className="button-row" aria-label="404 navigation">
-            <Link className="button" href="/play/mystery-map">
-              Play Mystery Map
+            <Link className="button" href="/play">
+              Open game library
             </Link>
             <Link className="button-secondary" href="/">
               Go home

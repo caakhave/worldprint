@@ -64,8 +64,8 @@ export default function SupportPage() {
           <p className="eyebrow">Data and sources</p>
           <h2>Report a map issue.</h2>
           <p>
-            Include the map/date, country or indicator, the source you checked, and the correction you expect. Can You Geo treats map
-            boundaries and missing data as gameplay/source choices, not sovereignty judgments.
+            Include the game, date or round when available, country, rule, or indicator, the source you checked, and the correction
+            you expect. Can You Geo treats map boundaries and missing data as gameplay/source choices, not sovereignty judgments.
           </p>
           <a className="button-secondary" href={CONTACT_LINKS.dataSourceIssue.href}>
             Data/source issue

@@ -15,20 +15,21 @@ export type AccessPlanCopy = {
 export const ACCESS_PLAN_COPY: Record<AccountPlan, AccessPlanCopy> = {
   guest: {
     label: "Guest",
-    headline: "Try the 5-map Sample Run.",
-    summary: "No account needed. These sample maps never change. Create a free account for 3 Daily rounds per playable game.",
+    headline: "Try sample runs.",
+    summary: "No account needed. Samples stay local. Create a free account for Daily rounds in Daily-enabled games.",
     primaryCta: "Create a free account"
   },
   free: {
     label: "Free account",
-    headline: "3 Daily rounds per playable game.",
-    summary: "Free accounts unlock 3 Daily rounds per playable game, saved results, streaks, progress, and basic stats.",
-    primaryCta: "Play today's Mystery Map"
+    headline: "Daily rounds in Daily-enabled games.",
+    summary: "Free accounts unlock Daily rounds in Daily-enabled games, saved results, streaks, progress, and basic stats.",
+    primaryCta: "Open game library"
   },
   pro: {
     label: "Pro",
-    headline: "Unlimited Atlas play.",
-    summary: "Pro unlocks unlimited Atlas runs, the full Practice Atlas, complete Past Games archive, advanced stats, and future premium surfaces.",
+    headline: "Open supported Pro modes.",
+    summary:
+      "Pro unlocks Mystery Map Custom Atlas, Pattern Atlas Pattern Runs, complete Past Games archive, advanced stats, and future premium modes.",
     primaryCta: "Open the full atlas"
   }
 };
@@ -42,9 +43,9 @@ export function accessCopyForEntitlement(entitlement: PlayerEntitlement): Access
 }
 
 export function practiceAccessLabel(entitlement: PlayerEntitlement): string {
-  if (entitlement.capabilities.canUseFullPractice) return "Full Practice Atlas";
-  if (entitlement.plan === "guest") return "5-map Sample Run";
-  return `${entitlement.capabilities.practiceLimit ?? LIMITED_PRACTICE_MAPS}-map Practice sets`;
+  if (entitlement.capabilities.canUseFullPractice) return "Supported Pro practice";
+  if (entitlement.plan === "guest") return "Sample runs only";
+  return `${entitlement.capabilities.practiceLimit ?? LIMITED_PRACTICE_MAPS}-map supported practice`;
 }
 
 export function archiveAccessLabel(entitlement: PlayerEntitlement): string {

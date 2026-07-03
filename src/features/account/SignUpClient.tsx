@@ -137,12 +137,12 @@ export function SignUpClient() {
       <article className="surface account-card account-primary-card">
         <p className="eyebrow">Create account</p>
         <h2>Account creation is not available in this preview.</h2>
-        <p>The 5-map Sample Run is still available in this browser. The 3-map Free Daily and saved progress start with a free account.</p>
+        <p>Sample runs are still available in this browser. Daily games and saved progress start with a free account where supported.</p>
         <div className="account-disabled-panel" role="status">
           Account saving is offline for this build.
         </div>
-        <Link className="button-secondary" href="/play/mystery-map">
-          Try Sample Run
+        <Link className="button-secondary" href="/play">
+          Explore games
         </Link>
       </article>
     );

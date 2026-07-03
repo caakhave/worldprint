@@ -26,7 +26,7 @@ export function UpgradeClient() {
     ? "Can You Geo? Pro membership is enabled on this account. Mystery Map Custom Atlas, Pattern Atlas Pattern Runs, the complete Past Games archive, and advanced stats are unlocked."
     : billingEnabled
       ? "Start Free with no card needed, or sign in and choose monthly or yearly Pro for the growing Can You Geo game library."
-      : "Pro pricing is visible for planning. Checkout is coming soon and billing is disabled for now; Free accounts still get 3 Daily rounds per playable game.";
+      : "Pro pricing is visible for planning. Checkout is coming soon and billing is disabled for now; Free accounts still get Daily rounds in Daily-enabled games.";
   const overviewHeading = loading ? "Checking your plan." : isPro ? "Can You Geo? Pro." : "Choose monthly or yearly.";
   const statusTitle = isPro
     ? "Can You Geo? Pro"
@@ -43,7 +43,7 @@ export function UpgradeClient() {
       ? signedIn
         ? "Pick monthly or yearly, then continue to secure checkout."
         : "New players can keep Free with no card needed or choose Pro after sign-in."
-      : "Billing is disabled right now. Free accounts can play 3 Daily rounds per playable game while Pro opens later.";
+      : "Billing is disabled right now. Free accounts can play Daily rounds in Daily-enabled games while Pro opens later.";
 
   useEffect(() => {
     setSelectedPlan(proBillingIntervalFromSearch(window.location.search));
@@ -113,7 +113,7 @@ export function UpgradeClient() {
               <Link className="button-secondary" href="/account">
                 Continue free
               </Link>
-              <p className="account-env-note">Free needs no card and includes 3 Daily rounds per playable game, saved progress, and basic stats.</p>
+              <p className="account-env-note">Free needs no card and includes Daily rounds in Daily-enabled games, saved progress, and basic stats.</p>
             </div>
           </div>
         </section>
@@ -124,8 +124,8 @@ export function UpgradeClient() {
           <p className="eyebrow">Full atlas access</p>
           <h2>{overviewHeading}</h2>
           <p>
-            Free accounts unlock 3 Daily rounds per playable game and saved Daily progress. Pro opens Mystery Map Custom Atlas,
-            Pattern Atlas Pattern Runs, the complete Past Games archive, advanced stats, and future premium games.
+            Free accounts unlock Daily rounds and saved progress in Daily-enabled games. Pro opens deeper supported modes: Mystery Map
+            Custom Atlas, Pattern Atlas Pattern Runs, the complete Past Games archive, and advanced stats.
           </p>
         </div>
         <div className="upgrade-hero-action-panel">
@@ -143,8 +143,9 @@ export function UpgradeClient() {
           <p className="eyebrow">Game library</p>
           <h2 id="upgrade-library-title">Free and Pro now cover more than one game.</h2>
           <p>
-            Mystery Map is the flagship daily map puzzle. Pattern Atlas is playable now with its own Daily and Pro Pattern Run.
-            Order Atlas is planned as the next library game, so Free currently applies to the two playable games.
+            Mystery Map is the original choropleth map game with Custom Atlas for Pro. Pattern Atlas adds rule-based country-set
+            puzzles with Free Daily and Pro Pattern Runs. Order Atlas is playable as an intro sample while Daily and Pro modes remain
+            future work for that game.
           </p>
         </div>
         <GameLibraryShowcase ariaLabel="Games included in Can You Geo Free and Pro" />
@@ -156,8 +157,8 @@ export function UpgradeClient() {
           <h2>{isPro ? "Full atlas unlocked." : "Open the whole atlas."}</h2>
           <p>
             {isPro
-              ? "Your account already has Mystery Map Custom Atlas, Pattern Atlas Pattern Runs, the complete Past Games archive, and deeper personal history."
-              : "For players who want Mystery Map Custom Atlas, Pattern Atlas Pattern Runs, the complete Past Games archive, and deeper personal history."}
+              ? "Your account already has supported Pro modes: Mystery Map Custom Atlas, Pattern Atlas Pattern Runs, the complete Past Games archive, and deeper personal history."
+              : "For players who want supported Pro modes: Mystery Map Custom Atlas, Pattern Atlas Pattern Runs, the complete Past Games archive, and deeper personal history."}
           </p>
           <div className="pro-price-options" aria-label="Pro pricing options">
             {PRO_PRICE_OPTIONS.map((option) => (
@@ -198,11 +199,11 @@ export function UpgradeClient() {
             </li>
             <li>
               <CheckCircle2 size={18} aria-hidden="true" />
-              Future premium games
+              Future premium modes as they launch
             </li>
             <li>
               <CheckCircle2 size={18} aria-hidden="true" />
-              More map packs over time
+              Growing game library over time
             </li>
           </ul>
           <BillingActionsClient entitlement={entitlement} context="upgrade" />
@@ -215,15 +216,19 @@ export function UpgradeClient() {
           <ul>
             <li>
               <CheckCircle2 size={18} aria-hidden="true" />
-              3 Daily rounds per playable game
+              Daily rounds in Daily-enabled games
             </li>
             <li>
               <CheckCircle2 size={18} aria-hidden="true" />
-              Saved results and streaks
+              Saved Daily results and streaks
             </li>
             <li>
               <CheckCircle2 size={18} aria-hidden="true" />
               Pattern Atlas Free Daily
+            </li>
+            <li>
+              <CheckCircle2 size={18} aria-hidden="true" />
+              Order Atlas intro sample
             </li>
             <li>
               <CheckCircle2 size={18} aria-hidden="true" />

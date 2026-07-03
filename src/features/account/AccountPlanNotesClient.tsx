@@ -32,8 +32,8 @@ export function AccountPlanNotesClient() {
   const billingCopy = isPro
     ? "Plan controls and receipts."
     : billingEnabled
-      ? "Full Practice Atlas, complete Past Games archive, advanced stats."
-      : "Pro is coming later with full Practice Atlas, complete Past Games archive, and advanced stats.";
+      ? "Mystery Map Custom Atlas, Pattern Atlas Pattern Runs, Past Games archive, advanced stats."
+      : "Pro is coming later with supported custom runs, Past Games archive, and advanced stats.";
   const billingAction = isPro ? "Manage billing" : billingEnabled ? (signedIn ? "Upgrade to Pro" : "View plans") : "View Pro preview";
 
   if (!signedIn) {
@@ -42,7 +42,7 @@ export function AccountPlanNotesClient() {
         <article className="surface account-card account-action-card">
           <p className="eyebrow">Can You Geo? Pro</p>
           <h2>Open the whole atlas.</h2>
-          <p>Full Practice Atlas, complete Past Games archive, advanced stats, and future premium surfaces.</p>
+          <p>Mystery Map Custom Atlas, Pattern Atlas Pattern Runs, complete Past Games archive, advanced stats, and future premium surfaces.</p>
           <Link className="button" href="/upgrade">
             Start Pro
           </Link>
@@ -51,12 +51,12 @@ export function AccountPlanNotesClient() {
         <article className="surface account-card account-action-card">
           <p className="eyebrow">Free account</p>
           <h2>Continue free.</h2>
-          <p>Free needs no card and includes the 3-map Free Daily, saved progress, streaks, and basic stats.</p>
+          <p>Free needs no card and includes Daily games with saved progress, streaks, and basic stats where supported.</p>
           <span className="account-action-stat">
             {localRecordCount} browser record{localRecordCount === 1 ? "" : "s"}
           </span>
-          <Link className="button-secondary" href="/play/mystery-map">
-            Try Sample Run
+          <Link className="button-secondary" href="/play">
+            Explore games
           </Link>
           <Link className="button-secondary" href="/sign-in">
             Sign in free
@@ -83,18 +83,18 @@ export function AccountPlanNotesClient() {
       <article className="surface account-card account-action-card">
         <p className="eyebrow">Past Games</p>
         <h2>Review results</h2>
-        <p>Dated Daily replays and saved runs.</p>
+        <p>Mystery Map Daily replays and saved runs.</p>
         <Link className="button-secondary" href="/past-games">
           Open Past Games
         </Link>
       </article>
 
       <article className="surface account-card account-action-card">
-        <p className="eyebrow">Practice Atlas</p>
+        <p className="eyebrow">Mystery Map practice</p>
         <h2>Train a topic</h2>
-        <p>3-map training sets by topic and difficulty.</p>
+        <p>Custom Atlas sets by topic and difficulty.</p>
         <Link className="button-secondary" href="/play/mystery-map">
-          Start practice
+          Start Custom Atlas
         </Link>
       </article>
 

@@ -117,7 +117,7 @@ export function BillingActionsClient({ entitlement, context, selectedPlan = null
           </Link>
         ) : null}
         <p className="account-env-note">
-          Pricing is visible now. Checkout is coming soon and billing is disabled for now. Continue free for 3 Daily rounds per playable game.
+          Pricing is visible now. Checkout is coming soon and billing is disabled for now. Continue free for Daily rounds in Daily-enabled games.
         </p>
       </div>
     );

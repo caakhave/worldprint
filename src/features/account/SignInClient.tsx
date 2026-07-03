@@ -130,7 +130,7 @@ export function SignInClient() {
       <article className="surface account-card account-primary-card">
         <p className="eyebrow">Account sign-in</p>
         <h2>Account sign-in is not available in this preview.</h2>
-        <p>The 5-map Sample Run is still available in this browser. The 3-map Free Daily and saved progress start with a free account.</p>
+        <p>Sample runs are still available in this browser. Daily games and saved progress start with a free account where supported.</p>
         <div className="account-disabled-panel" role="status">
           Account saving is offline for this build.
         </div>
@@ -138,8 +138,8 @@ export function SignInClient() {
           <button className="button" type="button" disabled>
             Sign in
           </button>
-          <Link className="button-secondary" href="/play/mystery-map">
-            Try Sample Run
+          <Link className="button-secondary" href="/play">
+            Explore games
           </Link>
         </div>
       </article>
@@ -173,8 +173,8 @@ export function SignInClient() {
           <Link className="button" href={signedInPrimaryHref}>
             {signedInPrimaryHref.startsWith("/upgrade") ? "Continue to Pro plans" : "Go to account"}
           </Link>
-          <Link className="button-secondary" href="/play/mystery-map">
-            Keep playing
+          <Link className="button-secondary" href="/play">
+            Open game library
           </Link>
           <button className="button-secondary" type="button" onClick={() => void handleSignOut()}>
             Sign out

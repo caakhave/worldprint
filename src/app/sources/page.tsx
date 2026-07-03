@@ -7,7 +7,7 @@ import { breadcrumbJsonLd, pageMetadata } from "@/lib/site/seo";
 export const metadata: Metadata = pageMetadata({
   title: "Data & Sources - Can You Geo?",
   description:
-    "See how Can You Geo? builds data map games from World Bank indicators, Natural Earth country geometry, reviewed sources, and missing-data rules.",
+    "See how Can You Geo? sources Mystery Map indicators, Pattern Atlas rules, Order Atlas values, Natural Earth country geometry, and missing-data rules.",
   path: "/sources/"
 });
 
@@ -45,18 +45,19 @@ export default function SourcesPage() {
         <p className="eyebrow">Data &amp; sources</p>
         <h1 className="page-title">Real data, readable puzzles.</h1>
         <p className="lead">
-          Can You Geo? uses public datasets to make Mystery Map feel like a game, not a lookup table. Each map is reviewed for
-          fairness before it becomes part of regular play.
+          Can You Geo? uses public sources differently by game. Mystery Map turns reviewed indicators into choropleth puzzles,
+          Pattern Atlas cites source-backed country-set rules, and Order Atlas reuses approved indicator artifacts for its values.
         </p>
       </header>
 
       <div className="sources-overview-grid">
         <article className="sources-primary surface" aria-labelledby="data-sources-heading">
           <p className="setup-kicker">Primary sources</p>
-          <h2 id="data-sources-heading">World Bank data on a Natural Earth map.</h2>
+          <h2 id="data-sources-heading">World Bank indicators on a Natural Earth map.</h2>
           <p>
-            Indicator values come from World Bank World Development Indicators, and Natural Earth provides the country map geometry
-            used for play.
+            Mystery Map indicator values come from World Bank World Development Indicators, and Natural Earth provides the country
+            map geometry used for map play. Order Atlas derives its values, units, years, and source links from the approved Mystery
+            Map indicator artifacts instead of copying separate values.
           </p>
           <div className="source-list">
             {sourceEntries.map((source) => (
@@ -98,7 +99,7 @@ export default function SourcesPage() {
 
         <aside className="sources-version-card surface" aria-labelledby="player-method-heading">
           <p className="setup-kicker">Player transparency</p>
-          <h2 id="player-method-heading">What each Mystery Map promises.</h2>
+          <h2 id="player-method-heading">What each Mystery Map indicator promises.</h2>
           <dl className="sources-principle-list">
             <div>
               <dt>One recent year</dt>
@@ -121,7 +122,7 @@ export default function SourcesPage() {
       </div>
 
       <div className="sources-methodology-layout">
-        <div className="sources-prose" aria-label="Mystery Map methodology">
+        <div className="sources-prose" aria-label="Game source methodology">
           <section>
             <h2>How Mystery Map chooses years</h2>
             <p>
@@ -158,6 +159,21 @@ export default function SourcesPage() {
             </p>
           </section>
           <section>
+            <h2>How Pattern Atlas sources rules</h2>
+            <p>
+              Pattern Atlas is not a choropleth game. Its catalog entries cite sources for the highlighted country-set rule, include
+              plausible decoys, and use mapped-country wording when the current map omits small states.
+            </p>
+          </section>
+          <section>
+            <h2>How Order Atlas uses indicator artifacts</h2>
+            <p>
+              Order Atlas rounds name the indicator up front and ask you to rank countries. The true order, values, unit, year, and
+              source link are rendered from the existing approved Mystery Map artifacts, so ordering rounds do not maintain a
+              separate hand-copied dataset.
+            </p>
+          </section>
+          <section>
             <h2>Why some indicators are retired</h2>
             <p>
               Retired indicators are not fake or unsupported; they simply make weaker puzzles. Some are near-duplicates of better
@@ -177,8 +193,9 @@ export default function SourcesPage() {
           <section>
             <h2>Known limitations</h2>
             <p>
-              The current catalog is static, country-level, and World Bank focused. It does not include subnational variation,
-              disputed border quizzes, cloud-synced results, public leaderboards, or non-World Bank providers yet.
+              The current indicator catalog is static, country-level, and World Bank focused. It does not include subnational
+              variation, disputed border quizzes, cloud-synced Order Atlas results, public leaderboards, or non-World Bank indicator
+              providers yet.
             </p>
           </section>
         </div>
@@ -188,8 +205,9 @@ export default function SourcesPage() {
             <p className="setup-kicker">Data checklist</p>
             <h2 id="data-checklist-heading">What is checked before play?</h2>
             <p>
-              A playable map needs source attribution, country coverage, a clear unit, enough visual contrast, and answer choices
-              that reward reading the map.
+              A playable Mystery Map indicator needs source attribution, country coverage, a clear unit, enough visual contrast, and
+              answer choices that reward reading the map. Pattern Atlas rules and Order Atlas rounds have their own catalog
+              validation on top of those sources.
             </p>
             <ul className="sources-status-list">
               <li>

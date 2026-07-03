@@ -17,35 +17,35 @@ export type GameLibraryItem = {
 export const GAME_LIBRARY_ITEMS: readonly GameLibraryItem[] = [
   {
     id: "mystery-map",
-    eyebrow: "Flagship game",
+    eyebrow: "Original map game",
     title: "Mystery Map",
     description: "Read an unlabeled choropleth, spend clues carefully, and identify the hidden world indicator.",
-    access: ["Guest Sample Run", "Free Daily", "Pro Custom Atlas"],
+    access: ["Signed-out Sample Run", "Free Daily", "Pro Custom Atlas"],
     href: "/play/mystery-map",
-    ctaLabel: "Play Mystery Map",
+    ctaLabel: "Open Mystery Map",
     statusLabel: "Playable now",
-    visual: "choropleth",
-    featured: true
+    visual: "choropleth"
   },
   {
     id: "pattern-atlas",
-    eyebrow: "New playable game",
+    eyebrow: "Rule pattern game",
     title: "Pattern Atlas",
     description: "Study highlighted countries and choose the rule connecting the set.",
-    access: ["Guest Sample Run", "Free Daily", "Pro Pattern Run"],
+    access: ["Signed-out Sample Run", "Free Daily", "Pro Pattern Run"],
     href: "/play/pattern-atlas",
-    ctaLabel: "Play Pattern Atlas",
+    ctaLabel: "Open Pattern Atlas",
     statusLabel: "Playable now",
     visual: "pattern"
   },
   {
     id: "order-atlas",
-    eyebrow: "Coming soon",
+    eyebrow: "Intro playable game",
     title: "Order Atlas",
-    description: "A future ordering challenge about arranging countries by a hidden geography signal.",
-    access: ["Planned game", "Library expansion", "No gameplay yet"],
-    ctaLabel: "Coming soon",
-    statusLabel: "Coming soon",
+    description: "Order country cards by a known geography signal, then reveal the true values.",
+    access: ["Playable intro run", "Daily and Pro modes coming next", "No saved stats yet"],
+    href: "/play/order-atlas",
+    ctaLabel: "Try intro run",
+    statusLabel: "Playable sample",
     visual: "order"
   }
 ];

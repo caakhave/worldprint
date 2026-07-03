@@ -17,8 +17,9 @@ describe("SignUpPage", () => {
       )
     ).toBeVisible();
     expect(screen.getByRole("heading", { name: "One account, two paths." })).toBeVisible();
-    expect(screen.getByText("3-map Free Daily, saved progress, streaks, and basic stats. No card needed.")).toBeVisible();
-    expect(screen.getByText("Unlimited Atlas play, full Practice Atlas, complete Past Games archive, and advanced stats.")).toBeVisible();
+    expect(screen.getByText("Daily games with saved progress, streaks, and basic stats where supported. No card needed.")).toBeVisible();
+    expect(screen.getByText("Mystery Map Custom Atlas, Pattern Atlas Pattern Runs, complete Past Games archive, and advanced stats.")).toBeVisible();
+    expect(screen.queryByText(/Practice Atlas/i)).not.toBeInTheDocument();
     expect(screen.getByRole("link", { name: "View Pro plans" })).toHaveAttribute("href", "/upgrade");
     expect(screen.getByRole("link", { name: "Sign in" })).toHaveAttribute("href", "/sign-in");
     expect(screen.getByTestId("sign-up-client")).toBeInTheDocument();

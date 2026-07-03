@@ -21,7 +21,7 @@ describe("WorldprintClient UI structure", () => {
     expect(source).toContain('aria-label="Primary Mystery Map action"');
     expect(source).toContain('<small>{primaryActionLabel}</small>');
     expect(source).not.toContain("Compass size={20}");
-    expect(source).toContain("Sign up for Pro for the full atlas, or create a free account for 3 Daily rounds per playable game.");
+    expect(source).toContain("Sign up for Pro for the full atlas, or create a free account for Daily rounds in Daily-enabled games.");
     expect(styles).toContain(".lobby-play-button");
     expect(styles).toContain(".lobby-play-main");
     expect(styles).toContain("min-height: 5rem");
@@ -55,7 +55,7 @@ describe("WorldprintClient UI structure", () => {
     expect(source).not.toContain("Start limited practice");
     expect(source).toContain("Pro feature");
     expect(source).toContain("Practice by topic and difficulty is included with Pro.");
-    expect(source).toContain("Free accounts include 3 Daily rounds per playable game.");
+    expect(source).toContain("Free accounts include Daily rounds in Daily-enabled games.");
     expect(source).toContain("Full Practice Atlas");
     expect(source).toContain('href="/sign-up"');
     expect(source).toContain("Create free account");
@@ -215,12 +215,14 @@ describe("WorldprintClient UI structure", () => {
     expect(source).not.toContain("Play today&apos;s 3 maps");
   });
 
-  it("lets the active Play nav return completed Mystery Map views to the lobby without private URLs", () => {
-    expect(primaryNavSource).toContain('href: "/play/mystery-map"');
+  it("keeps Play pointed at the hub while preserving Mystery Map same-route lobby reset", () => {
+    expect(primaryNavSource).toContain('href: "/play"');
+    expect(primaryNavSource).not.toContain('href: "/play/mystery-map"');
     expect(primaryNavSource).toContain("isMysteryMapPlayPath(pathname)");
     expect(primaryNavSource).toContain("event.preventDefault();");
     expect(primaryNavSource).toContain("dispatchPlayLobbyRequest();");
     expect(playLobbyNavigationSource).toContain('PLAY_LOBBY_REQUEST_EVENT = "canyougeo:play-lobby-request"');
+    expect(playLobbyNavigationSource).toContain('return normalized === "/play/mystery-map";');
     expect(source).toContain("window.addEventListener(PLAY_LOBBY_REQUEST_EVENT, handlePlayLobbyRequest)");
     expect(source).toContain("returnToLobby();");
     expect(source).not.toContain("runState=");

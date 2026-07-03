@@ -49,11 +49,13 @@ describe("HomeHeroAccountPanel", () => {
     render(<HomeHeroAccountPanel />);
 
     expect(screen.getAllByRole("link", { name: /Start Pro/i }).every((link) => link.getAttribute("href") === "/upgrade")).toBe(true);
-    expect(screen.getByRole("link", { name: "Try Sample Run" })).toHaveAttribute("href", "/play/mystery-map");
+    expect(screen.getByRole("link", { name: "Explore games" })).toHaveAttribute("href", "/play");
     expect(screen.getByRole("complementary", { name: "Join the game" })).toBeVisible();
     expect(screen.getByRole("heading", { name: "Start Pro or continue free" })).toBeVisible();
-    expect(screen.getByText("Free accounts get 3 Daily rounds per playable game.")).toBeVisible();
-    expect(screen.getByText("Pro accounts get Custom Atlas and Pattern Runs.")).toBeVisible();
+    expect(screen.getByText(/Try Mystery Map, Pattern Atlas, and the Order Atlas intro run/i)).toBeVisible();
+    expect(screen.getByText("No account needed for sample runs.")).toBeVisible();
+    expect(screen.getByText("Free accounts get Daily games and saved progress where supported.")).toBeVisible();
+    expect(screen.getByText("Order Atlas is intro-only today; Daily and Pro modes are coming next.")).toBeVisible();
   });
 
   it("shows Daily and upgrade actions for logged-in Free players", () => {
@@ -61,13 +63,13 @@ describe("HomeHeroAccountPanel", () => {
 
     render(<HomeHeroAccountPanel />);
 
-    expect(screen.getByRole("link", { name: /Play today's Free Daily/i })).toHaveAttribute("href", "/play/mystery-map");
+    expect(screen.getByRole("link", { name: /Open game library/i })).toHaveAttribute("href", "/play");
     expect(screen.getAllByRole("link", { name: /Upgrade to Pro/i }).every((link) => link.getAttribute("href") === "/upgrade")).toBe(true);
     expect(screen.getByRole("complementary", { name: "Free Daily unlocked" })).toBeVisible();
     expect(screen.getByText("You are signed in on Free.")).toBeVisible();
-    expect(screen.getByText(/Mystery Map and Pattern Atlas are playable now/i)).toBeVisible();
-    expect(screen.getByText(/Order Atlas is coming soon/i)).toBeVisible();
-    expect(screen.getByText("Pro unlocks Custom Atlas, Pattern Runs, and Past Games.")).toBeVisible();
+    expect(screen.getByText(/Mystery Map and Pattern Atlas have Free Daily play/i)).toBeVisible();
+    expect(screen.getByText(/Order Atlas has an intro sample run/i)).toBeVisible();
+    expect(screen.getByText("Pro unlocks Mystery Map Custom Atlas, Pattern Runs, and Past Games.")).toBeVisible();
     expect(screen.queryByRole("link", { name: "Try Sample Run" })).not.toBeInTheDocument();
   });
 
@@ -76,12 +78,13 @@ describe("HomeHeroAccountPanel", () => {
 
     render(<HomeHeroAccountPanel />);
 
-    expect(screen.getByRole("link", { name: /Play today's Daily/i })).toHaveAttribute("href", "/play/mystery-map");
+    expect(screen.getByRole("link", { name: /Open game library/i })).toHaveAttribute("href", "/play");
     expect(screen.getByRole("link", { name: /Start Custom Atlas/i })).toHaveAttribute("href", "/play/mystery-map#practice-atlas");
-    expect(screen.getByRole("link", { name: /Play Pattern Atlas/i })).toHaveAttribute("href", "/play/pattern-atlas");
+    expect(screen.getByRole("link", { name: /Open Pattern Atlas/i })).toHaveAttribute("href", "/play/pattern-atlas");
     expect(screen.getByRole("complementary", { name: "Pro Atlas unlocked" })).toBeVisible();
-    expect(screen.getByRole("heading", { name: "Daily, Custom Atlas, Pattern Atlas" })).toBeVisible();
+    expect(screen.getByRole("heading", { name: "Daily, Custom Atlas, Pattern Runs" })).toBeVisible();
     expect(screen.getByText("Pro is active on this account.")).toBeVisible();
+    expect(screen.getByText(/Order Atlas remains an intro sample/i)).toBeVisible();
     expect(screen.queryByRole("link", { name: /Start Pro/i })).not.toBeInTheDocument();
     expect(screen.queryByRole("link", { name: "Try Sample Run" })).not.toBeInTheDocument();
   });

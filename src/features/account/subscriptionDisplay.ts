@@ -61,7 +61,7 @@ export function membershipDisplay(entitlement: PlayerEntitlement, loading = fals
     return {
       heading: "Free account",
       detail: "Pro inactive",
-      body: "Pro access is not active on this account. You can still play the 3-map Free Daily and keep basic saved stats."
+      body: "Pro access is not active on this account. You can still play Daily games where supported and keep basic saved stats."
     };
   }
 
@@ -69,7 +69,7 @@ export function membershipDisplay(entitlement: PlayerEntitlement, loading = fals
 
   return {
     heading: accessCopy.label,
-    detail: entitlement.plan === "guest" ? "Sample Run only" : "3-map Daily and basic stats",
+    detail: entitlement.plan === "guest" ? "Sample runs only" : "Daily games and basic stats",
     body: accessCopy.summary
   };
 }

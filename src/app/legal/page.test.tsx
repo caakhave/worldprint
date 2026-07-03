@@ -22,6 +22,9 @@ describe("LegalPage", () => {
     expect(screen.getByText(/They are not a public official leaderboard, competition, sweepstakes, or prize system/i)).toBeVisible();
     expect(screen.getByText(/Password credentials are handled by Supabase Auth/i)).toBeVisible();
     expect(screen.getByText(/Billing and subscription state, when paid features are enabled/i)).toBeVisible();
+    expect(screen.getByText(/Mystery Map Custom Atlas, Pattern Atlas Pattern Runs/i)).toBeVisible();
+    expect(screen.getByText(/the complete Mystery Map Past Games archive/i)).toBeVisible();
+    expect(screen.queryByText(/Practice Atlas/i)).not.toBeInTheDocument();
     expect(screen.queryByText(/service providers that help operate the site/i)).not.toBeInTheDocument();
     expect(screen.queryByText(/Resend and Supabase SMTP for transactional email and owner\/admin billing notifications/i)).not.toBeInTheDocument();
     expect(screen.getByText(/We do not sell personal information/i)).toBeVisible();

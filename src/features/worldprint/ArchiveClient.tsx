@@ -256,13 +256,16 @@ export function ArchiveClient() {
       <div className="archive-hero">
         <p className="eyebrow">Past Games</p>
         <h1 className="page-title">Review Past Mystery Maps.</h1>
+        <p className="lead">
+          Past Games currently archives Mystery Map Daily games. Pattern Atlas and Order Atlas archives may come later.
+        </p>
       </div>
       <div className="archive-note surface map-texture-panel">
-        <strong>Past Games are separate from today&apos;s Daily.</strong>
+        <strong>Past Mystery Maps are separate from today&apos;s Daily.</strong>
         <span>
           {signedIn
             ? "Today's Free Daily updates the Daily score and streak; replayed dates save as Past Games for your account."
-            : "Logged-out players can try the fixed 5-map Sample Run. Start Pro for the complete archive, or continue free to save recent Past Games."}
+            : "Logged-out players can try sample runs. Start Pro for the complete Mystery Map archive, or continue free to save recent Past Games."}
         </span>
       </div>
       {hiddenCount > 0 ? (

@@ -260,7 +260,8 @@ describe("AccountStatusClient", () => {
     render(<AccountStatusClient />);
 
     expect(screen.getByRole("heading", { name: "Start Pro or continue free." })).toBeVisible();
-    expect(screen.getByText("Pro unlocks the full atlas. Free needs no card and still saves your 3-map Daily progress and basic stats.")).toBeVisible();
+    expect(screen.getByText(/Pro unlocks supported custom runs and the full Mystery Map archive/i)).toBeVisible();
+    expect(screen.getByText(/Free needs no card and saves Daily progress where supported/i)).toBeVisible();
     expect(screen.getByRole("link", { name: "Start Pro" })).toHaveAttribute("href", "/upgrade");
     expect(screen.getByRole("link", { name: "Continue free" })).toHaveAttribute("href", "/sign-up");
     expect(screen.queryByText("Player profile")).not.toBeInTheDocument();
@@ -282,10 +283,11 @@ describe("AccountHeroClient", () => {
     render(<AccountHeroClient />);
 
     expect(screen.getByRole("heading", { name: "Your atlas is connected." })).toBeVisible();
-    expect(screen.getByText("Review your scores, open Past Games, manage access, and keep playing.")).toBeVisible();
+    expect(screen.getByText("Review your scores, open the game hub, manage access, and keep playing.")).toBeVisible();
     expect(screen.getByText("Saved progress ready")).toBeVisible();
     expect(screen.queryByText("Stats sync ready")).not.toBeInTheDocument();
     expect(document.querySelector(".account-hero-video source[src='/worldprint/hero-loop.webm']")).toBeTruthy();
+    expect(screen.getByRole("link", { name: "Open game library" })).toHaveAttribute("href", "/play");
     expect(screen.getByRole("link", { name: "View saved stats" })).toHaveAttribute("href", "/account/stats");
   });
 
@@ -295,7 +297,7 @@ describe("AccountHeroClient", () => {
     render(<AccountHeroClient />);
 
     expect(screen.getByRole("heading", { name: "Start Pro or continue free." })).toBeVisible();
-    expect(screen.getByText(/Choose Can You Geo\? Pro for the full atlas/i)).toBeVisible();
+    expect(screen.getByText(/Choose Can You Geo\? Pro for supported custom runs and archives/i)).toBeVisible();
     expect(screen.getByRole("link", { name: "Start Pro" })).toHaveAttribute("href", "/upgrade");
     expect(screen.getByRole("link", { name: "Continue free" })).toHaveAttribute("href", "/sign-up");
   });
@@ -321,7 +323,10 @@ describe("AccountPlanNotesClient", () => {
     expect(screen.getByRole("heading", { name: "Full atlas" })).toBeVisible();
     expect(screen.getByRole("link", { name: "Open stats" })).toHaveAttribute("href", "/account/stats");
     expect(screen.getByRole("link", { name: "Open Past Games" })).toHaveAttribute("href", "/past-games");
-    expect(screen.getByRole("link", { name: "Start practice" })).toHaveAttribute("href", "/play/mystery-map");
+    expect(screen.getByText("Mystery Map Daily replays and saved runs.")).toBeVisible();
+    expect(screen.getByText("Custom Atlas sets by topic and difficulty.")).toBeVisible();
+    expect(screen.getByRole("link", { name: "Start Custom Atlas" })).toHaveAttribute("href", "/play/mystery-map");
+    expect(screen.queryByText("Practice Atlas")).not.toBeInTheDocument();
     expect(screen.queryByText("Play first.")).not.toBeInTheDocument();
     expect(screen.queryByText("Keep your streak.")).not.toBeInTheDocument();
     expect(screen.queryByText("Open the full atlas.")).not.toBeInTheDocument();
@@ -335,6 +340,9 @@ describe("AccountPlanNotesClient", () => {
 
     expect(await screen.findByRole("heading", { name: "Open the whole atlas." })).toBeVisible();
     expect(screen.getByRole("heading", { name: "Continue free." })).toBeVisible();
+    expect(screen.getByText(/Mystery Map Custom Atlas, Pattern Atlas Pattern Runs/i)).toBeVisible();
+    expect(screen.getByText(/Daily games with saved progress, streaks, and basic stats where supported/i)).toBeVisible();
+    expect(screen.getByRole("link", { name: "Explore games" })).toHaveAttribute("href", "/play");
     expect(screen.getByRole("link", { name: "Start Pro" })).toHaveAttribute("href", "/upgrade");
     expect(screen.getByRole("link", { name: "Sign in free" })).toHaveAttribute("href", "/sign-in");
   });

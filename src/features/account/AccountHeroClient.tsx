@@ -17,12 +17,12 @@ export function AccountHeroClient() {
         </h1>
         <p className="lead">
           {connected
-            ? "Review your scores, open Past Games, manage access, and keep playing."
-            : "Choose Can You Geo? Pro for the full atlas, or continue free with no card needed, 3 fresh Daily maps, and saved progress."}
+            ? "Review your scores, open the game hub, manage access, and keep playing."
+            : "Choose Can You Geo? Pro for supported custom runs and archives, or continue free with no card needed for Daily games where supported."}
         </p>
         <div className="button-row">
-          <Link className="button" href={connected ? "/play/mystery-map" : "/upgrade"}>
-            {connected ? "Play Mystery Map" : "Start Pro"}
+          <Link className="button" href={connected ? "/play" : "/upgrade"}>
+            {connected ? "Open game library" : "Start Pro"}
           </Link>
           <Link className="button-secondary" href={connected ? "/account/stats" : "/sign-up"}>
             {connected ? "View saved stats" : "Continue free"}

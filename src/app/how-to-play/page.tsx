@@ -7,7 +7,7 @@ import { breadcrumbJsonLd, pageMetadata } from "@/lib/site/seo";
 export const metadata: Metadata = pageMetadata({
   title: "How to Play Can You Geo?",
   description:
-    "Learn how Can You Geo? games work: play Mystery Map choropleth puzzles, Pattern Atlas hidden-rule rounds, and future geography challenges.",
+    "Learn how Can You Geo? games work: play Mystery Map choropleth puzzles, Pattern Atlas hidden-rule rounds, and the Order Atlas intro sample.",
   path: "/how-to-play/"
 });
 
@@ -33,45 +33,56 @@ export default function HowToPlayPage() {
         </div>
         <p className="lead">
           Can You Geo? is a library of geography games about reading patterns. Mystery Map asks you to solve an unlabeled choropleth;
-          Pattern Atlas asks you to identify the rule connecting highlighted countries.
+          Pattern Atlas asks you to identify the rule connecting highlighted countries; Order Atlas asks you to arrange countries by a
+          known signal.
         </p>
       </div>
 
       <section className="how-section how-library" aria-labelledby="how-library-title">
         <div className="section-heading">
           <p className="eyebrow">Games</p>
-          <h2 id="how-library-title">Two games are playable now.</h2>
+          <h2 id="how-library-title">Three ways to read the world.</h2>
           <p>
             Mystery Map remains the flagship Daily game. Pattern Atlas uses the same atlas feel with highlighted countries instead of
-            choropleth values. Free accounts get 3 Daily rounds per playable game. Order Atlas is a planned future game and is not
-            playable yet.
+            choropleth values. Order Atlas is available as an intro sample where you order country cards by a known indicator; its
+            Daily and Pro modes are still coming next.
           </p>
         </div>
         <GameLibraryShowcase className="how-library-grid" ariaLabel="Can You Geo games explained" />
       </section>
 
-      <div className="rules-grid how-steps" aria-label="How a round works">
-        <article>
-          <span>01</span>
-          <h2>Inspect the map</h2>
-          <p>Darker means a larger numerical value. Missing data is hatched and never means zero.</p>
-        </article>
-        <article>
-          <span>02</span>
-          <h2>Probe strategically</h2>
-          <p>Investigating a country reveals its value once. Repeated and no-data countries cost nothing.</p>
-        </article>
-        <article>
-          <span>03</span>
-          <h2>Guess, recover, learn</h2>
-          <p>Wrong answers deduct points but stay playable. Correct answers unlock a source-backed reveal lesson.</p>
-        </article>
-      </div>
+      <section className="how-section" aria-labelledby="mystery-map-basics-heading">
+        <div className="section-heading">
+          <p className="eyebrow">Mystery Map basics</p>
+          <h2 id="mystery-map-basics-heading">How a Mystery Map round works.</h2>
+          <p>
+            These clue, color, and scoring notes apply to Mystery Map. Pattern Atlas and Order Atlas use their own answer and reveal
+            flows.
+          </p>
+        </div>
+        <div className="rules-grid how-steps" aria-label="Mystery Map round basics">
+          <article>
+            <span>01</span>
+            <h2>Inspect the map</h2>
+            <p>Darker means a larger numerical value. Missing data is hatched and never means zero.</p>
+          </article>
+          <article>
+            <span>02</span>
+            <h2>Probe strategically</h2>
+            <p>Investigating a country reveals its value once. Repeated and no-data countries cost nothing.</p>
+          </article>
+          <article>
+            <span>03</span>
+            <h2>Guess, recover, learn</h2>
+            <p>Wrong answers deduct points but stay playable. Correct answers unlock a source-backed reveal lesson.</p>
+          </article>
+        </div>
+      </section>
 
       <section className="how-section" aria-labelledby="tier-rules-heading">
         <div className="section-heading">
-          <p className="eyebrow">Skill tiers</p>
-          <h2 id="tier-rules-heading">Choose how much the game helps.</h2>
+          <p className="eyebrow">Mystery Map skill tiers</p>
+          <h2 id="tier-rules-heading">Choose how much Mystery Map helps.</h2>
         </div>
         <div className="tier-table">
           {Object.values(TIER_CONFIGS).map((tier) => (
@@ -93,8 +104,8 @@ export default function HowToPlayPage() {
 
       <section className="how-section scoring-layout" aria-labelledby="scoring-heading">
         <div className="section-heading">
-          <p className="eyebrow">Scoring</p>
-          <h2 id="scoring-heading">Every clue spends points.</h2>
+          <p className="eyebrow">Mystery Map scoring</p>
+          <h2 id="scoring-heading">Every Mystery Map clue spends points.</h2>
         </div>
         <div className="scoring-card surface">
           <p>
@@ -108,7 +119,7 @@ export default function HowToPlayPage() {
       <div className="how-cta surface map-texture-panel">
         <div>
           <p className="eyebrow">Start playing</p>
-          <h2>Pick a game, continue free for 3 Daily rounds per playable game, or start Pro for deeper custom runs.</h2>
+          <h2>Pick a game, continue free for Daily-enabled rounds, or start Pro for deeper custom runs.</h2>
         </div>
         <div className="button-row">
           <Link className="button" href="/upgrade">
@@ -118,7 +129,7 @@ export default function HowToPlayPage() {
             Open game library
           </Link>
           <Link className="button-secondary" href="/play/mystery-map">
-            Try Sample Run
+            Try Mystery Map sample
           </Link>
           <Link className="button-secondary" href="/sign-up">
             Continue free

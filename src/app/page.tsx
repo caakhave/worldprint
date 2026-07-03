@@ -9,7 +9,7 @@ import { HOME_FAQ_ITEMS, homeFaqJsonLd, pageMetadata } from "@/lib/site/seo";
 export const metadata: Metadata = pageMetadata({
   title: "Can You Geo? - Daily Geography Games & World Data Puzzles",
   description:
-    "Play Can You Geo?, a growing geography game library with Mystery Map data puzzles, Pattern Atlas rule challenges, and more world games in planning.",
+    "Play Can You Geo?, a growing geography game library with Mystery Map data puzzles, Pattern Atlas rule challenges, and the Order Atlas intro sample.",
   path: "/"
 });
 
@@ -19,21 +19,21 @@ const signalCards = [
     image: "/images/homepage/01-read-the-map.png",
     objectPosition: "50% 50%",
     title: "Read the map",
-    copy: "The world lights up with a hidden statistic."
+    copy: "Mystery Map asks you to decode an unlabeled choropleth."
   },
   {
     step: "02",
     image: "/images/homepage/02-use-your-clues.png",
     objectPosition: "50% 48%",
-    title: "Use your clues",
-    copy: "Reveal a few countries when the pattern gets slippery."
+    title: "Find the rule",
+    copy: "Pattern Atlas highlights countries and hides the connection."
   },
   {
     step: "03",
     image: "/images/homepage/03-make-the-call.png",
     objectPosition: "50% 52%",
-    title: "Make the call",
-    copy: "Pick the answer and watch the atlas score your read."
+    title: "Order the signal",
+    copy: "Order Atlas turns country rankings into a quick intro challenge."
   }
 ] as const;
 
@@ -43,7 +43,7 @@ const modeCards = [
     objectPosition: "50% 50%",
     title: "Mystery Map",
     copy: "Read choropleth patterns, spend clues, and solve the hidden indicator.",
-    cta: "Play Mystery Map",
+    cta: "Open Mystery Map",
     href: "/play/mystery-map"
   },
   {
@@ -51,15 +51,17 @@ const modeCards = [
     objectPosition: "50% 50%",
     title: "Pattern Atlas",
     copy: "Find the shared rule connecting highlighted countries.",
-    cta: "Play Pattern Atlas",
+    cta: "Open Pattern Atlas",
     href: "/play/pattern-atlas"
   },
   {
     image: "/images/homepage/06-challenge-friends.png",
     objectPosition: "48% 50%",
     title: "Order Atlas",
-    copy: "A future game about ordering countries by hidden world signals.",
-    badge: "Coming soon"
+    copy: "Playable intro run now. Daily and Pro modes are coming next.",
+    cta: "Try Order Atlas",
+    href: "/play/order-atlas",
+    badge: "Intro sample"
   }
 ] as const;
 
@@ -98,9 +100,12 @@ export default function HomePage() {
       <section className="section-band homepage-section" id="how-it-works">
         <div className="page-shell homepage-section-layout">
           <div className="homepage-section-heading">
-            <p className="eyebrow">How the library starts</p>
+            <p className="eyebrow">How the library plays</p>
             <h2>Read patterns. Make the call.</h2>
-            <p className="section-lede">Start with Mystery Map, then try Pattern Atlas for a different kind of world-reading puzzle.</p>
+            <p className="section-lede">
+              Can You Geo is a three-game geography library: map signals, country-set rules, and ordering challenges built from the
+              same atlas feel.
+            </p>
           </div>
           <div className="game-loop-grid" aria-label="How Can You Geo works">
             {signalCards.map((card) => (
@@ -132,8 +137,14 @@ export default function HomePage() {
             <p className="eyebrow">Game library</p>
             <h2>Choose your geography game.</h2>
             <p className="section-lede">
-              Mystery Map and Pattern Atlas are playable now. Order Atlas is planned as the next library challenge.
+              Mystery Map and Pattern Atlas have Daily modes. Order Atlas is playable now as an intro sample, with Daily and Pro
+              modes coming next.
             </p>
+            <div className="button-row">
+              <Link className="button-secondary" href="/play">
+                Open game library
+              </Link>
+            </div>
           </div>
           <div className="mode-poster-grid" aria-label="Ways to play Can You Geo">
             {modeCards.map((card) => (

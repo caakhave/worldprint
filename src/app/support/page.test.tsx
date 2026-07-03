@@ -20,6 +20,7 @@ describe("SupportPage", () => {
     expect(screen.getByRole("link", { name: "Email account help" })).toHaveAttribute("href", CONTACT_LINKS.accountHelp.href);
     expect(screen.getByRole("link", { name: "Email billing help" })).toHaveAttribute("href", CONTACT_LINKS.billingHelp.href);
     expect(screen.getByRole("link", { name: "Report a bug" })).toHaveAttribute("href", CONTACT_LINKS.bugReport.href);
+    expect(screen.getByText(/Include the game, date or round when available, country, rule, or indicator/i)).toBeVisible();
     expect(screen.getByRole("link", { name: "Data/source issue" })).toHaveAttribute("href", CONTACT_LINKS.dataSourceIssue.href);
     expect(screen.getByRole("heading", { name: "Use it only if support asks." })).toBeVisible();
     expect(screen.getByText(/Do not send passwords, full card details, or private Stripe card information by email/i)).toBeVisible();

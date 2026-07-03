@@ -55,7 +55,7 @@ export const metadata: Metadata = {
   keywords: [
     "Can You Geo",
     "geography game",
-    "daily geography game",
+    "geography game library",
     "map game",
     "world map game",
     "geography quiz",
@@ -99,6 +99,7 @@ export const viewport: Viewport = {
 };
 
 const footerItems = [
+  { href: "/play", label: "Play" },
   { href: "/past-games", label: "Past Games" },
   { href: "/sources", label: "Sources" },
   { href: "/legal", label: "Terms, Privacy & Accessibility" },
@@ -129,7 +130,10 @@ export default function RootLayout({ children }: Readonly<{ children: React.Reac
           dangerouslySetInnerHTML={{ __html: JSON.stringify(siteStructuredData) }}
         />
         <footer className="site-footer">
-          <p>Can You Geo? is a daily geography game. Play new games, replay past games, and check the data sources any time.</p>
+          <p>
+            Can You Geo? is a geography game library. Open the game hub, replay Mystery Map Past Games, and check the data sources
+            any time.
+          </p>
           <nav className="footer-nav" aria-label="Footer navigation">
             {footerItems.map((item) => (
               <Link key={item.href} href={item.href}>

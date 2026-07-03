@@ -5,9 +5,15 @@ import { usePathname } from "next/navigation";
 import { dispatchPlayLobbyRequest, isMysteryMapPlayPath } from "@/lib/site/playLobbyNavigation";
 
 const navItems = [
-  { href: "/play/mystery-map", label: "Play", primary: true },
+  { href: "/play", label: "Play", primary: true },
   { href: "/how-to-play", label: "How it works" }
 ];
+
+function isPlayPath(pathname: string | null): boolean {
+  if (!pathname) return false;
+  const normalized = pathname.replace(/\/+$/, "") || "/";
+  return normalized === "/play" || normalized.startsWith("/play/");
+}
 
 export function PrimaryNav() {
   const pathname = usePathname();
@@ -19,9 +25,9 @@ export function PrimaryNav() {
           key={item.href}
           href={item.href}
           data-primary={"primary" in item && item.primary ? "true" : undefined}
-          aria-current={item.href === "/play/mystery-map" && isMysteryMapPlayPath(pathname) ? "page" : undefined}
+          aria-current={item.href === "/play" && isPlayPath(pathname) ? "page" : undefined}
           onClick={(event) => {
-            if (item.href !== "/play/mystery-map" || !isMysteryMapPlayPath(pathname)) return;
+            if (item.href !== "/play" || !isMysteryMapPlayPath(pathname)) return;
             event.preventDefault();
             dispatchPlayLobbyRequest();
           }}

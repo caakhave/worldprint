@@ -5,7 +5,7 @@ import { pageMetadata } from "@/lib/site/seo";
 export const metadata: Metadata = pageMetadata({
   title: "Free and Pro - Can You Geo?",
   description:
-    "Compare Free and Pro access for the Can You Geo game library: Mystery Map, Pattern Atlas, Order Atlas planning, saved progress, custom runs, Past Games, and advanced stats.",
+    "Compare Free and Pro access for the Can You Geo game library: supported Daily play, Mystery Map Custom Atlas, Pattern Atlas Pattern Runs, Order Atlas intro play, Past Games, and advanced stats.",
   path: "/upgrade/"
 });
 

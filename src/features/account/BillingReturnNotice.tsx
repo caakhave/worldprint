@@ -41,8 +41,8 @@ export function BillingReturnNotice({ context }: { context: "account" | "upgrade
             Compare plans
           </Link>
         ) : (
-          <Link className="button-secondary" href="/play/mystery-map">
-            Keep playing
+          <Link className="button-secondary" href="/play">
+            Open game library
           </Link>
         )}
       </aside>
@@ -69,8 +69,8 @@ export function BillingReturnNotice({ context }: { context: "account" | "upgrade
           ) : null}
         </p>
       </div>
-      <Link className="button-secondary" href={proActive ? "/play/mystery-map" : "/account"}>
-        {proActive ? "Play Pro" : "Refresh account"}
+      <Link className="button-secondary" href={proActive ? "/play" : "/account"}>
+        {proActive ? "Open game library" : "Refresh account"}
       </Link>
     </aside>
   );

@@ -21,52 +21,55 @@ const heroCopy: Record<
   }
 > = {
   guest: {
-    eyebrow: "Join the daily challenge",
-    lead: "A new mystery map is waiting, and Pattern Atlas adds another way to read the world. Spot the pattern, spend clues wisely, and make the call.",
+    eyebrow: "Three ways to read the world",
+    lead:
+      "Try Mystery Map, Pattern Atlas, and the Order Atlas intro run. Samples are open without an account; Free unlocks Daily games and saved progress where supported.",
     primary: { label: "Start Pro", href: "/upgrade" },
-    secondary: { label: "Try Sample Run", href: "/play/mystery-map" },
+    secondary: { label: "Explore games", href: "/play" },
     noteLines: [
-      "No account needed to try out our sample maps.",
-      "Free accounts get 3 Daily rounds per playable game.",
-      "Pro accounts get Custom Atlas and Pattern Runs."
+      "No account needed for sample runs.",
+      "Free accounts get Daily games and saved progress where supported.",
+      "Order Atlas is intro-only today; Daily and Pro modes are coming next."
     ],
     panelEyebrow: "Join the game",
     panelHeading: "Start Pro or continue free",
     panelBody:
-      "Pro opens the growing game library. Free needs no card and includes 3 Daily rounds per playable game, saved progress, streaks, and basic stats.",
+      "Free needs no card for Daily-enabled games and saved progress. Pro opens Mystery Map Custom Atlas, Pattern Atlas Pattern Runs, Past Games, and advanced stats.",
     panelCta: { label: "Start Pro", href: "/upgrade" }
   },
   free: {
     eyebrow: "Free account active",
     lead:
-      "Your Daily is ready. Free accounts get 3 Daily rounds per playable game: Mystery Map and Pattern Atlas are playable now, and Order Atlas is coming soon.",
-    primary: { label: "Play today's Free Daily", href: "/play/mystery-map" },
+      "Your Daily games are ready where supported. Mystery Map and Pattern Atlas have Free Daily play, and Order Atlas has an intro sample run.",
+    primary: { label: "Open game library", href: "/play" },
     secondary: { label: "Upgrade to Pro", href: "/upgrade" },
     noteLines: [
       "You are signed in on Free.",
-      "Free accounts save Daily progress, streaks, and basic stats.",
-      "Pro unlocks Custom Atlas, Pattern Runs, and Past Games."
+      "Daily progress, streaks, and basic stats save for supported games.",
+      "Pro unlocks Mystery Map Custom Atlas, Pattern Runs, and Past Games."
     ],
     panelEyebrow: "Free Daily unlocked",
-    panelHeading: "Play today's Daily or unlock more games",
+    panelHeading: "Play today's Daily games or unlock deeper runs",
     panelBody:
-      "Free keeps each playable game's Daily progress saved. Pro adds Custom Atlas runs, Pattern Atlas filters, and the complete Past Games archive.",
+      "Free keeps Daily-enabled progress saved. Pro adds Mystery Map Custom Atlas runs, Pattern Atlas filters, and the complete Past Games archive.",
     panelCta: { label: "Upgrade to Pro", href: "/upgrade" }
   },
   pro: {
     eyebrow: "Pro Atlas unlocked",
-    lead: "Your full atlas is open. Play today's Daily, start a Custom Atlas set, or jump into Pattern Atlas whenever you want.",
-    primary: { label: "Play today's Daily", href: "/play/mystery-map" },
+    lead:
+      "Your Pro library is open for the modes that support it: Daily play, Mystery Map Custom Atlas, Pattern Atlas Pattern Runs, and Past Games.",
+    primary: { label: "Open game library", href: "/play" },
     secondary: { label: "Start Custom Atlas", href: "/play/mystery-map#practice-atlas" },
     noteLines: [
       "Pro is active on this account.",
       "Daily maps still count for streaks and score.",
-      "Custom Atlas, Pattern Runs, and Past Games are unlocked for deeper play."
+      "Order Atlas remains an intro sample while its Daily and Pro modes are still coming next."
     ],
     panelEyebrow: "Pro Atlas unlocked",
-    panelHeading: "Daily, Custom Atlas, Pattern Atlas",
-    panelBody: "Pro can play the Daily, build Custom Atlas runs, start Pattern Atlas Pattern Runs, replay Past Games, and review advanced stats.",
-    panelCta: { label: "Play Pattern Atlas", href: "/play/pattern-atlas" }
+    panelHeading: "Daily, Custom Atlas, Pattern Runs",
+    panelBody:
+      "Pro can play Daily games, build Mystery Map Custom Atlas runs, start Pattern Atlas Pattern Runs, replay Past Games, and review advanced stats.",
+    panelCta: { label: "Open Pattern Atlas", href: "/play/pattern-atlas" }
   },
   loading: {
     eyebrow: "Checking atlas access",
@@ -75,8 +78,8 @@ const heroCopy: Record<
     secondary: { label: "Open Mystery Map", href: "/play/mystery-map" },
     noteLines: [
       "Looking for a signed-in account.",
-      "Free accounts get 3 Daily rounds per playable game.",
-      "Pro accounts get Daily, Custom Atlas, and Pattern Runs."
+      "Free accounts get Daily rounds in Daily-enabled games.",
+      "Pro accounts get supported Daily, Custom Atlas, and Pattern Runs."
     ],
     panelEyebrow: "Account check",
     panelHeading: "Loading your atlas",

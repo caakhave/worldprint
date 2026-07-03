@@ -1116,7 +1116,7 @@ export function WorldprintClient({ dateOverride, entryMode = "standard" }: World
         ? `Pro Atlas uses unlimited ${PRO_ATLAS_ROUND_COUNT}-map runs from the approved pool. Daily Challenge is today's fixed 3-map streak run.`
         : primaryMode === "daily"
           ? "Want more after today's 3 maps? Go Pro for unlimited Atlas play."
-          : "Sign up for Pro for the full atlas, or create a free account for 3 Daily rounds per playable game.";
+          : "Sign up for Pro for the full atlas, or create a free account for Daily rounds in Daily-enabled games.";
     const primaryActionLabel =
       primaryMode === "atlas"
         ? currentAtlasActive
@@ -1138,7 +1138,7 @@ export function WorldprintClient({ dateOverride, entryMode = "standard" }: World
     const practiceCopy = canUseFullPractice
       ? "Training sets by topic and difficulty. Never affects your Daily score or streak."
       : isFreeAccount
-        ? "Practice by topic and difficulty is included with Pro. Free accounts include 3 Daily rounds per playable game."
+        ? "Practice by topic and difficulty is included with Pro. Free accounts include Daily rounds in Daily-enabled games."
         : "Try the Sample Run without an account, or start Pro for topic and difficulty practice.";
     const practiceReadyText = selectedCount > 0
       ? practiceReadyLine(selectedCount)

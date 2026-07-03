@@ -52,6 +52,15 @@ describe("ResetPasswordClient", () => {
     expect(screen.getByText("Password updated. You can sign in with the new password next time.")).toBeVisible();
   });
 
+  it("routes unavailable-preview players to the game library", () => {
+    accountMock.state.configured = false;
+
+    render(<ResetPasswordClient />);
+
+    expect(screen.getByText("You can still try sample runs on this device.")).toBeVisible();
+    expect(screen.getByRole("link", { name: "Explore games" })).toHaveAttribute("href", "/play");
+  });
+
   it("requires a verified recovery session before showing the password form", () => {
     accountMock.state.user = null;
 

@@ -34,11 +34,11 @@ export default function SignUpPage() {
           <ul className="account-checklist">
             <li>
               <strong>Free</strong>
-              <span>3-map Free Daily, saved progress, streaks, and basic stats. No card needed.</span>
+              <span>Daily games with saved progress, streaks, and basic stats where supported. No card needed.</span>
             </li>
             <li>
               <strong>Pro</strong>
-              <span>Unlimited Atlas play, full Practice Atlas, complete Past Games archive, and advanced stats.</span>
+              <span>Mystery Map Custom Atlas, Pattern Atlas Pattern Runs, complete Past Games archive, and advanced stats.</span>
             </li>
             <li>
               <strong>Email confirm</strong>

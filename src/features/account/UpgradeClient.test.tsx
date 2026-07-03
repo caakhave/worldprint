@@ -94,13 +94,20 @@ describe("UpgradeClient", () => {
     expect(screen.getAllByText("Checkout coming soon").length).toBeGreaterThan(0);
     expect(screen.getByText(/Checkout is coming soon and billing is disabled for now/i)).toBeVisible();
     expect(screen.getByText(/Billing is disabled right now/i)).toBeVisible();
-    expect(screen.getAllByText(/3 Daily rounds per playable game/i).length).toBeGreaterThanOrEqual(1);
+    expect(screen.getAllByText(/Daily rounds in Daily-enabled games/i).length).toBeGreaterThanOrEqual(1);
     expect(screen.getByRole("heading", { name: "Free and Pro now cover more than one game." })).toBeVisible();
     expect(screen.getByRole("heading", { name: "Mystery Map" })).toBeVisible();
     expect(screen.getByRole("heading", { name: "Pattern Atlas" })).toBeVisible();
     expect(screen.getByRole("heading", { name: "Order Atlas" })).toBeVisible();
-    expect(screen.getByRole("link", { name: /Play Pattern Atlas/i })).toHaveAttribute("href", "/play/pattern-atlas");
-    expect(screen.getAllByText("Coming soon").length).toBeGreaterThan(0);
+    expect(screen.getByRole("link", { name: /Open Pattern Atlas/i })).toHaveAttribute("href", "/play/pattern-atlas");
+    expect(screen.getByRole("link", { name: /Try intro run/i })).toHaveAttribute("href", "/play/order-atlas");
+    expect(screen.getByText("Playable sample")).toBeVisible();
+    expect(screen.getByText(/Order Atlas is playable as an intro sample while Daily and Pro modes remain future work/i)).toBeVisible();
+    const orderAtlasCard = screen.getByRole("heading", { name: "Order Atlas" }).closest("article");
+    expect(orderAtlasCard).toBeTruthy();
+    expect(within(orderAtlasCard as HTMLElement).getByText("Daily and Pro modes coming next")).toBeVisible();
+    expect(within(orderAtlasCard as HTMLElement).getByText("No saved stats yet")).toBeVisible();
+    expect(within(orderAtlasCard as HTMLElement).queryByText(/Free Daily|Pro Pattern Run|saved progress|streaks|unlimited/i)).not.toBeInTheDocument();
     expect(screen.queryByText("Full Practice Atlas")).not.toBeInTheDocument();
   });
 
@@ -147,7 +154,7 @@ describe("UpgradeClient", () => {
     expect(within(overview).getByRole("button", { name: "Join yearly" })).toBeEnabled();
     expect(
       within(overview).getByText(
-        "Free accounts unlock 3 Daily rounds per playable game and saved Daily progress. Pro opens Mystery Map Custom Atlas, Pattern Atlas Pattern Runs, the complete Past Games archive, advanced stats, and future premium games."
+        "Free accounts unlock Daily rounds and saved progress in Daily-enabled games. Pro opens deeper supported modes: Mystery Map Custom Atlas, Pattern Atlas Pattern Runs, the complete Past Games archive, and advanced stats."
       )
     ).toBeVisible();
     expect(screen.getAllByText("Best value").length).toBeGreaterThanOrEqual(1);
@@ -202,7 +209,7 @@ describe("UpgradeClient", () => {
     expect(JSON.stringify(options.body)).not.toContain("price_");
     expect(client.from).not.toHaveBeenCalled();
     expect(screen.getAllByRole("link", { name: "Continue free" }).some((link) => link.getAttribute("href") === "/account")).toBe(true);
-    expect(screen.getByText("Free needs no card and includes 3 Daily rounds per playable game, saved progress, and basic stats.")).toBeVisible();
+    expect(screen.getByText("Free needs no card and includes Daily rounds in Daily-enabled games, saved progress, and basic stats.")).toBeVisible();
   });
 
   it("shows a focused yearly Pro intent landing state after sign-in", async () => {
@@ -246,6 +253,7 @@ describe("UpgradeClient", () => {
     render(<UpgradeClient />);
 
     expect(screen.getByRole("heading", { name: "You have the full atlas." })).toBeVisible();
+    expect(screen.getByText(/Your account already has supported Pro modes/i)).toBeVisible();
     expect(screen.queryByRole("heading", { name: "Finish setting up Can You Geo? Pro" })).not.toBeInTheDocument();
     expect(screen.queryByRole("button", { name: "Continue to secure checkout" })).not.toBeInTheDocument();
     expect(screen.queryByText("Pro active")).not.toBeInTheDocument();
