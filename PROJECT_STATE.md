@@ -12,8 +12,11 @@ Snapshot date: July 3, 2026.
   - `6ce8aa064cd5f1b40cd3253c665168d3452ae135` - Pattern Atlas Phase 3 account modes and persistence.
 - `728d8d3` - Pattern Atlas QA polish for clue clarity and sample conversion.
 - `ee9827c` - Phase 4 site integration for the multi-game library.
+- `3c2525d` - Manual QA gameplay/site polish for multi-game flows.
+- `9e841db` - Billing Portal CORS fix for Cloudflare preview deployments.
 - Phase 4 site integration is complete for this checkpoint.
 - Manual QA gameplay/site polish is complete for this checkpoint.
+- Billing Portal CORS fix is deployed to Supabase project `jquebthneczqdxagagof`.
 - The working tree should remain docs/product-code clean except for untracked `atd/` assets and explicitly requested checkpoint work.
 - `atd/` remains untracked and must not be committed unless explicitly requested.
 
@@ -116,6 +119,7 @@ Snapshot date: July 3, 2026.
 
 ### Manual QA Gameplay/Site Polish
 
+- Commit: `3c2525d`.
 - Pattern Atlas clue reveal values now stand out as emphasized player-facing clue values.
 - Pattern Atlas indicator-derived category clues no longer expose the raw `Indicators` family label alone; the player-facing label is now `Data & statistics` with helper copy for mapped data-indicator rules.
 - Free Daily completion for playable games now pushes Pro instead of offering impossible replay:
@@ -129,9 +133,46 @@ Snapshot date: July 3, 2026.
 - Rank Run remains clearly marked as coming soon; copy does not overpromise Rank Run as playable.
 - No Rank Run gameplay, auth/payment/Supabase/Stripe, Edge Function, or deployment config changes were made.
 
+### Billing Portal CORS Fix
+
+- Commit: `9e841db`.
+- Supabase Edge Function deployed: `stripe-portal`.
+- Project/ref: `jquebthneczqdxagagof`.
+- Manage Billing CORS now allows strict Cloudflare preview origins:
+  - `https://canyougeo.pages.dev`.
+  - Single-label preview subdomains such as `https://325e0252.canyougeo.pages.dev`.
+- Production, www, test, and localhost origins remain allowed.
+- Unknown origins are not echoed, and there is no wildcard CORS policy.
+- `stripe-portal` remains JWT protected.
+- Challenge email CORS was previously fixed and deployed in commit `b5950022774228f6f24c1c42d755962ddd383b4a`.
+- If Stripe itself rejects a Billing Portal return URL after CORS succeeds, treat that as a separate Stripe portal/return URL configuration issue.
+
+## Latest Staging QA Status
+
+- `/play/`: corrected `Choose your geography game.` headline; Mystery Map and Pattern Atlas are playable cards; Rank Run is coming soon only.
+- `/play/mystery-map/`: loads normally; Pro lobby distinguishes Unlimited/Pro Atlas from Daily Challenge; Free Daily completion pushes upgrade instead of replay.
+- `/play/pattern-atlas/`: loads normally; clue copy is clearer; revealed clue values stand out; Free Daily and sample completion flows use the updated upgrade/library actions.
+- `/upgrade/`: shows the multi-game library near the top; Free copy says `3 Daily rounds per playable game`; Rank Run is not presented as playable yet.
+- `/account Manage Billing`: `stripe-portal` CORS is fixed and deployed; OPTIONS preflight now echoes the Cloudflare preview origin exactly.
+- Homepage: logged-out acquisition copy remains intact; multi-game library copy is present; Free-account copy does not count Rank Run as playable.
+- `/how-to-play/`: frames Can You Geo as a multi-game library while keeping Mystery Map instructions concise.
+- Signed-out checks:
+  - Pattern Atlas sample, Mystery Map sample, homepage, `/play/`, `/upgrade/`, and `/how-to-play/` have passed smoke/manual QA.
+- Free checks:
+  - Mocked/structure tests cover account-aware Free branches.
+  - Staging Free-account QA should verify Daily completion upgrade pushes on both playable games.
+- Pro checks:
+  - Mocked/structure tests cover Pro branches.
+  - Manage Billing CORS preflight passes after the `stripe-portal` deploy; full Pro click-through should be retested on the Cloudflare preview URL.
+- No known CORS blockers remain after the Billing Portal deploy.
+
 ## Current Next Task
 
-Staging-wide QA pass before more feature work.
+Next safest tasks:
+
+1. Start Rank Run planning / Phase 1 data model.
+2. Do a production-readiness audit before more feature work.
+3. Later reconfigure a stable staging domain if desired.
 
 ## Validation Summary
 
@@ -284,15 +325,36 @@ Staging-wide QA pass before more feature work.
   - Mobile `/play/`, `/upgrade/`, and Pattern Atlas sample-complete checks had no horizontal overflow.
   - Real authenticated Free/Pro browser QA was not performed locally; mocked entitlement/structure coverage passed and staging QA with real accounts is still needed.
 
+### Billing Portal CORS Fix
+
+- `pnpm test supabase/functions/_shared/security.test.ts supabase/functions/_shared/returnUrls.test.ts supabase/functions/stripe-portal/index.structure.test.ts`
+  - Result: passed; 3 files and 20 tests.
+- `pnpm lint`
+  - Result: passed.
+- `pnpm typecheck`
+  - Result: passed.
+- `git diff --check`
+  - Result: passed.
+- Supabase deploy:
+  - `supabase functions deploy stripe-portal --use-api`
+  - Result: deployed successfully to project `jquebthneczqdxagagof`.
+- Real OPTIONS preflight checks for `https://jquebthneczqdxagagof.supabase.co/functions/v1/stripe-portal`:
+  - `https://325e0252.canyougeo.pages.dev`: allowed and echoed exactly.
+  - `https://canyougeo.com`: allowed and echoed exactly.
+  - `http://localhost:3000`: allowed and echoed exactly.
+  - `https://evil.example.com`: not echoed.
+
 ## Known Remaining Issues / Follow-Ups
 
 - Custom Atlas topic+difficulty combo exhaustion by play history is not implemented.
 - Full e2e may need updating for the newer access model and Custom Atlas naming.
 - `atd/` remains untracked and should not be committed.
-- Pattern Atlas Free/Pro real-browser QA needs staging verification with authenticated accounts after deploy.
-- Account Manage Billing CORS / billing portal behavior needs separate investigation if it has not already been fixed.
+- `test.canyougeo.com` may still point to production/main unless reconfigured.
+- Free-account copy should say `3 Daily rounds per playable game`, not `9`, until Rank Run is live.
+- Pattern Atlas small-state omissions rely on mapped-country scope notes.
+- Pattern Atlas Free/Pro real-browser QA should continue on staging with authenticated accounts.
 - Rank Run is represented only as coming soon; no gameplay exists yet.
-- Staging-wide QA should run before more feature work.
+- Full final public launch still needs Stripe live mode, production Supabase/Stripe settings, SEO/analytics checks, and production deploy.
 
 ## Key Decisions To Preserve
 
@@ -307,9 +369,15 @@ Staging-wide QA pass before more feature work.
 - Pattern Atlas uses `pattern-atlas:v1`; Mystery Map uses `worldprint:v1`.
 - Do not enable live billing.
 - Do not touch `atd/`.
+- Rank Run is coming soon only; no gameplay exists yet.
+- Free-account copy should count only playable games.
 
 ## Recently Completed Commits
 
+- `9e841db Allow billing portal from preview deployments`
+- `3c2525d Polish multi-game QA flows`
+- `ee9827c Integrate Pattern Atlas into site library`
+- `728d8d3 Polish Pattern Atlas clues and sample conversion`
 - `6ce8aa0 Add Pattern Atlas account modes and persistence`
 - `30d6969 Add playable Pattern Atlas sample route`
 - `c5482e0 Add Pattern Atlas rule catalog foundation`
