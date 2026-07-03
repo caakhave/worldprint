@@ -49,6 +49,11 @@ const DIFFICULTY_LABELS: Record<PatternAtlasDifficulty, string> = {
   standard: "Standard",
   expert: "Expert"
 };
+const CLUE_FEEDBACK_LABELS: Record<keyof PatternAtlasRoundState["clues"], string> = {
+  family: "Category clue used",
+  highlightedCountry: "Country clue used",
+  counterexample: "Counterexample clue used"
+};
 
 export type PatternAtlasLoadedData = {
   map: MapFeatureCollection;
@@ -301,7 +306,7 @@ export function PatternAtlasClient({ initialData, todayOverride }: PatternAtlasC
         return {
           ...round,
           score: round.score - PATTERN_ATLAS_CLUE_PENALTY,
-          feedback: `Clue revealed. -${PATTERN_ATLAS_CLUE_PENALTY} points.`,
+          feedback: `${CLUE_FEEDBACK_LABELS[clue]}. -${PATTERN_ATLAS_CLUE_PENALTY} points.`,
           clues: { ...round.clues, [clue]: true }
         };
       });
@@ -393,7 +398,7 @@ export function PatternAtlasClient({ initialData, todayOverride }: PatternAtlasC
   }
 
   if (run.status === "complete") {
-    return <PatternAtlasSummary run={run} onRestart={() => restartRun(run)} onLobby={() => setRun(null)} />;
+    return <PatternAtlasSummary run={run} signedIn={signedIn} onRestart={() => restartRun(run)} onLobby={() => setRun(null)} />;
   }
 
   const currentRule = ruleById.get(run.ruleIds[run.currentRoundIndex]);
@@ -486,26 +491,44 @@ export function PatternAtlasClient({ initialData, todayOverride }: PatternAtlasC
         <div className="clue-dashboard pattern-atlas-clues" aria-label="Pattern clues">
           <ClueButton
             label="Category"
-            text={currentState.clues.family ? familyLabel(currentRule.family) : "Reveal the family this pattern belongs to."}
+            text={
+              currentState.clues.family
+                ? `Category family revealed: ${familyLabel(currentRule.family)}`
+                : "Shows the broad type of rule, like borders, language, or indicators."
+            }
             used={currentState.clues.family}
             cost={PATTERN_ATLAS_CLUE_PENALTY}
             icon="family"
+            actionLabel="Reveal category family"
+            usedLabel="Category clue used"
             onClick={() => revealClue("family")}
           />
           <ClueButton
             label="Highlighted country"
-            text={currentState.clues.highlightedCountry ? countryName(highlightedCountry, data.countryNames) : "Reveal one country in the highlighted set."}
+            text={
+              currentState.clues.highlightedCountry
+                ? `One highlighted country: ${countryName(highlightedCountry, data.countryNames)}`
+                : "Names one country from the highlighted set, not the full list."
+            }
             used={currentState.clues.highlightedCountry}
             cost={PATTERN_ATLAS_CLUE_PENALTY}
             icon="highlight"
+            actionLabel="Reveal one highlighted country"
+            usedLabel="Country clue used"
             onClick={() => revealClue("highlightedCountry")}
           />
           <ClueButton
             label="Counterexample"
-            text={currentState.clues.counterexample ? `${countryName(counterexample, data.countryNames)} is not highlighted.` : "Reveal one country that does not fit."}
+            text={
+              currentState.clues.counterexample
+                ? `Counterexample revealed: ${countryName(counterexample, data.countryNames)} is not highlighted.`
+                : "Names a country that is not highlighted, helping rule out wrong patterns."
+            }
             used={currentState.clues.counterexample}
             cost={PATTERN_ATLAS_CLUE_PENALTY}
             icon="counterexample"
+            actionLabel="Reveal one country that does not fit"
+            usedLabel="Counterexample clue used"
             onClick={() => revealClue("counterexample")}
           />
         </div>
@@ -799,6 +822,8 @@ function ClueButton({
   used,
   cost,
   icon,
+  actionLabel,
+  usedLabel,
   onClick
 }: {
   label: string;
@@ -806,6 +831,8 @@ function ClueButton({
   used: boolean;
   cost: number;
   icon: "family" | "highlight" | "counterexample";
+  actionLabel: string;
+  usedLabel: string;
   onClick: () => void;
 }) {
   const Icon = icon === "family" ? Lightbulb : icon === "highlight" ? MapPin : XCircle;
@@ -815,7 +842,7 @@ function ClueButton({
       <p>{text}</p>
       <button className="button-secondary full-width" type="button" disabled={used} onClick={onClick}>
         <Icon size={18} aria-hidden="true" />
-        {used ? "Clue revealed" : `Reveal ${label.toLowerCase()} -${cost}`}
+        {used ? usedLabel : `${actionLabel} -${cost}`}
       </button>
     </div>
   );
@@ -971,14 +998,17 @@ function PatternAtlasReveal({
 
 function PatternAtlasSummary({
   run,
+  signedIn,
   onRestart,
   onLobby
 }: {
   run: PatternAtlasRunState;
+  signedIn: boolean;
   onRestart: () => void;
   onLobby: () => void;
 }) {
   const finalScore = run.rounds.reduce((total, round) => total + (round.solved ? round.score : 0), 0);
+  const showGuestSampleCta = run.mode === "sample" && !signedIn;
   return (
     <section className="game-shell page-shell pattern-atlas-summary">
       <div className="empty-state surface">
@@ -993,6 +1023,26 @@ function PatternAtlasSummary({
             </span>
           ))}
         </div>
+        {showGuestSampleCta ? (
+          <section className="pattern-atlas-account-cta" aria-label="Keep playing Pattern Atlas">
+            <div>
+              <p className="eyebrow">Free or Pro</p>
+              <h2>Start Pro or continue free.</h2>
+              <p>
+                Sample progress stays local. Create a free account to save Free Daily progress, or start Pro to unlock more Pattern Atlas
+                and the full Can You Geo library.
+              </p>
+            </div>
+            <div className="button-row">
+              <Link className="button" href="/upgrade">
+                Start Pro
+              </Link>
+              <Link className="button-secondary" href="/sign-up">
+                Create free account
+              </Link>
+            </div>
+          </section>
+        ) : null}
         <div className="button-row">
           <button className="button" type="button" onClick={onRestart}>
             <Compass size={18} aria-hidden="true" />

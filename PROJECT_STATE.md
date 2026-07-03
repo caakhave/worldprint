@@ -9,7 +9,8 @@ Snapshot date: July 3, 2026.
   - `b5950022774228f6f24c1c42d755962ddd383b4a` - Challenge email CORS fix.
   - `c5482e0bbe60c3b1800e7875d252a03fbc27bfbd` - Pattern Atlas Phase 1 rule catalog foundation.
   - `30d6969` - Pattern Atlas Phase 2 playable sample route.
-- Pattern Atlas Phase 3 account-aware modes and persistence are complete for this checkpoint.
+  - `6ce8aa064cd5f1b40cd3253c665168d3452ae135` - Pattern Atlas Phase 3 account modes and persistence.
+- Pattern Atlas QA polish is complete for this checkpoint.
 - The working tree should remain docs/product-code clean except for untracked `atd/` assets and explicitly requested checkpoint work.
 - `atd/` remains untracked and must not be committed unless explicitly requested.
 
@@ -81,6 +82,17 @@ Snapshot date: July 3, 2026.
   - Challenge/share links.
   - Stats saving.
   - Rank Run integration.
+
+### Pattern Atlas QA Polish
+
+- Clue cards now clearly explain what category, highlighted-country, and counterexample clues do before use.
+- Used clue states show specific revealed information and clearer disabled button labels.
+- The highlighted-country clue explicitly says it reveals one highlighted country, not the full highlighted set.
+- Signed-out Pattern Atlas Sample Run completion now includes a signup/upgrade CTA matching the Mystery Map sample conversion pattern.
+- CTA routes are valid:
+  - `Start Pro` uses `/upgrade`, backed by `src/app/upgrade/page.tsx`.
+  - `Create free account` uses `/sign-up`, backed by `src/app/sign-up/page.tsx`.
+- `/upgrade` visual game-card work is still pending for Phase 4 or a later explicit upgrade-page polish task.
 
 ## Current Next Task
 
@@ -168,6 +180,28 @@ Pattern Atlas Phase 4: site integration. Add Pattern Atlas to `/play` hub, navig
   - Mystery Map smoke QA passed locally.
   - Free/Pro Pattern Atlas browser QA was not done with real authenticated Supabase sessions; those branches are covered by mocked entitlement tests and need staging QA with real accounts after deploy.
 
+### Pattern Atlas QA Polish
+
+- `pnpm test src/features/pattern-atlas/PatternAtlasClient.test.tsx src/lib/pattern-atlas/selection.test.ts src/lib/pattern-atlas/storage.test.ts src/lib/pattern-atlas/catalog.test.ts src/app/play/pattern-atlas/page.test.tsx src/components/WorldMap.test.tsx`
+  - Result: passed; 6 files and 44 tests.
+- `pnpm test src/features/worldprint/WorldprintClient.structure.test.ts src/components/WorldMap.test.tsx`
+  - Result: passed; 2 files and 35 tests.
+- `pnpm lint`
+  - Result: passed.
+- `pnpm typecheck`
+  - Result: passed.
+- `pnpm build`
+  - Result: passed; static export generated 269 pages and included `/play/pattern-atlas`.
+- `git diff --check`
+  - Result: passed.
+- Manual QA:
+  - Signed-out Pattern Atlas clue cards are understandable before use.
+  - Used clue states show specific revealed information and no generic `Clue revealed` button text.
+  - Highlighted-country clue is clear that it reveals one highlighted country.
+  - Penalties apply once.
+  - Signed-out Sample Run completion shows the join/upgrade CTA.
+  - `/play/mystery-map/` still loaded locally with its map.
+
 ## Known Remaining Issues / Follow-Ups
 
 - Custom Atlas topic+difficulty combo exhaustion by play history is not implemented.
@@ -175,6 +209,7 @@ Pattern Atlas Phase 4: site integration. Add Pattern Atlas to `/play` hub, navig
 - Full e2e may need updating for the newer access model and Custom Atlas naming.
 - `atd/` remains untracked and should not be committed.
 - Pattern Atlas Free/Pro real-browser QA needs staging verification with authenticated accounts after deploy.
+- `/upgrade` visual game-card work is still pending.
 - Pattern Atlas Phase 4 should integrate the game into site surfaces without redesigning homepage or `/play` hub.
 
 ## Key Decisions To Preserve
@@ -193,6 +228,7 @@ Pattern Atlas Phase 4: site integration. Add Pattern Atlas to `/play` hub, navig
 
 ## Recently Completed Commits
 
+- `6ce8aa0 Add Pattern Atlas account modes and persistence`
 - `30d6969 Add playable Pattern Atlas sample route`
 - `c5482e0 Add Pattern Atlas rule catalog foundation`
 - `b595002 Allow challenge emails from preview deployments`

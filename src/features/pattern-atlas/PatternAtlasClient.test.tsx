@@ -1,6 +1,6 @@
 import { render, screen, waitFor, within } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
-import { readFileSync } from "node:fs";
+import { existsSync, readFileSync } from "node:fs";
 import path from "node:path";
 import { beforeEach, describe, expect, it, vi } from "vitest";
 import { PatternAtlasClient, type PatternAtlasLoadedData } from "@/features/pattern-atlas/PatternAtlasClient";
@@ -64,6 +64,36 @@ function renderPatternAtlas() {
 async function startSampleRun(user = userEvent.setup()) {
   await user.click(screen.getByRole("button", { name: /Start sample run/i }));
   return user;
+}
+
+async function completeRunByRuleIds(user: ReturnType<typeof userEvent.setup>, ruleIds: string[]) {
+  for (const [index, ruleId] of ruleIds.entries()) {
+    const rule = PATTERN_ATLAS_RULES.find((item) => item.id === ruleId);
+    if (!rule) throw new Error(`Missing Pattern Atlas test rule: ${ruleId}`);
+    await user.click(screen.getByRole("button", { name: rule.displayAnswer }));
+    await user.click(screen.getByRole("button", { name: index === ruleIds.length - 1 ? "Open summary" : "Next pattern" }));
+  }
+}
+
+async function completeSampleRun(user = userEvent.setup()) {
+  await startSampleRun(user);
+  await completeRunByRuleIds(user, [...PATTERN_ATLAS_SAMPLE_RULE_IDS]);
+  return user;
+}
+
+function completedRun(input: Parameters<typeof createPatternAtlasRun>[0]) {
+  const run = createPatternAtlasRun(input);
+  return {
+    ...run,
+    status: "complete" as const,
+    currentRoundIndex: run.rounds.length - 1,
+    rounds: run.rounds.map((round) => ({
+      ...round,
+      solved: true,
+      score: 900,
+      feedback: "Correct."
+    }))
+  };
 }
 
 describe("PatternAtlasClient", () => {
@@ -296,25 +326,57 @@ describe("PatternAtlasClient", () => {
     expect(screen.getByText("-300 points")).toBeVisible();
   });
 
+  it("explains what each clue does before use", async () => {
+    renderPatternAtlas();
+    await startSampleRun();
+
+    expect(screen.getByText("Shows the broad type of rule, like borders, language, or indicators.")).toBeVisible();
+    expect(screen.getByRole("button", { name: "Reveal category family -100" })).toBeVisible();
+    expect(screen.getByText("Names one country from the highlighted set, not the full list.")).toBeVisible();
+    expect(screen.getByRole("button", { name: "Reveal one highlighted country -100" })).toBeVisible();
+    expect(screen.getByText("Names a country that is not highlighted, helping rule out wrong patterns.")).toBeVisible();
+    expect(screen.getByRole("button", { name: "Reveal one country that does not fit -100" })).toBeVisible();
+  });
+
   it("reveals a clue country only after using the clue button", async () => {
     const user = userEvent.setup();
     renderPatternAtlas();
     await startSampleRun(user);
     expect(screen.queryByText("Bolivia")).not.toBeInTheDocument();
-    await user.click(screen.getByRole("button", { name: /Reveal highlighted country -100/i }));
-    expect(screen.getByText("Bolivia")).toBeVisible();
+    await user.click(screen.getByRole("button", { name: /Reveal one highlighted country -100/i }));
+    expect(screen.getByText("One highlighted country: Bolivia")).toBeVisible();
+    expect(screen.getByRole("button", { name: "Country clue used" })).toBeDisabled();
+  });
+
+  it("shows specific revealed clue information instead of generic used text", async () => {
+    const user = userEvent.setup();
+    renderPatternAtlas();
+    await startSampleRun(user);
+
+    await user.click(screen.getByRole("button", { name: /Reveal category family -100/i }));
+    await user.click(screen.getByRole("button", { name: /Reveal one highlighted country -100/i }));
+    await user.click(screen.getByRole("button", { name: /Reveal one country that does not fit -100/i }));
+
+    expect(screen.getByText("Category family revealed: Borders")).toBeVisible();
+    expect(screen.getByText("One highlighted country: Bolivia")).toBeVisible();
+    expect(screen.getByText("Counterexample revealed: Argentina is not highlighted.")).toBeVisible();
+    expect(screen.getByRole("button", { name: "Category clue used" })).toBeDisabled();
+    expect(screen.getByRole("button", { name: "Country clue used" })).toBeDisabled();
+    expect(screen.getByRole("button", { name: "Counterexample clue used" })).toBeDisabled();
+    expect(screen.queryByText("Clue revealed")).not.toBeInTheDocument();
   });
 
   it("applies clue penalties once and disables used clue buttons", async () => {
     const user = userEvent.setup();
     renderPatternAtlas();
     await startSampleRun(user);
-    const categoryClue = screen.getByRole("button", { name: /Reveal category -100/i });
+    const categoryClue = screen.getByRole("button", { name: /Reveal category family -100/i });
 
     await user.click(categoryClue);
 
     expect(screen.getAllByText("900").length).toBeGreaterThanOrEqual(1);
     expect(screen.getByText(/-100 points/i)).toBeVisible();
+    expect(categoryClue).toHaveTextContent("Category clue used");
     expect(categoryClue).toBeDisabled();
 
     await user.click(categoryClue);
@@ -323,6 +385,59 @@ describe("PatternAtlasClient", () => {
     await user.click(screen.getByRole("button", { name: "Landlocked countries in South America" }));
     expect(screen.getByText("-100")).toBeVisible();
     expect(screen.queryByRole("button", { name: /Reveal category/i })).not.toBeInTheDocument();
+  });
+
+  it("shows a signed-out Sample Run completion CTA for account signup", async () => {
+    const user = userEvent.setup();
+    renderPatternAtlas();
+
+    await completeSampleRun(user);
+
+    expect(screen.getByText("Pattern Atlas Sample Run complete")).toBeVisible();
+    expect(screen.getByText("Start Pro or continue free.")).toBeVisible();
+    expect(screen.getByText(/Sample progress stays local/i)).toBeVisible();
+    expect(screen.getByText(/Create a free account to save Free Daily progress/i)).toBeVisible();
+    expect(existsSync(path.join(process.cwd(), "src/app/upgrade/page.tsx"))).toBe(true);
+    expect(existsSync(path.join(process.cwd(), "src/app/sign-up/page.tsx"))).toBe(true);
+    expect(screen.getByRole("link", { name: "Start Pro" })).toHaveAttribute("href", "/upgrade");
+    expect(screen.getByRole("link", { name: "Create free account" })).toHaveAttribute("href", "/sign-up");
+    expect(screen.getByRole("button", { name: "Play again" })).toBeVisible();
+    expect(screen.getByRole("button", { name: "Choose mode" })).toBeVisible();
+  });
+
+  it("does not show logged-out signup copy on logged-in Free or Pro completions", async () => {
+    const user = userEvent.setup();
+    const dailyIds = selectPatternAtlasDailyRuleIds(PATTERN_ATLAS_RULES, PATTERN_ATLAS_CATALOG.contentVersion, "2026-07-03");
+    const dailyRun = completedRun({
+      mode: "daily",
+      dateKey: "2026-07-03",
+      contentVersion: PATTERN_ATLAS_CATALOG.contentVersion,
+      ruleIds: dailyIds,
+      salt: "2026-07-03"
+    });
+
+    setAccount(FREE_ENTITLEMENT, true);
+    savePatternAtlasPersistedState(persistPatternAtlasRun(defaultPatternAtlasPersistedState(), dailyRun));
+    const freeRender = renderPatternAtlas();
+    await user.click(screen.getByRole("button", { name: /View Pattern Atlas Daily/i }));
+
+    expect(screen.getByText("Pattern Atlas Daily complete")).toBeVisible();
+    expect(screen.queryByText("Start Pro or continue free.")).not.toBeInTheDocument();
+    expect(screen.queryByText(/Create a free account to save Free Daily progress/i)).not.toBeInTheDocument();
+    expect(screen.queryByRole("link", { name: "Create free account" })).not.toBeInTheDocument();
+
+    freeRender.unmount();
+    window.localStorage.clear();
+
+    setAccount(PRO_ENTITLEMENT, true);
+    savePatternAtlasPersistedState(persistPatternAtlasRun(defaultPatternAtlasPersistedState(), dailyRun));
+    renderPatternAtlas();
+    await user.click(screen.getByRole("button", { name: /View Pattern Atlas Daily/i }));
+
+    expect(screen.getByText("Pattern Atlas Daily complete")).toBeVisible();
+    expect(screen.queryByText("Start Pro or continue free.")).not.toBeInTheDocument();
+    expect(screen.queryByText(/Create a free account to save Free Daily progress/i)).not.toBeInTheDocument();
+    expect(screen.queryByRole("link", { name: "Create free account" })).not.toBeInTheDocument();
   });
 
   it("shows explanation, sources, highlighted countries, and mapped-country scope on reveal", async () => {
