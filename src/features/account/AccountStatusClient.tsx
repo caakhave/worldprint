@@ -129,7 +129,10 @@ export function AccountStatusClient() {
       <article className="surface account-card account-primary-card">
         <p className="eyebrow">Signed out</p>
         <h2>Start Pro or continue free.</h2>
-        <p>Pro unlocks supported custom runs and the full Mystery Map archive. Free needs no card and saves Daily progress where supported.</p>
+        <p>
+          Create a free account or sign in to save Daily progress where supported. Pro unlocks supported custom runs and the full
+          Mystery Map archive.
+        </p>
         <div className="button-row">
           <Link className="button" href="/upgrade">
             Start Pro

@@ -75,7 +75,10 @@ export function BillingActionsClient({ entitlement, context, selectedPlan = null
           <Link className="button-secondary" href="/sign-up">
             Continue free
           </Link>
-          <p className="account-env-note">Checkout is coming soon. Free needs no card and saves your Daily progress.</p>
+          <p className="account-env-note">
+            Checkout is coming soon. Create or sign in to your free account now; Free needs no card and saves Daily progress where
+            supported.
+          </p>
         </div>
       );
     }

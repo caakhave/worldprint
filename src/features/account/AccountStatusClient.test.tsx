@@ -260,8 +260,8 @@ describe("AccountStatusClient", () => {
     render(<AccountStatusClient />);
 
     expect(screen.getByRole("heading", { name: "Start Pro or continue free." })).toBeVisible();
+    expect(screen.getByText(/Create a free account or sign in to save Daily progress where supported/i)).toBeVisible();
     expect(screen.getByText(/Pro unlocks supported custom runs and the full Mystery Map archive/i)).toBeVisible();
-    expect(screen.getByText(/Free needs no card and saves Daily progress where supported/i)).toBeVisible();
     expect(screen.getByRole("link", { name: "Start Pro" })).toHaveAttribute("href", "/upgrade");
     expect(screen.getByRole("link", { name: "Continue free" })).toHaveAttribute("href", "/sign-up");
     expect(screen.queryByText("Player profile")).not.toBeInTheDocument();

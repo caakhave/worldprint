@@ -69,7 +69,8 @@ describe("BillingActionsClient", () => {
 
     expect(screen.getByRole("link", { name: "Start Pro" })).toHaveAttribute("href", "/sign-up?next=%2Fupgrade");
     expect(screen.getByRole("link", { name: "Continue free" })).toHaveAttribute("href", "/sign-up");
-    expect(screen.getByText("Checkout is coming soon. Free needs no card and saves your Daily progress.")).toBeVisible();
+    expect(screen.getByText(/Checkout is coming soon\. Create or sign in to your free account now/i)).toBeVisible();
+    expect(screen.getByText(/Free needs no card and saves Daily progress where supported/i)).toBeVisible();
     expect(screen.queryByRole("button", { name: "Checkout coming soon" })).not.toBeInTheDocument();
   });
 
