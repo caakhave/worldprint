@@ -1,0 +1,1098 @@
+{
+  "schemaVersion": "0.1.0",
+  "game": "pattern-atlas",
+  "contentVersion": "2026.07.02-pattern-atlas-phase1",
+  "sourceRegistry": [
+    {
+      "id": "natural-earth-admin0-110m",
+      "provider": "Natural Earth",
+      "dataset": "Admin 0 countries, 1:110m",
+      "attribution": "Made with Natural Earth.",
+      "sourceReference": "https://raw.githubusercontent.com/nvkelso/natural-earth-vector/v5.1.1/geojson/ne_110m_admin_0_countries.geojson",
+      "license": "Public domain",
+      "licenseReference": "https://www.naturalearthdata.com/about/terms-of-use/",
+      "retrievedAt": "2026-07-02",
+      "notes": "Used to scope Pattern Atlas starter rules to the current Can You Geo entity registry."
+    },
+    {
+      "id": "cia-world-factbook",
+      "provider": "CIA World Factbook",
+      "dataset": "Country profiles",
+      "attribution": "CIA World Factbook",
+      "sourceReference": "https://www.cia.gov/the-world-factbook/countries/",
+      "license": "Public domain",
+      "retrievedAt": "2026-07-02",
+      "notes": "Used for stable country language, border, coastline, and physical-geography facts."
+    },
+    {
+      "id": "asean-member-states",
+      "provider": "ASEAN",
+      "dataset": "Member States",
+      "attribution": "Association of Southeast Asian Nations",
+      "sourceReference": "https://asean.org/member-states/",
+      "license": "Official public informational page; used for factual membership reference.",
+      "retrievedAt": "2026-07-02"
+    },
+    {
+      "id": "gcc-member-states",
+      "provider": "Gulf Cooperation Council",
+      "dataset": "Member States",
+      "attribution": "Secretariat General of the Gulf Cooperation Council",
+      "sourceReference": "https://www.gcc-sg.org/en-us/AboutGCC/MemberStates/Pages/Home.aspx",
+      "license": "Official public informational page; used for factual membership reference.",
+      "retrievedAt": "2026-07-02"
+    },
+    {
+      "id": "nordic-council-countries",
+      "provider": "Nordic Council",
+      "dataset": "The Nordic countries",
+      "attribution": "Nordic Council and Nordic Council of Ministers",
+      "sourceReference": "https://www.norden.org/en/information/nordic-countries",
+      "license": "Official public informational page; used for factual membership reference.",
+      "retrievedAt": "2026-07-02"
+    },
+    {
+      "id": "pacific-alliance-members",
+      "provider": "Pacific Alliance",
+      "dataset": "Member countries",
+      "attribution": "Pacific Alliance",
+      "sourceReference": "https://alianzapacifico.net/en/member-states/",
+      "license": "Official public informational page; used for factual membership reference.",
+      "retrievedAt": "2026-07-02"
+    },
+    {
+      "id": "g7-members",
+      "provider": "Government of Canada",
+      "dataset": "G7 members",
+      "attribution": "Government of Canada",
+      "sourceReference": "https://www.international.gc.ca/world-monde/international_relations-relations_internationales/g7/index.aspx",
+      "license": "Official public informational page; used for factual membership reference.",
+      "retrievedAt": "2026-07-02"
+    },
+    {
+      "id": "european-union-countries",
+      "provider": "European Union",
+      "dataset": "EU country profiles",
+      "attribution": "European Union",
+      "sourceReference": "https://european-union.europa.eu/principles-countries-history/country-profiles_en",
+      "license": "Official public informational page; used for factual membership reference.",
+      "retrievedAt": "2026-07-02"
+    },
+    {
+      "id": "mercosur-member-states",
+      "provider": "MERCOSUR",
+      "dataset": "Member States",
+      "attribution": "MERCOSUR",
+      "sourceReference": "https://www.mercosur.int/en/about-mercosur/member-states/",
+      "license": "Official public informational page; used for factual membership reference.",
+      "retrievedAt": "2026-07-02"
+    },
+    {
+      "id": "european-central-bank-euro-area",
+      "provider": "European Central Bank",
+      "dataset": "Euro area countries",
+      "attribution": "European Central Bank",
+      "sourceReference": "https://www.ecb.europa.eu/euro/intro/html/index.en.html",
+      "license": "Official public informational page; used for factual currency reference.",
+      "retrievedAt": "2026-07-02"
+    },
+    {
+      "id": "bceao-waemu-members",
+      "provider": "BCEAO",
+      "dataset": "WAEMU member states",
+      "attribution": "Central Bank of West African States",
+      "sourceReference": "https://www.bceao.int/en/content/member-states",
+      "license": "Official public informational page; used for factual currency reference.",
+      "retrievedAt": "2026-07-02"
+    },
+    {
+      "id": "beac-cemac-members",
+      "provider": "BEAC",
+      "dataset": "CEMAC member states",
+      "attribution": "Bank of Central African States",
+      "sourceReference": "https://www.beac.int/index.php/etats-membres",
+      "license": "Official public informational page; used for factual currency reference.",
+      "retrievedAt": "2026-07-02"
+    },
+    {
+      "id": "world-bank-wdi",
+      "provider": "World Bank",
+      "dataset": "World Development Indicators via Indicators API",
+      "attribution": "The World Bank",
+      "sourceReference": "https://api.worldbank.org/v2",
+      "license": "Creative Commons Attribution 4.0 International unless specifically labeled otherwise by World Bank metadata.",
+      "licenseReference": "https://www.worldbank.org/en/about/legal/terms-of-use-for-datasets",
+      "retrievedAt": "2026-07-02",
+      "notes": "Indicator-derived Pattern Atlas rules must reference existing approved Mystery Map indicator artifacts."
+    }
+  ],
+  "rules": [
+    {
+      "id": "mapped-portuguese-official-language",
+      "displayAnswer": "Mapped countries where Portuguese is an official language",
+      "family": "language",
+      "includedIso3": ["AGO", "BRA", "GNQ", "GNB", "MOZ", "PRT", "TLS"],
+      "counterexampleIso3": ["ESP", "FRA", "ITA"],
+      "difficulty": "standard",
+      "eligibility": "daily",
+      "sources": ["cia-world-factbook", "natural-earth-admin0-110m"],
+      "explanation": "The highlighted countries share Portuguese as an official language, with a Lusophone Atlantic pattern plus Mozambique and Timor-Leste.",
+      "decoys": [
+        {
+          "displayAnswer": "Former Spanish colonies",
+          "whyPlausible": "The Atlantic and Latin America pattern can look colonial.",
+          "whyWrong": "Brazil, Angola, Mozambique, Guinea-Bissau, and Portugal point to Portuguese, not Spanish."
+        },
+        {
+          "displayAnswer": "Countries using a franc-zone currency",
+          "whyPlausible": "West and Central Africa are both visible in the set.",
+          "whyWrong": "Brazil, Portugal, Mozambique, and Timor-Leste do not fit that currency pattern."
+        },
+        {
+          "displayAnswer": "South Atlantic coastal countries",
+          "whyPlausible": "Several highlighted countries face the South Atlantic.",
+          "whyWrong": "Portugal and Timor-Leste break a coastline-only answer."
+        }
+      ],
+      "dateVintage": "2026-07-02",
+      "scopeNote": "Cabo Verde and Sao Tome and Principe are not present in the current 110m entity registry and are intentionally omitted."
+    },
+    {
+      "id": "spanish-official-language-south-america",
+      "displayAnswer": "South American countries where Spanish is an official language",
+      "family": "language",
+      "includedIso3": ["ARG", "BOL", "CHL", "COL", "ECU", "PRY", "PER", "URY", "VEN"],
+      "counterexampleIso3": ["BRA", "GUY", "SUR"],
+      "difficulty": "intro",
+      "eligibility": "sample",
+      "sources": ["cia-world-factbook", "natural-earth-admin0-110m"],
+      "explanation": "This rule highlights the Spanish-speaking mainland arc of South America, excluding Portuguese-speaking Brazil and the Guianas.",
+      "decoys": [
+        {
+          "displayAnswer": "Countries in the Andes",
+          "whyPlausible": "Many Andean countries are Spanish-speaking and highlighted.",
+          "whyWrong": "Argentina, Paraguay, Uruguay, and Venezuela make the set wider than the Andes."
+        },
+        {
+          "displayAnswer": "MERCOSUR founding members",
+          "whyPlausible": "Argentina, Paraguay, and Uruguay are highlighted.",
+          "whyWrong": "Brazil is a founding member but is not highlighted, while many highlighted countries are not founding members."
+        },
+        {
+          "displayAnswer": "Countries crossed by the Equator",
+          "whyPlausible": "Colombia and Ecuador are included.",
+          "whyWrong": "Most highlighted countries are south of the Equator, and Brazil is missing."
+        }
+      ],
+      "dateVintage": "2026-07-02"
+    },
+    {
+      "id": "french-official-language-west-africa",
+      "displayAnswer": "Mapped West African countries where French is an official language",
+      "family": "language",
+      "includedIso3": ["BEN", "BFA", "CIV", "GIN", "MLI", "NER", "SEN", "TGO"],
+      "counterexampleIso3": ["GHA", "LBR", "NGA"],
+      "difficulty": "standard",
+      "eligibility": "practice",
+      "sources": ["cia-world-factbook", "natural-earth-admin0-110m"],
+      "explanation": "The highlighted countries form a mostly contiguous Francophone West African pattern from Senegal and Guinea through the Sahel and Gulf of Guinea.",
+      "decoys": [
+        {
+          "displayAnswer": "ECOWAS members",
+          "whyPlausible": "All highlighted countries are in West Africa.",
+          "whyWrong": "English-speaking ECOWAS countries such as Ghana and Nigeria are not highlighted."
+        },
+        {
+          "displayAnswer": "Sahel countries",
+          "whyPlausible": "Mali, Burkina Faso, and Niger are central to the pattern.",
+          "whyWrong": "Benin, Cote d'Ivoire, Guinea, Senegal, and Togo make the set broader than the Sahel."
+        },
+        {
+          "displayAnswer": "Countries using the CFA franc",
+          "whyPlausible": "Several highlighted countries use a CFA franc currency.",
+          "whyWrong": "Guinea is highlighted but does not use the CFA franc."
+        }
+      ],
+      "dateVintage": "2026-07-02"
+    },
+    {
+      "id": "mapped-german-official-language",
+      "displayAnswer": "Mapped countries where German is an official language",
+      "family": "language",
+      "includedIso3": ["AUT", "BEL", "CHE", "DEU", "LUX"],
+      "counterexampleIso3": ["CZE", "DNK", "NLD"],
+      "difficulty": "standard",
+      "eligibility": "practice",
+      "sources": ["cia-world-factbook", "natural-earth-admin0-110m"],
+      "explanation": "The highlighted countries share official German status, producing a compact Central European cluster plus multilingual Belgium and Luxembourg.",
+      "decoys": [
+        {
+          "displayAnswer": "Countries bordering Germany",
+          "whyPlausible": "Most highlighted countries are Germany or neighbors of Germany.",
+          "whyWrong": "Denmark, Poland, Czechia, France, and the Netherlands border Germany but are not highlighted."
+        },
+        {
+          "displayAnswer": "EU founding members",
+          "whyPlausible": "Belgium, Germany, and Luxembourg are highlighted.",
+          "whyWrong": "Italy, France, and the Netherlands are founding members but are not highlighted."
+        },
+        {
+          "displayAnswer": "Alpine countries",
+          "whyPlausible": "Austria and Switzerland are highlighted.",
+          "whyWrong": "Belgium and Luxembourg are not Alpine countries."
+        }
+      ],
+      "dateVintage": "2026-07-02",
+      "scopeNote": "Liechtenstein is not present in the current 110m entity registry and is intentionally omitted."
+    },
+    {
+      "id": "landlocked-south-america",
+      "displayAnswer": "Landlocked countries in South America",
+      "family": "borders",
+      "includedIso3": ["BOL", "PRY"],
+      "counterexampleIso3": ["ARG", "BRA", "PER"],
+      "difficulty": "intro",
+      "eligibility": "sample",
+      "sources": ["cia-world-factbook", "natural-earth-admin0-110m"],
+      "explanation": "Bolivia and Paraguay are the two South American countries without a coastline.",
+      "decoys": [
+        {
+          "displayAnswer": "Countries crossed by the Tropic of Capricorn",
+          "whyPlausible": "Both highlighted countries are crossed by or near the tropic.",
+          "whyWrong": "Argentina, Brazil, Chile, and others also fit that tropic pattern."
+        },
+        {
+          "displayAnswer": "Former Spanish colonies in South America",
+          "whyPlausible": "Both highlighted countries are Spanish-speaking South American states.",
+          "whyWrong": "That answer would include most of Spanish-speaking South America."
+        },
+        {
+          "displayAnswer": "Countries in the Andes",
+          "whyPlausible": "Bolivia is strongly Andean.",
+          "whyWrong": "Paraguay is not an Andean country, and several Andean countries are missing."
+        }
+      ],
+      "dateVintage": "2026-07-02",
+      "allowSmallHighlightSet": true
+    },
+    {
+      "id": "mapped-mediterranean-coast",
+      "displayAnswer": "Mapped countries with a Mediterranean Sea coastline",
+      "family": "borders",
+      "includedIso3": ["ALB", "DZA", "BIH", "HRV", "CYP", "EGY", "FRA", "GRC", "ISR", "ITA", "LBN", "LBY", "MNE", "MAR", "SVN", "ESP", "SYR", "TUN", "TUR"],
+      "counterexampleIso3": ["DEU", "PRT", "ROU"],
+      "difficulty": "standard",
+      "eligibility": "daily",
+      "sources": ["cia-world-factbook", "natural-earth-admin0-110m"],
+      "explanation": "The highlighted set wraps the northern, eastern, and southern Mediterranean coastline.",
+      "decoys": [
+        {
+          "displayAnswer": "European Union members on the Mediterranean",
+          "whyPlausible": "Several highlighted European coasts are in the EU.",
+          "whyWrong": "Albania, Algeria, Bosnia and Herzegovina, Egypt, Lebanon, Libya, Montenegro, Morocco, Syria, Tunisia, and Turkey are not EU members."
+        },
+        {
+          "displayAnswer": "Countries bordering the Black Sea",
+          "whyPlausible": "Turkey is highlighted and sits near both basins.",
+          "whyWrong": "Most highlighted countries are on the Mediterranean rather than the Black Sea."
+        },
+        {
+          "displayAnswer": "Countries in North Africa",
+          "whyPlausible": "The southern Mediterranean edge is prominent.",
+          "whyWrong": "Southern Europe and the Levant are also highlighted."
+        }
+      ],
+      "dateVintage": "2026-07-02",
+      "scopeNote": "Malta is not present in the current 110m entity registry and is intentionally omitted."
+    },
+    {
+      "id": "caspian-sea-coast",
+      "displayAnswer": "Countries with a Caspian Sea coastline",
+      "family": "borders",
+      "includedIso3": ["AZE", "IRN", "KAZ", "RUS", "TKM"],
+      "counterexampleIso3": ["ARM", "GEO", "UZB"],
+      "difficulty": "standard",
+      "eligibility": "daily",
+      "sources": ["cia-world-factbook", "natural-earth-admin0-110m"],
+      "explanation": "These five countries border the enclosed Caspian Sea.",
+      "decoys": [
+        {
+          "displayAnswer": "Former Soviet republics in Central Asia",
+          "whyPlausible": "Kazakhstan and Turkmenistan are highlighted.",
+          "whyWrong": "Iran is highlighted, Russia is not a Central Asian republic, and Uzbekistan is missing."
+        },
+        {
+          "displayAnswer": "Countries bordering the Black Sea",
+          "whyPlausible": "Russia is highlighted and the region is nearby.",
+          "whyWrong": "Azerbaijan, Iran, Kazakhstan, and Turkmenistan do not border the Black Sea."
+        },
+        {
+          "displayAnswer": "Landlocked countries in Asia",
+          "whyPlausible": "Azerbaijan, Kazakhstan, and Turkmenistan are often treated as landlocked despite the Caspian coast.",
+          "whyWrong": "Russia and Iran are not landlocked, and many Asian landlocked countries are missing."
+        }
+      ],
+      "dateVintage": "2026-07-02"
+    },
+    {
+      "id": "countries-bordering-germany",
+      "displayAnswer": "Countries that border Germany",
+      "family": "borders",
+      "includedIso3": ["AUT", "BEL", "CHE", "CZE", "DNK", "FRA", "LUX", "NLD", "POL"],
+      "counterexampleIso3": ["ESP", "HUN", "ITA"],
+      "difficulty": "intro",
+      "eligibility": "sample",
+      "sources": ["cia-world-factbook", "natural-earth-admin0-110m"],
+      "explanation": "The highlighted countries are Germany's nine land neighbors.",
+      "decoys": [
+        {
+          "displayAnswer": "European Union founding members",
+          "whyPlausible": "Belgium, France, Luxembourg, and the Netherlands are highlighted.",
+          "whyWrong": "Austria, Czechia, Denmark, Poland, and Switzerland are not founding members."
+        },
+        {
+          "displayAnswer": "Countries where German is an official language",
+          "whyPlausible": "Austria, Belgium, Luxembourg, and Switzerland are highlighted.",
+          "whyWrong": "Czechia, Denmark, France, the Netherlands, and Poland are border neighbors, not German-official countries."
+        },
+        {
+          "displayAnswer": "Countries in the Schengen Area",
+          "whyPlausible": "Many highlighted countries participate in Schengen.",
+          "whyWrong": "The Schengen Area contains many more countries and is not centered only on Germany's border."
+        }
+      ],
+      "dateVintage": "2026-07-02"
+    },
+    {
+      "id": "countries-bordering-china",
+      "displayAnswer": "Countries that border China",
+      "family": "borders",
+      "includedIso3": ["AFG", "BTN", "IND", "KAZ", "KGZ", "LAO", "MNG", "MMR", "NPL", "PAK", "PRK", "RUS", "TJK", "VNM"],
+      "counterexampleIso3": ["BGD", "KOR", "THA"],
+      "difficulty": "expert",
+      "eligibility": "practice",
+      "sources": ["cia-world-factbook", "natural-earth-admin0-110m"],
+      "explanation": "The highlighted countries are China's land neighbors, spanning Central, South, Southeast, and Northeast Asia.",
+      "decoys": [
+        {
+          "displayAnswer": "Countries in the Belt and Road Initiative",
+          "whyPlausible": "The geography clusters around China.",
+          "whyWrong": "That initiative is far broader and would include many countries outside this border ring."
+        },
+        {
+          "displayAnswer": "Landlocked Asian countries",
+          "whyPlausible": "Several highlighted neighbors are landlocked.",
+          "whyWrong": "India, Myanmar, North Korea, Pakistan, Russia, and Vietnam have coastlines."
+        },
+        {
+          "displayAnswer": "Countries in Southeast Asia",
+          "whyPlausible": "Laos, Myanmar, and Vietnam are highlighted.",
+          "whyWrong": "The set extends far beyond Southeast Asia into Central Asia, South Asia, and Russia."
+        }
+      ],
+      "dateVintage": "2026-07-02"
+    },
+    {
+      "id": "mapped-equator-crossed",
+      "displayAnswer": "Mapped countries crossed by the Equator",
+      "family": "physical_geography",
+      "includedIso3": ["BRA", "COD", "COG", "COL", "ECU", "GAB", "IDN", "KEN", "SOM", "UGA"],
+      "counterexampleIso3": ["ETH", "PER", "TZA"],
+      "difficulty": "intro",
+      "eligibility": "daily",
+      "sources": ["cia-world-factbook", "natural-earth-admin0-110m"],
+      "explanation": "The highlighted countries sit along the Equator in South America, Central Africa, East Africa, and Indonesia.",
+      "decoys": [
+        {
+          "displayAnswer": "Countries in the tropics",
+          "whyPlausible": "Every highlighted country is tropical or near tropical latitudes.",
+          "whyWrong": "The tropics include a much larger belt; this rule is the Equator itself."
+        },
+        {
+          "displayAnswer": "Countries with Amazon rainforest",
+          "whyPlausible": "Brazil, Colombia, and Ecuador are highlighted.",
+          "whyWrong": "African and Asian Equator countries are highlighted too, while Peru is not."
+        },
+        {
+          "displayAnswer": "Countries on the Gulf of Guinea",
+          "whyPlausible": "Gabon and Congo are highlighted.",
+          "whyWrong": "The pattern crosses continents and is not a coastline rule."
+        }
+      ],
+      "dateVintage": "2026-07-02",
+      "scopeNote": "Small Equator-crossed states not present in the current 110m entity registry are intentionally omitted."
+    },
+    {
+      "id": "tropic-of-capricorn-crossed",
+      "displayAnswer": "Countries crossed by the Tropic of Capricorn",
+      "family": "physical_geography",
+      "includedIso3": ["ARG", "AUS", "BWA", "BRA", "CHL", "MDG", "MOZ", "NAM", "PRY", "ZAF"],
+      "counterexampleIso3": ["BOL", "COL", "KEN", "MEX"],
+      "difficulty": "standard",
+      "eligibility": "daily",
+      "sources": ["cia-world-factbook", "natural-earth-admin0-110m"],
+      "explanation": "The highlighted countries follow the southern tropic across South America, southern Africa, Madagascar, and Australia.",
+      "decoys": [
+        {
+          "displayAnswer": "Southern Hemisphere countries",
+          "whyPlausible": "The highlighted countries are mostly south of the Equator.",
+          "whyWrong": "Many Southern Hemisphere countries are not crossed by this latitude."
+        },
+        {
+          "displayAnswer": "Countries with major deserts",
+          "whyPlausible": "Australia, Namibia, Botswana, and Chile can suggest desert geography.",
+          "whyWrong": "Brazil, Paraguay, Mozambique, and Madagascar point to a latitude line instead."
+        },
+        {
+          "displayAnswer": "Countries bordering South Africa",
+          "whyPlausible": "Botswana, Mozambique, Namibia, and South Africa are clustered.",
+          "whyWrong": "The South American and Australian highlights make the rule global."
+        }
+      ],
+      "dateVintage": "2026-07-02"
+    },
+    {
+      "id": "mapped-arctic-circle-crossed",
+      "displayAnswer": "Mapped countries and territories crossed by the Arctic Circle",
+      "family": "physical_geography",
+      "includedIso3": ["CAN", "FIN", "GRL", "ISL", "NOR", "RUS", "SWE", "USA"],
+      "counterexampleIso3": ["DEU", "EST", "POL"],
+      "difficulty": "standard",
+      "eligibility": "practice",
+      "sources": ["cia-world-factbook", "natural-earth-admin0-110m"],
+      "explanation": "The highlighted set follows the Arctic Circle across North America, Greenland, the Nordic region, and Russia.",
+      "decoys": [
+        {
+          "displayAnswer": "Nordic Council sovereign members",
+          "whyPlausible": "Finland, Iceland, Norway, and Sweden are highlighted.",
+          "whyWrong": "Canada, Greenland, Russia, and the United States are also highlighted, while Denmark is not highlighted as a separate mainland country."
+        },
+        {
+          "displayAnswer": "Countries bordering the Arctic Ocean",
+          "whyPlausible": "Many highlighted countries have Arctic coasts.",
+          "whyWrong": "Finland and Sweden do not border the Arctic Ocean directly."
+        },
+        {
+          "displayAnswer": "Countries with tundra climate",
+          "whyPlausible": "The latitude pattern suggests tundra.",
+          "whyWrong": "Climate zones are broader and less exact than the Arctic Circle line."
+        }
+      ],
+      "dateVintage": "2026-07-02",
+      "scopeNote": "Greenland is present as a mapped entity in the current registry."
+    },
+    {
+      "id": "sahara-desert-countries",
+      "displayAnswer": "Countries containing part of the Sahara Desert",
+      "family": "physical_geography",
+      "includedIso3": ["DZA", "EGY", "LBY", "MLI", "MAR", "MRT", "NER", "SDN", "TCD", "TUN"],
+      "counterexampleIso3": ["ETH", "NGA", "SEN"],
+      "difficulty": "standard",
+      "eligibility": "practice",
+      "sources": ["cia-world-factbook", "natural-earth-admin0-110m"],
+      "explanation": "The highlighted countries span the Sahara from the Atlantic edge across North Africa into Sudan and Chad.",
+      "decoys": [
+        {
+          "displayAnswer": "Arab League members in Africa",
+          "whyPlausible": "Several highlighted countries are Arab League members.",
+          "whyWrong": "Chad, Mali, and Niger are highlighted because of the Sahara, not Arab League membership."
+        },
+        {
+          "displayAnswer": "Sahel countries",
+          "whyPlausible": "Mali, Niger, Chad, and Sudan are highlighted.",
+          "whyWrong": "Algeria, Egypt, Libya, Morocco, and Tunisia point north to the Sahara itself."
+        },
+        {
+          "displayAnswer": "Countries bordering the Mediterranean Sea",
+          "whyPlausible": "Several North African Mediterranean countries are highlighted.",
+          "whyWrong": "Mali, Mauritania, Niger, Sudan, and Chad have no Mediterranean coast."
+        }
+      ],
+      "dateVintage": "2026-07-02"
+    },
+    {
+      "id": "greater-antilles-countries",
+      "displayAnswer": "Countries of the Greater Antilles",
+      "family": "physical_geography",
+      "includedIso3": ["CUB", "DOM", "HTI", "JAM"],
+      "counterexampleIso3": ["BHS", "TTO", "PRI"],
+      "difficulty": "intro",
+      "eligibility": "sample",
+      "sources": ["cia-world-factbook", "natural-earth-admin0-110m"],
+      "explanation": "Cuba, Jamaica, Haiti, and the Dominican Republic occupy the major island group known as the Greater Antilles.",
+      "decoys": [
+        {
+          "displayAnswer": "Caribbean island countries",
+          "whyPlausible": "All highlighted countries are in the Caribbean.",
+          "whyWrong": "That wider answer would include many smaller island states and The Bahamas."
+        },
+        {
+          "displayAnswer": "Countries where Spanish is official",
+          "whyPlausible": "Cuba and the Dominican Republic are highlighted.",
+          "whyWrong": "Haiti and Jamaica do not fit that language answer."
+        },
+        {
+          "displayAnswer": "Countries bordering the Caribbean Sea in mainland America",
+          "whyPlausible": "The highlights sit in the Caribbean basin.",
+          "whyWrong": "These are island countries, not mainland coastal countries."
+        }
+      ],
+      "dateVintage": "2026-07-02"
+    },
+    {
+      "id": "andes-countries",
+      "displayAnswer": "Countries containing part of the Andes",
+      "family": "physical_geography",
+      "includedIso3": ["ARG", "BOL", "CHL", "COL", "ECU", "PER", "VEN"],
+      "counterexampleIso3": ["BRA", "PRY", "URY"],
+      "difficulty": "intro",
+      "eligibility": "daily",
+      "sources": ["cia-world-factbook", "natural-earth-admin0-110m"],
+      "explanation": "The highlighted countries trace the Andes along western South America and into Venezuela.",
+      "decoys": [
+        {
+          "displayAnswer": "Spanish-speaking countries in South America",
+          "whyPlausible": "Every highlighted country is Spanish-speaking.",
+          "whyWrong": "Paraguay and Uruguay are Spanish-speaking South American countries but are not Andean."
+        },
+        {
+          "displayAnswer": "Pacific coast countries in South America",
+          "whyPlausible": "Chile, Peru, Ecuador, and Colombia are highlighted.",
+          "whyWrong": "Bolivia and Venezuela are highlighted, while the rule is mountain geography rather than coast."
+        },
+        {
+          "displayAnswer": "Amazon rainforest countries",
+          "whyPlausible": "Several highlighted countries include Amazon basin territory.",
+          "whyWrong": "Chile and Argentina point to the Andes, not the Amazon."
+        }
+      ],
+      "dateVintage": "2026-07-02"
+    },
+    {
+      "id": "mekong-river-countries",
+      "displayAnswer": "Countries the Mekong River flows through",
+      "family": "physical_geography",
+      "includedIso3": ["CHN", "KHM", "LAO", "MMR", "THA", "VNM"],
+      "counterexampleIso3": ["BGD", "MYS", "PHL"],
+      "difficulty": "standard",
+      "eligibility": "practice",
+      "sources": ["cia-world-factbook", "natural-earth-admin0-110m"],
+      "explanation": "The highlighted countries follow the Mekong from China through mainland Southeast Asia to Vietnam.",
+      "decoys": [
+        {
+          "displayAnswer": "ASEAN members",
+          "whyPlausible": "Cambodia, Laos, Myanmar, Thailand, and Vietnam are ASEAN members.",
+          "whyWrong": "China is highlighted but is not an ASEAN member, while several ASEAN members are missing."
+        },
+        {
+          "displayAnswer": "Countries bordering China",
+          "whyPlausible": "China, Laos, Myanmar, and Vietnam are highlighted.",
+          "whyWrong": "Cambodia and Thailand do not border China, and many Chinese neighbors are missing."
+        },
+        {
+          "displayAnswer": "Mainland Southeast Asian countries",
+          "whyPlausible": "Most highlighted countries are in mainland Southeast Asia.",
+          "whyWrong": "The river-source clue adds China and excludes Malaysia."
+        }
+      ],
+      "dateVintage": "2026-07-02"
+    },
+    {
+      "id": "amazon-rainforest-countries",
+      "displayAnswer": "Countries containing part of the Amazon rainforest",
+      "family": "physical_geography",
+      "includedIso3": ["BOL", "BRA", "COL", "ECU", "GUY", "PER", "SUR", "VEN"],
+      "counterexampleIso3": ["ARG", "CHL", "PRY"],
+      "difficulty": "standard",
+      "eligibility": "practice",
+      "sources": ["cia-world-factbook", "natural-earth-admin0-110m"],
+      "explanation": "The highlighted countries contain Amazon rainforest territory in northern and central South America.",
+      "decoys": [
+        {
+          "displayAnswer": "Countries crossed by the Equator",
+          "whyPlausible": "Brazil, Colombia, and Ecuador are highlighted.",
+          "whyWrong": "Bolivia, Guyana, Peru, Suriname, and Venezuela are highlighted without being Equator-crossed on this map."
+        },
+        {
+          "displayAnswer": "Andean countries",
+          "whyPlausible": "Bolivia, Colombia, Ecuador, Peru, and Venezuela are highlighted.",
+          "whyWrong": "Brazil, Guyana, and Suriname point to rainforest-basin geography instead."
+        },
+        {
+          "displayAnswer": "MERCOSUR members",
+          "whyPlausible": "Brazil is highlighted and the pattern is South American.",
+          "whyWrong": "Most highlighted countries are not founding MERCOSUR members, and Argentina, Paraguay, and Uruguay are missing."
+        }
+      ],
+      "dateVintage": "2026-07-02"
+    },
+    {
+      "id": "mapped-asean-members",
+      "displayAnswer": "Mapped ASEAN member countries",
+      "family": "organizations",
+      "includedIso3": ["BRN", "IDN", "KHM", "LAO", "MMR", "MYS", "PHL", "THA", "VNM"],
+      "counterexampleIso3": ["CHN", "KOR", "TLS"],
+      "difficulty": "intro",
+      "eligibility": "daily",
+      "sources": ["asean-member-states", "natural-earth-admin0-110m"],
+      "explanation": "The highlighted countries are ASEAN members represented in the current country registry.",
+      "decoys": [
+        {
+          "displayAnswer": "Countries the Mekong River flows through",
+          "whyPlausible": "Cambodia, Laos, Myanmar, Thailand, and Vietnam are highlighted.",
+          "whyWrong": "Brunei, Indonesia, Malaysia, and the Philippines are ASEAN members outside the Mekong route."
+        },
+        {
+          "displayAnswer": "Countries bordering China",
+          "whyPlausible": "Laos, Myanmar, and Vietnam are highlighted.",
+          "whyWrong": "Most ASEAN members do not border China, and many Chinese neighbors are missing."
+        },
+        {
+          "displayAnswer": "Island countries in Southeast Asia",
+          "whyPlausible": "Brunei, Indonesia, Malaysia, and the Philippines are highlighted.",
+          "whyWrong": "Cambodia, Laos, Myanmar, Thailand, and Vietnam are mainland ASEAN members."
+        }
+      ],
+      "dateVintage": "2026-07-02",
+      "scopeNote": "Singapore is not present in the current 110m entity registry and is intentionally omitted."
+    },
+    {
+      "id": "mapped-gcc-members",
+      "displayAnswer": "Mapped Gulf Cooperation Council members",
+      "family": "organizations",
+      "includedIso3": ["ARE", "KWT", "OMN", "QAT", "SAU"],
+      "counterexampleIso3": ["IRQ", "IRN", "YEM"],
+      "difficulty": "standard",
+      "eligibility": "practice",
+      "sources": ["gcc-member-states", "natural-earth-admin0-110m"],
+      "explanation": "The highlighted countries are GCC members present in the current map registry.",
+      "decoys": [
+        {
+          "displayAnswer": "Countries on the Arabian Peninsula",
+          "whyPlausible": "The highlights cluster on and around the peninsula.",
+          "whyWrong": "Yemen is on the peninsula but is not highlighted, and the rule is organization membership."
+        },
+        {
+          "displayAnswer": "OPEC members in the Gulf",
+          "whyPlausible": "Saudi Arabia, Kuwait, and the United Arab Emirates are highlighted.",
+          "whyWrong": "Qatar and Oman are highlighted here because of GCC membership, not current OPEC membership."
+        },
+        {
+          "displayAnswer": "Countries bordering the Persian Gulf",
+          "whyPlausible": "Several highlighted countries have Persian Gulf coastlines.",
+          "whyWrong": "Iran and Iraq have Persian Gulf coastlines but are not GCC members."
+        }
+      ],
+      "dateVintage": "2026-07-02",
+      "scopeNote": "Bahrain is not present in the current 110m entity registry and is intentionally omitted."
+    },
+    {
+      "id": "nordic-council-sovereign-members",
+      "displayAnswer": "Nordic Council sovereign member countries",
+      "family": "organizations",
+      "includedIso3": ["DNK", "FIN", "ISL", "NOR", "SWE"],
+      "counterexampleIso3": ["EST", "DEU", "GBR"],
+      "difficulty": "intro",
+      "eligibility": "daily",
+      "sources": ["nordic-council-countries", "natural-earth-admin0-110m"],
+      "explanation": "Denmark, Finland, Iceland, Norway, and Sweden are the sovereign Nordic Council countries.",
+      "decoys": [
+        {
+          "displayAnswer": "Countries crossed by the Arctic Circle",
+          "whyPlausible": "Finland, Iceland, Norway, and Sweden are highlighted.",
+          "whyWrong": "Denmark is highlighted by membership, while Canada, Russia, and the United States are not Nordic Council countries."
+        },
+        {
+          "displayAnswer": "Baltic Sea countries",
+          "whyPlausible": "Denmark, Finland, and Sweden are Baltic-facing.",
+          "whyWrong": "Iceland and Norway break a Baltic-only pattern."
+        },
+        {
+          "displayAnswer": "European Union members in Northern Europe",
+          "whyPlausible": "Denmark, Finland, and Sweden are EU members.",
+          "whyWrong": "Iceland and Norway are highlighted but are not EU members."
+        }
+      ],
+      "dateVintage": "2026-07-02"
+    },
+    {
+      "id": "pacific-alliance-members",
+      "displayAnswer": "Pacific Alliance member countries",
+      "family": "organizations",
+      "includedIso3": ["CHL", "COL", "MEX", "PER"],
+      "counterexampleIso3": ["ARG", "BRA", "ECU"],
+      "difficulty": "standard",
+      "eligibility": "practice",
+      "sources": ["pacific-alliance-members", "natural-earth-admin0-110m"],
+      "explanation": "Chile, Colombia, Mexico, and Peru are the Pacific Alliance members.",
+      "decoys": [
+        {
+          "displayAnswer": "Pacific coast countries in Latin America",
+          "whyPlausible": "The highlights all have Pacific-facing geography.",
+          "whyWrong": "That coastline answer would include additional countries such as Ecuador and parts of Central America."
+        },
+        {
+          "displayAnswer": "Spanish-speaking countries in South America",
+          "whyPlausible": "Chile, Colombia, and Peru are highlighted.",
+          "whyWrong": "Mexico is not in South America, and many Spanish-speaking South American countries are missing."
+        },
+        {
+          "displayAnswer": "Countries containing part of the Andes",
+          "whyPlausible": "Chile, Colombia, and Peru are Andean.",
+          "whyWrong": "Mexico is highlighted because of organization membership, not Andes geography."
+        }
+      ],
+      "dateVintage": "2026-07-02"
+    },
+    {
+      "id": "g7-members",
+      "displayAnswer": "G7 member countries",
+      "family": "organizations",
+      "includedIso3": ["CAN", "FRA", "DEU", "ITA", "JPN", "GBR", "USA"],
+      "counterexampleIso3": ["AUS", "CHN", "ESP"],
+      "difficulty": "standard",
+      "eligibility": "daily",
+      "sources": ["g7-members", "natural-earth-admin0-110m"],
+      "explanation": "The highlighted countries are the Group of Seven members.",
+      "decoys": [
+        {
+          "displayAnswer": "Permanent UN Security Council members",
+          "whyPlausible": "France, the United Kingdom, and the United States are highlighted.",
+          "whyWrong": "Canada, Germany, Italy, and Japan are highlighted, while China and Russia are missing."
+        },
+        {
+          "displayAnswer": "NATO founding members",
+          "whyPlausible": "Several highlighted countries are NATO founders.",
+          "whyWrong": "Japan is highlighted but is not in NATO, and many NATO founders are missing."
+        },
+        {
+          "displayAnswer": "Top GDP economies",
+          "whyPlausible": "The set contains several very large economies.",
+          "whyWrong": "The exact seven-country set is the G7 membership list, not a current GDP ranking."
+        }
+      ],
+      "dateVintage": "2026-07-02"
+    },
+    {
+      "id": "eu-founding-members",
+      "displayAnswer": "European Union founding member countries",
+      "family": "organizations",
+      "includedIso3": ["BEL", "DEU", "FRA", "ITA", "LUX", "NLD"],
+      "counterexampleIso3": ["AUT", "ESP", "POL"],
+      "difficulty": "standard",
+      "eligibility": "daily",
+      "sources": ["european-union-countries", "natural-earth-admin0-110m"],
+      "explanation": "The highlighted countries are the six founding states of the European integration project that became the EU.",
+      "decoys": [
+        {
+          "displayAnswer": "Euro area founding members",
+          "whyPlausible": "These countries use the euro and were early European integration members.",
+          "whyWrong": "The answer is EU founding membership; it is not all original euro adopters."
+        },
+        {
+          "displayAnswer": "Countries bordering Germany",
+          "whyPlausible": "Belgium, France, Luxembourg, and the Netherlands border Germany.",
+          "whyWrong": "Italy is highlighted and several German neighbors are missing."
+        },
+        {
+          "displayAnswer": "Benelux plus neighbors",
+          "whyPlausible": "Belgium, Luxembourg, and the Netherlands are all highlighted.",
+          "whyWrong": "France, Germany, and Italy make it the EU founding-six pattern."
+        }
+      ],
+      "dateVintage": "2026-07-02"
+    },
+    {
+      "id": "mercosur-founding-members",
+      "displayAnswer": "MERCOSUR founding member countries",
+      "family": "organizations",
+      "includedIso3": ["ARG", "BRA", "PRY", "URY"],
+      "counterexampleIso3": ["BOL", "CHL", "PER"],
+      "difficulty": "standard",
+      "eligibility": "practice",
+      "sources": ["mercosur-member-states", "natural-earth-admin0-110m"],
+      "explanation": "Argentina, Brazil, Paraguay, and Uruguay founded MERCOSUR under the Treaty of Asuncion.",
+      "decoys": [
+        {
+          "displayAnswer": "Spanish-speaking South American countries",
+          "whyPlausible": "Argentina, Paraguay, and Uruguay are highlighted.",
+          "whyWrong": "Brazil is highlighted and many Spanish-speaking countries are missing."
+        },
+        {
+          "displayAnswer": "Landlocked countries in South America",
+          "whyPlausible": "Paraguay is highlighted and central.",
+          "whyWrong": "Bolivia is not highlighted, while Argentina, Brazil, and Uruguay have coastlines."
+        },
+        {
+          "displayAnswer": "Countries crossed by the Tropic of Capricorn",
+          "whyPlausible": "Argentina, Brazil, and Paraguay are crossed by the tropic.",
+          "whyWrong": "Uruguay is highlighted by MERCOSUR founding membership, and several tropic-crossed countries are missing."
+        }
+      ],
+      "dateVintage": "2026-07-02"
+    },
+    {
+      "id": "mapped-euro-area-members",
+      "displayAnswer": "Mapped euro area member countries",
+      "family": "economy",
+      "includedIso3": ["AUT", "BEL", "HRV", "CYP", "EST", "FIN", "FRA", "DEU", "GRC", "IRL", "ITA", "LVA", "LTU", "LUX", "NLD", "PRT", "SVK", "SVN", "ESP"],
+      "counterexampleIso3": ["CZE", "DNK", "POL"],
+      "difficulty": "expert",
+      "eligibility": "practice",
+      "sources": ["european-central-bank-euro-area", "natural-earth-admin0-110m"],
+      "explanation": "The highlighted countries are euro area members represented in the current entity registry.",
+      "decoys": [
+        {
+          "displayAnswer": "European Union member countries",
+          "whyPlausible": "Every highlighted country is an EU member.",
+          "whyWrong": "EU members that do not use the euro, such as Denmark and Poland, are not highlighted."
+        },
+        {
+          "displayAnswer": "Schengen Area countries",
+          "whyPlausible": "The map overlaps heavily with Schengen geography.",
+          "whyWrong": "Cyprus is highlighted for euro membership, and some Schengen countries outside the euro area are missing."
+        },
+        {
+          "displayAnswer": "EU founding members and later joiners before 2004",
+          "whyPlausible": "Many early EU economies are highlighted.",
+          "whyWrong": "Baltic countries, Slovakia, Slovenia, Croatia, and Cyprus show this is currency membership."
+        }
+      ],
+      "dateVintage": "2026-07-02",
+      "scopeNote": "Malta is not present in the current 110m entity registry and is intentionally omitted."
+    },
+    {
+      "id": "cfa-franc-countries",
+      "displayAnswer": "Countries using a CFA franc currency",
+      "family": "economy",
+      "includedIso3": ["BEN", "BFA", "CAF", "CIV", "CMR", "COG", "GAB", "GNB", "GNQ", "MLI", "NER", "SEN", "TCD", "TGO"],
+      "counterexampleIso3": ["GIN", "GHA", "NGA"],
+      "difficulty": "expert",
+      "eligibility": "practice",
+      "sources": ["bceao-waemu-members", "beac-cemac-members", "natural-earth-admin0-110m"],
+      "explanation": "The highlighted countries use either the West African CFA franc or the Central African CFA franc.",
+      "decoys": [
+        {
+          "displayAnswer": "Mapped West African countries where French is official",
+          "whyPlausible": "Many highlighted countries are Francophone West African states.",
+          "whyWrong": "Cameroon, Central African Republic, Chad, Congo, Equatorial Guinea, and Gabon are Central African, while Guinea is not highlighted."
+        },
+        {
+          "displayAnswer": "ECOWAS members",
+          "whyPlausible": "Several West African highlighted countries are ECOWAS members.",
+          "whyWrong": "Central African CFA users are highlighted too, and Ghana and Nigeria are missing."
+        },
+        {
+          "displayAnswer": "Former French colonies in Africa",
+          "whyPlausible": "The colonial-history signal is tempting.",
+          "whyWrong": "Guinea is a former French colony but is not highlighted, and Equatorial Guinea is highlighted through the currency union."
+        }
+      ],
+      "dateVintage": "2026-07-02"
+    },
+    {
+      "id": "top-quartile-renewable-electricity-share",
+      "displayAnswer": "Mapped countries in the top quartile for renewable electricity share",
+      "family": "indicators",
+      "includedIso3": ["BTN", "LSO", "CRI", "NOR", "CAF", "SLV", "TJK", "NAM", "BLZ", "ZMB", "AGO", "COD", "UGA", "LUX", "ZWE", "GIN", "KGZ", "URY", "NPL", "SWZ", "MOZ", "VEN", "NZL", "GEO", "ECU", "MWI", "AUT", "PAN", "DNK", "AFG", "KEN", "BRA", "GRL", "SLE", "COL", "HRV", "NIC", "CHE", "SWE", "CAN", "LTU", "PRT"],
+      "counterexampleIso3": ["AUS", "DEU", "USA"],
+      "difficulty": "expert",
+      "eligibility": "practice",
+      "sources": ["world-bank-wdi", "natural-earth-admin0-110m"],
+      "explanation": "This rule highlights mapped countries in the highest quartile of the approved Mystery Map renewable electricity share indicator.",
+      "decoys": [
+        {
+          "displayAnswer": "Top quartile for forest area share",
+          "whyPlausible": "Hydropower and forested countries overlap in some regions.",
+          "whyWrong": "Countries such as Lesotho, Tajikistan, and Uruguay point to electricity mix rather than forest cover."
+        },
+        {
+          "displayAnswer": "Countries with low PM2.5 exposure",
+          "whyPlausible": "Some clean-grid countries also have low air pollution.",
+          "whyWrong": "Afghanistan, Bangladesh, and other air-quality patterns do not match this renewable-electricity set."
+        },
+        {
+          "displayAnswer": "Hydropower-dependent countries",
+          "whyPlausible": "Hydropower explains many high renewable-electricity shares.",
+          "whyWrong": "The source indicator is all renewable electricity, not a hydropower-only rule."
+        }
+      ],
+      "dateVintage": "2021",
+      "indicatorRef": {
+        "indicatorId": "renewable-electricity",
+        "selection": "top_quartile",
+        "year": 2021
+      }
+    },
+    {
+      "id": "top-quartile-forest-area-share",
+      "displayAnswer": "Mapped countries in the top quartile for forest area share",
+      "family": "indicators",
+      "includedIso3": ["SUR", "GAB", "SLB", "GUY", "GNQ", "PNG", "LBR", "FIN", "BRN", "BTN", "LAO", "GNB", "SWE", "JPN", "COG", "KOR", "FJI", "TLS", "MNE", "SVN", "CRI", "ZMB", "BRA", "MYS", "EST", "PAN", "HND", "JAM", "PRI", "PER", "LVA", "BLZ", "COD", "COL", "VEN", "AGO", "BHS", "TZA", "RUS", "PRK", "ECU", "IDN", "VNM"],
+      "counterexampleIso3": ["DZA", "EGY", "SAU"],
+      "difficulty": "standard",
+      "eligibility": "daily",
+      "sources": ["world-bank-wdi", "natural-earth-admin0-110m"],
+      "explanation": "This rule highlights mapped countries in the highest quartile of the approved Mystery Map forest area share indicator.",
+      "decoys": [
+        {
+          "displayAnswer": "Countries containing part of the Amazon rainforest",
+          "whyPlausible": "Brazil, Colombia, Ecuador, Guyana, Peru, Suriname, and Venezuela are highlighted.",
+          "whyWrong": "The set also includes boreal, island, Southeast Asian, and Central African forest countries."
+        },
+        {
+          "displayAnswer": "Top quartile for renewable electricity share",
+          "whyPlausible": "Several forested countries also have hydro-heavy power systems.",
+          "whyWrong": "Japan, South Korea, and Brunei are forest-share clues, not renewable-electricity leaders."
+        },
+        {
+          "displayAnswer": "Countries crossed by the Equator",
+          "whyPlausible": "Many tropical forest countries near the Equator are highlighted.",
+          "whyWrong": "Finland, Sweden, Japan, Latvia, and Russia make this a forest-cover indicator pattern."
+        }
+      ],
+      "dateVintage": "2023",
+      "indicatorRef": {
+        "indicatorId": "forest-area",
+        "selection": "top_quartile",
+        "year": 2023
+      }
+    },
+    {
+      "id": "bottom-quartile-pm25-exposure",
+      "displayAnswer": "Mapped countries in the bottom quartile for PM2.5 exposure",
+      "family": "indicators",
+      "includedIso3": ["GRL", "FIN", "ISL", "SWE", "BHS", "NOR", "EST", "AUS", "FJI", "CAN", "NZL", "USA", "VUT", "LUX", "DNK", "IRL", "BRN", "PRI", "FRA", "CHE", "BEL", "NLD", "PRT", "DEU", "CUB", "GBR", "SLB", "AUT", "ESP", "LTU", "URY", "JPN", "RUS", "BLR", "TLS", "MDG", "SVN", "CZE", "LVA", "BWA", "BRA", "DOM"],
+      "counterexampleIso3": ["BGD", "IND", "PAK"],
+      "difficulty": "expert",
+      "eligibility": "practice",
+      "sources": ["world-bank-wdi", "natural-earth-admin0-110m"],
+      "explanation": "This rule highlights mapped countries in the lowest quartile of the approved Mystery Map PM2.5 exposure indicator.",
+      "decoys": [
+        {
+          "displayAnswer": "Top quartile for internet users",
+          "whyPlausible": "Many low-PM2.5 countries are high-income and connected.",
+          "whyWrong": "The set includes low-pollution island and sparsely populated countries that are not simply the internet-use top quartile."
+        },
+        {
+          "displayAnswer": "Countries crossed by the Arctic Circle",
+          "whyPlausible": "Greenland, Finland, Iceland, Sweden, Norway, Canada, the United States, and Russia are highlighted.",
+          "whyWrong": "Many non-Arctic countries are highlighted because this is an air-pollution indicator."
+        },
+        {
+          "displayAnswer": "Top quartile for forest area share",
+          "whyPlausible": "Forested and sparsely populated countries overlap with low PM2.5 exposure.",
+          "whyWrong": "Countries such as Belgium, the Netherlands, and Germany are not forest-share leaders."
+        }
+      ],
+      "dateVintage": "2023",
+      "indicatorRef": {
+        "indicatorId": "pm25-exposure",
+        "selection": "bottom_quartile",
+        "year": 2023
+      }
+    },
+    {
+      "id": "top-quartile-internet-users",
+      "displayAnswer": "Mapped countries in the top quartile for internet users",
+      "family": "indicators",
+      "includedIso3": ["ARE", "SAU", "DNK", "KWT", "NOR", "LUX", "ISL", "QAT", "MYS", "KOR", "CHE", "IRL", "NLD", "BRN", "AUS", "BEL", "ESP", "JOR", "CHL", "SWE", "GBR", "OMN", "AUT", "USA", "RUS", "CAN", "BLR", "HUN", "FIN", "MKD", "NZL", "DEU", "KAZ", "LVA", "BHS", "EST", "KGZ", "CHN", "URY"],
+      "counterexampleIso3": ["IND", "IDN", "NGA"],
+      "difficulty": "expert",
+      "eligibility": "practice",
+      "sources": ["world-bank-wdi", "natural-earth-admin0-110m"],
+      "explanation": "This rule highlights mapped countries in the highest quartile of the approved Mystery Map internet users indicator.",
+      "decoys": [
+        {
+          "displayAnswer": "Top quartile for GDP per capita",
+          "whyPlausible": "High-income countries are prominent.",
+          "whyWrong": "Jordan, Belarus, Kyrgyzstan, China, and Uruguay point to internet-use saturation rather than income alone."
+        },
+        {
+          "displayAnswer": "G7 member countries",
+          "whyPlausible": "Canada, Germany, the United Kingdom, and the United States are highlighted.",
+          "whyWrong": "France, Italy, and Japan are not highlighted here, while many non-G7 countries are."
+        },
+        {
+          "displayAnswer": "Euro area member countries",
+          "whyPlausible": "Several euro area countries are highlighted.",
+          "whyWrong": "Gulf states, Korea, Australia, Canada, China, and others show this is a connectivity indicator."
+        }
+      ],
+      "dateVintage": "2024",
+      "indicatorRef": {
+        "indicatorId": "internet-users",
+        "selection": "top_quartile",
+        "year": 2024
+      }
+    },
+    {
+      "id": "top-quartile-water-stress",
+      "displayAnswer": "Mapped countries in the top quartile for water stress",
+      "family": "indicators",
+      "includedIso3": ["KWT", "ARE", "SAU", "LBY", "QAT", "YEM", "DZA", "EGY", "TKM", "SYR", "UZB", "SDN", "OMN", "PAK", "JOR", "TUN", "LKA", "KOR", "IRN", "SWZ", "TJK", "ZAF", "IND", "ARM", "IRQ", "LBN", "AZE", "AFG", "BEL", "MKD", "MAR", "KGZ", "TUR", "ZWE", "MEX", "ESP", "CHN", "BGR", "DOM", "JPN", "DEU"],
+      "counterexampleIso3": ["BRA", "CAN", "NOR"],
+      "difficulty": "expert",
+      "eligibility": "expert-only",
+      "sources": ["world-bank-wdi", "natural-earth-admin0-110m"],
+      "explanation": "This rule highlights mapped countries in the highest quartile of the approved Mystery Map water stress indicator.",
+      "decoys": [
+        {
+          "displayAnswer": "Countries containing part of the Sahara Desert",
+          "whyPlausible": "North African desert countries are prominent.",
+          "whyWrong": "The set also includes South Asia, Central Asia, East Asia, Europe, and the Caribbean."
+        },
+        {
+          "displayAnswer": "Top quartile for fossil electricity share",
+          "whyPlausible": "Several Gulf and North African countries have fossil-heavy power systems.",
+          "whyWrong": "The rule follows water withdrawals relative to resources, not electricity generation mix."
+        },
+        {
+          "displayAnswer": "Countries bordering the Mediterranean Sea",
+          "whyPlausible": "Mediterranean countries such as Libya, Egypt, Syria, Tunisia, Lebanon, Morocco, Turkey, and Spain appear.",
+          "whyWrong": "The map includes many non-Mediterranean dry or heavily withdrawing countries."
+        }
+      ],
+      "dateVintage": "2022",
+      "indicatorRef": {
+        "indicatorId": "water-stress",
+        "selection": "top_quartile",
+        "year": 2022
+      }
+    },
+    {
+      "id": "top-quartile-tourism-receipts-share",
+      "displayAnswer": "Mapped countries in the top quartile for tourism receipts as a share of exports",
+      "family": "indicators",
+      "includedIso3": ["VUT", "BHS", "TLS", "MNE", "FJI", "ALB", "GMB", "ETH", "LBN", "JOR", "GEO", "DOM", "HRV", "HTI", "TZA", "LKA", "NPL", "ARM", "RWA", "GRC", "KHM", "UGA", "PAN", "EGY", "PRT", "MAR", "SDN", "MDG", "CRI", "KGZ", "NZL", "THA", "SLV", "CYP"],
+      "counterexampleIso3": ["CHN", "DEU", "USA"],
+      "difficulty": "expert",
+      "eligibility": "expert-only",
+      "sources": ["world-bank-wdi", "natural-earth-admin0-110m"],
+      "explanation": "This rule highlights mapped countries in the highest quartile of the approved Mystery Map tourism receipts share indicator.",
+      "decoys": [
+        {
+          "displayAnswer": "Island tourism economies",
+          "whyPlausible": "Vanuatu, The Bahamas, Timor-Leste, Fiji, Dominican Republic, Haiti, Sri Lanka, Madagascar, New Zealand, and Cyprus are highlighted.",
+          "whyWrong": "The set also includes mainland tourism-dependent economies across Europe, Africa, and Asia."
+        },
+        {
+          "displayAnswer": "Countries with Mediterranean coastlines",
+          "whyPlausible": "Albania, Montenegro, Lebanon, Croatia, Greece, Egypt, Morocco, and Cyprus are highlighted.",
+          "whyWrong": "Many highlighted countries are outside the Mediterranean basin."
+        },
+        {
+          "displayAnswer": "Top quartile for international tourism arrivals",
+          "whyPlausible": "Tourism geography is the common theme.",
+          "whyWrong": "This is receipts as a share of exports, so smaller tourism-dependent economies can outrank raw-arrival giants."
+        }
+      ],
+      "dateVintage": "2018",
+      "indicatorRef": {
+        "indicatorId": "tourism-receipts-share",
+        "selection": "top_quartile",
+        "year": 2018
+      }
+    }
+  ]
+}
