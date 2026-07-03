@@ -21,7 +21,7 @@ describe("WorldprintClient UI structure", () => {
     expect(source).toContain('aria-label="Primary Mystery Map action"');
     expect(source).toContain('<small>{primaryActionLabel}</small>');
     expect(source).not.toContain("Compass size={20}");
-    expect(source).toContain("Sign up for Pro for the full atlas, or sign up for a free account to play 3 fresh maps every day.");
+    expect(source).toContain("Sign up for Pro for the full atlas, or create a free account for 3 Daily rounds per playable game.");
     expect(styles).toContain(".lobby-play-button");
     expect(styles).toContain(".lobby-play-main");
     expect(styles).toContain("min-height: 5rem");
@@ -55,7 +55,7 @@ describe("WorldprintClient UI structure", () => {
     expect(source).not.toContain("Start limited practice");
     expect(source).toContain("Pro feature");
     expect(source).toContain("Practice by topic and difficulty is included with Pro.");
-    expect(source).toContain("Free accounts include one fresh 3-map Daily each day.");
+    expect(source).toContain("Free accounts include 3 Daily rounds per playable game.");
     expect(source).toContain("Full Practice Atlas");
     expect(source).toContain('href="/sign-up"');
     expect(source).toContain("Create free account");
@@ -194,12 +194,25 @@ describe("WorldprintClient UI structure", () => {
   it("gives completed Daily players a clear next action and makes result viewing explicit", () => {
     expect(source).toContain("Today's maps complete");
     expect(source).toContain('const completedPrimaryLabel = isFreeAccount ? "Start Pro" : signedIn && practiceMatches.length > 0 ? "Play" : "Play Sample Run";');
+    expect(source).toContain("const isFreeDailyRun = isDailyRun && signedIn && !canUseFullPractice;");
+    expect(source).toContain("You've used today's free Mystery Map rounds.");
+    expect(source).toContain("Go Pro to keep playing unlimited Atlas runs, or choose another game in the Can You Geo library.");
+    expect(source).toContain('href="/play"');
     expect(source).toContain("canReplayForPractice");
     expect(source).toContain("canUseFullPractice={canUseFullPractice}");
     expect(source).toContain('if (sourceRun.mode === "daily" && !canUseFullPractice) return;');
     expect(source).toContain(`const resultActionLabel = completedDailyRun ? "View today's result" : "View saved stats";`);
     expect(source).toContain("setRun(completedDailyRun);");
     expect(source).toContain("window.requestAnimationFrame(() => window.scrollTo(0, 0));");
+  });
+
+  it("distinguishes Pro Atlas from today's Daily Challenge in the Pro lobby", () => {
+    expect(source).toContain("Start Unlimited Atlas");
+    expect(source).toContain("Start unlimited 5-map Pro Atlas runs from the approved Mystery Map pool.");
+    expect(source).toContain("Pro Atlas uses unlimited");
+    expect(source).toContain("Daily Challenge is today's fixed 3-map streak run.");
+    expect(source).toContain("Play today&apos;s Daily Challenge");
+    expect(source).not.toContain("Play today&apos;s 3 maps");
   });
 
   it("lets the active Play nav return completed Mystery Map views to the lobby without private URLs", () => {

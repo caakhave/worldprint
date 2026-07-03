@@ -11,7 +11,7 @@ describe("account access copy", () => {
   it("distinguishes guest sample play from free account play", () => {
     expect(accessCopyForPlan("guest").summary).toContain("sample maps never change");
     expect(accessCopyForPlan("guest").summary).toContain("Create a free account");
-    expect(accessCopyForPlan("free").summary).toContain("3-map Free Daily");
+    expect(accessCopyForPlan("free").summary).toContain("3 Daily rounds per playable game");
     expect(accessCopyForPlan("free").summary).toContain("saved results");
   });
 

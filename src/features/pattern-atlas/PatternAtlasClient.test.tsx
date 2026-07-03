@@ -96,6 +96,14 @@ function completedRun(input: Parameters<typeof createPatternAtlasRun>[0]) {
   };
 }
 
+function getByExactTextContent(text: string) {
+  return screen.getByText((_, element) => element?.textContent === text);
+}
+
+function expectClueValue(text: string) {
+  expect(screen.getAllByText(text).some((element) => element.classList.contains("pattern-clue-value"))).toBe(true);
+}
+
 describe("PatternAtlasClient", () => {
   beforeEach(() => {
     window.localStorage.clear();
@@ -330,7 +338,7 @@ describe("PatternAtlasClient", () => {
     renderPatternAtlas();
     await startSampleRun();
 
-    expect(screen.getByText("Shows the broad type of rule, like borders, language, or indicators.")).toBeVisible();
+    expect(screen.getByText("Shows the broad type of rule, like borders, language, or data patterns.")).toBeVisible();
     expect(screen.getByRole("button", { name: "Reveal category family -100" })).toBeVisible();
     expect(screen.getByText("Names one country from the highlighted set, not the full list.")).toBeVisible();
     expect(screen.getByRole("button", { name: "Reveal one highlighted country -100" })).toBeVisible();
@@ -344,7 +352,8 @@ describe("PatternAtlasClient", () => {
     await startSampleRun(user);
     expect(screen.queryByText("Bolivia")).not.toBeInTheDocument();
     await user.click(screen.getByRole("button", { name: /Reveal one highlighted country -100/i }));
-    expect(screen.getByText("One highlighted country: Bolivia")).toBeVisible();
+    expect(getByExactTextContent("One highlighted country: Bolivia")).toBeVisible();
+    expectClueValue("Bolivia");
     expect(screen.getByRole("button", { name: "Country clue used" })).toBeDisabled();
   });
 
@@ -357,13 +366,35 @@ describe("PatternAtlasClient", () => {
     await user.click(screen.getByRole("button", { name: /Reveal one highlighted country -100/i }));
     await user.click(screen.getByRole("button", { name: /Reveal one country that does not fit -100/i }));
 
-    expect(screen.getByText("Category family revealed: Borders")).toBeVisible();
-    expect(screen.getByText("One highlighted country: Bolivia")).toBeVisible();
-    expect(screen.getByText("Counterexample revealed: Argentina is not highlighted.")).toBeVisible();
+    expect(getByExactTextContent("Category family revealed: Borders")).toBeVisible();
+    expect(getByExactTextContent("One highlighted country: Bolivia")).toBeVisible();
+    expect(getByExactTextContent("Counterexample revealed: Argentina is not highlighted.")).toBeVisible();
+    expectClueValue("Borders");
+    expectClueValue("Bolivia");
+    expectClueValue("Argentina");
     expect(screen.getByRole("button", { name: "Category clue used" })).toBeDisabled();
     expect(screen.getByRole("button", { name: "Country clue used" })).toBeDisabled();
     expect(screen.getByRole("button", { name: "Counterexample clue used" })).toBeDisabled();
     expect(screen.queryByText("Clue revealed")).not.toBeInTheDocument();
+  });
+
+  it("clarifies indicator-derived Pattern Atlas family clues", async () => {
+    const user = userEvent.setup();
+    renderPatternAtlas();
+    await startSampleRun(user);
+    await user.click(screen.getByRole("button", { name: "Landlocked countries in South America" }));
+    await user.click(screen.getByRole("button", { name: "Next pattern" }));
+    await user.click(screen.getByRole("button", { name: "Mapped ASEAN member countries" }));
+    await user.click(screen.getByRole("button", { name: "Next pattern" }));
+
+    await user.click(screen.getByRole("button", { name: /Reveal category family -100/i }));
+
+    expect(screen.getByText("This rule comes from a mapped data indicator.").closest(".clue-action-card")).toHaveTextContent(
+      "Category family revealed: Data & statistics"
+    );
+    expectClueValue("Data & statistics");
+    expect(screen.getByText("This rule comes from a mapped data indicator.")).toBeVisible();
+    expect(screen.queryByText("Indicators")).not.toBeInTheDocument();
   });
 
   it("applies clue penalties once and disables used clue buttons", async () => {
@@ -422,6 +453,11 @@ describe("PatternAtlasClient", () => {
     await user.click(screen.getByRole("button", { name: /View Pattern Atlas Daily/i }));
 
     expect(screen.getByText("Pattern Atlas Daily complete")).toBeVisible();
+    expect(screen.getByText("You've used today's free Pattern Atlas rounds.")).toBeVisible();
+    expect(screen.getByRole("link", { name: "Go Pro to keep playing" })).toHaveAttribute("href", "/upgrade");
+    expect(screen.getByRole("link", { name: "Choose another game" })).toHaveAttribute("href", "/play");
+    expect(screen.queryByRole("button", { name: "Play again" })).not.toBeInTheDocument();
+    expect(screen.queryByRole("button", { name: "Choose mode" })).not.toBeInTheDocument();
     expect(screen.queryByText("Start Pro or continue free.")).not.toBeInTheDocument();
     expect(screen.queryByText(/Create a free account to save Free Daily progress/i)).not.toBeInTheDocument();
     expect(screen.queryByRole("link", { name: "Create free account" })).not.toBeInTheDocument();
@@ -438,6 +474,8 @@ describe("PatternAtlasClient", () => {
     expect(screen.queryByText("Start Pro or continue free.")).not.toBeInTheDocument();
     expect(screen.queryByText(/Create a free account to save Free Daily progress/i)).not.toBeInTheDocument();
     expect(screen.queryByRole("link", { name: "Create free account" })).not.toBeInTheDocument();
+    expect(screen.getByRole("button", { name: "Play again" })).toBeVisible();
+    expect(screen.getByRole("button", { name: "Choose mode" })).toBeVisible();
   });
 
   it("shows explanation, sources, highlighted countries, and mapped-country scope on reveal", async () => {

@@ -94,6 +94,7 @@ describe("UpgradeClient", () => {
     expect(screen.getAllByText("Checkout coming soon").length).toBeGreaterThan(0);
     expect(screen.getByText(/Checkout is coming soon and billing is disabled for now/i)).toBeVisible();
     expect(screen.getByText(/Billing is disabled right now/i)).toBeVisible();
+    expect(screen.getAllByText(/3 Daily rounds per playable game/i).length).toBeGreaterThanOrEqual(1);
     expect(screen.getByRole("heading", { name: "Free and Pro now cover more than one game." })).toBeVisible();
     expect(screen.getByRole("heading", { name: "Mystery Map" })).toBeVisible();
     expect(screen.getByRole("heading", { name: "Pattern Atlas" })).toBeVisible();
@@ -146,7 +147,7 @@ describe("UpgradeClient", () => {
     expect(within(overview).getByRole("button", { name: "Join yearly" })).toBeEnabled();
     expect(
       within(overview).getByText(
-        "Free accounts unlock fresh Daily games and saved Mystery Map progress. Pro opens Mystery Map Custom Atlas, Pattern Atlas Pattern Runs, the complete Past Games archive, advanced stats, and future premium games."
+        "Free accounts unlock 3 Daily rounds per playable game and saved Daily progress. Pro opens Mystery Map Custom Atlas, Pattern Atlas Pattern Runs, the complete Past Games archive, advanced stats, and future premium games."
       )
     ).toBeVisible();
     expect(screen.getAllByText("Best value").length).toBeGreaterThanOrEqual(1);
@@ -201,7 +202,7 @@ describe("UpgradeClient", () => {
     expect(JSON.stringify(options.body)).not.toContain("price_");
     expect(client.from).not.toHaveBeenCalled();
     expect(screen.getAllByRole("link", { name: "Continue free" }).some((link) => link.getAttribute("href") === "/account")).toBe(true);
-    expect(screen.getByText("Free needs no card and includes the 3-map Free Daily, saved progress, and basic stats.")).toBeVisible();
+    expect(screen.getByText("Free needs no card and includes 3 Daily rounds per playable game, saved progress, and basic stats.")).toBeVisible();
   });
 
   it("shows a focused yearly Pro intent landing state after sign-in", async () => {

@@ -1087,17 +1087,17 @@ export function WorldprintClient({ dateOverride, entryMode = "standard" }: World
       primaryMode === "atlas"
         ? currentAtlasActive
           ? "Continue Pro Atlas"
-          : "Start Pro Atlas"
+          : "Start Unlimited Atlas"
         : primaryMode === "daily"
           ? currentDailyActive
             ? "Resume today's 3 maps"
-            : "Play today's 3 fresh maps"
+            : "Play today's Free Daily"
           : "Try the 5-map Sample Run";
     const primaryCopy =
       primaryMode === "atlas"
-        ? "5-map Atlas runs draw from the approved playable pool. Keep going after today's Free Daily."
+        ? "Start unlimited 5-map Pro Atlas runs from the approved Mystery Map pool. The Daily stays separate for streaks and history."
         : primaryMode === "daily"
-          ? "Your free account gets 3 fresh maps every day with saved results, progress, and streaks."
+          ? "Your free account gets 3 Daily Mystery Map rounds today with saved results, progress, and streaks."
           : "No account needed. These sample maps never change, and the Sample Run does not save stats or streaks.";
     const primaryStateLabel =
       primaryMode === "atlas"
@@ -1113,15 +1113,15 @@ export function WorldprintClient({ dateOverride, entryMode = "standard" }: World
             : "5 fixed maps";
     const primaryNote =
       primaryMode === "atlas"
-        ? `Unlimited Atlas uses ${PRO_ATLAS_ROUND_COUNT}-map runs and reshuffles after the full pool is complete.`
+        ? `Pro Atlas uses unlimited ${PRO_ATLAS_ROUND_COUNT}-map runs from the approved pool. Daily Challenge is today's fixed 3-map streak run.`
         : primaryMode === "daily"
           ? "Want more after today's 3 maps? Go Pro for unlimited Atlas play."
-          : "Sign up for Pro for the full atlas, or sign up for a free account to play 3 fresh maps every day.";
+          : "Sign up for Pro for the full atlas, or create a free account for 3 Daily rounds per playable game.";
     const primaryActionLabel =
       primaryMode === "atlas"
         ? currentAtlasActive
           ? "Continue Pro Atlas"
-          : "Start Pro Atlas"
+          : "Start Unlimited Atlas"
         : primaryMode === "daily"
           ? dailyLabel
           : "Try the 5-map Sample Run";
@@ -1138,7 +1138,7 @@ export function WorldprintClient({ dateOverride, entryMode = "standard" }: World
     const practiceCopy = canUseFullPractice
       ? "Training sets by topic and difficulty. Never affects your Daily score or streak."
       : isFreeAccount
-        ? "Practice by topic and difficulty is included with Pro. Free accounts include one fresh 3-map Daily each day."
+        ? "Practice by topic and difficulty is included with Pro. Free accounts include 3 Daily rounds per playable game."
         : "Try the Sample Run without an account, or start Pro for topic and difficulty practice.";
     const practiceReadyText = selectedCount > 0
       ? practiceReadyLine(selectedCount)
@@ -1275,7 +1275,7 @@ export function WorldprintClient({ dateOverride, entryMode = "standard" }: World
                   )}
                   {primaryMode === "atlas" && !todayCompleted ? (
                     <button className="button-secondary" type="button" onClick={() => void startRun("daily")}>
-                      Play today&apos;s 3 maps
+                      Play today&apos;s Daily Challenge
                     </button>
                   ) : null}
                   {isGuest ? (
@@ -2443,6 +2443,7 @@ function CompletionSummary({
   const isSampleRun = run.mode === "sample";
   const isDailyRun = run.mode === "daily";
   const isAtlasRun = run.mode === "atlas";
+  const isFreeDailyRun = isDailyRun && signedIn && !canUseFullPractice;
   const isPastRecord = run.mode === "archive";
   const canReplayForPractice = !isDailyRun || canUseFullPractice;
   const canCreateChallenge = !isSampleRun;
@@ -2480,13 +2481,15 @@ function CompletionSummary({
   const scorePercent = Math.max(0, Math.min(100, Math.round((total / possibleRunScore) * 100)));
   const accountSaveHeading = isSampleRun
     ? "Start Pro or continue free for fresh maps."
-    : signedIn
-    ? cloudSaveStatus.toLowerCase().includes("saved to your account")
-      ? "Saved to your account."
-      : cloudSaveStatus.toLowerCase().includes("failed")
-      ? "Saved locally. Sync needs another try."
-      : "Account save is on."
-    : "Save your score and streak.";
+    : isFreeDailyRun
+      ? "Daily complete. Go Pro to keep playing."
+      : signedIn
+        ? cloudSaveStatus.toLowerCase().includes("saved to your account")
+          ? "Saved to your account."
+          : cloudSaveStatus.toLowerCase().includes("failed")
+            ? "Saved locally. Sync needs another try."
+            : "Account save is on."
+        : "Save your score and streak.";
   const saveNote = isSampleRun
     ? "Sample Run is not saved. Free accounts save Daily stats, progress, and streaks."
     : signedIn
@@ -2662,14 +2665,24 @@ function CompletionSummary({
         ) : null}
         <section className="summary-retention-card surface" aria-label="Next Daily and streak">
           <div>
-            <p className="eyebrow">{isSampleRun ? "Free or Pro" : isAtlasRun ? "Unlimited Atlas" : "Return tomorrow"}</p>
-            <h2>{isSampleRun ? "Start Pro or continue free." : isAtlasRun ? "Start another Atlas run." : nextDaily.headline}</h2>
+            <p className="eyebrow">{isSampleRun ? "Free or Pro" : isFreeDailyRun ? "Daily complete" : isAtlasRun ? "Unlimited Atlas" : "Return tomorrow"}</p>
+            <h2>
+              {isSampleRun
+                ? "Start Pro or continue free."
+                : isFreeDailyRun
+                  ? "You've used today's free Mystery Map rounds."
+                  : isAtlasRun
+                    ? "Start another Atlas run."
+                    : nextDaily.headline}
+            </h2>
             <p>
               {isSampleRun
                 ? "Pro opens the full atlas. A free account needs no card and saves Free Daily progress, stats, and streaks."
-                : isAtlasRun
-                  ? "Pro Atlas runs keep going after the daily set and draw from the full approved pool."
-                  : nextDaily.body}
+                : isFreeDailyRun
+                  ? "Go Pro to keep playing unlimited Atlas runs, or choose another game in the Can You Geo library."
+                  : isAtlasRun
+                    ? "Pro Atlas runs keep going after the daily set and draw from the full approved pool."
+                    : nextDaily.body}
             </p>
           </div>
           {isSampleRun ? (
@@ -2679,6 +2692,15 @@ function CompletionSummary({
               </Link>
               <Link className="button-secondary" href="/sign-up">
                 Create free account
+              </Link>
+            </div>
+          ) : isFreeDailyRun ? (
+            <div className="button-row">
+              <Link className="button" href="/upgrade">
+                Go Pro to keep playing
+              </Link>
+              <Link className="button-secondary" href="/play">
+                Choose another game
               </Link>
             </div>
           ) : isAtlasRun ? (
@@ -2886,28 +2908,41 @@ function CompletionSummary({
                     Review result
                   </Link>
                 ) : null}
-                {isSampleRun ? (
-                  <Link className="button" href="/upgrade">
-                    Start Pro
-                  </Link>
+                {isFreeDailyRun ? (
+                  <>
+                    <Link className="button" href="/upgrade">
+                      Go Pro to keep playing
+                    </Link>
+                    <Link className="button-secondary" href="/play">
+                      Choose another game
+                    </Link>
+                  </>
                 ) : (
-                  <button className="button" type="button" onClick={onPractice}>
-                    Play another set
-                  </button>
+                  <>
+                    {isSampleRun ? (
+                      <Link className="button" href="/upgrade">
+                        Start Pro
+                      </Link>
+                    ) : (
+                      <button className="button" type="button" onClick={onPractice}>
+                        Play another set
+                      </button>
+                    )}
+                    {canReplayForPractice ? (
+                      <button className="button-secondary" type="button" onClick={onReplay}>
+                        {run.mode === "challenge" ? "Replay this challenge" : "Replay for practice"}
+                      </button>
+                    ) : null}
+                    {!isSampleRun ? (
+                      <Link className="button-secondary" href="/past-games">
+                        Past Games
+                      </Link>
+                    ) : null}
+                    <Link className="button-secondary" href={isSampleRun ? "/sign-up" : "/account/stats"}>
+                      {isSampleRun ? "Create free account" : "View saved stats"}
+                    </Link>
+                  </>
                 )}
-                {canReplayForPractice ? (
-                  <button className="button-secondary" type="button" onClick={onReplay}>
-                    {run.mode === "challenge" ? "Replay this challenge" : "Replay for practice"}
-                  </button>
-                ) : null}
-                {!isSampleRun ? (
-                  <Link className="button-secondary" href="/past-games">
-                    Past Games
-                  </Link>
-                ) : null}
-                <Link className="button-secondary" href={isSampleRun ? "/sign-up" : "/account/stats"}>
-                  {isSampleRun ? "Create free account" : "View saved stats"}
-                </Link>
               </div>
               <div className="status-live" role="status" aria-live="polite">
                 {shareStatus}

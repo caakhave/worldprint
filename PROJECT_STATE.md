@@ -11,7 +11,9 @@ Snapshot date: July 3, 2026.
   - `30d6969` - Pattern Atlas Phase 2 playable sample route.
   - `6ce8aa064cd5f1b40cd3253c665168d3452ae135` - Pattern Atlas Phase 3 account modes and persistence.
 - `728d8d3` - Pattern Atlas QA polish for clue clarity and sample conversion.
+- `ee9827c` - Phase 4 site integration for the multi-game library.
 - Phase 4 site integration is complete for this checkpoint.
+- Manual QA gameplay/site polish is complete for this checkpoint.
 - The working tree should remain docs/product-code clean except for untracked `atd/` assets and explicitly requested checkpoint work.
 - `atd/` remains untracked and must not be committed unless explicitly requested.
 
@@ -111,6 +113,21 @@ Snapshot date: July 3, 2026.
 - Free/Pro real browser QA status:
   - Mocked entitlement tests passed for homepage account-aware branches.
   - Real authenticated Free/Pro browser QA still needs staging verification after deploy.
+
+### Manual QA Gameplay/Site Polish
+
+- Pattern Atlas clue reveal values now stand out as emphasized player-facing clue values.
+- Pattern Atlas indicator-derived category clues no longer expose the raw `Indicators` family label alone; the player-facing label is now `Data & statistics` with helper copy for mapped data-indicator rules.
+- Free Daily completion for playable games now pushes Pro instead of offering impossible replay:
+  - Pattern Atlas Free Daily completion links to `/upgrade` and `/play`.
+  - Mystery Map Free Daily completion links to `/upgrade` and `/play`.
+- Mystery Map Pro lobby now distinguishes Unlimited/Pro Atlas from the Daily Challenge:
+  - Unlimited Atlas is the Pro run from the approved pool.
+  - Daily Challenge is today's fixed 3-map streak/history run.
+- `/play/` headline now says `Choose your geography game.`
+- Free-account copy now clarifies `3 Daily rounds per playable game`.
+- Rank Run remains clearly marked as coming soon; copy does not overpromise Rank Run as playable.
+- No Rank Run gameplay, auth/payment/Supabase/Stripe, Edge Function, or deployment config changes were made.
 
 ## Current Next Task
 
@@ -242,12 +259,38 @@ Staging-wide QA pass before more feature work.
   - Mobile `/play/` and `/upgrade/` had no horizontal overflow in the static preview smoke.
   - Real authenticated Free/Pro homepage browser QA was not performed locally; mocked entitlement coverage passed and staging QA with real accounts is still needed.
 
+### Manual QA Gameplay/Site Polish
+
+- `pnpm test src/features/pattern-atlas/PatternAtlasClient.test.tsx src/lib/pattern-atlas/selection.test.ts src/lib/pattern-atlas/storage.test.ts src/lib/pattern-atlas/catalog.test.ts src/app/play/pattern-atlas/page.test.tsx src/components/WorldMap.test.tsx`
+  - Result: passed; 6 files and 45 tests.
+- `pnpm test src/features/worldprint/WorldprintClient.structure.test.ts src/components/WorldMap.test.tsx`
+  - Result: passed; 2 files and 36 tests.
+- `pnpm test src/app/play/page.test.tsx src/app/page.test.tsx src/features/home/HomeHeroAccountPanel.test.tsx src/features/account/UpgradeClient.test.tsx src/features/account/BillingActionsClient.test.tsx src/app/how-to-play/page.test.tsx src/lib/account/accessCopy.test.ts`
+  - Result: passed; 7 files and 32 tests.
+- `pnpm lint`
+  - Result: passed.
+- `pnpm typecheck`
+  - Result: passed.
+- `pnpm build`
+  - Result: passed; static export generated 270 pages and included `/play`, `/play/mystery-map`, and `/play/pattern-atlas`.
+- `git diff --check`
+  - Result: passed.
+- Static preview manual QA:
+  - `/play/` showed the corrected `Choose your geography game.` headline, playable Mystery Map and Pattern Atlas cards, and Rank Run as coming soon with no gameplay link.
+  - `/play/pattern-atlas/` clue cards were understandable before use, used clue buttons stayed disabled, revealed clue values were emphasized, `Data & statistics` replaced raw `Indicators`, and the signed-out sample completion actions had no mobile horizontal overflow.
+  - `/play/mystery-map/` loaded normally and showed updated signed-out Free-account copy.
+  - `/upgrade/` showed the multi-game library, per-playable-game Free copy, and Rank Run as coming soon.
+  - Logged-out homepage retained `Start Pro` and `Try Sample Run` while showing the updated per-playable-game Free copy.
+  - Mobile `/play/`, `/upgrade/`, and Pattern Atlas sample-complete checks had no horizontal overflow.
+  - Real authenticated Free/Pro browser QA was not performed locally; mocked entitlement/structure coverage passed and staging QA with real accounts is still needed.
+
 ## Known Remaining Issues / Follow-Ups
 
 - Custom Atlas topic+difficulty combo exhaustion by play history is not implemented.
 - Full e2e may need updating for the newer access model and Custom Atlas naming.
 - `atd/` remains untracked and should not be committed.
 - Pattern Atlas Free/Pro real-browser QA needs staging verification with authenticated accounts after deploy.
+- Account Manage Billing CORS / billing portal behavior needs separate investigation if it has not already been fixed.
 - Rank Run is represented only as coming soon; no gameplay exists yet.
 - Staging-wide QA should run before more feature work.
 

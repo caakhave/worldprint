@@ -27,17 +27,19 @@ const heroCopy: Record<
     secondary: { label: "Try Sample Run", href: "/play/mystery-map" },
     noteLines: [
       "No account needed to try out our sample maps.",
-      "Free accounts get three fresh maps per day.",
+      "Free accounts get 3 Daily rounds per playable game.",
       "Pro accounts get Custom Atlas and Pattern Runs."
     ],
     panelEyebrow: "Join the game",
     panelHeading: "Start Pro or continue free",
-    panelBody: "Pro opens the growing game library. Free needs no card and includes the 3-map Free Daily, saved progress, streaks, and basic stats.",
+    panelBody:
+      "Pro opens the growing game library. Free needs no card and includes 3 Daily rounds per playable game, saved progress, streaks, and basic stats.",
     panelCta: { label: "Start Pro", href: "/upgrade" }
   },
   free: {
     eyebrow: "Free account active",
-    lead: "Your Daily is ready. Play today's three fresh maps, try Pattern Atlas, and upgrade when you want Custom Atlas and Pattern Runs.",
+    lead:
+      "Your Daily is ready. Free accounts get 3 Daily rounds per playable game: Mystery Map and Pattern Atlas are playable now, and Rank Run is coming soon.",
     primary: { label: "Play today's Free Daily", href: "/play/mystery-map" },
     secondary: { label: "Upgrade to Pro", href: "/upgrade" },
     noteLines: [
@@ -47,7 +49,8 @@ const heroCopy: Record<
     ],
     panelEyebrow: "Free Daily unlocked",
     panelHeading: "Play today's Daily or unlock more games",
-    panelBody: "Free keeps your Daily progress saved. Pro adds Custom Atlas runs, Pattern Atlas filters, and the complete Past Games archive.",
+    panelBody:
+      "Free keeps each playable game's Daily progress saved. Pro adds Custom Atlas runs, Pattern Atlas filters, and the complete Past Games archive.",
     panelCta: { label: "Upgrade to Pro", href: "/upgrade" }
   },
   pro: {
@@ -72,7 +75,7 @@ const heroCopy: Record<
     secondary: { label: "Open Mystery Map", href: "/play/mystery-map" },
     noteLines: [
       "Looking for a signed-in account.",
-      "Free accounts get today's Daily.",
+      "Free accounts get 3 Daily rounds per playable game.",
       "Pro accounts get Daily, Custom Atlas, and Pattern Runs."
     ],
     panelEyebrow: "Account check",

@@ -6,7 +6,9 @@ describe("PlayHubPage", () => {
   it("renders the Can You Geo game library with playable Mystery Map and Pattern Atlas cards", () => {
     render(<PlayHubPage />);
 
-    expect(screen.getByRole("heading", { name: "Choose your geography read." })).toBeVisible();
+    expect(screen.getByRole("heading", { name: "Choose your geography game." })).toBeVisible();
+    expect(screen.getByText(/Free accounts get 3 Daily rounds per playable game/i)).toBeVisible();
+    expect(screen.getByText(/Rank Run is coming soon/i)).toBeVisible();
     expect(screen.getByRole("heading", { name: "Mystery Map" })).toBeVisible();
     expect(screen.getByRole("heading", { name: "Pattern Atlas" })).toBeVisible();
     expect(screen.getByRole("heading", { name: "Rank Run" })).toBeVisible();

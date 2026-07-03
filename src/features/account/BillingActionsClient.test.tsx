@@ -60,7 +60,7 @@ describe("BillingActionsClient", () => {
     expect(screen.getByRole("button", { name: "Checkout coming soon" })).toBeDisabled();
     expect(screen.getByText(/Pricing is visible now\./)).toBeVisible();
     expect(screen.getByText(/billing is disabled for now\./)).toBeVisible();
-    expect(screen.getByText(/Continue free for 3 fresh maps every day\./)).toBeVisible();
+    expect(screen.getByText(/Continue free for 3 Daily rounds per playable game\./)).toBeVisible();
     expect(screen.queryByRole("button", { name: /Join/i })).not.toBeInTheDocument();
   });
 
@@ -69,7 +69,7 @@ describe("BillingActionsClient", () => {
 
     expect(screen.getByRole("link", { name: "Start Pro" })).toHaveAttribute("href", "/sign-up?next=%2Fupgrade");
     expect(screen.getByRole("link", { name: "Continue free" })).toHaveAttribute("href", "/sign-up");
-    expect(screen.getByText("Checkout is coming soon. Free needs no card and saves your 3-map Daily progress.")).toBeVisible();
+    expect(screen.getByText("Checkout is coming soon. Free needs no card and saves your Daily progress.")).toBeVisible();
     expect(screen.queryByRole("button", { name: "Checkout coming soon" })).not.toBeInTheDocument();
   });
 

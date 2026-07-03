@@ -43,7 +43,8 @@ export default function HowToPlayPage() {
           <h2 id="how-library-title">Two games are playable now.</h2>
           <p>
             Mystery Map remains the flagship Daily game. Pattern Atlas uses the same atlas feel with highlighted countries instead of
-            choropleth values. Rank Run is a planned future game and is not playable yet.
+            choropleth values. Free accounts get 3 Daily rounds per playable game. Rank Run is a planned future game and is not
+            playable yet.
           </p>
         </div>
         <GameLibraryShowcase className="how-library-grid" ariaLabel="Can You Geo games explained" />
@@ -107,7 +108,7 @@ export default function HowToPlayPage() {
       <div className="how-cta surface map-texture-panel">
         <div>
           <p className="eyebrow">Start playing</p>
-          <h2>Pick a game, continue free, or start Pro for deeper custom runs.</h2>
+          <h2>Pick a game, continue free for 3 Daily rounds per playable game, or start Pro for deeper custom runs.</h2>
         </div>
         <div className="button-row">
           <Link className="button" href="/upgrade">

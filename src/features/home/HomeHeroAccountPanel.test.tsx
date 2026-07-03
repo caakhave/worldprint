@@ -52,6 +52,7 @@ describe("HomeHeroAccountPanel", () => {
     expect(screen.getByRole("link", { name: "Try Sample Run" })).toHaveAttribute("href", "/play/mystery-map");
     expect(screen.getByRole("complementary", { name: "Join the game" })).toBeVisible();
     expect(screen.getByRole("heading", { name: "Start Pro or continue free" })).toBeVisible();
+    expect(screen.getByText("Free accounts get 3 Daily rounds per playable game.")).toBeVisible();
     expect(screen.getByText("Pro accounts get Custom Atlas and Pattern Runs.")).toBeVisible();
   });
 
@@ -64,6 +65,8 @@ describe("HomeHeroAccountPanel", () => {
     expect(screen.getAllByRole("link", { name: /Upgrade to Pro/i }).every((link) => link.getAttribute("href") === "/upgrade")).toBe(true);
     expect(screen.getByRole("complementary", { name: "Free Daily unlocked" })).toBeVisible();
     expect(screen.getByText("You are signed in on Free.")).toBeVisible();
+    expect(screen.getByText(/Mystery Map and Pattern Atlas are playable now/i)).toBeVisible();
+    expect(screen.getByText(/Rank Run is coming soon/i)).toBeVisible();
     expect(screen.getByText("Pro unlocks Custom Atlas, Pattern Runs, and Past Games.")).toBeVisible();
     expect(screen.queryByRole("link", { name: "Try Sample Run" })).not.toBeInTheDocument();
   });

@@ -52,7 +52,7 @@ describe("HomePage", () => {
     expect(screen.getByText(/geography game site for daily map puzzles/i)).toBeVisible();
     expect(screen.getAllByText(/Mystery Map and Pattern Atlas are playable now/i).length).toBeGreaterThanOrEqual(1);
     expect(screen.getByRole("heading", { name: "Is Can You Geo free?" })).toBeVisible();
-    expect(screen.getAllByText(/3-map Free Daily/i).length).toBeGreaterThanOrEqual(1);
+    expect(screen.getAllByText(/3 Daily rounds per playable game/i).length).toBeGreaterThanOrEqual(1);
     expect(screen.getByRole("heading", { name: "How does Mystery Map work?" })).toBeVisible();
     expect(screen.getByRole("heading", { name: "What games can I play?" })).toBeVisible();
     expect(screen.getByRole("heading", { name: "What data sources does Can You Geo use?" })).toBeVisible();
@@ -63,7 +63,7 @@ describe("HomePage", () => {
     expect(screen.getByRole("link", { name: /Play Pattern Atlas/i })).toHaveAttribute("href", "/play/pattern-atlas");
     expect(screen.getByText("Coming soon")).toBeVisible();
     expect(screen.getByText("No account needed to try out our sample maps.")).toBeVisible();
-    expect(screen.getByText("Free accounts get three fresh maps per day.")).toBeVisible();
+    expect(screen.getByText("Free accounts get 3 Daily rounds per playable game.")).toBeVisible();
     expect(screen.getByText("Pro accounts get Custom Atlas and Pattern Runs.")).toBeVisible();
   });
 });

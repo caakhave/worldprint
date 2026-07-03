@@ -263,7 +263,7 @@ export const HOME_FAQ_ITEMS = [
   {
     name: "Is Can You Geo free?",
     acceptedAnswer:
-      "Yes. Guests can try a fixed Sample Run, and Free accounts get a 3-map Free Daily with saved progress, streaks, and basic stats."
+      "Yes. Guests can try fixed Sample Runs, and Free accounts get 3 Daily rounds per playable game with saved progress, streaks, and basic stats."
   },
   {
     name: "How does Mystery Map work?",

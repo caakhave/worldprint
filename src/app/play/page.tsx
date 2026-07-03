@@ -17,7 +17,7 @@ export default function PlayHubPage() {
         <div>
           <p className="eyebrow">Game library</p>
           <h1 id="play-hub-title" className="page-title">
-            Choose your geography read.
+            Choose your geography game.
           </h1>
         </div>
         <p className="lead">
@@ -31,8 +31,8 @@ export default function PlayHubPage() {
           <p className="eyebrow">Playable now</p>
           <h2 id="play-library-title">Mystery Map and Pattern Atlas.</h2>
           <p>
-            Start with a guest sample, play the Free Daily when signed in, or use Pro for deeper custom runs where each game supports
-            them.
+            Free accounts get 3 Daily rounds per playable game. Mystery Map and Pattern Atlas are playable now; Rank Run is coming
+            soon.
           </p>
         </div>
         <GameLibraryShowcase ariaLabel="Can You Geo playable games and planned games" />

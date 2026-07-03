@@ -16,13 +16,13 @@ export const ACCESS_PLAN_COPY: Record<AccountPlan, AccessPlanCopy> = {
   guest: {
     label: "Guest",
     headline: "Try the 5-map Sample Run.",
-    summary: "No account needed. These sample maps never change. Create a free account for 3 fresh maps every day.",
+    summary: "No account needed. These sample maps never change. Create a free account for 3 Daily rounds per playable game.",
     primaryCta: "Create a free account"
   },
   free: {
     label: "Free account",
-    headline: "3 fresh maps every day.",
-    summary: "Free accounts unlock the 3-map Free Daily, saved results, streaks, progress, and basic stats.",
+    headline: "3 Daily rounds per playable game.",
+    summary: "Free accounts unlock 3 Daily rounds per playable game, saved results, streaks, progress, and basic stats.",
     primaryCta: "Play today's Mystery Map"
   },
   pro: {

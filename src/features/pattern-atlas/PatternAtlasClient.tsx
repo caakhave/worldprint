@@ -2,7 +2,7 @@
 
 import { Compass, Lightbulb, MapPin, XCircle } from "lucide-react";
 import Link from "next/link";
-import { useEffect, useMemo, useState } from "react";
+import { useEffect, useMemo, useState, type ReactNode } from "react";
 import { WorldMap } from "@/components/WorldMap";
 import { useEntitlement } from "@/features/account/useEntitlement";
 import { getPatternAtlasSampleRules } from "@/features/pattern-atlas/sampleRun";
@@ -49,6 +49,14 @@ const DIFFICULTY_LABELS: Record<PatternAtlasDifficulty, string> = {
   standard: "Standard",
   expert: "Expert"
 };
+const FAMILY_LABELS: Record<PatternAtlasFamily, string> = {
+  language: "Language",
+  borders: "Borders",
+  physical_geography: "Physical Geography",
+  organizations: "Organizations",
+  economy: "Economy",
+  indicators: "Data & statistics"
+};
 const CLUE_FEEDBACK_LABELS: Record<keyof PatternAtlasRoundState["clues"], string> = {
   family: "Category clue used",
   highlightedCountry: "Country clue used",
@@ -88,11 +96,7 @@ function answerChoicesForRule(rule: PatternAtlasRule, roundIndex: number): Answe
 }
 
 function familyLabel(family: PatternAtlasFamily) {
-  return family
-    .replace(/_/g, " ")
-    .split(" ")
-    .map((word) => word.charAt(0).toUpperCase() + word.slice(1))
-    .join(" ");
+  return FAMILY_LABELS[family];
 }
 
 function difficultyLabel(difficulty: PatternAtlasDifficulty) {
@@ -398,7 +402,15 @@ export function PatternAtlasClient({ initialData, todayOverride }: PatternAtlasC
   }
 
   if (run.status === "complete") {
-    return <PatternAtlasSummary run={run} signedIn={signedIn} onRestart={() => restartRun(run)} onLobby={() => setRun(null)} />;
+    return (
+      <PatternAtlasSummary
+        run={run}
+        signedIn={signedIn}
+        isFreeAccount={isFreeAccount}
+        onRestart={() => restartRun(run)}
+        onLobby={() => setRun(null)}
+      />
+    );
   }
 
   const currentRule = ruleById.get(run.ruleIds[run.currentRoundIndex]);
@@ -493,8 +505,16 @@ export function PatternAtlasClient({ initialData, todayOverride }: PatternAtlasC
             label="Category"
             text={
               currentState.clues.family
-                ? `Category family revealed: ${familyLabel(currentRule.family)}`
-                : "Shows the broad type of rule, like borders, language, or indicators."
+                ? (
+                    <>
+                      Category family revealed:{" "}
+                      <strong className="pattern-clue-value">{familyLabel(currentRule.family)}</strong>
+                      {currentRule.family === "indicators" ? (
+                        <span className="pattern-clue-helper">This rule comes from a mapped data indicator.</span>
+                      ) : null}
+                    </>
+                  )
+                : "Shows the broad type of rule, like borders, language, or data patterns."
             }
             used={currentState.clues.family}
             cost={PATTERN_ATLAS_CLUE_PENALTY}
@@ -507,7 +527,12 @@ export function PatternAtlasClient({ initialData, todayOverride }: PatternAtlasC
             label="Highlighted country"
             text={
               currentState.clues.highlightedCountry
-                ? `One highlighted country: ${countryName(highlightedCountry, data.countryNames)}`
+                ? (
+                    <>
+                      One highlighted country:{" "}
+                      <strong className="pattern-clue-value">{countryName(highlightedCountry, data.countryNames)}</strong>
+                    </>
+                  )
                 : "Names one country from the highlighted set, not the full list."
             }
             used={currentState.clues.highlightedCountry}
@@ -521,7 +546,12 @@ export function PatternAtlasClient({ initialData, todayOverride }: PatternAtlasC
             label="Counterexample"
             text={
               currentState.clues.counterexample
-                ? `Counterexample revealed: ${countryName(counterexample, data.countryNames)} is not highlighted.`
+                ? (
+                    <>
+                      Counterexample revealed:{" "}
+                      <strong className="pattern-clue-value">{countryName(counterexample, data.countryNames)}</strong> is not highlighted.
+                    </>
+                  )
                 : "Names a country that is not highlighted, helping rule out wrong patterns."
             }
             used={currentState.clues.counterexample}
@@ -827,7 +857,7 @@ function ClueButton({
   onClick
 }: {
   label: string;
-  text: string;
+  text: ReactNode;
   used: boolean;
   cost: number;
   icon: "family" | "highlight" | "counterexample";
@@ -999,16 +1029,19 @@ function PatternAtlasReveal({
 function PatternAtlasSummary({
   run,
   signedIn,
+  isFreeAccount,
   onRestart,
   onLobby
 }: {
   run: PatternAtlasRunState;
   signedIn: boolean;
+  isFreeAccount: boolean;
   onRestart: () => void;
   onLobby: () => void;
 }) {
   const finalScore = run.rounds.reduce((total, round) => total + (round.solved ? round.score : 0), 0);
   const showGuestSampleCta = run.mode === "sample" && !signedIn;
+  const showFreeDailyCompleteCta = run.mode === "daily" && isFreeAccount;
   return (
     <section className="game-shell page-shell pattern-atlas-summary">
       <div className="empty-state surface">
@@ -1033,25 +1066,53 @@ function PatternAtlasSummary({
                 and the full Can You Geo library.
               </p>
             </div>
-            <div className="button-row">
-              <Link className="button" href="/upgrade">
-                Start Pro
-              </Link>
-              <Link className="button-secondary" href="/sign-up">
-                Create free account
-              </Link>
+          </section>
+        ) : null}
+        {showFreeDailyCompleteCta ? (
+          <section className="pattern-atlas-account-cta" aria-label="Keep playing with Pro">
+            <div>
+              <p className="eyebrow">Daily complete</p>
+              <h2>You&apos;ve used today&apos;s free Pattern Atlas rounds.</h2>
+              <p>Go Pro to keep playing Pattern Runs, or choose another game in the Can You Geo library.</p>
             </div>
           </section>
         ) : null}
-        <div className="button-row">
-          <button className="button" type="button" onClick={onRestart}>
-            <Compass size={18} aria-hidden="true" />
-            Play again
-          </button>
-          <button className="button-secondary" type="button" onClick={onLobby}>
-            Choose mode
-          </button>
-        </div>
+        {showGuestSampleCta ? (
+          <div className="pattern-atlas-summary-actions" aria-label="Sample completion actions">
+            <Link className="button" href="/upgrade">
+              Start Pro
+            </Link>
+            <Link className="button-secondary" href="/sign-up">
+              Create free account
+            </Link>
+            <button className="button-secondary" type="button" onClick={onRestart}>
+              <Compass size={18} aria-hidden="true" />
+              Play again
+            </button>
+            <button className="button-secondary" type="button" onClick={onLobby}>
+              Choose mode
+            </button>
+          </div>
+        ) : showFreeDailyCompleteCta ? (
+          <div className="pattern-atlas-summary-actions" aria-label="Daily completion actions">
+            <Link className="button" href="/upgrade">
+              Go Pro to keep playing
+            </Link>
+            <Link className="button-secondary" href="/play">
+              Choose another game
+            </Link>
+          </div>
+        ) : (
+          <div className="pattern-atlas-summary-actions" aria-label="Run completion actions">
+            <button className="button" type="button" onClick={onRestart}>
+              <Compass size={18} aria-hidden="true" />
+              Play again
+            </button>
+            <button className="button-secondary" type="button" onClick={onLobby}>
+              Choose mode
+            </button>
+          </div>
+        )}
       </div>
     </section>
   );

@@ -75,7 +75,7 @@ export function BillingActionsClient({ entitlement, context, selectedPlan = null
           <Link className="button-secondary" href="/sign-up">
             Continue free
           </Link>
-          <p className="account-env-note">Checkout is coming soon. Free needs no card and saves your 3-map Daily progress.</p>
+          <p className="account-env-note">Checkout is coming soon. Free needs no card and saves your Daily progress.</p>
         </div>
       );
     }
@@ -117,7 +117,7 @@ export function BillingActionsClient({ entitlement, context, selectedPlan = null
           </Link>
         ) : null}
         <p className="account-env-note">
-          Pricing is visible now. Checkout is coming soon and billing is disabled for now. Continue free for 3 fresh maps every day.
+          Pricing is visible now. Checkout is coming soon and billing is disabled for now. Continue free for 3 Daily rounds per playable game.
         </p>
       </div>
     );
