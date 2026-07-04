@@ -336,6 +336,10 @@ describe("WorldprintClient UI structure", () => {
   });
 
   it("uses a simplified challenge sharing card with hidden raw share text by default", () => {
+    expect(source).toContain("const canCreateChallenge = !isSampleRun;");
+    expect(source).toContain('className="challenge-quick-card surface"');
+    expect(source).toContain('aria-label="Quick challenge actions"');
+    expect(source).toContain("Send this exact Mystery Map set with no answers, countries, indicators, or source labels revealed before play.");
     expect(source).toContain("<h2>Challenge a friend</h2>");
     expect(source).toContain("openChallengeInviteModal");
     expect(source).toContain("Send challenge by email");
@@ -347,6 +351,8 @@ describe("WorldprintClient UI structure", () => {
     expect(source).toContain('className="share-preview-disclosure"');
     expect(source).toContain("Preview share text");
     expect(source).toContain('aria-label="Spoiler-free share text preview"');
+    expect(styles).toContain(".challenge-quick-card");
+    expect(styles).toContain(".challenge-quick-actions");
     expect(source).not.toContain('className="share-action-grid"');
     expect(source).not.toContain(">Copy challenge link<");
   });

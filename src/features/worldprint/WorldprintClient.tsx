@@ -2764,6 +2764,25 @@ function CompletionSummary({
           {resultScoreLocked ? (
             <>
               {canCreateChallenge ? (
+                <section className="challenge-quick-card surface" aria-label="Quick challenge actions">
+                  <div>
+                    <p className="eyebrow">Spoiler-free challenge</p>
+                    <h2>Challenge a friend</h2>
+                    <p>Send this exact Mystery Map set with no answers, countries, indicators, or source labels revealed before play.</p>
+                  </div>
+                  <div className="challenge-quick-actions">
+                    <button className="button" type="button" onClick={openChallengeInviteModal}>
+                      <Mail size={18} aria-hidden="true" />
+                      Challenge a friend
+                    </button>
+                    <button className="button-secondary" type="button" onClick={() => void shareChallenge()}>
+                      <Share2 size={18} aria-hidden="true" />
+                      Share challenge
+                    </button>
+                  </div>
+                </section>
+              ) : null}
+              {canCreateChallenge ? (
                 <section className="daily-share-card challenge-friend-card surface" aria-label="Challenge a friend">
                   <div className="daily-share-card-head">
                     <div>

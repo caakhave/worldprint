@@ -135,10 +135,21 @@ describe("challenge invite helpers", () => {
     expect(body.to).toEqual(["friend@example.com"]);
     expect(body.subject).toBe("Can you beat this Can You Geo score?");
     expect(body.text).toEqual(expect.any(String));
+    expect(body.html).toEqual(expect.any(String));
     expect(email.text).toContain("2,400 out of 3,000");
     expect(email.text).toContain("https://test.canyougeo.com/challenge/mystery-map/?c=");
+    expect(email.html).toContain("A friend challenged you on Can You Geo.");
+    expect(email.html).toContain("Play the challenge");
+    expect(email.html).toContain('href="https://test.canyougeo.com/challenge/mystery-map/?c=');
+    expect(email.html).toContain("same spoiler-free map set");
+    expect(email.html).toContain("No spoilers");
+    expect(email.html.replace(/href="[^"]+"/g, "").replace(/<[^>]+>/g, " ")).not.toContain(
+      "https://test.canyougeo.com/challenge/mystery-map/?c="
+    );
     expect(email.text).toContain("not added to any marketing list");
+    expect(email.html).toContain("not added to any marketing list");
     expect(email.text).not.toMatch(/Brazil|Japan|World Bank|api\.worldbank|hidden indicator/i);
+    expect(email.html).not.toMatch(/Brazil|Japan|World Bank|api\.worldbank|hidden indicator/i);
     expect(String(request.init.body)).not.toContain("re_secret_test");
     expect(String(request.init.body)).not.toContain("audience");
   });

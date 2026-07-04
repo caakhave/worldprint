@@ -45,6 +45,7 @@ export type ChallengeInviteEmail = {
   to: string[];
   subject: string;
   text: string;
+  html: string;
 };
 
 export const CHALLENGE_INVITE_DAILY_LIMIT = 5;
@@ -191,6 +192,22 @@ export function buildChallengeInviteEmail(input: {
     : "They sent you a spoiler-free Mystery Map challenge.";
   const solvedLine = challenger ? `${challenger.solvedCount}/${challenger.roundCount} maps solved · ${challenger.strip}` : "";
   const messageLines = input.message ? ["", "Their note:", input.message] : [];
+  const htmlScoreLine = challenger
+    ? `They scored <strong>${escapeHtml(challenger.score.toLocaleString("en-US"))} out of ${escapeHtml(
+        challenger.possible.toLocaleString("en-US")
+      )}</strong> in Mystery Map and finished as <strong>${escapeHtml(challenger.rankTitle)}</strong>.`
+    : "They sent you a spoiler-free Mystery Map challenge.";
+  const htmlSolvedLine = challenger
+    ? `<p style="margin:0 0 18px;color:#abc0bd;font-family:Arial,sans-serif;font-size:14px;line-height:1.5;">${escapeHtml(
+        `${challenger.solvedCount}/${challenger.roundCount} maps solved · ${challenger.strip}`
+      )}</p>`
+    : "";
+  const htmlMessage = input.message
+    ? `<div style="margin:22px 0;padding:14px 16px;border:1px solid #315c57;border-radius:8px;background:#102323;">
+        <p style="margin:0 0 6px;color:#9bd6cc;font-family:Arial,sans-serif;font-size:12px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;">Their note</p>
+        <p style="margin:0;color:#f2eadc;font-family:Arial,sans-serif;font-size:16px;line-height:1.5;">${escapeHtml(input.message).replaceAll("\n", "<br>")}</p>
+      </div>`
+    : "";
 
   return {
     from: input.config.fromEmail,
@@ -211,7 +228,23 @@ export function buildChallengeInviteEmail(input: {
       "This one-time invite was sent by a signed-in Can You Geo player. You were not added to any marketing list."
     ]
       .filter((line) => line !== "")
-      .join("\n")
+      .join("\n"),
+    html: `<!doctype html>
+<html>
+  <body style="margin:0;background:#06191b;padding:28px 16px;">
+    <div style="max-width:560px;margin:0 auto;border:1px solid #315c57;border-radius:12px;background:#0b1f21;padding:28px;color:#f2eadc;">
+      <p style="margin:0 0 10px;color:#9bd6cc;font-family:Arial,sans-serif;font-size:12px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;">Can You Geo? Mystery Map</p>
+      <h1 style="margin:0 0 14px;color:#f2eadc;font-family:Georgia,serif;font-size:30px;line-height:1.1;">A friend challenged you on Can You Geo.</h1>
+      <p style="margin:0 0 10px;color:#d8e1dc;font-family:Arial,sans-serif;font-size:17px;line-height:1.5;">${htmlScoreLine}</p>
+      ${htmlSolvedLine}
+      <p style="margin:0 0 22px;color:#d8e1dc;font-family:Arial,sans-serif;font-size:16px;line-height:1.5;">Play the same spoiler-free map set and see if you can beat them.</p>
+      ${htmlMessage}
+      <a href="${escapeHtmlAttribute(challengeUrl)}" style="display:inline-block;border-radius:999px;background:#b9dbd2;color:#06191b;font-family:Arial,sans-serif;font-size:16px;font-weight:700;text-decoration:none;padding:13px 20px;">Play the challenge</a>
+      <p style="margin:22px 0 0;color:#abc0bd;font-family:Arial,sans-serif;font-size:14px;line-height:1.5;">No spoilers: answers, countries, indicators, and source labels stay hidden before play. Challenge games do not affect today's official Daily score or streak.</p>
+      <p style="margin:18px 0 0;color:#829c98;font-family:Arial,sans-serif;font-size:12px;line-height:1.5;">This one-time invite was sent by a signed-in Can You Geo player. You were not added to any marketing list.</p>
+    </div>
+  </body>
+</html>`
   };
 }
 
@@ -362,6 +395,19 @@ function challengeUrlFor(siteUrl: string, challengeCode: string): string {
   const url = new URL("/challenge/mystery-map/", origin);
   url.searchParams.set("c", challengeCode);
   return url.toString();
+}
+
+function escapeHtml(value: string): string {
+  return value
+    .replaceAll("&", "&amp;")
+    .replaceAll("<", "&lt;")
+    .replaceAll(">", "&gt;")
+    .replaceAll('"', "&quot;")
+    .replaceAll("'", "&#39;");
+}
+
+function escapeHtmlAttribute(value: string): string {
+  return escapeHtml(value);
 }
 
 function isRecord(value: unknown): value is Record<string, unknown> {

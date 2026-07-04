@@ -6262,6 +6262,47 @@ dd {
   animation: result-actions-rise 420ms ease-out both;
 }
 
+.challenge-quick-card {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto;
+  gap: 1rem;
+  align-items: center;
+  margin: 1.25rem 0 0;
+  border-color: rgb(215 168 75 / 0.38);
+  padding: clamp(1rem, 2.5vw, 1.2rem);
+  background:
+    linear-gradient(135deg, rgb(215 168 75 / 0.12), transparent 42%),
+    var(--surface);
+}
+
+.challenge-quick-card h2 {
+  margin: 0.12rem 0 0.35rem;
+  color: var(--parchment);
+  font-family: var(--font-serif);
+  font-size: clamp(1.35rem, 2.6vw, 1.85rem);
+  line-height: 1.05;
+}
+
+.challenge-quick-card p:last-child {
+  margin: 0;
+  color: var(--muted);
+  font-size: 0.92rem;
+  line-height: 1.45;
+}
+
+.challenge-quick-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.65rem;
+  justify-content: end;
+}
+
+.challenge-quick-actions .button,
+.challenge-quick-actions .button-secondary {
+  min-width: min(100%, 10.5rem);
+  white-space: nowrap;
+}
+
 .daily-share-card {
   position: relative;
   overflow: hidden;
@@ -10479,6 +10520,21 @@ button.pro-price-option:focus-visible {
 
   .daily-share-metrics {
     grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .challenge-quick-card,
+  .challenge-quick-actions {
+    grid-template-columns: 1fr;
+    justify-content: stretch;
+  }
+
+  .challenge-quick-actions {
+    display: grid;
+  }
+
+  .challenge-quick-actions .button,
+  .challenge-quick-actions .button-secondary {
+    width: 100%;
   }
 
   .daily-return-hook,
