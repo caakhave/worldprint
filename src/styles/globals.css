@@ -7571,12 +7571,227 @@ dd {
 
 .upgrade-hero-copy {
   display: grid;
-  gap: 0.65rem;
+  gap: 0.75rem;
 }
 
 .upgrade-hero-copy h2,
 .upgrade-hero-copy p {
   margin: 0;
+}
+
+.upgrade-value-strip {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.45rem;
+  margin: 0.15rem 0 0;
+  padding: 0;
+  list-style: none;
+}
+
+.upgrade-value-strip li {
+  border: 1px solid rgb(164 216 205 / 0.24);
+  border-radius: 999px;
+  padding: 0.36rem 0.58rem;
+  color: rgb(222 210 189 / 0.9);
+  background: rgb(4 42 47 / 0.34);
+  font-family: var(--font-mono);
+  font-size: 0.72rem;
+  font-weight: 800;
+  line-height: 1;
+  text-transform: uppercase;
+}
+
+.upgrade-game-strip {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 0.7rem;
+  margin-top: 0.25rem;
+}
+
+.upgrade-game-tile {
+  position: relative;
+  overflow: hidden;
+  display: grid;
+  grid-template-rows: auto 1fr;
+  gap: 0.7rem;
+  min-height: 100%;
+  border: 1px solid rgb(164 216 205 / 0.22);
+  border-radius: 8px;
+  padding: 0.72rem;
+  background:
+    linear-gradient(145deg, rgb(104 183 170 / 0.1), transparent 62%),
+    rgb(4 20 24 / 0.54);
+}
+
+.upgrade-game-tile[data-game="mystery-map"] {
+  border-color: rgb(215 168 75 / 0.36);
+  background:
+    linear-gradient(145deg, rgb(215 168 75 / 0.1), transparent 62%),
+    rgb(4 20 24 / 0.58);
+}
+
+.upgrade-game-tile strong {
+  display: block;
+  color: var(--parchment);
+  font-size: 0.94rem;
+  line-height: 1.25;
+}
+
+.upgrade-game-tile > div > span {
+  display: block;
+  margin-top: 0.28rem;
+  color: rgb(242 234 220 / 0.68);
+  font-size: 0.84rem;
+  line-height: 1.35;
+}
+
+.upgrade-mini-visual {
+  position: relative;
+  overflow: hidden;
+  min-height: 4.9rem;
+  border: 1px solid rgb(242 234 220 / 0.1);
+  border-radius: 7px;
+  background:
+    linear-gradient(180deg, rgb(242 234 220 / 0.055), transparent 62%),
+    rgb(4 20 24 / 0.72);
+}
+
+.upgrade-mini-visual::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background-image:
+    linear-gradient(rgb(164 216 205 / 0.1) 1px, transparent 1px),
+    linear-gradient(90deg, rgb(164 216 205 / 0.1) 1px, transparent 1px);
+  background-size: 22px 22px;
+  mask-image: radial-gradient(circle at center, black, transparent 86%);
+}
+
+.upgrade-mini-visual-map {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 0.26rem;
+  padding: 0.62rem;
+}
+
+.upgrade-mini-visual-map span {
+  position: relative;
+  z-index: 1;
+  min-height: 1.35rem;
+  border: 1px solid rgb(242 234 220 / 0.16);
+  border-radius: 999px 55% 65% 45%;
+  background: rgb(164 216 205 / 0.18);
+  transform: rotate(-5deg);
+}
+
+.upgrade-mini-visual-map span[data-tone="mid"] {
+  background: rgb(215 168 75 / 0.48);
+  transform: rotate(6deg);
+}
+
+.upgrade-mini-visual-map span[data-tone="high"] {
+  background: rgb(215 168 75 / 0.76);
+  box-shadow: 0 0 18px rgb(215 168 75 / 0.22);
+  transform: rotate(-9deg);
+}
+
+.upgrade-mini-visual-map span[data-tone="none"] {
+  background:
+    repeating-linear-gradient(135deg, rgb(242 234 220 / 0.14) 0 4px, transparent 4px 8px),
+    rgb(242 234 220 / 0.04);
+}
+
+.upgrade-mini-globe,
+.upgrade-mini-country,
+.upgrade-mini-rule {
+  position: absolute;
+  z-index: 1;
+}
+
+.upgrade-mini-globe {
+  inset: 0.45rem;
+  border: 1px solid rgb(164 216 205 / 0.15);
+  border-radius: 999px;
+  background:
+    radial-gradient(circle at center, transparent 0 32%, rgb(164 216 205 / 0.08) 33% 34%, transparent 35%),
+    repeating-linear-gradient(90deg, transparent 0 14px, rgb(164 216 205 / 0.08) 14px 15px, transparent 15px 28px);
+}
+
+.upgrade-mini-country {
+  width: 2.6rem;
+  height: 1.65rem;
+  border: 1px solid rgb(242 234 220 / 0.52);
+  border-radius: 62% 38% 52% 48%;
+  background: var(--gold);
+  box-shadow: 0 0 22px rgb(215 168 75 / 0.24);
+}
+
+.upgrade-mini-country[data-place="north"] {
+  top: 0.8rem;
+  left: 19%;
+  transform: rotate(-8deg);
+}
+
+.upgrade-mini-country[data-place="south"] {
+  right: 20%;
+  bottom: 1.05rem;
+  transform: rotate(8deg);
+}
+
+.upgrade-mini-rule {
+  right: 0.55rem;
+  bottom: 0.55rem;
+  border: 1px solid rgb(164 216 205 / 0.34);
+  border-radius: 999px;
+  padding: 0.22rem 0.42rem;
+  color: var(--signal-2);
+  background: rgb(4 20 24 / 0.82);
+  font-family: var(--font-mono);
+  font-size: 0.62rem;
+  font-weight: 800;
+  text-transform: uppercase;
+}
+
+.upgrade-mini-visual-order {
+  display: grid;
+  align-content: center;
+  gap: 0.28rem;
+  padding: 0.55rem;
+}
+
+.upgrade-mini-visual-order span {
+  position: relative;
+  z-index: 1;
+  display: grid;
+  grid-template-columns: auto 1fr;
+  gap: 0.38rem;
+  align-items: center;
+  border: 1px solid rgb(164 216 205 / 0.18);
+  border-radius: 7px;
+  padding: 0.32rem 0.42rem;
+  background: rgb(242 234 220 / 0.055);
+}
+
+.upgrade-mini-visual-order span:first-child {
+  border-color: rgb(215 168 75 / 0.48);
+}
+
+.upgrade-mini-visual-order strong {
+  display: grid;
+  place-items: center;
+  width: 1.25rem;
+  height: 1.25rem;
+  border-radius: 999px;
+  color: rgb(4 20 24);
+  background: var(--signal-2);
+  font-family: var(--font-mono);
+  font-size: 0.78rem;
+}
+
+.upgrade-mini-visual-order em {
+  color: var(--parchment);
+  font-style: normal;
+  font-weight: 800;
 }
 
 .upgrade-hero-action-panel {
@@ -8938,6 +9153,10 @@ button.pro-price-option:focus-visible {
   }
 
   .upgrade-intent-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .upgrade-game-strip {
     grid-template-columns: 1fr;
   }
 

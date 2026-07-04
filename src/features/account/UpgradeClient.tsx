@@ -122,11 +122,44 @@ export function UpgradeClient() {
       <section className="upgrade-hero surface" aria-label="Upgrade overview">
         <div className="upgrade-hero-copy">
           <p className="eyebrow">Full atlas access</p>
-          <h2>{overviewHeading}</h2>
+          <h2>{isPro ? overviewHeading : "Explore the full atlas."}</h2>
           <p>
-            Free accounts unlock Daily rounds and saved progress in Daily-enabled games. Pro opens deeper supported modes: Mystery Map
-            Custom Atlas, Pattern Atlas Pattern Runs, the complete Past Games archive, and advanced stats.
+            Train your world intuition across maps, patterns, and ordering challenges. Free accounts unlock Daily rounds and saved
+            progress in Daily-enabled games. Pro opens supported advanced modes already live today.
           </p>
+          <ul className="upgrade-value-strip" aria-label="Pro value highlights">
+            <li>Mystery Map Custom Atlas</li>
+            <li>Pattern Atlas Pattern Runs</li>
+            <li>Past Games archive</li>
+            <li>Advanced stats</li>
+            <li>New challenges added every month</li>
+          </ul>
+          <div className="upgrade-game-strip" aria-label="Current Can You Geo games">
+            <article className="upgrade-game-tile" data-game="mystery-map">
+              <UpgradeMiniVisual kind="choropleth" />
+              <div>
+                <p className="eyebrow">Mystery Map</p>
+                <strong>Custom Atlas and Daily map puzzles</strong>
+                <span>Read choropleths, spend clues, and name the signal.</span>
+              </div>
+            </article>
+            <article className="upgrade-game-tile" data-game="pattern-atlas">
+              <UpgradeMiniVisual kind="pattern" />
+              <div>
+                <p className="eyebrow">Pattern Atlas</p>
+                <strong>Pattern Runs and Daily rule puzzles</strong>
+                <span>Find the shared rule behind highlighted countries.</span>
+              </div>
+            </article>
+            <article className="upgrade-game-tile" data-game="order-atlas">
+              <UpgradeMiniVisual kind="order" />
+              <div>
+                <p className="eyebrow">Order Atlas</p>
+                <strong>Intro sample available now</strong>
+                <span>Daily and Pro modes are coming next for country-ordering challenges.</span>
+              </div>
+            </article>
+          </div>
         </div>
         <div className="upgrade-hero-action-panel">
           <div className="upgrade-status-card" aria-live="polite">
@@ -257,6 +290,49 @@ export function UpgradeClient() {
           </p>
         </div>
       </section>
+    </div>
+  );
+}
+
+function UpgradeMiniVisual({ kind }: { kind: "choropleth" | "pattern" | "order" }) {
+  if (kind === "choropleth") {
+    return (
+      <div className="upgrade-mini-visual upgrade-mini-visual-map" aria-hidden="true">
+        <span data-tone="low" />
+        <span data-tone="mid" />
+        <span data-tone="high" />
+        <span data-tone="none" />
+        <span data-tone="mid" />
+        <span data-tone="high" />
+      </div>
+    );
+  }
+
+  if (kind === "pattern") {
+    return (
+      <div className="upgrade-mini-visual upgrade-mini-visual-pattern" aria-hidden="true">
+        <span className="upgrade-mini-globe" />
+        <span className="upgrade-mini-country" data-place="north" />
+        <span className="upgrade-mini-country" data-place="south" />
+        <span className="upgrade-mini-rule">Rule</span>
+      </div>
+    );
+  }
+
+  return (
+    <div className="upgrade-mini-visual upgrade-mini-visual-order" aria-hidden="true">
+      <span>
+        <strong>1</strong>
+        <em>A</em>
+      </span>
+      <span>
+        <strong>2</strong>
+        <em>B</em>
+      </span>
+      <span>
+        <strong>3</strong>
+        <em>C</em>
+      </span>
     </div>
   );
 }

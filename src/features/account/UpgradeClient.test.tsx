@@ -95,6 +95,19 @@ describe("UpgradeClient", () => {
     expect(screen.getByText(/Checkout is coming soon and billing is disabled for now/i)).toBeVisible();
     expect(screen.getByText(/Billing is disabled right now/i)).toBeVisible();
     expect(screen.getAllByText(/Daily rounds in Daily-enabled games/i).length).toBeGreaterThanOrEqual(1);
+    const overview = screen.getByLabelText("Upgrade overview");
+    expect(within(overview).getByRole("heading", { name: "Explore the full atlas." })).toBeVisible();
+    expect(within(overview).getByText(/Train your world intuition across maps, patterns, and ordering challenges/i)).toBeVisible();
+    expect(within(overview).getByText("Mystery Map Custom Atlas")).toBeVisible();
+    expect(within(overview).getByText("Pattern Atlas Pattern Runs")).toBeVisible();
+    expect(within(overview).getByText("Past Games archive")).toBeVisible();
+    expect(within(overview).getByText("Advanced stats")).toBeVisible();
+    expect(within(overview).getByText("New challenges added every month")).toBeVisible();
+    expect(within(overview).getByText("Custom Atlas and Daily map puzzles")).toBeVisible();
+    expect(within(overview).getByText("Pattern Runs and Daily rule puzzles")).toBeVisible();
+    expect(within(overview).getByText("Intro sample available now")).toBeVisible();
+    expect(within(overview).getByText("Daily and Pro modes are coming next for country-ordering challenges.")).toBeVisible();
+    expect(within(overview).queryByText(/Order Atlas (Pro|Daily|custom|unlimited|archive|saved stats|streaks)/i)).not.toBeInTheDocument();
     expect(screen.getByRole("heading", { name: "Free and Pro now cover more than one game." })).toBeVisible();
     expect(screen.getByRole("heading", { name: "Mystery Map" })).toBeVisible();
     expect(screen.getByRole("heading", { name: "Pattern Atlas" })).toBeVisible();
@@ -146,7 +159,7 @@ describe("UpgradeClient", () => {
 
     render(<UpgradeClient />);
 
-    expect(screen.getByRole("heading", { name: "Choose monthly or yearly." })).toBeVisible();
+    expect(screen.getByRole("heading", { name: "Explore the full atlas." })).toBeVisible();
     expect(screen.queryByRole("link", { name: "Play today" })).not.toBeInTheDocument();
     expect(screen.getByText("Ready for secure checkout")).toBeVisible();
     const overview = screen.getByLabelText("Upgrade overview");
@@ -154,9 +167,10 @@ describe("UpgradeClient", () => {
     expect(within(overview).getByRole("button", { name: "Join yearly" })).toBeEnabled();
     expect(
       within(overview).getByText(
-        "Free accounts unlock Daily rounds and saved progress in Daily-enabled games. Pro opens deeper supported modes: Mystery Map Custom Atlas, Pattern Atlas Pattern Runs, the complete Past Games archive, and advanced stats."
+        "Train your world intuition across maps, patterns, and ordering challenges. Free accounts unlock Daily rounds and saved progress in Daily-enabled games. Pro opens supported advanced modes already live today."
       )
     ).toBeVisible();
+    expect(within(overview).getByText("New challenges added every month")).toBeVisible();
     expect(screen.getAllByText("Best value").length).toBeGreaterThanOrEqual(1);
   });
 
@@ -174,6 +188,9 @@ describe("UpgradeClient", () => {
     expect(within(overview).getByRole("button", { name: "Join yearly" })).toBeEnabled();
     expect(styles).toContain(".upgrade-hero-action-panel .checkout-option-buttons");
     expect(styles).toContain(".upgrade-hero-action-panel .checkout-option-buttons .button");
+    expect(styles).toContain(".upgrade-game-strip");
+    expect(styles).toContain(".upgrade-game-tile");
+    expect(styles).toContain(".upgrade-mini-visual");
     expect(styles).toContain(".pro-plan-card .billing-actions .checkout-option-buttons");
     expect(styles).toContain("justify-self: stretch");
     expect(styles).toContain("width: 100%");
