@@ -152,26 +152,25 @@ describe("OrderAtlasClient", () => {
     renderOrderAtlas();
 
     expect(screen.getByText("Pro account")).toBeVisible();
-    expect(screen.getByText("Your Pro account includes today's Daily and unlocks repeatable Practice Runs.")).toBeVisible();
+    expect(screen.getByText("Your Pro account unlocks repeatable Practice Runs, with today's fixed Daily nearby.")).toBeVisible();
+    const practiceCard = screen.getByLabelText("Pro Order Atlas Practice Run");
+    expect(within(practiceCard).getByText("Unlimited Pro practice")).toBeVisible();
+    expect(within(practiceCard).getByRole("heading", { name: "Start a Pro Practice Run" })).toBeVisible();
+    expect(
+      within(practiceCard).getByText("Practice is the repeatable Pro mode: start a fresh three-round ordering set whenever you want, separate from today's Daily.")
+    ).toBeVisible();
+    expect(within(practiceCard).getByText("Repeatable Pro mode")).toBeVisible();
+    expect(within(practiceCard).getByText("Ready for a fresh Practice Run.")).toBeVisible();
+    expect(within(practiceCard).getByRole("button", { name: /Start Pro Practice/i })).toBeVisible();
     const dailyCard = screen.getByLabelText("Order Atlas Daily");
     expect(screen.getByRole("heading", { name: "Order Atlas Daily" })).toBeVisible();
     expect(within(dailyCard).getByText("Today's Daily")).toBeVisible();
     expect(within(dailyCard).getByText("Included with Free and Pro")).toBeVisible();
     expect(within(dailyCard).queryByText("Free Daily")).not.toBeInTheDocument();
-    expect(screen.getByRole("button", { name: /Play today's Daily/i })).toBeVisible();
-    expect(screen.getByText("Unlimited Pro practice")).toBeVisible();
-    expect(screen.getByRole("heading", { name: "Start repeatable practice." })).toBeVisible();
-    expect(screen.getByRole("heading", { name: "Practice ordering signals" })).toBeVisible();
-    expect(
-      screen.getByText(
-        "Daily is today's fixed official set. Practice is the repeatable Pro benefit: start a fresh three-round set whenever you want, separate from Daily progress."
-      )
-    ).toBeVisible();
-    expect(screen.getByText("Repeatable Pro mode")).toBeVisible();
-    expect(screen.getByText("Start fresh 3-round practice sets from practice-eligible Order Atlas rounds. Results stay local to this browser.")).toBeVisible();
-    expect(screen.getByText("Practice is separate from today's Daily score and can be started again after each run.")).toBeVisible();
+    expect(within(dailyCard).getByRole("button", { name: "Play today's Daily" })).toBeVisible();
+    expect(screen.queryByText("View Order Atlas Daily")).not.toBeInTheDocument();
 
-    await user.click(screen.getByRole("button", { name: "Start Practice Run" }));
+    await user.click(within(practiceCard).getByRole("button", { name: /Start Pro Practice/i }));
 
     expect(screen.getAllByText("Pro Practice Run").length).toBeGreaterThanOrEqual(1);
     expect(screen.getByText(/Practice Run is your repeatable Pro mode: three practice-eligible ordering rounds/i)).toBeVisible();
@@ -184,7 +183,7 @@ describe("OrderAtlasClient", () => {
     setAccount(PRO_ENTITLEMENT, true);
     const firstRender = renderOrderAtlas();
 
-    await user.click(screen.getByRole("button", { name: "Start Practice Run" }));
+    await user.click(screen.getByRole("button", { name: /Start Pro Practice/i }));
     await user.click(screen.getByRole("button", { name: "Move India down" }));
     await waitFor(() => expect(window.localStorage.getItem(ORDER_ATLAS_STORAGE_KEY)).toContain("activePracticeRun"));
     firstRender.unmount();
@@ -316,6 +315,36 @@ describe("OrderAtlasClient", () => {
     expect(screen.getByRole("button", { name: "Back to game options" })).toBeVisible();
     expect(screen.queryByRole("button", { name: "Choose mode" })).not.toBeInTheDocument();
     expect(screen.queryByRole("button", { name: /Play.*again/i })).not.toBeInTheDocument();
+  });
+
+  it("routes Pro users from completed Daily results into Practice and labels Daily as review", async () => {
+    const user = userEvent.setup();
+    setAccount(PRO_ENTITLEMENT, true);
+    renderOrderAtlas();
+    await user.click(screen.getByRole("button", { name: "Play today's Daily" }));
+
+    await submitCurrentRound(user);
+    await user.click(within(orderCard()).getByRole("button", { name: "Next round" }));
+    await submitCurrentRound(user);
+    await user.click(within(orderCard()).getByRole("button", { name: "Next round" }));
+    await submitCurrentRound(user);
+    await user.click(within(orderCard()).getByRole("button", { name: "Open results" }));
+
+    expect(screen.getByText("You finished today's Order Atlas Daily. This result stays local to this browser for now.")).toBeVisible();
+    expect(screen.getByRole("button", { name: "Start Pro Practice" })).toBeVisible();
+    expect(screen.getByRole("button", { name: "Back to game options" })).toBeVisible();
+    expect(screen.queryByRole("button", { name: "Choose mode" })).not.toBeInTheDocument();
+    expect(screen.queryByText("View Order Atlas Daily")).not.toBeInTheDocument();
+
+    await user.click(screen.getByRole("button", { name: "Back to game options" }));
+    const practiceCard = screen.getByLabelText("Pro Order Atlas Practice Run");
+    expect(within(practiceCard).getByRole("button", { name: /Start Pro Practice/i })).toBeVisible();
+    expect(screen.getByRole("button", { name: "Review today's Daily" })).toBeVisible();
+    expect(screen.queryByText("View Order Atlas Daily")).not.toBeInTheDocument();
+
+    await user.click(within(practiceCard).getByRole("button", { name: /Start Pro Practice/i }));
+    expect(screen.getAllByText("Pro Practice Run").length).toBeGreaterThanOrEqual(1);
+    expect(screen.queryByText("Order Atlas Daily complete")).not.toBeInTheDocument();
   });
 
   it("uses the top action button to advance and open results after submitted rounds", async () => {

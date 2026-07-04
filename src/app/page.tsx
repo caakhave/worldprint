@@ -79,7 +79,7 @@ export default function HomePage() {
 
       <section className="section-band homepage-section homepage-entity-section" aria-labelledby="what-is-canyougeo">
         <div className="page-shell homepage-answer-layout">
-          <div className="homepage-section-heading">
+          <div className="homepage-section-heading homepage-section-heading-wide">
             <p className="eyebrow">Quick answers</p>
             <h2 id="what-is-canyougeo">What is Can You Geo?</h2>
             <p className="section-lede">

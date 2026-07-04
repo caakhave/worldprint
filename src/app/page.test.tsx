@@ -53,6 +53,7 @@ describe("HomePage", () => {
     render(<HomePage />);
 
     expect(screen.getAllByRole("heading", { name: "What is Can You Geo?" })).toHaveLength(2);
+    expect(document.getElementById("what-is-canyougeo")?.closest(".homepage-section-heading")).toHaveClass("homepage-section-heading-wide");
     expect(screen.getByText(/geography game site for daily map puzzles/i)).toBeVisible();
     expect(screen.getAllByText(/Mystery Map and Pattern Atlas have Daily play/i).length).toBeGreaterThanOrEqual(1);
     expect(screen.getAllByText(/Order Atlas has a playable intro sample/i).length).toBeGreaterThanOrEqual(1);
@@ -103,5 +104,7 @@ describe("HomePage", () => {
     expect(screen.getByText("Order Atlas is intro-only today; Daily and Pro modes are coming next.")).toBeVisible();
     expect(styles).toContain(".hero-growth-note + .button-row");
     expect(styles).toContain("margin-top: clamp(0.35rem, 1.2vh, 0.9rem)");
+    expect(styles).toContain(".homepage-section-heading-wide h2");
+    expect(styles).toContain("max-width: none");
   });
 });

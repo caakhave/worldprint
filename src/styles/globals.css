@@ -1973,6 +1973,14 @@ button:disabled {
   text-wrap: balance;
 }
 
+.homepage-section-heading-wide h2 {
+  max-width: none;
+}
+
+.homepage-section-heading-wide .section-lede {
+  max-width: 64rem;
+}
+
 .section-lede {
   max-width: 52rem;
   margin: 0;
