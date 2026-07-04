@@ -97,7 +97,7 @@ function runSummaryCopy(run: OrderAtlasRunState) {
 
 function runIntroCopy(mode: OrderAtlasRunMode) {
   if (mode === "daily") return "Order Atlas Daily uses three deterministic rounds for today. Progress resumes locally if you reload.";
-  if (mode === "practice") return "Pro Practice draws three rounds from the practice catalog and stays separate from Daily progress.";
+  if (mode === "practice") return "Practice Run is your repeatable Pro mode: three practice-eligible ordering rounds, separate from today's Daily.";
   return "No account needed. Sample progress stays local, and no account results are saved.";
 }
 
@@ -178,6 +178,30 @@ export function OrderAtlasClient({ rounds, todayOverride }: OrderAtlasClientProp
     () => validStoredRun(store.activePracticeRun, "practice", ORDER_ATLAS_CATALOG.contentVersion, roundById),
     [roundById, store.activePracticeRun]
   );
+
+  useEffect(() => {
+    if (!storeLoaded || entitlementLoading || run) return;
+
+    const activeRuns: Partial<Record<OrderAtlasRunMode, OrderAtlasRunState>> = {};
+    if (currentSampleRun?.status === "active") activeRuns.sample = currentSampleRun;
+    if (signedIn && currentDailyRun?.status === "active") activeRuns.daily = currentDailyRun;
+    if (isProAccount && currentPracticeRun?.status === "active") activeRuns.practice = currentPracticeRun;
+
+    const preferredRun = store.lastRunMode ? activeRuns[store.lastRunMode] : null;
+    const fallbackRun = activeRuns.practice ?? activeRuns.daily ?? activeRuns.sample ?? null;
+    const runToResume = preferredRun ?? fallbackRun;
+    if (runToResume) setRun(runToResume);
+  }, [
+    currentDailyRun,
+    currentPracticeRun,
+    currentSampleRun,
+    entitlementLoading,
+    isProAccount,
+    run,
+    signedIn,
+    store.lastRunMode,
+    storeLoaded
+  ]);
 
   const currentRound = run ? roundById.get(run.roundIds[run.currentRoundIndex]) : null;
   const currentRoundState = run?.rounds[run.currentRoundIndex] ?? null;
@@ -622,7 +646,7 @@ function OrderAtlasLobby({
               </button>
               {!isProAccount ? (
                 <Link className="button-secondary" href="/upgrade">
-                  Go Pro for Practice Runs
+                  Go Pro for unlimited practice
                 </Link>
               ) : null}
             </div>
@@ -633,13 +657,14 @@ function OrderAtlasLobby({
             <div className="mode-panel-heading mode-panel-heading-secondary">
               <p className="setup-kicker">Pro option</p>
               <h2>Start a Practice Run.</h2>
-              <p>Practice draws three ordering rounds from the approved practice catalog. No archives, sharing, leaderboards, or cloud results are added here.</p>
+              <p>Daily is the fixed set for today. Practice Run is your repeatable Pro mode: each run draws three practice-eligible ordering rounds and keeps the result local to this browser.</p>
             </div>
             <div className="mode-card-grid mode-card-grid-secondary">
               <article className="mode-card mode-card-practice" aria-label="Pro Order Atlas Practice Run">
                 <p className="setup-kicker">Pro Practice Run</p>
                 <h3>Practice ordering signals</h3>
                 <p>Draw three practice-eligible Order Atlas rounds and keep the result local to this browser.</p>
+                <p className="mode-card-note">Practice is separate from today&apos;s Daily score and can be started again after each run.</p>
                 <p className="mode-card-note">
                   {currentPracticeRun?.status === "active"
                     ? "A Practice Run is in progress."
@@ -707,7 +732,7 @@ function OrderAtlasSummary({
           <p className="eyebrow">{run.mode === "practice" ? "Practice complete" : "Next step"}</p>
           <h2>{summaryCtaHeading(run, signedIn, isFreeAccount, isProAccount)}</h2>
           <p>{summaryCtaBody(run, signedIn, isFreeAccount, isProAccount)}</p>
-          <div className="order-atlas-results-actions">
+          <div className="order-atlas-results-actions" data-layout="responsive-row">
             {!signedIn ? (
               <Link className="button" href="/sign-up/">
                 Sign up free
@@ -715,11 +740,11 @@ function OrderAtlasSummary({
             ) : null}
             {isFreeAccount ? (
               <Link className="button" href="/upgrade/">
-                Start Pro
+                Go Pro for unlimited practice
               </Link>
             ) : null}
             <button type="button" className="button button-secondary" onClick={onLobby}>
-              Choose mode
+              Back to game options
             </button>
             {canReplayCurrentMode ? (
               <button type="button" className="button button-secondary" onClick={onRestart}>

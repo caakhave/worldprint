@@ -53,6 +53,7 @@ export type OrderAtlasRunMode = OrderAtlasRunState["mode"];
 
 export const OrderAtlasPersistedStateSchema = z.object({
   schemaVersion: z.literal(SCHEMA_VERSION),
+  lastRunMode: z.enum(["sample", "daily", "practice"]).nullable().default(null),
   activeSampleRun: OrderAtlasRunStateSchema.nullable(),
   activeDailyRun: OrderAtlasRunStateSchema.nullable(),
   activePracticeRun: OrderAtlasRunStateSchema.nullable()
@@ -84,6 +85,7 @@ export function createOrderAtlasRun(input: {
 export function defaultOrderAtlasPersistedState(): OrderAtlasPersistedState {
   return {
     schemaVersion: SCHEMA_VERSION,
+    lastRunMode: null,
     activeSampleRun: null,
     activeDailyRun: null,
     activePracticeRun: null
@@ -112,12 +114,12 @@ export function saveOrderAtlasPersistedState(state: OrderAtlasPersistedState): v
 
 export function persistOrderAtlasRun(state: OrderAtlasPersistedState, run: OrderAtlasRunState): OrderAtlasPersistedState {
   if (run.mode === "sample") {
-    return { ...state, activeSampleRun: run };
+    return { ...state, lastRunMode: run.mode, activeSampleRun: run };
   }
   if (run.mode === "daily") {
-    return { ...state, activeDailyRun: run };
+    return { ...state, lastRunMode: run.mode, activeDailyRun: run };
   }
-  return { ...state, activePracticeRun: run };
+  return { ...state, lastRunMode: run.mode, activePracticeRun: run };
 }
 
 export function scoreFromOrderAtlasRoundState(round: OrderAtlasRoundState): OrderAtlasScoreBreakdown | null {

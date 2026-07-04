@@ -113,6 +113,7 @@ describe("OrderAtlasClient", () => {
     expect(screen.getByRole("heading", { name: "Order Atlas Daily" })).toBeVisible();
     expect(screen.getByText("Three deterministic ordering rounds for 2026-07-03. Local progress resumes safely if you reload.")).toBeVisible();
     expect(screen.queryByRole("heading", { name: "Order Atlas Sample Run" })).not.toBeInTheDocument();
+    expect(screen.getByRole("link", { name: "Go Pro for unlimited practice" })).toHaveAttribute("href", "/upgrade");
 
     await user.click(screen.getByRole("button", { name: /Start Order Atlas Daily/i }));
     const firstDailyChallenge = screen.getByText((_, element) => element?.classList.contains("order-atlas-challenge-highlight") ?? false).textContent;
@@ -121,10 +122,27 @@ describe("OrderAtlasClient", () => {
     firstRender.unmount();
 
     renderOrderAtlas();
-    expect(screen.getByRole("heading", { name: "Order Atlas Daily" })).toBeVisible();
-    await user.click(screen.getByRole("button", { name: /Resume Order Atlas Daily/i }));
+    await waitFor(() => expect(screen.getByText(firstDailyChallenge ?? "")).toHaveClass("order-atlas-challenge-highlight"));
 
-    expect(screen.getByText(firstDailyChallenge ?? "")).toHaveClass("order-atlas-challenge-highlight");
+    expect(screen.queryByRole("button", { name: /Resume Order Atlas Daily/i })).not.toBeInTheDocument();
+    expect(screen.queryByText("Ready to order the atlas?")).not.toBeInTheDocument();
+    expect(cardOrder()).toEqual(["Canada", "India", "Brazil", "South Africa", "Norway"]);
+  });
+
+  it("resumes an active signed-out Sample Run directly after reload", async () => {
+    const user = userEvent.setup();
+    const firstRender = renderOrderAtlas();
+
+    await user.click(screen.getByRole("button", { name: /Start sample run/i }));
+    await user.click(screen.getByRole("button", { name: "Move India down" }));
+    await waitFor(() => expect(window.localStorage.getItem(ORDER_ATLAS_STORAGE_KEY)).toContain("activeSampleRun"));
+    firstRender.unmount();
+
+    renderOrderAtlas();
+    await waitFor(() => expect(screen.getByText(sampleRounds[0].highlightText)).toHaveClass("order-atlas-challenge-highlight"));
+
+    expect(screen.queryByRole("button", { name: /Resume Sample Run/i })).not.toBeInTheDocument();
+    expect(screen.queryByText("Ready to order the atlas?")).not.toBeInTheDocument();
     expect(cardOrder()).toEqual(["Canada", "India", "Brazil", "South Africa", "Norway"]);
   });
 
@@ -135,14 +153,37 @@ describe("OrderAtlasClient", () => {
 
     expect(screen.getByRole("heading", { name: "Order Atlas Daily" })).toBeVisible();
     expect(screen.getByRole("heading", { name: "Practice ordering signals" })).toBeVisible();
-    expect(screen.getByText(/Practice draws three ordering rounds from the approved practice catalog/i)).toBeVisible();
+    expect(
+      screen.getByText(
+        "Daily is the fixed set for today. Practice Run is your repeatable Pro mode: each run draws three practice-eligible ordering rounds and keeps the result local to this browser."
+      )
+    ).toBeVisible();
+    expect(screen.getByText("Practice is separate from today's Daily score and can be started again after each run.")).toBeVisible();
 
     await user.click(screen.getByRole("button", { name: "Start Practice Run" }));
 
     expect(screen.getAllByText("Pro Practice Run").length).toBeGreaterThanOrEqual(1);
-    expect(screen.getByText(/Pro Practice draws three rounds from the practice catalog/i)).toBeVisible();
+    expect(screen.getByText(/Practice Run is your repeatable Pro mode: three practice-eligible ordering rounds/i)).toBeVisible();
     expect(screen.queryByText(/unlimited/i)).not.toBeInTheDocument();
     expect(screen.queryByText(/custom run/i)).not.toBeInTheDocument();
+  });
+
+  it("resumes an active Pro Practice Run directly after reload", async () => {
+    const user = userEvent.setup();
+    setAccount(PRO_ENTITLEMENT, true);
+    const firstRender = renderOrderAtlas();
+
+    await user.click(screen.getByRole("button", { name: "Start Practice Run" }));
+    await user.click(screen.getByRole("button", { name: "Move India down" }));
+    await waitFor(() => expect(window.localStorage.getItem(ORDER_ATLAS_STORAGE_KEY)).toContain("activePracticeRun"));
+    firstRender.unmount();
+
+    renderOrderAtlas();
+    await waitFor(() => expect(screen.getAllByText("Pro Practice Run").length).toBeGreaterThanOrEqual(1));
+
+    expect(screen.queryByRole("button", { name: /Resume Practice Run/i })).not.toBeInTheDocument();
+    expect(screen.queryByText("Ready to order the atlas?")).not.toBeInTheDocument();
+    expect(cardOrder()).toEqual(["Canada", "India", "Brazil", "South Africa", "Norway"]);
   });
 
   it("reorders country cards with mobile-safe controls", async () => {
@@ -236,7 +277,13 @@ describe("OrderAtlasClient", () => {
     expect(screen.queryByText(/unlimited practice runs/i)).not.toBeInTheDocument();
     expect(screen.queryByText(/saved stats|streaks|archive support|cloud sync/i)).not.toBeInTheDocument();
     expect(screen.getByRole("link", { name: "Sign up free" })).toHaveAttribute("href", "/sign-up");
+    expect(screen.getByRole("button", { name: "Back to game options" })).toBeVisible();
+    expect(screen.queryByRole("button", { name: "Choose mode" })).not.toBeInTheDocument();
     expect(screen.getByRole("button", { name: "Play sample again" })).toBeVisible();
+    expect(screen.getByRole("button", { name: "Back to game options" }).closest(".order-atlas-results-actions")).toHaveAttribute(
+      "data-layout",
+      "responsive-row"
+    );
     expect(container).not.toHaveTextContent(/MVP|hidden route|early playable|pre-production/i);
   });
 
@@ -254,8 +301,9 @@ describe("OrderAtlasClient", () => {
     await user.click(within(orderCard()).getByRole("button", { name: "Open results" }));
 
     expect(screen.getByText("You finished today's Order Atlas Daily. This result stays local to this browser for now.")).toBeVisible();
-    expect(screen.getByRole("link", { name: "Start Pro" })).toHaveAttribute("href", "/upgrade");
-    expect(screen.getByRole("button", { name: "Choose mode" })).toBeVisible();
+    expect(screen.getByRole("link", { name: "Go Pro for unlimited practice" })).toHaveAttribute("href", "/upgrade");
+    expect(screen.getByRole("button", { name: "Back to game options" })).toBeVisible();
+    expect(screen.queryByRole("button", { name: "Choose mode" })).not.toBeInTheDocument();
     expect(screen.queryByRole("button", { name: /Play.*again/i })).not.toBeInTheDocument();
   });
 

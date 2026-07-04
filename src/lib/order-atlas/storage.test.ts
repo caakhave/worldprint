@@ -42,7 +42,37 @@ describe("Order Atlas persistence", () => {
 
     const loaded = loadOrderAtlasPersistedState();
     expect(loaded.activeDailyRun?.id).toBe(run.id);
+    expect(loaded.lastRunMode).toBe("daily");
     expect(window.localStorage.getItem(ORDER_ATLAS_STORAGE_KEY)).toContain("activeDailyRun");
+  });
+
+  it("loads older Order Atlas storage without a last active mode", () => {
+    const run = createOrderAtlasRun({
+      mode: "sample",
+      dateKey: "2026-07-03",
+      contentVersion: ORDER_ATLAS_CATALOG.contentVersion,
+      roundIds: ["order-renewable-electricity-grid-mix", "order-fertility-rate", "order-internet-users"],
+      initialCardOrders: [
+        ["NOR", "BRA", "CAN", "IND", "ZAF"],
+        ["NER", "NGA", "EGY", "BRA", "JPN"],
+        ["CAN", "BRA", "CHN", "IND", "ETH"]
+      ],
+      salt: "evergreen"
+    });
+    window.localStorage.setItem(
+      ORDER_ATLAS_STORAGE_KEY,
+      JSON.stringify({
+        schemaVersion: "1.0.0",
+        activeSampleRun: run,
+        activeDailyRun: null,
+        activePracticeRun: null
+      })
+    );
+
+    const loaded = loadOrderAtlasPersistedState();
+
+    expect(loaded.lastRunMode).toBeNull();
+    expect(loaded.activeSampleRun?.id).toBe(run.id);
   });
 
   it("does not read or mutate Mystery Map or Pattern Atlas storage", () => {
@@ -65,7 +95,9 @@ describe("Order Atlas persistence", () => {
 
     expect(window.localStorage.getItem("worldprint:v1")).toBe('{"schemaVersion":"mystery-map-sentinel"}');
     expect(window.localStorage.getItem(PATTERN_ATLAS_STORAGE_KEY)).toBe('{"schemaVersion":"pattern-sentinel"}');
-    expect(loadOrderAtlasPersistedState().activePracticeRun?.roundIds).toEqual(run.roundIds);
+    const loaded = loadOrderAtlasPersistedState();
+    expect(loaded.activePracticeRun?.roundIds).toEqual(run.roundIds);
+    expect(loaded.lastRunMode).toBe("practice");
   });
 
   it("coexists with the real Mystery Map and Pattern Atlas persistence helpers", () => {

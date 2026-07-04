@@ -108,6 +108,9 @@ describe("UpgradeClient", () => {
     expect(within(overview).getByText("Pattern Runs and Daily rule puzzles")).toBeVisible();
     expect(within(overview).getByText("Intro sample available now")).toBeVisible();
     expect(within(overview).getByText("Daily and Pro modes are coming next for country-ordering challenges.")).toBeVisible();
+    expect(within(overview).getByAltText("Mystery Map Custom Atlas preview")).toHaveAttribute("src", expect.stringContaining("05-practice"));
+    expect(within(overview).getByAltText("Pattern Atlas Pattern Run preview")).toHaveAttribute("src", expect.stringContaining("06-challenge-friends"));
+    expect(within(overview).getByAltText("Order Atlas intro sample preview")).toHaveAttribute("src", expect.stringContaining("04-daily-mystery-map"));
     expect(within(overview).queryByText(/Order Atlas (Pro|Daily|custom|unlimited|archive|saved stats|streaks)/i)).not.toBeInTheDocument();
     expect(screen.getByRole("heading", { name: "Free and Pro now cover more than one game." })).toBeVisible();
     expect(screen.getByRole("heading", { name: "Mystery Map" })).toBeVisible();
@@ -192,7 +195,8 @@ describe("UpgradeClient", () => {
     expect(styles).toContain(".upgrade-hero-action-panel .checkout-option-buttons .button");
     expect(styles).toContain(".upgrade-game-strip");
     expect(styles).toContain(".upgrade-game-tile");
-    expect(styles).toContain(".upgrade-mini-visual");
+    expect(styles).toContain(".upgrade-game-preview");
+    expect(styles).toContain(".upgrade-game-preview-image");
     expect(styles).toContain(".pro-plan-card .billing-actions .checkout-option-buttons");
     expect(styles).toContain("justify-self: stretch");
     expect(styles).toContain("width: 100%");

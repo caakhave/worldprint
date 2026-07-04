@@ -1,6 +1,7 @@
 "use client";
 
 import Link from "next/link";
+import Image from "next/image";
 import { useEffect, useState } from "react";
 import { CheckCircle2, ShieldCheck, Sparkles } from "lucide-react";
 import { GameLibraryShowcase } from "@/components/GameLibraryShowcase";
@@ -136,7 +137,11 @@ export function UpgradeClient() {
           </ul>
           <div className="upgrade-game-strip" aria-label="Current Can You Geo games">
             <article className="upgrade-game-tile" data-game="mystery-map">
-              <UpgradeMiniVisual kind="choropleth" />
+              <UpgradeGamePreview
+                src="/images/homepage/05-practice.png"
+                alt="Mystery Map Custom Atlas preview"
+                objectPosition="50% 50%"
+              />
               <div>
                 <p className="eyebrow">Mystery Map</p>
                 <strong>Custom Atlas and Daily map puzzles</strong>
@@ -144,7 +149,11 @@ export function UpgradeClient() {
               </div>
             </article>
             <article className="upgrade-game-tile" data-game="pattern-atlas">
-              <UpgradeMiniVisual kind="pattern" />
+              <UpgradeGamePreview
+                src="/images/homepage/06-challenge-friends.png"
+                alt="Pattern Atlas Pattern Run preview"
+                objectPosition="48% 50%"
+              />
               <div>
                 <p className="eyebrow">Pattern Atlas</p>
                 <strong>Pattern Runs and Daily rule puzzles</strong>
@@ -152,7 +161,11 @@ export function UpgradeClient() {
               </div>
             </article>
             <article className="upgrade-game-tile" data-game="order-atlas">
-              <UpgradeMiniVisual kind="order" />
+              <UpgradeGamePreview
+                src="/images/homepage/04-daily-mystery-map.png"
+                alt="Order Atlas intro sample preview"
+                objectPosition="50% 50%"
+              />
               <div>
                 <p className="eyebrow">Order Atlas</p>
                 <strong>Intro sample available now</strong>
@@ -294,45 +307,17 @@ export function UpgradeClient() {
   );
 }
 
-function UpgradeMiniVisual({ kind }: { kind: "choropleth" | "pattern" | "order" }) {
-  if (kind === "choropleth") {
-    return (
-      <div className="upgrade-mini-visual upgrade-mini-visual-map" aria-hidden="true">
-        <span data-tone="low" />
-        <span data-tone="mid" />
-        <span data-tone="high" />
-        <span data-tone="none" />
-        <span data-tone="mid" />
-        <span data-tone="high" />
-      </div>
-    );
-  }
-
-  if (kind === "pattern") {
-    return (
-      <div className="upgrade-mini-visual upgrade-mini-visual-pattern" aria-hidden="true">
-        <span className="upgrade-mini-globe" />
-        <span className="upgrade-mini-country" data-place="north" />
-        <span className="upgrade-mini-country" data-place="south" />
-        <span className="upgrade-mini-rule">Rule</span>
-      </div>
-    );
-  }
-
+function UpgradeGamePreview({ src, alt, objectPosition }: { src: string; alt: string; objectPosition: string }) {
   return (
-    <div className="upgrade-mini-visual upgrade-mini-visual-order" aria-hidden="true">
-      <span>
-        <strong>1</strong>
-        <em>A</em>
-      </span>
-      <span>
-        <strong>2</strong>
-        <em>B</em>
-      </span>
-      <span>
-        <strong>3</strong>
-        <em>C</em>
-      </span>
+    <div className="upgrade-game-preview">
+      <Image
+        className="upgrade-game-preview-image"
+        src={src}
+        alt={alt}
+        fill
+        sizes="(max-width: 720px) calc(100vw - 2rem), (max-width: 1100px) 30vw, 18vw"
+        style={{ objectPosition }}
+      />
     </div>
   );
 }
