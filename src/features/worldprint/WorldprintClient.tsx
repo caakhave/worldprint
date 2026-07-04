@@ -1754,7 +1754,7 @@ export function WorldprintClient({ dateOverride, entryMode = "standard" }: World
           {showIncorrectFeedback ? "" : feedbackText}
         </div>
       </div>
-      <div className="play-map-panel" aria-label="Map evidence">
+      <div className="play-map-panel" aria-label="Map evidence" data-testid="mystery-map-board">
         <div className="map-evidence-header">
           <div>
             <p className="eyebrow">Map evidence</p>

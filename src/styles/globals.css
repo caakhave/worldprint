@@ -10875,7 +10875,7 @@ button.pro-price-option:focus-visible {
   }
 
   .play-action-dock {
-    position: sticky;
+    position: static;
     bottom: 0.55rem;
     z-index: 8;
     padding: 0.7rem;
@@ -10952,6 +10952,8 @@ button.pro-price-option:focus-visible {
   }
 
   .play-layout[data-layout="dashboard"] .play-action-dock {
+    position: static;
+    bottom: auto;
     background:
       radial-gradient(circle at 8% 0%, rgb(215 168 75 / 0.13), transparent 16rem),
       linear-gradient(135deg, rgb(104 183 170 / 0.08), transparent 58%),

@@ -587,7 +587,7 @@ export function PatternAtlasClient({ initialData, todayOverride }: PatternAtlasC
           {currentState.feedback}
         </div>
       </div>
-      <div className="play-map-panel" aria-label="Pattern evidence">
+      <div className="play-map-panel" aria-label="Pattern evidence" data-testid="pattern-atlas-board">
         <div className="map-evidence-header">
           <div>
             <p className="eyebrow">Map evidence</p>
