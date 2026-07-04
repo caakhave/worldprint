@@ -39,7 +39,7 @@ const signalCards = [
 
 const modeCards = [
   {
-    image: "/images/homepage/04-daily-mystery-map.png",
+    image: "/images/homepage/05-practice.png",
     objectPosition: "50% 50%",
     title: "Mystery Map",
     copy: "Read choropleth patterns, spend clues, and solve the hidden indicator.",
@@ -47,16 +47,16 @@ const modeCards = [
     href: "/play/mystery-map"
   },
   {
-    image: "/images/homepage/05-practice.png",
-    objectPosition: "50% 50%",
+    image: "/images/homepage/06-challenge-friends.png",
+    objectPosition: "48% 50%",
     title: "Pattern Atlas",
     copy: "Find the shared rule connecting highlighted countries.",
     cta: "Open Pattern Atlas",
     href: "/play/pattern-atlas"
   },
   {
-    image: "/images/homepage/06-challenge-friends.png",
-    objectPosition: "48% 50%",
+    image: "/images/homepage/04-daily-mystery-map.png",
+    objectPosition: "50% 50%",
     title: "Order Atlas",
     copy: "Playable intro run now. Daily and Pro modes are coming next.",
     cta: "Try Order Atlas",
@@ -93,6 +93,16 @@ export default function HomePage() {
                 <p>{item.acceptedAnswer}</p>
               </article>
             ))}
+            <article className="surface homepage-answer-card homepage-answer-visual" aria-label="Can You Geo library rhythm">
+              <p className="eyebrow">Growing atlas</p>
+              <h3>Fresh challenges without changing the rules.</h3>
+              <div className="answer-visual-stack" aria-hidden="true">
+                <span>Map signal</span>
+                <span>Country pattern</span>
+                <span>Order challenge</span>
+              </div>
+              <p>New maps, country patterns, and ordering challenges keep the same atlas feel moving forward.</p>
+            </article>
           </div>
         </div>
       </section>
@@ -140,10 +150,6 @@ export default function HomePage() {
               Mystery Map and Pattern Atlas have Daily modes. Order Atlas is playable now as an intro sample, with Daily and Pro
               modes coming next.
             </p>
-            <p className="atlas-growth-note">
-              <strong>New geography challenges added every month.</strong>
-              <span>Fresh maps, country patterns, and ordering challenges keep the atlas growing.</span>
-            </p>
             <div className="button-row">
               <Link className="button-secondary" href="/play">
                 Open game library
@@ -156,7 +162,7 @@ export default function HomePage() {
                 <Image
                   className="homepage-card-image"
                   src={card.image}
-                  alt=""
+                  alt={`${card.title} game preview`}
                   fill
                   sizes="(max-width: 720px) calc(100vw - 2rem), (max-width: 1100px) 30vw, 27vw"
                   style={{ objectPosition: card.objectPosition }}

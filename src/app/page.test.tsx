@@ -58,6 +58,7 @@ describe("HomePage", () => {
     expect(screen.getByRole("heading", { name: "What games can I play?" })).toBeVisible();
     expect(screen.getByRole("heading", { name: "What data sources does Can You Geo use?" })).toBeVisible();
     expect(screen.getByText(/World Bank World Development Indicators/i)).toBeVisible();
+    expect(screen.getByRole("heading", { name: "Fresh challenges without changing the rules." })).toBeVisible();
     expect(screen.getByRole("heading", { name: "Read patterns. Make the call." })).toBeVisible();
     expect(screen.getByText(/Can You Geo is a three-game geography library/i)).toBeVisible();
     expect(screen.getByText(/Mystery Map asks you to decode an unlabeled choropleth/i)).toBeVisible();
@@ -72,8 +73,24 @@ describe("HomePage", () => {
     expect(screen.getByRole("link", { name: /Open Mystery Map/i })).toHaveAttribute("href", "/play/mystery-map");
     expect(screen.getByRole("link", { name: /Open Pattern Atlas/i })).toHaveAttribute("href", "/play/pattern-atlas");
     expect(screen.getByRole("link", { name: /Try Order Atlas/i })).toHaveAttribute("href", "/play/order-atlas");
+    const mysteryMapPoster = screen.getByRole("heading", { name: "Mystery Map" }).closest("article");
+    const patternAtlasPoster = screen.getByRole("heading", { name: "Pattern Atlas" }).closest("article");
     const orderAtlasPoster = screen.getByRole("heading", { name: "Order Atlas" }).closest("article");
+    expect(mysteryMapPoster).toBeTruthy();
+    expect(patternAtlasPoster).toBeTruthy();
     expect(orderAtlasPoster).toBeTruthy();
+    expect(within(mysteryMapPoster as HTMLElement).getByRole("img", { name: "Mystery Map game preview" })).toHaveAttribute(
+      "src",
+      "/images/homepage/05-practice.png"
+    );
+    expect(within(patternAtlasPoster as HTMLElement).getByRole("img", { name: "Pattern Atlas game preview" })).toHaveAttribute(
+      "src",
+      "/images/homepage/06-challenge-friends.png"
+    );
+    expect(within(orderAtlasPoster as HTMLElement).getByRole("img", { name: "Order Atlas game preview" })).toHaveAttribute(
+      "src",
+      "/images/homepage/04-daily-mystery-map.png"
+    );
     expect(within(orderAtlasPoster as HTMLElement).getByText("Intro sample")).toBeVisible();
     expect(within(orderAtlasPoster as HTMLElement).getByText(/Playable intro run now/i)).toBeVisible();
     expect(within(orderAtlasPoster as HTMLElement).queryByText(/Free Daily|Pro Pattern Run|saved stats|streaks|unlimited/i)).not.toBeInTheDocument();

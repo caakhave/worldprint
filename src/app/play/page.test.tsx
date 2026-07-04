@@ -1,10 +1,18 @@
 import { render, screen, within } from "@testing-library/react";
-import { describe, expect, it } from "vitest";
+import { describe, expect, it, vi } from "vitest";
 import PlayHubPage from "@/app/play/page";
+
+vi.mock("next/image", () => ({
+  default: ({ alt = "", src, fill, ...props }: { alt?: string; src: string; fill?: boolean }) => {
+    void fill;
+    // eslint-disable-next-line @next/next/no-img-element
+    return <img alt={alt} src={src} {...props} />;
+  }
+}));
 
 describe("PlayHubPage", () => {
   it("renders the Can You Geo game library with all three public game cards", () => {
-    render(<PlayHubPage />);
+    const { container } = render(<PlayHubPage />);
 
     expect(screen.getByRole("heading", { name: "Choose your geography game." })).toBeVisible();
     expect(screen.getByRole("heading", { name: "Three games, one atlas." })).toBeVisible();
@@ -17,9 +25,27 @@ describe("PlayHubPage", () => {
     expect(screen.getByRole("heading", { name: "Mystery Map" })).toBeVisible();
     expect(screen.getByRole("heading", { name: "Pattern Atlas" })).toBeVisible();
     expect(screen.getByRole("heading", { name: "Order Atlas" })).toBeVisible();
+    expect(container.querySelectorAll(".game-library-visual-image")).toHaveLength(3);
+    expect(container.querySelector(".game-library-visual-map")).not.toBeInTheDocument();
     expect(screen.getAllByRole("link", { name: /Open Mystery Map/i }).every((link) => link.getAttribute("href") === "/play/mystery-map")).toBe(true);
     expect(screen.getAllByRole("link", { name: /Open Pattern Atlas/i }).every((link) => link.getAttribute("href") === "/play/pattern-atlas")).toBe(true);
     expect(screen.getAllByRole("link", { name: /Try Order Atlas|Try intro run/i }).some((link) => link.getAttribute("href") === "/play/order-atlas")).toBe(true);
+
+    const mysteryMapCard = screen.getByRole("heading", { name: "Mystery Map" }).closest("article");
+    const patternAtlasCard = screen.getByRole("heading", { name: "Pattern Atlas" }).closest("article");
+    const orderAtlasCard = screen.getByRole("heading", { name: "Order Atlas" }).closest("article");
+    expect(within(mysteryMapCard as HTMLElement).getByRole("img", { name: "Mystery Map game preview" })).toHaveAttribute(
+      "src",
+      "/images/homepage/05-practice.png"
+    );
+    expect(within(patternAtlasCard as HTMLElement).getByRole("img", { name: "Pattern Atlas game preview" })).toHaveAttribute(
+      "src",
+      "/images/homepage/06-challenge-friends.png"
+    );
+    expect(within(orderAtlasCard as HTMLElement).getByRole("img", { name: "Order Atlas game preview" })).toHaveAttribute(
+      "src",
+      "/images/homepage/04-daily-mystery-map.png"
+    );
   });
 
   it("keeps Mystery Map and Pattern Atlas access claims accurate", () => {

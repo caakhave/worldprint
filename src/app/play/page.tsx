@@ -39,7 +39,7 @@ export default function PlayHubPage() {
             <span>The atlas keeps growing with new maps, patterns, and ordering challenges.</span>
           </p>
         </div>
-        <GameLibraryShowcase ariaLabel="Can You Geo public game library" />
+        <GameLibraryShowcase ariaLabel="Can You Geo public game library" visualMode="image" />
       </section>
 
       <div className="play-hub-cta surface map-texture-panel">

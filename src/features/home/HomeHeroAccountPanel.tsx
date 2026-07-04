@@ -106,6 +106,10 @@ export function HomeHeroAccountPanel() {
         <p className="eyebrow">{copy.eyebrow}</p>
         <h1 className="hero-title">Can you read the world?</h1>
         <p className="lead">{copy.lead}</p>
+        <p className="atlas-growth-note hero-growth-note">
+          <strong>New geography challenges added every month.</strong>
+          <span>Fresh maps, country patterns, and ordering challenges keep the atlas growing.</span>
+        </p>
         <div className="button-row">
           <Link className="button hero-primary-cta" href={copy.primary.href} aria-disabled={state === "loading" ? "true" : undefined}>
             {copy.primary.label}

@@ -1,4 +1,5 @@
 import Link from "next/link";
+import Image from "next/image";
 import { ArrowRight } from "lucide-react";
 
 export type GameLibraryItem = {
@@ -11,6 +12,9 @@ export type GameLibraryItem = {
   ctaLabel: string;
   statusLabel: string;
   visual: "choropleth" | "pattern" | "order";
+  image: string;
+  imageAlt: string;
+  objectPosition: string;
   featured?: boolean;
 };
 
@@ -24,7 +28,10 @@ export const GAME_LIBRARY_ITEMS: readonly GameLibraryItem[] = [
     href: "/play/mystery-map",
     ctaLabel: "Open Mystery Map",
     statusLabel: "Playable now",
-    visual: "choropleth"
+    visual: "choropleth",
+    image: "/images/homepage/05-practice.png",
+    imageAlt: "Mystery Map game preview",
+    objectPosition: "50% 50%"
   },
   {
     id: "pattern-atlas",
@@ -35,7 +42,10 @@ export const GAME_LIBRARY_ITEMS: readonly GameLibraryItem[] = [
     href: "/play/pattern-atlas",
     ctaLabel: "Open Pattern Atlas",
     statusLabel: "Playable now",
-    visual: "pattern"
+    visual: "pattern",
+    image: "/images/homepage/06-challenge-friends.png",
+    imageAlt: "Pattern Atlas game preview",
+    objectPosition: "48% 50%"
   },
   {
     id: "order-atlas",
@@ -46,7 +56,10 @@ export const GAME_LIBRARY_ITEMS: readonly GameLibraryItem[] = [
     href: "/play/order-atlas",
     ctaLabel: "Try intro run",
     statusLabel: "Playable sample",
-    visual: "order"
+    visual: "order",
+    image: "/images/homepage/04-daily-mystery-map.png",
+    imageAlt: "Order Atlas game preview",
+    objectPosition: "50% 50%"
   }
 ];
 
@@ -54,26 +67,28 @@ type GameLibraryShowcaseProps = {
   className?: string;
   ariaLabel?: string;
   items?: readonly GameLibraryItem[];
+  visualMode?: "mini" | "image";
 };
 
 export function GameLibraryShowcase({
   className = "",
   ariaLabel = "Can You Geo game library",
-  items = GAME_LIBRARY_ITEMS
+  items = GAME_LIBRARY_ITEMS,
+  visualMode = "mini"
 }: GameLibraryShowcaseProps) {
   return (
     <div className={["game-library-grid", className].filter(Boolean).join(" ")} aria-label={ariaLabel}>
       {items.map((item) => (
-        <GameLibraryCard item={item} key={item.id} />
+        <GameLibraryCard item={item} key={item.id} visualMode={visualMode} />
       ))}
     </div>
   );
 }
 
-function GameLibraryCard({ item }: { item: GameLibraryItem }) {
+function GameLibraryCard({ item, visualMode }: { item: GameLibraryItem; visualMode: NonNullable<GameLibraryShowcaseProps["visualMode"]> }) {
   return (
     <article className="game-library-card" data-game={item.id} data-featured={item.featured ? "true" : "false"}>
-      <GameLibraryVisual kind={item.visual} />
+      {visualMode === "image" ? <GameLibraryImage item={item} /> : <GameLibraryVisual kind={item.visual} />}
       <div className="game-library-card-copy">
         <p className="eyebrow">{item.eyebrow}</p>
         <h3>{item.title}</h3>
@@ -98,6 +113,21 @@ function GameLibraryCard({ item }: { item: GameLibraryItem }) {
         )}
       </div>
     </article>
+  );
+}
+
+function GameLibraryImage({ item }: { item: GameLibraryItem }) {
+  return (
+    <div className="game-library-visual game-library-visual-image">
+      <Image
+        className="game-library-card-image"
+        src={item.image}
+        alt={item.imageAlt}
+        fill
+        sizes="(max-width: 720px) calc(100vw - 2rem), (max-width: 1100px) 46vw, 29vw"
+        style={{ objectPosition: item.objectPosition }}
+      />
+    </div>
   );
 }
 
