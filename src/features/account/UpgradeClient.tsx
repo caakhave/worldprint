@@ -194,7 +194,7 @@ export function UpgradeClient() {
             future work for that game.
           </p>
         </div>
-        <GameLibraryShowcase ariaLabel="Games included in Can You Geo Free and Pro" />
+        <GameLibraryShowcase ariaLabel="Games included in Can You Geo Free and Pro" visualMode="image" />
       </section>
 
       <div className="plan-grid">

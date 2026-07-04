@@ -116,6 +116,21 @@ describe("UpgradeClient", () => {
     expect(screen.getByRole("heading", { name: "Mystery Map" })).toBeVisible();
     expect(screen.getByRole("heading", { name: "Pattern Atlas" })).toBeVisible();
     expect(screen.getByRole("heading", { name: "Order Atlas" })).toBeVisible();
+    const upgradeLibrary = screen.getByLabelText("Games included in Can You Geo Free and Pro");
+    expect(upgradeLibrary.querySelectorAll(".game-library-visual-image")).toHaveLength(3);
+    expect(upgradeLibrary.querySelector(".game-library-visual-map")).toBeNull();
+    expect(within(upgradeLibrary).getByRole("img", { name: "Mystery Map game preview" })).toHaveAttribute(
+      "src",
+      expect.stringContaining("05-practice")
+    );
+    expect(within(upgradeLibrary).getByRole("img", { name: "Pattern Atlas game preview" })).toHaveAttribute(
+      "src",
+      expect.stringContaining("06-challenge-friends")
+    );
+    expect(within(upgradeLibrary).getByRole("img", { name: "Order Atlas game preview" })).toHaveAttribute(
+      "src",
+      expect.stringContaining("04-daily-mystery-map")
+    );
     expect(screen.getByRole("link", { name: /Open Pattern Atlas/i })).toHaveAttribute("href", "/play/pattern-atlas");
     expect(screen.getByRole("link", { name: /Try intro run/i })).toHaveAttribute("href", "/play/order-atlas");
     expect(screen.getByText("Playable sample")).toBeVisible();

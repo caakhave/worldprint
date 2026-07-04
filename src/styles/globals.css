@@ -794,8 +794,12 @@ button:disabled {
 
 .hero-growth-note {
   max-width: min(100%, 39rem);
-  margin: -0.25rem 0 1.25rem;
+  margin: 0.15rem 0 clamp(1.25rem, 2.8vh, 2rem);
   backdrop-filter: blur(12px);
+}
+
+.hero-growth-note + .button-row {
+  margin-top: clamp(0.35rem, 1.2vh, 0.9rem);
 }
 
 .hero-primary-cta {

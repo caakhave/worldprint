@@ -1,6 +1,10 @@
+import { readFileSync } from "node:fs";
+import { join } from "node:path";
 import { render, screen, within } from "@testing-library/react";
 import { describe, expect, it, vi } from "vitest";
 import HomePage from "@/app/page";
+
+const styles = readFileSync(join(process.cwd(), "src/styles/globals.css"), "utf8");
 
 const entitlementMock = vi.hoisted(() => ({
   state: {
@@ -97,5 +101,7 @@ describe("HomePage", () => {
     expect(screen.getByText("No account needed for sample runs.")).toBeVisible();
     expect(screen.getByText("Free accounts get Daily games and saved progress where supported.")).toBeVisible();
     expect(screen.getByText("Order Atlas is intro-only today; Daily and Pro modes are coming next.")).toBeVisible();
+    expect(styles).toContain(".hero-growth-note + .button-row");
+    expect(styles).toContain("margin-top: clamp(0.35rem, 1.2vh, 0.9rem)");
   });
 });

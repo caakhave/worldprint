@@ -151,21 +151,32 @@ describe("OrderAtlasClient", () => {
     setAccount(PRO_ENTITLEMENT, true);
     renderOrderAtlas();
 
+    expect(screen.getByText("Pro account")).toBeVisible();
+    expect(screen.getByText("Your Pro account includes today's Daily and unlocks repeatable Practice Runs.")).toBeVisible();
+    const dailyCard = screen.getByLabelText("Order Atlas Daily");
     expect(screen.getByRole("heading", { name: "Order Atlas Daily" })).toBeVisible();
+    expect(within(dailyCard).getByText("Today's Daily")).toBeVisible();
+    expect(within(dailyCard).getByText("Included with Free and Pro")).toBeVisible();
+    expect(within(dailyCard).queryByText("Free Daily")).not.toBeInTheDocument();
+    expect(screen.getByRole("button", { name: /Play today's Daily/i })).toBeVisible();
+    expect(screen.getByText("Unlimited Pro practice")).toBeVisible();
+    expect(screen.getByRole("heading", { name: "Start repeatable practice." })).toBeVisible();
     expect(screen.getByRole("heading", { name: "Practice ordering signals" })).toBeVisible();
     expect(
       screen.getByText(
-        "Daily is the fixed set for today. Practice Run is your repeatable Pro mode: each run draws three practice-eligible ordering rounds and keeps the result local to this browser."
+        "Daily is today's fixed official set. Practice is the repeatable Pro benefit: start a fresh three-round set whenever you want, separate from Daily progress."
       )
     ).toBeVisible();
+    expect(screen.getByText("Repeatable Pro mode")).toBeVisible();
+    expect(screen.getByText("Start fresh 3-round practice sets from practice-eligible Order Atlas rounds. Results stay local to this browser.")).toBeVisible();
     expect(screen.getByText("Practice is separate from today's Daily score and can be started again after each run.")).toBeVisible();
 
     await user.click(screen.getByRole("button", { name: "Start Practice Run" }));
 
     expect(screen.getAllByText("Pro Practice Run").length).toBeGreaterThanOrEqual(1);
     expect(screen.getByText(/Practice Run is your repeatable Pro mode: three practice-eligible ordering rounds/i)).toBeVisible();
-    expect(screen.queryByText(/unlimited/i)).not.toBeInTheDocument();
     expect(screen.queryByText(/custom run/i)).not.toBeInTheDocument();
+    expect(screen.queryByText(/cloud stats|streaks|archive support|challenge support|account-wide saved stats/i)).not.toBeInTheDocument();
   });
 
   it("resumes an active Pro Practice Run directly after reload", async () => {

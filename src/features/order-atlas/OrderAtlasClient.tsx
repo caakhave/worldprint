@@ -577,9 +577,22 @@ function OrderAtlasLobby({
   onStart: (mode: OrderAtlasRunMode, options?: { fresh?: boolean }) => void;
 }) {
   const sampleActionLabel = currentSampleRun?.status === "complete" ? "View Sample Run" : currentSampleRun ? "Resume Sample Run" : "Start sample run";
-  const dailyActionLabel = currentDailyRun?.status === "complete" ? "View Order Atlas Daily" : currentDailyRun ? "Resume Order Atlas Daily" : "Start Order Atlas Daily";
+  const dailyActionLabel = currentDailyRun?.status === "complete"
+    ? isProAccount
+      ? "View today's Daily"
+      : "View Order Atlas Daily"
+    : currentDailyRun
+      ? isProAccount
+        ? "Resume today's Daily"
+        : "Resume Order Atlas Daily"
+      : isProAccount
+        ? "Play today's Daily"
+        : "Start Order Atlas Daily";
   const practiceActionLabel =
     currentPracticeRun?.status === "complete" ? "View Practice Result" : currentPracticeRun ? "Resume Practice Run" : "Start Practice Run";
+  const accountFact = entitlementLoading ? "Checking account" : isProAccount ? "Pro account" : signedIn ? "Free account" : "No account needed";
+  const dailyKicker = isProAccount ? "Today's Daily" : "Free Daily";
+  const dailyPill = currentDailyRun?.status === "active" ? "Daily in progress" : isProAccount ? "Included with Free and Pro" : "Free Daily";
 
   return (
     <section className="game-entry page-shell">
@@ -593,7 +606,7 @@ function OrderAtlasLobby({
         <div className="entry-facts" aria-label="Order Atlas facts">
           <span>{ORDER_ATLAS_ROUND_COUNT} rounds per run</span>
           <span>Exact placement scoring</span>
-          <span>{entitlementLoading ? "Checking account" : signedIn ? "Account-aware" : "No account needed"}</span>
+          <span>{accountFact}</span>
         </div>
       </div>
       <div className="entry-panel surface" aria-label="Order Atlas modes">
@@ -602,7 +615,7 @@ function OrderAtlasLobby({
           <h2>Ready to order the atlas?</h2>
           <p>
             {isProAccount
-              ? "Play today's Daily or start a Pro Practice Run from the broader Order Atlas catalog."
+              ? "Your Pro account includes today's Daily and unlocks repeatable Practice Runs."
               : isFreeAccount
                 ? "Your free account gets today's Order Atlas Daily with local browser progress."
                 : "Try the fixed Order Atlas Sample Run. No account needed and no account results saved."}
@@ -631,12 +644,17 @@ function OrderAtlasLobby({
             </div>
           </article>
         ) : (
-          <article className="lobby-primary-card" data-state={currentDailyRun?.status === "complete" ? "complete" : "ready"} aria-label="Order Atlas Free Daily">
+          <article
+            className="lobby-primary-card"
+            data-account={isProAccount ? "pro" : "free"}
+            data-state={currentDailyRun?.status === "complete" ? "complete" : "ready"}
+            aria-label="Order Atlas Daily"
+          >
             <div className="lobby-primary-copy">
-              <p className="setup-kicker">Free Daily</p>
+              <p className="setup-kicker">{dailyKicker}</p>
               <h3>Order Atlas Daily</h3>
               <p>Three deterministic ordering rounds for {todayKey}. Local progress resumes safely if you reload.</p>
-              <span className="mode-state-pill">{currentDailyRun?.status === "active" ? "Daily in progress" : "Free Daily"}</span>
+              <span className="mode-state-pill">{dailyPill}</span>
             </div>
             <p className="mode-card-note">Order Atlas Daily is separate from Mystery Map and Pattern Atlas progress.</p>
             <div className="lobby-primary-actions">
@@ -655,15 +673,15 @@ function OrderAtlasLobby({
         {isProAccount ? (
           <section className="lobby-secondary" aria-label="Pro Order Atlas options">
             <div className="mode-panel-heading mode-panel-heading-secondary">
-              <p className="setup-kicker">Pro option</p>
-              <h2>Start a Practice Run.</h2>
-              <p>Daily is the fixed set for today. Practice Run is your repeatable Pro mode: each run draws three practice-eligible ordering rounds and keeps the result local to this browser.</p>
+              <p className="setup-kicker">Unlimited Pro practice</p>
+              <h2>Start repeatable practice.</h2>
+              <p>Daily is today&apos;s fixed official set. Practice is the repeatable Pro benefit: start a fresh three-round set whenever you want, separate from Daily progress.</p>
             </div>
             <div className="mode-card-grid mode-card-grid-secondary">
               <article className="mode-card mode-card-practice" aria-label="Pro Order Atlas Practice Run">
-                <p className="setup-kicker">Pro Practice Run</p>
+                <p className="setup-kicker">Repeatable Pro mode</p>
                 <h3>Practice ordering signals</h3>
-                <p>Draw three practice-eligible Order Atlas rounds and keep the result local to this browser.</p>
+                <p>Start fresh 3-round practice sets from practice-eligible Order Atlas rounds. Results stay local to this browser.</p>
                 <p className="mode-card-note">Practice is separate from today&apos;s Daily score and can be started again after each run.</p>
                 <p className="mode-card-note">
                   {currentPracticeRun?.status === "active"
