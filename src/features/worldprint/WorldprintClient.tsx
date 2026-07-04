@@ -2461,6 +2461,7 @@ function CompletionSummary({
   const challengeComparison = run.mode === "challenge" && challengeTarget ? challengeComparisonCopy(total, challengeTarget.score) : null;
   const challengeTargetScore = challengeTarget?.score ?? 0;
   const [resultCopyState, setResultCopyState] = useState<"idle" | "copied" | "failed">("idle");
+  const [nativeShareAvailable, setNativeShareAvailable] = useState(false);
   const [inviteModalOpen, setInviteModalOpen] = useState(false);
   const [inviteEmail, setInviteEmail] = useState("");
   const [inviteMessage, setInviteMessage] = useState("");
@@ -2510,6 +2511,10 @@ function CompletionSummary({
     const reducedMotion = typeof window !== "undefined" && window.matchMedia("(prefers-reduced-motion: reduce)").matches;
     if (reducedMotion) setResultScoreLocked(true);
   }, [run.id, total]);
+
+  useEffect(() => {
+    setNativeShareAvailable(typeof navigator.share === "function");
+  }, []);
 
   useEffect(() => {
     if (resultCopyState === "idle") return undefined;
@@ -2571,7 +2576,7 @@ function CompletionSummary({
       trackCanYouGeoEvent("cgy_share_clicked", { method: "copy_fallback", run_mode: run.mode });
       trackCanYouGeoEvent("cgy_challenge_created", { method: "copy_fallback", run_mode: run.mode });
       setResultCopyState("copied");
-      setShareStatus("Copied challenge link.");
+      setShareStatus("Challenge link copied.");
     } catch {
       setResultCopyState("failed");
       setShareStatus("Copy the challenge link from the preview below.");
@@ -2585,7 +2590,7 @@ function CompletionSummary({
       trackCanYouGeoEvent("cgy_share_clicked", { method: "copy_link", run_mode: run.mode });
       trackCanYouGeoEvent("cgy_challenge_created", { method: "copy_link", run_mode: run.mode });
       setResultCopyState("copied");
-      setShareStatus("Copied challenge link.");
+      setShareStatus("Challenge link copied.");
     } catch {
       setResultCopyState("failed");
       setShareStatus("Challenge link could not be copied.");
@@ -2775,10 +2780,17 @@ function CompletionSummary({
                       <Mail size={18} aria-hidden="true" />
                       Challenge a friend
                     </button>
-                    <button className="button-secondary" type="button" onClick={() => void shareChallenge()}>
-                      <Share2 size={18} aria-hidden="true" />
-                      Share challenge
+                    <button className="button-secondary" type="button" onClick={() => void copyChallengeLink()}>
+                      <Copy size={18} aria-hidden="true" />
+                      {resultCopyState === "copied" ? "Copied" : resultCopyState === "failed" ? "Could not copy" : "Copy link"}
                     </button>
+                    <span className="challenge-quick-status daily-share-copy-status" role="status" aria-live="polite">
+                      {resultCopyState === "copied"
+                        ? "Challenge link copied."
+                        : resultCopyState === "failed"
+                          ? "Challenge link could not be copied."
+                          : "No spoilers included."}
+                    </span>
                   </div>
                 </section>
               ) : null}
@@ -2827,10 +2839,12 @@ function CompletionSummary({
                       <Mail size={18} aria-hidden="true" />
                       Challenge a friend
                     </button>
-                    <button className="button-secondary" type="button" onClick={() => void shareChallenge()}>
-                      <Share2 size={18} aria-hidden="true" />
-                      Share challenge
-                    </button>
+                    {nativeShareAvailable ? (
+                      <button className="button-secondary" type="button" onClick={() => void shareChallenge()}>
+                        <Share2 size={18} aria-hidden="true" />
+                        Share challenge
+                      </button>
+                    ) : null}
                     <button className="button-secondary" type="button" onClick={() => void copyChallengeLink()}>
                       <Copy size={18} aria-hidden="true" />
                       {resultCopyState === "copied" ? "Copied" : resultCopyState === "failed" ? "Could not copy" : "Copy link"}

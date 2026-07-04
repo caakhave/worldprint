@@ -336,23 +336,40 @@ describe("WorldprintClient UI structure", () => {
   });
 
   it("uses a simplified challenge sharing card with hidden raw share text by default", () => {
+    const quickCardIndex = source.indexOf('className="challenge-quick-card surface"');
+    const detailedCardIndex = source.indexOf('className="daily-share-card challenge-friend-card surface"', quickCardIndex);
+    const quickCardSource = source.slice(quickCardIndex, detailedCardIndex);
+    const detailedCardSource = source.slice(detailedCardIndex, source.indexOf('className="share-preview-disclosure"', detailedCardIndex));
+
     expect(source).toContain("const canCreateChallenge = !isSampleRun;");
-    expect(source).toContain('className="challenge-quick-card surface"');
-    expect(source).toContain('aria-label="Quick challenge actions"');
-    expect(source).toContain("Send this exact Mystery Map set with no answers, countries, indicators, or source labels revealed before play.");
-    expect(source).toContain("<h2>Challenge a friend</h2>");
+    expect(quickCardIndex).toBeGreaterThan(0);
+    expect(detailedCardIndex).toBeGreaterThan(quickCardIndex);
+    expect(quickCardSource).toContain('aria-label="Quick challenge actions"');
+    expect(quickCardSource).toContain("Send this exact Mystery Map set with no answers, countries, indicators, or source labels revealed before play.");
+    expect(quickCardSource).toContain("<h2>Challenge a friend</h2>");
+    expect(quickCardSource).toContain("openChallengeInviteModal");
+    expect(quickCardSource).toContain("copyChallengeLink");
+    expect(quickCardSource).toContain("Copy link");
+    expect(quickCardSource).toContain("Challenge link copied.");
+    expect(quickCardSource).toContain('className="challenge-quick-status daily-share-copy-status"');
+    expect(quickCardSource).not.toContain("Share challenge");
+    expect(quickCardSource).not.toContain("shareChallenge");
     expect(source).toContain("openChallengeInviteModal");
     expect(source).toContain("Send challenge by email");
     expect(source).toContain("Friend&apos;s email");
     expect(source).toContain("requestChallengeEmailInvite");
-    expect(source).toContain("Share challenge");
-    expect(source).toContain("Copy link");
+    expect(source).toContain("nativeShareAvailable");
+    expect(source).toContain('setNativeShareAvailable(typeof navigator.share === "function")');
+    expect(detailedCardSource).toContain("nativeShareAvailable ? (");
+    expect(detailedCardSource).toContain("Share challenge");
+    expect(detailedCardSource).toContain("Copy link");
     expect(source).toContain("<Mail");
     expect(source).toContain('className="share-preview-disclosure"');
     expect(source).toContain("Preview share text");
     expect(source).toContain('aria-label="Spoiler-free share text preview"');
     expect(styles).toContain(".challenge-quick-card");
     expect(styles).toContain(".challenge-quick-actions");
+    expect(styles).toContain(".challenge-quick-status");
     expect(source).not.toContain('className="share-action-grid"');
     expect(source).not.toContain(">Copy challenge link<");
   });

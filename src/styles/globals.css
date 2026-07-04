@@ -6303,6 +6303,11 @@ dd {
   white-space: nowrap;
 }
 
+.challenge-quick-status {
+  flex-basis: 100%;
+  text-align: right;
+}
+
 .daily-share-card {
   position: relative;
   overflow: hidden;
@@ -10535,6 +10540,10 @@ button.pro-price-option:focus-visible {
   .challenge-quick-actions .button,
   .challenge-quick-actions .button-secondary {
     width: 100%;
+  }
+
+  .challenge-quick-status {
+    text-align: left;
   }
 
   .daily-return-hook,
