@@ -138,8 +138,8 @@ export function OrderAtlasClient({ rounds }: OrderAtlasClientProps) {
             <p className="eyebrow">Sample complete</p>
             <h2>Ready for fresh games every day?</h2>
             <p>
-              Create a free account to play daily geography challenges and save your progress. Go Pro to unlock unlimited practice
-              runs, deeper Order Atlas challenges, and the full Can You Geo library.
+              Create a free account to play daily geography challenges and save your progress. Go Pro to unlock supported advanced
+              modes like Mystery Map Custom Atlas and Pattern Atlas Pattern Runs. More Order Atlas modes are coming next.
             </p>
             <div className="order-atlas-results-actions">
               <Link className="button" href="/sign-up/">

@@ -203,9 +203,13 @@ describe("OrderAtlasClient", () => {
     expect(screen.getByRole("heading", { name: "Ready for fresh games every day?" })).toBeVisible();
     expect(
       screen.getByText(
-        "Create a free account to play daily geography challenges and save your progress. Go Pro to unlock unlimited practice runs, deeper Order Atlas challenges, and the full Can You Geo library."
+        "Create a free account to play daily geography challenges and save your progress. Go Pro to unlock supported advanced modes like Mystery Map Custom Atlas and Pattern Atlas Pattern Runs. More Order Atlas modes are coming next."
       )
     ).toBeVisible();
+    expect(screen.queryByText(/deeper Order Atlas challenges/i)).not.toBeInTheDocument();
+    expect(screen.queryByText(/unlimited practice runs/i)).not.toBeInTheDocument();
+    expect(screen.getByText(/supported advanced modes/i)).toBeVisible();
+    expect(screen.getByText(/More Order Atlas modes are coming next/i)).toBeVisible();
     expect(screen.getByRole("link", { name: "Sign up free" })).toHaveAttribute("href", "/sign-up");
     expect(screen.getByRole("link", { name: "Start Pro" })).toHaveAttribute("href", "/upgrade");
     expect(screen.getByRole("button", { name: "Play sample again" })).toBeVisible();
