@@ -109,7 +109,7 @@ export default function HomePage() {
 
       <section className="section-band homepage-section" id="how-it-works">
         <div className="page-shell homepage-section-layout">
-          <div className="homepage-section-heading">
+          <div className="homepage-section-heading homepage-section-heading-wide">
             <p className="eyebrow">How the library plays</p>
             <h2>Read patterns. Make the call.</h2>
             <p className="section-lede">
@@ -143,7 +143,7 @@ export default function HomePage() {
 
       <section className="section-band homepage-section">
         <div className="page-shell homepage-section-layout">
-          <div className="homepage-section-heading">
+          <div className="homepage-section-heading homepage-section-heading-wide">
             <p className="eyebrow">Game library</p>
             <h2>Choose your geography game.</h2>
             <p className="section-lede">

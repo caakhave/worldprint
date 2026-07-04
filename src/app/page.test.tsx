@@ -64,11 +64,17 @@ describe("HomePage", () => {
     expect(screen.getByText(/World Bank World Development Indicators/i)).toBeVisible();
     expect(screen.getByRole("heading", { name: "Fresh challenges without changing the rules." })).toBeVisible();
     expect(screen.getByRole("heading", { name: "Read patterns. Make the call." })).toBeVisible();
+    expect(screen.getByRole("heading", { name: "Read patterns. Make the call." }).closest(".homepage-section-heading")).toHaveClass(
+      "homepage-section-heading-wide"
+    );
     expect(screen.getByText(/Can You Geo is a three-game geography library/i)).toBeVisible();
     expect(screen.getByText(/Mystery Map asks you to decode an unlabeled choropleth/i)).toBeVisible();
     expect(screen.getByText(/Pattern Atlas highlights countries and hides the connection/i)).toBeVisible();
     expect(screen.getByText(/Order Atlas turns country rankings into Sample, Daily, and Pro Play rounds/i)).toBeVisible();
     expect(screen.getByRole("heading", { name: "Choose your geography game." })).toBeVisible();
+    expect(screen.getByRole("heading", { name: "Choose your geography game." }).closest(".homepage-section-heading")).toHaveClass(
+      "homepage-section-heading-wide"
+    );
     expect(screen.getByText("New geography challenges added every month.")).toBeVisible();
     expect(screen.getByText("Fresh maps, country patterns, and ordering challenges keep the atlas growing.")).toBeVisible();
     expect(screen.getByText(/Mystery Map, Pattern Atlas, and Order Atlas all support Sample and Daily play/i)).toBeVisible();
@@ -105,6 +111,7 @@ describe("HomePage", () => {
     expect(screen.queryByText(/intro-only|intro sample|Pro Practice|Practice Run/i)).not.toBeInTheDocument();
     expect(styles).toContain(".hero-growth-note + .button-row");
     expect(styles).toContain("margin-top: clamp(0.35rem, 1.2vh, 0.9rem)");
+    expect(styles).toContain(".homepage-section-heading-wide {");
     expect(styles).toContain(".homepage-section-heading-wide h2");
     expect(styles).toContain("max-width: none");
   });
