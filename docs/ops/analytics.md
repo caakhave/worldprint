@@ -62,6 +62,17 @@ The analytics helper rejects PII-shaped parameter names and email-like string va
 
 Cloudflare Web Analytics or Insights may still be injected from the Cloudflare dashboard. Keep that separate from app-owned GTM/GA4 analytics and verify any dashboard-injected analytics are production-appropriate before public launch.
 
+## CSP Allowlist
+
+Cloudflare Pages serves the launch CSP from `public/_headers`. GTM/GA4 needs these narrow Google allowances:
+
+- `script-src`: `https://www.googletagmanager.com`
+- `frame-src`: `https://www.googletagmanager.com` for the GTM noscript iframe
+- `connect-src`: `https://www.google-analytics.com` and `https://region1.google-analytics.com` for GA4 collection
+- `img-src`: `https://www.google-analytics.com` and `https://www.googletagmanager.com` for beacon/image fallbacks
+
+Do not replace these with broad Google wildcards. The current static export still permits inline scripts/styles for Next hydration, but the GTM fix should not add any new `unsafe-inline` or `unsafe-eval` allowances. Validate after deploy by opening production in a browser console and confirming `gtm.js` loads without CSP errors.
+
 ## Setup Checklist
 
 1. Create or confirm the production GA4 property for `canyougeo.com`.
