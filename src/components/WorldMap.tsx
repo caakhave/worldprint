@@ -42,8 +42,11 @@ export function WorldMap({
   const panStart = useRef<{ clientX: number; clientY: number; view: MapViewTransform } | null>(null);
   const pinchStart = useRef<{ distance: number; center: { clientX: number; clientY: number } } | null>(null);
   const suppressClick = useRef(false);
+  const touchClickHandled = useRef(false);
   const [view, setView] = useState<MapViewTransform>(DEFAULT_MAP_VIEW);
-  const [hovered, setHovered] = useState<{ mapId: string; name: string; value: number | null; x: number; y: number } | null>(null);
+  const [hovered, setHovered] = useState<{ mapId: string; iso3: string | null; name: string; value: number | null; x: number; y: number } | null>(
+    null
+  );
   const projection = useMemo(() => geoEqualEarth().fitExtent([[18, 14], [942, 506]], map as never), [map]);
   const path = useMemo(() => geoPath(projection), [projection]);
   const graticulePath = path(geoGraticule10() as never);
@@ -89,6 +92,7 @@ export function WorldMap({
 
   function handlePointerDown(event: PointerEvent<SVGSVGElement>) {
     if (!zoomable) return;
+    touchClickHandled.current = false;
     activePointers.current.set(event.pointerId, { clientX: event.clientX, clientY: event.clientY });
     if (activePointers.current.size === 1 && view.k > 1) {
       panStart.current = { clientX: event.clientX, clientY: event.clientY, view };
@@ -191,6 +195,7 @@ export function WorldMap({
                     if (!showCountryTooltip) return;
                     setHovered({
                       mapId: feature.properties.mapId,
+                      iso3: iso3 ?? null,
                       name: countryName,
                       value: value ?? null,
                       x: event.clientX,
@@ -203,6 +208,7 @@ export function WorldMap({
                     const rect = event.currentTarget.getBoundingClientRect();
                     setHovered({
                       mapId: feature.properties.mapId,
+                      iso3: iso3 ?? null,
                       name: countryName,
                       value: value ?? null,
                       x: rect.left + rect.width / 2,
@@ -217,11 +223,20 @@ export function WorldMap({
                     onCountryClick({ iso3, name: countryName });
                   }}
                   onClick={() => {
+                    if (touchClickHandled.current) {
+                      touchClickHandled.current = false;
+                      return;
+                    }
                     if (suppressClick.current) {
                       suppressClick.current = false;
                       return;
                     }
                     if (!interactive || !iso3 || !onCountryClick) return;
+                    onCountryClick({ iso3, name: countryName });
+                  }}
+                  onPointerUp={(event) => {
+                    if (!interactive || !iso3 || !onCountryClick || event.pointerType === "mouse" || suppressClick.current) return;
+                    touchClickHandled.current = true;
                     onCountryClick({ iso3, name: countryName });
                   }}
                 />
@@ -248,7 +263,7 @@ export function WorldMap({
         <div className="map-tooltip" style={{ left: hovered.x + 12, top: hovered.y + 12 }}>
           <strong>{hovered.name}</strong>
           {indicator ? (
-            <span>{hovered.value === null ? "No data on this map" : interactive ? "Click to select" : "Mapped value"}</span>
+            <span>{hovered.value === null ? "No data on this map" : interactive ? (hovered.iso3 === selectedIso3 ? "Selected" : "Tap to select") : "Mapped value"}</span>
           ) : null}
         </div>
       ) : null}

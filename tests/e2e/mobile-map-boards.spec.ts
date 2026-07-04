@@ -63,6 +63,14 @@ for (const viewport of MOBILE_VIEWPORTS) {
     await expect(page.getByRole("heading", { name: /What does this map measure/i })).toBeVisible();
 
     await expectVisibleMapBoard(page, "mystery-map-board");
+
+    await page.locator('.country-path[data-iso3="CAN"]').first().tap();
+    await expect(page.locator('.country-path[data-iso3="CAN"]').first()).toHaveAttribute("data-selected", "true");
+    await expect(page.getByTestId("country-evidence-panel")).toContainText("Selected country");
+    await expect(page.getByTestId("country-evidence-panel")).toContainText("Canada");
+    await expect(page.getByTestId("country-evidence-panel")).not.toContainText("Pick a country");
+    await expect(page.getByTestId("selected-country-panel")).toContainText("Selected: Canada");
+    await expectNoHorizontalOverflow(page);
   });
 
   test(`Pattern Atlas sample keeps the highlighted map board visible on ${viewport.name} mobile`, async ({ page }) => {

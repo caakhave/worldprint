@@ -1636,7 +1636,13 @@ export function WorldprintClient({ dateOverride, entryMode = "standard" }: World
           </div>
         </div>
         {selectedCountry ? (
-          <div className="selected-country-card selected-country-action-card" data-state="selected" data-layout="immediate" aria-live="polite">
+          <div
+            className="selected-country-card selected-country-action-card"
+            data-state="selected"
+            data-layout="immediate"
+            data-testid="selected-country-panel"
+            aria-live="polite"
+          >
             <div className="selected-country-action-copy">
               <span>Selected: {selectedCountry.name}</span>
               <strong>{selectedCountry.name}</strong>
@@ -1774,7 +1780,12 @@ export function WorldprintClient({ dateOverride, entryMode = "standard" }: World
           onCountryClick={(country) => selectCountry(country.iso3)}
           labelledBy="active-map-title"
         />
-        <div className="inspection-readout" data-state={revealedEvidence.length > 0 ? "evidence" : "empty"} aria-live="polite">
+        <div
+          className="inspection-readout"
+          data-state={revealedEvidence.length > 0 ? "evidence" : selectedCountry ? "selected" : "empty"}
+          data-testid="country-evidence-panel"
+          aria-live="polite"
+        >
           {revealedEvidence.length > 0 ? (
             <>
               <div className="inspection-readout-heading">
@@ -1790,6 +1801,12 @@ export function WorldprintClient({ dateOverride, entryMode = "standard" }: World
                   </article>
                 ))}
               </div>
+            </>
+          ) : selectedCountry ? (
+            <>
+              <span>Selected country</span>
+              <strong>{selectedCountry.name}</strong>
+              <p>{selectedCountryPrompt} Use the selected-country panel below to reveal evidence, or tap another country.</p>
             </>
           ) : (
             <>
