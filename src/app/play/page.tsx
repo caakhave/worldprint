@@ -32,7 +32,7 @@ export default function PlayHubPage() {
           <h2 id="play-library-title">Three games, one atlas.</h2>
           <p>
             No account is needed for samples. Create a free account for Daily games and saved progress where supported. Pro unlocks
-            Mystery Map Custom Atlas, Pattern Atlas Pattern Runs, and repeatable Order Atlas Practice.
+            Mystery Map Custom Atlas, Pattern Atlas Pattern Runs, and repeatable Order Atlas Play.
           </p>
           <p className="atlas-growth-note">
             <strong>New geography challenges added every month.</strong>

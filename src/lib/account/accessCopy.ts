@@ -29,7 +29,7 @@ export const ACCESS_PLAN_COPY: Record<AccountPlan, AccessPlanCopy> = {
     label: "Pro",
     headline: "Open supported Pro modes.",
     summary:
-      "Pro unlocks Mystery Map Custom Atlas, Pattern Atlas Pattern Runs, Order Atlas Practice Runs, complete Past Games archive, advanced stats, and future premium modes where supported.",
+      "Pro unlocks Mystery Map Custom Atlas, Pattern Atlas Pattern Runs, Order Atlas Play, complete Past Games archive, advanced stats, and future premium modes where supported.",
     primaryCta: "Open the full atlas"
   }
 };

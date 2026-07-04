@@ -55,7 +55,7 @@ describe("HomeHeroAccountPanel", () => {
     expect(screen.getByText(/Try Mystery Map, Pattern Atlas, and Order Atlas Sample Runs/i)).toBeVisible();
     expect(screen.getByText("No account needed for sample runs.")).toBeVisible();
     expect(screen.getByText("Free accounts get Daily games, with saved progress where supported.")).toBeVisible();
-    expect(screen.getByText("Order Atlas includes Sample Run, Free Daily, and repeatable Pro Practice.")).toBeVisible();
+    expect(screen.getByText("Order Atlas includes Sample Run, Free Daily, and repeatable Pro Play.")).toBeVisible();
     expect(screen.queryByText(/Daily and Pro modes coming next|intro-only/i)).not.toBeInTheDocument();
   });
 
@@ -69,7 +69,7 @@ describe("HomeHeroAccountPanel", () => {
     expect(screen.getByRole("complementary", { name: "Free Daily unlocked" })).toBeVisible();
     expect(screen.getByText("You are signed in on Free.")).toBeVisible();
     expect(screen.getByText(/Mystery Map, Pattern Atlas, and Order Atlas each have Free Daily play/i)).toBeVisible();
-    expect(screen.getByText("Pro unlocks Mystery Map Custom Atlas, Pattern Runs, Order Atlas Practice, and Past Games.")).toBeVisible();
+    expect(screen.getByText("Pro unlocks Mystery Map Custom Atlas, Pattern Runs, Order Atlas Play, and Past Games.")).toBeVisible();
     expect(screen.queryByText(/Order Atlas has an intro sample run/i)).not.toBeInTheDocument();
     expect(screen.queryByRole("link", { name: "Try Sample Run" })).not.toBeInTheDocument();
   });
@@ -83,9 +83,10 @@ describe("HomeHeroAccountPanel", () => {
     expect(screen.getByRole("link", { name: /Start Custom Atlas/i })).toHaveAttribute("href", "/play/mystery-map#practice-atlas");
     expect(screen.getByRole("link", { name: /Open Pattern Atlas/i })).toHaveAttribute("href", "/play/pattern-atlas");
     expect(screen.getByRole("complementary", { name: "Pro Atlas unlocked" })).toBeVisible();
-    expect(screen.getByRole("heading", { name: "Daily, Custom Atlas, Pattern Runs, Practice" })).toBeVisible();
+    expect(screen.getByRole("heading", { name: "Daily, Custom Atlas, Pattern Runs, Pro Play" })).toBeVisible();
     expect(screen.getByText("Pro is active on this account.")).toBeVisible();
-    expect(screen.getByText(/Order Atlas Pro Practice is repeatable and stays local to this browser for now/i)).toBeVisible();
+    expect(screen.getByText(/Order Atlas Pro Play is repeatable and stays local to this browser for now/i)).toBeVisible();
+    expect(screen.queryByText(/Order Atlas Pro Practice|Order Atlas Practice/i)).not.toBeInTheDocument();
     expect(screen.queryByText(/Order Atlas remains an intro sample/i)).not.toBeInTheDocument();
     expect(screen.queryByRole("link", { name: /Start Pro/i })).not.toBeInTheDocument();
     expect(screen.queryByRole("link", { name: "Try Sample Run" })).not.toBeInTheDocument();

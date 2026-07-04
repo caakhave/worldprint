@@ -45,7 +45,7 @@ export default function HowToPlayPage() {
           <p>
             Mystery Map remains the flagship Daily game. Pattern Atlas uses the same atlas feel with highlighted countries instead of
             choropleth values. Order Atlas asks you to order country cards by a known indicator, with a Sample Run, Free Daily, and
-            repeatable Pro Practice.
+            repeatable Pro Play.
           </p>
         </div>
         <GameLibraryShowcase className="how-library-grid" ariaLabel="Can You Geo games explained" />

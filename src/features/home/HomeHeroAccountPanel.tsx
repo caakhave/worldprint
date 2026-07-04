@@ -29,12 +29,12 @@ const heroCopy: Record<
     noteLines: [
       "No account needed for sample runs.",
       "Free accounts get Daily games, with saved progress where supported.",
-      "Order Atlas includes Sample Run, Free Daily, and repeatable Pro Practice."
+      "Order Atlas includes Sample Run, Free Daily, and repeatable Pro Play."
     ],
     panelEyebrow: "Join the game",
     panelHeading: "Start Pro or continue free",
     panelBody:
-      "Free needs no card for Daily-enabled games and saved progress where supported. Pro opens Mystery Map Custom Atlas, Pattern Atlas Pattern Runs, Order Atlas Pro Practice, Past Games, and advanced stats where supported.",
+      "Free needs no card for Daily-enabled games and saved progress where supported. Pro opens Mystery Map Custom Atlas, Pattern Atlas Pattern Runs, Order Atlas Pro Play, Past Games, and advanced stats where supported.",
     panelCta: { label: "Start Pro", href: "/upgrade" }
   },
   free: {
@@ -46,29 +46,29 @@ const heroCopy: Record<
     noteLines: [
       "You are signed in on Free.",
       "Daily progress, streaks, and basic stats save for supported games.",
-      "Pro unlocks Mystery Map Custom Atlas, Pattern Runs, Order Atlas Practice, and Past Games."
+      "Pro unlocks Mystery Map Custom Atlas, Pattern Runs, Order Atlas Play, and Past Games."
     ],
     panelEyebrow: "Free Daily unlocked",
     panelHeading: "Play today's Daily games or unlock deeper runs",
     panelBody:
-      "Free keeps Daily-enabled progress saved where supported. Pro adds Mystery Map Custom Atlas runs, Pattern Atlas filters, repeatable Order Atlas Practice, and the complete Past Games archive.",
+      "Free keeps Daily-enabled progress saved where supported. Pro adds Mystery Map Custom Atlas runs, Pattern Atlas filters, repeatable Order Atlas Play, and the complete Past Games archive.",
     panelCta: { label: "Upgrade to Pro", href: "/upgrade" }
   },
   pro: {
     eyebrow: "Pro Atlas unlocked",
     lead:
-      "Your Pro library is open for the modes that support it: Daily play, Mystery Map Custom Atlas, Pattern Atlas Pattern Runs, Order Atlas Practice, and Past Games.",
+      "Your Pro library is open for the modes that support it: Daily play, Mystery Map Custom Atlas, Pattern Atlas Pattern Runs, Order Atlas Play, and Past Games.",
     primary: { label: "Open game library", href: "/play" },
     secondary: { label: "Start Custom Atlas", href: "/play/mystery-map#practice-atlas" },
     noteLines: [
       "Pro is active on this account.",
       "Daily games still count for score and streaks where supported.",
-      "Order Atlas Pro Practice is repeatable and stays local to this browser for now."
+      "Order Atlas Pro Play is repeatable and stays local to this browser for now."
     ],
     panelEyebrow: "Pro Atlas unlocked",
-    panelHeading: "Daily, Custom Atlas, Pattern Runs, Practice",
+    panelHeading: "Daily, Custom Atlas, Pattern Runs, Pro Play",
     panelBody:
-      "Pro can play Daily games, build Mystery Map Custom Atlas runs, start Pattern Atlas Pattern Runs, run repeatable Order Atlas Practice, replay Past Games, and review advanced stats where supported.",
+      "Pro can play Daily games, build Mystery Map Custom Atlas runs, start Pattern Atlas Pattern Runs, run repeatable Order Atlas Play, replay Past Games, and review advanced stats where supported.",
     panelCta: { label: "Open Pattern Atlas", href: "/play/pattern-atlas" }
   },
   loading: {

@@ -52,7 +52,7 @@ export const GAME_LIBRARY_ITEMS: readonly GameLibraryItem[] = [
     eyebrow: "Country ordering game",
     title: "Order Atlas",
     description: "Order country cards by a known geography signal, then reveal the true values.",
-    access: ["Signed-out Sample Run", "Free Daily", "Pro Practice Run"],
+    access: ["Signed-out Sample Run", "Free Daily", "Pro Play"],
     href: "/play/order-atlas",
     ctaLabel: "Open Order Atlas",
     statusLabel: "Playable now",

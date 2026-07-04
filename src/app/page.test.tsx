@@ -67,12 +67,12 @@ describe("HomePage", () => {
     expect(screen.getByText(/Can You Geo is a three-game geography library/i)).toBeVisible();
     expect(screen.getByText(/Mystery Map asks you to decode an unlabeled choropleth/i)).toBeVisible();
     expect(screen.getByText(/Pattern Atlas highlights countries and hides the connection/i)).toBeVisible();
-    expect(screen.getByText(/Order Atlas turns country rankings into Sample, Daily, and Pro Practice rounds/i)).toBeVisible();
+    expect(screen.getByText(/Order Atlas turns country rankings into Sample, Daily, and Pro Play rounds/i)).toBeVisible();
     expect(screen.getByRole("heading", { name: "Choose your geography game." })).toBeVisible();
     expect(screen.getByText("New geography challenges added every month.")).toBeVisible();
     expect(screen.getByText("Fresh maps, country patterns, and ordering challenges keep the atlas growing.")).toBeVisible();
     expect(screen.getByText(/Mystery Map, Pattern Atlas, and Order Atlas all support Sample and Daily play/i)).toBeVisible();
-    expect(screen.getByText(/repeatable Order Atlas Practice/i)).toBeVisible();
+    expect(screen.getByText(/repeatable Order Atlas Play/i)).toBeVisible();
     expect(screen.queryByText(/new games every month/i)).not.toBeInTheDocument();
     expect(screen.getByRole("link", { name: /Open game library/i })).toHaveAttribute("href", "/play");
     expect(screen.getByRole("link", { name: /Open Mystery Map/i })).toHaveAttribute("href", "/play/mystery-map");
@@ -96,13 +96,13 @@ describe("HomePage", () => {
       "src",
       "/images/homepage/04-daily-mystery-map.png"
     );
-    expect(within(orderAtlasPoster as HTMLElement).getByText("Sample / Daily / Pro Practice")).toBeVisible();
-    expect(within(orderAtlasPoster as HTMLElement).getByText(/Order country cards in Sample, Free Daily, and repeatable Pro Practice runs/i)).toBeVisible();
+    expect(within(orderAtlasPoster as HTMLElement).getByText("Sample / Daily / Pro Play")).toBeVisible();
+    expect(within(orderAtlasPoster as HTMLElement).getByText(/Order country cards in Sample, Free Daily, and repeatable Pro Play sets/i)).toBeVisible();
     expect(within(orderAtlasPoster as HTMLElement).queryByText(/saved stats|streaks|archive|challenge|custom filters|continuous/i)).not.toBeInTheDocument();
     expect(screen.getByText("No account needed for sample runs.")).toBeVisible();
     expect(screen.getByText("Free accounts get Daily games, with saved progress where supported.")).toBeVisible();
     expect(screen.queryByText(/Daily and Pro modes coming next/i)).not.toBeInTheDocument();
-    expect(screen.queryByText(/intro-only|intro sample/i)).not.toBeInTheDocument();
+    expect(screen.queryByText(/intro-only|intro sample|Pro Practice|Practice Run/i)).not.toBeInTheDocument();
     expect(styles).toContain(".hero-growth-note + .button-row");
     expect(styles).toContain("margin-top: clamp(0.35rem, 1.2vh, 0.9rem)");
     expect(styles).toContain(".homepage-section-heading-wide h2");

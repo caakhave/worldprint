@@ -78,26 +78,26 @@ const difficultyLabels: Record<OrderAtlasDifficulty, string> = {
 const eligibilityLabels: Record<OrderAtlasEligibility, string> = {
   sample: "Sample Run",
   daily: "Daily",
-  practice: "Practice",
+  practice: "Pro Play",
   "expert-only": "Expert-only"
 };
 
 function runModeLabel(runOrMode: OrderAtlasRunState | OrderAtlasRunMode) {
   const mode = typeof runOrMode === "string" ? runOrMode : runOrMode.mode;
   if (mode === "daily") return "Order Atlas Daily";
-  if (mode === "practice") return "Pro Practice Run";
+  if (mode === "practice") return "Order Atlas Pro Play";
   return "Order Atlas Sample Run";
 }
 
 function runSummaryCopy(run: OrderAtlasRunState) {
   if (run.mode === "daily") return "You finished today's Order Atlas Daily. This result stays local to this browser for now.";
-  if (run.mode === "practice") return "You finished a Pro Practice Run. This result stays local and does not affect Daily progress.";
+  if (run.mode === "practice") return "You finished an Order Atlas Pro Play set. This result stays local to this browser for now.";
   return "You finished the Order Atlas sample.";
 }
 
 function runIntroCopy(mode: OrderAtlasRunMode) {
   if (mode === "daily") return "Order Atlas Daily uses three deterministic rounds for today. Progress resumes locally if you reload.";
-  if (mode === "practice") return "Practice Run is your repeatable Pro mode: three practice-eligible ordering rounds, separate from today's Daily.";
+  if (mode === "practice") return "Pro Play is repeatable: order a fresh three-round set whenever you want. This set stays local to this browser for now.";
   return "No account needed. Sample progress stays local, and no account results are saved.";
 }
 
@@ -183,8 +183,8 @@ export function OrderAtlasClient({ rounds, todayOverride }: OrderAtlasClientProp
     if (!storeLoaded || entitlementLoading || run) return;
 
     const activeRuns: Partial<Record<OrderAtlasRunMode, OrderAtlasRunState>> = {};
-    if (currentSampleRun?.status === "active") activeRuns.sample = currentSampleRun;
-    if (signedIn && currentDailyRun?.status === "active") activeRuns.daily = currentDailyRun;
+    if (!signedIn && currentSampleRun?.status === "active") activeRuns.sample = currentSampleRun;
+    if (signedIn && !isProAccount && currentDailyRun?.status === "active") activeRuns.daily = currentDailyRun;
     if (isProAccount && currentPracticeRun?.status === "active") activeRuns.practice = currentPracticeRun;
 
     const preferredRun = store.lastRunMode ? activeRuns[store.lastRunMode] : null;
@@ -354,7 +354,7 @@ export function OrderAtlasClient({ rounds, todayOverride }: OrderAtlasClientProp
         isFreeAccount={isFreeAccount}
         isProAccount={isProAccount}
         onRestart={() => restartRun(run)}
-        onStartPractice={() => startOrderRun("practice", { fresh: currentPracticeRun?.status === "complete" })}
+        onStartProPlay={() => startOrderRun("practice", { fresh: currentPracticeRun?.status === "complete" })}
         onLobby={() => setRun(null)}
       />
     );
@@ -579,15 +579,14 @@ function OrderAtlasLobby({
 }) {
   const sampleActionLabel = currentSampleRun?.status === "complete" ? "View Sample Run" : currentSampleRun ? "Resume Sample Run" : "Start sample run";
   const dailyActionLabel = currentDailyRun?.status === "complete" ? "Review today's Daily" : currentDailyRun ? "Resume Order Atlas Daily" : "Start Order Atlas Daily";
-  const proDailyActionLabel = currentDailyRun?.status === "complete" ? "Review today's Daily" : currentDailyRun ? "Continue today's Daily" : "Play today's Daily";
-  const practiceActionLabel = currentPracticeRun?.status === "active" ? "Continue Practice Run" : "Start Pro Practice";
+  const proPlayActionLabel = currentPracticeRun?.status === "active" ? "Continue Order Atlas Play" : "Start Order Atlas Play";
   const accountFact = entitlementLoading ? "Checking account" : isProAccount ? "Pro account" : signedIn ? "Free account" : "No account needed";
-  const dailyKicker = isProAccount ? "Today's Daily" : "Free Daily";
-  const dailyPill = currentDailyRun?.status === "active" ? "Daily in progress" : isProAccount ? "Included with Free and Pro" : "Free Daily";
-  const practiceStateCopy =
+  const dailyKicker = "Free Daily";
+  const dailyPill = currentDailyRun?.status === "active" ? "Daily in progress" : "Free Daily";
+  const proPlayStateCopy =
     currentPracticeRun?.status === "active"
-      ? "A Practice Run is in progress. Continue it whenever you are ready."
-      : "Ready for a fresh Practice Run.";
+      ? "An Order Atlas Play set is in progress. Continue it whenever you are ready."
+      : "Ready for a fresh three-round set.";
 
   return (
     <section className="game-entry page-shell">
@@ -610,7 +609,7 @@ function OrderAtlasLobby({
           <h2>Ready to order the atlas?</h2>
           <p>
             {isProAccount
-              ? "Your Pro account unlocks repeatable Practice Runs, with today's fixed Daily nearby."
+              ? "Your Pro account unlocks repeatable Order Atlas play: start a fresh three-round ordering set whenever you want."
               : isFreeAccount
                 ? "Your free account gets today's Order Atlas Daily with local browser progress."
                 : "Try the fixed Order Atlas Sample Run. No account needed and no account results saved."}
@@ -644,52 +643,26 @@ function OrderAtlasLobby({
               className="lobby-primary-card mode-card-practice"
               data-account="pro"
               data-state={currentPracticeRun?.status === "active" ? "active" : "ready"}
-              aria-label="Pro Order Atlas Practice Run"
+              aria-label="Unlimited Order Atlas Play"
             >
               <div className="lobby-primary-copy">
-                <p className="setup-kicker">Unlimited Pro practice</p>
-                <h3>Start a Pro Practice Run</h3>
-                <p>Practice is the repeatable Pro mode: start a fresh three-round ordering set whenever you want, separate from today&apos;s Daily.</p>
-                <span className="mode-state-pill">Repeatable Pro mode</span>
+                <p className="setup-kicker">Pro Play</p>
+                <h3>Unlimited Order Atlas Play</h3>
+                <p>Start a fresh three-round ordering set whenever you want. Each set stays local to this browser for now.</p>
+                <span className="mode-state-pill">Repeatable Pro play</span>
               </div>
-              <p className="mode-card-note">{practiceStateCopy}</p>
+              <p className="mode-card-note">{proPlayStateCopy}</p>
               <div className="lobby-primary-actions">
                 <button
                   className="button lobby-play-button"
                   type="button"
                   onClick={() => onStart("practice", { fresh: currentPracticeRun?.status === "complete" })}
                 >
-                  <span className="lobby-play-main">PRACTICE</span>
-                  <small>{practiceActionLabel}</small>
+                  <span className="lobby-play-main">PLAY</span>
+                  <small>{proPlayActionLabel}</small>
                 </button>
               </div>
             </article>
-            <section className="lobby-secondary" aria-label="Today Order Atlas Daily">
-              <div className="mode-panel-heading mode-panel-heading-secondary">
-                <p className="setup-kicker">Today&apos;s fixed Daily</p>
-                <h2>Keep today&apos;s Daily nearby.</h2>
-                <p>Daily is the fixed set for {todayKey}. Review it after completion, or play it once when today&apos;s set is still open.</p>
-              </div>
-              <div className="mode-card-grid mode-card-grid-secondary">
-                <article
-                  className="mode-card"
-                  data-account="pro"
-                  data-state={currentDailyRun?.status === "complete" ? "complete" : "ready"}
-                  aria-label="Order Atlas Daily"
-                >
-                  <p className="setup-kicker">{dailyKicker}</p>
-                  <h3>Order Atlas Daily</h3>
-                  <p>Three deterministic ordering rounds for {todayKey}. Local progress resumes safely if you reload.</p>
-                  <span className="mode-state-pill">{dailyPill}</span>
-                  <p className="mode-card-note">Order Atlas Daily is separate from Mystery Map and Pattern Atlas progress.</p>
-                  <div className="mode-card-actions">
-                    <button className="button-secondary" type="button" onClick={() => onStart("daily")}>
-                      {proDailyActionLabel}
-                    </button>
-                  </div>
-                </article>
-              </div>
-            </section>
           </>
         ) : (
           <article
@@ -711,7 +684,7 @@ function OrderAtlasLobby({
                 <small>{dailyActionLabel}</small>
               </button>
               <Link className="button-secondary" href="/upgrade">
-                Go Pro for unlimited practice
+                Go Pro for unlimited play
               </Link>
             </div>
           </article>
@@ -727,7 +700,7 @@ function OrderAtlasSummary({
   isFreeAccount,
   isProAccount,
   onRestart,
-  onStartPractice,
+  onStartProPlay,
   onLobby
 }: {
   run: OrderAtlasRunState;
@@ -735,12 +708,12 @@ function OrderAtlasSummary({
   isFreeAccount: boolean;
   isProAccount: boolean;
   onRestart: () => void;
-  onStartPractice: () => void;
+  onStartProPlay: () => void;
   onLobby: () => void;
 }) {
   const totalScore = run.rounds.reduce((sum, round) => sum + (round.score?.finalScore ?? 0), 0);
   const canReplayCurrentMode = run.mode === "sample" || run.mode === "practice";
-  const canStartPracticeFromDaily = run.mode === "daily" && isProAccount;
+  const canStartProPlayFromDaily = run.mode === "daily" && isProAccount;
 
   return (
     <section className="order-atlas-page game-shell page-shell">
@@ -762,7 +735,7 @@ function OrderAtlasSummary({
           </div>
         </div>
         <div className="order-atlas-results-cta">
-          <p className="eyebrow">{run.mode === "practice" ? "Practice complete" : "Next step"}</p>
+          <p className="eyebrow">{run.mode === "practice" ? "Pro play complete" : "Next step"}</p>
           <h2>{summaryCtaHeading(run, signedIn, isFreeAccount, isProAccount)}</h2>
           <p>{summaryCtaBody(run, signedIn, isFreeAccount, isProAccount)}</p>
           <div className="order-atlas-results-actions" data-layout="responsive-row">
@@ -773,21 +746,26 @@ function OrderAtlasSummary({
             ) : null}
             {isFreeAccount ? (
               <Link className="button" href="/upgrade/">
-                Go Pro for unlimited practice
+                Go Pro for unlimited play
               </Link>
             ) : null}
-            {canStartPracticeFromDaily ? (
-              <button type="button" className="button" onClick={onStartPractice}>
-                Start Pro Practice
+            {canStartProPlayFromDaily ? (
+              <button type="button" className="button" onClick={onStartProPlay}>
+                Play another set
+              </button>
+            ) : null}
+            {run.mode === "practice" ? (
+              <button type="button" className="button" onClick={onRestart}>
+                Play another set
               </button>
             ) : null}
             <button type="button" className="button button-secondary" onClick={onLobby}>
               Back to game options
             </button>
-            {canReplayCurrentMode ? (
+            {canReplayCurrentMode && run.mode !== "practice" ? (
               <button type="button" className="button button-secondary" onClick={onRestart}>
                 <RotateCcw aria-hidden="true" />
-                {run.mode === "practice" ? "Start another Practice Run" : "Play sample again"}
+                Play sample again
               </button>
             ) : null}
           </div>
@@ -799,22 +777,22 @@ function OrderAtlasSummary({
 
 function summaryCtaHeading(run: OrderAtlasRunState, signedIn: boolean, isFreeAccount: boolean, isProAccount: boolean) {
   if (!signedIn) return "Ready for fresh games every day?";
-  if (isFreeAccount) return "Want more Order Atlas practice?";
-  if (isProAccount && run.mode !== "practice") return "Keep practicing with Pro.";
-  return "Run another ordering set.";
+  if (isFreeAccount) return "Go Pro for unlimited play.";
+  if (isProAccount && run.mode !== "practice") return "Keep playing with Pro.";
+  return "Ready for another ordering set?";
 }
 
 function summaryCtaBody(run: OrderAtlasRunState, signedIn: boolean, isFreeAccount: boolean, isProAccount: boolean) {
   if (!signedIn) {
-    return "Create a free account to play Order Atlas Daily. Pro adds Order Atlas Practice Runs and supported advanced modes across the Can You Geo library.";
+    return "Create a free account to play Order Atlas Daily. Pro adds repeatable Order Atlas Play and supported advanced modes across the Can You Geo library.";
   }
   if (isFreeAccount) {
-    return "Your Daily is complete for today. Pro adds repeatable Order Atlas Practice Runs plus supported advanced modes in Mystery Map and Pattern Atlas.";
+    return "Your Daily is complete for today. Pro unlocks repeatable Order Atlas play: start a fresh three-round set whenever you want.";
   }
   if (isProAccount && run.mode !== "practice") {
-    return "Start a Pro Practice Run whenever you want a fresh set of Order Atlas ordering challenges.";
+    return "Start an Order Atlas Play set whenever you want a fresh three-round ordering challenge.";
   }
-  return "Practice results stay local to this browser and do not change Daily progress.";
+  return "Each Pro Play set stays local to this browser for now.";
 }
 
 function formatPlacementPoints(countryCount: number): string {

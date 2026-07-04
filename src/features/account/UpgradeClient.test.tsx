@@ -106,11 +106,11 @@ describe("UpgradeClient", () => {
     expect(within(overview).queryByText(/new games every month/i)).not.toBeInTheDocument();
     expect(within(overview).getByText("Custom Atlas and Daily map puzzles")).toBeVisible();
     expect(within(overview).getByText("Pattern Runs and Daily rule puzzles")).toBeVisible();
-    expect(within(overview).getByText("Daily and Pro Practice ordering rounds")).toBeVisible();
-    expect(within(overview).getByText("Order country cards in Sample, Free Daily, and repeatable Pro Practice runs.")).toBeVisible();
+    expect(within(overview).getByText("Daily and Pro Play ordering rounds")).toBeVisible();
+    expect(within(overview).getByText("Order country cards in Sample, Free Daily, and repeatable Pro Play sets.")).toBeVisible();
     expect(within(overview).getByAltText("Mystery Map Custom Atlas preview")).toHaveAttribute("src", expect.stringContaining("05-practice"));
     expect(within(overview).getByAltText("Pattern Atlas Pattern Run preview")).toHaveAttribute("src", expect.stringContaining("06-challenge-friends"));
-    expect(within(overview).getByAltText("Order Atlas Pro Practice preview")).toHaveAttribute("src", expect.stringContaining("04-daily-mystery-map"));
+    expect(within(overview).getByAltText("Order Atlas Pro Play preview")).toHaveAttribute("src", expect.stringContaining("04-daily-mystery-map"));
     expect(within(overview).queryByText(/Order Atlas (custom filters|archive|saved stats|streaks|challenge|cloud|continuous)/i)).not.toBeInTheDocument();
     expect(screen.getByRole("heading", { name: "Free and Pro now cover more than one game." })).toBeVisible();
     expect(screen.getByRole("heading", { name: "Mystery Map" })).toBeVisible();
@@ -134,14 +134,14 @@ describe("UpgradeClient", () => {
     expect(screen.getByRole("link", { name: /Open Pattern Atlas/i })).toHaveAttribute("href", "/play/pattern-atlas");
     expect(screen.getByRole("link", { name: /Open Order Atlas/i })).toHaveAttribute("href", "/play/order-atlas");
     expect(screen.getAllByText("Playable now").length).toBeGreaterThanOrEqual(3);
-    expect(screen.getByText(/Order Atlas adds country-ordering rounds with Sample Run, Free Daily, and repeatable Pro Practice/i)).toBeVisible();
+    expect(screen.getByText(/Order Atlas adds country-ordering rounds with Sample Run, Free Daily, and repeatable Pro Play/i)).toBeVisible();
     const orderAtlasCard = screen.getByRole("heading", { name: "Order Atlas" }).closest("article");
     expect(orderAtlasCard).toBeTruthy();
     expect(within(orderAtlasCard as HTMLElement).getByText("Signed-out Sample Run")).toBeVisible();
     expect(within(orderAtlasCard as HTMLElement).getByText("Free Daily")).toBeVisible();
-    expect(within(orderAtlasCard as HTMLElement).getByText("Pro Practice Run")).toBeVisible();
+    expect(within(orderAtlasCard as HTMLElement).getByText("Pro Play")).toBeVisible();
     expect(within(orderAtlasCard as HTMLElement).queryByText(/saved progress|saved stats|streaks|archive|challenge|custom filters|continuous/i)).not.toBeInTheDocument();
-    expect(screen.queryByText(/Daily and Pro modes coming next|intro-only|intro sample|No saved stats yet/i)).not.toBeInTheDocument();
+    expect(screen.queryByText(/Daily and Pro modes coming next|intro-only|intro sample|No saved stats yet|Pro Practice|Practice Run/i)).not.toBeInTheDocument();
     expect(screen.queryByText("Full Practice Atlas")).not.toBeInTheDocument();
   });
 

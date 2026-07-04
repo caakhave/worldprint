@@ -33,7 +33,7 @@ const signalCards = [
     image: "/images/homepage/03-make-the-call.png",
     objectPosition: "50% 52%",
     title: "Order the signal",
-    copy: "Order Atlas turns country rankings into Sample, Daily, and Pro Practice rounds."
+    copy: "Order Atlas turns country rankings into Sample, Daily, and Pro Play rounds."
   }
 ] as const;
 
@@ -58,10 +58,10 @@ const modeCards = [
     image: "/images/homepage/04-daily-mystery-map.png",
     objectPosition: "50% 50%",
     title: "Order Atlas",
-    copy: "Order country cards in Sample, Free Daily, and repeatable Pro Practice runs.",
+    copy: "Order country cards in Sample, Free Daily, and repeatable Pro Play sets.",
     cta: "Open Order Atlas",
     href: "/play/order-atlas",
-    badge: "Sample / Daily / Pro Practice"
+    badge: "Sample / Daily / Pro Play"
   }
 ] as const;
 
@@ -148,7 +148,7 @@ export default function HomePage() {
             <h2>Choose your geography game.</h2>
             <p className="section-lede">
               Mystery Map, Pattern Atlas, and Order Atlas all support Sample and Daily play. Pro adds Custom Atlas, Pattern Runs,
-              and repeatable Order Atlas Practice.
+              and repeatable Order Atlas Play.
             </p>
             <div className="button-row">
               <Link className="button-secondary" href="/play">

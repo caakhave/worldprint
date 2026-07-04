@@ -14,7 +14,7 @@ describe("HowToPlayPage", () => {
     expect(screen.queryByText(/Mystery Map is the first Can You Geo\? mode/i)).not.toBeInTheDocument();
     expect(screen.getByRole("heading", { name: "Three ways to read the world." })).toBeVisible();
     expect(screen.getByText(/Order Atlas asks you to order country cards by a known indicator/i)).toBeVisible();
-    expect(screen.getByText(/Sample Run, Free Daily, and repeatable Pro Practice/i)).toBeVisible();
+    expect(screen.getByText(/Sample Run, Free Daily, and repeatable Pro Play/i)).toBeVisible();
     expect(screen.getByRole("heading", { name: "Mystery Map" })).toBeVisible();
     expect(screen.getByRole("heading", { name: "Pattern Atlas" })).toBeVisible();
     expect(screen.getByRole("heading", { name: "Order Atlas" })).toBeVisible();

@@ -18,7 +18,7 @@ describe("PlayHubPage", () => {
     expect(screen.getByRole("heading", { name: "Three games, one atlas." })).toBeVisible();
     expect(screen.getByText(/No account is needed for samples/i)).toBeVisible();
     expect(screen.getByText(/Create a free account for Daily games and saved progress where supported/i)).toBeVisible();
-    expect(screen.getByText(/repeatable Order Atlas Practice/i)).toBeVisible();
+    expect(screen.getByText(/repeatable Order Atlas Play/i)).toBeVisible();
     expect(screen.getByText("New geography challenges added every month.")).toBeVisible();
     expect(screen.getByText("The atlas keeps growing with new maps, patterns, and ordering challenges.")).toBeVisible();
     expect(screen.queryByText(/two playable games/i)).not.toBeInTheDocument();
@@ -65,7 +65,7 @@ describe("PlayHubPage", () => {
     expect(within(patternAtlasCard as HTMLElement).getByText("Pro Pattern Run")).toBeVisible();
   });
 
-  it("marks Order Atlas as playable with Sample, Free Daily, and Pro Practice without false saved-stat claims", () => {
+  it("marks Order Atlas as playable with Sample, Free Daily, and Pro Play without false saved-stat claims", () => {
     render(<PlayHubPage />);
 
     const orderAtlasCard = screen.getByRole("heading", { name: "Order Atlas" }).closest("article");
@@ -73,9 +73,9 @@ describe("PlayHubPage", () => {
     expect(within(orderAtlasCard as HTMLElement).getByText("Playable now")).toBeVisible();
     expect(within(orderAtlasCard as HTMLElement).getByText("Signed-out Sample Run")).toBeVisible();
     expect(within(orderAtlasCard as HTMLElement).getByText("Free Daily")).toBeVisible();
-    expect(within(orderAtlasCard as HTMLElement).getByText("Pro Practice Run")).toBeVisible();
+    expect(within(orderAtlasCard as HTMLElement).getByText("Pro Play")).toBeVisible();
     expect(within(orderAtlasCard as HTMLElement).getByRole("link", { name: /Open Order Atlas/i })).toHaveAttribute("href", "/play/order-atlas");
     expect(within(orderAtlasCard as HTMLElement).queryByText(/saved progress|saved stats|streaks|archive|challenge|custom filters|continuous/i)).not.toBeInTheDocument();
-    expect(screen.queryByText(/Daily and Pro modes coming next|intro-only|intro sample/i)).not.toBeInTheDocument();
+    expect(screen.queryByText(/Daily and Pro modes coming next|intro-only|intro sample|Pro Practice|Practice Run/i)).not.toBeInTheDocument();
   });
 });

@@ -18,6 +18,6 @@ describe("PlayOrderAtlasPage", () => {
     expect(metadata).not.toHaveProperty("robots");
     expect(metadata.alternates?.canonical).toBe("https://canyougeo.com/play/order-atlas/");
     expect(metadata.description).toContain("Free Daily");
-    expect(metadata.description).toContain("Pro Practice");
+    expect(metadata.description).toContain("Pro Play");
   });
 });

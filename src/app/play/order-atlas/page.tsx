@@ -17,7 +17,7 @@ import { pageMetadata } from "@/lib/site/seo";
 
 export const metadata: Metadata = pageMetadata({
   title: "Play Order Atlas - Geography Ordering Game",
-  description: "Play Order Atlas, a Can You Geo? geography game with a sample run, Free Daily, and Pro Practice where you arrange countries by a known data signal.",
+  description: "Play Order Atlas, a Can You Geo? geography game with a sample run, Free Daily, and Pro Play where you arrange countries by a known data signal.",
   path: "/play/order-atlas/"
 });
 

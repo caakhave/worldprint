@@ -50,7 +50,7 @@ export const PUBLIC_INDEXED_ROUTES: PublicRouteMetadata[] = [
   {
     path: "/play/order-atlas/",
     title: "Play Order Atlas - Geography Ordering Game",
-    description: "Play Order Atlas, a Can You Geo? geography game with Sample Run, Free Daily, and Pro Practice where you arrange countries by a known data signal.",
+    description: "Play Order Atlas, a Can You Geo? geography game with Sample Run, Free Daily, and Pro Play where you arrange countries by a known data signal.",
     changeFrequency: "monthly",
     priority: 0.84
   },
@@ -89,7 +89,7 @@ export const PUBLIC_INDEXED_ROUTES: PublicRouteMetadata[] = [
     path: "/upgrade/",
     title: "Free and Pro - Can You Geo?",
     description:
-      "Compare Free and Pro access for the Can You Geo game library: supported Daily play, Mystery Map Custom Atlas, Pattern Atlas Pattern Runs, Order Atlas Practice, Past Games, and advanced stats.",
+      "Compare Free and Pro access for the Can You Geo game library: supported Daily play, Mystery Map Custom Atlas, Pattern Atlas Pattern Runs, Order Atlas Play, Past Games, and advanced stats.",
     changeFrequency: "monthly",
     priority: 0.6
   },
@@ -252,7 +252,7 @@ export function siteJsonLd(origin = publicSiteOrigin()) {
         genre: ["Geography game", "Ordering game", "Puzzle game"],
         isAccessibleForFree: true,
         description:
-          "Order Atlas is a country-ordering geography puzzle with Sample Run, Free Daily, and Pro Practice where players arrange country cards by a known data signal, then reveal the true order and source-backed values.",
+          "Order Atlas is a country-ordering geography puzzle with Sample Run, Free Daily, and Pro Play where players arrange country cards by a known data signal, then reveal the true order and source-backed values.",
         publisher: { "@id": `${origin}/#organization` }
       }
     ]
@@ -291,7 +291,7 @@ export const HOME_FAQ_ITEMS = [
   {
     name: "What games can I play?",
     acceptedAnswer:
-      "Mystery Map is the choropleth indicator guessing game. Pattern Atlas is the highlighted-country hidden-rule game. Order Atlas is the country-ordering game with Sample Run, Free Daily, and Pro Practice."
+      "Mystery Map is the choropleth indicator guessing game. Pattern Atlas is the highlighted-country hidden-rule game. Order Atlas is the country-ordering game with Sample Run, Free Daily, and Pro Play."
   },
   {
     name: "What data sources does Can You Geo use?",

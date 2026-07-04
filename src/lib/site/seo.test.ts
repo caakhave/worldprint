@@ -56,7 +56,7 @@ describe("site SEO helpers", () => {
     expect(graph[5]).toMatchObject({
       name: "Can You Geo? Order Atlas",
       url: "https://canyougeo.com/play/order-atlas/",
-      description: expect.stringContaining("Sample Run, Free Daily, and Pro Practice")
+      description: expect.stringContaining("Sample Run, Free Daily, and Pro Play")
     });
   });
 
@@ -68,7 +68,7 @@ describe("site SEO helpers", () => {
     expect(faq.mainEntity[0].acceptedAnswer.text).toContain("Mystery Map, Pattern Atlas, and Order Atlas have Sample and Daily play");
     expect(faq.mainEntity[0].acceptedAnswer.text).toContain("Pro adds supported practice modes");
     expect(faq.mainEntity[2].acceptedAnswer.text).toContain("current featured game");
-    expect(faq.mainEntity[3].acceptedAnswer.text).toContain("Order Atlas is the country-ordering game with Sample Run, Free Daily, and Pro Practice");
+    expect(faq.mainEntity[3].acceptedAnswer.text).toContain("Order Atlas is the country-ordering game with Sample Run, Free Daily, and Pro Play");
     expect(faq.mainEntity[4].acceptedAnswer.text).toContain("Order Atlas reuses approved Mystery Map indicator artifacts");
     expect(JSON.stringify(faq)).not.toMatch(/intro-only|Daily and Pro modes coming next|playable intro sample/i);
   });
