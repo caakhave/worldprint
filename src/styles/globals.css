@@ -8837,6 +8837,33 @@ button.pro-price-option:focus-visible {
   max-width: 64rem;
 }
 
+.legal-quick-links {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.6rem;
+  margin-top: 1rem;
+}
+
+.legal-quick-links a {
+  display: inline-flex;
+  align-items: center;
+  border: 1px solid rgb(164 216 205 / 0.34);
+  border-radius: 999px;
+  padding: 0.45rem 0.72rem;
+  color: var(--signal-2);
+  font-family: var(--font-mono);
+  font-size: 0.76rem;
+  font-weight: 800;
+  line-height: 1;
+  text-decoration: none;
+  text-transform: uppercase;
+}
+
+.legal-quick-links a:hover {
+  border-color: rgb(215 168 75 / 0.5);
+  color: var(--gold);
+}
+
 .legal-updated {
   display: inline-flex;
   width: fit-content;

@@ -19,7 +19,11 @@ describe("SignInPage", () => {
     expect(screen.getByRole("heading", { name: "Start Pro or continue free." })).toBeVisible();
     expect(screen.getByText("Your account identity comes first. Checkout only starts after you are signed in.")).toBeVisible();
     expect(screen.getByText("Choose monthly or yearly Pro, then complete secure Stripe checkout after signing in.")).toBeVisible();
+    expect(
+      screen.getByText("Create a free account for daily geography challenges, saved progress where supported, streaks, and basic stats.")
+    ).toBeVisible();
     expect(screen.getByText("Use the same email and password to keep your atlas connected.")).toBeVisible();
+    expect(screen.queryByText(/3 fresh maps every day/i)).not.toBeInTheDocument();
     expect(screen.getByRole("link", { name: "Start Pro" })).toHaveAttribute("href", "/upgrade");
     expect(screen.getByRole("link", { name: "Continue free" })).toHaveAttribute("href", "/sign-up");
     expect(screen.queryByRole("heading", { name: "Use the same account next time." })).not.toBeInTheDocument();

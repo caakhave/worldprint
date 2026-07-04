@@ -38,7 +38,7 @@ export default function SignInPage() {
             </li>
             <li>
               <strong>Continue free</strong>
-              <span>Create a free account for 3 fresh maps every day, saved results, streaks, and basic stats.</span>
+              <span>Create a free account for daily geography challenges, saved progress where supported, streaks, and basic stats.</span>
             </li>
             <li>
               <strong>Returning players</strong>

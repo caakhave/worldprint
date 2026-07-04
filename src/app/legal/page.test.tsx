@@ -24,6 +24,10 @@ describe("LegalPage", () => {
     expect(screen.getByText(/Billing and subscription state, when paid features are enabled/i)).toBeVisible();
     expect(screen.getByText(/Mystery Map Custom Atlas, Pattern Atlas Pattern Runs/i)).toBeVisible();
     expect(screen.getByText(/the complete Mystery Map Past Games archive/i)).toBeVisible();
+    expect(screen.getByRole("link", { name: "Terms" })).toHaveAttribute("href", "/terms");
+    expect(screen.getByRole("link", { name: "Privacy" })).toHaveAttribute("href", "/privacy");
+    expect(screen.getByRole("link", { name: "Accessibility" })).toHaveAttribute("href", "/legal#accessibility-heading");
+    expect(screen.getByRole("link", { name: "Support" })).toHaveAttribute("href", "/support");
     expect(screen.queryByText(/Practice Atlas/i)).not.toBeInTheDocument();
     expect(screen.queryByText(/service providers that help operate the site/i)).not.toBeInTheDocument();
     expect(screen.queryByText(/Resend and Supabase SMTP for transactional email and owner\/admin billing notifications/i)).not.toBeInTheDocument();

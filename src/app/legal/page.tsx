@@ -11,7 +11,7 @@ export const metadata: Metadata = pageMetadata({
   path: "/legal/"
 });
 
-export default function LegalPage() {
+export function LegalContent() {
   return (
     <section className="legal-page page-shell info-page-shell" aria-labelledby="legal-title">
       <header className="legal-hero">
@@ -22,6 +22,12 @@ export default function LegalPage() {
         <p className="lead">
           The practical rules for Can You Geo accounts, play, saved stats, billing readiness, privacy, accessibility, and support.
         </p>
+        <nav className="legal-quick-links" aria-label="Legal sections">
+          <Link href="/terms">Terms</Link>
+          <Link href="/privacy">Privacy</Link>
+          <Link href="/legal#accessibility-heading">Accessibility</Link>
+          <Link href="/support">Support</Link>
+        </nav>
       </header>
 
       <div className="legal-layout">
@@ -261,4 +267,8 @@ export default function LegalPage() {
       </div>
     </section>
   );
+}
+
+export default function LegalPage() {
+  return <LegalContent />;
 }

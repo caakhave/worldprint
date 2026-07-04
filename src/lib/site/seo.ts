@@ -108,6 +108,22 @@ export const PUBLIC_INDEXED_ROUTES: PublicRouteMetadata[] = [
       "Read Can You Geo? terms, privacy, cookies and browser storage notes, accessibility information, and support details.",
     changeFrequency: "yearly",
     priority: 0.32
+  },
+  {
+    path: "/privacy/",
+    title: "Privacy Policy - Can You Geo?",
+    description:
+      "Read the Can You Geo privacy policy, including account data, gameplay data, browser storage, analytics, and support requests.",
+    changeFrequency: "yearly",
+    priority: 0.3
+  },
+  {
+    path: "/terms/",
+    title: "Terms of Use - Can You Geo?",
+    description:
+      "Read the Can You Geo terms of use for accounts, Free and Pro access, billing readiness, fair play, stats, and source data.",
+    changeFrequency: "yearly",
+    priority: 0.3
   }
 ];
 

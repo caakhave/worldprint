@@ -29,6 +29,8 @@ describe("sitemap metadata route", () => {
     expect(urls).toContain("https://canyougeo.com/how-to-play/");
     expect(urls).toContain("https://canyougeo.com/sources/");
     expect(urls).toContain("https://canyougeo.com/about/");
+    expect(urls).toContain("https://canyougeo.com/privacy/");
+    expect(urls).toContain("https://canyougeo.com/terms/");
     expect(urls).not.toContain("https://canyougeo.com/account/");
     expect(urls).not.toContain("https://canyougeo.com/sign-in/");
   });
