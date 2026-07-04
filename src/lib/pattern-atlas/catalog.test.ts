@@ -47,31 +47,41 @@ describe("Pattern Atlas catalog", () => {
   it("parses the catalog and keeps a balanced inventory", () => {
     const catalog = PatternAtlasCatalogSchema.parse(PATTERN_ATLAS_CATALOG);
     expect(catalog.game).toBe("pattern-atlas");
-    expect(catalog.rules).toHaveLength(78);
+    expect(catalog.rules).toHaveLength(93);
     expect(catalog.sourceRegistry.length).toBeGreaterThanOrEqual(21);
 
     expect(countBy(catalog.rules, "family")).toMatchObject({
-      language: 9,
-      borders: 15,
-      physical_geography: 17,
+      language: 10,
+      borders: 26,
+      physical_geography: 20,
       organizations: 14,
       economy: 7,
       indicators: 16
     });
     expect(countBy(catalog.rules, "difficulty")).toMatchObject({
-      intro: 14,
-      standard: 40,
-      expert: 24
+      intro: 17,
+      standard: 51,
+      expert: 25
     });
     expect(countBy(catalog.rules, "eligibility")).toMatchObject({
       sample: 5,
-      daily: 29,
-      practice: 42,
+      daily: 36,
+      practice: 50,
       "expert-only": 2
     });
 
     expect(getPatternAtlasRulesByFamily("indicators")).toHaveLength(16);
     expect(getPatternAtlasRuleById("countries-bordering-germany")?.includedIso3).toContain("POL");
+    expect(getPatternAtlasRuleById("countries-bordering-turkey")?.includedIso3).toEqual([
+      "ARM",
+      "AZE",
+      "BGR",
+      "GEO",
+      "GRC",
+      "IRN",
+      "IRQ",
+      "SYR"
+    ]);
   });
 
   it("validates rules against the current entity registry and approved indicator artifacts", () => {

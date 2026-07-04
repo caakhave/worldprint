@@ -1,7 +1,7 @@
 {
   "schemaVersion": "0.1.0",
   "game": "pattern-atlas",
-  "contentVersion": "2026.07.03-pattern-atlas-expansion1",
+  "contentVersion": "2026.07.04-pattern-atlas-expansion2",
   "sourceRegistry": [
     {
       "id": "natural-earth-admin0-110m",
@@ -4379,6 +4379,680 @@
         "selection": "top_quartile",
         "year": 2022
       }
+    },
+    {
+      "id": "mapped-english-official-africa",
+      "displayAnswer": "Mapped African countries where English is an official language",
+      "family": "language",
+      "includedIso3": [
+        "BWA",
+        "CMR",
+        "GMB",
+        "GHA",
+        "KEN",
+        "LBR",
+        "LSO",
+        "MWI",
+        "NAM",
+        "NGA",
+        "RWA",
+        "SDN",
+        "SLE",
+        "SSD",
+        "SWZ",
+        "TZA",
+        "UGA",
+        "ZAF",
+        "ZMB",
+        "ZWE"
+      ],
+      "counterexampleIso3": [
+        "AGO",
+        "ETH",
+        "SEN"
+      ],
+      "difficulty": "standard",
+      "eligibility": "daily",
+      "sources": [
+        "natural-earth-admin0-110m",
+        "cia-world-factbook"
+      ],
+      "explanation": "The highlighted mapped African countries share English as an official language, creating a broad but uneven pattern across southern, eastern, western, and central Africa.",
+      "decoys": [
+        {
+          "displayAnswer": "Mapped Commonwealth countries in Africa",
+          "whyPlausible": "Many highlighted countries are also in the Commonwealth.",
+          "whyWrong": "Cameroon and Sudan point to the official-language pattern, while some Commonwealth members are not in this highlighted set."
+        },
+        {
+          "displayAnswer": "Countries with Indian Ocean coastlines",
+          "whyPlausible": "Several highlighted countries sit in eastern and southern Africa.",
+          "whyWrong": "Landlocked countries such as Botswana, Lesotho, Rwanda, South Sudan, Uganda, Zambia, and Zimbabwe do not fit a coastline rule."
+        },
+        {
+          "displayAnswer": "Countries in southern Africa",
+          "whyPlausible": "Southern Africa is strongly represented in the highlighted set.",
+          "whyWrong": "The pattern also includes countries such as Cameroon, The Gambia, Ghana, Kenya, Liberia, Nigeria, Rwanda, Sierra Leone, Sudan, South Sudan, Tanzania, and Uganda."
+        }
+      ],
+      "dateVintage": "2026-07-04",
+      "scopeNote": "Mauritius and Seychelles are not present in the current mapped-country registry and are omitted."
+    },
+    {
+      "id": "mapped-metropolitan-france-borders",
+      "displayAnswer": "Mapped countries sharing a land border with metropolitan France",
+      "family": "borders",
+      "includedIso3": [
+        "BEL",
+        "DEU",
+        "ESP",
+        "ITA",
+        "LUX",
+        "CHE"
+      ],
+      "counterexampleIso3": [
+        "GBR",
+        "NLD",
+        "PRT"
+      ],
+      "difficulty": "standard",
+      "eligibility": "practice",
+      "sources": [
+        "natural-earth-admin0-110m",
+        "cia-world-factbook"
+      ],
+      "explanation": "The highlighted countries are the mapped neighbors of metropolitan France, wrapping around the Pyrenees, Alps, Rhine, and Benelux edge.",
+      "decoys": [
+        {
+          "displayAnswer": "European countries where French is an official language",
+          "whyPlausible": "Belgium, Luxembourg, and Switzerland make the language clue tempting.",
+          "whyWrong": "Germany, Italy, and Spain are included because they border metropolitan France, not because French is official there."
+        },
+        {
+          "displayAnswer": "Countries containing part of the Alps",
+          "whyPlausible": "Italy, Switzerland, Germany, and France's Alpine neighbors suggest a mountain pattern.",
+          "whyWrong": "Belgium, Luxembourg, and Spain do not fit an Alps-only answer."
+        },
+        {
+          "displayAnswer": "European Union founding members",
+          "whyPlausible": "Belgium, Germany, Italy, and Luxembourg are EU founding members.",
+          "whyWrong": "Spain and Switzerland break the founding-member pattern."
+        }
+      ],
+      "dateVintage": "2026-07-04",
+      "scopeNote": "Andorra and Monaco are not present in the current mapped-country registry and are omitted."
+    },
+    {
+      "id": "countries-bordering-turkey",
+      "displayAnswer": "Countries sharing a land border with Turkey",
+      "family": "borders",
+      "includedIso3": [
+        "ARM",
+        "AZE",
+        "BGR",
+        "GEO",
+        "GRC",
+        "IRN",
+        "IRQ",
+        "SYR"
+      ],
+      "counterexampleIso3": [
+        "JOR",
+        "ROU",
+        "RUS"
+      ],
+      "difficulty": "standard",
+      "eligibility": "daily",
+      "sources": [
+        "natural-earth-admin0-110m",
+        "cia-world-factbook"
+      ],
+      "explanation": "The highlighted countries are Turkey's mapped land neighbors from the Balkans through the Caucasus and Middle East.",
+      "decoys": [
+        {
+          "displayAnswer": "Countries with a Black Sea coast",
+          "whyPlausible": "Bulgaria, Georgia, and Russia-adjacent geography may suggest the Black Sea.",
+          "whyWrong": "Armenia, Greece, Iran, Iraq, and Syria do not fit a Black Sea coastline rule."
+        },
+        {
+          "displayAnswer": "Balkan countries",
+          "whyPlausible": "Bulgaria and Greece are visible Balkan clues.",
+          "whyWrong": "Armenia, Azerbaijan, Georgia, Iran, Iraq, and Syria point beyond the Balkans to Turkey's full border set."
+        },
+        {
+          "displayAnswer": "Countries crossed by the Euphrates River",
+          "whyPlausible": "Syria and Iraq make a river clue plausible.",
+          "whyWrong": "The full highlighted set follows Turkey's land borders, not the Euphrates basin."
+        }
+      ],
+      "dateVintage": "2026-07-04"
+    },
+    {
+      "id": "countries-bordering-iran",
+      "displayAnswer": "Countries sharing a land border with Iran",
+      "family": "borders",
+      "includedIso3": [
+        "AFG",
+        "ARM",
+        "AZE",
+        "IRQ",
+        "PAK",
+        "TKM",
+        "TUR"
+      ],
+      "counterexampleIso3": [
+        "IND",
+        "KAZ",
+        "SYR"
+      ],
+      "difficulty": "standard",
+      "eligibility": "practice",
+      "sources": [
+        "natural-earth-admin0-110m",
+        "cia-world-factbook"
+      ],
+      "explanation": "The highlighted countries form Iran's mapped land-border ring from Anatolia and the Caucasus to Central and South Asia.",
+      "decoys": [
+        {
+          "displayAnswer": "Countries with a Caspian Sea coastline",
+          "whyPlausible": "Azerbaijan and Turkmenistan make the Caspian tempting.",
+          "whyWrong": "Afghanistan, Armenia, Iraq, Pakistan, and Turkey are included because they border Iran, not because of a Caspian coastline."
+        },
+        {
+          "displayAnswer": "Countries crossed by the Silk Road",
+          "whyPlausible": "The pattern has a Central and West Asian feel.",
+          "whyWrong": "This set is narrower and is defined by land borders with Iran."
+        },
+        {
+          "displayAnswer": "Mapped countries using a dinar-named currency",
+          "whyPlausible": "Iraq and nearby Middle Eastern geography make a currency clue plausible.",
+          "whyWrong": "Afghanistan, Armenia, Azerbaijan, Pakistan, Turkmenistan, and Turkey do not fit that currency pattern."
+        }
+      ],
+      "dateVintage": "2026-07-04"
+    },
+    {
+      "id": "countries-bordering-democratic-republic-congo",
+      "displayAnswer": "Countries sharing a land border with the Democratic Republic of the Congo",
+      "family": "borders",
+      "includedIso3": [
+        "AGO",
+        "BDI",
+        "CAF",
+        "COG",
+        "RWA",
+        "SSD",
+        "TZA",
+        "UGA",
+        "ZMB"
+      ],
+      "counterexampleIso3": [
+        "CMR",
+        "KEN",
+        "ZWE"
+      ],
+      "difficulty": "expert",
+      "eligibility": "practice",
+      "sources": [
+        "natural-earth-admin0-110m",
+        "cia-world-factbook"
+      ],
+      "explanation": "The highlighted countries are the Democratic Republic of the Congo's mapped land neighbors, including the Great Lakes edge and the Congo Basin west.",
+      "decoys": [
+        {
+          "displayAnswer": "Countries in the Congo Basin rainforest core",
+          "whyPlausible": "Central African rainforest geography overlaps with several highlighted countries.",
+          "whyWrong": "Burundi, Rwanda, South Sudan, Tanzania, Uganda, and Zambia reveal this is a border-neighbor rule."
+        },
+        {
+          "displayAnswer": "East African Community partner states",
+          "whyPlausible": "Burundi, Rwanda, South Sudan, Tanzania, and Uganda are close to that organization pattern.",
+          "whyWrong": "Angola, Central African Republic, Republic of the Congo, and Zambia are included because they border the Democratic Republic of the Congo."
+        },
+        {
+          "displayAnswer": "Countries with French as an official language",
+          "whyPlausible": "Central African Republic, Republic of the Congo, Burundi, and Rwanda can suggest a language clue.",
+          "whyWrong": "Angola, South Sudan, Tanzania, Uganda, and Zambia do not fit a French-official-language answer."
+        }
+      ],
+      "dateVintage": "2026-07-04"
+    },
+    {
+      "id": "countries-bordering-nigeria",
+      "displayAnswer": "Countries sharing a land border with Nigeria",
+      "family": "borders",
+      "includedIso3": [
+        "BEN",
+        "CMR",
+        "NER",
+        "TCD"
+      ],
+      "counterexampleIso3": [
+        "GHA",
+        "MLI",
+        "SDN"
+      ],
+      "difficulty": "intro",
+      "eligibility": "daily",
+      "sources": [
+        "natural-earth-admin0-110m",
+        "cia-world-factbook"
+      ],
+      "explanation": "The highlighted countries are Nigeria's four mapped land neighbors: Benin, Niger, Chad, and Cameroon.",
+      "decoys": [
+        {
+          "displayAnswer": "Gulf of Guinea coastal countries",
+          "whyPlausible": "Benin and Cameroon can pull attention toward the coast.",
+          "whyWrong": "Niger and Chad are landlocked, so the shared pattern is Nigeria's land border."
+        },
+        {
+          "displayAnswer": "Countries where French is an official language in West Africa",
+          "whyPlausible": "Benin, Niger, and Chad make a Francophone clue tempting.",
+          "whyWrong": "Cameroon is included because it borders Nigeria, and the set is not a full Francophone West Africa group."
+        },
+        {
+          "displayAnswer": "Sahel countries",
+          "whyPlausible": "Niger and Chad sit in the Sahel belt.",
+          "whyWrong": "Benin and Cameroon point to Nigeria's neighbor set rather than a Sahel-only pattern."
+        }
+      ],
+      "dateVintage": "2026-07-04"
+    },
+    {
+      "id": "countries-bordering-poland",
+      "displayAnswer": "Countries sharing a land border with Poland",
+      "family": "borders",
+      "includedIso3": [
+        "BLR",
+        "CZE",
+        "DEU",
+        "LTU",
+        "RUS",
+        "SVK",
+        "UKR"
+      ],
+      "counterexampleIso3": [
+        "AUT",
+        "HUN",
+        "LVA"
+      ],
+      "difficulty": "standard",
+      "eligibility": "practice",
+      "sources": [
+        "natural-earth-admin0-110m",
+        "cia-world-factbook"
+      ],
+      "explanation": "The highlighted countries are Poland's mapped land neighbors, including Russia through Kaliningrad.",
+      "decoys": [
+        {
+          "displayAnswer": "Countries with a Baltic Sea coastline",
+          "whyPlausible": "Germany, Lithuania, Russia, and Poland-adjacent geography can suggest the Baltic.",
+          "whyWrong": "Belarus, Czech Republic, Slovakia, and Ukraine are landlocked or non-Baltic in this context."
+        },
+        {
+          "displayAnswer": "Former Warsaw Pact countries",
+          "whyPlausible": "Eastern European clustering makes the Cold War clue tempting.",
+          "whyWrong": "Germany and Lithuania complicate that answer, while the exact set follows Poland's borders."
+        },
+        {
+          "displayAnswer": "Countries crossed by the Carpathian Mountains",
+          "whyPlausible": "Slovakia and Ukraine can suggest a mountain arc.",
+          "whyWrong": "Belarus, Germany, Lithuania, and Russia do not fit a Carpathian rule."
+        }
+      ],
+      "dateVintage": "2026-07-04"
+    },
+    {
+      "id": "bay-of-bengal-and-andaman-coast",
+      "displayAnswer": "Countries with coastline on the Bay of Bengal or Andaman Sea",
+      "family": "borders",
+      "includedIso3": [
+        "BGD",
+        "IND",
+        "LKA",
+        "MMR",
+        "THA"
+      ],
+      "counterexampleIso3": [
+        "KHM",
+        "MYS",
+        "PAK"
+      ],
+      "difficulty": "standard",
+      "eligibility": "daily",
+      "sources": [
+        "natural-earth-admin0-110m",
+        "cia-world-factbook"
+      ],
+      "explanation": "The highlighted countries wrap the Bay of Bengal and Andaman Sea from South Asia into mainland Southeast Asia.",
+      "decoys": [
+        {
+          "displayAnswer": "Countries crossed by the Tropic of Cancer",
+          "whyPlausible": "India, Bangladesh, and Myanmar sit on that latitude line.",
+          "whyWrong": "Sri Lanka and Thailand are included for coastline reasons, not the Tropic of Cancer."
+        },
+        {
+          "displayAnswer": "Mapped SAARC member states",
+          "whyPlausible": "Bangladesh, India, and Sri Lanka are South Asian Association members.",
+          "whyWrong": "Myanmar and Thailand are outside SAARC, so the coastline is the shared clue."
+        },
+        {
+          "displayAnswer": "Mekong River countries",
+          "whyPlausible": "Thailand and Myanmar make mainland Southeast Asia plausible.",
+          "whyWrong": "Bangladesh, India, and Sri Lanka do not fit the Mekong pattern."
+        }
+      ],
+      "dateVintage": "2026-07-04"
+    },
+    {
+      "id": "north-sea-coast",
+      "displayAnswer": "Countries with a North Sea coastline",
+      "family": "borders",
+      "includedIso3": [
+        "BEL",
+        "DNK",
+        "FRA",
+        "DEU",
+        "NLD",
+        "NOR",
+        "GBR"
+      ],
+      "counterexampleIso3": [
+        "IRL",
+        "POL",
+        "SWE"
+      ],
+      "difficulty": "standard",
+      "eligibility": "practice",
+      "sources": [
+        "natural-earth-admin0-110m",
+        "cia-world-factbook"
+      ],
+      "explanation": "The highlighted countries share coastline on the North Sea, from Norway and Denmark around to the Low Countries, Germany, France, and the United Kingdom.",
+      "decoys": [
+        {
+          "displayAnswer": "Countries with a Baltic Sea coastline",
+          "whyPlausible": "Denmark and Germany can pull the eye toward northern European seas.",
+          "whyWrong": "Belgium, France, Netherlands, Norway, and the United Kingdom point to the North Sea instead."
+        },
+        {
+          "displayAnswer": "Mapped Schengen Area member countries",
+          "whyPlausible": "Several highlighted countries are in or near Schengen Europe.",
+          "whyWrong": "The United Kingdom is not a Schengen member, and the full pattern is coastline-based."
+        },
+        {
+          "displayAnswer": "Countries bordering Germany",
+          "whyPlausible": "Belgium, Denmark, France, Netherlands, and Germany's neighborhood are visible.",
+          "whyWrong": "Norway and the United Kingdom do not border Germany."
+        }
+      ],
+      "dateVintage": "2026-07-04"
+    },
+    {
+      "id": "mapped-persian-gulf-coast",
+      "displayAnswer": "Mapped countries with a Persian Gulf coastline",
+      "family": "borders",
+      "includedIso3": [
+        "ARE",
+        "IRN",
+        "IRQ",
+        "KWT",
+        "QAT",
+        "SAU"
+      ],
+      "counterexampleIso3": [
+        "OMN",
+        "YEM",
+        "JOR"
+      ],
+      "difficulty": "standard",
+      "eligibility": "practice",
+      "sources": [
+        "natural-earth-admin0-110m",
+        "cia-world-factbook"
+      ],
+      "explanation": "The highlighted mapped countries line the Persian Gulf from Iran and Iraq through the Arabian Peninsula coast.",
+      "decoys": [
+        {
+          "displayAnswer": "Gulf Cooperation Council members",
+          "whyPlausible": "Kuwait, Qatar, Saudi Arabia, and the United Arab Emirates make a GCC clue tempting.",
+          "whyWrong": "Iran and Iraq are included for coastline reasons, while Oman is not highlighted."
+        },
+        {
+          "displayAnswer": "Countries on the Arabian Peninsula",
+          "whyPlausible": "Most highlighted countries sit on or beside the Arabian Peninsula.",
+          "whyWrong": "Iran is included and Oman is excluded, so this is a Persian Gulf coastline rule."
+        },
+        {
+          "displayAnswer": "Mapped countries using a dinar-named currency",
+          "whyPlausible": "Iraq and Kuwait use dinar-named currencies.",
+          "whyWrong": "Iran, Qatar, Saudi Arabia, and the United Arab Emirates do not fit that currency answer."
+        }
+      ],
+      "dateVintage": "2026-07-04",
+      "scopeNote": "Bahrain is not present in the current mapped-country registry and is omitted."
+    },
+    {
+      "id": "mapped-tropic-of-cancer-crossed",
+      "displayAnswer": "Mapped countries crossed by the Tropic of Cancer",
+      "family": "physical_geography",
+      "includedIso3": [
+        "BHS",
+        "MEX",
+        "MRT",
+        "MLI",
+        "DZA",
+        "NER",
+        "LBY",
+        "TCD",
+        "EGY",
+        "SAU",
+        "ARE",
+        "OMN",
+        "IND",
+        "BGD",
+        "MMR",
+        "CHN"
+      ],
+      "counterexampleIso3": [
+        "BRA",
+        "ETH",
+        "THA"
+      ],
+      "difficulty": "standard",
+      "eligibility": "daily",
+      "sources": [
+        "natural-earth-admin0-110m",
+        "cia-world-factbook"
+      ],
+      "explanation": "The highlighted mapped countries trace the Tropic of Cancer across North America, North Africa, the Arabian Peninsula, South Asia, and East Asia.",
+      "decoys": [
+        {
+          "displayAnswer": "Mapped countries crossed by the Equator",
+          "whyPlausible": "The long latitude-line pattern can feel similar.",
+          "whyWrong": "This set lies in the Northern Hemisphere around 23.5 degrees north, not on the Equator."
+        },
+        {
+          "displayAnswer": "Countries with major deserts",
+          "whyPlausible": "North Africa and the Arabian Peninsula make a desert clue tempting.",
+          "whyWrong": "Bahamas, Bangladesh, Myanmar, and China show the rule is latitude-based."
+        },
+        {
+          "displayAnswer": "Countries with Indian Ocean coastlines",
+          "whyPlausible": "India, Bangladesh, Myanmar, Oman, and parts of Arabia are visible.",
+          "whyWrong": "Mexico, Bahamas, North African landlocked countries, and China do not fit an Indian Ocean coastline rule."
+        }
+      ],
+      "dateVintage": "2026-07-04",
+      "scopeNote": "Western Sahara and Taiwan are not represented as ISO3 countries in the current mapped-country registry and are omitted."
+    },
+    {
+      "id": "central-asia-countries",
+      "displayAnswer": "Central Asian countries",
+      "family": "physical_geography",
+      "includedIso3": [
+        "KAZ",
+        "KGZ",
+        "TJK",
+        "TKM",
+        "UZB"
+      ],
+      "counterexampleIso3": [
+        "AFG",
+        "AZE",
+        "MNG"
+      ],
+      "difficulty": "intro",
+      "eligibility": "daily",
+      "sources": [
+        "natural-earth-admin0-110m",
+        "cia-world-factbook"
+      ],
+      "explanation": "The highlighted countries are the five commonly recognized Central Asian sovereign states.",
+      "decoys": [
+        {
+          "displayAnswer": "Countries bordering Kazakhstan",
+          "whyPlausible": "Kyrgyzstan, Turkmenistan, and Uzbekistan border Kazakhstan.",
+          "whyWrong": "Kazakhstan itself is highlighted, while Russia and China are not."
+        },
+        {
+          "displayAnswer": "Mapped countries using a rupee-named currency",
+          "whyPlausible": "The landlocked Asian cluster can suggest a currency or South/Central Asia clue.",
+          "whyWrong": "The highlighted set is regional, not a rupee-currency set."
+        },
+        {
+          "displayAnswer": "Caspian Sea coastal countries",
+          "whyPlausible": "Kazakhstan and Turkmenistan have Caspian coastlines.",
+          "whyWrong": "Kyrgyzstan, Tajikistan, and Uzbekistan do not have Caspian Sea coastlines."
+        }
+      ],
+      "dateVintage": "2026-07-04"
+    },
+    {
+      "id": "mapped-maghreb-countries",
+      "displayAnswer": "Mapped Maghreb countries",
+      "family": "physical_geography",
+      "includedIso3": [
+        "DZA",
+        "LBY",
+        "MAR",
+        "MRT",
+        "TUN"
+      ],
+      "counterexampleIso3": [
+        "EGY",
+        "MLI",
+        "SEN"
+      ],
+      "difficulty": "standard",
+      "eligibility": "practice",
+      "sources": [
+        "natural-earth-admin0-110m",
+        "cia-world-factbook"
+      ],
+      "explanation": "The highlighted mapped countries form the Maghreb across northwest North Africa.",
+      "decoys": [
+        {
+          "displayAnswer": "Countries with a Mediterranean Sea coastline",
+          "whyPlausible": "Morocco, Algeria, Tunisia, and Libya sit on the Mediterranean edge.",
+          "whyWrong": "Mauritania is included and many Mediterranean countries are not."
+        },
+        {
+          "displayAnswer": "Countries containing part of the Sahara Desert",
+          "whyPlausible": "The Sahara covers much of this region.",
+          "whyWrong": "The Sahara pattern is larger and extends beyond the Maghreb to countries such as Egypt, Mali, Niger, Chad, and Sudan."
+        },
+        {
+          "displayAnswer": "Countries where Arabic is an official language",
+          "whyPlausible": "The highlighted countries are Arabic-official countries.",
+          "whyWrong": "The Arabic-official pattern is much broader across North Africa and Western Asia."
+        }
+      ],
+      "dateVintage": "2026-07-04",
+      "scopeNote": "Western Sahara is not represented as an ISO3 country in the current mapped-country registry and is omitted."
+    },
+    {
+      "id": "gulf-of-thailand-coast",
+      "displayAnswer": "Countries with a Gulf of Thailand coastline",
+      "family": "borders",
+      "includedIso3": [
+        "KHM",
+        "MYS",
+        "THA",
+        "VNM"
+      ],
+      "counterexampleIso3": [
+        "IDN",
+        "LAO",
+        "MMR"
+      ],
+      "difficulty": "intro",
+      "eligibility": "daily",
+      "sources": [
+        "natural-earth-admin0-110m",
+        "cia-world-factbook"
+      ],
+      "explanation": "The highlighted countries share coastline on the Gulf of Thailand in mainland and peninsular Southeast Asia.",
+      "decoys": [
+        {
+          "displayAnswer": "Mekong River countries",
+          "whyPlausible": "Cambodia, Thailand, and Vietnam make the Mekong tempting.",
+          "whyWrong": "Malaysia is included and Laos is not, so the coastline is the rule."
+        },
+        {
+          "displayAnswer": "ASEAN founding members",
+          "whyPlausible": "Malaysia and Thailand are founding ASEAN members.",
+          "whyWrong": "Cambodia and Vietnam joined later, while Indonesia and the Philippines are not highlighted."
+        },
+        {
+          "displayAnswer": "Countries with a South China Sea coastline",
+          "whyPlausible": "Malaysia and Vietnam can point toward the South China Sea.",
+          "whyWrong": "Cambodia and Thailand are highlighted for the Gulf of Thailand, while many South China Sea coastal countries are absent."
+        }
+      ],
+      "dateVintage": "2026-07-04"
+    },
+    {
+      "id": "countries-bordering-kazakhstan",
+      "displayAnswer": "Countries sharing a land border with Kazakhstan",
+      "family": "borders",
+      "includedIso3": [
+        "CHN",
+        "KGZ",
+        "RUS",
+        "TKM",
+        "UZB"
+      ],
+      "counterexampleIso3": [
+        "AFG",
+        "MNG",
+        "TJK"
+      ],
+      "difficulty": "standard",
+      "eligibility": "practice",
+      "sources": [
+        "natural-earth-admin0-110m",
+        "cia-world-factbook"
+      ],
+      "explanation": "The highlighted countries are Kazakhstan's mapped land neighbors across Russia, China, and Central Asia.",
+      "decoys": [
+        {
+          "displayAnswer": "Central Asian countries",
+          "whyPlausible": "Kyrgyzstan, Turkmenistan, and Uzbekistan are Central Asian states.",
+          "whyWrong": "China and Russia are included because they border Kazakhstan, while Kazakhstan itself is not highlighted."
+        },
+        {
+          "displayAnswer": "Caspian Sea coastal countries",
+          "whyPlausible": "Russia and Turkmenistan have Caspian Sea coastlines near Kazakhstan.",
+          "whyWrong": "China, Kyrgyzstan, and Uzbekistan do not fit a Caspian coastline rule."
+        },
+        {
+          "displayAnswer": "Countries bordering China",
+          "whyPlausible": "Russia, Kazakhstan's eastern edge, and Kyrgyzstan can suggest China's border ring.",
+          "whyWrong": "Turkmenistan and Uzbekistan do not border China."
+        }
+      ],
+      "dateVintage": "2026-07-04"
     }
   ]
 }

@@ -217,7 +217,7 @@ describe("PatternAtlasClient", () => {
     await user.selectOptions(screen.getByRole("combobox", { name: /Family/i }), "borders");
     await user.selectOptions(screen.getByRole("combobox", { name: /Difficulty/i }), "expert");
 
-    expect(screen.getByText("3 rules available for this setup.")).toBeVisible();
+    expect(screen.getByText("4 rules available for this setup.")).toBeVisible();
     expect(screen.getByRole("button", { name: "Start Pattern Run" })).toBeEnabled();
   });
 
