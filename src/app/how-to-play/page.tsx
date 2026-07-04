@@ -7,7 +7,7 @@ import { breadcrumbJsonLd, pageMetadata } from "@/lib/site/seo";
 export const metadata: Metadata = pageMetadata({
   title: "How to Play Can You Geo?",
   description:
-    "Learn how Can You Geo? games work: play Mystery Map choropleth puzzles, Pattern Atlas hidden-rule rounds, and the Order Atlas intro sample.",
+    "Learn how Can You Geo? games work: play Mystery Map choropleth puzzles, Pattern Atlas hidden-rule rounds, and Order Atlas country-ordering rounds.",
   path: "/how-to-play/"
 });
 
@@ -44,8 +44,8 @@ export default function HowToPlayPage() {
           <h2 id="how-library-title">Three ways to read the world.</h2>
           <p>
             Mystery Map remains the flagship Daily game. Pattern Atlas uses the same atlas feel with highlighted countries instead of
-            choropleth values. Order Atlas is available as an intro sample where you order country cards by a known indicator; its
-            Daily and Pro modes are still coming next.
+            choropleth values. Order Atlas asks you to order country cards by a known indicator, with a Sample Run, Free Daily, and
+            repeatable Pro Practice.
           </p>
         </div>
         <GameLibraryShowcase className="how-library-grid" ariaLabel="Can You Geo games explained" />

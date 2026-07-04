@@ -22,14 +22,14 @@ export const ACCESS_PLAN_COPY: Record<AccountPlan, AccessPlanCopy> = {
   free: {
     label: "Free account",
     headline: "Daily rounds in Daily-enabled games.",
-    summary: "Free accounts unlock Daily rounds in Daily-enabled games, saved results, streaks, progress, and basic stats.",
+    summary: "Free accounts unlock Daily rounds in Daily-enabled games, with saved results, streaks, progress, and basic stats where supported.",
     primaryCta: "Open game library"
   },
   pro: {
     label: "Pro",
     headline: "Open supported Pro modes.",
     summary:
-      "Pro unlocks Mystery Map Custom Atlas, Pattern Atlas Pattern Runs, complete Past Games archive, advanced stats, and future premium modes.",
+      "Pro unlocks Mystery Map Custom Atlas, Pattern Atlas Pattern Runs, Order Atlas Practice Runs, complete Past Games archive, advanced stats, and future premium modes where supported.",
     primaryCta: "Open the full atlas"
   }
 };

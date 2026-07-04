@@ -28,7 +28,7 @@ export const PUBLIC_INDEXED_ROUTES: PublicRouteMetadata[] = [
     path: "/play/",
     title: "Play Can You Geo? - Geography Game Library",
     description:
-      "Choose a Can You Geo? geography game: Mystery Map choropleth puzzles, Pattern Atlas hidden-rule rounds, and the Order Atlas intro sample.",
+      "Choose a Can You Geo? geography game: Mystery Map choropleth puzzles, Pattern Atlas hidden-rule rounds, and Order Atlas country-ordering runs.",
     changeFrequency: "daily",
     priority: 0.97
   },
@@ -50,7 +50,7 @@ export const PUBLIC_INDEXED_ROUTES: PublicRouteMetadata[] = [
   {
     path: "/play/order-atlas/",
     title: "Play Order Atlas - Geography Ordering Game",
-    description: "Play the Order Atlas intro sample, a Can You Geo? geography game where you arrange countries by a known data signal.",
+    description: "Play Order Atlas, a Can You Geo? geography game with Sample Run, Free Daily, and Pro Practice where you arrange countries by a known data signal.",
     changeFrequency: "monthly",
     priority: 0.84
   },
@@ -58,7 +58,7 @@ export const PUBLIC_INDEXED_ROUTES: PublicRouteMetadata[] = [
     path: "/how-to-play/",
     title: "How to Play Can You Geo?",
     description:
-      "Learn how Can You Geo? games work: play Mystery Map choropleth puzzles, Pattern Atlas hidden-rule rounds, and the Order Atlas intro sample.",
+      "Learn how Can You Geo? games work: play Mystery Map choropleth puzzles, Pattern Atlas hidden-rule rounds, and Order Atlas country-ordering runs.",
     changeFrequency: "monthly",
     priority: 0.82
   },
@@ -89,7 +89,7 @@ export const PUBLIC_INDEXED_ROUTES: PublicRouteMetadata[] = [
     path: "/upgrade/",
     title: "Free and Pro - Can You Geo?",
     description:
-      "Compare Free and Pro access for the Can You Geo game library: supported Daily play, Mystery Map Custom Atlas, Pattern Atlas Pattern Runs, Order Atlas intro play, Past Games, and advanced stats.",
+      "Compare Free and Pro access for the Can You Geo game library: supported Daily play, Mystery Map Custom Atlas, Pattern Atlas Pattern Runs, Order Atlas Practice, Past Games, and advanced stats.",
     changeFrequency: "monthly",
     priority: 0.6
   },
@@ -252,7 +252,7 @@ export function siteJsonLd(origin = publicSiteOrigin()) {
         genre: ["Geography game", "Ordering game", "Puzzle game"],
         isAccessibleForFree: true,
         description:
-          "Order Atlas is an intro country-ordering geography puzzle where players arrange country cards by a known data signal, then reveal the true order and source-backed values.",
+          "Order Atlas is a country-ordering geography puzzle with Sample Run, Free Daily, and Pro Practice where players arrange country cards by a known data signal, then reveal the true order and source-backed values.",
         publisher: { "@id": `${origin}/#organization` }
       }
     ]
@@ -276,7 +276,7 @@ export const HOME_FAQ_ITEMS = [
   {
     name: "What is Can You Geo?",
     acceptedAnswer:
-      "Can You Geo? is a geography game site for daily map puzzles, world pattern challenges, and country-ordering samples. Mystery Map and Pattern Atlas have Daily play, and Order Atlas has a playable intro sample."
+      "Can You Geo? is a geography game site for daily map puzzles, world pattern challenges, and country-ordering rounds. Mystery Map, Pattern Atlas, and Order Atlas have Sample and Daily play; Pro adds supported practice modes."
   },
   {
     name: "Is Can You Geo free?",
@@ -291,7 +291,7 @@ export const HOME_FAQ_ITEMS = [
   {
     name: "What games can I play?",
     acceptedAnswer:
-      "Mystery Map is the choropleth indicator guessing game. Pattern Atlas is the highlighted-country hidden-rule game. Order Atlas is the country-ordering intro sample."
+      "Mystery Map is the choropleth indicator guessing game. Pattern Atlas is the highlighted-country hidden-rule game. Order Atlas is the country-ordering game with Sample Run, Free Daily, and Pro Practice."
   },
   {
     name: "What data sources does Can You Geo use?",

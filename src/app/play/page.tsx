@@ -6,7 +6,7 @@ import { pageMetadata } from "@/lib/site/seo";
 export const metadata: Metadata = pageMetadata({
   title: "Play Can You Geo? - Geography Game Library",
   description:
-    "Choose a Can You Geo? geography game: Mystery Map choropleth puzzles, Pattern Atlas hidden-rule rounds, and the Order Atlas intro sample.",
+    "Choose a Can You Geo? geography game: Mystery Map choropleth puzzles, Pattern Atlas hidden-rule rounds, and Order Atlas country-ordering runs.",
   path: "/play/"
 });
 
@@ -31,8 +31,8 @@ export default function PlayHubPage() {
           <p className="eyebrow">Can You Geo v1</p>
           <h2 id="play-library-title">Three games, one atlas.</h2>
           <p>
-            No account is needed for samples. Create a free account for Daily games and saved progress. Pro unlocks deeper custom
-            runs where a game already supports them.
+            No account is needed for samples. Create a free account for Daily games and saved progress where supported. Pro unlocks
+            Mystery Map Custom Atlas, Pattern Atlas Pattern Runs, and repeatable Order Atlas Practice.
           </p>
           <p className="atlas-growth-note">
             <strong>New geography challenges added every month.</strong>
@@ -55,7 +55,7 @@ export default function PlayHubPage() {
             Open Pattern Atlas
           </Link>
           <Link className="button-secondary" href="/play/order-atlas">
-            Try Order Atlas
+            Open Order Atlas
           </Link>
         </div>
       </div>

@@ -9,7 +9,7 @@ import { HOME_FAQ_ITEMS, homeFaqJsonLd, pageMetadata } from "@/lib/site/seo";
 export const metadata: Metadata = pageMetadata({
   title: "Can You Geo? - Daily Geography Games & World Data Puzzles",
   description:
-    "Play Can You Geo?, a growing geography game library with Mystery Map data puzzles, Pattern Atlas rule challenges, and the Order Atlas intro sample.",
+    "Play Can You Geo?, a growing geography game library with Mystery Map data puzzles, Pattern Atlas rule challenges, and Order Atlas country-ordering runs.",
   path: "/"
 });
 
@@ -33,7 +33,7 @@ const signalCards = [
     image: "/images/homepage/03-make-the-call.png",
     objectPosition: "50% 52%",
     title: "Order the signal",
-    copy: "Order Atlas turns country rankings into a quick intro challenge."
+    copy: "Order Atlas turns country rankings into Sample, Daily, and Pro Practice rounds."
   }
 ] as const;
 
@@ -58,10 +58,10 @@ const modeCards = [
     image: "/images/homepage/04-daily-mystery-map.png",
     objectPosition: "50% 50%",
     title: "Order Atlas",
-    copy: "Playable intro run now. Daily and Pro modes are coming next.",
-    cta: "Try Order Atlas",
+    copy: "Order country cards in Sample, Free Daily, and repeatable Pro Practice runs.",
+    cta: "Open Order Atlas",
     href: "/play/order-atlas",
-    badge: "Intro sample"
+    badge: "Sample / Daily / Pro Practice"
   }
 ] as const;
 
@@ -147,8 +147,8 @@ export default function HomePage() {
             <p className="eyebrow">Game library</p>
             <h2>Choose your geography game.</h2>
             <p className="section-lede">
-              Mystery Map and Pattern Atlas have Daily modes. Order Atlas is playable now as an intro sample, with Daily and Pro
-              modes coming next.
+              Mystery Map, Pattern Atlas, and Order Atlas all support Sample and Daily play. Pro adds Custom Atlas, Pattern Runs,
+              and repeatable Order Atlas Practice.
             </p>
             <div className="button-row">
               <Link className="button-secondary" href="/play">

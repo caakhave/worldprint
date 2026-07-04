@@ -13,13 +13,13 @@ describe("HowToPlayPage", () => {
     expect(screen.getByText(/Can You Geo\? is a library of geography games/i)).toBeVisible();
     expect(screen.queryByText(/Mystery Map is the first Can You Geo\? mode/i)).not.toBeInTheDocument();
     expect(screen.getByRole("heading", { name: "Three ways to read the world." })).toBeVisible();
-    expect(screen.getByText(/Order Atlas is available as an intro sample/i)).toBeVisible();
-    expect(screen.getByText(/Daily and Pro modes are still coming next/i)).toBeVisible();
+    expect(screen.getByText(/Order Atlas asks you to order country cards by a known indicator/i)).toBeVisible();
+    expect(screen.getByText(/Sample Run, Free Daily, and repeatable Pro Practice/i)).toBeVisible();
     expect(screen.getByRole("heading", { name: "Mystery Map" })).toBeVisible();
     expect(screen.getByRole("heading", { name: "Pattern Atlas" })).toBeVisible();
     expect(screen.getByRole("heading", { name: "Order Atlas" })).toBeVisible();
     expect(screen.getByRole("link", { name: /Open Pattern Atlas/i })).toHaveAttribute("href", "/play/pattern-atlas");
-    expect(screen.getByRole("link", { name: /Try intro run/i })).toHaveAttribute("href", "/play/order-atlas");
+    expect(screen.getByRole("link", { name: /Open Order Atlas/i })).toHaveAttribute("href", "/play/order-atlas");
     expect(screen.getByRole("heading", { name: /How a Mystery Map round works/i })).toBeVisible();
     expect(screen.getByText(/These clue, color, and scoring notes apply to Mystery Map/i)).toBeVisible();
     expect(screen.getByRole("heading", { name: /Every Mystery Map clue spends points/i })).toBeVisible();
@@ -28,6 +28,7 @@ describe("HowToPlayPage", () => {
     expect(screen.getByRole("link", { name: /Open game library/i })).toHaveAttribute("href", "/play");
     expect(screen.getByRole("link", { name: /Try Mystery Map sample/i })).toHaveAttribute("href", "/play/mystery-map");
     expect(screen.getByRole("link", { name: /Continue free/i })).toHaveAttribute("href", "/sign-up");
+    expect(screen.queryByText(/intro-only|Daily and Pro modes are still coming next|Daily and Pro modes coming next/i)).not.toBeInTheDocument();
     expect(screen.queryByText(/Open Beta|WORLDPRINT|spends score/i)).not.toBeInTheDocument();
   });
 
