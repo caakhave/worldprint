@@ -6,7 +6,6 @@ import entityRegistryJson from "../../../../public/data/v1/entity-registry.json"
 import { OrderAtlasClient, type OrderAtlasPlayableCountry, type OrderAtlasPlayableRound } from "@/features/order-atlas/OrderAtlasClient";
 import { EntityRegistrySchema, IndicatorArtifactSchema, type IndicatorArtifact } from "@/lib/content/schemas";
 import { ORDER_ATLAS_CATALOG, ORDER_ATLAS_ROUNDS } from "@/lib/order-atlas/catalog";
-import { sampleOrderAtlasRoundIds } from "@/lib/order-atlas/selection";
 import type { OrderAtlasRound } from "@/lib/order-atlas/schemas";
 import {
   deriveOrderAtlasCountryValues,
@@ -18,19 +17,19 @@ import { pageMetadata } from "@/lib/site/seo";
 
 export const metadata: Metadata = pageMetadata({
   title: "Play Order Atlas - Geography Ordering Game",
-  description: "Play the Order Atlas intro sample, a Can You Geo? geography game where you arrange countries by a known data signal.",
+  description: "Play Order Atlas, a Can You Geo? geography game with a sample run, Free Daily, and Pro Practice where you arrange countries by a known data signal.",
   path: "/play/order-atlas/"
 });
 
 export default function PlayOrderAtlasPage() {
-  const rounds = getOrderAtlasSampleRounds();
+  const rounds = getOrderAtlasPlayableRounds();
   return (
     <Suspense
       fallback={
         <section className="order-atlas-page game-shell page-shell">
           <div className="empty-state surface">
             <h1>Loading Order Atlas</h1>
-            <p>Preparing the sample ordering run.</p>
+            <p>Preparing the ordering runs.</p>
           </div>
         </section>
       }
@@ -40,7 +39,7 @@ export default function PlayOrderAtlasPage() {
   );
 }
 
-function getOrderAtlasSampleRounds(): OrderAtlasPlayableRound[] {
+function getOrderAtlasPlayableRounds(): OrderAtlasPlayableRound[] {
   const entityRegistry = EntityRegistrySchema.parse(entityRegistryJson);
   const countryNameByIso3 = new Map(
     entityRegistry.entities.filter((entity) => entity.iso3).map((entity) => [entity.iso3 as string, entity.name])
@@ -52,10 +51,7 @@ function getOrderAtlasSampleRounds(): OrderAtlasPlayableRound[] {
   }
 
   const indicatorById = new Map(indicators.map((indicator) => [indicator.id, indicator]));
-  const roundById = new Map(ORDER_ATLAS_ROUNDS.map((round) => [round.id, round]));
-  return sampleOrderAtlasRoundIds(ORDER_ATLAS_ROUNDS).map((roundId) => {
-    const round = roundById.get(roundId);
-    if (!round) throw new Error(`Missing Order Atlas sample round ${roundId}`);
+  return ORDER_ATLAS_ROUNDS.map((round) => {
     const indicator = indicatorById.get(round.indicatorId);
     if (!indicator) throw new Error(`Missing Order Atlas indicator artifact ${round.indicatorId}`);
     return playableRoundForRound(round, indicator, countryNameByIso3);

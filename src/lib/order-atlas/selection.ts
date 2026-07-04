@@ -14,6 +14,8 @@ export type OrderAtlasRoundFilters = {
   category?: string;
 };
 
+export type SelectableOrderAtlasRound = Pick<OrderAtlasRound, "id" | "indicatorId" | "difficulty" | "eligibility">;
+
 function hashString(input: string): number {
   let hash = 2166136261;
   for (let index = 0; index < input.length; index += 1) {
@@ -33,7 +35,7 @@ function mulberry32(seed: number): () => number {
   };
 }
 
-function shuffledRounds(rounds: OrderAtlasRound[], seedText: string): OrderAtlasRound[] {
+function shuffledRounds<T extends SelectableOrderAtlasRound>(rounds: T[], seedText: string): T[] {
   const random = mulberry32(hashString(seedText));
   const shuffled = [...rounds];
   for (let index = shuffled.length - 1; index > 0; index -= 1) {
@@ -43,20 +45,20 @@ function shuffledRounds(rounds: OrderAtlasRound[], seedText: string): OrderAtlas
   return shuffled;
 }
 
-export function sampleOrderAtlasRoundIds(rounds: OrderAtlasRound[]): string[] {
+export function sampleOrderAtlasRoundIds(rounds: SelectableOrderAtlasRound[]): string[] {
   const available = new Set(rounds.map((round) => round.id));
   return SAMPLE_ORDER_ATLAS_ROUND_IDS.filter((id) => available.has(id));
 }
 
-export function dailyEligibleOrderAtlasRounds(rounds: OrderAtlasRound[]): OrderAtlasRound[] {
+export function dailyEligibleOrderAtlasRounds<T extends SelectableOrderAtlasRound>(rounds: T[]): T[] {
   return rounds.filter((round) => round.eligibility === "daily");
 }
 
 export function practiceEligibleOrderAtlasRounds(
-  rounds: OrderAtlasRound[],
+  rounds: SelectableOrderAtlasRound[],
   filters: OrderAtlasRoundFilters = {},
   indicators: OrderAtlasIndicatorArtifact[] = []
-): OrderAtlasRound[] {
+): SelectableOrderAtlasRound[] {
   const indicatorById = new Map(indicators.map((indicator) => [indicator.id, indicator]));
   return rounds.filter((round) => {
     const eligible =
@@ -73,7 +75,7 @@ export function practiceEligibleOrderAtlasRounds(
   });
 }
 
-export function selectOrderAtlasDailyRoundIds(rounds: OrderAtlasRound[], contentVersion: string, dateKey: string): string[] {
+export function selectOrderAtlasDailyRoundIds(rounds: SelectableOrderAtlasRound[], contentVersion: string, dateKey: string): string[] {
   const eligible = dailyEligibleOrderAtlasRounds(rounds);
   return shuffledRounds(eligible, `order-atlas:daily:${contentVersion}:${dateKey}`)
     .slice(0, Math.min(ORDER_ATLAS_ROUND_COUNT, eligible.length))
@@ -81,7 +83,7 @@ export function selectOrderAtlasDailyRoundIds(rounds: OrderAtlasRound[], content
 }
 
 export function selectOrderAtlasPracticeRoundIds(
-  rounds: OrderAtlasRound[],
+  rounds: SelectableOrderAtlasRound[],
   contentVersion: string,
   salt: string,
   filters: OrderAtlasRoundFilters = {},

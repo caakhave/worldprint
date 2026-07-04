@@ -1,122 +1,154 @@
-import { render, screen, within } from "@testing-library/react";
+import { render, screen, waitFor, within } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
-import { afterEach, describe, expect, it, vi } from "vitest";
+import { beforeEach, describe, expect, it, vi } from "vitest";
 import { OrderAtlasClient, type OrderAtlasPlayableRound } from "@/features/order-atlas/OrderAtlasClient";
+import { FREE_ENTITLEMENT, GUEST_ENTITLEMENT, PRO_ENTITLEMENT, type PlayerEntitlement } from "@/lib/account/entitlements";
+import { SAMPLE_ORDER_ATLAS_ROUND_IDS } from "@/lib/order-atlas/selection";
+import { ORDER_ATLAS_STORAGE_KEY } from "@/lib/order-atlas/storage";
 
-const rounds: OrderAtlasPlayableRound[] = [
-  {
-    id: "order-test-renewable",
-    indicatorId: "renewable-electricity",
-    category: "energy",
-    difficulty: "standard",
+type MockEntitlementState = {
+  entitlement: PlayerEntitlement;
+  loading: boolean;
+  error: string | null;
+  configured: boolean;
+  signedIn: boolean;
+  refresh: () => Promise<void>;
+};
+
+const entitlementMock = vi.hoisted(() => ({
+  state: null as unknown as MockEntitlementState
+}));
+
+vi.mock("@/features/account/useEntitlement", () => ({
+  useEntitlement: () => entitlementMock.state
+}));
+
+const sampleRounds = [
+  makeRound({
+    id: SAMPLE_ORDER_ATLAS_ROUND_IDS[0],
     eligibility: "sample",
     prompt: "Put these countries in order by renewable electricity share, highest to lowest.",
     highlightText: "renewable electricity share",
-    explanation: "Hydro-heavy electricity systems rank above fossil-heavy systems.",
-    selectedCountries: [
-      { iso3: "IND", name: "India", value: 19, formattedValue: "19" },
-      { iso3: "CAN", name: "Canada", value: 67, formattedValue: "67" },
-      { iso3: "BRA", name: "Brazil", value: 77, formattedValue: "77" },
-      { iso3: "ZAF", name: "South Africa", value: 6, formattedValue: "6" },
-      { iso3: "NOR", name: "Norway", value: 99, formattedValue: "99" }
-    ],
-    trueOrder: [
-      { iso3: "NOR", name: "Norway", value: 99, formattedValue: "99" },
-      { iso3: "BRA", name: "Brazil", value: 77, formattedValue: "77" },
-      { iso3: "CAN", name: "Canada", value: 67, formattedValue: "67" },
-      { iso3: "IND", name: "India", value: 19, formattedValue: "19" },
-      { iso3: "ZAF", name: "South Africa", value: 6, formattedValue: "6" }
-    ],
-    order: "desc",
-    unit: "percent of total electricity output",
-    year: 2021,
-    dateVintage: "2021",
-    sourceLabel: "World Bank",
-    sourceUrl: "https://example.com/renewable"
-  },
-  {
-    id: "order-test-fertility",
-    indicatorId: "fertility-rate",
-    category: "demography",
-    difficulty: "standard",
+    category: "energy"
+  }),
+  makeRound({
+    id: SAMPLE_ORDER_ATLAS_ROUND_IDS[1],
     eligibility: "sample",
     prompt: "Put these countries in order by fertility rate, highest to lowest.",
     highlightText: "fertility rate",
-    explanation: "Higher-fertility countries tend to have younger demographic profiles.",
-    selectedCountries: [
-      { iso3: "NGA", name: "Nigeria", value: 4.4, formattedValue: "4.4" },
-      { iso3: "EGY", name: "Egypt", value: 2.7, formattedValue: "2.7" },
-      { iso3: "BRA", name: "Brazil", value: 1.6, formattedValue: "1.6" },
-      { iso3: "JPN", name: "Japan", value: 1.2, formattedValue: "1.2" },
-      { iso3: "NER", name: "Niger", value: 6.6, formattedValue: "6.6" }
-    ],
-    trueOrder: [
-      { iso3: "NER", name: "Niger", value: 6.6, formattedValue: "6.6" },
-      { iso3: "NGA", name: "Nigeria", value: 4.4, formattedValue: "4.4" },
-      { iso3: "EGY", name: "Egypt", value: 2.7, formattedValue: "2.7" },
-      { iso3: "BRA", name: "Brazil", value: 1.6, formattedValue: "1.6" },
-      { iso3: "JPN", name: "Japan", value: 1.2, formattedValue: "1.2" }
-    ],
-    order: "desc",
-    unit: "births per woman",
-    year: 2024,
-    dateVintage: "2024",
-    sourceLabel: "World Bank",
-    sourceUrl: "https://example.com/fertility"
-  },
-  {
-    id: "order-test-internet",
-    indicatorId: "internet-users",
-    category: "connectivity",
-    difficulty: "intro",
+    category: "demography"
+  }),
+  makeRound({
+    id: SAMPLE_ORDER_ATLAS_ROUND_IDS[2],
     eligibility: "sample",
     prompt: "Put these countries in order by share of people using the internet, highest to lowest.",
     highlightText: "share of people using the internet",
-    explanation: "Infrastructure and income shape the internet-use ranking.",
-    selectedCountries: [
-      { iso3: "CAN", name: "Canada", value: 94, formattedValue: "94" },
-      { iso3: "BRA", name: "Brazil", value: 84, formattedValue: "84" },
-      { iso3: "IND", name: "India", value: 65, formattedValue: "65" },
-      { iso3: "ETH", name: "Ethiopia", value: 22, formattedValue: "22" },
-      { iso3: "CHN", name: "China", value: 77, formattedValue: "77" }
-    ],
-    trueOrder: [
-      { iso3: "CAN", name: "Canada", value: 94, formattedValue: "94" },
-      { iso3: "BRA", name: "Brazil", value: 84, formattedValue: "84" },
-      { iso3: "CHN", name: "China", value: 77, formattedValue: "77" },
-      { iso3: "IND", name: "India", value: 65, formattedValue: "65" },
-      { iso3: "ETH", name: "Ethiopia", value: 22, formattedValue: "22" }
-    ],
-    order: "desc",
-    unit: "percent of population",
-    year: 2024,
-    dateVintage: "2024",
-    sourceLabel: "World Bank",
-    sourceUrl: "https://example.com/internet"
-  }
+    category: "connectivity",
+    difficulty: "intro"
+  })
 ];
 
+const dailyRounds = [
+  makeRound({ id: "daily-order-forest-share", eligibility: "daily", prompt: "Put these countries in order by forest area share, highest to lowest.", highlightText: "forest area share", category: "environment" }),
+  makeRound({ id: "daily-order-median-age", eligibility: "daily", prompt: "Put these countries in order by median age, highest to lowest.", highlightText: "median age", category: "demography" }),
+  makeRound({ id: "daily-order-urbanization", eligibility: "daily", prompt: "Put these countries in order by urban population share, highest to lowest.", highlightText: "urban population share", category: "settlement" })
+];
+
+const practiceRounds = [
+  makeRound({ id: "practice-order-air-quality", eligibility: "practice", prompt: "Put these countries in order by air pollution exposure, highest to lowest.", highlightText: "air pollution exposure", category: "environment" }),
+  makeRound({ id: "practice-order-tourism", eligibility: "practice", prompt: "Put these countries in order by tourism arrivals, highest to lowest.", highlightText: "tourism arrivals", category: "economy" }),
+  makeRound({ id: "practice-order-mobile", eligibility: "practice", prompt: "Put these countries in order by mobile subscriptions, highest to lowest.", highlightText: "mobile subscriptions", category: "connectivity" })
+];
+
+const rounds: OrderAtlasPlayableRound[] = [...sampleRounds, ...dailyRounds, ...practiceRounds];
+
+function setAccount(entitlement: PlayerEntitlement, signedIn: boolean) {
+  entitlementMock.state = {
+    entitlement,
+    loading: false,
+    error: null,
+    configured: true,
+    signedIn,
+    refresh: async () => undefined
+  };
+}
+
+function renderOrderAtlas() {
+  return render(<OrderAtlasClient rounds={rounds} todayOverride="2026-07-03" />);
+}
+
 describe("OrderAtlasClient", () => {
-  afterEach(() => {
-    vi.restoreAllMocks();
+  beforeEach(() => {
+    window.localStorage.clear();
+    setAccount(GUEST_ENTITLEMENT, false);
+    vi.spyOn(window, "requestAnimationFrame").mockImplementation((callback: FrameRequestCallback) => {
+      callback(0);
+      return 0;
+    });
+    vi.spyOn(window, "scrollTo").mockImplementation(() => undefined);
   });
 
-  it("renders the sample run with hidden values", () => {
-    const { container } = render(<OrderAtlasClient rounds={rounds} />);
+  it("shows signed-out players the fixed Sample Run with no-account copy", async () => {
+    const user = userEvent.setup();
+    const { container } = renderOrderAtlas();
 
+    expect(screen.getByRole("heading", { name: "Order Atlas Sample Run" })).toBeVisible();
+    expect(screen.getAllByText(/No account needed/i).length).toBeGreaterThanOrEqual(1);
+    expect(screen.getAllByText(/no account results are saved/i).length).toBeGreaterThanOrEqual(1);
+
+    await user.click(screen.getByRole("button", { name: /Start sample run/i }));
+
+    expect(screen.getAllByText("Order Atlas Sample Run").length).toBeGreaterThanOrEqual(1);
     expect(screen.getByText("1/3")).toBeVisible();
-    expect(screen.getByRole("heading", { name: "Order the countries." })).toBeVisible();
-    expect(screen.getByText("Order Atlas sample")).toBeVisible();
-    expect(screen.getByText("Arrange the cards by the stated indicator, then submit to reveal the true order and values.")).toBeVisible();
-    expect(screen.getByText("Challenge")).toBeVisible();
-    expect(screen.getByText(rounds[0].highlightText)).toHaveClass("order-atlas-challenge-highlight");
+    expect(screen.getByText(sampleRounds[0].highlightText)).toHaveClass("order-atlas-challenge-highlight");
     expect(screen.getAllByText("Value hidden")).toHaveLength(5);
     expect(container).not.toHaveTextContent(/MVP|hidden route|early playable|pre-production/i);
   });
 
+  it("shows Free signed-in players the deterministic Daily and resumes it locally", async () => {
+    const user = userEvent.setup();
+    setAccount(FREE_ENTITLEMENT, true);
+    const firstRender = renderOrderAtlas();
+
+    expect(screen.getByRole("heading", { name: "Order Atlas Daily" })).toBeVisible();
+    expect(screen.getByText("Three deterministic ordering rounds for 2026-07-03. Local progress resumes safely if you reload.")).toBeVisible();
+    expect(screen.queryByRole("heading", { name: "Order Atlas Sample Run" })).not.toBeInTheDocument();
+
+    await user.click(screen.getByRole("button", { name: /Start Order Atlas Daily/i }));
+    const firstDailyChallenge = screen.getByText((_, element) => element?.classList.contains("order-atlas-challenge-highlight") ?? false).textContent;
+    await user.click(screen.getByRole("button", { name: "Move India down" }));
+    await waitFor(() => expect(window.localStorage.getItem(ORDER_ATLAS_STORAGE_KEY)).toContain("activeDailyRun"));
+    firstRender.unmount();
+
+    renderOrderAtlas();
+    expect(screen.getByRole("heading", { name: "Order Atlas Daily" })).toBeVisible();
+    await user.click(screen.getByRole("button", { name: /Resume Order Atlas Daily/i }));
+
+    expect(screen.getByText(firstDailyChallenge ?? "")).toHaveClass("order-atlas-challenge-highlight");
+    expect(cardOrder()).toEqual(["Canada", "India", "Brazil", "South Africa", "Norway"]);
+  });
+
+  it("shows Pro users Daily plus a repeatable Practice Run", async () => {
+    const user = userEvent.setup();
+    setAccount(PRO_ENTITLEMENT, true);
+    renderOrderAtlas();
+
+    expect(screen.getByRole("heading", { name: "Order Atlas Daily" })).toBeVisible();
+    expect(screen.getByRole("heading", { name: "Practice ordering signals" })).toBeVisible();
+    expect(screen.getByText(/Practice draws three ordering rounds from the approved practice catalog/i)).toBeVisible();
+
+    await user.click(screen.getByRole("button", { name: "Start Practice Run" }));
+
+    expect(screen.getAllByText("Pro Practice Run").length).toBeGreaterThanOrEqual(1);
+    expect(screen.getByText(/Pro Practice draws three rounds from the practice catalog/i)).toBeVisible();
+    expect(screen.queryByText(/unlimited/i)).not.toBeInTheDocument();
+    expect(screen.queryByText(/custom run/i)).not.toBeInTheDocument();
+  });
+
   it("reorders country cards with mobile-safe controls", async () => {
     const user = userEvent.setup();
-    render(<OrderAtlasClient rounds={rounds} />);
+    renderOrderAtlas();
+    await user.click(screen.getByRole("button", { name: /Start sample run/i }));
 
     await user.click(screen.getByRole("button", { name: "Move India down" }));
 
@@ -129,7 +161,8 @@ describe("OrderAtlasClient", () => {
 
   it("submits an order and reveals scoring, values, and source metadata", async () => {
     const user = userEvent.setup();
-    render(<OrderAtlasClient rounds={rounds} />);
+    renderOrderAtlas();
+    await user.click(screen.getByRole("button", { name: /Start sample run/i }));
 
     await user.click(screen.getByRole("button", { name: "Move Norway to top" }));
     await user.click(screen.getByRole("button", { name: "Submit order" }));
@@ -141,23 +174,17 @@ describe("OrderAtlasClient", () => {
     expect(screen.getAllByText("Correctly placed")).toHaveLength(3);
     expect(screen.getAllByText("Misplaced")).toHaveLength(2);
     expect(screen.queryByText(/ranking matchups/i)).not.toBeInTheDocument();
-    expect(screen.queryByText(/one-vs-one/i)).not.toBeInTheDocument();
-    expect(screen.queryByText(/country pairs/i)).not.toBeInTheDocument();
     expect(screen.getByText("percent of total electricity output")).toBeVisible();
-    expect(screen.getByText("2021")).toBeVisible();
-    expect(screen.getByRole("link", { name: "World Bank" })).toHaveAttribute("href", "https://example.com/renewable");
+    expect(screen.getByText("2024")).toBeVisible();
+    expect(screen.getByRole("link", { name: "World Bank" })).toHaveAttribute("href", "https://example.com/source");
     expect(screen.getByText("Hydro-heavy electricity systems rank above fossil-heavy systems.")).toBeVisible();
-
-    const trueOrder = screen.getByRole("heading", { name: "True order and values" }).closest("article");
-    expect(trueOrder).toBeTruthy();
-    expect(within(trueOrder as HTMLElement).getByText("Brazil")).toBeVisible();
-    expect(within(trueOrder as HTMLElement).getByText("77")).toBeVisible();
   });
 
   it("scrolls to the reveal section after submitting an order", async () => {
     const user = userEvent.setup();
     const { scrollIntoView } = mockRevealScroll();
-    render(<OrderAtlasClient rounds={rounds} />);
+    renderOrderAtlas();
+    await user.click(screen.getByRole("button", { name: /Start sample run/i }));
 
     await user.click(screen.getByRole("button", { name: "Submit order" }));
 
@@ -168,7 +195,8 @@ describe("OrderAtlasClient", () => {
   it("respects reduced-motion preferences when scrolling to the reveal", async () => {
     const user = userEvent.setup();
     const { scrollIntoView } = mockRevealScroll(true);
-    render(<OrderAtlasClient rounds={rounds} />);
+    renderOrderAtlas();
+    await user.click(screen.getByRole("button", { name: /Start sample run/i }));
 
     await user.click(screen.getByRole("button", { name: "Submit order" }));
 
@@ -176,17 +204,18 @@ describe("OrderAtlasClient", () => {
     expect(scrollIntoView).toHaveBeenCalledWith({ behavior: "auto", block: "start" });
   });
 
-  it("advances through the fixed sample run and shows final results", async () => {
+  it("advances through the fixed sample run and shows claim-safe final results", async () => {
     const user = userEvent.setup();
-    const { container } = render(<OrderAtlasClient rounds={rounds} />);
+    const { container } = renderOrderAtlas();
+    await user.click(screen.getByRole("button", { name: /Start sample run/i }));
 
     await submitCurrentRound(user);
     await user.click(within(orderCard()).getByRole("button", { name: "Next round" }));
-    expect(screen.getByText(rounds[1].highlightText)).toBeVisible();
+    expect(screen.getByText(sampleRounds[1].highlightText)).toBeVisible();
 
     await submitCurrentRound(user);
     await user.click(within(orderCard()).getByRole("button", { name: "Next round" }));
-    expect(screen.getByText(rounds[2].highlightText)).toBeVisible();
+    expect(screen.getByText(sampleRounds[2].highlightText)).toBeVisible();
 
     await submitCurrentRound(user);
     expect(within(orderCard()).getByRole("button", { name: "Open results" })).toBeVisible();
@@ -197,39 +226,25 @@ describe("OrderAtlasClient", () => {
     const roundScores = screen.getByLabelText("Per-round scores");
     expect(roundScores).toBeVisible();
     expect(screen.getAllByText(/\d\/5 placed correctly/)).toHaveLength(3);
-    expect(within(roundScores).queryByRole("heading", { name: "Ready for fresh games every day?" })).not.toBeInTheDocument();
-    expect(screen.queryByText(/matchups correct/i)).not.toBeInTheDocument();
-    expect(screen.queryByText(/pairs correct/i)).not.toBeInTheDocument();
     expect(screen.getByRole("heading", { name: "Ready for fresh games every day?" })).toBeVisible();
     expect(
       screen.getByText(
-        "Create a free account to play daily geography challenges and save your progress. Go Pro to unlock supported advanced modes like Mystery Map Custom Atlas and Pattern Atlas Pattern Runs. More Order Atlas modes are coming next."
+        "Create a free account to play Order Atlas Daily. Pro adds Order Atlas Practice Runs and supported advanced modes across the Can You Geo library."
       )
     ).toBeVisible();
     expect(screen.queryByText(/deeper Order Atlas challenges/i)).not.toBeInTheDocument();
     expect(screen.queryByText(/unlimited practice runs/i)).not.toBeInTheDocument();
-    expect(screen.getByText(/supported advanced modes/i)).toBeVisible();
-    expect(screen.getByText(/More Order Atlas modes are coming next/i)).toBeVisible();
+    expect(screen.queryByText(/saved stats|streaks|archive support|cloud sync/i)).not.toBeInTheDocument();
     expect(screen.getByRole("link", { name: "Sign up free" })).toHaveAttribute("href", "/sign-up");
-    expect(screen.getByRole("link", { name: "Start Pro" })).toHaveAttribute("href", "/upgrade");
     expect(screen.getByRole("button", { name: "Play sample again" })).toBeVisible();
     expect(container).not.toHaveTextContent(/MVP|hidden route|early playable|pre-production/i);
   });
 
-  it("uses the top action button to advance after submitted rounds", async () => {
+  it("does not offer impossible Daily replay after a Free Daily completion", async () => {
     const user = userEvent.setup();
-    render(<OrderAtlasClient rounds={rounds} />);
-
-    expect(within(orderCard()).getByRole("button", { name: "Submit order" })).toBeVisible();
-    await submitCurrentRound(user);
-    expect(within(orderCard()).queryByRole("button", { name: "Submit order" })).not.toBeInTheDocument();
-    await user.click(within(orderCard()).getByRole("button", { name: "Next round" }));
-    expect(screen.getByText(rounds[1].highlightText)).toBeVisible();
-  });
-
-  it("uses the top action button to open results after the final submitted round", async () => {
-    const user = userEvent.setup();
-    render(<OrderAtlasClient rounds={rounds} />);
+    setAccount(FREE_ENTITLEMENT, true);
+    renderOrderAtlas();
+    await user.click(screen.getByRole("button", { name: /Start Order Atlas Daily/i }));
 
     await submitCurrentRound(user);
     await user.click(within(orderCard()).getByRole("button", { name: "Next round" }));
@@ -238,30 +253,45 @@ describe("OrderAtlasClient", () => {
     await submitCurrentRound(user);
     await user.click(within(orderCard()).getByRole("button", { name: "Open results" }));
 
+    expect(screen.getByText("You finished today's Order Atlas Daily. This result stays local to this browser for now.")).toBeVisible();
+    expect(screen.getByRole("link", { name: "Start Pro" })).toHaveAttribute("href", "/upgrade");
+    expect(screen.getByRole("button", { name: "Choose mode" })).toBeVisible();
+    expect(screen.queryByRole("button", { name: /Play.*again/i })).not.toBeInTheDocument();
+  });
+
+  it("uses the top action button to advance and open results after submitted rounds", async () => {
+    const user = userEvent.setup();
+    renderOrderAtlas();
+    await user.click(screen.getByRole("button", { name: /Start sample run/i }));
+
+    expect(within(orderCard()).getByRole("button", { name: "Submit order" })).toBeVisible();
+    await submitCurrentRound(user);
+    expect(within(orderCard()).queryByRole("button", { name: "Submit order" })).not.toBeInTheDocument();
+    await user.click(within(orderCard()).getByRole("button", { name: "Next round" }));
+    expect(screen.getByText(sampleRounds[1].highlightText)).toBeVisible();
+
+    await submitCurrentRound(user);
+    await user.click(within(orderCard()).getByRole("button", { name: "Next round" }));
+    await submitCurrentRound(user);
+    await user.click(within(orderCard()).getByRole("button", { name: "Open results" }));
+
     expect(screen.getByText("You finished the Order Atlas sample.")).toBeVisible();
   });
 
-  it("does not auto-scroll when advancing after a submitted round", async () => {
+  it("does not auto-scroll when advancing after a submitted round or opening final results", async () => {
     const user = userEvent.setup();
     const { scrollIntoView } = mockRevealScroll();
-    render(<OrderAtlasClient rounds={rounds} />);
+    renderOrderAtlas();
+    await user.click(screen.getByRole("button", { name: /Start sample run/i }));
 
     await submitCurrentRound(user);
     expect(scrollIntoView).toHaveBeenCalledTimes(1);
 
     await user.click(within(orderCard()).getByRole("button", { name: "Next round" }));
 
-    expect(screen.getByText(rounds[1].highlightText)).toBeVisible();
+    expect(screen.getByText(sampleRounds[1].highlightText)).toBeVisible();
     expect(scrollIntoView).toHaveBeenCalledTimes(1);
-  });
 
-  it("does not auto-scroll when opening final results", async () => {
-    const user = userEvent.setup();
-    const { scrollIntoView } = mockRevealScroll();
-    render(<OrderAtlasClient rounds={rounds} />);
-
-    await submitCurrentRound(user);
-    await user.click(within(orderCard()).getByRole("button", { name: "Next round" }));
     await submitCurrentRound(user);
     await user.click(within(orderCard()).getByRole("button", { name: "Next round" }));
     await submitCurrentRound(user);
@@ -313,4 +343,47 @@ function mockRevealScroll(prefersReducedMotion = false) {
   });
 
   return { scrollIntoView };
+}
+
+function makeRound(input: {
+  id: string;
+  eligibility: OrderAtlasPlayableRound["eligibility"];
+  prompt: string;
+  highlightText: string;
+  category: string;
+  difficulty?: OrderAtlasPlayableRound["difficulty"];
+}): OrderAtlasPlayableRound {
+  return {
+    id: input.id,
+    indicatorId: input.id.replace(/^order-/, ""),
+    category: input.category,
+    difficulty: input.difficulty ?? "standard",
+    eligibility: input.eligibility,
+    prompt: input.prompt,
+    highlightText: input.highlightText,
+    explanation:
+      input.id === SAMPLE_ORDER_ATLAS_ROUND_IDS[0]
+        ? "Hydro-heavy electricity systems rank above fossil-heavy systems."
+        : "The true order follows the published indicator values.",
+    selectedCountries: [
+      { iso3: "IND", name: "India", value: 19, formattedValue: "19" },
+      { iso3: "CAN", name: "Canada", value: 67, formattedValue: "67" },
+      { iso3: "BRA", name: "Brazil", value: 77, formattedValue: "77" },
+      { iso3: "ZAF", name: "South Africa", value: 6, formattedValue: "6" },
+      { iso3: "NOR", name: "Norway", value: 99, formattedValue: "99" }
+    ],
+    trueOrder: [
+      { iso3: "NOR", name: "Norway", value: 99, formattedValue: "99" },
+      { iso3: "BRA", name: "Brazil", value: 77, formattedValue: "77" },
+      { iso3: "CAN", name: "Canada", value: 67, formattedValue: "67" },
+      { iso3: "IND", name: "India", value: 19, formattedValue: "19" },
+      { iso3: "ZAF", name: "South Africa", value: 6, formattedValue: "6" }
+    ],
+    order: "desc",
+    unit: "percent of total electricity output",
+    year: 2024,
+    dateVintage: "2024",
+    sourceLabel: "World Bank",
+    sourceUrl: "https://example.com/source"
+  };
 }
