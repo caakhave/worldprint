@@ -102,7 +102,8 @@ describe("UpgradeClient", () => {
     expect(within(overview).getByText("Pattern Atlas Pattern Runs")).toBeVisible();
     expect(within(overview).getByText("Past Games archive")).toBeVisible();
     expect(within(overview).getByText("Advanced stats")).toBeVisible();
-    expect(within(overview).getByText("New challenges added every month")).toBeVisible();
+    expect(within(overview).getByText("New geography challenges added every month.")).toBeVisible();
+    expect(within(overview).queryByText(/new games every month/i)).not.toBeInTheDocument();
     expect(within(overview).getByText("Custom Atlas and Daily map puzzles")).toBeVisible();
     expect(within(overview).getByText("Pattern Runs and Daily rule puzzles")).toBeVisible();
     expect(within(overview).getByText("Intro sample available now")).toBeVisible();
@@ -170,7 +171,8 @@ describe("UpgradeClient", () => {
         "Train your world intuition across maps, patterns, and ordering challenges. Free accounts unlock Daily rounds and saved progress in Daily-enabled games. Pro opens supported advanced modes already live today."
       )
     ).toBeVisible();
-    expect(within(overview).getByText("New challenges added every month")).toBeVisible();
+    expect(within(overview).getByText("New geography challenges added every month.")).toBeVisible();
+    expect(within(overview).queryByText(/new games every month/i)).not.toBeInTheDocument();
     expect(screen.getAllByText("Best value").length).toBeGreaterThanOrEqual(1);
   });
 

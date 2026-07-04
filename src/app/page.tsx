@@ -140,6 +140,10 @@ export default function HomePage() {
               Mystery Map and Pattern Atlas have Daily modes. Order Atlas is playable now as an intro sample, with Daily and Pro
               modes coming next.
             </p>
+            <p className="atlas-growth-note">
+              <strong>New geography challenges added every month.</strong>
+              <span>Fresh maps, country patterns, and ordering challenges keep the atlas growing.</span>
+            </p>
             <div className="button-row">
               <Link className="button-secondary" href="/play">
                 Open game library

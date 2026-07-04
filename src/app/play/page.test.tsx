@@ -10,7 +10,10 @@ describe("PlayHubPage", () => {
     expect(screen.getByRole("heading", { name: "Three games, one atlas." })).toBeVisible();
     expect(screen.getByText(/No account is needed for samples/i)).toBeVisible();
     expect(screen.getByText(/Create a free account for Daily games and saved progress/i)).toBeVisible();
+    expect(screen.getByText("New geography challenges added every month.")).toBeVisible();
+    expect(screen.getByText("The atlas keeps growing with new maps, patterns, and ordering challenges.")).toBeVisible();
     expect(screen.queryByText(/two playable games/i)).not.toBeInTheDocument();
+    expect(screen.queryByText(/new games every month/i)).not.toBeInTheDocument();
     expect(screen.getByRole("heading", { name: "Mystery Map" })).toBeVisible();
     expect(screen.getByRole("heading", { name: "Pattern Atlas" })).toBeVisible();
     expect(screen.getByRole("heading", { name: "Order Atlas" })).toBeVisible();

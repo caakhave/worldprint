@@ -132,7 +132,7 @@ export function UpgradeClient() {
             <li>Pattern Atlas Pattern Runs</li>
             <li>Past Games archive</li>
             <li>Advanced stats</li>
-            <li>New challenges added every month</li>
+            <li>New geography challenges added every month.</li>
           </ul>
           <div className="upgrade-game-strip" aria-label="Current Can You Geo games">
             <article className="upgrade-game-tile" data-game="mystery-map">

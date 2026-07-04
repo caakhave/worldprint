@@ -64,7 +64,10 @@ describe("HomePage", () => {
     expect(screen.getByText(/Pattern Atlas highlights countries and hides the connection/i)).toBeVisible();
     expect(screen.getByText(/Order Atlas turns country rankings into a quick intro challenge/i)).toBeVisible();
     expect(screen.getByRole("heading", { name: "Choose your geography game." })).toBeVisible();
+    expect(screen.getByText("New geography challenges added every month.")).toBeVisible();
+    expect(screen.getByText("Fresh maps, country patterns, and ordering challenges keep the atlas growing.")).toBeVisible();
     expect(screen.getByText(/Order Atlas is playable now as an intro sample, with Daily and Pro modes coming next/i)).toBeVisible();
+    expect(screen.queryByText(/new games every month/i)).not.toBeInTheDocument();
     expect(screen.getByRole("link", { name: /Open game library/i })).toHaveAttribute("href", "/play");
     expect(screen.getByRole("link", { name: /Open Mystery Map/i })).toHaveAttribute("href", "/play/mystery-map");
     expect(screen.getByRole("link", { name: /Open Pattern Atlas/i })).toHaveAttribute("href", "/play/pattern-atlas");

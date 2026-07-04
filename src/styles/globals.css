@@ -2459,6 +2459,36 @@ button:disabled {
   line-height: 1.58;
 }
 
+.atlas-growth-note {
+  display: inline-grid;
+  gap: 0.25rem;
+  max-width: 34rem;
+  margin: 0;
+  border: 1px solid rgb(164 216 205 / 0.24);
+  border-radius: 8px;
+  padding: 0.65rem 0.75rem;
+  color: rgb(242 234 220 / 0.8);
+  background:
+    linear-gradient(145deg, rgb(215 168 75 / 0.1), transparent 62%),
+    rgb(4 42 47 / 0.3);
+  box-shadow: 0 14px 34px rgb(0 0 0 / 0.14);
+  line-height: 1.45;
+}
+
+.atlas-growth-note strong {
+  color: var(--signal);
+  font-family: var(--font-mono);
+  font-size: 0.78rem;
+  font-weight: 850;
+  letter-spacing: 0;
+  text-transform: uppercase;
+}
+
+.atlas-growth-note span {
+  color: rgb(222 210 189 / 0.82);
+  font-size: 0.95rem;
+}
+
 .play-hub-cta {
   display: grid;
   grid-template-columns: minmax(0, 1fr) auto;

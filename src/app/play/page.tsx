@@ -34,6 +34,10 @@ export default function PlayHubPage() {
             No account is needed for samples. Create a free account for Daily games and saved progress. Pro unlocks deeper custom
             runs where a game already supports them.
           </p>
+          <p className="atlas-growth-note">
+            <strong>New geography challenges added every month.</strong>
+            <span>The atlas keeps growing with new maps, patterns, and ordering challenges.</span>
+          </p>
         </div>
         <GameLibraryShowcase ariaLabel="Can You Geo public game library" />
       </section>
