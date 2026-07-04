@@ -20,7 +20,7 @@ describe("SignInPage", () => {
     expect(screen.getByText("Your account identity comes first. Checkout only starts after you are signed in.")).toBeVisible();
     expect(screen.getByText("Choose monthly or yearly Pro, then complete secure Stripe checkout after signing in.")).toBeVisible();
     expect(
-      screen.getByText("Create a free account for daily geography challenges, saved progress where supported, streaks, and basic stats.")
+      screen.getByText("Create a free account for daily geography challenges and, where supported, saved progress, streaks, and basic stats.")
     ).toBeVisible();
     expect(screen.getByText("Use the same email and password to keep your atlas connected.")).toBeVisible();
     expect(screen.queryByText(/3 fresh maps every day/i)).not.toBeInTheDocument();
