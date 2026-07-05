@@ -1,7 +1,7 @@
 {
   "schemaVersion": "1.0.0",
   "game": "order-atlas",
-  "contentVersion": "2026.07.03-order-atlas-expanded",
+  "contentVersion": "2026.07.05-order-atlas-prelaunch-expansion",
   "rounds": [
     {
       "id": "order-renewable-electricity-grid-mix",
@@ -961,6 +961,174 @@
       "difficulty": "expert",
       "eligibility": "practice",
       "explanation": "Fixed broadband access rewards thinking about household infrastructure and mature wired networks, not just mobile connectivity.",
+      "sourceMode": "mystery-map-indicator"
+    },
+    {
+      "id": "order-gdp-per-capita-current-usd",
+      "indicatorId": "gdp-per-capita",
+      "prompt": "Put these countries in order by GDP per capita, highest to lowest.",
+      "highlightText": "GDP per capita",
+      "countryIso3": ["LUX", "USA", "JPN", "BRA", "IND", "BDI"],
+      "order": "desc",
+      "difficulty": "intro",
+      "eligibility": "daily",
+      "explanation": "This round uses wide income gaps, from a very high-income European economy to large emerging economies and lower-income countries.",
+      "sourceMode": "mystery-map-indicator"
+    },
+    {
+      "id": "order-infant-mortality-rate",
+      "indicatorId": "infant-mortality",
+      "prompt": "Put these countries in order by infant mortality, lowest to highest.",
+      "highlightText": "infant mortality",
+      "countryIso3": ["JPN", "BRA", "IND", "NGA", "SSD"],
+      "order": "asc",
+      "difficulty": "standard",
+      "eligibility": "practice",
+      "explanation": "The ordering follows large differences in child health conditions and health-system access, with clear separation between low- and high-mortality countries.",
+      "sourceMode": "mystery-map-indicator"
+    },
+    {
+      "id": "order-uhc-service-coverage",
+      "indicatorId": "uhc-service-coverage",
+      "prompt": "Put these countries in order by universal health coverage service index, highest to lowest.",
+      "highlightText": "universal health coverage service index",
+      "countryIso3": ["CAN", "BRA", "IND", "ETH", "TCD"],
+      "order": "desc",
+      "difficulty": "standard",
+      "eligibility": "daily",
+      "explanation": "The service-coverage index creates a readable health-access gradient across high-, middle-, and lower-coverage systems.",
+      "sourceMode": "mystery-map-indicator"
+    },
+    {
+      "id": "order-safely-managed-drinking-water",
+      "indicatorId": "safely-managed-drinking-water",
+      "prompt": "Put these countries in order by safely managed drinking water access, highest to lowest.",
+      "highlightText": "safely managed drinking water access",
+      "countryIso3": ["NLD", "BRA", "IND", "ETH", "TCD"],
+      "order": "desc",
+      "difficulty": "intro",
+      "eligibility": "practice",
+      "explanation": "Water-service access makes a fair ordering round because the selected countries sit far apart across near-universal, partial, and very limited coverage.",
+      "sourceMode": "mystery-map-indicator"
+    },
+    {
+      "id": "order-low-elevation-coastal-population",
+      "indicatorId": "low-elevation-coastal-population",
+      "prompt": "Put these countries in order by low-elevation coastal population share, highest to lowest.",
+      "highlightText": "low-elevation coastal population share",
+      "countryIso3": ["NLD", "VNM", "BGD", "CHN", "USA", "ETH"],
+      "order": "desc",
+      "difficulty": "expert",
+      "eligibility": "expert-only",
+      "explanation": "This round rewards coastal geography: deltas and low-lying coasts outrank large countries where most people live inland.",
+      "sourceMode": "mystery-map-indicator"
+    },
+    {
+      "id": "order-air-passengers-carried",
+      "indicatorId": "air-passengers",
+      "prompt": "Put these countries in order by air passengers carried, highest to lowest.",
+      "highlightText": "air passengers carried",
+      "countryIso3": ["USA", "CHN", "IND", "TUR", "CAN", "ZAF"],
+      "order": "desc",
+      "difficulty": "standard",
+      "eligibility": "practice",
+      "explanation": "Large domestic markets and major aviation hubs separate the top of the list from smaller or more regional air networks.",
+      "sourceMode": "mystery-map-indicator"
+    },
+    {
+      "id": "order-container-port-traffic",
+      "indicatorId": "container-port-traffic",
+      "prompt": "Put these countries in order by container port traffic, highest to lowest.",
+      "highlightText": "container port traffic",
+      "countryIso3": ["CHN", "USA", "KOR", "JPN", "BRA", "ZAF"],
+      "order": "desc",
+      "difficulty": "standard",
+      "eligibility": "practice",
+      "explanation": "Container traffic turns trade geography into an ordering puzzle, with manufacturing scale and major ports driving the ranking.",
+      "sourceMode": "mystery-map-indicator"
+    },
+    {
+      "id": "order-cereal-production-volume",
+      "indicatorId": "cereal-production",
+      "prompt": "Put these countries in order by cereal production, highest to lowest.",
+      "highlightText": "cereal production",
+      "countryIso3": ["CHN", "USA", "IND", "BRA", "RUS", "EGY"],
+      "order": "desc",
+      "difficulty": "standard",
+      "eligibility": "practice",
+      "explanation": "The biggest cereal producers combine large populations, broad farming regions, and major grain belts.",
+      "sourceMode": "mystery-map-indicator"
+    },
+    {
+      "id": "order-arable-land-area-total",
+      "indicatorId": "arable-land-area",
+      "prompt": "Put these countries in order by total arable land area, highest to lowest.",
+      "highlightText": "total arable land area",
+      "countryIso3": ["IND", "RUS", "CHN", "BRA", "CAN", "EGY"],
+      "order": "desc",
+      "difficulty": "standard",
+      "eligibility": "practice",
+      "explanation": "This is a land-scale puzzle: very large countries do not always rank above densely farmed countries with extensive cropland.",
+      "sourceMode": "mystery-map-indicator"
+    },
+    {
+      "id": "order-remittances-share-gdp",
+      "indicatorId": "remittances",
+      "prompt": "Put these countries in order by remittances received as a share of GDP, highest to lowest.",
+      "highlightText": "remittances received as a share of GDP",
+      "countryIso3": ["TJK", "NPL", "SLV", "PHL", "IND", "USA"],
+      "order": "desc",
+      "difficulty": "expert",
+      "eligibility": "expert-only",
+      "explanation": "Remittance dependence is not about total population; smaller economies with large diasporas can rank far above huge economies.",
+      "sourceMode": "mystery-map-indicator"
+    },
+    {
+      "id": "order-hospital-beds-density",
+      "indicatorId": "hospital-beds",
+      "prompt": "Put these countries in order by hospital beds per 1,000 people, highest to lowest.",
+      "highlightText": "hospital beds per 1,000 people",
+      "countryIso3": ["KOR", "BLR", "BGR", "USA", "BRA", "TCD"],
+      "order": "desc",
+      "difficulty": "expert",
+      "eligibility": "practice",
+      "explanation": "Hospital-bed density varies sharply by health-system structure, age profile, and infrastructure, making the ranking less obvious than income alone.",
+      "sourceMode": "mystery-map-indicator"
+    },
+    {
+      "id": "order-communicable-death-share",
+      "indicatorId": "communicable-death-share",
+      "prompt": "Put these countries in order by communicable disease share of deaths, highest to lowest.",
+      "highlightText": "communicable disease share of deaths",
+      "countryIso3": ["TCD", "NGA", "IND", "BRA", "CHN", "FIN"],
+      "order": "desc",
+      "difficulty": "expert",
+      "eligibility": "expert-only",
+      "explanation": "The share is highest where infectious disease burdens remain large and lowest where noncommunicable diseases dominate mortality.",
+      "sourceMode": "mystery-map-indicator"
+    },
+    {
+      "id": "order-capture-fisheries-production",
+      "indicatorId": "capture-fisheries-production",
+      "prompt": "Put these countries in order by capture fisheries production, highest to lowest.",
+      "highlightText": "capture fisheries production",
+      "countryIso3": ["CHN", "IDN", "IND", "PER", "RUS", "USA"],
+      "order": "desc",
+      "difficulty": "standard",
+      "eligibility": "practice",
+      "explanation": "Fishing output reflects long coastlines, productive waters, fleet scale, and major maritime food systems.",
+      "sourceMode": "mystery-map-indicator"
+    },
+    {
+      "id": "order-air-pollution-mortality",
+      "indicatorId": "air-pollution-mortality",
+      "prompt": "Put these countries in order by air pollution mortality rate, highest to lowest.",
+      "highlightText": "air pollution mortality rate",
+      "countryIso3": ["CAF", "AFG", "IND", "CHN", "BRA", "CAN"],
+      "order": "desc",
+      "difficulty": "expert",
+      "eligibility": "practice",
+      "explanation": "Mortality from air pollution reflects exposure, baseline health, indoor and outdoor pollution, and health-system capacity.",
       "sourceMode": "mystery-map-indicator"
     }
   ]
