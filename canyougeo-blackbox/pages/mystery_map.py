@@ -11,6 +11,12 @@ from utils.assertions import assert_no_horizontal_overflow
 class MysteryMapPage(BasePage):
     path = "/play/mystery-map/"
 
+    def expect_first_run_intro_cta_cleanup(self) -> None:
+        intro = self.page.get_by_label(re.compile("First run intro", re.I))
+        expect(intro).to_be_visible()
+        expect(intro.get_by_role("button", name=re.compile(r"^Start map 1$", re.I))).to_be_visible()
+        expect(intro.get_by_role("button", name=re.compile(r"^Skip intro$", re.I))).to_have_count(0)
+
     def start_signed_out_sample(self) -> None:
         self.clear_storage()
         self.goto()
@@ -18,6 +24,7 @@ class MysteryMapPage(BasePage):
         if analyst.count() > 0:
             analyst.check()
         self.page.get_by_role("button", name=re.compile("Try the 5-map Sample Run|Play Sample Run|Try Sample Run", re.I)).click()
+        self.expect_first_run_intro_cta_cleanup()
         self.page.get_by_label(re.compile("First run intro", re.I)).get_by_role("button", name=re.compile("Start map 1", re.I)).click()
         expect(self.page.get_by_role("heading", name=re.compile("What does this map measure", re.I))).to_be_visible()
 
