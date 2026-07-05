@@ -1,23 +1,33 @@
 import nextVitals from "eslint-config-next/core-web-vitals";
 import nextTs from "eslint-config-next/typescript";
 
+const ignores = [
+  ".next/**",
+  "out/**",
+  "node_modules/**",
+  "coverage/**",
+  "playwright-report/**",
+  "test-results/**",
+  "output/**",
+  "canyougeo-blackbox/.venv/**",
+  "canyougeo-blackbox/.pytest_cache/**",
+  "canyougeo-blackbox/**/__pycache__/**",
+  "canyougeo-blackbox/reports/**",
+  "canyougeo-blackbox/exports/*.zip",
+  "canyougeo-blackbox/.env",
+  "generated/raw/**",
+  "supabase/functions/**",
+  "public/data/v1/**",
+  "public/maps/**"
+];
+
 const config = [
+  {
+    ignores
+  },
   ...nextVitals,
   ...nextTs,
   {
-    ignores: [
-      ".next/**",
-      "out/**",
-      "node_modules/**",
-      "coverage/**",
-      "playwright-report/**",
-      "test-results/**",
-      "output/**",
-      "generated/raw/**",
-      "supabase/functions/**",
-      "public/data/v1/**",
-      "public/maps/**"
-    ],
     rules: {
       "react-hooks/set-state-in-effect": "off"
     }

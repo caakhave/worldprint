@@ -2478,9 +2478,6 @@ function FirstRunIntro({ tier, onContinue }: { tier: Tier; onContinue: () => voi
           <button className="button" type="button" onClick={onContinue}>
             Start map 1
           </button>
-          <button className="button-secondary" type="button" onClick={onContinue}>
-            Skip intro
-          </button>
         </div>
       </div>
     </section>

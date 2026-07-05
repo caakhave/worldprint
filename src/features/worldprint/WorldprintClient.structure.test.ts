@@ -28,6 +28,18 @@ describe("WorldprintClient UI structure", () => {
     expect(styles).toContain("justify-items: center");
   });
 
+  it("keeps the first-run intro to one clear start action", () => {
+    const introIndex = source.indexOf('aria-label="First run intro"');
+    const introEnd = source.indexOf("function CompletionSummary", introIndex);
+    const introSource = source.slice(introIndex, introEnd);
+
+    expect(introIndex).toBeGreaterThan(0);
+    expect(introEnd).toBeGreaterThan(introIndex);
+    expect(introSource).toContain("Start map 1");
+    expect(introSource).not.toContain("Skip intro");
+    expect(introSource.match(/onClick=\{onContinue\}/g)).toHaveLength(1);
+  });
+
   it("keeps Practice, Past Games, replay, and stats visually secondary in the lobby", () => {
     expect(source).toContain("More ways to play");
     expect(source).toContain('aria-label="More ways to play"');
