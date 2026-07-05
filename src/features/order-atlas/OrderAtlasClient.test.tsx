@@ -315,6 +315,43 @@ describe("OrderAtlasClient", () => {
     expect(container).not.toHaveTextContent(/MVP|hidden route|early playable|pre-production/i);
   });
 
+  it("starts a fresh playable Sample Run from the lobby after a completed sample is saved", async () => {
+    const user = userEvent.setup();
+    renderOrderAtlas();
+    await user.click(screen.getByRole("button", { name: /Start sample run/i }));
+    await completeCurrentRun(user);
+
+    await waitFor(() => expect(window.localStorage.getItem(ORDER_ATLAS_STORAGE_KEY)).toContain('"status":"complete"'));
+    expect(screen.getByText("You finished the Order Atlas sample.")).toBeVisible();
+
+    await user.click(screen.getByRole("button", { name: "Back to game options" }));
+    expect(screen.getByRole("heading", { name: "Order Atlas Sample Run" })).toBeVisible();
+    expect(screen.getByRole("button", { name: /Play sample again/i })).toBeVisible();
+
+    await user.click(screen.getByRole("button", { name: /Play sample again/i }));
+
+    expect(screen.getByRole("heading", { name: "Move the cards into order." })).toBeVisible();
+    expect(screen.getByText("1/3")).toBeVisible();
+    expect(screen.getByText(sampleRounds[0].highlightText)).toHaveClass("order-atlas-challenge-highlight");
+    expect(screen.queryByText("You finished the Order Atlas sample.")).not.toBeInTheDocument();
+  });
+
+  it("starts a fresh playable Sample Run from the completed result action", async () => {
+    const user = userEvent.setup();
+    renderOrderAtlas();
+    await user.click(screen.getByRole("button", { name: /Start sample run/i }));
+    await completeCurrentRun(user);
+
+    expect(screen.getByText("You finished the Order Atlas sample.")).toBeVisible();
+
+    await user.click(screen.getByRole("button", { name: "Play sample again" }));
+
+    expect(screen.getByRole("heading", { name: "Move the cards into order." })).toBeVisible();
+    expect(screen.getByText("1/3")).toBeVisible();
+    expect(screen.getByText(sampleRounds[0].highlightText)).toHaveClass("order-atlas-challenge-highlight");
+    expect(screen.queryByText("You finished the Order Atlas sample.")).not.toBeInTheDocument();
+  });
+
   it("does not offer impossible Daily replay after a Free Daily completion", async () => {
     const user = userEvent.setup();
     setAccount(FREE_ENTITLEMENT, true);
@@ -414,6 +451,15 @@ describe("OrderAtlasClient", () => {
 
 async function submitCurrentRound(user: ReturnType<typeof userEvent.setup>) {
   await user.click(screen.getByRole("button", { name: "Submit order" }));
+}
+
+async function completeCurrentRun(user: ReturnType<typeof userEvent.setup>) {
+  await submitCurrentRound(user);
+  await user.click(within(orderCard()).getByRole("button", { name: "Next round" }));
+  await submitCurrentRound(user);
+  await user.click(within(orderCard()).getByRole("button", { name: "Next round" }));
+  await submitCurrentRound(user);
+  await user.click(within(orderCard()).getByRole("button", { name: "Open results" }));
 }
 
 function cardOrder(): string[] {

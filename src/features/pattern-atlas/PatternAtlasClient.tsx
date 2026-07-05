@@ -269,7 +269,8 @@ export function PatternAtlasClient({ initialData, todayOverride }: PatternAtlasC
     if (mode === "practice" && !isProAccount) return;
 
     const existing = mode === "sample" ? currentSampleRun : mode === "daily" ? currentDailyRun : currentPracticeRun;
-    if (!options.fresh && existing) {
+    const canResumeExisting = mode === "sample" ? existing?.status === "active" : Boolean(existing);
+    if (!options.fresh && existing && canResumeExisting) {
       setRun(existing);
       scrollToTop();
       return;
@@ -707,7 +708,7 @@ function PatternAtlasLobby({
   onStart: (mode: PatternAtlasRunMode, options?: { fresh?: boolean; setup?: PatternAtlasRunSetup }) => void;
 }) {
   const dailyActionLabel = currentDailyRun?.status === "complete" ? "View Pattern Atlas Daily" : currentDailyRun ? "Resume Pattern Atlas Daily" : "Start Pattern Atlas Daily";
-  const sampleActionLabel = currentSampleRun?.status === "complete" ? "View Sample Run" : currentSampleRun ? "Resume Sample Run" : "Start sample run";
+  const sampleActionLabel = currentSampleRun?.status === "active" ? "Resume Sample Run" : currentSampleRun?.status === "complete" ? "Play sample again" : "Start sample run";
   const practiceActionLabel = currentPracticeRun?.status === "active" ? "Start new Pattern Run" : "Start Pattern Run";
 
   return (

@@ -266,7 +266,8 @@ export function OrderAtlasClient({ rounds, todayOverride }: OrderAtlasClientProp
     if (mode === "practice" && !isProAccount) return;
 
     const existing = mode === "sample" ? currentSampleRun : mode === "daily" ? currentDailyRun : currentPracticeRun;
-    if (!options.fresh && existing) {
+    const canResumeExisting = mode === "sample" ? existing?.status === "active" : Boolean(existing);
+    if (!options.fresh && existing && canResumeExisting) {
       setRun(existing);
       scrollToTop();
       return;
@@ -594,7 +595,7 @@ function OrderAtlasLobby({
   currentPracticeRun: OrderAtlasRunState | null;
   onStart: (mode: OrderAtlasRunMode, options?: { fresh?: boolean }) => void;
 }) {
-  const sampleActionLabel = currentSampleRun?.status === "complete" ? "View Sample Run" : currentSampleRun ? "Resume Sample Run" : "Start sample run";
+  const sampleActionLabel = currentSampleRun?.status === "active" ? "Resume Sample Run" : currentSampleRun?.status === "complete" ? "Play sample again" : "Start sample run";
   const dailyActionLabel = currentDailyRun?.status === "complete" ? "Review today's Daily" : currentDailyRun ? "Resume Order Atlas Daily" : "Start Order Atlas Daily";
   const proPlayActionLabel = currentPracticeRun?.status === "active" ? "Continue Order Atlas Play" : "Start Order Atlas Play";
   const accountFact = entitlementLoading ? "Checking account" : isProAccount ? "Pro account" : signedIn ? "Free account" : "No account needed";

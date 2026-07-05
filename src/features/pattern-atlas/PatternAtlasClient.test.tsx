@@ -455,6 +455,33 @@ describe("PatternAtlasClient", () => {
     expect(screen.getByRole("button", { name: "Choose mode" })).toBeVisible();
   });
 
+  it("starts a fresh playable Sample Run from the lobby after a completed sample is saved", async () => {
+    const user = userEvent.setup();
+    renderPatternAtlas();
+
+    await completeSampleRun(user);
+    await user.click(screen.getByRole("button", { name: "Choose mode" }));
+
+    expect(screen.getByRole("heading", { name: "Pattern Atlas Sample Run" })).toBeVisible();
+    await user.click(screen.getByRole("button", { name: /Play sample again/i }));
+
+    expect(screen.getByRole("heading", { name: "What pattern connects these countries?" })).toBeVisible();
+    expect(screen.getByRole("heading", { name: "Which rule is shown?" })).toBeVisible();
+    expect(screen.queryByText("Pattern Atlas Sample Run complete")).not.toBeInTheDocument();
+  });
+
+  it("starts a fresh playable Sample Run from the completed result action", async () => {
+    const user = userEvent.setup();
+    renderPatternAtlas();
+
+    await completeSampleRun(user);
+    await user.click(screen.getByRole("button", { name: "Play again" }));
+
+    expect(screen.getByRole("heading", { name: "What pattern connects these countries?" })).toBeVisible();
+    expect(screen.getByRole("heading", { name: "Which rule is shown?" })).toBeVisible();
+    expect(screen.queryByText("Pattern Atlas Sample Run complete")).not.toBeInTheDocument();
+  });
+
   it("does not show logged-out signup copy on logged-in Free or Pro completions", async () => {
     const user = userEvent.setup();
     const dailyIds = selectPatternAtlasDailyRuleIds(PATTERN_ATLAS_RULES, PATTERN_ATLAS_CATALOG.contentVersion, "2026-07-03");
