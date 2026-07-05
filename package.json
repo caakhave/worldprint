@@ -23,6 +23,7 @@
     "qa:blackbox:local": "cd canyougeo-blackbox && CGY_TARGET=local pytest --html=reports/local.html --self-contained-html",
     "qa:blackbox:smoke": "cd canyougeo-blackbox && CGY_TARGET=test pytest -m smoke --html=reports/smoke.html --self-contained-html",
     "qa:blackbox:mobile": "cd canyougeo-blackbox && CGY_TARGET=test pytest -m mobile --html=reports/mobile.html --self-contained-html",
+    "qa:blackbox:operator": "cd canyougeo-blackbox && python tools/qa_operator_summary.py",
     "qa:blackbox:export": "cd canyougeo-blackbox && python tools/export_suite.py"
   },
   "dependencies": {

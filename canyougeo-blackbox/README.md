@@ -4,6 +4,14 @@ External pytest + Playwright smoke tests for deployed Can You Geo hosts.
 
 This suite is intentionally separate from the app's internal Vitest and TypeScript Playwright tests. It treats the site as a black box and targets stable public routes, roles, text, and a small set of `data-testid` selectors exposed for QA.
 
+## Coverage And Staging Checklist
+
+- Coverage contract: [QA_COVERAGE_CONTRACT.md](QA_COVERAGE_CONTRACT.md)
+- Staging launch checklist: [../docs/qa/STAGING_LAUNCH_CHECKLIST.md](../docs/qa/STAGING_LAUNCH_CHECKLIST.md)
+- Operator summary:
+  - from the repo root: `pnpm qa:blackbox:operator`
+  - from this suite folder: `python tools/qa_operator_summary.py`
+
 ## Setup
 
 ```bash
@@ -84,6 +92,7 @@ CGY_TARGET=www pytest --html=reports/www.html --self-contained-html
 Root package shortcuts are also available from the app repo root:
 
 ```bash
+pnpm qa:blackbox:operator
 pnpm qa:blackbox:smoke
 pnpm qa:blackbox:mobile
 pnpm qa:blackbox:test
