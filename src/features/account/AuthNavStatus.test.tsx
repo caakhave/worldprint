@@ -1,7 +1,10 @@
+import { readFileSync } from "node:fs";
 import { render, screen, waitFor } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
 import { beforeEach, describe, expect, it, vi } from "vitest";
 import { AuthNavStatus } from "@/features/account/AuthNavStatus";
+
+const styles = readFileSync("src/styles/globals.css", "utf8");
 
 type BillingMockClient = {
   auth: { getSession: ReturnType<typeof vi.fn> };
@@ -122,7 +125,7 @@ describe("AuthNavStatus", () => {
     expect(screen.getByText("Menu")).toHaveClass("account-nav-action");
     await user.click(menuControl);
     expect(screen.getByRole("menuitem", { name: "View account" })).toHaveAttribute("href", "/account");
-    expect(screen.getByRole("menuitem", { name: "Saved stats" })).toHaveAttribute("href", "/account/stats");
+    expect(screen.getByRole("menuitem", { name: "Saved stats" })).toHaveAttribute("href", "/account/stats#saved-stats");
     expect(screen.getByRole("menuitem", { name: "Compare plans" })).toHaveAttribute("href", "/upgrade");
     expect(screen.queryByRole("menuitem", { name: "Manage billing" })).not.toBeInTheDocument();
     await user.click(screen.getByRole("menuitem", { name: "Sign out" }));
@@ -134,6 +137,17 @@ describe("AuthNavStatus", () => {
     expect(screen.getByRole("link", { name: "Start Pro" })).toHaveAttribute("href", "/upgrade");
     expect(screen.getByRole("link", { name: "Sign in" })).toHaveAttribute("href", "/sign-in");
     expect(screen.queryByText("user_123")).not.toBeInTheDocument();
+  });
+
+  it("keeps the signed-in header compact and overflow-resistant on small phones", () => {
+    expect(styles).toContain("@media (max-width: 720px)");
+    expect(styles).toContain("grid-template-columns: minmax(0, 1fr) auto;");
+    expect(styles).toContain("grid-row: 1;");
+    expect(styles).toContain("grid-row: 2;");
+    expect(styles).toContain(".account-nav-control-signed-in");
+    expect(styles).toContain("max-width: min(48vw, 16rem);");
+    expect(styles).toContain(".site-header .account-nav-email");
+    expect(styles).toContain("display: none;");
   });
 
   it("calls the customer portal action for Stripe-backed Pro accounts", async () => {

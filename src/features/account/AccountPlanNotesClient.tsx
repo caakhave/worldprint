@@ -75,7 +75,7 @@ export function AccountPlanNotesClient() {
         <span className="account-action-stat">
           {localRecordCount} local record{localRecordCount === 1 ? "" : "s"}
         </span>
-        <Link className="button-secondary" href="/account/stats">
+        <Link className="button-secondary" href="/account/stats#saved-stats">
           Open stats
         </Link>
       </article>

@@ -24,7 +24,7 @@ export function AccountHeroClient() {
           <Link className="button" href={connected ? "/play" : "/upgrade"}>
             {connected ? "Open game library" : "Start Pro"}
           </Link>
-          <Link className="button-secondary" href={connected ? "/account/stats" : "/sign-up"}>
+          <Link className="button-secondary" href={connected ? "/account/stats#saved-stats" : "/sign-up"}>
             {connected ? "View saved stats" : "Continue free"}
           </Link>
         </div>

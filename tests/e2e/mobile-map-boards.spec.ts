@@ -28,6 +28,18 @@ async function expectNoHorizontalOverflow(page: Page) {
   expect(hasOverflow).toBe(false);
 }
 
+async function expectCompactMobileHeader(page: Page) {
+  const header = page.locator(".site-header");
+  await expect(header).toBeVisible();
+  const headerBox = await header.boundingBox();
+  const viewport = page.viewportSize();
+
+  expect(headerBox).not.toBeNull();
+  expect(viewport).not.toBeNull();
+  expect(headerBox!.height).toBeLessThan(130);
+  expect(headerBox!.width).toBeLessThanOrEqual(viewport!.width + 1);
+}
+
 async function expectVisibleMapBoard(page: Page, boardTestId: string) {
   const board = page.getByTestId(boardTestId);
   const frame = board.locator(".map-frame");
@@ -77,6 +89,7 @@ for (const viewport of MOBILE_VIEWPORTS) {
     await page.getByLabel("First run intro").getByRole("button", { name: "Start map 1" }).click();
     await expect(page.getByRole("heading", { name: /What does this map measure/i })).toBeVisible();
 
+    await expectCompactMobileHeader(page);
     await expectVisibleMapBoard(page, "mystery-map-board");
 
     await page.locator('.country-path[data-iso3="CAN"]').first().tap();
@@ -95,6 +108,7 @@ for (const viewport of MOBILE_VIEWPORTS) {
     await page.goto(atlasMasterChallengePath());
     await page.getByRole("button", { name: /Play the challenge/i }).click();
     await expect(page.getByRole("heading", { name: /What does this map measure/i })).toBeVisible();
+    await expectCompactMobileHeader(page);
 
     const search = page.getByLabel("Search playable map catalog");
     await search.fill("age");
@@ -113,6 +127,7 @@ for (const viewport of MOBILE_VIEWPORTS) {
     await page.getByRole("button", { name: /Start sample run/i }).click();
     await expect(page.getByRole("heading", { name: /What pattern connects these countries/i })).toBeVisible();
 
+    await expectCompactMobileHeader(page);
     await expectVisibleMapBoard(page, "pattern-atlas-board");
   });
 }

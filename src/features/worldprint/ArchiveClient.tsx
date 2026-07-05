@@ -140,7 +140,7 @@ export function ArchiveCard({
       <div className="archive-card-action" data-state={hasCompletion ? "saved" : signedIn ? "open" : "guest"}>
         <Link
           className="button"
-          href={hasCompletion ? `/play/mystery-map/${entry.date}?review=1` : signedIn ? `/play/mystery-map/${entry.date}` : "/sign-up"}
+          href={hasCompletion ? `/play/mystery-map/${entry.date}?review=1#past-game-result` : signedIn ? `/play/mystery-map/${entry.date}` : "/sign-up"}
           onClick={() =>
             trackCanYouGeoEvent(signedIn ? "cgy_past_game_opened" : "cgy_sign_in_clicked", {
               source: "past_games_card",

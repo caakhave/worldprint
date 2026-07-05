@@ -15,6 +15,7 @@ describe("AccountStatsPage", () => {
     const { container } = render(<AccountStatsPage />);
 
     const layout = container.querySelector(".account-stats-layout");
+    expect(container.querySelector("#saved-stats")).toBeTruthy();
     expect(layout).toBeTruthy();
     expect(layout?.querySelector(".stats-panel")).toBeTruthy();
     expect(screen.getByRole("region", { name: "Your stats" })).toBeVisible();

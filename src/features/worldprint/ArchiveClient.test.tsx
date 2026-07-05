@@ -63,7 +63,7 @@ describe("ArchiveCard", () => {
     expect(screen.getByText("Saved to account")).toBeVisible();
     expect(screen.getByText("4,200 points")).toBeVisible();
     expect(screen.getByText("Jun 24, 2026")).toBeVisible();
-    expect(screen.getByRole("link", { name: "View result" })).toHaveAttribute("href", "/play/mystery-map/2026-06-24?review=1");
+    expect(screen.getByRole("link", { name: "View result" })).toHaveAttribute("href", "/play/mystery-map/2026-06-24?review=1#past-game-result");
     expect(screen.getByRole("link", { name: "Replay for practice" })).toBeVisible();
     expect(screen.getByText("Saved result")).toBeVisible();
     expect(screen.getByText(/Today's Daily score will not change/i)).toBeVisible();

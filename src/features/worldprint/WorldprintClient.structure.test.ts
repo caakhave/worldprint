@@ -207,6 +207,12 @@ describe("WorldprintClient UI structure", () => {
     expect(source).toContain(`const resultActionLabel = completedDailyRun ? "View today's result" : "View saved stats";`);
     expect(source).toContain("setRun(completedDailyRun);");
     expect(source).toContain("window.requestAnimationFrame(() => window.scrollTo(0, 0));");
+    expect(source).toContain('href="/account/stats#saved-stats"');
+    expect(source).toContain("?review=1#past-game-result");
+    expect(source).toContain('id="past-game-result"');
+    expect(styles).toContain("#saved-stats");
+    expect(styles).toContain("#past-game-result");
+    expect(styles).toContain("scroll-margin-top: 6rem;");
   });
 
   it("distinguishes Pro Atlas from today's Daily Challenge in the Pro lobby", () => {

@@ -12,7 +12,7 @@ export const metadata: Metadata = pageMetadata({
 
 export default function AccountStatsPage() {
   return (
-    <section className="account-page account-page-shell page-shell" aria-labelledby="stats-title">
+    <section id="saved-stats" className="account-page account-page-shell page-shell" aria-labelledby="stats-title">
       <div className="account-hero">
         <p className="eyebrow">Saved record</p>
         <h1 id="stats-title" className="page-title">

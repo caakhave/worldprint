@@ -165,7 +165,7 @@ describe("AccountStatusClient", () => {
     expect(screen.queryByText("Import local runs from your stats page.")).not.toBeInTheDocument();
     expect(screen.queryByText("Move guest plays into this account.")).not.toBeInTheDocument();
     expect(screen.queryByText("11111111-2222-4333-8444-555555555555")).not.toBeInTheDocument();
-    expect(screen.getByRole("link", { name: "View saved stats" })).toHaveAttribute("href", "/account/stats");
+    expect(screen.getByRole("link", { name: "View saved stats" })).toHaveAttribute("href", "/account/stats#saved-stats");
     expect(screen.getByRole("link", { name: "Compare plans" })).toHaveAttribute("href", "/upgrade");
     expect(screen.getByRole("link", { name: "Email support" })).toHaveAttribute("href", CONTACT_LINKS.accountHelp.href);
     expect(screen.getByRole("button", { name: "Sign out" })).toBeVisible();
@@ -185,7 +185,7 @@ describe("AccountStatusClient", () => {
 
     expect(await screen.findByText("Move guest plays into this account.")).toBeVisible();
     expect(screen.getByText("If you played sample or guest maps in this browser before signing in, you can import those local results here.")).toBeVisible();
-    expect(screen.getByRole("link", { name: "Import guest plays" })).toHaveAttribute("href", "/account/stats");
+    expect(screen.getByRole("link", { name: "Import guest plays" })).toHaveAttribute("href", "/account/stats#saved-stats");
     expect(screen.queryByText("Stats sync")).not.toBeInTheDocument();
     expect(screen.queryByText("Account sync ready")).not.toBeInTheDocument();
   });
@@ -288,7 +288,7 @@ describe("AccountHeroClient", () => {
     expect(screen.queryByText("Stats sync ready")).not.toBeInTheDocument();
     expect(document.querySelector(".account-hero-video source[src='/worldprint/hero-loop.webm']")).toBeTruthy();
     expect(screen.getByRole("link", { name: "Open game library" })).toHaveAttribute("href", "/play");
-    expect(screen.getByRole("link", { name: "View saved stats" })).toHaveAttribute("href", "/account/stats");
+    expect(screen.getByRole("link", { name: "View saved stats" })).toHaveAttribute("href", "/account/stats#saved-stats");
   });
 
   it("leads with Pro while keeping Free available before sign-in", () => {
@@ -321,7 +321,7 @@ describe("AccountPlanNotesClient", () => {
     expect(screen.getByRole("heading", { name: "Review results" })).toBeVisible();
     expect(screen.getByRole("heading", { name: "Train a topic" })).toBeVisible();
     expect(screen.getByRole("heading", { name: "Full atlas" })).toBeVisible();
-    expect(screen.getByRole("link", { name: "Open stats" })).toHaveAttribute("href", "/account/stats");
+    expect(screen.getByRole("link", { name: "Open stats" })).toHaveAttribute("href", "/account/stats#saved-stats");
     expect(screen.getByRole("link", { name: "Open Past Games" })).toHaveAttribute("href", "/past-games");
     expect(screen.getByText("Mystery Map Daily replays and saved runs.")).toBeVisible();
     expect(screen.getByText("Custom Atlas sets by topic and difficulty.")).toBeVisible();

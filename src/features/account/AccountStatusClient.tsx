@@ -185,7 +185,7 @@ export function AccountStatusClient() {
             <dd>
               Move guest plays into this account.
               <span>If you played sample or guest maps in this browser before signing in, you can import those local results here.</span>
-              <Link className="account-inline-action" href="/account/stats">
+              <Link className="account-inline-action" href="/account/stats#saved-stats">
                 Import guest plays
               </Link>
             </dd>
@@ -256,7 +256,7 @@ export function AccountStatusClient() {
         </p>
       ) : null}
       <div className="button-row">
-        <Link className="button" href="/account/stats">
+        <Link className="button" href="/account/stats#saved-stats">
           View saved stats
         </Link>
         <Link className="button-secondary" href="/upgrade">

@@ -1315,7 +1315,7 @@ export function WorldprintClient({ dateOverride, entryMode = "standard" }: World
                         {resultActionLabel}
                       </button>
                     ) : signedIn ? (
-                      <Link className="button-secondary" href="/account/stats">
+                      <Link className="button-secondary" href="/account/stats#saved-stats">
                         {resultActionLabel}
                       </Link>
                     ) : null
@@ -1419,7 +1419,7 @@ export function WorldprintClient({ dateOverride, entryMode = "standard" }: World
                         {isProAccount ? "Open past games" : isGuest ? "Create free account" : "Start Pro"}
                       </Link>
                       {signedIn ? (
-                        <Link className="button-secondary" href="/account/stats">
+                        <Link className="button-secondary" href="/account/stats#saved-stats">
                           View saved stats
                         </Link>
                       ) : null}
@@ -1457,7 +1457,7 @@ export function WorldprintClient({ dateOverride, entryMode = "standard" }: World
               <div className="button-row archive-start-row">
                 {reviewRecord ? (
                   <>
-                    <Link className="button" href={`/play/mystery-map/${todayKey}?review=1`}>
+                    <Link className="button" href={`/play/mystery-map/${todayKey}?review=1#past-game-result`}>
                       View result
                     </Link>
                     <button className="button-secondary" type="button" onClick={() => void startArchivePracticeReplay()}>
@@ -2272,7 +2272,7 @@ function ArchiveReview({
   const savedDate = formatRecordDate(record.completedAt);
 
   return (
-    <section className="archive-review-page page-shell" aria-label="Past Game result review">
+    <section id="past-game-result" className="archive-review-page page-shell" aria-label="Past Game result review">
       <div className="archive-review-hero surface">
         <div>
           <p className="eyebrow">Past Game result</p>
@@ -2671,7 +2671,7 @@ function CompletionSummary({
           : run.setup?.kind === "custom-atlas"
             ? "Custom Atlas complete"
             : "Atlas Run complete";
-  const reviewHref = run.mode === "daily" || run.mode === "archive" ? `/play/mystery-map/${run.dateKey}?review=1` : null;
+  const reviewHref = run.mode === "daily" || run.mode === "archive" ? `/play/mystery-map/${run.dateKey}?review=1#past-game-result` : null;
   const nextDaily = nextDailyUnlockCopy();
   const bestDailyScore = bestDailyScoreForStore(store);
 
@@ -3031,7 +3031,7 @@ function CompletionSummary({
                         Past Games
                       </Link>
                     ) : null}
-                    <Link className="button-secondary" href={isSampleRun ? "/sign-up" : "/account/stats"}>
+                    <Link className="button-secondary" href={isSampleRun ? "/sign-up" : "/account/stats#saved-stats"}>
                       {isSampleRun ? "Create free account" : "View saved stats"}
                     </Link>
                   </>
@@ -3065,7 +3065,7 @@ function CompletionSummary({
             ) : null}
           </div>
           <div className="button-row">
-            <Link className="button" href={signedIn && !isSampleRun ? "/account/stats" : "/upgrade"}>
+            <Link className="button" href={signedIn && !isSampleRun ? "/account/stats#saved-stats" : "/upgrade"}>
               {signedIn && !isSampleRun ? "View saved stats" : "Start Pro"}
             </Link>
             {signedIn && !isSampleRun ? null : (

@@ -105,7 +105,7 @@ export function AuthNavStatus() {
         <Link className="account-nav-menu-item" role="menuitem" href="/account">
           View account
         </Link>
-        <Link className="account-nav-menu-item" role="menuitem" href="/account/stats">
+        <Link className="account-nav-menu-item" role="menuitem" href="/account/stats#saved-stats">
           Saved stats
         </Link>
         {canManageBilling ? (
