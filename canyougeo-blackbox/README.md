@@ -99,6 +99,16 @@ Authenticated tests are marked `auth` and skip unless the matching env vars are 
 - `CGY_PRO_EMAIL`
 - `CGY_PRO_PASSWORD`
 
+Create an uncommitted local `.env` from `.env.example`, fill only the private QA account credentials you want to test, then run:
+
+```bash
+CGY_TARGET=test pytest -m auth --html=reports/auth.html --self-contained-html
+```
+
+The auth smoke signs in as the Free and Pro test accounts, checks `/account/`, `/upgrade/`, and one game page, confirms it did not navigate to Stripe checkout, then signs out before the next account. If any credential pair is missing, that plan's auth case skips.
+
+If auth fails, first verify the same credentials manually at `https://test.canyougeo.com/sign-in/`. If `/account/` still says signed out in a normal browser, fix the credentials, account setup, or password-auth state in the test Supabase project before rerunning pytest. If manual login works but pytest fails, inspect `pages/auth.py` and rerun the auth marker with a headed browser so you can see where the helper stopped waiting for the signed-in state.
+
 Live challenge-email tests are marked `email_live` and are skipped unless explicitly enabled by setting `CGY_RUN_EMAIL_LIVE=1`. The default challenge tests do not send email.
 
 Do not run live payment flows from this suite.
