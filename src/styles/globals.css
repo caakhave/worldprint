@@ -4913,6 +4913,10 @@ textarea,
   margin-top: -0.2rem;
 }
 
+.selected-country-evidence-slot-mobile {
+  display: none;
+}
+
 .selected-country-action-copy {
   display: grid;
   gap: 0.25rem;
@@ -11013,6 +11017,14 @@ button.pro-price-option:focus-visible {
     gap: 0.58rem;
     padding: 0.78rem;
     scroll-margin-top: 0.75rem;
+  }
+
+  .selected-country-evidence-slot-desktop {
+    display: none;
+  }
+
+  .selected-country-evidence-slot-mobile {
+    display: block;
   }
 
   .selected-country-reveal-button {

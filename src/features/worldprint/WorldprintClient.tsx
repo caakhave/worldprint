@@ -1580,6 +1580,47 @@ export function WorldprintClient({ dateOverride, entryMode = "standard" }: World
     dispatch({ type: "investigate", iso3, countryName: name, value });
   };
 
+  function selectedCountryEvidencePanel(placement: "desktop" | "mobile") {
+    if (!selectedCountry) return null;
+
+    return (
+      <div className={`selected-country-evidence-slot selected-country-evidence-slot-${placement}`}>
+        <div
+          className="selected-country-card selected-country-action-card"
+          data-state="selected"
+          data-layout="immediate"
+          data-testid={placement === "mobile" ? "country-value-evidence-panel" : "selected-country-panel"}
+          aria-live="polite"
+        >
+          <div className="selected-country-action-copy">
+            <span>Selected: {selectedCountry.name}</span>
+            <strong>{selectedCountry.name}</strong>
+            <p>{selectedCountryPrompt}</p>
+            <small>
+              {selectedCountryAlreadyRevealed
+                ? "No points spent this time."
+                : selectedCountryHasData
+                  ? selectedCountryRevealCost === "No reveals left"
+                    ? "Country reveals used up for this round."
+                    : `Reveal cost: ${selectedCountryRevealCost}.`
+                  : "Reveal cost: 0 points."}
+            </small>
+          </div>
+          <button
+            className="button selected-country-reveal-button"
+            type="button"
+            aria-label={selectedCountryActionText}
+            disabled={revealDisabled}
+            onClick={() => selectedCountry.iso3 && investigate(selectedCountry.iso3, selectedCountry.name)}
+          >
+            <Search size={18} aria-hidden="true" />
+            {selectedCountryActionText}
+          </button>
+        </div>
+      </div>
+    );
+  }
+
   const topBottom = topAndBottom(indicator, data.countryNames);
   const unitClue = unitClueForIndicator(indicator);
   const runStats = runProgressStats(run);
@@ -1649,40 +1690,7 @@ export function WorldprintClient({ dateOverride, entryMode = "standard" }: World
             <p>Read the map pattern, spend points only when evidence helps, then lock the answer.</p>
           </div>
         </div>
-        {selectedCountry ? (
-          <div
-            className="selected-country-card selected-country-action-card"
-            data-state="selected"
-            data-layout="immediate"
-            data-testid="selected-country-panel"
-            aria-live="polite"
-          >
-            <div className="selected-country-action-copy">
-              <span>Selected: {selectedCountry.name}</span>
-              <strong>{selectedCountry.name}</strong>
-              <p>{selectedCountryPrompt}</p>
-              <small>
-                {selectedCountryAlreadyRevealed
-                  ? "No points spent this time."
-                  : selectedCountryHasData
-                    ? selectedCountryRevealCost === "No reveals left"
-                      ? "Country reveals used up for this round."
-                      : `Reveal cost: ${selectedCountryRevealCost}.`
-                    : "Reveal cost: 0 points."}
-              </small>
-            </div>
-            <button
-              className="button selected-country-reveal-button"
-              type="button"
-              aria-label={selectedCountryActionText}
-              disabled={revealDisabled}
-              onClick={() => selectedCountry.iso3 && investigate(selectedCountry.iso3, selectedCountry.name)}
-            >
-              <Search size={18} aria-hidden="true" />
-              {selectedCountryActionText}
-            </button>
-          </div>
-        ) : null}
+        {selectedCountryEvidencePanel("desktop")}
         <div className="score-hud" aria-label="Score status">
           <div className="score-hud-card score-hud-current">
             <span>This map</span>
@@ -1830,7 +1838,13 @@ export function WorldprintClient({ dateOverride, entryMode = "standard" }: World
             </>
           )}
         </div>
-        <div className="play-action-dock surface" data-state={showIncorrectFeedback ? "miss" : "choosing"} aria-label="Answer actions">
+        {selectedCountryEvidencePanel("mobile")}
+        <div
+          className="play-action-dock surface"
+          data-state={showIncorrectFeedback ? "miss" : "choosing"}
+          data-testid="indicator-answer-panel"
+          aria-label="Answer actions"
+        >
           <div className="answer-box primary-answer-box" data-placement="dock">
             {run.tier === "atlasMaster" ? (
               <form
@@ -1905,7 +1919,7 @@ export function WorldprintClient({ dateOverride, entryMode = "standard" }: World
                   <small>Wrong answers cost {wrongAnswerPenalty} points.</small>
                 </div>
                 {config.unitClue && unitClue.eligible ? (
-                  <div className="answer-clue-row" data-clue="unit">
+                  <div className="answer-clue-row" data-clue="unit" data-testid="unit-clue-panel">
                     <div>
                       <span>Optional clue</span>
                       <p>{roundState.unitClueUsed ? unitClue.text : "Reveal the measurement units when the scale is the missing piece."}</p>

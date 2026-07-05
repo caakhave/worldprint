@@ -241,7 +241,7 @@ describe("WorldprintClient UI structure", () => {
 
   it("keeps the unit clue visible in the immediate answer flow", () => {
     const mapPanelIndex = source.indexOf('className="play-map-panel"');
-    const actionDockIndex = source.indexOf('className="play-action-dock surface"');
+    const actionDockIndex = source.indexOf('data-testid="indicator-answer-panel"');
     const answerBoxIndex = source.indexOf('className="answer-box primary-answer-box"', actionDockIndex);
     const unitClueIndex = source.indexOf('className="answer-clue-row"', actionDockIndex);
     const choiceListIndex = source.indexOf('className="choice-list"', actionDockIndex);
@@ -262,7 +262,7 @@ describe("WorldprintClient UI structure", () => {
   });
 
   it("renders active answers in a compact gameplay action dock", () => {
-    const actionDockIndex = source.indexOf('className="play-action-dock surface"');
+    const actionDockIndex = source.indexOf('data-testid="indicator-answer-panel"');
     const answerBoxIndex = source.indexOf('className="answer-box primary-answer-box"', actionDockIndex);
     const choiceListIndex = source.indexOf('className="choice-list"', actionDockIndex);
     const controlPanelIndex = source.indexOf('className="play-control-panel surface"');
@@ -331,19 +331,29 @@ describe("WorldprintClient UI structure", () => {
 
   it("keeps selected-country reveal action in the immediate/top gameplay layout", () => {
     const selectedActionIndex = source.indexOf('className="selected-country-card selected-country-action-card"');
+    const desktopSlotIndex = source.indexOf('{selectedCountryEvidencePanel("desktop")}');
+    const mobileSlotIndex = source.indexOf('{selectedCountryEvidencePanel("mobile")}');
     const scoreHudIndex = source.indexOf('className="score-hud"');
     const runStatsIndex = source.indexOf('className="run-stats-card"');
     const investigationBoxIndex = source.indexOf('className="investigation-box"');
+    const mapSummaryIndex = source.indexOf('data-testid="country-evidence-panel"');
+    const answerPanelIndex = source.indexOf('data-testid="indicator-answer-panel"');
 
     expect(selectedActionIndex).toBeGreaterThan(0);
-    expect(selectedActionIndex).toBeLessThan(scoreHudIndex);
-    expect(selectedActionIndex).toBeLessThan(runStatsIndex);
-    expect(selectedActionIndex).toBeLessThan(investigationBoxIndex);
+    expect(desktopSlotIndex).toBeGreaterThan(0);
+    expect(desktopSlotIndex).toBeLessThan(scoreHudIndex);
+    expect(desktopSlotIndex).toBeLessThan(runStatsIndex);
+    expect(desktopSlotIndex).toBeLessThan(investigationBoxIndex);
+    expect(mobileSlotIndex).toBeGreaterThan(mapSummaryIndex);
+    expect(mobileSlotIndex).toBeLessThan(answerPanelIndex);
     expect(source).toContain('data-layout="immediate"');
+    expect(source).toContain('data-testid={placement === "mobile" ? "country-value-evidence-panel" : "selected-country-panel"}');
     expect(source).toContain("selected-country-reveal-button");
     expect(source).toContain("Reveal from the selected-country panel above");
     expect(styles).toContain(".selected-country-action-card");
     expect(styles).toContain("position: static");
+    expect(styles).toContain(".selected-country-evidence-slot-mobile");
+    expect(styles).toContain(".selected-country-evidence-slot-desktop");
   });
 
   it("uses a simplified challenge sharing card with hidden raw share text by default", () => {

@@ -97,8 +97,18 @@ for (const viewport of MOBILE_VIEWPORTS) {
     await expect(page.getByTestId("country-evidence-panel")).toContainText("Selected country");
     await expect(page.getByTestId("country-evidence-panel")).toContainText("Canada");
     await expect(page.getByTestId("country-evidence-panel")).not.toContainText("Pick a country");
-    await expect(page.getByTestId("selected-country-panel")).toContainText("Selected: Canada");
-    await expect(page.getByTestId("selected-country-panel").getByRole("button", { name: /Reveal Canada's value/i })).toBeVisible();
+    await expect(page.getByTestId("country-value-evidence-panel")).toContainText("Selected: Canada");
+    await expect(page.getByTestId("country-value-evidence-panel").getByRole("button", { name: /Reveal Canada's value/i })).toBeVisible();
+    await expect(page.getByTestId("indicator-answer-panel")).toBeVisible();
+
+    const selectedSummaryBox = await page.getByTestId("country-evidence-panel").boundingBox();
+    const countryValueBox = await page.getByTestId("country-value-evidence-panel").boundingBox();
+    const answerPanelBox = await page.getByTestId("indicator-answer-panel").boundingBox();
+    expect(selectedSummaryBox).not.toBeNull();
+    expect(countryValueBox).not.toBeNull();
+    expect(answerPanelBox).not.toBeNull();
+    expect(countryValueBox!.y).toBeGreaterThanOrEqual(selectedSummaryBox!.y + selectedSummaryBox!.height - 1);
+    expect(answerPanelBox!.y).toBeGreaterThanOrEqual(countryValueBox!.y + countryValueBox!.height - 1);
     await expectNoHorizontalOverflow(page);
   });
 
