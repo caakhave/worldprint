@@ -215,6 +215,14 @@ describe("WorldprintClient UI structure", () => {
     expect(styles).toContain("scroll-margin-top: 6rem;");
   });
 
+  it("stretches mobile completion CTA buttons to the full result card width", () => {
+    expect(styles).toContain(".summary-retention-card > .button-row");
+    expect(styles).toContain("flex-basis: 100%;");
+    expect(styles).toContain(".summary-retention-card > .button-row > .button");
+    expect(styles).toContain(".summary-retention-card > .button-row > .button-secondary");
+    expect(styles).toContain("width: 100%;");
+  });
+
   it("distinguishes Pro Atlas from today's Daily Challenge in the Pro lobby", () => {
     expect(source).toContain("Start Unlimited Atlas");
     expect(source).toContain("Start unlimited 5-map Pro Atlas runs from the approved Mystery Map pool.");

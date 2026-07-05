@@ -1,6 +1,10 @@
+import { readFileSync } from "node:fs";
+import { join } from "node:path";
 import { render, screen, within } from "@testing-library/react";
 import { describe, expect, it, vi } from "vitest";
 import PlayHubPage from "@/app/play/page";
+
+const styles = readFileSync(join(process.cwd(), "src/styles/globals.css"), "utf8");
 
 vi.mock("next/image", () => ({
   default: ({ alt = "", src, fill, ...props }: { alt?: string; src: string; fill?: boolean }) => {
@@ -77,5 +81,13 @@ describe("PlayHubPage", () => {
     expect(within(orderAtlasCard as HTMLElement).getByRole("link", { name: /Open Order Atlas/i })).toHaveAttribute("href", "/play/order-atlas");
     expect(within(orderAtlasCard as HTMLElement).queryByText(/saved progress|saved stats|streaks|archive|challenge|custom filters|continuous/i)).not.toBeInTheDocument();
     expect(screen.queryByText(/Daily and Pro modes coming next|intro-only|intro sample|Pro Practice|Practice Run/i)).not.toBeInTheDocument();
+  });
+
+  it("keeps the mobile route picker CTA buttons full width inside the card", () => {
+    expect(styles).toContain(".play-hub-cta .button-row");
+    expect(styles).toContain("display: grid;");
+    expect(styles).toContain(".play-hub-cta .button-row > .button");
+    expect(styles).toContain(".play-hub-cta .button-row > .button-secondary");
+    expect(styles).toContain("width: 100%;");
   });
 });

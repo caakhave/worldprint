@@ -9328,7 +9328,16 @@ button.pro-price-option:focus-visible {
   }
 
   .play-hub-cta .button-row {
+    display: grid;
+    grid-template-columns: 1fr;
+    align-items: stretch;
     justify-content: stretch;
+    width: 100%;
+  }
+
+  .play-hub-cta .button-row > .button,
+  .play-hub-cta .button-row > .button-secondary {
+    width: 100%;
   }
 
   .source-list {
@@ -10963,6 +10972,27 @@ button.pro-price-option:focus-visible {
   .daily-return-hook,
   .summary-retention-card dl {
     grid-template-columns: 1fr;
+  }
+
+  .summary-retention-card {
+    align-items: stretch;
+  }
+
+  .summary-retention-card > div,
+  .summary-retention-card > .button-row {
+    flex-basis: 100%;
+    width: 100%;
+  }
+
+  .summary-retention-card > .button-row {
+    display: grid;
+    grid-template-columns: 1fr;
+    align-items: stretch;
+  }
+
+  .summary-retention-card > .button-row > .button,
+  .summary-retention-card > .button-row > .button-secondary {
+    width: 100%;
   }
 
   .summary-achievement div:nth-child(2n) {
