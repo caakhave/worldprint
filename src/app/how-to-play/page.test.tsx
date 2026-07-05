@@ -18,6 +18,9 @@ describe("HowToPlayPage", () => {
     expect(screen.getByRole("heading", { name: "Mystery Map" })).toBeVisible();
     expect(screen.getByRole("heading", { name: "Pattern Atlas" })).toBeVisible();
     expect(screen.getByRole("heading", { name: "Order Atlas" })).toBeVisible();
+    expect(screen.getByAltText("Mystery Map game preview")).toBeVisible();
+    expect(screen.getByAltText("Pattern Atlas game preview")).toBeVisible();
+    expect(screen.getByAltText("Order Atlas game preview")).toBeVisible();
     expect(screen.getByRole("link", { name: /Open Pattern Atlas/i })).toHaveAttribute("href", "/play/pattern-atlas");
     expect(screen.getByRole("link", { name: /Open Order Atlas/i })).toHaveAttribute("href", "/play/order-atlas");
     expect(screen.getByRole("heading", { name: /How a Mystery Map round works/i })).toBeVisible();

@@ -103,6 +103,9 @@ describe("WorldprintClient UI structure", () => {
     expect(source).toContain('run.tier === "atlasMaster" ? (');
     expect(source).toContain('className="choice-list"');
     expect(source).toContain('Search playable map catalog');
+    expect(source).toContain('className="master-suggestion-list"');
+    expect(source).toContain('data-testid="atlas-master-suggestions"');
+    expect(source).not.toContain("<datalist");
   });
 
   it("stores Custom Atlas setup metadata and renders it on active practice runs", () => {
@@ -333,6 +336,8 @@ describe("WorldprintClient UI structure", () => {
     expect(source).toContain('data-layout="immediate"');
     expect(source).toContain("selected-country-reveal-button");
     expect(source).toContain("Reveal from the selected-country panel above");
+    expect(styles).toContain(".selected-country-action-card");
+    expect(styles).toContain("position: static");
   });
 
   it("uses a simplified challenge sharing card with hidden raw share text by default", () => {

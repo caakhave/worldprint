@@ -48,7 +48,7 @@ export default function HowToPlayPage() {
             repeatable Pro Play.
           </p>
         </div>
-        <GameLibraryShowcase className="how-library-grid" ariaLabel="Can You Geo games explained" />
+        <GameLibraryShowcase className="how-library-grid" ariaLabel="Can You Geo games explained" visualMode="image" />
       </section>
 
       <section className="how-section" aria-labelledby="mystery-map-basics-heading">

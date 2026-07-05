@@ -1597,9 +1597,23 @@ export function WorldprintClient({ dateOverride, entryMode = "standard" }: World
     : showIncorrectFeedback
       ? `-${wrongAnswerPenalty}`
       : feedbackText.toLowerCase().includes("unit clue revealed")
-      ? `-${config.scoring.unitCluePenalty}`
-      : null;
+        ? `-${config.scoring.unitCluePenalty}`
+        : null;
   const activeContextChips = activeRunContextChips(run, config.label);
+  const masterCatalogOptions = Array.from(data.indicators.values())
+    .filter((item) => item.editorialReview.challengeEligible)
+    .sort((left, right) => left.shortTitle.localeCompare(right.shortTitle));
+  const masterGuessQuery = masterGuess.trim();
+  const masterGuessNormalized = normalizeGuess(masterGuessQuery);
+  const masterSuggestions = masterGuessQuery
+    ? masterCatalogOptions
+        .filter((item) => {
+          const title = item.shortTitle.toLowerCase();
+          const normalizedTitle = normalizeGuess(item.shortTitle);
+          return title.includes(masterGuessQuery.toLowerCase()) || normalizedTitle.includes(masterGuessNormalized);
+        })
+        .slice(0, 6)
+    : [];
 
   if (roundState.phase === "solved") {
     return (
@@ -1833,21 +1847,50 @@ export function WorldprintClient({ dateOverride, entryMode = "standard" }: World
                 }}
               >
                 <label htmlFor="master-search">Search playable map catalog</label>
-                <input
-                  id="master-search"
-                  list="indicator-catalog"
-                  value={masterGuess}
-                  onChange={(event) => setMasterGuess(event.target.value)}
-                  placeholder="Type an indicator"
-                  autoComplete="off"
-                />
-                <datalist id="indicator-catalog">
-                  {Array.from(data.indicators.values())
-                    .filter((item) => item.editorialReview.challengeEligible)
-                    .map((item) => (
-                      <option key={item.id} value={item.shortTitle} />
-                    ))}
-                </datalist>
+                <div className="master-answer-search">
+                  <input
+                    id="master-search"
+                    value={masterGuess}
+                    onChange={(event) => setMasterGuess(event.target.value)}
+                    placeholder="Type an indicator"
+                    autoComplete="off"
+                    role="combobox"
+                    aria-autocomplete="list"
+                    aria-expanded={masterSuggestions.length > 0}
+                    aria-controls="master-suggestion-list"
+                  />
+                  {masterGuessQuery ? (
+                    masterSuggestions.length > 0 ? (
+                      <div
+                        id="master-suggestion-list"
+                        className="master-suggestion-list"
+                        role="listbox"
+                        aria-label="Playable map suggestions"
+                        data-testid="atlas-master-suggestions"
+                      >
+                        {masterSuggestions.map((item) => (
+                          <button
+                            className="master-suggestion-button"
+                            type="button"
+                            role="option"
+                            aria-selected={normalizeGuess(masterGuess) === normalizeGuess(item.shortTitle)}
+                            key={item.id}
+                            onClick={() => setMasterGuess(item.shortTitle)}
+                          >
+                            <strong>{item.shortTitle}</strong>
+                            <span>
+                              {DIFFICULTY_LABELS[item.difficulty]} · {formatTopicLabel(item.category)}
+                            </span>
+                          </button>
+                        ))}
+                      </div>
+                    ) : (
+                      <p className="master-suggestion-empty" data-testid="atlas-master-suggestions">
+                        No matching playable maps yet.
+                      </p>
+                    )
+                  ) : null}
+                </div>
                 <button className="button full-width" type="submit" disabled={!masterGuess.trim()}>
                   Submit answer
                 </button>

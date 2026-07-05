@@ -1,4 +1,7 @@
 import { expect, test, type Page } from "@playwright/test";
+import { readFileSync } from "node:fs";
+import path from "node:path";
+import { encodeChallenge } from "../../src/lib/game/challenge";
 
 type ViewportCase = {
   name: string;
@@ -6,6 +9,8 @@ type ViewportCase = {
   height: number;
 };
 
+const UNIT_CLUE_ROUND_ID = "worldprint-age-dependency";
+const manifest = JSON.parse(readFileSync(path.join(process.cwd(), "public/data/v1/manifest.json"), "utf8")) as { contentVersion: string };
 const MOBILE_VIEWPORTS: ViewportCase[] = [
   { name: "390px", width: 390, height: 844 },
   { name: "375px", width: 375, height: 812 }
@@ -52,6 +57,16 @@ async function expectVisibleMapBoard(page: Page, boardTestId: string) {
   await expectNoHorizontalOverflow(page);
 }
 
+function atlasMasterChallengePath() {
+  const code = encodeChallenge({
+    kind: "practice",
+    contentVersion: manifest.contentVersion,
+    tier: "atlasMaster",
+    roundIds: [UNIT_CLUE_ROUND_ID]
+  });
+  return `/challenge/mystery-map?c=${code}`;
+}
+
 for (const viewport of MOBILE_VIEWPORTS) {
   test(`Mystery Map sample keeps the map board visible on ${viewport.name} mobile`, async ({ page }) => {
     await page.setViewportSize({ width: viewport.width, height: viewport.height });
@@ -70,6 +85,24 @@ for (const viewport of MOBILE_VIEWPORTS) {
     await expect(page.getByTestId("country-evidence-panel")).toContainText("Canada");
     await expect(page.getByTestId("country-evidence-panel")).not.toContainText("Pick a country");
     await expect(page.getByTestId("selected-country-panel")).toContainText("Selected: Canada");
+    await expect(page.getByTestId("selected-country-panel").getByRole("button", { name: /Reveal Canada's value/i })).toBeVisible();
+    await expectNoHorizontalOverflow(page);
+  });
+
+  test(`Atlas Master catalog search shows tappable suggestions on ${viewport.name} mobile`, async ({ page }) => {
+    await page.setViewportSize({ width: viewport.width, height: viewport.height });
+    await clearLocalState(page);
+    await page.goto(atlasMasterChallengePath());
+    await page.getByRole("button", { name: /Play the challenge/i }).click();
+    await expect(page.getByRole("heading", { name: /What does this map measure/i })).toBeVisible();
+
+    const search = page.getByLabel("Search playable map catalog");
+    await search.fill("age");
+    await expect(page.getByTestId("atlas-master-suggestions")).toBeVisible();
+    await expect(page.getByRole("option", { name: /Age dependency ratio/i })).toBeVisible();
+    await page.getByRole("option", { name: /Age dependency ratio/i }).tap();
+    await expect(search).toHaveValue("Age dependency ratio");
+    await expect(page.getByRole("button", { name: "Submit answer" })).toBeEnabled();
     await expectNoHorizontalOverflow(page);
   });
 
