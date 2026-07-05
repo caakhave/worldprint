@@ -290,6 +290,7 @@ describe("OrderAtlasClient", () => {
 
     expect(screen.getByRole("heading", { name: /points$/ })).toBeVisible();
     expect(screen.getByText("You finished the Order Atlas sample.")).toBeVisible();
+    expect(screen.getByTestId("order-atlas-results-top")).toBeVisible();
     const roundScores = screen.getByLabelText("Per-round scores");
     expect(roundScores).toBeVisible();
     expect(screen.getAllByText(/\d\/5 placed correctly/)).toHaveLength(3);
@@ -383,7 +384,7 @@ describe("OrderAtlasClient", () => {
     expect(screen.getByText("You finished the Order Atlas sample.")).toBeVisible();
   });
 
-  it("does not auto-scroll when advancing after a submitted round or opening final results", async () => {
+  it("does not auto-scroll when advancing after submitted rounds but scrolls to final results", async () => {
     const user = userEvent.setup();
     const { scrollIntoView } = mockRevealScroll();
     renderOrderAtlas();
@@ -405,7 +406,9 @@ describe("OrderAtlasClient", () => {
     await user.click(within(orderCard()).getByRole("button", { name: "Open results" }));
 
     expect(screen.getByText("You finished the Order Atlas sample.")).toBeVisible();
-    expect(scrollIntoView).toHaveBeenCalledTimes(3);
+    expect(scrollIntoView).toHaveBeenCalledTimes(4);
+    expect(scrollIntoView).toHaveBeenLastCalledWith({ behavior: "smooth", block: "start" });
+    expect(scrollIntoView.mock.contexts.at(-1)).toBe(screen.getByTestId("order-atlas-results-top"));
   });
 });
 

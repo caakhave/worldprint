@@ -9931,7 +9931,8 @@ button.pro-price-option:focus-visible {
   min-width: 0;
 }
 
-.order-atlas-reveal {
+.order-atlas-reveal,
+.order-atlas-results {
   scroll-margin-top: 6.5rem;
 }
 

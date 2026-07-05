@@ -3,6 +3,7 @@
 import { ArrowDown, ArrowRight, ArrowUp, CheckCircle2, ChevronsDown, ChevronsUp, RotateCcw } from "lucide-react";
 import Link from "next/link";
 import { useEffect, useMemo, useRef, useState } from "react";
+import type { RefObject } from "react";
 import { useEntitlement } from "@/features/account/useEntitlement";
 import { localDateKey } from "@/lib/game/retention";
 import { ORDER_ATLAS_CATALOG } from "@/lib/order-atlas/catalog";
@@ -139,6 +140,19 @@ function scrollToTop() {
   window.requestAnimationFrame(() => window.scrollTo(0, 0));
 }
 
+function scrollElementToStart(element: HTMLElement | null) {
+  window.requestAnimationFrame(() => {
+    if (!element || typeof element.scrollIntoView !== "function") return;
+    const prefersReducedMotion =
+      typeof window !== "undefined" && window.matchMedia?.("(prefers-reduced-motion: reduce)").matches;
+
+    element.scrollIntoView({
+      behavior: prefersReducedMotion ? "auto" : "smooth",
+      block: "start"
+    });
+  });
+}
+
 export function OrderAtlasClient({ rounds, todayOverride }: OrderAtlasClientProps) {
   const { entitlement, loading: entitlementLoading, signedIn } = useEntitlement();
   const todayKey = todayOverride ?? localDateKey(new Date());
@@ -148,7 +162,9 @@ export function OrderAtlasClient({ rounds, todayOverride }: OrderAtlasClientProp
   const [store, setStore] = useState<OrderAtlasPersistedState>(() => defaultOrderAtlasPersistedState());
   const [run, setRun] = useState<OrderAtlasRunState | null>(null);
   const revealRef = useRef<HTMLElement | null>(null);
+  const resultsTopRef = useRef<HTMLDivElement | null>(null);
   const shouldScrollToRevealRef = useRef(false);
+  const shouldScrollToResultsRef = useRef(false);
 
   const roundById = useMemo(() => new Map(rounds.map((round) => [round.id, round])), [rounds]);
 
@@ -215,16 +231,15 @@ export function OrderAtlasClient({ rounds, todayOverride }: OrderAtlasClientProp
     if (!submittedRound || !shouldScrollToRevealRef.current) return;
 
     shouldScrollToRevealRef.current = false;
-    const prefersReducedMotion =
-      typeof window !== "undefined" && window.matchMedia?.("(prefers-reduced-motion: reduce)").matches;
-    const revealTarget = revealRef.current;
-    if (!revealTarget || typeof revealTarget.scrollIntoView !== "function") return;
-
-    revealTarget.scrollIntoView({
-      behavior: prefersReducedMotion ? "auto" : "smooth",
-      block: "start"
-    });
+    scrollElementToStart(revealRef.current);
   }, [submittedRound]);
+
+  useEffect(() => {
+    if (run?.status !== "complete" || !shouldScrollToResultsRef.current) return;
+
+    shouldScrollToResultsRef.current = false;
+    scrollElementToStart(resultsTopRef.current);
+  }, [run?.status]);
 
   const currentCountriesByIso3 = useMemo(
     () => new Map((currentRound?.selectedCountries ?? []).map((country) => [country.iso3, country])),
@@ -319,6 +334,7 @@ export function OrderAtlasClient({ rounds, todayOverride }: OrderAtlasClientProp
   function nextRound() {
     if (!run || !submittedRound) return;
     if (run.currentRoundIndex + 1 >= run.rounds.length) {
+      shouldScrollToResultsRef.current = true;
       setRun({ ...run, status: "complete" });
       return;
     }
@@ -353,6 +369,7 @@ export function OrderAtlasClient({ rounds, todayOverride }: OrderAtlasClientProp
         signedIn={signedIn}
         isFreeAccount={isFreeAccount}
         isProAccount={isProAccount}
+        resultsTopRef={resultsTopRef}
         onRestart={() => restartRun(run)}
         onStartProPlay={() => startOrderRun("practice", { fresh: currentPracticeRun?.status === "complete" })}
         onLobby={() => setRun(null)}
@@ -701,12 +718,14 @@ function OrderAtlasSummary({
   isProAccount,
   onRestart,
   onStartProPlay,
-  onLobby
+  onLobby,
+  resultsTopRef
 }: {
   run: OrderAtlasRunState;
   signedIn: boolean;
   isFreeAccount: boolean;
   isProAccount: boolean;
+  resultsTopRef: RefObject<HTMLDivElement | null>;
   onRestart: () => void;
   onStartProPlay: () => void;
   onLobby: () => void;
@@ -717,7 +736,7 @@ function OrderAtlasSummary({
 
   return (
     <section className="order-atlas-page game-shell page-shell">
-      <div className="order-atlas-results surface">
+      <div ref={resultsTopRef} className="order-atlas-results surface" data-testid="order-atlas-results-top" tabIndex={-1}>
         <div className="order-atlas-results-primary">
           <p className="eyebrow">{runModeLabel(run)} complete</p>
           <h1>{totalScore.toLocaleString()} points</h1>
