@@ -29,12 +29,12 @@ export default function HowToPlayPage() {
       <div className="how-hero map-texture-panel">
         <div>
           <p className="eyebrow">How to play</p>
-          <h1 className="page-title">Read the pattern before the answer reads you.</h1>
+          <h1 className="page-title">Learn the three ways to read the world.</h1>
         </div>
         <p className="lead">
-          Can You Geo? is a library of geography games about reading patterns. Mystery Map asks you to solve an unlabeled choropleth;
-          Pattern Atlas asks you to identify the rule connecting highlighted countries; Order Atlas asks you to arrange countries by a
-          known signal.
+          Can You Geo? is a library of geography games about reading patterns. Mystery Map asks you to solve an unlabeled choropleth,
+          Pattern Atlas asks you to identify the rule connecting highlighted countries, and Order Atlas asks you to arrange countries by
+          a known signal.
         </p>
       </div>
 
@@ -51,13 +51,39 @@ export default function HowToPlayPage() {
         <GameLibraryShowcase className="how-library-grid" ariaLabel="Can You Geo games explained" visualMode="image" />
       </section>
 
-      <section className="how-section" aria-labelledby="mystery-map-basics-heading">
+      <section className="how-section" aria-labelledby="quick-guide-heading">
+        <div className="section-heading">
+          <p className="eyebrow">Quick comparison</p>
+          <h2 id="quick-guide-heading">Each game asks for a different kind of geography read.</h2>
+          <p>
+            The games share the same atlas style, reveal rhythm, and source-backed results. What changes is the puzzle you are solving.
+          </p>
+        </div>
+        <div className="how-comparison-grid" aria-label="Can You Geo game comparison">
+          <article className="surface">
+            <span className="how-card-index">01</span>
+            <h3>Mystery Map</h3>
+            <p>Read a color pattern on an unlabeled world map and name the hidden data indicator.</p>
+          </article>
+          <article className="surface">
+            <span className="how-card-index">02</span>
+            <h3>Pattern Atlas</h3>
+            <p>Read the highlighted country set and choose the shared rule that connects those places.</p>
+          </article>
+          <article className="surface">
+            <span className="how-card-index">03</span>
+            <h3>Order Atlas</h3>
+            <p>Read a known signal, move the country cards into order, then compare against the true values.</p>
+          </article>
+        </div>
+      </section>
+
+      <section className="how-section how-game-section" aria-labelledby="mystery-map-basics-heading">
         <div className="section-heading">
           <p className="eyebrow">Mystery Map basics</p>
           <h2 id="mystery-map-basics-heading">How a Mystery Map round works.</h2>
           <p>
-            These clue, color, and scoring notes apply to Mystery Map. Pattern Atlas and Order Atlas use their own answer and reveal
-            flows.
+            Mystery Map is the choropleth game. You see the shape of the data first, then spend points only when evidence helps.
           </p>
         </div>
         <div className="rules-grid how-steps" aria-label="Mystery Map round basics">
@@ -79,10 +105,91 @@ export default function HowToPlayPage() {
         </div>
       </section>
 
+      <section className="how-section how-game-section" aria-labelledby="pattern-atlas-basics-heading">
+        <div className="section-heading">
+          <p className="eyebrow">Pattern Atlas basics</p>
+          <h2 id="pattern-atlas-basics-heading">How a Pattern Atlas round works.</h2>
+          <p>
+            Pattern Atlas shows a highlighted set of countries. Your job is to name the rule those mapped countries share.
+          </p>
+        </div>
+        <div className="rules-grid how-steps" aria-label="Pattern Atlas round basics">
+          <article>
+            <span>01</span>
+            <h2>Read the highlighted set</h2>
+            <p>Country names stay hidden at first. Study where the highlighted countries cluster, spread out, or avoid.</p>
+          </article>
+          <article>
+            <span>02</span>
+            <h2>Spend clues carefully</h2>
+            <p>Clues can reveal the broad category, one highlighted country, or one country that does not fit the rule.</p>
+          </article>
+          <article>
+            <span>03</span>
+            <h2>Choose the shared rule</h2>
+            <p>The reveal shows the answer, explanation, sources, highlighted countries, and mapped-country scope notes when needed.</p>
+          </article>
+        </div>
+      </section>
+
+      <section className="how-section how-game-section" aria-labelledby="order-atlas-basics-heading">
+        <div className="section-heading">
+          <p className="eyebrow">Order Atlas basics</p>
+          <h2 id="order-atlas-basics-heading">How an Order Atlas round works.</h2>
+          <p>
+            Order Atlas gives you the signal up front. The puzzle is putting the country cards into the right order before values are
+            revealed.
+          </p>
+        </div>
+        <div className="rules-grid how-steps" aria-label="Order Atlas round basics">
+          <article>
+            <span>01</span>
+            <h2>Read the challenge</h2>
+            <p>The prompt tells you the indicator and whether to sort from highest to lowest or lowest to highest.</p>
+          </article>
+          <article>
+            <span>02</span>
+            <h2>Move the cards</h2>
+            <p>Use the up, down, top, and bottom controls to arrange the countries. Values stay hidden until you submit.</p>
+          </article>
+          <article>
+            <span>03</span>
+            <h2>Reveal the exact order</h2>
+            <p>Each exact placement earns points. The result compares your order with the true order, values, unit, source, and explanation.</p>
+          </article>
+        </div>
+      </section>
+
+      <section className="how-section" aria-labelledby="mode-guide-heading">
+        <div className="section-heading">
+          <p className="eyebrow">Modes and accounts</p>
+          <h2 id="mode-guide-heading">Samples, Daily games, and Pro runs stay clearly separated.</h2>
+          <p>
+            No account is needed for Sample Runs. Free accounts unlock Daily-enabled games. Pro opens the deeper supported modes in the
+            current library.
+          </p>
+        </div>
+        <div className="how-mode-grid" aria-label="Can You Geo account and mode guide">
+          <article className="surface">
+            <h3>Signed-out Sample Runs</h3>
+            <p>Try each game without an account. Sample progress is local to your browser and does not create account stats.</p>
+          </article>
+          <article className="surface">
+            <h3>Free Daily games</h3>
+            <p>Free accounts can play Daily-enabled games. Mystery Map has account-backed Daily progress, streaks, and basic stats.</p>
+          </article>
+          <article className="surface">
+            <h3>Pro supported modes</h3>
+            <p>Pro includes Mystery Map Custom Atlas, Pattern Atlas Pattern Runs, and Order Atlas Pro Play where those modes are available.</p>
+          </article>
+        </div>
+      </section>
+
       <section className="how-section" aria-labelledby="tier-rules-heading">
         <div className="section-heading">
           <p className="eyebrow">Mystery Map skill tiers</p>
           <h2 id="tier-rules-heading">Choose how much Mystery Map helps.</h2>
+          <p>These skill tiers are specific to Mystery Map. Pattern Atlas and Order Atlas use their own clue and reveal systems.</p>
         </div>
         <div className="tier-table">
           {Object.values(TIER_CONFIGS).map((tier) => (
@@ -106,6 +213,7 @@ export default function HowToPlayPage() {
         <div className="section-heading">
           <p className="eyebrow">Mystery Map scoring</p>
           <h2 id="scoring-heading">Every Mystery Map clue spends points.</h2>
+          <p>Pattern Atlas and Order Atlas score their own round types differently, then show sources and explanations on reveal.</p>
         </div>
         <div className="scoring-card surface">
           <p>
@@ -119,7 +227,7 @@ export default function HowToPlayPage() {
       <div className="how-cta surface map-texture-panel">
         <div>
           <p className="eyebrow">Start playing</p>
-          <h2>Pick a game, continue free for Daily-enabled rounds, or start Pro for deeper custom runs.</h2>
+          <h2>Pick a game, continue free for Daily-enabled rounds, or start Pro for deeper supported modes.</h2>
         </div>
         <div className="button-row">
           <Link className="button" href="/upgrade">

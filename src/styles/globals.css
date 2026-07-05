@@ -8443,6 +8443,22 @@ button.pro-price-option:focus-visible {
   margin-top: clamp(2rem, 5vw, 4rem);
 }
 
+.how-page .section-heading {
+  display: grid;
+  max-width: 78rem;
+  justify-content: start;
+  justify-items: start;
+  gap: 0.55rem;
+  align-items: start;
+}
+
+.how-page .section-heading p:not(.eyebrow) {
+  max-width: 58rem;
+  margin: 0;
+  color: var(--muted);
+  line-height: 1.58;
+}
+
 .how-library .section-heading p:not(.eyebrow) {
   max-width: 54rem;
   margin: 0;
@@ -8472,6 +8488,54 @@ button.pro-price-option:focus-visible {
 
 .how-steps {
   grid-template-columns: repeat(3, minmax(0, 1fr));
+}
+
+.how-comparison-grid,
+.how-mode-grid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 1rem;
+}
+
+.how-comparison-grid article,
+.how-mode-grid article {
+  min-width: 0;
+  padding: clamp(0.95rem, 1.5vw, 1.15rem);
+  border-color: rgb(164 216 205 / 0.18);
+  background:
+    linear-gradient(135deg, rgb(104 183 170 / 0.08), transparent 52%),
+    var(--surface);
+}
+
+.how-comparison-grid article:nth-child(2),
+.how-mode-grid article:nth-child(2) {
+  border-color: rgb(215 168 75 / 0.34);
+  background:
+    linear-gradient(135deg, rgb(215 168 75 / 0.1), transparent 56%),
+    var(--surface);
+}
+
+.how-comparison-grid h3,
+.how-mode-grid h3 {
+  margin: 0.35rem 0 0.5rem;
+  color: var(--parchment);
+  font-family: var(--font-serif);
+  font-size: clamp(1.25rem, 2vw, 1.65rem);
+  line-height: 1.12;
+}
+
+.how-comparison-grid p,
+.how-mode-grid p {
+  margin: 0;
+  color: var(--muted);
+  line-height: 1.55;
+}
+
+.how-card-index {
+  color: var(--gold);
+  font-family: var(--font-mono);
+  font-size: 0.74rem;
+  font-weight: 850;
 }
 
 .how-steps article,
@@ -10773,6 +10837,8 @@ button.pro-price-option:focus-visible {
   .tier-preview-grid,
   .tier-table,
   .rules-grid,
+  .how-comparison-grid,
+  .how-mode-grid,
   .how-steps,
   .practice-filters,
   .result-cells,
