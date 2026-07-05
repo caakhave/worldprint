@@ -16,7 +16,14 @@
     "beta:qa": "node tools/beta_qa/build_beta_qa.mjs",
     "beta:external": "node tools/beta_qa/build_external_beta.mjs",
     "data:build": "python3 tools/data_pipeline/build.py",
-    "test:e2e": "playwright test"
+    "test:e2e": "playwright test",
+    "qa:blackbox:test": "cd canyougeo-blackbox && CGY_TARGET=test pytest --html=reports/test.html --self-contained-html",
+    "qa:blackbox:www": "cd canyougeo-blackbox && CGY_TARGET=www pytest --html=reports/www.html --self-contained-html",
+    "qa:blackbox:apex": "cd canyougeo-blackbox && CGY_TARGET=apex pytest --html=reports/apex.html --self-contained-html",
+    "qa:blackbox:local": "cd canyougeo-blackbox && CGY_TARGET=local pytest --html=reports/local.html --self-contained-html",
+    "qa:blackbox:smoke": "cd canyougeo-blackbox && CGY_TARGET=test pytest -m smoke --html=reports/smoke.html --self-contained-html",
+    "qa:blackbox:mobile": "cd canyougeo-blackbox && CGY_TARGET=test pytest -m mobile --html=reports/mobile.html --self-contained-html",
+    "qa:blackbox:export": "cd canyougeo-blackbox && python tools/export_suite.py"
   },
   "dependencies": {
     "@supabase/ssr": "^0.12.0",

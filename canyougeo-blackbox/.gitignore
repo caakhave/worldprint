@@ -1,0 +1,12 @@
+__pycache__/
+*.py[cod]
+.venv/
+.pytest_cache/
+.env
+reports/*
+!reports/.gitkeep
+!reports/screenshots/
+reports/screenshots/*
+!reports/screenshots/.gitkeep
+exports/*
+!exports/.gitkeep
