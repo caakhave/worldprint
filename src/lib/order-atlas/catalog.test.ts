@@ -15,21 +15,27 @@ describe("Order Atlas catalog", () => {
     const catalog = OrderAtlasCatalogSchema.parse(ORDER_ATLAS_CATALOG);
 
     expect(catalog.game).toBe("order-atlas");
-    expect(catalog.rounds).toHaveLength(94);
+    expect(catalog.rounds).toHaveLength(102);
     expect(countBy(catalog.rounds, "difficulty")).toMatchObject({
       intro: 20,
-      standard: 52,
-      expert: 22
+      standard: 58,
+      expert: 24
     });
     expect(countBy(catalog.rounds, "eligibility")).toMatchObject({
       sample: 3,
-      daily: 38,
-      practice: 41,
+      daily: 37,
+      practice: 50,
       "expert-only": 12
+    });
+    expect(countBy(catalog.rounds, "order")).toMatchObject({
+      asc: 7,
+      desc: 95
     });
 
     expect(getOrderAtlasRoundById("order-renewable-electricity-grid-mix")?.indicatorId).toBe("renewable-electricity");
     expect(getOrderAtlasRoundById("order-low-elevation-coastal-population")?.eligibility).toBe("expert-only");
+    expect(getOrderAtlasRoundById("order-freshwater-per-person")?.eligibility).toBe("practice");
+    expect(getOrderAtlasRoundById("order-urban-slum-population-low-to-high")?.order).toBe("asc");
     expect(getOrderAtlasRoundsByIndicatorId("internet-users")).toHaveLength(1);
     expect(ORDER_ATLAS_ROUNDS.every((round) => round.sourceMode === "mystery-map-indicator")).toBe(true);
     expect(ORDER_ATLAS_ROUNDS.every((round) => round.prompt.includes(round.highlightText))).toBe(true);

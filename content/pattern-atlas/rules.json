@@ -1,7 +1,7 @@
 {
   "schemaVersion": "0.1.0",
   "game": "pattern-atlas",
-  "contentVersion": "2026.07.04-pattern-atlas-expansion2",
+  "contentVersion": "2026.07.05-pattern-order-balance",
   "sourceRegistry": [
     {
       "id": "natural-earth-admin0-110m",
@@ -5053,6 +5053,724 @@
         }
       ],
       "dateVintage": "2026-07-04"
+    },
+    {
+      "id": "mapped-european-union-members",
+      "displayAnswer": "Mapped European Union member countries",
+      "family": "organizations",
+      "includedIso3": [
+        "AUT",
+        "BEL",
+        "BGR",
+        "HRV",
+        "CYP",
+        "CZE",
+        "DNK",
+        "EST",
+        "FIN",
+        "FRA",
+        "DEU",
+        "GRC",
+        "HUN",
+        "IRL",
+        "ITA",
+        "LVA",
+        "LTU",
+        "LUX",
+        "NLD",
+        "POL",
+        "PRT",
+        "ROU",
+        "SVK",
+        "SVN",
+        "ESP",
+        "SWE"
+      ],
+      "counterexampleIso3": [
+        "CHE",
+        "GBR",
+        "NOR"
+      ],
+      "difficulty": "standard",
+      "eligibility": "daily",
+      "sources": [
+        "european-union-countries",
+        "natural-earth-admin0-110m"
+      ],
+      "explanation": "The highlighted countries are European Union members represented in the current mapped entity registry.",
+      "decoys": [
+        {
+          "displayAnswer": "Mapped Schengen Area member countries",
+          "whyPlausible": "Many EU members also participate in the Schengen Area.",
+          "whyWrong": "Ireland, Cyprus, Bulgaria, and Romania point to EU membership rather than the Schengen Area."
+        },
+        {
+          "displayAnswer": "Mapped euro area member countries",
+          "whyPlausible": "Many highlighted EU countries use the euro.",
+          "whyWrong": "Denmark, Sweden, Poland, Hungary, Czechia, Romania, and Bulgaria are highlighted but do not use the euro."
+        },
+        {
+          "displayAnswer": "NATO member countries in Europe",
+          "whyPlausible": "Most highlighted countries are also NATO members.",
+          "whyWrong": "Austria, Cyprus, Ireland, and Sweden make the set a European Union pattern instead."
+        }
+      ],
+      "dateVintage": "2026-07-02",
+      "scopeNote": "Malta is not present in the current 110m entity registry and is intentionally omitted."
+    },
+    {
+      "id": "top-quartile-gdp-per-capita-current-usd",
+      "displayAnswer": "Mapped countries in the top quartile for GDP per capita",
+      "family": "indicators",
+      "includedIso3": [
+        "LUX",
+        "IRL",
+        "CHE",
+        "ISL",
+        "NOR",
+        "USA",
+        "DNK",
+        "NLD",
+        "QAT",
+        "AUS",
+        "SWE",
+        "AUT",
+        "BEL",
+        "DEU",
+        "ISR",
+        "GBR",
+        "FIN",
+        "CAN",
+        "NZL",
+        "FRA",
+        "ITA",
+        "CYP",
+        "PRI",
+        "ESP",
+        "SVN",
+        "KOR",
+        "JPN",
+        "CZE",
+        "SAU",
+        "EST",
+        "LTU",
+        "GUY",
+        "KWT",
+        "BRN",
+        "PRT",
+        "SVK",
+        "POL",
+        "HRV",
+        "GRC",
+        "LVA"
+      ],
+      "counterexampleIso3": [
+        "BRA",
+        "IND",
+        "NGA"
+      ],
+      "difficulty": "standard",
+      "eligibility": "daily",
+      "sources": [
+        "world-bank-wdi",
+        "natural-earth-admin0-110m"
+      ],
+      "explanation": "This rule highlights mapped countries in the highest quartile of the approved Mystery Map GDP per capita indicator.",
+      "decoys": [
+        {
+          "displayAnswer": "OECD member countries",
+          "whyPlausible": "Many high-income countries in the highlighted set are OECD members.",
+          "whyWrong": "Qatar, Kuwait, Brunei, Guyana, and Puerto Rico are income-signal clues, not OECD membership clues."
+        },
+        {
+          "displayAnswer": "Mapped euro area member countries",
+          "whyPlausible": "Several euro area countries are highlighted.",
+          "whyWrong": "The set extends well beyond the euro area to North America, Oceania, East Asia, and the Gulf."
+        },
+        {
+          "displayAnswer": "Mapped countries in the top quartile for internet users",
+          "whyPlausible": "High-income countries often have high internet use.",
+          "whyWrong": "The selected countries follow GDP per capita from the Mystery Map artifact, not the internet-use indicator."
+        }
+      ],
+      "dateVintage": "2025",
+      "indicatorRef": {
+        "indicatorId": "gdp-per-capita",
+        "selection": "top_quartile",
+        "year": 2025
+      }
+    },
+    {
+      "id": "bottom-quartile-under-five-mortality",
+      "displayAnswer": "Mapped countries in the bottom quartile for under-five mortality",
+      "family": "indicators",
+      "includedIso3": [
+        "EST",
+        "LUX",
+        "BLR",
+        "SVN",
+        "FIN",
+        "JPN",
+        "MNE",
+        "SWE",
+        "LVA",
+        "NOR",
+        "CZE",
+        "ITA",
+        "ISL",
+        "KOR",
+        "MKD",
+        "ESP",
+        "PRT",
+        "AUT",
+        "ISR",
+        "LTU",
+        "AUS",
+        "BEL",
+        "DEU",
+        "HUN",
+        "GRC",
+        "CHE",
+        "IRL",
+        "NLD",
+        "DNK",
+        "POL",
+        "FRA",
+        "GBR",
+        "NZL",
+        "ARE",
+        "CYP",
+        "RUS",
+        "CAN",
+        "SRB",
+        "HRV",
+        "BGR",
+        "CHN",
+        "LKA"
+      ],
+      "counterexampleIso3": [
+        "TCD",
+        "NGA",
+        "IND"
+      ],
+      "difficulty": "standard",
+      "eligibility": "practice",
+      "sources": [
+        "world-bank-wdi",
+        "natural-earth-admin0-110m"
+      ],
+      "explanation": "This rule highlights mapped countries in the lowest quartile of the approved Mystery Map under-five mortality indicator.",
+      "decoys": [
+        {
+          "displayAnswer": "Mapped countries in the top quartile for GDP per capita",
+          "whyPlausible": "Low child mortality is common in high-income countries.",
+          "whyWrong": "Belarus, Montenegro, North Macedonia, Serbia, Bulgaria, China, and Sri Lanka show this is the mortality indicator rather than income alone."
+        },
+        {
+          "displayAnswer": "Mapped countries in the bottom quartile for fertility rate",
+          "whyPlausible": "Several low-mortality countries also have low fertility.",
+          "whyWrong": "The highlighted set is derived from child mortality, not births per woman."
+        },
+        {
+          "displayAnswer": "European Union member countries",
+          "whyPlausible": "Many EU countries are highlighted.",
+          "whyWrong": "Japan, South Korea, Australia, New Zealand, Canada, China, and Sri Lanka are outside the EU."
+        }
+      ],
+      "dateVintage": "2024",
+      "indicatorRef": {
+        "indicatorId": "under-five-mortality",
+        "selection": "bottom_quartile",
+        "year": 2024
+      }
+    },
+    {
+      "id": "top-quartile-protected-land-share",
+      "displayAnswer": "Mapped countries in the top quartile for protected land share",
+      "family": "indicators",
+      "includedIso3": [
+        "NCL",
+        "VEN",
+        "BTN",
+        "BGR",
+        "GIN",
+        "GRL",
+        "ZMB",
+        "SVN",
+        "BRN",
+        "NAM",
+        "TZA",
+        "KHM",
+        "POL",
+        "DEU",
+        "LUX",
+        "ARM",
+        "CYP",
+        "HRV",
+        "SVK",
+        "BLZ",
+        "COG",
+        "BEN",
+        "GRC",
+        "BHS",
+        "NZL",
+        "PAN",
+        "BOL",
+        "LKA",
+        "BRA",
+        "TTO",
+        "JPN",
+        "AUT",
+        "MOZ",
+        "MKD",
+        "OMN",
+        "FRA",
+        "GBR",
+        "ZWE",
+        "ESP",
+        "TGO",
+        "BWA",
+        "ISR",
+        "SEN"
+      ],
+      "counterexampleIso3": [
+        "USA",
+        "IND",
+        "CHN"
+      ],
+      "difficulty": "standard",
+      "eligibility": "practice",
+      "sources": [
+        "world-bank-wdi",
+        "natural-earth-admin0-110m"
+      ],
+      "explanation": "This rule highlights mapped countries in the highest quartile of the approved Mystery Map protected land share indicator.",
+      "decoys": [
+        {
+          "displayAnswer": "Mapped countries in the top quartile for forest area share",
+          "whyPlausible": "Some protected-land countries are also forested.",
+          "whyWrong": "Greenland, Namibia, Oman, Botswana, and several European countries point to protected land rather than forest cover."
+        },
+        {
+          "displayAnswer": "Countries containing part of the Sahara Desert",
+          "whyPlausible": "A few North and West African countries are highlighted.",
+          "whyWrong": "The set spans the Caribbean, Europe, Oceania, South America, and Asia."
+        },
+        {
+          "displayAnswer": "Mapped countries in the top quartile for low-elevation coastal land share",
+          "whyPlausible": "Some island and coastal countries appear in both kinds of environmental set.",
+          "whyWrong": "Landlocked and mountainous countries such as Bhutan, Zambia, Armenia, and Botswana fit protected land, not low-elevation coast."
+        }
+      ],
+      "dateVintage": "2025",
+      "indicatorRef": {
+        "indicatorId": "protected-land",
+        "selection": "top_quartile",
+        "year": 2025
+      }
+    },
+    {
+      "id": "top-quartile-arable-land-share",
+      "displayAnswer": "Mapped countries in the top quartile for arable land share",
+      "family": "indicators",
+      "includedIso3": [
+        "BGD",
+        "DNK",
+        "UKR",
+        "MDA",
+        "IND",
+        "BDI",
+        "TGO",
+        "RWA",
+        "HUN",
+        "GMB",
+        "MWI",
+        "NGA",
+        "PAK",
+        "LTU",
+        "POL",
+        "ROU",
+        "HTI",
+        "SLV",
+        "UGA",
+        "DEU",
+        "CZE",
+        "BGR",
+        "BEN",
+        "FRA",
+        "THA",
+        "SRB",
+        "NLD",
+        "BFA",
+        "BEL",
+        "CUB",
+        "BLR",
+        "SVK",
+        "TUR",
+        "AZE",
+        "GBR",
+        "GIN",
+        "SYR",
+        "ITA",
+        "LUX",
+        "KHM",
+        "ESP",
+        "LKA"
+      ],
+      "counterexampleIso3": [
+        "CAN",
+        "BRA",
+        "EGY"
+      ],
+      "difficulty": "standard",
+      "eligibility": "daily",
+      "sources": [
+        "world-bank-wdi",
+        "natural-earth-admin0-110m"
+      ],
+      "explanation": "This rule highlights mapped countries in the highest quartile of the approved Mystery Map arable land share indicator.",
+      "decoys": [
+        {
+          "displayAnswer": "Countries with the largest total arable land area",
+          "whyPlausible": "India, Ukraine, France, and several large farming countries are highlighted.",
+          "whyWrong": "This is a share-of-land-area pattern, so smaller countries can rank above countries with more total cropland."
+        },
+        {
+          "displayAnswer": "Mapped countries in the top quartile for agricultural land share",
+          "whyPlausible": "Arable land and agricultural land overlap.",
+          "whyWrong": "Agricultural land includes pasture; this rule follows cropland share specifically."
+        },
+        {
+          "displayAnswer": "Mapped countries in the top quartile for cereal yield",
+          "whyPlausible": "Some intensive farming countries are highlighted.",
+          "whyWrong": "The set is about how much land is arable, not how productive cereal fields are."
+        }
+      ],
+      "dateVintage": "2023",
+      "indicatorRef": {
+        "indicatorId": "arable-land",
+        "selection": "top_quartile",
+        "year": 2023
+      }
+    },
+    {
+      "id": "bottom-quartile-clean-cooking-fuels-access",
+      "displayAnswer": "Mapped countries in the bottom quartile for clean cooking fuels access",
+      "family": "indicators",
+      "includedIso3": [
+        "SSD",
+        "BDI",
+        "GNB",
+        "LBR",
+        "SLE",
+        "CAF",
+        "GIN",
+        "MLI",
+        "MWI",
+        "GMB",
+        "MDG",
+        "UGA",
+        "HTI",
+        "COD",
+        "NER",
+        "SOM",
+        "BEN",
+        "ETH",
+        "MOZ",
+        "SLB",
+        "ZMB",
+        "RWA",
+        "TCD",
+        "TZA",
+        "DJI",
+        "PNG",
+        "LAO",
+        "ERI",
+        "TGO",
+        "PRK",
+        "BFA",
+        "TLS",
+        "VUT",
+        "GNQ",
+        "NGA",
+        "BGD",
+        "CMR",
+        "ZWE",
+        "KEN",
+        "GHA",
+        "SEN"
+      ],
+      "counterexampleIso3": [
+        "CAN",
+        "BRA",
+        "CHN"
+      ],
+      "difficulty": "standard",
+      "eligibility": "practice",
+      "sources": [
+        "world-bank-wdi",
+        "natural-earth-admin0-110m"
+      ],
+      "explanation": "This rule highlights mapped countries in the lowest quartile of the approved Mystery Map clean cooking fuels access indicator.",
+      "decoys": [
+        {
+          "displayAnswer": "Mapped countries in the bottom quartile for electricity access",
+          "whyPlausible": "Energy access and clean cooking access are related in many countries.",
+          "whyWrong": "Bangladesh, Ghana, Kenya, Laos, and Nigeria help separate cooking fuels from electricity access."
+        },
+        {
+          "displayAnswer": "Mapped countries in the top quartile for employment in agriculture",
+          "whyPlausible": "Several low-access countries also have large rural workforces.",
+          "whyWrong": "The highlighted set follows household cooking fuel access, not employment structure."
+        },
+        {
+          "displayAnswer": "Mapped countries in the top quartile for open defecation",
+          "whyPlausible": "Both indicators can point toward infrastructure gaps.",
+          "whyWrong": "The set includes countries where sanitation and cooking-fuel patterns diverge."
+        }
+      ],
+      "dateVintage": "2023",
+      "indicatorRef": {
+        "indicatorId": "clean-fuels-access",
+        "selection": "bottom_quartile",
+        "year": 2023
+      }
+    },
+    {
+      "id": "top-quartile-account-ownership",
+      "displayAnswer": "Mapped countries in the top quartile for account ownership",
+      "family": "indicators",
+      "includedIso3": [
+        "ISL",
+        "FIN",
+        "AUT",
+        "GBR",
+        "FRA",
+        "NLD",
+        "LTU",
+        "EST",
+        "SVN",
+        "DNK",
+        "SWE",
+        "NOR",
+        "JPN",
+        "CHE",
+        "CAN",
+        "ESP",
+        "DEU",
+        "IRL",
+        "MNG",
+        "BEL",
+        "AUS",
+        "NZL",
+        "USA",
+        "KOR",
+        "CYP",
+        "LVA",
+        "HRV",
+        "CZE",
+        "SVK",
+        "THA",
+        "PRT",
+        "IRN",
+        "KEN"
+      ],
+      "counterexampleIso3": [
+        "PAK",
+        "TCD",
+        "NER"
+      ],
+      "difficulty": "expert",
+      "eligibility": "practice",
+      "sources": [
+        "world-bank-wdi",
+        "natural-earth-admin0-110m"
+      ],
+      "explanation": "This rule highlights mapped countries in the highest quartile of the approved Mystery Map account ownership indicator.",
+      "decoys": [
+        {
+          "displayAnswer": "Mapped countries in the top quartile for GDP per capita",
+          "whyPlausible": "High-income countries dominate the set.",
+          "whyWrong": "Mongolia, Thailand, Iran, and Kenya point to account ownership rather than income alone."
+        },
+        {
+          "displayAnswer": "Mapped countries in the top quartile for internet users",
+          "whyPlausible": "Digital access often tracks financial access.",
+          "whyWrong": "The pattern is based on financial account ownership, not internet adoption."
+        },
+        {
+          "displayAnswer": "OECD member countries",
+          "whyPlausible": "Many highlighted countries are OECD members.",
+          "whyWrong": "The highlighted set includes non-OECD countries and excludes some OECD members."
+        }
+      ],
+      "dateVintage": "2024",
+      "indicatorRef": {
+        "indicatorId": "account-ownership",
+        "selection": "top_quartile",
+        "year": 2024
+      }
+    },
+    {
+      "id": "top-quartile-fixed-broadband-subscriptions",
+      "displayAnswer": "Mapped countries in the top quartile for fixed broadband subscriptions",
+      "family": "indicators",
+      "includedIso3": [
+        "FRA",
+        "KOR",
+        "CHN",
+        "CHE",
+        "DEU",
+        "PRT",
+        "NOR",
+        "GRC",
+        "BEL",
+        "SAU",
+        "DNK",
+        "NLD",
+        "CAN",
+        "GBR",
+        "ARE",
+        "SWE",
+        "LUX",
+        "ESP",
+        "CZE",
+        "USA",
+        "NZL",
+        "CYP",
+        "HUN",
+        "ISL",
+        "AUS",
+        "FIN",
+        "BLR",
+        "ROU",
+        "EST",
+        "UZB",
+        "SVN",
+        "SVK",
+        "SRB",
+        "URY"
+      ],
+      "counterexampleIso3": [
+        "IND",
+        "BRA",
+        "ETH"
+      ],
+      "difficulty": "expert",
+      "eligibility": "practice",
+      "sources": [
+        "world-bank-wdi",
+        "natural-earth-admin0-110m"
+      ],
+      "explanation": "This rule highlights mapped countries in the highest quartile of the approved Mystery Map fixed broadband subscriptions indicator.",
+      "decoys": [
+        {
+          "displayAnswer": "Mapped countries in the top quartile for internet users",
+          "whyPlausible": "Internet use and broadband subscriptions overlap in many high-connectivity countries.",
+          "whyWrong": "This set follows fixed broadband subscriptions, which can differ from overall internet-use rates."
+        },
+        {
+          "displayAnswer": "Mapped countries in the top quartile for GDP per capita",
+          "whyPlausible": "Many broadband leaders are high-income countries.",
+          "whyWrong": "China, Belarus, Hungary, and other infrastructure-heavy countries separate this from income alone."
+        },
+        {
+          "displayAnswer": "Mapped European Union member countries",
+          "whyPlausible": "Many European Union countries are highlighted.",
+          "whyWrong": "South Korea, China, Switzerland, Norway, Saudi Arabia, Canada, the United States, and others are outside the EU."
+        }
+      ],
+      "dateVintage": "2024",
+      "indicatorRef": {
+        "indicatorId": "fixed-broadband",
+        "selection": "top_quartile",
+        "year": 2024
+      }
+    },
+    {
+      "id": "top-quartile-agricultural-land-share",
+      "displayAnswer": "Mapped countries in the top quartile for agricultural land share",
+      "family": "indicators",
+      "includedIso3": [
+        "CIV",
+        "TKM",
+        "BDI",
+        "URY",
+        "SAU",
+        "ZAF",
+        "KAZ",
+        "LSO",
+        "RWA",
+        "NGA",
+        "MDA",
+        "SYR",
+        "DJI",
+        "GIN",
+        "BGD",
+        "UGA",
+        "UKR",
+        "SOM",
+        "GBR",
+        "MDG",
+        "TGO",
+        "SWZ",
+        "MNG",
+        "MAR",
+        "LBN",
+        "DNK",
+        "HTI",
+        "PSE",
+        "MWI",
+        "ERI",
+        "GMB",
+        "TUN",
+        "CUB",
+        "IRL",
+        "SDN",
+        "IND",
+        "ARM",
+        "AFG",
+        "UZB",
+        "AZE",
+        "SLV",
+        "HUN",
+        "CHN"
+      ],
+      "counterexampleIso3": [
+        "SUR",
+        "NOR",
+        "BRA"
+      ],
+      "difficulty": "standard",
+      "eligibility": "practice",
+      "sources": [
+        "world-bank-wdi",
+        "natural-earth-admin0-110m"
+      ],
+      "explanation": "This rule highlights mapped countries in the highest quartile of the approved Mystery Map agricultural land share indicator.",
+      "decoys": [
+        {
+          "displayAnswer": "Mapped countries in the top quartile for arable land share",
+          "whyPlausible": "Several crop-heavy countries are highlighted.",
+          "whyWrong": "Agricultural land includes pasture and other farm land, so dryland and grazing countries change the set."
+        },
+        {
+          "displayAnswer": "Mapped countries in the top quartile for employment in agriculture",
+          "whyPlausible": "Some highlighted countries have large agricultural workforces.",
+          "whyWrong": "The rule is about land use, not the share of workers in agriculture."
+        },
+        {
+          "displayAnswer": "Mapped countries containing part of the Sahara Desert",
+          "whyPlausible": "Several dryland North African and Sahel countries are highlighted.",
+          "whyWrong": "The set spans Europe, South America, Central Asia, South Asia, and the Caribbean as an agricultural-land indicator pattern."
+        }
+      ],
+      "dateVintage": "2023",
+      "indicatorRef": {
+        "indicatorId": "agricultural-land",
+        "selection": "top_quartile",
+        "year": 2023
+      }
     }
   ]
 }

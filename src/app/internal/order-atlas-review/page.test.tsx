@@ -14,7 +14,7 @@ describe("InternalOrderAtlasReviewPage", () => {
   it("renders the internal Order Atlas review client with derived catalog rows", () => {
     render(<InternalOrderAtlasReviewPage />);
 
-    expect(screen.getByText(/Order Atlas review client 94 2026.07.05-order-atlas-prelaunch-expansion/)).toBeVisible();
+    expect(screen.getByText(/Order Atlas review client 102 2026.07.05-order-atlas-balance/)).toBeVisible();
   });
 
   it("keeps the internal Order Atlas review route noindexed", () => {

@@ -120,7 +120,7 @@ describe("PatternAtlasClient", () => {
     expect(PATTERN_ATLAS_SAMPLE_RULE_IDS).toEqual([
       "landlocked-south-america",
       "mapped-asean-members",
-      "top-quartile-forest-area-share"
+      "central-asia-countries"
     ]);
     expect(rules).toHaveLength(3);
     expect(rules.map((rule) => rule.id)).toEqual([...PATTERN_ATLAS_SAMPLE_RULE_IDS]);
@@ -392,12 +392,19 @@ describe("PatternAtlasClient", () => {
 
   it("clarifies indicator-derived Pattern Atlas family clues", async () => {
     const user = userEvent.setup();
+    setAccount(PRO_ENTITLEMENT, true);
+    const run = createPatternAtlasRun({
+      mode: "practice",
+      dateKey: "2026-07-03",
+      contentVersion: PATTERN_ATLAS_CATALOG.contentVersion,
+      ruleIds: ["top-quartile-forest-area-share"],
+      salt: "indicator-family-clue",
+      setup: { kind: "pro-pattern-run" as const, family: "indicators" as const }
+    });
+    savePatternAtlasPersistedState(persistPatternAtlasRun(defaultPatternAtlasPersistedState(), run));
+
     renderPatternAtlas();
-    await startSampleRun(user);
-    await user.click(screen.getByRole("button", { name: "Landlocked countries in South America" }));
-    await user.click(screen.getByRole("button", { name: "Next pattern" }));
-    await user.click(screen.getByRole("button", { name: "Mapped ASEAN member countries" }));
-    await user.click(screen.getByRole("button", { name: "Next pattern" }));
+    await user.click(screen.getByRole("button", { name: /Resume Pattern Run/i }));
 
     await user.click(screen.getByRole("button", { name: /Reveal category family -100/i }));
 

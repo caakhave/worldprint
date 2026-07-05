@@ -4,7 +4,7 @@ import type { PatternAtlasRule } from "@/lib/pattern-atlas/schemas";
 export const PATTERN_ATLAS_SAMPLE_RULE_IDS = [
   "landlocked-south-america",
   "mapped-asean-members",
-  "top-quartile-forest-area-share"
+  "central-asia-countries"
 ] as const;
 
 export function getPatternAtlasSampleRules(): PatternAtlasRule[] {

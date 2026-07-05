@@ -1,7 +1,7 @@
 {
   "schemaVersion": "1.0.0",
   "game": "order-atlas",
-  "contentVersion": "2026.07.05-order-atlas-prelaunch-expansion",
+  "contentVersion": "2026.07.05-order-atlas-balance",
   "rounds": [
     {
       "id": "order-renewable-electricity-grid-mix",
@@ -95,7 +95,7 @@
       "countryIso3": ["EGY", "CAN", "IND", "RUS", "BRA"],
       "order": "desc",
       "difficulty": "standard",
-      "eligibility": "daily",
+      "eligibility": "practice",
       "explanation": "Large water endowments, population size, and arid climates all reshape the per-person freshwater ranking.",
       "sourceMode": "mystery-map-indicator"
     },
@@ -1129,6 +1129,102 @@
       "difficulty": "expert",
       "eligibility": "practice",
       "explanation": "Mortality from air pollution reflects exposure, baseline health, indoor and outdoor pollution, and health-system capacity.",
+      "sourceMode": "mystery-map-indicator"
+    },
+    {
+      "id": "order-agricultural-land-share",
+      "indicatorId": "agricultural-land",
+      "prompt": "Put these countries in order by agricultural land share, highest to lowest.",
+      "highlightText": "agricultural land share",
+      "countryIso3": ["TKM", "ZAF", "USA", "BRA", "NOR"],
+      "order": "desc",
+      "difficulty": "standard",
+      "eligibility": "practice",
+      "explanation": "Agricultural land includes cropland and pasture, so dryland grazing countries can rank above larger forested or mountainous countries.",
+      "sourceMode": "mystery-map-indicator"
+    },
+    {
+      "id": "order-land-under-cereal-production",
+      "indicatorId": "land-under-cereal",
+      "prompt": "Put these countries in order by land under cereal production, highest to lowest.",
+      "highlightText": "land under cereal production",
+      "countryIso3": ["IND", "USA", "BRA", "NGA", "EGY"],
+      "order": "desc",
+      "difficulty": "standard",
+      "eligibility": "practice",
+      "explanation": "Major cereal area combines population demand, farming belts, and land availability rather than total country size alone.",
+      "sourceMode": "mystery-map-indicator"
+    },
+    {
+      "id": "order-largest-city-share",
+      "indicatorId": "largest-city-share",
+      "prompt": "Put these countries in order by largest city share of urban population, highest to lowest.",
+      "highlightText": "largest city share of urban population",
+      "countryIso3": ["ERI", "PAN", "BRA", "USA", "CHN"],
+      "order": "desc",
+      "difficulty": "expert",
+      "eligibility": "practice",
+      "explanation": "Some urban systems concentrate heavily in one primate city, while large countries often spread urban population across many major metros.",
+      "sourceMode": "mystery-map-indicator"
+    },
+    {
+      "id": "order-urban-slum-population-low-to-high",
+      "indicatorId": "urban-slum-population",
+      "prompt": "Put these countries in order by urban slum population share, lowest to highest.",
+      "highlightText": "urban slum population share",
+      "countryIso3": ["DEU", "BRA", "ZAF", "NGA", "AFG", "SSD"],
+      "order": "asc",
+      "difficulty": "standard",
+      "eligibility": "practice",
+      "explanation": "The lowest-to-highest order contrasts high-income urban infrastructure with countries where informal urban housing remains widespread.",
+      "sourceMode": "mystery-map-indicator"
+    },
+    {
+      "id": "order-air-carrier-departures",
+      "indicatorId": "air-departures",
+      "prompt": "Put these countries in order by air carrier departures, highest to lowest.",
+      "highlightText": "air carrier departures",
+      "countryIso3": ["USA", "CHN", "IND", "JPN", "BRA", "ZAF"],
+      "order": "desc",
+      "difficulty": "standard",
+      "eligibility": "practice",
+      "explanation": "Air departures reward huge domestic aviation markets and dense route networks, not just population size.",
+      "sourceMode": "mystery-map-indicator"
+    },
+    {
+      "id": "order-air-freight-volume",
+      "indicatorId": "air-freight",
+      "prompt": "Put these countries in order by air freight volume, highest to lowest.",
+      "highlightText": "air freight volume",
+      "countryIso3": ["USA", "CHN", "QAT", "DEU", "JPN", "GBR"],
+      "order": "desc",
+      "difficulty": "expert",
+      "eligibility": "practice",
+      "explanation": "Air freight mixes large economies with hub airports, so a smaller transit-heavy country can sit among global giants.",
+      "sourceMode": "mystery-map-indicator"
+    },
+    {
+      "id": "order-gni-per-capita-current-usd",
+      "indicatorId": "gni-per-capita",
+      "prompt": "Put these countries in order by GNI per capita, highest to lowest.",
+      "highlightText": "GNI per capita",
+      "countryIso3": ["CHE", "USA", "QAT", "BRA", "IND"],
+      "order": "desc",
+      "difficulty": "standard",
+      "eligibility": "practice",
+      "explanation": "GNI per person separates high-income financial and energy economies from large middle-income and lower-income economies.",
+      "sourceMode": "mystery-map-indicator"
+    },
+    {
+      "id": "order-severe-food-insecurity-low-to-high",
+      "indicatorId": "severe-food-insecurity",
+      "prompt": "Put these countries in order by severe food insecurity, lowest to highest.",
+      "highlightText": "severe food insecurity",
+      "countryIso3": ["ARM", "ZAF", "NGA", "AFG", "HTI", "SSD"],
+      "order": "asc",
+      "difficulty": "standard",
+      "eligibility": "practice",
+      "explanation": "The ascending order highlights how conflict, poverty, food systems, and shocks can separate countries by severe food insecurity.",
       "sourceMode": "mystery-map-indicator"
     }
   ]

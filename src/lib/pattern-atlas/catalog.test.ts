@@ -1,22 +1,8 @@
+import fs from "node:fs";
+import path from "node:path";
 import { describe, expect, it } from "vitest";
-import agriculturalWaterWithdrawalsJson from "../../../public/data/v1/indicators/agricultural-water-withdrawals.json";
-import childrenShareJson from "../../../public/data/v1/indicators/children-share.json";
-import coalElectricityShareJson from "../../../public/data/v1/indicators/coal-electricity-share.json";
 import entityRegistryJson from "../../../public/data/v1/entity-registry.json";
-import fertilityRateJson from "../../../public/data/v1/indicators/fertility-rate.json";
-import forestAreaJson from "../../../public/data/v1/indicators/forest-area.json";
-import freshwaterPerCapitaJson from "../../../public/data/v1/indicators/freshwater-per-capita.json";
-import hydroElectricityShareJson from "../../../public/data/v1/indicators/hydro-electricity-share.json";
-import internetUsersJson from "../../../public/data/v1/indicators/internet-users.json";
-import lowElevationLandShareJson from "../../../public/data/v1/indicators/low-elevation-land-share.json";
 import manifestJson from "../../../public/data/v1/manifest.json";
-import olderAdultsShareJson from "../../../public/data/v1/indicators/older-adults-share.json";
-import pm25ExposureJson from "../../../public/data/v1/indicators/pm25-exposure.json";
-import renewableElectricityJson from "../../../public/data/v1/indicators/renewable-electricity.json";
-import remittancesJson from "../../../public/data/v1/indicators/remittances.json";
-import tourismReceiptsShareJson from "../../../public/data/v1/indicators/tourism-receipts-share.json";
-import urbanPopulationJson from "../../../public/data/v1/indicators/urban-population.json";
-import waterStressJson from "../../../public/data/v1/indicators/water-stress.json";
 import { EntityRegistrySchema, IndicatorArtifactSchema, ManifestSchema } from "@/lib/content/schemas";
 import { PATTERN_ATLAS_CATALOG, getPatternAtlasRuleById, getPatternAtlasRulesByFamily } from "@/lib/pattern-atlas/catalog";
 import { PatternAtlasCatalogSchema, type PatternAtlasCatalog } from "@/lib/pattern-atlas/schemas";
@@ -24,53 +10,36 @@ import { deriveIndicatorIso3Set, validatePatternAtlasCatalog } from "@/lib/patte
 
 const entityRegistry = EntityRegistrySchema.parse(entityRegistryJson);
 const manifest = ManifestSchema.parse(manifestJson);
-const indicatorArtifacts = [
-  IndicatorArtifactSchema.parse(renewableElectricityJson),
-  IndicatorArtifactSchema.parse(forestAreaJson),
-  IndicatorArtifactSchema.parse(pm25ExposureJson),
-  IndicatorArtifactSchema.parse(internetUsersJson),
-  IndicatorArtifactSchema.parse(waterStressJson),
-  IndicatorArtifactSchema.parse(tourismReceiptsShareJson),
-  IndicatorArtifactSchema.parse(urbanPopulationJson),
-  IndicatorArtifactSchema.parse(fertilityRateJson),
-  IndicatorArtifactSchema.parse(childrenShareJson),
-  IndicatorArtifactSchema.parse(olderAdultsShareJson),
-  IndicatorArtifactSchema.parse(remittancesJson),
-  IndicatorArtifactSchema.parse(hydroElectricityShareJson),
-  IndicatorArtifactSchema.parse(coalElectricityShareJson),
-  IndicatorArtifactSchema.parse(freshwaterPerCapitaJson),
-  IndicatorArtifactSchema.parse(lowElevationLandShareJson),
-  IndicatorArtifactSchema.parse(agriculturalWaterWithdrawalsJson)
-];
+const indicatorArtifacts = loadReferencedIndicatorArtifacts(PATTERN_ATLAS_CATALOG);
 
 describe("Pattern Atlas catalog", () => {
   it("parses the catalog and keeps a balanced inventory", () => {
     const catalog = PatternAtlasCatalogSchema.parse(PATTERN_ATLAS_CATALOG);
     expect(catalog.game).toBe("pattern-atlas");
-    expect(catalog.rules).toHaveLength(93);
+    expect(catalog.rules).toHaveLength(102);
     expect(catalog.sourceRegistry.length).toBeGreaterThanOrEqual(21);
 
     expect(countBy(catalog.rules, "family")).toMatchObject({
       language: 10,
       borders: 26,
       physical_geography: 20,
-      organizations: 14,
+      organizations: 15,
       economy: 7,
-      indicators: 16
+      indicators: 24
     });
     expect(countBy(catalog.rules, "difficulty")).toMatchObject({
       intro: 17,
-      standard: 51,
-      expert: 25
+      standard: 58,
+      expert: 27
     });
     expect(countBy(catalog.rules, "eligibility")).toMatchObject({
       sample: 5,
-      daily: 36,
-      practice: 50,
+      daily: 39,
+      practice: 56,
       "expert-only": 2
     });
 
-    expect(getPatternAtlasRulesByFamily("indicators")).toHaveLength(16);
+    expect(getPatternAtlasRulesByFamily("indicators")).toHaveLength(24);
     expect(getPatternAtlasRuleById("countries-bordering-germany")?.includedIso3).toContain("POL");
     expect(getPatternAtlasRuleById("countries-bordering-turkey")?.includedIso3).toEqual([
       "ARM",
@@ -140,4 +109,13 @@ function countBy<T, K extends keyof T>(items: T[], key: K): Record<string, numbe
     counts[value] = (counts[value] ?? 0) + 1;
     return counts;
   }, {});
+}
+
+function loadReferencedIndicatorArtifacts(catalog: PatternAtlasCatalog) {
+  const indicatorIds = [...new Set(catalog.rules.flatMap((rule) => (rule.indicatorRef ? [rule.indicatorRef.indicatorId] : [])))];
+  return indicatorIds.map((indicatorId) =>
+    IndicatorArtifactSchema.parse(
+      JSON.parse(fs.readFileSync(path.join(process.cwd(), "public/data/v1/indicators", `${indicatorId}.json`), "utf8"))
+    )
+  );
 }
