@@ -11,10 +11,15 @@ This is a launch-candidate evidence record for the current private QA pass on `h
   - `28c585e` - Harden black-box auth smoke tests
   - `a086cd4` - Add staging QA operator checklist
   - `2fed0c3` - Add pre-prod readiness audit and clean Mystery Map intro CTA
+  - `f9c878a` - Update black-box upgrade assertions
 - Automated result: the external black-box suite passed after the latest staging push. Current expected baseline with auth env vars present is `47 passed, 1 skipped`.
 - Expected skipped test: live challenge email, intentionally disabled by default.
 - Manual QA: passed so far with no launch-blocking product bugs reported in the current operator pass.
 - Production, apex, and www were not touched.
+- Dashboard/service launch-gate checks: Cloudflare, Supabase, Stripe, Google Workspace / Email / DNS / Resend, and Local Operator checks passed.
+- Analytics/GTM: not rerun in this checklist update; keep as a separate production-host verification if needed.
+- Billing remains deferred. Stripe checkout/webhook validation is sandbox/test-mode only, with webhook events expected to have `livemode=false`.
+- `CGY_RUN_EMAIL_LIVE` remains unset, and live challenge-email testing was not run.
 
 ## Automated QA Evidence
 
@@ -65,7 +70,8 @@ Known expected baseline:
 | QA-002 | Mystery Map intro | Duplicate intro CTA was found: `Skip intro` called the same handler as `Start map 1`. | Low | Fixed in `2fed0c3` | Black-box coverage now checks that `Start map 1` is visible and `Skip intro` is absent before sample play continues. |
 | QA-003 | Challenge email | Live challenge email remains intentionally untested by default. | None | Deferred | Only test with explicit opt-in and a safe test alias. |
 | QA-004 | Production/apex/www | Production custom-domain and apex/www checks are deferred. | None | Deferred | Run during the launch/unblock task, not during staging QA. |
-| QA-005 | Services/dashboard | Dashboard and service checks remain open. | Medium | Open | Complete the dashboard/service worksheet before public launch. |
+| QA-005 | Services/dashboard | Dashboard and service checks passed for Cloudflare, Supabase, Stripe, Google Workspace / Email / DNS / Resend, and Local Operator. | None | Passed | Continue manual QA; do not unblock apex/www until the final launch decision. |
+| QA-006 | Local operator QA | Black-box `/upgrade/` assertions were updated for current billing-ready sandbox copy. | Low | Fixed in `f9c878a` | Full suite passed: `47 passed, 1 skipped`; live email remains intentionally skipped. |
 
 ## Remaining Open Checks
 
@@ -81,6 +87,6 @@ Use the readiness docs and dashboard worksheet before any public launch or produ
 
 ## Current Recommendation
 
-Staging is a launch candidate pending dashboard/service verification.
+Staging/pre-production is a launch candidate pending continued manual QA and the final apex/www activation decision.
 
-Do not overread this as production, apex/www, billing, live challenge email, DNS, analytics, or dashboard sign-off. Those remain manual launch checks.
+Do not overread this as public apex/www launch. Apex/www were not changed, billing remains deferred, live challenge email remains opt-in and unrun, and analytics/GTM can be checked separately if needed.
