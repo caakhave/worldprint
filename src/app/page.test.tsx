@@ -114,5 +114,12 @@ describe("HomePage", () => {
     expect(styles).toContain(".homepage-section-heading-wide {");
     expect(styles).toContain(".homepage-section-heading-wide h2");
     expect(styles).toContain("max-width: none");
+    const cardCopyRule = styles.slice(
+      styles.indexOf(".game-loop-copy,\n.mode-poster-copy,\n.game-library-card-copy,\n.entry-preview-copy"),
+      styles.indexOf(".game-loop-copy,\n.mode-poster-copy {")
+    );
+    expect(cardCopyRule).toContain("width: 100%");
+    expect(cardCopyRule).toContain("max-width: none");
+    expect(styles).not.toContain("max-width: 18rem");
   });
 });

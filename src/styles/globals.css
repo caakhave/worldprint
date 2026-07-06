@@ -2076,10 +2076,18 @@ button:disabled {
 }
 
 .game-loop-copy,
+.mode-poster-copy,
+.game-library-card-copy,
+.entry-preview-copy {
+  min-width: 0;
+  width: 100%;
+  max-width: none;
+}
+
+.game-loop-copy,
 .mode-poster-copy {
   position: relative;
   z-index: 1;
-  max-width: 18rem;
   padding: 0;
 }
 
