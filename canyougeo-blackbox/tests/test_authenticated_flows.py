@@ -4,7 +4,7 @@ import os
 import re
 
 import pytest
-from playwright.sync_api import Page, expect
+from playwright.sync_api import Page, TimeoutError as PlaywrightTimeoutError, expect
 
 from pages.auth import AuthPage, expect_signed_in_account
 from utils.assertions import normalize_url
@@ -46,6 +46,29 @@ def _expect_no_live_payment_navigation(page: Page) -> None:
     expect(page).not_to_have_url(re.compile(r"checkout\.stripe\.com|billing\.stripe\.com", re.I))
 
 
+def _wait_for_upgrade_account_hydration(page: Page) -> None:
+    try:
+        page.wait_for_function(
+            """
+            () => {
+              const isVisible = (element) =>
+                Boolean(element.offsetWidth || element.offsetHeight || element.getClientRects().length);
+
+              return !Array.from(document.querySelectorAll("button:disabled")).some((button) => {
+                const label = (button.textContent || "").trim();
+                return isVisible(button) && /^Checking account$/i.test(label);
+              });
+            }
+            """,
+            timeout=10_000,
+        )
+    except PlaywrightTimeoutError as exc:
+        raise AssertionError(
+            "Upgrade page did not finish account hydration: disabled 'Checking account' "
+            "button remained visible after 10 seconds."
+        ) from exc
+
+
 def _expect_account_membership(page: Page, plan: str) -> None:
     expect_signed_in_account(page)
     expect(page.get_by_text("Player profile")).to_be_visible()
@@ -59,12 +82,24 @@ def _expect_account_membership(page: Page, plan: str) -> None:
 
 
 def _expect_upgrade_page(page: Page, plan: str) -> None:
+    _wait_for_upgrade_account_hydration(page)
+
     for game_name in ("Mystery Map", "Pattern Atlas", "Order Atlas"):
         expect(page.get_by_text(game_name).first).to_be_visible()
+    expect(page.get_by_text("Open the whole atlas.").first).to_be_visible()
+    expect(page.get_by_text("$3.99").first).to_be_visible()
+    expect(page.get_by_text("$29.99").first).to_be_visible()
+    expect(page.get_by_text(re.compile(r"Daily rounds in Daily-enabled games", re.I)).first).to_be_visible()
+
+    secure_checkout = page.get_by_label("Secure checkout note")
+    expect(secure_checkout).to_be_visible()
+    expect(secure_checkout.get_by_text("Secure checkout.")).to_be_visible()
+
     if plan == "pro":
         expect(page.get_by_text(re.compile(r"Pro membership is enabled|already has supported Pro modes|Order Atlas Pro Play", re.I)).first).to_be_visible()
     else:
-        expect(page.get_by_text(re.compile(r"Choose Free or Pro|Checkout is coming soon|Continue free", re.I)).first).to_be_visible()
+        expect(page.get_by_text("Ready for secure checkout").first).to_be_visible()
+        expect(page.get_by_text(re.compile(r"Pick monthly or yearly, then continue to secure checkout", re.I)).first).to_be_visible()
     _expect_no_live_payment_navigation(page)
 
 
