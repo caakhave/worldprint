@@ -1082,23 +1082,23 @@ export function WorldprintClient({ dateOverride, entryMode = "standard" }: World
     const currentPracticeActive = canUseFullPractice && currentPracticeRun?.status === "active" && runMatchesTier(currentPracticeRun, selectedTier);
     const primaryMode: "sample" | "daily" | "atlas" = isProAccount ? "atlas" : isFreeAccount ? "daily" : "sample";
     const primaryModeComplete = primaryMode === "daily" ? todayCompleted : false;
-    const primaryKicker = primaryMode === "atlas" ? "Unlimited Atlas" : primaryMode === "daily" ? "Today's Free Maps" : "Sample Run";
+    const primaryKicker = primaryMode === "atlas" ? "Mystery Map Pro" : primaryMode === "daily" ? "Mystery Map Daily" : "Mystery Map Sample";
     const primaryHeading =
       primaryMode === "atlas"
         ? currentAtlasActive
-          ? "Continue Pro Atlas"
-          : "Start Unlimited Atlas"
+          ? "Continue Mystery Map"
+          : "Start a Mystery Map run"
         : primaryMode === "daily"
           ? currentDailyActive
-            ? "Resume today's 3 maps"
-            : "Play today's Free Daily"
-          : "Try the 5-map Sample Run";
+            ? "Resume today's Mystery Map"
+            : "Play today's Mystery Map"
+          : "Start the sample game";
     const primaryCopy =
       primaryMode === "atlas"
-        ? "Start unlimited 5-map Pro Atlas runs from the approved Mystery Map pool. The Daily stays separate for streaks and history."
+        ? "Look at the map. Colors are the clue. Tap countries if you need help, then guess what the map measures."
         : primaryMode === "daily"
-          ? "Your free account gets 3 Daily Mystery Map rounds today with saved results, progress, and streaks."
-          : "No account needed. These sample maps never change, and the Sample Run does not save stats or streaks.";
+          ? "Today's Daily starts with a mystery map. Read the colors, investigate when you need help, and make the guess."
+          : "No account needed. Start with a few fixed maps and learn the rhythm before worrying about modes or stats.";
     const primaryStateLabel =
       primaryMode === "atlas"
         ? currentAtlasActive
@@ -1110,21 +1110,21 @@ export function WorldprintClient({ dateOverride, entryMode = "standard" }: World
             ? currentDailyActive
               ? "Daily in progress"
               : "Ready today"
-            : "5 fixed maps";
+            : "Start here";
     const primaryNote =
       primaryMode === "atlas"
-        ? `Pro Atlas uses unlimited ${PRO_ATLAS_ROUND_COUNT}-map runs from the approved pool. Daily Challenge is today's fixed 3-map streak run.`
+        ? `Pro can keep playing ${PRO_ATLAS_ROUND_COUNT}-map Mystery Map runs after the Daily.`
         : primaryMode === "daily"
-          ? "Want more after today's 3 maps? Go Pro for unlimited Atlas play."
-          : "Sign up for Pro for the full atlas, or create a free account for Daily rounds in Daily-enabled games.";
+          ? "Want more after today's 3 maps? Pro opens longer supported runs."
+          : "The sample is local to this browser. Free accounts unlock Daily-enabled games where supported.";
     const primaryActionLabel =
       primaryMode === "atlas"
         ? currentAtlasActive
-          ? "Continue Pro Atlas"
-          : "Start Unlimited Atlas"
+          ? "Continue Mystery Map"
+          : "Start Pro Mystery Map"
         : primaryMode === "daily"
           ? dailyLabel
-          : "Try the 5-map Sample Run";
+          : "Start sample game";
     const completedPrimaryLabel = isFreeAccount ? "Start Pro" : signedIn && practiceMatches.length > 0 ? "Play" : "Play Sample Run";
     const completedPrimaryDetail =
       completedPrimaryLabel === "Start Pro"
@@ -1220,9 +1220,9 @@ export function WorldprintClient({ dateOverride, entryMode = "standard" }: World
           {!isArchiveDate ? (
             <>
               <div className="mode-panel-heading lobby-heading">
-                <p className="setup-kicker">Choose your game mode</p>
-                <h2>Ready to read the map?</h2>
-                <p>Press play for the freshest Can You Geo run available to you. Other modes stay nearby when you want them.</p>
+                <p className="setup-kicker">Start here</p>
+                <h2>Ready to play Mystery Map?</h2>
+                <p>Look at the map. Colors are the clue. Tap a country if you need evidence, then guess what the map measures.</p>
               </div>
               <article className="lobby-primary-card" data-state={primaryModeComplete ? "complete" : "ready"} aria-label="Primary Mystery Map action">
                 <div className="lobby-primary-copy">
@@ -1269,7 +1269,7 @@ export function WorldprintClient({ dateOverride, entryMode = "standard" }: World
                     )
                   ) : (
                     <button className="button lobby-play-button" type="button" onClick={() => void startRun(primaryMode)}>
-                      <span className="lobby-play-main">PLAY</span>
+                      <span className="lobby-play-main">Play Mystery Map</span>
                       <small>{primaryActionLabel}</small>
                     </button>
                   )}
@@ -1297,9 +1297,9 @@ export function WorldprintClient({ dateOverride, entryMode = "standard" }: World
               </article>
               <section className="lobby-secondary" aria-label="More ways to play">
                 <div className="mode-panel-heading mode-panel-heading-secondary">
-                  <p className="setup-kicker">More ways to play</p>
-                  <h2>Choose a side route.</h2>
-                  <p>Practice, replay, and stats are here when you want them. None of these changes today&apos;s Daily score.</p>
+                  <p className="setup-kicker">More details</p>
+                  <h2>Explore modes after the first map.</h2>
+                  <p>Practice, replay, and stats are here when you want them. You can ignore them until the basic loop makes sense.</p>
                 </div>
                 <div className="lobby-secondary-actions">
                   {todayCompleted ? (
@@ -1686,8 +1686,8 @@ export function WorldprintClient({ dateOverride, entryMode = "standard" }: World
           </div>
           <div>
             <p className="eyebrow">Your task</p>
-            <h1 id="active-map-title">What does this map measure?</h1>
-            <p>Read the map pattern, spend points only when evidence helps, then lock the answer.</p>
+            <h1 id="active-map-title">Use the map as your clue.</h1>
+            <p>Darker usually means more. Tap a country if you need evidence, then guess what the map measures.</p>
           </div>
         </div>
         {selectedCountryEvidencePanel("desktop")}
@@ -1834,7 +1834,7 @@ export function WorldprintClient({ dateOverride, entryMode = "standard" }: World
             <>
               <span>Ready</span>
               <strong>Pick a country</strong>
-              <p>Click the map or use the country search to collect evidence.</p>
+              <p>Tap the map or use search to investigate a country before you guess.</p>
             </>
           )}
         </div>
@@ -2451,27 +2451,32 @@ function FirstRunIntro({ tier, onContinue }: { tier: Tier; onContinue: () => voi
   return (
     <section className="first-run-shell page-shell" aria-label="First run intro">
       <div className="first-run-card surface">
-        <p className="eyebrow">Before map 1</p>
-        <h1>Read the signal, then make the call.</h1>
+        <p className="eyebrow">Quick start</p>
+        <h1>Look at the map. Make a guess.</h1>
         <p className="lead">
-          You are starting on {TIER_CONFIGS[tier].label}. Keep your score clean, spend clues only when the map gets slippery, and pick the hidden
-          indicator.
+          You are starting on {TIER_CONFIGS[tier].label}. You do not need to learn every mode first: read the colors, tap a country if
+          you want evidence, then choose what the map measures.
         </p>
         <ol className="first-run-beats" aria-label="How Mystery Map works">
           <li>
             <span>01</span>
-            <strong>Read the map color pattern.</strong>
-            <p>Darker countries carry the stronger signal.</p>
+            <strong>Each round starts with a mystery map.</strong>
+            <p>The map is the clue.</p>
           </li>
           <li>
             <span>02</span>
-            <strong>Use clues if stuck.</strong>
-            <p>Country values help, but every paid clue spends points.</p>
+            <strong>The colors are your clue.</strong>
+            <p>Darker usually means more.</p>
           </li>
           <li>
             <span>03</span>
-            <strong>Pick the hidden indicator.</strong>
-            <p>Solve the map, bank the score, and move to the next one.</p>
+            <strong>Pick a country to investigate.</strong>
+            <p>Need help? Reveal a country value before you guess.</p>
+          </li>
+          <li>
+            <span>04</span>
+            <strong>Lock in the answer.</strong>
+            <p>Choose what the map measures and learn the pattern.</p>
           </li>
         </ol>
         <div className="first-run-actions">

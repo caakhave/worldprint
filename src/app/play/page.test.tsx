@@ -18,11 +18,11 @@ describe("PlayHubPage", () => {
   it("renders the Can You Geo game library with all three public game cards", () => {
     const { container } = render(<PlayHubPage />);
 
-    expect(screen.getByRole("heading", { name: "Choose your geography game." })).toBeVisible();
-    expect(screen.getByRole("heading", { name: "Three games, one atlas." })).toBeVisible();
+    expect(screen.getByRole("heading", { name: "Start with Mystery Map." })).toBeVisible();
+    expect(screen.getByRole("heading", { name: "Pick your game when you are ready." })).toBeVisible();
+    expect(screen.getByText(/Look at the map\. Colors are the clue/i)).toBeVisible();
     expect(screen.getByText(/No account is needed for samples/i)).toBeVisible();
-    expect(screen.getByText(/Create a free account for Daily games and saved progress where supported/i)).toBeVisible();
-    expect(screen.getByText(/repeatable Order Atlas Play/i)).toBeVisible();
+    expect(screen.getByText(/Mystery Map is the easiest first play/i)).toBeVisible();
     expect(screen.getByText("New geography challenges added every month.")).toBeVisible();
     expect(screen.getByText("The atlas keeps growing with new maps, patterns, and ordering challenges.")).toBeVisible();
     expect(screen.queryByText(/two playable games/i)).not.toBeInTheDocument();
@@ -32,7 +32,7 @@ describe("PlayHubPage", () => {
     expect(screen.getByRole("heading", { name: "Order Atlas" })).toBeVisible();
     expect(container.querySelectorAll(".game-library-visual-image")).toHaveLength(3);
     expect(container.querySelector(".game-library-visual-map")).not.toBeInTheDocument();
-    expect(screen.getAllByRole("link", { name: /Open Mystery Map/i }).every((link) => link.getAttribute("href") === "/play/mystery-map")).toBe(true);
+    expect(screen.getAllByRole("link", { name: /Open Mystery Map|Start Mystery Map/i }).every((link) => link.getAttribute("href") === "/play/mystery-map")).toBe(true);
     expect(screen.getAllByRole("link", { name: /Open Pattern Atlas/i }).every((link) => link.getAttribute("href") === "/play/pattern-atlas")).toBe(true);
     expect(screen.getAllByRole("link", { name: /Open Order Atlas/i }).some((link) => link.getAttribute("href") === "/play/order-atlas")).toBe(true);
 
@@ -79,6 +79,7 @@ describe("PlayHubPage", () => {
     expect(within(orderAtlasCard as HTMLElement).getByText("Free Daily")).toBeVisible();
     expect(within(orderAtlasCard as HTMLElement).getByText("Pro Play")).toBeVisible();
     expect(within(orderAtlasCard as HTMLElement).getByRole("link", { name: /Open Order Atlas/i })).toHaveAttribute("href", "/play/order-atlas");
+    expect(screen.getByRole("link", { name: /Try Order Atlas/i })).toHaveAttribute("href", "/play/order-atlas");
     expect(within(orderAtlasCard as HTMLElement).queryByText(/saved progress|saved stats|streaks|archive|challenge|custom filters|continuous/i)).not.toBeInTheDocument();
     expect(screen.queryByText(/Daily and Pro modes coming next|intro-only|intro sample|Pro Practice|Practice Run/i)).not.toBeInTheDocument();
   });

@@ -30,7 +30,7 @@ describe("EntryAtlasVisual", () => {
     expect(visual).toHaveAttribute("data-preview-tone", "gold");
     expect(screen.getByText("Evidence")).toHaveClass("entry-preview-panel-label");
 
-    await user.click(screen.getByRole("button", { name: "Show step 4: Choose the hidden indicator" }));
+    await user.click(screen.getByRole("button", { name: "Show step 4: Make the guess" }));
     expect(visual).toHaveAttribute("data-preview-step", "4");
     expect(visual).toHaveAttribute("data-preview-tone", "green");
     expect(screen.getByText("Answer choices")).toHaveClass("entry-preview-panel-label");

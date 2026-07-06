@@ -63,24 +63,24 @@ describe("HomePage", () => {
     expect(screen.getByRole("heading", { name: "What data sources does Can You Geo use?" })).toBeVisible();
     expect(screen.getByText(/World Bank World Development Indicators/i)).toBeVisible();
     expect(screen.getByRole("heading", { name: "Fresh challenges without changing the rules." })).toBeVisible();
-    expect(screen.getByRole("heading", { name: "Read patterns. Make the call." })).toBeVisible();
-    expect(screen.getByRole("heading", { name: "Read patterns. Make the call." }).closest(".homepage-section-heading")).toHaveClass(
+    expect(screen.getByRole("heading", { name: "Look at the map. Make the guess." })).toBeVisible();
+    expect(screen.getByRole("heading", { name: "Look at the map. Make the guess." }).closest(".homepage-section-heading")).toHaveClass(
       "homepage-section-heading-wide"
     );
-    expect(screen.getByText(/Can You Geo is a three-game geography library/i)).toBeVisible();
-    expect(screen.getByText(/Mystery Map asks you to decode an unlabeled choropleth/i)).toBeVisible();
-    expect(screen.getByText(/Pattern Atlas highlights countries and hides the connection/i)).toBeVisible();
-    expect(screen.getByText(/Order Atlas turns country rankings into Sample, Daily, and Pro Play rounds/i)).toBeVisible();
-    expect(screen.getByRole("heading", { name: "Choose your geography game." })).toBeVisible();
-    expect(screen.getByRole("heading", { name: "Choose your geography game." }).closest(".homepage-section-heading")).toHaveClass(
+    expect(screen.getByText(/The first game is Mystery Map/i)).toBeVisible();
+    expect(screen.getByText(/Every round starts with a mystery choropleth/i)).toBeVisible();
+    expect(screen.getByText(/Darker usually means more/i)).toBeVisible();
+    expect(screen.getByText(/Tap a country if you need evidence/i)).toBeVisible();
+    expect(screen.getByRole("heading", { name: "Play Mystery Map first." })).toBeVisible();
+    expect(screen.getByRole("heading", { name: "Play Mystery Map first." }).closest(".homepage-section-heading")).toHaveClass(
       "homepage-section-heading-wide"
     );
     expect(screen.getByText("New geography challenges added every month.")).toBeVisible();
     expect(screen.getByText("Fresh maps, country patterns, and ordering challenges keep the atlas growing.")).toBeVisible();
-    expect(screen.getByText(/Mystery Map, Pattern Atlas, and Order Atlas all support Sample and Daily play/i)).toBeVisible();
-    expect(screen.getByText(/repeatable Order Atlas Play/i)).toBeVisible();
+    expect(screen.getByText(/Mystery Map is the clearest first step/i)).toBeVisible();
     expect(screen.queryByText(/new games every month/i)).not.toBeInTheDocument();
-    expect(screen.getByRole("link", { name: /Open game library/i })).toHaveAttribute("href", "/play");
+    expect(screen.getByRole("link", { name: /Start the sample game/i })).toHaveAttribute("href", "/play/mystery-map");
+    expect(screen.getByRole("link", { name: /See all games/i })).toHaveAttribute("href", "/play");
     expect(screen.getByRole("link", { name: /Open Mystery Map/i })).toHaveAttribute("href", "/play/mystery-map");
     expect(screen.getByRole("link", { name: /Open Pattern Atlas/i })).toHaveAttribute("href", "/play/pattern-atlas");
     expect(screen.getByRole("link", { name: /Open Order Atlas/i })).toHaveAttribute("href", "/play/order-atlas");
@@ -103,10 +103,10 @@ describe("HomePage", () => {
       "/images/homepage/04-daily-mystery-map.png"
     );
     expect(within(orderAtlasPoster as HTMLElement).getByText("Sample / Daily / Pro Play")).toBeVisible();
-    expect(within(orderAtlasPoster as HTMLElement).getByText(/Order country cards in Sample, Free Daily, and repeatable Pro Play sets/i)).toBeVisible();
+    expect(within(orderAtlasPoster as HTMLElement).getByText(/Order country cards by a known geography signal/i)).toBeVisible();
     expect(within(orderAtlasPoster as HTMLElement).queryByText(/saved stats|streaks|archive|challenge|custom filters|continuous/i)).not.toBeInTheDocument();
-    expect(screen.getByText("No account needed for sample runs.")).toBeVisible();
-    expect(screen.getByText("Free accounts get Daily games, with saved progress where supported.")).toBeVisible();
+    expect(screen.getByText("No account needed for the sample game.")).toBeVisible();
+    expect(screen.getByText("Free accounts get Daily geography challenges where supported.")).toBeVisible();
     expect(screen.queryByText(/Daily and Pro modes coming next/i)).not.toBeInTheDocument();
     expect(screen.queryByText(/intro-only|intro sample|Pro Practice|Practice Run/i)).not.toBeInTheDocument();
     expect(styles).toContain(".hero-growth-note + .button-row");

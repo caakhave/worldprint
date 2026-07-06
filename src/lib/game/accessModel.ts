@@ -7,11 +7,11 @@ export const FREE_DAILY_ROUND_COUNT = 3;
 export const PRO_ATLAS_ROUND_COUNT = 5;
 
 export const SAMPLE_RUN_ROUND_IDS = [
-  "worldprint-cereal-yield",
-  "worldprint-rural-population-growth",
-  "worldprint-measles-immunization",
-  "worldprint-migrant-stock",
-  "worldprint-pm25-exposure"
+  "worldprint-fertility-rate",
+  "worldprint-life-expectancy",
+  "worldprint-urban-population",
+  "worldprint-internet-users",
+  "worldprint-forest-area"
 ] as const;
 
 export function sampleRunRoundIds(rounds: RoundDefinition[]): string[] {

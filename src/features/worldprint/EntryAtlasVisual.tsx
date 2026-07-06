@@ -54,8 +54,8 @@ const PREVIEW_STEPS: PreviewStep[] = [
   },
   {
     id: "choose-answer",
-    title: "Choose the hidden indicator",
-    body: "Use the map shape and evidence to pick the statistic the world is hiding.",
+    title: "Make the guess",
+    body: "Use the map shape and evidence to choose what the map measures.",
     points: "800 points possible",
     investigatedIso3: ["JPN", "BRA"],
     selectedIso3: "BRA",

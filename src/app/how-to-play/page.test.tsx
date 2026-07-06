@@ -9,12 +9,16 @@ describe("HowToPlayPage", () => {
   it("uses player-facing scoring and account copy", () => {
     render(<HowToPlayPage />);
 
-    expect(screen.getByRole("heading", { name: /Learn the three ways to read the world/i })).toBeVisible();
-    expect(screen.getByText(/Can You Geo\? is a library of geography games/i)).toBeVisible();
+    expect(screen.getByRole("heading", { name: /Start with one mystery map/i })).toBeVisible();
+    expect(screen.getByText(/Can You Geo\? is a geography guessing game/i)).toBeVisible();
     expect(screen.queryByText(/Mystery Map is the first Can You Geo\? mode/i)).not.toBeInTheDocument();
-    expect(screen.getByRole("heading", { name: "Three ways to read the world." })).toBeVisible();
-    expect(screen.getByText(/Order Atlas asks you to order country cards by a known indicator/i)).toBeVisible();
-    expect(screen.getByText(/Sample Run, Free Daily, and repeatable Pro Play/i)).toBeVisible();
+    expect(screen.getByRole("heading", { name: /How a Mystery Map round works/i })).toBeVisible();
+    expect(screen.getByText(/Do not worry about sources, scoring, streaks, or modes at first/i)).toBeVisible();
+    expect(screen.getByRole("heading", { name: "Look at the map" })).toBeVisible();
+    expect(screen.getByRole("heading", { name: "Use the colors" })).toBeVisible();
+    expect(screen.getByRole("heading", { name: "Tap a country" })).toBeVisible();
+    expect(screen.getByRole("heading", { name: "Lock in the answer" })).toBeVisible();
+    expect(screen.getByRole("heading", { name: "The atlas has other puzzle types too." })).toBeVisible();
     expect(screen.getAllByRole("heading", { name: "Mystery Map" }).length).toBeGreaterThan(0);
     expect(screen.getAllByRole("heading", { name: "Pattern Atlas" }).length).toBeGreaterThan(0);
     expect(screen.getAllByRole("heading", { name: "Order Atlas" }).length).toBeGreaterThan(0);
@@ -23,9 +27,7 @@ describe("HowToPlayPage", () => {
     expect(screen.getByAltText("Order Atlas game preview")).toBeVisible();
     expect(screen.getByRole("link", { name: /Open Pattern Atlas/i })).toHaveAttribute("href", "/play/pattern-atlas");
     expect(screen.getByRole("link", { name: /Open Order Atlas/i })).toHaveAttribute("href", "/play/order-atlas");
-    expect(screen.getByRole("heading", { name: /Each game asks for a different kind of geography read/i })).toBeVisible();
-    expect(screen.getByRole("heading", { name: /How a Mystery Map round works/i })).toBeVisible();
-    expect(screen.getByText(/Mystery Map is the choropleth game/i)).toBeVisible();
+    expect(screen.getByRole("heading", { name: /Choose another game when you are ready/i })).toBeVisible();
     expect(screen.getByRole("heading", { name: /How a Pattern Atlas round works/i })).toBeVisible();
     expect(screen.getByText(/Country names stay hidden at first/i)).toBeVisible();
     expect(screen.getByText(/The reveal shows the answer, explanation, sources, highlighted countries/i)).toBeVisible();

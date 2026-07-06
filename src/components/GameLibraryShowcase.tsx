@@ -23,7 +23,7 @@ export const GAME_LIBRARY_ITEMS: readonly GameLibraryItem[] = [
     id: "mystery-map",
     eyebrow: "Original map game",
     title: "Mystery Map",
-    description: "Read an unlabeled choropleth, spend clues carefully, and identify the hidden world indicator.",
+    description: "Read the color pattern, investigate countries when you need help, and guess what the map measures.",
     access: ["Signed-out Sample Run", "Free Daily", "Pro Custom Atlas"],
     href: "/play/mystery-map",
     ctaLabel: "Open Mystery Map",

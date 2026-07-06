@@ -12,7 +12,7 @@ const styles = readFileSync(join(process.cwd(), "src/styles/globals.css"), "utf8
 describe("WorldprintClient UI structure", () => {
   it("makes the lobby default action a dominant PLAY CTA", () => {
     const primaryIndex = source.indexOf('className="lobby-primary-card"');
-    const playIndex = source.indexOf('<span className="lobby-play-main">PLAY</span>');
+    const playIndex = source.indexOf('<span className="lobby-play-main">Play Mystery Map</span>');
     const secondaryIndex = source.indexOf('className="lobby-secondary"');
 
     expect(primaryIndex).toBeGreaterThan(0);
@@ -21,7 +21,8 @@ describe("WorldprintClient UI structure", () => {
     expect(source).toContain('aria-label="Primary Mystery Map action"');
     expect(source).toContain('<small>{primaryActionLabel}</small>');
     expect(source).not.toContain("Compass size={20}");
-    expect(source).toContain("Sign up for Pro for the full atlas, or create a free account for Daily rounds in Daily-enabled games.");
+    expect(source).toContain("Look at the map. Colors are the clue. Tap a country if you need evidence, then guess what the map measures.");
+    expect(source).toContain("The sample is local to this browser. Free accounts unlock Daily-enabled games where supported.");
     expect(styles).toContain(".lobby-play-button");
     expect(styles).toContain(".lobby-play-main");
     expect(styles).toContain("min-height: 5rem");
@@ -35,13 +36,17 @@ describe("WorldprintClient UI structure", () => {
 
     expect(introIndex).toBeGreaterThan(0);
     expect(introEnd).toBeGreaterThan(introIndex);
+    expect(introSource).toContain("Each round starts with a mystery map.");
+    expect(introSource).toContain("The colors are your clue.");
+    expect(introSource).toContain("Pick a country to investigate.");
+    expect(introSource).toContain("Lock in the answer.");
     expect(introSource).toContain("Start map 1");
     expect(introSource).not.toContain("Skip intro");
     expect(introSource.match(/onClick=\{onContinue\}/g)).toHaveLength(1);
   });
 
   it("keeps Practice, Past Games, replay, and stats visually secondary in the lobby", () => {
-    expect(source).toContain("More ways to play");
+    expect(source).toContain("More details");
     expect(source).toContain('aria-label="More ways to play"');
     expect(source).toContain('className="lobby-secondary-actions"');
     expect(source).toContain("Practice Atlas");
@@ -88,8 +93,8 @@ describe("WorldprintClient UI structure", () => {
     expect(source).toContain("Resume practice");
     expect(source).toContain("Resume map");
     expect(source).toContain("Daily in progress");
-    expect(source).toContain("Resume today's 3 maps");
-    expect(source).toContain("Continue Pro Atlas");
+    expect(source).toContain("Resume today's Mystery Map");
+    expect(source).toContain("Continue Mystery Map");
     expect(source).toContain("Continue replay");
   });
 
@@ -236,10 +241,10 @@ describe("WorldprintClient UI structure", () => {
   });
 
   it("distinguishes Pro Atlas from today's Daily Challenge in the Pro lobby", () => {
-    expect(source).toContain("Start Unlimited Atlas");
-    expect(source).toContain("Start unlimited 5-map Pro Atlas runs from the approved Mystery Map pool.");
-    expect(source).toContain("Pro Atlas uses unlimited");
-    expect(source).toContain("Daily Challenge is today's fixed 3-map streak run.");
+    expect(source).toContain("Start a Mystery Map run");
+    expect(source).toContain("Start Pro Mystery Map");
+    expect(source).toContain("Pro can keep playing");
+    expect(source).toContain("Start Pro Mystery Map");
     expect(source).toContain("Play today&apos;s Daily Challenge");
     expect(source).not.toContain("Play today&apos;s 3 maps");
   });

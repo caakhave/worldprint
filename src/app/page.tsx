@@ -7,9 +7,9 @@ import { HomeHeroAccountPanel } from "@/features/home/HomeHeroAccountPanel";
 import { HOME_FAQ_ITEMS, homeFaqJsonLd, pageMetadata } from "@/lib/site/seo";
 
 export const metadata: Metadata = pageMetadata({
-  title: "Can You Geo? - Daily Geography Games & World Data Puzzles",
+  title: "Can You Geo? - Mystery Map Geography Game",
   description:
-    "Play Can You Geo?, a growing geography game library with Mystery Map data puzzles, Pattern Atlas rule challenges, and Order Atlas country-ordering runs.",
+    "Start with Mystery Map, a geography guessing game where the map is the clue. Read the colors, investigate countries, and guess what the map measures.",
   path: "/"
 });
 
@@ -18,22 +18,22 @@ const signalCards = [
     step: "01",
     image: "/images/homepage/01-read-the-map.png",
     objectPosition: "50% 50%",
-    title: "Read the map",
-    copy: "Mystery Map asks you to decode an unlabeled choropleth."
+    title: "Look at the map",
+    copy: "Every round starts with a mystery choropleth."
   },
   {
     step: "02",
     image: "/images/homepage/02-use-your-clues.png",
     objectPosition: "50% 48%",
-    title: "Find the rule",
-    copy: "Pattern Atlas highlights countries and hides the connection."
+    title: "Use the colors",
+    copy: "Darker usually means more. The color pattern is your clue."
   },
   {
     step: "03",
     image: "/images/homepage/03-make-the-call.png",
     objectPosition: "50% 52%",
-    title: "Order the signal",
-    copy: "Order Atlas turns country rankings into Sample, Daily, and Pro Play rounds."
+    title: "Make the guess",
+    copy: "Tap a country if you need evidence, then guess what the map measures."
   }
 ] as const;
 
@@ -42,7 +42,7 @@ const modeCards = [
     image: "/images/homepage/05-practice.png",
     objectPosition: "50% 50%",
     title: "Mystery Map",
-    copy: "Read choropleth patterns, spend clues, and solve the hidden indicator.",
+    copy: "Read the color pattern, investigate countries when you need help, and guess what the map measures.",
     cta: "Open Mystery Map",
     href: "/play/mystery-map"
   },
@@ -58,7 +58,7 @@ const modeCards = [
     image: "/images/homepage/04-daily-mystery-map.png",
     objectPosition: "50% 50%",
     title: "Order Atlas",
-    copy: "Order country cards in Sample, Free Daily, and repeatable Pro Play sets.",
+    copy: "Order country cards by a known geography signal.",
     cta: "Open Order Atlas",
     href: "/play/order-atlas",
     badge: "Sample / Daily / Pro Play"
@@ -110,11 +110,10 @@ export default function HomePage() {
       <section className="section-band homepage-section" id="how-it-works">
         <div className="page-shell homepage-section-layout">
           <div className="homepage-section-heading homepage-section-heading-wide">
-            <p className="eyebrow">How the library plays</p>
-            <h2>Read patterns. Make the call.</h2>
+            <p className="eyebrow">Start here</p>
+            <h2>Look at the map. Make the guess.</h2>
             <p className="section-lede">
-              Can You Geo is a three-game geography library: map signals, country-set rules, and ordering challenges built from the
-              same atlas feel.
+              The first game is Mystery Map: a color-coded world map, a hidden measure, and a simple question. What is this map showing?
             </p>
           </div>
           <div className="game-loop-grid" aria-label="How Can You Geo works">
@@ -145,14 +144,17 @@ export default function HomePage() {
         <div className="page-shell homepage-section-layout">
           <div className="homepage-section-heading homepage-section-heading-wide">
             <p className="eyebrow">Game library</p>
-            <h2>Choose your geography game.</h2>
+            <h2>Play Mystery Map first.</h2>
             <p className="section-lede">
-              Mystery Map, Pattern Atlas, and Order Atlas all support Sample and Daily play. Pro adds Custom Atlas, Pattern Runs,
-              and repeatable Order Atlas Play.
+              Mystery Map is the clearest first step. Pattern Atlas and Order Atlas are there when you want a different kind of
+              geography puzzle.
             </p>
             <div className="button-row">
+              <Link className="button" href="/play/mystery-map">
+                Start the sample game
+              </Link>
               <Link className="button-secondary" href="/play">
-                Open game library
+                See all games
               </Link>
             </div>
           </div>

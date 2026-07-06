@@ -7,7 +7,7 @@ import { breadcrumbJsonLd, pageMetadata } from "@/lib/site/seo";
 export const metadata: Metadata = pageMetadata({
   title: "How to Play Can You Geo?",
   description:
-    "Learn how Can You Geo? games work: play Mystery Map choropleth puzzles, Pattern Atlas hidden-rule rounds, and Order Atlas country-ordering rounds.",
+    "Learn the Mystery Map basics: look at the map, read the colors, tap countries for evidence, and guess what the map measures.",
   path: "/how-to-play/"
 });
 
@@ -29,34 +29,52 @@ export default function HowToPlayPage() {
       <div className="how-hero map-texture-panel">
         <div>
           <p className="eyebrow">How to play</p>
-          <h1 className="page-title">Learn the three ways to read the world.</h1>
+          <h1 className="page-title">Start with one mystery map.</h1>
         </div>
         <p className="lead">
-          Can You Geo? is a library of geography games about reading patterns. Mystery Map asks you to solve an unlabeled choropleth,
-          Pattern Atlas asks you to identify the rule connecting highlighted countries, and Order Atlas asks you to arrange countries by
-          a known signal.
+          Can You Geo? is a geography guessing game. In Mystery Map, the map is the clue: read the colors, tap countries if you need
+          evidence, then guess what the map measures.
         </p>
       </div>
 
-      <section className="how-section how-library" aria-labelledby="how-library-title">
+      <section className="how-section how-game-section" aria-labelledby="mystery-map-basics-heading">
         <div className="section-heading">
-          <p className="eyebrow">Games</p>
-          <h2 id="how-library-title">Three ways to read the world.</h2>
+          <p className="eyebrow">First 30 seconds</p>
+          <h2 id="mystery-map-basics-heading">How a Mystery Map round works.</h2>
           <p>
-            Mystery Map remains the flagship Daily game. Pattern Atlas uses the same atlas feel with highlighted countries instead of
-            choropleth values. Order Atlas asks you to order country cards by a known indicator, with a Sample Run, Free Daily, and
-            repeatable Pro Play.
+            Do not worry about sources, scoring, streaks, or modes at first. Start the map, read the colors, and make one guess.
           </p>
         </div>
-        <GameLibraryShowcase className="how-library-grid" ariaLabel="Can You Geo games explained" visualMode="image" />
+        <div className="rules-grid how-steps" aria-label="Mystery Map round basics">
+          <article>
+            <span>01</span>
+            <h2>Look at the map</h2>
+            <p>Each round starts with an unlabeled world map. The pattern is the clue.</p>
+          </article>
+          <article>
+            <span>02</span>
+            <h2>Use the colors</h2>
+            <p>Darker usually means more. Hatched countries have no data for that map.</p>
+          </article>
+          <article>
+            <span>03</span>
+            <h2>Tap a country</h2>
+            <p>If you need help, investigate a country to reveal its value before you guess.</p>
+          </article>
+          <article>
+            <span>04</span>
+            <h2>Lock in the answer</h2>
+            <p>Choose what the map measures. The reveal explains the answer and source.</p>
+          </article>
+        </div>
       </section>
 
       <section className="how-section" aria-labelledby="quick-guide-heading">
         <div className="section-heading">
-          <p className="eyebrow">Quick comparison</p>
-          <h2 id="quick-guide-heading">Each game asks for a different kind of geography read.</h2>
+          <p className="eyebrow">After the first map</p>
+          <h2 id="quick-guide-heading">The atlas has other puzzle types too.</h2>
           <p>
-            The games share the same atlas style, reveal rhythm, and source-backed results. What changes is the puzzle you are solving.
+            Mystery Map is the best starting point. Pattern Atlas and Order Atlas use the same atlas feel with different kinds of reads.
           </p>
         </div>
         <div className="how-comparison-grid" aria-label="Can You Geo game comparison">
@@ -78,31 +96,15 @@ export default function HowToPlayPage() {
         </div>
       </section>
 
-      <section className="how-section how-game-section" aria-labelledby="mystery-map-basics-heading">
+      <section className="how-section how-library" aria-labelledby="how-library-title">
         <div className="section-heading">
-          <p className="eyebrow">Mystery Map basics</p>
-          <h2 id="mystery-map-basics-heading">How a Mystery Map round works.</h2>
+          <p className="eyebrow">Game library</p>
+          <h2 id="how-library-title">Choose another game when you are ready.</h2>
           <p>
-            Mystery Map is the choropleth game. You see the shape of the data first, then spend points only when evidence helps.
+            These games share the same geography-native style, but you can learn Mystery Map first and come back to the rest.
           </p>
         </div>
-        <div className="rules-grid how-steps" aria-label="Mystery Map round basics">
-          <article>
-            <span>01</span>
-            <h2>Inspect the map</h2>
-            <p>Darker means a larger numerical value. Missing data is hatched and never means zero.</p>
-          </article>
-          <article>
-            <span>02</span>
-            <h2>Probe strategically</h2>
-            <p>Investigating a country reveals its value once. Repeated and no-data countries cost nothing.</p>
-          </article>
-          <article>
-            <span>03</span>
-            <h2>Guess, recover, learn</h2>
-            <p>Wrong answers deduct points but stay playable. Correct answers unlock a source-backed reveal lesson.</p>
-          </article>
-        </div>
+        <GameLibraryShowcase className="how-library-grid" ariaLabel="Can You Geo games explained" visualMode="image" />
       </section>
 
       <section className="how-section how-game-section" aria-labelledby="pattern-atlas-basics-heading">
