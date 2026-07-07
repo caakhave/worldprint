@@ -344,6 +344,7 @@ describe("MembershipCardClient", () => {
 
 describe("AccountPlanNotesClient", () => {
   beforeEach(() => {
+    delete process.env.NEXT_PUBLIC_BILLING_MODE;
     accountMock.state.user = {
       id: "11111111-2222-4333-8444-555555555555",
       email: "player@example.com"
@@ -363,6 +364,9 @@ describe("AccountPlanNotesClient", () => {
     expect(screen.getByRole("heading", { name: "Review results" })).toBeVisible();
     expect(screen.getByRole("heading", { name: "Train a topic" })).toBeVisible();
     expect(screen.getByRole("heading", { name: "Full atlas" })).toBeVisible();
+    expect(screen.getByText("Billing setup")).toBeVisible();
+    expect(screen.getByText("Pro checkout needs billing setup in this environment. Free play still works while setup is unavailable.")).toBeVisible();
+    expect(screen.getByRole("link", { name: "View Pro plans" })).toHaveAttribute("href", "/upgrade");
     expect(screen.getByRole("link", { name: "Open stats" })).toHaveAttribute("href", "/account/stats#saved-stats");
     expect(screen.getByRole("link", { name: "Open Past Games" })).toHaveAttribute("href", "/past-games");
     expect(screen.getByText("Mystery Map Daily replays and saved runs.")).toBeVisible();
@@ -372,6 +376,9 @@ describe("AccountPlanNotesClient", () => {
     expect(screen.queryByText("Play first.")).not.toBeInTheDocument();
     expect(screen.queryByText("Keep your streak.")).not.toBeInTheDocument();
     expect(screen.queryByText("Open the full atlas.")).not.toBeInTheDocument();
+    expect(screen.queryByText("Pro preview")).not.toBeInTheDocument();
+    expect(screen.queryByText(/Pro is coming later/i)).not.toBeInTheDocument();
+    expect(screen.queryByText("View Pro preview")).not.toBeInTheDocument();
   });
 
   it("shows Pro-first account actions before sign-in", async () => {

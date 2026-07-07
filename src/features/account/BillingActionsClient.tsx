@@ -111,7 +111,7 @@ export function BillingActionsClient({ entitlement, context, selectedPlan = null
     return (
       <div className="billing-actions" aria-label="Billing actions">
         <button className="button" type="button" disabled>
-          Secure checkout unavailable
+          Checkout setup needed
         </button>
         {context === "account" ? (
           <Link className="button-secondary" href="/upgrade">
@@ -119,7 +119,7 @@ export function BillingActionsClient({ entitlement, context, selectedPlan = null
           </Link>
         ) : null}
         <p className="account-env-note">
-          Checkout could not start. Please try again, or continue free for Daily rounds in Daily-enabled games.
+          Secure checkout needs billing setup in this environment. Continue free for Daily rounds in Daily-enabled games.
         </p>
       </div>
     );

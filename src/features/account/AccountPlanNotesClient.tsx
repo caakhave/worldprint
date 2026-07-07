@@ -28,13 +28,13 @@ export function AccountPlanNotesClient() {
     );
   }
 
-  const billingTitle = isPro ? "Manage billing" : billingEnabled ? (signedIn ? "Upgrade access" : "Compare plans") : "Pro preview";
+  const billingTitle = isPro ? "Manage billing" : billingEnabled ? (signedIn ? "Upgrade access" : "Compare plans") : "Billing setup";
   const billingCopy = isPro
     ? "Plan controls and receipts."
     : billingEnabled
       ? "Mystery Map Custom Atlas, Pattern Atlas Pattern Runs, Past Games archive, advanced stats."
-      : "Pro is coming later with supported custom runs, Past Games archive, and advanced stats.";
-  const billingAction = isPro ? "Manage billing" : billingEnabled ? (signedIn ? "Upgrade to Pro" : "View plans") : "View Pro preview";
+      : "Pro checkout needs billing setup in this environment. Free play still works while setup is unavailable.";
+  const billingAction = isPro ? "Manage billing" : billingEnabled ? (signedIn ? "Upgrade to Pro" : "View plans") : "View Pro plans";
 
   if (!signedIn) {
     return (

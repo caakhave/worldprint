@@ -52,14 +52,14 @@ describe("BillingActionsClient", () => {
     accountMock.state.user = null;
   });
 
-  it("shows a safe disabled billing state on the upgrade page until billing is explicitly enabled", () => {
+  it("shows a safe disabled billing state on the upgrade page when billing config is missing", () => {
     accountMock.state.user = TEST_USER;
 
     render(<BillingActionsClient entitlement={FREE_ENTITLEMENT} context="upgrade" />);
 
-    expect(screen.getByRole("button", { name: "Secure checkout unavailable" })).toBeDisabled();
-    expect(screen.getByText(/Checkout could not start\. Please try again/i)).toBeVisible();
-    expect(screen.getByText(/continue free for Daily rounds in Daily-enabled games\./i)).toBeVisible();
+    expect(screen.getByRole("button", { name: "Checkout setup needed" })).toBeDisabled();
+    expect(screen.getByText(/Secure checkout needs billing setup in this environment/i)).toBeVisible();
+    expect(screen.getByText(/Continue free for Daily rounds in Daily-enabled games\./i)).toBeVisible();
     expect(screen.queryByText(/checkout coming soon|billing is disabled|visible for planning|opens later|disabled for now/i)).not.toBeInTheDocument();
     expect(screen.queryByRole("button", { name: /Join/i })).not.toBeInTheDocument();
   });
@@ -71,7 +71,7 @@ describe("BillingActionsClient", () => {
     expect(screen.getByRole("link", { name: "Continue free" })).toHaveAttribute("href", "/sign-up");
     expect(screen.getByText("Create or sign in to your free account anytime. Pro unlocks the full Can You Geo library where supported.")).toBeVisible();
     expect(screen.queryByText(/checkout coming soon|billing is disabled|visible for planning|opens later|disabled for now/i)).not.toBeInTheDocument();
-    expect(screen.queryByRole("button", { name: "Secure checkout unavailable" })).not.toBeInTheDocument();
+    expect(screen.queryByRole("button", { name: "Checkout setup needed" })).not.toBeInTheDocument();
   });
 
   it("keeps account plan comparison available while billing is disabled", () => {
@@ -79,7 +79,7 @@ describe("BillingActionsClient", () => {
 
     render(<BillingActionsClient entitlement={FREE_ENTITLEMENT} context="account" />);
 
-    expect(screen.getByRole("button", { name: "Secure checkout unavailable" })).toBeDisabled();
+    expect(screen.getByRole("button", { name: "Checkout setup needed" })).toBeDisabled();
     expect(screen.getByRole("link", { name: "Compare plans" })).toHaveAttribute("href", "/upgrade");
   });
 
@@ -118,7 +118,7 @@ describe("BillingActionsClient", () => {
     expect(screen.getByRole("link", { name: "Join monthly" })).toHaveAttribute("href", "/sign-up?next=%2Fupgrade%3Fplan%3Dmonthly");
     expect(screen.getByRole("link", { name: "Join yearly" })).toHaveAttribute("href", "/sign-up?next=%2Fupgrade%3Fplan%3Dyearly");
     expect(screen.getByRole("link", { name: "Continue free" })).toHaveAttribute("href", "/sign-up");
-    expect(screen.queryByRole("button", { name: "Secure checkout unavailable" })).not.toBeInTheDocument();
+    expect(screen.queryByRole("button", { name: "Checkout setup needed" })).not.toBeInTheDocument();
   });
 
   it("shows monthly and yearly checkout actions for signed-in Free users in test mode", () => {
@@ -300,13 +300,14 @@ describe("BillingActionsClient", () => {
     expect(screen.getByText("We could not open billing management. Try again in a minute.")).toBeVisible();
   });
 
-  it("keeps live mode disabled until a future launch turns it on intentionally", () => {
+  it("shows monthly and yearly checkout actions for signed-in Free users in live mode", () => {
     process.env.NEXT_PUBLIC_BILLING_MODE = "live";
     accountMock.state.user = TEST_USER;
 
     render(<BillingActionsClient entitlement={FREE_ENTITLEMENT} context="upgrade" />);
 
-    expect(screen.getByRole("button", { name: "Secure checkout unavailable" })).toBeDisabled();
-    expect(screen.queryByRole("link", { name: "Create a free account" })).not.toBeInTheDocument();
+    expect(screen.getByRole("button", { name: "Join monthly" })).toBeEnabled();
+    expect(screen.getByRole("button", { name: "Join yearly" })).toBeEnabled();
+    expect(screen.queryByRole("button", { name: "Checkout setup needed" })).not.toBeInTheDocument();
   });
 });

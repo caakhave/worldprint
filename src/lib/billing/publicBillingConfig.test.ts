@@ -7,14 +7,11 @@ describe("public billing mode", () => {
     expect(publicBillingEnabled(undefined)).toBe(false);
   });
 
-  it("enables checkout only for explicit Stripe test-mode QA", () => {
+  it("enables checkout for explicit Stripe test and live modes", () => {
     expect(publicBillingMode("test")).toBe("test");
     expect(publicBillingEnabled("test")).toBe(true);
-  });
-
-  it("does not treat future live mode as enabled checkout", () => {
     expect(publicBillingMode("live")).toBe("live");
-    expect(publicBillingEnabled("live")).toBe(false);
+    expect(publicBillingEnabled("live")).toBe(true);
   });
 
   it("fails closed for unknown values", () => {

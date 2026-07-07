@@ -6,5 +6,5 @@ export function publicBillingMode(value = process.env.NEXT_PUBLIC_BILLING_MODE):
 }
 
 export function publicBillingEnabled(value = process.env.NEXT_PUBLIC_BILLING_MODE): boolean {
-  return publicBillingMode(value) === "test";
+  return publicBillingMode(value) !== "disabled";
 }
