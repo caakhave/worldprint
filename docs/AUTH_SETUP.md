@@ -63,39 +63,14 @@ The public app never stores passwords in application tables. Passwords are handl
 
 ## Email Templates
 
-In Supabase Dashboard, open **Authentication -> Email Templates** and brand the confirmation and password reset emails.
+In Supabase Dashboard, open **Authentication -> Email Templates** and paste the branded templates from
+`docs/ops/email-templates.md` for account confirmation, magic-link sign-in if enabled, password reset, and email-change
+confirmation. The dashboard should use these visible subjects:
 
-### Confirm Signup
-
-Recommended subject:
-
-```text
-Confirm your Can You Geo? account
-```
-
-Recommended body:
-
-```html
-<p>Confirm your Can You Geo? account.</p>
-<p><a href="{{ .RedirectTo }}?token_hash={{ .TokenHash }}&type=signup">Confirm account</a></p>
-<p>If you did not create this account, you can ignore this email.</p>
-```
-
-### Reset Password
-
-Recommended subject:
-
-```text
-Reset your Can You Geo? password
-```
-
-Recommended body:
-
-```html
-<p>Reset your Can You Geo? password.</p>
-<p><a href="{{ .RedirectTo }}?token_hash={{ .TokenHash }}&type=recovery">Choose a new password</a></p>
-<p>If you did not request this reset, you can ignore this email.</p>
-```
+- `Confirm your Can You Geo account`
+- `Sign in to Can You Geo`
+- `Reset your Can You Geo password`
+- `Confirm your new Can You Geo email`
 
 The `token_hash` callback format is static-export compatible. It lets `/auth/callback` verify account confirmation and recovery links directly with `verifyOtp`.
 
@@ -110,7 +85,7 @@ If emails still arrive as "Supabase Auth", configure custom SMTP in Supabase Das
 1. Start the app on the same origin listed in Redirect URLs.
 2. Open `/sign-in`.
 3. Create a fresh account on `/sign-up` with email and password.
-4. Confirm the email subject says **Confirm your Can You Geo? account**.
+4. Confirm the email subject says **Confirm your Can You Geo account** and the visible message uses the branded button.
 5. Open the confirmation link and confirm `/auth/callback` redirects to `/account` or the stored `/upgrade?plan=monthly|yearly` intent.
 6. Sign out, then sign in on `/sign-in` with the same email and password.
 7. Request a password reset on `/forgot-password`.

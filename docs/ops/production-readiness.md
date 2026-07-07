@@ -164,32 +164,16 @@ If using wildcard redirect patterns in Supabase, test them explicitly before rel
 
 Use the token-hash link format so static export callback handling does not depend on a same-browser PKCE verifier.
 
-Confirm signup subject:
+Paste the branded Supabase Auth templates from `docs/ops/email-templates.md`. That source covers account confirmation,
+magic-link sign-in if enabled, password reset, and email-change confirmation.
+
+Required visible subjects:
 
 ```text
-Confirm your Can You Geo? account
-```
-
-Confirm signup body:
-
-```html
-<p>Confirm your Can You Geo? account.</p>
-<p><a href="{{ .RedirectTo }}?token_hash={{ .TokenHash }}&type=signup">Confirm account</a></p>
-<p>If you did not create this account, you can ignore this email.</p>
-```
-
-Password reset subject:
-
-```text
-Reset your Can You Geo? password
-```
-
-Password reset body:
-
-```html
-<p>Reset your Can You Geo? password.</p>
-<p><a href="{{ .RedirectTo }}?token_hash={{ .TokenHash }}&type=recovery">Choose a new password</a></p>
-<p>If you did not request this reset, you can ignore this email.</p>
+Confirm your Can You Geo account
+Sign in to Can You Geo
+Reset your Can You Geo password
+Confirm your new Can You Geo email
 ```
 
 `{{ .RedirectTo }}` should be the plain `/auth/callback` URL with no app `next` query string. The app stores Pro plan intent before account creation and restores it after callback verification, which keeps `token_hash` from being swallowed into a nested return URL.

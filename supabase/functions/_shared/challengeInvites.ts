@@ -57,6 +57,19 @@ const PAYLOAD_KEYS = new Set(["schemaVersion", "game", "kind", "contentVersion",
 const CHALLENGER_KEYS = new Set(["score", "possible", "rankTitle", "solvedCount", "roundCount", "strip"]);
 const REQUEST_KEYS = new Set(["challengeCode", "recipientEmail", "message"]);
 const MESSAGE_FORBIDDEN_PATTERN = /\b(answer|answers|correct country|indicator|source|solution|world bank|api\.worldbank|spoiler)\b/i;
+const EMAIL_COLORS = {
+  background: "#000411",
+  panel: "#03222D",
+  panelDeep: "#04151D",
+  border: "#0b6971",
+  text: "#F5F7EE",
+  warm: "#E1E9D0",
+  muted: "#97B09D",
+  cyan: "#0FD8DB",
+  lime: "#C2ED39",
+  darkText: "#000818",
+  gold: "#BA7A36"
+};
 
 export function parseChallengeInviteRequest(input: {
   contentType: string | null;
@@ -198,14 +211,14 @@ export function buildChallengeInviteEmail(input: {
       )}</strong> in Mystery Map and finished as <strong>${escapeHtml(challenger.rankTitle)}</strong>.`
     : "They sent you a spoiler-free Mystery Map challenge.";
   const htmlSolvedLine = challenger
-    ? `<p style="margin:0 0 18px;color:#abc0bd;font-family:Arial,sans-serif;font-size:14px;line-height:1.5;">${escapeHtml(
+    ? `<p style="margin:0 0 18px;color:${EMAIL_COLORS.muted};font-family:Arial,sans-serif;font-size:14px;line-height:1.5;">${escapeHtml(
         `${challenger.solvedCount}/${challenger.roundCount} maps solved · ${challenger.strip}`
       )}</p>`
     : "";
   const htmlMessage = input.message
-    ? `<div style="margin:22px 0;padding:14px 16px;border:1px solid #315c57;border-radius:8px;background:#102323;">
-        <p style="margin:0 0 6px;color:#9bd6cc;font-family:Arial,sans-serif;font-size:12px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;">Their note</p>
-        <p style="margin:0;color:#f2eadc;font-family:Arial,sans-serif;font-size:16px;line-height:1.5;">${escapeHtml(input.message).replaceAll("\n", "<br>")}</p>
+    ? `<div style="margin:22px 0 0;padding:14px 16px;border:1px solid ${EMAIL_COLORS.border};border-radius:10px;background:${EMAIL_COLORS.panelDeep};">
+        <p style="margin:0 0 6px;color:${EMAIL_COLORS.cyan};font-family:Arial,sans-serif;font-size:12px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;">Their note</p>
+        <p style="margin:0;color:${EMAIL_COLORS.warm};font-family:Arial,sans-serif;font-size:16px;line-height:1.5;">${escapeHtml(input.message).replaceAll("\n", "<br>")}</p>
       </div>`
     : "";
 
@@ -231,17 +244,18 @@ export function buildChallengeInviteEmail(input: {
       .join("\n"),
     html: `<!doctype html>
 <html>
-  <body style="margin:0;background:#06191b;padding:28px 16px;">
-    <div style="max-width:560px;margin:0 auto;border:1px solid #315c57;border-radius:12px;background:#0b1f21;padding:28px;color:#f2eadc;">
-      <p style="margin:0 0 10px;color:#9bd6cc;font-family:Arial,sans-serif;font-size:12px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;">Can You Geo? Mystery Map</p>
-      <h1 style="margin:0 0 14px;color:#f2eadc;font-family:Georgia,serif;font-size:30px;line-height:1.1;">A friend challenged you on Can You Geo.</h1>
-      <p style="margin:0 0 10px;color:#d8e1dc;font-family:Arial,sans-serif;font-size:17px;line-height:1.5;">${htmlScoreLine}</p>
+  <body style="margin:0;background:${EMAIL_COLORS.background};padding:28px 16px;">
+    <div style="max-width:560px;margin:0 auto;border:1px solid ${EMAIL_COLORS.border};border-radius:14px;background:${EMAIL_COLORS.panel};padding:28px;color:${EMAIL_COLORS.text};">
+      <p style="margin:0 0 10px;color:${EMAIL_COLORS.cyan};font-family:Arial,sans-serif;font-size:12px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;">Can You Geo Mystery Map</p>
+      <h1 style="margin:0 0 14px;color:${EMAIL_COLORS.text};font-family:Georgia,serif;font-size:30px;line-height:1.1;">A friend challenged you on Can You Geo.</h1>
+      <p style="margin:0 0 10px;color:${EMAIL_COLORS.warm};font-family:Arial,sans-serif;font-size:17px;line-height:1.5;">${htmlScoreLine}</p>
       ${htmlSolvedLine}
-      <p style="margin:0 0 22px;color:#d8e1dc;font-family:Arial,sans-serif;font-size:16px;line-height:1.5;">Play the same spoiler-free map set and see if you can beat them.</p>
+      <p style="margin:0 0 22px;color:${EMAIL_COLORS.warm};font-family:Arial,sans-serif;font-size:16px;line-height:1.5;">Play the same spoiler-free map set and see if you can beat them.</p>
+      <a href="${escapeHtmlAttribute(challengeUrl)}" style="display:inline-block;border-radius:999px;background:${EMAIL_COLORS.lime};color:${EMAIL_COLORS.darkText};font-family:Arial,sans-serif;font-size:16px;font-weight:700;text-decoration:none;padding:13px 20px;">Play the challenge</a>
+      <p style="margin:16px 0 0;color:${EMAIL_COLORS.muted};font-family:Arial,sans-serif;font-size:13px;line-height:1.5;">Button not working? <a href="${escapeHtmlAttribute(challengeUrl)}" style="color:${EMAIL_COLORS.cyan};text-decoration:underline;">Open the challenge link.</a></p>
+      <p style="margin:22px 0 0;color:${EMAIL_COLORS.muted};font-family:Arial,sans-serif;font-size:14px;line-height:1.5;"><strong style="color:${EMAIL_COLORS.gold};">No spoilers:</strong> answers, countries, indicators, and source labels stay hidden before play. Challenge games do not affect today's official Daily score or streak.</p>
       ${htmlMessage}
-      <a href="${escapeHtmlAttribute(challengeUrl)}" style="display:inline-block;border-radius:999px;background:#b9dbd2;color:#06191b;font-family:Arial,sans-serif;font-size:16px;font-weight:700;text-decoration:none;padding:13px 20px;">Play the challenge</a>
-      <p style="margin:22px 0 0;color:#abc0bd;font-family:Arial,sans-serif;font-size:14px;line-height:1.5;">No spoilers: answers, countries, indicators, and source labels stay hidden before play. Challenge games do not affect today's official Daily score or streak.</p>
-      <p style="margin:18px 0 0;color:#829c98;font-family:Arial,sans-serif;font-size:12px;line-height:1.5;">This one-time invite was sent by a signed-in Can You Geo player. You were not added to any marketing list.</p>
+      <p style="margin:18px 0 0;color:${EMAIL_COLORS.muted};font-family:Arial,sans-serif;font-size:12px;line-height:1.5;">This one-time invite was sent by a signed-in Can You Geo player. You were not added to any marketing list.</p>
     </div>
   </body>
 </html>`

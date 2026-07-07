@@ -140,9 +140,14 @@ describe("challenge invite helpers", () => {
     expect(email.text).toContain("https://test.canyougeo.com/challenge/mystery-map/?c=");
     expect(email.html).toContain("A friend challenged you on Can You Geo.");
     expect(email.html).toContain("Play the challenge");
+    expect(email.html).toContain("Open the challenge link.");
     expect(email.html).toContain('href="https://test.canyougeo.com/challenge/mystery-map/?c=');
     expect(email.html).toContain("same spoiler-free map set");
     expect(email.html).toContain("No spoilers");
+    expect(email.html).toContain("#000411");
+    expect(email.html).toContain("#03222D");
+    expect(email.html).toContain("#0FD8DB");
+    expect(email.html).toContain("#C2ED39");
     expect(email.html.replace(/href="[^"]+"/g, "").replace(/<[^>]+>/g, " ")).not.toContain(
       "https://test.canyougeo.com/challenge/mystery-map/?c="
     );

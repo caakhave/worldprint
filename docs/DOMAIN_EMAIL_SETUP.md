@@ -104,34 +104,17 @@ If Cloudflare preview deployments will be used for auth testing, add their exact
 
 ### Email Password Templates
 
-In Supabase Dashboard, open **Authentication -> Email Templates** and update the account confirmation and password reset templates.
+In Supabase Dashboard, open **Authentication -> Email Templates** and paste the branded templates from
+`docs/ops/email-templates.md`. That file is the source of truth for account confirmation, magic-link sign-in if enabled,
+password reset, and email-change confirmation.
 
-Confirm signup subject:
-
-```text
-Confirm your Can You Geo? account
-```
-
-Confirm signup body:
-
-```html
-<p>Confirm your Can You Geo? account.</p>
-<p><a href="{{ .RedirectTo }}?token_hash={{ .TokenHash }}&type=signup">Confirm account</a></p>
-<p>If you did not create this account, you can ignore this email.</p>
-```
-
-Password reset subject:
+Required visible subjects:
 
 ```text
-Reset your Can You Geo? password
-```
-
-Password reset body:
-
-```html
-<p>Reset your Can You Geo? password.</p>
-<p><a href="{{ .RedirectTo }}?token_hash={{ .TokenHash }}&type=recovery">Choose a new password</a></p>
-<p>If you did not request this reset, you can ignore this email.</p>
+Confirm your Can You Geo account
+Sign in to Can You Geo
+Reset your Can You Geo password
+Confirm your new Can You Geo email
 ```
 
 The `token_hash` callback format is preferred because `/auth/callback` can verify confirmation and recovery links directly with `verifyOtp`.
