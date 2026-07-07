@@ -16,8 +16,9 @@ import { siteOrigin } from "@/lib/supabase/env";
 
 const MIN_PASSWORD_LENGTH = 8;
 const GENERIC_SIGN_UP_ERROR = "We could not create that account. If you already have one, sign in instead.";
-const EXISTING_ACCOUNT_ERROR = "That email may already have an account. Sign in, or reset your password if you need help.";
 const CONFIRMATION_SENT_STATUS = "Account created and confirmation email sent. Open it, then sign in with your password to continue.";
+
+type SignUpOutcome = "confirmation" | "existing-account" | "ambiguous-check-email";
 
 function nextSearchValue(): string | null {
   if (typeof window === "undefined") return null;
@@ -32,6 +33,16 @@ function isExistingAccountError(error: { code?: string; message: string }) {
   return error.code === "user_already_exists" || /already (registered|exists)|user already/i.test(error.message);
 }
 
+function userHasEmptyIdentities(user: unknown) {
+  const identities = (user as { identities?: unknown } | null)?.identities;
+  return Array.isArray(identities) && identities.length === 0;
+}
+
+function userHasNewIdentity(user: unknown) {
+  const identities = (user as { identities?: unknown } | null)?.identities;
+  return Array.isArray(identities) && identities.length > 0;
+}
+
 export function SignUpClient() {
   const router = useRouter();
   const { client, configured, loading, user, profileError, signOut } = useSupabaseAccount();
@@ -43,7 +54,7 @@ export function SignUpClient() {
   const [status, setStatus] = useState<string>("");
   const [error, setError] = useState<string>("");
   const [submitting, setSubmitting] = useState(false);
-  const [confirmationSent, setConfirmationSent] = useState(false);
+  const [signUpOutcome, setSignUpOutcome] = useState<SignUpOutcome | null>(null);
   const [signOutError, setSignOutError] = useState("");
 
   useEffect(() => {
@@ -66,7 +77,7 @@ export function SignUpClient() {
     }
 
     setSubmitting(true);
-    setConfirmationSent(false);
+    setSignUpOutcome(null);
     setError("");
     setStatus("");
 
@@ -93,7 +104,12 @@ export function SignUpClient() {
         });
       }
       setSubmitting(false);
-      setError(isExistingAccountError(signUpError) ? EXISTING_ACCOUNT_ERROR : GENERIC_SIGN_UP_ERROR);
+      if (isExistingAccountError(signUpError)) {
+        setSignUpOutcome("existing-account");
+        setStatus("");
+        return;
+      }
+      setError(GENERIC_SIGN_UP_ERROR);
       return;
     }
 
@@ -114,8 +130,14 @@ export function SignUpClient() {
     }
 
     setSubmitting(false);
-    setConfirmationSent(true);
-    setStatus(CONFIRMATION_SENT_STATUS);
+    if (userHasEmptyIdentities(activeUser)) {
+      setSignUpOutcome("existing-account");
+      setStatus("");
+      return;
+    }
+    const hasNewIdentity = userHasNewIdentity(activeUser);
+    setSignUpOutcome(hasNewIdentity ? "confirmation" : "ambiguous-check-email");
+    setStatus(hasNewIdentity ? CONFIRMATION_SENT_STATUS : "");
   }
 
   async function handleSignOut() {
@@ -132,8 +154,8 @@ export function SignUpClient() {
   const signInHref = signInPathForReturn(returnPath);
   const signedInPrimaryHref = returnPath.startsWith("/upgrade") ? returnPath : "/account";
 
-  function resetConfirmation() {
-    setConfirmationSent(false);
+  function resetSignUpOutcome() {
+    setSignUpOutcome(null);
     setStatus("");
     setError("");
     setEmail("");
@@ -196,16 +218,33 @@ export function SignUpClient() {
       <p className="eyebrow">Create account</p>
       <h2>Create your Can You Geo? account.</h2>
       <p>No credit card required to sign up for a free account.</p>
-      {confirmationSent ? (
+      {signUpOutcome ? (
         <div className="account-confirmation-card" role="status">
-          <p className="eyebrow">Check your email</p>
-          <h3>We sent a confirmation link.</h3>
-          <p>Open the email for {email}, confirm the account, then sign in with your password to keep playing.</p>
+          <p className="eyebrow">{signUpOutcome === "existing-account" ? "Account found" : "Check your email"}</p>
+          <h3>
+            {signUpOutcome === "confirmation"
+              ? "We sent a confirmation link."
+              : signUpOutcome === "existing-account"
+                ? "This email already has an account."
+                : "Check your email."}
+          </h3>
+          <p>
+            {signUpOutcome === "confirmation"
+              ? `Open the email for ${email}, confirm the account, then sign in with your password to keep playing.`
+              : signUpOutcome === "existing-account"
+                ? "Sign in with this email, or reset your password if you do not remember it."
+                : "If this is a new account, we sent a confirmation link. If this email already has an account, sign in or reset your password."}
+          </p>
           <div className="button-row">
             <Link className="button" href={signInHref}>
               Sign in
             </Link>
-            <button className="button-secondary" type="button" onClick={resetConfirmation}>
+            {signUpOutcome === "confirmation" ? null : (
+              <Link className="button-secondary" href="/forgot-password">
+                Reset password
+              </Link>
+            )}
+            <button className="button-secondary" type="button" onClick={resetSignUpOutcome}>
               Try another email
             </button>
           </div>

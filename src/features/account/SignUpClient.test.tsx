@@ -13,7 +13,8 @@ const accountMock = vi.hoisted(() => ({
   state: {
     client: {
       auth: {
-        signUp: vi.fn()
+        signUp: vi.fn(),
+        resetPasswordForEmail: vi.fn()
       }
     },
     configured: true,
@@ -41,7 +42,8 @@ vi.mock("@/features/account/useSupabaseAccount", () => ({
 
 const signedInUser = {
   id: "11111111-2222-4333-8444-555555555555",
-  email: "new@example.com"
+  email: "new@example.com",
+  identities: [{ id: "identity-1" }]
 };
 
 describe("SignUpClient", () => {
@@ -49,6 +51,7 @@ describe("SignUpClient", () => {
     routerMock.push.mockClear();
     ensureProfileMock.mockClear();
     accountMock.state.client.auth.signUp.mockReset();
+    accountMock.state.client.auth.resetPasswordForEmail.mockReset();
     accountMock.state.client.auth.signUp.mockResolvedValue({
       data: { user: signedInUser, session: null },
       error: null
@@ -93,7 +96,9 @@ describe("SignUpClient", () => {
     expect(screen.getByText(/Open the email for new@example\.com/i)).toBeVisible();
     expect(screen.getByRole("link", { name: "Sign in" })).toHaveAttribute("href", "/sign-in");
     expect(screen.getByRole("button", { name: "Try another email" })).toBeVisible();
+    expect(screen.queryByRole("link", { name: "Reset password" })).not.toBeInTheDocument();
     expect(screen.queryByRole("button", { name: "Create account" })).not.toBeInTheDocument();
+    expect(accountMock.state.client.auth.resetPasswordForEmail).not.toHaveBeenCalled();
     expect(window.sessionStorage.getItem("canyougeo:sign-in-return")).toBe("/account");
   });
 
@@ -175,7 +180,7 @@ describe("SignUpClient", () => {
     expect(accountMock.state.client.auth.signUp).not.toHaveBeenCalled();
   });
 
-  it("shows a helpful existing-account message when Supabase exposes a duplicate email", async () => {
+  it("shows an account-exists state when Supabase exposes a duplicate email error", async () => {
     const user = userEvent.setup();
     accountMock.state.client.auth.signUp.mockResolvedValue({
       data: { user: null, session: null },
@@ -193,8 +198,74 @@ describe("SignUpClient", () => {
     await user.type(screen.getByLabelText("Confirm password"), "strong-password");
     await user.click(screen.getByRole("button", { name: "Create account" }));
 
-    await screen.findByRole("alert");
-    expect(screen.getByText("That email may already have an account. Sign in, or reset your password if you need help.")).toBeVisible();
+    expect(await screen.findByRole("heading", { name: "This email already has an account." })).toBeVisible();
+    expect(screen.getByText("Sign in with this email, or reset your password if you do not remember it.")).toBeVisible();
+    expect(screen.getByRole("link", { name: "Sign in" })).toHaveAttribute("href", "/sign-in");
+    expect(screen.getByRole("link", { name: "Reset password" })).toHaveAttribute("href", "/forgot-password");
+    expect(screen.getByRole("button", { name: "Try another email" })).toBeVisible();
+    expect(screen.queryByRole("heading", { name: "We sent a confirmation link." })).not.toBeInTheDocument();
+    expect(screen.queryByRole("alert")).not.toBeInTheDocument();
+    expect(accountMock.state.client.auth.resetPasswordForEmail).not.toHaveBeenCalled();
+    expect(routerMock.push).not.toHaveBeenCalled();
+  });
+
+  it("shows an account-exists state when Supabase returns an obfuscated duplicate response", async () => {
+    const user = userEvent.setup();
+    accountMock.state.client.auth.signUp.mockResolvedValue({
+      data: {
+        user: {
+          id: "22222222-2222-4333-8444-555555555555",
+          email: "existing@example.com",
+          identities: []
+        },
+        session: null
+      },
+      error: null
+    });
+
+    render(<SignUpClient />);
+
+    await user.type(screen.getByLabelText("Email"), "existing@example.com");
+    await user.type(screen.getByLabelText("Password"), "strong-password");
+    await user.type(screen.getByLabelText("Confirm password"), "strong-password");
+    await user.click(screen.getByRole("button", { name: "Create account" }));
+
+    expect(await screen.findByRole("heading", { name: "This email already has an account." })).toBeVisible();
+    expect(screen.getByRole("link", { name: "Sign in" })).toHaveAttribute("href", "/sign-in");
+    expect(screen.getByRole("link", { name: "Reset password" })).toHaveAttribute("href", "/forgot-password");
+    expect(screen.getByRole("button", { name: "Try another email" })).toBeVisible();
+    expect(screen.queryByRole("heading", { name: "We sent a confirmation link." })).not.toBeInTheDocument();
+    expect(accountMock.state.client.auth.resetPasswordForEmail).not.toHaveBeenCalled();
+    expect(routerMock.push).not.toHaveBeenCalled();
+  });
+
+  it("uses safe check-email copy for ambiguous no-session sign-up responses", async () => {
+    const user = userEvent.setup();
+    accountMock.state.client.auth.signUp.mockResolvedValue({
+      data: {
+        user: {
+          id: "33333333-2222-4333-8444-555555555555",
+          email: "maybe-new@example.com"
+        },
+        session: null
+      },
+      error: null
+    });
+
+    render(<SignUpClient />);
+
+    await user.type(screen.getByLabelText("Email"), "maybe-new@example.com");
+    await user.type(screen.getByLabelText("Password"), "strong-password");
+    await user.type(screen.getByLabelText("Confirm password"), "strong-password");
+    await user.click(screen.getByRole("button", { name: "Create account" }));
+
+    expect(await screen.findByRole("heading", { name: "Check your email." })).toBeVisible();
+    expect(screen.getByText("If this is a new account, we sent a confirmation link. If this email already has an account, sign in or reset your password.")).toBeVisible();
+    expect(screen.getByRole("link", { name: "Sign in" })).toHaveAttribute("href", "/sign-in");
+    expect(screen.getByRole("link", { name: "Reset password" })).toHaveAttribute("href", "/forgot-password");
+    expect(screen.getByRole("button", { name: "Try another email" })).toBeVisible();
+    expect(screen.queryByRole("heading", { name: "We sent a confirmation link." })).not.toBeInTheDocument();
+    expect(accountMock.state.client.auth.resetPasswordForEmail).not.toHaveBeenCalled();
     expect(routerMock.push).not.toHaveBeenCalled();
   });
 
