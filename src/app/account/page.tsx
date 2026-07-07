@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import { AccountHeroClient } from "@/features/account/AccountHeroClient";
 import { AccountPlanNotesClient } from "@/features/account/AccountPlanNotesClient";
 import { BillingReturnNotice } from "@/features/account/BillingReturnNotice";
+import { ChangePasswordClient } from "@/features/account/ChangePasswordClient";
 import { EntitlementDiagnosticsClient } from "@/features/account/EntitlementDiagnosticsClient";
 import { MembershipCardClient } from "@/features/account/MembershipCardClient";
 import { AccountStatusClient } from "@/features/account/AccountStatusClient";
@@ -26,6 +27,7 @@ export default function AccountPage() {
 
         <div className="account-stack">
           <MembershipCardClient />
+          <ChangePasswordClient />
           <AccountPlanNotesClient />
         </div>
       </div>
