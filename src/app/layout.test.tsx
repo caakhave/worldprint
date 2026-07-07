@@ -1,6 +1,6 @@
 import { renderToStaticMarkup } from "react-dom/server";
 import { describe, expect, it, vi } from "vitest";
-import RootLayout from "@/app/layout";
+import RootLayout, { metadata } from "@/app/layout";
 
 vi.mock("next/font/google", () => {
   const font = () => ({ variable: "mock-font" });
@@ -37,9 +37,22 @@ describe("RootLayout", () => {
 
     expect(markup).toContain("Can You Geo? is a geography game library.");
     expect(markup).toContain("Open the game hub and check the data sources any time.");
+    expect(markup).toContain("cgy-logo-header-96.png");
     expect(markup).toContain("href=\"/play\"");
     expect(markup).not.toContain("href=\"/past-games\"");
     expect(markup).toContain("href=\"/support\"");
     expect(markup).not.toContain("href=\"/about\"");
+  });
+
+  it("uses the final Can You Geo icon assets", () => {
+    const icons = JSON.stringify(metadata.icons);
+
+    expect(icons).toContain("/favicon.ico");
+    expect(icons).toContain("/favicon-32x32.png");
+    expect(icons).toContain("/favicon-16x16.png");
+    expect(icons).toContain("/apple-touch-icon.png");
+    expect(icons).toContain("/cgy-logo-icon-192.png");
+    expect(icons).toContain("/cgy-logo-icon-512.png");
+    expect(icons).not.toContain("/favicon.svg");
   });
 });

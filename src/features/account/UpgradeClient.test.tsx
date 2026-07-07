@@ -83,6 +83,7 @@ describe("UpgradeClient", () => {
     render(<UpgradeClient />);
 
     expect(screen.getByRole("heading", { name: "Choose Free or Pro." })).toBeVisible();
+    expect(screen.getByText("Free accounts get Daily rounds in Daily-enabled games. Pro unlocks the full atlas, advanced modes, and more ways to play.")).toBeVisible();
     expect(screen.queryByRole("link", { name: "Sign in for Free or Pro" })).not.toBeInTheDocument();
     expect(screen.queryByRole("link", { name: "View account" })).not.toBeInTheDocument();
     expect(screen.getAllByRole("link", { name: "Start Pro" }).every((link) => link.getAttribute("href") === "/sign-up?next=%2Fupgrade")).toBe(true);
@@ -91,9 +92,9 @@ describe("UpgradeClient", () => {
       "href",
       CONTACT_LINKS.billingHelp.href
     );
-    expect(screen.getAllByText("Checkout coming soon").length).toBeGreaterThan(0);
-    expect(screen.getByText(/Checkout is coming soon and billing is disabled for now/i)).toBeVisible();
-    expect(screen.getByText(/Billing is disabled right now/i)).toBeVisible();
+    expect(screen.getByText("Ready for secure checkout")).toBeVisible();
+    expect(screen.getByText("Pick monthly or yearly, then continue to secure checkout.")).toBeVisible();
+    expect(screen.queryByText(/checkout coming soon|billing is disabled|visible for planning|opens later|disabled for now/i)).not.toBeInTheDocument();
     expect(screen.getAllByText(/Daily rounds in Daily-enabled games/i).length).toBeGreaterThanOrEqual(1);
     const overview = screen.getByLabelText("Upgrade overview");
     expect(within(overview).getByRole("heading", { name: "Explore the full atlas." })).toBeVisible();
@@ -157,7 +158,7 @@ describe("UpgradeClient", () => {
 
     expect(screen.getByRole("heading", { name: "You have the full atlas." })).toBeVisible();
     expect(screen.queryByRole("heading", { name: "Choose Free or Pro." })).not.toBeInTheDocument();
-    expect(screen.getByText("Membership is active and managed manually.")).toBeVisible();
+    expect(screen.getByText("Membership is active on this account.")).toBeVisible();
     expect(screen.getAllByRole("link", { name: "Manage from account" }).every((link) => link.getAttribute("href") === "/account")).toBe(true);
   });
 

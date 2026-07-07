@@ -44,6 +44,9 @@ describe("site SEO helpers", () => {
     expect(graph[1]).toMatchObject({
       alternateName: ["Can You Geo", "Mystery Map", "Pattern Atlas", "Order Atlas"]
     });
+    expect(graph[0]).toMatchObject({
+      logo: "https://canyougeo.com/cgy-logo-icon-512.png"
+    });
     expect(graph[3]).toMatchObject({
       name: "Can You Geo? Mystery Map",
       gamePlatform: "Web browser",

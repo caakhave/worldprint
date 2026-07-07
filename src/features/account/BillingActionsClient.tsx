@@ -55,7 +55,7 @@ export function BillingActionsClient({ entitlement, context, selectedPlan = null
     });
     setPending(null);
     if (result.message || !result.url) {
-      setMessage(result.message ?? (kind === "portal" ? "Billing management is not available yet." : "Checkout is not open yet."));
+      setMessage(result.message ?? (kind === "portal" ? "Billing management could not open. Please try again." : "Checkout could not start. Please try again."));
       return;
     }
     window.location.assign(result.url);
@@ -76,8 +76,7 @@ export function BillingActionsClient({ entitlement, context, selectedPlan = null
             Continue free
           </Link>
           <p className="account-env-note">
-            Checkout is coming soon. Create or sign in to your free account now; Free needs no card and saves Daily progress where
-            supported.
+            Create or sign in to your free account anytime. Pro unlocks the full Can You Geo library where supported.
           </p>
         </div>
       );
@@ -92,7 +91,7 @@ export function BillingActionsClient({ entitlement, context, selectedPlan = null
             </Link>
           ) : (
             <button className="button" type="button" disabled>
-              Membership managed manually
+              Membership active
             </button>
           )}
           {context === "account" ? (
@@ -102,8 +101,8 @@ export function BillingActionsClient({ entitlement, context, selectedPlan = null
           ) : null}
           <p className="account-env-note">
             {hasStripeCustomer
-              ? "Can You Geo? Pro membership is enabled. Billing changes are not open from this page right now."
-              : "Can You Geo? Pro membership is enabled. This membership is managed manually for now."}
+              ? "Can You Geo? Pro membership is enabled. Manage membership details from your account."
+              : "Can You Geo? Pro membership is enabled on this account."}
           </p>
         </div>
       );
@@ -112,7 +111,7 @@ export function BillingActionsClient({ entitlement, context, selectedPlan = null
     return (
       <div className="billing-actions" aria-label="Billing actions">
         <button className="button" type="button" disabled>
-          Checkout coming soon
+          Secure checkout unavailable
         </button>
         {context === "account" ? (
           <Link className="button-secondary" href="/upgrade">
@@ -120,7 +119,7 @@ export function BillingActionsClient({ entitlement, context, selectedPlan = null
           </Link>
         ) : null}
         <p className="account-env-note">
-          Pricing is visible now. Checkout is coming soon and billing is disabled for now. Continue free for Daily rounds in Daily-enabled games.
+          Checkout could not start. Please try again, or continue free for Daily rounds in Daily-enabled games.
         </p>
       </div>
     );
@@ -191,7 +190,7 @@ export function BillingActionsClient({ entitlement, context, selectedPlan = null
             {message}
           </p>
         ) : null}
-        {!hasStripeCustomer ? <p className="account-env-note">This account has Pro, but billing management is not available yet.</p> : null}
+        {!hasStripeCustomer ? <p className="account-env-note">This account has Pro. Manage membership details from your account.</p> : null}
       </div>
     );
   }

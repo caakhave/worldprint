@@ -57,10 +57,10 @@ describe("BillingActionsClient", () => {
 
     render(<BillingActionsClient entitlement={FREE_ENTITLEMENT} context="upgrade" />);
 
-    expect(screen.getByRole("button", { name: "Checkout coming soon" })).toBeDisabled();
-    expect(screen.getByText(/Pricing is visible now\./)).toBeVisible();
-    expect(screen.getByText(/billing is disabled for now\./)).toBeVisible();
-    expect(screen.getByText(/Continue free for Daily rounds in Daily-enabled games\./)).toBeVisible();
+    expect(screen.getByRole("button", { name: "Secure checkout unavailable" })).toBeDisabled();
+    expect(screen.getByText(/Checkout could not start\. Please try again/i)).toBeVisible();
+    expect(screen.getByText(/continue free for Daily rounds in Daily-enabled games\./i)).toBeVisible();
+    expect(screen.queryByText(/checkout coming soon|billing is disabled|visible for planning|opens later|disabled for now/i)).not.toBeInTheDocument();
     expect(screen.queryByRole("button", { name: /Join/i })).not.toBeInTheDocument();
   });
 
@@ -69,9 +69,9 @@ describe("BillingActionsClient", () => {
 
     expect(screen.getByRole("link", { name: "Start Pro" })).toHaveAttribute("href", "/sign-up?next=%2Fupgrade");
     expect(screen.getByRole("link", { name: "Continue free" })).toHaveAttribute("href", "/sign-up");
-    expect(screen.getByText(/Checkout is coming soon\. Create or sign in to your free account now/i)).toBeVisible();
-    expect(screen.getByText(/Free needs no card and saves Daily progress where supported/i)).toBeVisible();
-    expect(screen.queryByRole("button", { name: "Checkout coming soon" })).not.toBeInTheDocument();
+    expect(screen.getByText("Create or sign in to your free account anytime. Pro unlocks the full Can You Geo library where supported.")).toBeVisible();
+    expect(screen.queryByText(/checkout coming soon|billing is disabled|visible for planning|opens later|disabled for now/i)).not.toBeInTheDocument();
+    expect(screen.queryByRole("button", { name: "Secure checkout unavailable" })).not.toBeInTheDocument();
   });
 
   it("keeps account plan comparison available while billing is disabled", () => {
@@ -79,7 +79,7 @@ describe("BillingActionsClient", () => {
 
     render(<BillingActionsClient entitlement={FREE_ENTITLEMENT} context="account" />);
 
-    expect(screen.getByRole("button", { name: "Checkout coming soon" })).toBeDisabled();
+    expect(screen.getByRole("button", { name: "Secure checkout unavailable" })).toBeDisabled();
     expect(screen.getByRole("link", { name: "Compare plans" })).toHaveAttribute("href", "/upgrade");
   });
 
@@ -103,9 +103,9 @@ describe("BillingActionsClient", () => {
 
     render(<BillingActionsClient entitlement={manualPro} context="account" />);
 
-    expect(screen.getByRole("button", { name: "Membership managed manually" })).toBeDisabled();
+    expect(screen.getByRole("button", { name: "Membership active" })).toBeDisabled();
     expect(screen.getByRole("link", { name: "Manage plan" })).toHaveAttribute("href", "/upgrade");
-    expect(screen.getByText("Can You Geo? Pro membership is enabled. This membership is managed manually for now.")).toBeVisible();
+    expect(screen.getByText("Can You Geo? Pro membership is enabled on this account.")).toBeVisible();
     expect(screen.queryByRole("button", { name: "Manage billing" })).not.toBeInTheDocument();
     expect(screen.queryByRole("link", { name: "View plan" })).not.toBeInTheDocument();
   });
@@ -118,7 +118,7 @@ describe("BillingActionsClient", () => {
     expect(screen.getByRole("link", { name: "Join monthly" })).toHaveAttribute("href", "/sign-up?next=%2Fupgrade%3Fplan%3Dmonthly");
     expect(screen.getByRole("link", { name: "Join yearly" })).toHaveAttribute("href", "/sign-up?next=%2Fupgrade%3Fplan%3Dyearly");
     expect(screen.getByRole("link", { name: "Continue free" })).toHaveAttribute("href", "/sign-up");
-    expect(screen.queryByRole("button", { name: "Checkout coming soon" })).not.toBeInTheDocument();
+    expect(screen.queryByRole("button", { name: "Secure checkout unavailable" })).not.toBeInTheDocument();
   });
 
   it("shows monthly and yearly checkout actions for signed-in Free users in test mode", () => {
@@ -306,7 +306,7 @@ describe("BillingActionsClient", () => {
 
     render(<BillingActionsClient entitlement={FREE_ENTITLEMENT} context="upgrade" />);
 
-    expect(screen.getByRole("button", { name: "Checkout coming soon" })).toBeDisabled();
+    expect(screen.getByRole("button", { name: "Secure checkout unavailable" })).toBeDisabled();
     expect(screen.queryByRole("link", { name: "Create a free account" })).not.toBeInTheDocument();
   });
 });

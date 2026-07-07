@@ -72,7 +72,7 @@ export function AuthNavStatus() {
     });
     setBillingPending(false);
     if (result.message || !result.url) {
-      setBillingMessage(result.message ?? "Billing management is not available yet.");
+      setBillingMessage(result.message ?? "Billing management could not open. Please try again.");
       return;
     }
     window.location.assign(result.url);

@@ -631,8 +631,8 @@ button:disabled {
 .brand-glyph {
   width: 2.6rem;
   height: 2.6rem;
-  color: var(--signal-2);
   flex: 0 0 auto;
+  object-fit: contain;
 }
 
 .brand-mark strong {

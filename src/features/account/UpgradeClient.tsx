@@ -24,9 +24,7 @@ export function UpgradeClient() {
   const heroTitle = loading ? "Checking your atlas plan." : isPro ? "You have the full atlas." : "Choose Free or Pro.";
   const heroLead = isPro
     ? "Can You Geo? Pro membership is enabled on this account. Mystery Map Custom Atlas, Pattern Atlas Pattern Runs, repeatable Order Atlas Play, the complete Past Games archive, and advanced stats are unlocked where supported."
-    : billingEnabled
-      ? "Start Free with no card needed, or sign in and choose monthly or yearly Pro for the growing Can You Geo game library."
-      : "Pro pricing is visible for planning. Checkout is coming soon and billing is disabled for now; Free accounts still get Daily rounds in Daily-enabled games.";
+    : "Free accounts get Daily rounds in Daily-enabled games. Pro unlocks the full atlas, advanced modes, and more ways to play.";
   const overviewHeading = loading ? "Checking your plan." : isPro ? "Can You Geo? Pro." : "Choose monthly or yearly.";
   const statusTitle = isPro
     ? "Can You Geo? Pro"
@@ -34,16 +32,16 @@ export function UpgradeClient() {
       ? signedIn
         ? "Ready for secure checkout"
         : "Sign in for Free or Pro"
-      : "Checkout coming soon";
+      : "Ready for secure checkout";
   const statusDetail = isPro
     ? hasStripeCustomer
       ? "Manage your membership from your account."
-      : "Membership is active and managed manually."
+      : "Membership is active on this account."
     : billingEnabled
       ? signedIn
         ? "Pick monthly or yearly, then continue to secure checkout."
         : "New players can keep Free with no card needed or choose Pro after sign-in."
-      : "Billing is disabled right now. Free accounts can play Daily rounds in Daily-enabled games while Pro opens later.";
+      : "Pick monthly or yearly, then continue to secure checkout.";
 
   useEffect(() => {
     setSelectedPlan(proBillingIntervalFromSearch(window.location.search));

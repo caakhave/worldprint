@@ -21,7 +21,7 @@ export function warnBillingDetail(message: string, detail: unknown) {
 export function billingErrorCopy(kind: BillingActionKind, message?: string | null) {
   const normalized = message?.toLowerCase() ?? "";
   if (normalized.includes("configured") || normalized.includes("env") || normalized.includes("supabase")) {
-    return kind === "portal" ? "Billing management is not available yet." : "Checkout is not open yet.";
+    return kind === "portal" ? "Billing management could not open. Please try again." : "Checkout could not start. Please try again.";
   }
   if (normalized.includes("sign in")) {
     return "Sign in to continue with Pro.";
@@ -64,7 +64,10 @@ export async function requestBillingActionUrl({
     return { url: null, message: billingErrorCopy(kind, data?.error ?? error?.message) };
   }
   if (!data?.url) {
-    return { url: null, message: kind === "portal" ? "Billing management is not available yet." : "Checkout is not open yet." };
+    return {
+      url: null,
+      message: kind === "portal" ? "Billing management could not open. Please try again." : "Checkout could not start. Please try again."
+    };
   }
 
   return { url: data.url, message: null };

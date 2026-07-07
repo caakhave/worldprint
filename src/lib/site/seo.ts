@@ -211,7 +211,7 @@ export function siteJsonLd(origin = publicSiteOrigin()) {
         "@id": `${origin}/#organization`,
         name: BRAND_NAME,
         url: origin,
-        logo: `${origin}/favicon.svg`,
+        logo: `${origin}/cgy-logo-icon-512.png`,
         email: SUPPORT_EMAIL
       },
       {
