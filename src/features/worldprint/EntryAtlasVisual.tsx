@@ -55,7 +55,7 @@ const PREVIEW_STEPS: PreviewStep[] = [
   {
     id: "choose-answer",
     title: "Make the guess",
-    body: "Use the map shape and evidence to choose what the map measures.",
+    body: "Use the map shape and clues to choose what the map is showing.",
     points: "800 points possible",
     investigatedIso3: ["JPN", "BRA"],
     selectedIso3: "BRA",

@@ -12,6 +12,28 @@ export function MembershipCardClient() {
   const membership = membershipDisplay(entitlement, loading);
   const heading = signedIn || loading ? membership.heading : "Sample Run";
 
+  if (loading) {
+    return (
+      <article className="surface account-card membership-card" id="membership" aria-label="Membership plan" aria-busy="true">
+        <div>
+          <p className="eyebrow">Membership</p>
+          <h2>{membership.heading}</h2>
+          <p>{membership.body}</p>
+        </div>
+        <dl className="account-status-list account-mini-status">
+          <div>
+            <dt>Status</dt>
+            <dd>Checking</dd>
+          </div>
+          <div>
+            <dt>Access</dt>
+            <dd>Loading your saved plan.</dd>
+          </div>
+        </dl>
+      </article>
+    );
+  }
+
   return (
     <article className="surface account-card membership-card" id="membership" aria-label="Membership plan">
       <div>

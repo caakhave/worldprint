@@ -19,6 +19,14 @@ vi.mock("@/features/account/AuthNavStatus", () => ({
   AuthNavStatus: () => <a href="/sign-in">Sign in</a>
 }));
 
+vi.mock("@/features/account/useSupabaseAccount", () => ({
+  useSupabaseAccount: () => ({
+    configured: true,
+    loading: false,
+    user: null
+  })
+}));
+
 describe("RootLayout", () => {
   it("renders the launch footer copy", () => {
     const markup = renderToStaticMarkup(
@@ -28,8 +36,9 @@ describe("RootLayout", () => {
     );
 
     expect(markup).toContain("Can You Geo? is a geography game library.");
-    expect(markup).toContain("Open the game hub, replay Mystery Map Past Games, and check the data sources");
+    expect(markup).toContain("Open the game hub and check the data sources any time.");
     expect(markup).toContain("href=\"/play\"");
+    expect(markup).not.toContain("href=\"/past-games\"");
     expect(markup).toContain("href=\"/support\"");
     expect(markup).not.toContain("href=\"/about\"");
   });

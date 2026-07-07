@@ -4,6 +4,7 @@ import Link from "next/link";
 import "@/styles/globals.css";
 import { AnalyticsScripts } from "@/components/AnalyticsScripts";
 import { BrandMark } from "@/components/BrandMark";
+import { FooterNav } from "@/components/FooterNav";
 import { PrimaryNav } from "@/components/PrimaryNav";
 import { AuthNavStatus } from "@/features/account/AuthNavStatus";
 import { BRAND_NAME } from "@/lib/brand";
@@ -98,14 +99,6 @@ export const viewport: Viewport = {
   themeColor: "#08181D"
 };
 
-const footerItems = [
-  { href: "/play", label: "Play" },
-  { href: "/past-games", label: "Past Games" },
-  { href: "/sources", label: "Sources" },
-  { href: "/legal", label: "Terms, Privacy & Accessibility" },
-  { href: "/support", label: "Support" }
-];
-
 export default function RootLayout({ children }: Readonly<{ children: React.ReactNode }>) {
   return (
     <html lang="en" className={`${plexSans.variable} ${literata.variable} ${plexMono.variable}`}>
@@ -131,17 +124,9 @@ export default function RootLayout({ children }: Readonly<{ children: React.Reac
         />
         <footer className="site-footer">
           <p>
-            Can You Geo? is a geography game library. Open the game hub, replay Mystery Map Past Games, and check the data sources
-            any time.
+            Can You Geo? is a geography game library. Open the game hub and check the data sources any time.
           </p>
-          <nav className="footer-nav" aria-label="Footer navigation">
-            {footerItems.map((item) => (
-              <Link key={item.href} href={item.href}>
-                {item.label}
-              </Link>
-            ))}
-            <AuthNavStatus />
-          </nav>
+          <FooterNav />
         </footer>
       </body>
     </html>

@@ -4,6 +4,7 @@ import { beforeEach, describe, expect, it, vi } from "vitest";
 import { AccountHeroClient } from "@/features/account/AccountHeroClient";
 import { AccountPlanNotesClient } from "@/features/account/AccountPlanNotesClient";
 import { AccountStatusClient } from "@/features/account/AccountStatusClient";
+import { MembershipCardClient } from "@/features/account/MembershipCardClient";
 import { CONTACT_LINKS } from "@/lib/contact";
 
 const routerMock = vi.hoisted(() => ({
@@ -147,8 +148,10 @@ describe("AccountStatusClient", () => {
       id: "11111111-2222-4333-8444-555555555555",
       email: "player@example.com"
     };
+    accountMock.state.loading = false;
     routerMock.push.mockClear();
     entitlementMock.state.signedIn = true;
+    entitlementMock.state.loading = false;
     entitlementMock.state.entitlement.plan = "free";
   });
 
@@ -276,6 +279,7 @@ describe("AccountHeroClient", () => {
       id: "11111111-2222-4333-8444-555555555555",
       email: "player@example.com"
     };
+    accountMock.state.loading = false;
     entitlementMock.state.signedIn = true;
   });
 
@@ -301,6 +305,41 @@ describe("AccountHeroClient", () => {
     expect(screen.getByRole("link", { name: "Start Pro" })).toHaveAttribute("href", "/upgrade");
     expect(screen.getByRole("link", { name: "Continue free" })).toHaveAttribute("href", "/sign-up");
   });
+
+  it("does not flash signed-out upsell copy while account state is loading", () => {
+    accountMock.state.loading = true;
+    accountMock.state.user = null;
+
+    render(<AccountHeroClient />);
+
+    expect(screen.getByRole("heading", { name: "Checking your account." })).toBeVisible();
+    expect(screen.getByText("Looking for a saved session on this device.")).toBeVisible();
+    expect(screen.getByText("Loading your saved access")).toBeVisible();
+    expect(screen.queryByRole("heading", { name: "Start Pro or continue free." })).not.toBeInTheDocument();
+    expect(screen.queryByText("Sample Run")).not.toBeInTheDocument();
+  });
+});
+
+describe("MembershipCardClient", () => {
+  beforeEach(() => {
+    entitlementMock.state.loading = false;
+    entitlementMock.state.signedIn = true;
+    entitlementMock.state.entitlement.plan = "free";
+    entitlementMock.state.entitlement.status = "free";
+  });
+
+  it("renders neutral access copy while membership state is loading", () => {
+    entitlementMock.state.loading = true;
+
+    render(<MembershipCardClient />);
+
+    expect(screen.getByRole("article", { name: "Membership plan" })).toHaveAttribute("aria-busy", "true");
+    expect(screen.getByRole("heading", { name: "Checking access." })).toBeVisible();
+    expect(screen.getByText("Looking for the latest membership state on this account.")).toBeVisible();
+    expect(screen.getByText("Loading your saved plan.")).toBeVisible();
+    expect(screen.queryByRole("link", { name: "Start Pro" })).not.toBeInTheDocument();
+    expect(screen.queryByText("Sample Run")).not.toBeInTheDocument();
+  });
 });
 
 describe("AccountPlanNotesClient", () => {
@@ -309,8 +348,11 @@ describe("AccountPlanNotesClient", () => {
       id: "11111111-2222-4333-8444-555555555555",
       email: "player@example.com"
     };
+    accountMock.state.loading = false;
     entitlementMock.state.signedIn = true;
+    entitlementMock.state.loading = false;
     entitlementMock.state.entitlement.plan = "free";
+    entitlementMock.state.entitlement.status = "free";
   });
 
   it("renders account actions without generic onboarding cards", async () => {

@@ -22,32 +22,30 @@ const heroCopy: Record<
 > = {
   guest: {
     eyebrow: "Mystery Map",
-    lead:
-      "Look at the map. Pick countries to investigate when you need help. Guess what the colors measure, then learn the answer.",
-    primary: { label: "Start sample game", href: "/play/mystery-map" },
-    secondary: { label: "How it works", href: "/how-to-play" },
+    lead: "A geography guessing game. Look at the map, read the colors, and pick what the world is showing.",
+    primary: { label: "Play Mystery Map", href: "/play/mystery-map" },
+    secondary: { label: "Explore games", href: "/play" },
     noteLines: [
       "No account needed for the sample game.",
-      "Free accounts get Daily geography challenges where supported.",
-      "Advanced modes and the wider game library stay ready after the first map."
+      "The map is the clue.",
+      "Sign up later if you want Daily progress where supported."
     ],
     panelEyebrow: "First time here?",
-    panelHeading: "Start with Mystery Map",
-    panelBody:
-      "One map, one mystery. Read the colors, tap a country if you want evidence, and lock in the answer when the pattern clicks.",
+    panelHeading: "Start with one map",
+    panelBody: "Colors tell the story. Tap a country if you want a clue, then make your guess.",
     panelCta: { label: "Play Mystery Map", href: "/play/mystery-map" }
   },
   free: {
-    eyebrow: "Free Daily ready",
-    lead: "Play today's Mystery Map. Read the color pattern, investigate countries only when you need help, and lock in the answer.",
-    primary: { label: "Play today's Mystery Map", href: "/play/mystery-map" },
+    eyebrow: "Daily game ready",
+    lead: "Play today's Mystery Map. Read the colors, use clues when they help, and lock in the answer.",
+    primary: { label: "Play today's game", href: "/play/mystery-map" },
     secondary: { label: "Open game library", href: "/play" },
     noteLines: [
       "You are signed in on Free.",
       "Daily progress, streaks, and basic stats save where supported.",
       "Pro unlocks deeper supported modes after you know the rhythm."
     ],
-    panelEyebrow: "Free Daily unlocked",
+    panelEyebrow: "Daily unlocked",
     panelHeading: "Start with today's map",
     panelBody:
       "Free keeps Daily-enabled progress saved where supported. Pro adds Mystery Map Custom Atlas, Pattern Atlas Pattern Runs, Order Atlas Pro Play, and Past Games.",
@@ -55,7 +53,7 @@ const heroCopy: Record<
   },
   pro: {
     eyebrow: "Pro Atlas unlocked",
-    lead: "Start with Mystery Map, or jump into the deeper supported Pro modes when you want a longer run.",
+    lead: "Start with Mystery Map, or jump into deeper Pro runs when you want a longer session.",
     primary: { label: "Play Mystery Map", href: "/play/mystery-map" },
     secondary: { label: "Start Custom Atlas", href: "/play/mystery-map#practice-atlas" },
     noteLines: [
@@ -67,11 +65,11 @@ const heroCopy: Record<
     panelHeading: "Mystery Map first, deeper runs next",
     panelBody:
       "Pro can play Daily games, build Mystery Map Custom Atlas runs, start Pattern Atlas Pattern Runs, run repeatable Order Atlas Play, replay Past Games, and review advanced stats where supported.",
-    panelCta: { label: "Open Pattern Atlas", href: "/play/pattern-atlas" }
+    panelCta: { label: "Play Pattern Atlas", href: "/play/pattern-atlas" }
   },
   loading: {
     eyebrow: "Checking atlas access",
-    lead: "Checking this browser's account state so your homepage actions match your Free or Pro access.",
+    lead: "Checking this browser's account state so your next button matches your access.",
     primary: { label: "Checking account...", href: "/account" },
     secondary: { label: "Open Mystery Map", href: "/play/mystery-map" },
     noteLines: [

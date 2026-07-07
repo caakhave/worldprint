@@ -7,7 +7,7 @@ import { breadcrumbJsonLd, pageMetadata } from "@/lib/site/seo";
 export const metadata: Metadata = pageMetadata({
   title: "How to Play Can You Geo?",
   description:
-    "Learn the Mystery Map basics: look at the map, read the colors, tap countries for evidence, and guess what the map measures.",
+    "Learn the Mystery Map basics: look at the map, read the colors, tap countries for clues, and guess what the world is showing.",
   path: "/how-to-play/"
 });
 
@@ -32,8 +32,8 @@ export default function HowToPlayPage() {
           <h1 className="page-title">Start with one mystery map.</h1>
         </div>
         <p className="lead">
-          Can You Geo? is a geography guessing game. In Mystery Map, the map is the clue: read the colors, tap countries if you need
-          evidence, then guess what the map measures.
+          Can You Geo? is a geography guessing game. In Mystery Map, the map is the clue: read the colors, tap countries if you want
+          help, then guess what the world is showing.
         </p>
       </div>
 
@@ -59,12 +59,12 @@ export default function HowToPlayPage() {
           <article>
             <span>03</span>
             <h2>Tap a country</h2>
-            <p>If you need help, investigate a country to reveal its value before you guess.</p>
+            <p>If you need help, reveal one country value before you guess.</p>
           </article>
           <article>
             <span>04</span>
             <h2>Lock in the answer</h2>
-            <p>Choose what the map measures. The reveal explains the answer and source.</p>
+            <p>Choose the answer that fits the map. The result explains the pattern and source.</p>
           </article>
         </div>
       </section>
@@ -81,7 +81,7 @@ export default function HowToPlayPage() {
           <article className="surface">
             <span className="how-card-index">01</span>
             <h3>Mystery Map</h3>
-            <p>Read a color pattern on an unlabeled world map and name the hidden data indicator.</p>
+            <p>Read a color pattern on an unlabeled world map and guess what the map is showing.</p>
           </article>
           <article className="surface">
             <span className="how-card-index">02</span>
@@ -239,7 +239,7 @@ export default function HowToPlayPage() {
             Open game library
           </Link>
           <Link className="button-secondary" href="/play/mystery-map">
-            Try Mystery Map sample
+            Play Mystery Map sample
           </Link>
           <Link className="button-secondary" href="/sign-up">
             Continue free

@@ -21,7 +21,7 @@ describe("WorldprintClient UI structure", () => {
     expect(source).toContain('aria-label="Primary Mystery Map action"');
     expect(source).toContain('<small>{primaryActionLabel}</small>');
     expect(source).not.toContain("Compass size={20}");
-    expect(source).toContain("Look at the map. Colors are the clue. Tap a country if you need evidence, then guess what the map measures.");
+    expect(source).toContain("Look at the map. Colors are the clue. Tap a country if you want help, then guess what the map is showing.");
     expect(source).toContain("The sample is local to this browser. Free accounts unlock Daily-enabled games where supported.");
     expect(styles).toContain(".lobby-play-button");
     expect(styles).toContain(".lobby-play-main");
@@ -38,7 +38,7 @@ describe("WorldprintClient UI structure", () => {
     expect(introEnd).toBeGreaterThan(introIndex);
     expect(introSource).toContain("Each round starts with a mystery map.");
     expect(introSource).toContain("The colors are your clue.");
-    expect(introSource).toContain("Pick a country to investigate.");
+    expect(introSource).toContain("Pick a country for a clue.");
     expect(introSource).toContain("Lock in the answer.");
     expect(introSource).toContain("Start map 1");
     expect(introSource).not.toContain("Skip intro");
@@ -182,7 +182,7 @@ describe("WorldprintClient UI structure", () => {
     expect(movedTierIndex).toBeLessThan(entryPanelIndex);
     expect(entryCopySource).not.toContain('className="entry-facts"');
     expect(entryCopySource).not.toContain('className="entry-lobby-strip"');
-    expect(source.match(/Sets the answer list, clues, and investigations for Daily, Practice, and replays\./g)).toHaveLength(1);
+    expect(source.match(/Sets the answer choices, clue limits, and replay rules\./g)).toHaveLength(1);
     expect(styles).toContain(".entry-skill-tier");
   });
 
@@ -339,7 +339,7 @@ describe("WorldprintClient UI structure", () => {
   });
 
   it("lets the indicator question use the full answer panel width", () => {
-    expect(source).toContain("<h2>Which indicator is this?</h2>");
+    expect(source).toContain("<h2>What is this map showing?</h2>");
     expect(styles).toContain(".answer-box-heading");
     expect(styles).toContain("grid-template-columns: minmax(0, 1fr)");
     expect(styles).toContain(".answer-box-heading > div");

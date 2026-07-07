@@ -409,7 +409,6 @@ export function PatternAtlasClient({ initialData, todayOverride }: PatternAtlasC
         signedIn={signedIn}
         isFreeAccount={isFreeAccount}
         onRestart={() => restartRun(run)}
-        onLobby={() => setRun(null)}
       />
     );
   }
@@ -1031,14 +1030,12 @@ function PatternAtlasSummary({
   run,
   signedIn,
   isFreeAccount,
-  onRestart,
-  onLobby
+  onRestart
 }: {
   run: PatternAtlasRunState;
   signedIn: boolean;
   isFreeAccount: boolean;
   onRestart: () => void;
-  onLobby: () => void;
 }) {
   const finalScore = run.rounds.reduce((total, round) => total + (round.solved ? round.score : 0), 0);
   const showGuestSampleCta = run.mode === "sample" && !signedIn;
@@ -1090,9 +1087,6 @@ function PatternAtlasSummary({
               <Compass size={18} aria-hidden="true" />
               Play again
             </button>
-            <button className="button-secondary" type="button" onClick={onLobby}>
-              Choose mode
-            </button>
           </div>
         ) : showFreeDailyCompleteCta ? (
           <div className="pattern-atlas-summary-actions" aria-label="Daily completion actions">
@@ -1108,9 +1102,6 @@ function PatternAtlasSummary({
             <button className="button" type="button" onClick={onRestart}>
               <Compass size={18} aria-hidden="true" />
               Play again
-            </button>
-            <button className="button-secondary" type="button" onClick={onLobby}>
-              Choose mode
             </button>
           </div>
         )}

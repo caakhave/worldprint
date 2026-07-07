@@ -49,47 +49,34 @@ vi.mock("@/features/account/useEntitlement", () => ({
 }));
 
 describe("HomePage", () => {
-  it("renders crawlable quick answers about the geography game", () => {
+  it("renders a simplified first-time Mystery Map funnel", () => {
     render(<HomePage />);
 
-    expect(screen.getAllByRole("heading", { name: "What is Can You Geo?" })).toHaveLength(2);
-    expect(document.getElementById("what-is-canyougeo")?.closest(".homepage-section-heading")).toHaveClass("homepage-section-heading-wide");
-    expect(screen.getByText(/geography game site for daily map puzzles/i)).toBeVisible();
-    expect(screen.getAllByText(/Mystery Map, Pattern Atlas, and Order Atlas have Sample and Daily play/i).length).toBeGreaterThanOrEqual(1);
-    expect(screen.getByRole("heading", { name: "Is Can You Geo free?" })).toBeVisible();
-    expect(screen.getAllByText(/Daily rounds in Daily-enabled games/i).length).toBeGreaterThanOrEqual(1);
-    expect(screen.getByRole("heading", { name: "How does Mystery Map work?" })).toBeVisible();
-    expect(screen.getByRole("heading", { name: "What games can I play?" })).toBeVisible();
-    expect(screen.getByRole("heading", { name: "What data sources does Can You Geo use?" })).toBeVisible();
-    expect(screen.getByText(/World Bank World Development Indicators/i)).toBeVisible();
-    expect(screen.getByRole("heading", { name: "Fresh challenges without changing the rules." })).toBeVisible();
-    expect(screen.getByRole("heading", { name: "Look at the map. Make the guess." })).toBeVisible();
-    expect(screen.getByRole("heading", { name: "Look at the map. Make the guess." }).closest(".homepage-section-heading")).toHaveClass(
-      "homepage-section-heading-wide"
-    );
-    expect(screen.getByText(/The first game is Mystery Map/i)).toBeVisible();
-    expect(screen.getByText(/Every round starts with a mystery choropleth/i)).toBeVisible();
-    expect(screen.getByText(/Darker usually means more/i)).toBeVisible();
-    expect(screen.getByText(/Tap a country if you need evidence/i)).toBeVisible();
-    expect(screen.getByRole("heading", { name: "Play Mystery Map first." })).toBeVisible();
-    expect(screen.getByRole("heading", { name: "Play Mystery Map first." }).closest(".homepage-section-heading")).toHaveClass(
+    expect(screen.getByRole("heading", { name: "Can you read the world?" })).toBeVisible();
+    expect(screen.getByText(/A geography guessing game/i)).toBeVisible();
+    expect(screen.queryByRole("heading", { name: "What is Can You Geo?" })).not.toBeInTheDocument();
+    expect(screen.queryByRole("heading", { name: "Is Can You Geo free?" })).not.toBeInTheDocument();
+    expect(screen.queryByText(/answer engines/i)).not.toBeInTheDocument();
+    expect(screen.queryByRole("heading", { name: "Look at the map. Make the guess." })).not.toBeInTheDocument();
+    expect(screen.queryByText(/Every round starts with a mystery map/i)).not.toBeInTheDocument();
+    expect(screen.queryByText(/Darker usually means more/i)).not.toBeInTheDocument();
+    expect(screen.getByRole("heading", { name: "Pick a game." })).toBeVisible();
+    expect(screen.getByRole("heading", { name: "Pick a game." }).closest(".homepage-section-heading")).toHaveClass(
       "homepage-section-heading-wide"
     );
     expect(screen.getByText("New geography challenges added every month.")).toBeVisible();
     expect(screen.getByText("Fresh maps, country patterns, and ordering challenges keep the atlas growing.")).toBeVisible();
-    expect(screen.getByText(/Mystery Map is the clearest first step/i)).toBeVisible();
+    expect(screen.getByText(/Start with Mystery Map/i)).toBeVisible();
     expect(screen.queryByText(/new games every month/i)).not.toBeInTheDocument();
-    expect(screen.getByRole("link", { name: /Start the sample game/i })).toHaveAttribute("href", "/play/mystery-map");
-    expect(screen.getByRole("link", { name: /See all games/i })).toHaveAttribute("href", "/play");
-    expect(screen.getByRole("link", { name: /Open Mystery Map/i })).toHaveAttribute("href", "/play/mystery-map");
-    expect(screen.getByRole("link", { name: /Open Pattern Atlas/i })).toHaveAttribute("href", "/play/pattern-atlas");
-    expect(screen.getByRole("link", { name: /Open Order Atlas/i })).toHaveAttribute("href", "/play/order-atlas");
     const mysteryMapPoster = screen.getByRole("heading", { name: "Mystery Map" }).closest("article");
     const patternAtlasPoster = screen.getByRole("heading", { name: "Pattern Atlas" }).closest("article");
     const orderAtlasPoster = screen.getByRole("heading", { name: "Order Atlas" }).closest("article");
     expect(mysteryMapPoster).toBeTruthy();
     expect(patternAtlasPoster).toBeTruthy();
     expect(orderAtlasPoster).toBeTruthy();
+    expect(within(mysteryMapPoster as HTMLElement).getByRole("link", { name: /Play Mystery Map/i })).toHaveAttribute("href", "/play/mystery-map");
+    expect(within(patternAtlasPoster as HTMLElement).getByRole("link", { name: /Play Pattern Atlas/i })).toHaveAttribute("href", "/play/pattern-atlas");
+    expect(within(orderAtlasPoster as HTMLElement).getByRole("link", { name: /Play Order Atlas/i })).toHaveAttribute("href", "/play/order-atlas");
     expect(within(mysteryMapPoster as HTMLElement).getByRole("img", { name: "Mystery Map game preview" })).toHaveAttribute(
       "src",
       "/images/homepage/05-practice.png"
@@ -102,15 +89,23 @@ describe("HomePage", () => {
       "src",
       "/images/homepage/04-daily-mystery-map.png"
     );
-    expect(within(orderAtlasPoster as HTMLElement).getByText("Sample / Daily / Pro Play")).toBeVisible();
-    expect(within(orderAtlasPoster as HTMLElement).getByText(/Order country cards by a known geography signal/i)).toBeVisible();
+    expect(within(mysteryMapPoster as HTMLElement).getByText("Best first play")).toBeVisible();
+    expect(within(patternAtlasPoster as HTMLElement).getByText("More puzzles")).toBeVisible();
+    expect(within(orderAtlasPoster as HTMLElement).getByText("Pro Play")).toBeVisible();
+    expect(within(orderAtlasPoster as HTMLElement).getByText(/Put country cards in order by a known clue/i)).toBeVisible();
     expect(within(orderAtlasPoster as HTMLElement).queryByText(/saved stats|streaks|archive|challenge|custom filters|continuous/i)).not.toBeInTheDocument();
     expect(screen.getByText("No account needed for the sample game.")).toBeVisible();
-    expect(screen.getByText("Free accounts get Daily geography challenges where supported.")).toBeVisible();
+    expect(screen.getByText("The map is the clue.")).toBeVisible();
+    expect(screen.getByText("Sign up later if you want Daily progress where supported.")).toBeVisible();
     expect(screen.queryByText(/Daily and Pro modes coming next/i)).not.toBeInTheDocument();
     expect(screen.queryByText(/intro-only|intro sample|Pro Practice|Practice Run/i)).not.toBeInTheDocument();
     expect(styles).toContain(".hero-growth-note + .button-row");
     expect(styles).toContain("margin-top: clamp(0.35rem, 1.2vh, 0.9rem)");
+    expect(styles).toContain("@media (min-width: 900px) and (max-height: 940px)");
+    expect(styles).toContain("font-size: clamp(3.75rem, min(8vw, 12vh), 7rem)");
+    expect(styles).toContain("@media (min-width: 900px) and (max-height: 820px)");
+    expect(styles).toContain("font-size: clamp(3.45rem, min(7.2vw, 11.5vh), 6.15rem)");
+    expect(styles).toContain("padding: clamp(1.75rem, 4.2vh, 3rem) 0 clamp(1.55rem, 3.8vh, 2.7rem)");
     expect(styles).toContain(".homepage-section-heading-wide {");
     expect(styles).toContain(".homepage-section-heading-wide h2");
     expect(styles).toContain("max-width: none");
@@ -120,6 +115,8 @@ describe("HomePage", () => {
     );
     expect(cardCopyRule).toContain("width: 100%");
     expect(cardCopyRule).toContain("max-width: none");
+    expect(styles).toContain(".game-library-card-link");
+    expect(styles).toContain("grid-template-rows: auto 1fr auto");
     expect(styles).not.toContain("max-width: 18rem");
   });
 });

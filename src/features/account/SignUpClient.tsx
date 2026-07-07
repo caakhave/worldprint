@@ -132,6 +132,15 @@ export function SignUpClient() {
   const signInHref = signInPathForReturn(returnPath);
   const signedInPrimaryHref = returnPath.startsWith("/upgrade") ? returnPath : "/account";
 
+  function resetConfirmation() {
+    setConfirmationSent(false);
+    setStatus("");
+    setError("");
+    setEmail("");
+    setPassword("");
+    setConfirmPassword("");
+  }
+
   if (!configured) {
     return (
       <article className="surface account-card account-primary-card">
@@ -187,62 +196,78 @@ export function SignUpClient() {
       <p className="eyebrow">Create account</p>
       <h2>Create your Can You Geo? account.</h2>
       <p>No credit card required to sign up for a free account.</p>
-      <form className="account-form" noValidate onSubmit={(event) => void submit(event)}>
-        <label htmlFor="sign-up-email">
-          Email
-          <input
-            id="sign-up-email"
-            name="email"
-            type="email"
-            value={email}
-            onChange={(event) => setEmail(event.target.value)}
-            placeholder="you@example.com"
-            autoComplete="email"
-            required
-          />
-        </label>
-        <label htmlFor="sign-up-password">
-          Password
-          <input
-            id="sign-up-password"
-            name="password"
-            type="password"
-            value={password}
-            onChange={(event) => setPassword(event.target.value)}
-            placeholder="At least 8 characters"
-            autoComplete="new-password"
-            minLength={MIN_PASSWORD_LENGTH}
-            required
-          />
-        </label>
-        <label htmlFor="sign-up-password-confirm">
-          Confirm password
-          <input
-            id="sign-up-password-confirm"
-            name="confirmPassword"
-            type="password"
-            value={confirmPassword}
-            onChange={(event) => setConfirmPassword(event.target.value)}
-            placeholder="Repeat your password"
-            autoComplete="new-password"
-            minLength={MIN_PASSWORD_LENGTH}
-            required
-          />
-        </label>
-        <label className="account-checkbox-label" htmlFor="sign-up-marketing-opt-in">
-          <input
-            id="sign-up-marketing-opt-in"
-            name="marketingOptIn"
-            type="checkbox"
-            checked={marketingOptIn}
-            onChange={(event) => setMarketingOptIn(event.target.checked)}
-          />
-          <span>Send me occasional Can You Geo updates and new game announcements.</span>
-        </label>
-        <button className="button" type="submit" disabled={submitting || confirmationSent}>
-          {confirmationSent ? "Check your email" : submitting ? "Creating account..." : "Create account"}
-        </button>
-      </form>
+      {confirmationSent ? (
+        <div className="account-confirmation-card" role="status">
+          <p className="eyebrow">Check your email</p>
+          <h3>We sent a confirmation link.</h3>
+          <p>Open the email for {email}, confirm the account, then sign in with your password to keep playing.</p>
+          <div className="button-row">
+            <Link className="button" href={signInHref}>
+              Sign in
+            </Link>
+            <button className="button-secondary" type="button" onClick={resetConfirmation}>
+              Try another email
+            </button>
+          </div>
+        </div>
+      ) : (
+        <form className="account-form" noValidate onSubmit={(event) => void submit(event)}>
+          <label htmlFor="sign-up-email">
+            Email
+            <input
+              id="sign-up-email"
+              name="email"
+              type="email"
+              value={email}
+              onChange={(event) => setEmail(event.target.value)}
+              placeholder="you@example.com"
+              autoComplete="email"
+              required
+            />
+          </label>
+          <label htmlFor="sign-up-password">
+            Password
+            <input
+              id="sign-up-password"
+              name="password"
+              type="password"
+              value={password}
+              onChange={(event) => setPassword(event.target.value)}
+              placeholder="At least 8 characters"
+              autoComplete="new-password"
+              minLength={MIN_PASSWORD_LENGTH}
+              required
+            />
+          </label>
+          <label htmlFor="sign-up-password-confirm">
+            Confirm password
+            <input
+              id="sign-up-password-confirm"
+              name="confirmPassword"
+              type="password"
+              value={confirmPassword}
+              onChange={(event) => setConfirmPassword(event.target.value)}
+              placeholder="Repeat your password"
+              autoComplete="new-password"
+              minLength={MIN_PASSWORD_LENGTH}
+              required
+            />
+          </label>
+          <label className="account-checkbox-label" htmlFor="sign-up-marketing-opt-in">
+            <input
+              id="sign-up-marketing-opt-in"
+              name="marketingOptIn"
+              type="checkbox"
+              checked={marketingOptIn}
+              onChange={(event) => setMarketingOptIn(event.target.checked)}
+            />
+            <span>Send me occasional Can You Geo updates and new game announcements.</span>
+          </label>
+          <button className="button" type="submit" disabled={submitting}>
+            {submitting ? "Creating account..." : "Create account"}
+          </button>
+        </form>
+      )}
       <div className="account-inline-links" aria-label="Account links">
         <Link href={signInHref}>Already have an account?</Link>
         <Link href="/forgot-password">Forgot password?</Link>

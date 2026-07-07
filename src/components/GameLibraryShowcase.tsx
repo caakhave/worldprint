@@ -21,27 +21,28 @@ export type GameLibraryItem = {
 export const GAME_LIBRARY_ITEMS: readonly GameLibraryItem[] = [
   {
     id: "mystery-map",
-    eyebrow: "Original map game",
+    eyebrow: "Start here",
     title: "Mystery Map",
-    description: "Read the color pattern, investigate countries when you need help, and guess what the map measures.",
-    access: ["Signed-out Sample Run", "Free Daily", "Pro Custom Atlas"],
+    description: "Read the colors on a mystery map and guess what the world is showing.",
+    access: ["Sample", "Daily", "Pro"],
     href: "/play/mystery-map",
-    ctaLabel: "Open Mystery Map",
-    statusLabel: "Playable now",
+    ctaLabel: "Play Mystery Map",
+    statusLabel: "Best first play",
     visual: "choropleth",
     image: "/images/homepage/05-practice.png",
     imageAlt: "Mystery Map game preview",
-    objectPosition: "50% 50%"
+    objectPosition: "50% 50%",
+    featured: true
   },
   {
     id: "pattern-atlas",
-    eyebrow: "Rule pattern game",
+    eyebrow: "Rule puzzle",
     title: "Pattern Atlas",
-    description: "Study highlighted countries and choose the rule connecting the set.",
-    access: ["Signed-out Sample Run", "Free Daily", "Pro Pattern Run"],
+    description: "Find the rule shared by highlighted countries.",
+    access: ["Sample", "Daily", "Pro"],
     href: "/play/pattern-atlas",
-    ctaLabel: "Open Pattern Atlas",
-    statusLabel: "Playable now",
+    ctaLabel: "Play Pattern Atlas",
+    statusLabel: "More puzzles",
     visual: "pattern",
     image: "/images/homepage/06-challenge-friends.png",
     imageAlt: "Pattern Atlas game preview",
@@ -49,13 +50,13 @@ export const GAME_LIBRARY_ITEMS: readonly GameLibraryItem[] = [
   },
   {
     id: "order-atlas",
-    eyebrow: "Country ordering game",
+    eyebrow: "Ordering puzzle",
     title: "Order Atlas",
-    description: "Order country cards by a known geography signal, then reveal the true values.",
-    access: ["Signed-out Sample Run", "Free Daily", "Pro Play"],
+    description: "Put country cards in order by a known clue.",
+    access: ["Sample", "Daily", "Pro Play"],
     href: "/play/order-atlas",
-    ctaLabel: "Open Order Atlas",
-    statusLabel: "Playable now",
+    ctaLabel: "Play Order Atlas",
+    statusLabel: "More puzzles",
     visual: "order",
     image: "/images/homepage/04-daily-mystery-map.png",
     imageAlt: "Order Atlas game preview",
@@ -86,8 +87,8 @@ export function GameLibraryShowcase({
 }
 
 function GameLibraryCard({ item, visualMode }: { item: GameLibraryItem; visualMode: NonNullable<GameLibraryShowcaseProps["visualMode"]> }) {
-  return (
-    <article className="game-library-card" data-game={item.id} data-featured={item.featured ? "true" : "false"}>
+  const cardContent = (
+    <>
       {visualMode === "image" ? <GameLibraryImage item={item} /> : <GameLibraryVisual kind={item.visual} />}
       <div className="game-library-card-copy">
         <p className="eyebrow">{item.eyebrow}</p>
@@ -101,17 +102,31 @@ function GameLibraryCard({ item, visualMode }: { item: GameLibraryItem; visualMo
       </div>
       <div className="game-library-card-footer">
         <span className="game-library-status">{item.statusLabel}</span>
-        {item.href ? (
-          <Link className="game-library-card-action" href={item.href}>
-            {item.ctaLabel}
-            <ArrowRight size={16} aria-hidden="true" />
-          </Link>
-        ) : (
-          <span className="game-library-card-action game-library-card-action-disabled" aria-disabled="true">
-            {item.ctaLabel}
-          </span>
-        )}
+        <span
+          className={[
+            "game-library-card-action",
+            item.href ? "" : "game-library-card-action-disabled"
+          ]
+            .filter(Boolean)
+            .join(" ")}
+          aria-disabled={item.href ? undefined : "true"}
+        >
+          {item.ctaLabel}
+          {item.href ? <ArrowRight size={16} aria-hidden="true" /> : null}
+        </span>
       </div>
+    </>
+  );
+
+  return (
+    <article className="game-library-card" data-game={item.id} data-featured={item.featured ? "true" : "false"}>
+      {item.href ? (
+        <Link className="game-library-card-link" href={item.href}>
+          {cardContent}
+        </Link>
+      ) : (
+        <div className="game-library-card-link game-library-card-link-disabled">{cardContent}</div>
+      )}
     </article>
   );
 }

@@ -36,7 +36,7 @@ export const PUBLIC_INDEXED_ROUTES: PublicRouteMetadata[] = [
     path: "/play/mystery-map/",
     title: "Play Mystery Map - Daily Geography Game",
     description:
-      "Start Mystery Map, the flagship Can You Geo? world map game where you read an unlabeled choropleth and guess the hidden data indicator.",
+      "Start Mystery Map, the flagship Can You Geo? world map game where you read an unlabeled map and guess what the colors are showing.",
     changeFrequency: "daily",
     priority: 0.95
   },
@@ -244,7 +244,7 @@ export function siteJsonLd(origin = publicSiteOrigin()) {
         genre: ["Geography game", "Map game", "Puzzle game"],
         isAccessibleForFree: true,
         description:
-          "Mystery Map is a choropleth geography puzzle where players read an unlabeled world map, reveal country clues, and guess the hidden data indicator.",
+          "Mystery Map is a geography puzzle where players read an unlabeled world map, reveal country clues, and guess what the colors are showing.",
         publisher: { "@id": `${origin}/#organization` }
       },
       {
@@ -302,7 +302,7 @@ export const HOME_FAQ_ITEMS = [
   {
     name: "How does Mystery Map work?",
     acceptedAnswer:
-      "Mystery Map is the current featured game. It shows an unlabeled choropleth map; read the color pattern, reveal country values only when needed, then guess the hidden indicator."
+      "Mystery Map is the current featured game. It shows an unlabeled world map; read the color pattern, reveal country values only when needed, then guess what the map is showing."
   },
   {
     name: "What games can I play?",

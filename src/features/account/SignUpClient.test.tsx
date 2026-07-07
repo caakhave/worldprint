@@ -88,7 +88,12 @@ describe("SignUpClient", () => {
       })
     });
     await screen.findByText("Account created and confirmation email sent. Open it, then sign in with your password to continue.");
-    expect(screen.getByRole("button", { name: "Check your email" })).toBeDisabled();
+    expect(screen.getByText("Check your email")).toBeVisible();
+    expect(screen.getByRole("heading", { name: "We sent a confirmation link." })).toBeVisible();
+    expect(screen.getByText(/Open the email for new@example\.com/i)).toBeVisible();
+    expect(screen.getByRole("link", { name: "Sign in" })).toHaveAttribute("href", "/sign-in");
+    expect(screen.getByRole("button", { name: "Try another email" })).toBeVisible();
+    expect(screen.queryByRole("button", { name: "Create account" })).not.toBeInTheDocument();
     expect(window.sessionStorage.getItem("canyougeo:sign-in-return")).toBe("/account");
   });
 

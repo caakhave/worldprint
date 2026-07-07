@@ -8,7 +8,7 @@ import type { IndicatorArtifact, MapFeatureCollection } from "@/lib/content/sche
 const demoSteps = [
   "Start with shape, not labels.",
   "Spend score to reveal country values.",
-  "Guess the hidden indicator, then learn the pattern."
+  "Guess what the map shows, then learn the pattern."
 ] as const;
 
 export function HeroMap() {

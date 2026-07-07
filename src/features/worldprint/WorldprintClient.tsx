@@ -1095,9 +1095,9 @@ export function WorldprintClient({ dateOverride, entryMode = "standard" }: World
           : "Start the sample game";
     const primaryCopy =
       primaryMode === "atlas"
-        ? "Look at the map. Colors are the clue. Tap countries if you need help, then guess what the map measures."
+        ? "Look at the map. Colors are the clue. Tap countries if you want help, then guess what the map is showing."
         : primaryMode === "daily"
-          ? "Today's Daily starts with a mystery map. Read the colors, investigate when you need help, and make the guess."
+          ? "Today's Daily starts with a mystery map. Read the colors, use clues when they help, and make the guess."
           : "No account needed. Start with a few fixed maps and learn the rhythm before worrying about modes or stats.";
     const primaryStateLabel =
       primaryMode === "atlas"
@@ -1199,9 +1199,9 @@ export function WorldprintClient({ dateOverride, entryMode = "standard" }: World
           {isArchiveDate ? (
             <>
               <p className="eyebrow">{`Past Mystery Map Replay · ${todayKey}`}</p>
-              <h1 className="page-title">What does this map measure?</h1>
+              <h1 className="page-title">What is this map showing?</h1>
               <p className="lead">
-                Replay this past Mystery Map as a record run: five unlabeled maps, one hidden indicator each. Investigate countries when you need evidence,
+                Replay this past Mystery Map as a record run: five unlabeled maps, one mystery pattern each. Use country clues when they help,
                 but every clue spends points.
               </p>
             </>
@@ -1209,7 +1209,7 @@ export function WorldprintClient({ dateOverride, entryMode = "standard" }: World
             <div className="setup-section setup-section-compact entry-skill-tier">
               <div className="setup-heading">
                 <p className="setup-kicker">Skill tier</p>
-                <p>Sets the answer list, clues, and investigations for Daily, Practice, and replays.</p>
+                <p>Sets the answer choices, clue limits, and replay rules.</p>
               </div>
               <TierSelector value={selectedTier} onChange={updateTier} />
             </div>
@@ -1222,7 +1222,7 @@ export function WorldprintClient({ dateOverride, entryMode = "standard" }: World
               <div className="mode-panel-heading lobby-heading">
                 <p className="setup-kicker">Start here</p>
                 <h2>Ready to play Mystery Map?</h2>
-                <p>Look at the map. Colors are the clue. Tap a country if you need evidence, then guess what the map measures.</p>
+                <p>Look at the map. Colors are the clue. Tap a country if you want help, then guess what the map is showing.</p>
               </div>
               <article className="lobby-primary-card" data-state={primaryModeComplete ? "complete" : "ready"} aria-label="Primary Mystery Map action">
                 <div className="lobby-primary-copy">
@@ -1687,7 +1687,7 @@ export function WorldprintClient({ dateOverride, entryMode = "standard" }: World
           <div>
             <p className="eyebrow">Your task</p>
             <h1 id="active-map-title">Use the map as your clue.</h1>
-            <p>Darker usually means more. Tap a country if you need evidence, then guess what the map measures.</p>
+            <p>Darker usually means more. Tap a country if you want a clue, then guess what the map is showing.</p>
           </div>
         </div>
         {selectedCountryEvidencePanel("desktop")}
@@ -1749,11 +1749,11 @@ export function WorldprintClient({ dateOverride, entryMode = "standard" }: World
           </dl>
         </div>
         <div className="investigation-box">
-          <h2>Investigate a country</h2>
+          <h2>Get a country clue</h2>
           <p className="cost-note">
             Use this when the pattern gets slippery. Selecting a country is free; revealing a value spends the listed points.
           </p>
-          <label htmlFor="country-search">Choose a country to investigate</label>
+          <label htmlFor="country-search">Choose a country for a clue</label>
           <div className="country-select-row">
             <select id="country-search" value={selectedCountryIso3} onChange={(event) => setSelectedCountryIso3(event.target.value)}>
               <option value="">Choose a country</option>
@@ -1834,7 +1834,7 @@ export function WorldprintClient({ dateOverride, entryMode = "standard" }: World
             <>
               <span>Ready</span>
               <strong>Pick a country</strong>
-              <p>Tap the map or use search to investigate a country before you guess.</p>
+              <p>Tap the map or use search for a country clue before you guess.</p>
             </>
           )}
         </div>
@@ -1914,7 +1914,7 @@ export function WorldprintClient({ dateOverride, entryMode = "standard" }: World
                 <div className="answer-box-heading">
                   <div>
                     <span>Pick one answer</span>
-                    <h2>Which indicator is this?</h2>
+                    <h2>What is this map showing?</h2>
                   </div>
                   <small>Wrong answers cost {wrongAnswerPenalty} points.</small>
                 </div>
@@ -2455,7 +2455,7 @@ function FirstRunIntro({ tier, onContinue }: { tier: Tier; onContinue: () => voi
         <h1>Look at the map. Make a guess.</h1>
         <p className="lead">
           You are starting on {TIER_CONFIGS[tier].label}. You do not need to learn every mode first: read the colors, tap a country if
-          you want evidence, then choose what the map measures.
+          you want a clue, then choose what the map is showing.
         </p>
         <ol className="first-run-beats" aria-label="How Mystery Map works">
           <li>
@@ -2470,13 +2470,13 @@ function FirstRunIntro({ tier, onContinue }: { tier: Tier; onContinue: () => voi
           </li>
           <li>
             <span>03</span>
-            <strong>Pick a country to investigate.</strong>
+            <strong>Pick a country for a clue.</strong>
             <p>Need help? Reveal a country value before you guess.</p>
           </li>
           <li>
             <span>04</span>
             <strong>Lock in the answer.</strong>
-            <p>Choose what the map measures and learn the pattern.</p>
+            <p>Choose what the map is showing and learn the pattern.</p>
           </li>
         </ol>
         <div className="first-run-actions">

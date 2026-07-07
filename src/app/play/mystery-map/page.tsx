@@ -6,7 +6,7 @@ import { pageMetadata } from "@/lib/site/seo";
 export const metadata: Metadata = pageMetadata({
   title: "Play Mystery Map - Daily Geography Game",
   description:
-    "Start Mystery Map, the Can You Geo? choropleth geography game where you read an unlabeled world map and guess the hidden data indicator.",
+    "Start Mystery Map, the Can You Geo? geography game where you read an unlabeled world map and guess what the colors are showing.",
   path: "/play/mystery-map/"
 });
 

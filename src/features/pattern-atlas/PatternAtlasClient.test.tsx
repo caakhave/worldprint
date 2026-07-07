@@ -452,17 +452,23 @@ describe("PatternAtlasClient", () => {
     expect(screen.getByRole("link", { name: "Start Pro" })).toHaveAttribute("href", "/upgrade");
     expect(screen.getByRole("link", { name: "Create free account" })).toHaveAttribute("href", "/sign-up");
     expect(screen.getByRole("button", { name: "Play again" })).toBeVisible();
-    expect(screen.getByRole("button", { name: "Choose mode" })).toBeVisible();
+    expect(screen.queryByRole("button", { name: "Choose mode" })).not.toBeInTheDocument();
   });
 
   it("starts a fresh playable Sample Run from the lobby after a completed sample is saved", async () => {
     const user = userEvent.setup();
+    const completedSample = completedRun({
+      mode: "sample",
+      dateKey: "2026-07-03",
+      contentVersion: PATTERN_ATLAS_CATALOG.contentVersion,
+      ruleIds: [...PATTERN_ATLAS_SAMPLE_RULE_IDS],
+      salt: "evergreen"
+    });
+    savePatternAtlasPersistedState(persistPatternAtlasRun(defaultPatternAtlasPersistedState(), completedSample));
     renderPatternAtlas();
 
-    await completeSampleRun(user);
-    await user.click(screen.getByRole("button", { name: "Choose mode" }));
-
     expect(screen.getByRole("heading", { name: "Pattern Atlas Sample Run" })).toBeVisible();
+    await waitFor(() => expect(screen.getByRole("button", { name: /Play sample again/i })).toBeVisible());
     await user.click(screen.getByRole("button", { name: /Play sample again/i }));
 
     expect(screen.getByRole("heading", { name: "What pattern connects these countries?" })).toBeVisible();
@@ -521,7 +527,7 @@ describe("PatternAtlasClient", () => {
     expect(screen.queryByText(/Create a free account to save Free Daily progress/i)).not.toBeInTheDocument();
     expect(screen.queryByRole("link", { name: "Create free account" })).not.toBeInTheDocument();
     expect(screen.getByRole("button", { name: "Play again" })).toBeVisible();
-    expect(screen.getByRole("button", { name: "Choose mode" })).toBeVisible();
+    expect(screen.queryByRole("button", { name: "Choose mode" })).not.toBeInTheDocument();
   });
 
   it("shows explanation, sources, highlighted countries, and mapped-country scope on reveal", async () => {
