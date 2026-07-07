@@ -1,7 +1,6 @@
 import { fireEvent, render, screen } from "@testing-library/react";
 import { beforeEach, describe, expect, it, vi } from "vitest";
 import { PrimaryNav } from "@/components/PrimaryNav";
-import { PLAY_LOBBY_REQUEST_EVENT } from "@/lib/site/playLobbyNavigation";
 
 let mockPathname = "/";
 
@@ -14,62 +13,50 @@ describe("PrimaryNav", () => {
     mockPathname = "/";
   });
 
-  it("links Play to the game hub while preserving Mystery Map same-route lobby reset", () => {
-    mockPathname = "/play/mystery-map";
-    const handleLobbyRequest = vi.fn();
-    window.addEventListener(PLAY_LOBBY_REQUEST_EVENT, handleLobbyRequest);
-
+  it("links Play to the game hub on the homepage", () => {
     render(<PrimaryNav />);
 
     const playLink = screen.getByRole("link", { name: "Play" });
     expect(playLink).toHaveAttribute("href", "/play");
-    expect(playLink).toHaveAttribute("aria-current", "page");
-    expect(fireEvent.click(playLink)).toBe(false);
-    expect(handleLobbyRequest).toHaveBeenCalledTimes(1);
-
-    window.removeEventListener(PLAY_LOBBY_REQUEST_EVENT, handleLobbyRequest);
+    expect(playLink).not.toHaveAttribute("aria-current");
+    expect(fireEvent.click(playLink)).toBe(true);
   });
 
-  it("treats a trailing slash Mystery Map pathname as the same active play route", () => {
-    mockPathname = "/play/mystery-map/";
-    const handleLobbyRequest = vi.fn();
-    window.addEventListener(PLAY_LOBBY_REQUEST_EVENT, handleLobbyRequest);
-
-    render(<PrimaryNav />);
-
-    expect(fireEvent.click(screen.getByRole("link", { name: "Play" }))).toBe(false);
-    expect(handleLobbyRequest).toHaveBeenCalledTimes(1);
-
-    window.removeEventListener(PLAY_LOBBY_REQUEST_EVENT, handleLobbyRequest);
-  });
-
-  it("marks the game hub active on other play routes without hijacking navigation", () => {
-    mockPathname = "/play/order-atlas/";
-    const handleLobbyRequest = vi.fn();
-    window.addEventListener(PLAY_LOBBY_REQUEST_EVENT, handleLobbyRequest);
-
+  it("links Play to the game hub from a Mystery Map route", () => {
+    mockPathname = "/play/mystery-map";
     render(<PrimaryNav />);
 
     const playLink = screen.getByRole("link", { name: "Play" });
     expect(playLink).toHaveAttribute("href", "/play");
     expect(playLink).toHaveAttribute("aria-current", "page");
     expect(fireEvent.click(playLink)).toBe(true);
-    expect(handleLobbyRequest).not.toHaveBeenCalled();
+  });
 
-    window.removeEventListener(PLAY_LOBBY_REQUEST_EVENT, handleLobbyRequest);
+  it("treats a trailing slash Mystery Map pathname as active without hijacking navigation", () => {
+    mockPathname = "/play/mystery-map/";
+    render(<PrimaryNav />);
+
+    const playLink = screen.getByRole("link", { name: "Play" });
+    expect(playLink).toHaveAttribute("href", "/play");
+    expect(playLink).toHaveAttribute("aria-current", "page");
+    expect(fireEvent.click(playLink)).toBe(true);
+  });
+
+  it.each(["/play/pattern-atlas/", "/play/order-atlas/"])("marks the game hub active on %s without hijacking navigation", (path) => {
+    mockPathname = path;
+    render(<PrimaryNav />);
+
+    const playLink = screen.getByRole("link", { name: "Play" });
+    expect(playLink).toHaveAttribute("href", "/play");
+    expect(playLink).toHaveAttribute("aria-current", "page");
+    expect(fireEvent.click(playLink)).toBe(true);
   });
 
   it("keeps normal navigation for other primary nav links and other routes", () => {
     mockPathname = "/how-to-play";
-    const handleLobbyRequest = vi.fn();
-    window.addEventListener(PLAY_LOBBY_REQUEST_EVENT, handleLobbyRequest);
-
     render(<PrimaryNav />);
 
     expect(fireEvent.click(screen.getByRole("link", { name: "Play" }))).toBe(true);
     expect(fireEvent.click(screen.getByRole("link", { name: "How it works" }))).toBe(true);
-    expect(handleLobbyRequest).not.toHaveBeenCalled();
-
-    window.removeEventListener(PLAY_LOBBY_REQUEST_EVENT, handleLobbyRequest);
   });
 });

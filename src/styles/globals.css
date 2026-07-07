@@ -833,12 +833,12 @@ button:disabled {
 
 .hero-growth-note {
   max-width: min(100%, 39rem);
-  margin: 0.15rem 0 clamp(1.25rem, 2.8vh, 2rem);
+  margin: 0.15rem 0 clamp(1.45rem, 3vh, 2.1rem);
   backdrop-filter: blur(12px);
 }
 
 .hero-growth-note + .button-row {
-  margin-top: clamp(0.35rem, 1.2vh, 0.9rem);
+  margin-top: clamp(0.55rem, 1.35vh, 1rem);
 }
 
 .hero-primary-cta {
@@ -930,7 +930,7 @@ button:disabled {
   }
 
   .hero-growth-note {
-    margin-bottom: 0.95rem;
+    margin-bottom: 1.1rem;
   }
 
   .hero-note {
@@ -958,7 +958,7 @@ button:disabled {
   }
 
   .hero-growth-note {
-    margin-bottom: 0.72rem;
+    margin-bottom: 0.92rem;
     padding-block: 0.52rem;
     line-height: 1.35;
   }

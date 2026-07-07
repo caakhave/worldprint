@@ -2,7 +2,6 @@
 
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { dispatchPlayLobbyRequest, isMysteryMapPlayPath } from "@/lib/site/playLobbyNavigation";
 
 const navItems = [
   { href: "/play", label: "Play", primary: true },
@@ -26,11 +25,6 @@ export function PrimaryNav() {
           href={item.href}
           data-primary={"primary" in item && item.primary ? "true" : undefined}
           aria-current={item.href === "/play" && isPlayPath(pathname) ? "page" : undefined}
-          onClick={(event) => {
-            if (item.href !== "/play" || !isMysteryMapPlayPath(pathname)) return;
-            event.preventDefault();
-            dispatchPlayLobbyRequest();
-          }}
         >
           {item.label}
         </Link>

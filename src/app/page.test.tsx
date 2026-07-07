@@ -100,7 +100,7 @@ describe("HomePage", () => {
     expect(screen.queryByText(/Daily and Pro modes coming next/i)).not.toBeInTheDocument();
     expect(screen.queryByText(/intro-only|intro sample|Pro Practice|Practice Run/i)).not.toBeInTheDocument();
     expect(styles).toContain(".hero-growth-note + .button-row");
-    expect(styles).toContain("margin-top: clamp(0.35rem, 1.2vh, 0.9rem)");
+    expect(styles).toContain("margin-top: clamp(0.55rem, 1.35vh, 1rem)");
     expect(styles).toContain("@media (min-width: 900px) and (max-height: 940px)");
     expect(styles).toContain("font-size: clamp(3.75rem, min(8vw, 12vh), 7rem)");
     expect(styles).toContain("@media (min-width: 900px) and (max-height: 820px)");

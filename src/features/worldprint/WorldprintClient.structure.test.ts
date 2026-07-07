@@ -4,7 +4,6 @@ import { describe, expect, it } from "vitest";
 
 const source = readFileSync(join(process.cwd(), "src/features/worldprint/WorldprintClient.tsx"), "utf8");
 const primaryNavSource = readFileSync(join(process.cwd(), "src/components/PrimaryNav.tsx"), "utf8");
-const playLobbyNavigationSource = readFileSync(join(process.cwd(), "src/lib/site/playLobbyNavigation.ts"), "utf8");
 const runStateSource = readFileSync(join(process.cwd(), "src/lib/game/state.ts"), "utf8");
 const storageSource = readFileSync(join(process.cwd(), "src/lib/persistence/storage.ts"), "utf8");
 const styles = readFileSync(join(process.cwd(), "src/styles/globals.css"), "utf8");
@@ -249,15 +248,11 @@ describe("WorldprintClient UI structure", () => {
     expect(source).not.toContain("Play today&apos;s 3 maps");
   });
 
-  it("keeps Play pointed at the hub while preserving Mystery Map same-route lobby reset", () => {
+  it("keeps the global Play nav pointed at the game hub", () => {
     expect(primaryNavSource).toContain('href: "/play"');
     expect(primaryNavSource).not.toContain('href: "/play/mystery-map"');
-    expect(primaryNavSource).toContain("isMysteryMapPlayPath(pathname)");
-    expect(primaryNavSource).toContain("event.preventDefault();");
-    expect(primaryNavSource).toContain("dispatchPlayLobbyRequest();");
-    expect(playLobbyNavigationSource).toContain('PLAY_LOBBY_REQUEST_EVENT = "canyougeo:play-lobby-request"');
-    expect(playLobbyNavigationSource).toContain('return normalized === "/play/mystery-map";');
-    expect(source).toContain("window.addEventListener(PLAY_LOBBY_REQUEST_EVENT, handlePlayLobbyRequest)");
+    expect(primaryNavSource).not.toContain("event.preventDefault();");
+    expect(primaryNavSource).not.toContain("dispatchPlayLobbyRequest();");
     expect(source).toContain("returnToLobby();");
     expect(source).not.toContain("runState=");
     expect(source).not.toContain("answerIds=");
