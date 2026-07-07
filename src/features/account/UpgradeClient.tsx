@@ -3,8 +3,7 @@
 import Link from "next/link";
 import Image from "next/image";
 import { useEffect, useState } from "react";
-import { CheckCircle2, ShieldCheck, Sparkles } from "lucide-react";
-import { GameLibraryShowcase } from "@/components/GameLibraryShowcase";
+import { ArrowRight, CheckCircle2, ShieldCheck, Sparkles } from "lucide-react";
 import { BillingActionsClient } from "@/features/account/BillingActionsClient";
 import { BillingReturnNotice } from "@/features/account/BillingReturnNotice";
 import { useEntitlement } from "@/features/account/useEntitlement";
@@ -137,42 +136,39 @@ export function UpgradeClient() {
             <li>New geography challenges added every month.</li>
           </ul>
           <div className="upgrade-game-strip" aria-label="Current Can You Geo games">
-            <article className="upgrade-game-tile" data-game="mystery-map">
-              <UpgradeGamePreview
-                src="/images/homepage/05-practice.png"
-                alt="Mystery Map Custom Atlas preview"
-                objectPosition="50% 50%"
-              />
-              <div>
-                <p className="eyebrow">Mystery Map</p>
-                <strong>Custom Atlas and Daily map puzzles</strong>
-                <span>Read choropleths, spend clues, and name the signal.</span>
-              </div>
-            </article>
-            <article className="upgrade-game-tile" data-game="pattern-atlas">
-              <UpgradeGamePreview
-                src="/images/homepage/06-challenge-friends.png"
-                alt="Pattern Atlas Pattern Run preview"
-                objectPosition="48% 50%"
-              />
-              <div>
-                <p className="eyebrow">Pattern Atlas</p>
-                <strong>Pattern Runs and Daily rule puzzles</strong>
-                <span>Find the shared rule behind highlighted countries.</span>
-              </div>
-            </article>
-            <article className="upgrade-game-tile" data-game="order-atlas">
-              <UpgradeGamePreview
-                src="/images/homepage/04-daily-mystery-map.png"
-                alt="Order Atlas Pro Play preview"
-                objectPosition="50% 50%"
-              />
-              <div>
-                <p className="eyebrow">Order Atlas</p>
-                <strong>Daily and Pro Play ordering rounds</strong>
-                <span>Order country cards in Sample, Free Daily, and repeatable Pro Play sets.</span>
-              </div>
-            </article>
+            <UpgradeGameTile
+              gameId="mystery-map"
+              href="/play/mystery-map"
+              imageSrc="/images/homepage/05-practice.png"
+              imageAlt="Mystery Map Custom Atlas preview"
+              objectPosition="50% 50%"
+              eyebrow="Mystery Map"
+              title="Custom Atlas and Daily map puzzles"
+              description="Read choropleths, spend clues, and name the signal."
+              ctaLabel="Play Mystery Map"
+            />
+            <UpgradeGameTile
+              gameId="pattern-atlas"
+              href="/play/pattern-atlas"
+              imageSrc="/images/homepage/06-challenge-friends.png"
+              imageAlt="Pattern Atlas Pattern Run preview"
+              objectPosition="48% 50%"
+              eyebrow="Pattern Atlas"
+              title="Pattern Runs and Daily rule puzzles"
+              description="Find the shared rule behind highlighted countries."
+              ctaLabel="Play Pattern Atlas"
+            />
+            <UpgradeGameTile
+              gameId="order-atlas"
+              href="/play/order-atlas"
+              imageSrc="/images/homepage/04-daily-mystery-map.png"
+              imageAlt="Order Atlas Pro Play preview"
+              objectPosition="50% 50%"
+              eyebrow="Order Atlas"
+              title="Daily and Pro Play ordering rounds"
+              description="Order country cards in Sample, Free Daily, and repeatable Pro Play sets."
+              ctaLabel="Play Order Atlas"
+            />
           </div>
         </div>
         <div className="upgrade-hero-action-panel">
@@ -183,19 +179,6 @@ export function UpgradeClient() {
           </div>
           <BillingActionsClient entitlement={entitlement} context="upgrade" />
         </div>
-      </section>
-
-      <section className="upgrade-library-showcase" aria-labelledby="upgrade-library-title">
-        <div className="upgrade-library-heading">
-          <p className="eyebrow">Game library</p>
-          <h2 id="upgrade-library-title">Free and Pro now cover more than one game.</h2>
-          <p>
-            Mystery Map is the original choropleth map game with Custom Atlas for Pro. Pattern Atlas adds rule-based country-set
-            puzzles with Free Daily and Pro Pattern Runs. Order Atlas adds country-ordering rounds with Sample Run, Free Daily, and
-            repeatable Pro Play.
-          </p>
-        </div>
-        <GameLibraryShowcase ariaLabel="Games included in Can You Geo Free and Pro" visualMode="image" />
       </section>
 
       <div className="plan-grid">
@@ -309,6 +292,47 @@ export function UpgradeClient() {
         </div>
       </section>
     </div>
+  );
+}
+
+function UpgradeGameTile({
+  gameId,
+  href,
+  imageSrc,
+  imageAlt,
+  objectPosition,
+  eyebrow,
+  title,
+  description,
+  ctaLabel
+}: {
+  gameId: "mystery-map" | "pattern-atlas" | "order-atlas";
+  href: string;
+  imageSrc: string;
+  imageAlt: string;
+  objectPosition: string;
+  eyebrow: string;
+  title: string;
+  description: string;
+  ctaLabel: string;
+}) {
+  return (
+    <Link className="upgrade-game-tile" data-game={gameId} href={href}>
+      <UpgradeGamePreview
+        src={imageSrc}
+        alt={imageAlt}
+        objectPosition={objectPosition}
+      />
+      <div className="upgrade-game-tile-copy">
+        <p className="eyebrow">{eyebrow}</p>
+        <strong>{title}</strong>
+        <span>{description}</span>
+      </div>
+      <span className="upgrade-game-tile-cta">
+        {ctaLabel}
+        <ArrowRight size={14} aria-hidden="true" />
+      </span>
+    </Link>
   );
 }
 

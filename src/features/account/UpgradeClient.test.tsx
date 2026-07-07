@@ -112,42 +112,25 @@ describe("UpgradeClient", () => {
     expect(within(overview).getByAltText("Pattern Atlas Pattern Run preview")).toHaveAttribute("src", expect.stringContaining("06-challenge-friends"));
     expect(within(overview).getByAltText("Order Atlas Pro Play preview")).toHaveAttribute("src", expect.stringContaining("04-daily-mystery-map"));
     expect(within(overview).queryByText(/Order Atlas (custom filters|archive|saved stats|streaks|challenge|cloud|continuous)/i)).not.toBeInTheDocument();
-    expect(screen.getByRole("heading", { name: "Free and Pro now cover more than one game." })).toBeVisible();
-    expect(screen.getByRole("heading", { name: "Mystery Map" })).toBeVisible();
-    expect(screen.getByRole("heading", { name: "Pattern Atlas" })).toBeVisible();
-    expect(screen.getByRole("heading", { name: "Order Atlas" })).toBeVisible();
-    const upgradeLibrary = screen.getByLabelText("Games included in Can You Geo Free and Pro");
-    expect(upgradeLibrary.querySelectorAll(".game-library-visual-image")).toHaveLength(3);
-    expect(upgradeLibrary.querySelector(".game-library-visual-map")).toBeNull();
-    expect(within(upgradeLibrary).getByRole("img", { name: "Mystery Map game preview" })).toHaveAttribute(
-      "src",
-      expect.stringContaining("05-practice")
-    );
-    expect(within(upgradeLibrary).getByRole("img", { name: "Pattern Atlas game preview" })).toHaveAttribute(
-      "src",
-      expect.stringContaining("06-challenge-friends")
-    );
-    expect(within(upgradeLibrary).getByRole("img", { name: "Order Atlas game preview" })).toHaveAttribute(
-      "src",
-      expect.stringContaining("04-daily-mystery-map")
-    );
-    const patternAtlasLibraryCard = upgradeLibrary.querySelector('article[data-game="pattern-atlas"]');
-    const orderAtlasLibraryCard = upgradeLibrary.querySelector('article[data-game="order-atlas"]');
-    expect(patternAtlasLibraryCard).toBeTruthy();
-    expect(orderAtlasLibraryCard).toBeTruthy();
-    expect(within(patternAtlasLibraryCard as HTMLElement).getByRole("link", { name: /Play Pattern Atlas/i })).toHaveAttribute("href", "/play/pattern-atlas");
-    expect(within(orderAtlasLibraryCard as HTMLElement).getByRole("link", { name: /Play Order Atlas/i })).toHaveAttribute("href", "/play/order-atlas");
-    expect(within(upgradeLibrary).getByText("Best first play")).toBeVisible();
-    expect(within(upgradeLibrary).getAllByText("More puzzles")).toHaveLength(2);
-    expect(screen.getByText(/Order Atlas adds country-ordering rounds with Sample Run, Free Daily, and repeatable Pro Play/i)).toBeVisible();
-    const orderAtlasCard = screen.getByRole("heading", { name: "Order Atlas" }).closest("article");
-    expect(orderAtlasCard).toBeTruthy();
-    expect(within(orderAtlasCard as HTMLElement).getByText("Sample")).toBeVisible();
-    expect(within(orderAtlasCard as HTMLElement).getByText("Daily")).toBeVisible();
-    expect(within(orderAtlasCard as HTMLElement).getByText("Pro Play")).toBeVisible();
-    expect(within(orderAtlasCard as HTMLElement).queryByText(/saved progress|saved stats|streaks|archive|challenge|custom filters|continuous/i)).not.toBeInTheDocument();
+    expect(overview.querySelectorAll(".upgrade-game-tile")).toHaveLength(3);
+    const mysteryMapTile = within(overview).getByRole("link", { name: /Mystery Map[\s\S]*Play Mystery Map/i });
+    const patternAtlasTile = within(overview).getByRole("link", { name: /Pattern Atlas[\s\S]*Play Pattern Atlas/i });
+    const orderAtlasTile = within(overview).getByRole("link", { name: /Order Atlas[\s\S]*Play Order Atlas/i });
+    expect(mysteryMapTile).toHaveAttribute("href", "/play/mystery-map");
+    expect(patternAtlasTile).toHaveAttribute("href", "/play/pattern-atlas");
+    expect(orderAtlasTile).toHaveAttribute("href", "/play/order-atlas");
+    expect(within(mysteryMapTile).getByText("Play Mystery Map")).toBeVisible();
+    expect(within(patternAtlasTile).getByText("Play Pattern Atlas")).toBeVisible();
+    expect(within(orderAtlasTile).getByText("Play Order Atlas")).toBeVisible();
+    expect(within(orderAtlasTile).getByText("Daily and Pro Play ordering rounds")).toBeVisible();
+    expect(within(orderAtlasTile).getByText("Order country cards in Sample, Free Daily, and repeatable Pro Play sets.")).toBeVisible();
+    expect(within(orderAtlasTile).queryByText(/saved progress|saved stats|streaks|archive|challenge|custom filters|continuous/i)).not.toBeInTheDocument();
+    expect(screen.queryByRole("heading", { name: "Free and Pro now cover more than one game." })).not.toBeInTheDocument();
+    expect(screen.queryByLabelText("Games included in Can You Geo Free and Pro")).not.toBeInTheDocument();
+    expect(screen.queryByText("Game library")).not.toBeInTheDocument();
     expect(screen.queryByText(/Daily and Pro modes coming next|intro-only|intro sample|No saved stats yet|Pro Practice|Practice Run/i)).not.toBeInTheDocument();
     expect(screen.queryByText("Full Practice Atlas")).not.toBeInTheDocument();
+    expect(screen.queryByText(/Try Pattern Atlas|Try Order Atlas|Choose mode/i)).not.toBeInTheDocument();
   });
 
   it("leads with active Pro copy for players who already have Pro", () => {
@@ -217,8 +200,10 @@ describe("UpgradeClient", () => {
     expect(styles).toContain(".upgrade-hero-action-panel .checkout-option-buttons .button");
     expect(styles).toContain(".upgrade-game-strip");
     expect(styles).toContain(".upgrade-game-tile");
+    expect(styles).toContain(".upgrade-game-tile-cta");
     expect(styles).toContain(".upgrade-game-preview");
     expect(styles).toContain(".upgrade-game-preview-image");
+    expect(styles).not.toContain(".upgrade-library-showcase");
     expect(styles).toContain(".pro-plan-card .billing-actions .checkout-option-buttons");
     expect(styles).toContain("justify-self: stretch");
     expect(styles).toContain("width: 100%");
