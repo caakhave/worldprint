@@ -423,6 +423,12 @@ describe("WorldprintClient UI structure", () => {
     expect(source).toContain("Play the challenge");
   });
 
+  it("keeps challenge comparison results padded like neighboring result cards", () => {
+    expect(source).toContain('className="challenge-comparison-card surface"');
+    expect(styles).toContain(".challenge-comparison-card");
+    expect(styles).toContain("padding: clamp(0.95rem, 2.4vw, 1.2rem);");
+  });
+
   it("marks reveal result text and stat cells with overflow-resistant hooks", () => {
     expect(source).toContain("correct-answer-line");
     expect(source).toContain('className="point-breakdown"');
