@@ -47,8 +47,13 @@ def response_has_noindex(headers: dict[str, str], html: str) -> bool:
 
 
 def robots_disallows_all(robots_txt: str) -> bool:
-    lower = robots_txt.lower()
-    return "user-agent: *" in lower and "disallow: /" in lower
+    lines = []
+    for raw_line in robots_txt.splitlines():
+        line = raw_line.split("#", 1)[0].strip().lower()
+        if line:
+            lines.append(line)
+
+    return "user-agent: *" in lines and "disallow: /" in lines
 
 
 def sitemap_has_public_routes(sitemap_xml: str) -> bool:
