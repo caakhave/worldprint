@@ -205,6 +205,9 @@ export function buildChallengeInviteEmail(input: {
     : "They sent you a spoiler-free Mystery Map challenge.";
   const solvedLine = challenger ? `${challenger.solvedCount}/${challenger.roundCount} maps solved · ${challenger.strip}` : "";
   const messageLines = input.message ? ["", "Their note:", input.message] : [];
+  const subject = challenger
+    ? `Can You Geo Mystery Map challenge: ${challenger.score.toLocaleString("en-US")} to beat`
+    : "Can You Geo Mystery Map challenge";
   const htmlScoreLine = challenger
     ? `They scored <strong>${escapeHtml(challenger.score.toLocaleString("en-US"))} out of ${escapeHtml(
         challenger.possible.toLocaleString("en-US")
@@ -225,15 +228,14 @@ export function buildChallengeInviteEmail(input: {
   return {
     from: input.config.fromEmail,
     to: [input.recipientEmail],
-    subject: "Can you beat this Can You Geo score?",
+    subject,
     text: [
       "A friend challenged you to Can You Geo? Mystery Map.",
       scoreLine,
       solvedLine,
-      ...messageLines,
-      "",
       "Play the same map set:",
       challengeUrl,
+      ...messageLines,
       "",
       "No answers, countries, indicators, or source labels are shown before you play.",
       "Challenge games do not affect today's official Daily score or streak.",
@@ -251,10 +253,12 @@ export function buildChallengeInviteEmail(input: {
       <p style="margin:0 0 10px;color:${EMAIL_COLORS.warm};font-family:Arial,sans-serif;font-size:17px;line-height:1.5;">${htmlScoreLine}</p>
       ${htmlSolvedLine}
       <p style="margin:0 0 22px;color:${EMAIL_COLORS.warm};font-family:Arial,sans-serif;font-size:16px;line-height:1.5;">Play the same spoiler-free map set and see if you can beat them.</p>
-      <a href="${escapeHtmlAttribute(challengeUrl)}" style="display:inline-block;border-radius:999px;background:${EMAIL_COLORS.lime};color:${EMAIL_COLORS.darkText};font-family:Arial,sans-serif;font-size:16px;font-weight:700;text-decoration:none;padding:13px 20px;">Play the challenge</a>
-      <p style="margin:16px 0 0;color:${EMAIL_COLORS.muted};font-family:Arial,sans-serif;font-size:13px;line-height:1.5;">Button not working? <a href="${escapeHtmlAttribute(challengeUrl)}" style="color:${EMAIL_COLORS.cyan};text-decoration:underline;">Open the challenge link.</a></p>
-      <p style="margin:22px 0 0;color:${EMAIL_COLORS.muted};font-family:Arial,sans-serif;font-size:14px;line-height:1.5;"><strong style="color:${EMAIL_COLORS.gold};">No spoilers:</strong> answers, countries, indicators, and source labels stay hidden before play. Challenge games do not affect today's official Daily score or streak.</p>
+      <div style="margin:0 0 22px;">
+        <a href="${escapeHtmlAttribute(challengeUrl)}" style="display:inline-block;border-radius:999px;background:${EMAIL_COLORS.lime};color:${EMAIL_COLORS.darkText};font-family:Arial,sans-serif;font-size:16px;font-weight:700;text-decoration:none;padding:13px 20px;">Play the challenge</a>
+        <p style="margin:14px 0 0;color:${EMAIL_COLORS.muted};font-family:Arial,sans-serif;font-size:13px;line-height:1.5;">Button not working? Copy this challenge link:<br><a href="${escapeHtmlAttribute(challengeUrl)}" style="color:${EMAIL_COLORS.cyan};text-decoration:underline;word-break:break-all;">${escapeHtml(challengeUrl)}</a></p>
+      </div>
       ${htmlMessage}
+      <p style="margin:22px 0 0;color:${EMAIL_COLORS.muted};font-family:Arial,sans-serif;font-size:14px;line-height:1.5;"><strong style="color:${EMAIL_COLORS.gold};">No spoilers:</strong> answers, countries, indicators, and source labels stay hidden before play. Challenge games do not affect today's official Daily score or streak.</p>
       <p style="margin:18px 0 0;color:${EMAIL_COLORS.muted};font-family:Arial,sans-serif;font-size:12px;line-height:1.5;">This one-time invite was sent by a signed-in Can You Geo player. You were not added to any marketing list.</p>
     </div>
   </body>

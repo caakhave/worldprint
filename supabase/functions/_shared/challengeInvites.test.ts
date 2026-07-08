@@ -133,24 +133,33 @@ describe("challenge invite helpers", () => {
     expect(request.url).toBe("https://api.resend.com/emails");
     expect(body.from).toBe("Can You Geo Challenges <challenge@mail.canyougeo.com>");
     expect(body.to).toEqual(["friend@example.com"]);
-    expect(body.subject).toBe("Can you beat this Can You Geo score?");
+    expect(body.subject).toBe("Can You Geo Mystery Map challenge: 2,400 to beat");
     expect(body.text).toEqual(expect.any(String));
     expect(body.html).toEqual(expect.any(String));
     expect(email.text).toContain("2,400 out of 3,000");
     expect(email.text).toContain("https://test.canyougeo.com/challenge/mystery-map/?c=");
     expect(email.html).toContain("A friend challenged you on Can You Geo.");
     expect(email.html).toContain("Play the challenge");
-    expect(email.html).toContain("Open the challenge link.");
     expect(email.html).toContain('href="https://test.canyougeo.com/challenge/mystery-map/?c=');
+    expect(email.html).toContain("Button not working? Copy this challenge link:");
     expect(email.html).toContain("same spoiler-free map set");
     expect(email.html).toContain("No spoilers");
     expect(email.html).toContain("#000411");
     expect(email.html).toContain("#03222D");
     expect(email.html).toContain("#0FD8DB");
     expect(email.html).toContain("#C2ED39");
-    expect(email.html.replace(/href="[^"]+"/g, "").replace(/<[^>]+>/g, " ")).not.toContain(
-      "https://test.canyougeo.com/challenge/mystery-map/?c="
-    );
+    const htmlCtaIndex = email.html.indexOf("Play the challenge");
+    const htmlFallbackIndex = email.html.indexOf("Button not working? Copy this challenge link:");
+    const htmlUrlIndex = email.html.indexOf("https://test.canyougeo.com/challenge/mystery-map/?c=", htmlFallbackIndex);
+    const htmlNoteIndex = email.html.indexOf("Their note");
+    expect(htmlCtaIndex).toBeGreaterThan(0);
+    expect(htmlFallbackIndex).toBeGreaterThan(htmlCtaIndex);
+    expect(htmlUrlIndex).toBeGreaterThan(htmlFallbackIndex);
+    expect(htmlUrlIndex).toBeLessThan(htmlNoteIndex);
+    const textUrlIndex = email.text.indexOf("https://test.canyougeo.com/challenge/mystery-map/?c=");
+    const textNoteIndex = email.text.indexOf("Their note:");
+    expect(textUrlIndex).toBeGreaterThan(0);
+    expect(textUrlIndex).toBeLessThan(textNoteIndex);
     expect(email.text).toContain("not added to any marketing list");
     expect(email.html).toContain("not added to any marketing list");
     expect(email.text).not.toMatch(/Brazil|Japan|World Bank|api\.worldbank|hidden indicator/i);
