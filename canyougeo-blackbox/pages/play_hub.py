@@ -11,7 +11,8 @@ class PlayHubPage(BasePage):
     path = "/play/"
 
     def expect_three_game_hub(self) -> None:
-        expect(self.page.get_by_role("heading", name=re.compile("Choose your geography game", re.I))).to_be_visible()
+        expect(self.page.get_by_role("heading", name=re.compile(r"^Choose a game\.?$", re.I))).to_be_visible()
+        expect(self.page.get_by_role("heading", name=re.compile("Pick the geography puzzle you want", re.I))).to_be_visible()
         for game in ("Mystery Map", "Pattern Atlas", "Order Atlas"):
             expect(self.page.get_by_text(game).first).to_be_visible()
 

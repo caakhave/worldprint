@@ -23,10 +23,14 @@ class MysteryMapPage(BasePage):
         analyst = self.page.get_by_label("Analyst")
         if analyst.count() > 0:
             analyst.check()
-        self.page.get_by_role("button", name=re.compile("Try the 5-map Sample Run|Play Sample Run|Try Sample Run", re.I)).click()
+        self.page.get_by_role(
+            "button",
+            name=re.compile(r"Play Mystery Map\s*Start sample game|Start sample game", re.I),
+        ).click()
         self.expect_first_run_intro_cta_cleanup()
         self.page.get_by_label(re.compile("First run intro", re.I)).get_by_role("button", name=re.compile("Start map 1", re.I)).click()
-        expect(self.page.get_by_role("heading", name=re.compile("What does this map measure", re.I))).to_be_visible()
+        expect(self.page.get_by_role("heading", name=re.compile("Use the map as your clue", re.I))).to_be_visible()
+        expect(self.page.get_by_role("heading", name=re.compile("What is this map showing", re.I))).to_be_visible()
 
     def expect_active_board(self) -> None:
         expect(self.page.get_by_test_id("mystery-map-board")).to_be_visible()

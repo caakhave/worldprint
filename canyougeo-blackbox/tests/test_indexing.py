@@ -6,6 +6,27 @@ from utils.assertions import fetch_route
 from utils.host_policy import policy_for_base_url, response_has_noindex, robots_disallows_all, sitemap_has_public_routes
 
 
+def test_robots_disallows_all_ignores_route_specific_private_paths():
+    robots = """
+    User-Agent: *
+    Allow: /
+    Disallow: /account/
+    Disallow: /sign-in/
+    Sitemap: https://canyougeo.com/sitemap.xml
+    """
+
+    assert not robots_disallows_all(robots)
+
+
+def test_robots_disallows_all_detects_exact_root_disallow():
+    robots = """
+    User-Agent: *
+    Disallow: / # private QA host
+    """
+
+    assert robots_disallows_all(robots)
+
+
 @pytest.mark.indexing
 @pytest.mark.smoke
 def test_host_indexing_policy(target_base_url: str):
