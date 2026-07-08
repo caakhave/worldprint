@@ -6458,6 +6458,7 @@ dd {
   align-items: end;
   margin: 1.2rem 0 0;
   border-color: rgb(215 168 75 / 0.34);
+  padding: clamp(0.95rem, 2.4vw, 1.2rem);
   background:
     radial-gradient(circle at 100% 0%, rgb(215 168 75 / 0.13), transparent 12rem),
     linear-gradient(135deg, rgb(104 183 170 / 0.08), transparent 60%),
