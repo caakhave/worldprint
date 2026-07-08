@@ -68,7 +68,7 @@ Cloudflare Pages serves the launch CSP from `public/_headers`. GTM/GA4 needs the
 
 - `script-src`: `https://www.googletagmanager.com`
 - `frame-src`: `https://www.googletagmanager.com` for the GTM noscript iframe
-- `connect-src`: `https://www.google-analytics.com` and `https://region1.google-analytics.com` for GA4 collection
+- `connect-src`: `https://www.google-analytics.com`, `https://region1.google-analytics.com`, and `https://www.google.com` for GA4 collection paths used by the GTM container
 - `img-src`: `https://www.google-analytics.com` and `https://www.googletagmanager.com` for beacon/image fallbacks
 
 Do not replace these with broad Google wildcards. The current static export still permits inline scripts/styles for Next hydration, but the GTM fix should not add any new `unsafe-inline` or `unsafe-eval` allowances. Validate after deploy by opening production in a browser console and confirming `gtm.js` loads without CSP errors.

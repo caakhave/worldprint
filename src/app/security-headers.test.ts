@@ -27,7 +27,8 @@ describe("static security headers", () => {
         "https://*.supabase.co",
         "wss://*.supabase.co",
         "https://www.google-analytics.com",
-        "https://region1.google-analytics.com"
+        "https://region1.google-analytics.com",
+        "https://www.google.com"
       ])
     );
     expect(directive("img-src")).toEqual(
