@@ -26,7 +26,7 @@ The app has the trusted billing boundary in code: browser UI can only request Su
 Static app and UI:
 
 - `/upgrade` renders pricing and enables checkout only for the configured environment billing mode.
-- `/account` shows membership state from the entitlement row and opens Customer Portal only for Stripe-backed Pro users when billing is enabled.
+- `/account` shows membership state from the entitlement row and opens Customer Portal only for Stripe-backed Pro users in environments where billing is configured.
 - `src/lib/billing/publicBillingConfig.ts` keeps `disabled`, unset, and invalid modes from enabling checkout.
 - `src/features/account/BillingActionsClient.tsx` reads the current Supabase session and invokes `stripe-checkout` or `stripe-portal` with `Authorization: Bearer <session token>`.
 - Browser code does not include Stripe secret keys or Supabase service-role keys.

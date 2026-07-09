@@ -18,10 +18,13 @@ describe("LegalPage", () => {
     expect(screen.getByRole("heading", { name: "Accessibility" })).toBeVisible();
     expect(screen.getByRole("heading", { name: "Support" })).toBeVisible();
     expect(screen.queryByText(/Live billing is not enabled until we explicitly launch paid checkout/i)).not.toBeInTheDocument();
+    expect(screen.getByText(/Pro is offered as monthly or yearly auto-renewing subscription access/i)).toBeVisible();
+    expect(screen.getByText(/You can manage or cancel a Stripe-backed Pro subscription from the account billing portal/i)).toBeVisible();
     expect(screen.getByText(/If you cancel a renewing Pro membership at the end of the current paid period/i)).toBeVisible();
     expect(screen.getByText(/They are not a public official leaderboard, competition, sweepstakes, or prize system/i)).toBeVisible();
     expect(screen.getByText(/Password credentials are handled by Supabase Auth/i)).toBeVisible();
-    expect(screen.getByText(/Billing and subscription state, when paid features are enabled/i)).toBeVisible();
+    expect(screen.getByText(/Billing and subscription state, such as Stripe customer ID/i)).toBeVisible();
+    expect(screen.getByText(/Challenge email ledger entries, including hashed recipient emails/i)).toBeVisible();
     expect(screen.getByText(/Mystery Map Custom Atlas, Pattern Atlas Pattern Runs/i)).toBeVisible();
     expect(screen.getByText(/the complete Mystery Map Past Games archive/i)).toBeVisible();
     expect(screen.getByRole("link", { name: "Terms" })).toHaveAttribute("href", "/terms");
@@ -38,7 +41,7 @@ describe("LegalPage", () => {
         "Marketing updates, such as product updates or new game announcements, are optional and are sent only when you opt in. Transactional messages needed for the service can still be sent even if marketing updates are off."
       )
     ).toBeVisible();
-    expect(screen.getAllByText("Effective date: June 30, 2026")).toHaveLength(4);
+    expect(screen.getAllByText("Effective date: July 9, 2026")).toHaveLength(4);
     const supportLinks = screen.getAllByRole("link", { name: SUPPORT_EMAIL });
     expect(supportLinks.length).toBeGreaterThanOrEqual(6);
     expect(supportLinks.some((link) => link.getAttribute("href") === CONTACT_LINKS.privacyLegalRequest.href)).toBe(true);

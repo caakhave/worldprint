@@ -3,7 +3,7 @@ import Link from "next/link";
 import { CONTACT_LINKS, SUPPORT_EMAIL } from "@/lib/contact";
 import { pageMetadata } from "@/lib/site/seo";
 
-const EFFECTIVE_DATE = "June 30, 2026";
+const EFFECTIVE_DATE = "July 9, 2026";
 
 export const metadata: Metadata = pageMetadata({
   title: "Terms, Privacy & Accessibility - Can You Geo?",
@@ -20,7 +20,7 @@ export function LegalContent() {
           Terms &amp; Privacy
         </h1>
         <p className="lead">
-          The practical rules for Can You Geo accounts, play, saved stats, billing readiness, privacy, accessibility, and support.
+          The practical rules for Can You Geo accounts, play, saved stats, paid Pro subscriptions, privacy, accessibility, and support.
         </p>
         <nav className="legal-quick-links" aria-label="Legal sections">
           <Link href="/terms">Terms</Link>
@@ -53,21 +53,23 @@ export function LegalContent() {
 
             <h3>Free and Pro Access</h3>
             <p>
-              Free accounts include Daily play in supported games, saved progress, streaks, and basic stats. Can You Geo? Pro is
-              intended to unlock expanded features such as Mystery Map Custom Atlas, Pattern Atlas Pattern Runs, the complete Mystery
-              Map Past Games archive, advanced stats, and future premium surfaces. Pro details may change before or after paid launch.
+              Free accounts include Daily play in supported games, saved progress, streaks, and basic stats where supported. Can You
+              Geo? Pro is a paid subscription that unlocks supported advanced features such as Mystery Map Custom Atlas, Pattern Atlas
+              Pattern Runs, repeatable Order Atlas Pro Play, the complete Mystery Map Past Games archive, and advanced stats.
             </p>
 
             <h3>Billing, Renewal, and Cancellation</h3>
             <p>
-              When paid Pro memberships are enabled, pricing, renewal interval, and material purchase terms will be shown before
-              checkout. Payment processing and billing management are handled by Stripe. Can You Geo does not store full payment card
-              numbers.
+              Pro is offered as monthly or yearly auto-renewing subscription access. Pricing, renewal interval, and material purchase
+              terms are shown before checkout. Payment processing, subscription renewal, and billing management are handled by Stripe.
+              Can You Geo does not store full payment card numbers.
             </p>
             <p>
-              If you cancel a renewing Pro membership at the end of the current paid period, Pro access generally remains active until
-              that period ends. Refunds, credits, taxes, payment failures, and billing disputes may be handled through Stripe and
-              support according to the checkout terms shown at purchase.
+              You can manage or cancel a Stripe-backed Pro subscription from the account billing portal. If you cancel a renewing Pro
+              membership at the end of the current paid period, Pro access generally remains active until that period ends. Refunds,
+              credits, taxes, payment failures, and billing disputes may be handled through Stripe and support according to the
+              checkout terms shown at purchase. If something looks wrong, contact support so we can review the account and billing
+              state.
             </p>
 
             <h3>Fair Play and Acceptable Use</h3>
@@ -143,8 +145,16 @@ export function LegalContent() {
               <li>Marketing preference information, such as opt-in status, opt-in time, opt-in source, and opt-out time.</li>
               <li>Gameplay information, such as scores, streaks, guesses, completed runs, challenge activity, and saved stats.</li>
               <li>
-                Billing and subscription state, when paid features are enabled, such as Stripe customer ID, subscription ID, price ID,
-                subscription status, renewal period, and cancellation-at-period-end status.
+                Billing and subscription state, such as Stripe customer ID, subscription ID, price ID, subscription status, renewal
+                period, and cancellation-at-period-end status.
+              </li>
+              <li>
+                Transactional email records and delivery metadata for Supabase Auth, Resend challenge emails, owner/admin billing
+                notifications, and Google Workspace support email.
+              </li>
+              <li>
+                Challenge email ledger entries, including hashed recipient emails, recipient domains, challenge-code hashes, delivery
+                status, message length, and send timing for rate limiting and abuse prevention.
               </li>
               <li>Support emails and related information you send to the support inbox.</li>
               <li>
@@ -160,7 +170,7 @@ export function LegalContent() {
             <h3>How We Use Information</h3>
             <p>
               We use information to operate the game, authenticate accounts, confirm email addresses, reset passwords, save stats and
-              streaks, prevent abuse, debug issues, improve the product, provide support, manage paid features if enabled, and send
+              streaks, prevent abuse, debug issues, improve the product, provide support, manage paid features, and send
               service-related account, security, support, and billing messages.
             </p>
             <p>

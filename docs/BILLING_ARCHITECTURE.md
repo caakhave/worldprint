@@ -124,7 +124,7 @@ STRIPE_PRO_PRICE_ID=price_<optional-legacy-fallback>
 NEXT_PUBLIC_SITE_URL=https://canyougeo.com
 ```
 
-Use Stripe test mode only until the live checklist is complete. Prefer a restricted API key with the minimum permissions needed by Checkout, Customer, Subscription, Portal, and webhook reconciliation calls when feasible.
+Use Stripe sandbox/test mode for staging and Stripe live mode only for production after the live checklist is complete. Prefer a restricted API key with the minimum permissions needed by Checkout, Customer, Subscription, Portal, and webhook reconciliation calls when feasible.
 
 ## Supabase Setup
 
@@ -184,7 +184,7 @@ Expected auth settings:
 
 ### Manual Test Card Checklist
 
-Use Stripe test mode only. Never use real card details in testing.
+Use Stripe test mode only for staging and QA. Never use real card details in testing.
 
 - Successful subscription Checkout: `4242 4242 4242 4242`, any future date, any three-digit CVC.
 - 3D Secure/authentication path if enabled in Dashboard: use Stripe's current 3D Secure test card from the Dashboard/docs and confirm Checkout returns cleanly.

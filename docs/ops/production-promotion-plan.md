@@ -305,7 +305,7 @@ Safe to promote after approval if:
 - The post-cherry-pick tree diff against approved `origin/staging` is understood.
 - All validation commands pass.
 - Production dashboard settings are verified manually.
-- Live billing remains disabled.
+- Production live billing is enabled only when the manually verified production dashboard/env posture is in place; do not copy staging sandbox billing values into production.
 
 Current launch blockers:
 

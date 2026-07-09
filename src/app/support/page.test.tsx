@@ -16,7 +16,8 @@ describe("SupportPage", () => {
     expect(screen.getByRole("link", { name: HELLO_EMAIL })).toHaveAttribute("href", CONTACT_LINKS.generalFeedback.href);
     expect(screen.getByRole("heading", { name: "Account help." })).toBeVisible();
     expect(screen.getByRole("heading", { name: "Plan and payment help." })).toBeVisible();
-    expect(screen.getByText(/use Account > Manage billing to update payment details or cancel through Stripe/i)).toBeVisible();
+    expect(screen.getByText(/Signed-in Pro members can use Account > Manage billing to update payment details or cancel through Stripe/i)).toBeVisible();
+    expect(screen.getByText(/never send passwords or full payment card numbers/i)).toBeVisible();
     expect(screen.getByRole("link", { name: "Email account help" })).toHaveAttribute("href", CONTACT_LINKS.accountHelp.href);
     expect(screen.getByRole("link", { name: "Email billing help" })).toHaveAttribute("href", CONTACT_LINKS.billingHelp.href);
     expect(screen.getByRole("link", { name: "Report a bug" })).toHaveAttribute("href", CONTACT_LINKS.bugReport.href);

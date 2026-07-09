@@ -41,7 +41,7 @@ Use this worksheet when checking Cloudflare, Supabase, Stripe, Google Workspace,
 
 ## Stripe
 
-- [ ] Billing remains disabled unless explicitly launching billing.
+- [ ] Production live billing posture is intentional for the current release.
 - [ ] Staging does not use live keys.
 - [ ] Production does not expose Stripe secrets in Cloudflare public env.
 - [ ] Products/prices exist in the intended Stripe mode.
@@ -84,6 +84,6 @@ Use this worksheet when checking Cloudflare, Supabase, Stripe, Google Workspace,
 | --- | --- | --- | --- | --- | --- |
 | Cloudflare Pages | Local operator | 2026-07-06 | Pass | No Cloudflare settings were changed. Apex/www remain intentionally blocked for pre-launch; no manual deployment was run. | No |
 | Supabase | Local operator | 2026-07-06 | Pass | Auth/account/project checks passed. No Supabase settings, secrets, billing, migrations, or functions were changed in this pass. | No |
-| Stripe | Local operator | 2026-07-06 | Pass | Billing remains deferred. Stripe checks are sandbox/test-mode only; webhook events are expected with `livemode=false`. No live payment flow was run. | No |
+| Stripe | Local operator | 2026-07-09 | Pass | Production live billing is enabled and tested. Staging uses Stripe sandbox/test-mode only; webhook events there are expected with `livemode=false`. | No |
 | Google Workspace / Email / DNS | Local operator | 2026-07-06 | Pass | Google Workspace/DNS/Resend checks passed; `mail.canyougeo.com` is verified. Live challenge-email testing remains opt-in and was not run. | No |
 | Local Operator | Local operator | 2026-07-06 | Pass | `CGY_RUN_EMAIL_LIVE` is unset. Black-box QA passed with `47 passed, 1 skipped`; the skipped test is live challenge email by design. | No |
