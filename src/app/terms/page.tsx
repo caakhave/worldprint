@@ -5,7 +5,7 @@ import { pageMetadata } from "@/lib/site/seo";
 export const metadata: Metadata = pageMetadata({
   title: "Terms of Use - Can You Geo?",
   description:
-    "Read the Can You Geo terms of use for accounts, Free and Pro access, billing readiness, fair play, stats, and source data.",
+    "Read the Can You Geo terms of use for accounts, Free and Pro access, paid subscriptions, fair play, stats, and source data.",
   path: "/terms/"
 });
 

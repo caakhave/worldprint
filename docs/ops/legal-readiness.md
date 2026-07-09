@@ -1,16 +1,18 @@
 # Legal, Privacy, And Support Readiness
 
-Last updated: 2026-06-30
+Last updated: 2026-07-09
 
-This document tracks the current Can You Geo public legal/support copy and the remaining review needed before a larger paid launch. It is operational guidance, not legal advice.
+This document tracks the current Can You Geo public legal/support copy and the remaining review needed before broader paid marketing or scale-up. It is operational guidance, not legal advice.
 
 ## Updated Public Surfaces
 
 - `/legal` now covers:
   - Free account behavior.
-  - Pro membership concept and current live billing posture.
+  - Pro paid subscription behavior and current live billing posture.
+  - Monthly/yearly automatic renewal.
   - Stripe Checkout and Customer Portal as the paid billing path.
   - Cancellation-at-period-end behavior, with Pro access generally remaining until the paid period ends.
+  - Refund/support posture using cautious support language.
   - Personal stats/scores only; no prize, sweepstakes, or official leaderboard guarantees.
   - User responsibilities, acceptable use, no abuse, no account attacks, and no payment fraud.
   - Service changes and no uninterrupted-availability guarantee.
@@ -19,17 +21,17 @@ This document tracks the current Can You Geo public legal/support copy and the r
   - Accessibility support and issue-reporting instructions.
 - `/support` now gives users a clear support destination and explains what to include for:
   - account/sign-in help
-  - billing help
+  - billing help, including using the account billing portal when signed in
   - bug and accessibility reports
   - data/source issues
   - Support ID use only when support asks for it
 - The footer now links to `/support` instead of opening a direct support email link.
 
-## Remaining Attorney Review Before Large Paid Launch
+## Remaining Attorney Review Before Broader Paid Launch
 
 - Replace practical launch language with attorney-reviewed Terms of Service and Privacy Policy.
 - Confirm business entity name, governing law, venue, arbitration/class-action language, refund terms, tax language, and cancellation language.
-- Confirm paid subscription disclosures satisfy card-network, Stripe, app-store-like platform, and applicable state/federal renewal requirements.
+- Confirm paid subscription renewal, cancellation, refund, tax, and customer-support disclosures satisfy card-network, Stripe, app-store-like platform, and applicable state/federal renewal requirements.
 - Confirm whether any pre-checkout, post-checkout, and renewal reminder language is required for the launch jurisdictions.
 - Confirm whether the game needs contest/sweepstakes language if public leaderboards, prizes, rankings, badges with value, or competitions are added later.
 - Confirm data retention periods and deletion workflow for Supabase Auth users, profiles, entitlements, runs, stats, Stripe records, Resend logs, Google Workspace support mail, and backups.
@@ -58,8 +60,8 @@ This document tracks the current Can You Geo public legal/support copy and the r
 
 ## Operational Notes
 
-- Live billing remains disabled until a separate launch decision.
-- Stripe test-mode QA copy should not imply live billing is available on production.
+- Production live billing is enabled. Do not reintroduce "coming soon," "billing disabled," or "planning" copy on public billing surfaces.
+- Staging uses Stripe sandbox/test values only. Staging copy should not imply live charges on `test.canyougeo.com`.
 - Owner/admin billing notifications are operational alerts, not marketing.
 - Support requests should go to `support@canyougeo.com`.
 - General friendly feedback may go to `hello@canyougeo.com`.

@@ -18,7 +18,7 @@ This is a launch-candidate evidence record for the current private QA pass on `h
 - Production, apex, and www were not touched.
 - Dashboard/service launch-gate checks: Cloudflare, Supabase, Stripe, Google Workspace / Email / DNS / Resend, and Local Operator checks passed.
 - Analytics/GTM: not rerun in this checklist update; keep as a separate production-host verification if needed.
-- Billing remains deferred. Stripe checkout/webhook validation is sandbox/test-mode only, with webhook events expected to have `livemode=false`.
+- Billing posture is environment-specific: production live billing is enabled and tested, while staging uses Stripe sandbox/test-mode only with webhook events expected to have `livemode=false`.
 - `CGY_RUN_EMAIL_LIVE` remains unset, and live challenge-email testing was not run.
 
 ## Automated QA Evidence
@@ -59,7 +59,7 @@ Known expected baseline:
 - Free auth: checked through black-box auth smoke when credentials are present.
 - Pro auth: checked through black-box auth smoke when credentials are present.
 - Mobile spot checks: checked for map visibility, country tapping, overflow, result navigation, and CTA width regressions.
-- Payment safety: no live payment flow was run.
+- Payment safety: staging QA uses Stripe sandbox/test-mode only; no live payment flow should be run from `test.canyougeo.com`.
 - Challenge email: no live challenge email was sent.
 
 ## Findings

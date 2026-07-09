@@ -64,7 +64,7 @@ describe("BillingActionsClient", () => {
     expect(screen.queryByRole("button", { name: /Join/i })).not.toBeInTheDocument();
   });
 
-  it("asks signed-out users to create an account before upgrading while checkout is disabled", () => {
+  it("asks signed-out users to create an account before upgrading when checkout config is unavailable", () => {
     render(<BillingActionsClient entitlement={FREE_ENTITLEMENT} context="upgrade" />);
 
     expect(screen.getByRole("link", { name: "Start Pro" })).toHaveAttribute("href", "/sign-up?next=%2Fupgrade");
@@ -74,7 +74,7 @@ describe("BillingActionsClient", () => {
     expect(screen.queryByRole("button", { name: "Checkout setup needed" })).not.toBeInTheDocument();
   });
 
-  it("keeps account plan comparison available while billing is disabled", () => {
+  it("keeps account plan comparison available when checkout config is unavailable", () => {
     accountMock.state.user = TEST_USER;
 
     render(<BillingActionsClient entitlement={FREE_ENTITLEMENT} context="account" />);

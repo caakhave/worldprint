@@ -40,8 +40,9 @@ export default function SupportPage() {
           <p className="eyebrow">Billing</p>
           <h2>Plan and payment help.</h2>
           <p>
-            When billing is enabled, use Account &gt; Manage billing to update payment details or cancel through Stripe. If a
-            membership is canceled at period end, Pro access should remain until that paid period ends.
+            Signed-in Pro members can use Account &gt; Manage billing to update payment details or cancel through Stripe. If a
+            membership is canceled at period end, Pro access should remain until that paid period ends. Email support for billing
+            issues, but never send passwords or full payment card numbers.
           </p>
           <a className="button-secondary" href={CONTACT_LINKS.billingHelp.href}>
             Email billing help

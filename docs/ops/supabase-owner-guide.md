@@ -1,6 +1,6 @@
 # Supabase Owner Guide
 
-Last reviewed: June 29, 2026
+Last reviewed: July 9, 2026
 
 This guide is for owner/operator checks in the Supabase dashboard. It avoids developer-only assumptions and focuses on what is safe to view, what should not be edited casually, and how the Can You Geo account model is represented in the database.
 
@@ -11,7 +11,7 @@ This guide is for owner/operator checks in the Supabase dashboard. It avoids dev
 - Free account data includes the account profile, saved runs, round results, and basic stats.
 - Missing entitlement rows must be treated as Free by the app.
 - Pro is controlled by trusted backend paths only. Browser code must never be able to grant Pro or update subscription state directly.
-- Billing is currently disabled in the public product. Stripe and subscription columns are present for future paid launch readiness.
+- Production live billing is enabled through Stripe Checkout and Stripe Customer Portal. Staging billing uses Stripe sandbox/test values only.
 
 ## Schema Source Of Truth
 
@@ -186,7 +186,7 @@ Stripe webhook replay/audit ledger.
 
 ## Trusted Billing Paths
 
-Billing remains disabled in public UI, but the trusted backend paths are:
+The trusted billing paths are:
 
 - `supabase/functions/stripe-checkout`: JWT-protected Edge Function that creates checkout sessions.
 - `supabase/functions/stripe-portal`: JWT-protected Edge Function that opens the billing portal.
