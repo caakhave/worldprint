@@ -29,6 +29,25 @@ Use this checklist when something sensitive may have been exposed or a productio
 6. If committed publicly, treat the secret as compromised even after history cleanup.
 7. Record the incident and follow-up in ops notes without the secret value.
 
+## GitHub Incident
+
+Common triggers: leaked secret in commit history, bad `main` push, compromised GitHub account/token, malicious dependency update, or unexpected workflow change.
+
+1. Identify the affected branch and commit SHA.
+2. If a secret was committed, rotate it in the owning dashboard before any cleanup. Assume public commit history exposure compromises the secret.
+3. For a bad `main` push, prefer a normal revert over force-push:
+
+   ```bash
+   git switch main
+   git pull --ff-only origin main
+   git revert --no-edit <bad-sha>
+   git push origin main
+   ```
+
+4. If a GitHub account or token is compromised, revoke suspicious sessions/tokens, rotate local deploy/service tokens that may have been accessible, and review recent pushes, branch changes, Actions/workflow changes, repository settings, and collaborators.
+5. If a dependency or workflow change looks malicious, review `package.json`, the lockfile, package scripts, and `.github/workflows` before running installs or CI. Revert the suspicious commit and rotate any secrets that may have been exposed to CI.
+6. Do not paste leaked token values into issues, docs, screenshots, or chat. Record only the secret category, affected system, timestamp, and remediation status.
+
 ## Supabase Incident
 
 Common triggers: unexpected auth behavior, RLS failure, suspicious data change, wrong project targeted, Edge Function writing to the wrong environment.
