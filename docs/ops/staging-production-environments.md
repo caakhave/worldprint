@@ -230,15 +230,17 @@ Apply migrations separately per Supabase project using the currently approved da
 Run staging RLS checks after migrations with the safe wrapper:
 
 ```bash
-pnpm ops:supabase:staging-rls -- --prompt
+pnpm ops:supabase:staging-rls -- --prompt-parts
 ```
 
-Prompt mode is recommended for humans because it reads the staging DB URL interactively with echo disabled where possible, never prints it, and unsets it on exit. Automation may still manually export `SUPABASE_STAGING_DB_URL` before running the command. Do not echo, paste, log, or commit that value. Use the direct Supabase database connection string, not the transaction-pooler URL. Pooler hosts and port `6543` may fail because Supabase CLI query execution can use prepared statements. The wrapper splits the validation SQL into discrete statements and runs each with `supabase db query --db-url`.
+Prompt-parts mode is recommended for humans because it asks for the staging project ref or direct host, reads the database password with echo disabled where possible, URL-encodes the password, never prints the constructed DB URL, and unsets it on exit. Automation may still manually export `SUPABASE_STAGING_DB_URL` before running the command, and full-URL prompt mode remains available with `--prompt`. Do not echo, paste, log, or commit that value. Use the direct Supabase database connection string, not the transaction-pooler URL. Pooler hosts and port `6543` may fail because Supabase CLI query execution can use prepared statements. The wrapper splits the validation SQL into discrete statements and runs each with `supabase db query --db-url`.
+
+If validation reaches the remote host but fails with `FATAL: password authentication failed`, the likely cause is the wrong DB password, a recently rotated password that has not propagated yet, or a pasted URL with an incorrectly encoded password. Wait a few minutes after resetting the password, avoid rapid retries, and prefer `--prompt-parts` so the runner performs URL encoding. If needed, use a long alphanumeric-only staging DB password to avoid URL-encoding edge cases.
 
 For broader staging owner review:
 
 ```bash
-pnpm ops:supabase:staging-audit -- --prompt
+pnpm ops:supabase:staging-audit -- --prompt-parts
 ```
 
 The audit command runs `docs/ops/supabase-validation.sql`; its raw output may include operational details and should not be committed. Production SQL validation requires a separately approved production process and must not use the staging runner.

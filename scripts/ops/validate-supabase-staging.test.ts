@@ -1,6 +1,6 @@
 import { chmodSync, mkdtempSync, readFileSync, rmSync, writeFileSync } from "node:fs";
 import { tmpdir } from "node:os";
-import { join } from "node:path";
+import { dirname, join } from "node:path";
 import { execFileSync, spawnSync } from "node:child_process";
 
 const runner = readFileSync("scripts/ops/validate-supabase-staging.sh", "utf8");
@@ -9,6 +9,7 @@ const environmentGuide = readFileSync("docs/ops/staging-production-environments.
 const packageJson = JSON.parse(readFileSync("package.json", "utf8")) as {
   scripts: Record<string, string>;
 };
+const nodeBinDir = dirname(process.execPath);
 
 function runAndCaptureFailure(env: NodeJS.ProcessEnv) {
   try {
@@ -46,10 +47,36 @@ exit 0
   return { countFile };
 }
 
+function writeSupabaseDbUrlAssertionStub(tmp: string, expectedFragment: string) {
+  const supabaseStub = join(tmp, "supabase");
+  const countFile = join(tmp, "count");
+  writeFileSync(
+    supabaseStub,
+    `#!/usr/bin/env bash
+count_file="${countFile}"
+case " $* " in
+  *"${expectedFragment}"*) ;;
+  *) exit 42 ;;
+esac
+count=0
+if [[ -f "$count_file" ]]; then
+  count="$(cat "$count_file")"
+fi
+printf "%s" "$((count + 1))" > "$count_file"
+exit 0
+`,
+    { mode: 0o700 }
+  );
+  chmodSync(supabaseStub, 0o700);
+
+  return { countFile };
+}
+
 describe("staging Supabase validation runner", () => {
   it("requires the explicit staging database URL and references the RLS validation SQL", () => {
     expect(runner).toContain("SUPABASE_STAGING_DB_URL");
     expect(runner).toContain("--prompt");
+    expect(runner).toContain("--prompt-parts");
     expect(runner).toContain("supabase/tests/rls_security_checks.sql");
     expect(runner).toContain("docs/ops/supabase-validation.sql");
   });
@@ -104,13 +131,39 @@ describe("staging Supabase validation runner", () => {
         env: {
           HOME: process.env.HOME ?? "",
           NODE_ENV: "test",
-          PATH: `${tmp}:/bin:/usr/bin`,
+          PATH: `${tmp}:${nodeBinDir}:/bin:/usr/bin`,
         },
         input: `${promptedUrl}\n`,
       });
 
       expect(result.status).toBe(0);
       expect(`${result.stdout}${result.stderr}`).not.toContain("dummy-secret");
+      expect(readFileSync(countFile, "utf8")).toBe("2");
+    } finally {
+      rmSync(tmp, { recursive: true, force: true });
+    }
+  });
+
+  it("constructs a direct URL from prompted parts with an encoded password", () => {
+    const tmp = mkdtempSync(join(tmpdir(), "cgy-supabase-parts-stub-"));
+    try {
+      const rawPassword = ["pa ss", "/word", ":with", "@chars", "?"].join("");
+      const expectedEncodedPassword = "pa%20ss%2Fword%3Awith%40chars%3F";
+      const { countFile } = writeSupabaseDbUrlAssertionStub(tmp, expectedEncodedPassword);
+      const result = spawnSync("scripts/ops/validate-supabase-staging.sh", ["--prompt-parts"], {
+        encoding: "utf8",
+        env: {
+          HOME: process.env.HOME ?? "",
+          NODE_ENV: "test",
+          PATH: `${tmp}:${nodeBinDir}:/bin:/usr/bin`,
+        },
+        input: `hsgpjtyysbremrokkoym\n${rawPassword}\n`,
+      });
+
+      expect(result.status).toBe(0);
+      expect(`${result.stdout}${result.stderr}`).not.toContain(rawPassword);
+      expect(`${result.stdout}${result.stderr}`).not.toContain(expectedEncodedPassword);
+      expect(`${result.stdout}${result.stderr}`).not.toContain("postgresql://postgres");
       expect(readFileSync(countFile, "utf8")).toBe("2");
     } finally {
       rmSync(tmp, { recursive: true, force: true });
@@ -164,9 +217,11 @@ describe("staging Supabase validation runner", () => {
   it("documents direct connection preference and transaction pooler caveats", () => {
     expect(ownerGuide).toContain("direct Supabase database connection string");
     expect(ownerGuide).toContain("Transaction-pooler");
-    expect(ownerGuide).toContain("pnpm ops:supabase:staging-rls -- --prompt");
+    expect(ownerGuide).toContain("pnpm ops:supabase:staging-rls -- --prompt-parts");
+    expect(ownerGuide).toContain("FATAL: password authentication failed");
     expect(environmentGuide).toContain("direct Supabase database connection string");
     expect(environmentGuide).toContain("port `6543`");
-    expect(environmentGuide).toContain("pnpm ops:supabase:staging-rls -- --prompt");
+    expect(environmentGuide).toContain("pnpm ops:supabase:staging-rls -- --prompt-parts");
+    expect(environmentGuide).toContain("FATAL: password authentication failed");
   });
 });
