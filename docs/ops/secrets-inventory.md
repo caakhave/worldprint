@@ -32,7 +32,7 @@ This document lists secret and configuration names by category. It must not cont
 | `SUPABASE_ANON_KEY` | Public-ish but sensitive to environment | Edge Function auth verification | Must match the target project. |
 | `SUPABASE_SERVICE_ROLE_KEY` | Yes | Service-role writes from Edge Functions | Never expose to browser code. |
 | `SUPABASE_ACCESS_TOKEN` | Yes | Supabase CLI deploy/admin operations | Keep local and gitignored. |
-| `SUPABASE_STAGING_DB_URL` | Yes | Staging SQL validation runner | Prefer parts prompt mode for human validation: `pnpm ops:supabase:staging-rls -- --prompt-parts`. Export manually only for automation. Prefer the direct connection string over transaction-pooler URLs. Do not print, paste, log, or commit. |
+| `SUPABASE_STAGING_DB_URL` | Yes | Staging SQL validation runner | Prefer project-ref password prompt mode for human validation: `scripts/ops/validate-supabase-staging.sh --project-ref hsgpjtyysbremrokkoym --prompt-password`. Export manually only for automation. Prefer the direct connection string over transaction-pooler URLs. Do not print, paste, log, or commit. |
 | Production DB URL/password | Yes | Migrations and direct SQL validation | Use explicit production value only for approved production operations. |
 | Staging DB URL/password | Yes | Staging migrations and SQL validation | Use explicit staging value only for staging operations. |
 

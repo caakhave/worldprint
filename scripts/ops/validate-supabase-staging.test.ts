@@ -47,17 +47,20 @@ exit 0
   return { countFile };
 }
 
-function writeSupabaseDbUrlAssertionStub(tmp: string, expectedFragment: string) {
+function writeSupabaseDbUrlAssertionStub(tmp: string, expectedFragments: string[]) {
   const supabaseStub = join(tmp, "supabase");
   const countFile = join(tmp, "count");
+  const fragmentChecks = expectedFragments
+    .map((fragment) => `case " $* " in
+  *"${fragment}"*) ;;
+  *) exit 42 ;;
+esac`)
+    .join("\n");
   writeFileSync(
     supabaseStub,
     `#!/usr/bin/env bash
 count_file="${countFile}"
-case " $* " in
-  *"${expectedFragment}"*) ;;
-  *) exit 42 ;;
-esac
+${fragmentChecks}
 count=0
 if [[ -f "$count_file" ]]; then
   count="$(cat "$count_file")"
@@ -77,13 +80,16 @@ describe("staging Supabase validation runner", () => {
     expect(runner).toContain("SUPABASE_STAGING_DB_URL");
     expect(runner).toContain("--prompt");
     expect(runner).toContain("--prompt-parts");
+    expect(runner).toContain("--prompt-password");
+    expect(runner).toContain("--project-ref");
+    expect(runner).toContain("--host");
     expect(runner).toContain("supabase/tests/rls_security_checks.sql");
     expect(runner).toContain("docs/ops/supabase-validation.sql");
   });
 
-  it("does not rely on linked project state or unsupported project-ref query flags", () => {
+  it("does not rely on linked project state or Supabase CLI project-ref query flags", () => {
     expect(runner).not.toContain("--linked");
-    expect(runner).not.toContain("--project-ref");
+    expect(runner).not.toContain("supabase db query --project-ref");
     expect(runner).toContain("--db-url");
     expect(runner).not.toContain('--file "$sql_file"');
     expect(runner).toContain("run_sql_file_statements");
@@ -149,7 +155,10 @@ describe("staging Supabase validation runner", () => {
     try {
       const rawPassword = ["pa ss", "/word", ":with", "@chars", "?"].join("");
       const expectedEncodedPassword = "pa%20ss%2Fword%3Awith%40chars%3F";
-      const { countFile } = writeSupabaseDbUrlAssertionStub(tmp, expectedEncodedPassword);
+      const { countFile } = writeSupabaseDbUrlAssertionStub(tmp, [
+        expectedEncodedPassword,
+        "db.hsgpjtyysbremrokkoym.supabase.co",
+      ]);
       const result = spawnSync("scripts/ops/validate-supabase-staging.sh", ["--prompt-parts"], {
         encoding: "utf8",
         env: {
@@ -159,6 +168,72 @@ describe("staging Supabase validation runner", () => {
         },
         input: `hsgpjtyysbremrokkoym\n${rawPassword}\n`,
       });
+
+      expect(result.status).toBe(0);
+      expect(`${result.stdout}${result.stderr}`).not.toContain(rawPassword);
+      expect(`${result.stdout}${result.stderr}`).not.toContain(expectedEncodedPassword);
+      expect(`${result.stdout}${result.stderr}`).not.toContain("postgresql://postgres");
+      expect(readFileSync(countFile, "utf8")).toBe("2");
+    } finally {
+      rmSync(tmp, { recursive: true, force: true });
+    }
+  });
+
+  it("constructs a direct URL from an explicit project ref and prompted password", () => {
+    const tmp = mkdtempSync(join(tmpdir(), "cgy-supabase-ref-stub-"));
+    try {
+      const rawPassword = ["ref pass", "/secret", "@chars"].join("");
+      const expectedEncodedPassword = "ref%20pass%2Fsecret%40chars";
+      const { countFile } = writeSupabaseDbUrlAssertionStub(tmp, [
+        expectedEncodedPassword,
+        "db.hsgpjtyysbremrokkoym.supabase.co",
+      ]);
+      const result = spawnSync(
+        "scripts/ops/validate-supabase-staging.sh",
+        ["--project-ref", "hsgpjtyysbremrokkoym", "--prompt-password"],
+        {
+          encoding: "utf8",
+          env: {
+            HOME: process.env.HOME ?? "",
+            NODE_ENV: "test",
+            PATH: `${tmp}:${nodeBinDir}:/bin:/usr/bin`,
+          },
+          input: `${rawPassword}\n`,
+        }
+      );
+
+      expect(result.status).toBe(0);
+      expect(`${result.stdout}${result.stderr}`).not.toContain(rawPassword);
+      expect(`${result.stdout}${result.stderr}`).not.toContain(expectedEncodedPassword);
+      expect(`${result.stdout}${result.stderr}`).not.toContain("postgresql://postgres");
+      expect(readFileSync(countFile, "utf8")).toBe("2");
+    } finally {
+      rmSync(tmp, { recursive: true, force: true });
+    }
+  });
+
+  it("constructs a direct URL from an explicit host and tolerates a separator argument", () => {
+    const tmp = mkdtempSync(join(tmpdir(), "cgy-supabase-host-stub-"));
+    try {
+      const rawPassword = ["host pass", ":secret"].join("");
+      const expectedEncodedPassword = "host%20pass%3Asecret";
+      const { countFile } = writeSupabaseDbUrlAssertionStub(tmp, [
+        expectedEncodedPassword,
+        "db.hsgpjtyysbremrokkoym.supabase.co",
+      ]);
+      const result = spawnSync(
+        "scripts/ops/validate-supabase-staging.sh",
+        ["--", "--host", "db.hsgpjtyysbremrokkoym.supabase.co", "--prompt-password"],
+        {
+          encoding: "utf8",
+          env: {
+            HOME: process.env.HOME ?? "",
+            NODE_ENV: "test",
+            PATH: `${tmp}:${nodeBinDir}:/bin:/usr/bin`,
+          },
+          input: `${rawPassword}\n`,
+        }
+      );
 
       expect(result.status).toBe(0);
       expect(`${result.stdout}${result.stderr}`).not.toContain(rawPassword);
@@ -217,11 +292,15 @@ describe("staging Supabase validation runner", () => {
   it("documents direct connection preference and transaction pooler caveats", () => {
     expect(ownerGuide).toContain("direct Supabase database connection string");
     expect(ownerGuide).toContain("Transaction-pooler");
-    expect(ownerGuide).toContain("pnpm ops:supabase:staging-rls -- --prompt-parts");
+    expect(ownerGuide).toContain(
+      "scripts/ops/validate-supabase-staging.sh --project-ref hsgpjtyysbremrokkoym --prompt-password"
+    );
     expect(ownerGuide).toContain("FATAL: password authentication failed");
     expect(environmentGuide).toContain("direct Supabase database connection string");
     expect(environmentGuide).toContain("port `6543`");
-    expect(environmentGuide).toContain("pnpm ops:supabase:staging-rls -- --prompt-parts");
+    expect(environmentGuide).toContain(
+      "scripts/ops/validate-supabase-staging.sh --project-ref hsgpjtyysbremrokkoym --prompt-password"
+    );
     expect(environmentGuide).toContain("FATAL: password authentication failed");
   });
 });

@@ -230,17 +230,17 @@ Apply migrations separately per Supabase project using the currently approved da
 Run staging RLS checks after migrations with the safe wrapper:
 
 ```bash
-pnpm ops:supabase:staging-rls -- --prompt-parts
+scripts/ops/validate-supabase-staging.sh --project-ref hsgpjtyysbremrokkoym --prompt-password
 ```
 
-Prompt-parts mode is recommended for humans because it asks for the staging project ref or direct host, reads the database password with echo disabled where possible, URL-encodes the password, never prints the constructed DB URL, and unsets it on exit. Automation may still manually export `SUPABASE_STAGING_DB_URL` before running the command, and full-URL prompt mode remains available with `--prompt`. Do not echo, paste, log, or commit that value. Use the direct Supabase database connection string, not the transaction-pooler URL. Pooler hosts and port `6543` may fail because Supabase CLI query execution can use prepared statements. The wrapper splits the validation SQL into discrete statements and runs each with `supabase db query --db-url`.
+This direct script form is recommended for humans because the staging project ref is non-secret and the runner prompts only for the database password with echo disabled where possible. It URL-encodes the password, never prints the constructed DB URL, and unsets it on exit. Automation may still manually export `SUPABASE_STAGING_DB_URL` before running the command, and legacy full-URL prompt modes remain available with `--prompt` or `--prompt-parts`. Do not paste full DB URLs into shell command text, and do not echo, log, or commit secrets. Use the direct Supabase database connection string, not the transaction-pooler URL. Pooler hosts and port `6543` may fail because Supabase CLI query execution can use prepared statements. The wrapper splits the validation SQL into discrete statements and runs each with `supabase db query --db-url`.
 
-If validation reaches the remote host but fails with `FATAL: password authentication failed`, the likely cause is the wrong DB password, a recently rotated password that has not propagated yet, or a pasted URL with an incorrectly encoded password. Wait a few minutes after resetting the password, avoid rapid retries, and prefer `--prompt-parts` so the runner performs URL encoding. If needed, use a long alphanumeric-only staging DB password to avoid URL-encoding edge cases.
+If validation reaches the remote host but fails with `FATAL: password authentication failed`, the likely cause is the wrong DB password, a recently rotated password that has not propagated yet, or a pasted URL with an incorrectly encoded password. Wait a few minutes after resetting the password, avoid rapid retries, and prefer `--project-ref hsgpjtyysbremrokkoym --prompt-password` so the runner performs URL encoding. If needed, use a long alphanumeric-only staging DB password to avoid URL-encoding edge cases.
 
 For broader staging owner review:
 
 ```bash
-pnpm ops:supabase:staging-audit -- --prompt-parts
+scripts/ops/validate-supabase-staging.sh --project-ref hsgpjtyysbremrokkoym --prompt-password --operator-audit
 ```
 
 The audit command runs `docs/ops/supabase-validation.sql`; its raw output may include operational details and should not be committed. Production SQL validation requires a separately approved production process and must not use the staging runner.
