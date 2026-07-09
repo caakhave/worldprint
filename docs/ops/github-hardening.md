@@ -20,7 +20,7 @@ This audit records the current GitHub repository posture and the practical harde
 
 Tracked repo files currently show:
 
-- No `.github/workflows` directory and no custom GitHub Actions workflow files.
+- A lightweight `.github/workflows/ci.yml` GitHub Actions workflow.
 - Package validation scripts:
   - `pnpm lint`
   - `pnpm typecheck`
@@ -30,7 +30,7 @@ Tracked repo files currently show:
   - `pnpm test:e2e`
   - `pnpm qa:blackbox:prod-smoke`
   - staging black-box commands such as `pnpm qa:blackbox:test`
-- Because no custom CI workflows exist, there are no reliable repository-native quality check names to require yet.
+- Required status checks remain deferred until the new workflow has produced stable, successful check names on normal pushes and pull requests.
 
 ## Read-Only GitHub API Findings
 
@@ -57,7 +57,7 @@ Observed after manual GitHub hardening changes:
   - returned `Branch not protected`, which is expected because the current protection is implemented with repository rulesets rather than classic branch protection.
 - GitHub Actions workflows API:
   - returned one GitHub-managed `Dependency Graph` workflow.
-  - no custom `.github/workflows` files are tracked in the repo.
+  - no custom `.github/workflows` files were tracked before this CI addition.
 - Security and analysis status:
   - Dependabot alerts: enabled. The vulnerability-alerts endpoint returned `204 No Content`.
   - Dependabot security updates: enabled.
@@ -83,13 +83,15 @@ Practical solo-operator target for `main`:
 1. Keep the active `Protect main` ruleset.
 2. Keep force pushes blocked via the `non_fast_forward` rule.
 3. Keep branch deletion blocked via the `deletion` rule.
-4. Required status checks are intentionally deferred until lightweight CI exists.
+4. Required status checks are intentionally deferred until the lightweight CI workflow has run successfully and check names are stable.
 5. Require a pull request before merge once the workflow is comfortable.
 6. Require conversation resolution on PRs if PR-based promotion becomes routine.
 7. Allow admin bypass only for documented production incident recovery if bypass is ever added.
-8. After CI is added, require either:
-   - a single stable `quality` check, or
-   - stable checks named `lint`, `typecheck`, `test`, and `build`.
+8. After the CI workflow proves stable, require:
+   - `CI / test`
+   - `CI / lint`
+   - `CI / typecheck`
+   - `CI / build`
 9. Keep black-box production smoke manual or optional. It depends on the live site and should not block emergency doc/security promotions unless intentionally designed for that workflow.
 
 Avoid requiring Cloudflare Pages deployment status until the exact check name is confirmed and consistently appears on main pushes.
@@ -102,23 +104,31 @@ Practical target for `staging`:
 2. Keep force pushes blocked via the `non_fast_forward` rule.
 3. Keep branch deletion blocked via the `deletion` rule.
 4. Do not require PRs initially if the current workflow depends on direct staging commits.
-5. Required status checks are intentionally deferred until lightweight CI exists.
+5. Required status checks are intentionally deferred until the lightweight CI workflow has run successfully and check names are stable.
 6. Consider requiring the same future `quality` check after the normal staging workflow has adjusted.
 
 This keeps staging fast while preventing accidental destructive branch operations.
 
-## Recommended CI
+## Current CI
 
-No workflow change is included in this audit. If CI is added later, start with a small workflow:
+The repository now includes `.github/workflows/ci.yml`, a lightweight GitHub Actions workflow designed to create stable required-check candidates without needing secrets or live services.
 
-- Trigger on pull requests to `main` and `staging`.
-- Trigger on pushes to `main` and `staging`.
-- Install with `pnpm install --frozen-lockfile`.
-- Run:
-  - `pnpm lint`
-  - `pnpm typecheck`
-  - `pnpm test`
-  - `pnpm build`
+- Triggers:
+  - pull requests targeting `main`
+  - pull requests targeting `staging`
+  - pushes to `main`
+  - pushes to `staging`
+- Runtime:
+  - Node 22
+  - `pnpm@11.0.9`
+  - `pnpm install --frozen-lockfile`
+- Jobs/check candidates:
+  - `CI / test` runs `pnpm test`
+  - `CI / lint` runs `pnpm lint`
+  - `CI / typecheck` runs `pnpm typecheck`
+  - `CI / build` runs `pnpm build`
+
+Required checks remain intentionally deferred until these check names have been observed as stable and green in GitHub.
 
 Optional/manual jobs:
 
@@ -201,7 +211,7 @@ Malicious dependency or workflow change:
 
 Highest-value next GitHub hardening actions:
 
-1. Add lightweight CI for `lint`, `typecheck`, `test`, and `build`.
+1. Watch the new `CI / test`, `CI / lint`, `CI / typecheck`, and `CI / build` checks on staging and main pushes.
 2. Confirm Cloudflare Pages status check names after the next production deploy.
 3. Require status checks on `main` only after CI check names are stable.
 4. Decide whether to require PRs for `main` after the direct staging-to-main promotion workflow settles.

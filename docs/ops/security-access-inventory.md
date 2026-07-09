@@ -58,6 +58,7 @@ The following must never be exposed in browser code, committed files, screenshot
 - Edge Function deploy rules are documented as explicit project-ref only.
 - GitHub hardening posture is documented in `docs/ops/github-hardening.md`. Current read-only verification shows active rulesets protecting `main` and `staging` from deletion and non-fast-forward updates.
 - GitHub secret scanning, push protection, Dependabot alerts, and Dependabot security updates are enabled.
+- Lightweight GitHub Actions CI now exists for `pnpm test`, `pnpm lint`, `pnpm typecheck`, and `pnpm build` on pushes and pull requests for `main` and `staging`.
 - Supabase function JWT posture is explicit in `supabase/config.toml`:
   - `send-challenge-email`, `stripe-checkout`, and `stripe-portal` require JWT.
   - `stripe-webhook` disables JWT and verifies Stripe signatures internally.
@@ -72,7 +73,7 @@ The following must never be exposed in browser code, committed files, screenshot
 ### WARN
 
 - Exact dashboard admin lists and MFA status are not visible from the repo and need manual verification.
-- GitHub protection is implemented through repository rulesets rather than classic branch protection. Required status checks are intentionally deferred because no custom GitHub Actions CI workflow exists yet.
+- GitHub protection is implemented through repository rulesets rather than classic branch protection. Required status checks are intentionally deferred until the new CI check names are observed as stable and green.
 - GitHub non-provider secret scanning patterns and secret validity checks remain disabled as optional follow-up settings.
 - `supabase/.temp` is intentionally ignored but has been linked to production in the past; Supabase CLI commands must keep using explicit environment targeting. Edge Function deploys use `--project-ref`; staging SQL validation uses the safe `--db-url` runner.
 - Staging Supabase RLS/security validation execution is pending as of July 9, 2026. The safe runner reached the staging database host, but Postgres returned `FATAL: password authentication failed` before SQL validation could run. This produced no RLS/security finding. Verify the staging project ref and `postgres` database password in Supabase Dashboard, wait after password rotation before retrying, avoid rapid retries, or run the read-only validation SQL from the staging Supabase SQL Editor.
@@ -92,7 +93,7 @@ The following must never be exposed in browser code, committed files, screenshot
 ### P1
 
 - Manually verify MFA/2FA and admin membership for GitHub, Cloudflare, Supabase, Stripe, Resend, Google Workspace, GTM, GA4, Search Console, and registrar/DNS.
-- Add lightweight GitHub Actions CI for `lint`, `typecheck`, `test`, and `build`, then require stable checks on `main` when the workflow is proven reliable.
+- Observe the lightweight GitHub Actions checks (`CI / test`, `CI / lint`, `CI / typecheck`, `CI / build`), then require stable checks on `main` when the workflow is proven reliable.
 - Keep the GitHub rulesets, secret scanning, push protection, Dependabot alerts, and Dependabot security updates enabled. Decide whether to enable non-provider pattern scanning and validity checks.
 - Keep the Cloudflare Access service-token rotation reminder and rotate before expiry.
 - Confirm Stripe production keys are live-only, Stripe sandbox keys are staging-only, and webhook endpoints point to the matching Supabase project.
