@@ -16,7 +16,7 @@ This inventory maps the operational systems that matter for Can You Geo. It inte
 
 | System | Purpose | Known Owner/Admin | Known Access Level | 2FA/MFA Status | Secrets / Sensitive Items | Rotation / Review Cadence |
 | --- | --- | --- | --- | --- | --- | --- |
-| GitHub repository | Source, branches, pull/push, CI if enabled | Owner/operator, exact admins not documented in repo | Unknown from tracked files | Manual verification needed | Git credentials, repository write access | Review collaborators and branch protection before major launches, then quarterly. |
+| GitHub repository | Source, branches, pull/push, CI if enabled | `caakhave` visible as direct admin via read-only API | Admin for visible direct collaborator | GitHub account MFA/passkey manual verification needed | Git credentials, repository write access, GitHub tokens, GitHub Apps | Current audit: `docs/ops/github-hardening.md`. Review collaborators, branch protection, secret scanning, and Dependabot quarterly. |
 | Cloudflare Pages | Frontend deploys, domains, headers, environment variables | Owner/operator, exact admins not documented in repo | Unknown from tracked files | Manual verification needed | Cloudflare account access, Pages env vars, Cloudflare Access service tokens | Review access quarterly. Rotate service token before 2027-07-09 08:39 AM. |
 | Cloudflare DNS / domain routing | Apex/www/test routing and DNS | Owner/operator, exact admins not documented in repo | Unknown from tracked files | Manual verification needed | Registrar/Cloudflare admin credentials | Review before DNS changes and quarterly. |
 | Cloudflare Access | Protects `test.canyougeo.com` | Owner/operator | Service token support documented for black-box QA | Manual verification needed | `CGY_CF_ACCESS_CLIENT_ID`, `CGY_CF_ACCESS_CLIENT_SECRET` | Rotation reminder recorded for 2027-06-09 09:00 AM. |
@@ -56,6 +56,7 @@ The following must never be exposed in browser code, committed files, screenshot
 
 - Staging and production Supabase projects are separated.
 - Edge Function deploy rules are documented as explicit project-ref only.
+- GitHub hardening posture is documented in `docs/ops/github-hardening.md`, including the current unprotected branch state and recommended practical branch protection.
 - Supabase function JWT posture is explicit in `supabase/config.toml`:
   - `send-challenge-email`, `stripe-checkout`, and `stripe-portal` require JWT.
   - `stripe-webhook` disables JWT and verifies Stripe signatures internally.
@@ -70,6 +71,8 @@ The following must never be exposed in browser code, committed files, screenshot
 ### WARN
 
 - Exact dashboard admin lists and MFA status are not visible from the repo and need manual verification.
+- GitHub `main` and `staging` currently have no classic branch protection or repository rulesets. No GitHub Actions workflows exist yet, so there are no stable required-check names to enforce.
+- GitHub security features reported disabled via read-only API: secret scanning, push protection, non-provider pattern scanning, validity checks, Dependabot alerts, and Dependabot security updates.
 - `supabase/.temp` is intentionally ignored but has been linked to production in the past; Supabase CLI commands must keep using explicit environment targeting. Edge Function deploys use `--project-ref`; staging SQL validation uses the safe `--db-url` runner.
 - Staging Supabase RLS/security validation execution is pending as of July 9, 2026. The safe runner reached the staging database host, but Postgres returned `FATAL: password authentication failed` before SQL validation could run. This produced no RLS/security finding. Verify the staging project ref and `postgres` database password in Supabase Dashboard, wait after password rotation before retrying, avoid rapid retries, or run the read-only validation SQL from the staging Supabase SQL Editor.
 - Client-submitted game stats are protected by user-scoped RLS, but they are not suitable for prize, sweepstakes, or official competitive guarantees.
@@ -88,7 +91,7 @@ The following must never be exposed in browser code, committed files, screenshot
 ### P1
 
 - Manually verify MFA/2FA and admin membership for GitHub, Cloudflare, Supabase, Stripe, Resend, Google Workspace, GTM, GA4, Search Console, and registrar/DNS.
-- Confirm GitHub branch protection, required checks, secret scanning, and push protection for `main`.
+- Apply the practical GitHub hardening recommendations in `docs/ops/github-hardening.md`: block force pushes/deletion on `main` and `staging`, enable secret scanning and push protection, enable Dependabot alerts, and add lightweight CI before requiring status checks.
 - Keep the Cloudflare Access service-token rotation reminder and rotate before expiry.
 - Confirm Stripe production keys are live-only, Stripe sandbox keys are staging-only, and webhook endpoints point to the matching Supabase project.
 - Decide whether Resend should use separate staging and production API keys rather than one shared key.
