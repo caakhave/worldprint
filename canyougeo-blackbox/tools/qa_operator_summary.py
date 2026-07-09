@@ -56,6 +56,8 @@ def main() -> int:
     print_command("CGY_TARGET=test pytest -m smoke --html=reports/smoke.html --self-contained-html")
     print_command("CGY_TARGET=test pytest -m mobile --html=reports/mobile.html --self-contained-html")
     print_command("CGY_TARGET=test pytest -m auth --html=reports/auth.html --self-contained-html")
+    print_command("CGY_TARGET=apex pytest --html=reports/apex.html --self-contained-html")
+    print_command("CGY_TARGET=www pytest --html=reports/www.html --self-contained-html")
     print_command("python tools/export_suite.py")
 
     print_section("Reports")
@@ -70,7 +72,9 @@ def main() -> int:
     print("  ../docs/qa/STAGING_LAUNCH_CHECKLIST.md")
 
     print_section("Safety Reminders")
-    print("  Put optional auth credentials in canyougeo-blackbox/.env and never commit them.")
+    print("  Put optional auth credentials in canyougeo-blackbox/.env or .env.local and never commit them.")
+    print("  If test.canyougeo.com is Cloudflare Access-protected, add CGY_CF_ACCESS_CLIENT_ID and")
+    print("  CGY_CF_ACCESS_CLIENT_SECRET locally; those headers are sent only to test.canyougeo.com.")
     print("  Live challenge email is disabled by default.")
     print("  Do not set CGY_RUN_EMAIL_LIVE=1 during normal staging QA.")
     print("  Do not run live payments from the black-box suite.")
