@@ -2,7 +2,7 @@
 
 Last updated: 2026-06-27 America/Mexico_City.
 
-This plan keeps Can You Geo? static-export compatible while allowing Stripe Pro billing to be tested safely in Stripe test mode. It does not turn on live payments.
+This plan keeps Can You Geo? static-export compatible while allowing Stripe Pro billing through trusted Supabase Edge Functions. Current environment-specific setup lives in `docs/ops/staging-production-environments.md`.
 
 ## Decision
 
@@ -36,7 +36,7 @@ Manual Supabase SQL remains useful for local QA and trusted beta testing. It mus
 
 1. User signs in with Supabase email/password auth.
 2. Static `/upgrade` page renders monthly/yearly Pro actions only when public Supabase env exists and
-   `NEXT_PUBLIC_BILLING_MODE=test`.
+   `NEXT_PUBLIC_BILLING_MODE` is `test` for staging sandbox QA or `live` for production live billing.
 3. Browser invokes `stripe-checkout` through `client.functions.invoke`.
 4. Function validates:
    - Supabase Edge Function env is present.
@@ -100,14 +100,14 @@ Names only; set values in Cloudflare, not in source:
 NEXT_PUBLIC_SITE_URL=https://canyougeo.com
 NEXT_PUBLIC_SUPABASE_URL=https://<project-ref>.supabase.co
 NEXT_PUBLIC_SUPABASE_ANON_KEY=<anon-key>
-NEXT_PUBLIC_BILLING_MODE=disabled
+NEXT_PUBLIC_BILLING_MODE=live
 ```
 
 `NEXT_PUBLIC_SUPABASE_URL` must be the project root URL only. For the current project, use
 `https://jquebthneczqdxagagof.supabase.co`, not `https://jquebthneczqdxagagof.supabase.co/rest/v1` or
 `https://jquebthneczqdxagagof.supabase.co/auth/v1`.
 
-Set `NEXT_PUBLIC_BILLING_MODE=test` only for an intentional Stripe test-mode QA deployment. Leave it `disabled` for normal static deploys until billing is ready. `live` is documented as a future value but remains disabled by the current app code until a later live-payments launch explicitly enables it.
+Use `NEXT_PUBLIC_BILLING_MODE=test` only for staging Stripe sandbox QA with staging Supabase. Use `NEXT_PUBLIC_BILLING_MODE=live` only for production live billing with production Supabase and live Stripe values.
 
 ### Supabase Edge Function secrets
 
@@ -208,7 +208,9 @@ Generated fixture events may not always map to the real QA customer/subscription
 ## Failure States
 
 - Missing public Supabase env: account pages render disabled sign-in/billing states; gameplay remains available.
-- `NEXT_PUBLIC_BILLING_MODE` unset, `disabled`, or `live`: public checkout/portal actions stay disabled with `Checkout coming soon.`
+- `NEXT_PUBLIC_BILLING_MODE` unset, `disabled`, or invalid: public checkout/portal actions stay unavailable with safe checkout-unavailable copy.
+- `NEXT_PUBLIC_BILLING_MODE=test`: checkout/portal actions use Stripe sandbox values in staging.
+- `NEXT_PUBLIC_BILLING_MODE=live`: checkout/portal actions use live Stripe values in production.
 - Missing billing function env: functions return `503`; public UI shows `Checkout is not open yet.`
 - Signed-out checkout or portal request: function returns `401`; UI asks player to create a free account.
 - Missing Stripe customer for Portal: function returns a safe error; account does not expose raw ids.
@@ -220,7 +222,7 @@ Generated fixture events may not always map to the real QA customer/subscription
 ## Rollback Plan
 
 1. Leave static gameplay live.
-2. Hide checkout by removing/withholding Supabase public env in preview, or unset Stripe Edge Function secrets so Checkout returns disabled.
+2. Hide checkout by setting the relevant Cloudflare public billing mode to `disabled`, removing/withholding Supabase public env in preview, or unsetting Stripe Edge Function secrets so Checkout returns unavailable.
 3. Keep manual trusted Pro SQL available for testers.
 4. If a bad webhook writes incorrect entitlements, correct rows in Supabase SQL Editor using trusted admin access.
 5. Rotate Stripe webhook/API secrets if any secret is suspected to be exposed.

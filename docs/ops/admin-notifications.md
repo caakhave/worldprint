@@ -101,7 +101,7 @@ Cloudflare does not need new public env vars for these owner alerts. The app UI 
 6. Trigger or simulate `invoice.payment_failed` and confirm a payment-failed alert arrives.
 7. Recover the payment and confirm a payment-recovered alert arrives only when the prior state was failed or past due.
 8. Replay a webhook event and confirm no duplicate alert is sent.
-9. Keep live billing disabled until the live Stripe, Supabase, and owner inbox setup has been verified.
+9. Keep production live billing enabled only after live Stripe, production Supabase, and owner inbox setup have been verified.
 
 ## Future Digest Checklist
 

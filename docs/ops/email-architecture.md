@@ -18,7 +18,8 @@ Use Google Workspace for human mailboxes:
 
 - `support@canyougeo.com`: public support, account help, privacy/legal requests, billing help, bug reports, and data/source concerns.
 - `hello@canyougeo.com`: general feedback, partnerships, and friendly contact if needed.
-- `auth@canyougeo.com`: system/auth sender only; do not list it publicly.
+- `signin@mail.canyougeo.com`: production Supabase Auth sender only; do not list it publicly.
+- `staging-auth@mail.canyougeo.com`: staging Supabase Auth sender only; do not list it publicly.
 
 Use Supabase Auth for account transactional flows:
 
@@ -62,8 +63,12 @@ Supabase Auth SMTP non-secret fields in both projects:
 Host: smtp.resend.com
 Username: resend
 Port: 587
-Sender: Can You Geo <auth@canyougeo.com>
 ```
+
+Configured sender values:
+
+- Staging: `Can You Geo Staging <staging-auth@mail.canyougeo.com>`
+- Production: `Can You Geo <signin@mail.canyougeo.com>`
 
 The SMTP password is the Resend API key and must not be committed, printed, or copied into browser-exposed Cloudflare env vars.
 

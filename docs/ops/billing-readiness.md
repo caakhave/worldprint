@@ -2,13 +2,15 @@
 
 Last updated: 2026-06-29 America/Mexico_City.
 
+## Current Status
+
+Production live billing is enabled and verified. Staging billing uses Stripe sandbox/test values only and writes to staging Supabase `hsgpjtyysbremrokkoym`. The current environment split lives in `docs/ops/staging-production-environments.md`.
+
 ## Readiness Grade
 
-Yellow for test-mode readiness.
+Green for production live billing and staging sandbox smoke. Keep full staging lifecycle items, such as yearly checkout, Customer Portal, cancellation, failed-payment, and resubscribe, marked pending unless each has been rerun and recorded against the separated staging Supabase project.
 
-The app has the trusted billing boundary in code: browser UI can only request Supabase Edge Functions, Checkout and Portal require an authenticated Supabase user, webhook writes use service-role credentials, and missing or inactive entitlement rows resolve to Free. The remaining launch gates are manual Stripe Dashboard setup, Supabase Edge Function secrets/deploys, and a real Stripe test-mode checkout/webhook QA run.
-
-Live billing must remain disabled. Current browser code enables checkout only when `NEXT_PUBLIC_BILLING_MODE=test`; `live` is parsed as a future value but still fails closed.
+The app has the trusted billing boundary in code: browser UI can only request Supabase Edge Functions, Checkout and Portal require an authenticated Supabase user, webhook writes use service-role credentials, and missing or inactive entitlement rows resolve to Free.
 
 ## Current Product Model
 
@@ -23,9 +25,9 @@ Live billing must remain disabled. Current browser code enables checkout only wh
 
 Static app and UI:
 
-- `/upgrade` renders pricing and keeps checkout disabled unless billing mode is `test`.
-- `/account` shows membership state from the entitlement row and opens Customer Portal only for Stripe-backed Pro users in test mode.
-- `src/lib/billing/publicBillingConfig.ts` keeps `disabled`, unset, invalid, and `live` modes from enabling checkout.
+- `/upgrade` renders pricing and enables checkout only for the configured environment billing mode.
+- `/account` shows membership state from the entitlement row and opens Customer Portal only for Stripe-backed Pro users when billing is enabled.
+- `src/lib/billing/publicBillingConfig.ts` keeps `disabled`, unset, and invalid modes from enabling checkout.
 - `src/features/account/BillingActionsClient.tsx` reads the current Supabase session and invokes `stripe-checkout` or `stripe-portal` with `Authorization: Bearer <session token>`.
 - Browser code does not include Stripe secret keys or Supabase service-role keys.
 
@@ -96,7 +98,7 @@ Subscriptions canceled at period end remain Pro while Stripe still reports `acti
 
 ## Required Stripe Dashboard Setup
 
-Use Stripe test mode for this pass.
+Use Stripe test mode for staging and Stripe live mode for production. Never mix test/live keys, webhook secrets, price IDs, or customer data.
 
 1. Create the `Can You Geo Pro` product.
 2. Create the recurring monthly USD `$3.99` price and copy its `price_...` id.
@@ -167,18 +169,18 @@ Preview or staging Stripe QA:
 
 ```text
 NEXT_PUBLIC_SITE_URL=https://test.canyougeo.com
-NEXT_PUBLIC_SUPABASE_URL=https://jquebthneczqdxagagof.supabase.co
+NEXT_PUBLIC_SUPABASE_URL=https://hsgpjtyysbremrokkoym.supabase.co
 NEXT_PUBLIC_SUPABASE_ANON_KEY=<supabase-anon-key>
 NEXT_PUBLIC_BILLING_MODE=test
 ```
 
-Normal Production before paid launch:
+Production live billing:
 
 ```text
 NEXT_PUBLIC_SITE_URL=https://canyougeo.com
 NEXT_PUBLIC_SUPABASE_URL=https://jquebthneczqdxagagof.supabase.co
 NEXT_PUBLIC_SUPABASE_ANON_KEY=<supabase-anon-key>
-NEXT_PUBLIC_BILLING_MODE=disabled
+NEXT_PUBLIC_BILLING_MODE=live
 ```
 
 Do not put `STRIPE_SECRET_KEY`, `STRIPE_WEBHOOK_SECRET`, `SUPABASE_SERVICE_ROLE_KEY`, or Resend/SMTP secrets in Cloudflare public app env.
@@ -201,13 +203,11 @@ Run this only against a test-mode Stripe setup.
 12. Test resubscribe and confirm stale inactive events from the older subscription do not remove newer Pro access.
 13. Send or replay a duplicate event id and confirm it is ignored.
 14. Send an invalid-signature webhook request and confirm it returns `400` and writes nothing.
-15. Return Cloudflare billing mode to `disabled` after the QA window unless more test-mode checkout is intentionally planned.
+15. Keep staging in `test` only while sandbox checkout is intentionally planned.
 
 For fresh account QA, use Gmail plus-addresses such as `name+canyougeo-billing-01@gmail.com` so each run creates a distinct Supabase Auth user. Delete Supabase Auth test users only from the Supabase **Authentication -> Users** dashboard unless you are intentionally running a reviewed cleanup script.
 
 ## Live-Mode Launch Checklist
-
-Do not enable live billing until these are complete:
 
 - Create live-mode Stripe product/prices; test price IDs cannot be reused.
 - Create live-mode webhook endpoint and secret.
@@ -217,16 +217,15 @@ Do not enable live billing until these are complete:
 - Confirm legal/privacy copy covers paid accounts and Stripe as payment processor.
 - Confirm `support@canyougeo.com` is fully monitored for billing and account help.
 - Run live-mode-safe Checkout, Portal, cancel, payment-failure, and resubscribe QA.
-- Make an explicit code and deployment decision to enable live checkout; current code keeps `NEXT_PUBLIC_BILLING_MODE=live` disabled.
+- Make an explicit dashboard/deployment decision before changing production live billing configuration.
 
-## Current Launch Blockers
+## Current Follow-Ups
 
-- Stripe test-mode product, prices, portal, and webhook endpoint need to be confirmed in the Dashboard.
-- Supabase Edge Function secrets must be set for the exact Stripe test-mode resources.
-- Supabase billing functions must be deployed after secrets are set.
-- A real end-to-end test-mode Checkout/webhook/Portal QA run still needs to be completed.
-- Live payments remain blocked by design until the live-mode launch checklist and explicit live enablement work happen.
+- Keep Stripe sandbox webhook endpoint pointed only at staging `hsgpjtyysbremrokkoym`.
+- Record separate staging QA results for yearly checkout, Customer Portal, cancellation, failed-payment, and resubscribe if those flows have not been rerun since the Supabase split.
+- Keep staging Stripe Edge Function secrets and deploys scoped to the staging Supabase project only.
+- Keep production live billing changes behind explicit dashboard/deployment approval and production Stripe/Supabase values only.
 
-## Non-Blocker To Revisit Before Live
+## Non-Blocker To Revisit Before Stripe API Changes
 
-The Supabase Edge Functions currently use Stripe SDK `stripe@16.12.0` with API version `2024-06-20`. That is acceptable to keep stable for this test-mode readiness pass, but before live launch review the current Stripe API version and rerun the full billing QA matrix after any upgrade.
+The Supabase Edge Functions currently use Stripe SDK `stripe@16.12.0` with API version `2024-06-20`. That is acceptable to keep stable for launch; before any Stripe API or SDK upgrade, review the current Stripe API version and rerun the full billing QA matrix after the upgrade.

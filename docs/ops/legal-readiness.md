@@ -8,8 +8,8 @@ This document tracks the current Can You Geo public legal/support copy and the r
 
 - `/legal` now covers:
   - Free account behavior.
-  - Pro membership concept and current live-billing-disabled posture.
-  - Stripe Checkout and Customer Portal as the paid billing path when billing is enabled.
+  - Pro membership concept and current live billing posture.
+  - Stripe Checkout and Customer Portal as the paid billing path.
   - Cancellation-at-period-end behavior, with Pro access generally remaining until the paid period ends.
   - Personal stats/scores only; no prize, sweepstakes, or official leaderboard guarantees.
   - User responsibilities, acceptable use, no abuse, no account attacks, and no payment fraud.
