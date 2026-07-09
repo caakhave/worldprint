@@ -62,6 +62,7 @@ The following must never be exposed in browser code, committed files, screenshot
 - Stripe checkout and portal are server-side Edge Function flows; no Stripe secret key is used in browser code.
 - Stripe webhook processing records event IDs in `stripe_webhook_events` and validates configured price IDs before granting Pro.
 - Challenge email sends require a signed-in user, service-side rate-limit ledger, and spoiler-safe invite payload.
+- `supabase/tests/rls_security_checks.sql` validates forced RLS and browser grant posture for core account/game/billing tables plus the `challenge_email_sends` service-only ledger.
 - Root `.gitignore` ignores `.env*`, build output, reports, test results, and Supabase `.temp`.
 - Black-box QA has separate ignore rules for `.env`, reports, exports, screenshots, caches, and virtualenvs.
 
@@ -69,7 +70,6 @@ The following must never be exposed in browser code, committed files, screenshot
 
 - Exact dashboard admin lists and MFA status are not visible from the repo and need manual verification.
 - `supabase/.temp` is intentionally ignored but has been linked to production in the past; all Supabase CLI commands must keep using explicit environment targeting.
-- `supabase/tests/rls_security_checks.sql` validates major tables but does not currently include `challenge_email_sends` in the expected RLS/forced-RLS list.
 - Client-submitted game stats are protected by user-scoped RLS, but they are not suitable for prize, sweepstakes, or official competitive guarantees.
 - Some `dangerouslySetInnerHTML` usage exists for static structured data. Keep it static and never feed it user-provided HTML.
 
@@ -87,7 +87,6 @@ The following must never be exposed in browser code, committed files, screenshot
 
 - Manually verify MFA/2FA and admin membership for GitHub, Cloudflare, Supabase, Stripe, Resend, Google Workspace, GTM, GA4, Search Console, and registrar/DNS.
 - Confirm GitHub branch protection, required checks, secret scanning, and push protection for `main`.
-- Extend Supabase RLS/security checks to include `challenge_email_sends`.
 - Keep the Cloudflare Access service-token rotation reminder and rotate before expiry.
 - Confirm Stripe production keys are live-only, Stripe sandbox keys are staging-only, and webhook endpoints point to the matching Supabase project.
 - Decide whether Resend should use separate staging and production API keys rather than one shared key.

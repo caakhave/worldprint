@@ -56,7 +56,7 @@ Recommended operating posture until a formal policy exists:
 
 ### P1
 
-- Add `challenge_email_sends` to the Supabase RLS/security verification script.
+- Keep `challenge_email_sends` covered by the Supabase RLS/security verification script as the challenge email workflow evolves.
 - Create a written account deletion/export runbook.
 - Confirm Supabase backup/retention posture after user and paid-customer volume grows.
 
