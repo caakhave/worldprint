@@ -206,6 +206,8 @@ This direct script form is recommended for humans: the staging project ref is no
 
 If validation reaches the remote host but fails with `FATAL: password authentication failed`, treat it as a credential-entry problem rather than an RLS finding: the DB password may be wrong, may not have propagated after a dashboard reset, or may have been incorrectly encoded in a pasted URL. Wait a few minutes after password rotation, avoid repeated rapid retries, and use `--project-ref hsgpjtyysbremrokkoym --prompt-password` so the runner handles URL encoding. If needed, reset the staging DB password to a long alphanumeric-only password to reduce URL-encoding mistakes.
 
+Current status: staging validation execution was attempted on July 9, 2026. The runner reached the staging host, but database password authentication failed before the SQL checks could run. No RLS/security finding was produced. Verify the staging project ref and database password in Supabase Dashboard before retrying, or run the read-only validation SQL from the staging Supabase SQL Editor.
+
 For a broader owner audit, run:
 
 ```bash

@@ -71,6 +71,7 @@ The following must never be exposed in browser code, committed files, screenshot
 
 - Exact dashboard admin lists and MFA status are not visible from the repo and need manual verification.
 - `supabase/.temp` is intentionally ignored but has been linked to production in the past; Supabase CLI commands must keep using explicit environment targeting. Edge Function deploys use `--project-ref`; staging SQL validation uses the safe `--db-url` runner.
+- Staging Supabase RLS/security validation execution is pending as of July 9, 2026. The safe runner reached the staging database host, but Postgres returned `FATAL: password authentication failed` before SQL validation could run. This produced no RLS/security finding. Verify the staging project ref and `postgres` database password in Supabase Dashboard, wait after password rotation before retrying, avoid rapid retries, or run the read-only validation SQL from the staging Supabase SQL Editor.
 - Client-submitted game stats are protected by user-scoped RLS, but they are not suitable for prize, sweepstakes, or official competitive guarantees.
 - Some `dangerouslySetInnerHTML` usage exists for static structured data. Keep it static and never feed it user-provided HTML.
 
