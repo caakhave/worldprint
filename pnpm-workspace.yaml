@@ -1,3 +1,13 @@
+packages:
+  - "."
+
 allowBuilds:
   sharp: false
   unrs-resolver: false
+
+overrides:
+  postcss: 8.5.15
+
+ignoredBuiltDependencies:
+  - sharp
+  - unrs-resolver

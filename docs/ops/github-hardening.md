@@ -178,6 +178,14 @@ Recommended dashboard changes:
 5. Consider enabling non-provider pattern scanning if available.
 6. Consider enabling validity checks if available.
 
+Dependabot alert follow-up:
+
+- Alert reviewed: `GHSA-qx2v-qp2m-jg93` / `CVE-2026-41305`, PostCSS XSS via unescaped `</style>` in CSS stringify output.
+- Root cause: `next@16.2.9` pulled `postcss@8.4.31` transitively.
+- Next update check: latest available Next 16 patch metadata still reported `postcss: 8.4.31`, so a small Next patch update would not resolve the alert.
+- Fix path chosen: targeted pnpm override to `postcss@8.5.15`, a patched 8.x version already present elsewhere in the lockfile.
+- GitHub should close the alert after the fixed lockfile reaches the default branch.
+
 Do not rely only on GitHub scanning. Continue local discipline:
 
 - Never commit `.env*.local`.
