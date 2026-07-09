@@ -1,6 +1,6 @@
 # Can You Geo Staging And Production Environments
 
-Last updated: 2026-07-08
+Last updated: 2026-07-09
 
 This is the source of truth for the current Can You Geo environment split. It exists to keep frontend, Supabase, email, billing, and QA work from accidentally crossing staging and production.
 
@@ -43,7 +43,11 @@ Branch: main
 
 Staging and production now have separate Supabase Auth databases, application tables, RLS policy state, Edge Functions, and function secrets. Same QA email addresses may exist in both projects because the Auth databases are separate.
 
-Never rely on `supabase/.temp` to identify the target environment. It has been linked to the production/shared ref before and must be treated as unsafe for environment targeting. Use explicit `--project-ref` on every Supabase CLI command.
+Never rely on `supabase/.temp` to identify the target environment. It has been linked to the production/shared ref before and must be treated as unsafe for environment targeting. Use explicit environment targeting on every Supabase operation:
+
+- Edge Function deploys use explicit `--project-ref`.
+- Staging SQL validation uses the safe `--db-url` runner documented below.
+- Do not use linked project state for staging or production validation.
 
 ## Cloudflare Environment Variables
 
@@ -225,24 +229,21 @@ Apply migrations separately per Supabase project using an explicit database URL 
 target environment. Do not rely on `supabase/.temp`, and do not use project-ref
 shortcuts for database migrations.
 
-Staging:
+Run staging RLS checks after migrations with the safe wrapper:
 
 ```bash
-supabase db push --db-url "$SUPABASE_STAGING_DB_URL" --include-all
+pnpm ops:supabase:staging-rls
 ```
 
-Production:
+The operator must manually export `SUPABASE_STAGING_DB_URL` before running the command. Do not echo, paste, log, or commit that value. The wrapper uses `supabase db query --db-url "$SUPABASE_STAGING_DB_URL" --file supabase/tests/rls_security_checks.sql`.
+
+For broader staging owner review:
 
 ```bash
-supabase db push --db-url "$SUPABASE_PROD_DB_URL" --include-all
+pnpm ops:supabase:staging-audit
 ```
 
-Run RLS checks after migrations:
-
-```bash
-supabase db query --db-url "$SUPABASE_STAGING_DB_URL" --file supabase/tests/rls_security_checks.sql
-supabase db query --db-url "$SUPABASE_PROD_DB_URL" --file supabase/tests/rls_security_checks.sql
-```
+The audit command runs `docs/ops/supabase-validation.sql`; its raw output may include operational details and should not be committed. Production SQL validation requires a separately approved production process and must not use the staging runner.
 
 Expected tables include:
 

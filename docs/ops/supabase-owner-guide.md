@@ -196,7 +196,21 @@ Only these trusted paths should write subscription or entitlement state. Browser
 
 ## Validation Checklist
 
-Run `docs/ops/supabase-validation.sql` in the Supabase SQL editor. It is read-only and intended for owner review.
+Run staging RLS validation through the safe wrapper from the repo root:
+
+```bash
+pnpm ops:supabase:staging-rls
+```
+
+The wrapper requires the operator to export `SUPABASE_STAGING_DB_URL` first. Do not print the value, paste it into chat, commit it, or store it in docs. The wrapper uses `supabase db query --db-url` and does not rely on linked Supabase state.
+
+For a broader owner audit, run:
+
+```bash
+pnpm ops:supabase:staging-audit
+```
+
+That command runs `docs/ops/supabase-validation.sql`. It is read-only and intended for owner review, but the output may include operational details. Do not commit raw SQL output.
 
 Expected result:
 
@@ -206,4 +220,4 @@ Expected result:
 - No duplicate entitlement rows.
 - Orphan checks return zero rows unless there is a known support/reconciliation reason.
 
-For deeper RLS behavior checks, use `supabase/tests/rls_security_checks.sql` in a safe staging database or controlled SQL session.
+For deeper RLS behavior checks, use `supabase/tests/rls_security_checks.sql` through the staging wrapper or in a safe controlled SQL session. Do not use linked project state for staging or production validation.
