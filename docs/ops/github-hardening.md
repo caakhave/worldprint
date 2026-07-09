@@ -20,7 +20,7 @@ This audit records the current GitHub repository posture and the practical harde
 
 Tracked repo files currently show:
 
-- No `.github/workflows` directory and no GitHub Actions workflows.
+- No `.github/workflows` directory and no custom GitHub Actions workflow files.
 - Package validation scripts:
   - `pnpm lint`
   - `pnpm typecheck`
@@ -30,34 +30,43 @@ Tracked repo files currently show:
   - `pnpm test:e2e`
   - `pnpm qa:blackbox:prod-smoke`
   - staging black-box commands such as `pnpm qa:blackbox:test`
-- Because no workflows exist, there are no reliable repository-native CI check names to require yet.
+- Because no custom CI workflows exist, there are no reliable repository-native quality check names to require yet.
 
 ## Read-Only GitHub API Findings
 
 Read-only checks were performed with GitHub CLI using the authenticated owner account. No settings were changed.
 
-Observed:
+Observed after manual GitHub hardening changes:
 
 - Repository visibility: public.
 - Direct collaborator list visible to the API:
   - `caakhave` with admin permissions.
-- Classic branch protection:
-  - `main`: not protected.
-  - `staging`: not protected.
+- Branch summary:
+  - `main`: protected.
+  - `staging`: protected.
 - Repository rulesets:
-  - none returned.
-- GitHub Actions workflows:
-  - none returned.
+  - `Protect main`: active branch ruleset targeting `refs/heads/main`.
+    - Rules: block deletion, block non-fast-forward updates.
+    - Bypass actors: none.
+    - Required status checks: not configured.
+  - `Protect staging`: active branch ruleset targeting `refs/heads/staging`.
+    - Rules: block deletion, block non-fast-forward updates.
+    - Bypass actors: none.
+    - Required status checks: not configured.
+- Classic branch protection endpoints:
+  - returned `Branch not protected`, which is expected because the current protection is implemented with repository rulesets rather than classic branch protection.
+- GitHub Actions workflows API:
+  - returned one GitHub-managed `Dependency Graph` workflow.
+  - no custom `.github/workflows` files are tracked in the repo.
 - Security and analysis status:
-  - Dependabot security updates: disabled.
-  - Secret scanning: disabled.
+  - Dependabot alerts: enabled. The vulnerability-alerts endpoint returned `204 No Content`.
+  - Dependabot security updates: enabled.
+  - Dependabot alerts list: reachable and returned no alert rows in the sample query.
+  - Secret scanning: enabled.
+  - Secret scanning alert list: reachable and returned no alert rows in the sample query.
   - Secret scanning non-provider patterns: disabled.
-  - Secret scanning push protection: disabled.
+  - Secret scanning push protection: enabled.
   - Secret scanning validity checks: disabled.
-- Dependabot alerts endpoint:
-  - disabled for this repository.
-- Secret scanning alerts endpoint:
-  - disabled for this repository.
 
 Manual dashboard verification still needed:
 
@@ -65,18 +74,19 @@ Manual dashboard verification still needed:
 - Whether GitHub account MFA/passkeys are enabled.
 - Whether private forks, fine-grained PATs, or GitHub Apps have write access.
 - Whether Cloudflare Pages deploy checks appear as commit statuses after a production deploy.
+- Whether secret scanning non-provider patterns and validity checks should be enabled for this repository.
 
 ## Recommended Main Branch Protection
 
 Practical solo-operator target for `main`:
 
-1. Protect `main`.
-2. Block force pushes.
-3. Block branch deletion.
-4. Require a pull request before merge once the workflow is comfortable.
-5. Require conversation resolution on PRs.
-6. Allow admin bypass only for documented production incident recovery.
-7. Do not require status checks until GitHub Actions exists and is stable.
+1. Keep the active `Protect main` ruleset.
+2. Keep force pushes blocked via the `non_fast_forward` rule.
+3. Keep branch deletion blocked via the `deletion` rule.
+4. Required status checks are intentionally deferred until lightweight CI exists.
+5. Require a pull request before merge once the workflow is comfortable.
+6. Require conversation resolution on PRs if PR-based promotion becomes routine.
+7. Allow admin bypass only for documented production incident recovery if bypass is ever added.
 8. After CI is added, require either:
    - a single stable `quality` check, or
    - stable checks named `lint`, `typecheck`, `test`, and `build`.
@@ -88,11 +98,11 @@ Avoid requiring Cloudflare Pages deployment status until the exact check name is
 
 Practical target for `staging`:
 
-1. Protect `staging`.
-2. Block force pushes.
-3. Block branch deletion.
+1. Keep the active `Protect staging` ruleset.
+2. Keep force pushes blocked via the `non_fast_forward` rule.
+3. Keep branch deletion blocked via the `deletion` rule.
 4. Do not require PRs initially if the current workflow depends on direct staging commits.
-5. Do not require status checks until GitHub Actions exists and is stable.
+5. Required status checks are intentionally deferred until lightweight CI exists.
 6. Consider requiring the same future `quality` check after the normal staging workflow has adjusted.
 
 This keeps staging fast while preventing accidental destructive branch operations.
@@ -120,12 +130,12 @@ Optional/manual jobs:
 
 Recommended dashboard changes:
 
-1. Enable GitHub secret scanning.
-2. Enable push protection.
-3. Enable non-provider pattern scanning if available.
-4. Enable validity checks if available.
-5. Enable Dependabot alerts.
-6. Enable Dependabot security updates after reviewing the expected PR flow.
+1. Keep GitHub secret scanning enabled.
+2. Keep push protection enabled.
+3. Keep Dependabot alerts enabled.
+4. Keep Dependabot security updates enabled.
+5. Consider enabling non-provider pattern scanning if available.
+6. Consider enabling validity checks if available.
 
 Do not rely only on GitHub scanning. Continue local discipline:
 
@@ -140,12 +150,13 @@ Apply or verify:
 - Account-level MFA/passkey enabled for the owner/operator.
 - Repository admins reviewed; remove stale users/apps.
 - Fine-grained PATs and GitHub Apps reviewed for repo write access.
-- `main` protected from force push/delete.
-- `staging` protected from force push/delete.
-- Secret scanning enabled.
-- Push protection enabled.
-- Dependabot alerts enabled.
-- Dependabot security updates enabled when the PR flow is ready.
+- `main` remains protected from force push/delete.
+- `staging` remains protected from force push/delete.
+- Secret scanning remains enabled.
+- Push protection remains enabled.
+- Dependabot alerts remain enabled.
+- Dependabot security updates remain enabled.
+- Decide whether to enable non-provider pattern scanning and validity checks.
 - Confirm whether Cloudflare Pages check names appear on pushes.
 - Confirm any required-check names before making them required.
 
@@ -190,8 +201,8 @@ Malicious dependency or workflow change:
 
 Highest-value next GitHub hardening actions:
 
-1. Enable secret scanning and push protection.
-2. Enable Dependabot alerts.
-3. Add lightweight CI for `lint`, `typecheck`, `test`, and `build`.
-4. Protect `main` and `staging` from force pushes and deletion.
-5. Require status checks on `main` only after CI check names are stable.
+1. Add lightweight CI for `lint`, `typecheck`, `test`, and `build`.
+2. Confirm Cloudflare Pages status check names after the next production deploy.
+3. Require status checks on `main` only after CI check names are stable.
+4. Decide whether to require PRs for `main` after the direct staging-to-main promotion workflow settles.
+5. Decide whether to enable GitHub non-provider pattern scanning and validity checks.
