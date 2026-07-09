@@ -202,7 +202,7 @@ Run staging RLS validation through the safe wrapper from the repo root:
 pnpm ops:supabase:staging-rls
 ```
 
-The wrapper requires the operator to export `SUPABASE_STAGING_DB_URL` first. Do not print the value, paste it into chat, commit it, or store it in docs. The wrapper uses `supabase db query --db-url` and does not rely on linked Supabase state.
+The wrapper requires the operator to export `SUPABASE_STAGING_DB_URL` first. Do not print the value, paste it into chat, commit it, or store it in docs. The wrapper uses `supabase db query --db-url` and does not rely on linked Supabase state. Prefer the direct Supabase database connection string for this value. Transaction-pooler connection strings, including pooler hosts or port `6543`, can conflict with prepared SQL execution and should be avoided for validation.
 
 For a broader owner audit, run:
 

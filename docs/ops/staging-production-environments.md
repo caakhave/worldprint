@@ -233,7 +233,7 @@ Run staging RLS checks after migrations with the safe wrapper:
 pnpm ops:supabase:staging-rls
 ```
 
-The operator must manually export `SUPABASE_STAGING_DB_URL` before running the command. Do not echo, paste, log, or commit that value. The wrapper uses `supabase db query --db-url "$SUPABASE_STAGING_DB_URL" --file supabase/tests/rls_security_checks.sql`.
+The operator must manually export `SUPABASE_STAGING_DB_URL` before running the command. Do not echo, paste, log, or commit that value. Use the direct Supabase database connection string, not the transaction-pooler URL. Pooler hosts and port `6543` may fail because Supabase CLI query execution can use prepared statements. The wrapper splits the validation SQL into discrete statements and runs each with `supabase db query --db-url`.
 
 For broader staging owner review:
 

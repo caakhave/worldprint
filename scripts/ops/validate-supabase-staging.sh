@@ -16,6 +16,8 @@ Safety:
   - This script never prints the database URL.
   - This script does not load .env files.
   - This script does not use linked Supabase project state.
+  - Prefer the direct Supabase database connection string.
+  - Transaction pooler URLs may fail because validation uses prepared query execution.
   - Do not commit raw SQL output from the broader operator audit.
 USAGE
 }
@@ -106,6 +108,57 @@ if ! command -v supabase >/dev/null 2>&1; then
   exit 127
 fi
 
+if [[ "$SUPABASE_STAGING_DB_URL" == *"pooler.supabase.com"* || "$SUPABASE_STAGING_DB_URL" == *":6543/"* ]]; then
+  echo "Warning: the staging DB URL looks like a Supabase pooler connection." >&2
+  echo "Prefer the direct database connection for validation; transaction pooling can conflict with prepared SQL execution." >&2
+fi
+
+temp_sql_dir=""
+cleanup_temp_sql_dir() {
+  if [[ -n "$temp_sql_dir" && -d "$temp_sql_dir" ]]; then
+    rm -rf "$temp_sql_dir"
+  fi
+}
+trap cleanup_temp_sql_dir EXIT
+
+run_sql_file_statements() {
+  local source_file="$1"
+  temp_sql_dir="$(mktemp -d)"
+
+  awk -v output_dir="$temp_sql_dir" '
+    BEGIN {
+      RS = ";"
+    }
+    {
+      statement = $0
+      gsub(/^[[:space:]]+|[[:space:]]+$/, "", statement)
+      if (statement != "") {
+        count += 1
+        output_file = sprintf("%s/statement-%03d.sql", output_dir, count)
+        print statement ";" > output_file
+        close(output_file)
+      }
+    }
+  ' "$source_file"
+
+  local statement_file
+  local statement_count=0
+  for statement_file in "$temp_sql_dir"/statement-*.sql; do
+    if [[ ! -e "$statement_file" ]]; then
+      continue
+    fi
+
+    statement_count=$((statement_count + 1))
+    echo "Running validation statement ${statement_count} from ${source_file}." >&2
+    SUPABASE_TELEMETRY_DISABLED=1 supabase db query --db-url "$SUPABASE_STAGING_DB_URL" --file "$statement_file"
+  done
+
+  if [[ "$statement_count" -eq 0 ]]; then
+    echo "No SQL statements found in ${source_file}." >&2
+    exit 1
+  fi
+}
+
 sql_file="supabase/tests/rls_security_checks.sql"
 if [[ "$mode" == "operator-audit" ]]; then
   sql_file="docs/ops/supabase-validation.sql"
@@ -115,4 +168,4 @@ else
   echo "Running staging Supabase RLS/security validation." >&2
 fi
 
-SUPABASE_TELEMETRY_DISABLED=1 supabase db query --db-url "$SUPABASE_STAGING_DB_URL" --file "$sql_file"
+run_sql_file_statements "$sql_file"
