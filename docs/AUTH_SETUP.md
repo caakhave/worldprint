@@ -2,7 +2,7 @@
 
 Can You Geo? uses Supabase email/password authentication for player accounts. Anonymous sample play must keep working even when auth is unavailable.
 
-Do not commit secrets. Keep local values in `.env.local` and production values in the hosting/Supabase dashboards.
+Do not commit secrets. Keep local values in `.env.local` and dashboard values in Cloudflare/Supabase dashboards. The current environment split is documented in `docs/ops/staging-production-environments.md`.
 
 ## Required Public App Env
 
@@ -14,30 +14,51 @@ NEXT_PUBLIC_SUPABASE_ANON_KEY=
 NEXT_PUBLIC_SITE_URL=
 ```
 
-Use the Supabase project root URL only. For the current project, that means:
+Use the Supabase project root URL only.
+
+Current project roots:
 
 ```text
-https://jquebthneczqdxagagof.supabase.co
+Staging: https://hsgpjtyysbremrokkoym.supabase.co
+Production: https://jquebthneczqdxagagof.supabase.co
 ```
 
 Do not use a REST or Auth endpoint path:
 
 ```text
-https://jquebthneczqdxagagof.supabase.co/rest/v1
-https://jquebthneczqdxagagof.supabase.co/auth/v1
+https://<project-ref>.supabase.co/rest/v1
+https://<project-ref>.supabase.co/auth/v1
 ```
 
 ## Supabase URL Configuration
 
 In Supabase Dashboard, open **Authentication -> URL Configuration**.
 
-Set **Site URL** to the real deployed app origin, for example:
+Set **Site URL** to the deployed app origin for that Supabase project.
+
+Staging:
+
+```text
+https://test.canyougeo.com
+```
+
+Production:
 
 ```text
 https://canyougeo.com
 ```
 
-Add every local QA and production callback URL under **Redirect URLs**:
+Add every local QA and matching deployed callback URL under **Redirect URLs**.
+
+Staging:
+
+```text
+http://localhost:3000/auth/callback
+http://localhost:3001/auth/callback
+https://test.canyougeo.com/auth/callback
+```
+
+Production:
 
 ```text
 http://localhost:3000/auth/callback
@@ -46,7 +67,7 @@ https://canyougeo.com/auth/callback
 https://www.canyougeo.com/auth/callback
 ```
 
-Add preview deployment origins as needed. The callback origin must match the origin where account confirmation or password reset starts.
+Add preview deployment origins as needed. The callback origin must match the origin where account confirmation or password reset starts. Do not add staging/test callback URLs to production unless there is an explicit reason; staging and production Auth databases are separate.
 
 ## Supabase Auth Settings
 
@@ -78,7 +99,29 @@ The app sends Supabase a query-free `emailRedirectTo` / `redirectTo` value endin
 
 ## Sender Branding
 
-If emails still arrive as "Supabase Auth", configure custom SMTP in Supabase Dashboard under **Authentication -> SMTP**. Set the sender name/from address to Can You Geo? once the production email domain is ready.
+Configure custom SMTP in each Supabase project under **Authentication -> SMTP**.
+
+Can You Geo uses Resend SMTP for Supabase Auth email in both staging and production.
+
+Non-secret fields:
+
+```text
+Host: smtp.resend.com
+Username: resend
+Port: 587
+Sender: Can You Geo <auth@canyougeo.com>
+```
+
+Secret field:
+
+```text
+Password: Resend API key
+```
+
+Confirmed status:
+
+- Staging Auth custom SMTP works through Resend.
+- Production Auth custom SMTP works through Resend.
 
 ## Manual QA Checklist
 

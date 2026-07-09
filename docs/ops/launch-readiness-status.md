@@ -1,32 +1,36 @@
 # Can You Geo Launch Readiness Status
 
-Last updated: 2026-06-30
+Last updated: 2026-07-08
+
+Current source of truth: `docs/ops/staging-production-environments.md`.
 
 Audit target:
 
-- Staging branch: `origin/staging` at `426950acd34fe0ab8b4b6d8186aa634e2c1f6cad` before this status document.
-- Main branch: `origin/main` at `c208f99008262c1eb43b18dc51a96f5c84176ea5`.
-- Supabase project: `jquebthneczqdxagagof`.
+- Staging branch: `origin/staging`.
+- Main branch: `origin/main`.
+- Staging Supabase project: `hsgpjtyysbremrokkoym`.
+- Production Supabase project: `jquebthneczqdxagagof`.
 - Public staging domain: `https://test.canyougeo.com`.
+- Public production domain: `https://canyougeo.com`.
 
 Billing posture:
 
-- Staging/Preview may use Stripe test mode with `NEXT_PUBLIC_BILLING_MODE=test`.
-- Production/main must keep `NEXT_PUBLIC_BILLING_MODE=disabled` until an explicit live billing launch.
+- Staging/Preview may use `NEXT_PUBLIC_BILLING_MODE=test` with Stripe sandbox/test-mode functions and secrets.
+- Production/main may use `NEXT_PUBLIC_BILLING_MODE=live` only with the production Stripe/Supabase function setup.
 - No browser code should receive Stripe secret keys, Supabase service-role keys, webhook secrets, or raw Stripe price ids.
 
 ## Readiness Summary
 
 | Area | Grade | Status |
 | --- | --- | --- |
-| Git/release state | Yellow | Staging contains the current auth, billing, email, and account work. Main is intentionally behind staging. Promote only approved commits. |
-| Supabase database and RLS | Green | Remote migrations are applied, RLS is enabled and forced on account/billing tables, and validation checks passed. |
-| Supabase Auth | Green for staging, Yellow for production cutover | Email/password, confirmation, reset, sign-out, and Pro intent flows are implemented. Production requires dashboard redirect/template confirmation before launch. |
-| Supabase Edge Functions | Green for staging/test billing | `stripe-checkout` and `stripe-portal` are JWT protected. `stripe-webhook` has Supabase JWT disabled and verifies Stripe signatures internally. |
-| Stripe billing | Green for sandbox QA, Yellow for live billing | Monthly/yearly Checkout, Portal, cancellation at period end, webhook entitlement sync, and owner notifications have been QA'd in test mode. Live billing remains disabled. |
-| Cloudflare Preview/staging | Yellow | `test.canyougeo.com` is reachable, noindexed, and serves staging UI. Exact deployment commit still needs confirmation in Cloudflare Pages unless exposed by the deployment UI/API. |
-| Cloudflare Production/main | Yellow | Production should remain billing-disabled. Verify dashboard env vars before every promotion. |
-| Email architecture | Green for transactional/admin, Yellow for marketing | Google Workspace, Supabase Auth SMTP/Resend, and owner notifications are documented. Marketing consent is stored, but no mass marketing sender is implemented yet. |
+| Git/release state | Green | `staging` and `main` are branch-separated. Promote only approved commits. |
+| Supabase database and RLS | Green | Staging and production are now separate projects. Apply migrations and RLS checks per project with explicit `--project-ref`. |
+| Supabase Auth | Green | Staging and production Auth databases are separate. Custom SMTP through Resend is configured and working in both. |
+| Supabase Edge Functions | Green | `send-challenge-email` is deployed/tested in staging and production. Stripe functions are deployed/tested for production live billing and staging sandbox billing. |
+| Stripe billing | Green | Production live billing has been configured/tested. Staging sandbox checkout and webhook entitlement updates work with Stripe test values only. |
+| Cloudflare Preview/staging | Green | `test.canyougeo.com` is noindexed and points at staging Supabase `hsgpjtyysbremrokkoym`. |
+| Cloudflare Production/main | Green | Production points at production Supabase `jquebthneczqdxagagof`. Verify env vars before every promotion. |
+| Email architecture | Green for transactional/admin, Yellow for marketing | Supabase Auth SMTP uses Resend, challenge emails use the Edge Function/Resend path, and marketing broadcasts are not implemented. |
 | Account/product UX | Green for staging QA | Current staging includes email/password auth, Pro-first onboarding, account menu, billing actions, marketing preference UI, and sign-out confirmation. |
 | Gameplay/stat trust | Yellow | Current saved runs/stats are acceptable for personal history. Client-submitted scores are not yet suitable for public leaderboards, prizes, or anti-abuse sensitive rankings. |
 
@@ -34,7 +38,8 @@ Billing posture:
 
 - Current local branch is `staging`; local `HEAD` matches `origin/staging`.
 - Local working tree only had the unrelated untracked `atd/` directory before this document was added.
-- Supabase project link points to `jquebthneczqdxagagof`.
+- Production Supabase project link points to `jquebthneczqdxagagof`.
+- Staging Supabase project link points to `hsgpjtyysbremrokkoym`.
 - Remote migration status shows these local and remote versions aligned:
   - `20260627000000`
   - `20260627010000`
@@ -98,7 +103,7 @@ Billing posture:
 - Owner/admin billing notifications through Resend were tested and delivered to `support@canyougeo.com`.
 - Supabase Auth passwordless testing has been superseded by email/password auth, but the callback route still supports token-hash confirmation and recovery links.
 
-## Manual Dashboard Settings Still Needed Before Production Promotion
+## Environment Verification Checklist
 
 Cloudflare Pages:
 
@@ -110,19 +115,20 @@ Cloudflare Pages:
   - `NEXT_PUBLIC_SITE_URL=https://canyougeo.com`
   - `NEXT_PUBLIC_SUPABASE_URL=https://jquebthneczqdxagagof.supabase.co`
   - `NEXT_PUBLIC_SUPABASE_ANON_KEY` present
-  - `NEXT_PUBLIC_BILLING_MODE=disabled`
+  - `NEXT_PUBLIC_BILLING_MODE=live` when production live billing is enabled
 - Preview/staging env for billing QA should include:
   - `NEXT_PUBLIC_SITE_URL=https://test.canyougeo.com`
-  - `NEXT_PUBLIC_SUPABASE_URL=https://jquebthneczqdxagagof.supabase.co`
+  - `NEXT_PUBLIC_SUPABASE_URL=https://hsgpjtyysbremrokkoym.supabase.co`
   - `NEXT_PUBLIC_SUPABASE_ANON_KEY` present
-  - `NEXT_PUBLIC_BILLING_MODE=test`
+  - `NEXT_PUBLIC_BILLING_MODE=test` when staging sandbox checkout is enabled
 - `NEXT_PUBLIC_SUPABASE_URL` must be exactly the Supabase project root URL, not `/rest/v1`, `/auth/v1`, or any endpoint path.
 - No Stripe secret keys, webhook secrets, Supabase service-role keys, or Resend API keys should exist in Cloudflare public env vars.
 
 Supabase Auth:
 
-- Confirm Site URL and Redirect URLs include the production and staging callback origins:
+- Confirm production Site URL and Redirect URLs include:
   - `https://canyougeo.com/auth/callback`
+- Confirm staging Site URL and Redirect URLs include:
   - `https://test.canyougeo.com/auth/callback`
   - local callback URLs used for QA
 - Confirm account confirmation email template uses:
@@ -134,7 +140,7 @@ Supabase Auth:
 
 Supabase Edge Functions:
 
-- Confirm required secrets are present and not printed in logs:
+- Confirm required secrets are present per environment and not printed in logs:
   - `STRIPE_SECRET_KEY`
   - `STRIPE_WEBHOOK_SECRET`
   - `STRIPE_PRO_MONTHLY_PRICE_ID`
@@ -145,12 +151,13 @@ Supabase Edge Functions:
   - `OWNER_NOTIFICATION_FROM_EMAIL`
   - `RESEND_API_KEY`
 - Keep `stripe-webhook` deployed with `--no-verify-jwt`.
+- Deploy functions with explicit project refs. Do not rely on `supabase/.temp`.
 
 Stripe:
 
-- Keep live billing disabled until a separate live billing launch decision.
-- Before live launch, create live product/prices, live webhook endpoint, and live Customer Portal settings.
-- Confirm live webhook event coverage before enabling any public live checkout.
+- Production live billing exists.
+- Staging Stripe sandbox checkout exists and must use test-mode keys, prices, webhook secret, and Customer Portal settings only.
+- Stripe sandbox webhook endpoint must point to staging Supabase `hsgpjtyysbremrokkoym`, not production `jquebthneczqdxagagof`.
 
 ## Staging QA Checklist
 
@@ -181,17 +188,18 @@ Stripe:
   - `pnpm build`
 - Push `main`.
 - Confirm Cloudflare Production deployed the intended main commit.
-- Confirm Production env keeps `NEXT_PUBLIC_BILLING_MODE=disabled`.
+- Confirm Production env uses `NEXT_PUBLIC_BILLING_MODE=live` only with production Supabase/Stripe values.
 - Smoke test production:
   - public pages render
   - auth signup/sign-in/reset work
   - account page loads
-  - billing checkout is not exposed
+  - billing checkout uses production live Stripe only during approved live billing windows
   - production canonical/noindex behavior is correct for the chosen live domain
 
 ## Known Caveats
 
-- Live billing is intentionally not enabled.
+- Keep Stripe sandbox webhook endpoint pointed only at staging.
+- The staging database required a one-time `profiles` bootstrap because the current migration chain assumes the production spine/profile baseline exists. Fix the migration baseline before creating another fresh Supabase project.
 - Marketing consent is collected, but no Resend Audience/Broadcast workflow or unsubscribe sync is implemented yet.
 - Client-submitted scores and stats are not suitable for public leaderboards, prizes, or adversarial anti-abuse contexts.
 - Exact Cloudflare deployment commit for `test.canyougeo.com` cannot be proven from the public HTML alone; confirm in Cloudflare Pages.
