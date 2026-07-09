@@ -5,7 +5,7 @@ set +x
 usage() {
   cat <<'USAGE'
 Usage:
-  scripts/ops/validate-supabase-staging.sh [--prompt] [--operator-audit|--full]
+  scripts/ops/validate-supabase-staging.sh [--prompt|--prompt-parts] [--operator-audit|--full]
 
 Runs read-only Supabase validation SQL against the staging database.
 
@@ -20,12 +20,15 @@ Safety:
   - Prefer the direct Supabase database connection string.
   - Transaction pooler URLs may fail because validation uses prepared query execution.
   - Prompt mode reads the DB URL with echo disabled where possible and unsets it on exit.
+  - Prompt-parts mode asks for project ref/host plus password separately, URL-encodes
+    the password, and unsets the constructed URL on exit.
   - Do not commit raw SQL output from the broader operator audit.
 USAGE
 }
 
 mode="rls"
 prompt_for_db_url=false
+prompt_for_db_parts=false
 while [[ $# -gt 0 ]]; do
   case "$1" in
     "--rls")
@@ -36,6 +39,9 @@ while [[ $# -gt 0 ]]; do
       ;;
     "--prompt")
       prompt_for_db_url=true
+      ;;
+    "--prompt-parts")
+      prompt_for_db_parts=true
       ;;
     "-h" | "--help")
       usage
@@ -49,6 +55,11 @@ while [[ $# -gt 0 ]]; do
   esac
   shift
 done
+
+if [[ "$prompt_for_db_url" == true && "$prompt_for_db_parts" == true ]]; then
+  echo "Use either --prompt or --prompt-parts, not both." >&2
+  exit 64
+fi
 
 script_dir="$(cd -- "$(dirname -- "${BASH_SOURCE[0]}")" && pwd)"
 repo_root="$(cd -- "${script_dir}/../.." && pwd)"
@@ -112,11 +123,43 @@ cleanup_runner() {
   if [[ -n "$temp_sql_dir" && -d "$temp_sql_dir" ]]; then
     rm -rf "$temp_sql_dir"
   fi
+  unset db_url_input db_password_input encoded_password project_or_host_input db_host
   if [[ "$prompt_loaded_db_url" == true ]]; then
     unset SUPABASE_STAGING_DB_URL
   fi
 }
 trap cleanup_runner EXIT
+
+read_hidden_line() {
+  local prompt="$1"
+  local __result_var="$2"
+  local input=""
+  local stty_state=""
+
+  printf "%s" "$prompt" >&2
+  if [[ -t 0 ]]; then
+    stty_state="$(stty -g 2>/dev/null || true)"
+    if [[ -n "$stty_state" ]]; then
+      stty -echo
+    fi
+  fi
+  IFS= read -r input || input=""
+  if [[ -n "$stty_state" ]]; then
+    stty "$stty_state"
+    printf "\n" >&2
+  fi
+
+  printf -v "$__result_var" "%s" "$input"
+}
+
+url_encode_stdin() {
+  if ! command -v node >/dev/null 2>&1; then
+    echo "Node.js is required for --prompt-parts password encoding, but it was not found on PATH." >&2
+    exit 127
+  fi
+
+  node -e 'let input = ""; process.stdin.setEncoding("utf8"); process.stdin.on("data", (chunk) => { input += chunk; }); process.stdin.on("end", () => { process.stdout.write(encodeURIComponent(input)); });'
+}
 
 if [[ "$prompt_for_db_url" == true ]]; then
   printf "Paste staging Supabase direct DB URL (input hidden): " >&2
@@ -143,9 +186,58 @@ if [[ "$prompt_for_db_url" == true ]]; then
   export SUPABASE_STAGING_DB_URL="$db_url_input"
   unset db_url_input
   prompt_loaded_db_url=true
+elif [[ "$prompt_for_db_parts" == true ]]; then
+  printf "Staging Supabase project ref or direct host: " >&2
+  project_or_host_input=""
+  IFS= read -r project_or_host_input || project_or_host_input=""
+  project_or_host_input="${project_or_host_input#"${project_or_host_input%%[![:space:]]*}"}"
+  project_or_host_input="${project_or_host_input%"${project_or_host_input##*[![:space:]]}"}"
+
+  if [[ -z "$project_or_host_input" ]]; then
+    echo "Missing staging project ref or direct host." >&2
+    unset project_or_host_input
+    exit 1
+  fi
+
+  if [[ "$project_or_host_input" == *"://"* || "$project_or_host_input" == *"/"* || "$project_or_host_input" == *"@"* || "$project_or_host_input" == *":"* ]]; then
+    echo "Invalid staging project ref or host. Enter a bare project ref or direct host, not a URL." >&2
+    unset project_or_host_input
+    exit 1
+  fi
+
+  if [[ "$project_or_host_input" == "jquebthneczqdxagagof" || "$project_or_host_input" == *"jquebthneczqdxagagof"* ]]; then
+    echo "Refusing to construct a database URL for the production Supabase project ref." >&2
+    unset project_or_host_input
+    exit 1
+  fi
+
+  db_host="$project_or_host_input"
+  if [[ "$db_host" != *"."* ]]; then
+    db_host="db.${db_host}.supabase.co"
+  fi
+  if [[ "$db_host" != db.*.supabase.co ]]; then
+    echo "Invalid staging host. Expected a direct Supabase DB host like db.<project-ref>.supabase.co." >&2
+    unset project_or_host_input db_host
+    exit 1
+  fi
+
+  db_password_input=""
+  read_hidden_line "Staging database password (input hidden): " db_password_input
+  if [[ -z "$db_password_input" ]]; then
+    echo "Missing staging database password." >&2
+    unset project_or_host_input db_host db_password_input
+    exit 1
+  fi
+
+  encoded_password="$(printf "%s" "$db_password_input" | url_encode_stdin)"
+  unset db_password_input
+
+  export SUPABASE_STAGING_DB_URL="postgresql://postgres:${encoded_password}@${db_host}:5432/postgres"
+  unset encoded_password project_or_host_input db_host
+  prompt_loaded_db_url=true
 elif [[ -z "${SUPABASE_STAGING_DB_URL:-}" ]]; then
   echo "Missing SUPABASE_STAGING_DB_URL." >&2
-  echo "Export SUPABASE_STAGING_DB_URL explicitly without printing it, or rerun with --prompt." >&2
+  echo "Export SUPABASE_STAGING_DB_URL explicitly without printing it, or rerun with --prompt-parts." >&2
   exit 1
 fi
 

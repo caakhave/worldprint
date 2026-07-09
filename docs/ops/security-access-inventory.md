@@ -63,7 +63,7 @@ The following must never be exposed in browser code, committed files, screenshot
 - Stripe webhook processing records event IDs in `stripe_webhook_events` and validates configured price IDs before granting Pro.
 - Challenge email sends require a signed-in user, service-side rate-limit ledger, and spoiler-safe invite payload.
 - `supabase/tests/rls_security_checks.sql` validates forced RLS and browser grant posture for core account/game/billing tables plus the `challenge_email_sends` service-only ledger.
-- `scripts/ops/validate-supabase-staging.sh` provides a safe staging-only SQL validation path. It supports `--prompt` for humans, requires `SUPABASE_STAGING_DB_URL` for non-prompt automation, uses `supabase db query --db-url`, splits multi-statement SQL into discrete CLI calls, and does not use linked project state.
+- `scripts/ops/validate-supabase-staging.sh` provides a safe staging-only SQL validation path. It supports `--prompt-parts` for humans, keeps `--prompt` for full-URL entry, requires `SUPABASE_STAGING_DB_URL` for non-prompt automation, uses `supabase db query --db-url`, splits multi-statement SQL into discrete CLI calls, and does not use linked project state.
 - Root `.gitignore` ignores `.env*`, build output, reports, test results, and Supabase `.temp`.
 - Black-box QA has separate ignore rules for `.env`, reports, exports, screenshots, caches, and virtualenvs.
 
