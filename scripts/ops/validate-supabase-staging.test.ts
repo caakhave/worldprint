@@ -1,7 +1,7 @@
 import { chmodSync, mkdtempSync, readFileSync, rmSync, writeFileSync } from "node:fs";
 import { tmpdir } from "node:os";
 import { join } from "node:path";
-import { execFileSync } from "node:child_process";
+import { execFileSync, spawnSync } from "node:child_process";
 
 const runner = readFileSync("scripts/ops/validate-supabase-staging.sh", "utf8");
 const ownerGuide = readFileSync("docs/ops/supabase-owner-guide.md", "utf8");
@@ -25,9 +25,31 @@ function runAndCaptureFailure(env: NodeJS.ProcessEnv) {
   throw new Error("Expected command to fail");
 }
 
+function writeSupabaseCountingStub(tmp: string) {
+  const supabaseStub = join(tmp, "supabase");
+  const countFile = join(tmp, "count");
+  writeFileSync(
+    supabaseStub,
+    `#!/usr/bin/env bash
+count_file="${countFile}"
+count=0
+if [[ -f "$count_file" ]]; then
+  count="$(cat "$count_file")"
+fi
+printf "%s" "$((count + 1))" > "$count_file"
+exit 0
+`,
+    { mode: 0o700 }
+  );
+  chmodSync(supabaseStub, 0o700);
+
+  return { countFile };
+}
+
 describe("staging Supabase validation runner", () => {
   it("requires the explicit staging database URL and references the RLS validation SQL", () => {
     expect(runner).toContain("SUPABASE_STAGING_DB_URL");
+    expect(runner).toContain("--prompt");
     expect(runner).toContain("supabase/tests/rls_security_checks.sql");
     expect(runner).toContain("docs/ops/supabase-validation.sql");
   });
@@ -52,22 +74,7 @@ describe("staging Supabase validation runner", () => {
   it("allows the explicit staging URL through the guard without printing it", () => {
     const tmp = mkdtempSync(join(tmpdir(), "cgy-supabase-stub-"));
     try {
-      const supabaseStub = join(tmp, "supabase");
-      const countFile = join(tmp, "count");
-      writeFileSync(
-        supabaseStub,
-        `#!/usr/bin/env bash
-count_file="${countFile}"
-count=0
-if [[ -f "$count_file" ]]; then
-  count="$(cat "$count_file")"
-fi
-printf "%s" "$((count + 1))" > "$count_file"
-exit 0
-`,
-        { mode: 0o700 }
-      );
-      chmodSync(supabaseStub, 0o700);
+      const { countFile } = writeSupabaseCountingStub(tmp);
 
       const output = execFileSync("scripts/ops/validate-supabase-staging.sh", [], {
         encoding: "utf8",
@@ -85,6 +92,47 @@ exit 0
     } finally {
       rmSync(tmp, { recursive: true, force: true });
     }
+  });
+
+  it("accepts a prompted staging URL without printing it", () => {
+    const tmp = mkdtempSync(join(tmpdir(), "cgy-supabase-prompt-stub-"));
+    try {
+      const { countFile } = writeSupabaseCountingStub(tmp);
+      const promptedUrl = ["postgres", "://", "staging-user", ":", "dummy-secret", "@", "example.invalid/db"].join("");
+      const result = spawnSync("scripts/ops/validate-supabase-staging.sh", ["--prompt"], {
+        encoding: "utf8",
+        env: {
+          HOME: process.env.HOME ?? "",
+          NODE_ENV: "test",
+          PATH: `${tmp}:/bin:/usr/bin`,
+        },
+        input: `${promptedUrl}\n`,
+      });
+
+      expect(result.status).toBe(0);
+      expect(`${result.stdout}${result.stderr}`).not.toContain("dummy-secret");
+      expect(readFileSync(countFile, "utf8")).toBe("2");
+    } finally {
+      rmSync(tmp, { recursive: true, force: true });
+    }
+  });
+
+  it("rejects invalid prompted input without printing it", () => {
+    const invalidInput = "not-a-postgres-dummy-secret";
+    const result = spawnSync("scripts/ops/validate-supabase-staging.sh", ["--prompt"], {
+      encoding: "utf8",
+      env: {
+        HOME: process.env.HOME ?? "",
+        NODE_ENV: "test",
+        PATH: "/bin:/usr/bin",
+      },
+      input: `${invalidInput}\n`,
+    });
+
+    expect(result.status).not.toBe(0);
+    expect(result.stderr).toContain("Invalid staging DB URL");
+    expect(`${result.stdout}${result.stderr}`).not.toContain(invalidInput);
+    expect(`${result.stdout}${result.stderr}`).not.toContain("dummy-secret");
   });
 
   it("refuses generic database variables by name only", () => {
@@ -116,7 +164,9 @@ exit 0
   it("documents direct connection preference and transaction pooler caveats", () => {
     expect(ownerGuide).toContain("direct Supabase database connection string");
     expect(ownerGuide).toContain("Transaction-pooler");
+    expect(ownerGuide).toContain("pnpm ops:supabase:staging-rls -- --prompt");
     expect(environmentGuide).toContain("direct Supabase database connection string");
     expect(environmentGuide).toContain("port `6543`");
+    expect(environmentGuide).toContain("pnpm ops:supabase:staging-rls -- --prompt");
   });
 });

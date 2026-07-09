@@ -5,12 +5,13 @@ set +x
 usage() {
   cat <<'USAGE'
 Usage:
-  scripts/ops/validate-supabase-staging.sh [--operator-audit|--full]
+  scripts/ops/validate-supabase-staging.sh [--prompt] [--operator-audit|--full]
 
 Runs read-only Supabase validation SQL against the staging database.
 
 Required environment:
-  SUPABASE_STAGING_DB_URL must be exported by the operator before running.
+  SUPABASE_STAGING_DB_URL must be exported by the operator before running,
+  unless --prompt is used.
 
 Safety:
   - This script never prints the database URL.
@@ -18,28 +19,36 @@ Safety:
   - This script does not use linked Supabase project state.
   - Prefer the direct Supabase database connection string.
   - Transaction pooler URLs may fail because validation uses prepared query execution.
+  - Prompt mode reads the DB URL with echo disabled where possible and unsets it on exit.
   - Do not commit raw SQL output from the broader operator audit.
 USAGE
 }
 
 mode="rls"
-case "${1:-}" in
-  "" | "--rls")
-    mode="rls"
-    ;;
-  "--operator-audit" | "--full")
-    mode="operator-audit"
-    ;;
-  "-h" | "--help")
-    usage
-    exit 0
-    ;;
-  *)
-    echo "Unknown option: $1" >&2
-    usage >&2
-    exit 64
-    ;;
-esac
+prompt_for_db_url=false
+while [[ $# -gt 0 ]]; do
+  case "$1" in
+    "--rls")
+      mode="rls"
+      ;;
+    "--operator-audit" | "--full")
+      mode="operator-audit"
+      ;;
+    "--prompt")
+      prompt_for_db_url=true
+      ;;
+    "-h" | "--help")
+      usage
+      exit 0
+      ;;
+    *)
+      echo "Unknown option: $1" >&2
+      usage >&2
+      exit 64
+      ;;
+  esac
+  shift
+done
 
 script_dir="$(cd -- "$(dirname -- "${BASH_SOURCE[0]}")" && pwd)"
 repo_root="$(cd -- "${script_dir}/../.." && pwd)"
@@ -97,9 +106,46 @@ if (( ${#offending_env_names[@]} > 0 )); then
   exit 1
 fi
 
-if [[ -z "${SUPABASE_STAGING_DB_URL:-}" ]]; then
+prompt_loaded_db_url=false
+temp_sql_dir=""
+cleanup_runner() {
+  if [[ -n "$temp_sql_dir" && -d "$temp_sql_dir" ]]; then
+    rm -rf "$temp_sql_dir"
+  fi
+  if [[ "$prompt_loaded_db_url" == true ]]; then
+    unset SUPABASE_STAGING_DB_URL
+  fi
+}
+trap cleanup_runner EXIT
+
+if [[ "$prompt_for_db_url" == true ]]; then
+  printf "Paste staging Supabase direct DB URL (input hidden): " >&2
+  db_url_input=""
+  stty_state=""
+  if [[ -t 0 ]]; then
+    stty_state="$(stty -g 2>/dev/null || true)"
+    if [[ -n "$stty_state" ]]; then
+      stty -echo
+    fi
+  fi
+  IFS= read -r db_url_input || db_url_input=""
+  if [[ -n "$stty_state" ]]; then
+    stty "$stty_state"
+    printf "\n" >&2
+  fi
+
+  if [[ ! "$db_url_input" =~ ^postgres(ql)?:// ]]; then
+    echo "Invalid staging DB URL. Expected a postgres:// or postgresql:// connection string." >&2
+    unset db_url_input
+    exit 1
+  fi
+
+  export SUPABASE_STAGING_DB_URL="$db_url_input"
+  unset db_url_input
+  prompt_loaded_db_url=true
+elif [[ -z "${SUPABASE_STAGING_DB_URL:-}" ]]; then
   echo "Missing SUPABASE_STAGING_DB_URL." >&2
-  echo "Export SUPABASE_STAGING_DB_URL explicitly without printing it, then rerun." >&2
+  echo "Export SUPABASE_STAGING_DB_URL explicitly without printing it, or rerun with --prompt." >&2
   exit 1
 fi
 
@@ -112,14 +158,6 @@ if [[ "$SUPABASE_STAGING_DB_URL" == *"pooler.supabase.com"* || "$SUPABASE_STAGIN
   echo "Warning: the staging DB URL looks like a Supabase pooler connection." >&2
   echo "Prefer the direct database connection for validation; transaction pooling can conflict with prepared SQL execution." >&2
 fi
-
-temp_sql_dir=""
-cleanup_temp_sql_dir() {
-  if [[ -n "$temp_sql_dir" && -d "$temp_sql_dir" ]]; then
-    rm -rf "$temp_sql_dir"
-  fi
-}
-trap cleanup_temp_sql_dir EXIT
 
 run_sql_file_statements() {
   local source_file="$1"
