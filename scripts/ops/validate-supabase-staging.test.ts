@@ -4,6 +4,8 @@ import { join } from "node:path";
 import { execFileSync } from "node:child_process";
 
 const runner = readFileSync("scripts/ops/validate-supabase-staging.sh", "utf8");
+const ownerGuide = readFileSync("docs/ops/supabase-owner-guide.md", "utf8");
+const environmentGuide = readFileSync("docs/ops/staging-production-environments.md", "utf8");
 const packageJson = JSON.parse(readFileSync("package.json", "utf8")) as {
   scripts: Record<string, string>;
 };
@@ -34,6 +36,8 @@ describe("staging Supabase validation runner", () => {
     expect(runner).not.toContain("--linked");
     expect(runner).not.toContain("--project-ref");
     expect(runner).toContain("--db-url");
+    expect(runner).not.toContain('--file "$sql_file"');
+    expect(runner).toContain("run_sql_file_statements");
   });
 
   it("exposes package scripts that call the safe runner", () => {
@@ -49,7 +53,20 @@ describe("staging Supabase validation runner", () => {
     const tmp = mkdtempSync(join(tmpdir(), "cgy-supabase-stub-"));
     try {
       const supabaseStub = join(tmp, "supabase");
-      writeFileSync(supabaseStub, "#!/usr/bin/env bash\nexit 0\n", { mode: 0o700 });
+      const countFile = join(tmp, "count");
+      writeFileSync(
+        supabaseStub,
+        `#!/usr/bin/env bash
+count_file="${countFile}"
+count=0
+if [[ -f "$count_file" ]]; then
+  count="$(cat "$count_file")"
+fi
+printf "%s" "$((count + 1))" > "$count_file"
+exit 0
+`,
+        { mode: 0o700 }
+      );
       chmodSync(supabaseStub, 0o700);
 
       const output = execFileSync("scripts/ops/validate-supabase-staging.sh", [], {
@@ -64,6 +81,7 @@ describe("staging Supabase validation runner", () => {
       });
 
       expect(output).not.toContain("dummy-secret");
+      expect(readFileSync(countFile, "utf8")).toBe("2");
     } finally {
       rmSync(tmp, { recursive: true, force: true });
     }
@@ -93,5 +111,12 @@ describe("staging Supabase validation runner", () => {
 
     expect(stderr).toContain("SUPABASE_PRODUCTION_DB_URL");
     expect(stderr).not.toContain("dummy-secret");
+  });
+
+  it("documents direct connection preference and transaction pooler caveats", () => {
+    expect(ownerGuide).toContain("direct Supabase database connection string");
+    expect(ownerGuide).toContain("Transaction-pooler");
+    expect(environmentGuide).toContain("direct Supabase database connection string");
+    expect(environmentGuide).toContain("port `6543`");
   });
 });
