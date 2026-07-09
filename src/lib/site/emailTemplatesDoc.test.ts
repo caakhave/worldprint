@@ -45,6 +45,8 @@ describe("user-facing email template docs", () => {
   it("documents the repo-controlled challenge email and external email ownership boundaries", () => {
     expect(emailTemplatesDoc).toContain("Repo-Controlled Challenge Email");
     expect(emailTemplatesDoc).toContain("supabase/functions/_shared/challengeInvites.ts");
+    expect(emailTemplatesDoc).toContain("You’ve been challenged on Can You Geo");
+    expect(emailTemplatesDoc).toContain("never `Can You Geo Ops`");
     expect(emailTemplatesDoc).toContain("Play the challenge");
     expect(emailTemplatesDoc).toContain("plain-text fallback with the raw challenge URL");
     expect(emailTemplatesDoc).toContain("Stripe dashboard controls billing receipts");

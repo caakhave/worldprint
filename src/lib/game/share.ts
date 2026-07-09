@@ -146,7 +146,7 @@ export function buildChallengeShareTarget(run: RunState, challengeUrl: string): 
 
 export function buildEmailChallengeHref(target: ChallengeShareTarget): string {
   const params = new URLSearchParams({
-    subject: "Can you beat my Can You Geo score?",
+    subject: "You’ve been challenged on Can You Geo",
     body: `${target.text}\n\nOpen the challenge:\n${target.url}`
   });
   return `mailto:?${params.toString()}`;

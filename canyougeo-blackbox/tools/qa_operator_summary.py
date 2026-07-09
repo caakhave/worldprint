@@ -47,6 +47,7 @@ def main() -> int:
     print_section("Root Package Shortcuts")
     print_command("pnpm qa:blackbox:operator")
     print_command("pnpm qa:blackbox:test")
+    print_command("pnpm qa:blackbox:prod-smoke")
     print_command("pnpm qa:blackbox:smoke")
     print_command("pnpm qa:blackbox:mobile")
     print_command("pnpm qa:blackbox:export")
@@ -56,6 +57,7 @@ def main() -> int:
     print_command("CGY_TARGET=test pytest -m smoke --html=reports/smoke.html --self-contained-html")
     print_command("CGY_TARGET=test pytest -m mobile --html=reports/mobile.html --self-contained-html")
     print_command("CGY_TARGET=test pytest -m auth --html=reports/auth.html --self-contained-html")
+    print_command("CGY_TARGET=apex pytest -m prod_smoke --html=reports/prod-smoke.html --self-contained-html")
     print_command("CGY_TARGET=apex pytest --html=reports/apex.html --self-contained-html")
     print_command("CGY_TARGET=www pytest --html=reports/www.html --self-contained-html")
     print_command("python tools/export_suite.py")
@@ -65,6 +67,7 @@ def main() -> int:
     print("  reports/smoke.html")
     print("  reports/mobile.html")
     print("  reports/auth.html")
+    print("  reports/prod-smoke.html")
     print("  reports/screenshots/")
 
     print_section("Operator Docs")

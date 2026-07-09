@@ -133,7 +133,8 @@ describe("challenge invite helpers", () => {
     expect(request.url).toBe("https://api.resend.com/emails");
     expect(body.from).toBe("Can You Geo Challenges <challenge@mail.canyougeo.com>");
     expect(body.to).toEqual(["friend@example.com"]);
-    expect(body.subject).toBe("Can You Geo Mystery Map challenge: 2,400 to beat");
+    expect(body.subject).toBe("You’ve been challenged on Can You Geo");
+    expect(String(body.subject)).not.toContain("Ops");
     expect(body.text).toEqual(expect.any(String));
     expect(body.html).toEqual(expect.any(String));
     expect(email.text).toContain("2,400 out of 3,000");
@@ -166,6 +167,30 @@ describe("challenge invite helpers", () => {
     expect(email.html).not.toMatch(/Brazil|Japan|World Bank|api\.worldbank|hidden indicator/i);
     expect(String(request.init.body)).not.toContain("re_secret_test");
     expect(String(request.init.body)).not.toContain("audience");
+  });
+
+  it("keeps challenge invite sender display public-facing when an ops fallback sender is configured", () => {
+    const decoded = decodeChallengeInviteCode(validChallengeCode);
+    expect(decoded.ok).toBe(true);
+    if (!decoded.ok) return;
+
+    const email = buildChallengeInviteEmail({
+      config: {
+        fromEmail: "Can You Geo Ops <notify@mail.canyougeo.com>",
+        siteUrl: "https://test.canyougeo.com"
+      },
+      recipientEmail: "friend@example.com",
+      challengeCode: validChallengeCode,
+      message: null,
+      payload: decoded.payload
+    });
+    const request = buildResendChallengeInviteRequest({ apiKey: "re_secret_test", email });
+    const body = JSON.parse(String(request.init.body)) as Record<string, unknown>;
+
+    expect(email.from).toBe("Can You Geo <notify@mail.canyougeo.com>");
+    expect(body.from).toBe("Can You Geo <notify@mail.canyougeo.com>");
+    expect(email.subject).toBe("You’ve been challenged on Can You Geo");
+    expect(JSON.stringify(body)).not.toContain("Can You Geo Ops");
   });
 
   it("enforces conservative rate limit decisions and hashes recipient data", async () => {

@@ -85,6 +85,7 @@ CGY_TARGET=local pytest --html=reports/local.html --self-contained-html
 Production after launch:
 
 ```bash
+CGY_TARGET=apex pytest -m prod_smoke --html=reports/prod-smoke.html --self-contained-html
 CGY_TARGET=apex pytest --html=reports/apex.html --self-contained-html
 CGY_TARGET=www pytest --html=reports/www.html --self-contained-html
 ```
@@ -92,6 +93,7 @@ CGY_TARGET=www pytest --html=reports/www.html --self-contained-html
 There is no separate `CGY_TARGET=prod` target. From the repo root, production smoke uses:
 
 ```bash
+pnpm qa:blackbox:prod-smoke
 pnpm qa:blackbox:apex
 pnpm qa:blackbox:www
 ```
@@ -100,6 +102,7 @@ Root package shortcuts are also available from the app repo root:
 
 ```bash
 pnpm qa:blackbox:operator
+pnpm qa:blackbox:prod-smoke
 pnpm qa:blackbox:smoke
 pnpm qa:blackbox:mobile
 pnpm qa:blackbox:test
