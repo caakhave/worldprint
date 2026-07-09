@@ -230,15 +230,15 @@ Apply migrations separately per Supabase project using the currently approved da
 Run staging RLS checks after migrations with the safe wrapper:
 
 ```bash
-pnpm ops:supabase:staging-rls
+pnpm ops:supabase:staging-rls -- --prompt
 ```
 
-The operator must manually export `SUPABASE_STAGING_DB_URL` before running the command. Do not echo, paste, log, or commit that value. Use the direct Supabase database connection string, not the transaction-pooler URL. Pooler hosts and port `6543` may fail because Supabase CLI query execution can use prepared statements. The wrapper splits the validation SQL into discrete statements and runs each with `supabase db query --db-url`.
+Prompt mode is recommended for humans because it reads the staging DB URL interactively with echo disabled where possible, never prints it, and unsets it on exit. Automation may still manually export `SUPABASE_STAGING_DB_URL` before running the command. Do not echo, paste, log, or commit that value. Use the direct Supabase database connection string, not the transaction-pooler URL. Pooler hosts and port `6543` may fail because Supabase CLI query execution can use prepared statements. The wrapper splits the validation SQL into discrete statements and runs each with `supabase db query --db-url`.
 
 For broader staging owner review:
 
 ```bash
-pnpm ops:supabase:staging-audit
+pnpm ops:supabase:staging-audit -- --prompt
 ```
 
 The audit command runs `docs/ops/supabase-validation.sql`; its raw output may include operational details and should not be committed. Production SQL validation requires a separately approved production process and must not use the staging runner.

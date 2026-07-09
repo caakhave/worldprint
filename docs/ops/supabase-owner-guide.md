@@ -199,15 +199,15 @@ Only these trusted paths should write subscription or entitlement state. Browser
 Run staging RLS validation through the safe wrapper from the repo root:
 
 ```bash
-pnpm ops:supabase:staging-rls
+pnpm ops:supabase:staging-rls -- --prompt
 ```
 
-The wrapper requires the operator to export `SUPABASE_STAGING_DB_URL` first. Do not print the value, paste it into chat, commit it, or store it in docs. The wrapper uses `supabase db query --db-url` and does not rely on linked Supabase state. Prefer the direct Supabase database connection string for this value. Transaction-pooler connection strings, including pooler hosts or port `6543`, can conflict with prepared SQL execution and should be avoided for validation.
+Prompt mode asks for the staging DB URL with echo disabled where possible, never prints it, and unsets it on exit. Automation may still export `SUPABASE_STAGING_DB_URL` before running `pnpm ops:supabase:staging-rls`, but humans should prefer prompt mode to avoid pasting secrets into shell history. Do not print the value, paste it into chat, commit it, or store it in docs. The wrapper uses `supabase db query --db-url` and does not rely on linked Supabase state. Prefer the direct Supabase database connection string for this value. Transaction-pooler connection strings, including pooler hosts or port `6543`, can conflict with prepared SQL execution and should be avoided for validation.
 
 For a broader owner audit, run:
 
 ```bash
-pnpm ops:supabase:staging-audit
+pnpm ops:supabase:staging-audit -- --prompt
 ```
 
 That command runs `docs/ops/supabase-validation.sql`. It is read-only and intended for owner review, but the output may include operational details. Do not commit raw SQL output.
