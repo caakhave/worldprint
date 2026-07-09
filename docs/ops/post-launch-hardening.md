@@ -8,10 +8,17 @@ Use this as a lightweight backlog for non-blocking launch follow-up. Do not trea
 
 ## Operations Follow-Up
 
-- Check Search Console sitemap processing over the next few days.
-- Check GA4 normal traffic outside Realtime after launch-day traffic settles.
-- Verify Stripe public-facing business name and statement descriptor say Can You Geo or a similarly recognizable name.
-- Record the Cloudflare Access service-token expiration date and add a rotation reminder before expiry.
+## Completed Manual Checks
+
+- Stripe public-facing business name and statement descriptor looked recognizable for Can You Geo as of the July 9, 2026 post-launch check.
+- Search Console sitemap processing showed Success, last read Jul 8, 2026, with 14 discovered pages.
+- Search Console unused ownership tokens check was clear as of manual review: 0 unused ownership tokens detected, so no token cleanup is currently needed.
+- GA4 normal reports are receiving data beyond Realtime.
+- Cloudflare Access service token expires July 9, 2027 at 08:39 AM.
+- A reminder exists for June 9, 2027 at 9:00 AM to rotate the Cloudflare Access service token before expiry.
+
+## Remaining Follow-Up
+
 - Upgrade Supabase later once there are real users or paid customers.
 - Decide whether guest refresh should resume signed-out sample games.
 - Clean up stale billing docs and decide where the untracked `atd/` scratch folder should live long term.
