@@ -221,24 +221,27 @@ Required Stripe Edge Function secret names when configuring an environment:
 
 ## Database And Migrations
 
-Apply migrations separately per Supabase project.
+Apply migrations separately per Supabase project using an explicit database URL for the
+target environment. Do not rely on `supabase/.temp`, and do not use project-ref
+shortcuts for database migrations.
 
 Staging:
 
 ```bash
-supabase db push --project-ref hsgpjtyysbremrokkoym
+supabase db push --db-url "$SUPABASE_STAGING_DB_URL" --include-all
 ```
 
 Production:
 
 ```bash
-supabase db push --project-ref jquebthneczqdxagagof
+supabase db push --db-url "$SUPABASE_PROD_DB_URL" --include-all
 ```
 
 Run RLS checks after migrations:
 
 ```bash
-supabase db query --project-ref <target-ref> < supabase/tests/rls_security_checks.sql
+supabase db query --db-url "$SUPABASE_STAGING_DB_URL" --file supabase/tests/rls_security_checks.sql
+supabase db query --db-url "$SUPABASE_PROD_DB_URL" --file supabase/tests/rls_security_checks.sql
 ```
 
 Expected tables include:
