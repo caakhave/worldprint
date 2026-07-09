@@ -130,6 +130,19 @@ The repository now includes `.github/workflows/ci.yml`, a lightweight GitHub Act
 
 Required checks remain intentionally deferred until these check names have been observed as stable and green in GitHub.
 
+Observed staging verification:
+
+- Commit: `80e4f553792c88dd88e784eb6b7b0b429a970cec`
+- Workflow run: `CI`, push to `staging`, run ID `29054559420`
+- Result: passed on 2026-07-09 UTC
+- Jobs observed as passed:
+  - `CI / test`
+  - `CI / lint`
+  - `CI / typecheck`
+  - `CI / build`
+
+Required status checks remain deferred until the same CI workflow also passes from `main` after promotion.
+
 Optional/manual jobs:
 
 - `pnpm qa:blackbox:prod-smoke` after production deploys.
