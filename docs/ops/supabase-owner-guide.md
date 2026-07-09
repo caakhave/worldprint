@@ -199,17 +199,17 @@ Only these trusted paths should write subscription or entitlement state. Browser
 Run staging RLS validation through the safe wrapper from the repo root:
 
 ```bash
-pnpm ops:supabase:staging-rls -- --prompt-parts
+scripts/ops/validate-supabase-staging.sh --project-ref hsgpjtyysbremrokkoym --prompt-password
 ```
 
-Prompt-parts mode asks for the staging project ref or direct host, then asks for the database password with echo disabled where possible. It URL-encodes the password, constructs a direct database URL internally, never prints it, and unsets it on exit. Automation may still export `SUPABASE_STAGING_DB_URL` before running `pnpm ops:supabase:staging-rls`, and full-URL prompt mode remains available with `--prompt`, but humans should prefer `--prompt-parts` to avoid pasting connection strings into shell history. Do not print the value, paste it into chat, commit it, or store it in docs. The wrapper uses `supabase db query --db-url` and does not rely on linked Supabase state. Prefer the direct Supabase database connection string for this value. Transaction-pooler connection strings, including pooler hosts or port `6543`, can conflict with prepared SQL execution and should be avoided for validation.
+This direct script form is recommended for humans: the staging project ref is not a password, and the operator only types or pastes the database password at the hidden password prompt. The runner URL-encodes the password, constructs a direct database URL internally, never prints it, and unsets it on exit. Automation may still export `SUPABASE_STAGING_DB_URL` before running `pnpm ops:supabase:staging-rls`, and legacy full-URL prompt modes remain available with `--prompt` or `--prompt-parts`, but avoid pasting full DB URLs into shell command text. Do not print the value, paste secrets into chat, commit them, or store them in docs. The wrapper uses `supabase db query --db-url` and does not rely on linked Supabase state. Prefer the direct Supabase database connection string for this value. Transaction-pooler connection strings, including pooler hosts or port `6543`, can conflict with prepared SQL execution and should be avoided for validation.
 
-If validation reaches the remote host but fails with `FATAL: password authentication failed`, treat it as a credential-entry problem rather than an RLS finding: the DB password may be wrong, may not have propagated after a dashboard reset, or may have been incorrectly encoded in a pasted URL. Wait a few minutes after password rotation, avoid repeated rapid retries, and use `--prompt-parts` so the runner handles URL encoding. If needed, reset the staging DB password to a long alphanumeric-only password to reduce URL-encoding mistakes.
+If validation reaches the remote host but fails with `FATAL: password authentication failed`, treat it as a credential-entry problem rather than an RLS finding: the DB password may be wrong, may not have propagated after a dashboard reset, or may have been incorrectly encoded in a pasted URL. Wait a few minutes after password rotation, avoid repeated rapid retries, and use `--project-ref hsgpjtyysbremrokkoym --prompt-password` so the runner handles URL encoding. If needed, reset the staging DB password to a long alphanumeric-only password to reduce URL-encoding mistakes.
 
 For a broader owner audit, run:
 
 ```bash
-pnpm ops:supabase:staging-audit -- --prompt-parts
+scripts/ops/validate-supabase-staging.sh --project-ref hsgpjtyysbremrokkoym --prompt-password --operator-audit
 ```
 
 That command runs `docs/ops/supabase-validation.sql`. It is read-only and intended for owner review, but the output may include operational details. Do not commit raw SQL output.
