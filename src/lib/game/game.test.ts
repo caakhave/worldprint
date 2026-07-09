@@ -574,7 +574,7 @@ describe("streaks and sharing", () => {
     expect(target.text).toContain(url);
     expect(target.text).toContain("Can You Geo? Mystery Map");
     expect(mailto).toMatch(/^mailto:\?/);
-    expect(mailto).toContain("Can+you+beat+my+Can+You+Geo+score%3F");
+    expect(mailto).toContain("You%E2%80%99ve+been+challenged+on+Can+You+Geo");
     expect(decodeURIComponent(mailto)).toContain(url);
     expect(containsSpoiler(`${target.text}\n${mailto}`, ["fertility rate", "World Bank", "Japan", "Brazil"])).toBe(false);
   });

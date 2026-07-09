@@ -51,6 +51,7 @@ export type ChallengeInviteEmail = {
 export const CHALLENGE_INVITE_DAILY_LIMIT = 5;
 export const CHALLENGE_INVITE_MAX_MESSAGE_LENGTH = 180;
 export const CHALLENGE_INVITE_MAX_BODY_BYTES = 4096;
+export const CHALLENGE_INVITE_SUBJECT = "You’ve been challenged on Can You Geo";
 
 const TIERS = new Set(["explorer", "analyst", "cartographer", "atlasMaster"]);
 const PAYLOAD_KEYS = new Set(["schemaVersion", "game", "kind", "contentVersion", "tier", "roundIds", "dateKey", "challenger", "checksum"]);
@@ -205,9 +206,6 @@ export function buildChallengeInviteEmail(input: {
     : "They sent you a spoiler-free Mystery Map challenge.";
   const solvedLine = challenger ? `${challenger.solvedCount}/${challenger.roundCount} maps solved · ${challenger.strip}` : "";
   const messageLines = input.message ? ["", "Their note:", input.message] : [];
-  const subject = challenger
-    ? `Can You Geo Mystery Map challenge: ${challenger.score.toLocaleString("en-US")} to beat`
-    : "Can You Geo Mystery Map challenge";
   const htmlScoreLine = challenger
     ? `They scored <strong>${escapeHtml(challenger.score.toLocaleString("en-US"))} out of ${escapeHtml(
         challenger.possible.toLocaleString("en-US")
@@ -226,9 +224,9 @@ export function buildChallengeInviteEmail(input: {
     : "";
 
   return {
-    from: input.config.fromEmail,
+    from: publicChallengeInviteFrom(input.config.fromEmail),
     to: [input.recipientEmail],
-    subject,
+    subject: CHALLENGE_INVITE_SUBJECT,
     text: [
       "A friend challenged you to Can You Geo? Mystery Map.",
       scoreLine,
@@ -264,6 +262,11 @@ export function buildChallengeInviteEmail(input: {
   </body>
 </html>`
   };
+}
+
+function publicChallengeInviteFrom(fromEmail: string): string {
+  const opsDisplayName = /^Can You Geo Ops\s*(<.+>)$/i.exec(fromEmail.trim());
+  return opsDisplayName ? `Can You Geo ${opsDisplayName[1]}` : fromEmail;
 }
 
 export function buildResendChallengeInviteRequest(input: { apiKey: string; email: ChallengeInviteEmail }): { url: string; init: RequestInit } {
