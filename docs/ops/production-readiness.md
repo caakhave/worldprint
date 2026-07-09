@@ -6,6 +6,8 @@ Do not commit `.env.local`, Stripe secrets, Supabase service-role keys, Resend A
 
 Deployment safety guardrails for environment separation, static security headers, billing mode transitions, and smoke QA live in `docs/ops/deployment-safety-v30.md`.
 
+The current staging/production split is documented in `docs/ops/staging-production-environments.md`. Use that document as the source of truth before changing Cloudflare env vars, Supabase Auth settings, Supabase Edge Functions, database migrations, Stripe billing, or Resend/SMTP settings.
+
 ## GitHub
 
 - Repository: `https://github.com/caakhave/worldprint`
@@ -70,10 +72,10 @@ Production values should point at:
 NEXT_PUBLIC_SITE_URL=https://canyougeo.com
 NEXT_PUBLIC_SUPABASE_URL=https://<project-ref>.supabase.co
 NEXT_PUBLIC_SUPABASE_ANON_KEY=<Supabase anon key>
-NEXT_PUBLIC_BILLING_MODE=disabled
+NEXT_PUBLIC_BILLING_MODE=live
 ```
 
-For the current project, `NEXT_PUBLIC_SUPABASE_URL` must be exactly:
+For the current production project, `NEXT_PUBLIC_SUPABASE_URL` must be exactly:
 
 ```text
 https://jquebthneczqdxagagof.supabase.co
@@ -99,13 +101,13 @@ RESEND_API_KEY
 
 Those values belong only in trusted server/dashboard contexts.
 
-Preview behavior:
+Preview/staging behavior:
 
+- `test.canyougeo.com` uses the staging Supabase project `hsgpjtyysbremrokkoym`.
 - Cloudflare preview builds may use their own `*.pages.dev` origins.
-- The app's account confirmation and password reset requests use `window.location.origin`, so preview email links target the preview origin that requested them.
-- Supabase Auth must allow that exact preview callback URL before preview account confirmation or reset can work.
-- If preview auth is not needed, keep preview deployments usable for public browsing but test sign-in only on localhost and production.
-- Keep preview `NEXT_PUBLIC_BILLING_MODE=disabled` unless running an intentional Stripe test-mode QA window.
+- The app's account confirmation and password reset requests use `window.location.origin`, so preview email links target the origin that requested them.
+- Supabase Auth must allow the exact callback URL before preview account confirmation or reset can work.
+- Staging/preview may use `NEXT_PUBLIC_BILLING_MODE=test` when running approved Stripe sandbox QA.
 
 ### Static Security Headers
 
@@ -125,25 +127,31 @@ Cloudflare Web Analytics currently injects `static.cloudflareinsights.com/beacon
 
 ## Supabase
 
-- Linked project ref: `jquebthneczqdxagagof`
-- Supabase project URL pattern: `https://jquebthneczqdxagagof.supabase.co`
+- Production project ref: `jquebthneczqdxagagof`
+- Production project URL pattern: `https://jquebthneczqdxagagof.supabase.co`
+- Staging project ref: `hsgpjtyysbremrokkoym`
+- Staging project URL pattern: `https://hsgpjtyysbremrokkoym.supabase.co`
 - Auth callback route: `/auth/callback`
 - Billing functions:
   - `stripe-checkout`
   - `stripe-portal`
   - `stripe-webhook`
+- Challenge email function:
+  - `send-challenge-email`
+
+Do not rely on `supabase/.temp` to choose the target project. It has been linked to production before. Use explicit `--project-ref` on every Supabase CLI command.
 
 ### Auth Redirects
 
 In Supabase Dashboard -> Authentication -> URL Configuration:
 
-Site URL:
+Production Site URL:
 
 ```text
 https://canyougeo.com
 ```
 
-Allowed Redirect URLs:
+Production Allowed Redirect URLs:
 
 ```text
 http://localhost:3000/auth/callback
@@ -152,13 +160,21 @@ https://canyougeo.com/auth/callback
 https://www.canyougeo.com/auth/callback
 ```
 
-For Cloudflare preview auth testing, add exact preview callback URLs such as:
+Staging Site URL:
 
 ```text
-https://<preview>.pages.dev/auth/callback
+https://test.canyougeo.com
 ```
 
-If using wildcard redirect patterns in Supabase, test them explicitly before relying on them for QA.
+Staging Allowed Redirect URLs:
+
+```text
+http://localhost:3000/auth/callback
+http://localhost:3001/auth/callback
+https://test.canyougeo.com/auth/callback
+```
+
+If using wildcard redirect patterns in Supabase, test them explicitly before relying on them for QA. Keep production Auth settings unchanged during staging-only work.
 
 ### Auth Email Templates
 
@@ -245,12 +261,22 @@ Notes:
 - `STRIPE_PRO_PRICE_ID` is a legacy local/dev fallback. Prefer separate monthly/yearly IDs.
 - Edge Function `NEXT_PUBLIC_SITE_URL` should be `https://canyougeo.com` for production so Checkout success, Checkout cancel, and Billing Portal return URLs come back to the production app.
 
-Deploy commands after secrets are ready:
+Staging deploy commands after secrets are ready:
 
 ```bash
-supabase functions deploy stripe-checkout --use-api
-supabase functions deploy stripe-portal --use-api
-supabase functions deploy stripe-webhook --use-api --no-verify-jwt
+supabase functions deploy send-challenge-email --project-ref hsgpjtyysbremrokkoym
+supabase functions deploy stripe-checkout --project-ref hsgpjtyysbremrokkoym
+supabase functions deploy stripe-portal --project-ref hsgpjtyysbremrokkoym
+supabase functions deploy stripe-webhook --project-ref hsgpjtyysbremrokkoym --no-verify-jwt
+```
+
+Production deploy commands require explicit approval:
+
+```bash
+supabase functions deploy send-challenge-email --project-ref jquebthneczqdxagagof
+supabase functions deploy stripe-checkout --project-ref jquebthneczqdxagagof
+supabase functions deploy stripe-portal --project-ref jquebthneczqdxagagof
+supabase functions deploy stripe-webhook --project-ref jquebthneczqdxagagof --no-verify-jwt
 ```
 
 ## Stripe
@@ -281,6 +307,16 @@ Production dependencies:
 - Billing Portal return URL comes from Edge Function `NEXT_PUBLIC_SITE_URL`: `/account`
 
 Keep test-mode and live-mode values separate. Do not mix test Stripe keys with live price IDs or live webhook secrets.
+
+Production live billing exists and uses production Supabase/Stripe values. Staging Stripe sandbox billing exists and must use only staging Supabase plus Stripe test-mode values.
+
+Stripe sandbox webhook endpoint:
+
+```text
+https://hsgpjtyysbremrokkoym.supabase.co/functions/v1/stripe-webhook
+```
+
+Do not point Stripe sandbox webhooks at production `jquebthneczqdxagagof`.
 
 ## Resend And Email
 

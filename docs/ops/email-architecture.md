@@ -10,6 +10,8 @@ Marketing emails are optional. Examples include new game announcements, weekly u
 
 No mass email sending or broadcast automation is implemented yet.
 
+The current staging/production environment split lives in `docs/ops/staging-production-environments.md`.
+
 ## Addresses And Providers
 
 Use Google Workspace for human mailboxes:
@@ -31,6 +33,39 @@ Use Resend for application-triggered transactional or owner/admin delivery where
 - future marketing broadcasts only after consent export/audience management is ready
 
 Google Workspace SMTP can be used for mailbox sending, but Resend is better for Edge Function and broadcast-style delivery because it has a simple HTTP API, delivery logs, domain verification, and audience/broadcast tooling.
+
+## Environment-Specific Email Setup
+
+Staging:
+
+- Frontend: `https://test.canyougeo.com`
+- Supabase project ref: `hsgpjtyysbremrokkoym`
+- Supabase Auth custom SMTP uses Resend SMTP.
+- `send-challenge-email` is deployed to the staging project and uses staging function secrets.
+- Challenge email links must use `https://test.canyougeo.com`.
+- Challenge email ledger rows must land in staging `public.challenge_email_sends`.
+
+Production:
+
+- Frontend: `https://canyougeo.com` and `https://www.canyougeo.com`
+- Supabase project ref: `jquebthneczqdxagagof`
+- Supabase Auth custom SMTP uses Resend SMTP.
+- `send-challenge-email` is deployed to the production project and uses production function secrets.
+- Challenge email links must use `https://canyougeo.com`.
+- Challenge email ledger rows must land in production `public.challenge_email_sends`.
+
+Use explicit Supabase project refs for Edge Function deploys. Do not rely on `supabase/.temp` for environment targeting.
+
+Supabase Auth SMTP non-secret fields in both projects:
+
+```text
+Host: smtp.resend.com
+Username: resend
+Port: 587
+Sender: Can You Geo <auth@canyougeo.com>
+```
+
+The SMTP password is the Resend API key and must not be committed, printed, or copied into browser-exposed Cloudflare env vars.
 
 ## Marketing Consent Storage
 
