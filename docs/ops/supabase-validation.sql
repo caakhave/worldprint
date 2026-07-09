@@ -65,6 +65,8 @@ union all
 select 'entitlements' as table_name, count(*) as rows from public.entitlements
 union all
 select 'stripe_webhook_events' as table_name, count(*) as rows from public.stripe_webhook_events
+union all
+select 'challenge_email_sends' as table_name, count(*) as rows from public.challenge_email_sends
 order by table_name;
 
 -- 7. Recent signed-in runs.
@@ -134,7 +136,8 @@ where n.nspname = 'public'
     'round_results',
     'user_stats',
     'entitlements',
-    'stripe_webhook_events'
+    'stripe_webhook_events',
+    'challenge_email_sends'
   )
   and c.relkind = 'r'
 order by c.relname;
@@ -157,7 +160,8 @@ where schemaname = 'public'
     'round_results',
     'user_stats',
     'entitlements',
-    'stripe_webhook_events'
+    'stripe_webhook_events',
+    'challenge_email_sends'
   )
 order by tablename, policyname;
 
@@ -175,7 +179,8 @@ where table_schema = 'public'
     'round_results',
     'user_stats',
     'entitlements',
-    'stripe_webhook_events'
+    'stripe_webhook_events',
+    'challenge_email_sends'
   )
   and grantee in ('anon', 'authenticated', 'service_role')
 order by table_name, grantee, privilege_type;
@@ -188,7 +193,8 @@ with expected_tables(table_name) as (
     ('round_results'),
     ('user_stats'),
     ('entitlements'),
-    ('stripe_webhook_events')
+    ('stripe_webhook_events'),
+    ('challenge_email_sends')
 ),
 rls_findings as (
   select
@@ -223,25 +229,25 @@ entitlement_write_grants as (
     and grantee = 'authenticated'
     and privilege_type <> 'SELECT'
 ),
-webhook_browser_grants as (
+service_ledger_browser_grants as (
   select
-    'BROWSER_WEBHOOK_EVENT_GRANT' as finding,
+    'BROWSER_SERVICE_LEDGER_GRANT' as finding,
     table_name,
     grantee || ':' || privilege_type as detail
   from information_schema.role_table_grants
   where table_schema = 'public'
-    and table_name = 'stripe_webhook_events'
+    and table_name in ('stripe_webhook_events', 'challenge_email_sends')
     and grantee in ('anon', 'authenticated')
 ),
 missing_policies as (
   select
     'NO_POLICY_DEFINED' as finding,
     et.table_name,
-    'Expected policies for browser-accessible tables. stripe_webhook_events may intentionally have none.' as detail
+    'Expected policies for browser-accessible tables. service-only ledgers may intentionally have none.' as detail
   from expected_tables et
   left join pg_policies p on p.schemaname = 'public' and p.tablename = et.table_name
   where p.policyname is null
-    and et.table_name <> 'stripe_webhook_events'
+    and et.table_name not in ('stripe_webhook_events', 'challenge_email_sends')
 )
 select * from rls_findings
 union all
@@ -249,7 +255,7 @@ select * from anon_grants
 union all
 select * from entitlement_write_grants
 union all
-select * from webhook_browser_grants
+select * from service_ledger_browser_grants
 union all
 select * from missing_policies
 order by finding, table_name;
