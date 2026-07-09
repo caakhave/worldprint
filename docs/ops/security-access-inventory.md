@@ -63,13 +63,14 @@ The following must never be exposed in browser code, committed files, screenshot
 - Stripe webhook processing records event IDs in `stripe_webhook_events` and validates configured price IDs before granting Pro.
 - Challenge email sends require a signed-in user, service-side rate-limit ledger, and spoiler-safe invite payload.
 - `supabase/tests/rls_security_checks.sql` validates forced RLS and browser grant posture for core account/game/billing tables plus the `challenge_email_sends` service-only ledger.
+- `scripts/ops/validate-supabase-staging.sh` provides a safe staging-only SQL validation path. It requires `SUPABASE_STAGING_DB_URL`, uses `supabase db query --db-url`, and does not use linked project state.
 - Root `.gitignore` ignores `.env*`, build output, reports, test results, and Supabase `.temp`.
 - Black-box QA has separate ignore rules for `.env`, reports, exports, screenshots, caches, and virtualenvs.
 
 ### WARN
 
 - Exact dashboard admin lists and MFA status are not visible from the repo and need manual verification.
-- `supabase/.temp` is intentionally ignored but has been linked to production in the past; all Supabase CLI commands must keep using explicit environment targeting.
+- `supabase/.temp` is intentionally ignored but has been linked to production in the past; Supabase CLI commands must keep using explicit environment targeting. Edge Function deploys use `--project-ref`; staging SQL validation uses the safe `--db-url` runner.
 - Client-submitted game stats are protected by user-scoped RLS, but they are not suitable for prize, sweepstakes, or official competitive guarantees.
 - Some `dangerouslySetInnerHTML` usage exists for static structured data. Keep it static and never feed it user-provided HTML.
 
