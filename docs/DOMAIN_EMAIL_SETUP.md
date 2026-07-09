@@ -125,10 +125,11 @@ The app passes Supabase query-free `emailRedirectTo` and `redirectTo` values end
 
 If emails arrive as `Supabase Auth`, configure custom SMTP under **Authentication -> SMTP**.
 
-Recommended auth sender:
+Configured auth senders:
 
 ```text
-Can You Geo <auth@canyougeo.com>
+Staging: Can You Geo Staging <staging-auth@mail.canyougeo.com>
+Production: Can You Geo <signin@mail.canyougeo.com>
 ```
 
 Changing the visible From name/address usually requires custom SMTP or a transactional email provider. Supabase's default email service is not enough for polished production sender branding.
@@ -246,8 +247,8 @@ hello@canyougeo.com
 
 Use Cloudflare Email Routing for inbound forwarding from those addresses to the owner's real inbox. Use `support@canyougeo.com`
 for support, account/sign-in help, privacy/legal requests, billing help, bug reports, and data/source concerns. Use
-`hello@canyougeo.com` only for general feedback, partnerships, or friendly contact. Do not list `auth@canyougeo.com` as a
-public contact address; reserve it for system/auth sender configuration.
+`hello@canyougeo.com` only for general feedback, partnerships, or friendly contact. Do not list Supabase Auth sender
+addresses as public contact addresses; reserve them for system/auth delivery.
 
 Cloudflare Email Routing handles inbound forwarding only. It does not by itself send branded outbound auth emails for Supabase.
 
@@ -264,10 +265,11 @@ Recommended auth sender domain:
 mail.canyougeo.com
 ```
 
-Recommended visible sender:
+Configured visible senders:
 
 ```text
-Can You Geo <auth@canyougeo.com>
+Staging: Can You Geo Staging <staging-auth@mail.canyougeo.com>
+Production: Can You Geo <signin@mail.canyougeo.com>
 ```
 
 ### DNS Records At A High Level
@@ -297,7 +299,7 @@ After successful delivery testing, tighten the policy later.
 5. Supabase Auth Site URL is `https://canyougeo.com`.
 6. Supabase Auth Redirect URLs include localhost QA and production callbacks.
 7. Supabase confirmation and password reset templates use the `token_hash` callback link.
-8. Supabase SMTP sender branding is configured before public launch email QA.
+8. Supabase SMTP sender branding is configured and verified for the target environment.
 9. Supabase Edge Function `NEXT_PUBLIC_SITE_URL` secret is `https://canyougeo.com`.
 10. Stripe test webhook endpoint points to `stripe-webhook` and has required events.
 11. Checkout success/cancel and Portal return paths land on `https://canyougeo.com`.

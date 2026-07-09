@@ -60,7 +60,7 @@ Allowed event parameters are generic fields such as run mode, tier, round count,
 
 The analytics helper rejects PII-shaped parameter names and email-like string values. This is a defense-in-depth guard, not permission to pass sensitive data. Event wiring should continue to use only generic product state.
 
-Cloudflare Web Analytics or Insights may still be injected from the Cloudflare dashboard. Keep that separate from app-owned GTM/GA4 analytics and verify any dashboard-injected analytics are production-appropriate before public launch.
+Cloudflare Web Analytics or Insights may still be injected from the Cloudflare dashboard. Keep that separate from app-owned GTM/GA4 analytics and verify any dashboard-injected analytics are appropriate for the current production posture.
 
 ## CSP Allowlist
 

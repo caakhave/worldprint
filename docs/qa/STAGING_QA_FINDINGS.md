@@ -75,13 +75,13 @@ Known expected baseline:
 
 ## Remaining Open Checks
 
-Use the readiness docs and dashboard worksheet before any public launch or production unlock:
+Use the readiness docs and dashboard worksheet before any future production unlock, domain change, or service-config change:
 
 - [Pre-production service readiness](../launch/PRE_PROD_SERVICE_READINESS.md)
 - [Dashboard service verification worksheet](../launch/DASHBOARD_SERVICE_VERIFICATION.md)
 - Cloudflare Pages, custom-domain, headers, robots, and sitemap checks
 - Supabase auth, redirect, RLS, Edge Function, and CORS checks
-- Stripe billing-disabled posture and later billing-launch checklist
+- Stripe billing posture, including production live mode and staging sandbox mode, matches the current launch checklist
 - Google Workspace/email/DNS sender and deliverability checks
 - Production analytics, CSP, and indexing checks
 
@@ -89,4 +89,4 @@ Use the readiness docs and dashboard worksheet before any public launch or produ
 
 Staging/pre-production is a launch candidate pending continued manual QA and the final apex/www activation decision.
 
-Do not overread this as public apex/www launch. Apex/www were not changed, billing remains deferred, live challenge email remains opt-in and unrun, and analytics/GTM can be checked separately if needed.
+Do not overread this as public apex/www launch. Apex/www were not changed during this staging QA pass; billing status should be checked against the current production/staging billing docs, live challenge email remains opt-in and unrun here, and analytics/GTM can be checked separately if needed.

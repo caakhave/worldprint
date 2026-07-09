@@ -11,8 +11,8 @@ This checklist is for the final staging-to-production decision for Can You Geo. 
 - Promotion should be a fast-forward from tested `staging` to `main`.
 - Private QA host: `https://test.canyougeo.com`.
 - Pages production host: `https://canyougeo.pages.dev`.
-- Apex/www launch hosts: `https://canyougeo.com` and `https://www.canyougeo.com`.
-- Current pre-launch assumption: apex/www may remain intentionally blocked until launch. Do not unblock during staging QA.
+- Production custom domains: `https://canyougeo.com` and `https://www.canyougeo.com`.
+- Staging QA must not change production custom-domain, DNS, WAF, or Cloudflare settings unless a separate approved production task explicitly says to.
 
 ### Deploy verification
 
@@ -86,7 +86,7 @@ Variable names only are listed here. Never paste actual secrets into docs, ticke
 | --- | --- | --- | --- |
 | Site URL | `NEXT_PUBLIC_SITE_URL` | Required | Should match the staging/test public origin used for auth redirects and generated links. |
 | Indexing | `NEXT_PUBLIC_NO_INDEX` | Required | Should keep `test.canyougeo.com` private/noindexed. |
-| Supabase | `NEXT_PUBLIC_SUPABASE_URL` | Required | Repo docs identify project ref `jquebthneczqdxagagof`; verify dashboard target before launch. |
+| Supabase | `NEXT_PUBLIC_SUPABASE_URL` | Required | Staging should use `hsgpjtyysbremrokkoym`; production should use `jquebthneczqdxagagof`. |
 | Supabase | `NEXT_PUBLIC_SUPABASE_ANON_KEY` | Required | Public anon key for the staging-backed project. |
 | Billing | `NEXT_PUBLIC_BILLING_MODE` | Required | Staging may use test-safe billing mode only when explicitly testing Stripe sandbox. |
 | Stripe/billing | Stripe live secrets | Must not use live value on staging | Staging should not trigger live checkout. |
@@ -102,7 +102,7 @@ Variable names only are listed here. Never paste actual secrets into docs, ticke
 | Indexing | `NEXT_PUBLIC_NO_INDEX` | Required | Must be false/absent for public production launch. |
 | Supabase | `NEXT_PUBLIC_SUPABASE_URL` | Required | Must be the project root URL. |
 | Supabase | `NEXT_PUBLIC_SUPABASE_ANON_KEY` | Required | Public anon key only. |
-| Billing | `NEXT_PUBLIC_BILLING_MODE` | Required | Production billing should remain disabled until the explicit billing launch task. |
+| Billing | `NEXT_PUBLIC_BILLING_MODE` | Required | Staging may use `test` with Stripe sandbox values; production uses `live` only with production Stripe/Supabase values. |
 | Stripe/billing | `STRIPE_SECRET_KEY`, `STRIPE_WEBHOOK_SECRET`, `STRIPE_PRO_MONTHLY_PRICE_ID`, `STRIPE_PRO_YEARLY_PRICE_ID`, `STRIPE_PRO_PRICE_ID` | Production-only server secrets | Store only in Supabase Edge Function secrets, not browser/Cloudflare public env. |
 | Email/challenge | `RESEND_API_KEY` | Production-only server secret | Required for challenge email function if live challenge email is enabled. |
 | Email/challenge | `SUPABASE_SERVICE_ROLE_KEY` | Production-only server secret | Edge Functions only. Never expose to browser code. |
@@ -173,7 +173,7 @@ If staging and production share project `jquebthneczqdxagagof`, decide whether t
 
 - Billing must remain disabled in production until an explicit launch decision.
 - Black-box QA must not run live payments.
-- Upgrade/account copy should not imply live checkout if checkout remains disabled.
+- Upgrade/account copy should match the active billing mode and must not imply sandbox checkout on production.
 - Stripe test mode can be used only in a dedicated sandbox QA pass.
 
 ### Manual Stripe checks before enabling billing later
@@ -195,7 +195,8 @@ Repo docs reference these mail identities:
 
 - `support@canyougeo.com`
 - `hello@canyougeo.com`
-- `auth@canyougeo.com`
+- Production Supabase Auth sender: `signin@mail.canyougeo.com`
+- Staging Supabase Auth sender: `staging-auth@mail.canyougeo.com`
 
 Manual checks:
 
@@ -206,7 +207,7 @@ Manual checks:
 
 ### DNS and deliverability
 
-Before public launch:
+For production/domain changes:
 
 - Verify MX records for Google Workspace.
 - Verify SPF/DKIM/DMARC for the sending domain(s).
@@ -266,15 +267,15 @@ Do not enable `CGY_RUN_EMAIL_LIVE=1` during normal staging QA. Live challenge em
 
 | Area | Risk | Evidence found | Manual check needed | Severity | Launch blocker? |
 | --- | --- | --- | --- | --- | --- |
-| Cloudflare | Apex/www may remain blocked or misrouted at launch time | Prior QA expects apex/www intentionally blocked pre-launch | Verify WAF/Access/custom-domain state before public launch | High | Yes for public apex launch |
+| Cloudflare | Apex/www may be misrouted after a future domain/config change | Production launch uses Cloudflare Pages custom domains | Verify WAF/Access/custom-domain state before any future domain change | High | Yes for domain changes |
 | Cloudflare | Wrong branch or stale SHA deployed | Staging and production are promoted by git branch state | Confirm visible SHA/behavior on test and Pages host | High | Yes |
 | Static export | `_headers` missing from deployed output | CSP/security depends on `public/_headers` | Curl deployed pages and inspect CSP | Medium | Yes if headers absent |
-| SEO | Test host accidentally indexable or production accidentally noindexed | Host-aware noindex behavior exists | Verify `robots.txt`, `sitemap.xml`, meta robots, and `x-robots-tag` per host | High | Yes for public launch |
+| SEO | Test host accidentally indexable or production accidentally noindexed | Host-aware noindex behavior exists | Verify `robots.txt`, `sitemap.xml`, meta robots, and `x-robots-tag` per host | High | Yes for indexing changes |
 | Supabase | Redirect URLs missing for test/production | Auth callback requires dashboard allowlist | Check Supabase Auth URL configuration | High | Yes for auth launch |
-| Supabase | Staging and production share one project | Repo docs repeatedly reference project `jquebthneczqdxagagof` | Decide whether shared backend is acceptable before public launch | Medium | Unknown |
+| Supabase | Staging and production accidentally target the same project | Current split is staging `hsgpjtyysbremrokkoym`, production `jquebthneczqdxagagof` | Confirm Cloudflare env vars and CLI `--project-ref` before backend work | High | Yes for backend changes |
 | Supabase/RLS | Policy drift or missing migration | RLS validation SQL exists | Run/review validation SQL on target project | High | Yes if policies fail |
-| Stripe | Live checkout accidentally enabled | Billing mode supports disabled/test posture | Confirm production billing env remains disabled until launch | High | Yes |
-| Stripe | Webhook/portal functions stale | Functions deploy separately from Cloudflare | Confirm deployed functions and secrets before billing launch | High | Yes for billing launch |
+| Stripe | Test/live billing settings mixed across environments | Staging uses sandbox/test and production uses live | Confirm production uses live Stripe/Supabase and staging uses sandbox/staging only | High | Yes for billing changes |
+| Stripe | Webhook/portal functions stale | Functions deploy separately from Cloudflare | Confirm deployed functions and secrets before billing changes | High | Yes for billing changes |
 | Email | Auth/challenge senders not verified | Domain/email docs reference Workspace and Resend | Verify DNS and sender identities | Medium | Yes for email-dependent flows |
 | Challenge email | Live email abuse or spoiler leak | Function is signed-in/rate-limited and tests guard spoiler copy | Verify rate limits and live email only in explicit QA | Medium | No for core game launch if email remains optional |
 | Analytics | GTM/GA blocked or double-counting | CSP allowances documented; analytics disabled on test | Validate on production Pages host when analytics enabled | Low | No, unless analytics is a launch requirement |

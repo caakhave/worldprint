@@ -16,7 +16,7 @@ Set in Cloudflare Pages production environment:
 NEXT_PUBLIC_SITE_URL=https://canyougeo.com
 NEXT_PUBLIC_SUPABASE_URL=https://<project-ref>.supabase.co
 NEXT_PUBLIC_SUPABASE_ANON_KEY=<supabase-anon-key>
-NEXT_PUBLIC_BILLING_MODE=disabled
+NEXT_PUBLIC_BILLING_MODE=live
 ```
 
 `NEXT_PUBLIC_SUPABASE_URL` must be the project root URL only. For the current project, use
@@ -55,10 +55,10 @@ SUPABASE_ACCESS_TOKEN
 Set in Cloudflare Pages preview environment:
 
 ```text
-NEXT_PUBLIC_SITE_URL=https://<preview>.canyougeo.pages.dev
-NEXT_PUBLIC_SUPABASE_URL=https://<project-ref>.supabase.co
+NEXT_PUBLIC_SITE_URL=https://test.canyougeo.com
+NEXT_PUBLIC_SUPABASE_URL=https://hsgpjtyysbremrokkoym.supabase.co
 NEXT_PUBLIC_SUPABASE_ANON_KEY=<supabase-anon-key>
-NEXT_PUBLIC_BILLING_MODE=disabled
+NEXT_PUBLIC_BILLING_MODE=test
 ```
 
 Preview uses the same rule: `NEXT_PUBLIC_SUPABASE_URL` must be the project root URL only, not a REST/Auth endpoint path.
@@ -69,7 +69,7 @@ Preview sign-in only works when the exact preview callback is allowed in Supabas
 https://<preview>.canyougeo.pages.dev/auth/callback
 ```
 
-Keep preview billing disabled unless the preview is intentionally being used for Stripe test-mode QA.
+Keep preview billing in `test` mode only when the preview/staging deployment is intentionally using Stripe sandbox values and the staging Supabase project.
 
 ## Billing Mode Guardrail
 
@@ -87,24 +87,23 @@ Current app behavior:
 
 - `disabled`: checkout and portal actions are unavailable.
 - `test`: checkout and portal actions call Supabase Edge Functions for Stripe test-mode QA.
-- `live`: intentionally treated as disabled by the app until a future live-billing launch explicitly changes code and QA.
+- `live`: calls the same trusted Supabase Edge Functions and must be used only with production live Stripe/Supabase values.
 
-Safe production default:
+Current production default after live billing launch:
 
 ```text
-NEXT_PUBLIC_BILLING_MODE=disabled
+NEXT_PUBLIC_BILLING_MODE=live
 ```
 
-Temporary production QA:
+Staging sandbox QA:
 
-1. Confirm Supabase Edge Functions are deployed.
+1. Confirm staging Supabase Edge Functions are deployed to `hsgpjtyysbremrokkoym`.
 2. Confirm Edge Function secrets use Stripe test-mode keys and test-mode price IDs only.
-3. Set Cloudflare production `NEXT_PUBLIC_BILLING_MODE=test`.
-4. Redeploy production.
-5. Run the billing QA checklist.
-6. Restore Cloudflare production `NEXT_PUBLIC_BILLING_MODE=disabled`.
-7. Redeploy production again.
-8. Confirm `/upgrade` says checkout is not open.
+3. Set Cloudflare Preview/staging `NEXT_PUBLIC_BILLING_MODE=test`.
+4. Confirm the Stripe sandbox webhook endpoint points to `https://hsgpjtyysbremrokkoym.supabase.co/functions/v1/stripe-webhook`.
+5. Run the billing QA checklist against `https://test.canyougeo.com`.
+
+Do not set production to `test` mode. Production live billing uses `NEXT_PUBLIC_BILLING_MODE=live` with production Stripe and production Supabase only.
 
 Never mix:
 
@@ -194,12 +193,12 @@ Run after every production deploy from `main`.
 
 ### Billing
 
-- With `NEXT_PUBLIC_BILLING_MODE=disabled`, `/upgrade` does not show live checkout buttons.
+- With `NEXT_PUBLIC_BILLING_MODE=live` in production, `/upgrade` shows live checkout actions backed by production Stripe and production Supabase only.
+- With `NEXT_PUBLIC_BILLING_MODE=test` in staging, `/upgrade` shows sandbox checkout actions backed by staging Stripe test values and staging Supabase only.
 - Signed-out upgrade asks users to sign in.
-- Signed-in Free account sees checkout unavailable/coming soon when disabled.
+- Signed-in Free account can start the checkout flow only in the intended billing mode for that environment.
 - Signed-in Pro account sees Pro state and account/manage actions.
-- If temporarily in `test`, complete monthly or yearly test checkout and verify webhook grants Pro.
-- After QA, restore `NEXT_PUBLIC_BILLING_MODE=disabled` and redeploy.
+- In staging `test`, complete test checkout and verify the webhook grants Pro in staging.
 
 ## Release Guardrails
 
@@ -208,7 +207,7 @@ Before promoting to `main`:
 1. Confirm `git status --short` has no `.env*`, `atd/`, `output/playwright/`, or scratch files staged.
 2. Run `pnpm quality`.
 3. Confirm `out/_headers` exists after `pnpm build`.
-4. Confirm `NEXT_PUBLIC_BILLING_MODE=disabled` in Cloudflare production unless running an explicit test-mode QA window.
+4. Confirm Cloudflare production uses `NEXT_PUBLIC_BILLING_MODE=live` only with production Stripe/Supabase values.
 5. Confirm Supabase Auth redirect URLs include production and localhost callback URLs.
 6. Confirm Stripe webhook endpoint event list matches the documented billing events.
-7. Confirm Resend/Supabase SMTP is not using default Supabase Auth branding before public launch.
+7. Confirm Resend/Supabase SMTP is not using default Supabase Auth branding in the target environment.

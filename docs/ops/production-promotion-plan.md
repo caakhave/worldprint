@@ -143,7 +143,7 @@ Same-title commits exist on `main` for Supabase URL normalization, auth polish, 
 - `426950acd34fe0ab8b4b6d8186aa634e2c1f6cad` - Open billing portal from account menu
 - `129c6ce1695561a4d2e669b26587a86e1ff08633` - Add admin billing notifications plan
 
-Billing promotion is safe only if Cloudflare Production keeps `NEXT_PUBLIC_BILLING_MODE=disabled`. Do not copy Preview/test billing env values into Production.
+Billing promotion is safe only if Cloudflare Production uses production Stripe/Supabase values. Do not copy Preview/test billing env values into Production. The current environment split lives in `docs/ops/staging-production-environments.md`.
 
 ### Supabase / RLS / Docs
 
@@ -196,14 +196,14 @@ These commits add static-export compatible App Router metadata, robots and sitem
 - Any future unapproved local SEO/GEO edits beyond `7b4fdb89e1b78e2422d62a6ab9275e95c19fb778`.
 - Do not promote any local `atd/` files.
 - Do not promote any dashboard-only setting, secret, `.env.local`, or generated artifact.
-- Do not enable live billing. Test-mode billing code can be promoted only while Production billing env stays disabled.
+- Do not copy staging/test billing settings into production. Production live billing uses `NEXT_PUBLIC_BILLING_MODE=live` with production Stripe and production Supabase only.
 
 ## Production Safety Requirements
 
 Before pushing `main`, confirm:
 
 - Cloudflare Production:
-  - `NEXT_PUBLIC_BILLING_MODE=disabled`
+  - `NEXT_PUBLIC_BILLING_MODE=live`
   - `NEXT_PUBLIC_SITE_URL=https://canyougeo.com`
   - `NEXT_PUBLIC_SUPABASE_URL=https://jquebthneczqdxagagof.supabase.co`
   - `NEXT_PUBLIC_SUPABASE_URL` has no `/rest/v1`, `/auth/v1`, path, query, or hash.
@@ -235,10 +235,10 @@ Before pushing `main`, confirm:
   - `stripe-portal` requires JWT.
   - `stripe-webhook` has Supabase JWT verification disabled but verifies Stripe signatures internally.
   - `send-challenge-email` requires JWT.
-  - Required secrets are set, without printing them: Stripe test secrets, Resend API key, challenge sender, site URL, owner notification settings.
+  - Required secrets are set, without printing them: production Stripe secrets, Resend API key, challenge sender, site URL, owner notification settings.
 - Stripe:
-  - Live billing is not enabled.
-  - Production UI remains checkout-disabled.
+  - Production live billing uses production Stripe and production Supabase values only.
+  - Production UI uses production live checkout only.
   - Stripe sandbox products/prices/webhooks may stay configured for staging/test QA.
 
 ## Manual Preflight Checklist
@@ -251,7 +251,7 @@ Before pushing `main`, confirm:
    - `20260630090000_marketing_consent_profiles.sql`
    - `20260630130000_challenge_email_sends.sql`
 6. Confirm Supabase RLS validation was last run successfully.
-7. Confirm Cloudflare Production env is billing-disabled.
+7. Confirm Cloudflare Production env uses production live billing values only.
 8. Confirm Cloudflare Pages Production branch is `main`.
 9. Confirm Cloudflare Preview/test domain is not mapped to Production unintentionally.
 10. Confirm `test.canyougeo.com` can remain a staging/testing surface after production promotion.
@@ -269,7 +269,7 @@ Run on `https://canyougeo.com` after Cloudflare Production deploys the promoted 
 7. Password reset request and reset route work.
 8. `/account/` shows current user only; no user IDs in URLs.
 9. `/account/stats/` is session-scoped and user-facing.
-10. `/upgrade/` shows Pro pricing but checkout remains disabled/coming soon in Production.
+10. `/upgrade/` shows production live checkout with production Stripe/Supabase values only; no staging sandbox or coming-soon copy appears.
 11. Header account menu opens and sign-out routes to signed-out confirmation.
 12. Challenge link landing is spoiler-safe.
 13. Copy/share/mailto challenge options work.
@@ -294,7 +294,7 @@ If the production deploy has a critical regression:
    git push origin main
    ```
 3. Do not roll back Supabase migrations destructively. If a database issue appears, disable the affected UI path or deploy a forward fix.
-4. Keep `NEXT_PUBLIC_BILLING_MODE=disabled` during rollback.
+4. If billing must be paused during rollback, set `NEXT_PUBLIC_BILLING_MODE=disabled` only as an explicit production incident response step.
 5. Document the rollback commit, Cloudflare deployment ID, and user-visible impact.
 
 ## Go / No-Go

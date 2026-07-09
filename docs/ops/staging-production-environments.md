@@ -102,8 +102,12 @@ Non-secret dashboard fields:
 SMTP host: smtp.resend.com
 SMTP username: resend
 SMTP port: 587
-Sender: Can You Geo <auth@canyougeo.com>
 ```
+
+Configured sender values:
+
+- Staging: `Can You Geo Staging <staging-auth@mail.canyougeo.com>`
+- Production: `Can You Geo <signin@mail.canyougeo.com>`
 
 Secret field:
 
@@ -202,6 +206,7 @@ Staging:
 - Staging `NEXT_PUBLIC_BILLING_MODE=test` enables test-mode checkout on `https://test.canyougeo.com`.
 - The Stripe sandbox webhook endpoint must point to the staging Supabase project `hsgpjtyysbremrokkoym`, not production `jquebthneczqdxagagof`.
 - Staging Stripe test checkout works and the staging webhook updates staging Pro entitlement.
+- Treat yearly checkout, Customer Portal, cancellation, failed-payment, and resubscribe paths as pending until each is explicitly rerun and recorded against the separated staging Supabase project.
 - Do not use production Stripe keys, webhook secrets, price IDs, customer data, or live checkout against staging.
 
 Required Stripe Edge Function secret names when configuring an environment:

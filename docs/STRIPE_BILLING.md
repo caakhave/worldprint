@@ -50,10 +50,10 @@ The static Next app still needs:
 NEXT_PUBLIC_SUPABASE_URL=
 NEXT_PUBLIC_SUPABASE_ANON_KEY=
 NEXT_PUBLIC_SITE_URL=
-NEXT_PUBLIC_BILLING_MODE=disabled
+NEXT_PUBLIC_BILLING_MODE=test|live
 ```
 
-Use `NEXT_PUBLIC_BILLING_MODE=test` only for intentional Stripe test-mode QA. Keep it `disabled` for regular production deploys until live billing is approved. The current app intentionally does not enable checkout for `NEXT_PUBLIC_BILLING_MODE=live`.
+Use `NEXT_PUBLIC_BILLING_MODE=test` only for staging Stripe sandbox QA with staging Supabase. Use `NEXT_PUBLIC_BILLING_MODE=live` only for production live billing with production Supabase and live Stripe values.
 
 Never expose `STRIPE_SECRET_KEY`, `STRIPE_WEBHOOK_SECRET`, or `SUPABASE_SERVICE_ROLE_KEY` to browser code.
 

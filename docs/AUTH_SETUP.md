@@ -109,8 +109,12 @@ Non-secret fields:
 Host: smtp.resend.com
 Username: resend
 Port: 587
-Sender: Can You Geo <auth@canyougeo.com>
 ```
+
+Configured senders:
+
+- Staging: `Can You Geo Staging <staging-auth@mail.canyougeo.com>`
+- Production: `Can You Geo <signin@mail.canyougeo.com>`
 
 Secret field:
 

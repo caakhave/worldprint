@@ -328,17 +328,10 @@ Recommended sending subdomain:
 mail.canyougeo.com
 ```
 
-Alternative:
+Configured Supabase Auth From addresses:
 
-```text
-auth.canyougeo.com
-```
-
-Recommended Supabase Auth From address:
-
-```text
-Can You Geo <auth@canyougeo.com>
-```
+- Staging: `Can You Geo Staging <staging-auth@mail.canyougeo.com>`
+- Production: `Can You Geo <signin@mail.canyougeo.com>`
 
 Recommended public receiving addresses:
 
@@ -349,7 +342,7 @@ hello@canyougeo.com
 
 Use `support@canyougeo.com` for support, account/sign-in help, privacy/legal requests, billing help, bug reports, and data/source
 concerns. Use `hello@canyougeo.com` only for general feedback, partnerships, or friendly contact. Do not list
-`auth@canyougeo.com` publicly; reserve it for the Supabase Auth/system sender.
+Supabase Auth sender addresses publicly; reserve them for account email delivery.
 
 Cloudflare Email Routing can forward inbound mail for these addresses. It does not send branded outbound Supabase Auth email by itself.
 
@@ -366,7 +359,8 @@ Host: smtp.resend.com
 Username: resend
 Password: <Resend API key>
 Port: 587 or 465
-Sender name/address: Can You Geo <auth@canyougeo.com>
+Staging sender: Can You Geo Staging <staging-auth@mail.canyougeo.com>
+Production sender: Can You Geo <signin@mail.canyougeo.com>
 ```
 
 Resend operational notes:
@@ -412,4 +406,4 @@ The unlinked internal route `/internal/worldprint-review` now includes an ops-re
 - Verify Edge Function secrets and JWT settings.
 - Verify Stripe webhook endpoint and event list.
 - Create/verify Resend sending domain and DNS records.
-- Create or forward `support@canyougeo.com` and `hello@canyougeo.com` before public launch.
+- Create or verify forwarding for `support@canyougeo.com` and `hello@canyougeo.com` for the current production launch posture.
