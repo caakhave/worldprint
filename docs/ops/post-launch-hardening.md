@@ -5,6 +5,7 @@ Use this as a lightweight backlog for non-blocking launch follow-up. Do not trea
 ## Known Non-Blocking Issues
 
 - Guest signed-out Mystery Map sample can start and play, but refreshing during an active sample returns to the preview/start flow instead of restoring the in-round panel. This is not launch-blocking; review after launch and decide whether guest sample runs should persist/resume.
+- Staging Supabase RLS/security validation is pending. On July 9, 2026, the safe validation runner reached the staging database host but failed database authentication before SQL validation could run. This is not an RLS/security validation failure and produced no security finding.
 
 ## Operations Follow-Up
 
@@ -19,6 +20,7 @@ Use this as a lightweight backlog for non-blocking launch follow-up. Do not trea
 
 ## Remaining Follow-Up
 
+- Verify the staging Supabase project ref and `postgres` database password in Supabase Dashboard, wait after password rotation, then retry read-only staging validation with `scripts/ops/validate-supabase-staging.sh --project-ref <staging-project-ref> --prompt-password`. Do not paste DB URLs/passwords into chat, shell history, docs, or commits, and do not keep retrying rapidly. If local CLI auth remains blocked, run the read-only validation SQL from the staging Supabase SQL Editor instead.
 - Upgrade Supabase later once there are real users or paid customers.
 - Decide whether guest refresh should resume signed-out sample games.
 - Clean up stale billing docs and decide where the untracked `atd/` scratch folder should live long term.
