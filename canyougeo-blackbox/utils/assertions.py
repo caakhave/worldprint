@@ -5,6 +5,8 @@ from urllib.parse import urljoin
 import httpx
 from playwright.sync_api import Locator, Page, expect
 
+from utils.cloudflare_access import cloudflare_access_headers, is_access_protected_host, looks_like_cloudflare_access_login
+
 DEFAULT_TIMEOUT = 20.0
 USER_AGENT = "CanYouGeoBlackboxQA/1.0"
 
@@ -18,17 +20,24 @@ def normalize_url(base_url: str, path: str = "/") -> str:
 
 
 def fetch_route(base_url: str, path: str = "/", *, follow_redirects: bool = False) -> httpx.Response:
+    headers = {"User-Agent": USER_AGENT, **cloudflare_access_headers(base_url)}
     return httpx.get(
         normalize_url(base_url, path),
         follow_redirects=follow_redirects,
         timeout=DEFAULT_TIMEOUT,
-        headers={"User-Agent": USER_AGENT},
+        headers=headers,
     )
 
 
 def assert_route_status(base_url: str, path: str, expected: set[int] | None = None) -> httpx.Response:
     expected = expected or {200, 301, 302, 303, 307, 308}
     response = fetch_route(base_url, path)
+    if is_access_protected_host(base_url) and looks_like_cloudflare_access_login(response.text):
+        raise AssertionError(
+            f"{normalize_url(base_url, path)} returned the Cloudflare Access login page. "
+            "Set CGY_CF_ACCESS_CLIENT_ID and CGY_CF_ACCESS_CLIENT_SECRET in "
+            "canyougeo-blackbox/.env or the shell to run staging black-box QA."
+        )
     assert response.status_code in expected, (
         f"{normalize_url(base_url, path)} returned {response.status_code}; "
         f"expected one of {sorted(expected)}"

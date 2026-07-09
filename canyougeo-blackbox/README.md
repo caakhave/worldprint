@@ -22,7 +22,7 @@ pip install -r requirements.txt
 python -m playwright install chromium webkit
 ```
 
-Optional credentials live in `.env`, copied from `.env.example`. Do not commit real credentials.
+Optional credentials live in `.env` or `.env.local`, copied from `.env.example`. Do not commit real credentials.
 
 ## Target Hosts
 
@@ -44,7 +44,7 @@ Targets resolve to:
 | `apex` | `https://canyougeo.com` |
 | `local` | `http://localhost:3000` |
 
-`test` is the default private QA host. Use `www` and `apex` for production launch checks only when those hosts are intentionally live.
+`test` is the default private QA host and always resolves to `https://test.canyougeo.com`. Do not replace it with a random Cloudflare Pages preview URL for normal staging QA. Use `www` and `apex` for production launch checks only when those hosts are intentionally live.
 
 Explicit overrides still work and take precedence:
 
@@ -89,6 +89,13 @@ CGY_TARGET=apex pytest --html=reports/apex.html --self-contained-html
 CGY_TARGET=www pytest --html=reports/www.html --self-contained-html
 ```
 
+There is no separate `CGY_TARGET=prod` target. From the repo root, production smoke uses:
+
+```bash
+pnpm qa:blackbox:apex
+pnpm qa:blackbox:www
+```
+
 Root package shortcuts are also available from the app repo root:
 
 ```bash
@@ -98,6 +105,21 @@ pnpm qa:blackbox:mobile
 pnpm qa:blackbox:test
 pnpm qa:blackbox:export
 ```
+
+## Cloudflare Access For Staging
+
+`test.canyougeo.com` may be protected by Cloudflare Access for privacy. Human testers can use the email/PIN login. Automated black-box tests should use a Cloudflare Access service token for the staging host only.
+
+Add these values to the uncommitted `canyougeo-blackbox/.env` or `canyougeo-blackbox/.env.local`, or export them in your shell:
+
+```bash
+CGY_CF_ACCESS_CLIENT_ID=
+CGY_CF_ACCESS_CLIENT_SECRET=
+```
+
+The suite sends them as `CF-Access-Client-Id` and `CF-Access-Client-Secret` only when the resolved base URL host is `test.canyougeo.com`. The headers are not sent to `canyougeo.com`, `www.canyougeo.com`, localhost, or arbitrary preview URLs.
+
+If the values are absent, the suite still starts normally. If a route check clearly receives the Cloudflare Access login page, the failure message will tell you to add the service token locally. Never commit service-token credentials.
 
 ## Auth And Email Safety
 

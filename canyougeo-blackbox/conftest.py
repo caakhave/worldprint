@@ -10,12 +10,14 @@ import pytest
 from dotenv import load_dotenv
 from playwright.sync_api import Browser, BrowserContext, Page
 
+from utils.cloudflare_access import cloudflare_access_headers
 from utils.targets import resolve_base_url
 
 ROOT = Path(__file__).resolve().parent
 SCREENSHOT_DIR = ROOT / "reports" / "screenshots"
 
 load_dotenv(ROOT / ".env")
+load_dotenv(ROOT / ".env.local", override=True)
 
 
 @pytest.fixture(scope="session")
@@ -50,9 +52,11 @@ def credentials() -> dict[str, dict[str, str | None] | str | None]:
 
 
 def _new_context(browser: Browser, base_url: str, *, mobile: bool) -> BrowserContext:
+    extra_http_headers = cloudflare_access_headers(base_url)
     if mobile:
         return browser.new_context(
             base_url=base_url,
+            extra_http_headers=extra_http_headers or None,
             viewport={"width": 390, "height": 844},
             is_mobile=True,
             has_touch=True,
@@ -67,6 +71,7 @@ def _new_context(browser: Browser, base_url: str, *, mobile: bool) -> BrowserCon
 
     return browser.new_context(
         base_url=base_url,
+        extra_http_headers=extra_http_headers or None,
         viewport={"width": 1440, "height": 1000},
         locale="en-US",
         ignore_https_errors=True,
