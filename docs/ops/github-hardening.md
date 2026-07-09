@@ -128,7 +128,7 @@ The repository now includes `.github/workflows/ci.yml`, a lightweight GitHub Act
   - `CI / typecheck` runs `pnpm typecheck`
   - `CI / build` runs `pnpm build`
 
-Required checks remain intentionally deferred until these check names have been observed as stable and green in GitHub.
+Required checks remain intentionally deferred until the owner manually updates the `Protect main` ruleset.
 
 Observed staging verification:
 
@@ -141,7 +141,25 @@ Observed staging verification:
   - `CI / typecheck`
   - `CI / build`
 
-Required status checks remain deferred until the same CI workflow also passes from `main` after promotion.
+Observed main verification:
+
+- Commit: `fbf253ab26d33b0fbe93b9a44c67a649f50aa49e`
+- Workflow run: `CI`, push to `main`, run ID `29055492431`
+- Result: passed on 2026-07-09 UTC
+- Jobs observed as passed:
+  - `CI / test`
+  - `CI / lint`
+  - `CI / typecheck`
+  - `CI / build`
+
+Next manual dashboard step:
+
+- Add required status checks to the `Protect main` ruleset only:
+  - `CI / test`
+  - `CI / lint`
+  - `CI / typecheck`
+  - `CI / build`
+- Keep `staging` protected from deletion and non-fast-forward pushes, but do not require status checks on `staging` yet.
 
 Optional/manual jobs:
 
@@ -224,8 +242,8 @@ Malicious dependency or workflow change:
 
 Highest-value next GitHub hardening actions:
 
-1. Watch the new `CI / test`, `CI / lint`, `CI / typecheck`, and `CI / build` checks on staging and main pushes.
-2. Confirm Cloudflare Pages status check names after the next production deploy.
-3. Require status checks on `main` only after CI check names are stable.
+1. Manually add `CI / test`, `CI / lint`, `CI / typecheck`, and `CI / build` as required checks on the `Protect main` ruleset only.
+2. Keep `Protect staging` without required checks for now.
+3. Confirm Cloudflare Pages status check names after the next production deploy.
 4. Decide whether to require PRs for `main` after the direct staging-to-main promotion workflow settles.
 5. Decide whether to enable GitHub non-provider pattern scanning and validity checks.
