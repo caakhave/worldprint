@@ -105,7 +105,8 @@ Use this for normal maintenance and drift detection.
   - Check whether public `/legal`, `/support`, `/upgrade`, and account billing copy still match current billing/support posture.
   - Do not make legal promises without review.
 - Production smoke/manual QA:
-  - Run or schedule the minimal production smoke where appropriate.
+  - Run or schedule the minimal production smoke where appropriate: `pnpm qa:blackbox:prod-smoke`.
+  - Treat it as public/no-secret coverage for route availability, robots/sitemap posture, public HTML marker checks, and deployed security headers.
   - Use staging QA checklists before promotions, not ad hoc memory.
 
 ## Quarterly Security / Access Review
