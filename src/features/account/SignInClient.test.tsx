@@ -1,6 +1,6 @@
 import { render, screen, waitFor } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
-import { beforeEach, describe, expect, it, vi } from "vitest";
+import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
 import { SignInClient, supabaseAuthErrorDiagnostic } from "@/features/account/SignInClient";
 
 const routerMock = vi.hoisted(() => ({
@@ -63,6 +63,11 @@ describe("SignInClient", () => {
     window.history.pushState({}, "", "/sign-in");
   });
 
+  afterEach(() => {
+    vi.unstubAllEnvs();
+    delete (window as typeof window & { dataLayer?: unknown[] }).dataLayer;
+  });
+
   it("shows the production email and password sign-in flow", async () => {
     render(<SignInClient />);
 
@@ -99,6 +104,11 @@ describe("SignInClient", () => {
 
   it("signs in with password and returns to account by default", async () => {
     const user = userEvent.setup();
+    vi.stubEnv("NEXT_PUBLIC_ANALYTICS_ENABLED", "true");
+    vi.stubEnv("NEXT_PUBLIC_GTM_ID", "GTM-CANYOUGEO");
+    vi.stubEnv("NEXT_PUBLIC_SITE_URL", "https://canyougeo.com");
+    vi.stubEnv("NEXT_PUBLIC_NO_INDEX", "false");
+    (window as typeof window & { dataLayer?: unknown[] }).dataLayer = [];
     render(<SignInClient />);
 
     await user.type(screen.getByLabelText("Email"), "player@example.com");
@@ -111,6 +121,7 @@ describe("SignInClient", () => {
     });
     await waitFor(() => expect(ensureProfileMock).toHaveBeenCalledWith(accountMock.state.client, signedInUser));
     expect(window.sessionStorage.getItem("canyougeo:sign-in-return")).toBeNull();
+    expect((window as typeof window & { dataLayer?: unknown[] }).dataLayer).toEqual([{ event: "cgy_login", method: "email" }]);
     expect(routerMock.push).toHaveBeenCalledWith("/account");
   });
 

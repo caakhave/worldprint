@@ -1,5 +1,5 @@
 import { fireEvent, render, screen, waitFor } from "@testing-library/react";
-import { beforeEach, describe, expect, it, vi } from "vitest";
+import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
 import { BillingActionsClient } from "@/features/account/BillingActionsClient";
 import { FREE_ENTITLEMENT, PRO_ENTITLEMENT, type PlayerEntitlement } from "@/lib/account/entitlements";
 
@@ -50,6 +50,11 @@ describe("BillingActionsClient", () => {
     accountMock.state.configured = true;
     accountMock.state.loading = false;
     accountMock.state.user = null;
+  });
+
+  afterEach(() => {
+    vi.unstubAllEnvs();
+    delete (window as typeof window & { dataLayer?: unknown[] }).dataLayer;
   });
 
   it("shows a safe disabled billing state on the upgrade page when billing config is missing", () => {
@@ -133,6 +138,11 @@ describe("BillingActionsClient", () => {
 
   it("uses protected checkout functions instead of browser entitlement writes in test mode", async () => {
     process.env.NEXT_PUBLIC_BILLING_MODE = "test";
+    vi.stubEnv("NEXT_PUBLIC_ANALYTICS_ENABLED", "true");
+    vi.stubEnv("NEXT_PUBLIC_GTM_ID", "GTM-CANYOUGEO");
+    vi.stubEnv("NEXT_PUBLIC_SITE_URL", "https://canyougeo.com");
+    vi.stubEnv("NEXT_PUBLIC_NO_INDEX", "false");
+    (window as typeof window & { dataLayer?: unknown[] }).dataLayer = [];
     accountMock.state.user = TEST_USER;
     const client = billingClientMock();
 
@@ -147,6 +157,9 @@ describe("BillingActionsClient", () => {
       headers: { Authorization: "Bearer billing-token" },
       body: { plan: "monthly" }
     });
+    expect((window as typeof window & { dataLayer?: unknown[] }).dataLayer).toEqual([
+      { event: "cgy_begin_checkout", currency: "USD", value: 3.99, plan: "pro_monthly" }
+    ]);
     expect(client.from).not.toHaveBeenCalled();
   });
 

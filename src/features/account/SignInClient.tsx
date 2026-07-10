@@ -11,7 +11,7 @@ import {
   signUpPathForReturn,
   storeSignInReturnPath
 } from "@/lib/account/signInRedirect";
-import { trackCanYouGeoEvent } from "@/lib/site/analytics";
+import { trackAnalyticsEvent } from "@/lib/site/analytics";
 
 const GENERIC_SIGN_IN_ERROR = "We could not sign you in. Check your email and password.";
 const EMAIL_NOT_CONFIRMED_ERROR = "Check your email to confirm this account, then sign in with your password.";
@@ -82,7 +82,6 @@ export function SignInClient() {
     setSubmitting(true);
     setError("");
     setStatus("");
-    trackCanYouGeoEvent("cgy_sign_in_clicked", { source: "sign_in_form" });
 
     const nextPath = storeSignInReturnPath(nextSearchValue());
     const { data, error: signInError } = await client.auth.signInWithPassword({
@@ -106,6 +105,7 @@ export function SignInClient() {
     }
 
     clearStoredSignInReturnPath();
+    trackAnalyticsEvent("cgy_login", { method: "email" });
     setStatus(signedInStatusForReturn(nextPath));
     setSubmitting(false);
     router.push(nextPath);

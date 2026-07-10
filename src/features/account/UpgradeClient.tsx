@@ -11,7 +11,7 @@ import { ACCESS_PLAN_COPY } from "@/lib/account/accessCopy";
 import { publicBillingEnabled } from "@/lib/billing/publicBillingConfig";
 import { proBillingIntervalFromSearch, proPriceOptionForInterval, PRO_PRICE_OPTIONS, type ProBillingInterval } from "@/lib/billing/proPricing";
 import { CONTACT_LINKS } from "@/lib/contact";
-import { trackCanYouGeoEvent } from "@/lib/site/analytics";
+import { trackAnalyticsEvent } from "@/lib/site/analytics";
 
 export function UpgradeClient() {
   const [selectedPlan, setSelectedPlan] = useState<ProBillingInterval | null>(null);
@@ -49,7 +49,10 @@ export function UpgradeClient() {
 
   function choosePlan(interval: ProBillingInterval) {
     setSelectedPlan(interval);
-    trackCanYouGeoEvent("cgy_upgrade_clicked", { source: "plan_select", plan: interval });
+    trackAnalyticsEvent("cgy_select_content", {
+      content_type: "pro_plan",
+      item_id: interval === "yearly" ? "pro_yearly" : "pro_monthly"
+    });
     const params = new URLSearchParams(window.location.search);
     params.set("plan", interval);
     const search = params.toString();
@@ -315,7 +318,18 @@ function UpgradeGameTile({
   ctaLabel: string;
 }) {
   return (
-    <Link className="upgrade-game-tile" data-game={gameId} href={href}>
+    <Link
+      className="upgrade-game-tile"
+      data-game={gameId}
+      href={href}
+      onClick={() =>
+        trackAnalyticsEvent("cgy_select_content", {
+          content_type: "game_card",
+          item_id: `upgrade_${gameId}`,
+          game_slug: gameId
+        })
+      }
+    >
       <UpgradeGamePreview
         src={imageSrc}
         alt={imageAlt}

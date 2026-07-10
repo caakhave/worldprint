@@ -8,7 +8,7 @@ import { requestBillingActionUrl } from "@/features/account/billingActionHelpers
 import { useEntitlement } from "@/features/account/useEntitlement";
 import { useSupabaseAccount } from "@/features/account/useSupabaseAccount";
 import { publicBillingEnabled } from "@/lib/billing/publicBillingConfig";
-import { trackCanYouGeoEvent } from "@/lib/site/analytics";
+import { trackAnalyticsEvent } from "@/lib/site/analytics";
 
 export function AuthNavStatus() {
   const router = useRouter();
@@ -37,14 +37,24 @@ export function AuthNavStatus() {
         <Link
           className="account-nav-control account-nav-control-signed-out account-nav-control-primary"
           href="/upgrade"
-          onClick={() => trackCanYouGeoEvent("cgy_upgrade_clicked", { source: "header" })}
+          onClick={() =>
+            trackAnalyticsEvent("cgy_select_content", {
+              content_type: "cta",
+              item_id: "header_start_pro"
+            })
+          }
         >
           Start Pro
         </Link>
         <Link
           className="account-nav-control account-nav-control-signed-out"
           href="/sign-in"
-          onClick={() => trackCanYouGeoEvent("cgy_sign_in_clicked", { source: "header" })}
+          onClick={() =>
+            trackAnalyticsEvent("cgy_select_content", {
+              content_type: "auth_link",
+              item_id: "header_sign_in"
+            })
+          }
         >
           Sign in
         </Link>

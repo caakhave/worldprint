@@ -13,7 +13,7 @@ import type { PlayerEntitlement } from "@/lib/account/entitlements";
 import { signUpPathForReturn } from "@/lib/account/signInRedirect";
 import { publicBillingEnabled } from "@/lib/billing/publicBillingConfig";
 import { PRO_PRICE_OPTIONS, type ProBillingInterval } from "@/lib/billing/proPricing";
-import { trackCanYouGeoEvent } from "@/lib/site/analytics";
+import { trackAnalyticsEvent } from "@/lib/site/analytics";
 
 type BillingActionsClientProps = {
   entitlement: PlayerEntitlement;
@@ -24,6 +24,14 @@ type BillingActionsClientProps = {
 
 function signUpPathForPlan(interval: ProBillingInterval) {
   return signUpPathForReturn(`/upgrade?plan=${interval}`);
+}
+
+function analyticsPlanForInterval(interval: ProBillingInterval | undefined) {
+  return interval === "yearly" ? "pro_yearly" : "pro_monthly";
+}
+
+function analyticsValueForInterval(interval: ProBillingInterval | undefined) {
+  return interval === "yearly" ? 29.99 : 3.99;
 }
 
 export function BillingActionsClient({ entitlement, context, selectedPlan = null, checkoutLabel }: BillingActionsClientProps) {
@@ -44,7 +52,11 @@ export function BillingActionsClient({ entitlement, context, selectedPlan = null
     setPending(pendingState);
     setMessage("");
     if (kind === "checkout") {
-      trackCanYouGeoEvent("cgy_upgrade_clicked", { source: context, plan: interval ?? "unknown" });
+      trackAnalyticsEvent("cgy_begin_checkout", {
+        currency: "USD",
+        value: analyticsValueForInterval(interval),
+        plan: analyticsPlanForInterval(interval)
+      });
     }
     const result = await requestBillingActionUrl({
       client,
@@ -68,7 +80,12 @@ export function BillingActionsClient({ entitlement, context, selectedPlan = null
           <Link
             className="button"
             href={signUpPathForReturn("/upgrade")}
-            onClick={() => trackCanYouGeoEvent("cgy_upgrade_clicked", { source: context })}
+            onClick={() =>
+              trackAnalyticsEvent("cgy_select_content", {
+                content_type: "cta",
+                item_id: `${context}_start_pro`
+              })
+            }
           >
             Start Pro
           </Link>
@@ -145,7 +162,12 @@ export function BillingActionsClient({ entitlement, context, selectedPlan = null
               className={option.featured ? "button" : "button-secondary"}
               href={signUpPathForPlan(option.interval)}
               key={option.interval}
-              onClick={() => trackCanYouGeoEvent("cgy_upgrade_clicked", { source: context, plan: option.interval })}
+              onClick={() =>
+                trackAnalyticsEvent("cgy_select_content", {
+                  content_type: "pro_plan",
+                  item_id: analyticsPlanForInterval(option.interval)
+                })
+              }
             >
               <span>{checkoutLabel ?? option.cta}</span>
               {option.badge ? (
