@@ -141,6 +141,17 @@ Observed staging verification:
   - `CI / typecheck`
   - `CI / build`
 
+Latest staging readiness check:
+
+- Commit: `ca49c07a5ffbbc61e4ffa631f7f36a9eda575eef`
+- Workflow run: `CI`, push to `staging`, run ID `29061550657`
+- Result: passed on 2026-07-10 UTC
+- Jobs observed as passed:
+  - `CI / test`
+  - `CI / lint`
+  - `CI / typecheck`
+  - `CI / build`
+
 Observed main verification:
 
 - Commit: `fbf253ab26d33b0fbe93b9a44c67a649f50aa49e`
@@ -151,6 +162,25 @@ Observed main verification:
   - `CI / lint`
   - `CI / typecheck`
   - `CI / build`
+
+Latest main readiness check:
+
+- Commit: `cea1debd92b554c128cc61f76495b92cce1f3d4f`
+- Workflow run: `CI`, push to `main`, run ID `29060180532`
+- Result: passed on 2026-07-10 UTC
+- Jobs observed as passed:
+  - `CI / test`
+  - `CI / lint`
+  - `CI / typecheck`
+  - `CI / build`
+
+Required-check readiness:
+
+- Read-only GitHub API verification on July 9, 2026 local time found the same four CI jobs green on the latest inspected `staging` and `main` push runs.
+- GitHub Actions API job names are `test`, `lint`, `typecheck`, and `build` under workflow `CI`; the GitHub UI/check context presents these as `CI / test`, `CI / lint`, `CI / typecheck`, and `CI / build`.
+- The names have stayed consistent across the original staging/main verification runs and the latest inspected staging/main push runs.
+- These checks look ready to require on `main` after the owner confirms the same names in the branch ruleset picker.
+- Do not enable required checks if the workflow is renamed, job names change, any job is pending/skipped/flaky, or a future workflow change removes one of the four checks.
 
 Next manual dashboard step:
 
