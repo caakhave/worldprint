@@ -49,6 +49,16 @@ vi.mock("@/features/account/useEntitlement", () => ({
 }));
 
 describe("HomePage", () => {
+  it("renders a homepage breadcrumb JSON-LD marker", () => {
+    const { container } = render(<HomePage />);
+    const breadcrumbSchema = JSON.parse(container.querySelector("#canyougeo-home-breadcrumb-jsonld")?.textContent ?? "{}");
+
+    expect(breadcrumbSchema).toMatchObject({
+      "@type": "BreadcrumbList",
+      itemListElement: [{ position: 1, name: "Can You Geo?", item: "https://canyougeo.com/" }]
+    });
+  });
+
   it("renders a simplified first-time Mystery Map funnel", () => {
     render(<HomePage />);
 

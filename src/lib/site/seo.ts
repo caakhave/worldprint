@@ -202,76 +202,57 @@ export function shouldNoIndexCurrentBuild(): boolean {
   );
 }
 
-export function siteJsonLd(origin = publicSiteOrigin()) {
+export function organizationJsonLd(origin = publicSiteOrigin()) {
   return {
     "@context": "https://schema.org",
-    "@graph": [
-      {
-        "@type": "Organization",
-        "@id": `${origin}/#organization`,
-        name: BRAND_NAME,
-        url: origin,
-        logo: `${origin}/cgy-logo-icon-512.png`,
-        email: SUPPORT_EMAIL
-      },
-      {
-        "@type": "WebSite",
-        "@id": `${origin}/#website`,
-        name: BRAND_NAME,
-        alternateName: ["Can You Geo", "Mystery Map", "Pattern Atlas", "Order Atlas"],
-        url: origin,
-        description: SITE_DESCRIPTION,
-        inLanguage: "en-US",
-        publisher: { "@id": `${origin}/#organization` }
-      },
-      {
-        "@type": "WebApplication",
-        "@id": `${origin}/#web-application`,
-        name: BRAND_NAME,
-        url: origin,
-        applicationCategory: "GameApplication",
-        operatingSystem: "Web",
-        isAccessibleForFree: true,
-        description: SITE_DESCRIPTION,
-        publisher: { "@id": `${origin}/#organization` }
-      },
-      {
-        "@type": "VideoGame",
-        "@id": `${origin}/#mystery-map`,
-        name: "Can You Geo? Mystery Map",
-        url: `${origin}/play/mystery-map/`,
-        gamePlatform: "Web browser",
-        genre: ["Geography game", "Map game", "Puzzle game"],
-        isAccessibleForFree: true,
-        description:
-          "Mystery Map is a geography puzzle where players read an unlabeled world map, reveal country clues, and guess what the colors are showing.",
-        publisher: { "@id": `${origin}/#organization` }
-      },
-      {
-        "@type": "VideoGame",
-        "@id": `${origin}/#pattern-atlas`,
-        name: "Can You Geo? Pattern Atlas",
-        url: `${origin}/play/pattern-atlas/`,
-        gamePlatform: "Web browser",
-        genre: ["Geography game", "Map game", "Puzzle game"],
-        isAccessibleForFree: true,
-        description:
-          "Pattern Atlas is a highlighted-country geography puzzle where players identify the shared rule connecting countries on the map.",
-        publisher: { "@id": `${origin}/#organization` }
-      },
-      {
-        "@type": "VideoGame",
-        "@id": `${origin}/#order-atlas`,
-        name: "Can You Geo? Order Atlas",
-        url: `${origin}/play/order-atlas/`,
-        gamePlatform: "Web browser",
-        genre: ["Geography game", "Ordering game", "Puzzle game"],
-        isAccessibleForFree: true,
-        description:
-          "Order Atlas is a country-ordering geography puzzle with Sample Run, Free Daily, and Pro Play where players arrange country cards by a known data signal, then reveal the true order and source-backed values.",
-        publisher: { "@id": `${origin}/#organization` }
-      }
-    ]
+    "@type": "Organization",
+    "@id": `${origin}/#organization`,
+    name: BRAND_NAME,
+    url: origin,
+    logo: `${origin}/cgy-logo-icon-512.png`,
+    email: SUPPORT_EMAIL
+  };
+}
+
+export function websiteJsonLd(origin = publicSiteOrigin()) {
+  return {
+    "@context": "https://schema.org",
+    "@type": "WebSite",
+    "@id": `${origin}/#website`,
+    name: BRAND_NAME,
+    alternateName: "Can You Geo",
+    url: origin,
+    description: SITE_DESCRIPTION,
+    inLanguage: "en-US",
+    publisher: { "@id": `${origin}/#organization` }
+  };
+}
+
+export function siteJsonLd(origin = publicSiteOrigin()) {
+  const { "@context": organizationContext, ...organization } = organizationJsonLd(origin);
+  const { "@context": websiteContext, ...website } = websiteJsonLd(origin);
+  void organizationContext;
+  void websiteContext;
+
+  return {
+    "@context": "https://schema.org",
+    "@graph": [organization, website]
+  };
+}
+
+export function webApplicationJsonLd(origin = publicSiteOrigin()) {
+  return {
+    "@context": "https://schema.org",
+    "@type": "WebApplication",
+    "@id": `${origin}/#web-application`,
+    name: BRAND_NAME,
+    url: canonicalUrl("/play/", origin),
+    applicationCategory: "GameApplication",
+    operatingSystem: "Web",
+    isAccessibleForFree: true,
+    description: SITE_DESCRIPTION,
+    browserRequirements: "Requires a modern web browser with JavaScript enabled.",
+    publisher: { "@id": `${origin}/#organization` }
   };
 }
 
@@ -285,54 +266,5 @@ export function breadcrumbJsonLd(items: Array<{ name: string; path: string }>, o
       name: item.name,
       item: canonicalUrl(item.path, origin)
     }))
-  };
-}
-
-export const HOME_FAQ_ITEMS = [
-  {
-    name: "What is Can You Geo?",
-    acceptedAnswer:
-      "Can You Geo? is a geography game site for daily map puzzles, world pattern challenges, and country-ordering rounds. Mystery Map, Pattern Atlas, and Order Atlas have Sample and Daily play; Pro adds supported practice modes."
-  },
-  {
-    name: "Is Can You Geo free?",
-    acceptedAnswer:
-      "Yes. Guests can try fixed Sample Runs, and Free accounts get Daily rounds in Daily-enabled games with saved progress, streaks, and basic stats."
-  },
-  {
-    name: "How does Mystery Map work?",
-    acceptedAnswer:
-      "Mystery Map is the current featured game. It shows an unlabeled world map; read the color pattern, reveal country values only when needed, then guess what the map is showing."
-  },
-  {
-    name: "What games can I play?",
-    acceptedAnswer:
-      "Mystery Map is the choropleth indicator guessing game. Pattern Atlas is the highlighted-country hidden-rule game. Order Atlas is the country-ordering game with Sample Run, Free Daily, and Pro Play."
-  },
-  {
-    name: "What data sources does Can You Geo use?",
-    acceptedAnswer:
-      "Mystery Map uses reviewed World Bank World Development Indicators on Natural Earth country geometry. Order Atlas reuses approved Mystery Map indicator artifacts for values, and Pattern Atlas uses source-backed mapped-country rules."
-  },
-  {
-    name: "What makes it different from other geography games?",
-    acceptedAnswer:
-      "Instead of only naming places, Can You Geo? asks you to interpret real-world patterns: a map game, geography quiz, and world data puzzle in one."
-  }
-] as const;
-
-export function homeFaqJsonLd(origin = publicSiteOrigin()) {
-  return {
-    "@context": "https://schema.org",
-    "@type": "FAQPage",
-    mainEntity: HOME_FAQ_ITEMS.map((question) => ({
-      "@type": "Question",
-      name: question.name,
-      acceptedAnswer: {
-        "@type": "Answer",
-        text: question.acceptedAnswer
-      }
-    })),
-    url: origin
   };
 }

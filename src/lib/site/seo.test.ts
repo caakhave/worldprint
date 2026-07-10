@@ -1,13 +1,15 @@
 import { describe, expect, it } from "vitest";
 import {
+  breadcrumbJsonLd,
   canonicalPath,
   canonicalUrl,
-  homeFaqJsonLd,
-  HOME_FAQ_ITEMS,
   NON_INDEXED_ROUTE_PREFIXES,
+  organizationJsonLd,
   pageMetadata,
   PUBLIC_INDEXED_ROUTES,
-  siteJsonLd
+  siteJsonLd,
+  webApplicationJsonLd,
+  websiteJsonLd
 } from "@/lib/site/seo";
 
 describe("site SEO helpers", () => {
@@ -38,41 +40,49 @@ describe("site SEO helpers", () => {
     expect(noindexed.robots).toMatchObject({ index: false, follow: false });
   });
 
-  it("describes Can You Geo as a website, app, organization, and three public games", () => {
+  it("describes Can You Geo with lean organization and website schema", () => {
     const graph = siteJsonLd("https://canyougeo.com")["@graph"];
-    expect(graph.map((entry) => entry["@type"])).toEqual(["Organization", "WebSite", "WebApplication", "VideoGame", "VideoGame", "VideoGame"]);
-    expect(graph[1]).toMatchObject({
-      alternateName: ["Can You Geo", "Mystery Map", "Pattern Atlas", "Order Atlas"]
-    });
+    expect(graph.map((entry) => entry["@type"])).toEqual(["Organization", "WebSite"]);
     expect(graph[0]).toMatchObject({
       logo: "https://canyougeo.com/cgy-logo-icon-512.png"
     });
-    expect(graph[3]).toMatchObject({
-      name: "Can You Geo? Mystery Map",
-      gamePlatform: "Web browser",
-      isAccessibleForFree: true
+    expect(graph[1]).toMatchObject({
+      alternateName: "Can You Geo",
+      publisher: { "@id": "https://canyougeo.com/#organization" }
     });
-    expect(graph[4]).toMatchObject({
-      name: "Can You Geo? Pattern Atlas",
-      url: "https://canyougeo.com/play/pattern-atlas/"
-    });
-    expect(graph[5]).toMatchObject({
-      name: "Can You Geo? Order Atlas",
-      url: "https://canyougeo.com/play/order-atlas/",
-      description: expect.stringContaining("Sample Run, Free Daily, and Pro Play")
-    });
+    expect(JSON.stringify(graph)).not.toMatch(/VideoGame|FAQPage|Product|Offer|aggregateRating|review/i);
   });
 
-  it("only emits FAQ structured data for the visible homepage quick answers", () => {
-    const faq = homeFaqJsonLd("https://canyougeo.com");
-    expect(faq["@type"]).toBe("FAQPage");
-    expect(faq.mainEntity.map((item) => item.name)).toEqual(HOME_FAQ_ITEMS.map((item) => item.name));
-    expect(faq.mainEntity[0].acceptedAnswer.text).toContain("geography game site");
-    expect(faq.mainEntity[0].acceptedAnswer.text).toContain("Mystery Map, Pattern Atlas, and Order Atlas have Sample and Daily play");
-    expect(faq.mainEntity[0].acceptedAnswer.text).toContain("Pro adds supported practice modes");
-    expect(faq.mainEntity[2].acceptedAnswer.text).toContain("current featured game");
-    expect(faq.mainEntity[3].acceptedAnswer.text).toContain("Order Atlas is the country-ordering game with Sample Run, Free Daily, and Pro Play");
-    expect(faq.mainEntity[4].acceptedAnswer.text).toContain("Order Atlas reuses approved Mystery Map indicator artifacts");
-    expect(JSON.stringify(faq)).not.toMatch(/intro-only|Daily and Pro modes coming next|playable intro sample/i);
+  it("emits separate reusable JSON-LD helpers for organization, website, web app, and breadcrumbs", () => {
+    expect(organizationJsonLd("https://canyougeo.com")).toMatchObject({
+      "@type": "Organization",
+      "@id": "https://canyougeo.com/#organization",
+      url: "https://canyougeo.com"
+    });
+    expect(websiteJsonLd("https://canyougeo.com")).toMatchObject({
+      "@type": "WebSite",
+      "@id": "https://canyougeo.com/#website",
+      publisher: { "@id": "https://canyougeo.com/#organization" }
+    });
+    expect(webApplicationJsonLd("https://canyougeo.com")).toMatchObject({
+      "@type": "WebApplication",
+      "@id": "https://canyougeo.com/#web-application",
+      url: "https://canyougeo.com/play/",
+      applicationCategory: "GameApplication",
+      operatingSystem: "Web",
+      isAccessibleForFree: true
+    });
+    expect(
+      breadcrumbJsonLd([
+        { name: "Can You Geo?", path: "/" },
+        { name: "Mystery Map", path: "/play/mystery-map/" }
+      ], "https://canyougeo.com")
+    ).toMatchObject({
+      "@type": "BreadcrumbList",
+      itemListElement: [
+        { position: 1, name: "Can You Geo?", item: "https://canyougeo.com/" },
+        { position: 2, name: "Mystery Map", item: "https://canyougeo.com/play/mystery-map/" }
+      ]
+    });
   });
 });

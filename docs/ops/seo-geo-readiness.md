@@ -1,6 +1,6 @@
 # Can You Geo SEO/GEO Readiness
 
-Last updated: July 1, 2026
+Last updated: July 10, 2026
 
 ## Goal
 
@@ -13,8 +13,8 @@ Make Can You Geo understandable to traditional search engines and answer engines
 | Index controls | Green | Production can be indexable. `test.canyougeo.com`, Pages previews, non-main branches, and explicit noindex builds stay blocked. |
 | Metadata | Green | Public pages have route-specific titles, descriptions, canonical URLs, Open Graph, and Twitter metadata. |
 | Sitemap and robots | Green | App Router `sitemap.xml` includes the core public pages only. `robots.txt` blocks account, auth, internal, and challenge surfaces. |
-| Structured data | Green | Global WebSite, Organization, WebApplication, and VideoGame JSON-LD describe the entity and flagship game. Homepage FAQPage JSON-LD matches visible quick-answer content. Breadcrumb JSON-LD appears on appropriate info pages. |
-| Content clarity | Green | Homepage now includes a crawlable "What is Can You Geo?" quick-answer section. Core pages explain how the game works, sources, Free/Pro, and support/legal trust details. |
+| Structured data | Green | Lean JSON-LD describes the organization, website, web application, and public breadcrumb paths without fake reviews, ratings, offers, FAQ markup, or over-specific game schema. |
+| Content clarity | Green | Homepage leads with a clear first-game funnel. Core pages explain how the game works, sources, Free/Pro, and support/legal trust details. |
 | AI/GEO visibility | Yellow | Foundation is strong, but future gains need fresh high-quality public content, screenshots/share images, and Search Console data after launch. |
 | Performance basics | Green | No heavy new assets were added. Existing hero media remains the main LCP risk to monitor after deployment. |
 
@@ -39,7 +39,7 @@ Use these phrases naturally. Do not create separate near-duplicate pages for eac
 
 | Route | Indexing | Canonical | Title | Purpose |
 | --- | --- | --- | --- | --- |
-| `/` | Index | `/` | Can You Geo? - Daily Geography Games & World Data Puzzles | Entity home, product summary, quick answers. |
+| `/` | Index | `/` | Can You Geo? - Daily Geography Games & World Data Puzzles | Entity home, product summary, and first-game entry. |
 | `/play/mystery-map/` | Index | `/play/mystery-map/` | Play Mystery Map - Daily Geography Game | Primary game landing and play route. |
 | `/how-to-play/` | Index | `/how-to-play/` | How to Play Mystery Map | Gameplay rules and scoring explanation. |
 | `/sources/` | Index | `/sources/` | Data & Sources - Can You Geo? | Source transparency and methodology. |
@@ -59,12 +59,15 @@ Implemented:
 
 - `Organization` for Can You Geo.
 - `WebSite` for the canonical site entity.
-- `WebApplication` for the browser-based game application.
-- `VideoGame` for Mystery Map as the flagship web game.
-- `FAQPage` on the homepage only, matching visible quick-answer content.
-- `BreadcrumbList` on `/about/`, `/how-to-play/`, and `/sources/`.
+- `WebApplication` on `/play/` for the browser-based game application.
+- `BreadcrumbList` on `/`, `/play/`, `/play/mystery-map/`, `/play/pattern-atlas/`, `/play/order-atlas/`, `/sources/`, `/upgrade/`, and supporting info pages such as `/about/` and `/how-to-play/`.
 
-Do not add FAQPage markup to pages without real visible Q&A content.
+Current guardrails:
+
+- Do not add `Product`, `Offer`, pricing, or plan schema unless public billing details are intentionally modeled and kept current.
+- Do not add fake reviews, ratings, `aggregateRating`, or unsupported quality claims.
+- Do not add `FAQPage` markup unless the exact Q&A content is visibly present on the page.
+- Do not add answer countries, hidden indicators, challenge codes, or private run/user state to structured data.
 
 ## Sitemap And Robots Behavior
 
@@ -90,7 +93,7 @@ Post-deploy checks:
 
 - Run Lighthouse or PageSpeed Insights on `/`, `/play/mystery-map/`, and `/sources/`.
 - Watch LCP on the homepage hero.
-- Confirm no unexpected horizontal overflow on mobile snippets or quick-answer cards.
+- Confirm no unexpected horizontal overflow on mobile snippets or public game cards.
 
 ## Google Search Console Setup
 
@@ -132,7 +135,8 @@ Post-deploy checks:
   - `https://canyougeo.com/robots.txt`
   - `https://canyougeo.com/sitemap.xml`
   - homepage rendered source includes `canyougeo-site-jsonld`
-  - homepage rendered source includes `canyougeo-home-faq-jsonld`
+  - `/play/` rendered source includes `canyougeo-web-application-jsonld`
+  - public route rendered source includes route-appropriate `BreadcrumbList` JSON-LD
   - `/challenge/mystery-map/` share previews render but the route is not in the sitemap.
 
 ## References

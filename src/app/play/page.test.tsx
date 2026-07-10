@@ -15,6 +15,27 @@ vi.mock("next/image", () => ({
 }));
 
 describe("PlayHubPage", () => {
+  it("renders WebApplication and breadcrumb JSON-LD for the public game hub", () => {
+    const { container } = render(<PlayHubPage />);
+    const appSchema = JSON.parse(container.querySelector("#canyougeo-web-application-jsonld")?.textContent ?? "{}");
+    const breadcrumbSchema = JSON.parse(container.querySelector("#canyougeo-play-breadcrumb-jsonld")?.textContent ?? "{}");
+
+    expect(appSchema).toMatchObject({
+      "@type": "WebApplication",
+      "@id": "https://canyougeo.com/#web-application",
+      url: "https://canyougeo.com/play/",
+      applicationCategory: "GameApplication"
+    });
+    expect(JSON.stringify(appSchema)).not.toMatch(/Product|Offer|aggregateRating|review/i);
+    expect(breadcrumbSchema).toMatchObject({
+      "@type": "BreadcrumbList",
+      itemListElement: [
+        { position: 1, name: "Can You Geo?", item: "https://canyougeo.com/" },
+        { position: 2, name: "Play", item: "https://canyougeo.com/play/" }
+      ]
+    });
+  });
+
   it("renders the Can You Geo game library with all three public game cards", () => {
     const { container } = render(<PlayHubPage />);
 

@@ -1,5 +1,6 @@
 import Link from "next/link";
 import type { Metadata } from "next";
+import { JsonLd } from "@/components/JsonLd";
 import { CONTACT_LINKS } from "@/lib/contact";
 import { breadcrumbJsonLd, pageMetadata } from "@/lib/site/seo";
 
@@ -13,17 +14,12 @@ export const metadata: Metadata = pageMetadata({
 export default function AboutPage() {
   return (
     <section className="about-page page-shell info-page-shell">
-      <script
+      <JsonLd
         id="canyougeo-about-breadcrumb-jsonld"
-        type="application/ld+json"
-        dangerouslySetInnerHTML={{
-          __html: JSON.stringify(
-            breadcrumbJsonLd([
-              { name: "Can You Geo?", path: "/" },
-              { name: "About", path: "/about/" }
-            ])
-          )
-        }}
+        data={breadcrumbJsonLd([
+          { name: "Can You Geo?", path: "/" },
+          { name: "About", path: "/about/" }
+        ])}
       />
       <div className="about-hero">
         <p className="eyebrow">Mission</p>

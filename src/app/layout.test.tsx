@@ -42,6 +42,12 @@ describe("RootLayout", () => {
     expect(markup).not.toContain("href=\"/past-games\"");
     expect(markup).toContain("href=\"/support\"");
     expect(markup).not.toContain("href=\"/about\"");
+    expect(markup).toContain("id=\"canyougeo-site-jsonld\"");
+    expect(markup).toContain("\"@type\":\"Organization\"");
+    expect(markup).toContain("\"@type\":\"WebSite\"");
+    expect(markup).not.toContain("VideoGame");
+    expect(markup).not.toContain("FAQPage");
+    expect(markup).not.toContain("aggregateRating");
   });
 
   it("uses the final Can You Geo icon assets", () => {

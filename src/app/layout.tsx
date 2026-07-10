@@ -5,6 +5,7 @@ import "@/styles/globals.css";
 import { AnalyticsScripts } from "@/components/AnalyticsScripts";
 import { BrandMark } from "@/components/BrandMark";
 import { FooterNav } from "@/components/FooterNav";
+import { JsonLd } from "@/components/JsonLd";
 import { PrimaryNav } from "@/components/PrimaryNav";
 import { AuthNavStatus } from "@/features/account/AuthNavStatus";
 import { BRAND_NAME } from "@/lib/brand";
@@ -127,11 +128,7 @@ export default function RootLayout({ children }: Readonly<{ children: React.Reac
           </nav>
         </header>
         <main id="main">{children}</main>
-        <script
-          id="canyougeo-site-jsonld"
-          type="application/ld+json"
-          dangerouslySetInnerHTML={{ __html: JSON.stringify(siteStructuredData) }}
-        />
+        <JsonLd id="canyougeo-site-jsonld" data={siteStructuredData} />
         <footer className="site-footer">
           <p>
             Can You Geo? is a geography game library. Open the game hub and check the data sources any time.
