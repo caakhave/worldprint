@@ -28,9 +28,9 @@ def test_play_hub_shows_three_games_and_routes(desktop_page, target_base_url: st
     hub.expect_three_game_hub()
 
     expectations = {
-        "Open Mystery Map": r"/play/mystery-map/?$",
-        "Open Pattern Atlas": r"/play/pattern-atlas/?$",
-        "Open Order Atlas": r"/play/order-atlas/?$",
+        "Play Mystery Map": r"/play/mystery-map/?$",
+        "Play Pattern Atlas": r"/play/pattern-atlas/?$",
+        "Play Order Atlas": r"/play/order-atlas/?$",
     }
     for label, href_pattern in expectations.items():
         link = desktop_page.get_by_role("link", name=re.compile(label, re.I)).first

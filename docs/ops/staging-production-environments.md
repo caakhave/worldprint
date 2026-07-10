@@ -239,7 +239,7 @@ This direct script form is recommended for humans because the staging project re
 
 If validation reaches the remote host but fails with `FATAL: password authentication failed`, the likely cause is the wrong DB password, a recently rotated password that has not propagated yet, or a pasted URL with an incorrectly encoded password. Wait a few minutes after resetting the password, avoid rapid retries, and prefer `--project-ref hsgpjtyysbremrokkoym --prompt-password` so the runner performs URL encoding. If needed, use a long alphanumeric-only staging DB password to avoid URL-encoding edge cases.
 
-Current status: staging validation execution was attempted on July 9, 2026. The runner reached the staging host, but database password authentication failed before the SQL checks could run. No RLS/security finding was produced. Verify the staging project ref and database password in Supabase Dashboard before retrying, or run the read-only validation SQL from the staging Supabase SQL Editor.
+Current status: staging validation execution remains pending as of July 10, 2026. The first runner attempt reached the staging host, but database password authentication failed before the SQL checks could run. A later retry did not complete because the operator password entry path did not accept the credential string cleanly. No RLS/security finding was produced. Verify the staging project ref and database password in Supabase Dashboard before retrying. If the local prompt path remains unreliable, run the read-only SQL in `supabase/tests/rls_security_checks.sql` from the staging Supabase SQL Editor for project `hsgpjtyysbremrokkoym`; the first `security_findings` result set should return zero rows.
 
 For broader staging owner review:
 
@@ -259,10 +259,12 @@ Expected tables include:
 - `stripe_webhook_events`
 - `challenge_email_sends`
 
-Known reproducibility issue:
+Fresh migration reproducibility status:
 
-- The staging database required a one-time `profiles` bootstrap because the current timestamped migrations assume `profiles` already exists from the production spine baseline.
-- Follow-up task: convert the baseline/profile schema into a fully reproducible migration chain so a fresh Supabase project can be created without manual bootstrap SQL.
+- The earlier staging project required a one-time `profiles` bootstrap because the tracked migration chain did not yet include the production spine/profile baseline.
+- The tracked chain now starts with `supabase/migrations/20260626000000_account_profiles_baseline.sql`, which creates `public.profiles` before later profile-dependent migrations create foreign keys, marketing consent columns, policies, grants, and service ledgers.
+- `supabase/tests/migration_reproducibility.structure.test.ts` protects the baseline order and profile-dependent schema expectations.
+- Fresh local replay should still be rerun before creating another long-lived Supabase project. This task did not apply migrations to staging or production.
 
 ## QA Accounts
 
@@ -364,7 +366,7 @@ Dashboard config rollback:
 ## Known Risks And Follow-Up Tasks
 
 - Keep the Stripe sandbox webhook endpoint pointed only at staging `hsgpjtyysbremrokkoym`.
-- Fix the migration baseline so fresh Supabase projects do not require manual `profiles` bootstrap.
+- Before creating another long-lived Supabase project, rerun fresh local migration replay and the migration reproducibility structure test.
 - Consider Cloudflare Access or equivalent protection for `test.canyougeo.com`.
 - Keep black-box test configs clearly split for staging and production smoke.
 - Avoid relying on `supabase/.temp` for any environment decision.
