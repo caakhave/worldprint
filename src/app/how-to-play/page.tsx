@@ -1,6 +1,7 @@
 import Link from "next/link";
 import type { Metadata } from "next";
 import { GameLibraryShowcase } from "@/components/GameLibraryShowcase";
+import { JsonLd } from "@/components/JsonLd";
 import { TIER_CONFIGS } from "@/lib/game/scoring";
 import { breadcrumbJsonLd, pageMetadata } from "@/lib/site/seo";
 
@@ -14,17 +15,12 @@ export const metadata: Metadata = pageMetadata({
 export default function HowToPlayPage() {
   return (
     <section className="how-page page-shell info-page-shell">
-      <script
+      <JsonLd
         id="canyougeo-how-to-play-breadcrumb-jsonld"
-        type="application/ld+json"
-        dangerouslySetInnerHTML={{
-          __html: JSON.stringify(
-            breadcrumbJsonLd([
-              { name: "Can You Geo?", path: "/" },
-              { name: "How to Play Can You Geo?", path: "/how-to-play/" }
-            ])
-          )
-        }}
+        data={breadcrumbJsonLd([
+          { name: "Can You Geo?", path: "/" },
+          { name: "How to Play Can You Geo?", path: "/how-to-play/" }
+        ])}
       />
       <div className="how-hero map-texture-panel">
         <div>

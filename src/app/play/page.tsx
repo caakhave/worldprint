@@ -1,7 +1,8 @@
 import type { Metadata } from "next";
 import Link from "next/link";
 import { GameLibraryShowcase } from "@/components/GameLibraryShowcase";
-import { pageMetadata } from "@/lib/site/seo";
+import { JsonLd } from "@/components/JsonLd";
+import { breadcrumbJsonLd, pageMetadata, webApplicationJsonLd } from "@/lib/site/seo";
 
 export const metadata: Metadata = pageMetadata({
   title: "Play Can You Geo? - Geography Game Library",
@@ -13,6 +14,14 @@ export const metadata: Metadata = pageMetadata({
 export default function PlayHubPage() {
   return (
     <section className="play-hub-page page-shell info-page-shell" aria-labelledby="play-hub-title">
+      <JsonLd id="canyougeo-web-application-jsonld" data={webApplicationJsonLd()} />
+      <JsonLd
+        id="canyougeo-play-breadcrumb-jsonld"
+        data={breadcrumbJsonLd([
+          { name: "Can You Geo?", path: "/" },
+          { name: "Play", path: "/play/" }
+        ])}
+      />
       <div className="play-hub-hero map-texture-panel">
         <div>
           <p className="eyebrow">Game menu</p>

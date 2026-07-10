@@ -1,7 +1,8 @@
 import { Suspense } from "react";
 import type { Metadata } from "next";
+import { JsonLd } from "@/components/JsonLd";
 import { WorldprintClient } from "@/features/worldprint/WorldprintClient";
-import { pageMetadata } from "@/lib/site/seo";
+import { breadcrumbJsonLd, pageMetadata } from "@/lib/site/seo";
 
 export const metadata: Metadata = pageMetadata({
   title: "Play Mystery Map - Daily Geography Game",
@@ -12,17 +13,27 @@ export const metadata: Metadata = pageMetadata({
 
 export default function PlayMysteryMapPage() {
   return (
-    <Suspense
-      fallback={
-        <section className="game-shell page-shell">
-          <div className="empty-state surface">
-            <h1>Loading Mystery Map</h1>
-            <p>Preparing the static challenge.</p>
-          </div>
-        </section>
-      }
-    >
-      <WorldprintClient />
-    </Suspense>
+    <>
+      <JsonLd
+        id="canyougeo-mystery-map-breadcrumb-jsonld"
+        data={breadcrumbJsonLd([
+          { name: "Can You Geo?", path: "/" },
+          { name: "Play", path: "/play/" },
+          { name: "Mystery Map", path: "/play/mystery-map/" }
+        ])}
+      />
+      <Suspense
+        fallback={
+          <section className="game-shell page-shell">
+            <div className="empty-state surface">
+              <h1>Loading Mystery Map</h1>
+              <p>Preparing the static challenge.</p>
+            </div>
+          </section>
+        }
+      >
+        <WorldprintClient />
+      </Suspense>
+    </>
   );
 }

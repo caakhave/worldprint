@@ -1,8 +1,9 @@
 import type { Metadata } from "next";
 import { GameLibraryShowcase } from "@/components/GameLibraryShowcase";
 import { HomepageHeroMedia } from "@/components/HomepageHeroMedia";
+import { JsonLd } from "@/components/JsonLd";
 import { HomeHeroAccountPanel } from "@/features/home/HomeHeroAccountPanel";
-import { pageMetadata } from "@/lib/site/seo";
+import { breadcrumbJsonLd, pageMetadata } from "@/lib/site/seo";
 
 export const metadata: Metadata = pageMetadata({
   title: "Can You Geo? - Mystery Map Geography Game",
@@ -14,6 +15,10 @@ export const metadata: Metadata = pageMetadata({
 export default function HomePage() {
   return (
     <>
+      <JsonLd
+        id="canyougeo-home-breadcrumb-jsonld"
+        data={breadcrumbJsonLd([{ name: "Can You Geo?", path: "/" }])}
+      />
       <section className="landing-hero" data-testid="cinematic-home-hero">
         <HomepageHeroMedia />
         <div className="landing-hero-backdrop" aria-hidden="true" />

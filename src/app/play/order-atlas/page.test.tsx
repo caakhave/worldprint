@@ -9,9 +9,18 @@ vi.mock("@/features/order-atlas/OrderAtlasClient", () => ({
 
 describe("PlayOrderAtlasPage", () => {
   it("renders the Order Atlas route client with the playable catalog", () => {
-    render(<PlayOrderAtlasPage />);
+    const { container } = render(<PlayOrderAtlasPage />);
 
     expect(screen.getByText(`Order Atlas route client ${ORDER_ATLAS_ROUNDS.length}`)).toBeVisible();
+    const breadcrumbSchema = JSON.parse(container.querySelector("#canyougeo-order-atlas-breadcrumb-jsonld")?.textContent ?? "{}");
+    expect(breadcrumbSchema).toMatchObject({
+      "@type": "BreadcrumbList",
+      itemListElement: [
+        { position: 1, name: "Can You Geo?", item: "https://canyougeo.com/" },
+        { position: 2, name: "Play", item: "https://canyougeo.com/play/" },
+        { position: 3, name: "Order Atlas", item: "https://canyougeo.com/play/order-atlas/" }
+      ]
+    });
   });
 
   it("keeps the public Order Atlas route indexable", () => {

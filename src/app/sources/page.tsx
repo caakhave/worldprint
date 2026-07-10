@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import sources from "../../../public/data/v1/sources.json";
+import { JsonLd } from "@/components/JsonLd";
 import { CONTACT_LINKS } from "@/lib/contact";
 import { storageDescription } from "@/lib/persistence/storage";
 import { breadcrumbJsonLd, pageMetadata } from "@/lib/site/seo";
@@ -29,17 +30,12 @@ export default function SourcesPage() {
 
   return (
     <section className="sources-page page-shell info-page-shell">
-      <script
+      <JsonLd
         id="canyougeo-sources-breadcrumb-jsonld"
-        type="application/ld+json"
-        dangerouslySetInnerHTML={{
-          __html: JSON.stringify(
-            breadcrumbJsonLd([
-              { name: "Can You Geo?", path: "/" },
-              { name: "Data & Sources", path: "/sources/" }
-            ])
-          )
-        }}
+        data={breadcrumbJsonLd([
+          { name: "Can You Geo?", path: "/" },
+          { name: "Data & Sources", path: "/sources/" }
+        ])}
       />
       <header className="sources-hero">
         <p className="eyebrow">Data &amp; sources</p>

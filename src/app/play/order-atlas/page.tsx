@@ -3,6 +3,7 @@ import path from "node:path";
 import { Suspense } from "react";
 import type { Metadata } from "next";
 import entityRegistryJson from "../../../../public/data/v1/entity-registry.json";
+import { JsonLd } from "@/components/JsonLd";
 import { OrderAtlasClient, type OrderAtlasPlayableCountry, type OrderAtlasPlayableRound } from "@/features/order-atlas/OrderAtlasClient";
 import { EntityRegistrySchema, IndicatorArtifactSchema, type IndicatorArtifact } from "@/lib/content/schemas";
 import { ORDER_ATLAS_CATALOG, ORDER_ATLAS_ROUNDS } from "@/lib/order-atlas/catalog";
@@ -13,7 +14,7 @@ import {
   deriveOrderAtlasTrueOrder,
   validateOrderAtlasCatalog
 } from "@/lib/order-atlas/validation";
-import { pageMetadata } from "@/lib/site/seo";
+import { breadcrumbJsonLd, pageMetadata } from "@/lib/site/seo";
 
 export const metadata: Metadata = pageMetadata({
   title: "Play Order Atlas - Geography Ordering Game",
@@ -24,18 +25,28 @@ export const metadata: Metadata = pageMetadata({
 export default function PlayOrderAtlasPage() {
   const rounds = getOrderAtlasPlayableRounds();
   return (
-    <Suspense
-      fallback={
-        <section className="order-atlas-page game-shell page-shell">
-          <div className="empty-state surface">
-            <h1>Loading Order Atlas</h1>
-            <p>Preparing the ordering runs.</p>
-          </div>
-        </section>
-      }
-    >
-      <OrderAtlasClient rounds={rounds} />
-    </Suspense>
+    <>
+      <JsonLd
+        id="canyougeo-order-atlas-breadcrumb-jsonld"
+        data={breadcrumbJsonLd([
+          { name: "Can You Geo?", path: "/" },
+          { name: "Play", path: "/play/" },
+          { name: "Order Atlas", path: "/play/order-atlas/" }
+        ])}
+      />
+      <Suspense
+        fallback={
+          <section className="order-atlas-page game-shell page-shell">
+            <div className="empty-state surface">
+              <h1>Loading Order Atlas</h1>
+              <p>Preparing the ordering runs.</p>
+            </div>
+          </section>
+        }
+      >
+        <OrderAtlasClient rounds={rounds} />
+      </Suspense>
+    </>
   );
 }
 
