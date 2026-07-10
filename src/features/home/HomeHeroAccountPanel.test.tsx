@@ -88,7 +88,7 @@ describe("HomeHeroAccountPanel", () => {
     expect(screen.getByRole("complementary", { name: "Pro Atlas unlocked" })).toBeVisible();
     expect(screen.getByRole("heading", { name: "Mystery Map first, deeper runs next" })).toBeVisible();
     expect(screen.getByText("Pro is active on this account.")).toBeVisible();
-    expect(screen.getByText(/Order Atlas Pro Play is repeatable and stays local to this browser for now/i)).toBeVisible();
+    expect(screen.getByText(/Order Atlas Pro Play is repeatable whenever you want another ordering set/i)).toBeVisible();
     expect(screen.queryByText(/Order Atlas Pro Practice|Order Atlas Practice/i)).not.toBeInTheDocument();
     expect(screen.queryByText(/Order Atlas remains an intro sample/i)).not.toBeInTheDocument();
     expect(screen.queryByRole("link", { name: /Start Pro/i })).not.toBeInTheDocument();

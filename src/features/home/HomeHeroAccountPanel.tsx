@@ -60,7 +60,7 @@ const heroCopy: Record<
     noteLines: [
       "Pro is active on this account.",
       "Daily games still count for score and streaks where supported.",
-      "Order Atlas Pro Play is repeatable and stays local to this browser for now."
+      "Order Atlas Pro Play is repeatable whenever you want another ordering set."
     ],
     panelEyebrow: "Pro Atlas unlocked",
     panelHeading: "Mystery Map first, deeper runs next",
