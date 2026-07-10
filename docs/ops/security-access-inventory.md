@@ -104,7 +104,7 @@ The following must never be exposed in browser code, committed files, screenshot
 ### P2
 
 - Update `.env.example` placeholders that no longer match final configured senders, if needed.
-- Add a recurring quarterly access review checklist.
+- Use the recurring operations review checklist in `docs/ops/recurring-operations-review.md`; later decide whether to automate calendar reminders or ticket templates.
 - Add a lightweight production security-header smoke to the black-box suite if it stays useful.
 - Use the user data request operating procedure in `docs/ops/user-data-requests.md`; later define counsel-approved retention periods and decide whether to automate export/deletion tooling.
 - Decide whether guest sample runs should persist/resume after refresh.
