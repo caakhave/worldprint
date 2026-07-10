@@ -257,10 +257,12 @@ Expected tables include:
 - `stripe_webhook_events`
 - `challenge_email_sends`
 
-Known reproducibility issue:
+Fresh migration reproducibility status:
 
-- The staging database required a one-time `profiles` bootstrap because the current timestamped migrations assume `profiles` already exists from the production spine baseline.
-- Follow-up task: convert the baseline/profile schema into a fully reproducible migration chain so a fresh Supabase project can be created without manual bootstrap SQL.
+- The earlier staging project required a one-time `profiles` bootstrap because the tracked migration chain did not yet include the production spine/profile baseline.
+- The tracked chain now starts with `supabase/migrations/20260626000000_account_profiles_baseline.sql`, which creates `public.profiles` before later profile-dependent migrations create foreign keys, marketing consent columns, policies, grants, and service ledgers.
+- `supabase/tests/migration_reproducibility.structure.test.ts` protects the baseline order and profile-dependent schema expectations.
+- Fresh local replay should still be rerun before creating another long-lived Supabase project. This task did not apply migrations to staging or production.
 
 ## QA Accounts
 
@@ -362,7 +364,7 @@ Dashboard config rollback:
 ## Known Risks And Follow-Up Tasks
 
 - Keep the Stripe sandbox webhook endpoint pointed only at staging `hsgpjtyysbremrokkoym`.
-- Fix the migration baseline so fresh Supabase projects do not require manual `profiles` bootstrap.
+- Before creating another long-lived Supabase project, rerun fresh local migration replay and the migration reproducibility structure test.
 - Consider Cloudflare Access or equivalent protection for `test.canyougeo.com`.
 - Keep black-box test configs clearly split for staging and production smoke.
 - Avoid relying on `supabase/.temp` for any environment decision.
