@@ -90,6 +90,8 @@ CGY_TARGET=apex pytest --html=reports/apex.html --self-contained-html
 CGY_TARGET=www pytest --html=reports/www.html --self-contained-html
 ```
 
+The `prod_smoke` marker is no-secret and production-safe. It checks public route availability, core launch copy, robots/sitemap production posture, public HTML for staging/secret markers, and the deployed security-header/CSP baseline.
+
 There is no separate `CGY_TARGET=prod` target. From the repo root, production smoke uses:
 
 ```bash

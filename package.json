@@ -21,7 +21,7 @@
     "qa:blackbox:www": "cd canyougeo-blackbox && CGY_TARGET=www pytest --html=reports/www.html --self-contained-html",
     "qa:blackbox:apex": "cd canyougeo-blackbox && CGY_TARGET=apex pytest --html=reports/apex.html --self-contained-html",
     "qa:blackbox:local": "cd canyougeo-blackbox && CGY_TARGET=local pytest --html=reports/local.html --self-contained-html",
-    "qa:blackbox:prod-smoke": "cd canyougeo-blackbox && CGY_TARGET=apex pytest -m prod_smoke --html=reports/prod-smoke.html --self-contained-html",
+    "qa:blackbox:prod-smoke": "cd canyougeo-blackbox && CGY_TARGET=apex ./.venv/bin/python -m pytest -m prod_smoke --html=reports/prod-smoke.html --self-contained-html",
     "qa:blackbox:smoke": "cd canyougeo-blackbox && CGY_TARGET=test pytest -m smoke --html=reports/smoke.html --self-contained-html",
     "qa:blackbox:mobile": "cd canyougeo-blackbox && CGY_TARGET=test pytest -m mobile --html=reports/mobile.html --self-contained-html",
     "qa:blackbox:operator": "cd canyougeo-blackbox && python tools/qa_operator_summary.py",
