@@ -40,7 +40,12 @@ Use these phrases naturally. Do not create separate near-duplicate pages for eac
 | Route | Indexing | Canonical | Title | Purpose |
 | --- | --- | --- | --- | --- |
 | `/` | Index | `/` | Can You Geo? - Daily Geography Games & World Data Puzzles | Entity home, product summary, and first-game entry. |
+| `/play/` | Index | `/play/` | Play Can You Geo? - Geography Game Library | Game hub with links to public play routes. |
 | `/play/mystery-map/` | Index | `/play/mystery-map/` | Play Mystery Map - Daily Geography Game | Primary game landing and play route. |
+| `/daily-geography-game/` | Index | `/daily-geography-game/` | Daily Geography Game - Can You Geo? | Search-intent page for daily geography puzzle players. |
+| `/map-quiz/` | Index | `/map-quiz/` | Map Quiz - Can You Geo? | Search-intent page for map quiz and world map challenge players. |
+| `/choropleth-map-game/` | Index | `/choropleth-map-game/` | Choropleth Map Game - Can You Geo? | Search-intent page explaining color-coded data-map play. |
+| `/country-guessing-game/` | Index | `/country-guessing-game/` | Country Guessing Game - Can You Geo? | Search-intent page for country clue and guessing-game play. |
 | `/how-to-play/` | Index | `/how-to-play/` | How to Play Mystery Map | Gameplay rules and scoring explanation. |
 | `/sources/` | Index | `/sources/` | Data & Sources - Can You Geo? | Source transparency and methodology. |
 | `/past-games/` | Index | `/past-games/` | Past Games - Can You Geo? | Replay/archive landing page. |
@@ -60,7 +65,7 @@ Implemented:
 - `Organization` for Can You Geo.
 - `WebSite` for the canonical site entity.
 - `WebApplication` on `/play/` for the browser-based game application.
-- `BreadcrumbList` on `/`, `/play/`, `/play/mystery-map/`, `/play/pattern-atlas/`, `/play/order-atlas/`, `/sources/`, `/upgrade/`, and supporting info pages such as `/about/` and `/how-to-play/`.
+- `BreadcrumbList` on `/`, `/play/`, `/play/mystery-map/`, `/play/pattern-atlas/`, `/play/order-atlas/`, `/daily-geography-game/`, `/map-quiz/`, `/choropleth-map-game/`, `/country-guessing-game/`, `/sources/`, `/upgrade/`, and supporting info pages such as `/about/` and `/how-to-play/`.
 
 Current guardrails:
 
@@ -68,6 +73,17 @@ Current guardrails:
 - Do not add fake reviews, ratings, `aggregateRating`, or unsupported quality claims.
 - Do not add `FAQPage` markup unless the exact Q&A content is visibly present on the page.
 - Do not add answer countries, hidden indicators, challenge codes, or private run/user state to structured data.
+
+## Intent Landing Pages
+
+The first public SEO landing page batch targets four real player intents: daily geography game, map quiz, choropleth map game, and country guessing game. These pages are allowed because they have distinct player jobs:
+
+- `/daily-geography-game/` explains the daily-play habit and points new players toward Mystery Map.
+- `/map-quiz/` frames Can You Geo as a map-reading challenge rather than a memorization quiz.
+- `/choropleth-map-game/` explains color-coded data maps in plain language and links to source notes.
+- `/country-guessing-game/` explains the three country-clue styles across Mystery Map, Pattern Atlas, and Order Atlas.
+
+Keep this batch useful and finite. Do not create near-duplicate keyword pages that only swap titles or target phrases. Future landing pages should have a clear user intent, unique page copy, visible internal links, and a reason to exist for players before they exist for crawlers.
 
 ## Sitemap And Robots Behavior
 

@@ -6428,12 +6428,11 @@ dd {
   display: grid;
   gap: 0.18rem;
   border-right: 1px solid var(--line);
-  padding-right: 0.75rem;
+  padding: 0.78rem;
 }
 
 .summary-achievement div:last-child {
   border-right: 0;
-  padding-right: 0;
 }
 
 .summary-achievement span {
@@ -11203,7 +11202,6 @@ button.pro-price-option:focus-visible {
 
   .summary-achievement div:nth-child(2n) {
     border-right: 0;
-    padding-right: 0;
   }
 
   .summary-achievement div {

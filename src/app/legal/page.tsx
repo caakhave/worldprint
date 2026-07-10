@@ -46,9 +46,9 @@ export function LegalContent() {
 
             <h3>Accounts and Passwords</h3>
             <p>
-              You may try sample play without an account. A Free account uses email and password sign-in through Supabase Auth and
-              may require email confirmation. You are responsible for keeping access to your email account and password secure. Do not
-              share your account or try to access another player&apos;s account.
+              You may try sample play without an account. A Free account uses email and password sign-in through a secure
+              authentication provider and may require email confirmation. You are responsible for keeping access to your email account
+              and password secure. Do not share your account or try to access another player&apos;s account.
             </p>
 
             <h3>Free and Pro Access</h3>
@@ -139,8 +139,8 @@ export function LegalContent() {
             <ul>
               <li>Account information, such as email address, account ID, confirmation status, and profile settings.</li>
               <li>
-                Password credentials are handled by Supabase Auth. Can You Geo does not store plaintext passwords in application
-                tables.
+                Password credentials are handled by a secure authentication provider. Can You Geo does not store plaintext passwords in
+                application tables.
               </li>
               <li>Marketing preference information, such as opt-in status, opt-in time, opt-in source, and opt-out time.</li>
               <li>Gameplay information, such as scores, streaks, guesses, completed runs, challenge activity, and saved stats.</li>
@@ -149,8 +149,8 @@ export function LegalContent() {
                 period, and cancellation-at-period-end status.
               </li>
               <li>
-                Transactional email records and delivery metadata for Supabase Auth, Resend challenge emails, owner/admin billing
-                notifications, and Google Workspace support email.
+                Transactional email records and delivery metadata for account and security emails, challenge emails, owner/admin
+                billing notifications, and support email.
               </li>
               <li>
                 Challenge email ledger entries, including hashed recipient emails, recipient domains, challenge-code hashes, delivery
@@ -181,7 +181,8 @@ export function LegalContent() {
             <h3>Sharing and Legal Disclosures</h3>
             <p>
               We do not sell personal information. We may disclose information if required by law or to protect rights, safety, and
-              security.
+              security. We may also share limited information with service providers that help operate authentication, secure
+              application data storage, email delivery, analytics, payments, hosting, and support.
             </p>
 
             <h3>Owner and Admin Notifications</h3>

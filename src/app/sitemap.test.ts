@@ -25,6 +25,10 @@ describe("sitemap metadata route", () => {
     expect(urls).toContain("https://canyougeo.com/play/mystery-map/");
     expect(urls).toContain("https://canyougeo.com/play/pattern-atlas/");
     expect(urls).toContain("https://canyougeo.com/play/order-atlas/");
+    expect(urls).toContain("https://canyougeo.com/daily-geography-game/");
+    expect(urls).toContain("https://canyougeo.com/map-quiz/");
+    expect(urls).toContain("https://canyougeo.com/choropleth-map-game/");
+    expect(urls).toContain("https://canyougeo.com/country-guessing-game/");
     expect(urls).not.toContain("https://canyougeo.com/internal/order-atlas-review/");
     expect(urls).toContain("https://canyougeo.com/how-to-play/");
     expect(urls).toContain("https://canyougeo.com/sources/");

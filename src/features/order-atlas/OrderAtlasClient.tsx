@@ -92,14 +92,14 @@ function runModeLabel(runOrMode: OrderAtlasRunState | OrderAtlasRunMode) {
 }
 
 function runSummaryCopy(run: OrderAtlasRunState) {
-  if (run.mode === "daily") return "You finished today's Order Atlas Daily. This result stays local to this browser for now.";
-  if (run.mode === "practice") return "You finished an Order Atlas Pro Play set. This result stays local to this browser for now.";
+  if (run.mode === "daily") return "You finished today's Order Atlas Daily.";
+  if (run.mode === "practice") return "You finished an Order Atlas Pro Play set.";
   return "You finished the Order Atlas sample.";
 }
 
 function runIntroCopy(mode: OrderAtlasRunMode) {
-  if (mode === "daily") return "Order Atlas Daily uses three deterministic rounds for today. Progress resumes locally if you reload.";
-  if (mode === "practice") return "Pro Play is repeatable: order a fresh three-round set whenever you want. This set stays local to this browser for now.";
+  if (mode === "daily") return "Order Atlas Daily uses three deterministic rounds for today.";
+  if (mode === "practice") return "Pro Play is repeatable: order a fresh three-round set whenever you want.";
   return "No account needed. Sample progress stays local, and no account results are saved.";
 }
 
@@ -653,8 +653,8 @@ function OrderAtlasLobby({
         <p className="eyebrow">Order Atlas</p>
         <h1 className="page-title">Order countries by the signal.</h1>
         <p className="lead">
-          Arrange country cards by a known geography indicator, then reveal the real values. Order Atlas progress is local to this browser and separate from
-          Mystery Map and Pattern Atlas.
+          Arrange country cards by a known geography indicator, then reveal the real values. Order Atlas progress is separate from Mystery Map and Pattern
+          Atlas.
         </p>
         <div className="entry-facts" aria-label="Order Atlas facts">
           <span>{ORDER_ATLAS_ROUND_COUNT} rounds per run</span>
@@ -670,7 +670,7 @@ function OrderAtlasLobby({
             {isProAccount
               ? "Your Pro account unlocks repeatable Order Atlas play: start a fresh three-round ordering set whenever you want."
               : isFreeAccount
-                ? "Your free account gets today's Order Atlas Daily with local browser progress."
+                ? "Your free account gets today's Order Atlas Daily."
                 : "Try the fixed Order Atlas Sample Run. No account needed and no account results saved."}
           </p>
         </div>
@@ -707,7 +707,7 @@ function OrderAtlasLobby({
               <div className="lobby-primary-copy">
                 <p className="setup-kicker">Pro Play</p>
                 <h3>Unlimited Order Atlas Play</h3>
-                <p>Start a fresh three-round ordering set whenever you want. Each set stays local to this browser for now.</p>
+                <p>Start a fresh three-round ordering set whenever you want.</p>
                 <span className="mode-state-pill">Repeatable Pro play</span>
               </div>
               <p className="mode-card-note">{proPlayStateCopy}</p>
@@ -853,7 +853,7 @@ function summaryCtaBody(run: OrderAtlasRunState, signedIn: boolean, isFreeAccoun
   if (isProAccount && run.mode !== "practice") {
     return "Start an Order Atlas Play set whenever you want a fresh three-round ordering challenge.";
   }
-  return "Each Pro Play set stays local to this browser for now.";
+  return "Start a fresh three-round ordering set whenever you want.";
 }
 
 function formatPlacementPoints(countryCount: number): string {

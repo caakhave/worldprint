@@ -63,6 +63,38 @@ export const PUBLIC_INDEXED_ROUTES: PublicRouteMetadata[] = [
     priority: 0.82
   },
   {
+    path: "/daily-geography-game/",
+    title: "Daily Geography Game - Can You Geo?",
+    description:
+      "Play a daily geography game built around map clues, country patterns, and source-backed world data. Start with Mystery Map on Can You Geo.",
+    changeFrequency: "monthly",
+    priority: 0.8
+  },
+  {
+    path: "/map-quiz/",
+    title: "Map Quiz - Can You Geo?",
+    description:
+      "Play a map quiz where the challenge is reading country patterns, data maps, and geography logic instead of only memorizing capitals.",
+    changeFrequency: "monthly",
+    priority: 0.8
+  },
+  {
+    path: "/choropleth-map-game/",
+    title: "Choropleth Map Game - Can You Geo?",
+    description:
+      "Play a choropleth map game where colors are the clue. Mystery Map asks you to read a world data map and guess the hidden pattern.",
+    changeFrequency: "monthly",
+    priority: 0.8
+  },
+  {
+    path: "/country-guessing-game/",
+    title: "Country Guessing Game - Can You Geo?",
+    description:
+      "Play a country guessing game with colored maps, country-set rules, and ordering puzzles. Choose a Can You Geo geography challenge.",
+    changeFrequency: "monthly",
+    priority: 0.8
+  },
+  {
     path: "/sources/",
     title: "Data & Sources - Can You Geo?",
     description:
