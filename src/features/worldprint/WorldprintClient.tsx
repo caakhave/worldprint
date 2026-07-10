@@ -61,7 +61,13 @@ import {
   type RunSetupMetadata,
   type RunState
 } from "@/lib/game/state";
-import { trackCanYouGeoEvent } from "@/lib/site/analytics";
+import {
+  scoreBandForScore,
+  trackAnalyticsEvent,
+  type AnalyticsGameMode,
+  type AnalyticsPlan,
+  type AnalyticsShareMethod
+} from "@/lib/site/analytics";
 import { PLAY_LOBBY_REQUEST_EVENT } from "@/lib/site/playLobbyNavigation";
 import {
   defaultPersistedState,
@@ -128,6 +134,20 @@ function rarePracticeNote(count: number) {
 
 function practiceLabel(difficulty: string, category: string) {
   return category ? `${difficulty} ${category} practice` : `${difficulty} practice`;
+}
+
+function analyticsPlan(signedIn: boolean, isProAccount: boolean): AnalyticsPlan {
+  if (!signedIn) return "guest";
+  return isProAccount ? "pro" : "free";
+}
+
+function analyticsMode(mode: RunMode, signedIn: boolean, isProAccount: boolean): AnalyticsGameMode {
+  if (mode === "sample") return "guest_sample";
+  if (mode === "daily") return signedIn && isProAccount ? "pro_daily" : "free_daily";
+  if (mode === "atlas") return "pro_atlas";
+  if (mode === "practice") return "practice";
+  if (mode === "archive") return "past_game";
+  return "challenge";
 }
 
 function practiceFlavor(difficulty: IndicatorDifficulty) {
@@ -777,11 +797,12 @@ export function WorldprintClient({ dateOverride, entryMode = "standard" }: World
     });
     await ensureIndicators(nextRun.rounds.map((round) => round.correctIndicatorId));
     setRun(nextRun);
-    trackCanYouGeoEvent("cgy_game_start", {
-      run_mode: mode,
-      tier: nextRun.tier,
+    trackAnalyticsEvent("cgy_game_start", {
+      game_slug: "mystery-map",
+      mode: analyticsMode(nextRun.mode, signedIn, isProAccount),
       round_count: nextRun.rounds.length,
-      source: mode === "challenge" ? "challenge" : isArchiveDate ? "past_game" : "lobby"
+      signed_in: signedIn,
+      plan: analyticsPlan(signedIn, isProAccount)
     });
     setShowFirstRunIntro((mode === "sample" || mode === "daily" || mode === "atlas") && !store.onboardingComplete);
     setSelectedCountryIso3("");
@@ -808,11 +829,12 @@ export function WorldprintClient({ dateOverride, entryMode = "standard" }: World
     });
     await ensureIndicators(replay.rounds.map((round) => round.correctIndicatorId));
     setRun(replay);
-    trackCanYouGeoEvent("cgy_game_start", {
-      run_mode: replay.mode,
-      tier: replay.tier,
+    trackAnalyticsEvent("cgy_game_start", {
+      game_slug: "mystery-map",
+      mode: analyticsMode(replay.mode, signedIn, isProAccount),
       round_count: replay.rounds.length,
-      source: sourceRun.mode === "challenge" ? "challenge_replay" : "result_replay"
+      signed_in: signedIn,
+      plan: analyticsPlan(signedIn, isProAccount)
     });
     setShowFirstRunIntro(false);
     setSelectedCountryIso3("");
@@ -849,21 +871,32 @@ export function WorldprintClient({ dateOverride, entryMode = "standard" }: World
       const next = reduceRun(current, action);
       if (action.type === "submit") {
         const nextRound = next.rounds[current.currentRoundIndex];
-        trackCanYouGeoEvent("cgy_round_answered", {
-          run_mode: current.mode,
-          tier: current.tier,
-          round_number: current.currentRoundIndex + 1,
-          round_count: current.rounds.length,
-          correct: action.correct,
-          score: nextRound?.score ?? currentRound?.score ?? 0
-        });
+        const alreadyRejected = currentRound?.rejectedAnswers.some((answer) => answer.id === action.answerId) ?? false;
+        if (currentRound && (action.correct || !alreadyRejected)) {
+          trackAnalyticsEvent("cgy_round_answered", {
+            game_slug: "mystery-map",
+            mode: analyticsMode(current.mode, signedIn, isProAccount),
+            round_number: current.currentRoundIndex + 1,
+            correct: action.correct,
+            difficulty: current.tier,
+            score_band: scoreBandForScore(nextRound?.score ?? currentRound.score, 1000),
+            signed_in: signedIn,
+            plan: analyticsPlan(signedIn, isProAccount)
+          });
+        }
       }
       if (current.status !== "complete" && next.status === "complete") {
-        trackCanYouGeoEvent("cgy_game_complete", {
-          run_mode: next.mode,
-          tier: next.tier,
+        const finalScore = next.rounds.reduce((sum, round) => sum + round.score, 0);
+        const maxScore = next.rounds.length * 1000;
+        trackAnalyticsEvent("cgy_game_complete", {
+          game_slug: "mystery-map",
+          mode: analyticsMode(next.mode, signedIn, isProAccount),
           round_count: next.rounds.length,
-          score: next.rounds.reduce((sum, round) => sum + round.score, 0)
+          final_score: finalScore,
+          score_band: scoreBandForScore(finalScore, maxScore),
+          perfect_run: finalScore >= maxScore,
+          signed_in: signedIn,
+          plan: analyticsPlan(signedIn, isProAccount)
         });
       }
       return next;
@@ -2607,8 +2640,23 @@ function CompletionSummary({
     return () => window.removeEventListener("keydown", onKeyDown);
   }, [inviteModalOpen]);
 
+  const shareAnalyticsMode = analyticsMode(run.mode, signedIn, canUseFullPractice);
+  function trackChallengeShare(method: AnalyticsShareMethod) {
+    trackAnalyticsEvent("cgy_share", {
+      method,
+      content_type: "challenge_link",
+      game_slug: "mystery-map",
+      mode: shareAnalyticsMode
+    });
+  }
+
   function openChallengeInviteModal() {
-    trackCanYouGeoEvent("cgy_share_clicked", { method: "challenge_email_modal", run_mode: run.mode });
+    trackAnalyticsEvent("cgy_select_content", {
+      content_type: "share_action",
+      item_id: "challenge_email_modal",
+      game_slug: "mystery-map",
+      mode: shareAnalyticsMode
+    });
     setInviteModalOpen(true);
     setInviteStatus(signedIn ? "" : "Sign in to send a one-time challenge email. Copy and mailto still work without an account.");
     setInviteSent(false);
@@ -2631,7 +2679,7 @@ function CompletionSummary({
     setInviteStatus(result.message);
     setInviteSent(result.ok);
     if (result.ok) {
-      trackCanYouGeoEvent("cgy_challenge_created", { method: "server_email", run_mode: run.mode });
+      trackChallengeShare("email");
       setShareStatus(result.remaining === null ? "Challenge email sent." : `Challenge email sent. ${result.remaining} left today.`);
       setInviteEmail("");
       setInviteMessage("");
@@ -2643,14 +2691,12 @@ function CompletionSummary({
     try {
       if (navigator.share) {
         await navigator.share(challengeShareTarget);
-        trackCanYouGeoEvent("cgy_share_clicked", { method: "native_share", run_mode: run.mode });
-        trackCanYouGeoEvent("cgy_challenge_created", { method: "native_share", run_mode: run.mode });
+        trackChallengeShare("native_share");
         setShareStatus("Challenge shared.");
         return;
       }
       await navigator.clipboard.writeText(challengeUrl);
-      trackCanYouGeoEvent("cgy_share_clicked", { method: "copy_fallback", run_mode: run.mode });
-      trackCanYouGeoEvent("cgy_challenge_created", { method: "copy_fallback", run_mode: run.mode });
+      trackChallengeShare("copy_link");
       setResultCopyState("copied");
       setShareStatus("Challenge link copied.");
     } catch {
@@ -2663,8 +2709,7 @@ function CompletionSummary({
     if (!canCreateChallenge) return;
     try {
       await navigator.clipboard.writeText(challengeUrl);
-      trackCanYouGeoEvent("cgy_share_clicked", { method: "copy_link", run_mode: run.mode });
-      trackCanYouGeoEvent("cgy_challenge_created", { method: "copy_link", run_mode: run.mode });
+      trackChallengeShare("copy_link");
       setResultCopyState("copied");
       setShareStatus("Challenge link copied.");
     } catch {
@@ -2929,8 +2974,7 @@ function CompletionSummary({
                       className="button-secondary"
                       href={emailChallengeHref}
                       onClick={() => {
-                        trackCanYouGeoEvent("cgy_share_clicked", { method: "mailto", run_mode: run.mode });
-                        trackCanYouGeoEvent("cgy_challenge_created", { method: "mailto", run_mode: run.mode });
+                        trackChallengeShare("mailto");
                       }}
                     >
                       <Mail size={18} aria-hidden="true" />

@@ -1,6 +1,9 @@
+"use client";
+
 import Link from "next/link";
 import Image from "next/image";
 import { ArrowRight } from "lucide-react";
+import { trackAnalyticsEvent } from "@/lib/site/analytics";
 
 export type GameLibraryItem = {
   id: "mystery-map" | "pattern-atlas" | "order-atlas";
@@ -121,7 +124,17 @@ function GameLibraryCard({ item, visualMode }: { item: GameLibraryItem; visualMo
   return (
     <article className="game-library-card" data-game={item.id} data-featured={item.featured ? "true" : "false"}>
       {item.href ? (
-        <Link className="game-library-card-link" href={item.href}>
+        <Link
+          className="game-library-card-link"
+          href={item.href}
+          onClick={() =>
+            trackAnalyticsEvent("cgy_select_content", {
+              content_type: "game_card",
+              item_id: `game_library_${item.id}`,
+              game_slug: item.id
+            })
+          }
+        >
           {cardContent}
         </Link>
       ) : (

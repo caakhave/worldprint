@@ -3,6 +3,7 @@
 import Link from "next/link";
 import { ArrowRight } from "lucide-react";
 import { useEntitlement } from "@/features/account/useEntitlement";
+import { trackAnalyticsEvent, type AnalyticsGameSlug } from "@/lib/site/analytics";
 
 type HomeHeroState = "guest" | "free" | "pro" | "loading";
 
@@ -91,6 +92,22 @@ function heroStateForEntitlement(input: ReturnType<typeof useEntitlement>): Home
   return "free";
 }
 
+function gameSlugForHref(href: string): AnalyticsGameSlug | undefined {
+  if (href.startsWith("/play/mystery-map")) return "mystery-map";
+  if (href.startsWith("/play/pattern-atlas")) return "pattern-atlas";
+  if (href.startsWith("/play/order-atlas")) return "order-atlas";
+  return undefined;
+}
+
+function trackHeroSelection(itemId: string, href: string) {
+  const gameSlug = gameSlugForHref(href);
+  trackAnalyticsEvent("cgy_select_content", {
+    content_type: "hero_cta",
+    item_id: itemId,
+    ...(gameSlug ? { game_slug: gameSlug } : {})
+  });
+}
+
 export function HomeHeroAccountPanel() {
   const entitlementState = useEntitlement();
   const state = heroStateForEntitlement(entitlementState);
@@ -107,11 +124,20 @@ export function HomeHeroAccountPanel() {
           <span>Fresh maps, country patterns, and ordering challenges keep the atlas growing.</span>
         </p>
         <div className="button-row">
-          <Link className="button hero-primary-cta" href={copy.primary.href} aria-disabled={state === "loading" ? "true" : undefined}>
+          <Link
+            className="button hero-primary-cta"
+            href={copy.primary.href}
+            aria-disabled={state === "loading" ? "true" : undefined}
+            onClick={() => trackHeroSelection(`home_${state}_primary`, copy.primary.href)}
+          >
             {copy.primary.label}
             <ArrowRight size={18} aria-hidden="true" />
           </Link>
-          <Link className="button-secondary hero-secondary-cta" href={copy.secondary.href}>
+          <Link
+            className="button-secondary hero-secondary-cta"
+            href={copy.secondary.href}
+            onClick={() => trackHeroSelection(`home_${state}_secondary`, copy.secondary.href)}
+          >
             {copy.secondary.label}
           </Link>
         </div>
@@ -125,7 +151,11 @@ export function HomeHeroAccountPanel() {
         <p className="eyebrow">{copy.panelEyebrow}</p>
         <h2>{copy.panelHeading}</h2>
         <p>{copy.panelBody}</p>
-        <Link className="button hero-panel-button" href={copy.panelCta.href}>
+        <Link
+          className="button hero-panel-button"
+          href={copy.panelCta.href}
+          onClick={() => trackHeroSelection(`home_${state}_panel`, copy.panelCta.href)}
+        >
           {copy.panelCta.label}
           <ArrowRight size={18} aria-hidden="true" />
         </Link>

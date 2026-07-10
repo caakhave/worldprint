@@ -30,6 +30,7 @@ import {
   type OrderAtlasRunMode,
   type OrderAtlasRunState
 } from "@/lib/order-atlas/storage";
+import { scoreBandForScore, trackAnalyticsEvent, type AnalyticsGameMode, type AnalyticsPlan } from "@/lib/site/analytics";
 
 export type OrderAtlasPlayableCountry = {
   iso3: string;
@@ -151,6 +152,17 @@ function scrollElementToStart(element: HTMLElement | null) {
       block: "start"
     });
   });
+}
+
+function orderAnalyticsPlan(signedIn: boolean, isProAccount: boolean): AnalyticsPlan {
+  if (!signedIn) return "guest";
+  return isProAccount ? "pro" : "free";
+}
+
+function orderAnalyticsMode(mode: OrderAtlasRunMode, signedIn: boolean, isProAccount: boolean): AnalyticsGameMode {
+  if (mode === "sample") return "guest_sample";
+  if (mode === "daily") return signedIn && isProAccount ? "pro_daily" : "free_daily";
+  return "practice";
 }
 
 export function OrderAtlasClient({ rounds, todayOverride }: OrderAtlasClientProps) {
@@ -291,6 +303,13 @@ export function OrderAtlasClient({ rounds, todayOverride }: OrderAtlasClientProp
       salt: mode === "sample" ? "evergreen" : mode === "daily" ? todayKey : `pro:${Date.now()}`
     });
     setRun(nextRun);
+    trackAnalyticsEvent("cgy_game_start", {
+      game_slug: "order-atlas",
+      mode: orderAnalyticsMode(nextRun.mode, signedIn, isProAccount),
+      round_count: nextRun.rounds.length,
+      signed_in: signedIn,
+      plan: orderAnalyticsPlan(signedIn, isProAccount)
+    });
     scrollToTop();
   }
 
@@ -318,6 +337,16 @@ export function OrderAtlasClient({ rounds, todayOverride }: OrderAtlasClientProp
       submittedIso3: currentRoundState.cardOrderIso3,
       trueOrderIso3: currentRound.trueOrder.map((country) => country.iso3)
     });
+    trackAnalyticsEvent("cgy_round_answered", {
+      game_slug: "order-atlas",
+      mode: orderAnalyticsMode(run.mode, signedIn, isProAccount),
+      round_number: run.currentRoundIndex + 1,
+      correct: score.correctPositions === score.totalCountries,
+      difficulty: currentRound.difficulty,
+      score_band: scoreBandForScore(score.finalScore, ORDER_ATLAS_MAX_SCORE),
+      signed_in: signedIn,
+      plan: orderAnalyticsPlan(signedIn, isProAccount)
+    });
     shouldScrollToRevealRef.current = true;
     updateRun((current) => {
       const roundsState = [...current.rounds];
@@ -336,6 +365,18 @@ export function OrderAtlasClient({ rounds, todayOverride }: OrderAtlasClientProp
     if (!run || !submittedRound) return;
     if (run.currentRoundIndex + 1 >= run.rounds.length) {
       shouldScrollToResultsRef.current = true;
+      const finalScore = run.rounds.reduce((sum, round) => sum + (round.score?.finalScore ?? 0), 0);
+      const maxScore = run.rounds.length * ORDER_ATLAS_MAX_SCORE;
+      trackAnalyticsEvent("cgy_game_complete", {
+        game_slug: "order-atlas",
+        mode: orderAnalyticsMode(run.mode, signedIn, isProAccount),
+        round_count: run.rounds.length,
+        final_score: finalScore,
+        score_band: scoreBandForScore(finalScore, maxScore),
+        perfect_run: finalScore >= maxScore,
+        signed_in: signedIn,
+        plan: orderAnalyticsPlan(signedIn, isProAccount)
+      });
       setRun({ ...run, status: "complete" });
       return;
     }

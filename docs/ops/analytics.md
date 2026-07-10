@@ -1,6 +1,6 @@
 # Can You Geo Analytics Guide
 
-Last updated: July 1, 2026
+Last updated: July 10, 2026
 
 ## Status
 
@@ -43,22 +43,36 @@ NEXT_PUBLIC_NO_INDEX=true
 
 ## Tracked Events
 
-Only high-level, non-PII product events are tracked:
+Only high-level, non-PII product events are pushed to `window.dataLayer`. GTM listens for the `cgy_*` app event names and forwards them to clean GA4 event names.
 
-- `cgy_game_start`
-- `cgy_round_answered`
-- `cgy_game_complete`
-- `cgy_share_clicked`
-- `cgy_sign_in_clicked`
-- `cgy_upgrade_clicked`
-- `cgy_past_game_opened`
-- `cgy_challenge_created`
+| App dataLayer event | GA4 event forwarded by GTM | Fires when | Parameters |
+| --- | --- | --- | --- |
+| `cgy_game_start` | `game_start` | A new playable run starts, not on page load or resume. | `game_slug`, `mode`, `round_count`, `signed_in`, `plan` |
+| `cgy_round_answered` | `round_submit` | A player submits an answer for a round. Repeated already-rejected answers are ignored. | `game_slug`, `mode`, `round_number`, `correct`, `difficulty`, `score_band`, `signed_in`, `plan` |
+| `cgy_game_complete` | `game_complete` | A run transitions to complete. | `game_slug`, `mode`, `round_count`, `final_score`, `score_band`, `perfect_run`, `signed_in`, `plan` |
+| `cgy_select_content` | `select_content` | A player selects a major game card, mode card, plan option, auth link, or CTA. | `content_type`, `item_id`, optional `game_slug`, optional `mode` |
+| `cgy_sign_up` | `sign_up` | A new account is successfully created. | `method` |
+| `cgy_login` | `login` | A sign-in succeeds. | `method` |
+| `cgy_share` | `share` | A challenge/result link is copied, natively shared, sent by server email, or opened as mailto. | `method`, `content_type`, `game_slug`, `mode` |
+| `cgy_begin_checkout` | `begin_checkout` | A signed-in player starts secure Stripe checkout. | `currency`, `value`, `plan` |
 
-Allowed event parameters are generic fields such as run mode, tier, round count, score, plan, source, method, and boolean state. Do not send account emails, user IDs, recipient emails, auth tokens, payment details, precise location, answer countries, hidden indicators, source labels, or challenge codes.
+`purchase` is intentionally not emitted from the frontend yet. The current app does not have a refresh-proof, single source of truth with a stable transaction ID on the browser return path, so a frontend `purchase` event could double-count. Add this later only from a reliable billing success source.
+
+Allowed event parameters are generic low-cardinality fields such as game slug, public mode, score band, plan, CTA ID, method, and boolean state. Do not send account emails, user IDs, recipient emails, auth tokens, payment details, precise location, answer countries, hidden indicators, source labels, raw challenge codes, or free-text notes.
 
 ## Privacy Notes
 
-The analytics helper rejects PII-shaped parameter names and email-like string values. This is a defense-in-depth guard, not permission to pass sensitive data. Event wiring should continue to use only generic product state.
+The analytics helper rejects PII-shaped parameter names and email-like string values. It also drops `undefined` and `null` values before pushing to `window.dataLayer`. This is a defense-in-depth guard, not permission to pass sensitive data. Event wiring should continue to use only generic product state.
+
+Recommended GA4 key events after GTM forwarding is configured:
+
+- `game_complete`
+- `sign_up`
+- `share`
+- `begin_checkout`
+- `purchase` only after it is safely implemented
+
+Consider `game_start` later if activation becomes a core acquisition metric. Do not mark `round_submit` as a key event.
 
 Cloudflare Web Analytics or Insights may still be injected from the Cloudflare dashboard. Keep that separate from app-owned GTM/GA4 analytics and verify any dashboard-injected analytics are appropriate for the current production posture.
 
@@ -77,7 +91,7 @@ Do not replace these with broad Google wildcards. The current static export stil
 
 1. Create or confirm the production GA4 property for `canyougeo.com`.
 2. Create a production Google Tag Manager container if using GTM.
-3. In GTM, configure GA4 page view and custom event forwarding for the `cgy_*` events.
+3. In GTM, configure GA4 page view and custom event forwarding for the `cgy_*` dataLayer events listed above.
 4. Publish the GTM container before production launch. The current launch container is `GTM-5CQ22953`.
 5. Set Cloudflare Pages Production env:
    - `NEXT_PUBLIC_SITE_URL=https://canyougeo.com`

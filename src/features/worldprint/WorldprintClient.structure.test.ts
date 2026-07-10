@@ -447,12 +447,12 @@ describe("WorldprintClient UI structure", () => {
   });
 
   it("wires only high-level launch analytics events without answer labels", () => {
-    expect(source).toContain("trackCanYouGeoEvent");
+    expect(source).toContain("trackAnalyticsEvent");
     expect(source).toContain('"cgy_game_start"');
     expect(source).toContain('"cgy_round_answered"');
     expect(source).toContain('"cgy_game_complete"');
-    expect(source).toContain('"cgy_share_clicked"');
-    expect(source).toContain('"cgy_challenge_created"');
+    expect(source).toContain('"cgy_share"');
+    expect(source).toContain('"cgy_select_content"');
     expect(source).toContain("round_number: current.currentRoundIndex + 1");
     expect(source).not.toContain('answer_label');
     expect(source).not.toContain('indicator_id');

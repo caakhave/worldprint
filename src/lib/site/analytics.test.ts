@@ -1,5 +1,5 @@
 import { afterEach, describe, expect, it, vi } from "vitest";
-import { analyticsConfigFromEnv, sanitizeAnalyticsParams, trackCanYouGeoEvent } from "@/lib/site/analytics";
+import { analyticsConfigFromEnv, sanitizeAnalyticsParams, scoreBandForScore, trackAnalyticsEvent } from "@/lib/site/analytics";
 
 describe("analytics helpers", () => {
   afterEach(() => {
@@ -81,7 +81,15 @@ describe("analytics helpers", () => {
     const originalWindow = window;
     vi.stubGlobal("window", undefined);
 
-    expect(() => trackCanYouGeoEvent("cgy_game_start", { run_mode: "sample" })).not.toThrow();
+    expect(() =>
+      trackAnalyticsEvent("cgy_game_start", {
+        game_slug: "mystery-map",
+        mode: "guest_sample",
+        round_count: 5,
+        signed_in: false,
+        plan: "guest"
+      })
+    ).not.toThrow();
 
     vi.stubGlobal("window", originalWindow);
   });
@@ -92,10 +100,18 @@ describe("analytics helpers", () => {
     vi.stubEnv("NEXT_PUBLIC_SITE_URL", "https://canyougeo.com");
     vi.stubEnv("NEXT_PUBLIC_NO_INDEX", "false");
 
-    expect(() => trackCanYouGeoEvent("cgy_game_start", { run_mode: "sample" })).not.toThrow();
+    expect(() =>
+      trackAnalyticsEvent("cgy_game_start", {
+        game_slug: "mystery-map",
+        mode: "guest_sample",
+        round_count: 5,
+        signed_in: false,
+        plan: "guest"
+      })
+    ).not.toThrow();
   });
 
-  it("pushes safe events to GTM dataLayer when available", () => {
+  it("pushes safe events to the dataLayer", () => {
     vi.stubEnv("NEXT_PUBLIC_ANALYTICS_ENABLED", "true");
     vi.stubEnv("NEXT_PUBLIC_GTM_ID", "GTM-CANYOUGEO");
     vi.stubEnv("NEXT_PUBLIC_SITE_URL", "https://canyougeo.com");
@@ -103,16 +119,25 @@ describe("analytics helpers", () => {
     const analyticsWindow = window as typeof window & { dataLayer: unknown[] };
     analyticsWindow.dataLayer = [];
 
-    trackCanYouGeoEvent("cgy_share_clicked", {
+    trackAnalyticsEvent("cgy_share", {
       method: "copy_link",
-      run_mode: "daily",
-      recipient_email: "friend@example.com"
+      content_type: "challenge_link",
+      game_slug: "mystery-map",
+      mode: "free_daily"
     });
 
-    expect(analyticsWindow.dataLayer).toEqual([{ event: "cgy_share_clicked", method: "copy_link", run_mode: "daily" }]);
+    expect(analyticsWindow.dataLayer).toEqual([
+      {
+        event: "cgy_share",
+        method: "copy_link",
+        content_type: "challenge_link",
+        game_slug: "mystery-map",
+        mode: "free_daily"
+      }
+    ]);
   });
 
-  it("uses gtag when direct GA4 is available", () => {
+  it("initializes dataLayer even when direct GA4 is the configured provider", () => {
     vi.stubEnv("NEXT_PUBLIC_ANALYTICS_ENABLED", "true");
     vi.stubEnv("NEXT_PUBLIC_GA_MEASUREMENT_ID", "G-ABC1234567");
     vi.stubEnv("NEXT_PUBLIC_SITE_URL", "https://canyougeo.com");
@@ -120,8 +145,34 @@ describe("analytics helpers", () => {
     const gtag = vi.fn();
     (window as typeof window & { gtag: typeof gtag }).gtag = gtag;
 
-    trackCanYouGeoEvent("cgy_upgrade_clicked", { source: "upgrade", plan: "monthly" });
+    trackAnalyticsEvent("cgy_begin_checkout", { currency: "USD", value: 3.99, plan: "pro_monthly" });
 
-    expect(gtag).toHaveBeenCalledWith("event", "cgy_upgrade_clicked", { source: "upgrade", plan: "monthly" });
+    expect(gtag).not.toHaveBeenCalled();
+    expect((window as typeof window & { dataLayer?: unknown[] }).dataLayer).toEqual([
+      { event: "cgy_begin_checkout", currency: "USD", value: 3.99, plan: "pro_monthly" }
+    ]);
+  });
+
+  it("omits undefined and null event params", () => {
+    expect(
+      sanitizeAnalyticsParams({
+        content_type: "game_card",
+        item_id: "play_mystery_map",
+        game_slug: "mystery-map",
+        mode: undefined,
+        value: null
+      })
+    ).toEqual({
+      content_type: "game_card",
+      item_id: "play_mystery_map",
+      game_slug: "mystery-map"
+    });
+  });
+
+  it("uses stable score bands", () => {
+    expect(scoreBandForScore(3000, 3000)).toBe("perfect");
+    expect(scoreBandForScore(2400, 3000)).toBe("high");
+    expect(scoreBandForScore(1500, 3000)).toBe("medium");
+    expect(scoreBandForScore(1000, 3000)).toBe("low");
   });
 });

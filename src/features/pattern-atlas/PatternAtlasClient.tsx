@@ -40,6 +40,7 @@ import {
   type PatternAtlasRunSetup,
   type PatternAtlasRunState
 } from "@/lib/pattern-atlas/storage";
+import { scoreBandForScore, trackAnalyticsEvent, type AnalyticsGameMode, type AnalyticsPlan } from "@/lib/site/analytics";
 
 const SAMPLE_RULES = getPatternAtlasSampleRules();
 const FAMILY_ORDER: PatternAtlasFamily[] = ["language", "borders", "physical_geography", "organizations", "economy", "indicators"];
@@ -177,6 +178,17 @@ function scrollToTop() {
   window.requestAnimationFrame(() => window.scrollTo(0, 0));
 }
 
+function patternAnalyticsPlan(signedIn: boolean, isProAccount: boolean): AnalyticsPlan {
+  if (!signedIn) return "guest";
+  return isProAccount ? "pro" : "free";
+}
+
+function patternAnalyticsMode(mode: PatternAtlasRunMode, signedIn: boolean, isProAccount: boolean): AnalyticsGameMode {
+  if (mode === "sample") return "guest_sample";
+  if (mode === "daily") return signedIn && isProAccount ? "pro_daily" : "free_daily";
+  return "practice";
+}
+
 export function PatternAtlasClient({ initialData, todayOverride }: PatternAtlasClientProps) {
   const { entitlement, loading: entitlementLoading, signedIn } = useEntitlement();
   const todayKey = todayOverride ?? localDateKey(new Date());
@@ -300,6 +312,13 @@ export function PatternAtlasClient({ initialData, todayOverride }: PatternAtlasC
       ...(setup ? { setup } : {})
     });
     setRun(nextRun);
+    trackAnalyticsEvent("cgy_game_start", {
+      game_slug: "pattern-atlas",
+      mode: patternAnalyticsMode(nextRun.mode, signedIn, isProAccount),
+      round_count: nextRun.rounds.length,
+      signed_in: signedIn,
+      plan: patternAnalyticsPlan(signedIn, isProAccount)
+    });
     scrollToTop();
   }
 
@@ -324,15 +343,36 @@ export function PatternAtlasClient({ initialData, todayOverride }: PatternAtlasC
       return updateCurrentRound(current, (round) => {
         if (round.solved || round.rejectedAnswerIds.includes(choice.id)) return round;
         if (choice.correct) {
+          trackAnalyticsEvent("cgy_round_answered", {
+            game_slug: "pattern-atlas",
+            mode: patternAnalyticsMode(current.mode, signedIn, isProAccount),
+            round_number: current.currentRoundIndex + 1,
+            correct: true,
+            difficulty: rule.difficulty,
+            score_band: scoreBandForScore(round.score, PATTERN_ATLAS_STARTING_SCORE),
+            signed_in: signedIn,
+            plan: patternAnalyticsPlan(signedIn, isProAccount)
+          });
           return {
             ...round,
             solved: true,
             feedback: `Correct. ${rule.displayAnswer}.`
           };
         }
+        const nextScore = round.score - PATTERN_ATLAS_WRONG_ANSWER_PENALTY;
+        trackAnalyticsEvent("cgy_round_answered", {
+          game_slug: "pattern-atlas",
+          mode: patternAnalyticsMode(current.mode, signedIn, isProAccount),
+          round_number: current.currentRoundIndex + 1,
+          correct: false,
+          difficulty: rule.difficulty,
+          score_band: scoreBandForScore(nextScore, PATTERN_ATLAS_STARTING_SCORE),
+          signed_in: signedIn,
+          plan: patternAnalyticsPlan(signedIn, isProAccount)
+        });
         return {
           ...round,
-          score: round.score - PATTERN_ATLAS_WRONG_ANSWER_PENALTY,
+          score: nextScore,
           rejectedAnswerIds: [...round.rejectedAnswerIds, choice.id],
           feedback: `${choice.label} is not the pattern. -${PATTERN_ATLAS_WRONG_ANSWER_PENALTY} points.`
         };
@@ -345,6 +385,18 @@ export function PatternAtlasClient({ initialData, todayOverride }: PatternAtlasC
       if (!current) return current;
       const nextIndex = current.currentRoundIndex + 1;
       if (nextIndex >= current.rounds.length) {
+        const finalScore = current.rounds.reduce((total, round) => total + (round.solved ? round.score : 0), 0);
+        const maxScore = current.rounds.length * PATTERN_ATLAS_STARTING_SCORE;
+        trackAnalyticsEvent("cgy_game_complete", {
+          game_slug: "pattern-atlas",
+          mode: patternAnalyticsMode(current.mode, signedIn, isProAccount),
+          round_count: current.rounds.length,
+          final_score: finalScore,
+          score_band: scoreBandForScore(finalScore, maxScore),
+          perfect_run: finalScore >= maxScore,
+          signed_in: signedIn,
+          plan: patternAnalyticsPlan(signedIn, isProAccount)
+        });
         return { ...current, status: "complete" };
       }
       return { ...current, currentRoundIndex: nextIndex };
