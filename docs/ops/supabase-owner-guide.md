@@ -17,8 +17,11 @@ This guide is for owner/operator checks in the Supabase dashboard. It avoids dev
 
 The current schema source of truth is the real Supabase migrations in:
 
-- `supabase/migrations/20260627010000_rls_account_security_hardening.sql`
+- `supabase/migrations/20260626000000_account_profiles_baseline.sql`
 - `supabase/migrations/20260627000000_billing_test_mode_entitlements.sql`
+- `supabase/migrations/20260627010000_rls_account_security_hardening.sql`
+- `supabase/migrations/20260630090000_marketing_consent_profiles.sql`
+- `supabase/migrations/20260630130000_challenge_email_sends.sql`
 
 The older file `docs/supabase/production_spine_v0.sql` is historical planning documentation. Do not treat it as the active schema unless it is reconciled into a migration.
 

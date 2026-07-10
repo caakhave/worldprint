@@ -199,7 +199,7 @@ Stripe:
 ## Known Caveats
 
 - Keep Stripe sandbox webhook endpoint pointed only at staging.
-- The staging database required a one-time `profiles` bootstrap because the current migration chain assumes the production spine/profile baseline exists. Fix the migration baseline before creating another fresh Supabase project.
+- The staging database previously required a one-time `profiles` bootstrap. The tracked chain now includes `supabase/migrations/20260626000000_account_profiles_baseline.sql`; rerun fresh local migration replay before creating another long-lived Supabase project.
 - Marketing consent is collected, but no Resend Audience/Broadcast workflow or unsubscribe sync is implemented yet.
 - Client-submitted scores and stats are not suitable for public leaderboards, prizes, or adversarial anti-abuse contexts.
 - Exact Cloudflare deployment commit for `test.canyougeo.com` cannot be proven from the public HTML alone; confirm in Cloudflare Pages.
