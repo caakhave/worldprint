@@ -185,7 +185,7 @@ Dependabot alert follow-up:
 - Next update check: latest available Next 16 patch metadata still reported `postcss: 8.4.31`, so a small Next patch update would not resolve the alert.
 - Fix path chosen: targeted pnpm override to `postcss@8.5.15`, a patched 8.x version already present elsewhere in the lockfile.
 - Main verification on July 9, 2026: GitHub Actions passed `CI / test`, `CI / lint`, `CI / typecheck`, and `CI / build` for the promoted main commit. Local `pnpm audit` returned no known vulnerabilities with `postcss@8.5.15` resolved.
-- Dependabot alert dashboard status could not be read from the local unauthenticated API because Dependabot alerts require authenticated security access. If the dashboard still shows the alert after the fixed lockfile reaches the default branch, treat it as pending GitHub dependency graph recheck rather than unresolved code risk.
+- Dependabot verification on July 9, 2026: authenticated read-only GitHub API returned zero open Dependabot alerts, and alert #1 for `GHSA-qx2v-qp2m-jg93` was marked `fixed` after the main lockfile update reached the default branch.
 
 Do not rely only on GitHub scanning. Continue local discipline:
 
