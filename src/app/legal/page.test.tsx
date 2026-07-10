@@ -22,7 +22,8 @@ describe("LegalPage", () => {
     expect(screen.getByText(/You can manage or cancel a Stripe-backed Pro subscription from the account billing portal/i)).toBeVisible();
     expect(screen.getByText(/If you cancel a renewing Pro membership at the end of the current paid period/i)).toBeVisible();
     expect(screen.getByText(/They are not a public official leaderboard, competition, sweepstakes, or prize system/i)).toBeVisible();
-    expect(screen.getByText(/Password credentials are handled by Supabase Auth/i)).toBeVisible();
+    expect(screen.getByText(/Password credentials are handled by a secure authentication provider/i)).toBeVisible();
+    expect(screen.queryByText(/Supabase/i)).not.toBeInTheDocument();
     expect(screen.getByText(/Billing and subscription state, such as Stripe customer ID/i)).toBeVisible();
     expect(screen.getByText(/Challenge email ledger entries, including hashed recipient emails/i)).toBeVisible();
     expect(screen.getByText(/Mystery Map Custom Atlas, Pattern Atlas Pattern Runs/i)).toBeVisible();
@@ -32,7 +33,7 @@ describe("LegalPage", () => {
     expect(screen.getByRole("link", { name: "Accessibility" })).toHaveAttribute("href", "/legal#accessibility-heading");
     expect(screen.getByRole("link", { name: "Support" })).toHaveAttribute("href", "/support");
     expect(screen.queryByText(/Practice Atlas/i)).not.toBeInTheDocument();
-    expect(screen.queryByText(/service providers that help operate the site/i)).not.toBeInTheDocument();
+    expect(screen.getByText(/service providers that help operate authentication, secure application data storage/i)).toBeVisible();
     expect(screen.queryByText(/Resend and Supabase SMTP for transactional email and owner\/admin billing notifications/i)).not.toBeInTheDocument();
     expect(screen.getByText(/We do not sell personal information/i)).toBeVisible();
     expect(screen.getByText(/without sending account emails, user IDs, passwords, auth tokens, payment details/i)).toBeVisible();

@@ -432,8 +432,13 @@ describe("WorldprintClient UI structure", () => {
   it("marks reveal result text and stat cells with overflow-resistant hooks", () => {
     expect(source).toContain("correct-answer-line");
     expect(source).toContain('className="point-breakdown"');
+    expect(source).toContain("const summaryLeadCopy = [");
+    expect(source).toContain('.join(" ")');
+    expect(source).not.toContain("streaks.Daily");
     expect(styles).toContain(".round-result-banner .correct-answer-line");
     expect(styles).toContain("padding-top: 0.72rem");
+    expect(styles).toContain(".summary-achievement div");
+    expect(styles).toContain("padding: 0.78rem;");
     expect(styles).toContain("grid-template-columns: minmax(0, 1fr)");
     expect(styles).toContain("grid-template-columns: repeat(auto-fit, minmax(min(100%, 7rem), 1fr));");
     expect(styles).toContain("grid-template-columns: repeat(auto-fit, minmax(5.2rem, 1fr));");

@@ -156,9 +156,7 @@ describe("OrderAtlasClient", () => {
     const proPlayCard = screen.getByLabelText("Unlimited Order Atlas Play");
     expect(within(proPlayCard).getByText("Pro Play")).toBeVisible();
     expect(within(proPlayCard).getByRole("heading", { name: "Unlimited Order Atlas Play" })).toBeVisible();
-    expect(
-      within(proPlayCard).getByText("Start a fresh three-round ordering set whenever you want. Each set stays local to this browser for now.")
-    ).toBeVisible();
+    expect(within(proPlayCard).getByText("Start a fresh three-round ordering set whenever you want.")).toBeVisible();
     expect(within(proPlayCard).getByText("Repeatable Pro play")).toBeVisible();
     expect(within(proPlayCard).getByText("Ready for a fresh three-round set.")).toBeVisible();
     expect(within(proPlayCard).getByRole("button", { name: /Start Order Atlas Play/i })).toBeVisible();
@@ -170,7 +168,8 @@ describe("OrderAtlasClient", () => {
     await user.click(within(proPlayCard).getByRole("button", { name: /Start Order Atlas Play/i }));
 
     expect(screen.getAllByText("Order Atlas Pro Play").length).toBeGreaterThanOrEqual(1);
-    expect(screen.getByText("Pro Play is repeatable: order a fresh three-round set whenever you want. This set stays local to this browser for now.")).toBeVisible();
+    expect(screen.getByText("Pro Play is repeatable: order a fresh three-round set whenever you want.")).toBeVisible();
+    expect(screen.queryByText(/local to this browser|local browser/i)).not.toBeInTheDocument();
     expect(screen.queryByText(/custom run/i)).not.toBeInTheDocument();
     expect(screen.queryByText(/cloud stats|streaks|archive support|challenge support|account-wide saved stats/i)).not.toBeInTheDocument();
     expect(screen.queryByText(/Practice Run|Pro Practice|Review today's Daily|View Order Atlas Daily/i)).not.toBeInTheDocument();
@@ -365,7 +364,7 @@ describe("OrderAtlasClient", () => {
     await submitCurrentRound(user);
     await user.click(within(orderCard()).getByRole("button", { name: "Open results" }));
 
-    expect(screen.getByText("You finished today's Order Atlas Daily. This result stays local to this browser for now.")).toBeVisible();
+    expect(screen.getByText("You finished today's Order Atlas Daily.")).toBeVisible();
     expect(screen.getByRole("link", { name: "Go Pro for unlimited play" })).toHaveAttribute("href", "/upgrade");
     expect(screen.getByRole("button", { name: "Back to game options" })).toBeVisible();
     expect(screen.queryByRole("button", { name: "Choose mode" })).not.toBeInTheDocument();
@@ -388,10 +387,10 @@ describe("OrderAtlasClient", () => {
     await submitCurrentRound(user);
     await user.click(within(orderCard()).getByRole("button", { name: "Open results" }));
 
-    expect(screen.getByText("You finished an Order Atlas Pro Play set. This result stays local to this browser for now.")).toBeVisible();
+    expect(screen.getByText("You finished an Order Atlas Pro Play set.")).toBeVisible();
     expect(screen.getAllByText(/Order Atlas Pro Play complete|Pro play complete/i).length).toBeGreaterThanOrEqual(1);
     expect(screen.getByRole("heading", { name: "Ready for another ordering set?" })).toBeVisible();
-    expect(screen.getByText("Each Pro Play set stays local to this browser for now.")).toBeVisible();
+    expect(screen.getByText("Start a fresh three-round ordering set whenever you want.")).toBeVisible();
     expect(screen.getByRole("button", { name: "Play another set" })).toBeVisible();
     expect(screen.getByRole("button", { name: "Back to game options" })).toBeVisible();
     expect(screen.queryByRole("button", { name: "Choose mode" })).not.toBeInTheDocument();

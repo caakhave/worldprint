@@ -2735,6 +2735,17 @@ function CompletionSummary({
   const reviewHref = run.mode === "daily" || run.mode === "archive" ? `/play/mystery-map/${run.dateKey}?review=1#past-game-result` : null;
   const nextDaily = nextDailyUnlockCopy();
   const bestDailyScore = bestDailyScoreForStore(store);
+  const summaryLeadCopy = [
+    isSampleRun
+      ? "Sample Run complete. These maps never change, and the Sample Run does not save stats or streaks."
+      : isPastRecord
+        ? "Record entry saved for this fixed Past Game."
+        : null,
+    !isSampleRun ? `${run.rounds.length} maps completed on ${TIER_CONFIGS[run.tier].label}.` : null,
+    isDailyRun ? `Daily streak: ${store.streak.current}.` : "Daily streaks are unaffected."
+  ]
+    .filter(Boolean)
+    .join(" ");
 
   return (
     <section className="summary-shell page-shell">
@@ -2761,15 +2772,7 @@ function CompletionSummary({
             <p>{rank.note}</p>
           </div>
         </div>
-        <p className="lead">
-          {isSampleRun
-            ? "Sample Run complete. These maps never change, and the Sample Run does not save stats or streaks."
-            : isPastRecord
-              ? "Record entry saved for this fixed Past Game. "
-              : ""}
-          {!isSampleRun ? `${run.rounds.length} maps completed on ${TIER_CONFIGS[run.tier].label}. ` : ""}
-          {isDailyRun ? `Daily streak: ${store.streak.current}.` : "Daily streaks are unaffected."}
-        </p>
+        <p className="lead">{summaryLeadCopy}</p>
         {challengeComparison ? (
           <section className="challenge-comparison-card surface" data-result={challengeComparison.tone} aria-label="Challenge comparison">
             <div>
