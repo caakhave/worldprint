@@ -30,7 +30,7 @@ Tracked repo files currently show:
   - `pnpm test:e2e`
   - `pnpm qa:blackbox:prod-smoke`
   - staging black-box commands such as `pnpm qa:blackbox:test`
-- Required status checks remain deferred until the new workflow has produced stable, successful check names on normal pushes and pull requests.
+- The lightweight CI workflow has produced stable, successful check names on `main` and `staging`; `Protect main` now requires those four checks.
 
 ## Read-Only GitHub API Findings
 
@@ -48,7 +48,7 @@ Observed after manual GitHub hardening changes:
   - `Protect main`: active branch ruleset targeting `refs/heads/main`.
     - Rules: block deletion, block non-fast-forward updates.
     - Bypass actors: none.
-    - Required status checks: not configured.
+    - Required status checks: `CI / test`, `CI / lint`, `CI / typecheck`, `CI / build`.
   - `Protect staging`: active branch ruleset targeting `refs/heads/staging`.
     - Rules: block deletion, block non-fast-forward updates.
     - Bypass actors: none.
@@ -83,16 +83,15 @@ Practical solo-operator target for `main`:
 1. Keep the active `Protect main` ruleset.
 2. Keep force pushes blocked via the `non_fast_forward` rule.
 3. Keep branch deletion blocked via the `deletion` rule.
-4. Required status checks are intentionally deferred until the lightweight CI workflow has run successfully and check names are stable.
-5. Require a pull request before merge once the workflow is comfortable.
-6. Require conversation resolution on PRs if PR-based promotion becomes routine.
-7. Allow admin bypass only for documented production incident recovery if bypass is ever added.
-8. After the CI workflow proves stable, require:
+4. Keep the stable lightweight CI checks required:
    - `CI / test`
    - `CI / lint`
    - `CI / typecheck`
    - `CI / build`
-9. Keep black-box production smoke manual or optional. It depends on the live site and should not block emergency doc/security promotions unless intentionally designed for that workflow.
+5. Require a pull request before merge once the workflow is comfortable.
+6. Require conversation resolution on PRs if PR-based promotion becomes routine.
+7. Allow admin bypass only for documented production incident recovery if bypass is ever added.
+8. Keep black-box production smoke manual or optional. It depends on the live site and should not block emergency doc/security promotions unless intentionally designed for that workflow.
 
 Avoid requiring Cloudflare Pages deployment status until the exact check name is confirmed and consistently appears on main pushes.
 
@@ -104,8 +103,8 @@ Practical target for `staging`:
 2. Keep force pushes blocked via the `non_fast_forward` rule.
 3. Keep branch deletion blocked via the `deletion` rule.
 4. Do not require PRs initially if the current workflow depends on direct staging commits.
-5. Required status checks are intentionally deferred until the lightweight CI workflow has run successfully and check names are stable.
-6. Consider requiring the same future `quality` check after the normal staging workflow has adjusted.
+5. Keep required status checks off initially so direct staging iteration remains fast.
+6. Consider requiring the same CI checks later only if staging iteration can absorb the extra gate.
 
 This keeps staging fast while preventing accidental destructive branch operations.
 
@@ -128,7 +127,7 @@ The repository now includes `.github/workflows/ci.yml`, a lightweight GitHub Act
   - `CI / typecheck` runs `pnpm typecheck`
   - `CI / build` runs `pnpm build`
 
-Required checks remain intentionally deferred until the owner manually updates the `Protect main` ruleset.
+The owner applied the required-check hardening step to the `Protect main` ruleset after the staging/main check names were observed as stable.
 
 Observed staging verification:
 
@@ -179,17 +178,17 @@ Required-check readiness:
 - Read-only GitHub API verification on July 9, 2026 local time found the same four CI jobs green on the latest inspected `staging` and `main` push runs.
 - GitHub Actions API job names are `test`, `lint`, `typecheck`, and `build` under workflow `CI`; the GitHub UI/check context presents these as `CI / test`, `CI / lint`, `CI / typecheck`, and `CI / build`.
 - The names have stayed consistent across the original staging/main verification runs and the latest inspected staging/main push runs.
-- These checks look ready to require on `main` after the owner confirms the same names in the branch ruleset picker.
-- Do not enable required checks if the workflow is renamed, job names change, any job is pending/skipped/flaky, or a future workflow change removes one of the four checks.
+- These checks are now required on `main`.
+- Re-check the ruleset if the workflow is renamed, job names change, any job is pending/skipped/flaky, or a future workflow change removes one of the four checks.
 
-Next manual dashboard step:
+Current required-check state:
 
-- Add required status checks to the `Protect main` ruleset only:
+- `Protect main` requires:
   - `CI / test`
   - `CI / lint`
   - `CI / typecheck`
   - `CI / build`
-- Keep `staging` protected from deletion and non-fast-forward pushes, but do not require status checks on `staging` yet.
+- `Protect staging` remains protected from deletion and non-fast-forward pushes, but does not require status checks.
 
 Optional/manual jobs:
 
@@ -281,7 +280,7 @@ Malicious dependency or workflow change:
 
 Highest-value next GitHub hardening actions:
 
-1. Manually add `CI / test`, `CI / lint`, `CI / typecheck`, and `CI / build` as required checks on the `Protect main` ruleset only.
+1. Monitor the first protected `main` promotions with `CI / test`, `CI / lint`, `CI / typecheck`, and `CI / build` required.
 2. Keep `Protect staging` without required checks for now.
 3. Confirm Cloudflare Pages status check names after the next production deploy.
 4. Decide whether to require PRs for `main` after the direct staging-to-main promotion workflow settles.

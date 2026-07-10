@@ -35,6 +35,7 @@ This document tracks the current Can You Geo public legal/support copy and the r
 - Confirm whether any pre-checkout, post-checkout, and renewal reminder language is required for the launch jurisdictions.
 - Confirm whether the game needs contest/sweepstakes language if public leaderboards, prizes, rankings, badges with value, or competitions are added later.
 - Confirm data retention periods and deletion workflow for Supabase Auth users, profiles, entitlements, runs, stats, Stripe records, Resend logs, Google Workspace support mail, and backups.
+- Use `docs/ops/user-data-requests.md` as the current operator SOP for access/export/correction/deletion requests, but keep retention timelines and legal exceptions under attorney review.
 - Confirm international transfer language, processor/subprocessor disclosures, and whether a Data Processing Addendum is needed.
 - Confirm accessibility statement language and any required accommodations workflow.
 - Confirm trademark/copyright ownership and third-party data/source/license disclosures.
@@ -42,6 +43,7 @@ This document tracks the current Can You Geo public legal/support copy and the r
 ## GDPR/CCPA And Other Privacy Considerations
 
 - Current copy supports basic access, correction, deletion, opt-out, and support-request language, but a larger public launch should review jurisdiction-specific privacy rights before relying on it.
+- The current operator SOP maps the practical data surfaces and safe handling steps, but it is not a legal-compliance guarantee.
 - If Can You Geo markets to or has meaningful traffic from the EU/EEA, UK, California, or other regulated jurisdictions, review notice, lawful basis, data subject rights, processor/subprocessor, international transfer, cookie consent, and deletion workflows with counsel.
 - Do not assume all users are US-only just because the business is US-based.
 - Keep personal data minimization in mind: support emails should ask for account email, page URL, browser/device, and screenshots when useful, but never request passwords or full payment card details.

@@ -56,7 +56,7 @@ The following must never be exposed in browser code, committed files, screenshot
 
 - Staging and production Supabase projects are separated.
 - Edge Function deploy rules are documented as explicit project-ref only.
-- GitHub hardening posture is documented in `docs/ops/github-hardening.md`. Current read-only verification shows active rulesets protecting `main` and `staging` from deletion and non-fast-forward updates.
+- GitHub hardening posture is documented in `docs/ops/github-hardening.md`. Current rulesets protect `main` and `staging` from deletion and non-fast-forward updates, and `main` now requires the stable lightweight CI checks.
 - GitHub secret scanning, push protection, Dependabot alerts, and Dependabot security updates are enabled.
 - Lightweight GitHub Actions CI now exists for `pnpm test`, `pnpm lint`, `pnpm typecheck`, and `pnpm build` on pushes and pull requests for `main` and `staging`.
 - Supabase function JWT posture is explicit in `supabase/config.toml`:
@@ -75,7 +75,7 @@ The following must never be exposed in browser code, committed files, screenshot
 - Exact dashboard admin lists and MFA status are not visible from the repo and need manual verification.
 - Admin access, recovery continuity, stale privileged access, and future MFA readiness should be reviewed with `docs/ops/admin-access-recovery-review.md`. The worksheet is record-safe by design and should not contain recovery codes, MFA seeds, passwords, API keys, private screenshots, or other secret material.
 - Environment separation between local, staging, and production is tracked in `docs/ops/environment-separation-audit.md`. Use it before dashboard env changes, Supabase deploys, Stripe webhook changes, or any operation that could mix production and staging secrets.
-- GitHub protection is implemented through repository rulesets rather than classic branch protection. Required status checks are intentionally deferred until the new CI check names are observed as stable and green.
+- GitHub protection is implemented through repository rulesets rather than classic branch protection. Required status checks are enabled on `Protect main` only; `Protect staging` remains protected from destructive branch operations without required checks.
 - GitHub non-provider secret scanning patterns and secret validity checks remain disabled as optional follow-up settings.
 - `supabase/.temp` is intentionally ignored but has been linked to production in the past; Supabase CLI commands must keep using explicit environment targeting. Edge Function deploys use `--project-ref`; staging SQL validation uses the safe `--db-url` runner.
 - Staging Supabase RLS/security validation execution is pending as of July 9, 2026. The safe runner reached the staging database host, but Postgres returned `FATAL: password authentication failed` before SQL validation could run. This produced no RLS/security finding. Verify the staging project ref and `postgres` database password in Supabase Dashboard, wait after password rotation before retrying, avoid rapid retries, or run the read-only validation SQL from the staging Supabase SQL Editor.
@@ -95,7 +95,7 @@ The following must never be exposed in browser code, committed files, screenshot
 ### P1
 
 - Complete the manual admin access and recovery worksheet in `docs/ops/admin-access-recovery-review.md` for GitHub, Cloudflare, Supabase, Stripe, Resend, Google Workspace, GTM, GA4, Search Console, registrar/DNS, and local machine recovery.
-- Observe the lightweight GitHub Actions checks (`CI / test`, `CI / lint`, `CI / typecheck`, `CI / build`), then require stable checks on `main` when the workflow is proven reliable.
+- Keep the lightweight GitHub Actions checks (`CI / test`, `CI / lint`, `CI / typecheck`, `CI / build`) required on `main` and monitor the first protected promotions for friction.
 - Keep the GitHub rulesets, secret scanning, push protection, Dependabot alerts, and Dependabot security updates enabled. Decide whether to enable non-provider pattern scanning and validity checks.
 - Keep the Cloudflare Access service-token rotation reminder and rotate before expiry.
 - Confirm Stripe production keys are live-only, Stripe sandbox keys are staging-only, and webhook endpoints point to the matching Supabase project.
@@ -106,7 +106,7 @@ The following must never be exposed in browser code, committed files, screenshot
 - Update `.env.example` placeholders that no longer match final configured senders, if needed.
 - Add a recurring quarterly access review checklist.
 - Add a lightweight production security-header smoke to the black-box suite if it stays useful.
-- Define a formal user data export/deletion operating procedure.
+- Use the user data request operating procedure in `docs/ops/user-data-requests.md`; later define counsel-approved retention periods and decide whether to automate export/deletion tooling.
 - Decide whether guest sample runs should persist/resume after refresh.
 - Clean up stale scratch-folder placement and document where large audit artifacts should live.
 
