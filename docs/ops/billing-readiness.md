@@ -152,9 +152,9 @@ Hosted Supabase functions provide `SUPABASE_URL`, `SUPABASE_ANON_KEY`, and `SUPA
 Deploy functions after changing secrets:
 
 ```bash
-supabase functions deploy stripe-checkout --use-api
-supabase functions deploy stripe-portal --use-api
-supabase functions deploy stripe-webhook --use-api --no-verify-jwt
+supabase functions deploy stripe-checkout --project-ref <target-supabase-project-ref>
+supabase functions deploy stripe-portal --project-ref <target-supabase-project-ref>
+supabase functions deploy stripe-webhook --project-ref <target-supabase-project-ref> --no-verify-jwt
 ```
 
 Expected function auth:

@@ -74,6 +74,7 @@ The following must never be exposed in browser code, committed files, screenshot
 
 - Exact dashboard admin lists and MFA status are not visible from the repo and need manual verification.
 - Admin access, recovery continuity, stale privileged access, and future MFA readiness should be reviewed with `docs/ops/admin-access-recovery-review.md`. The worksheet is record-safe by design and should not contain recovery codes, MFA seeds, passwords, API keys, private screenshots, or other secret material.
+- Environment separation between local, staging, and production is tracked in `docs/ops/environment-separation-audit.md`. Use it before dashboard env changes, Supabase deploys, Stripe webhook changes, or any operation that could mix production and staging secrets.
 - GitHub protection is implemented through repository rulesets rather than classic branch protection. Required status checks are intentionally deferred until the new CI check names are observed as stable and green.
 - GitHub non-provider secret scanning patterns and secret validity checks remain disabled as optional follow-up settings.
 - `supabase/.temp` is intentionally ignored but has been linked to production in the past; Supabase CLI commands must keep using explicit environment targeting. Edge Function deploys use `--project-ref`; staging SQL validation uses the safe `--db-url` runner.
