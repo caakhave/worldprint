@@ -5,9 +5,11 @@ export const CAN_YOU_GEO_ANALYTICS_EVENTS = [
   "cgy_round_answered",
   "cgy_game_complete",
   "cgy_select_content",
+  "cgy_signup_complete",
   "cgy_sign_up",
   "cgy_login",
   "cgy_share",
+  "cgy_upgrade_click",
   "cgy_begin_checkout"
 ] as const;
 
@@ -21,6 +23,7 @@ export type AnalyticsScoreBand = "perfect" | "high" | "medium" | "low";
 export type AnalyticsAuthMethod = "email";
 export type AnalyticsShareMethod = "copy_link" | "native_share" | "email" | "mailto";
 export type AnalyticsCheckoutPlan = "pro_monthly" | "pro_yearly";
+export type AnalyticsUpgradeSource = "upgrade" | "account";
 
 export type AnalyticsEventPayloads = {
   cgy_game_start: {
@@ -56,6 +59,9 @@ export type AnalyticsEventPayloads = {
     game_slug?: AnalyticsGameSlug;
     mode?: AnalyticsGameMode;
   };
+  cgy_signup_complete: {
+    method: AnalyticsAuthMethod;
+  };
   cgy_sign_up: {
     method: AnalyticsAuthMethod;
   };
@@ -67,6 +73,13 @@ export type AnalyticsEventPayloads = {
     content_type: string;
     game_slug: AnalyticsGameSlug;
     mode: AnalyticsGameMode;
+  };
+  cgy_upgrade_click: {
+    currency: "USD";
+    value: number;
+    plan: AnalyticsCheckoutPlan;
+    signed_in: boolean;
+    source: AnalyticsUpgradeSource;
   };
   cgy_begin_checkout: {
     currency: "USD";

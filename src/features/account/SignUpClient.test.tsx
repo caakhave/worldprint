@@ -1,6 +1,6 @@
 import { render, screen, waitFor } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
-import { beforeEach, describe, expect, it, vi } from "vitest";
+import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
 import { SignUpClient } from "@/features/account/SignUpClient";
 
 const routerMock = vi.hoisted(() => ({
@@ -63,6 +63,11 @@ describe("SignUpClient", () => {
     window.localStorage.clear();
     window.sessionStorage.clear();
     window.history.pushState({}, "", "/sign-up");
+  });
+
+  afterEach(() => {
+    vi.unstubAllEnvs();
+    delete (window as typeof window & { dataLayer?: unknown[] }).dataLayer;
   });
 
   it("creates a password account and sends a query-free confirmation callback", async () => {
@@ -130,6 +135,28 @@ describe("SignUpClient", () => {
     await user.click(screen.getByRole("button", { name: "Create account" }));
 
     expect(window.sessionStorage.getItem("canyougeo:sign-in-return")).toBe("/upgrade?plan=yearly");
+  });
+
+  it("tracks a vendor-neutral signup-complete event for confirmed new signup responses", async () => {
+    vi.stubEnv("NEXT_PUBLIC_ANALYTICS_ENABLED", "true");
+    vi.stubEnv("NEXT_PUBLIC_GTM_ID", "GTM-CANYOUGEO");
+    vi.stubEnv("NEXT_PUBLIC_SITE_URL", "https://canyougeo.com");
+    vi.stubEnv("NEXT_PUBLIC_NO_INDEX", "false");
+    (window as typeof window & { dataLayer?: unknown[] }).dataLayer = [];
+    const user = userEvent.setup();
+
+    render(<SignUpClient />);
+
+    await user.type(screen.getByLabelText("Email"), "new@example.com");
+    await user.type(screen.getByLabelText("Password"), "strong-password");
+    await user.type(screen.getByLabelText("Confirm password"), "strong-password");
+    await user.click(screen.getByRole("button", { name: "Create account" }));
+
+    await screen.findByRole("heading", { name: "We sent a confirmation link." });
+    expect((window as typeof window & { dataLayer?: unknown[] }).dataLayer).toEqual([
+      { event: "cgy_sign_up", method: "email" },
+      { event: "cgy_signup_complete", method: "email" }
+    ]);
   });
 
   it("stores marketing opt-in intent only when the optional checkbox is checked", async () => {

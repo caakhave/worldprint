@@ -165,6 +165,10 @@ export function LegalContent() {
                 Browser storage data, such as cookies, localStorage, or sessionStorage used for sign-in, gameplay state, preferences,
                 Pro purchase intent, and saved progress.
               </li>
+              <li>
+                Advertising and measurement information when enabled, such as campaign source, page visits, game event categories,
+                conversion events, and similar site interaction signals used to understand campaign performance.
+              </li>
             </ul>
 
             <h3>How We Use Information</h3>
@@ -182,7 +186,7 @@ export function LegalContent() {
             <p>
               We do not sell personal information. We may disclose information if required by law or to protect rights, safety, and
               security. We may also share limited information with service providers that help operate authentication, secure
-              application data storage, email delivery, analytics, payments, hosting, and support.
+              application data storage, email delivery, analytics, advertising measurement, payments, hosting, and support.
             </p>
 
             <h3>Owner and Admin Notifications</h3>
@@ -197,8 +201,9 @@ export function LegalContent() {
               We use necessary cookies and browser storage for authentication, gameplay state, saved progress, account preferences,
               Pro intent during sign-in, and security. We may use production analytics to understand page visits and game events
               without sending account emails, user IDs, passwords, auth tokens, payment details, exact location, or answer spoilers.
-              If advertising cookies or materially different tracking tools are added later, this policy and consent controls should
-              be updated where required.
+              Advertising and measurement partners may use cookies, pixels, or similar technologies where enabled to measure campaign
+              performance and site or gameplay events. These tools should be configured without sending account emails, user IDs,
+              passwords, auth tokens, payment details, exact location, answer spoilers, challenge codes, or free-text notes.
             </p>
 
             <h3>Data Retention and Deletion</h3>
