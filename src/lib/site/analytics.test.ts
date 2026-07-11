@@ -1,6 +1,8 @@
 import { afterEach, describe, expect, it, vi } from "vitest";
 import {
   analyticsConfigFromEnv,
+  marketingConsentUiEnabledForHostname,
+  marketingConsentUiEnabledFromEnv,
   sanitizeAnalyticsParams,
   scoreBandForScore,
   trackAnalyticsEvent,
@@ -64,6 +66,20 @@ describe("analytics helpers", () => {
         NEXT_PUBLIC_NO_INDEX: "false"
       })
     ).toMatchObject({ enabled: false });
+  });
+
+  it("keeps the marketing consent UI available on staging while analytics delivery stays disabled", () => {
+    const stagingEnv = {
+      NEXT_PUBLIC_ANALYTICS_ENABLED: "false",
+      NEXT_PUBLIC_SITE_URL: "https://test.canyougeo.com",
+      NEXT_PUBLIC_NO_INDEX: "true"
+    };
+
+    expect(analyticsConfigFromEnv(stagingEnv)).toMatchObject({ enabled: false });
+    expect(marketingConsentUiEnabledFromEnv(stagingEnv)).toBe(true);
+    expect(marketingConsentUiEnabledForHostname("test.canyougeo.com")).toBe(true);
+    expect(marketingConsentUiEnabledForHostname("localhost")).toBe(false);
+    expect(marketingConsentUiEnabledForHostname("preview.canyougeo.pages.dev")).toBe(false);
   });
 
   it("drops PII-shaped keys and email-like values from event payloads", () => {

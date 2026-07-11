@@ -3,7 +3,8 @@
 import { useEffect, useState } from "react";
 import {
   MARKETING_CONSENT_STORAGE_KEY,
-  analyticsConfigFromEnv,
+  marketingConsentUiEnabledForHostname,
+  marketingConsentUiEnabledFromEnv,
   normalizeMarketingConsentChoice,
   pushMarketingConsentChoice,
   type MarketingConsentChoice
@@ -15,9 +16,9 @@ export function MarketingConsentManager() {
   const [open, setOpen] = useState(false);
 
   useEffect(() => {
-    const config = analyticsConfigFromEnv();
-    setEnabled(config.enabled);
-    if (!config.enabled) return;
+    const shouldEnable = marketingConsentUiEnabledForHostname(window.location.hostname) || marketingConsentUiEnabledFromEnv();
+    setEnabled(shouldEnable);
+    if (!shouldEnable) return;
 
     const storedChoice = readStoredChoice();
     setChoice(storedChoice);

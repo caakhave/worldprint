@@ -1,4 +1,4 @@
-import { render, screen, waitFor } from "@testing-library/react";
+import { render, screen } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
 import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
 import { MarketingConsentManager } from "@/components/MarketingConsentManager";
@@ -28,16 +28,39 @@ describe("MarketingConsentManager", () => {
     delete (window as typeof window & { dataLayer?: unknown[] }).dataLayer;
   });
 
-  it("renders no marketing cookie controls when analytics is disabled for staging", async () => {
-    vi.stubEnv("NEXT_PUBLIC_ANALYTICS_ENABLED", "true");
-    vi.stubEnv("NEXT_PUBLIC_GTM_ID", "GTM-CANYOUGEO");
+  it("renders marketing cookie controls on staging even when analytics delivery is disabled", async () => {
+    vi.stubEnv("NEXT_PUBLIC_ANALYTICS_ENABLED", "false");
     vi.stubEnv("NEXT_PUBLIC_SITE_URL", "https://test.canyougeo.com");
-    vi.stubEnv("NEXT_PUBLIC_NO_INDEX", "false");
+    vi.stubEnv("NEXT_PUBLIC_NO_INDEX", "true");
 
     render(<MarketingConsentManager />);
 
-    await waitFor(() => expect(screen.queryByRole("button", { name: "Cookie settings" })).not.toBeInTheDocument());
-    expect(screen.queryByRole("dialog", { name: "Marketing cookies" })).not.toBeInTheDocument();
+    expect(await screen.findByRole("button", { name: "Cookie settings" })).toBeVisible();
+    expect(screen.getByRole("dialog", { name: "Marketing cookies" })).toBeVisible();
+  });
+
+  it("emits the consent grant event on staging without enabling vendor pixels in app code", async () => {
+    vi.stubEnv("NEXT_PUBLIC_ANALYTICS_ENABLED", "false");
+    vi.stubEnv("NEXT_PUBLIC_SITE_URL", "https://test.canyougeo.com");
+    vi.stubEnv("NEXT_PUBLIC_NO_INDEX", "true");
+    const user = userEvent.setup();
+
+    render(<MarketingConsentManager />);
+
+    await user.click(await screen.findByRole("button", { name: "Accept marketing cookies" }));
+
+    expect(dataLayerCommands()).toEqual([
+      [
+        "consent",
+        "update",
+        {
+          ad_storage: "granted",
+          ad_personalization: "granted",
+          ad_user_data: "granted"
+        }
+      ],
+      { event: "cgy_marketing_consent_granted" }
+    ]);
   });
 
   it("declines marketing cookies and updates ad consent to denied without emitting a grant event", async () => {

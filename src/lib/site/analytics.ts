@@ -1,4 +1,4 @@
-import { shouldNoIndexSite } from "@/lib/site/origin";
+import { publicSiteOrigin, shouldNoIndexSite } from "@/lib/site/origin";
 
 export const CAN_YOU_GEO_ANALYTICS_EVENTS = [
   "cgy_game_start",
@@ -246,11 +246,24 @@ export function pushMarketingConsentChoice(choice: MarketingConsentChoice) {
     const gtag = typeof analyticsWindow.gtag === "function" ? analyticsWindow.gtag : fallbackGtag;
     gtag("consent", "update", choice === "granted" ? AD_CONSENT_GRANTED : AD_CONSENT_DENIED);
     if (choice === "granted") {
-      trackAnalyticsEvent("cgy_marketing_consent_granted", {});
+      analyticsWindow.dataLayer.push({ event: "cgy_marketing_consent_granted" });
     }
   } catch {
     // Consent updates must never break account, billing, or gameplay flows.
   }
+}
+
+export function marketingConsentUiEnabledFromEnv(env: AnalyticsEnv = process.env as AnalyticsEnv): boolean {
+  const origin = publicSiteOrigin(env.NEXT_PUBLIC_SITE_URL, env.CF_PAGES_URL);
+  try {
+    return marketingConsentUiEnabledForHostname(new URL(origin).hostname);
+  } catch {
+    return false;
+  }
+}
+
+export function marketingConsentUiEnabledForHostname(hostname: string): boolean {
+  return hostname === "canyougeo.com" || hostname === "www.canyougeo.com" || hostname === "test.canyougeo.com";
 }
 
 export function scoreBandForScore(score: number, maxScore: number): AnalyticsScoreBand {
