@@ -97,14 +97,17 @@ The current app-owned CSP allows GTM/GA4 and Cloudflare analytics sources. Befor
 
 ## CSP Allowlist
 
-Cloudflare Pages serves the launch CSP from `public/_headers`. GTM/GA4 needs these narrow Google allowances:
+Cloudflare Pages serves the launch CSP from `public/_headers`. GTM/GA4 and the GTM-managed Reddit Pixel base tag need these narrow allowances:
 
 - `script-src`: `https://www.googletagmanager.com`
 - `frame-src`: `https://www.googletagmanager.com` for the GTM noscript iframe
 - `connect-src`: `https://www.google-analytics.com`, `https://region1.google-analytics.com`, and `https://www.google.com` for GA4 collection paths used by the GTM container
 - `img-src`: `https://www.google-analytics.com` and `https://www.googletagmanager.com` for beacon/image fallbacks
+- `script-src`: `https://www.redditstatic.com` for the Reddit Pixel script loaded by GTM
+- `connect-src` and `img-src`: `https://alb.reddit.com` for Reddit Pixel collection beacons
+- `img-src`: `https://www.redditstatic.com` for Reddit Pixel image fallback behavior
 
-Do not replace these with broad Google wildcards. The current static export still permits inline scripts/styles for Next hydration, but the GTM fix should not add any new `unsafe-inline` or `unsafe-eval` allowances. Validate after deploy by opening production in a browser console and confirming `gtm.js` loads without CSP errors.
+Do not replace these with broad Google or Reddit wildcards. The current static export still permits inline scripts/styles for Next hydration, but the GTM fix should not add any new `unsafe-inline` or `unsafe-eval` allowances. Validate after deploy by opening production in a browser console and confirming `gtm.js` and the GTM-managed Reddit Pixel tag load without CSP errors.
 
 ## Setup Checklist
 
