@@ -1,5 +1,15 @@
 import { afterEach, describe, expect, it, vi } from "vitest";
-import { analyticsConfigFromEnv, sanitizeAnalyticsParams, scoreBandForScore, trackAnalyticsEvent } from "@/lib/site/analytics";
+import {
+  analyticsConfigFromEnv,
+  marketingConsentUiEnabledForHostname,
+  marketingConsentUiEnabledFromEnv,
+  sanitizeAnalyticsParams,
+  scoreBandForScore,
+  trackAnalyticsEvent,
+  trackCheckoutStarted,
+  trackRegistrationComplete,
+  trackUpgradeIntent
+} from "@/lib/site/analytics";
 
 describe("analytics helpers", () => {
   afterEach(() => {
@@ -56,6 +66,20 @@ describe("analytics helpers", () => {
         NEXT_PUBLIC_NO_INDEX: "false"
       })
     ).toMatchObject({ enabled: false });
+  });
+
+  it("keeps the marketing consent UI available on staging while analytics delivery stays disabled", () => {
+    const stagingEnv = {
+      NEXT_PUBLIC_ANALYTICS_ENABLED: "false",
+      NEXT_PUBLIC_SITE_URL: "https://test.canyougeo.com",
+      NEXT_PUBLIC_NO_INDEX: "true"
+    };
+
+    expect(analyticsConfigFromEnv(stagingEnv)).toMatchObject({ enabled: false });
+    expect(marketingConsentUiEnabledFromEnv(stagingEnv)).toBe(true);
+    expect(marketingConsentUiEnabledForHostname("test.canyougeo.com")).toBe(true);
+    expect(marketingConsentUiEnabledForHostname("localhost")).toBe(false);
+    expect(marketingConsentUiEnabledForHostname("preview.canyougeo.pages.dev")).toBe(false);
   });
 
   it("drops PII-shaped keys and email-like values from event payloads", () => {
@@ -159,16 +183,22 @@ describe("analytics helpers", () => {
     vi.stubEnv("NEXT_PUBLIC_SITE_URL", "https://canyougeo.com");
     vi.stubEnv("NEXT_PUBLIC_NO_INDEX", "false");
 
-    trackAnalyticsEvent("cgy_signup_complete", { method: "email" });
-    trackAnalyticsEvent("cgy_upgrade_click", {
+    trackRegistrationComplete();
+    trackUpgradeIntent({
       currency: "USD",
       value: 29.99,
       plan: "pro_yearly",
       signed_in: false,
       source: "upgrade"
     });
+    trackCheckoutStarted({
+      currency: "USD",
+      value: 29.99,
+      plan: "pro_yearly"
+    });
 
     expect((window as typeof window & { dataLayer?: unknown[] }).dataLayer).toEqual([
+      { event: "cgy_sign_up", method: "email" },
       { event: "cgy_signup_complete", method: "email" },
       {
         event: "cgy_upgrade_click",
@@ -177,8 +207,36 @@ describe("analytics helpers", () => {
         plan: "pro_yearly",
         signed_in: false,
         source: "upgrade"
-      }
+      },
+      { event: "cgy_begin_checkout", currency: "USD", value: 29.99, plan: "pro_yearly" }
     ]);
+    expect(JSON.stringify((window as typeof window & { dataLayer?: unknown[] }).dataLayer)).not.toMatch(
+      /Meta|Facebook|fbp|fbc|pixel|reddit|tiktok|pinterest|user_id|player@example/i
+    );
+  });
+
+  it("does not push conversion events on staging even if analytics IDs are present", () => {
+    vi.stubEnv("NEXT_PUBLIC_ANALYTICS_ENABLED", "true");
+    vi.stubEnv("NEXT_PUBLIC_GTM_ID", "GTM-CANYOUGEO");
+    vi.stubEnv("NEXT_PUBLIC_SITE_URL", "https://test.canyougeo.com");
+    vi.stubEnv("NEXT_PUBLIC_NO_INDEX", "false");
+    (window as typeof window & { dataLayer?: unknown[] }).dataLayer = [];
+
+    trackRegistrationComplete();
+    trackUpgradeIntent({
+      currency: "USD",
+      value: 3.99,
+      plan: "pro_monthly",
+      signed_in: true,
+      source: "account"
+    });
+    trackCheckoutStarted({
+      currency: "USD",
+      value: 3.99,
+      plan: "pro_monthly"
+    });
+
+    expect((window as typeof window & { dataLayer?: unknown[] }).dataLayer).toEqual([]);
   });
 
   it("omits undefined and null event params", () => {

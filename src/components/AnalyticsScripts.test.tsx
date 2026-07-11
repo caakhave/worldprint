@@ -36,6 +36,22 @@ describe("AnalyticsScripts", () => {
     expect(container.innerHTML).not.toContain("cgy-ga4-init");
   });
 
+  it("sets advertising consent defaults to denied before GTM loads", () => {
+    vi.stubEnv("NEXT_PUBLIC_SITE_URL", "https://canyougeo.com");
+    vi.stubEnv("NEXT_PUBLIC_NO_INDEX", "false");
+    vi.stubEnv("NEXT_PUBLIC_ANALYTICS_ENABLED", "true");
+    vi.stubEnv("NEXT_PUBLIC_GTM_ID", "GTM-CANYOUGEO");
+
+    const { container } = render(<AnalyticsScripts />);
+    const markup = container.innerHTML;
+
+    expect(markup).toContain("window.gtag('consent', 'default'");
+    expect(markup).toContain('"ad_storage":"denied"');
+    expect(markup).toContain('"ad_personalization":"denied"');
+    expect(markup).toContain('"ad_user_data":"denied"');
+    expect(markup.indexOf("window.gtag('consent', 'default'")).toBeLessThan(markup.indexOf("gtm.start"));
+  });
+
   it("renders direct GA4 when enabled and GTM is absent", () => {
     vi.stubEnv("NEXT_PUBLIC_SITE_URL", "https://canyougeo.com");
     vi.stubEnv("NEXT_PUBLIC_NO_INDEX", "false");

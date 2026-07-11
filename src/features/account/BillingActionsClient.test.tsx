@@ -160,7 +160,7 @@ describe("BillingActionsClient", () => {
     expect(screen.getByRole("button", { name: "Join yearly" })).toBeEnabled();
   });
 
-  it("uses protected checkout functions instead of browser entitlement writes in test mode", async () => {
+  it("uses protected checkout functions and does not start checkout analytics until a URL is returned", async () => {
     process.env.NEXT_PUBLIC_BILLING_MODE = "test";
     vi.stubEnv("NEXT_PUBLIC_ANALYTICS_ENABLED", "true");
     vi.stubEnv("NEXT_PUBLIC_GTM_ID", "GTM-CANYOUGEO");
@@ -190,8 +190,38 @@ describe("BillingActionsClient", () => {
         signed_in: true,
         source: "upgrade"
       },
-      { event: "cgy_begin_checkout", currency: "USD", value: 3.99, plan: "pro_monthly" }
     ]);
+    expect(client.from).not.toHaveBeenCalled();
+  });
+
+  it("tracks begin-checkout only after Stripe checkout is actually launched", async () => {
+    process.env.NEXT_PUBLIC_BILLING_MODE = "test";
+    vi.stubEnv("NEXT_PUBLIC_ANALYTICS_ENABLED", "true");
+    vi.stubEnv("NEXT_PUBLIC_GTM_ID", "GTM-CANYOUGEO");
+    vi.stubEnv("NEXT_PUBLIC_SITE_URL", "https://canyougeo.com");
+    vi.stubEnv("NEXT_PUBLIC_NO_INDEX", "false");
+    (window as typeof window & { dataLayer?: unknown[] }).dataLayer = [];
+    accountMock.state.user = TEST_USER;
+    const client = billingClientMock();
+    client.functions.invoke.mockResolvedValue({ data: { url: "https://checkout.stripe.com/c/test-session" }, error: null });
+
+    render(<BillingActionsClient entitlement={FREE_ENTITLEMENT} context="upgrade" />);
+
+    fireEvent.click(screen.getByRole("button", { name: "Join monthly" }));
+
+    await waitFor(() =>
+      expect((window as typeof window & { dataLayer?: unknown[] }).dataLayer).toEqual([
+        {
+          event: "cgy_upgrade_click",
+          currency: "USD",
+          value: 3.99,
+          plan: "pro_monthly",
+          signed_in: true,
+          source: "upgrade"
+        },
+        { event: "cgy_begin_checkout", currency: "USD", value: 3.99, plan: "pro_monthly" }
+      ])
+    );
     expect(client.from).not.toHaveBeenCalled();
   });
 

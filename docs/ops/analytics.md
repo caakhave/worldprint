@@ -56,7 +56,8 @@ Only high-level, non-PII product events are pushed to `window.dataLayer`. GTM li
 | `cgy_login` | `login` | A sign-in succeeds. | `method` |
 | `cgy_share` | `share` | A challenge/result link is copied, natively shared, sent by server email, or opened as mailto. | `method`, `content_type`, `game_slug`, `mode` |
 | `cgy_upgrade_click` | ad-platform upgrade intent conversion | A player clicks a Pro upgrade CTA or checkout CTA before any Stripe redirect. | `currency`, `value`, `plan`, `signed_in`, `source` |
-| `cgy_begin_checkout` | `begin_checkout` | A signed-in player starts secure Stripe checkout. | `currency`, `value`, `plan` |
+| `cgy_begin_checkout` | `begin_checkout` | A signed-in player receives a Stripe checkout URL and is about to leave for secure checkout. | `currency`, `value`, `plan` |
+| `cgy_marketing_consent_granted` | marketing consent grant trigger | A visitor accepts marketing cookies in the Can You Geo cookie settings UI. | none |
 
 `purchase` is intentionally not emitted from the frontend yet. The current app does not have a refresh-proof, single source of truth with a stable transaction ID on the browser return path, so a frontend `purchase` event could double-count. Add this later only from a reliable billing success source.
 
@@ -94,6 +95,49 @@ Suggested Reddit/GTM mapping:
 - Do not pass emails, user IDs, recipient emails, challenge codes, hidden indicators, answer countries, free-text notes, or payment identifiers into ad-platform tags.
 
 The current app-owned CSP allows GTM/GA4 and Cloudflare analytics sources. Before publishing a Reddit Pixel tag, validate in GTM Preview and the browser console whether additional narrow Reddit script/beacon/image/connect sources are required in `public/_headers`. Add only the exact endpoints needed by the published tag and verify there are no CSP violations.
+
+## Meta Pixel / Paid Media Readiness
+
+Meta Pixel should also be installed through the existing GTM container rather than as app-owned vendor script code. The production Meta Pixel / Dataset ID is:
+
+```text
+1042037754988430
+```
+
+Treat the Pixel ID as public configuration, not a secret, but do not hard-code Meta's base snippet into the Next.js app. Use GTM and the neutral `cgy_*` dataLayer events instead.
+
+Production-only targeting:
+
+- Include hostnames: `canyougeo.com`, `www.canyougeo.com`
+- Exclude: `test.canyougeo.com`, `localhost`, `127.0.0.1`, Cloudflare preview/Page URLs, and any noindexed build
+- Keep Cloudflare Preview analytics disabled with `NEXT_PUBLIC_ANALYTICS_ENABLED=false`
+
+Consent posture:
+
+- Can You Geo sets default advertising consent to denied before GTM loads: `ad_storage=denied`, `ad_personalization=denied`, and `ad_user_data=denied`.
+- The footer cookie settings UI lets visitors accept or decline marketing cookies and stores that choice locally. The UI is available on production and `test.canyougeo.com` so the consent flow can be QA-tested without enabling advertising pixels on staging.
+- When marketing consent is accepted, the app updates ad consent to granted and pushes `cgy_marketing_consent_granted`.
+- When marketing consent is declined or revoked, the app updates ad consent back to denied.
+- In GTM, Meta PageView and conversion tags must require `ad_storage` and `ad_personalization`; use `ad_user_data` too where supported.
+- Reddit Pixel tags should be brought under the same marketing consent gate. Do not let Reddit fire on Initialization or Container Loaded unless consent is already granted.
+- If GTM consent checks are not configured yet, keep Meta and Reddit tags paused/unpublished except for manual Preview testing.
+
+Suggested Meta/GTM mapping:
+
+| Meta event | GTM trigger | App dataLayer event | Notes |
+| --- | --- | --- | --- |
+| `PageView` | Page View / Initialization on production hostnames only | GTM page view | Consent-gated. Do not fire on staging, previews, or localhost. |
+| Consent-granted PageView replay | Custom Event | `cgy_marketing_consent_granted` | Use this trigger so Meta PageView can fire once after a visitor accepts marketing cookies during the same page view. |
+| `CompleteRegistration` | Custom Event | `cgy_signup_complete` | Fires only after a confirmed new account creation path. Payload: `method`. |
+| `InitiateCheckout` | Custom Event | `cgy_begin_checkout` | Fires only after the Stripe checkout URL is returned and the browser is about to leave for Checkout. Payload: `currency`, `value`, `plan`. |
+| Upper-funnel upgrade intent | Custom Event | `cgy_upgrade_click` | Optional ad optimization signal before checkout starts. Payload: `currency`, `value`, `plan`, `signed_in`, `source`. |
+| `StartSampleRun` / `StartDaily` custom events | Custom Event with mode filter | `cgy_game_start` | Use `mode=guest_sample`, `free_daily`, or `pro_daily`; payload stays generic. |
+| `CompleteSampleRun` / `CompleteDaily` custom events | Custom Event with mode filter | `cgy_game_complete` | Use `mode=guest_sample`, `free_daily`, or `pro_daily`; do not pass answers or guesses. |
+| `Purchase` | Deferred | Not emitted | Wait for a later server-side/CAPI or webhook-backed implementation with a stable transaction/subscription event id. The browser return path can be refreshed and may double-count. |
+
+Never map or enrich Meta events with account emails, names, user IDs, auth tokens, recipient emails, challenge codes, exact location, hidden indicators, answer countries, guesses, payment identifiers, or free-text notes. Keep Meta payloads limited to the low-cardinality fields already emitted by the app.
+
+If Meta tags are published through GTM, validate the production browser console for CSP violations. Add only the narrow Meta script/beacon/image/connect hosts required by the actual GTM tag in a separate CSP change; do not add broad wildcards.
 
 ## CSP Allowlist
 

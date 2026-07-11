@@ -13,7 +13,7 @@ import type { PlayerEntitlement } from "@/lib/account/entitlements";
 import { signUpPathForReturn } from "@/lib/account/signInRedirect";
 import { publicBillingEnabled } from "@/lib/billing/publicBillingConfig";
 import { PRO_PRICE_OPTIONS, type ProBillingInterval } from "@/lib/billing/proPricing";
-import { trackAnalyticsEvent } from "@/lib/site/analytics";
+import { trackAnalyticsEvent, trackCheckoutStarted, trackUpgradeIntent } from "@/lib/site/analytics";
 
 type BillingActionsClientProps = {
   entitlement: PlayerEntitlement;
@@ -44,7 +44,7 @@ export function BillingActionsClient({ entitlement, context, selectedPlan = null
   const billingEnabled = configured && publicBillingEnabled();
 
   function trackUpgradeClick(interval: ProBillingInterval | undefined) {
-    trackAnalyticsEvent("cgy_upgrade_click", {
+    trackUpgradeIntent({
       currency: "USD",
       value: analyticsValueForInterval(interval),
       plan: analyticsPlanForInterval(interval),
@@ -63,11 +63,6 @@ export function BillingActionsClient({ entitlement, context, selectedPlan = null
     setMessage("");
     if (kind === "checkout") {
       trackUpgradeClick(interval);
-      trackAnalyticsEvent("cgy_begin_checkout", {
-        currency: "USD",
-        value: analyticsValueForInterval(interval),
-        plan: analyticsPlanForInterval(interval)
-      });
     }
     const result = await requestBillingActionUrl({
       client,
@@ -80,6 +75,13 @@ export function BillingActionsClient({ entitlement, context, selectedPlan = null
     if (result.message || !result.url) {
       setMessage(result.message ?? (kind === "portal" ? "Billing management could not open. Please try again." : "Checkout could not start. Please try again."));
       return;
+    }
+    if (kind === "checkout") {
+      trackCheckoutStarted({
+        currency: "USD",
+        value: analyticsValueForInterval(interval),
+        plan: analyticsPlanForInterval(interval)
+      });
     }
     window.location.assign(result.url);
   }

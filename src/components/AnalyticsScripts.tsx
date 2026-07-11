@@ -1,5 +1,5 @@
 import Script from "next/script";
-import { analyticsConfigFromEnv } from "@/lib/site/analytics";
+import { analyticsConfigFromEnv, marketingConsentBootstrapScript } from "@/lib/site/analytics";
 
 export function AnalyticsScripts() {
   const config = analyticsConfigFromEnv();
@@ -10,7 +10,7 @@ export function AnalyticsScripts() {
       <>
         <Script id="cgy-gtm-init" data-testid="cgy-gtm-init" strategy="afterInteractive">
           {`
-            window.dataLayer = window.dataLayer || [];
+            ${marketingConsentBootstrapScript()}
             window.dataLayer.push({ 'gtm.start': new Date().getTime(), event: 'gtm.js' });
             (function(w,d,s,l,i){var f=d.getElementsByTagName(s)[0],j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src='https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);})(window,document,'script','dataLayer','${config.gtmId}');
           `}
@@ -39,10 +39,9 @@ export function AnalyticsScripts() {
         />
         <Script id="cgy-ga4-init" data-testid="cgy-ga4-init" strategy="afterInteractive">
           {`
-            window.dataLayer = window.dataLayer || [];
-            function gtag(){dataLayer.push(arguments);}
-            gtag('js', new Date());
-            gtag('config', '${config.gaMeasurementId}', { send_page_view: true });
+            ${marketingConsentBootstrapScript()}
+            window.gtag('js', new Date());
+            window.gtag('config', '${config.gaMeasurementId}', { send_page_view: true });
           `}
         </Script>
       </>
