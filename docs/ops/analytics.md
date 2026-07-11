@@ -115,7 +115,7 @@ Production-only targeting:
 Consent posture:
 
 - Can You Geo sets default advertising consent to denied before GTM loads: `ad_storage=denied`, `ad_personalization=denied`, and `ad_user_data=denied`.
-- The footer cookie settings UI lets visitors accept or decline marketing cookies and stores that choice locally.
+- The footer cookie settings UI lets visitors accept or decline marketing cookies and stores that choice locally. The UI is available on production and `test.canyougeo.com` so the consent flow can be QA-tested without enabling advertising pixels on staging.
 - When marketing consent is accepted, the app updates ad consent to granted and pushes `cgy_marketing_consent_granted`.
 - When marketing consent is declined or revoked, the app updates ad consent back to denied.
 - In GTM, Meta PageView and conversion tags must require `ad_storage` and `ad_personalization`; use `ad_user_data` too where supported.
