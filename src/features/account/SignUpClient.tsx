@@ -44,6 +44,11 @@ function userHasNewIdentity(user: unknown) {
   return Array.isArray(identities) && identities.length > 0;
 }
 
+function trackSignUpComplete() {
+  trackAnalyticsEvent("cgy_sign_up", { method: "email" });
+  trackAnalyticsEvent("cgy_signup_complete", { method: "email" });
+}
+
 export function SignUpClient() {
   const router = useRouter();
   const { client, configured, loading, user, profileError, signOut } = useSupabaseAccount();
@@ -124,7 +129,7 @@ export function SignUpClient() {
         console.warn("[auth] Profile creation failed after password sign-up.", profile.error);
       }
       clearStoredSignInReturnPath();
-      trackAnalyticsEvent("cgy_sign_up", { method: "email" });
+      trackSignUpComplete();
       setStatus(signedInStatusForReturn(nextPath));
       setSubmitting(false);
       router.push(nextPath);
@@ -139,7 +144,7 @@ export function SignUpClient() {
     }
     const hasNewIdentity = userHasNewIdentity(activeUser);
     if (hasNewIdentity) {
-      trackAnalyticsEvent("cgy_sign_up", { method: "email" });
+      trackSignUpComplete();
     }
     setSignUpOutcome(hasNewIdentity ? "confirmation" : "ambiguous-check-email");
     setStatus(hasNewIdentity ? CONFIRMATION_SENT_STATUS : "");

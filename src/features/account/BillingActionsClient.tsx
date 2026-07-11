@@ -43,6 +43,16 @@ export function BillingActionsClient({ entitlement, context, selectedPlan = null
   const hasStripeCustomer = Boolean(entitlement.row?.stripe_customer_id);
   const billingEnabled = configured && publicBillingEnabled();
 
+  function trackUpgradeClick(interval: ProBillingInterval | undefined) {
+    trackAnalyticsEvent("cgy_upgrade_click", {
+      currency: "USD",
+      value: analyticsValueForInterval(interval),
+      plan: analyticsPlanForInterval(interval),
+      signed_in: signedIn,
+      source: context
+    });
+  }
+
   async function invokeBillingFunction(
     functionName: BillingFunctionName,
     pendingState: BillingPendingState,
@@ -52,6 +62,7 @@ export function BillingActionsClient({ entitlement, context, selectedPlan = null
     setPending(pendingState);
     setMessage("");
     if (kind === "checkout") {
+      trackUpgradeClick(interval);
       trackAnalyticsEvent("cgy_begin_checkout", {
         currency: "USD",
         value: analyticsValueForInterval(interval),
@@ -162,12 +173,13 @@ export function BillingActionsClient({ entitlement, context, selectedPlan = null
               className={option.featured ? "button" : "button-secondary"}
               href={signUpPathForPlan(option.interval)}
               key={option.interval}
-              onClick={() =>
+              onClick={() => {
+                trackUpgradeClick(option.interval);
                 trackAnalyticsEvent("cgy_select_content", {
                   content_type: "pro_plan",
                   item_id: analyticsPlanForInterval(option.interval)
-                })
-              }
+                });
+              }}
             >
               <span>{checkoutLabel ?? option.cta}</span>
               {option.badge ? (
