@@ -399,6 +399,59 @@ button:disabled {
   justify-content: flex-end;
 }
 
+.cookie-settings-button {
+  min-height: 0;
+  border: 0;
+  background: transparent;
+  color: var(--signal-2);
+  font: inherit;
+  font-weight: 700;
+  padding: 0;
+  cursor: pointer;
+}
+
+.cookie-settings-button:hover,
+.cookie-settings-button:focus-visible {
+  color: var(--cgy-lime);
+  text-decoration: underline;
+}
+
+.marketing-consent-banner {
+  position: fixed;
+  right: clamp(1rem, 4vw, 2rem);
+  bottom: clamp(1rem, 4vw, 2rem);
+  z-index: 60;
+  width: min(42rem, calc(100vw - 2rem));
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto;
+  gap: 1rem;
+  align-items: end;
+  border-color: rgb(15 216 219 / 0.34);
+  background:
+    linear-gradient(135deg, rgb(3 34 45 / 0.96), rgb(0 8 24 / 0.94)),
+    var(--surface);
+  box-shadow:
+    0 18px 50px rgb(0 0 0 / 0.42),
+    0 0 26px rgb(15 216 219 / 0.14);
+}
+
+.marketing-consent-banner h2 {
+  margin: 0.25rem 0 0.35rem;
+  font-size: clamp(1.35rem, 2vw, 1.8rem);
+}
+
+.marketing-consent-banner p {
+  margin: 0;
+  color: var(--parchment-2);
+}
+
+.marketing-consent-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.65rem;
+  justify-content: flex-end;
+}
+
 .page-shell {
   width: min(1180px, calc(100% - 2rem));
   max-width: 100%;
@@ -10801,6 +10854,20 @@ button.pro-price-option:focus-visible {
 }
 
 @media (max-width: 720px) {
+  .marketing-consent-banner {
+    grid-template-columns: 1fr;
+    align-items: stretch;
+  }
+
+  .marketing-consent-actions {
+    justify-content: stretch;
+  }
+
+  .marketing-consent-actions .button,
+  .marketing-consent-actions .button-secondary {
+    width: 100%;
+  }
+
   .site-header {
     display: grid;
     grid-template-columns: minmax(0, 1fr) auto;
