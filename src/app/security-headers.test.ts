@@ -17,9 +17,15 @@ function directive(name: string): string[] {
 }
 
 describe("static security headers", () => {
-  it("allows only the GTM/GA origins needed by launch analytics", () => {
+  it("allows only the GTM/GA/Reddit origins needed by launch analytics", () => {
     expect(directive("script-src")).toEqual(
-      expect.arrayContaining(["'self'", "'unsafe-inline'", "https://static.cloudflareinsights.com", "https://www.googletagmanager.com"])
+      expect.arrayContaining([
+        "'self'",
+        "'unsafe-inline'",
+        "https://static.cloudflareinsights.com",
+        "https://www.googletagmanager.com",
+        "https://www.redditstatic.com"
+      ])
     );
     expect(directive("connect-src")).toEqual(
       expect.arrayContaining([
@@ -28,20 +34,31 @@ describe("static security headers", () => {
         "wss://*.supabase.co",
         "https://www.google-analytics.com",
         "https://region1.google-analytics.com",
-        "https://www.google.com"
+        "https://www.google.com",
+        "https://alb.reddit.com"
       ])
     );
     expect(directive("img-src")).toEqual(
-      expect.arrayContaining(["'self'", "data:", "blob:", "https://www.google-analytics.com", "https://www.googletagmanager.com"])
+      expect.arrayContaining([
+        "'self'",
+        "data:",
+        "blob:",
+        "https://www.google-analytics.com",
+        "https://www.googletagmanager.com",
+        "https://www.redditstatic.com",
+        "https://alb.reddit.com"
+      ])
     );
     expect(directive("frame-src")).toEqual(["https://www.googletagmanager.com"]);
   });
 
-  it("does not add broad Google or script-eval CSP allowances", () => {
+  it("does not add broad Google, Reddit, or script-eval CSP allowances", () => {
     const csp = cspLine ?? "";
     expect(csp).not.toContain("https://*.google");
     expect(csp).not.toContain("https://*.googletagmanager.com");
     expect(csp).not.toContain("https://*.google-analytics.com");
+    expect(csp).not.toContain("https://*.reddit");
+    expect(csp).not.toContain("https://*.redditstatic.com");
     expect(csp).not.toContain("'unsafe-eval'");
   });
 });
