@@ -204,6 +204,7 @@ export function LegalContent() {
               Advertising and measurement partners may use cookies, pixels, or similar technologies where enabled to measure campaign
               performance and site or gameplay events. These tools should be configured without sending account emails, user IDs,
               passwords, auth tokens, payment details, exact location, answer spoilers, challenge codes, or free-text notes.
+              Advertising pixels such as Meta Pixel or Reddit Pixel are intended to run only when marketing cookies are accepted.
             </p>
 
             <h3>Data Retention and Deletion</h3>

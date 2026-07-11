@@ -10,7 +10,8 @@ export const CAN_YOU_GEO_ANALYTICS_EVENTS = [
   "cgy_login",
   "cgy_share",
   "cgy_upgrade_click",
-  "cgy_begin_checkout"
+  "cgy_begin_checkout",
+  "cgy_marketing_consent_granted"
 ] as const;
 
 export type CanYouGeoAnalyticsEvent = (typeof CAN_YOU_GEO_ANALYTICS_EVENTS)[number];
@@ -24,6 +25,16 @@ export type AnalyticsAuthMethod = "email";
 export type AnalyticsShareMethod = "copy_link" | "native_share" | "email" | "mailto";
 export type AnalyticsCheckoutPlan = "pro_monthly" | "pro_yearly";
 export type AnalyticsUpgradeSource = "upgrade" | "account";
+export type MarketingConsentChoice = "granted" | "denied";
+export type AnalyticsCheckoutConversionInput = {
+  currency: "USD";
+  value: number;
+  plan: AnalyticsCheckoutPlan;
+};
+export type AnalyticsUpgradeIntentInput = AnalyticsCheckoutConversionInput & {
+  signed_in: boolean;
+  source: AnalyticsUpgradeSource;
+};
 
 export type AnalyticsEventPayloads = {
   cgy_game_start: {
@@ -86,6 +97,7 @@ export type AnalyticsEventPayloads = {
     value: number;
     plan: AnalyticsCheckoutPlan;
   };
+  cgy_marketing_consent_granted: Record<string, never>;
 };
 
 type AnalyticsProvider = "gtm" | "ga4";
@@ -118,12 +130,24 @@ export type AnalyticsConfig =
 
 type AnalyticsWindow = Window & {
   dataLayer?: unknown[];
+  gtag?: (...args: unknown[]) => void;
 };
 
+export const MARKETING_CONSENT_STORAGE_KEY = "canyougeo:marketing-consent";
 const SAFE_KEY_PATTERN = /^[a-z][a-z0-9_]{0,39}$/;
 const PII_KEY_PATTERN = /(email|user|uid|uuid|token|secret|password|session|recipient|auth|location|lat|lng|longitude|latitude)/i;
 const EMAIL_LIKE_PATTERN = /\S+@\S+\.\S+/;
 const TRUE_VALUE = "true";
+const AD_CONSENT_DENIED = {
+  ad_storage: "denied",
+  ad_personalization: "denied",
+  ad_user_data: "denied"
+} as const;
+const AD_CONSENT_GRANTED = {
+  ad_storage: "granted",
+  ad_personalization: "granted",
+  ad_user_data: "granted"
+} as const;
 
 export function analyticsConfigFromEnv(env: AnalyticsEnv = process.env as AnalyticsEnv): AnalyticsConfig {
   const siteOrigin = cleanRootOrigin(env.NEXT_PUBLIC_SITE_URL);
@@ -178,6 +202,54 @@ export function trackAnalyticsEvent<EventName extends CanYouGeoAnalyticsEvent>(e
     analyticsWindow.dataLayer.push({ event: eventName, ...safeParams });
   } catch {
     // Analytics must never break gameplay or account flows.
+  }
+}
+
+export function trackRegistrationComplete(method: AnalyticsAuthMethod = "email") {
+  trackAnalyticsEvent("cgy_sign_up", { method });
+  trackAnalyticsEvent("cgy_signup_complete", { method });
+}
+
+export function trackUpgradeIntent(input: AnalyticsUpgradeIntentInput) {
+  trackAnalyticsEvent("cgy_upgrade_click", input);
+}
+
+export function trackCheckoutStarted(input: AnalyticsCheckoutConversionInput) {
+  trackAnalyticsEvent("cgy_begin_checkout", input);
+}
+
+export function marketingConsentBootstrapScript() {
+  return `
+            window.dataLayer = window.dataLayer || [];
+            window.gtag = window.gtag || function(){window.dataLayer.push(arguments);}
+            window.gtag('consent', 'default', ${JSON.stringify(AD_CONSENT_DENIED)});
+            try {
+              if (window.localStorage.getItem('${MARKETING_CONSENT_STORAGE_KEY}') === 'granted') {
+                window.gtag('consent', 'update', ${JSON.stringify(AD_CONSENT_GRANTED)});
+              }
+            } catch (error) {}
+  `;
+}
+
+export function normalizeMarketingConsentChoice(value: string | null | undefined): MarketingConsentChoice | null {
+  return value === "granted" || value === "denied" ? value : null;
+}
+
+export function pushMarketingConsentChoice(choice: MarketingConsentChoice) {
+  if (typeof window === "undefined") return;
+  try {
+    const analyticsWindow = window as AnalyticsWindow;
+    if (!Array.isArray(analyticsWindow.dataLayer)) analyticsWindow.dataLayer = [];
+    const fallbackGtag = (...args: unknown[]) => {
+      analyticsWindow.dataLayer?.push(args);
+    };
+    const gtag = typeof analyticsWindow.gtag === "function" ? analyticsWindow.gtag : fallbackGtag;
+    gtag("consent", "update", choice === "granted" ? AD_CONSENT_GRANTED : AD_CONSENT_DENIED);
+    if (choice === "granted") {
+      trackAnalyticsEvent("cgy_marketing_consent_granted", {});
+    }
+  } catch {
+    // Consent updates must never break account, billing, or gameplay flows.
   }
 }
 

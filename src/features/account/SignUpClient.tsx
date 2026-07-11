@@ -12,7 +12,7 @@ import {
   signInPathForReturn,
   storeSignInReturnPath
 } from "@/lib/account/signInRedirect";
-import { trackAnalyticsEvent } from "@/lib/site/analytics";
+import { trackRegistrationComplete } from "@/lib/site/analytics";
 import { siteOrigin } from "@/lib/supabase/env";
 
 const MIN_PASSWORD_LENGTH = 8;
@@ -42,11 +42,6 @@ function userHasEmptyIdentities(user: unknown) {
 function userHasNewIdentity(user: unknown) {
   const identities = (user as { identities?: unknown } | null)?.identities;
   return Array.isArray(identities) && identities.length > 0;
-}
-
-function trackSignUpComplete() {
-  trackAnalyticsEvent("cgy_sign_up", { method: "email" });
-  trackAnalyticsEvent("cgy_signup_complete", { method: "email" });
 }
 
 export function SignUpClient() {
@@ -129,7 +124,7 @@ export function SignUpClient() {
         console.warn("[auth] Profile creation failed after password sign-up.", profile.error);
       }
       clearStoredSignInReturnPath();
-      trackSignUpComplete();
+      trackRegistrationComplete();
       setStatus(signedInStatusForReturn(nextPath));
       setSubmitting(false);
       router.push(nextPath);
@@ -144,7 +139,7 @@ export function SignUpClient() {
     }
     const hasNewIdentity = userHasNewIdentity(activeUser);
     if (hasNewIdentity) {
-      trackSignUpComplete();
+      trackRegistrationComplete();
     }
     setSignUpOutcome(hasNewIdentity ? "confirmation" : "ambiguous-check-email");
     setStatus(hasNewIdentity ? CONFIRMATION_SENT_STATUS : "");

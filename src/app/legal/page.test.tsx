@@ -41,6 +41,7 @@ describe("LegalPage", () => {
     expect(screen.getByText(/without sending account emails, user IDs, passwords, auth tokens, payment details/i)).toBeVisible();
     expect(screen.getByText(/cookies, pixels, or similar technologies where enabled/i)).toBeVisible();
     expect(screen.getByText(/answer spoilers, challenge codes, or free-text notes/i)).toBeVisible();
+    expect(screen.getByText(/Meta Pixel or Reddit Pixel are intended to run only when marketing cookies are accepted/i)).toBeVisible();
     expect(
       screen.getByText(
         "Marketing updates, such as product updates or new game announcements, are optional and are sent only when you opt in. Transactional messages needed for the service can still be sent even if marketing updates are off."
