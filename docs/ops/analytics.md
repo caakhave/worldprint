@@ -137,11 +137,11 @@ Suggested Meta/GTM mapping:
 
 Never map or enrich Meta events with account emails, names, user IDs, auth tokens, recipient emails, challenge codes, exact location, hidden indicators, answer countries, guesses, payment identifiers, or free-text notes. Keep Meta payloads limited to the low-cardinality fields already emitted by the app.
 
-If Meta tags are published through GTM, validate the production browser console for CSP violations. Add only the narrow Meta script/beacon/image/connect hosts required by the actual GTM tag in a separate CSP change; do not add broad wildcards.
+Meta tags remain GTM-managed and consent-gated. The app-owned CSP allows only the narrow browser hosts needed by the GTM-managed Meta Pixel tag; do not add Meta scripts or Pixel IDs directly to the app.
 
 ## CSP Allowlist
 
-Cloudflare Pages serves the launch CSP from `public/_headers`. GTM/GA4 and the GTM-managed Reddit Pixel base tag need these narrow allowances:
+Cloudflare Pages serves the launch CSP from `public/_headers`. GTM/GA4 and the GTM-managed Reddit/Meta Pixel tags need these narrow allowances:
 
 - `script-src`: `https://www.googletagmanager.com`
 - `frame-src`: `https://www.googletagmanager.com` for the GTM noscript iframe
@@ -150,8 +150,10 @@ Cloudflare Pages serves the launch CSP from `public/_headers`. GTM/GA4 and the G
 - `script-src`: `https://www.redditstatic.com` for the Reddit Pixel script loaded by GTM
 - `connect-src` and `img-src`: `https://alb.reddit.com` for Reddit Pixel collection beacons
 - `img-src`: `https://www.redditstatic.com` for Reddit Pixel image fallback behavior
+- `script-src`: `https://connect.facebook.net` for the Meta Pixel script loaded by GTM
+- `connect-src` and `img-src`: `https://www.facebook.com` for Meta Pixel collection beacons such as `/tr`
 
-Do not replace these with broad Google or Reddit wildcards. The current static export still permits inline scripts/styles for Next hydration, but the GTM fix should not add any new `unsafe-inline` or `unsafe-eval` allowances. Validate after deploy by opening production in a browser console and confirming `gtm.js` and the GTM-managed Reddit Pixel tag load without CSP errors.
+Do not replace these with broad Google, Reddit, or Meta wildcards. The current static export still permits inline scripts/styles for Next hydration, but the GTM fix should not add any new `unsafe-inline` or `unsafe-eval` allowances. Validate after deploy by opening production in a browser console and confirming `gtm.js` and the GTM-managed Reddit/Meta Pixel tags load without CSP errors after marketing consent is granted.
 
 ## Setup Checklist
 
