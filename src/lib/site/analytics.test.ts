@@ -153,6 +153,34 @@ describe("analytics helpers", () => {
     ]);
   });
 
+  it("pushes signup and upgrade conversion events without vendor-specific fields", () => {
+    vi.stubEnv("NEXT_PUBLIC_ANALYTICS_ENABLED", "true");
+    vi.stubEnv("NEXT_PUBLIC_GTM_ID", "GTM-CANYOUGEO");
+    vi.stubEnv("NEXT_PUBLIC_SITE_URL", "https://canyougeo.com");
+    vi.stubEnv("NEXT_PUBLIC_NO_INDEX", "false");
+
+    trackAnalyticsEvent("cgy_signup_complete", { method: "email" });
+    trackAnalyticsEvent("cgy_upgrade_click", {
+      currency: "USD",
+      value: 29.99,
+      plan: "pro_yearly",
+      signed_in: false,
+      source: "upgrade"
+    });
+
+    expect((window as typeof window & { dataLayer?: unknown[] }).dataLayer).toEqual([
+      { event: "cgy_signup_complete", method: "email" },
+      {
+        event: "cgy_upgrade_click",
+        currency: "USD",
+        value: 29.99,
+        plan: "pro_yearly",
+        signed_in: false,
+        source: "upgrade"
+      }
+    ]);
+  });
+
   it("omits undefined and null event params", () => {
     expect(
       sanitizeAnalyticsParams({

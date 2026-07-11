@@ -26,6 +26,7 @@ describe("LegalPage", () => {
     expect(screen.queryByText(/Supabase/i)).not.toBeInTheDocument();
     expect(screen.getByText(/Billing and subscription state, such as Stripe customer ID/i)).toBeVisible();
     expect(screen.getByText(/Challenge email ledger entries, including hashed recipient emails/i)).toBeVisible();
+    expect(screen.getByText(/Advertising and measurement information when enabled/i)).toBeVisible();
     expect(screen.getByText(/Mystery Map Custom Atlas, Pattern Atlas Pattern Runs/i)).toBeVisible();
     expect(screen.getByText(/the complete Mystery Map Past Games archive/i)).toBeVisible();
     expect(screen.getByRole("link", { name: "Terms" })).toHaveAttribute("href", "/terms");
@@ -36,7 +37,10 @@ describe("LegalPage", () => {
     expect(screen.getByText(/service providers that help operate authentication, secure application data storage/i)).toBeVisible();
     expect(screen.queryByText(/Resend and Supabase SMTP for transactional email and owner\/admin billing notifications/i)).not.toBeInTheDocument();
     expect(screen.getByText(/We do not sell personal information/i)).toBeVisible();
+    expect(screen.getByText(/advertising measurement, payments, hosting, and support/i)).toBeVisible();
     expect(screen.getByText(/without sending account emails, user IDs, passwords, auth tokens, payment details/i)).toBeVisible();
+    expect(screen.getByText(/cookies, pixels, or similar technologies where enabled/i)).toBeVisible();
+    expect(screen.getByText(/answer spoilers, challenge codes, or free-text notes/i)).toBeVisible();
     expect(
       screen.getByText(
         "Marketing updates, such as product updates or new game announcements, are optional and are sent only when you opt in. Transactional messages needed for the service can still be sent even if marketing updates are off."

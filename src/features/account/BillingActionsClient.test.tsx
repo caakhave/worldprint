@@ -117,13 +117,37 @@ describe("BillingActionsClient", () => {
 
   it("preserves signed-out Pro plan intent when test billing is enabled", () => {
     process.env.NEXT_PUBLIC_BILLING_MODE = "test";
+    vi.stubEnv("NEXT_PUBLIC_ANALYTICS_ENABLED", "true");
+    vi.stubEnv("NEXT_PUBLIC_GTM_ID", "GTM-CANYOUGEO");
+    vi.stubEnv("NEXT_PUBLIC_SITE_URL", "https://canyougeo.com");
+    vi.stubEnv("NEXT_PUBLIC_NO_INDEX", "false");
+    (window as typeof window & { dataLayer?: unknown[] }).dataLayer = [];
 
     render(<BillingActionsClient entitlement={FREE_ENTITLEMENT} context="upgrade" />);
 
-    expect(screen.getByRole("link", { name: "Join monthly" })).toHaveAttribute("href", "/sign-up?next=%2Fupgrade%3Fplan%3Dmonthly");
+    const monthlyLink = screen.getByRole("link", { name: "Join monthly" });
+    expect(monthlyLink).toHaveAttribute("href", "/sign-up?next=%2Fupgrade%3Fplan%3Dmonthly");
     expect(screen.getByRole("link", { name: "Join yearly" })).toHaveAttribute("href", "/sign-up?next=%2Fupgrade%3Fplan%3Dyearly");
     expect(screen.getByRole("link", { name: "Continue free" })).toHaveAttribute("href", "/sign-up");
     expect(screen.queryByRole("button", { name: "Checkout setup needed" })).not.toBeInTheDocument();
+
+    fireEvent.click(monthlyLink);
+
+    expect((window as typeof window & { dataLayer?: unknown[] }).dataLayer).toEqual([
+      {
+        event: "cgy_upgrade_click",
+        currency: "USD",
+        value: 3.99,
+        plan: "pro_monthly",
+        signed_in: false,
+        source: "upgrade"
+      },
+      {
+        event: "cgy_select_content",
+        content_type: "pro_plan",
+        item_id: "pro_monthly"
+      }
+    ]);
   });
 
   it("shows monthly and yearly checkout actions for signed-in Free users in test mode", () => {
@@ -158,6 +182,14 @@ describe("BillingActionsClient", () => {
       body: { plan: "monthly" }
     });
     expect((window as typeof window & { dataLayer?: unknown[] }).dataLayer).toEqual([
+      {
+        event: "cgy_upgrade_click",
+        currency: "USD",
+        value: 3.99,
+        plan: "pro_monthly",
+        signed_in: true,
+        source: "upgrade"
+      },
       { event: "cgy_begin_checkout", currency: "USD", value: 3.99, plan: "pro_monthly" }
     ]);
     expect(client.from).not.toHaveBeenCalled();

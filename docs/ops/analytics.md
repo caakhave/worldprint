@@ -51,14 +51,18 @@ Only high-level, non-PII product events are pushed to `window.dataLayer`. GTM li
 | `cgy_round_answered` | `round_submit` | A player submits an answer for a round. Repeated already-rejected answers are ignored. | `game_slug`, `mode`, `round_number`, `correct`, `difficulty`, `score_band`, `signed_in`, `plan` |
 | `cgy_game_complete` | `game_complete` | A run transitions to complete. | `game_slug`, `mode`, `round_count`, `final_score`, `score_band`, `perfect_run`, `signed_in`, `plan` |
 | `cgy_select_content` | `select_content` | A player selects a major game card, mode card, plan option, auth link, or CTA. | `content_type`, `item_id`, optional `game_slug`, optional `mode` |
+| `cgy_signup_complete` | `sign_up` or ad-platform signup conversion | A new account is successfully created through a confirmed new-user path. | `method` |
 | `cgy_sign_up` | `sign_up` | A new account is successfully created. | `method` |
 | `cgy_login` | `login` | A sign-in succeeds. | `method` |
 | `cgy_share` | `share` | A challenge/result link is copied, natively shared, sent by server email, or opened as mailto. | `method`, `content_type`, `game_slug`, `mode` |
+| `cgy_upgrade_click` | ad-platform upgrade intent conversion | A player clicks a Pro upgrade CTA or checkout CTA before any Stripe redirect. | `currency`, `value`, `plan`, `signed_in`, `source` |
 | `cgy_begin_checkout` | `begin_checkout` | A signed-in player starts secure Stripe checkout. | `currency`, `value`, `plan` |
 
 `purchase` is intentionally not emitted from the frontend yet. The current app does not have a refresh-proof, single source of truth with a stable transaction ID on the browser return path, so a frontend `purchase` event could double-count. Add this later only from a reliable billing success source.
 
-Allowed event parameters are generic low-cardinality fields such as game slug, public mode, score band, plan, CTA ID, method, and boolean state. Do not send account emails, user IDs, recipient emails, auth tokens, payment details, precise location, answer countries, hidden indicators, source labels, raw challenge codes, or free-text notes.
+`cgy_play_page_view` is not emitted by the app. GTM can use ordinary page-view or history-change triggers for `/play/` and game route visits without adding another app event.
+
+Allowed event parameters are generic low-cardinality fields such as game slug, public mode, score band, plan, CTA ID, method, CTA source, and boolean state. Do not send account emails, user IDs, recipient emails, auth tokens, payment details, precise location, answer countries, hidden indicators, data source labels, raw challenge codes, or free-text notes.
 
 ## Privacy Notes
 
@@ -67,8 +71,9 @@ The analytics helper rejects PII-shaped parameter names and email-like string va
 Recommended GA4 key events after GTM forwarding is configured:
 
 - `game_complete`
-- `sign_up`
+- `sign_up` or `cgy_signup_complete`, but avoid double-counting both in the same reporting view
 - `share`
+- `cgy_upgrade_click` for paid-plan intent, especially ad-platform optimization
 - `begin_checkout`
 - `purchase` only after it is safely implemented
 
@@ -76,16 +81,33 @@ Consider `game_start` later if activation becomes a core acquisition metric. Do 
 
 Cloudflare Web Analytics or Insights may still be injected from the Cloudflare dashboard. Keep that separate from app-owned GTM/GA4 analytics and verify any dashboard-injected analytics are appropriate for the current production posture.
 
+## Reddit Pixel / Paid Media Notes
+
+Reddit Pixel and similar paid-media tags should be added through GTM, not as hard-coded vendor scripts in the app. The app provides neutral first-party `cgy_*` dataLayer events that GTM can map to Reddit, Meta, GA4, or other measurement destinations.
+
+Suggested Reddit/GTM mapping:
+
+- Use GTM page-view triggers for page visits and `/play/` visits.
+- Trigger signup conversion tags from `cgy_signup_complete`.
+- Trigger upper-funnel upgrade-intent tags from `cgy_upgrade_click`.
+- Trigger engagement tags from `cgy_game_start` and `cgy_game_complete` where useful.
+- Do not pass emails, user IDs, recipient emails, challenge codes, hidden indicators, answer countries, free-text notes, or payment identifiers into ad-platform tags.
+
+The current app-owned CSP allows GTM/GA4 and Cloudflare analytics sources. Before publishing a Reddit Pixel tag, validate in GTM Preview and the browser console whether additional narrow Reddit script/beacon/image/connect sources are required in `public/_headers`. Add only the exact endpoints needed by the published tag and verify there are no CSP violations.
+
 ## CSP Allowlist
 
-Cloudflare Pages serves the launch CSP from `public/_headers`. GTM/GA4 needs these narrow Google allowances:
+Cloudflare Pages serves the launch CSP from `public/_headers`. GTM/GA4 and the GTM-managed Reddit Pixel base tag need these narrow allowances:
 
 - `script-src`: `https://www.googletagmanager.com`
 - `frame-src`: `https://www.googletagmanager.com` for the GTM noscript iframe
 - `connect-src`: `https://www.google-analytics.com`, `https://region1.google-analytics.com`, and `https://www.google.com` for GA4 collection paths used by the GTM container
 - `img-src`: `https://www.google-analytics.com` and `https://www.googletagmanager.com` for beacon/image fallbacks
+- `script-src`: `https://www.redditstatic.com` for the Reddit Pixel script loaded by GTM
+- `connect-src` and `img-src`: `https://alb.reddit.com` for Reddit Pixel collection beacons
+- `img-src`: `https://www.redditstatic.com` for Reddit Pixel image fallback behavior
 
-Do not replace these with broad Google wildcards. The current static export still permits inline scripts/styles for Next hydration, but the GTM fix should not add any new `unsafe-inline` or `unsafe-eval` allowances. Validate after deploy by opening production in a browser console and confirming `gtm.js` loads without CSP errors.
+Do not replace these with broad Google or Reddit wildcards. The current static export still permits inline scripts/styles for Next hydration, but the GTM fix should not add any new `unsafe-inline` or `unsafe-eval` allowances. Validate after deploy by opening production in a browser console and confirming `gtm.js` and the GTM-managed Reddit Pixel tag load without CSP errors.
 
 ## Setup Checklist
 
