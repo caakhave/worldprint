@@ -10,10 +10,6 @@ const accountMock = vi.hoisted(() => ({
   }
 }));
 
-vi.mock("@/features/account/AuthNavStatus", () => ({
-  AuthNavStatus: () => <a href="/sign-in">Sign in</a>
-}));
-
 vi.mock("@/features/account/useSupabaseAccount", () => ({
   useSupabaseAccount: () => accountMock.state
 }));
@@ -30,7 +26,6 @@ describe("FooterNav", () => {
 
     expect(screen.getByRole("link", { name: "Play" })).toHaveAttribute("href", "/play");
     expect(screen.queryByRole("link", { name: "Past Games" })).not.toBeInTheDocument();
-    expect(screen.getByRole("link", { name: "Sign in" })).toHaveAttribute("href", "/sign-in");
   });
 
   it("does not flash Past Games while account state is loading", () => {

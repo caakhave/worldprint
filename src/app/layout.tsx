@@ -132,12 +132,19 @@ export default function RootLayout({ children }: Readonly<{ children: React.Reac
         <main id="main">{children}</main>
         <JsonLd id="canyougeo-site-jsonld" data={siteStructuredData} />
         <footer className="site-footer">
-          <p>
+          <p className="footer-copy">
             Can You Geo? is a geography game library. Open the game hub and check the data sources any time.
           </p>
-          <FooterNav />
-          <SocialLinks source="footer" className="footer-social-links" />
-          <MarketingConsentManager />
+          <div className="footer-nav-row">
+            <FooterNav />
+          </div>
+          <div className="footer-utility-row">
+            <div className="footer-account-area" aria-label="Footer account">
+              <AuthNavStatus />
+            </div>
+            <SocialLinks source="footer" className="footer-social-links" />
+            <MarketingConsentManager />
+          </div>
         </footer>
       </body>
     </html>
