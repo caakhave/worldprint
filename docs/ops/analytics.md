@@ -153,6 +153,7 @@ Cloudflare Pages serves the launch CSP from `public/_headers`. GTM/GA4 and the G
 - `script-src`: `https://connect.facebook.net` for the Meta Pixel script loaded by GTM
 - `connect-src` and `img-src`: `https://www.facebook.com` for Meta Pixel collection beacons such as `/tr`
 - `script-src` and `connect-src`: `https://analytics.tiktok.com` for the GTM-managed TikTok Pixel script and event collection
+- `connect-src` and `img-src`: `https://analytics-ipv6.tiktokw.us` for TikTok Pixel IPv6 enrichment requests; keep it out of `script-src` unless a future browser error proves a script load is required
 
 Do not replace these with broad Google, Reddit, Meta, or TikTok wildcards. The current static export still permits inline scripts/styles for Next hydration, but the GTM fix should not add any new `unsafe-inline` or `unsafe-eval` allowances. Validate after deploy by opening production in a browser console and confirming `gtm.js` and the GTM-managed Reddit/Meta/TikTok Pixel tags load without CSP errors after marketing consent is granted.
 
