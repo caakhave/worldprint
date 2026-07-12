@@ -141,7 +141,7 @@ Meta tags remain GTM-managed and consent-gated. The app-owned CSP allows only th
 
 ## CSP Allowlist
 
-Cloudflare Pages serves the launch CSP from `public/_headers`. GTM/GA4 and the GTM-managed Reddit/Meta Pixel tags need these narrow allowances:
+Cloudflare Pages serves the launch CSP from `public/_headers`. GTM/GA4 and the GTM-managed Reddit/Meta/TikTok Pixel tags need these narrow allowances:
 
 - `script-src`: `https://www.googletagmanager.com`
 - `frame-src`: `https://www.googletagmanager.com` for the GTM noscript iframe
@@ -152,8 +152,9 @@ Cloudflare Pages serves the launch CSP from `public/_headers`. GTM/GA4 and the G
 - `img-src`: `https://www.redditstatic.com` for Reddit Pixel image fallback behavior
 - `script-src`: `https://connect.facebook.net` for the Meta Pixel script loaded by GTM
 - `connect-src` and `img-src`: `https://www.facebook.com` for Meta Pixel collection beacons such as `/tr`
+- `script-src` and `connect-src`: `https://analytics.tiktok.com` for the GTM-managed TikTok Pixel script and event collection
 
-Do not replace these with broad Google, Reddit, or Meta wildcards. The current static export still permits inline scripts/styles for Next hydration, but the GTM fix should not add any new `unsafe-inline` or `unsafe-eval` allowances. Validate after deploy by opening production in a browser console and confirming `gtm.js` and the GTM-managed Reddit/Meta Pixel tags load without CSP errors after marketing consent is granted.
+Do not replace these with broad Google, Reddit, Meta, or TikTok wildcards. The current static export still permits inline scripts/styles for Next hydration, but the GTM fix should not add any new `unsafe-inline` or `unsafe-eval` allowances. Validate after deploy by opening production in a browser console and confirming `gtm.js` and the GTM-managed Reddit/Meta/TikTok Pixel tags load without CSP errors after marketing consent is granted.
 
 ## Setup Checklist
 
