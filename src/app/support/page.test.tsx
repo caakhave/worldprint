@@ -4,6 +4,7 @@ import { render, screen } from "@testing-library/react";
 import { describe, expect, it } from "vitest";
 import SupportPage from "@/app/support/page";
 import { CONTACT_LINKS, HELLO_EMAIL, SUPPORT_EMAIL } from "@/lib/contact";
+import { OFFICIAL_SOCIAL_LINKS } from "@/lib/social";
 
 const styles = readFileSync(join(process.cwd(), "src/styles/globals.css"), "utf8");
 
@@ -25,9 +26,15 @@ describe("SupportPage", () => {
     expect(screen.getByRole("link", { name: "Data/source issue" })).toHaveAttribute("href", CONTACT_LINKS.dataSourceIssue.href);
     expect(screen.getByRole("heading", { name: "Use it only if support asks." })).toBeVisible();
     expect(screen.getByText(/Do not send passwords, full card details, or private Stripe card information by email/i)).toBeVisible();
+    expect(screen.getByRole("heading", { name: "Follow Can You Geo" })).toBeVisible();
+    expect(screen.getByText("For updates, new games, and daily geography challenges.")).toBeVisible();
+    for (const social of OFFICIAL_SOCIAL_LINKS) {
+      expect(screen.getByRole("link", { name: `Follow Can You Geo on ${social.label}` })).toHaveAttribute("href", social.href);
+    }
     expect(screen.getByRole("link", { name: "Open account" })).toHaveAttribute("href", "/account");
     expect(screen.getByRole("link", { name: "Terms & Privacy" })).toHaveAttribute("href", "/legal");
     expect(styles).toContain(".support-page .legal-hero");
+    expect(styles).toContain(".support-social");
     expect(styles).toContain("margin-bottom: clamp(1.45rem, 3.8vw, 2.4rem)");
   });
 });

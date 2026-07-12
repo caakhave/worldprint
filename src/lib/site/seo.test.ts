@@ -11,6 +11,7 @@ import {
   webApplicationJsonLd,
   websiteJsonLd
 } from "@/lib/site/seo";
+import { OFFICIAL_SOCIAL_URLS } from "@/lib/social";
 
 describe("site SEO helpers", () => {
   it("keeps canonical paths trailing-slash compatible", () => {
@@ -44,7 +45,8 @@ describe("site SEO helpers", () => {
     const graph = siteJsonLd("https://canyougeo.com")["@graph"];
     expect(graph.map((entry) => entry["@type"])).toEqual(["Organization", "WebSite"]);
     expect(graph[0]).toMatchObject({
-      logo: "https://canyougeo.com/cgy-logo-icon-512.png"
+      logo: "https://canyougeo.com/cgy-logo-icon-512.png",
+      sameAs: OFFICIAL_SOCIAL_URLS
     });
     expect(graph[1]).toMatchObject({
       alternateName: "Can You Geo",
@@ -57,7 +59,8 @@ describe("site SEO helpers", () => {
     expect(organizationJsonLd("https://canyougeo.com")).toMatchObject({
       "@type": "Organization",
       "@id": "https://canyougeo.com/#organization",
-      url: "https://canyougeo.com"
+      url: "https://canyougeo.com",
+      sameAs: OFFICIAL_SOCIAL_URLS
     });
     expect(websiteJsonLd("https://canyougeo.com")).toMatchObject({
       "@type": "WebSite",

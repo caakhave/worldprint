@@ -41,6 +41,12 @@ describe("RootLayout", () => {
     expect(markup).toContain("href=\"/play\"");
     expect(markup).not.toContain("href=\"/past-games\"");
     expect(markup).toContain("href=\"/support\"");
+    expect(markup).toContain("Follow Can You Geo on TikTok");
+    expect(markup).toContain("href=\"https://www.tiktok.com/@canyougeo\"");
+    expect(markup).toContain("Follow Can You Geo on Instagram");
+    expect(markup).toContain("href=\"https://www.instagram.com/canyougeo\"");
+    expect(markup).toContain("Follow Can You Geo on Facebook");
+    expect(markup).toContain("href=\"https://www.facebook.com/canyougeo\"");
     expect(markup).not.toContain("href=\"/about\"");
     expect(markup).toContain("id=\"canyougeo-site-jsonld\"");
     expect(markup).toContain("\"@type\":\"Organization\"");

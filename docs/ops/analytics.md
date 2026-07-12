@@ -50,7 +50,7 @@ Only high-level, non-PII product events are pushed to `window.dataLayer`. GTM li
 | `cgy_game_start` | A new playable run starts, not on page load or resume. | `game_start` | Optional custom gameplay event, filtered by mode if useful. | Optional custom gameplay event, filtered by mode if useful. | `game_slug`, `mode`, `round_count`, `signed_in`, `plan`; no map IDs, answer labels, countries, or hidden indicators. |
 | `cgy_round_answered` | A player submits an answer for a round. Repeated already-rejected answers are ignored. | `round_submit`; not a GA4 key event. | Do not map for ad optimization by default. | Do not map for ad optimization by default. | `game_slug`, `mode`, `round_number`, `correct`, `difficulty`, `score_band`, `signed_in`, `plan`; no guesses, exact answer labels, countries, or prompt text. |
 | `cgy_game_complete` | A run transitions to complete. | `game_complete`; candidate key event. | Optional custom gameplay completion event, especially for sample or Daily completion. | Optional custom gameplay completion event, especially for sample or Daily completion. | `game_slug`, `mode`, `round_count`, `final_score`, `score_band`, `perfect_run`, `signed_in`, `plan`; no answer labels or country names. |
-| `cgy_select_content` | A player selects a major game card, mode card, plan option, auth link, or high-value upgrade navigation link. | `select_content` | Usually do not map as a conversion; useful for audiences only if consent-gated and low-volume. | Usually do not map as a conversion; useful for audiences only if consent-gated and low-volume. | `content_type`, `item_id`, optional `game_slug`, optional `mode`; use `content_type=upgrade_cta` for high-value upgrade navigation. |
+| `cgy_select_content` | A player selects a major game card, mode card, plan option, auth link, official social profile link, or high-value upgrade navigation link. | `select_content` | Usually do not map as a conversion; useful for audiences only if consent-gated and low-volume. | Usually do not map as a conversion; useful for audiences only if consent-gated and low-volume. | `content_type`, `item_id`, optional `source`, optional `game_slug`, optional `mode`; use `content_type=upgrade_cta` for high-value upgrade navigation and `content_type=social_link` with `item_id=tiktok`, `instagram`, or `facebook` for official social links. |
 | `cgy_signup_complete` | A new account is successfully created through a confirmed new-user path. | `sign_up`; key event. | `CompleteRegistration`. | `CompleteRegistration`. | `method`; this is the only signup conversion event app code should emit. |
 | `cgy_sign_up` | Legacy compatibility name. App code should not emit it for new signup flows. | Do not map. | Do not map. | Do not map. | Retained in the helper event registry only so older GTM references are visible during cleanup. Mapping it as a conversion will double-count signups. |
 | `cgy_login` | A sign-in succeeds. | `login`; not a key event. | Do not map for ad optimization by default. | Do not map for ad optimization by default. | `method`; do not include account identifiers. |
@@ -81,6 +81,20 @@ Recommended GA4 key events after GTM forwarding is configured:
 Consider `game_start` later if activation becomes a core acquisition metric. Do not mark `round_submit` as a key event.
 
 Cloudflare Web Analytics or Insights may still be injected from the Cloudflare dashboard. Keep that separate from app-owned GTM/GA4 analytics and verify any dashboard-injected analytics are appropriate for the current production posture.
+
+## Social UTM Tracking
+
+Outbound clicks from Can You Geo to the official TikTok, Instagram, and Facebook profiles are tracked with `cgy_select_content` using:
+
+```text
+content_type: "social_link"
+item_id: "tiktok" | "instagram" | "facebook"
+source: "footer" | "support"
+```
+
+Inbound links from social profiles and posts back to Can You Geo should use UTM-tagged URLs so GA4 can attribute social traffic by platform, campaign, and post. Use `utm_medium=organic_social`, lowercase snake_case labels, and put the final tracked URL in the social content calendar before posting.
+
+Full posting convention, ready-to-copy URLs, GA4 reporting paths, and contractor handoff text live in [`docs/marketing/social-utm-tracking.md`](../marketing/social-utm-tracking.md).
 
 ## Reddit Pixel / Paid Media Notes
 

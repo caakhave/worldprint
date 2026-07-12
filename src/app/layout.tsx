@@ -8,6 +8,7 @@ import { FooterNav } from "@/components/FooterNav";
 import { JsonLd } from "@/components/JsonLd";
 import { MarketingConsentManager } from "@/components/MarketingConsentManager";
 import { PrimaryNav } from "@/components/PrimaryNav";
+import { SocialLinks } from "@/components/SocialLinks";
 import { AuthNavStatus } from "@/features/account/AuthNavStatus";
 import { BRAND_NAME } from "@/lib/brand";
 import { publicSiteOrigin, robotsForSite, shouldNoIndexSite } from "@/lib/site/origin";
@@ -135,6 +136,7 @@ export default function RootLayout({ children }: Readonly<{ children: React.Reac
             Can You Geo? is a geography game library. Open the game hub and check the data sources any time.
           </p>
           <FooterNav />
+          <SocialLinks source="footer" className="footer-social-links" />
           <MarketingConsentManager />
         </footer>
       </body>

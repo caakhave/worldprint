@@ -399,6 +399,65 @@ button:disabled {
   justify-content: flex-end;
 }
 
+.social-links {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+}
+
+.social-link {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 2.75rem;
+  min-height: 2.75rem;
+  border: 1px solid rgb(164 216 205 / 0.34);
+  border-radius: 999px;
+  background: rgb(3 34 45 / 0.38);
+  color: var(--signal-2);
+  text-decoration: none;
+  transition:
+    border-color 160ms ease,
+    background 160ms ease,
+    color 160ms ease,
+    box-shadow 160ms ease,
+    transform 160ms ease;
+}
+
+.social-link:hover,
+.social-link:focus-visible {
+  border-color: rgb(194 237 57 / 0.72);
+  background: rgb(194 237 57 / 0.09);
+  color: var(--cgy-lime);
+  box-shadow: 0 0 0 3px rgb(194 237 57 / 0.14);
+  transform: translateY(-1px);
+}
+
+.social-link-icon {
+  width: 1.05rem;
+  height: 1.05rem;
+  fill: none;
+  stroke: currentColor;
+  stroke-width: 1.6;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+
+.social-link-icon path {
+  fill: currentColor;
+  stroke: none;
+}
+
+.social-links[data-variant="labeled"] .social-link {
+  gap: 0.45rem;
+  padding: 0.38rem 0.78rem;
+  font-family: var(--font-mono);
+  font-size: 0.78rem;
+  font-weight: 800;
+  text-transform: uppercase;
+}
+
 .cookie-settings-button {
   min-height: 0;
   border: 0;
@@ -9229,6 +9288,29 @@ button.pro-price-option:focus-visible {
   margin-bottom: clamp(1.45rem, 3.8vw, 2.4rem);
 }
 
+.support-social {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+  padding: clamp(1rem, 2.5vw, 1.35rem);
+  margin-top: clamp(1.35rem, 3vw, 2rem);
+  margin-bottom: clamp(1.35rem, 3vw, 2rem);
+}
+
+.support-social h2,
+.support-social p {
+  margin: 0;
+}
+
+.support-social h2 {
+  margin-bottom: 0.25rem;
+}
+
+.support-social p:not(.eyebrow) {
+  color: var(--muted);
+}
+
 .legal-hero .page-title {
   max-width: min(100%, 24ch);
   margin-bottom: 1rem;
@@ -11012,6 +11094,16 @@ button.pro-price-option:focus-visible {
 
   .site-footer {
     flex-direction: column;
+  }
+
+  .footer-social-links,
+  .support-social {
+    justify-content: center;
+  }
+
+  .support-social {
+    flex-direction: column;
+    align-items: flex-start;
   }
 
   .homepage-section-layout,

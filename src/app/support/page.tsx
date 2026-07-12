@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import Link from "next/link";
+import { SocialLinks } from "@/components/SocialLinks";
 import { CONTACT_LINKS, HELLO_EMAIL, SUPPORT_EMAIL } from "@/lib/contact";
 import { pageMetadata } from "@/lib/site/seo";
 
@@ -73,6 +74,15 @@ export default function SupportPage() {
           </a>
         </article>
       </div>
+
+      <aside className="support-social surface" aria-labelledby="support-social-heading">
+        <div>
+          <p className="eyebrow">Social</p>
+          <h2 id="support-social-heading">Follow Can You Geo</h2>
+          <p>For updates, new games, and daily geography challenges.</p>
+        </div>
+        <SocialLinks source="support" variant="labeled" />
+      </aside>
 
       <div className="about-cta surface map-texture-panel" aria-label="Support ID guidance">
         <div>
