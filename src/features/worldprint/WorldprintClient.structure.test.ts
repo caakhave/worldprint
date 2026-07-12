@@ -452,15 +452,39 @@ describe("WorldprintClient UI structure", () => {
   });
 
   it("wires only high-level launch analytics events without answer labels", () => {
+    const dispatchIndex = source.indexOf("function dispatch");
+    const dispatchEnd = source.indexOf("function dismissFirstRunIntro", dispatchIndex);
+    const dispatchSource = source.slice(dispatchIndex, dispatchEnd);
+    const shareIndex = source.indexOf("function trackChallengeShare");
+    const shareEnd = source.indexOf("function openChallengeInviteModal", shareIndex);
+    const shareSource = source.slice(shareIndex, shareEnd);
+
     expect(source).toContain("trackAnalyticsEvent");
     expect(source).toContain('"cgy_game_start"');
     expect(source).toContain('"cgy_round_answered"');
     expect(source).toContain('"cgy_game_complete"');
     expect(source).toContain('"cgy_share"');
     expect(source).toContain('"cgy_select_content"');
-    expect(source).toContain("round_number: current.currentRoundIndex + 1");
+    expect(dispatchIndex).toBeGreaterThan(0);
+    expect(dispatchEnd).toBeGreaterThan(dispatchIndex);
+    expect(dispatchSource).not.toContain("setRun((current)");
+    expect(dispatchSource.match(/"cgy_game_complete"/g)).toHaveLength(1);
+    expect(dispatchSource).toContain("round_number: run.currentRoundIndex + 1");
+    expect(source).toContain('content_type: "upgrade_cta"');
+    expect(source).toContain("mystery_map_daily_result_go_pro");
+    expect(shareIndex).toBeGreaterThan(0);
+    expect(shareEnd).toBeGreaterThan(shareIndex);
+    expect(shareSource).toContain('content_type: "challenge_link"');
+    expect(shareSource).toContain('game_slug: "mystery-map"');
+    expect(shareSource).toContain("method,");
+    expect(shareSource).toContain("mode: shareAnalyticsMode");
+    expect(shareSource).not.toContain("challengeCode");
+    expect(shareSource).not.toContain("challengeUrl");
+    expect(shareSource).not.toContain("recipientEmail");
+    expect(shareSource).not.toContain("inviteEmail");
     expect(source).not.toContain('answer_label');
     expect(source).not.toContain('indicator_id');
+    expect(source).not.toContain("stripe_session");
   });
 
   it("keeps the challenge email modal padded and readable across widths", () => {

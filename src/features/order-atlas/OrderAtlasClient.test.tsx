@@ -1,6 +1,6 @@
 import { render, screen, waitFor, within } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
-import { beforeEach, describe, expect, it, vi } from "vitest";
+import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
 import { OrderAtlasClient, type OrderAtlasPlayableRound } from "@/features/order-atlas/OrderAtlasClient";
 import { FREE_ENTITLEMENT, GUEST_ENTITLEMENT, PRO_ENTITLEMENT, type PlayerEntitlement } from "@/lib/account/entitlements";
 import { SAMPLE_ORDER_ATLAS_ROUND_IDS } from "@/lib/order-atlas/selection";
@@ -73,6 +73,20 @@ function setAccount(entitlement: PlayerEntitlement, signedIn: boolean) {
   };
 }
 
+function enableProductionAnalytics() {
+  vi.stubEnv("NEXT_PUBLIC_ANALYTICS_ENABLED", "true");
+  vi.stubEnv("NEXT_PUBLIC_GTM_ID", "GTM-CANYOUGEO");
+  vi.stubEnv("NEXT_PUBLIC_SITE_URL", "https://canyougeo.com");
+  vi.stubEnv("NEXT_PUBLIC_NO_INDEX", "false");
+  (window as typeof window & { dataLayer?: unknown[] }).dataLayer = [];
+}
+
+function dataLayerEvents(eventName: string) {
+  return ((window as typeof window & { dataLayer?: unknown[] }).dataLayer ?? []).filter(
+    (entry): entry is Record<string, unknown> => typeof entry === "object" && entry !== null && "event" in entry && entry.event === eventName
+  );
+}
+
 function renderOrderAtlas() {
   return render(<OrderAtlasClient rounds={rounds} todayOverride="2026-07-03" />);
 }
@@ -86,6 +100,11 @@ describe("OrderAtlasClient", () => {
       return 0;
     });
     vi.spyOn(window, "scrollTo").mockImplementation(() => undefined);
+  });
+
+  afterEach(() => {
+    vi.unstubAllEnvs();
+    delete (window as typeof window & { dataLayer?: unknown[] }).dataLayer;
   });
 
   it("shows signed-out players the fixed Sample Run with no-account copy", async () => {
@@ -103,6 +122,41 @@ describe("OrderAtlasClient", () => {
     expect(screen.getByText(sampleRounds[0].highlightText)).toHaveClass("order-atlas-challenge-highlight");
     expect(screen.getAllByText("Value hidden")).toHaveLength(5);
     expect(container).not.toHaveTextContent(/MVP|hidden route|early playable|pre-production/i);
+  });
+
+  it("tracks Order Atlas start and finish once without country, answer, or checkout identifiers", async () => {
+    enableProductionAnalytics();
+    const user = userEvent.setup();
+    renderOrderAtlas();
+
+    await user.click(screen.getByRole("button", { name: /Start sample run/i }));
+    await completeCurrentRun(user);
+
+    expect(dataLayerEvents("cgy_game_start")).toEqual([
+      {
+        event: "cgy_game_start",
+        game_slug: "order-atlas",
+        mode: "guest_sample",
+        round_count: 3,
+        signed_in: false,
+        plan: "guest"
+      }
+    ]);
+    expect(dataLayerEvents("cgy_game_complete")).toEqual([
+      expect.objectContaining({
+        event: "cgy_game_complete",
+        game_slug: "order-atlas",
+        mode: "guest_sample",
+        round_count: 3,
+        score_band: "low",
+        perfect_run: false,
+        signed_in: false,
+        plan: "guest"
+      })
+    ]);
+    expect(JSON.stringify((window as typeof window & { dataLayer?: unknown[] }).dataLayer)).not.toMatch(
+      /Norway|Canada|India|Brazil|South Africa|NOR|CAN|IND|BRA|ZAF|renewable electricity share|reader@example|user_id|challenge_recipient|stripe_session|checkout\.stripe/i
+    );
   });
 
   it("shows Free signed-in players the deterministic Daily and resumes it locally", async () => {

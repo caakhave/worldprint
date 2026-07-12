@@ -365,6 +365,9 @@ export function WorldprintClient({ dateOverride, entryMode = "standard" }: World
   const [cloudSaveStatus, setCloudSaveStatus] = useState("");
   const [accountRuns, setAccountRuns] = useState<GameRunRow[]>([]);
   const cloudSaveAttempts = useRef(new Set<string>());
+  const roundAnswerAnalyticsEvents = useRef(new Set<string>());
+  const completionAnalyticsEvents = useRef(new Set<string>());
+  const archivePracticeReplayCounter = useRef(0);
 
   useEffect(() => {
     const persisted = loadPersistedState();
@@ -697,9 +700,10 @@ export function WorldprintClient({ dateOverride, entryMode = "standard" }: World
   async function startArchivePracticeReplay() {
     if (!data) return;
     const selectedIds = selectDailyRoundIdsFromManifest(data.rounds, data.manifest.contentVersion, todayKey, data.dailyManifest).roundIds;
+    archivePracticeReplayCounter.current += 1;
     await startRun("practice", undefined, {
       practiceRoundIds: selectedIds,
-      practiceSalt: `past-game-practice:${todayKey}:${Date.now()}`
+      practiceSalt: `past-game-practice:${todayKey}:${archivePracticeReplayCounter.current}`
     });
   }
 
@@ -796,6 +800,8 @@ export function WorldprintClient({ dateOverride, entryMode = "standard" }: World
       ...(mode === "practice" && options.setup ? { setup: options.setup } : {})
     });
     await ensureIndicators(nextRun.rounds.map((round) => round.correctIndicatorId));
+    roundAnswerAnalyticsEvents.current.clear();
+    completionAnalyticsEvents.current.clear();
     setRun(nextRun);
     trackAnalyticsEvent("cgy_game_start", {
       game_slug: "mystery-map",
@@ -828,6 +834,8 @@ export function WorldprintClient({ dateOverride, entryMode = "standard" }: World
       ...(replayMode === "practice" && sourceRun.setup ? { setup: sourceRun.setup } : {})
     });
     await ensureIndicators(replay.rounds.map((round) => round.correctIndicatorId));
+    roundAnswerAnalyticsEvents.current.clear();
+    completionAnalyticsEvents.current.clear();
     setRun(replay);
     trackAnalyticsEvent("cgy_game_start", {
       game_slug: "mystery-map",
@@ -865,42 +873,43 @@ export function WorldprintClient({ dateOverride, entryMode = "standard" }: World
   }, [returnToLobby]);
 
   function dispatch(action: Parameters<typeof reduceRun>[1]) {
-    setRun((current) => {
-      if (!current) return current;
-      const currentRound = activeRound(current);
-      const next = reduceRun(current, action);
-      if (action.type === "submit") {
-        const nextRound = next.rounds[current.currentRoundIndex];
-        const alreadyRejected = currentRound?.rejectedAnswers.some((answer) => answer.id === action.answerId) ?? false;
-        if (currentRound && (action.correct || !alreadyRejected)) {
-          trackAnalyticsEvent("cgy_round_answered", {
-            game_slug: "mystery-map",
-            mode: analyticsMode(current.mode, signedIn, isProAccount),
-            round_number: current.currentRoundIndex + 1,
-            correct: action.correct,
-            difficulty: current.tier,
-            score_band: scoreBandForScore(nextRound?.score ?? currentRound.score, 1000),
-            signed_in: signedIn,
-            plan: analyticsPlan(signedIn, isProAccount)
-          });
-        }
-      }
-      if (current.status !== "complete" && next.status === "complete") {
-        const finalScore = next.rounds.reduce((sum, round) => sum + round.score, 0);
-        const maxScore = next.rounds.length * 1000;
-        trackAnalyticsEvent("cgy_game_complete", {
+    if (!run) return;
+    const currentRound = activeRound(run);
+    const next = reduceRun(run, action);
+    if (action.type === "submit") {
+      const nextRound = next.rounds[run.currentRoundIndex];
+      const alreadyRejected = currentRound?.rejectedAnswers.some((answer) => answer.id === action.answerId) ?? false;
+      const answerAnalyticsKey = `${run.id}:${run.currentRoundIndex}:${action.answerId}`;
+      if (currentRound && (action.correct || !alreadyRejected) && !roundAnswerAnalyticsEvents.current.has(answerAnalyticsKey)) {
+        roundAnswerAnalyticsEvents.current.add(answerAnalyticsKey);
+        trackAnalyticsEvent("cgy_round_answered", {
           game_slug: "mystery-map",
-          mode: analyticsMode(next.mode, signedIn, isProAccount),
-          round_count: next.rounds.length,
-          final_score: finalScore,
-          score_band: scoreBandForScore(finalScore, maxScore),
-          perfect_run: finalScore >= maxScore,
+          mode: analyticsMode(run.mode, signedIn, isProAccount),
+          round_number: run.currentRoundIndex + 1,
+          correct: action.correct,
+          difficulty: run.tier,
+          score_band: scoreBandForScore(nextRound?.score ?? currentRound.score, 1000),
           signed_in: signedIn,
           plan: analyticsPlan(signedIn, isProAccount)
         });
       }
-      return next;
-    });
+    }
+    if (run.status !== "complete" && next.status === "complete" && !completionAnalyticsEvents.current.has(run.id)) {
+      completionAnalyticsEvents.current.add(run.id);
+      const finalScore = next.rounds.reduce((sum, round) => sum + round.score, 0);
+      const maxScore = next.rounds.length * 1000;
+      trackAnalyticsEvent("cgy_game_complete", {
+        game_slug: "mystery-map",
+        mode: analyticsMode(next.mode, signedIn, isProAccount),
+        round_count: next.rounds.length,
+        final_score: finalScore,
+        score_band: scoreBandForScore(finalScore, maxScore),
+        perfect_run: finalScore >= maxScore,
+        signed_in: signedIn,
+        plan: analyticsPlan(signedIn, isProAccount)
+      });
+    }
+    setRun(next);
   }
 
   function dismissFirstRunIntro() {
@@ -2640,7 +2649,17 @@ function CompletionSummary({
     return () => window.removeEventListener("keydown", onKeyDown);
   }, [inviteModalOpen]);
 
-  const shareAnalyticsMode = analyticsMode(run.mode, signedIn, canUseFullPractice);
+  const analyticsRunMode = analyticsMode(run.mode, signedIn, canUseFullPractice);
+  const shareAnalyticsMode = analyticsRunMode;
+  function trackUpgradeCta(itemId: string) {
+    trackAnalyticsEvent("cgy_select_content", {
+      content_type: "upgrade_cta",
+      item_id: itemId,
+      game_slug: "mystery-map",
+      mode: analyticsRunMode
+    });
+  }
+
   function trackChallengeShare(method: AnalyticsShareMethod) {
     trackAnalyticsEvent("cgy_share", {
       method,
@@ -2816,7 +2835,7 @@ function CompletionSummary({
           </div>
           {isSampleRun ? (
             <div className="button-row">
-              <Link className="button" href="/upgrade">
+              <Link className="button" href="/upgrade" onClick={() => trackUpgradeCta("mystery_map_sample_result_start_pro")}>
                 Start Pro
               </Link>
               <Link className="button-secondary" href="/sign-up">
@@ -2825,7 +2844,7 @@ function CompletionSummary({
             </div>
           ) : isFreeDailyRun ? (
             <div className="button-row">
-              <Link className="button" href="/upgrade">
+              <Link className="button" href="/upgrade" onClick={() => trackUpgradeCta("mystery_map_daily_result_go_pro")}>
                 Go Pro to keep playing
               </Link>
               <Link className="button-secondary" href="/play">
@@ -3066,7 +3085,7 @@ function CompletionSummary({
                 ) : null}
                 {isFreeDailyRun ? (
                   <>
-                    <Link className="button" href="/upgrade">
+                    <Link className="button" href="/upgrade" onClick={() => trackUpgradeCta("mystery_map_daily_result_go_pro_actions")}>
                       Go Pro to keep playing
                     </Link>
                     <Link className="button-secondary" href="/play">
@@ -3076,7 +3095,7 @@ function CompletionSummary({
                 ) : (
                   <>
                     {isSampleRun ? (
-                      <Link className="button" href="/upgrade">
+                      <Link className="button" href="/upgrade" onClick={() => trackUpgradeCta("mystery_map_sample_result_start_pro_actions")}>
                         Start Pro
                       </Link>
                     ) : (
@@ -3128,7 +3147,13 @@ function CompletionSummary({
             ) : null}
           </div>
           <div className="button-row">
-            <Link className="button" href={signedIn && !isSampleRun ? "/account/stats#saved-stats" : "/upgrade"}>
+            <Link
+              className="button"
+              href={signedIn && !isSampleRun ? "/account/stats#saved-stats" : "/upgrade"}
+              onClick={() => {
+                if (!(signedIn && !isSampleRun)) trackUpgradeCta("mystery_map_result_save_card_start_pro");
+              }}
+            >
               {signedIn && !isSampleRun ? "View saved stats" : "Start Pro"}
             </Link>
             {signedIn && !isSampleRun ? null : (

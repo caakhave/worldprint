@@ -5,6 +5,14 @@ import { useEffect, useState } from "react";
 import { useEntitlement } from "@/features/account/useEntitlement";
 import { publicBillingEnabled } from "@/lib/billing/publicBillingConfig";
 import { defaultPersistedState, loadPersistedState } from "@/lib/persistence/storage";
+import { trackAnalyticsEvent } from "@/lib/site/analytics";
+
+function trackUpgradeNavigation(itemId: string) {
+  trackAnalyticsEvent("cgy_select_content", {
+    content_type: "upgrade_cta",
+    item_id: itemId
+  });
+}
 
 export function AccountPlanNotesClient() {
   const { entitlement, loading, signedIn } = useEntitlement();
@@ -43,7 +51,7 @@ export function AccountPlanNotesClient() {
           <p className="eyebrow">Can You Geo? Pro</p>
           <h2>Open the whole atlas.</h2>
           <p>Mystery Map Custom Atlas, Pattern Atlas Pattern Runs, complete Past Games archive, advanced stats, and future premium surfaces.</p>
-          <Link className="button" href="/upgrade">
+          <Link className="button" href="/upgrade" onClick={() => trackUpgradeNavigation("account_notes_signed_out_start_pro")}>
             Start Pro
           </Link>
         </article>
@@ -102,7 +110,13 @@ export function AccountPlanNotesClient() {
         <p className="eyebrow">{billingTitle}</p>
         <h2>{isPro ? "Pro controls" : "Full atlas"}</h2>
         <p>{billingCopy}</p>
-        <Link className={isPro ? "button-secondary" : "button"} href="/upgrade">
+        <Link
+          className={isPro ? "button-secondary" : "button"}
+          href="/upgrade"
+          onClick={() => {
+            if (!isPro) trackUpgradeNavigation("account_notes_upgrade");
+          }}
+        >
           {billingAction}
         </Link>
       </article>

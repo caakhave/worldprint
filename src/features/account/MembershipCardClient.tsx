@@ -5,6 +5,7 @@ import { BillingActionsClient } from "@/features/account/BillingActionsClient";
 import { membershipDisplay } from "@/features/account/subscriptionDisplay";
 import { useEntitlement } from "@/features/account/useEntitlement";
 import { archiveAccessLabel, practiceAccessLabel, statsAccessLabel } from "@/lib/account/accessCopy";
+import { trackAnalyticsEvent } from "@/lib/site/analytics";
 
 export function MembershipCardClient() {
   const { entitlement, loading, error, signedIn } = useEntitlement();
@@ -83,7 +84,18 @@ export function AdvancedStatsGateClient() {
           ? "Can You Geo? Pro membership is enabled. Deeper trends and Challenge history can appear here as the atlas grows."
           : "Free stats keep supported Daily scores and streaks. Pro adds full history, richer trends, and Challenge comparisons later."}
       </p>
-      <Link className={hasAdvancedStats ? "button-secondary" : "button"} href="/upgrade">
+      <Link
+        className={hasAdvancedStats ? "button-secondary" : "button"}
+        href="/upgrade"
+        onClick={() => {
+          if (!hasAdvancedStats) {
+            trackAnalyticsEvent("cgy_select_content", {
+              content_type: "upgrade_cta",
+              item_id: "advanced_stats_full_atlas_plan"
+            });
+          }
+        }}
+      >
         {hasAdvancedStats ? "Manage plan" : "See full atlas plan"}
       </Link>
     </article>

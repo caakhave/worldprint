@@ -2,7 +2,7 @@ import { render, screen, waitFor, within } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
 import { existsSync, readFileSync } from "node:fs";
 import path from "node:path";
-import { beforeEach, describe, expect, it, vi } from "vitest";
+import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
 import { PatternAtlasClient, type PatternAtlasLoadedData } from "@/features/pattern-atlas/PatternAtlasClient";
 import { PATTERN_ATLAS_SAMPLE_RULE_IDS, getPatternAtlasSampleRules } from "@/features/pattern-atlas/sampleRun";
 import { FREE_ENTITLEMENT, GUEST_ENTITLEMENT, PRO_ENTITLEMENT, type PlayerEntitlement } from "@/lib/account/entitlements";
@@ -55,6 +55,20 @@ function setAccount(entitlement: PlayerEntitlement, signedIn: boolean) {
     signedIn,
     refresh: async () => undefined
   };
+}
+
+function enableProductionAnalytics() {
+  vi.stubEnv("NEXT_PUBLIC_ANALYTICS_ENABLED", "true");
+  vi.stubEnv("NEXT_PUBLIC_GTM_ID", "GTM-CANYOUGEO");
+  vi.stubEnv("NEXT_PUBLIC_SITE_URL", "https://canyougeo.com");
+  vi.stubEnv("NEXT_PUBLIC_NO_INDEX", "false");
+  (window as typeof window & { dataLayer?: unknown[] }).dataLayer = [];
+}
+
+function dataLayerEvents(eventName: string) {
+  return ((window as typeof window & { dataLayer?: unknown[] }).dataLayer ?? []).filter(
+    (entry): entry is Record<string, unknown> => typeof entry === "object" && entry !== null && "event" in entry && entry.event === eventName
+  );
 }
 
 function renderPatternAtlas() {
@@ -115,6 +129,11 @@ describe("PatternAtlasClient", () => {
     vi.spyOn(window, "scrollTo").mockImplementation(() => undefined);
   });
 
+  afterEach(() => {
+    vi.unstubAllEnvs();
+    delete (window as typeof window & { dataLayer?: unknown[] }).dataLayer;
+  });
+
   it("uses the fixed Pattern Atlas sample rules from the approved catalog", () => {
     const rules = getPatternAtlasSampleRules();
     expect(PATTERN_ATLAS_SAMPLE_RULE_IDS).toEqual([
@@ -138,6 +157,41 @@ describe("PatternAtlasClient", () => {
 
     expect(screen.getByRole("heading", { name: "What pattern connects these countries?" })).toBeVisible();
     expect(screen.getByText("Sample Run")).toBeVisible();
+  });
+
+  it("tracks Pattern Atlas start and finish once without answer or country labels", async () => {
+    enableProductionAnalytics();
+    const user = userEvent.setup();
+    renderPatternAtlas();
+
+    await completeSampleRun(user);
+
+    expect(dataLayerEvents("cgy_game_start")).toEqual([
+      {
+        event: "cgy_game_start",
+        game_slug: "pattern-atlas",
+        mode: "guest_sample",
+        round_count: 3,
+        signed_in: false,
+        plan: "guest"
+      }
+    ]);
+    expect(dataLayerEvents("cgy_game_complete")).toEqual([
+      {
+        event: "cgy_game_complete",
+        game_slug: "pattern-atlas",
+        mode: "guest_sample",
+        round_count: 3,
+        final_score: 3000,
+        score_band: "perfect",
+        perfect_run: true,
+        signed_in: false,
+        plan: "guest"
+      }
+    ]);
+    expect(JSON.stringify((window as typeof window & { dataLayer?: unknown[] }).dataLayer)).not.toMatch(
+      /Bolivia|Paraguay|Landlocked countries in South America|landlocked-south-america|new@example|user_id|challenge_recipient|stripe_session/i
+    );
   });
 
   it("shows Free users a deterministic Pattern Atlas Daily and saves local progress", async () => {
