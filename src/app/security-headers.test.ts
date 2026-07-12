@@ -39,7 +39,8 @@ describe("static security headers", () => {
         "https://www.google.com",
         "https://alb.reddit.com",
         "https://www.facebook.com",
-        "https://analytics.tiktok.com"
+        "https://analytics.tiktok.com",
+        "https://analytics-ipv6.tiktokw.us"
       ])
     );
     expect(directive("img-src")).toEqual(
@@ -51,7 +52,8 @@ describe("static security headers", () => {
         "https://www.googletagmanager.com",
         "https://www.redditstatic.com",
         "https://alb.reddit.com",
-        "https://www.facebook.com"
+        "https://www.facebook.com",
+        "https://analytics-ipv6.tiktokw.us"
       ])
     );
     expect(directive("frame-src")).toEqual(["https://www.googletagmanager.com"]);
@@ -67,6 +69,13 @@ describe("static security headers", () => {
     expect(csp).not.toContain("https://*.facebook.com");
     expect(csp).not.toContain("https://*.facebook.net");
     expect(csp).not.toContain("https://*.tiktok.com");
+    expect(csp).not.toContain("https://*.tiktokw.us");
     expect(csp).not.toContain("'unsafe-eval'");
+  });
+
+  it("keeps the TikTok IPv6 enrichment host out of script-src", () => {
+    expect(directive("script-src")).not.toContain(
+      "https://analytics-ipv6.tiktokw.us"
+    );
   });
 });
