@@ -17,7 +17,7 @@ function directive(name: string): string[] {
 }
 
 describe("static security headers", () => {
-  it("allows only the GTM/GA/Reddit/Meta origins needed by launch analytics", () => {
+  it("allows only the GTM/GA/Reddit/Meta/TikTok origins needed by launch analytics", () => {
     expect(directive("script-src")).toEqual(
       expect.arrayContaining([
         "'self'",
@@ -25,7 +25,8 @@ describe("static security headers", () => {
         "https://static.cloudflareinsights.com",
         "https://www.googletagmanager.com",
         "https://www.redditstatic.com",
-        "https://connect.facebook.net"
+        "https://connect.facebook.net",
+        "https://analytics.tiktok.com"
       ])
     );
     expect(directive("connect-src")).toEqual(
@@ -37,7 +38,8 @@ describe("static security headers", () => {
         "https://region1.google-analytics.com",
         "https://www.google.com",
         "https://alb.reddit.com",
-        "https://www.facebook.com"
+        "https://www.facebook.com",
+        "https://analytics.tiktok.com"
       ])
     );
     expect(directive("img-src")).toEqual(
@@ -55,7 +57,7 @@ describe("static security headers", () => {
     expect(directive("frame-src")).toEqual(["https://www.googletagmanager.com"]);
   });
 
-  it("does not add broad Google, Reddit, Meta, or script-eval CSP allowances", () => {
+  it("does not add broad Google, Reddit, Meta, TikTok, or script-eval CSP allowances", () => {
     const csp = cspLine ?? "";
     expect(csp).not.toContain("https://*.google");
     expect(csp).not.toContain("https://*.googletagmanager.com");
@@ -64,6 +66,7 @@ describe("static security headers", () => {
     expect(csp).not.toContain("https://*.redditstatic.com");
     expect(csp).not.toContain("https://*.facebook.com");
     expect(csp).not.toContain("https://*.facebook.net");
+    expect(csp).not.toContain("https://*.tiktok.com");
     expect(csp).not.toContain("'unsafe-eval'");
   });
 });
