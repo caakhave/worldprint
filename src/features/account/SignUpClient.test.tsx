@@ -137,7 +137,7 @@ describe("SignUpClient", () => {
     expect(window.sessionStorage.getItem("canyougeo:sign-in-return")).toBe("/upgrade?plan=yearly");
   });
 
-  it("tracks a vendor-neutral signup-complete event for confirmed new signup responses", async () => {
+  it("tracks exactly one vendor-neutral signup-complete event for confirmed new signup responses", async () => {
     vi.stubEnv("NEXT_PUBLIC_ANALYTICS_ENABLED", "true");
     vi.stubEnv("NEXT_PUBLIC_GTM_ID", "GTM-CANYOUGEO");
     vi.stubEnv("NEXT_PUBLIC_SITE_URL", "https://canyougeo.com");
@@ -154,9 +154,11 @@ describe("SignUpClient", () => {
 
     await screen.findByRole("heading", { name: "We sent a confirmation link." });
     expect((window as typeof window & { dataLayer?: unknown[] }).dataLayer).toEqual([
-      { event: "cgy_sign_up", method: "email" },
       { event: "cgy_signup_complete", method: "email" }
     ]);
+    expect(JSON.stringify((window as typeof window & { dataLayer?: unknown[] }).dataLayer)).not.toMatch(
+      /new@example\.com|11111111-2222-4333-8444-555555555555|user_id/i
+    );
   });
 
   it("stores marketing opt-in intent only when the optional checkbox is checked", async () => {

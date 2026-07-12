@@ -1,7 +1,7 @@
 import { readFileSync } from "node:fs";
-import { render, screen, waitFor } from "@testing-library/react";
+import { fireEvent, render, screen, waitFor } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
-import { beforeEach, describe, expect, it, vi } from "vitest";
+import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
 import { AuthNavStatus } from "@/features/account/AuthNavStatus";
 
 const styles = readFileSync("src/styles/globals.css", "utf8");
@@ -87,6 +87,14 @@ function billingClientMock(): BillingMockClient {
   return client;
 }
 
+function enableProductionAnalytics() {
+  vi.stubEnv("NEXT_PUBLIC_ANALYTICS_ENABLED", "true");
+  vi.stubEnv("NEXT_PUBLIC_GTM_ID", "GTM-CANYOUGEO");
+  vi.stubEnv("NEXT_PUBLIC_SITE_URL", "https://canyougeo.com");
+  vi.stubEnv("NEXT_PUBLIC_NO_INDEX", "false");
+  (window as typeof window & { dataLayer?: unknown[] }).dataLayer = [];
+}
+
 describe("AuthNavStatus", () => {
   beforeEach(() => {
     delete process.env.NEXT_PUBLIC_BILLING_MODE;
@@ -101,11 +109,23 @@ describe("AuthNavStatus", () => {
     entitlementMock.state.signedIn = false;
   });
 
+  afterEach(() => {
+    vi.unstubAllEnvs();
+    delete (window as typeof window & { dataLayer?: unknown[] }).dataLayer;
+  });
+
   it("links signed-out players to the Pro-first account flow", () => {
+    enableProductionAnalytics();
     render(<AuthNavStatus />);
 
-    expect(screen.getByRole("link", { name: "Start Pro" })).toHaveAttribute("href", "/upgrade");
+    const startProLink = screen.getByRole("link", { name: "Start Pro" });
+    expect(startProLink).toHaveAttribute("href", "/upgrade");
     expect(screen.getByRole("link", { name: "Sign in" })).toHaveAttribute("href", "/sign-in");
+
+    fireEvent.click(startProLink);
+    expect((window as typeof window & { dataLayer?: unknown[] }).dataLayer).toEqual([
+      { event: "cgy_select_content", content_type: "upgrade_cta", item_id: "header_start_pro" }
+    ]);
   });
 
   it("shows a compact Free account menu for signed-in players and redirects after sign-out", async () => {

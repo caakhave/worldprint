@@ -6,6 +6,7 @@ export const CAN_YOU_GEO_ANALYTICS_EVENTS = [
   "cgy_game_complete",
   "cgy_select_content",
   "cgy_signup_complete",
+  // Legacy event name retained for GTM compatibility checks; app code should not emit it.
   "cgy_sign_up",
   "cgy_login",
   "cgy_share",
@@ -206,7 +207,6 @@ export function trackAnalyticsEvent<EventName extends CanYouGeoAnalyticsEvent>(e
 }
 
 export function trackRegistrationComplete(method: AnalyticsAuthMethod = "email") {
-  trackAnalyticsEvent("cgy_sign_up", { method });
   trackAnalyticsEvent("cgy_signup_complete", { method });
 }
 

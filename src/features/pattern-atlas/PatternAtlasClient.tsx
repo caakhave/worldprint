@@ -2,7 +2,7 @@
 
 import { Compass, Lightbulb, MapPin, XCircle } from "lucide-react";
 import Link from "next/link";
-import { useEffect, useMemo, useState, type ReactNode } from "react";
+import { useEffect, useMemo, useRef, useState, type ReactNode } from "react";
 import { WorldMap } from "@/components/WorldMap";
 import { useEntitlement } from "@/features/account/useEntitlement";
 import { getPatternAtlasSampleRules } from "@/features/pattern-atlas/sampleRun";
@@ -201,6 +201,8 @@ export function PatternAtlasClient({ initialData, todayOverride }: PatternAtlasC
   const [run, setRun] = useState<PatternAtlasRunState | null>(null);
   const [practiceFamily, setPracticeFamily] = useState<PatternAtlasFamily | "">("");
   const [practiceDifficulty, setPracticeDifficulty] = useState<PatternAtlasDifficulty | "">("");
+  const roundAnswerAnalyticsEvents = useRef(new Set<string>());
+  const completionAnalyticsEvents = useRef(new Set<string>());
   const sourceById = useMemo(() => new Map(PATTERN_ATLAS_CATALOG.sourceRegistry.map((source) => [source.id, source])), []);
   const ruleById = useMemo(() => new Map(PATTERN_ATLAS_RULES.map((rule) => [rule.id, rule])), []);
 
@@ -311,6 +313,8 @@ export function PatternAtlasClient({ initialData, todayOverride }: PatternAtlasC
       salt: mode === "sample" ? "evergreen" : mode === "daily" ? todayKey : `pro:${Date.now()}`,
       ...(setup ? { setup } : {})
     });
+    roundAnswerAnalyticsEvents.current.clear();
+    completionAnalyticsEvents.current.clear();
     setRun(nextRun);
     trackAnalyticsEvent("cgy_game_start", {
       game_slug: "pattern-atlas",
@@ -338,69 +342,77 @@ export function PatternAtlasClient({ initialData, todayOverride }: PatternAtlasC
   }
 
   function submitAnswer(choice: AnswerChoice, rule: PatternAtlasRule) {
-    setRun((current) => {
-      if (!current) return current;
-      return updateCurrentRound(current, (round) => {
-        if (round.solved || round.rejectedAnswerIds.includes(choice.id)) return round;
-        if (choice.correct) {
-          trackAnalyticsEvent("cgy_round_answered", {
-            game_slug: "pattern-atlas",
-            mode: patternAnalyticsMode(current.mode, signedIn, isProAccount),
-            round_number: current.currentRoundIndex + 1,
-            correct: true,
-            difficulty: rule.difficulty,
-            score_band: scoreBandForScore(round.score, PATTERN_ATLAS_STARTING_SCORE),
-            signed_in: signedIn,
-            plan: patternAnalyticsPlan(signedIn, isProAccount)
-          });
-          return {
-            ...round,
-            solved: true,
-            feedback: `Correct. ${rule.displayAnswer}.`
-          };
-        }
-        const nextScore = round.score - PATTERN_ATLAS_WRONG_ANSWER_PENALTY;
-        trackAnalyticsEvent("cgy_round_answered", {
-          game_slug: "pattern-atlas",
-          mode: patternAnalyticsMode(current.mode, signedIn, isProAccount),
-          round_number: current.currentRoundIndex + 1,
-          correct: false,
-          difficulty: rule.difficulty,
-          score_band: scoreBandForScore(nextScore, PATTERN_ATLAS_STARTING_SCORE),
-          signed_in: signedIn,
-          plan: patternAnalyticsPlan(signedIn, isProAccount)
-        });
-        return {
-          ...round,
-          score: nextScore,
-          rejectedAnswerIds: [...round.rejectedAnswerIds, choice.id],
-          feedback: `${choice.label} is not the pattern. -${PATTERN_ATLAS_WRONG_ANSWER_PENALTY} points.`
-        };
+    if (!run) return;
+    const round = run.rounds[run.currentRoundIndex];
+    if (!round || round.solved || round.rejectedAnswerIds.includes(choice.id)) return;
+    const answerAnalyticsKey = `${run.id}:${run.currentRoundIndex}:${choice.id}`;
+    if (roundAnswerAnalyticsEvents.current.has(answerAnalyticsKey)) return;
+    roundAnswerAnalyticsEvents.current.add(answerAnalyticsKey);
+
+    if (choice.correct) {
+      trackAnalyticsEvent("cgy_round_answered", {
+        game_slug: "pattern-atlas",
+        mode: patternAnalyticsMode(run.mode, signedIn, isProAccount),
+        round_number: run.currentRoundIndex + 1,
+        correct: true,
+        difficulty: rule.difficulty,
+        score_band: scoreBandForScore(round.score, PATTERN_ATLAS_STARTING_SCORE),
+        signed_in: signedIn,
+        plan: patternAnalyticsPlan(signedIn, isProAccount)
       });
+      setRun(
+        updateCurrentRound(run, (currentRound) => ({
+          ...currentRound,
+          solved: true,
+          feedback: `Correct. ${rule.displayAnswer}.`
+        }))
+      );
+      return;
+    }
+
+    const nextScore = round.score - PATTERN_ATLAS_WRONG_ANSWER_PENALTY;
+    trackAnalyticsEvent("cgy_round_answered", {
+      game_slug: "pattern-atlas",
+      mode: patternAnalyticsMode(run.mode, signedIn, isProAccount),
+      round_number: run.currentRoundIndex + 1,
+      correct: false,
+      difficulty: rule.difficulty,
+      score_band: scoreBandForScore(nextScore, PATTERN_ATLAS_STARTING_SCORE),
+      signed_in: signedIn,
+      plan: patternAnalyticsPlan(signedIn, isProAccount)
     });
+    setRun(
+      updateCurrentRound(run, (currentRound) => ({
+        ...currentRound,
+        score: nextScore,
+        rejectedAnswerIds: [...currentRound.rejectedAnswerIds, choice.id],
+        feedback: `${choice.label} is not the pattern. -${PATTERN_ATLAS_WRONG_ANSWER_PENALTY} points.`
+      }))
+    );
   }
 
   function nextRound() {
-    setRun((current) => {
-      if (!current) return current;
-      const nextIndex = current.currentRoundIndex + 1;
-      if (nextIndex >= current.rounds.length) {
-        const finalScore = current.rounds.reduce((total, round) => total + (round.solved ? round.score : 0), 0);
-        const maxScore = current.rounds.length * PATTERN_ATLAS_STARTING_SCORE;
-        trackAnalyticsEvent("cgy_game_complete", {
-          game_slug: "pattern-atlas",
-          mode: patternAnalyticsMode(current.mode, signedIn, isProAccount),
-          round_count: current.rounds.length,
-          final_score: finalScore,
-          score_band: scoreBandForScore(finalScore, maxScore),
-          perfect_run: finalScore >= maxScore,
-          signed_in: signedIn,
-          plan: patternAnalyticsPlan(signedIn, isProAccount)
-        });
-        return { ...current, status: "complete" };
-      }
-      return { ...current, currentRoundIndex: nextIndex };
-    });
+    if (!run) return;
+    const nextIndex = run.currentRoundIndex + 1;
+    if (nextIndex >= run.rounds.length) {
+      if (completionAnalyticsEvents.current.has(run.id)) return;
+      completionAnalyticsEvents.current.add(run.id);
+      const finalScore = run.rounds.reduce((total, round) => total + (round.solved ? round.score : 0), 0);
+      const maxScore = run.rounds.length * PATTERN_ATLAS_STARTING_SCORE;
+      trackAnalyticsEvent("cgy_game_complete", {
+        game_slug: "pattern-atlas",
+        mode: patternAnalyticsMode(run.mode, signedIn, isProAccount),
+        round_count: run.rounds.length,
+        final_score: finalScore,
+        score_band: scoreBandForScore(finalScore, maxScore),
+        perfect_run: finalScore >= maxScore,
+        signed_in: signedIn,
+        plan: patternAnalyticsPlan(signedIn, isProAccount)
+      });
+      setRun({ ...run, status: "complete" });
+    } else {
+      setRun({ ...run, currentRoundIndex: nextIndex });
+    }
     scrollToTop();
   }
 
@@ -1092,6 +1104,16 @@ function PatternAtlasSummary({
   const finalScore = run.rounds.reduce((total, round) => total + (round.solved ? round.score : 0), 0);
   const showGuestSampleCta = run.mode === "sample" && !signedIn;
   const showFreeDailyCompleteCta = run.mode === "daily" && isFreeAccount;
+  const analyticsMode = run.mode === "sample" ? "guest_sample" : run.mode === "daily" ? "free_daily" : "practice";
+  function trackUpgradeCta(itemId: string) {
+    trackAnalyticsEvent("cgy_select_content", {
+      content_type: "upgrade_cta",
+      item_id: itemId,
+      game_slug: "pattern-atlas",
+      mode: analyticsMode
+    });
+  }
+
   return (
     <section className="game-shell page-shell pattern-atlas-summary">
       <div className="empty-state surface">
@@ -1129,7 +1151,7 @@ function PatternAtlasSummary({
         ) : null}
         {showGuestSampleCta ? (
           <div className="pattern-atlas-summary-actions" aria-label="Sample completion actions">
-            <Link className="button" href="/upgrade">
+            <Link className="button" href="/upgrade" onClick={() => trackUpgradeCta("pattern_atlas_sample_result_start_pro")}>
               Start Pro
             </Link>
             <Link className="button-secondary" href="/sign-up">
@@ -1142,7 +1164,7 @@ function PatternAtlasSummary({
           </div>
         ) : showFreeDailyCompleteCta ? (
           <div className="pattern-atlas-summary-actions" aria-label="Daily completion actions">
-            <Link className="button" href="/upgrade">
+            <Link className="button" href="/upgrade" onClick={() => trackUpgradeCta("pattern_atlas_daily_result_go_pro")}>
               Go Pro to keep playing
             </Link>
             <Link className="button-secondary" href="/play">

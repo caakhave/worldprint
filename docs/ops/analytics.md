@@ -1,6 +1,6 @@
 # Can You Geo Analytics Guide
 
-Last updated: July 10, 2026
+Last updated: July 12, 2026
 
 ## Status
 
@@ -43,23 +43,23 @@ NEXT_PUBLIC_NO_INDEX=true
 
 ## Tracked Events
 
-Only high-level, non-PII product events are pushed to `window.dataLayer`. GTM listens for the `cgy_*` app event names and forwards them to clean GA4 event names.
+Only high-level, non-PII product events are pushed to `window.dataLayer`. GTM listens for the `cgy_*` app event names and forwards them to GA4 and consent-gated ad platform tags. App code must stay vendor-neutral and must not call Meta, TikTok, Reddit, or GA vendor APIs directly.
 
-| App dataLayer event | GA4 event forwarded by GTM | Fires when | Parameters |
-| --- | --- | --- | --- |
-| `cgy_game_start` | `game_start` | A new playable run starts, not on page load or resume. | `game_slug`, `mode`, `round_count`, `signed_in`, `plan` |
-| `cgy_round_answered` | `round_submit` | A player submits an answer for a round. Repeated already-rejected answers are ignored. | `game_slug`, `mode`, `round_number`, `correct`, `difficulty`, `score_band`, `signed_in`, `plan` |
-| `cgy_game_complete` | `game_complete` | A run transitions to complete. | `game_slug`, `mode`, `round_count`, `final_score`, `score_band`, `perfect_run`, `signed_in`, `plan` |
-| `cgy_select_content` | `select_content` | A player selects a major game card, mode card, plan option, auth link, or CTA. | `content_type`, `item_id`, optional `game_slug`, optional `mode` |
-| `cgy_signup_complete` | `sign_up` or ad-platform signup conversion | A new account is successfully created through a confirmed new-user path. | `method` |
-| `cgy_sign_up` | `sign_up` | A new account is successfully created. | `method` |
-| `cgy_login` | `login` | A sign-in succeeds. | `method` |
-| `cgy_share` | `share` | A challenge/result link is copied, natively shared, sent by server email, or opened as mailto. | `method`, `content_type`, `game_slug`, `mode` |
-| `cgy_upgrade_click` | ad-platform upgrade intent conversion | A player clicks a Pro upgrade CTA or checkout CTA before any Stripe redirect. | `currency`, `value`, `plan`, `signed_in`, `source` |
-| `cgy_begin_checkout` | `begin_checkout` | A signed-in player receives a Stripe checkout URL and is about to leave for secure checkout. | `currency`, `value`, `plan` |
-| `cgy_marketing_consent_granted` | marketing consent grant trigger | A visitor accepts marketing cookies in the Can You Geo cookie settings UI. | none |
+| App dataLayer event | Fires when | Recommended GA4 mapping | Meta mapping in GTM | TikTok mapping in GTM | Allowed parameters / privacy notes |
+| --- | --- | --- | --- | --- | --- |
+| `cgy_game_start` | A new playable run starts, not on page load or resume. | `game_start` | Optional custom gameplay event, filtered by mode if useful. | Optional custom gameplay event, filtered by mode if useful. | `game_slug`, `mode`, `round_count`, `signed_in`, `plan`; no map IDs, answer labels, countries, or hidden indicators. |
+| `cgy_round_answered` | A player submits an answer for a round. Repeated already-rejected answers are ignored. | `round_submit`; not a GA4 key event. | Do not map for ad optimization by default. | Do not map for ad optimization by default. | `game_slug`, `mode`, `round_number`, `correct`, `difficulty`, `score_band`, `signed_in`, `plan`; no guesses, exact answer labels, countries, or prompt text. |
+| `cgy_game_complete` | A run transitions to complete. | `game_complete`; candidate key event. | Optional custom gameplay completion event, especially for sample or Daily completion. | Optional custom gameplay completion event, especially for sample or Daily completion. | `game_slug`, `mode`, `round_count`, `final_score`, `score_band`, `perfect_run`, `signed_in`, `plan`; no answer labels or country names. |
+| `cgy_select_content` | A player selects a major game card, mode card, plan option, auth link, or high-value upgrade navigation link. | `select_content` | Usually do not map as a conversion; useful for audiences only if consent-gated and low-volume. | Usually do not map as a conversion; useful for audiences only if consent-gated and low-volume. | `content_type`, `item_id`, optional `game_slug`, optional `mode`; use `content_type=upgrade_cta` for high-value upgrade navigation. |
+| `cgy_signup_complete` | A new account is successfully created through a confirmed new-user path. | `sign_up`; key event. | `CompleteRegistration`. | `CompleteRegistration`. | `method`; this is the only signup conversion event app code should emit. |
+| `cgy_sign_up` | Legacy compatibility name. App code should not emit it for new signup flows. | Do not map. | Do not map. | Do not map. | Retained in the helper event registry only so older GTM references are visible during cleanup. Mapping it as a conversion will double-count signups. |
+| `cgy_login` | A sign-in succeeds. | `login`; not a key event. | Do not map for ad optimization by default. | Do not map for ad optimization by default. | `method`; do not include account identifiers. |
+| `cgy_share` | A challenge/result link is copied, natively shared, sent by server email, or opened as mailto. | `share`; candidate key event. | Optional custom share event. | Optional custom share event. | `method`, `content_type`, `game_slug`, `mode`; no raw challenge code, URL, recipient email, message text, answers, or countries. |
+| `cgy_upgrade_click` | A player clicks a plan/value CTA where checkout intent is explicit. | Optional custom `upgrade_click` event. | Optional upper-funnel upgrade intent conversion. | Optional upper-funnel upgrade intent conversion. | `currency`, `value`, `plan`, `signed_in`, `source`; keep this reserved for plan/value checkout intent, not generic navigation. |
+| `cgy_begin_checkout` | A signed-in player receives a Stripe checkout URL and is about to leave for secure checkout. | `begin_checkout`; key event. | `InitiateCheckout`. | `InitiateCheckout`. | `currency`, `value`, `plan`; no Stripe session ID, checkout URL, customer ID, user ID, or email. |
+| `cgy_marketing_consent_granted` | A visitor accepts marketing cookies in the Can You Geo cookie settings UI. | Consent trigger only. | Consent-granted PageView replay trigger if needed. | Consent-granted PageView replay trigger if needed. | No parameters. Marketing tags must stay consent-gated in GTM. |
 
-`purchase` is intentionally not emitted from the frontend yet. The current app does not have a refresh-proof, single source of truth with a stable transaction ID on the browser return path, so a frontend `purchase` event could double-count. Add this later only from a reliable billing success source.
+`cgy_subscription_success`, GA4 `purchase`, and ad-platform purchase events are intentionally deferred. The current browser return pages are refreshable and can be revisited, so emitting purchase/subscription success from the frontend could double-count. Add purchase tracking later from a reliable billing success source with a stable transaction or subscription event ID, ideally server/webhook-backed.
 
 `cgy_play_page_view` is not emitted by the app. GTM can use ordinary page-view or history-change triggers for `/play/` and game route visits without adding another app event.
 
@@ -72,11 +72,11 @@ The analytics helper rejects PII-shaped parameter names and email-like string va
 Recommended GA4 key events after GTM forwarding is configured:
 
 - `game_complete`
-- `sign_up` or `cgy_signup_complete`, but avoid double-counting both in the same reporting view
+- `sign_up` forwarded only from `cgy_signup_complete`
 - `share`
 - `cgy_upgrade_click` for paid-plan intent, especially ad-platform optimization
 - `begin_checkout`
-- `purchase` only after it is safely implemented
+- `purchase` only after it is safely implemented from a reliable billing source
 
 Consider `game_start` later if activation becomes a core acquisition metric. Do not mark `round_submit` as a key event.
 
@@ -131,6 +131,7 @@ Suggested Meta/GTM mapping:
 | `CompleteRegistration` | Custom Event | `cgy_signup_complete` | Fires only after a confirmed new account creation path. Payload: `method`. |
 | `InitiateCheckout` | Custom Event | `cgy_begin_checkout` | Fires only after the Stripe checkout URL is returned and the browser is about to leave for Checkout. Payload: `currency`, `value`, `plan`. |
 | Upper-funnel upgrade intent | Custom Event | `cgy_upgrade_click` | Optional ad optimization signal before checkout starts. Payload: `currency`, `value`, `plan`, `signed_in`, `source`. |
+| Upgrade navigation audience | Custom Event | `cgy_select_content` with `content_type=upgrade_cta` | Optional audience signal only; do not optimize against every generic link click. |
 | `StartSampleRun` / `StartDaily` custom events | Custom Event with mode filter | `cgy_game_start` | Use `mode=guest_sample`, `free_daily`, or `pro_daily`; payload stays generic. |
 | `CompleteSampleRun` / `CompleteDaily` custom events | Custom Event with mode filter | `cgy_game_complete` | Use `mode=guest_sample`, `free_daily`, or `pro_daily`; do not pass answers or guesses. |
 | `Purchase` | Deferred | Not emitted | Wait for a later server-side/CAPI or webhook-backed implementation with a stable transaction/subscription event id. The browser return path can be refreshed and may double-count. |
@@ -138,6 +139,25 @@ Suggested Meta/GTM mapping:
 Never map or enrich Meta events with account emails, names, user IDs, auth tokens, recipient emails, challenge codes, exact location, hidden indicators, answer countries, guesses, payment identifiers, or free-text notes. Keep Meta payloads limited to the low-cardinality fields already emitted by the app.
 
 Meta tags remain GTM-managed and consent-gated. The app-owned CSP allows only the narrow browser hosts needed by the GTM-managed Meta Pixel tag; do not add Meta scripts or Pixel IDs directly to the app.
+
+## TikTok Pixel / Paid Media Readiness
+
+TikTok Pixel should stay GTM-managed and consent-gated, matching the same production-only and no-PII posture as Meta and Reddit. Do not add TikTok base snippets, event calls, or pixel IDs directly to the Next.js app.
+
+Suggested TikTok/GTM mapping:
+
+| TikTok event | GTM trigger | App dataLayer event | Notes |
+| --- | --- | --- | --- |
+| Page view | Page View / Initialization on production hostnames only | GTM page view | Consent-gated. Do not fire on staging, previews, localhost, or noindexed builds. |
+| Consent-granted PageView replay | Custom Event | `cgy_marketing_consent_granted` | Use only if the container needs a same-page page-view event after marketing consent is accepted. |
+| `CompleteRegistration` | Custom Event | `cgy_signup_complete` | The only signup conversion source. Do not also map `cgy_sign_up`. |
+| `InitiateCheckout` | Custom Event | `cgy_begin_checkout` | Fires after the Stripe checkout URL is returned and before redirect. Do not send checkout URLs or session IDs. |
+| Upper-funnel upgrade intent | Custom Event | `cgy_upgrade_click` | Optional optimization signal before checkout starts. |
+| Upgrade navigation audience | Custom Event | `cgy_select_content` with `content_type=upgrade_cta` | Optional audience signal only; keep it distinct from checkout intent. |
+| Custom gameplay events | Custom Event with mode filter | `cgy_game_start`, `cgy_game_complete` | Optional engagement signals; payload stays generic. |
+| Purchase / subscription success | Deferred | Not emitted | Wait for a later webhook-backed implementation with a stable event ID. Browser return pages can double-count. |
+
+Never map TikTok events from `cgy_sign_up`, answer-level labels, challenge recipient data, Stripe checkout/session identifiers, user IDs, or email addresses.
 
 ## CSP Allowlist
 

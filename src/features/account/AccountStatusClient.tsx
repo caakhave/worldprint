@@ -12,6 +12,14 @@ import { planLabel } from "@/lib/account/entitlements";
 import { CONTACT_LINKS } from "@/lib/contact";
 import { buildLocalPlayerStats } from "@/lib/persistence/playerStats";
 import { loadPersistedState } from "@/lib/persistence/storage";
+import { trackAnalyticsEvent } from "@/lib/site/analytics";
+
+function trackUpgradeNavigation(itemId: string) {
+  trackAnalyticsEvent("cgy_select_content", {
+    content_type: "upgrade_cta",
+    item_id: itemId
+  });
+}
 
 export function AccountStatusClient() {
   const router = useRouter();
@@ -134,7 +142,7 @@ export function AccountStatusClient() {
           Mystery Map archive.
         </p>
         <div className="button-row">
-          <Link className="button" href="/upgrade">
+          <Link className="button" href="/upgrade" onClick={() => trackUpgradeNavigation("account_status_signed_out_start_pro")}>
             Start Pro
           </Link>
           <Link className="button-secondary" href="/sign-up">
@@ -259,7 +267,13 @@ export function AccountStatusClient() {
         <Link className="button" href="/account/stats#saved-stats">
           View saved stats
         </Link>
-        <Link className="button-secondary" href="/upgrade">
+        <Link
+          className="button-secondary"
+          href="/upgrade"
+          onClick={() => {
+            if (entitlement.plan !== "pro") trackUpgradeNavigation("account_status_compare_plans");
+          }}
+        >
           {planActionLabel}
         </Link>
         <button className="button-secondary" type="button" onClick={() => void handleSignOut()}>

@@ -1,5 +1,5 @@
-import { render, screen } from "@testing-library/react";
-import { beforeEach, describe, expect, it, vi } from "vitest";
+import { fireEvent, render, screen } from "@testing-library/react";
+import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
 import { HomeHeroAccountPanel } from "@/features/home/HomeHeroAccountPanel";
 
 const entitlementMock = vi.hoisted(() => ({
@@ -32,6 +32,14 @@ vi.mock("@/features/account/useEntitlement", () => ({
   useEntitlement: () => entitlementMock.state
 }));
 
+function enableProductionAnalytics() {
+  vi.stubEnv("NEXT_PUBLIC_ANALYTICS_ENABLED", "true");
+  vi.stubEnv("NEXT_PUBLIC_GTM_ID", "GTM-CANYOUGEO");
+  vi.stubEnv("NEXT_PUBLIC_SITE_URL", "https://canyougeo.com");
+  vi.stubEnv("NEXT_PUBLIC_NO_INDEX", "false");
+  (window as typeof window & { dataLayer?: unknown[] }).dataLayer = [];
+}
+
 function setAccountState(plan: "guest" | "free" | "pro", options: { loading?: boolean; signedIn?: boolean } = {}) {
   entitlementMock.state.entitlement.plan = plan;
   entitlementMock.state.entitlement.status = plan === "pro" ? "active" : plan;
@@ -43,6 +51,11 @@ function setAccountState(plan: "guest" | "free" | "pro", options: { loading?: bo
 describe("HomeHeroAccountPanel", () => {
   beforeEach(() => {
     setAccountState("guest", { signedIn: false });
+  });
+
+  afterEach(() => {
+    vi.unstubAllEnvs();
+    delete (window as typeof window & { dataLayer?: unknown[] }).dataLayer;
   });
 
   it("keeps the logged-out acquisition CTAs", () => {
@@ -61,13 +74,15 @@ describe("HomeHeroAccountPanel", () => {
   });
 
   it("shows Daily and upgrade actions for logged-in Free players", () => {
+    enableProductionAnalytics();
     setAccountState("free");
 
     render(<HomeHeroAccountPanel />);
 
     expect(screen.getByRole("link", { name: /Play today's game/i })).toHaveAttribute("href", "/play/mystery-map");
     expect(screen.getByRole("link", { name: /Open game library/i })).toHaveAttribute("href", "/play");
-    expect(screen.getByRole("link", { name: /Upgrade to Pro/i })).toHaveAttribute("href", "/upgrade");
+    const upgradeLink = screen.getByRole("link", { name: /Upgrade to Pro/i });
+    expect(upgradeLink).toHaveAttribute("href", "/upgrade");
     expect(screen.getByRole("complementary", { name: "Daily unlocked" })).toBeVisible();
     expect(screen.getByText("You are signed in on Free.")).toBeVisible();
     expect(screen.getAllByText(/Play today's Mystery Map/i).length).toBeGreaterThan(0);
@@ -75,6 +90,11 @@ describe("HomeHeroAccountPanel", () => {
     expect(screen.getByText("Pro unlocks deeper supported modes after you know the rhythm.")).toBeVisible();
     expect(screen.queryByText(/Order Atlas has an intro sample run/i)).not.toBeInTheDocument();
     expect(screen.queryByRole("link", { name: "Try Sample Run" })).not.toBeInTheDocument();
+
+    fireEvent.click(upgradeLink);
+    expect((window as typeof window & { dataLayer?: unknown[] }).dataLayer).toEqual([
+      { event: "cgy_select_content", content_type: "upgrade_cta", item_id: "home_free_panel" }
+    ]);
   });
 
   it("shows Pro-aware Daily and Custom Atlas actions", () => {

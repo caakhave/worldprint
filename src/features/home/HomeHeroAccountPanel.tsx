@@ -102,7 +102,7 @@ function gameSlugForHref(href: string): AnalyticsGameSlug | undefined {
 function trackHeroSelection(itemId: string, href: string) {
   const gameSlug = gameSlugForHref(href);
   trackAnalyticsEvent("cgy_select_content", {
-    content_type: "hero_cta",
+    content_type: href.startsWith("/upgrade") ? "upgrade_cta" : "hero_cta",
     item_id: itemId,
     ...(gameSlug ? { game_slug: gameSlug } : {})
   });

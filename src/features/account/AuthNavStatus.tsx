@@ -39,7 +39,7 @@ export function AuthNavStatus() {
           href="/upgrade"
           onClick={() =>
             trackAnalyticsEvent("cgy_select_content", {
-              content_type: "cta",
+              content_type: "upgrade_cta",
               item_id: "header_start_pro"
             })
           }
@@ -129,7 +129,19 @@ export function AuthNavStatus() {
             {billingPending ? "Opening billing..." : "Manage billing"}
           </button>
         ) : (
-          <Link className="account-nav-menu-item" role="menuitem" href={isPro ? "/account#membership" : "/upgrade"}>
+          <Link
+            className="account-nav-menu-item"
+            role="menuitem"
+            href={isPro ? "/account#membership" : "/upgrade"}
+            onClick={() => {
+              if (!isPro) {
+                trackAnalyticsEvent("cgy_select_content", {
+                  content_type: "upgrade_cta",
+                  item_id: "header_compare_plans"
+                });
+              }
+            }}
+          >
             {isPro ? "View membership" : "Compare plans"}
           </Link>
         )}
