@@ -3,7 +3,7 @@ from __future__ import annotations
 import pytest
 
 from utils.assertions import assert_route_status
-from utils.host_policy import robots_disallows_all, sitemap_has_public_routes
+from utils.host_policy import policy_for_base_url, robots_disallows_all, sitemap_has_public_routes
 
 PRODUCTION_SMOKE_ROUTES = [
     "/",
@@ -15,6 +15,12 @@ PRODUCTION_SMOKE_ROUTES = [
     "/robots.txt",
     "/sitemap.xml",
 ]
+
+
+def require_production_target(target_base_url: str) -> None:
+    policy = policy_for_base_url(target_base_url)
+    if policy.kind != "production":
+        pytest.skip(f"Production-only smoke assertion skipped for {policy.host}.")
 
 
 @pytest.mark.prod_smoke
@@ -41,6 +47,8 @@ def test_production_smoke_core_public_copy_loads(target_base_url: str):
 
 @pytest.mark.prod_smoke
 def test_production_smoke_indexing_files_are_public(target_base_url: str):
+    require_production_target(target_base_url)
+
     robots = assert_route_status(target_base_url, "/robots.txt").text
     sitemap = assert_route_status(target_base_url, "/sitemap.xml").text
 
@@ -55,6 +63,8 @@ def test_production_smoke_indexing_files_are_public(target_base_url: str):
 
 @pytest.mark.prod_smoke
 def test_production_smoke_public_html_does_not_expose_staging_or_secret_markers(target_base_url: str):
+    require_production_target(target_base_url)
+
     public_paths = ["/", "/legal/", "/support/"]
     forbidden_markers = [
         "https://test.canyougeo.com",

@@ -2,6 +2,7 @@ import type { MetadataRoute } from "next";
 import { BRAND_NAME } from "@/lib/brand";
 import { SUPPORT_EMAIL } from "@/lib/contact";
 import { publicSiteOrigin, robotsForSite, shouldNoIndexSite } from "@/lib/site/origin";
+import { OFFICIAL_SOCIAL_URLS } from "@/lib/social";
 
 export const SITE_TITLE = "Can You Geo? - Daily Geography Games & World Data Puzzles";
 export const SITE_DESCRIPTION =
@@ -242,7 +243,8 @@ export function organizationJsonLd(origin = publicSiteOrigin()) {
     name: BRAND_NAME,
     url: origin,
     logo: `${origin}/cgy-logo-icon-512.png`,
-    email: SUPPORT_EMAIL
+    email: SUPPORT_EMAIL,
+    sameAs: OFFICIAL_SOCIAL_URLS
   };
 }
 

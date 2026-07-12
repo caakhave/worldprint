@@ -225,7 +225,9 @@ Required Stripe Edge Function secret names when configuring an environment:
 
 ## Database And Migrations
 
-Apply migrations separately per Supabase project using the currently approved database migration process for that environment. Do not rely on linked Supabase state or stale CLI examples when targeting staging or production.
+Apply migrations separately per Supabase project using an explicit database URL for the
+target environment. Do not rely on `supabase/.temp`, and do not use project-ref
+shortcuts for database migrations.
 
 Run staging RLS checks after migrations with the safe wrapper:
 

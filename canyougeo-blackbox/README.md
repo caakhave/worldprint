@@ -29,10 +29,10 @@ Optional credentials live in `.env` or `.env.local`, copied from `.env.example`.
 The preferred workflow is `CGY_TARGET`:
 
 ```bash
-CGY_TARGET=test pytest
-CGY_TARGET=www pytest
-CGY_TARGET=apex pytest
-CGY_TARGET=local pytest
+CGY_TARGET=test ./.venv/bin/python -m pytest
+CGY_TARGET=www ./.venv/bin/python -m pytest
+CGY_TARGET=apex ./.venv/bin/python -m pytest
+CGY_TARGET=local ./.venv/bin/python -m pytest
 ```
 
 Targets resolve to:
@@ -49,8 +49,8 @@ Targets resolve to:
 Explicit overrides still work and take precedence:
 
 ```bash
-pytest --base-url https://some-preview-url.pages.dev
-CGY_BASE_URL=https://some-preview-url.pages.dev pytest
+./.venv/bin/python -m pytest --base-url https://some-preview-url.pages.dev
+CGY_BASE_URL=https://some-preview-url.pages.dev ./.venv/bin/python -m pytest
 ```
 
 Precedence is:
@@ -65,29 +65,29 @@ Precedence is:
 Full private-QA run:
 
 ```bash
-CGY_TARGET=test pytest --html=reports/test.html --self-contained-html
+CGY_TARGET=test ./.venv/bin/python -m pytest --html=reports/test.html --self-contained-html
 ```
 
 Normal QA loop:
 
 ```bash
-CGY_TARGET=test pytest -m smoke --html=reports/smoke.html --self-contained-html
-CGY_TARGET=test pytest -m mobile --html=reports/mobile.html --self-contained-html
-python tools/export_suite.py
+CGY_TARGET=test ./.venv/bin/python -m pytest -m smoke --html=reports/smoke.html --self-contained-html
+CGY_TARGET=test ./.venv/bin/python -m pytest -m mobile --html=reports/mobile.html --self-contained-html
+./.venv/bin/python tools/export_suite.py
 ```
 
 Localhost:
 
 ```bash
-CGY_TARGET=local pytest --html=reports/local.html --self-contained-html
+CGY_TARGET=local ./.venv/bin/python -m pytest --html=reports/local.html --self-contained-html
 ```
 
 Production after launch:
 
 ```bash
-CGY_TARGET=apex pytest -m prod_smoke --html=reports/prod-smoke.html --self-contained-html
-CGY_TARGET=apex pytest --html=reports/apex.html --self-contained-html
-CGY_TARGET=www pytest --html=reports/www.html --self-contained-html
+CGY_TARGET=apex ./.venv/bin/python -m pytest -m prod_smoke --html=reports/prod-smoke.html --self-contained-html
+CGY_TARGET=apex ./.venv/bin/python -m pytest --html=reports/apex.html --self-contained-html
+CGY_TARGET=www ./.venv/bin/python -m pytest --html=reports/www.html --self-contained-html
 ```
 
 The `prod_smoke` marker is no-secret and production-safe. It checks public route availability, core launch copy, robots/sitemap production posture, public HTML for staging/secret markers, and the deployed security-header/CSP baseline.
@@ -138,7 +138,7 @@ Authenticated tests are marked `auth` and skip unless the matching env vars are 
 Create an uncommitted local `.env` from `.env.example`, fill only the private QA account credentials you want to test, then run:
 
 ```bash
-CGY_TARGET=test pytest -m auth --html=reports/auth.html --self-contained-html
+CGY_TARGET=test ./.venv/bin/python -m pytest -m auth --html=reports/auth.html --self-contained-html
 ```
 
 The auth smoke signs in as the Free and Pro test accounts, checks `/account/`, `/upgrade/`, and one game page, confirms it did not navigate to Stripe checkout, then signs out before the next account. If any credential pair is missing, that plan's auth case skips.
@@ -147,7 +147,57 @@ If auth fails, first verify the same credentials manually at `https://test.canyo
 
 Live challenge-email tests are marked `email_live` and are skipped unless explicitly enabled by setting `CGY_RUN_EMAIL_LIVE=1`. The default challenge tests do not send email.
 
-Do not run live payment flows from this suite.
+Checkout-open smoke is marked `checkout_smoke` and is also skipped unless explicitly enabled. It uses a signed-in Free test account, clicks one Pro checkout CTA, asserts that Stripe Checkout opens, checks the neutral app-side analytics events, and stops immediately. It never fills card details and never completes a purchase.
+
+Required local-only variables:
+
+- `CGY_ENABLE_CHECKOUT_SMOKE=1`
+- `CGY_CHECKOUT_EMAIL`
+- `CGY_CHECKOUT_PASSWORD`
+- `CGY_CHECKOUT_PLAN=monthly` or `yearly` (optional; defaults to `monthly`)
+
+Production checkout-open smoke:
+
+```bash
+cd canyougeo-blackbox
+CGY_TARGET=apex CGY_ENABLE_CHECKOUT_SMOKE=1 CGY_CHECKOUT_EMAIL='free-test@example.com' CGY_CHECKOUT_PASSWORD='...' ./.venv/bin/python -m pytest -m checkout_smoke tests/test_checkout_smoke.py --headed
+```
+
+Staging checkout-open smoke:
+
+```bash
+cd canyougeo-blackbox
+CGY_TARGET=test CGY_ENABLE_CHECKOUT_SMOKE=1 CGY_CHECKOUT_EMAIL='free-test@example.com' CGY_CHECKOUT_PASSWORD='...' ./.venv/bin/python -m pytest -m checkout_smoke tests/test_checkout_smoke.py --headed
+```
+
+The checkout smoke asserts `cgy_upgrade_click` and `cgy_begin_checkout` are emitted into the page `dataLayer` before the Stripe redirect. It does not rely on GTM admin access or published conversion mappings.
+
+Signup analytics smoke is marked `signup_analytics` and is skipped unless explicitly enabled. It may create a test account in the target Supabase project and may send that environment's normal account confirmation email.
+
+Required local-only variables:
+
+- `CGY_ENABLE_SIGNUP_ANALYTICS_SMOKE=1`
+- `CGY_SIGNUP_ANALYTICS_PASSWORD`
+- `CGY_SIGNUP_ANALYTICS_EMAIL`, for an exact disposable address, or
+- `CGY_SIGNUP_ANALYTICS_EMAIL_BASE`, for generated plus-addresses such as `qa+cgyqa20260712123456@example.com`
+
+Production signup analytics smoke:
+
+```bash
+cd canyougeo-blackbox
+CGY_TARGET=apex CGY_ENABLE_SIGNUP_ANALYTICS_SMOKE=1 CGY_SIGNUP_ANALYTICS_EMAIL_BASE='qa@example.com' CGY_SIGNUP_ANALYTICS_PASSWORD='...' ./.venv/bin/python -m pytest -m signup_analytics tests/test_signup_analytics_smoke.py --headed
+```
+
+Staging signup analytics smoke:
+
+```bash
+cd canyougeo-blackbox
+CGY_TARGET=test CGY_ENABLE_SIGNUP_ANALYTICS_SMOKE=1 CGY_SIGNUP_ANALYTICS_EMAIL_BASE='qa@example.com' CGY_SIGNUP_ANALYTICS_PASSWORD='...' ./.venv/bin/python -m pytest -m signup_analytics tests/test_signup_analytics_smoke.py --headed
+```
+
+The signup analytics smoke asserts `cgy_signup_complete` is emitted exactly once and the legacy duplicate `cgy_sign_up` is not emitted. It records event names only and does not inspect GTM, Meta, TikTok, or any admin dashboard.
+
+Do not run live payment-completion flows from this suite.
 
 ## Reports
 
@@ -160,7 +210,7 @@ Generated reports and screenshots are ignored by git.
 Create a clean zip of the QA suite:
 
 ```bash
-python tools/export_suite.py
+./.venv/bin/python tools/export_suite.py
 ```
 
 The exporter writes:
