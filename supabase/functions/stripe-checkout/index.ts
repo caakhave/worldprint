@@ -14,6 +14,15 @@ import { billingReturnUrls } from "../_shared/returnUrls.ts";
 import { parseCheckoutPlanBody } from "../_shared/security.ts";
 
 Deno.serve(async (request) => {
+  try {
+    return await handleCheckoutRequest(request);
+  } catch (error) {
+    console.error(`[billing] Stripe checkout failed: ${errorMessage(error)}`);
+    return json({ error: "Checkout could not start. Please try again." }, 500, request);
+  }
+});
+
+async function handleCheckoutRequest(request: Request): Promise<Response> {
   if (request.method === "OPTIONS") return optionsResponse(request);
   if (request.method !== "POST") return json({ error: "Method not allowed" }, 405, request);
 
@@ -68,7 +77,7 @@ Deno.serve(async (request) => {
   });
 
   return json({ url: session.url }, 200, request, env);
-});
+}
 
 async function checkoutPlan(request: Request): Promise<{ plan: ProBillingPlan | null; error: string | null }> {
   const bodyText = await request.text();
@@ -76,4 +85,8 @@ async function checkoutPlan(request: Request): Promise<{ plan: ProBillingPlan | 
     contentType: request.headers.get("content-type"),
     bodyText
   });
+}
+
+function errorMessage(error: unknown): string {
+  return error instanceof Error ? error.message : "Unknown checkout error";
 }
