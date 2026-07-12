@@ -177,6 +177,8 @@ export function OrderAtlasClient({ rounds, todayOverride }: OrderAtlasClientProp
   const resultsTopRef = useRef<HTMLDivElement | null>(null);
   const shouldScrollToRevealRef = useRef(false);
   const shouldScrollToResultsRef = useRef(false);
+  const roundSubmitAnalyticsEvents = useRef(new Set<string>());
+  const completionAnalyticsEvents = useRef(new Set<string>());
 
   const roundById = useMemo(() => new Map(rounds.map((round) => [round.id, round])), [rounds]);
 
@@ -302,6 +304,8 @@ export function OrderAtlasClient({ rounds, todayOverride }: OrderAtlasClientProp
       initialCardOrders: selectedPlayableRounds.map((round) => round.selectedCountries.map((country) => country.iso3)),
       salt: mode === "sample" ? "evergreen" : mode === "daily" ? todayKey : `pro:${Date.now()}`
     });
+    roundSubmitAnalyticsEvents.current.clear();
+    completionAnalyticsEvents.current.clear();
     setRun(nextRun);
     trackAnalyticsEvent("cgy_game_start", {
       game_slug: "order-atlas",
@@ -333,6 +337,9 @@ export function OrderAtlasClient({ rounds, todayOverride }: OrderAtlasClientProp
 
   function submitRound() {
     if (!run || !currentRound || !currentRoundState || submittedRound) return;
+    const roundAnalyticsKey = `${run.id}:${run.currentRoundIndex}`;
+    if (roundSubmitAnalyticsEvents.current.has(roundAnalyticsKey)) return;
+    roundSubmitAnalyticsEvents.current.add(roundAnalyticsKey);
     const score = scoreOrderAtlasOrder({
       submittedIso3: currentRoundState.cardOrderIso3,
       trueOrderIso3: currentRound.trueOrder.map((country) => country.iso3)
@@ -364,6 +371,8 @@ export function OrderAtlasClient({ rounds, todayOverride }: OrderAtlasClientProp
   function nextRound() {
     if (!run || !submittedRound) return;
     if (run.currentRoundIndex + 1 >= run.rounds.length) {
+      if (completionAnalyticsEvents.current.has(run.id)) return;
+      completionAnalyticsEvents.current.add(run.id);
       shouldScrollToResultsRef.current = true;
       const finalScore = run.rounds.reduce((sum, round) => sum + (round.score?.finalScore ?? 0), 0);
       const maxScore = run.rounds.length * ORDER_ATLAS_MAX_SCORE;
@@ -775,6 +784,15 @@ function OrderAtlasSummary({
   const totalScore = run.rounds.reduce((sum, round) => sum + (round.score?.finalScore ?? 0), 0);
   const canReplayCurrentMode = run.mode === "sample" || run.mode === "practice";
   const canStartProPlayFromDaily = run.mode === "daily" && isProAccount;
+  const analyticsMode = orderAnalyticsMode(run.mode, signedIn, isProAccount);
+  function trackUpgradeCta() {
+    trackAnalyticsEvent("cgy_select_content", {
+      content_type: "upgrade_cta",
+      item_id: "order_atlas_daily_result_go_pro",
+      game_slug: "order-atlas",
+      mode: analyticsMode
+    });
+  }
 
   return (
     <section className="order-atlas-page game-shell page-shell">
@@ -806,7 +824,7 @@ function OrderAtlasSummary({
               </Link>
             ) : null}
             {isFreeAccount ? (
-              <Link className="button" href="/upgrade/">
+              <Link className="button" href="/upgrade/" onClick={trackUpgradeCta}>
                 Go Pro for unlimited play
               </Link>
             ) : null}

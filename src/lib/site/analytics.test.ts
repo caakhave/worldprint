@@ -90,6 +90,9 @@ describe("analytics helpers", () => {
         score: 2400,
         email: "player@example.com",
         user_id: "11111111-2222-4333-8444-555555555555",
+        stripe_session_id: "cs_test_123",
+        challenge_recipient: "friend@example.com",
+        auth_token: "secret-token",
         label: "not-an-email",
         maybe_email: "friend@example.com"
       })
@@ -177,7 +180,7 @@ describe("analytics helpers", () => {
     ]);
   });
 
-  it("pushes signup and upgrade conversion events without vendor-specific fields", () => {
+  it("pushes one signup conversion event plus upgrade events without vendor-specific fields", () => {
     vi.stubEnv("NEXT_PUBLIC_ANALYTICS_ENABLED", "true");
     vi.stubEnv("NEXT_PUBLIC_GTM_ID", "GTM-CANYOUGEO");
     vi.stubEnv("NEXT_PUBLIC_SITE_URL", "https://canyougeo.com");
@@ -198,7 +201,6 @@ describe("analytics helpers", () => {
     });
 
     expect((window as typeof window & { dataLayer?: unknown[] }).dataLayer).toEqual([
-      { event: "cgy_sign_up", method: "email" },
       { event: "cgy_signup_complete", method: "email" },
       {
         event: "cgy_upgrade_click",
@@ -211,7 +213,7 @@ describe("analytics helpers", () => {
       { event: "cgy_begin_checkout", currency: "USD", value: 29.99, plan: "pro_yearly" }
     ]);
     expect(JSON.stringify((window as typeof window & { dataLayer?: unknown[] }).dataLayer)).not.toMatch(
-      /Meta|Facebook|fbp|fbc|pixel|reddit|tiktok|pinterest|user_id|player@example/i
+      /Meta|Facebook|fbp|fbc|pixel|reddit|tiktok|pinterest|user_id|stripe_session|challenge_recipient|player@example/i
     );
   });
 

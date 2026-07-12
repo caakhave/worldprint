@@ -34,6 +34,13 @@ function analyticsValueForInterval(interval: ProBillingInterval | undefined) {
   return interval === "yearly" ? 29.99 : 3.99;
 }
 
+function trackUpgradeNavigation(itemId: string) {
+  trackAnalyticsEvent("cgy_select_content", {
+    content_type: "upgrade_cta",
+    item_id: itemId
+  });
+}
+
 export function BillingActionsClient({ entitlement, context, selectedPlan = null, checkoutLabel }: BillingActionsClientProps) {
   const { client, configured, loading, user } = useSupabaseAccount();
   const [pending, setPending] = useState<BillingPendingState | null>(null);
@@ -93,12 +100,7 @@ export function BillingActionsClient({ entitlement, context, selectedPlan = null
           <Link
             className="button"
             href={signUpPathForReturn("/upgrade")}
-            onClick={() =>
-              trackAnalyticsEvent("cgy_select_content", {
-                content_type: "cta",
-                item_id: `${context}_start_pro`
-              })
-            }
+            onClick={() => trackUpgradeNavigation(`${context}_start_pro`)}
           >
             Start Pro
           </Link>
@@ -144,7 +146,7 @@ export function BillingActionsClient({ entitlement, context, selectedPlan = null
           Checkout setup needed
         </button>
         {context === "account" ? (
-          <Link className="button-secondary" href="/upgrade">
+          <Link className="button-secondary" href="/upgrade" onClick={() => trackUpgradeNavigation("account_compare_plans_billing_setup")}>
             Compare plans
           </Link>
         ) : null}
@@ -283,7 +285,7 @@ export function BillingActionsClient({ entitlement, context, selectedPlan = null
         })}
       </div>
       {context === "account" ? (
-        <Link className="button-secondary" href="/upgrade">
+        <Link className="button-secondary" href="/upgrade" onClick={() => trackUpgradeNavigation("account_compare_plans")}>
           Compare plans
         </Link>
       ) : null}

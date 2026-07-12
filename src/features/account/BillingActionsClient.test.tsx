@@ -43,6 +43,14 @@ function billingClientMock(): BillingMockClient {
   return client;
 }
 
+function enableProductionAnalytics() {
+  vi.stubEnv("NEXT_PUBLIC_ANALYTICS_ENABLED", "true");
+  vi.stubEnv("NEXT_PUBLIC_GTM_ID", "GTM-CANYOUGEO");
+  vi.stubEnv("NEXT_PUBLIC_SITE_URL", "https://canyougeo.com");
+  vi.stubEnv("NEXT_PUBLIC_NO_INDEX", "false");
+  (window as typeof window & { dataLayer?: unknown[] }).dataLayer = [];
+}
+
 describe("BillingActionsClient", () => {
   beforeEach(() => {
     delete process.env.NEXT_PUBLIC_BILLING_MODE;
@@ -70,13 +78,20 @@ describe("BillingActionsClient", () => {
   });
 
   it("asks signed-out users to create an account before upgrading when checkout config is unavailable", () => {
+    enableProductionAnalytics();
     render(<BillingActionsClient entitlement={FREE_ENTITLEMENT} context="upgrade" />);
 
-    expect(screen.getByRole("link", { name: "Start Pro" })).toHaveAttribute("href", "/sign-up?next=%2Fupgrade");
+    const startProLink = screen.getByRole("link", { name: "Start Pro" });
+    expect(startProLink).toHaveAttribute("href", "/sign-up?next=%2Fupgrade");
     expect(screen.getByRole("link", { name: "Continue free" })).toHaveAttribute("href", "/sign-up");
     expect(screen.getByText("Create or sign in to your free account anytime. Pro unlocks the full Can You Geo library where supported.")).toBeVisible();
     expect(screen.queryByText(/checkout coming soon|billing is disabled|visible for planning|opens later|disabled for now/i)).not.toBeInTheDocument();
     expect(screen.queryByRole("button", { name: "Checkout setup needed" })).not.toBeInTheDocument();
+
+    fireEvent.click(startProLink);
+    expect((window as typeof window & { dataLayer?: unknown[] }).dataLayer).toEqual([
+      { event: "cgy_select_content", content_type: "upgrade_cta", item_id: "upgrade_start_pro" }
+    ]);
   });
 
   it("keeps account plan comparison available when checkout config is unavailable", () => {
@@ -117,11 +132,7 @@ describe("BillingActionsClient", () => {
 
   it("preserves signed-out Pro plan intent when test billing is enabled", () => {
     process.env.NEXT_PUBLIC_BILLING_MODE = "test";
-    vi.stubEnv("NEXT_PUBLIC_ANALYTICS_ENABLED", "true");
-    vi.stubEnv("NEXT_PUBLIC_GTM_ID", "GTM-CANYOUGEO");
-    vi.stubEnv("NEXT_PUBLIC_SITE_URL", "https://canyougeo.com");
-    vi.stubEnv("NEXT_PUBLIC_NO_INDEX", "false");
-    (window as typeof window & { dataLayer?: unknown[] }).dataLayer = [];
+    enableProductionAnalytics();
 
     render(<BillingActionsClient entitlement={FREE_ENTITLEMENT} context="upgrade" />);
 
@@ -162,11 +173,7 @@ describe("BillingActionsClient", () => {
 
   it("uses protected checkout functions and does not start checkout analytics until a URL is returned", async () => {
     process.env.NEXT_PUBLIC_BILLING_MODE = "test";
-    vi.stubEnv("NEXT_PUBLIC_ANALYTICS_ENABLED", "true");
-    vi.stubEnv("NEXT_PUBLIC_GTM_ID", "GTM-CANYOUGEO");
-    vi.stubEnv("NEXT_PUBLIC_SITE_URL", "https://canyougeo.com");
-    vi.stubEnv("NEXT_PUBLIC_NO_INDEX", "false");
-    (window as typeof window & { dataLayer?: unknown[] }).dataLayer = [];
+    enableProductionAnalytics();
     accountMock.state.user = TEST_USER;
     const client = billingClientMock();
 
@@ -196,11 +203,7 @@ describe("BillingActionsClient", () => {
 
   it("tracks begin-checkout only after Stripe checkout is actually launched", async () => {
     process.env.NEXT_PUBLIC_BILLING_MODE = "test";
-    vi.stubEnv("NEXT_PUBLIC_ANALYTICS_ENABLED", "true");
-    vi.stubEnv("NEXT_PUBLIC_GTM_ID", "GTM-CANYOUGEO");
-    vi.stubEnv("NEXT_PUBLIC_SITE_URL", "https://canyougeo.com");
-    vi.stubEnv("NEXT_PUBLIC_NO_INDEX", "false");
-    (window as typeof window & { dataLayer?: unknown[] }).dataLayer = [];
+    enableProductionAnalytics();
     accountMock.state.user = TEST_USER;
     const client = billingClientMock();
     client.functions.invoke.mockResolvedValue({ data: { url: "https://checkout.stripe.com/c/test-session" }, error: null });
@@ -221,6 +224,11 @@ describe("BillingActionsClient", () => {
         },
         { event: "cgy_begin_checkout", currency: "USD", value: 3.99, plan: "pro_monthly" }
       ])
+    );
+    const dataLayer = (window as typeof window & { dataLayer?: unknown[] }).dataLayer ?? [];
+    expect(dataLayer.filter((entry) => typeof entry === "object" && entry && "event" in entry && entry.event === "cgy_begin_checkout")).toHaveLength(1);
+    expect(JSON.stringify(dataLayer)).not.toMatch(
+      /checkout\.stripe\.com|test-session|cs_test|billing-token|reader@example\.com|11111111-2222-4333-8444-555555555555|stripe_session/i
     );
     expect(client.from).not.toHaveBeenCalled();
   });
