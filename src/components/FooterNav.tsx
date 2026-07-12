@@ -1,7 +1,6 @@
 "use client";
 
 import Link from "next/link";
-import { AuthNavStatus } from "@/features/account/AuthNavStatus";
 import { useSupabaseAccount } from "@/features/account/useSupabaseAccount";
 
 const publicFooterItems = [
@@ -23,7 +22,6 @@ export function FooterNav() {
         </Link>
       ))}
       {showPastGames ? <Link href="/past-games">Past Games</Link> : null}
-      <AuthNavStatus />
     </nav>
   );
 }

@@ -38,6 +38,12 @@ describe("RootLayout", () => {
     expect(markup).toContain("Can You Geo? is a geography game library.");
     expect(markup).toContain("Open the game hub and check the data sources any time.");
     expect(markup).toContain("cgy-logo-header-96.png");
+    expect(markup).toContain("class=\"footer-copy\"");
+    expect(markup).toContain("class=\"footer-nav-row\"");
+    expect(markup).toContain("class=\"footer-utility-row\"");
+    expect(markup).toContain("class=\"footer-account-area\"");
+    expect(markup).toContain("aria-label=\"Footer account\"");
+    expect(markup).toContain("<div class=\"footer-account-area\" aria-label=\"Footer account\"><a href=\"/sign-in\">Sign in</a></div>");
     expect(markup).toContain("href=\"/play\"");
     expect(markup).not.toContain("href=\"/past-games\"");
     expect(markup).toContain("href=\"/support\"");
