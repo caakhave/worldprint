@@ -68,6 +68,7 @@ export type AnalyticsEventPayloads = {
   cgy_select_content: {
     content_type: string;
     item_id: string;
+    source?: string;
     game_slug?: AnalyticsGameSlug;
     mode?: AnalyticsGameMode;
   };
