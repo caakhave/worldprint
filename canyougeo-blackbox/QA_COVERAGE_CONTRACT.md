@@ -31,6 +31,8 @@ Must add or update:
 - optional authenticated smoke behind env vars
 - account and upgrade assertions
 - payment safety checks
+- checkout-open smoke behind `checkout_smoke` plus explicit credentials/opt-in when checkout behavior changes
+- signup analytics smoke behind `signup_analytics` plus explicit disposable credentials/opt-in when signup conversion behavior changes
 
 Never test live payments by default.
 
