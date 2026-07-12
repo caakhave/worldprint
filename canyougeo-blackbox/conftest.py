@@ -15,6 +15,24 @@ from utils.targets import resolve_base_url
 
 ROOT = Path(__file__).resolve().parent
 SCREENSHOT_DIR = ROOT / "reports" / "screenshots"
+MARKETING_CONSENT_DENIED_INIT_SCRIPT = """
+(() => {
+  try {
+    const host = window.location.hostname;
+    if (
+      host === "localhost" ||
+      host === "127.0.0.1" ||
+      host === "::1" ||
+      host === "canyougeo.com" ||
+      host === "www.canyougeo.com" ||
+      host === "test.canyougeo.com" ||
+      host.endsWith(".pages.dev")
+    ) {
+      window.localStorage.setItem("canyougeo:marketing-consent", "denied");
+    }
+  } catch (error) {}
+})();
+"""
 
 load_dotenv(ROOT / ".env")
 load_dotenv(ROOT / ".env.local", override=True)
@@ -54,7 +72,7 @@ def credentials() -> dict[str, dict[str, str | None] | str | None]:
 def _new_context(browser: Browser, base_url: str, *, mobile: bool) -> BrowserContext:
     extra_http_headers = cloudflare_access_headers(base_url)
     if mobile:
-        return browser.new_context(
+        context = browser.new_context(
             base_url=base_url,
             extra_http_headers=extra_http_headers or None,
             viewport={"width": 390, "height": 844},
@@ -68,14 +86,18 @@ def _new_context(browser: Browser, base_url: str, *, mobile: bool) -> BrowserCon
                 "AppleWebKit/605.1.15 (KHTML, like Gecko) Version/17.0 Mobile/15E148 Safari/604.1"
             ),
         )
+        context.add_init_script(MARKETING_CONSENT_DENIED_INIT_SCRIPT)
+        return context
 
-    return browser.new_context(
+    context = browser.new_context(
         base_url=base_url,
         extra_http_headers=extra_http_headers or None,
         viewport={"width": 1440, "height": 1000},
         locale="en-US",
         ignore_https_errors=True,
     )
+    context.add_init_script(MARKETING_CONSENT_DENIED_INIT_SCRIPT)
+    return context
 
 
 @pytest.fixture
