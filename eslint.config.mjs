@@ -4,6 +4,8 @@ import nextTs from "eslint-config-next/typescript";
 const ignores = [
   ".next/**",
   "out/**",
+  "ios/DerivedData/**",
+  "ios/App/App/public/**",
   "node_modules/**",
   "coverage/**",
   "playwright-report/**",

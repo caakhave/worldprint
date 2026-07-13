@@ -1,7 +1,7 @@
 import { readFileSync } from "node:fs";
 import { join } from "node:path";
 import { fireEvent, render, screen, waitFor, within } from "@testing-library/react";
-import { beforeEach, describe, expect, it, vi } from "vitest";
+import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
 import { UpgradeClient } from "@/features/account/UpgradeClient";
 import { FREE_ENTITLEMENT, PRO_ENTITLEMENT, type PlayerEntitlement } from "@/lib/account/entitlements";
 import { CONTACT_LINKS } from "@/lib/contact";
@@ -77,6 +77,10 @@ describe("UpgradeClient", () => {
     accountMock.state.loading = false;
     accountMock.state.user = null;
     window.history.pushState({}, "", "/upgrade");
+  });
+
+  afterEach(() => {
+    vi.unstubAllEnvs();
   });
 
   it("leads with account creation copy for signed-out players", () => {
@@ -185,6 +189,27 @@ describe("UpgradeClient", () => {
     expect(screen.getAllByText("Best value").length).toBeGreaterThanOrEqual(1);
   });
 
+  it("shows a non-purchasable mobile preview state in native builds", () => {
+    vi.stubEnv("NEXT_PUBLIC_CGY_NATIVE_APP", "1");
+    process.env.NEXT_PUBLIC_BILLING_MODE = "test";
+    entitlementMock.state.signedIn = true;
+    accountMock.state.user = TEST_USER;
+    const client = billingClientMock();
+
+    render(<UpgradeClient />);
+
+    expect(screen.getByText("Mobile purchase preview")).toBeVisible();
+    expect(screen.getAllByText(/Mobile purchases are not available in this preview/i).length).toBeGreaterThanOrEqual(1);
+    expect(screen.getByRole("heading", { name: "Mobile purchase preview." })).toBeVisible();
+    expect(screen.getAllByRole("button", { name: "Mobile purchases unavailable" }).every((button) => button.hasAttribute("disabled"))).toBe(true);
+    expect(screen.queryByRole("button", { name: "Join monthly" })).not.toBeInTheDocument();
+    expect(screen.queryByRole("button", { name: "Join yearly" })).not.toBeInTheDocument();
+    expect(screen.queryByRole("button", { name: "Continue to secure checkout" })).not.toBeInTheDocument();
+    expect(screen.queryByText("Stripe handles payment details.")).not.toBeInTheDocument();
+    expect(screen.queryByText(/buy on the website|purchase on the website/i)).not.toBeInTheDocument();
+    expect(client.functions.invoke).not.toHaveBeenCalled();
+  });
+
   it("keeps the top Pro checkout buttons full-width and aligned with plan cards", () => {
     process.env.NEXT_PUBLIC_BILLING_MODE = "test";
     entitlementMock.state.signedIn = true;
@@ -289,5 +314,38 @@ describe("UpgradeClient", () => {
     expect(screen.queryByRole("button", { name: "Continue to secure checkout" })).not.toBeInTheDocument();
     expect(screen.queryByText("Pro active")).not.toBeInTheDocument();
     expect(screen.getAllByText("Can You Geo? Pro").length).toBeGreaterThanOrEqual(1);
+  });
+
+  it("keeps existing Pro entitlement visible in native builds without billing management", () => {
+    vi.stubEnv("NEXT_PUBLIC_CGY_NATIVE_APP", "1");
+    process.env.NEXT_PUBLIC_BILLING_MODE = "test";
+    const stripePro: PlayerEntitlement = {
+      ...PRO_ENTITLEMENT,
+      row: {
+        user_id: TEST_USER.id,
+        plan: "pro",
+        status: "active",
+        stripe_customer_id: "cus_test",
+        stripe_subscription_id: "sub_test",
+        stripe_price_id: "price_test",
+        stripe_status: "active",
+        cancel_at_period_end: false,
+        current_period_end: "2026-07-29T00:00:00.000Z",
+        updated_at: "2026-06-29T00:00:00.000Z"
+      }
+    };
+    entitlementMock.state.entitlement = stripePro;
+    entitlementMock.state.signedIn = true;
+    accountMock.state.user = TEST_USER;
+    const client = billingClientMock();
+
+    render(<UpgradeClient />);
+
+    expect(screen.getByRole("heading", { name: "You have the full atlas." })).toBeVisible();
+    expect(screen.getByText(/Existing Pro access stays active/i)).toBeVisible();
+    expect(screen.getAllByText(/Subscription management is not available in this preview/i).length).toBeGreaterThanOrEqual(1);
+    expect(screen.queryByRole("button", { name: "Manage billing" })).not.toBeInTheDocument();
+    expect(screen.queryByRole("button", { name: /Join monthly|Join yearly|Continue to secure checkout/i })).not.toBeInTheDocument();
+    expect(client.functions.invoke).not.toHaveBeenCalled();
   });
 });

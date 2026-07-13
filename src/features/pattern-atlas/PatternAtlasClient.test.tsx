@@ -491,6 +491,19 @@ describe("PatternAtlasClient", () => {
     expect(screen.queryByRole("button", { name: /Reveal category/i })).not.toBeInTheDocument();
   });
 
+  it("renders the shared solved moment overlay on Pattern Atlas reveal", async () => {
+    const user = userEvent.setup();
+    const { container } = renderPatternAtlas();
+    await startSampleRun(user);
+
+    await user.click(screen.getByRole("button", { name: "Landlocked countries in South America" }));
+
+    const overlay = container.querySelector(".solve-moment-overlay");
+    expect(overlay).toHaveAttribute("aria-hidden", "true");
+    expect(overlay).toHaveTextContent("Correct");
+    expect(overlay).toHaveTextContent("Solved");
+  });
+
   it("shows a signed-out Sample Run completion CTA for account signup", async () => {
     const user = userEvent.setup();
     renderPatternAtlas();

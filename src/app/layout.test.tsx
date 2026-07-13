@@ -1,6 +1,6 @@
 import { renderToStaticMarkup } from "react-dom/server";
-import { describe, expect, it, vi } from "vitest";
-import RootLayout, { metadata } from "@/app/layout";
+import { afterEach, describe, expect, it, vi } from "vitest";
+import RootLayout, { metadata, viewport } from "@/app/layout";
 
 vi.mock("next/font/google", () => {
   const font = () => ({ variable: "mock-font" });
@@ -16,7 +16,12 @@ vi.mock("@/components/AnalyticsScripts", () => ({
 }));
 
 vi.mock("@/features/account/AuthNavStatus", () => ({
-  AuthNavStatus: () => <a href="/sign-in">Sign in</a>
+  AuthNavStatus: () => (
+    <div className="account-nav-signed-out-actions">
+      <a href="/upgrade">Start Pro</a>
+      <a href="/sign-in">Sign in</a>
+    </div>
+  )
 }));
 
 vi.mock("@/features/account/useSupabaseAccount", () => ({
@@ -28,6 +33,10 @@ vi.mock("@/features/account/useSupabaseAccount", () => ({
 }));
 
 describe("RootLayout", () => {
+  afterEach(() => {
+    vi.unstubAllEnvs();
+  });
+
   it("renders the launch footer copy", () => {
     const markup = renderToStaticMarkup(
       <RootLayout>
@@ -43,7 +52,7 @@ describe("RootLayout", () => {
     expect(markup).toContain("class=\"footer-utility-row\"");
     expect(markup).toContain("class=\"footer-account-area\"");
     expect(markup).toContain("aria-label=\"Footer account\"");
-    expect(markup).toContain("<div class=\"footer-account-area\" aria-label=\"Footer account\"><a href=\"/sign-in\">Sign in</a></div>");
+    expect(markup).toContain("<div class=\"footer-account-area\" aria-label=\"Footer account\"><div class=\"account-nav-signed-out-actions\">");
     expect(markup).toContain("href=\"/play\"");
     expect(markup).not.toContain("href=\"/past-games\"");
     expect(markup).toContain("href=\"/support\"");
@@ -60,6 +69,66 @@ describe("RootLayout", () => {
     expect(markup).not.toContain("VideoGame");
     expect(markup).not.toContain("FAQPage");
     expect(markup).not.toContain("aggregateRating");
+  });
+
+  it("keeps ordinary web builds free of the native app shell marker", () => {
+    const markup = renderToStaticMarkup(
+      <RootLayout>
+        <div>Page body</div>
+      </RootLayout>
+    );
+
+    expect(markup).toContain("class=\"mock-font mock-font mock-font\"");
+    expect(markup).not.toContain("cgy-native-app");
+    expect(markup).not.toContain("data-native-app");
+  });
+
+  it("keeps the normal header structure and account actions available", () => {
+    const markup = renderToStaticMarkup(
+      <RootLayout>
+        <div>Page body</div>
+      </RootLayout>
+    );
+
+    expect(markup).toContain("<header class=\"site-header\">");
+    expect(markup).toContain("class=\"brand-link\"");
+    expect(markup).toContain("class=\"site-nav\"");
+    expect(markup).toContain("Play");
+    expect(markup).toContain("How it works");
+    expect(markup).toContain("href=\"/upgrade\"");
+    expect(markup).toContain("Start Pro");
+    expect(markup).toContain("href=\"/sign-in\"");
+    expect(markup).toContain("Sign in");
+  });
+
+  it("keeps ordinary web viewport behavior without native viewport-fit", () => {
+    expect(viewport).toMatchObject({
+      width: "device-width",
+      initialScale: 1,
+      colorScheme: "dark",
+      themeColor: "#08181D"
+    });
+    expect(viewport).not.toHaveProperty("viewportFit");
+  });
+
+  it("marks native app builds and enables viewport-fit=cover", async () => {
+    vi.stubEnv("NEXT_PUBLIC_CGY_NATIVE_APP", "1");
+    vi.resetModules();
+    const { default: NativeRootLayout, viewport: nativeViewport } = await import("@/app/layout");
+
+    const markup = renderToStaticMarkup(
+      <NativeRootLayout>
+        <div>Page body</div>
+      </NativeRootLayout>
+    );
+
+    expect(markup).toContain("cgy-native-app");
+    expect(markup).toContain("data-native-app=\"true\"");
+    expect(nativeViewport).toMatchObject({
+      width: "device-width",
+      initialScale: 1,
+      viewportFit: "cover"
+    });
   });
 
   it("uses the final Can You Geo icon assets", () => {

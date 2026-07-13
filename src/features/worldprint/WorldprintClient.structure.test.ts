@@ -3,6 +3,8 @@ import { join } from "node:path";
 import { describe, expect, it } from "vitest";
 
 const source = readFileSync(join(process.cwd(), "src/features/worldprint/WorldprintClient.tsx"), "utf8");
+const patternAtlasSource = readFileSync(join(process.cwd(), "src/features/pattern-atlas/PatternAtlasClient.tsx"), "utf8");
+const orderAtlasSource = readFileSync(join(process.cwd(), "src/features/order-atlas/OrderAtlasClient.tsx"), "utf8");
 const primaryNavSource = readFileSync(join(process.cwd(), "src/components/PrimaryNav.tsx"), "utf8");
 const runStateSource = readFileSync(join(process.cwd(), "src/lib/game/state.ts"), "utf8");
 const storageSource = readFileSync(join(process.cwd(), "src/lib/persistence/storage.ts"), "utf8");
@@ -320,6 +322,31 @@ describe("WorldprintClient UI structure", () => {
     expect(styles).toContain(".reveal-action-dock");
     expect(styles).toContain(".next-map-button");
     expect(styles).toContain("next-button-ready");
+  });
+
+  it("centers Mystery Map and Pattern Atlas moment overlays in the native landscape viewport", () => {
+    const nativeLandscapeIndex = styles.indexOf("@media (orientation: landscape) and (max-height: 560px)");
+    const nativeLandscapeEnd = styles.indexOf("@media (max-width: 720px)", nativeLandscapeIndex);
+    const nativeLandscapeStyles = styles.slice(nativeLandscapeIndex, nativeLandscapeEnd);
+
+    expect(nativeLandscapeIndex).toBeGreaterThan(0);
+    expect(nativeLandscapeEnd).toBeGreaterThan(nativeLandscapeIndex);
+    expect(nativeLandscapeStyles).toContain(".cgy-native-app .miss-moment-overlay");
+    expect(nativeLandscapeStyles).toContain(".cgy-native-app .solve-moment-overlay");
+    expect(nativeLandscapeStyles).toContain("position: fixed;");
+    expect(nativeLandscapeStyles).toContain("left: 50vw;");
+    expect(nativeLandscapeStyles).toContain("top: 50dvh;");
+    expect(nativeLandscapeStyles).toContain("max-inline-size: calc(100dvw - var(--cgy-safe-area-left) - var(--cgy-safe-area-right) - 1.5rem);");
+    expect(nativeLandscapeStyles).toContain("max-block-size: calc(100dvh - var(--cgy-safe-area-top) - var(--cgy-safe-area-bottom) - 1.5rem);");
+    expect(nativeLandscapeStyles).toContain("width: min(20rem, calc(100dvw - var(--cgy-safe-area-left) - var(--cgy-safe-area-right) - 1.5rem));");
+    expect(nativeLandscapeStyles).toContain("width: min(34rem, calc(100dvw - var(--cgy-safe-area-left) - var(--cgy-safe-area-right) - 1.5rem));");
+    expect(nativeLandscapeStyles).toContain("min-width: 0;");
+    expect(source).toContain('className="miss-moment-overlay"');
+    expect(source).toContain('className="solve-moment-overlay"');
+    expect(patternAtlasSource).toContain("function PatternAtlasReveal");
+    expect(patternAtlasSource).toContain('className="solve-moment-overlay"');
+    expect(orderAtlasSource).not.toContain("miss-moment-overlay");
+    expect(orderAtlasSource).not.toContain("solve-moment-overlay");
   });
 
   it("shows every paid country reveal in a horizontal evidence strip", () => {

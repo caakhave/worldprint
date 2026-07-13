@@ -12,13 +12,15 @@ import { publicBillingEnabled } from "@/lib/billing/publicBillingConfig";
 import { proBillingIntervalFromSearch, proPriceOptionForInterval, PRO_PRICE_OPTIONS, type ProBillingInterval } from "@/lib/billing/proPricing";
 import { CONTACT_LINKS } from "@/lib/contact";
 import { trackAnalyticsEvent } from "@/lib/site/analytics";
+import { isNativeAppBuild } from "@/lib/site/buildTarget";
 
 export function UpgradeClient() {
   const [selectedPlan, setSelectedPlan] = useState<ProBillingInterval | null>(null);
   const { configured, entitlement, loading, signedIn } = useEntitlement();
   const isPro = entitlement.plan === "pro";
   const hasStripeCustomer = Boolean(entitlement.row?.stripe_customer_id);
-  const billingEnabled = configured && publicBillingEnabled();
+  const nativeBuild = isNativeAppBuild();
+  const billingEnabled = configured && publicBillingEnabled() && !nativeBuild;
   const selectedPlanOption = selectedPlan ? proPriceOptionForInterval(selectedPlan) : null;
   const showProIntentPanel = Boolean(billingEnabled && signedIn && !isPro && selectedPlanOption);
   const heroTitle = loading ? "Checking your atlas plan." : isPro ? "You have the full atlas." : "Choose Free or Pro.";
@@ -28,6 +30,8 @@ export function UpgradeClient() {
   const overviewHeading = loading ? "Checking your plan." : isPro ? "Can You Geo? Pro." : "Choose monthly or yearly.";
   const statusTitle = isPro
     ? "Can You Geo? Pro"
+    : nativeBuild
+      ? "Mobile purchase preview"
     : billingEnabled
       ? signedIn
         ? "Ready for secure checkout"
@@ -35,8 +39,12 @@ export function UpgradeClient() {
       : "Ready for secure checkout";
   const statusDetail = isPro
     ? hasStripeCustomer
-      ? "Manage your membership from your account."
+      ? nativeBuild
+        ? "Existing Pro access stays active. Subscription management is not available in this preview."
+        : "Manage your membership from your account."
       : "Membership is active on this account."
+    : nativeBuild
+      ? "Mobile purchases are not available in this preview. Free play remains available."
     : billingEnabled
       ? signedIn
         ? "Pick monthly or yearly, then continue to secure checkout."
@@ -282,14 +290,20 @@ export function UpgradeClient() {
         </article>
       </div>
 
-      <section className="surface account-card upgrade-note" aria-label="Secure checkout note">
+      <section className="surface account-card upgrade-note" aria-label={nativeBuild ? "Mobile purchase preview note" : "Secure checkout note"}>
         <ShieldCheck size={20} aria-hidden="true" />
         <div>
-          <h2>Secure checkout.</h2>
-          <p>
-            Stripe handles payment details. Can You Geo? never asks for card information on this page.{" "}
-            <a href={CONTACT_LINKS.billingHelp.href}>Email support for billing help</a>.
-          </p>
+          <h2>{nativeBuild ? "Mobile purchase preview." : "Secure checkout."}</h2>
+          {nativeBuild ? (
+            <p>
+              Mobile purchases are not available in this preview. Existing Pro access still works for entitled accounts, and Free play remains available.
+            </p>
+          ) : (
+            <p>
+              Stripe handles payment details. Can You Geo? never asks for card information on this page.{" "}
+              <a href={CONTACT_LINKS.billingHelp.href}>Email support for billing help</a>.
+            </p>
+          )}
         </div>
       </section>
     </div>

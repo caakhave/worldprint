@@ -138,4 +138,16 @@ describe("MarketingConsentManager", () => {
       ]
     ]);
   });
+
+  it("renders no website marketing consent UI in native app builds", () => {
+    vi.stubEnv("NEXT_PUBLIC_CGY_NATIVE_APP", "1");
+    enableProductionAnalytics();
+    window.localStorage.setItem(MARKETING_CONSENT_STORAGE_KEY, "granted");
+
+    render(<MarketingConsentManager />);
+
+    expect(screen.queryByRole("button", { name: "Cookie settings" })).not.toBeInTheDocument();
+    expect(screen.queryByRole("dialog", { name: "Marketing cookies" })).not.toBeInTheDocument();
+    expect(dataLayerCommands()).toEqual([]);
+  });
 });
