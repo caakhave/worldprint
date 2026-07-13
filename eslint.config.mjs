@@ -4,6 +4,11 @@ import nextTs from "eslint-config-next/typescript";
 const ignores = [
   ".next/**",
   "out/**",
+  "android/.gradle/**",
+  "android/build/**",
+  "android/app/build/**",
+  "android/app/src/main/assets/**",
+  "android/capacitor-cordova-android-plugins/**",
   "ios/DerivedData/**",
   "ios/App/App/public/**",
   "node_modules/**",
