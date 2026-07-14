@@ -7,6 +7,7 @@ import { BrandMark } from "@/components/BrandMark";
 import { FooterNav } from "@/components/FooterNav";
 import { JsonLd } from "@/components/JsonLd";
 import { MarketingConsentManager } from "@/components/MarketingConsentManager";
+import { NativeAppBridge } from "@/components/NativeAppBridge";
 import { PrimaryNav } from "@/components/PrimaryNav";
 import { SocialLinks } from "@/components/SocialLinks";
 import { AuthNavStatus } from "@/features/account/AuthNavStatus";
@@ -124,6 +125,7 @@ export default function RootLayout({ children }: Readonly<{ children: React.Reac
     <html lang="en" className={htmlClassName} data-native-app={nativeAppBuild ? "true" : undefined}>
       <body>
         <AnalyticsScripts />
+        <NativeAppBridge />
         <a className="skip-link" href="#main">
           Skip to content
         </a>

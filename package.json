@@ -36,6 +36,7 @@
   },
   "dependencies": {
     "@capacitor/android": "8.4.1",
+    "@capacitor/app": "8.1.0",
     "@capacitor/core": "^8.4.1",
     "@capacitor/ios": "^8.4.1",
     "@supabase/ssr": "^0.12.0",

@@ -9,7 +9,8 @@ This proof of concept packages the existing static-export Next.js app in a Capac
 - App name: `Can You Geo`
 - Android application ID: `com.canyougeo.app`
 - Android namespace: `com.canyougeo.app`
-- Capacitor packages: `8.4.1`
+- Capacitor core, CLI, Android, and iOS packages: `8.4.1`
+- Capacitor App plugin: `8.1.0`
 - Native project: `android/`
 - Web directory: `out`
 - Android Studio: `2025.2.1`
@@ -74,6 +75,7 @@ The validated emulator for this POC was `Medium_Phone_API_36.1`.
 - Marketing consent UI and consent events are suppressed in native builds.
 - Stripe checkout and customer portal actions are unavailable in the native preview.
 - Existing Pro entitlements can still be read by the web app, but purchase and subscription management must be replaced before Play Store release.
+- Android system Back is handled through Capacitor's official App plugin. Internal routes with usable WebView history call `window.history.back()`, while the root route minimizes the app instead of force-closing it.
 - Android status and navigation bars are handled as WebView system insets. Current shallow testing found content inset below the top status bar and above the bottom navigation/gesture area without obvious overlap.
 - Portrait result moments use the existing inline correct/incorrect result content.
 - Landscape result moments use centered transient overlays for Mystery Map and Pattern Atlas.
@@ -109,7 +111,6 @@ That keystore is local developer state only. It is not part of the repository an
 
 ## Deferred Work
 
-- Android system Back currently exits to the launcher instead of navigating in-app history.
 - Safe-area CSS injection can log a console warning in WebView.
 - Google Play Billing.
 - Authentication redirects and app links.
