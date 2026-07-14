@@ -8,6 +8,7 @@ import { FooterNav } from "@/components/FooterNav";
 import { JsonLd } from "@/components/JsonLd";
 import { MarketingConsentManager } from "@/components/MarketingConsentManager";
 import { NativeAppBridge } from "@/components/NativeAppBridge";
+import { NativeDeepLinkBridge } from "@/components/NativeDeepLinkBridge";
 import { PrimaryNav } from "@/components/PrimaryNav";
 import { SocialLinks } from "@/components/SocialLinks";
 import { AuthNavStatus } from "@/features/account/AuthNavStatus";
@@ -126,6 +127,7 @@ export default function RootLayout({ children }: Readonly<{ children: React.Reac
       <body>
         <AnalyticsScripts />
         <NativeAppBridge />
+        <NativeDeepLinkBridge />
         <a className="skip-link" href="#main">
           Skip to content
         </a>

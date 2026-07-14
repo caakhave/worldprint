@@ -15,6 +15,10 @@ vi.mock("@/components/AnalyticsScripts", () => ({
   AnalyticsScripts: () => null
 }));
 
+vi.mock("@/components/NativeDeepLinkBridge", () => ({
+  NativeDeepLinkBridge: () => null
+}));
+
 vi.mock("@/features/account/AuthNavStatus", () => ({
   AuthNavStatus: () => (
     <div className="account-nav-signed-out-actions">
