@@ -5,6 +5,7 @@ import { useRouter } from "next/navigation";
 import { Capacitor, type PluginListenerHandle } from "@capacitor/core";
 import { isNativeAppBuild } from "@/lib/site/buildTarget";
 import { nativeDeepLinkDedupeKey, parseNativeDeepLinkUrl, type NativeDeepLinkAccepted } from "@/lib/mobile/nativeDeepLink";
+import { resetNativeNavigationHistory } from "@/lib/mobile/nativeNavigationHistory";
 
 type IncomingUrlEvent = {
   url?: string | null;
@@ -16,6 +17,7 @@ type AppPlugin = {
 };
 
 const DUPLICATE_DEEP_LINK_WINDOW_MS = 2000;
+const LAUNCH_URL_LOOKUP_TIMEOUT_MS = 2500;
 const NATIVE_DEEP_LINK_PLATFORMS = new Set(["ios", "android"]);
 
 export function shouldRegisterNativeDeepLinkBridge(platform: string, nativeBuild = isNativeAppBuild()): boolean {
@@ -29,6 +31,20 @@ export function shouldSkipDuplicateNativeDeepLink(
   duplicateWindowMs = DUPLICATE_DEEP_LINK_WINDOW_MS
 ): boolean {
   return Boolean(lastNavigation && lastNavigation.key === key && now - lastNavigation.at < duplicateWindowMs);
+}
+
+async function lookupLaunchUrl(App: AppPlugin): Promise<IncomingUrlEvent | null | undefined> {
+  let timeout: number | undefined;
+  try {
+    return await Promise.race([
+      App.getLaunchUrl(),
+      new Promise<undefined>((resolve) => {
+        timeout = window.setTimeout(() => resolve(undefined), LAUNCH_URL_LOOKUP_TIMEOUT_MS);
+      })
+    ]);
+  } finally {
+    if (timeout) window.clearTimeout(timeout);
+  }
 }
 
 export function NativeDeepLinkBridge() {
@@ -50,6 +66,7 @@ export function NativeDeepLinkBridge() {
       lastNavigationRef.current = { key, at: now };
       const navigation = source === "cold" ? "replace" : result.navigation;
       if (navigation === "replace") {
+        resetNativeNavigationHistory();
         router.replace(result.destination);
         return;
       }
@@ -72,6 +89,13 @@ export function NativeDeepLinkBridge() {
       }
 
       try {
+        const launchUrl = await lookupLaunchUrl(App);
+        handleIncomingUrl(launchUrl?.url, "cold");
+      } catch {
+        // A launch URL lookup failure should not block the static app from loading normally.
+      }
+
+      try {
         const handle = await App.addListener("appUrlOpen", (event) => handleIncomingUrl(event.url, "warm"));
         if (active) {
           listenerHandle = handle;
@@ -80,13 +104,6 @@ export function NativeDeepLinkBridge() {
         }
       } catch {
         // Incoming links are optional for this shell checkpoint; rendering must continue if native wiring is unavailable.
-      }
-
-      try {
-        const launchUrl = await App.getLaunchUrl();
-        handleIncomingUrl(launchUrl?.url, "cold");
-      } catch {
-        // A launch URL lookup failure should not block the static app from loading normally.
       }
     };
 

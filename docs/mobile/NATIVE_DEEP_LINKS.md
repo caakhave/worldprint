@@ -1,6 +1,7 @@
 # Can You Geo Native Deep-Link Foundation
 
-Checkpoint 4B adds a code-only deep-link foundation for the Capacitor shells. It does not activate iOS Universal Links or Android App Links by itself.
+Checkpoint 4B adds a code-only deep-link foundation for the Capacitor shells. Checkpoint 4D-1 adds Android app-side HTTPS
+intent filters for `canyougeo.com`, but verified Android App Links still require the website association file described below.
 
 ## Parser Contract
 
@@ -172,7 +173,104 @@ Warm/running app:
 - never uses `window.location.assign`
 - never loads rejected external URLs in the WebView
 
-Android Back behavior remains in `NativeAppBridge`. Warm links use `push` so system Back can return to the previous Can You Geo route. Cold links use `replace` so the synthetic local homepage is not inserted as a misleading Back destination.
+Android Back behavior remains in `NativeAppBridge`. Warm links use `push` so system Back can return to the previous Can You Geo
+route. Cold links use `replace` so the synthetic local homepage is not inserted as a misleading Back destination.
+
+Checkpoint 4D-1A confirmed two Android runtime details:
+
+- after a warm App Link, Android/Capacitor can report `backButton.canGoBack=false` even though Next's client navigation created
+  a real browser history entry and `window.history.back()` works
+- during a cold Android App Link launch, Capacitor can deliver the launch URL through `appUrlOpen` before `getLaunchUrl()`
+  settles
+
+The bridges therefore use this policy:
+
+- root routes still minimize the app
+- native `canGoBack=true` still uses `window.history.back()`
+- `NativeAppBridge` tracks only a numeric, session-local count of native WebView `history.pushState` entries
+- if `canGoBack=false` but that tracked depth is positive on a non-root route, Back uses `window.history.back()` and consumes one depth entry
+- `appUrlOpen` events received before the initial launch URL lookup completes are treated as cold links
+- cold links and auth callbacks use `replace` and reset the tracked depth
+- the depth signal stores no route strings, incoming URLs, tokens, challenge codes, user identifiers, or browser storage
+
+This keeps auth callbacks from becoming reusable Back destinations and avoids navigating from cold deep links to the synthetic
+local bootstrap page.
+
+## Android App Link Intent Filters
+
+Checkpoint 4D-1 configures `android/app/src/main/AndroidManifest.xml` so `MainActivity` can receive approved HTTPS links:
+
+- action: `android.intent.action.VIEW`
+- categories: `android.intent.category.DEFAULT` and `android.intent.category.BROWSABLE`
+- `android:autoVerify="true"`
+- scheme: `https`
+- host: `canyougeo.com`
+
+The Android app does not claim:
+
+- `http`
+- `www.canyougeo.com`
+- `test.canyougeo.com`
+- localhost
+- custom URL schemes
+- arbitrary files
+- `/_next/*`
+- `/internal/*`
+
+The manifest uses isolated intent filters so each filter has one `<data>` claim. This avoids Android combining separate scheme, host,
+and path declarations into broader unintended matches.
+
+Current manifest path claims:
+
+- exact `/`
+- prefix `/play/`
+- exact `/challenge/mystery-map/`
+- exact `/upgrade/`
+- exact `/about/`
+- exact `/how-to-play/`
+- exact `/sources/`
+- exact `/past-games/`
+- exact `/support/`
+- exact `/legal/`
+- exact `/privacy/`
+- exact `/terms/`
+- exact `/choropleth-map-game/`
+- exact `/country-guessing-game/`
+- exact `/daily-geography-game/`
+- exact `/map-quiz/`
+- exact `/sign-in/`
+- exact `/sign-up/`
+- exact `/forgot-password/`
+- exact `/auth/callback/`
+- exact `/reset-password/`
+- exact `/account/`
+
+The `/play/` prefix intentionally covers current game routes and dated Mystery Map URLs. The JavaScript parser remains the final
+navigation authority: it still rejects malformed dates, unknown `/play/*` paths, unsafe query parameters, unsafe auth callbacks,
+alternate origins, internal routes, and asset paths even if Android offers the URL to the app.
+
+The apex-only policy is deliberate. Do not add `www.canyougeo.com`, `test.canyougeo.com`, or a custom scheme unless a later
+checkpoint explicitly changes the production origin policy and parser configuration.
+
+Android verification is not expected to pass until Can You Geo serves:
+
+```text
+https://canyougeo.com/.well-known/assetlinks.json
+```
+
+This checkpoint does not add that file and does not deploy the website. Until the file is deployed, `adb shell pm get-app-links
+com.canyougeo.app` can show the declared domain but may report it as unverified.
+
+The current local debug certificate SHA-256 fingerprint is:
+
+```text
+D4:95:77:E6:E5:D7:90:B1:64:2E:86:32:EC:DD:24:3E:1D:97:82:73:64:03:6A:2E:93:B9:17:88:96:36:99:37
+```
+
+This fingerprint is public association metadata for Android App Links, not a private key or signing secret. A future
+`assetlinks.json` may include the debug fingerprint for local/internal testing, but production release builds must use the
+production Play App Signing certificate fingerprint from Play Console. Add that production fingerprint later; do not infer it
+from the debug keystore.
 
 ## Deduplication
 
@@ -186,12 +284,10 @@ Cold start and warm events can deliver the same URL. The bridge keeps a session-
 
 ## Deferred Platform Work
 
-This checkpoint does not add or modify:
+These checkpoints do not add or modify:
 
 - iOS Associated Domains
 - iOS entitlements
-- Android HTTPS `VIEW` / `BROWSABLE` intent filters
-- `android:autoVerify`
 - `apple-app-site-association`
 - `assetlinks.json`
 - `public/.well-known`
@@ -200,6 +296,7 @@ This checkpoint does not add or modify:
 - Supabase redirect allowlists
 - Supabase email templates
 - custom URL schemes
+- Play Console signing configuration
 
 ## Remaining Auth Redirect Work
 
@@ -269,4 +366,6 @@ Platform association work is still required before installed iOS or Android apps
 
 Checkpoint 4B can verify parser behavior, listener registration, cold/warm bridge routing, deduplication, and non-logging guarantees through tests.
 
-It cannot prove end-to-end iOS Universal Links or Android App Links until later checkpoints add website association files and native platform configuration.
+Checkpoint 4D-1 can verify Android manifest structure and explicit package-targeted HTTPS intents before website verification.
+
+It cannot prove end-to-end iOS Universal Links or verified Android App Links until later checkpoints add website association files and production signing configuration.

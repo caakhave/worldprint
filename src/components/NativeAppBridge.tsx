@@ -3,6 +3,13 @@
 import { useEffect } from "react";
 import { Capacitor, type PluginListenerHandle } from "@capacitor/core";
 import { isNativeAppBuild } from "@/lib/site/buildTarget";
+import {
+  consumeNativeBackEntry,
+  installNativeNavigationHistoryTracker,
+  nativeBackAction,
+  resetNativeNavigationHistory,
+  uninstallNativeNavigationHistoryTracker
+} from "@/lib/mobile/nativeNavigationHistory";
 
 type BackButtonEvent = {
   canGoBack: boolean;
@@ -10,18 +17,16 @@ type BackButtonEvent = {
 
 const BACK_HANDLER_RELEASE_MS = 250;
 
-function isRootPath(pathname: string): boolean {
-  const normalizedPathname = pathname.replace(/\/+$/, "") || "/";
-  return normalizedPathname === "/" || normalizedPathname === "/index.html";
-}
-
 export function shouldNavigateBackWithinWebView(event: BackButtonEvent, pathname: string): boolean {
-  return event.canGoBack && !isRootPath(pathname);
+  return nativeBackAction(event.canGoBack, pathname).action === "back";
 }
 
 export function NativeAppBridge() {
   useEffect(() => {
     if (!isNativeAppBuild() || Capacitor.getPlatform() !== "android") return;
+
+    resetNativeNavigationHistory();
+    installNativeNavigationHistoryTracker();
 
     let active = true;
     let listenerHandle: PluginListenerHandle | undefined;
@@ -46,11 +51,14 @@ export function NativeAppBridge() {
           if (releaseTimer) window.clearTimeout(releaseTimer);
           releaseTimer = window.setTimeout(releaseBackHandler, BACK_HANDLER_RELEASE_MS);
 
-          if (shouldNavigateBackWithinWebView(event, window.location.pathname)) {
+          const backAction = nativeBackAction(event.canGoBack, window.location.pathname);
+          if (backAction.action === "back") {
+            if (backAction.consumeTrackedEntry) consumeNativeBackEntry();
             window.history.back();
             return;
           }
 
+          resetNativeNavigationHistory();
           void App.minimizeApp();
         });
 
@@ -71,6 +79,8 @@ export function NativeAppBridge() {
       active = false;
       if (releaseTimer) window.clearTimeout(releaseTimer);
       if (listenerHandle) void listenerHandle.remove();
+      uninstallNativeNavigationHistoryTracker();
+      resetNativeNavigationHistory();
     };
   }, []);
 

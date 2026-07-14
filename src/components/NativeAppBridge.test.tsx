@@ -1,6 +1,12 @@
 import { render, waitFor } from "@testing-library/react";
 import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
 import { NativeAppBridge, shouldNavigateBackWithinWebView } from "@/components/NativeAppBridge";
+import {
+  markNativeHistoryPush,
+  nativeTrackedHistoryDepth,
+  resetNativeNavigationHistory,
+  uninstallNativeNavigationHistoryTracker
+} from "@/lib/mobile/nativeNavigationHistory";
 
 type BackButtonEvent = {
   canGoBack: boolean;
@@ -42,11 +48,15 @@ describe("NativeAppBridge", () => {
     capacitorMocks.minimizeApp.mockReset();
     capacitorMocks.minimizeApp.mockResolvedValue(undefined);
     historyBack = vi.spyOn(window.history, "back").mockImplementation(() => undefined);
+    uninstallNativeNavigationHistoryTracker();
+    resetNativeNavigationHistory();
     window.history.replaceState({}, "", "/");
   });
 
   afterEach(() => {
     historyBack.mockRestore();
+    uninstallNativeNavigationHistoryTracker();
+    resetNativeNavigationHistory();
     vi.unstubAllEnvs();
   });
 
@@ -107,6 +117,36 @@ describe("NativeAppBridge", () => {
     expect(historyBack).not.toHaveBeenCalled();
   });
 
+  it("navigates through tracked warm App Link history when Android reports canGoBack=false", async () => {
+    vi.stubEnv("NEXT_PUBLIC_CGY_NATIVE_APP", "1");
+    capacitorMocks.platform = "android";
+
+    render(<NativeAppBridge />);
+    await waitFor(() => expect(backButtonListener).toBeDefined());
+    window.history.pushState({}, "", "/upgrade");
+
+    backButtonListener?.({ canGoBack: false });
+
+    expect(historyBack).toHaveBeenCalledTimes(1);
+    expect(capacitorMocks.minimizeApp).not.toHaveBeenCalled();
+    expect(nativeTrackedHistoryDepth()).toBe(0);
+  });
+
+  it("consumes only one tracked warm App Link entry per Back event", async () => {
+    vi.stubEnv("NEXT_PUBLIC_CGY_NATIVE_APP", "1");
+    capacitorMocks.platform = "android";
+
+    render(<NativeAppBridge />);
+    await waitFor(() => expect(backButtonListener).toBeDefined());
+    window.history.pushState({}, "", "/play/");
+    window.history.pushState({}, "", "/play/pattern-atlas");
+
+    backButtonListener?.({ canGoBack: false });
+
+    expect(historyBack).toHaveBeenCalledTimes(1);
+    expect(nativeTrackedHistoryDepth()).toBe(1);
+  });
+
   it("minimizes the app at the root route even if the native history entry is still marked backable", async () => {
     vi.stubEnv("NEXT_PUBLIC_CGY_NATIVE_APP", "1");
     capacitorMocks.platform = "android";
@@ -159,6 +199,9 @@ describe("shouldNavigateBackWithinWebView", () => {
   it("uses internal history only away from the root route", () => {
     expect(shouldNavigateBackWithinWebView({ canGoBack: true }, "/play")).toBe(true);
     expect(shouldNavigateBackWithinWebView({ canGoBack: false }, "/play")).toBe(false);
+    markNativeHistoryPush();
+    expect(shouldNavigateBackWithinWebView({ canGoBack: false }, "/play")).toBe(true);
+    resetNativeNavigationHistory();
     expect(shouldNavigateBackWithinWebView({ canGoBack: true }, "/")).toBe(false);
     expect(shouldNavigateBackWithinWebView({ canGoBack: true }, "/index.html")).toBe(false);
   });

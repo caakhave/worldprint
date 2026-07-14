@@ -137,12 +137,15 @@ describe("parseNativeDeepLinkUrl", () => {
   });
 
   it("rejects internal, build, asset, unknown, malformed, and traversal paths", () => {
+    expectRejected("https://canyougeo.com/internal/order-atlas-review/", "path-not-allowed");
     expectRejected("https://canyougeo.com/internal/worldprint-review/", "path-not-allowed");
+    expectRejected("https://canyougeo.com/_next/example.js", "path-not-allowed");
     expectRejected("https://canyougeo.com/_next/static/app.js", "path-not-allowed");
     expectRejected("https://canyougeo.com/favicon.ico", "path-not-allowed");
     expectRejected("https://canyougeo.com/404/", "path-not-allowed");
     expectRejected("https://canyougeo.com/_not-found/", "path-not-allowed");
     expectRejected("https://canyougeo.com/unknown-route/", "path-not-allowed");
+    expectRejected("https://canyougeo.com/play/not-real/", "path-not-allowed");
     expectRejected("https://canyougeo.com/play/mystery-map/not-a-date/", "path-not-allowed");
     expectRejected("https://canyougeo.com/play/mystery-map/2026-02-31/", "path-not-allowed");
     expectRejected("https://canyougeo.com/play/../account/", "path-not-allowed");
