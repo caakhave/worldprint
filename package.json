@@ -7,7 +7,7 @@
   "scripts": {
     "dev": "next dev",
     "build": "next build",
-    "build:native": "NEXT_PUBLIC_CGY_NATIVE_APP=1 next build",
+    "build:native": "NEXT_PUBLIC_CGY_NATIVE_APP=1 NEXT_PUBLIC_CGY_NATIVE_HOSTED_ORIGIN=https://canyougeo.com next build",
     "mobile:sync:android": "pnpm build:native && pnpm exec cap sync android",
     "mobile:open:android": "pnpm exec cap open android",
     "mobile:sync:ios": "pnpm build:native && pnpm exec cap sync ios",

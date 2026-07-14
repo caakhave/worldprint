@@ -1,6 +1,6 @@
 import { render, screen } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
-import { beforeEach, describe, expect, it, vi } from "vitest";
+import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
 import { ForgotPasswordClient } from "@/features/account/ForgotPasswordClient";
 
 const accountMock = vi.hoisted(() => ({
@@ -34,6 +34,10 @@ describe("ForgotPasswordClient", () => {
     window.history.pushState({}, "", "/forgot-password");
   });
 
+  afterEach(() => {
+    vi.unstubAllEnvs();
+  });
+
   it("requests a password reset email with the auth callback redirect", async () => {
     const user = userEvent.setup();
     render(<ForgotPasswordClient />);
@@ -42,12 +46,42 @@ describe("ForgotPasswordClient", () => {
     await user.click(screen.getByRole("button", { name: "Send reset email" }));
 
     expect(accountMock.state.client.auth.resetPasswordForEmail).toHaveBeenCalledWith("player@example.com", {
-      redirectTo: expect.stringMatching(/\/auth\/callback$/)
+      redirectTo: `${window.location.origin}/auth/callback`
     });
     expect(screen.getByText("Password reset email sent. Open the link to choose a new password.")).toBeVisible();
     expect(screen.getByRole("link", { name: "Back to sign in" })).toHaveAttribute("href", "/sign-in");
     expect(screen.getByRole("link", { name: "Create account" })).toHaveAttribute("href", "/sign-up");
     expect(screen.getByRole("link", { name: "Get account help" })).toBeVisible();
+  });
+
+  it("uses the hosted production callback for native password reset emails", async () => {
+    vi.stubEnv("NEXT_PUBLIC_CGY_NATIVE_APP", "1");
+    vi.stubEnv("NEXT_PUBLIC_CGY_NATIVE_HOSTED_ORIGIN", "https://canyougeo.com");
+    const user = userEvent.setup();
+
+    render(<ForgotPasswordClient />);
+
+    await user.type(screen.getByLabelText("Email"), "player@example.com");
+    await user.click(screen.getByRole("button", { name: "Send reset email" }));
+
+    expect(accountMock.state.client.auth.resetPasswordForEmail).toHaveBeenCalledWith("player@example.com", {
+      redirectTo: "https://canyougeo.com/auth/callback"
+    });
+    expect(JSON.stringify(accountMock.state.client.auth.resetPasswordForEmail.mock.calls)).not.toContain("https://localhost");
+  });
+
+  it("does not call Supabase when native reset callback configuration is missing", async () => {
+    vi.stubEnv("NEXT_PUBLIC_CGY_NATIVE_APP", "1");
+    vi.stubEnv("NEXT_PUBLIC_CGY_NATIVE_HOSTED_ORIGIN", "");
+    const user = userEvent.setup();
+
+    render(<ForgotPasswordClient />);
+
+    await user.type(screen.getByLabelText("Email"), "player@example.com");
+    await user.click(screen.getByRole("button", { name: "Send reset email" }));
+
+    expect(screen.getByRole("alert")).toHaveTextContent("Password reset email links are not configured for this app build. Try again in a moment.");
+    expect(accountMock.state.client.auth.resetPasswordForEmail).not.toHaveBeenCalled();
   });
 
   it("routes unavailable-preview players to the game library", () => {

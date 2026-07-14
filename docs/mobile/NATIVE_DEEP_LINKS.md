@@ -203,13 +203,67 @@ This checkpoint does not add or modify:
 
 ## Remaining Auth Redirect Work
 
-Native WebViews use a local origin. Future auth work must ensure native signup and password-reset emails use the public HTTPS callback origin, such as:
+Native WebViews use a local origin. Checkpoint 4C keeps Supabase Auth email redirects on a hosted HTTPS origin instead of deriving them from the Capacitor WebView origin.
+
+Native production builds use:
+
+```bash
+NEXT_PUBLIC_CGY_NATIVE_HOSTED_ORIGIN=https://canyougeo.com
+```
+
+The native build script supplies this public value together with `NEXT_PUBLIC_CGY_NATIVE_APP=1`. It is public build-time configuration, not a secret.
+
+Production native signup confirmation and password-reset requests send Supabase this exact callback URL:
 
 ```text
 https://canyougeo.com/auth/callback
 ```
 
-Do not rely on the WebView origin for production Supabase Auth email redirects.
+Do not rely on the WebView origin for production Supabase Auth email redirects. A Capacitor app may run the web bundle from a local origin such as `https://localhost`; hosted Supabase Auth emails must not contain that origin.
+
+Web builds preserve the existing behavior: signup and password reset callbacks are still based on the active browser origin through the existing site-origin helper, so local web development and deployed web origins keep working as before.
+
+Native builds fail closed if `NEXT_PUBLIC_CGY_NATIVE_HOSTED_ORIGIN` is missing or invalid. The UI does not send the Supabase `signUp` or `resetPasswordForEmail` request when a safe hosted callback cannot be constructed.
+
+Production hosted-origin validation currently allows only:
+
+- `https://canyougeo.com`
+- HTTPS
+- no credentials
+- no non-production host such as `www.canyougeo.com`, `test.canyougeo.com`, or `localhost`
+- no path other than `/`
+- no query string
+- no fragment
+- no custom scheme
+
+The helper accepts an explicit allowed-origin option so a future staging native build can intentionally use:
+
+```text
+https://test.canyougeo.com
+```
+
+Do not enable staging by default in the production native build.
+
+## Supabase Dashboard Contract
+
+Repository documentation expects the production Supabase Auth URL configuration to be:
+
+```text
+Site URL: https://canyougeo.com
+Redirect URL: https://canyougeo.com/auth/callback
+```
+
+Repository documentation expects the staging Supabase Auth callback entry to be:
+
+```text
+https://test.canyougeo.com/auth/callback
+```
+
+Those are documented expectations from `docs/AUTH_SETUP.md` and `docs/DOMAIN_EMAIL_SETUP.md`. This checkpoint does not verify or modify the live Supabase dashboard.
+
+Do not add `https://localhost/auth/callback` to a hosted production or staging Supabase allowlist. Local web QA continues to use the documented `http://localhost:3000/auth/callback` and `http://localhost:3001/auth/callback` entries where appropriate.
+
+Platform association work is still required before installed iOS or Android apps can receive production HTTPS links directly.
 
 ## Testing Limits
 
