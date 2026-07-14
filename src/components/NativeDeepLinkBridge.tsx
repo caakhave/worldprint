@@ -4,7 +4,12 @@ import { useEffect, useRef } from "react";
 import { useRouter } from "next/navigation";
 import { Capacitor, type PluginListenerHandle } from "@capacitor/core";
 import { isNativeAppBuild } from "@/lib/site/buildTarget";
-import { nativeDeepLinkDedupeKey, parseNativeDeepLinkUrl, type NativeDeepLinkAccepted } from "@/lib/mobile/nativeDeepLink";
+import {
+  nativeDeepLinkDedupeKey,
+  parseNativeDeepLinkUrl,
+  type NativeDeepLinkAccepted,
+  type NativeDeepLinkNavigation
+} from "@/lib/mobile/nativeDeepLink";
 import { resetNativeNavigationHistory } from "@/lib/mobile/nativeNavigationHistory";
 
 type IncomingUrlEvent = {
@@ -14,6 +19,11 @@ type IncomingUrlEvent = {
 type AppPlugin = {
   getLaunchUrl: () => Promise<IncomingUrlEvent | null | undefined>;
   addListener: (eventName: "appUrlOpen", listener: (event: IncomingUrlEvent) => void) => Promise<PluginListenerHandle>;
+};
+
+type NativeRouter = {
+  push: (href: string) => void;
+  replace: (href: string) => void;
 };
 
 const DUPLICATE_DEEP_LINK_WINDOW_MS = 2000;
@@ -47,9 +57,44 @@ async function lookupLaunchUrl(App: AppPlugin): Promise<IncomingUrlEvent | null 
   }
 }
 
+function currentBrowserDestination() {
+  return `${window.location.pathname}${window.location.search}${window.location.hash}`;
+}
+
+function requestNavigationCheckFrame(callback: () => void) {
+  if (typeof window.requestAnimationFrame === "function") {
+    const frame = window.requestAnimationFrame(callback);
+    return () => window.cancelAnimationFrame(frame);
+  }
+
+  const timeout = window.setTimeout(callback, 0);
+  return () => window.clearTimeout(timeout);
+}
+
+function schedulePostNavigationCheck(
+  destination: string,
+  navigation: NativeDeepLinkNavigation,
+  router: NativeRouter,
+  isActive: () => boolean
+) {
+  let cancelInnerFrame: (() => void) | undefined;
+  const cancelOuterFrame = requestNavigationCheckFrame(() => {
+    cancelInnerFrame = requestNavigationCheckFrame(() => {
+      if (!isActive() || currentBrowserDestination() === destination) return;
+      router[navigation](destination);
+    });
+  });
+
+  return () => {
+    cancelOuterFrame();
+    if (cancelInnerFrame) cancelInnerFrame();
+  };
+}
+
 export function NativeDeepLinkBridge() {
   const router = useRouter();
   const lastNavigationRef = useRef<{ key: string; at: number } | null>(null);
+  const pendingNavigationChecksRef = useRef<Array<() => void>>([]);
 
   useEffect(() => {
     const platform = Capacitor.getPlatform();
@@ -57,6 +102,21 @@ export function NativeDeepLinkBridge() {
 
     let active = true;
     let listenerHandle: PluginListenerHandle | undefined;
+
+    const cancelPendingNavigationChecks = () => {
+      for (const cancel of pendingNavigationChecksRef.current) cancel();
+      pendingNavigationChecksRef.current = [];
+    };
+
+    const rememberNavigationCheck = (cancel: () => void) => {
+      pendingNavigationChecksRef.current.push(cancel);
+    };
+
+    const issueNavigation = (destination: string, navigation: NativeDeepLinkNavigation) => {
+      cancelPendingNavigationChecks();
+      router[navigation](destination);
+      rememberNavigationCheck(schedulePostNavigationCheck(destination, navigation, router, () => active));
+    };
 
     const navigateToAcceptedLink = (result: NativeDeepLinkAccepted, source: "cold" | "warm") => {
       const key = nativeDeepLinkDedupeKey(result);
@@ -67,10 +127,10 @@ export function NativeDeepLinkBridge() {
       const navigation = source === "cold" ? "replace" : result.navigation;
       if (navigation === "replace") {
         resetNativeNavigationHistory();
-        router.replace(result.destination);
+        issueNavigation(result.destination, "replace");
         return;
       }
-      router.push(result.destination);
+      issueNavigation(result.destination, "push");
     };
 
     const handleIncomingUrl = (rawUrl: string | null | undefined, source: "cold" | "warm") => {
@@ -89,13 +149,6 @@ export function NativeDeepLinkBridge() {
       }
 
       try {
-        const launchUrl = await lookupLaunchUrl(App);
-        handleIncomingUrl(launchUrl?.url, "cold");
-      } catch {
-        // A launch URL lookup failure should not block the static app from loading normally.
-      }
-
-      try {
         const handle = await App.addListener("appUrlOpen", (event) => handleIncomingUrl(event.url, "warm"));
         if (active) {
           listenerHandle = handle;
@@ -103,7 +156,14 @@ export function NativeDeepLinkBridge() {
           void handle.remove();
         }
       } catch {
-        // Incoming links are optional for this shell checkpoint; rendering must continue if native wiring is unavailable.
+        // Incoming warm links are optional for this shell checkpoint; cold launch URL lookup can still recover.
+      }
+
+      try {
+        const launchUrl = await lookupLaunchUrl(App);
+        handleIncomingUrl(launchUrl?.url, "cold");
+      } catch {
+        // A launch URL lookup failure should not block the static app from loading normally.
       }
     };
 
@@ -111,6 +171,7 @@ export function NativeDeepLinkBridge() {
 
     return () => {
       active = false;
+      cancelPendingNavigationChecks();
       if (listenerHandle) void listenerHandle.remove();
     };
   }, [router]);

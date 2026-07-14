@@ -77,6 +77,12 @@ describe("NativeDeepLinkBridge", () => {
     });
     routerMock.push.mockReset();
     routerMock.replace.mockReset();
+    routerMock.push.mockImplementation((destination: string) => {
+      window.history.pushState({}, "", destination);
+    });
+    routerMock.replace.mockImplementation((destination: string) => {
+      window.history.replaceState({}, "", destination);
+    });
     resetNativeNavigationHistory();
     window.history.replaceState({}, "", "/");
   });
@@ -195,7 +201,7 @@ describe("NativeDeepLinkBridge", () => {
     expect(nativeTrackedHistoryDepth()).toBe(0);
   });
 
-  it("waits for launch URL lookup before registering the warm URL listener", async () => {
+  it("registers the warm URL listener before waiting on launch URL lookup", async () => {
     vi.stubEnv("NEXT_PUBLIC_CGY_NATIVE_APP", "1");
     capacitorMocks.platform = "android";
     let resolveLaunchUrl: (event: IncomingUrlEvent) => void = () => undefined;
@@ -207,14 +213,33 @@ describe("NativeDeepLinkBridge", () => {
 
     render(<NativeDeepLinkBridge />);
 
+    await waitFor(() => expect(capacitorMocks.addListener).toHaveBeenCalledWith("appUrlOpen", expect.any(Function)));
     await waitFor(() => expect(capacitorMocks.getLaunchUrl).toHaveBeenCalledTimes(1));
-    expect(capacitorMocks.addListener).not.toHaveBeenCalled();
+    expect(capacitorMocks.addListener.mock.invocationCallOrder[0]).toBeLessThan(
+      capacitorMocks.getLaunchUrl.mock.invocationCallOrder[0]
+    );
+
+    appUrlOpenListener?.({ url: "https://canyougeo.com/sign-up/" });
+
+    await waitFor(() => expect(routerMock.push).toHaveBeenCalledWith("/sign-up/"));
+    expect(routerMock.replace).not.toHaveBeenCalled();
 
     resolveLaunchUrl({ url: "https://canyougeo.com/sign-up/" });
 
+    expect(routerMock.push).toHaveBeenCalledTimes(1);
+    expect(routerMock.replace).not.toHaveBeenCalled();
+  });
+
+  it("still handles cold launch URLs when warm listener registration fails", async () => {
+    vi.stubEnv("NEXT_PUBLIC_CGY_NATIVE_APP", "1");
+    capacitorMocks.platform = "android";
+    capacitorMocks.addListener.mockRejectedValueOnce(new Error("listener unavailable"));
+    capacitorMocks.getLaunchUrl.mockResolvedValueOnce({ url: "https://canyougeo.com/sign-up/" });
+
+    render(<NativeDeepLinkBridge />);
+
     await waitFor(() => expect(routerMock.replace).toHaveBeenCalledWith("/sign-up/"));
     expect(routerMock.push).not.toHaveBeenCalled();
-    await waitFor(() => expect(capacitorMocks.addListener).toHaveBeenCalledWith("appUrlOpen", expect.any(Function)));
   });
 
   it("always uses replace for auth callback URLs", async () => {
