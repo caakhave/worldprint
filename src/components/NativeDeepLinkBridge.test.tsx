@@ -127,6 +127,17 @@ describe("NativeDeepLinkBridge", () => {
     expect(routerMock.push).not.toHaveBeenCalled();
   });
 
+  it("uses replace for accepted cold-start signup URLs", async () => {
+    vi.stubEnv("NEXT_PUBLIC_CGY_NATIVE_APP", "1");
+    capacitorMocks.platform = "android";
+    capacitorMocks.getLaunchUrl.mockResolvedValue({ url: "https://canyougeo.com/sign-up/" });
+
+    render(<NativeDeepLinkBridge />);
+
+    await waitFor(() => expect(routerMock.replace).toHaveBeenCalledWith("/sign-up/"));
+    expect(routerMock.push).not.toHaveBeenCalled();
+  });
+
   it("uses push for accepted warm public URLs", async () => {
     vi.stubEnv("NEXT_PUBLIC_CGY_NATIVE_APP", "1");
     capacitorMocks.platform = "android";
@@ -136,6 +147,18 @@ describe("NativeDeepLinkBridge", () => {
     appUrlOpenListener?.({ url: validChallengeUrl() });
 
     await waitFor(() => expect(routerMock.push).toHaveBeenCalledWith(expect.stringMatching(/^\/challenge\/mystery-map\/\?c=/)));
+    expect(routerMock.replace).not.toHaveBeenCalled();
+  });
+
+  it("uses push for accepted warm signup URLs", async () => {
+    vi.stubEnv("NEXT_PUBLIC_CGY_NATIVE_APP", "1");
+    capacitorMocks.platform = "android";
+
+    render(<NativeDeepLinkBridge />);
+    await waitFor(() => expect(appUrlOpenListener).toBeDefined());
+    appUrlOpenListener?.({ url: "https://canyougeo.com/sign-up/" });
+
+    await waitFor(() => expect(routerMock.push).toHaveBeenCalledWith("/sign-up/"));
     expect(routerMock.replace).not.toHaveBeenCalled();
   });
 

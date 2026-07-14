@@ -78,6 +78,9 @@ describe("parseNativeDeepLinkUrl", () => {
     expectAccepted("https://canyougeo.com/sign-in/?next=%2Fupgrade%3Fplan%3Dyearly", "/sign-in/?next=%2Fupgrade%3Fplan%3Dyearly", {
       category: "auth"
     });
+    expectAccepted("https://canyougeo.com/sign-up/", "/sign-up/", {
+      category: "auth"
+    });
     expectAccepted("https://canyougeo.com/sign-up/?next=%2Faccount%2Fstats", "/sign-up/?next=%2Faccount%2Fstats", {
       category: "auth"
     });
