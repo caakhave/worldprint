@@ -1,6 +1,7 @@
 import path from "node:path";
 import { describe, expect, it } from "vitest";
 import {
+  androidDeviceNetworkShellCommands,
   buildMaestroInvocation,
   flowFilesFor,
   maestroEnvironment,
@@ -25,6 +26,12 @@ describe("native Maestro runner options", () => {
       suite: "auth",
       device: "simulator-id"
     });
+
+    expect(parseArgs(["--platform", "android", "--suite", "guardrails"])).toMatchObject({
+      platform: "android",
+      suite: "guardrails",
+      device: "emulator-5554"
+    });
   });
 
   it("rejects invalid platform and suite values", () => {
@@ -35,6 +42,7 @@ describe("native Maestro runner options", () => {
   it("keeps auth as the only credential-bearing default suite", () => {
     expect(suiteNeedsCredentials("smoke")).toBe(false);
     expect(suiteNeedsCredentials("interaction")).toBe(false);
+    expect(suiteNeedsCredentials("guardrails")).toBe(false);
     expect(suiteNeedsCredentials("auth")).toBe(true);
     expect(suiteNeedsCredentials("all")).toBe(true);
   });
@@ -91,6 +99,17 @@ describe("native Maestro runner command construction", () => {
     expect(flowFilesFor("ios", "auth").every((file) => file.includes("canyougeo-blackbox/native/maestro/flows/ios"))).toBe(true);
   });
 
+  it("registers separate native guardrail suites without folding them into all", () => {
+    expect(flowFilesFor("android", "guardrails").map((file) => path.basename(file))).toEqual([
+      "06_guardrails_online.yaml",
+      "07_guardrails_offline.yaml",
+      "08_guardrails_reconnect.yaml"
+    ]);
+    expect(flowFilesFor("ios", "guardrails").map((file) => path.basename(file))).toEqual(["04_guardrails.yaml"]);
+    expect(flowFilesFor("android", "all").map((file) => path.basename(file))).not.toContain("06_guardrails_online.yaml");
+    expect(flowFilesFor("ios", "all").map((file) => path.basename(file))).not.toContain("04_guardrails.yaml");
+  });
+
   it("keeps reports inside the ignored native report directory", () => {
     const dir = reportDirectory("android", "smoke", new Date("2026-07-14T18:00:00Z"));
 
@@ -142,6 +161,36 @@ describe("native Maestro runner command construction", () => {
     expect(args).toContain("--test-output-dir");
     expect(invocation.debugDir).toContain("canyougeo-blackbox/native/reports/android-smoke-20260714T180000Z/debug");
     expect(invocation.outputDir).toContain("canyougeo-blackbox/native/reports/android-smoke-20260714T180000Z/test-output");
+  });
+
+  it("builds non-secret guardrail invocations with ignored report output", () => {
+    const reportDir = reportDirectory("android", "guardrails", new Date("2026-07-14T18:00:00Z"));
+    const invocation = buildMaestroInvocation({
+      platform: "android",
+      suite: "guardrails",
+      device: "emulator-5554",
+      reportDir
+    });
+    const args = invocation.args.join(" ");
+
+    expect(args).toContain("06_guardrails_online.yaml");
+    expect(args).toContain("07_guardrails_offline.yaml");
+    expect(args).toContain("08_guardrails_reconnect.yaml");
+    expect(args).toContain("--debug-output");
+    expect(args).toContain("--test-output-dir");
+  });
+
+  it("uses emulator-local Android networking controls for offline guardrails", () => {
+    expect(androidDeviceNetworkShellCommands("offline")).toEqual([
+      ["cmd", "connectivity", "airplane-mode", "enable"],
+      ["svc", "wifi", "disable"],
+      ["svc", "data", "disable"]
+    ]);
+    expect(androidDeviceNetworkShellCommands("online")).toEqual([
+      ["cmd", "connectivity", "airplane-mode", "disable"],
+      ["svc", "wifi", "enable"],
+      ["svc", "data", "enable"]
+    ]);
   });
 
   it("injects credential variables through the subprocess environment", () => {

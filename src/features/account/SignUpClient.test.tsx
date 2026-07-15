@@ -7,6 +7,7 @@ const routerMock = vi.hoisted(() => ({
   push: vi.fn()
 }));
 
+const getPlatformMock = vi.hoisted(() => vi.fn(() => "web"));
 const ensureProfileMock = vi.hoisted(() => vi.fn(async () => ({ error: null })));
 
 const accountMock = vi.hoisted(() => ({
@@ -32,6 +33,12 @@ vi.mock("next/navigation", () => ({
   useRouter: () => routerMock
 }));
 
+vi.mock("@capacitor/core", () => ({
+  Capacitor: {
+    getPlatform: getPlatformMock
+  }
+}));
+
 vi.mock("@/lib/account/sync", () => ({
   ensureProfile: ensureProfileMock
 }));
@@ -46,8 +53,17 @@ const signedInUser = {
   identities: [{ id: "identity-1" }]
 };
 
+let onlineSpy: { mockRestore: () => void } | null = null;
+
+function mockNativeOffline() {
+  vi.stubEnv("NEXT_PUBLIC_CGY_NATIVE_APP", "1");
+  getPlatformMock.mockReturnValue("android");
+  onlineSpy = vi.spyOn(window.navigator, "onLine", "get").mockReturnValue(false);
+}
+
 describe("SignUpClient", () => {
   beforeEach(() => {
+    getPlatformMock.mockReturnValue("web");
     routerMock.push.mockClear();
     ensureProfileMock.mockClear();
     accountMock.state.client.auth.signUp.mockReset();
@@ -66,6 +82,8 @@ describe("SignUpClient", () => {
   });
 
   afterEach(() => {
+    onlineSpy?.mockRestore();
+    onlineSpy = null;
     vi.unstubAllEnvs();
     delete (window as typeof window & { dataLayer?: unknown[] }).dataLayer;
   });
@@ -127,6 +145,22 @@ describe("SignUpClient", () => {
       })
     );
     expect(JSON.stringify(accountMock.state.client.auth.signUp.mock.calls)).not.toContain("https://localhost");
+  });
+
+  it("fails fast without creating an account when a native app is offline", async () => {
+    mockNativeOffline();
+    const user = userEvent.setup();
+
+    render(<SignUpClient />);
+
+    await user.type(screen.getByLabelText("Email"), "new@example.com");
+    await user.type(screen.getByLabelText("Password"), "strong-password");
+    await user.type(screen.getByLabelText("Confirm password"), "strong-password");
+    await user.click(screen.getByRole("button", { name: "Create account" }));
+
+    expect(screen.getByRole("alert")).toHaveTextContent("You're offline. Reconnect, then try this account action again.");
+    expect(accountMock.state.client.auth.signUp).not.toHaveBeenCalled();
+    expect(routerMock.push).not.toHaveBeenCalled();
   });
 
   it("does not call Supabase when native sign-up callback configuration is missing", async () => {

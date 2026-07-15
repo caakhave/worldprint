@@ -1,0 +1,46 @@
+appId: com.canyougeo.app
+name: Android native release guardrails online
+tags:
+  - native
+  - guardrails
+  - android
+---
+- launchApp:
+    clearState: true
+- extendedWaitUntil:
+    visible: "Can you read the world?"
+    timeout: 60000
+- assertNotVisible: "Cookie settings"
+- tapOn: "Explore games"
+- extendedWaitUntil:
+    visible: "Choose a game."
+    timeout: 15000
+- tapOn: "Can You Geo? home"
+- extendedWaitUntil:
+    visible: "Can you read the world?"
+    timeout: 60000
+- openLink: "https://canyougeo.com/support/"
+- extendedWaitUntil:
+    visible: "Follow Can You Geo"
+    timeout: 20000
+- scrollUntilVisible:
+    element: "Instagram"
+    direction: DOWN
+- tapOn: "Instagram"
+- extendedWaitUntil:
+    visible: "instagram.com"
+    timeout: 30000
+- tapOn: "Close tab"
+- extendedWaitUntil:
+    visible: "Follow Can You Geo"
+    timeout: 30000
+- openLink: "https://canyougeo.com/upgrade/"
+- extendedWaitUntil:
+    visible: "Mobile purchase preview"
+    timeout: 30000
+- extendedWaitUntil:
+    visible: "Mobile purchases unavailable"
+    timeout: 15000
+- assertNotVisible: "Join monthly"
+- assertNotVisible: "Join yearly"
+- assertNotVisible: "Cookie settings"

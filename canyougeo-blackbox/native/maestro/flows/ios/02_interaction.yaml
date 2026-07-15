@@ -10,7 +10,7 @@ tags:
 - extendedWaitUntil:
     visible: "Can you read the world?"
     timeout: 15000
-- tapOn: "Play"
+- tapOn: "Explore games"
 - extendedWaitUntil:
     visible: "Choose a game."
     timeout: 15000

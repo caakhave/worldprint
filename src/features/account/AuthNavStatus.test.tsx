@@ -182,6 +182,22 @@ describe("AuthNavStatus", () => {
     expect(styles).toContain("padding-left: calc(clamp(0.75rem, 4vw, 1rem) + var(--cgy-safe-area-left));");
     expect(styles).toContain(".cgy-native-app .site-footer");
     expect(styles).toContain("padding-bottom: calc(2rem + var(--cgy-safe-area-bottom));");
+    expect(styles).toContain(".cgy-native-app .native-connectivity-status");
+    expect(styles).toContain("top: calc(0.55rem + var(--cgy-safe-area-top));");
+    expect(styles).toContain("right: calc(0.75rem + var(--cgy-safe-area-right));");
+    expect(styles).toContain("left: calc(0.75rem + var(--cgy-safe-area-left));");
+  });
+
+  it("keeps native gameplay and bottom actions clear of system bars", () => {
+    expect(styles).toContain(".cgy-native-app .play-action-dock");
+    expect(styles).toContain("margin-right: var(--cgy-safe-area-right);");
+    expect(styles).toContain("margin-bottom: var(--cgy-safe-area-bottom);");
+    expect(styles).toContain("margin-left: var(--cgy-safe-area-left);");
+    expect(styles).toContain(".cgy-native-app .checkout-option-buttons");
+    expect(styles).toContain("padding-bottom: max(0px, var(--cgy-safe-area-bottom));");
+    expect(styles).toContain(".cgy-native-app .game-shell,");
+    expect(styles).toContain("padding-left: max(1rem, var(--cgy-safe-area-left));");
+    expect(styles).toContain("padding-right: max(1rem, var(--cgy-safe-area-right));");
   });
 
   it("keeps native narrow-width header controls visible and touchable", () => {

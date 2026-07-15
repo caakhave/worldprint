@@ -1,0 +1,22 @@
+appId: com.canyougeo.app
+name: Android native release guardrails reconnect
+tags:
+  - native
+  - guardrails
+  - android
+  - reconnect
+---
+- launchApp
+- extendedWaitUntil:
+    visible: "Can You Geo?"
+    timeout: 60000
+- assertNotVisible: "Device offline."
+- openLink: "https://canyougeo.com/sign-in/"
+- extendedWaitUntil:
+    visible: "Sign in with email and password."
+    timeout: 30000
+- assertNotVisible: "You're offline. Reconnect, then try this account action again."
+- tapOn: "Can You Geo? home"
+- extendedWaitUntil:
+    visible: "Can you read the world?"
+    timeout: 60000

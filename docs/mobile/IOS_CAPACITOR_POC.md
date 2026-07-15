@@ -43,6 +43,8 @@ xcrun simctl launch booted com.canyougeo.app
 - Marketing consent UI and consent events are suppressed in native builds.
 - Stripe checkout and customer portal actions are unavailable in the native preview.
 - Existing Pro entitlements can still be read by the web app, but purchase and subscription management must be replaced before App Store release.
+- Official social links open through Capacitor Browser after strict trusted-destination validation. Internal Can You Geo routes stay inside the WebView.
+- Native offline handling uses `navigator.onLine`, browser connectivity events, and a short native-only HTTPS reachability probe when the WebView still reports online. It shows a small offline status, fails account actions quickly, preserves durable sessions, and retries sync after reconnect. Isolated iOS simulator offline runtime testing remains deferred unless it can be done without unsafe system-wide network changes.
 - The root layout marks native builds with `cgy-native-app` and enables `viewport-fit=cover`.
 - Safe-area CSS variables use `env(safe-area-inset-*)` for header/footer padding and iPhone compact-header adjustments.
 - Mystery Map and Pattern Atlas moment overlays are centered in the visible native landscape viewport.
@@ -63,6 +65,7 @@ Most recent checkpoint validation recorded:
 - Capacitor iOS sync: passed
 - Xcode iPhone 17 Pro simulator build: `BUILD SUCCEEDED`
 - Manual iPhone 17 Pro QA: passed
+- Release guardrails are documented in `docs/mobile/NATIVE_RELEASE_GUARDRAILS.md`.
 
 ## Deferred Work
 

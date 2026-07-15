@@ -22,9 +22,11 @@ pnpm qa:native:android:interaction
 pnpm qa:native:android:back
 pnpm qa:native:android:deep-link
 pnpm qa:native:android:auth
+pnpm qa:native:android:guardrails
 pnpm qa:native:ios:smoke
 pnpm qa:native:ios:interaction
 pnpm qa:native:ios:auth
+pnpm qa:native:ios:guardrails
 ```
 
 The `android:all` and `ios:all` shortcuts run the platform's complete current native flow list. Use the narrower commands while diagnosing a regression.
@@ -51,6 +53,7 @@ Current Android coverage:
 - verified production App Link intake for `/play/`
 - tokenless auth callback route handling
 - sign-in session persistence across app stop/relaunch
+- native release guardrails for Browser-plugin social links, internal navigation, safe-area-visible controls, offline/reconnect behavior, billing boundaries, and consent absence
 
 Current iOS coverage:
 
@@ -58,8 +61,11 @@ Current iOS coverage:
 - Play hub and three game route lobbies
 - Pattern Atlas WebView interaction
 - sign-in session persistence across app stop/relaunch
+- native release guardrails for Browser-plugin social links, internal navigation, safe-area-visible controls, billing boundaries, and consent absence
 
 iOS does not claim Universal Links yet, so the iOS flows avoid OS-level HTTPS link routing. Add those tests only after iOS association and entitlement work exists.
+
+Android guardrails temporarily enable airplane mode and disable Wi-Fi/data on the target emulator/device through `adb`, then disable airplane mode and re-enable Wi-Fi/data before the reconnect flow. They must not alter host-machine networking.
 
 ## Reports
 

@@ -75,6 +75,8 @@ The validated emulator for this POC was `Medium_Phone_API_36.1`.
 - Marketing consent UI and consent events are suppressed in native builds.
 - Stripe checkout and customer portal actions are unavailable in the native preview.
 - Existing Pro entitlements can still be read by the web app, but purchase and subscription management must be replaced before Play Store release.
+- Official social links open through Capacitor Browser after strict trusted-destination validation. Internal Can You Geo routes stay inside the WebView.
+- Native offline handling uses `navigator.onLine`, browser connectivity events, and a short native-only HTTPS reachability probe when the Android WebView still reports online. It shows a small offline status, fails account actions quickly, preserves durable sessions, and retries sync after reconnect.
 - Android system Back is handled through Capacitor's official App plugin. Internal routes with usable WebView history call `window.history.back()`, while the root route minimizes the app instead of force-closing it.
 - Android status and navigation bars are handled as WebView system insets. Current shallow testing found content inset below the top status bar and above the bottom navigation/gesture area without obvious overlap.
 - Capacitor Android 8.4.1 can log `Error injecting safe area CSS: TypeError: Cannot read properties of null (reading 'style')` during startup from `com.getcapacitor.plugin.SystemBars.injectSafeAreaCSS`. The injected JavaScript touches `document.documentElement.style` before the WebView has created `document.documentElement`, so the null value is the document element, not a Can You Geo selector. This is an upstream timing warning from the default `SystemBars.insetsHandling = "css"` path on Android WebView 134.0.6998.135, which Capacitor uses to compensate for older WebView safe-area bugs. It is currently non-fatal: the app launches, WebView history/back behavior works, and visual insets remain correct. Retest this note when upgrading Capacitor Android or when Android WebView is 140 or newer; do not disable SystemBars inset handling just to silence the warning.
@@ -91,6 +93,7 @@ The validated emulator for this POC was `Medium_Phone_API_36.1`.
 - Upgrade route shows the native billing-preview state and does not open Stripe checkout or an external browser.
 - No website marketing-consent banner is visible in the native app.
 - No GTM, GA4, Meta, TikTok, or Reddit runtime markers were observed in shallow native runtime logs.
+- Release guardrails are documented in `docs/mobile/NATIVE_RELEASE_GUARDRAILS.md`.
 
 ## Debug APK
 
