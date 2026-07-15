@@ -1,15 +1,18 @@
 import { render, screen } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
-import { beforeEach, describe, expect, it, vi } from "vitest";
+import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
 import { AccountHeroClient } from "@/features/account/AccountHeroClient";
 import { AccountPlanNotesClient } from "@/features/account/AccountPlanNotesClient";
 import { AccountStatusClient } from "@/features/account/AccountStatusClient";
 import { MembershipCardClient } from "@/features/account/MembershipCardClient";
 import { CONTACT_LINKS } from "@/lib/contact";
+import { NATIVE_ACCOUNT_SYNC_DEFERRED_MESSAGE } from "@/lib/mobile/nativeConnectivity";
 
 const routerMock = vi.hoisted(() => ({
   push: vi.fn()
 }));
+
+const getPlatformMock = vi.hoisted(() => vi.fn(() => "web"));
 
 const accountMock = vi.hoisted(() => ({
   state: {
@@ -98,6 +101,12 @@ vi.mock("next/navigation", () => ({
   useRouter: () => routerMock
 }));
 
+vi.mock("@capacitor/core", () => ({
+  Capacitor: {
+    getPlatform: getPlatformMock
+  }
+}));
+
 vi.mock("@/features/account/useSupabaseAccount", () => ({
   useSupabaseAccount: () => accountMock.state
 }));
@@ -122,8 +131,18 @@ vi.mock("@/lib/persistence/playerStats", () => ({
   buildLocalPlayerStats: localHistoryMock.buildLocalPlayerStats
 }));
 
+let onlineSpy: { mockRestore: () => void } | null = null;
+
+function mockNativeOffline() {
+  vi.stubEnv("NEXT_PUBLIC_CGY_NATIVE_APP", "1");
+  getPlatformMock.mockReturnValue("android");
+  onlineSpy = vi.spyOn(window.navigator, "onLine", "get").mockReturnValue(false);
+}
+
 describe("AccountStatusClient", () => {
   beforeEach(() => {
+    vi.stubEnv("NEXT_PUBLIC_CGY_NATIVE_APP", "0");
+    getPlatformMock.mockReturnValue("web");
     accountMock.state.signOut.mockClear();
     marketingMock.fetchMarketingPreference.mockClear();
     marketingMock.updateMarketingPreference.mockClear();
@@ -153,6 +172,12 @@ describe("AccountStatusClient", () => {
     entitlementMock.state.signedIn = true;
     entitlementMock.state.loading = false;
     entitlementMock.state.entitlement.plan = "free";
+  });
+
+  afterEach(() => {
+    onlineSpy?.mockRestore();
+    onlineSpy = null;
+    vi.unstubAllEnvs();
   });
 
   it("renders a compact signed-in account summary without exposing the raw user ID", async () => {
@@ -232,6 +257,16 @@ describe("AccountStatusClient", () => {
 
     expect(marketingMock.updateMarketingPreference).toHaveBeenCalledWith(accountMock.state.client, "11111111-2222-4333-8444-555555555555", false);
     expect(await screen.findByText("Email updates turned off.")).toBeVisible();
+  });
+
+  it("defers marketing preference sync instead of fetching while a native app is offline", async () => {
+    mockNativeOffline();
+
+    render(<AccountStatusClient />);
+
+    expect(await screen.findByText(NATIVE_ACCOUNT_SYNC_DEFERRED_MESSAGE)).toBeVisible();
+    expect(marketingMock.fetchMarketingPreference).not.toHaveBeenCalled();
+    expect(marketingMock.updateMarketingPreference).not.toHaveBeenCalled();
   });
 
   it("redirects to signed-out confirmation after account-page sign-out", async () => {

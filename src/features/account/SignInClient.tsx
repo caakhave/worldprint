@@ -11,6 +11,7 @@ import {
   signUpPathForReturn,
   storeSignInReturnPath
 } from "@/lib/account/signInRedirect";
+import { isNativeAppCurrentlyOfflineAsync, NATIVE_NETWORK_ACTION_UNAVAILABLE_MESSAGE } from "@/lib/mobile/nativeConnectivity";
 import { trackAnalyticsEvent } from "@/lib/site/analytics";
 
 const GENERIC_SIGN_IN_ERROR = "We could not sign you in. Check your email and password.";
@@ -76,6 +77,10 @@ export function SignInClient() {
     event.preventDefault();
     if (!client) {
       setError("Email and password sign-in is not available in this preview. You can still try the Sample Run.");
+      return;
+    }
+    if (await isNativeAppCurrentlyOfflineAsync()) {
+      setError(NATIVE_NETWORK_ACTION_UNAVAILABLE_MESSAGE);
       return;
     }
 

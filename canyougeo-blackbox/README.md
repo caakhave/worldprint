@@ -120,9 +120,11 @@ pnpm qa:native:android:interaction
 pnpm qa:native:android:back
 pnpm qa:native:android:deep-link
 pnpm qa:native:android:auth
+pnpm qa:native:android:guardrails
 pnpm qa:native:ios:smoke
 pnpm qa:native:ios:interaction
 pnpm qa:native:ios:auth
+pnpm qa:native:ios:guardrails
 ```
 
 Native auth flows reuse `CGY_FREE_EMAIL`/`CGY_FREE_PASSWORD` or `CGY_PRO_EMAIL`/`CGY_PRO_PASSWORD` from local env files or the shell. They are device-level Maestro flows, not Playwright tests, and they do not use Maestro Cloud.

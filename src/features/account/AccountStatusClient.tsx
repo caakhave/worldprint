@@ -10,6 +10,11 @@ import { useSupabaseAccount } from "@/features/account/useSupabaseAccount";
 import { fetchMarketingPreference, statsSyncSignature, syncMarkerKey, updateMarketingPreference, type MarketingPreference } from "@/lib/account/sync";
 import { planLabel } from "@/lib/account/entitlements";
 import { CONTACT_LINKS } from "@/lib/contact";
+import {
+  isNativeAppCurrentlyOffline,
+  NATIVE_ACCOUNT_SYNC_DEFERRED_MESSAGE,
+  NATIVE_NETWORK_ACTION_UNAVAILABLE_MESSAGE
+} from "@/lib/mobile/nativeConnectivity";
 import { buildLocalPlayerStats } from "@/lib/persistence/playerStats";
 import { loadPersistedState } from "@/lib/persistence/storage";
 import { trackAnalyticsEvent } from "@/lib/site/analytics";
@@ -23,7 +28,7 @@ function trackUpgradeNavigation(itemId: string) {
 
 export function AccountStatusClient() {
   const router = useRouter();
-  const { client, configured, loading, user, profileError, signOut } = useSupabaseAccount();
+  const { client, configured, loading, user, profileError, nativeOffline, signOut } = useSupabaseAccount();
   const { entitlement, loading: entitlementLoading } = useEntitlement();
   const [signOutError, setSignOutError] = useState<string | null>(null);
   const [supportIdVisible, setSupportIdVisible] = useState(false);
@@ -42,6 +47,12 @@ export function AccountStatusClient() {
       setMarketingLoading(false);
       return;
     }
+    if (nativeOffline || isNativeAppCurrentlyOffline()) {
+      setMarketingPreference(null);
+      setMarketingError(NATIVE_ACCOUNT_SYNC_DEFERRED_MESSAGE);
+      setMarketingLoading(false);
+      return;
+    }
     setMarketingLoading(true);
     setMarketingError("");
     void fetchMarketingPreference(client, user.id).then((result) => {
@@ -53,7 +64,7 @@ export function AccountStatusClient() {
     return () => {
       cancelled = true;
     };
-  }, [client, user]);
+  }, [client, nativeOffline, user]);
 
   useEffect(() => {
     if (!user) {
@@ -93,6 +104,10 @@ export function AccountStatusClient() {
 
   async function handleMarketingPreference(nextOptIn: boolean) {
     if (!client || !user) return;
+    if (isNativeAppCurrentlyOffline()) {
+      setMarketingError(NATIVE_NETWORK_ACTION_UNAVAILABLE_MESSAGE);
+      return;
+    }
     setMarketingSaving(true);
     setMarketingError("");
     setMarketingStatus("");

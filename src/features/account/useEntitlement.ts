@@ -8,6 +8,7 @@ import {
   resolvePlayerEntitlement,
   type PlayerEntitlement
 } from "@/lib/account/entitlements";
+import { NATIVE_ACCOUNT_SYNC_DEFERRED_MESSAGE } from "@/lib/mobile/nativeConnectivity";
 
 export type EntitlementState = {
   entitlement: PlayerEntitlement;
@@ -37,6 +38,15 @@ export function useEntitlement(): EntitlementState {
       return;
     }
 
+    if (account.nativeOffline) {
+      setEntitlement((currentEntitlement) =>
+        currentEntitlement.plan === "guest" ? resolvePlayerEntitlement(null, true) : currentEntitlement
+      );
+      setLoading(false);
+      setError(NATIVE_ACCOUNT_SYNC_DEFERRED_MESSAGE);
+      return;
+    }
+
     setLoading(true);
     const result = await fetchRemoteEntitlement(account.client, account.user.id);
     if (result.error) {
@@ -47,7 +57,7 @@ export function useEntitlement(): EntitlementState {
       setEntitlement(resolvePlayerEntitlement(result.data, true));
     }
     setLoading(false);
-  }, [account.client, account.loading, account.user]);
+  }, [account.client, account.loading, account.nativeOffline, account.user]);
 
   useEffect(() => {
     void loadEntitlement();

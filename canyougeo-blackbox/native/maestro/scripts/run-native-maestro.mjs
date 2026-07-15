@@ -18,6 +18,11 @@ export const SUITES = {
     back: ["flows/android/03_back.yaml"],
     "deep-link": ["flows/android/04_app_links.yaml"],
     auth: ["flows/android/05_auth_lifecycle.yaml"],
+    guardrails: [
+      "flows/android/06_guardrails_online.yaml",
+      "flows/android/07_guardrails_offline.yaml",
+      "flows/android/08_guardrails_reconnect.yaml"
+    ],
     all: [
       "flows/android/01_smoke.yaml",
       "flows/android/02_interaction.yaml",
@@ -30,9 +35,16 @@ export const SUITES = {
     smoke: ["flows/ios/01_smoke.yaml"],
     interaction: ["flows/ios/02_interaction.yaml"],
     auth: ["flows/ios/03_auth_lifecycle.yaml"],
+    guardrails: ["flows/ios/04_guardrails.yaml"],
     all: ["flows/ios/01_smoke.yaml", "flows/ios/02_interaction.yaml", "flows/ios/03_auth_lifecycle.yaml"]
   }
 };
+
+const ANDROID_GUARDRAIL_SEQUENCE = [
+  { label: "online", flowFile: "flows/android/06_guardrails_online.yaml" },
+  { label: "offline", flowFile: "flows/android/07_guardrails_offline.yaml", network: "offline" },
+  { label: "reconnect", flowFile: "flows/android/08_guardrails_reconnect.yaml", network: "online" }
+];
 
 const AUTH_SUITES = new Set(["auth", "all"]);
 const ALLOWED_CREDENTIAL_PAIRS = [
@@ -158,7 +170,7 @@ export function maestroEnvironment(baseEnv = process.env, credentialEnv = {}) {
   };
 }
 
-export function buildMaestroInvocation({ platform, suite, device, reportDir, root = MAESTRO_ROOT }) {
+export function buildMaestroInvocation({ platform, suite, device, reportDir, root = MAESTRO_ROOT, flowFiles = flowFilesFor(platform, suite, root) }) {
   const debugDir = path.join(reportDir, "debug");
   const outputDir = path.join(reportDir, "test-output");
   const outputArgs = suiteNeedsCredentials(suite)
@@ -185,7 +197,7 @@ export function buildMaestroInvocation({ platform, suite, device, reportDir, roo
       path.join(root, "config.yaml"),
       "--test-suite-name",
       `cgy-native-${platform}-${suite}`,
-      ...flowFilesFor(platform, suite, root)
+      ...flowFiles
     ],
     debugDir: suiteNeedsCredentials(suite) ? null : debugDir,
     outputDir: suiteNeedsCredentials(suite) ? null : outputDir
@@ -229,6 +241,96 @@ export function suiteNeedsCredentials(suite) {
   return AUTH_SUITES.has(suite);
 }
 
+function runInvocation(invocation, env, secrets, commandRunner) {
+  const result = commandRunner(invocation.command, invocation.args, { env, cwd: path.resolve("."), encoding: "utf8" });
+  const stdout = sanitizeOutput(result.stdout ?? "", secrets);
+  const stderr = sanitizeOutput(result.stderr ?? "", secrets);
+  if (stdout) process.stdout.write(stdout);
+  if (stderr) process.stderr.write(stderr);
+  return result.status ?? 1;
+}
+
+export function androidDeviceNetworkShellCommands(mode) {
+  if (mode === "offline") {
+    return [
+      ["cmd", "connectivity", "airplane-mode", "enable"],
+      ["svc", "wifi", "disable"],
+      ["svc", "data", "disable"]
+    ];
+  }
+
+  return [
+    ["cmd", "connectivity", "airplane-mode", "disable"],
+    ["svc", "wifi", "enable"],
+    ["svc", "data", "enable"]
+  ];
+}
+
+function setAndroidDeviceNetwork(device, mode, env, commandRunner) {
+  const nextState = mode === "offline" ? "disable" : "enable";
+  for (const shellCommand of androidDeviceNetworkShellCommands(mode)) {
+    const result = commandRunner("adb", ["-s", device, "shell", ...shellCommand], {
+      env,
+      cwd: path.resolve("."),
+      encoding: "utf8"
+    });
+    if ((result.status ?? 1) !== 0) {
+      throw new Error(`Could not ${nextState} Android app networking for native guardrail QA.`);
+    }
+  }
+}
+
+function androidGuardrailInvocations(options, reportDir) {
+  return ANDROID_GUARDRAIL_SEQUENCE.map(({ label, flowFile }) =>
+    buildMaestroInvocation({
+      ...options,
+      suite: `guardrails-${label}`,
+      reportDir,
+      flowFiles: [path.join(MAESTRO_ROOT, flowFile)]
+    })
+  );
+}
+
+function runAndroidGuardrails(options, reportDir, env, commandRunner) {
+  const invocations = androidGuardrailInvocations(options, reportDir);
+  if (options.dryRun) {
+    return {
+      status: 0,
+      reportDir,
+      invocation: buildMaestroInvocation({ ...options, reportDir }),
+      guardrailInvocations: invocations,
+      androidNetworkToggles: true,
+      credentialsAvailable: false
+    };
+  }
+
+  let offlineStatus = 0;
+  let shouldRunReconnect = true;
+  for (const [index, step] of ANDROID_GUARDRAIL_SEQUENCE.entries()) {
+    const invocation = invocations[index];
+    if (step.network === "offline") {
+      setAndroidDeviceNetwork(options.device, "offline", env, commandRunner);
+      try {
+        offlineStatus = runInvocation(invocation, env, [], commandRunner);
+      } finally {
+        setAndroidDeviceNetwork(options.device, "online", env, commandRunner);
+      }
+      if (offlineStatus !== 0) shouldRunReconnect = false;
+      continue;
+    }
+
+    if (step.network === "online") {
+      setAndroidDeviceNetwork(options.device, "online", env, commandRunner);
+      if (!shouldRunReconnect) return { status: offlineStatus, reportDir, invocation, credentialsAvailable: false };
+    }
+
+    const status = runInvocation(invocation, env, [], commandRunner);
+    if (status !== 0) return { status, reportDir, invocation, credentialsAvailable: false };
+  }
+
+  return { status: offlineStatus, reportDir, invocation: invocations.at(-1), credentialsAvailable: false };
+}
+
 export function runNativeMaestro(rawOptions, commandRunner = runCommand) {
   const options = validateOptions(rawOptions);
   const credentials = suiteNeedsCredentials(options.suite) ? selectedApprovedCredentials() : { available: false, env: {}, secrets: [] };
@@ -240,19 +342,20 @@ export function runNativeMaestro(rawOptions, commandRunner = runCommand) {
   mkdirSync(reportDir, { recursive: true });
   const env = maestroEnvironment(process.env, credentials.env);
   assertPreflight(options, env);
+
+  if (options.platform === "android" && options.suite === "guardrails") {
+    return runAndroidGuardrails(options, reportDir, env, commandRunner);
+  }
+
   const invocation = buildMaestroInvocation({ ...options, reportDir });
 
   if (options.dryRun) {
     return { status: 0, reportDir, invocation, credentialsAvailable: credentials.available };
   }
 
-  const result = commandRunner(invocation.command, invocation.args, { env, cwd: path.resolve("."), encoding: "utf8" });
-  const stdout = sanitizeOutput(result.stdout ?? "", credentials.secrets);
-  const stderr = sanitizeOutput(result.stderr ?? "", credentials.secrets);
-  if (stdout) process.stdout.write(stdout);
-  if (stderr) process.stderr.write(stderr);
+  const status = runInvocation(invocation, env, credentials.secrets, commandRunner);
   return {
-    status: result.status ?? 1,
+    status,
     reportDir,
     invocation,
     credentialsAvailable: credentials.available

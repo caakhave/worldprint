@@ -13,6 +13,7 @@ import {
   signInPathForReturn,
   storeSignInReturnPath
 } from "@/lib/account/signInRedirect";
+import { isNativeAppCurrentlyOfflineAsync, NATIVE_NETWORK_ACTION_UNAVAILABLE_MESSAGE } from "@/lib/mobile/nativeConnectivity";
 import { trackRegistrationComplete } from "@/lib/site/analytics";
 
 const MIN_PASSWORD_LENGTH = 8;
@@ -67,6 +68,10 @@ export function SignUpClient() {
     event.preventDefault();
     if (!client) {
       setError("Account creation is not available in this preview. You can still try the Sample Run.");
+      return;
+    }
+    if (await isNativeAppCurrentlyOfflineAsync()) {
+      setError(NATIVE_NETWORK_ACTION_UNAVAILABLE_MESSAGE);
       return;
     }
     if (password.length < MIN_PASSWORD_LENGTH) {

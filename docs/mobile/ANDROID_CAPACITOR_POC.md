@@ -75,6 +75,8 @@ The validated emulator for this POC was `Medium_Phone_API_36.1`.
 - Marketing consent UI and consent events are suppressed in native builds.
 - Stripe checkout and customer portal actions are unavailable in the native preview.
 - Existing Pro entitlements can still be read by the web app, but purchase and subscription management must be replaced before Play Store release.
+- Official social links open through Capacitor Browser after strict trusted-destination validation. Internal Can You Geo routes stay inside the WebView.
+- Native offline handling uses `navigator.onLine`, browser connectivity events, and a short native-only HTTPS reachability probe when the Android WebView still reports online. It shows a small offline status, fails account actions quickly, preserves durable sessions, and retries sync after reconnect.
 - Android system Back is handled through Capacitor's official App plugin. Internal routes with usable WebView history call `window.history.back()`, while the root route minimizes the app instead of force-closing it.
 - Android status and navigation bars are handled as WebView system insets. Current shallow testing found content inset below the top status bar and above the bottom navigation/gesture area without obvious overlap.
 - Capacitor Android 8.4.1 can log `Error injecting safe area CSS: TypeError: Cannot read properties of null (reading 'style')` during startup from `com.getcapacitor.plugin.SystemBars.injectSafeAreaCSS`. The injected JavaScript touches `document.documentElement.style` before the WebView has created `document.documentElement`, so the null value is the document element, not a Can You Geo selector. This is an upstream timing warning from the default `SystemBars.insetsHandling = "css"` path on Android WebView 134.0.6998.135, which Capacitor uses to compensate for older WebView safe-area bugs. It is currently non-fatal: the app launches, WebView history/back behavior works, and visual insets remain correct. Retest this note when upgrading Capacitor Android or when Android WebView is 140 or newer; do not disable SystemBars inset handling just to silence the warning.
@@ -91,6 +93,7 @@ The validated emulator for this POC was `Medium_Phone_API_36.1`.
 - Upgrade route shows the native billing-preview state and does not open Stripe checkout or an external browser.
 - No website marketing-consent banner is visible in the native app.
 - No GTM, GA4, Meta, TikTok, or Reddit runtime markers were observed in shallow native runtime logs.
+- Release guardrails are documented in `docs/mobile/NATIVE_RELEASE_GUARDRAILS.md`.
 
 ## Debug APK
 
@@ -112,12 +115,21 @@ That keystore is local developer state only. It is not part of the repository an
 
 ## Deferred Work
 
+The app-side/runtime foundations are now in place and covered by focused unit and native black-box checks:
+
+- Native authentication callbacks, password recovery, and email confirmation route through the hosted `https://canyougeo.com/auth/callback` origin.
+- Strict native deep-link intake handles supported public Can You Geo routes, including challenge links, without logging sensitive callback values.
+- Android App Link intent filters and warm-link history handling are implemented in the native app.
+- Durable native Supabase session storage is implemented for Android and iOS.
+- Native release guardrails cover trusted external social links, internal WebView navigation, offline/reconnect behavior, mobile billing boundaries, marketing-consent absence, and safe-area handling.
+
+Remaining release/configuration work:
+
 - Google Play Billing.
-- Authentication redirects and app links.
-- Password recovery, email confirmation, and challenge links.
-- Push notifications.
-- Native sharing.
-- Production icon and splash screen.
-- Physical-device testing.
-- Production signing and Play Console submission.
-- Performance profiling and emulator graphics/media warnings.
+- Production Play signing and Play Console setup.
+- Final production App Link verification with the Play signing certificate; current production association metadata only covers the debug certificate used for emulator/local verification.
+- Production icon and splash assets.
+- Physical Android-device testing.
+- Optional future push notifications.
+- Optional future native sharing.
+- Performance profiling and remaining device-specific warnings, including retesting the non-fatal Capacitor SystemBars startup warning after future Capacitor Android or Android WebView updates.

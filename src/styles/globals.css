@@ -11860,6 +11860,26 @@ button.pro-price-option:focus-visible {
   overflow-x: hidden;
 }
 
+.cgy-native-app .native-connectivity-status {
+  position: fixed;
+  top: calc(0.55rem + var(--cgy-safe-area-top));
+  right: calc(0.75rem + var(--cgy-safe-area-right));
+  left: calc(0.75rem + var(--cgy-safe-area-left));
+  z-index: 120;
+  width: min(34rem, calc(100dvw - var(--cgy-safe-area-left) - var(--cgy-safe-area-right) - 1.5rem));
+  margin-inline: auto;
+  border: 1px solid rgb(215 168 75 / 0.38);
+  border-radius: 8px;
+  padding: 0.64rem 0.78rem;
+  color: var(--parchment);
+  background:
+    linear-gradient(135deg, rgb(215 168 75 / 0.16), transparent 65%),
+    rgb(4 18 23 / 0.96);
+  box-shadow: 0 18px 42px rgb(0 0 0 / 0.24);
+  font-size: 0.86rem;
+  line-height: 1.35;
+}
+
 .cgy-native-app .site-header {
   padding-top: calc(1rem + var(--cgy-safe-area-top));
   padding-right: calc(clamp(1rem, 4vw, 3rem) + var(--cgy-safe-area-right));
@@ -11872,7 +11892,34 @@ button.pro-price-option:focus-visible {
   padding-left: calc(clamp(1rem, 4vw, 3rem) + var(--cgy-safe-area-left));
 }
 
+.cgy-native-app .play-action-dock {
+  margin-right: var(--cgy-safe-area-right);
+  margin-bottom: var(--cgy-safe-area-bottom);
+  margin-left: var(--cgy-safe-area-left);
+}
+
+.cgy-native-app .lobby-primary-actions,
+.cgy-native-app .lobby-secondary-actions,
+.cgy-native-app .mode-card-actions,
+.cgy-native-app .completed-daily-actions,
+.cgy-native-app .entry-primary-actions,
+.cgy-native-app .practice-actions,
+.cgy-native-app .button-row,
+.cgy-native-app .checkout-option-buttons {
+  padding-bottom: max(0px, var(--cgy-safe-area-bottom));
+}
+
 @media (orientation: landscape) and (max-height: 560px) {
+  .cgy-native-app .game-shell,
+  .cgy-native-app .play-shell,
+  .cgy-native-app .play-layout,
+  .cgy-native-app .entry-shell,
+  .cgy-native-app .account-shell,
+  .cgy-native-app .upgrade-shell {
+    padding-right: max(1rem, var(--cgy-safe-area-right));
+    padding-left: max(1rem, var(--cgy-safe-area-left));
+  }
+
   .cgy-native-app .miss-moment-overlay,
   .cgy-native-app .solve-moment-overlay {
     position: fixed;

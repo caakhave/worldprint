@@ -6,6 +6,7 @@ import { useSupabaseAccount } from "@/features/account/useSupabaseAccount";
 import { authEmailCallbackUrl } from "@/lib/account/authRedirect";
 import { authCallbackPathForReturn } from "@/lib/account/signInRedirect";
 import { CONTACT_LINKS } from "@/lib/contact";
+import { isNativeAppCurrentlyOfflineAsync, NATIVE_NETWORK_ACTION_UNAVAILABLE_MESSAGE } from "@/lib/mobile/nativeConnectivity";
 
 const GENERIC_RESET_ERROR = "We could not send a password reset email. Check the address and try again.";
 const AUTH_EMAIL_CONFIGURATION_ERROR = "Password reset email links are not configured for this app build. Try again in a moment.";
@@ -21,6 +22,10 @@ export function ForgotPasswordClient() {
     event.preventDefault();
     if (!client) {
       setError("Password reset is not available in this preview.");
+      return;
+    }
+    if (await isNativeAppCurrentlyOfflineAsync()) {
+      setError(NATIVE_NETWORK_ACTION_UNAVAILABLE_MESSAGE);
       return;
     }
 

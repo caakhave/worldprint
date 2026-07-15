@@ -3,6 +3,8 @@ import userEvent from "@testing-library/user-event";
 import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
 import { ForgotPasswordClient } from "@/features/account/ForgotPasswordClient";
 
+const getPlatformMock = vi.hoisted(() => vi.fn(() => "web"));
+
 const accountMock = vi.hoisted(() => ({
   state: {
     client: {
@@ -21,12 +23,27 @@ const accountMock = vi.hoisted(() => ({
   }
 }));
 
+vi.mock("@capacitor/core", () => ({
+  Capacitor: {
+    getPlatform: getPlatformMock
+  }
+}));
+
 vi.mock("@/features/account/useSupabaseAccount", () => ({
   useSupabaseAccount: () => accountMock.state
 }));
 
+let onlineSpy: { mockRestore: () => void } | null = null;
+
+function mockNativeOffline() {
+  vi.stubEnv("NEXT_PUBLIC_CGY_NATIVE_APP", "1");
+  getPlatformMock.mockReturnValue("android");
+  onlineSpy = vi.spyOn(window.navigator, "onLine", "get").mockReturnValue(false);
+}
+
 describe("ForgotPasswordClient", () => {
   beforeEach(() => {
+    getPlatformMock.mockReturnValue("web");
     accountMock.state.configured = true;
     accountMock.state.loading = false;
     accountMock.state.client.auth.resetPasswordForEmail.mockReset();
@@ -35,6 +52,8 @@ describe("ForgotPasswordClient", () => {
   });
 
   afterEach(() => {
+    onlineSpy?.mockRestore();
+    onlineSpy = null;
     vi.unstubAllEnvs();
   });
 
@@ -81,6 +100,19 @@ describe("ForgotPasswordClient", () => {
     await user.click(screen.getByRole("button", { name: "Send reset email" }));
 
     expect(screen.getByRole("alert")).toHaveTextContent("Password reset email links are not configured for this app build. Try again in a moment.");
+    expect(accountMock.state.client.auth.resetPasswordForEmail).not.toHaveBeenCalled();
+  });
+
+  it("fails fast without sending reset email when a native app is offline", async () => {
+    mockNativeOffline();
+    const user = userEvent.setup();
+
+    render(<ForgotPasswordClient />);
+
+    await user.type(screen.getByLabelText("Email"), "player@example.com");
+    await user.click(screen.getByRole("button", { name: "Send reset email" }));
+
+    expect(screen.getByRole("alert")).toHaveTextContent("You're offline. Reconnect, then try this account action again.");
     expect(accountMock.state.client.auth.resetPasswordForEmail).not.toHaveBeenCalled();
   });
 

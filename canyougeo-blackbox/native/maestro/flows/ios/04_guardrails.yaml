@@ -1,0 +1,61 @@
+appId: com.canyougeo.app
+name: iOS native release guardrails
+tags:
+  - native
+  - guardrails
+  - ios
+---
+- launchApp:
+    clearState: true
+- extendedWaitUntil:
+    visible: "Can you read the world?"
+    timeout: 60000
+- assertNotVisible: "Cookie settings"
+- tapOn: "Explore games"
+- extendedWaitUntil:
+    visible: "Choose a game."
+    timeout: 15000
+- tapOn: "Can You Geo? home"
+- extendedWaitUntil:
+    visible: "Can you read the world?"
+    timeout: 60000
+- scrollUntilVisible:
+    element: "Support"
+    direction: DOWN
+    speed: 80
+    visibilityPercentage: 50
+    timeout: 60000
+- tapOn: "Support"
+- extendedWaitUntil:
+    visible: "How can we help?"
+    timeout: 30000
+- scrollUntilVisible:
+    element: "Follow Can You Geo"
+    direction: DOWN
+    speed: 60
+    timeout: 30000
+- scrollUntilVisible:
+    element: "Follow Can You Geo on Instagram"
+    direction: DOWN
+- tapOn: "Follow Can You Geo on Instagram"
+- extendedWaitUntil:
+    visible: "Open Instagram"
+    timeout: 30000
+- tapOn:
+    text: "Close"
+    index: 0
+- extendedWaitUntil:
+    visible: "Follow Can You Geo"
+    timeout: 30000
+- tapOn: "Start Pro"
+- scrollUntilVisible:
+    element: "Mobile purchase preview"
+    direction: DOWN
+    speed: 60
+    timeout: 30000
+- extendedWaitUntil:
+    visible: "Mobile purchases unavailable"
+    timeout: 15000
+- assertNotVisible: "Join monthly"
+- assertNotVisible: "Join yearly"
+- assertNotVisible: "Cookie settings"

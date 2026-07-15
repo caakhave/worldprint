@@ -7,6 +7,7 @@ const routerMock = vi.hoisted(() => ({
   push: vi.fn()
 }));
 
+const getPlatformMock = vi.hoisted(() => vi.fn(() => "web"));
 const ensureProfileMock = vi.hoisted(() => vi.fn(async () => ({ error: null })));
 
 const accountMock = vi.hoisted(() => ({
@@ -31,6 +32,12 @@ vi.mock("next/navigation", () => ({
   useRouter: () => routerMock
 }));
 
+vi.mock("@capacitor/core", () => ({
+  Capacitor: {
+    getPlatform: getPlatformMock
+  }
+}));
+
 vi.mock("@/lib/account/sync", () => ({
   ensureProfile: ensureProfileMock
 }));
@@ -44,8 +51,17 @@ const signedInUser = {
   email: "player@example.com"
 };
 
+let onlineSpy: { mockRestore: () => void } | null = null;
+
+function mockNativeOffline() {
+  vi.stubEnv("NEXT_PUBLIC_CGY_NATIVE_APP", "1");
+  getPlatformMock.mockReturnValue("android");
+  onlineSpy = vi.spyOn(window.navigator, "onLine", "get").mockReturnValue(false);
+}
+
 describe("SignInClient", () => {
   beforeEach(() => {
+    getPlatformMock.mockReturnValue("web");
     routerMock.push.mockClear();
     ensureProfileMock.mockClear();
     accountMock.state.client.auth.signInWithPassword.mockReset();
@@ -64,6 +80,8 @@ describe("SignInClient", () => {
   });
 
   afterEach(() => {
+    onlineSpy?.mockRestore();
+    onlineSpy = null;
     vi.unstubAllEnvs();
     delete (window as typeof window & { dataLayer?: unknown[] }).dataLayer;
   });
@@ -190,6 +208,21 @@ describe("SignInClient", () => {
 
     await screen.findByRole("alert");
     expect(screen.getByText("We could not sign you in. Check your email and password.")).toBeVisible();
+    expect(routerMock.push).not.toHaveBeenCalled();
+  });
+
+  it("fails fast without calling Supabase when a native app is offline", async () => {
+    mockNativeOffline();
+    const user = userEvent.setup();
+
+    render(<SignInClient />);
+
+    await user.type(screen.getByLabelText("Email"), "player@example.com");
+    await user.type(screen.getByLabelText("Password"), "correct horse battery");
+    await user.click(screen.getByRole("button", { name: "Sign in" }));
+
+    expect(screen.getByRole("alert")).toHaveTextContent("You're offline. Reconnect, then try this account action again.");
+    expect(accountMock.state.client.auth.signInWithPassword).not.toHaveBeenCalled();
     expect(routerMock.push).not.toHaveBeenCalled();
   });
 
