@@ -21,6 +21,7 @@ This proof of concept packages the existing static-export Next.js app in a Capac
 - Apple Team ID: `G5N5U6QFS8`
 - App Store Connect Apple ID: `6791248782`
 - Signing style: Xcode-managed Automatic signing for Debug and Release.
+- Associated Domains entitlement: `applinks:canyougeo.com`.
 - Provisioning remains Xcode-managed. Do not commit provisioning profiles, certificates, signing private keys, device UDIDs, Apple Account credentials, or local keychain details.
 - Physical iPhone 14 development install and launch passed after Apple Developer membership activation and automatic signing setup.
 
@@ -55,6 +56,7 @@ xcrun simctl launch booted com.canyougeo.app
 - Existing Pro entitlements can still be read by the web app, but purchase and subscription management must be replaced before App Store release.
 - Official social links open through Capacitor Browser after strict trusted-destination validation. Internal Can You Geo routes stay inside the WebView.
 - Native offline handling uses `navigator.onLine`, browser connectivity events, and a short native-only HTTPS reachability probe when the WebView still reports online. It shows a small offline status, fails account actions quickly, preserves durable sessions, and retries sync after reconnect. Isolated iOS simulator offline runtime testing remains deferred unless it can be done without unsafe system-wide network changes.
+- iOS Associated Domains is configured only for the production apex host: `applinks:canyougeo.com`. The website association file is `https://canyougeo.com/.well-known/apple-app-site-association` and uses the application identifier `G5N5U6QFS8.com.canyougeo.app`.
 - The root layout marks native builds with `cgy-native-app` and enables `viewport-fit=cover`.
 - Safe-area CSS variables use `env(safe-area-inset-*)` for header/footer padding and iPhone compact-header adjustments.
 - Mystery Map and Pattern Atlas moment overlays are centered in the visible native landscape viewport.
@@ -86,13 +88,14 @@ The app-side/runtime foundations are now in place and covered by focused unit an
 - Durable native Supabase session storage is implemented for iOS and Android.
 - Native release guardrails cover trusted external social links, internal WebView navigation, mobile billing boundaries, marketing-consent absence, and safe-area handling.
 - Paid-team automatic development signing is configured for `com.canyougeo.app`, and a physical iPhone 14 development install and launch has passed.
+- The iOS Universal Link app-side foundation is source controlled: Debug and Release use `ios/App/App/App.entitlements`, and the AASA file uses a strict route allowlist for current public, game, auth, callback, challenge, upgrade, and account destinations.
 
 Remaining release/configuration work:
 
 - Apple In-App Purchase.
 - TestFlight and App Store submission.
 - App Store production signing and release provisioning review.
-- Apple Universal Link association and final production verification when approved for a release checkpoint.
+- Deploy the AASA file to production, wait for CDN/device cache propagation, reinstall the app, and verify real iOS Universal Links on a physical device. Do not claim production Universal Link success before that live test passes.
 - Production app icons and splash assets.
 - Broader physical-device testing beyond the initial iPhone 14 development launch.
 - Optional future push notifications.

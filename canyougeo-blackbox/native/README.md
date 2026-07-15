@@ -27,6 +27,7 @@ pnpm qa:native:ios:smoke
 pnpm qa:native:ios:interaction
 pnpm qa:native:ios:auth
 pnpm qa:native:ios:guardrails
+pnpm qa:native:ios:universal-link
 ```
 
 The `android:all` and `ios:all` shortcuts run the platform's complete current native flow list. Use the narrower commands while diagnosing a regression.
@@ -62,8 +63,9 @@ Current iOS coverage:
 - Pattern Atlas WebView interaction
 - sign-in session persistence across app stop/relaunch
 - native release guardrails for Browser-plugin social links, internal navigation, safe-area-visible controls, billing boundaries, and consent absence
+- prepared Universal Link intake for public, auth callback, challenge-without-code, and unsupported-route safety, pending live AASA deployment and app reinstall
 
-iOS does not claim Universal Links yet, so the iOS flows avoid OS-level HTTPS link routing. Add those tests only after iOS association and entitlement work exists.
+`pnpm qa:native:ios:universal-link` is not included in `ios:all` yet. Run it only after the production AASA file is live at `https://canyougeo.com/.well-known/apple-app-site-association`, the app has been reinstalled on the target device/simulator, and any CDN or iOS association cache delay has been handled.
 
 Android guardrails temporarily enable airplane mode and disable Wi-Fi/data on the target emulator/device through `adb`, then disable airplane mode and re-enable Wi-Fi/data before the reconnect flow. They must not alter host-machine networking.
 
@@ -80,3 +82,7 @@ Credential-bearing suites create the ignored report directory but intentionally 
 ## Android App Link Flow
 
 `pnpm qa:native:android:deep-link` expects the installed app, APK fingerprint, and live `https://canyougeo.com/.well-known/assetlinks.json` to be aligned. It is a genuine domain-verification smoke and should fail if the emulator routes the unqualified link to a browser instead of Can You Geo.
+
+## iOS Universal Link Flow
+
+`pnpm qa:native:ios:universal-link` expects the installed iOS app to include the `applinks:canyougeo.com` entitlement and the live production AASA file to include `G5N5U6QFS8.com.canyougeo.app`. It opens unqualified HTTPS links and should fail if iOS routes them to Safari instead of Can You Geo.

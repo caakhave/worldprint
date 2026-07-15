@@ -32,6 +32,12 @@ describe("native Maestro runner options", () => {
       suite: "guardrails",
       device: "emulator-5554"
     });
+
+    expect(parseArgs(["--platform", "ios", "--suite", "universal-link"])).toMatchObject({
+      platform: "ios",
+      suite: "universal-link",
+      device: "9DD07C47-7733-488F-9F1A-9D927ED9F6FB"
+    });
   });
 
   it("rejects invalid platform and suite values", () => {
@@ -43,6 +49,7 @@ describe("native Maestro runner options", () => {
     expect(suiteNeedsCredentials("smoke")).toBe(false);
     expect(suiteNeedsCredentials("interaction")).toBe(false);
     expect(suiteNeedsCredentials("guardrails")).toBe(false);
+    expect(suiteNeedsCredentials("universal-link")).toBe(false);
     expect(suiteNeedsCredentials("auth")).toBe(true);
     expect(suiteNeedsCredentials("all")).toBe(true);
   });
@@ -108,6 +115,8 @@ describe("native Maestro runner command construction", () => {
     expect(flowFilesFor("ios", "guardrails").map((file) => path.basename(file))).toEqual(["04_guardrails.yaml"]);
     expect(flowFilesFor("android", "all").map((file) => path.basename(file))).not.toContain("06_guardrails_online.yaml");
     expect(flowFilesFor("ios", "all").map((file) => path.basename(file))).not.toContain("04_guardrails.yaml");
+    expect(flowFilesFor("ios", "universal-link").map((file) => path.basename(file))).toEqual(["05_universal_links.yaml"]);
+    expect(flowFilesFor("ios", "all").map((file) => path.basename(file))).not.toContain("05_universal_links.yaml");
   });
 
   it("keeps reports inside the ignored native report directory", () => {
