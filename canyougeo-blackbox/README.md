@@ -7,6 +7,7 @@ This suite is intentionally separate from the app's internal Vitest and TypeScri
 ## Coverage And Staging Checklist
 
 - Coverage contract: [QA_COVERAGE_CONTRACT.md](QA_COVERAGE_CONTRACT.md)
+- Native QA baseline: [native/README.md](native/README.md)
 - Staging launch checklist: [../docs/qa/STAGING_LAUNCH_CHECKLIST.md](../docs/qa/STAGING_LAUNCH_CHECKLIST.md)
 - Operator summary:
   - from the repo root: `pnpm qa:blackbox:operator`
@@ -110,6 +111,21 @@ pnpm qa:blackbox:mobile
 pnpm qa:blackbox:test
 pnpm qa:blackbox:export
 ```
+
+Native Capacitor black-box shortcuts are available after installing and syncing local native builds:
+
+```bash
+pnpm qa:native:android:smoke
+pnpm qa:native:android:interaction
+pnpm qa:native:android:back
+pnpm qa:native:android:deep-link
+pnpm qa:native:android:auth
+pnpm qa:native:ios:smoke
+pnpm qa:native:ios:interaction
+pnpm qa:native:ios:auth
+```
+
+Native auth flows reuse `CGY_FREE_EMAIL`/`CGY_FREE_PASSWORD` or `CGY_PRO_EMAIL`/`CGY_PRO_PASSWORD` from local env files or the shell. They are device-level Maestro flows, not Playwright tests, and they do not use Maestro Cloud.
 
 ## Cloudflare Access For Staging
 

@@ -1,0 +1,72 @@
+appId: com.canyougeo.app
+name: iOS native auth persistence
+tags:
+  - native
+  - auth
+  - ios
+---
+- launchApp:
+    clearState: true
+- extendedWaitUntil:
+    visible: "Can you read the world?"
+    timeout: 20000
+- runFlow:
+    when:
+      visible: "Account menu for .*"
+    commands:
+      - tapOn: "Account menu for .*"
+      - extendedWaitUntil:
+          visible: "View account"
+          timeout: 15000
+      - tapOn: "View account"
+      - extendedWaitUntil:
+          visible: "Your atlas is connected."
+          timeout: 30000
+      - scrollUntilVisible:
+          element: "Sign out"
+          direction: DOWN
+      - tapOn: "Sign out"
+      - extendedWaitUntil:
+          visible: "You're signed out."
+          timeout: 30000
+      - tapOn: "Can You Geo? home"
+      - extendedWaitUntil:
+          visible: "Can you read the world?"
+          timeout: 20000
+- tapOn: "Sign in"
+- extendedWaitUntil:
+    visible: "Sign in with email and password."
+    timeout: 20000
+- tapOn: "Email"
+- eraseText
+- inputText: ${MAESTRO_CGY_EMAIL}
+- tapOn: "Password"
+- eraseText
+- inputText: ${MAESTRO_CGY_PASSWORD}
+- hideKeyboard
+- tapOn:
+    text: "Sign in"
+    index: 2
+- extendedWaitUntil:
+    visible: "Your atlas is connected."
+    timeout: 45000
+- stopApp
+- launchApp
+- extendedWaitUntil:
+    visible: "You are signed in on .*"
+    timeout: 30000
+- tapOn: "Account menu for .*"
+- extendedWaitUntil:
+    visible: "View account"
+    timeout: 15000
+- tapOn: "View account"
+- extendedWaitUntil:
+    visible: "Your atlas is connected."
+    timeout: 30000
+- scrollUntilVisible:
+    element: "Sign out"
+    direction: DOWN
+- tapOn: "Sign out"
+- extendedWaitUntil:
+    visible: "You're signed out."
+    timeout: 30000
