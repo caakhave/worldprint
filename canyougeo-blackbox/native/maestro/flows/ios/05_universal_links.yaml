@@ -1,0 +1,32 @@
+appId: com.canyougeo.app
+name: iOS Universal Links
+tags:
+  - native
+  - universal-link
+  - ios
+---
+- launchApp:
+    clearState: true
+- extendedWaitUntil:
+    visible: "Can you read the world?"
+    timeout: 60000
+- openLink: "https://canyougeo.com/play/"
+- extendedWaitUntil:
+    visible: "GAME MENU"
+    timeout: 60000
+- openLink: "https://canyougeo.com/auth/callback/"
+- extendedWaitUntil:
+    visible: "That account email link did not work."
+    timeout: 30000
+- tapOn: "Can You Geo? home"
+- extendedWaitUntil:
+    visible: "Can you read the world?"
+    timeout: 30000
+- openLink: "https://canyougeo.com/challenge/mystery-map/"
+- extendedWaitUntil:
+    visible: "Can you read the world?"
+    timeout: 30000
+- openLink: "https://canyougeo.com/internal/order-atlas-review/"
+- launchApp
+- assertNotVisible: "Order Atlas Review"
+- assertNotVisible: "Internal Order Atlas Review"

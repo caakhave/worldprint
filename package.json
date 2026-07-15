@@ -42,6 +42,7 @@
     "qa:native:ios:interaction": "node canyougeo-blackbox/native/maestro/scripts/run-native-maestro.mjs --platform ios --suite interaction",
     "qa:native:ios:auth": "node canyougeo-blackbox/native/maestro/scripts/run-native-maestro.mjs --platform ios --suite auth",
     "qa:native:ios:guardrails": "node canyougeo-blackbox/native/maestro/scripts/run-native-maestro.mjs --platform ios --suite guardrails",
+    "qa:native:ios:universal-link": "node canyougeo-blackbox/native/maestro/scripts/run-native-maestro.mjs --platform ios --suite universal-link",
     "qa:native:ios:all": "node canyougeo-blackbox/native/maestro/scripts/run-native-maestro.mjs --platform ios --suite all",
     "ops:supabase:staging-rls": "scripts/ops/validate-supabase-staging.sh",
     "ops:supabase:staging-audit": "scripts/ops/validate-supabase-staging.sh --operator-audit"

@@ -36,6 +36,7 @@ export const SUITES = {
     interaction: ["flows/ios/02_interaction.yaml"],
     auth: ["flows/ios/03_auth_lifecycle.yaml"],
     guardrails: ["flows/ios/04_guardrails.yaml"],
+    "universal-link": ["flows/ios/05_universal_links.yaml"],
     all: ["flows/ios/01_smoke.yaml", "flows/ios/02_interaction.yaml", "flows/ios/03_auth_lifecycle.yaml"]
   }
 };

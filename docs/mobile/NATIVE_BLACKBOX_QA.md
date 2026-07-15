@@ -22,6 +22,7 @@ pnpm qa:native:ios:smoke
 pnpm qa:native:ios:interaction
 pnpm qa:native:ios:auth
 pnpm qa:native:ios:guardrails
+pnpm qa:native:ios:universal-link
 ```
 
 Use `pnpm qa:native:android:all` or `pnpm qa:native:ios:all` only after the individual flows are healthy.
@@ -39,7 +40,7 @@ It maps the selected pair to Maestro-only environment variables and never passes
 
 Android has production HTTPS App Link filters, so the Android deep-link flow verifies OS-delivered links for `https://canyougeo.com/play/` and a tokenless `/auth/callback/`.
 
-iOS does not have Universal Link association or entitlement configuration yet. iOS flows use normal visible app navigation and auth persistence checks until that platform work exists.
+iOS has the app-side Universal Link entitlement and a prepared `pnpm qa:native:ios:universal-link` flow. Run that flow only after the AASA file is deployed at `https://canyougeo.com/.well-known/apple-app-site-association`, cache propagation is accounted for, and the test app has been reinstalled so iOS refreshes association state. The flow is intentionally not part of `ios:all` yet.
 
 The guardrail suites cover Browser-plugin social links, internal navigation, safe-area-visible controls, native billing boundaries, consent absence, and Android offline/reconnect behavior. Android guardrails use `adb` to toggle airplane mode plus Wi-Fi/data on the target emulator/device and then restore connectivity; they do not alter host-machine networking. iOS offline runtime testing remains optional unless it can be isolated safely.
 

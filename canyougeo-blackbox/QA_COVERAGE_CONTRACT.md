@@ -60,6 +60,7 @@ Must add or update:
 
 - Maestro native smoke in `native/maestro/flows/android/` or `native/maestro/flows/ios/`
 - platform-specific Back, App Link, Universal Link, or auth persistence coverage when those areas change
+- AASA or `assetlinks.json` route-policy changes must update the matching native flow, association tests, and docs in the same checkpoint
 - native release-guardrail flows when external-link handling, safe areas/system bars, connectivity behavior, native billing visibility, or native analytics/consent behavior changes
 - runner/docs updates when a new native flow needs credentials, devices, or platform prerequisites
 

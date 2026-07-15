@@ -1,7 +1,8 @@
 # Can You Geo Native Deep-Link Foundation
 
 Checkpoint 4B adds a code-only deep-link foundation for the Capacitor shells. Checkpoint 4D-1 adds Android app-side HTTPS
-intent filters for `canyougeo.com`, but verified Android App Links still require the website association file described below.
+intent filters for `canyougeo.com`. Checkpoint 4H-2 adds the iOS Associated Domains entitlement and the production
+`apple-app-site-association` file for `canyougeo.com`.
 
 ## Parser Contract
 
@@ -252,14 +253,14 @@ alternate origins, internal routes, and asset paths even if Android offers the U
 The apex-only policy is deliberate. Do not add `www.canyougeo.com`, `test.canyougeo.com`, or a custom scheme unless a later
 checkpoint explicitly changes the production origin policy and parser configuration.
 
-Android verification is not expected to pass until Can You Geo serves:
+Android verification requires Can You Geo to serve:
 
 ```text
 https://canyougeo.com/.well-known/assetlinks.json
 ```
 
-This checkpoint does not add that file and does not deploy the website. Until the file is deployed, `adb shell pm get-app-links
-com.canyougeo.app` can show the declared domain but may report it as unverified.
+Until the file is deployed, `adb shell pm get-app-links com.canyougeo.app` can show the declared domain but may report it as
+unverified.
 
 The current local debug certificate SHA-256 fingerprint is:
 
@@ -272,6 +273,56 @@ This fingerprint is public association metadata for Android App Links, not a pri
 production Play App Signing certificate fingerprint from Play Console. Add that production fingerprint later; do not infer it
 from the debug keystore.
 
+## iOS Universal Links
+
+The iOS target has a source-controlled Associated Domains entitlement at:
+
+```text
+ios/App/App/App.entitlements
+```
+
+The only associated domain is:
+
+```text
+applinks:canyougeo.com
+```
+
+Debug and Release both use that entitlements file through `CODE_SIGN_ENTITLEMENTS = App/App.entitlements`. Automatic signing,
+Team ID `G5N5U6QFS8`, and bundle identifier `com.canyougeo.app` remain unchanged.
+
+The production website association file is:
+
+```text
+https://canyougeo.com/.well-known/apple-app-site-association
+```
+
+The file is extensionless JSON and uses the exact application identifier:
+
+```text
+G5N5U6QFS8.com.canyougeo.app
+```
+
+`public/_headers` gives the AASA endpoint `Content-Type: application/json` and a one-hour public cache policy. Do not add
+redirects, auth gates, or broad `.well-known` header changes for this endpoint.
+
+The AASA path policy is intentionally allowlist-based. It includes current public, game, auth, callback, challenge, upgrade, and
+account destinations with slash and slashless forms where real links may use either. It does not use a global `/*` claim and
+does not claim `/internal/*`, `/_next/*`, data files, asset files, or arbitrary unknown routes.
+
+The AASA file is not the final security boundary. It only controls whether iOS offers the URL to the app. The JavaScript parser
+above remains the final in-app authority for origin, query, fragment, callback-token, challenge-code, and route validation.
+
+Universal Link end-to-end verification still requires:
+
+- deploying the AASA file to production
+- confirming the live endpoint returns `200` JSON without redirect or HTML fallback
+- waiting for CDN and iOS association cache propagation
+- reinstalling the app on the physical device after the association file is live
+- running a real Universal Link smoke against unqualified `https://canyougeo.com/...` URLs
+
+Do not add `www.canyougeo.com`, `test.canyougeo.com`, localhost, custom schemes, `webcredentials`, `activitycontinuation`, push
+notifications, Sign in with Apple, iCloud, or Game Center without a separate approved checkpoint.
+
 ## Deduplication
 
 Cold start and warm events can deliver the same URL. The bridge keeps a session-local in-memory record of the last accepted destination fingerprint.
@@ -282,21 +333,18 @@ Cold start and warm events can deliver the same URL. The bridge keeps a session-
 - nothing is persisted to `localStorage` or `sessionStorage`
 - raw auth tokens and challenge codes are not stored as dedupe keys
 
-## Deferred Platform Work
+## Deferred Live And Platform Work
 
 These checkpoints do not add or modify:
 
-- iOS Associated Domains
-- iOS entitlements
-- `apple-app-site-association`
-- `assetlinks.json`
-- `public/.well-known`
-- Cloudflare headers
 - DNS
 - Supabase redirect allowlists
 - Supabase email templates
 - custom URL schemes
 - Play Console signing configuration
+- Apple Developer portal capability settings
+- App Store Connect metadata
+- live production deployment
 
 ## Remaining Auth Redirect Work
 
@@ -461,7 +509,8 @@ Those are documented expectations from `docs/AUTH_SETUP.md` and `docs/DOMAIN_EMA
 
 Do not add `https://localhost/auth/callback` to a hosted production or staging Supabase allowlist. Local web QA continues to use the documented `http://localhost:3000/auth/callback` and `http://localhost:3001/auth/callback` entries where appropriate.
 
-Platform association work is still required before installed iOS or Android apps can receive production HTTPS links directly.
+Live platform verification remains separate from source-control setup. Installed apps receive production HTTPS links only after the
+matching website association files are deployed and the operating system has verified the domain association for the installed app.
 
 ## Testing Limits
 
@@ -469,4 +518,5 @@ Checkpoint 4B can verify parser behavior, listener registration, cold/warm bridg
 
 Checkpoint 4D-1 can verify Android manifest structure and explicit package-targeted HTTPS intents before website verification.
 
-It cannot prove end-to-end iOS Universal Links or verified Android App Links until later checkpoints add website association files and production signing configuration.
+Checkpoint 4H-2 can verify iOS entitlement structure and AASA route policy from source control. It cannot prove end-to-end iOS
+Universal Links until the AASA file is deployed publicly, the app is reinstalled, and a physical-device Universal Link test passes.
