@@ -314,11 +314,24 @@ above remains the final in-app authority for origin, query, fragment, callback-t
 
 Universal Link end-to-end verification still requires:
 
-- deploying the AASA file to production
-- confirming the live endpoint returns `200` JSON without redirect or HTML fallback
-- waiting for CDN and iOS association cache propagation
-- reinstalling the app on the physical device after the association file is live
-- running a real Universal Link smoke against unqualified `https://canyougeo.com/...` URLs
+- deploying the AASA file to production: completed
+- confirming the live endpoint returns `200` JSON without redirect or HTML fallback: completed
+- waiting for CDN and iOS association cache propagation: completed for physical-device validation
+- reinstalling the app on the physical device after the association file is live: completed on iPhone 14
+- running a real Universal Link smoke against unqualified `https://canyougeo.com/...` URLs: completed for development-signed physical-device testing
+
+Physical iPhone 14 validation after production AASA deployment confirmed:
+
+- cold public Universal Links opened the installed app
+- warm public Universal Links opened the installed app
+- tokenless `/auth/callback/` routing opened safely
+- a real password-recovery email callback for an approved confirmed production QA account opened the installed app
+- the callback reached the reset-password flow
+- password update and subsequent login with the new password passed
+
+Do not record the QA account email, password, callback URL, callback token, or user id. This verifies the development-signed
+physical-device Universal Link/auth path. TestFlight/App Store distribution remains pending until an archive is created,
+uploaded, and separately validated.
 
 Do not add `www.canyougeo.com`, `test.canyougeo.com`, localhost, custom schemes, `webcredentials`, `activitycontinuation`, push
 notifications, Sign in with Apple, iCloud, or Game Center without a separate approved checkpoint.
@@ -518,5 +531,6 @@ Checkpoint 4B can verify parser behavior, listener registration, cold/warm bridg
 
 Checkpoint 4D-1 can verify Android manifest structure and explicit package-targeted HTTPS intents before website verification.
 
-Checkpoint 4H-2 can verify iOS entitlement structure and AASA route policy from source control. It cannot prove end-to-end iOS
-Universal Links until the AASA file is deployed publicly, the app is reinstalled, and a physical-device Universal Link test passes.
+Checkpoint 4H-2 verified iOS entitlement structure and AASA route policy from source control. Checkpoint 4H-4 records the
+development-signed physical iPhone Universal Link and password-recovery callback validation. TestFlight/App Store distribution
+still requires a separate archive/upload/validation checkpoint.

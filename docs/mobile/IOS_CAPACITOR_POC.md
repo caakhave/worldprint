@@ -20,10 +20,13 @@ This proof of concept packages the existing static-export Next.js app in a Capac
 - Bundle ID: `com.canyougeo.app`
 - Apple Team ID: `G5N5U6QFS8`
 - App Store Connect Apple ID: `6791248782`
+- Marketing version: `1.0.0`
+- Build number: `1`
 - Signing style: Xcode-managed Automatic signing for Debug and Release.
 - Associated Domains entitlement: `applinks:canyougeo.com`.
 - Provisioning remains Xcode-managed. Do not commit provisioning profiles, certificates, signing private keys, device UDIDs, Apple Account credentials, or local keychain details.
 - Physical iPhone 14 development install and launch passed after Apple Developer membership activation and automatic signing setup.
+- The first TestFlight prep target is iPhone-only. Portrait, landscape left, and landscape right remain enabled because the app has portrait account/navigation surfaces and landscape gameplay surfaces.
 
 ## Architecture
 
@@ -89,15 +92,38 @@ The app-side/runtime foundations are now in place and covered by focused unit an
 - Native release guardrails cover trusted external social links, internal WebView navigation, mobile billing boundaries, marketing-consent absence, and safe-area handling.
 - Paid-team automatic development signing is configured for `com.canyougeo.app`, and a physical iPhone 14 development install and launch has passed.
 - The iOS Universal Link app-side foundation is source controlled: Debug and Release use `ios/App/App/App.entitlements`, and the AASA file uses a strict route allowlist for current public, game, auth, callback, challenge, upgrade, and account destinations.
+- Production AASA is live and verified as HTTP `200` JSON with no redirect.
+- A fresh physical iPhone 14 development install after AASA deployment verified cold and warm public Universal Links opening the installed app.
+- Tokenless `/auth/callback/` Universal Link routing opened safely.
+- A real password-recovery email callback for an approved confirmed production QA account opened the installed app, reached reset-password, changed the password, and the new password worked. Do not record the QA account email, password, callback URL, token, or user id.
+
+## Release Metadata Audit
+
+- `MARKETING_VERSION` is `1.0.0` for Debug and Release.
+- `CURRENT_PROJECT_VERSION` is `1` for Debug and Release.
+- `PRODUCT_BUNDLE_IDENTIFIER` remains `com.canyougeo.app`.
+- `DEVELOPMENT_TEAM` remains `G5N5U6QFS8`.
+- `CODE_SIGN_STYLE` remains `Automatic`.
+- `CODE_SIGN_ENTITLEMENTS` remains `App/App.entitlements`.
+- Associated Domains remains limited to `applinks:canyougeo.com`.
+- `TARGETED_DEVICE_FAMILY` is iPhone-only for this first TestFlight prep. iPad support should be a separate checkpoint after iPad UI review and App Store metadata decisions.
+- `UISupportedInterfaceOrientations` supports portrait, landscape left, and landscape right. Portrait is required for public/account flows; landscape is required for Mystery Map and Pattern Atlas gameplay. Upside-down is not enabled.
+
+## Icon And Launch Audit
+
+- The native AppIcon asset contains a 1024 x 1024 universal iOS slot, but the image is still the default Capacitor mark, not production Can You Geo artwork.
+- Public web icons exist at 512 x 512, 192 x 192, and 180 x 180, but there is no clearly approved production-quality 1024 x 1024 Can You Geo App Store icon source in the repository.
+- The launch screen uses the default Capacitor splash image in `ios/App/App/Assets.xcassets/Splash.imageset` through `LaunchScreen.storyboard`.
+- Required next asset work: create approved production 1024 x 1024 App Store icon artwork, generate the full iOS AppIcon set from that source, replace the default Capacitor splash/launch presentation with approved Can You Geo launch artwork, and visually QA launch on physical iPhone before archiving.
 
 Remaining release/configuration work:
 
 - Apple In-App Purchase.
 - TestFlight and App Store submission.
 - App Store production signing and release provisioning review.
-- Deploy the AASA file to production, wait for CDN/device cache propagation, reinstall the app, and verify real iOS Universal Links on a physical device. Do not claim production Universal Link success before that live test passes.
-- Production app icons and splash assets.
-- Broader physical-device testing beyond the initial iPhone 14 development launch.
+- TestFlight archive/export/upload after production icon and launch assets are replaced.
+- Broader physical-device testing beyond the iPhone 14 development launch and Universal Link/auth validation.
+- iPad UI and metadata decision if universal iPad support is desired later.
 - Optional future push notifications.
 - Optional future native sharing.
 - Performance profiling and remaining device-specific warnings.

@@ -23,12 +23,11 @@ The Android manifest path filters and the JavaScript native deep-link parser sti
 This checkpoint does not add:
 
 - `www` or staging domain association
-- Apple `apple-app-site-association`
 - Android custom-scheme links
 - Supabase redirect allowlist changes
 - Play Console configuration
 
-iOS AASA remains deferred until the Apple Team ID and final iOS association requirements are available.
+iOS Universal Links are documented separately in `docs/mobile/NATIVE_DEEP_LINKS.md`; keep Android and iOS association policies narrow and platform-specific.
 
 ## HTTP Behavior
 
