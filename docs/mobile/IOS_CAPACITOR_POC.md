@@ -111,17 +111,33 @@ The app-side/runtime foundations are now in place and covered by focused unit an
 
 ## Icon And Launch Audit
 
-- The native AppIcon asset contains a 1024 x 1024 universal iOS slot, but the image is still the default Capacitor mark, not production Can You Geo artwork.
-- Public web icons exist at 512 x 512, 192 x 192, and 180 x 180, but there is no clearly approved production-quality 1024 x 1024 Can You Geo App Store icon source in the repository.
-- The launch screen uses the default Capacitor splash image in `ios/App/App/Assets.xcassets/Splash.imageset` through `LaunchScreen.storyboard`.
-- Required next asset work: create approved production 1024 x 1024 App Store icon artwork, generate the full iOS AppIcon set from that source, replace the default Capacitor splash/launch presentation with approved Can You Geo launch artwork, and visually QA launch on physical iPhone before archiving.
+- Source vector asset: `public/favicon.svg`. It is the highest-quality existing Can You Geo mark in the repository and defines the production dark navy, cyan globe, and gold contour-line geometry used by the web favicons and public logo PNGs.
+- Supporting raster references: `public/cgy-logo-icon-512.png`, `public/cgy-logo-icon-192.png`, `public/apple-touch-icon.png`, and `public/images/brand/cgy-logo-header-96.png`. These confirmed the production mark but were not used as App Store sources because they are smaller raster files with alpha.
+- Asset-generation command: `node tools/mobile/generateIosBrandAssets.mjs`.
+- Native AppIcon destination: `ios/App/App/Assets.xcassets/AppIcon.appiconset/AppIcon-512@2x.png`.
+- Native launch destinations: `ios/App/App/Assets.xcassets/Splash.imageset/splash-2732x2732-2.png`, `ios/App/App/Assets.xcassets/Splash.imageset/splash-2732x2732-1.png`, and `ios/App/App/Assets.xcassets/Splash.imageset/splash-2732x2732.png`.
+- Icon validation: the AppIcon is a 1024 x 1024 RGB PNG with no alpha channel or transparent pixels. The icon uses a square brand background and does not bake in rounded corners.
+- Launch validation: each launch image is a 2732 x 2732 RGB PNG with no alpha channel. The launch art uses the same Can You Geo mark, centered on the production dark navy background, with enough padding for portrait and landscape `scaleAspectFill` cropping.
+- `LaunchScreen.storyboard` continues to use the existing static `Splash` image with `scaleAspectFill`; no animated splash screen or runtime startup behavior was added.
+
+Physical-device visual QA still required before the first archive:
+
+- Home-screen icon appearance
+- App Library icon appearance
+- Launch screen in portrait
+- Launch screen in landscape left
+- Launch screen in landscape right
+- No flash of Capacitor branding
+- No stretched or clipped logo
+- Startup into the expected production app shell
+- Existing Universal Link and auth-recovery behavior remains intact
 
 Remaining release/configuration work:
 
 - Apple In-App Purchase.
 - TestFlight and App Store submission.
 - App Store production signing and release provisioning review.
-- TestFlight archive/export/upload after production icon and launch assets are replaced.
+- TestFlight archive/export/upload after physical-device visual QA passes.
 - Broader physical-device testing beyond the iPhone 14 development launch and Universal Link/auth validation.
 - iPad UI and metadata decision if universal iPad support is desired later.
 - Optional future push notifications.

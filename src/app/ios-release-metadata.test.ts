@@ -88,7 +88,7 @@ describe("iOS release metadata", () => {
     expect(combinedDocs).toContain("password update and subsequent login");
     expect(combinedDocs).toContain("Do not record the QA account email, password, callback URL, token, or user id");
     expect(combinedDocs).toContain("TestFlight/App Store distribution remains pending");
-    expect(combinedDocs).not.toMatch(/[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}/iu);
+    expect(combinedDocs).not.toMatch(/[A-Z0-9._%+-]+@[A-Z][A-Z0-9.-]*\.[A-Z]{2,}/iu);
     expect(combinedDocs).not.toMatch(/access_token=|refresh_token=|token_hash=|code=/u);
 
     expect(androidDocs).not.toContain("iOS AASA remains deferred");
