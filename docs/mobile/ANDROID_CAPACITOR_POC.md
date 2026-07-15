@@ -115,12 +115,21 @@ That keystore is local developer state only. It is not part of the repository an
 
 ## Deferred Work
 
+The app-side/runtime foundations are now in place and covered by focused unit and native black-box checks:
+
+- Native authentication callbacks, password recovery, and email confirmation route through the hosted `https://canyougeo.com/auth/callback` origin.
+- Strict native deep-link intake handles supported public Can You Geo routes, including challenge links, without logging sensitive callback values.
+- Android App Link intent filters and warm-link history handling are implemented in the native app.
+- Durable native Supabase session storage is implemented for Android and iOS.
+- Native release guardrails cover trusted external social links, internal WebView navigation, offline/reconnect behavior, mobile billing boundaries, marketing-consent absence, and safe-area handling.
+
+Remaining release/configuration work:
+
 - Google Play Billing.
-- Authentication redirects and app links.
-- Password recovery, email confirmation, and challenge links.
-- Push notifications.
-- Native sharing.
-- Production icon and splash screen.
-- Physical-device testing.
-- Production signing and Play Console submission.
-- Performance profiling and emulator graphics/media warnings.
+- Production Play signing and Play Console setup.
+- Final production App Link verification with the Play signing certificate; current production association metadata only covers the debug certificate used for emulator/local verification.
+- Production icon and splash assets.
+- Physical Android-device testing.
+- Optional future push notifications.
+- Optional future native sharing.
+- Performance profiling and remaining device-specific warnings, including retesting the non-fatal Capacitor SystemBars startup warning after future Capacitor Android or Android WebView updates.
