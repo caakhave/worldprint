@@ -1,10 +1,31 @@
 import { copyFileSync, mkdirSync, readFileSync } from "node:fs";
+import { createHash } from "node:crypto";
 import { dirname, join } from "node:path";
 import { fileURLToPath } from "node:url";
-import { chromium } from "@playwright/test";
 
 const root = join(dirname(fileURLToPath(import.meta.url)), "../..");
-const sourceSvgPath = join(root, "public/favicon.svg");
+
+const approvedAssets = {
+  appIcon: {
+    path: join(root, "assets/mobile/ios/source/app-icon.png"),
+    sha256: "aa6cc894b2f5bf615f5f502bc300a6e0d4f74cbbe088610c1e8535cd9d001858",
+    width: 1024,
+    height: 1024
+  },
+  launchSource: {
+    path: join(root, "assets/mobile/ios/source/launch-screen.png"),
+    sha256: "fee1b9c2ee67fb061839ca62b35f060e990e386a67c86f762dcfcae7a917835a",
+    width: 1254,
+    height: 1254
+  },
+  launchPrepared: {
+    path: join(root, "assets/mobile/ios/source/launch-screen-2732.png"),
+    sha256: "d8f6d6fbfae76753f157a17f0fabb5bb2a696a7cbeee981318c0b90fd49c451c",
+    width: 2732,
+    height: 2732
+  }
+};
+
 const appIconPath = join(root, "ios/App/App/Assets.xcassets/AppIcon.appiconset/AppIcon-512@2x.png");
 const splashPaths = [
   join(root, "ios/App/App/Assets.xcassets/Splash.imageset/splash-2732x2732-2.png"),
@@ -12,87 +33,72 @@ const splashPaths = [
   join(root, "ios/App/App/Assets.xcassets/Splash.imageset/splash-2732x2732.png")
 ];
 
-function extractBrandMark(source) {
-  const background = source.match(/<rect\b[^>]*\bfill="(?<color>#[0-9a-fA-F]{6})"/u)?.groups?.color;
-  const geometry = Array.from(source.matchAll(/^\s*(<(?:circle|path)\b[^>]*\/>)\s*$/gmu))
-    .map((match) => match[1])
-    .join("\n");
-
-  if (!background || !geometry.includes("#89e3d4") || !geometry.includes("#d6a747")) {
-    throw new Error("public/favicon.svg does not contain the expected Can You Geo brand mark.");
+function readPngMetadata(path) {
+  const data = readFileSync(path);
+  if (data.subarray(0, 8).toString("hex") !== "89504e470d0a1a0a") {
+    throw new Error(`${path} is not a PNG file.`);
   }
 
-  return { background, geometry };
+  let offset = 8;
+  let metadata;
+  let hasTransparencyChunk = false;
+
+  while (offset < data.length) {
+    const chunkLength = data.readUInt32BE(offset);
+    const chunkType = data.subarray(offset + 4, offset + 8).toString("ascii");
+    const chunk = data.subarray(offset + 8, offset + 8 + chunkLength);
+
+    if (chunkType === "IHDR") {
+      metadata = {
+        width: chunk.readUInt32BE(0),
+        height: chunk.readUInt32BE(4),
+        bitDepth: chunk[8],
+        colorType: chunk[9],
+        interlaceMethod: chunk[12]
+      };
+    } else if (chunkType === "tRNS") {
+      hasTransparencyChunk = true;
+    } else if (chunkType === "IEND") {
+      break;
+    }
+
+    offset += chunkLength + 12;
+  }
+
+  if (!metadata) {
+    throw new Error(`${path} is missing PNG IHDR metadata.`);
+  }
+
+  return { data, hasTransparencyChunk, ...metadata };
 }
 
-function brandSvg({ background, geometry, size, glyphSize }) {
-  const offset = (size - glyphSize) / 2;
-  const scale = glyphSize / 48;
-
-  return `<!doctype html>
-<html>
-  <head>
-    <meta charset="utf-8" />
-    <style>
-      html,
-      body {
-        width: ${size}px;
-        height: ${size}px;
-        margin: 0;
-        overflow: hidden;
-        background: ${background};
-      }
-
-      svg {
-        display: block;
-        width: ${size}px;
-        height: ${size}px;
-        background: ${background};
-      }
-    </style>
-  </head>
-  <body>
-    <svg xmlns="http://www.w3.org/2000/svg" width="${size}" height="${size}" viewBox="0 0 ${size} ${size}" shape-rendering="geometricPrecision">
-      <rect width="${size}" height="${size}" fill="${background}" />
-      <g transform="translate(${offset} ${offset}) scale(${scale})">
-        ${geometry}
-      </g>
-    </svg>
-  </body>
-</html>`;
+function sha256(data) {
+  return createHash("sha256").update(data).digest("hex");
 }
 
-async function renderPng(browser, html, outputPath, size) {
-  mkdirSync(dirname(outputPath), { recursive: true });
-  const page = await browser.newPage({ viewport: { width: size, height: size }, deviceScaleFactor: 1 });
-  await page.setContent(html, { waitUntil: "load" });
-  await page.screenshot({ path: outputPath, fullPage: false, omitBackground: false });
-  await page.close();
+function assertApprovedPng(name, asset) {
+  const metadata = readPngMetadata(asset.path);
+  if (sha256(metadata.data) !== asset.sha256) {
+    throw new Error(`${name} does not match the approved SHA-256.`);
+  }
+  if (metadata.width !== asset.width || metadata.height !== asset.height) {
+    throw new Error(`${name} must be ${asset.width}x${asset.height}; found ${metadata.width}x${metadata.height}.`);
+  }
+  if (metadata.bitDepth !== 8 || metadata.colorType !== 2 || metadata.hasTransparencyChunk || metadata.interlaceMethod !== 0) {
+    throw new Error(`${name} must be an opaque, non-interlaced, 8-bit RGB PNG.`);
+  }
 }
 
-const brandMark = extractBrandMark(readFileSync(sourceSvgPath, "utf8"));
-const browser = await chromium.launch({ headless: true });
-
-try {
-  await renderPng(
-    browser,
-    brandSvg({ ...brandMark, size: 1024, glyphSize: 760 }),
-    appIconPath,
-    1024
-  );
-
-  await renderPng(
-    browser,
-    brandSvg({ ...brandMark, size: 2732, glyphSize: 900 }),
-    splashPaths[0],
-    2732
-  );
-} finally {
-  await browser.close();
+for (const [name, asset] of Object.entries(approvedAssets)) {
+  assertApprovedPng(name, asset);
 }
 
-for (const destination of splashPaths.slice(1)) {
-  copyFileSync(splashPaths[0], destination);
+mkdirSync(dirname(appIconPath), { recursive: true });
+copyFileSync(approvedAssets.appIcon.path, appIconPath);
+
+for (const destination of splashPaths) {
+  mkdirSync(dirname(destination), { recursive: true });
+  copyFileSync(approvedAssets.launchPrepared.path, destination);
 }
 
-console.log("Generated branded iOS AppIcon and launch artwork from public/favicon.svg.");
+console.log("Installed approved iOS AppIcon and launch artwork from assets/mobile/ios/source.");

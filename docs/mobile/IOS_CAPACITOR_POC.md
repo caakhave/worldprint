@@ -111,17 +111,26 @@ The app-side/runtime foundations are now in place and covered by focused unit an
 
 ## Icon And Launch Audit
 
-- Source vector asset: `public/favicon.svg`. It is the highest-quality existing Can You Geo mark in the repository and defines the production dark navy, cyan globe, and gold contour-line geometry used by the web favicons and public logo PNGs.
-- Supporting raster references: `public/cgy-logo-icon-512.png`, `public/cgy-logo-icon-192.png`, `public/apple-touch-icon.png`, and `public/images/brand/cgy-logo-header-96.png`. These confirmed the production mark but were not used as App Store sources because they are smaller raster files with alpha.
+- The approved globe-only image is the iOS app icon.
+- The approved full globe-plus-wordmark image is the launch-screen artwork.
+- The earlier `public/favicon.svg` source was incorrect and has been replaced for iOS native branding. Do not use the web favicon as the iOS app icon or launch-screen source.
+- Checked-in approved source assets:
+  - `assets/mobile/ios/source/app-icon.png`: 1024 x 1024 RGB PNG, no alpha, SHA-256 `aa6cc894b2f5bf615f5f502bc300a6e0d4f74cbbe088610c1e8535cd9d001858`.
+  - `assets/mobile/ios/source/launch-screen.png`: 1254 x 1254 RGB PNG, no alpha, SHA-256 `fee1b9c2ee67fb061839ca62b35f060e990e386a67c86f762dcfcae7a917835a`.
+  - `assets/mobile/ios/source/launch-screen-2732.png`: 2732 x 2732 RGB PNG prepared from the approved launch-screen source, no alpha, SHA-256 `d8f6d6fbfae76753f157a17f0fabb5bb2a696a7cbeee981318c0b90fd49c451c`.
 - Asset-generation command: `node tools/mobile/generateIosBrandAssets.mjs`.
 - Native AppIcon destination: `ios/App/App/Assets.xcassets/AppIcon.appiconset/AppIcon-512@2x.png`.
 - Native launch destinations: `ios/App/App/Assets.xcassets/Splash.imageset/splash-2732x2732-2.png`, `ios/App/App/Assets.xcassets/Splash.imageset/splash-2732x2732-1.png`, and `ios/App/App/Assets.xcassets/Splash.imageset/splash-2732x2732.png`.
-- Icon validation: the AppIcon is a 1024 x 1024 RGB PNG with no alpha channel or transparent pixels. The icon uses a square brand background and does not bake in rounded corners.
-- Launch validation: each launch image is a 2732 x 2732 RGB PNG with no alpha channel. The launch art uses the same Can You Geo mark, centered on the production dark navy background, with enough padding for portrait and landscape `scaleAspectFill` cropping.
-- `LaunchScreen.storyboard` continues to use the existing static `Splash` image with `scaleAspectFill`; no animated splash screen or runtime startup behavior was added.
+- Icon validation: the AppIcon output is exactly the approved 1024 x 1024 globe-only RGB PNG with no alpha channel or transparent pixels. It does not add rounded corners, text, cropping, or favicon artwork.
+- Launch validation: each launch image output is exactly the approved 2732 x 2732 full-logo RGB PNG with no alpha channel. The globe and `Can You Geo?` wordmark remain present.
+- `LaunchScreen.storyboard` uses `scaleAspectFit` so the full square launch artwork remains visible in portrait and landscape. It uses a dark navy background derived from the approved artwork for any unused space.
+- The native launch screen may be visible only for a fraction of a second because the app starts quickly. Do not add an artificial splash delay for inspection.
+- Frame-by-frame screen recording is the recommended inspection method for the launch screen on physical devices.
+- No archive or TestFlight upload has occurred.
 
 Physical-device visual QA still required before the first archive:
 
+- Physical visual QA must be repeated after a clean reinstall because the prior installed development build used the wrong native branding assets.
 - Home-screen icon appearance
 - App Library icon appearance
 - Launch screen in portrait
