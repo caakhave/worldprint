@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect, useState } from "react";
+import { isNativeAppBuild } from "@/lib/site/buildTarget";
 import {
   MARKETING_CONSENT_STORAGE_KEY,
   marketingConsentUiEnabledForHostname,
@@ -16,6 +17,11 @@ export function MarketingConsentManager() {
   const [open, setOpen] = useState(false);
 
   useEffect(() => {
+    if (isNativeAppBuild()) {
+      setEnabled(false);
+      return;
+    }
+
     const shouldEnable = marketingConsentUiEnabledForHostname(window.location.hostname) || marketingConsentUiEnabledFromEnv();
     setEnabled(shouldEnable);
     if (!shouldEnable) return;

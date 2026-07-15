@@ -10,3 +10,5 @@ reports/screenshots/*
 !reports/screenshots/.gitkeep
 exports/*
 !exports/.gitkeep
+native/reports/*
+!native/reports/.gitkeep

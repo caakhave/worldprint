@@ -1,6 +1,7 @@
 "use client";
 
 import { trackAnalyticsEvent } from "@/lib/site/analytics";
+import { handleTrustedNativeExternalClick } from "@/lib/mobile/nativeExternalNavigation";
 import { OFFICIAL_SOCIAL_LINKS, type OfficialSocialLinkId } from "@/lib/social";
 
 type SocialLinksSource = "footer" | "support";
@@ -26,12 +27,13 @@ export function SocialLinks({ source, variant = "icons", className }: SocialLink
           target="_blank"
           rel="noopener noreferrer"
           aria-label={`Follow Can You Geo on ${link.label}`}
-          onClick={() => {
+          onClick={(event) => {
             trackAnalyticsEvent("cgy_select_content", {
               content_type: "social_link",
               item_id: link.id,
               source
             });
+            handleTrustedNativeExternalClick(event, link.id, { url: link.href });
           }}
         >
           <SocialIcon id={link.id} />

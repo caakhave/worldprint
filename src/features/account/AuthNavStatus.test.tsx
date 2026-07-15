@@ -170,6 +170,49 @@ describe("AuthNavStatus", () => {
     expect(styles).toContain("display: none;");
   });
 
+  it("defines native-only safe-area shell tokens and header spacing", () => {
+    expect(styles).toContain(".cgy-native-app");
+    expect(styles).toContain("--cgy-safe-area-top: env(safe-area-inset-top, 0px);");
+    expect(styles).toContain("--cgy-safe-area-right: env(safe-area-inset-right, 0px);");
+    expect(styles).toContain("--cgy-safe-area-bottom: env(safe-area-inset-bottom, 0px);");
+    expect(styles).toContain("--cgy-safe-area-left: env(safe-area-inset-left, 0px);");
+    expect(styles).toContain(".cgy-native-app .site-header");
+    expect(styles).toContain("padding-top: calc(0.68rem + var(--cgy-safe-area-top));");
+    expect(styles).toContain("padding-right: calc(clamp(0.75rem, 4vw, 1rem) + var(--cgy-safe-area-right));");
+    expect(styles).toContain("padding-left: calc(clamp(0.75rem, 4vw, 1rem) + var(--cgy-safe-area-left));");
+    expect(styles).toContain(".cgy-native-app .site-footer");
+    expect(styles).toContain("padding-bottom: calc(2rem + var(--cgy-safe-area-bottom));");
+    expect(styles).toContain(".cgy-native-app .native-connectivity-status");
+    expect(styles).toContain("top: calc(0.55rem + var(--cgy-safe-area-top));");
+    expect(styles).toContain("right: calc(0.75rem + var(--cgy-safe-area-right));");
+    expect(styles).toContain("left: calc(0.75rem + var(--cgy-safe-area-left));");
+  });
+
+  it("keeps native gameplay and bottom actions clear of system bars", () => {
+    expect(styles).toContain(".cgy-native-app .play-action-dock");
+    expect(styles).toContain("margin-right: var(--cgy-safe-area-right);");
+    expect(styles).toContain("margin-bottom: var(--cgy-safe-area-bottom);");
+    expect(styles).toContain("margin-left: var(--cgy-safe-area-left);");
+    expect(styles).toContain(".cgy-native-app .checkout-option-buttons");
+    expect(styles).toContain("padding-bottom: max(0px, var(--cgy-safe-area-bottom));");
+    expect(styles).toContain(".cgy-native-app .game-shell,");
+    expect(styles).toContain("padding-left: max(1rem, var(--cgy-safe-area-left));");
+    expect(styles).toContain("padding-right: max(1rem, var(--cgy-safe-area-right));");
+  });
+
+  it("keeps native narrow-width header controls visible and touchable", () => {
+    expect(styles).toContain(".cgy-native-app .brand-mark small");
+    expect(styles).toContain(".cgy-native-app .brand-mark strong");
+    expect(styles).toContain("max-width: 7.4rem;");
+    expect(styles).toContain(".cgy-native-app .site-nav a,");
+    expect(styles).toContain(".cgy-native-app .account-nav-control");
+    expect(styles).toContain("min-height: 2.28rem;");
+    expect(styles).toContain(".cgy-native-app .account-nav-signed-out-actions");
+    expect(styles).toContain("flex-wrap: nowrap;");
+    expect(styles).toContain(".cgy-native-app .account-nav-control-signed-out");
+    expect(styles).toContain("padding-inline: 0.56rem;");
+  });
+
   it("calls the customer portal action for Stripe-backed Pro accounts", async () => {
     const user = userEvent.setup();
     process.env.NEXT_PUBLIC_BILLING_MODE = "test";
@@ -202,6 +245,37 @@ describe("AuthNavStatus", () => {
     expect(options.headers).toEqual({ Authorization: "Bearer billing-token" });
     expect(options.body).toBeUndefined();
     expect(screen.queryByText("Pro active")).not.toBeInTheDocument();
+  });
+
+  it("does not show or call the header customer portal action in native builds", async () => {
+    const user = userEvent.setup();
+    vi.stubEnv("NEXT_PUBLIC_CGY_NATIVE_APP", "1");
+    process.env.NEXT_PUBLIC_BILLING_MODE = "test";
+    const client = billingClientMock();
+    accountMock.state.user = { id: "user_123", email: "pro@example.com" };
+    entitlementMock.state.entitlement.plan = "pro";
+    entitlementMock.state.entitlement.row = {
+      user_id: "user_123",
+      plan: "pro",
+      status: "active",
+      stripe_customer_id: "cus_test",
+      stripe_subscription_id: "sub_test",
+      stripe_price_id: "price_test",
+      stripe_status: "active",
+      cancel_at_period_end: false,
+      current_period_end: "2026-07-29T00:00:00.000Z",
+      updated_at: "2026-06-29T00:00:00.000Z"
+    };
+    entitlementMock.state.signedIn = true;
+
+    render(<AuthNavStatus />);
+
+    await user.click(screen.getByLabelText(/Account menu for pro@example.com/i));
+
+    expect(screen.queryByRole("menuitem", { name: "Manage billing" })).not.toBeInTheDocument();
+    expect(screen.getByRole("menuitem", { name: "View membership" })).toHaveAttribute("href", "/account#membership");
+    expect(screen.getByText("Subscription management is not available in this preview.")).toBeVisible();
+    expect(client.functions.invoke).not.toHaveBeenCalled();
   });
 
   it("uses billing-management copy for header customer portal failures", async () => {

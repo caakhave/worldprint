@@ -11848,6 +11848,188 @@ button.pro-price-option:focus-visible {
   }
 }
 
+.cgy-native-app {
+  --cgy-safe-area-top: env(safe-area-inset-top, 0px);
+  --cgy-safe-area-right: env(safe-area-inset-right, 0px);
+  --cgy-safe-area-bottom: env(safe-area-inset-bottom, 0px);
+  --cgy-safe-area-left: env(safe-area-inset-left, 0px);
+}
+
+.cgy-native-app body {
+  min-height: 100dvh;
+  overflow-x: hidden;
+}
+
+.cgy-native-app .native-connectivity-status {
+  position: fixed;
+  top: calc(0.55rem + var(--cgy-safe-area-top));
+  right: calc(0.75rem + var(--cgy-safe-area-right));
+  left: calc(0.75rem + var(--cgy-safe-area-left));
+  z-index: 120;
+  width: min(34rem, calc(100dvw - var(--cgy-safe-area-left) - var(--cgy-safe-area-right) - 1.5rem));
+  margin-inline: auto;
+  border: 1px solid rgb(215 168 75 / 0.38);
+  border-radius: 8px;
+  padding: 0.64rem 0.78rem;
+  color: var(--parchment);
+  background:
+    linear-gradient(135deg, rgb(215 168 75 / 0.16), transparent 65%),
+    rgb(4 18 23 / 0.96);
+  box-shadow: 0 18px 42px rgb(0 0 0 / 0.24);
+  font-size: 0.86rem;
+  line-height: 1.35;
+}
+
+.cgy-native-app .site-header {
+  padding-top: calc(1rem + var(--cgy-safe-area-top));
+  padding-right: calc(clamp(1rem, 4vw, 3rem) + var(--cgy-safe-area-right));
+  padding-left: calc(clamp(1rem, 4vw, 3rem) + var(--cgy-safe-area-left));
+}
+
+.cgy-native-app .site-footer {
+  padding-right: calc(clamp(1rem, 4vw, 3rem) + var(--cgy-safe-area-right));
+  padding-bottom: calc(2rem + var(--cgy-safe-area-bottom));
+  padding-left: calc(clamp(1rem, 4vw, 3rem) + var(--cgy-safe-area-left));
+}
+
+.cgy-native-app .play-action-dock {
+  margin-right: var(--cgy-safe-area-right);
+  margin-bottom: var(--cgy-safe-area-bottom);
+  margin-left: var(--cgy-safe-area-left);
+}
+
+.cgy-native-app .lobby-primary-actions,
+.cgy-native-app .lobby-secondary-actions,
+.cgy-native-app .mode-card-actions,
+.cgy-native-app .completed-daily-actions,
+.cgy-native-app .entry-primary-actions,
+.cgy-native-app .practice-actions,
+.cgy-native-app .button-row,
+.cgy-native-app .checkout-option-buttons {
+  padding-bottom: max(0px, var(--cgy-safe-area-bottom));
+}
+
+@media (orientation: landscape) and (max-height: 560px) {
+  .cgy-native-app .game-shell,
+  .cgy-native-app .play-shell,
+  .cgy-native-app .play-layout,
+  .cgy-native-app .entry-shell,
+  .cgy-native-app .account-shell,
+  .cgy-native-app .upgrade-shell {
+    padding-right: max(1rem, var(--cgy-safe-area-right));
+    padding-left: max(1rem, var(--cgy-safe-area-left));
+  }
+
+  .cgy-native-app .miss-moment-overlay,
+  .cgy-native-app .solve-moment-overlay {
+    position: fixed;
+    right: auto;
+    left: 50vw;
+    top: 50svh;
+    top: 50dvh;
+    z-index: 80;
+    max-inline-size: calc(100dvw - var(--cgy-safe-area-left) - var(--cgy-safe-area-right) - 1.5rem);
+    max-block-size: calc(100dvh - var(--cgy-safe-area-top) - var(--cgy-safe-area-bottom) - 1.5rem);
+    overflow: hidden;
+  }
+
+  .cgy-native-app .miss-moment-overlay {
+    width: min(20rem, calc(100dvw - var(--cgy-safe-area-left) - var(--cgy-safe-area-right) - 1.5rem));
+    padding: 0.78rem;
+  }
+
+  .cgy-native-app .solve-moment-overlay {
+    width: min(34rem, calc(100dvw - var(--cgy-safe-area-left) - var(--cgy-safe-area-right) - 1.5rem));
+    min-width: 0;
+    padding: clamp(0.84rem, 2.2vw, 1.1rem) 1rem;
+  }
+
+  .cgy-native-app .solve-moment-overlay strong {
+    font-size: clamp(2.25rem, 8vw, 3.35rem);
+  }
+}
+
+@media (max-width: 720px) {
+  .cgy-native-app .site-header {
+    padding-top: calc(0.68rem + var(--cgy-safe-area-top));
+    padding-right: calc(clamp(0.75rem, 4vw, 1rem) + var(--cgy-safe-area-right));
+    padding-bottom: 0.58rem;
+    padding-left: calc(clamp(0.75rem, 4vw, 1rem) + var(--cgy-safe-area-left));
+    gap: 0.34rem 0.46rem;
+  }
+
+  .cgy-native-app .brand-mark {
+    gap: 0.42rem;
+  }
+
+  .cgy-native-app .brand-glyph {
+    width: 2.05rem;
+    height: 2.05rem;
+  }
+
+  .cgy-native-app .brand-mark strong {
+    max-width: 9rem;
+    overflow: hidden;
+    font-size: 0.82rem;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
+
+  .cgy-native-app .brand-mark small {
+    display: none;
+  }
+
+  .cgy-native-app .site-nav {
+    width: 100%;
+  }
+
+  .cgy-native-app .site-nav a,
+  .cgy-native-app .account-nav-control {
+    min-height: 2.32rem;
+  }
+
+  .cgy-native-app .account-nav-signed-out-actions {
+    flex-wrap: nowrap;
+    gap: 0.28rem;
+  }
+
+  .cgy-native-app .account-nav-control-signed-out {
+    padding-inline: 0.56rem;
+  }
+}
+
+@media (max-width: 420px) {
+  .cgy-native-app .site-header {
+    padding-top: calc(0.64rem + var(--cgy-safe-area-top));
+    gap: 0.3rem 0.36rem;
+  }
+
+  .cgy-native-app .brand-glyph {
+    width: 1.95rem;
+    height: 1.95rem;
+  }
+
+  .cgy-native-app .brand-mark strong {
+    max-width: 7.4rem;
+    font-size: 0.78rem;
+  }
+
+  .cgy-native-app .site-nav {
+    gap: 0.22rem;
+  }
+
+  .cgy-native-app .site-nav a {
+    min-height: 2.28rem;
+    padding-inline: 0.46rem;
+  }
+
+  .cgy-native-app .account-nav-control {
+    min-height: 2.28rem;
+    padding-inline: 0.38rem;
+    font-size: 0.73rem;
+  }
+}
+
 @media (prefers-reduced-motion: reduce) {
   *,
   *::before,

@@ -1,0 +1,32 @@
+appId: com.canyougeo.app
+name: Android native release guardrails offline
+tags:
+  - native
+  - guardrails
+  - android
+  - offline
+---
+- launchApp:
+    clearState: true
+- extendedWaitUntil:
+    visible: "Can you read the world?"
+    timeout: 60000
+- extendedWaitUntil:
+    visible: "Device offline. Bundled sample games still open, but sign-in, account sync, and purchases need a connection."
+    timeout: 30000
+- tapOn: "Explore games"
+- extendedWaitUntil:
+    visible: "Choose a game."
+    timeout: 20000
+- openLink: "https://canyougeo.com/sign-in/"
+- extendedWaitUntil:
+    visible: "Sign in with email and password."
+    timeout: 30000
+- tapOn: "Email"
+- inputText: "offline@example.test"
+- tapOn: "Password"
+- inputText: "offline-password"
+- tapOn: "Sign in"
+- extendedWaitUntil:
+    visible: "You're offline. Reconnect, then try this account action again."
+    timeout: 15000

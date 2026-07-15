@@ -7,10 +7,15 @@ import { BrandMark } from "@/components/BrandMark";
 import { FooterNav } from "@/components/FooterNav";
 import { JsonLd } from "@/components/JsonLd";
 import { MarketingConsentManager } from "@/components/MarketingConsentManager";
+import { NativeAppBridge } from "@/components/NativeAppBridge";
+import { NativeConnectivityStatus } from "@/components/NativeConnectivityStatus";
+import { NativeDeepLinkBridge } from "@/components/NativeDeepLinkBridge";
+import { NativeExternalNavigationGuard } from "@/components/NativeExternalNavigationGuard";
 import { PrimaryNav } from "@/components/PrimaryNav";
 import { SocialLinks } from "@/components/SocialLinks";
 import { AuthNavStatus } from "@/features/account/AuthNavStatus";
 import { BRAND_NAME } from "@/lib/brand";
+import { isNativeAppBuild } from "@/lib/site/buildTarget";
 import { publicSiteOrigin, robotsForSite, shouldNoIndexSite } from "@/lib/site/origin";
 import { openGraphImageUrl, SITE_DESCRIPTION, SITE_TITLE, siteJsonLd } from "@/lib/site/seo";
 
@@ -36,6 +41,7 @@ const plexMono = IBM_Plex_Mono({
 });
 
 const siteOrigin = publicSiteOrigin(process.env.NEXT_PUBLIC_SITE_URL, process.env.CF_PAGES_URL);
+const nativeAppBuild = isNativeAppBuild();
 const robots = robotsForSite(
   shouldNoIndexSite(
     process.env.NEXT_PUBLIC_SITE_URL,
@@ -108,15 +114,24 @@ export const metadata: Metadata = {
 export const viewport: Viewport = {
   width: "device-width",
   initialScale: 1,
+  ...(nativeAppBuild ? { viewportFit: "cover" as const } : {}),
   colorScheme: "dark",
   themeColor: "#08181D"
 };
 
 export default function RootLayout({ children }: Readonly<{ children: React.ReactNode }>) {
+  const htmlClassName = [plexSans.variable, literata.variable, plexMono.variable, nativeAppBuild ? "cgy-native-app" : null]
+    .filter(Boolean)
+    .join(" ");
+
   return (
-    <html lang="en" className={`${plexSans.variable} ${literata.variable} ${plexMono.variable}`}>
+    <html lang="en" className={htmlClassName} data-native-app={nativeAppBuild ? "true" : undefined}>
       <body>
         <AnalyticsScripts />
+        <NativeAppBridge />
+        <NativeConnectivityStatus />
+        <NativeDeepLinkBridge />
+        <NativeExternalNavigationGuard />
         <a className="skip-link" href="#main">
           Skip to content
         </a>

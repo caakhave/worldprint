@@ -1,4 +1,5 @@
 import { publicSiteOrigin, shouldNoIndexSite } from "@/lib/site/origin";
+import { isNativeAppBuild } from "@/lib/site/buildTarget";
 
 export const CAN_YOU_GEO_ANALYTICS_EVENTS = [
   "cgy_game_start",
@@ -110,6 +111,7 @@ type AnalyticsEnv = {
   NEXT_PUBLIC_GA_MEASUREMENT_ID?: string;
   NEXT_PUBLIC_SITE_URL?: string;
   NEXT_PUBLIC_NO_INDEX?: string;
+  NEXT_PUBLIC_CGY_NATIVE_APP?: string;
   CF_PAGES_BRANCH?: string;
   CF_PAGES_URL?: string;
 };
@@ -153,6 +155,10 @@ const AD_CONSENT_GRANTED = {
 
 export function analyticsConfigFromEnv(env: AnalyticsEnv = process.env as AnalyticsEnv): AnalyticsConfig {
   const siteOrigin = cleanRootOrigin(env.NEXT_PUBLIC_SITE_URL);
+  if (isNativeAppBuild(env)) {
+    return disabledConfig(siteOrigin);
+  }
+
   if (env.NEXT_PUBLIC_ANALYTICS_ENABLED?.trim().toLowerCase() !== TRUE_VALUE || !siteOrigin) {
     return disabledConfig(siteOrigin);
   }
@@ -238,6 +244,7 @@ export function normalizeMarketingConsentChoice(value: string | null | undefined
 
 export function pushMarketingConsentChoice(choice: MarketingConsentChoice) {
   if (typeof window === "undefined") return;
+  if (isNativeAppBuild(clientAnalyticsEnv())) return;
   try {
     const analyticsWindow = window as AnalyticsWindow;
     if (!Array.isArray(analyticsWindow.dataLayer)) analyticsWindow.dataLayer = [];
@@ -255,6 +262,7 @@ export function pushMarketingConsentChoice(choice: MarketingConsentChoice) {
 }
 
 export function marketingConsentUiEnabledFromEnv(env: AnalyticsEnv = process.env as AnalyticsEnv): boolean {
+  if (isNativeAppBuild(env)) return false;
   const origin = publicSiteOrigin(env.NEXT_PUBLIC_SITE_URL, env.CF_PAGES_URL);
   try {
     return marketingConsentUiEnabledForHostname(new URL(origin).hostname);
@@ -315,6 +323,7 @@ function clientAnalyticsEnv(): AnalyticsEnv {
     NEXT_PUBLIC_GTM_ID: process.env.NEXT_PUBLIC_GTM_ID,
     NEXT_PUBLIC_GA_MEASUREMENT_ID: process.env.NEXT_PUBLIC_GA_MEASUREMENT_ID,
     NEXT_PUBLIC_SITE_URL: process.env.NEXT_PUBLIC_SITE_URL,
-    NEXT_PUBLIC_NO_INDEX: process.env.NEXT_PUBLIC_NO_INDEX
+    NEXT_PUBLIC_NO_INDEX: process.env.NEXT_PUBLIC_NO_INDEX,
+    NEXT_PUBLIC_CGY_NATIVE_APP: process.env.NEXT_PUBLIC_CGY_NATIVE_APP
   };
 }

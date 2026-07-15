@@ -3,6 +3,7 @@ import {
   analyticsConfigFromEnv,
   marketingConsentUiEnabledForHostname,
   marketingConsentUiEnabledFromEnv,
+  pushMarketingConsentChoice,
   sanitizeAnalyticsParams,
   scoreBandForScore,
   trackAnalyticsEvent,
@@ -40,6 +41,34 @@ describe("analytics helpers", () => {
       provider: "gtm",
       gtmId: "GTM-CANYOUGEO"
     });
+  });
+
+  it("keeps browser analytics disabled in native app builds even with production IDs", () => {
+    expect(
+      analyticsConfigFromEnv({
+        NEXT_PUBLIC_CGY_NATIVE_APP: "1",
+        NEXT_PUBLIC_ANALYTICS_ENABLED: "true",
+        NEXT_PUBLIC_GTM_ID: "GTM-CANYOUGEO",
+        NEXT_PUBLIC_GA_MEASUREMENT_ID: "G-ABC1234567",
+        NEXT_PUBLIC_SITE_URL: "https://canyougeo.com",
+        NEXT_PUBLIC_NO_INDEX: "false"
+      })
+    ).toMatchObject({
+      enabled: false,
+      provider: null
+    });
+  });
+
+  it("keeps the marketing consent UI disabled in native app builds", () => {
+    expect(
+      marketingConsentUiEnabledFromEnv({
+        NEXT_PUBLIC_CGY_NATIVE_APP: "1",
+        NEXT_PUBLIC_ANALYTICS_ENABLED: "true",
+        NEXT_PUBLIC_GTM_ID: "GTM-CANYOUGEO",
+        NEXT_PUBLIC_SITE_URL: "https://canyougeo.com",
+        NEXT_PUBLIC_NO_INDEX: "false"
+      })
+    ).toBe(false);
   });
 
   it("falls back to direct GA4 only when GTM is absent", () => {
@@ -164,6 +193,26 @@ describe("analytics helpers", () => {
     ]);
   });
 
+  it("no-ops analytics events in native app builds without creating dataLayer", () => {
+    vi.stubEnv("NEXT_PUBLIC_CGY_NATIVE_APP", "1");
+    vi.stubEnv("NEXT_PUBLIC_ANALYTICS_ENABLED", "true");
+    vi.stubEnv("NEXT_PUBLIC_GTM_ID", "GTM-CANYOUGEO");
+    vi.stubEnv("NEXT_PUBLIC_SITE_URL", "https://canyougeo.com");
+    vi.stubEnv("NEXT_PUBLIC_NO_INDEX", "false");
+    delete (window as typeof window & { dataLayer?: unknown[] }).dataLayer;
+
+    expect(() =>
+      trackAnalyticsEvent("cgy_share", {
+        method: "copy_link",
+        content_type: "challenge_link",
+        game_slug: "mystery-map",
+        mode: "free_daily"
+      })
+    ).not.toThrow();
+
+    expect((window as typeof window & { dataLayer?: unknown[] }).dataLayer).toBeUndefined();
+  });
+
   it("initializes dataLayer even when direct GA4 is the configured provider", () => {
     vi.stubEnv("NEXT_PUBLIC_ANALYTICS_ENABLED", "true");
     vi.stubEnv("NEXT_PUBLIC_GA_MEASUREMENT_ID", "G-ABC1234567");
@@ -239,6 +288,19 @@ describe("analytics helpers", () => {
     });
 
     expect((window as typeof window & { dataLayer?: unknown[] }).dataLayer).toEqual([]);
+  });
+
+  it("no-ops marketing consent updates in native app builds", () => {
+    vi.stubEnv("NEXT_PUBLIC_CGY_NATIVE_APP", "1");
+    vi.stubEnv("NEXT_PUBLIC_ANALYTICS_ENABLED", "true");
+    vi.stubEnv("NEXT_PUBLIC_GTM_ID", "GTM-CANYOUGEO");
+    vi.stubEnv("NEXT_PUBLIC_SITE_URL", "https://canyougeo.com");
+    vi.stubEnv("NEXT_PUBLIC_NO_INDEX", "false");
+    delete (window as typeof window & { dataLayer?: unknown[] }).dataLayer;
+
+    expect(() => pushMarketingConsentChoice("granted")).not.toThrow();
+
+    expect((window as typeof window & { dataLayer?: unknown[] }).dataLayer).toBeUndefined();
   });
 
   it("omits undefined and null event params", () => {

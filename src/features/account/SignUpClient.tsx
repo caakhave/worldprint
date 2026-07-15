@@ -4,6 +4,7 @@ import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
 import { useSupabaseAccount } from "@/features/account/useSupabaseAccount";
+import { authEmailCallbackUrl } from "@/lib/account/authRedirect";
 import { ensureProfile } from "@/lib/account/sync";
 import {
   authCallbackPathForReturn,
@@ -12,11 +13,12 @@ import {
   signInPathForReturn,
   storeSignInReturnPath
 } from "@/lib/account/signInRedirect";
+import { isNativeAppCurrentlyOfflineAsync, NATIVE_NETWORK_ACTION_UNAVAILABLE_MESSAGE } from "@/lib/mobile/nativeConnectivity";
 import { trackRegistrationComplete } from "@/lib/site/analytics";
-import { siteOrigin } from "@/lib/supabase/env";
 
 const MIN_PASSWORD_LENGTH = 8;
 const GENERIC_SIGN_UP_ERROR = "We could not create that account. If you already have one, sign in instead.";
+const AUTH_EMAIL_CONFIGURATION_ERROR = "Account email links are not configured for this app build. Try again in a moment.";
 const CONFIRMATION_SENT_STATUS = "Account created and confirmation email sent. Open it, then sign in with your password to continue.";
 
 type SignUpOutcome = "confirmation" | "existing-account" | "ambiguous-check-email";
@@ -68,6 +70,10 @@ export function SignUpClient() {
       setError("Account creation is not available in this preview. You can still try the Sample Run.");
       return;
     }
+    if (await isNativeAppCurrentlyOfflineAsync()) {
+      setError(NATIVE_NETWORK_ACTION_UNAVAILABLE_MESSAGE);
+      return;
+    }
     if (password.length < MIN_PASSWORD_LENGTH) {
       setError("Use at least 8 characters for your password.");
       return;
@@ -82,13 +88,22 @@ export function SignUpClient() {
     setError("");
     setStatus("");
 
-    const nextPath = storeSignInReturnPath(nextSearchValue());
+    const requestedNextValue = nextSearchValue();
+    const nextPath = safeSignInReturnPath(requestedNextValue);
     const callbackPath = authCallbackPathForReturn(nextPath);
+    const callbackUrl = authEmailCallbackUrl(callbackPath);
+    if (!callbackUrl.ok) {
+      setSubmitting(false);
+      setError(AUTH_EMAIL_CONFIGURATION_ERROR);
+      return;
+    }
+
+    storeSignInReturnPath(requestedNextValue);
     const { data, error: signUpError } = await client.auth.signUp({
       email,
       password,
       options: {
-        emailRedirectTo: `${siteOrigin()}${callbackPath}`,
+        emailRedirectTo: callbackUrl.url,
         data: {
           marketing_opt_in: marketingOptIn,
           marketing_opt_in_source: marketingOptIn ? "sign_up" : null

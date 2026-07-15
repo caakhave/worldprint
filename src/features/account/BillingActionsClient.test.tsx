@@ -171,6 +171,26 @@ describe("BillingActionsClient", () => {
     expect(screen.getByRole("button", { name: "Join yearly" })).toBeEnabled();
   });
 
+  it("shows non-actionable mobile purchase preview copy in native builds", () => {
+    vi.stubEnv("NEXT_PUBLIC_CGY_NATIVE_APP", "1");
+    process.env.NEXT_PUBLIC_BILLING_MODE = "test";
+    enableProductionAnalytics();
+    accountMock.state.user = TEST_USER;
+    const client = billingClientMock();
+    const startingHref = window.location.href;
+
+    render(<BillingActionsClient entitlement={FREE_ENTITLEMENT} context="upgrade" />);
+
+    expect(screen.getByRole("button", { name: "Mobile purchases unavailable" })).toBeDisabled();
+    expect(screen.getByText(/Mobile purchases are not available in this preview/i)).toBeVisible();
+    expect(screen.queryByRole("button", { name: "Join monthly" })).not.toBeInTheDocument();
+    expect(screen.queryByRole("button", { name: "Join yearly" })).not.toBeInTheDocument();
+    expect(screen.queryByText(/secure checkout/i)).not.toBeInTheDocument();
+    expect(client.functions.invoke).not.toHaveBeenCalled();
+    expect((window as typeof window & { dataLayer?: unknown[] }).dataLayer).toEqual([]);
+    expect(window.location.href).toBe(startingHref);
+  });
+
   it("uses protected checkout functions and does not start checkout analytics until a URL is returned", async () => {
     process.env.NEXT_PUBLIC_BILLING_MODE = "test";
     enableProductionAnalytics();
@@ -282,6 +302,26 @@ describe("BillingActionsClient", () => {
     expect(client.from).not.toHaveBeenCalled();
   });
 
+  it("does not show focused checkout actions in native builds", () => {
+    vi.stubEnv("NEXT_PUBLIC_CGY_NATIVE_APP", "1");
+    process.env.NEXT_PUBLIC_BILLING_MODE = "test";
+    accountMock.state.user = TEST_USER;
+    const client = billingClientMock();
+
+    render(
+      <BillingActionsClient
+        entitlement={FREE_ENTITLEMENT}
+        context="upgrade"
+        selectedPlan="monthly"
+        checkoutLabel="Continue to secure checkout"
+      />
+    );
+
+    expect(screen.getByRole("button", { name: "Mobile purchases unavailable" })).toBeDisabled();
+    expect(screen.queryByRole("button", { name: "Continue to secure checkout" })).not.toBeInTheDocument();
+    expect(client.functions.invoke).not.toHaveBeenCalled();
+  });
+
   it("uses a focused yearly checkout action when returning from Pro-first sign-in", async () => {
     process.env.NEXT_PUBLIC_BILLING_MODE = "test";
     accountMock.state.user = TEST_USER;
@@ -352,6 +392,35 @@ describe("BillingActionsClient", () => {
     expect(options.headers).toEqual({ Authorization: "Bearer billing-token" });
     expect(options.body).toBeUndefined();
     expect(client.from).not.toHaveBeenCalled();
+  });
+
+  it("does not open the customer portal in native builds", () => {
+    vi.stubEnv("NEXT_PUBLIC_CGY_NATIVE_APP", "1");
+    process.env.NEXT_PUBLIC_BILLING_MODE = "test";
+    accountMock.state.user = TEST_USER;
+    const client = billingClientMock();
+    const stripePro: PlayerEntitlement = {
+      ...PRO_ENTITLEMENT,
+      row: {
+        user_id: TEST_USER.id,
+        plan: "pro",
+        status: "active",
+        stripe_customer_id: "cus_test",
+        stripe_subscription_id: "sub_test",
+        stripe_price_id: "price_test",
+        stripe_status: "active",
+        cancel_at_period_end: false,
+        current_period_end: "2026-07-29T00:00:00.000Z",
+        updated_at: "2026-06-29T00:00:00.000Z"
+      }
+    };
+
+    render(<BillingActionsClient entitlement={stripePro} context="account" />);
+
+    expect(screen.getByRole("button", { name: "Membership active" })).toBeDisabled();
+    expect(screen.getByText(/Subscription management is not available in this preview/i)).toBeVisible();
+    expect(screen.queryByRole("button", { name: "Manage billing" })).not.toBeInTheDocument();
+    expect(client.functions.invoke).not.toHaveBeenCalled();
   });
 
   it("uses billing-management copy for customer portal failures", async () => {
