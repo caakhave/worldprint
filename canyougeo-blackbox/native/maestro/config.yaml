@@ -1,0 +1,8 @@
+# Maestro workspace config for installed native Can You Geo apps.
+#
+# The local runner passes explicit flow files, but this list documents the
+# executable discovery boundary. Shared helpers/subflows stay outside these
+# globs so they are not accidentally executed as standalone tests.
+flows:
+  - flows/android/*.yaml
+  - flows/ios/*.yaml

@@ -1,0 +1,17 @@
+appId: com.canyougeo.app
+name: Android verified App Links
+tags:
+  - native
+  - app-link
+  - android
+---
+- launchApp:
+    clearState: true
+- openLink: "https://canyougeo.com/play/"
+- extendedWaitUntil:
+    visible: "GAME MENU"
+    timeout: 60000
+- openLink: "https://canyougeo.com/auth/callback/"
+- extendedWaitUntil:
+    visible: "That account email link did not work."
+    timeout: 30000

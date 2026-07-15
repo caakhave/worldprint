@@ -29,6 +29,7 @@ Must add or update:
 
 - signed-out auth page smoke
 - optional authenticated smoke behind env vars
+- native auth persistence smoke when behavior affects Capacitor session storage or callback routing
 - account and upgrade assertions
 - payment safety checks
 - checkout-open smoke behind `checkout_smoke` plus explicit credentials/opt-in when checkout behavior changes
@@ -52,6 +53,16 @@ Must update:
 - non-live route and copy smoke
 - spoiler-safety assertions where applicable
 - live email coverage only behind the `email_live` marker and explicit env opt-in
+
+## New Native App Routing Or WebView Behavior
+
+Must add or update:
+
+- Maestro native smoke in `native/maestro/flows/android/` or `native/maestro/flows/ios/`
+- platform-specific Back, App Link, Universal Link, or auth persistence coverage when those areas change
+- runner/docs updates when a new native flow needs credentials, devices, or platform prerequisites
+
+Do not use Maestro Cloud for the baseline suite.
 
 ## New `data-testid` Selector
 

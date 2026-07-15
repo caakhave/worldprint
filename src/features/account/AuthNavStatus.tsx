@@ -5,6 +5,7 @@ import { useRouter } from "next/navigation";
 import { useState } from "react";
 import { accountInitial, compactPlanLabel } from "@/features/account/accountDisplay";
 import { requestBillingActionUrl } from "@/features/account/billingActionHelpers";
+import { isNativeAppBuild } from "@/lib/site/buildTarget";
 import { useEntitlement } from "@/features/account/useEntitlement";
 import { useSupabaseAccount } from "@/features/account/useSupabaseAccount";
 import { publicBillingEnabled } from "@/lib/billing/publicBillingConfig";
@@ -16,6 +17,7 @@ export function AuthNavStatus() {
   const { entitlement, loading: entitlementLoading } = useEntitlement();
   const [billingPending, setBillingPending] = useState(false);
   const [billingMessage, setBillingMessage] = useState("");
+  const nativeBuild = isNativeAppBuild();
 
   if (!configured) {
     return (
@@ -72,6 +74,11 @@ export function AuthNavStatus() {
   }
 
   async function handleManageBilling() {
+    if (nativeBuild) {
+      setBillingMessage("Subscription management is not available in this preview.");
+      return;
+    }
+
     setBillingPending(true);
     setBillingMessage("");
     const result = await requestBillingActionUrl({
@@ -90,7 +97,7 @@ export function AuthNavStatus() {
 
   const plan = entitlementLoading ? "Account" : compactPlanLabel(entitlement.plan);
   const isPro = !entitlementLoading && entitlement.plan === "pro";
-  const canManageBilling = isPro && Boolean(entitlement.row?.stripe_customer_id) && publicBillingEnabled();
+  const canManageBilling = isPro && Boolean(entitlement.row?.stripe_customer_id) && publicBillingEnabled() && !nativeBuild;
   return (
     <details className="account-nav-menu">
       <summary
@@ -145,6 +152,11 @@ export function AuthNavStatus() {
             {isPro ? "View membership" : "Compare plans"}
           </Link>
         )}
+        {nativeBuild && isPro && Boolean(entitlement.row?.stripe_customer_id) ? (
+          <p className="account-nav-menu-error" role="note">
+            Subscription management is not available in this preview.
+          </p>
+        ) : null}
         {billingMessage ? (
           <p className="account-nav-menu-error" role="alert">
             {billingMessage}

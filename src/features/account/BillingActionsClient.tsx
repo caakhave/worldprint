@@ -4,6 +4,9 @@ import Link from "next/link";
 import { useState } from "react";
 import {
   requestBillingActionUrl,
+  NATIVE_CHECKOUT_UNAVAILABLE_MESSAGE,
+  NATIVE_PORTAL_UNAVAILABLE_MESSAGE,
+  nativeBillingUnavailableMessage,
   type BillingActionKind,
   type BillingFunctionName,
   type BillingPendingState
@@ -13,6 +16,7 @@ import type { PlayerEntitlement } from "@/lib/account/entitlements";
 import { signUpPathForReturn } from "@/lib/account/signInRedirect";
 import { publicBillingEnabled } from "@/lib/billing/publicBillingConfig";
 import { PRO_PRICE_OPTIONS, type ProBillingInterval } from "@/lib/billing/proPricing";
+import { isNativeAppBuild } from "@/lib/site/buildTarget";
 import { trackAnalyticsEvent, trackCheckoutStarted, trackUpgradeIntent } from "@/lib/site/analytics";
 
 type BillingActionsClientProps = {
@@ -49,6 +53,7 @@ export function BillingActionsClient({ entitlement, context, selectedPlan = null
   const isPro = entitlement.plan === "pro";
   const hasStripeCustomer = Boolean(entitlement.row?.stripe_customer_id);
   const billingEnabled = configured && publicBillingEnabled();
+  const nativeBuild = isNativeAppBuild();
 
   function trackUpgradeClick(interval: ProBillingInterval | undefined) {
     trackUpgradeIntent({
@@ -66,6 +71,11 @@ export function BillingActionsClient({ entitlement, context, selectedPlan = null
     kind: BillingActionKind,
     interval?: ProBillingInterval
   ) {
+    if (nativeBuild) {
+      setMessage(nativeBillingUnavailableMessage(kind));
+      return;
+    }
+
     setPending(pendingState);
     setMessage("");
     if (kind === "checkout") {
@@ -91,6 +101,56 @@ export function BillingActionsClient({ entitlement, context, selectedPlan = null
       });
     }
     window.location.assign(result.url);
+  }
+
+  if (nativeBuild) {
+    if (isPro) {
+      return (
+        <div className="billing-actions" aria-label="Billing actions">
+          {context === "upgrade" ? (
+            <Link className="button" href="/account">
+              View account
+            </Link>
+          ) : (
+            <button className="button" type="button" disabled>
+              Membership active
+            </button>
+          )}
+          {context === "account" ? (
+            <Link className="button-secondary" href="/upgrade">
+              View plan
+            </Link>
+          ) : null}
+          <p className="account-env-note">
+            {NATIVE_PORTAL_UNAVAILABLE_MESSAGE} Existing Pro access remains available on this account.
+          </p>
+        </div>
+      );
+    }
+
+    return (
+      <div className="billing-actions" aria-label="Billing actions">
+        <button className="button" type="button" disabled>
+          Mobile purchases unavailable
+        </button>
+        {context === "account" ? (
+          <Link className="button-secondary" href="/upgrade" onClick={() => trackUpgradeNavigation("account_compare_plans_native_preview")}>
+            Compare plans
+          </Link>
+        ) : signedIn ? (
+          <Link className="button-secondary" href="/account">
+            Continue free
+          </Link>
+        ) : (
+          <Link className="button-secondary" href="/sign-up">
+            Continue free
+          </Link>
+        )}
+        <p className="account-env-note">
+          {NATIVE_CHECKOUT_UNAVAILABLE_MESSAGE} Free play and already entitled Pro access still work.
+        </p>
+      </div>
+    );
   }
 
   if (!billingEnabled) {

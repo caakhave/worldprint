@@ -1,6 +1,7 @@
 "use client";
 
 import type { ProBillingInterval } from "@/lib/billing/proPricing";
+import { isNativeAppBuild } from "@/lib/site/buildTarget";
 import type { CanYouGeoSupabaseClient } from "@/lib/supabase/client";
 
 type BillingActionResponse = {
@@ -11,6 +12,13 @@ type BillingActionResponse = {
 export type BillingActionKind = "checkout" | "portal";
 export type BillingFunctionName = "stripe-checkout" | "stripe-portal";
 export type BillingPendingState = "checkout-monthly" | "checkout-yearly" | "portal";
+
+export const NATIVE_CHECKOUT_UNAVAILABLE_MESSAGE = "Mobile purchases are not available in this preview.";
+export const NATIVE_PORTAL_UNAVAILABLE_MESSAGE = "Subscription management is not available in this preview.";
+
+export function nativeBillingUnavailableMessage(kind: BillingActionKind) {
+  return kind === "portal" ? NATIVE_PORTAL_UNAVAILABLE_MESSAGE : NATIVE_CHECKOUT_UNAVAILABLE_MESSAGE;
+}
 
 export function warnBillingDetail(message: string, detail: unknown) {
   if (process.env.NODE_ENV !== "production") {
@@ -42,6 +50,10 @@ export async function requestBillingActionUrl({
   kind: BillingActionKind;
   interval?: ProBillingInterval;
 }): Promise<{ url: string | null; message: string | null }> {
+  if (isNativeAppBuild()) {
+    return { url: null, message: nativeBillingUnavailableMessage(kind) };
+  }
+
   if (!client || !signedIn) {
     return { url: null, message: "Sign in to continue with Pro." };
   }

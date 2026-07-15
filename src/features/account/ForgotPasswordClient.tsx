@@ -3,11 +3,12 @@
 import Link from "next/link";
 import { useState } from "react";
 import { useSupabaseAccount } from "@/features/account/useSupabaseAccount";
+import { authEmailCallbackUrl } from "@/lib/account/authRedirect";
 import { authCallbackPathForReturn } from "@/lib/account/signInRedirect";
 import { CONTACT_LINKS } from "@/lib/contact";
-import { siteOrigin } from "@/lib/supabase/env";
 
 const GENERIC_RESET_ERROR = "We could not send a password reset email. Check the address and try again.";
+const AUTH_EMAIL_CONFIGURATION_ERROR = "Password reset email links are not configured for this app build. Try again in a moment.";
 
 export function ForgotPasswordClient() {
   const { client, configured, loading } = useSupabaseAccount();
@@ -27,8 +28,15 @@ export function ForgotPasswordClient() {
     setError("");
     setStatus("");
 
+    const callbackUrl = authEmailCallbackUrl(authCallbackPathForReturn("/account"));
+    if (!callbackUrl.ok) {
+      setSubmitting(false);
+      setError(AUTH_EMAIL_CONFIGURATION_ERROR);
+      return;
+    }
+
     const { error: resetError } = await client.auth.resetPasswordForEmail(email, {
-      redirectTo: `${siteOrigin()}${authCallbackPathForReturn("/account")}`
+      redirectTo: callbackUrl.url
     });
 
     setSubmitting(false);

@@ -88,7 +88,7 @@ describe("SignUpClient", () => {
       email: "new@example.com",
       password: "strong-password",
       options: expect.objectContaining({
-        emailRedirectTo: expect.stringMatching(/\/auth\/callback$/),
+        emailRedirectTo: `${window.location.origin}/auth/callback`,
         data: {
           marketing_opt_in: false,
           marketing_opt_in_source: null
@@ -105,6 +105,45 @@ describe("SignUpClient", () => {
     expect(screen.queryByRole("button", { name: "Create account" })).not.toBeInTheDocument();
     expect(accountMock.state.client.auth.resetPasswordForEmail).not.toHaveBeenCalled();
     expect(window.sessionStorage.getItem("canyougeo:sign-in-return")).toBe("/account");
+  });
+
+  it("uses the hosted production callback for native sign-up email redirects", async () => {
+    vi.stubEnv("NEXT_PUBLIC_CGY_NATIVE_APP", "1");
+    vi.stubEnv("NEXT_PUBLIC_CGY_NATIVE_HOSTED_ORIGIN", "https://canyougeo.com");
+    const user = userEvent.setup();
+
+    render(<SignUpClient />);
+
+    await user.type(screen.getByLabelText("Email"), "new@example.com");
+    await user.type(screen.getByLabelText("Password"), "strong-password");
+    await user.type(screen.getByLabelText("Confirm password"), "strong-password");
+    await user.click(screen.getByRole("button", { name: "Create account" }));
+
+    expect(accountMock.state.client.auth.signUp).toHaveBeenCalledWith(
+      expect.objectContaining({
+        options: expect.objectContaining({
+          emailRedirectTo: "https://canyougeo.com/auth/callback"
+        })
+      })
+    );
+    expect(JSON.stringify(accountMock.state.client.auth.signUp.mock.calls)).not.toContain("https://localhost");
+  });
+
+  it("does not call Supabase when native sign-up callback configuration is missing", async () => {
+    vi.stubEnv("NEXT_PUBLIC_CGY_NATIVE_APP", "1");
+    vi.stubEnv("NEXT_PUBLIC_CGY_NATIVE_HOSTED_ORIGIN", "");
+    const user = userEvent.setup();
+
+    render(<SignUpClient />);
+
+    await user.type(screen.getByLabelText("Email"), "new@example.com");
+    await user.type(screen.getByLabelText("Password"), "strong-password");
+    await user.type(screen.getByLabelText("Confirm password"), "strong-password");
+    await user.click(screen.getByRole("button", { name: "Create account" }));
+
+    expect(screen.getByRole("alert")).toHaveTextContent("Account email links are not configured for this app build. Try again in a moment.");
+    expect(accountMock.state.client.auth.signUp).not.toHaveBeenCalled();
+    expect(window.sessionStorage.getItem("canyougeo:sign-in-return")).toBeNull();
   });
 
   it("routes preview fallback players to the game library", () => {

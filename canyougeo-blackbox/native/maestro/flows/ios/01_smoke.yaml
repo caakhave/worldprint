@@ -1,0 +1,56 @@
+appId: com.canyougeo.app
+name: iOS native smoke
+tags:
+  - native
+  - smoke
+  - ios
+---
+- launchApp:
+    clearState: true
+- extendedWaitUntil:
+    visible: "Can You Geo?"
+    timeout: 15000
+- extendedWaitUntil:
+    visible: "Can you read the world?"
+    timeout: 15000
+- tapOn: "Play"
+- extendedWaitUntil:
+    visible: "Choose a game."
+    timeout: 15000
+- scrollUntilVisible:
+    element: "Play Mystery Map"
+    direction: DOWN
+- tapOn: "Play Mystery Map"
+- extendedWaitUntil:
+    visible: "Read the unlabeled map"
+    timeout: 15000
+- tapOn: "Play"
+- extendedWaitUntil:
+    visible: "Choose a game."
+    timeout: 15000
+- scrollUntilVisible:
+    element: "Play Pattern Atlas"
+    direction: DOWN
+- tapOn: "Play Pattern Atlas"
+- extendedWaitUntil:
+    visible: "Pattern Atlas Sample Run"
+    timeout: 15000
+- tapOn: "Play"
+- extendedWaitUntil:
+    visible: "Choose a game."
+    timeout: 15000
+- scrollUntilVisible:
+    element: "Play Order Atlas"
+    direction: DOWN
+- tapOn: "Play Order Atlas"
+- extendedWaitUntil:
+    visible: "Order Atlas Sample Run"
+    timeout: 15000
+- tapOn: "Can You Geo? home"
+- extendedWaitUntil:
+    visible: "Sign in"
+    timeout: 20000
+- tapOn: "Sign in"
+- extendedWaitUntil:
+    visible: "Sign in with email and password."
+    timeout: 15000

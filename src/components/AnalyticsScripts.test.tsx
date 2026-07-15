@@ -75,4 +75,21 @@ describe("AnalyticsScripts", () => {
 
     expect(container).toBeEmptyDOMElement();
   });
+
+  it("renders no browser analytics loaders in native app builds", () => {
+    vi.stubEnv("NEXT_PUBLIC_CGY_NATIVE_APP", "1");
+    vi.stubEnv("NEXT_PUBLIC_SITE_URL", "https://canyougeo.com");
+    vi.stubEnv("NEXT_PUBLIC_NO_INDEX", "false");
+    vi.stubEnv("NEXT_PUBLIC_ANALYTICS_ENABLED", "true");
+    vi.stubEnv("NEXT_PUBLIC_GTM_ID", "GTM-CANYOUGEO");
+    vi.stubEnv("NEXT_PUBLIC_GA_MEASUREMENT_ID", "G-ABC1234567");
+
+    const { container } = render(<AnalyticsScripts />);
+
+    expect(container).toBeEmptyDOMElement();
+    expect(container.innerHTML).not.toContain("googletagmanager.com");
+    expect(container.innerHTML).not.toContain("cgy-gtm-init");
+    expect(container.innerHTML).not.toContain("cgy-ga4-src");
+    expect(container.querySelector("iframe")).toBeNull();
+  });
 });
