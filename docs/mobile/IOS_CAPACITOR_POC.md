@@ -14,6 +14,16 @@ This proof of concept packages the existing static-export Next.js app in a Capac
 - Scheme: `App`
 - Web directory: `out`
 
+## Signing
+
+- App name: `Can You Geo`
+- Bundle ID: `com.canyougeo.app`
+- Apple Team ID: `G5N5U6QFS8`
+- App Store Connect Apple ID: `6791248782`
+- Signing style: Xcode-managed Automatic signing for Debug and Release.
+- Provisioning remains Xcode-managed. Do not commit provisioning profiles, certificates, signing private keys, device UDIDs, Apple Account credentials, or local keychain details.
+- Physical iPhone 14 development install and launch passed after Apple Developer membership activation and automatic signing setup.
+
 ## Architecture
 
 The web app remains the source of truth. `pnpm build:native` runs the Next.js static export with `NEXT_PUBLIC_CGY_NATIVE_APP=1`, which marks the build as native and writes the static app into `out/`. `pnpm mobile:sync:ios` copies that export into the Capacitor iOS project for local simulator builds.
@@ -69,12 +79,22 @@ Most recent checkpoint validation recorded:
 
 ## Deferred Work
 
-- Apple In-App Purchase
-- Authentication redirects and deep links
-- Password recovery, email confirmation, and challenge link handling in native routes
-- Push notifications
-- Native sharing
-- Production app icons and splash screen
-- Physical-device testing
-- App Store signing, provisioning, TestFlight, and submission
-- Android implementation
+The app-side/runtime foundations are now in place and covered by focused unit and native black-box checks:
+
+- Native authentication callbacks, password recovery, and email confirmation route through the hosted `https://canyougeo.com/auth/callback` origin.
+- Strict native deep-link intake handles supported public Can You Geo routes, including challenge links, without logging sensitive callback values.
+- Durable native Supabase session storage is implemented for iOS and Android.
+- Native release guardrails cover trusted external social links, internal WebView navigation, mobile billing boundaries, marketing-consent absence, and safe-area handling.
+- Paid-team automatic development signing is configured for `com.canyougeo.app`, and a physical iPhone 14 development install and launch has passed.
+
+Remaining release/configuration work:
+
+- Apple In-App Purchase.
+- TestFlight and App Store submission.
+- App Store production signing and release provisioning review.
+- Apple Universal Link association and final production verification when approved for a release checkpoint.
+- Production app icons and splash assets.
+- Broader physical-device testing beyond the initial iPhone 14 development launch.
+- Optional future push notifications.
+- Optional future native sharing.
+- Performance profiling and remaining device-specific warnings.
