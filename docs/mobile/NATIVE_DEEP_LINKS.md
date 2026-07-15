@@ -341,6 +341,107 @@ https://test.canyougeo.com
 
 Do not enable staging by default in the production native build.
 
+## Native Static Route Payloads
+
+Checkpoint 4E-2B found a native-only static export mismatch in the Capacitor local asset server. Next's static export writes
+route-qualified React Server Component page payloads, for example:
+
+```text
+out/account/__next.account.__PAGE__.txt
+out/play/mystery-map/__next.play.mystery-map.__PAGE__.txt
+```
+
+During native client navigation, Android WebView requested generic route-local payload names such as:
+
+```text
+https://localhost/account/__next.__PAGE__.txt
+```
+
+Without a matching route-local alias, `/account/` could remain on loading UI or fail to hydrate the intended route. The fix is a
+native-build-only post-export normalization step:
+
+```text
+node tools/mobile/normalizeNextNativeExport.mjs out
+```
+
+`pnpm build` remains the normal website export and does not run this step. `pnpm build:native` runs it after `next build`, then
+Capacitor sync copies the normalized `out/` directory into the native projects.
+
+The normalizer walks every exported route directory, finds exactly one route-qualified `__next.*.__PAGE__.txt`, and copies it to
+`__next.__PAGE__.txt` beside the original. It is idempotent and fails loudly if a route directory has multiple candidate page payloads
+or an existing generic alias with different contents. It intentionally leaves `_tree`, `_head`, `_index`, segment payloads, HTML files,
+and unrelated assets unchanged.
+
+Supported native route loading should go through Next app-router links or the native deep-link bridge. A diagnostic top-level WebView
+assignment such as `location.href = "/account/"` can still pass through Capacitor's root document fallback and is not the supported
+navigation path. Android validation should use visible route content plus absence of relevant `__PAGE__` 404s, not just the URL bar.
+
+## Native Supabase Session Storage
+
+Checkpoint 4E-2 confirmed that Android WebView `localStorage` is not durable enough for Can You Geo auth sessions. A harmless
+`cgy:native-storage-probe` key written before `adb shell am force-stop com.canyougeo.app` was missing after relaunch, so the native
+app must not rely on WebView storage for Supabase session persistence.
+
+Web builds keep the existing `@supabase/ssr` browser client and cookie-backed auth storage. That preserves the exported website's
+current browser behavior, callback handling, cookies, and deployed Supabase dashboard contract.
+
+Native Capacitor runtimes use `@supabase/supabase-js` with an explicit async storage adapter backed by:
+
+```text
+@aparajita/capacitor-secure-storage@8.0.0
+```
+
+Native client auth options:
+
+- `persistSession: true`
+- `autoRefreshToken: true`
+- `detectSessionInUrl: false`
+- `storage: createNativeSupabaseAuthStorage()`
+- `storageKey: sb-<supabase-project-ref>-auth-token`
+
+The native storage adapter lazy-loads the secure storage plugin only after Capacitor reports a real native platform. It uses:
+
+- storage prefix: `cgy.supabase.auth.`
+- iCloud Keychain synchronization: disabled with `setSynchronize(false)`
+- iOS Keychain accessibility: `KeychainAccess.whenUnlockedThisDeviceOnly`
+- no biometric prompts
+- no WebView `localStorage` fallback
+- no key enumeration during normal auth operations
+
+The Supabase storage key remains the standard `sb-<project-ref>-auth-token` namespace. The secure-storage plugin adds the
+Can You Geo prefix underneath that key, so the app avoids broad keychain names while keeping Supabase's expected storage-key
+contract.
+
+The adapter exposes only the async `getItem`, `setItem`, and `removeItem` contract required by Supabase Auth. Secure-storage
+failures are surfaced as sanitized operation errors. Never print access tokens, refresh tokens, session JSON, cookie values,
+passwords, full callback URLs, or stored secure-storage values while debugging.
+
+Checkpoint 4E-2B Android validation:
+
+- clean signed-out launch rendered signed out and no secure auth key was present
+- password sign-in created the secure auth key and rendered authenticated account state
+- authenticated state survived `adb shell am force-stop com.canyougeo.app`
+- authenticated state survived emulator restart
+- sign-out removed the secure auth key
+- signed-out state survived force-stop and emulator restart
+- debug APK replacement with `adb install -r` preserved the authenticated session and secure auth key
+- Android App Links opened the installed app for `/play/`
+- `/auth/callback/` route loading through Android App Links still reached the callback screen
+- live email callback was not rerun because no safe reusable callback token flow was available
+- no credential, token, session JSON, raw callback URL, user id, or email value was printed or committed
+
+iOS caveat: Keychain items can survive app deletion and reinstallation for the same bundle identifier. Do not claim uninstalling the
+iOS app clears a session. If store-release policy requires clearing keychain data after reinstall, handle that in a later checkpoint
+with a dedicated install-marker design rather than adding it here.
+
+Checkpoint 4E-2B iOS validation:
+
+- Capacitor iOS sync completed with `@aparajita/capacitor-secure-storage@8.0.0` and `@capacitor/app@8.1.0`
+- iPhone 17 Pro, iOS 26.5 simulator compile passed
+- simulator install and launch rendered the Can You Geo homepage
+- automated iOS `/account/`, `/sign-in/`, and auth-persistence runtime checks were not run because this machine does not have an
+  installed WebKit inspection bridge and `simctl` does not provide tap/DOM inspection for the WebView
+
 ## Supabase Dashboard Contract
 
 Repository documentation expects the production Supabase Auth URL configuration to be:

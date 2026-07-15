@@ -7,7 +7,7 @@
   "scripts": {
     "dev": "next dev",
     "build": "next build",
-    "build:native": "NEXT_PUBLIC_CGY_NATIVE_APP=1 NEXT_PUBLIC_CGY_NATIVE_HOSTED_ORIGIN=https://canyougeo.com next build",
+    "build:native": "NEXT_PUBLIC_CGY_NATIVE_APP=1 NEXT_PUBLIC_CGY_NATIVE_HOSTED_ORIGIN=https://canyougeo.com next build && node tools/mobile/normalizeNextNativeExport.mjs out",
     "mobile:sync:android": "pnpm build:native && pnpm exec cap sync android",
     "mobile:open:android": "pnpm exec cap open android",
     "mobile:sync:ios": "pnpm build:native && pnpm exec cap sync ios",
@@ -35,6 +35,7 @@
     "ops:supabase:staging-audit": "scripts/ops/validate-supabase-staging.sh --operator-audit"
   },
   "dependencies": {
+    "@aparajita/capacitor-secure-storage": "8.0.0",
     "@capacitor/android": "8.4.1",
     "@capacitor/app": "8.1.0",
     "@capacitor/core": "^8.4.1",
