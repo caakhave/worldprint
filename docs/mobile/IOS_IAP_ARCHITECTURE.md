@@ -297,3 +297,502 @@ This checkpoint did not:
 - Accept Apple agreements, create Apple products, configure App Store Server Notifications, create App Store Server API keys, or change App Store Connect.
 - Upload a binary, increment version/build, change signing, create a PR, merge, deploy, or modify Android.
 - Add speculative tests or change app behavior.
+
+---
+
+Checkpoint 5A-2 status: architecture design only. This section selects the recommended Apple subscription integration
+approach and proposes the provider-neutral entitlement model. It does not add StoreKit code, migrations, Edge Functions,
+Apple products, App Store Server Notification endpoints, or production configuration.
+
+## 13. Integration options evaluated
+
+| Option | Description | Fit for Can You Geo | Strengths | Risks and costs |
+| --- | --- | --- | --- | --- |
+| A. First-party StoreKit 2 Capacitor plugin | Add a small source-controlled iOS Capacitor plugin that wraps only the StoreKit 2 actions Can You Geo needs. The backend still verifies transactions and owns entitlements. | Best fit now. The native app already has controlled Capacitor bridges, Supabase Auth, durable native session storage, strict deep-link handling, and backend-owned billing boundaries. | Minimal client surface, direct control of `appAccountToken`, no new entitlement vendor, easiest to audit against App Store requirements, and least disruptive to existing Stripe/Supabase ownership. | Requires Swift maintenance, App Store Server API work, App Store Server Notification handling, and a separate future Google Play Billing checkpoint. |
+| B. Maintained Capacitor IAP bridge | Use a maintained bridge such as `capacitor-plugin-cdv-purchase` for StoreKit 2 and Google Play Billing. Current npm metadata lists version `13.18.0` with `@capacitor/core` peer support for Capacitor 6, 7, and 8. | Viable fallback, not recommended for the first Can You Geo Apple implementation. | Cross-platform purchase abstraction, MIT license, existing restore-purchase concepts, and Android coverage later. | Broader API than needed, dependency/release risk, many edge cases still require Can You Geo backend verification, and reviewed package docs did not confirm the exact `appAccountToken` ownership path needed for strict Supabase-account binding. |
+| C. RevenueCat or equivalent | Outsource store purchase collection, receipt validation, subscription state, webhooks, and entitlement reporting to a subscription platform. Current `@revenuecat/purchases-capacitor` metadata lists version `13.2.3` with `@capacitor/core >=8.0.0`. | Strong product if Can You Geo wants a managed cross-platform subscription vendor, but not the best fit for this checkpoint. | Mature StoreKit/Google abstraction, webhooks, customer info callbacks, restore handling, dashboards, and cross-platform tooling. | Introduces another billing authority beside Stripe and Supabase, adds vendor lock-in/cost/data-processing review, complicates migration/rollback from the current Stripe-owned entitlement model, and may obscure provider-state details needed for support and audits. |
+
+Primary references used for this design:
+
+- Apple StoreKit `Product.PurchaseOption.appAccountToken(_:)`: `https://developer.apple.com/documentation/storekit/product/purchaseoption/appaccounttoken(_:)`
+- Apple App Store Server Notifications: `https://developer.apple.com/documentation/appstoreservernotifications`
+- `capacitor-plugin-cdv-purchase` npm metadata: `https://www.npmjs.com/package/capacitor-plugin-cdv-purchase`
+- RevenueCat Capacitor SDK npm metadata: `https://www.npmjs.com/package/@revenuecat/purchases-capacitor`
+- Current app dependency baseline: Capacitor core/iOS/Android/CLI `8.4.1`, Capacitor App `8.1.0`.
+
+## 14. Recommended integration approach
+
+Recommend **Option A: a first-party StoreKit 2 Capacitor plugin backed by Supabase service-role verification**.
+
+The client plugin should be deliberately small:
+
+- fetch available Pro products from StoreKit;
+- start purchase for a signed-in user only;
+- pass the Supabase user UUID as StoreKit `appAccountToken`;
+- return sanitized purchase/restore results to browser code;
+- never decide Pro access locally;
+- never log raw signed transactions, callback URLs, auth tokens, email addresses, or customer identifiers;
+- hand any transaction identifiers or signed transaction data to a trusted Supabase Edge Function for verification;
+- finish transactions only after the backend records the verified state or returns a safe idempotent already-processed result.
+
+The backend remains the subscription authority:
+
+- App Store Server API verification confirms the transaction and renewal status.
+- App Store Server Notifications V2 provide renewal, cancellation, refund, revocation, billing-retry, and grace-period changes.
+- Supabase service-role code writes provider subscription records, provider event records, and the effective entitlement summary.
+- Browser/native app code reads only the effective entitlement summary through RLS.
+
+Why this is the right default now:
+
+- Can You Geo already owns Supabase Auth, Stripe webhooks, entitlement resolution, native route handling, and native release guardrails.
+- Apple explicitly supports associating a purchase with an app account by providing a UUID through `appAccountToken`, which matches Supabase Auth user ids.
+- A small first-party bridge keeps the iOS purchase boundary easier to review for App Store compliance and privacy.
+- It avoids placing RevenueCat or another vendor in the middle of Stripe-to-Apple entitlement reconciliation.
+- It avoids adopting a broad IAP bridge before Can You Geo knows the exact support, restore, and reconciliation behavior it wants.
+
+What would change the recommendation:
+
+- The team cannot maintain a small Swift Capacitor plugin.
+- Google Play Billing must launch at the same time as iOS and a single cross-platform client abstraction becomes more valuable than first-party control.
+- StoreKit 2 or App Store Server API validation proves substantially more complex than expected during 5A-3.
+- A managed vendor is explicitly approved for cost, data-processing, support workflow, migration, and lock-in tradeoffs.
+- The chosen maintained bridge proves, in source and runtime tests, that it supports strict `appAccountToken` ownership, server-side verification, minimal logging, Capacitor 8, and the exact restore semantics Can You Geo needs.
+
+## 15. Rejected approaches
+
+Option B is rejected for this first Apple checkpoint because it adds a broad third-party purchase abstraction while Can You Geo still needs to build backend verification, event dedupe, entitlement conflict handling, restore ownership rules, and support workflows. It remains a reasonable future fallback, especially if Android Play Billing needs to share client-side purchase code, but it should not be adopted until `appAccountToken` behavior and sensitive payload handling are verified in source and runtime tests.
+
+Option C is rejected for this checkpoint because Can You Geo already has Stripe web billing and a Supabase-owned entitlement model. RevenueCat would be useful if Can You Geo wanted a managed subscription platform and dashboard, but it would also become a second entitlement authority that must be reconciled with Stripe. That adds vendor and migration risk before the app has even validated the minimal Apple purchase flow.
+
+Do not implement external purchase links, alternative payment APIs, or browser Stripe checkout inside the iOS app. Native iOS Pro purchase must use Apple IAP until an explicitly approved legal/App Store review says otherwise.
+
+## 16. Proposed Apple product model
+
+| Item | Recommendation | Notes |
+| --- | --- | --- |
+| Subscription group reference | `Can You Geo Pro` | Create one auto-renewable subscription group in App Store Connect. The exact Apple group id is assigned by Apple and should be recorded later. |
+| Monthly product display name | Can You Geo Pro Monthly | One Pro entitlement tier. |
+| Monthly product id | `com.canyougeo.pro.monthly` | Candidate id. Do not create until App Store Connect product setup checkpoint. |
+| Annual product display name | Can You Geo Pro Annual | Same Pro entitlement tier, annual duration. |
+| Annual product id | `com.canyougeo.pro.annual` | Candidate id. |
+| Levels | One level: Pro | Monthly and annual should be equivalent access, not separate access levels. |
+| Family Sharing | Off for version 1 unless explicitly approved | Simpler account ownership and `appAccountToken` support. Reconsider only with clear support/account-sharing policy. |
+| Intro trials/offers | Off for version 1 unless explicitly approved | Avoids additional eligibility, analytics, refund, and support complexity. |
+| Grace period | Enable only after 5A-3 confirms App Store Connect and resolver handling | The proposed resolver supports `grace_period`, but product configuration should wait for backend notification handling. |
+| Billing retry | Supported by schema and resolver | Access depends on whether Apple reports an active grace period. |
+| Pricing parity | Target customer-facing parity with web where commercially practical | Web is `$3.99/month` and `$29.99/year`. Apple proceeds are lower after Apple commission, so exact net parity is not expected. |
+| Storefront pricing | Use Apple price tiers selected during product setup | Record final storefront decisions in a later release checklist. |
+
+Do not create Apple products in this checkpoint.
+
+## 17. Provider-neutral billing schema
+
+Recommended model:
+
+- Keep provider subscription records in a service-role-only schema.
+- Keep provider event/replay records in a service-role-only schema.
+- Keep one browser-readable effective entitlement summary per user.
+- Keep optional immutable entitlement history for support and reconciliation.
+- Preserve the existing `public.entitlements` row during migration so current app reads remain stable.
+
+Recommended schemas:
+
+- `billing`: private application schema for provider records and event ledgers. Do not expose through Supabase API roles.
+- `public`: user-readable effective summaries only, protected by RLS.
+
+Recommended tables:
+
+- `billing.provider_subscriptions`
+- `billing.provider_events`
+- `public.entitlements` as the compatibility/effective summary during migration
+- optional `billing.entitlement_history`
+
+Long-term direction for `public.entitlements`:
+
+- It should remain the app-facing effective summary until a migration explicitly replaces it with a view or `public.entitlement_summaries`.
+- Stripe-specific columns should be treated as legacy compatibility columns after provider-neutral records exist.
+- New provider identifiers should not be added to `public.entitlements`.
+- Browser/native code should never read raw Apple original transaction ids, transaction ids, signed payloads, purchase tokens, Stripe subscription ids for decision-making, or Google purchase tokens.
+
+## 18. Table and column definitions
+
+### `billing.provider_subscriptions`
+
+Service-role-owned normalized provider subscription state.
+
+| Column | Type | Purpose |
+| --- | --- | --- |
+| `id` | `uuid primary key` | Internal subscription record id. |
+| `user_id` | `uuid null references public.profiles(id) on delete set null` | Current Can You Geo account owner. Nullable to retain billing audit after deletion without exposing profile data. |
+| `provider` | text enum/check | `stripe`, `apple`, or future `google_play`. |
+| `environment` | text enum/check | Stripe: `test` or `live`; Apple: `sandbox` or `production`; Google: `test` or `production`. Enforce provider-specific allowed values. |
+| `product_tier` | text | `pro` for the current product line. |
+| `provider_product_ref` | text | Stripe price id, Apple product id, or Google product id/base-plan reference. |
+| `provider_customer_ref` | text null | Stripe customer id or provider account/customer reference when applicable. Not used for browser access decisions. |
+| `provider_subscription_ref` | text null | Stripe subscription id, Apple web order line item id or subscription reference, or Google subscription reference. |
+| `provider_original_transaction_ref` | text null | Apple original transaction id or equivalent durable purchase-chain id. |
+| `provider_transaction_ref` | text null | Latest verified transaction/renewal id when applicable. |
+| `app_account_token` | `uuid null` | Supabase user UUID provided to StoreKit purchases. |
+| `status` | text enum/check | Canonical status from section 20. |
+| `auto_renews` | boolean null | Provider-reported renewal flag. |
+| `cancel_at_period_end` | boolean null | Provider reports cancellation but paid access continues through period end. |
+| `started_at` | timestamptz null | First known purchase/start timestamp. |
+| `current_period_start` | timestamptz null | Current entitlement period start. |
+| `current_period_end` | timestamptz null | Current paid-through/expiration boundary. |
+| `grace_period_ends_at` | timestamptz null | Access-granting Apple/Google grace boundary. |
+| `billing_retry_started_at` | timestamptz null | Provider billing retry start. |
+| `expires_at` | timestamptz null | Normalized expiration when distinct from `current_period_end`. |
+| `revoked_at` | timestamptz null | Provider revocation timestamp. |
+| `refunded_at` | timestamptz null | Refund timestamp when provider indicates entitlement should be removed. |
+| `paused_at` | timestamptz null | Future Google pause support. |
+| `last_verified_at` | timestamptz null | Last successful server-side verification against provider. |
+| `last_event_at` | timestamptz null | Latest provider event time applied to this row. |
+| `last_provider_event_ref` | text null | Last deduped provider event id/notification id. |
+| `reconciliation_status` | text | `current`, `needs_verification`, `verification_failed`, `event_pending`, `manual_review`, or `superseded`. |
+| `created_at` | timestamptz | Database default. |
+| `updated_at` | timestamptz | Service-role update timestamp. |
+
+Required constraints and indexes:
+
+- Unique `(provider, environment, provider_subscription_ref)` where `provider_subscription_ref is not null`.
+- Unique `(provider, environment, provider_original_transaction_ref)` where `provider_original_transaction_ref is not null`.
+- Unique `(provider, environment, provider_transaction_ref)` where `provider_transaction_ref is not null`.
+- Index `(user_id)`.
+- Index `(provider, environment, provider_customer_ref)` where `provider_customer_ref is not null`.
+- Index `(status, current_period_end)`.
+- Index `(reconciliation_status)`.
+- Check that `provider = 'stripe'` only uses `environment in ('test', 'live')`.
+- Check that `provider = 'apple'` only uses `environment in ('sandbox', 'production')`.
+- Check that `provider = 'google_play'` only uses `environment in ('test', 'production')`.
+
+### `billing.provider_events`
+
+Service-role-only replay and reconciliation ledger.
+
+| Column | Type | Purpose |
+| --- | --- | --- |
+| `id` | `uuid primary key` | Internal event row id. |
+| `provider` | text enum/check | `stripe`, `apple`, or future `google_play`. |
+| `environment` | text enum/check | Provider-specific environment. |
+| `provider_event_ref` | text | Stripe event id, Apple notification UUID/JWS id, verified transaction id, or Google notification id. |
+| `event_type` | text | Provider event/notification type. |
+| `occurred_at` | timestamptz null | Provider event occurrence time. |
+| `received_at` | timestamptz | Database default. |
+| `processed_at` | timestamptz null | Processing completion timestamp. |
+| `processing_status` | text | `processed`, `ignored`, `error`, `retry_pending`, or `manual_review`. |
+| `attempt_count` | integer | Incremented on retries. |
+| `last_error_code` | text null | Sanitized error code only, not raw provider payload. |
+| `related_user_id` | `uuid null references public.profiles(id) on delete set null` | Matched account if known. |
+| `provider_subscription_id` | `uuid null references billing.provider_subscriptions(id)` | Normalized subscription record affected. |
+| `provider_customer_ref` | text null | Provider customer/account reference if needed for matching. |
+| `provider_subscription_ref` | text null | Provider subscription reference if known. |
+| `provider_original_transaction_ref` | text null | Durable purchase-chain id if known. |
+| `provider_transaction_ref` | text null | Transaction id if known. |
+| `payload_hash` | text null | Hash of the raw payload/JWS for support dedupe without storing raw sensitive payloads in user-readable rows. |
+| `created_at` | timestamptz | Database default. |
+| `updated_at` | timestamptz | Service-role update timestamp. |
+
+Required constraints and indexes:
+
+- Unique `(provider, environment, provider_event_ref)`.
+- Index `(provider, environment, provider_original_transaction_ref)` where present.
+- Index `(related_user_id)`.
+- Index `(processing_status, received_at)`.
+- Raw signed Apple transactions, raw receipts, full webhook payloads, purchase tokens, email addresses, and auth/session values must not be stored in user-readable tables.
+
+### `public.entitlements`
+
+Existing app-facing effective summary.
+
+During the migration:
+
+- Keep `user_id`, `plan`, `status`, and the existing capability semantics so current app code continues to resolve Guest/Free/Pro safely.
+- Add provider-neutral summary columns only in a later migration if needed:
+  - `effective_status`
+  - `effective_current_period_end`
+  - `management_provider`
+  - `management_providers`
+  - `has_multiple_active_providers`
+  - `requires_billing_attention`
+  - `computed_at`
+  - `source_subscription_id`
+- Do not add Apple transaction ids, Apple original transaction ids, signed payloads, Google purchase tokens, or raw provider payloads to this table.
+- Treat current `stripe_*` columns as legacy compatibility fields until web Portal and account UI are migrated to provider-neutral management copy.
+
+### `billing.entitlement_history` optional
+
+Immutable service-role-only audit rows for support/reconciliation.
+
+Recommended columns:
+
+- `id uuid primary key`
+- `user_id uuid null references public.profiles(id) on delete set null`
+- `previous_plan text null`
+- `previous_status text null`
+- `new_plan text not null`
+- `new_status text not null`
+- `reason text not null`
+- `source_provider text null`
+- `source_provider_event_id uuid null references billing.provider_events(id)`
+- `source_subscription_id uuid null references billing.provider_subscriptions(id)`
+- `computed_at timestamptz not null`
+- `summary_hash text null`
+
+## 19. RLS and security model
+
+Security goals:
+
+- Browser/native clients may read only their own effective entitlement summary.
+- Browser/native clients may not insert, update, or delete entitlement or provider billing state.
+- Provider identifiers and event ledgers are service-role-only.
+- One provider's event cannot update another provider's record.
+- One user's purchase cannot be silently reassigned to another user.
+
+Recommended policies:
+
+- Enable and force RLS on any `public` billing summary table.
+- `public.entitlements`: authenticated users may `select` where `auth.uid() = user_id`; no authenticated `insert`, `update`, or `delete`; no anonymous access.
+- `billing.provider_subscriptions`: no anon/auth grants; service-role only.
+- `billing.provider_events`: no anon/auth grants; service-role only.
+- `billing.entitlement_history`: no anon/auth grants; service-role only.
+
+Trusted writers:
+
+- Stripe webhook Edge Function.
+- Apple App Store Server Notification Edge Function.
+- Apple transaction verification/restore Edge Function.
+- Future Google Play notification/verification Edge Function.
+- Reviewed admin/support reconciliation scripts using service-role credentials.
+
+Cross-account prevention:
+
+- Unique provider/environment/original-transaction constraints prevent the same Apple purchase chain from being assigned to two users.
+- If a restore or server notification references an already-owned original transaction for a different `user_id`, do not reassign automatically. Mark `manual_review`, keep effective access unchanged, and show a safe support message.
+- Use Supabase Auth user UUID as Apple `appAccountToken` for purchases. Treat mismatched `appAccountToken` as a support/manual-review condition, not as a browser-resolvable conflict.
+
+Deleted users and retention:
+
+- Provider records should use `on delete set null`, not cascade, so accounting/refund/support audit is retained without keeping a live profile relationship.
+- Do not preserve email addresses or raw auth identifiers in provider event rows.
+- Keep retention periods aligned with legal/accounting review before broad paid launch.
+
+## 20. Canonical subscription status vocabulary
+
+| Status | Grants Pro? | Required timestamps | User-facing meaning | Reconciliation need | Override behavior |
+| --- | --- | --- | --- | --- | --- |
+| `active` | Yes | `current_period_end` or verified open-ended period | Pro is active and renewing unless `auto_renews` says otherwise. | Normal periodic verification. | Another active provider can also grant Pro. |
+| `cancelled_active_until_period_end` | Yes until `current_period_end` | `current_period_end`, cancellation flag/event time when available | Subscription is canceled but paid access continues until the period ends. | Verify at period end. | Must not remove access from another active provider. |
+| `grace_period` | Yes until `grace_period_ends_at` | `grace_period_ends_at`, provider event time | Billing issue, but Apple/Google grace access is still active. | High priority follow-up before grace expires. | Another active provider continues Pro even after grace ends. |
+| `billing_retry` | No by default unless paired with `grace_period` | `billing_retry_started_at`, optional `current_period_end` | Payment needs attention and access is not currently verified. | High priority reconciliation. | Does not override another active/grace provider. |
+| `pending` | No | `started_at` or `last_event_at` | Purchase or restore is awaiting trusted verification. | Must verify before granting. | Never grants Pro by itself. |
+| `expired` | No | `expires_at` or `current_period_end` | Subscription period ended. | Low priority unless user disputes. | Does not override another active provider. |
+| `revoked` | No | `revoked_at` | Provider revoked access. | Support/review if unexpected. | Does not override another active provider. |
+| `refunded` | No | `refunded_at` | Purchase was refunded and access removed for that provider. | Support/review if unexpected. | Does not override another active provider. |
+| `paused` | No by default | `paused_at`, optional resume timestamp | Future Google paused subscription support. | Verify before resuming. | Does not override another active provider. |
+| `unknown_needs_reconciliation` | No new grant; preserve existing effective access only until a known paid-through boundary if one exists | `last_verified_at`, `current_period_end` when known | Billing state needs verification. | High priority. | Never downgrades another verified provider. |
+
+## 21. Effective entitlement resolver
+
+Core rule: **a user is Pro if at least one independently verified provider subscription currently grants Pro**.
+
+Resolver inputs:
+
+- all non-superseded `billing.provider_subscriptions` rows for the user;
+- current timestamp;
+- provider environment;
+- status-specific paid-through/grace timestamps;
+- reconciliation status and last verification timestamps.
+
+Resolver output:
+
+- `plan = 'pro'` when any provider grants Pro;
+- `plan = 'free'` when no provider grants Pro;
+- effective status for account copy;
+- management provider metadata;
+- billing-attention flag;
+- whether multiple providers are active;
+- source subscription id(s) for service-role support use only.
+
+State handling:
+
+- Active Stripe only: grant Pro while Stripe row is `active` or equivalent verified Pro state.
+- Active Apple only: grant Pro while Apple row is `active`.
+- Active Stripe and Apple: grant Pro, set `has_multiple_active_providers = true`, and show both management paths.
+- Canceled but paid-through Stripe: grant Pro until `current_period_end`, then expire if no newer active state arrives.
+- Canceled but paid-through Apple: grant Pro until Apple expiration/current-period end, then expire if no renewal state arrives.
+- Apple grace period: grant Pro until `grace_period_ends_at`; show billing attention.
+- Apple billing retry without grace: do not grant Pro from Apple, but do not affect Stripe or another active provider.
+- Stripe payment failure: preserve current launch policy by mapping failed payment to no Pro for Stripe unless a later product decision approves a Stripe grace window.
+- Expired/refunded/revoked provider: no Pro from that provider.
+- Out-of-order events: store the event, but only mutate provider state if it is newer than the applied provider event or a fresh provider verification confirms the downgrade/upgrade.
+- Provider unavailable: do not mutate provider state; mark reconciliation needed. Keep a previously verified grant only until the known paid-through/grace boundary.
+- Stale verification: if `last_verified_at` is stale but the known paid-through boundary is still future, grant Pro with `requires_billing_attention = true`; after the boundary, no grant without re-verification.
+- One provider removed while another is active: Pro remains active from the remaining provider.
+- Unknown state: no new grant; do not downgrade a separate verified provider.
+
+The resolver should be idempotent and safe to rerun after every provider event, manual reconciliation, restore attempt, or scheduled verification job.
+
+## 22. Management-provider selection
+
+| Effective state | Recommended management provider | User-facing behavior |
+| --- | --- | --- |
+| No provider grants Pro | `none` | Show the appropriate purchase CTA for the current platform. |
+| Stripe grants Pro only | `stripe` | Website can open Stripe Portal. Native iOS should say subscription is managed on the website and must not open Stripe checkout in-app. |
+| Apple grants Pro only | `apple` | iOS should use Apple's subscription management flow/copy. Website should say subscription is managed through Apple. |
+| Future Google grants Pro only | `google_play` | Android should use Play subscription management flow/copy. Website should say subscription is managed through Google Play. |
+| Multiple providers grant Pro | `multiple` | Show a billing-attention/support state and list the provider management paths without auto-canceling either provider. |
+| One provider paid-through canceling and another active | Active provider primary plus secondary notice | Keep Pro. Show that one subscription remains paid-through and another continues. |
+| Unknown/reconciliation only | `none` or last known provider with warning | Do not expose purchase actions that could create a duplicate until reconciliation finishes, unless product policy explicitly allows it. |
+
+## 23. Account-linking rules
+
+Native purchase rules:
+
+- Require a Supabase session before showing Apple purchase actions.
+- Block signed-out Apple purchases. Do not create anonymous StoreKit purchases.
+- Use the Supabase Auth user UUID as StoreKit `appAccountToken`.
+- Do not use email address, display name, Stripe customer id, or local device id as the Apple account key.
+
+Restore rules:
+
+- Signed-in restore fetches/verifies Apple transactions and matches `appAccountToken` and original transaction id.
+- If the original transaction is already assigned to the same user, refresh provider state and recompute entitlement.
+- If the original transaction is already assigned to another live user, do not reassign automatically. Mark manual review and show safe support copy.
+- If the prior user was deleted, preserve the audit record and require a support-approved reassignment policy before granting.
+- Switching accounts on one device must not silently move an Apple subscription.
+- Recreated accounts should not automatically inherit old Apple purchases unless an explicit, audited support flow approves it.
+
+Support rules:
+
+- Support tooling may show provider names, product ids, status, period dates, and sanitized event ids.
+- Support tooling must not expose raw signed transactions, receipts, session tokens, recovery tokens, private keys, or user passwords.
+
+## 24. Duplicate-subscription prevention
+
+Default product policy:
+
+- If a user already has active Stripe Pro and opens iOS upgrade, do not offer Apple purchase by default. Explain that Pro is active and managed on the website. Offer restore only.
+- If a user already has active Apple Pro and opens web upgrade, do not start Stripe checkout by default. Explain that Pro is active and managed through Apple.
+- If a user already has active Apple Pro and tries to purchase Apple again, rely on StoreKit subscription-group behavior and also block redundant app UI where possible.
+- If both Stripe and Apple are active, keep Pro and show a billing-attention state that tells the user to manage each provider separately.
+- Never cancel one provider automatically in response to another provider becoming active.
+- Never let one provider's cancellation, refund, payment failure, or revocation remove access granted by another independently verified provider.
+
+Allowed exceptions require explicit later approval:
+
+- A user intentionally switches from Stripe to Apple after canceling Stripe.
+- A support agent manually resolves duplicate subscriptions.
+- A migration offer or promo is created with counsel/App Store review.
+
+## 25. Stripe-to-provider-neutral migration plan
+
+Phase 0: design approval.
+
+- Approve this architecture, open decisions, product ids, and Apple account-linking policy.
+- No runtime changes.
+
+Phase 1: additive schema.
+
+- Add `billing.provider_subscriptions`, `billing.provider_events`, and optional `billing.entitlement_history`.
+- Keep existing `public.entitlements` behavior unchanged.
+- Add structure/RLS tests for the new schema.
+
+Phase 2: Stripe backfill and dual-write.
+
+- Backfill current Stripe entitlement rows into `billing.provider_subscriptions`.
+- Keep `stripe_webhook_events` as the existing Stripe replay ledger while dual-writing new provider events.
+- Stripe webhooks continue updating `public.entitlements`.
+- A dry-run resolver compares provider-neutral output to the current entitlement row without changing app behavior.
+
+Phase 3: resolver writes effective summary.
+
+- Stripe webhooks update provider records and invoke the provider-neutral resolver.
+- Resolver writes `public.entitlements` compatibility fields.
+- App reads remain unchanged.
+
+Phase 4: Apple backend foundation.
+
+- Add Apple transaction verification and App Store Server Notification V2 endpoint.
+- Apple events write provider records and invoke the same resolver.
+- No purchase UI until sandbox verification and restore rules pass.
+
+Phase 5: native Apple purchase UI.
+
+- Add first-party StoreKit 2 Capacitor plugin.
+- Enable signed-in Apple monthly/annual purchase and restore.
+- Keep native Stripe checkout/portal disabled.
+
+Phase 6: cleanup.
+
+- Migrate account UI to provider-neutral management provider copy.
+- Stop exposing Stripe-specific identifiers in browser-facing rows where practical.
+- Decide whether `public.entitlements` remains a table, becomes a view over a new summary table, or is replaced by `public.entitlement_summaries`.
+
+## 26. Rollback strategy
+
+Rollback principles:
+
+- Keep current Stripe-only production behavior working until Apple purchase UI is explicitly launched.
+- Make all schema changes additive before cutting over resolver writes.
+- Keep legacy `public.entitlements` readable by the app throughout.
+- Do not delete Stripe columns or `stripe_webhook_events` until provider-neutral parity has been proven.
+
+Rollback by phase:
+
+- Phase 1 rollback: leave additive tables unused or drop them in a reviewed rollback migration if no production data depends on them.
+- Phase 2 rollback: disable dual-write/backfill job; keep Stripe webhooks writing legacy entitlements.
+- Phase 3 rollback: disable provider-neutral resolver writes and return to direct Stripe entitlement writes.
+- Phase 4 rollback: disable Apple notification/verification functions; existing Stripe access remains unchanged.
+- Phase 5 rollback: hide Apple purchase/restore UI with a native billing feature flag; continue honoring already verified Apple subscriptions only if backend state is trusted, or mark them for manual reconciliation if not.
+- Any Apple incident: do not alter Stripe provider records; never downgrade a Stripe-active user because of Apple rollback.
+
+## 27. Open decisions for user approval
+
+Default recommendations unless changed:
+
+- Use first-party StoreKit 2 Capacitor plugin.
+- Use subscription group reference `Can You Geo Pro`.
+- Use candidate product ids `com.canyougeo.pro.monthly` and `com.canyougeo.pro.annual`.
+- Keep Family Sharing off for version 1.
+- Keep trials and introductory offers off for version 1.
+- Use Supabase Auth UUID as StoreKit `appAccountToken`.
+- Require sign-in before purchase.
+- Block signed-out restore from granting access.
+- Keep `public.entitlements` as the app-facing effective summary during migration.
+- Keep native Stripe checkout/portal unavailable.
+- Prevent duplicate Stripe/Apple purchases in UI by default.
+- Preserve current Stripe payment-failure policy unless separately approved.
+
+Decisions still needing explicit approval:
+
+- Final App Store prices/tiers and local storefront policy.
+- Whether Apple grace period should be enabled at launch.
+- Whether a user may intentionally switch providers without support involvement.
+- Whether support can manually reassign Apple original transactions after account deletion.
+- How long provider events and entitlement history should be retained.
+- Whether to build admin/support tooling before or after Apple sandbox purchase testing.
+
+## 28. Questions deferred to Checkpoint 5A-3
+
+- Exact Apple App Store Server API authentication and key-management plan.
+- Exact App Store Server Notification V2 endpoint path, CORS posture, signature/JWS validation, and replay handling.
+- Exact Apple transaction fields to persist after reviewing sandbox payloads.
+- Exact Swift plugin API shape and TypeScript types.
+- Exact StoreKit sandbox test matrix for purchase, renewal, cancellation, billing retry, refund, restore, and account switching.
+- Exact Supabase migration DDL and RLS tests.
+- Exact resolver implementation and dry-run parity tests.
+- Exact account UI copy for Stripe-only, Apple-only, duplicate-provider, grace-period, billing-retry, and manual-review states.
+- Exact purchase analytics source for idempotent `purchase`/subscription-success events without browser double-counting.
+- Exact production launch sequence after Apple products and server notifications exist.
+
+## 29. Explicit non-actions taken in 5A-2
+
+This checkpoint did not:
+
+- Accept Apple agreements, banking, tax, or Paid Apps setup.
+- Create Apple subscription groups, products, App Store Server API keys, or notification URLs.
+- Modify App Store Connect, Apple Developer, Stripe, Supabase, Cloudflare, GTM, or production configuration.
+- Install packages or add StoreKit, Swift, Android, migration, Edge Function, or UI code.
+- Add provider-neutral schema migrations.
+- Upload another binary, increment version/build, submit for review, release, create a PR, merge, or deploy.
+- Change native Stripe, analytics, marketing-consent, game, auth, or entitlement runtime behavior.
