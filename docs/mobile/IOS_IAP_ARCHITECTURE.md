@@ -2771,3 +2771,353 @@ This checkpoint did not:
 - Modify legal pages, support pages, pricing constants, app metadata, App Store Connect, Apple agreements, subscription products, offers, Family Sharing, or grace-period settings.
 - Change native projects, Android, version/build numbers, signing, TestFlight, App Review, or production deployment.
 - Run a build, upload a binary, create a PR, merge, force-push, or make unrelated changes.
+
+## 102. 5A-3C2 scope and official references
+
+Status: design and release planning only. This checkpoint finalizes the testing, rollout, rollback, and readiness plan for future Apple billing implementation. It does not start implementation.
+
+Official references used:
+
+- StoreKit Testing in Xcode: `https://developer.apple.com/documentation/xcode/setting-up-storekit-testing-in-xcode`
+- StoreKit Test framework: `https://developer.apple.com/documentation/storekittest`
+- Sandbox in-app purchase testing: `https://developer.apple.com/help/app-store-connect/test-in-app-purchases/test-in-app-purchases-with-sandbox`
+- Sandbox Apple Account settings and renewal rate: `https://developer.apple.com/help/app-store-connect/test-in-app-purchases/manage-sandbox-apple-account-settings`
+- TestFlight subscriptions and in-app purchases: `https://developer.apple.com/help/app-store-connect/test-a-beta-version/testing-subscriptions-and-in-app-purchases-in-testflight`
+- App Store Server API test notification: `https://developer.apple.com/documentation/appstoreserverapi/request-a-test-notification`
+- App Store Server Notifications test notification setup: `https://developer.apple.com/help/app-store-connect/manage-app-information/enable-app-store-server-notifications`
+- First in-app purchase or subscription submission: `https://developer.apple.com/help/app-store-connect/manage-submissions-to-app-review/submit-an-in-app-purchase`
+- Build numbers and bundle version: `https://developer.apple.com/documentation/bundleresources/information_property_list/cfbundleversion`
+- Supabase local development and migrations: `https://supabase.com/docs/guides/local-development`
+- Supabase Edge Functions testing: `https://supabase.com/docs/guides/functions/unit-test`
+- Supabase scheduled functions: `https://supabase.com/docs/guides/functions/schedule-functions`
+- Supabase secrets: `https://supabase.com/docs/guides/functions/secrets`
+
+## 103. Testing environment matrix
+
+| Environment | Primary purpose | Backend behavior | What it proves | What it cannot prove |
+| --- | --- | --- | --- | --- |
+| Local StoreKit configuration | Product loading, local purchase UI, cancellation, pending transactions, renewals, expiration, refund/revocation simulation, product changes, transaction listener behavior, app restart recovery. | Must not write production provider records. Use mocked backend adapter or isolated local/staging backend that rejects `xcode` transactions from production entitlement resolution. | Client state machine, plugin mapping, UI states, duplicate-tap prevention, finish policy, restart recovery, local automation. | Real App Store Connect products, real signed transaction JWS, App Store Server API, App Store Server Notifications, storefront localization, real billing retry. |
+| Apple sandbox | Real StoreKit products, real sandbox JWS, App Store Server API, App Store Server Notifications V2, accelerated renewal, restore across devices, sandbox account behavior, refund/revocation tooling where available. | Events should go to staging/sandbox provider records. Sandbox Apple rows must not grant production `public.entitlements`. | Product metadata, server verification, notification intake, app account token ownership, accelerated lifecycle, restore/reconciliation. | Real-money storefront behavior, production renewal timing, production notification reliability, App Review approval. |
+| TestFlight | Apple-processed build, sandbox purchasing on physical devices, real account linking, reinstall restore, notification/reconciliation validation, native UX, existing Stripe subscriber behavior, dual-provider QA accounts. | Use sandbox Apple environment and an explicitly isolated entitlement path. If production Supabase is used for app shell, sandbox rows still must not grant production web Pro. | Distribution-signed build behavior, physical-device flows, Apple account/sandbox interaction, native app lifecycle. | Production Apple billing, final App Store metadata, live production storefront prices, public release behavior. |
+| Production App Store | Real-money purchase, production notifications, production reconciliation, production management/restore, real pricing/localization. | Production Apple rows can grant production Pro only after all gates pass and Apple participation is enabled in the resolver. | Real production subscription lifecycle. | Anything that should have been caught before release. Production is not a test substitute. |
+
+Sandbox users should be identifiable through test account conventions and provider environment, not by logging Apple IDs. Sandbox data can be retained for audit and debugging but should be excluded from production entitlement summaries and conversion reporting.
+
+## 104. StoreKit configuration design
+
+Future local StoreKit configuration:
+
+- Recommended app-level file: `ios/App/StoreKit/CanYouGeoLocal.storekit`.
+- Recommended plugin test fixture: `plugins/cgy-storekit/ios/Tests/CgyStoreKitPluginTests/Resources/CgyStoreKit.storekit`.
+- Commit the files when created. StoreKit configuration files are test metadata, not secrets.
+- Associate the app-level file only with Debug/local testing schemes, not Release archive behavior.
+- Product group: one auto-renewable subscription group for Can You Geo Pro.
+- Product identifiers: `com.canyougeo.pro.monthly` and `com.canyougeo.pro.annual`.
+- Entitlement level: identical Pro access for both products.
+- Durations: monthly and annual.
+- Test prices: may mirror current web price intent for local readability, but must not be treated as Apple price approval.
+- Localization: include at least English local product names/descriptions; add long-string fixtures if possible.
+- Family Sharing: disabled in local config to match the recommended initial release.
+- Offers: no free trial, introductory discount, offer code, or promotional offer.
+- Grace-period/billing-retry simulation: use StoreKit Testing controls where supported, plus sandbox for server-visible lifecycle.
+- Renewal simulation: use local StoreKit controls for fast client/plugin tests; use sandbox renewal rate for server and notification tests.
+
+The local configuration may mirror production product identifiers, but it is not proof that App Store Connect products exist, are approved, or have correct territory pricing.
+
+## 105. Automated test pyramid
+
+| Layer | Coverage |
+| --- | --- |
+| Pure TypeScript tests | Purchase state machine, product allowlist, product selection, signed-out purchase block, duplicate-tap prevention, Stripe subscriber suppression, Apple subscriber management state, dual-provider warning, restore-result handling, failure-message mapping, analytics sanitization, web fallback, entitlement refresh behavior. |
+| Swift unit tests | StoreKit model normalization, product filtering, `appAccountToken` validation, purchase-result mapping, transaction update buffering, stable error-code normalization, finish policy, retry queue, release logging redaction. |
+| StoreKit Testing / simulator tests | Local product load, cancel, pending, purchase success through mocked backend, restore, transaction redelivery after restart, refund/revocation client mapping where supported. |
+| Database tests | Provider subscription constraints, provider event uniqueness, RLS isolation, service-role-only writes, environment separation, dual-provider resolution, provider cancellation isolation, backfill correctness, concurrent event processing, resolver transactionality, deleted-account behavior. |
+| Edge Function tests | Purchase verification, JWT validation, Apple verifier adapter, product allowlist, account ownership, duplicate submissions, invalid bundle ID, wrong environment, notification verification, retry response behavior, out-of-order events, reconciliation, Apple API outage, idempotent analytics. |
+| Native black-box tests | Paywall entry, product loading, signed-out block, purchase cancellation, purchase pending where controllable, restore, manage subscription, existing Stripe subscriber, billing-boundary regression, rotation/safe areas, offline/reconnect. |
+
+Native black-box flows that may remain partly manual: successful paid sandbox purchase, Ask to Buy/pending approval, refund/revocation, App Store subscription management UI, Apple account switching, and accelerated renewal timing.
+
+## 106. Manual QA matrix
+
+| Test ID | Environment | Preconditions | Action | Expected client result | Expected backend/result summary | Analytics | Evidence |
+| --- | --- | --- | --- | --- | --- | --- | --- |
+| IAP-001 | Local StoreKit | Signed-in Free, mocked backend accept | Buy monthly | Confirming, then Pro active | Mock accepted; no production write | Client funnel only | Test output/video without IDs |
+| IAP-002 | Sandbox/TestFlight | Signed-in Free, sandbox monthly ready | Buy monthly | Pro active after backend refresh | Apple production untouched; sandbox row accepted | Server purchase after idempotency | Entitlement summary, sandbox receipt state |
+| IAP-003 | Sandbox/TestFlight | Signed-in Free, sandbox annual ready | Buy annual | Pro active after backend refresh | Annual provider row accepted | Server purchase after idempotency | Entitlement summary |
+| IAP-004 | Local/Sandbox | Purchase sheet open | Cancel purchase | Returns to paywall, no Pro grant | No provider state change | Cancel event | Client log/test output |
+| IAP-005 | Local/Sandbox | Pending approval available | Start pending purchase | Pending state, no Pro active | No entitlement until accepted | Pending event | StoreKit/sandbox state |
+| IAP-006 | Any native | Offline | Tap subscribe | Purchase blocked or fails safely | No provider write | Failure event | Offline flow output |
+| IAP-007 | Sandbox | Backend disabled/transient | Apple accepts, backend unavailable | Confirming/pending, no success claim | Pending event queued or no grant | Backend pending/failure | Sanitized event state |
+| REN-001 | Sandbox | Active subscription | Accelerated renewal | Renewal status visible after refresh | Renewal event updates provider row | Server renewal once | Notification/event ledger |
+| REN-002 | Sandbox | Active subscription | Turn off auto-renew | Pro active until period end | Cancel-at-period-end state recorded | Status event | Entitlement row |
+| REN-003 | Sandbox | Payment failure/grace configured | Trigger billing issue | Grace copy if active | Grace state recorded | Status event | Provider state |
+| REN-004 | Sandbox | Billing retry without access | Trigger retry | Recovery copy, Pro paused if resolver says so | Billing retry state | Status event | Provider state |
+| REN-005 | Sandbox | Expired subscription | Wait for expiration | Free/upgrade visible after current refresh | Apple provider inactive; no other provider active | Expiration once | Entitlement transition |
+| REN-006 | Sandbox | Expired subscription | Resubscribe | Pro active after accept | New event linked to original transaction | Purchase/renewal as applicable | Provider row |
+| REN-007 | Sandbox | Active monthly | Switch to annual | Apple management/change copy; no duplicate CTA | Subscription group state reconciled | Status event | Apple status |
+| REN-008 | Sandbox | Active annual | Switch to monthly | Change state reconciled | Provider row updated by verified status | Status event | Apple status |
+| RES-001 | TestFlight | Same account, reinstall | Restore | Pro restored after backend refresh | Same owner accepted | Restore granted once | Device observation |
+| RES-002 | TestFlight | Second device, same account | Restore | Pro active | Same owner accepted | Restore event | Device observation |
+| RES-003 | TestFlight | Different Can You Geo account | Restore | Conflict/support copy | Ownership conflict, no transfer | Conflict event | Sanitized conflict state |
+| RES-004 | TestFlight | No Apple purchase | Restore | No Apple subscription found | No provider change | Restore none | Device observation |
+| RES-005 | TestFlight | Existing Stripe Pro | Restore no Apple purchase | Stripe Pro remains active | No Apple row; Stripe unaffected | Restore none | Entitlement summary |
+| COEX-001 | Staging | Stripe only | Open iOS paywall | Pro active, website-managed | No Apple purchase CTA | Paywall suppressed | Screenshot sans IDs |
+| COEX-002 | Staging | Apple only | Open account | Pro active, Apple-managed | Apple provider active | Paywall suppressed | Entitlement summary |
+| COEX-003 | Staging | Stripe and Apple active | Open account | Dual-provider warning | Pro active; duplicate condition recorded | Warning displayed | Sanitized provider state |
+| COEX-004 | Staging | Stripe canceling, Apple active | Refresh | Pro stays active | Apple still grants | Status event | Resolver output |
+| COEX-005 | Staging | Apple canceling, Stripe active | Refresh | Pro stays active | Stripe still grants | Status event | Resolver output |
+| REF-001 | Sandbox | Active Apple | Refund/revoke where available | Neutral access-change copy if no other provider | Provider revocation, resolver recompute | Refund/revoke once | Provider event state |
+| REF-002 | Staging | Apple revoked, Stripe active | Refresh | Pro stays active with support context | Stripe still grants | Status event | Resolver output |
+| ACC-001 | TestFlight | Signed in Pro | Sign out/in | Correct account and Pro reload | No provider mutation | Login only | Device observation |
+| ACC-002 | TestFlight | Pending purchase | Sign out attempt | Warn/block unsafe action or preserve pending | No cross-account grant | Pending/failure | Device observation |
+| ACC-003 | Staging | Deleted account, active Apple | Notification/reconcile | Orphaned handling, no new grant | Orphaned provider state | Ops event | DB assertion |
+| OPS-001 | Staging | Invalid notification signature | POST notification | Safe rejection | No provider mutation | None/server failure metric | Function test |
+| OPS-002 | Staging | Duplicate notification | Deliver twice | No duplicate grant | Idempotent ledger | Server event once | Ledger assertion |
+| OPS-003 | Staging | Out-of-order events | Expire then renew | Latest verified state wins | Resolver correct | Server event once per state | Test output |
+| OPS-004 | Staging | Apple API outage | Reconcile | Backoff/dead-letter if needed | No unsafe grant | Outage metric | Logs/queue state |
+| OPS-005 | Staging | Sandbox event in production path | Process event | Guard blocks production entitlement | Contamination alert | Error metric | Guard assertion |
+
+This matrix is the minimum. Build 2 cannot move to App Review until the TestFlight subset and backend lifecycle subset pass with non-sensitive evidence.
+
+## 107. QA evidence standards
+
+Acceptable evidence:
+
+- Automated test command output.
+- Native black-box/Maestro output and non-sensitive recordings.
+- TestFlight physical observation notes.
+- App Store Connect sandbox subscription state with account identifiers redacted.
+- Sanitized provider-event rows using QA labels or hashes.
+- `public.entitlements` summary output for QA accounts without emails or user UUIDs in reports.
+- App Store Server Notification delivery status and request-test-notification result.
+- Reconciliation queue counts and state transitions.
+
+Do not store:
+
+- Apple ID credentials.
+- Supabase user UUIDs in public reports.
+- Transaction IDs, original transaction IDs, app account tokens, signed JWS, receipts, recovery links, private keys, screenshots with emails/passwords, or raw provider payloads.
+
+Screenshots are allowed only when they do not reveal credentials, transaction identifiers, or private account data.
+
+## 108. Implementation checkpoint sequence
+
+Recommended sequence after architecture approval:
+
+| Checkpoint | Scope | Exit criteria |
+| --- | --- | --- |
+| 5B Provider-neutral database foundation | Add billing schema, provider subscription/event tables, resolver, RLS, current Stripe backfill, and compatibility projection. | Resolver matches current legacy output; no Pro loss/gain regressions. |
+| 5C Stripe migration to provider-neutral writes | Update Stripe webhook to write provider records and recompute effective summary while preserving rollback compatibility. | Production Stripe behavior validated before Apple depends on the resolver. |
+| 5D Apple server foundation | Add Apple verifier adapter, purchase verification endpoint, notification endpoint, reconciliation job, and secrets wiring without secret values. | Sandbox-only backend verifies purchases/notifications and blocks production contamination. |
+| 5E StoreKit 2 Capacitor plugin | Add local plugin package, Swift service, TypeScript contract, buffered transaction listener, restore, management, StoreKit config tests. | Local StoreKit simulator tests and native compile pass. |
+| 5F Native subscription UI | Add paywall, selector, purchase coordinator, account status, restore, management, dual-provider handling, analytics hooks. | UI/native boundary tests pass; no Stripe fallback in iOS. |
+| 5G App Store Connect setup | Paid Apps Agreement, tax/banking, subscription group/products, pricing/localization, notifications, API key, grace-period decision, sandbox accounts. | Administrative setup documented and sandbox product loading proven. |
+| 5H Build 2 TestFlight | Increment to build 2, archive/upload, sandbox purchase lifecycle testing, renewal/restore/refund/reconciliation QA. | Full TestFlight matrix passes with evidence. |
+| 5I App Review submission | Submit first subscriptions with app version, metadata, reviewer account, notes, restore/management paths, legal links. | Review passes; public release waits for explicit approval. |
+
+Do not combine 5B-5F into one large implementation. The provider-neutral backend foundation should land before Apple UI can grant anything.
+
+## 109. Migration gates
+
+| Gate | Required before proceeding |
+| --- | --- |
+| Before 5C | Backfill verified; resolver matches legacy Stripe output; no existing Pro user loses access; no Free user gains Pro; RLS/service-role tests pass. |
+| Before 5D | Stripe uses provider-neutral records successfully; rollback remains available; provider event ledger idempotency proven; provider cancellation isolation tested. |
+| Before 5E | Apple backend contracts deployed in sandbox/staging; product allowlist and environment separation ready; purchase verification endpoint can reject unsafe data. |
+| Before 5F | StoreKit plugin contract stable; backend returns accepted/pending/conflict/failure states; native billing boundary still blocks Stripe. |
+| Before 5G | Legal entity/developer-name path reviewed; Paid Apps Agreement/tax/banking timing approved; product identifiers and group name approved; legal-copy update plan approved. |
+| Before build 2 | Local StoreKit tests pass; sandbox products load; request-test-notification passes; purchase/restore on physical local or TestFlight-prep build passes. |
+| Before App Review | Full TestFlight matrix passes; no P0/P1 billing issue open; legal links/disclosures complete; support runbooks ready; reconciliation operational. |
+| Before public release | App Review approved; production notification endpoint healthy; rollback/purchase-disable flag tested; support monitoring staffed; explicit release approval given. |
+
+Any gate failure stops promotion to the next checkpoint until resolved or explicitly waived with documented risk.
+
+## 110. Build and version strategy
+
+Current baseline:
+
+- Public/internal iOS baseline: `1.0.0` build `1`.
+- First Apple-billing binary: keep marketing version `1.0.0`, increment build to `2`.
+
+Rules:
+
+- Every uploaded binary must use a new build number.
+- Do not reuse build `2` after upload, even for a small fix.
+- If build 2 fails TestFlight or review, upload build 3 or higher.
+- Keep all billing implementation under marketing version `1.0.0` until public submission unless the product scope changes enough to warrant `1.1.0`.
+- Docs, migrations, Edge Functions, and backend changes do not require iOS build-number changes unless the native binary changes.
+- TestFlight builds expire under Apple's TestFlight policy; record expiration risk in the release plan.
+- Version/build numbers are changed only in an explicitly approved binary checkpoint.
+
+Recommended default: build all Apple-billing implementation toward `1.0.0 (2)` and reserve marketing-version changes for public product scope or App Review strategy.
+
+## 111. Feature flags and rollout controls
+
+Recommended future flags:
+
+| Flag | Owner | Safe default | Can disable without new binary? | Notes |
+| --- | --- | --- | --- | --- |
+| Native Apple paywall enabled | Server/build | Off | Yes if server-controlled | Shows Apple paywall instead of unavailable preview. |
+| Apple product loading enabled | Server/build | Off | Yes | Must not turn on before StoreKit plugin and products exist. |
+| Apple purchase enabled | Server | Off | Yes | Emergency kill switch for new purchases. |
+| Restore enabled | Server | Off until backend ready | Yes | Can remain on if backend reconciliation is safe. |
+| Manage Subscription enabled | Build/server | Off until plugin ready | Partly | Requires native method in binary. |
+| Server notification processing enabled | Server | Off/record-only | Yes | Record-only mode useful before mutation. |
+| Apple resolver participation enabled | Server | Off | Yes | Controls whether Apple rows affect `public.entitlements`. |
+| Sandbox-only mode | Server | On for non-production | Yes | Prevents production entitlement grants from sandbox rows. |
+| Internal tester allowlist | Server | On during QA | Yes | Limits purchase UI to QA accounts. |
+| Emergency purchase disable | Server | On-call controlled | Yes | Must not remove existing verified access. |
+
+Flag changes should be logged with operator, time, environment, old value, new value, and reason. No remote flag may enable Apple purchases before backend verification, product allowlist, and environment separation are ready.
+
+## 112. Rollback strategy
+
+| Layer | Rollback action | Existing entitlement impact | Prohibited fallback |
+| --- | --- | --- | --- |
+| Database | Preserve legacy Stripe columns, keep compatibility projection, avoid destructive column removal, keep provider rows for analysis. | Existing verified access should remain. | Do not drop provider data during an incident. |
+| Stripe migration | Restore legacy webhook entitlement writes if needed; disable provider-neutral Stripe mutation path. | Stripe Pro preserved through legacy path. | Do not double-process the same Stripe event. |
+| Apple backend | Disable purchase verification for new purchases; keep notification endpoint acknowledging safely or queueing record-only where possible; preserve verified access during temporary outage. | Existing Apple Pro can remain for bounded cached period if resolver state is trusted. | Do not grant Pro from unverified client claims. |
+| Native UI | Disable purchase initiation remotely; show temporary unavailable copy; keep account status and management where safe. | Existing Pro remains visible. | Do not fall back to Stripe checkout or Stripe portal inside iOS. |
+| Binary/TestFlight | Remove bad build from tester groups; upload a higher build with fixes. | Depends on server state; avoid changing entitlements through binary rollback alone. | Never replace build 2 with another build 2. |
+| Public App Store | Disable server purchase path if urgent; submit expedited fix only if needed. | Existing access preserved where safe; new purchases disabled. | Do not rely on immediate App Store binary rollback. |
+
+Rollback usually disables new purchase availability first. It should not remove existing verified entitlement unless there is evidence the entitlement is unsafe or assigned to the wrong account.
+
+## 113. Operational runbooks
+
+| Runbook | Detection | Immediate containment | Inspect | Safe actions | Prohibited actions | Recovery verification | Escalate when |
+| --- | --- | --- | --- | --- | --- | --- | --- |
+| Apple notification endpoint outage | 5xx spike, missing notifications, App Store delivery failures | Put endpoint in minimal verified/queue mode if available | Provider event backlog, function logs, Apple status | Fix endpoint, replay notification history, reconcile | Manual entitlement edits by default | Notifications process and backlog drains | Valid paid events cannot be processed |
+| Apple JWS verification failures | Signature/bundle/environment failures spike | Disable new grants if verifier trust is uncertain | Verifier deploy, cert/root config, environment, Apple status | Roll back verifier, use official library path, reconcile | Accept unverified JWS | Known valid sandbox/prod payload verifies | Any production valid payload rejected broadly |
+| App Store Server API outage | Apple API 5xx/429 or auth failures | Disable new purchase finish; keep pending/retry | API status, key auth, rate limits | Backoff, queue reconciliation | Grant from client state | Pending queue clears after recovery | Purchases accepted by Apple cannot be confirmed |
+| Reconciliation backlog | Queue age/count grows | Disable new purchase if backlog threatens grants | Queue states, locks, Apple API latency | Increase workers within limits, process priority rows | Skip verification to catch up | Oldest age under threshold | Backlog affects active access |
+| Product metadata unavailable | StoreKit product load failures | Hide purchase buttons, keep Restore if safe | Product ids, App Store Connect status, storefront | Retry/load diagnostics | Hard-code Apple price | Products load in sandbox/TestFlight | Broad TestFlight/prod product outage |
+| Apple accepted but Pro not granted | Support ticket, pending state, ledger accepted but no entitlement | Disable affected purchase path if systemic | Provider event, resolver logs, entitlement row | Re-run resolver/reconcile idempotently | Direct public row edit unless approved emergency | User Pro active after verified fix | Multiple paid users affected |
+| Restore conflict | Conflict response or support ticket | Block local grant | Original transaction owner, account state | Guide user to owning account/support | Silent transfer | Conflict recorded and user informed | Many conflicts or wrong assignment suspected |
+| Dual-provider subscriber | Resolver duplicate condition | Suppress purchase CTA | Provider rows and management paths | Show dual warning, support review | Auto-cancel either provider | User sees both management paths | Duplicate billing encouraged by app |
+| Sandbox event in production path | Environment guard alert | Disable Apple resolver participation | Event env, resolver env filters | Fix guard, remove production effect if any | Treat sandbox as production | Production entitlement unchanged | Any production grant from sandbox |
+| Refund or revocation | Provider event | Recompute across all providers | Affected provider row, other active providers | Neutral support copy, resolver retry | Accuse user or reveal event internals | Access matches remaining providers | Wrong users downgraded |
+| Deleted account with active Apple subscription | Orphaned provider row | Do not auto-link recreated account | Deletion history, provider ownership | Guide Apple management/support | Auto-assign to new account | Orphan state recorded | Active paying user cannot recover access |
+| Subscription products rejected | App Review/App Store Connect rejection | Keep Apple UI disabled | Rejection reason, metadata, legal links | Correct metadata/config in next checkpoint | Ship hidden unsupported product | Products Ready/Approved | Blocks build 2/App Review |
+| Build 2 rejected | App Review rejection | Do not release; keep previous build | Rejection notes, binary, metadata | Fix in build 3+ | Reuse build 2 | New build accepted | Billing or policy issue unclear |
+| Emergency purchase disable | P0/P1 incident | Turn off purchase flag, preserve access | Flags, provider events, support tickets | Disable new purchases, post internal note | Redirect iOS to Stripe checkout | New purchases blocked, existing access stable | Paid access/security impacted |
+| Stripe entitlement regression | Resolver mismatch, Pro loss/gain | Roll back Stripe provider-neutral writer if needed | Stripe events, provider rows, legacy rows | Restore legacy path, reconcile | Delete provider rows | Stripe behavior matches baseline | Existing Pro users affected |
+
+Manual database edits are last-resort emergency actions requiring approval, audit, before/after evidence, and a follow-up migration or support tool.
+
+## 114. Incident severity model
+
+| Severity | Examples | Response | Release impact |
+| --- | --- | --- | --- |
+| P0 | Widespread paid users lose access; purchases succeed but are not recorded; incorrect users receive Pro; cross-account assignment; production/sandbox contamination; signature verification failure. | Immediate containment, disable new purchases if needed, owner notification, incident log. | Blocks release and requires post-fix validation. |
+| P1 | Restore broadly broken; notifications failing but reconciliation works; new purchases disabled; duplicate billing encouraged; management links broadly unavailable. | Same-day fix or clear mitigation; support guidance. | Blocks App Review/public release; may block TestFlight expansion. |
+| P2 | Localized product metadata issue; one status message wrong; analytics missing; non-blocking reconciliation delay. | Scheduled fix with monitoring. | Does not block internal testing unless it hides a billing truth. |
+| P3 | Documentation typo, low-risk copy polish, non-critical test fixture gap. | Backlog or next checkpoint. | No release block. |
+
+Any issue that can charge a user, deny paid access, grant Pro to the wrong account, or mix sandbox with production is P0 until proven otherwise.
+
+## 115. App Review submission checklist
+
+Future checklist before submitting Apple IAP:
+
+- Paid Apps Agreement active.
+- Tax and banking complete.
+- Subscription group configured.
+- Monthly and annual products created with approved identifiers.
+- Products Ready to Submit.
+- Prices selected and reviewed.
+- Product localization complete.
+- Family Sharing disabled or final state verified.
+- Grace-period state verified.
+- Server Notifications V2 configured.
+- App Store Server API key/issuer/key ID configured in secret store.
+- Request Test Notification succeeds.
+- Privacy and Terms URLs valid and Apple-aware.
+- Restore Purchases visible on paywall and account.
+- Manage Apple Subscription visible for Apple subscribers.
+- Reviewer account available without exposing credentials in Git.
+- Review notes explain web Stripe subscription coexistence and native Apple IAP.
+- Native Stripe checkout and portal absent.
+- Account deletion path documented.
+- Build 2 or later selected.
+- First subscriptions attached to the app submission as required by App Store Connect.
+- Screenshots/metadata do not promise unsupported features.
+- Support contact monitored.
+
+Do not perform any checklist action in this checkpoint.
+
+## 116. Final business-decision table
+
+| Decision | Recommended default | Alternatives | Consequence | Needed before implementation? | Needed before App Store Connect setup? | User approval status |
+| --- | --- | --- | --- | --- | --- | --- |
+| StoreKit approach | First-party StoreKit 2 Capacitor plugin | Third-party IAP plugin, RevenueCat | More control, more maintenance | Yes | No | Recommended, not final-approved |
+| Product IDs | `com.canyougeo.pro.monthly`, `com.canyougeo.pro.annual` | Different namespace | Stable backend/App Store contract | Yes | Yes | Recommended, not final-approved |
+| Subscription group name | `Can You Geo Pro` | Product-specific group names | One entitlement level and upgrade/downgrade path | No | Yes | Needs approval |
+| Family Sharing | Disabled initially | Enabled | Simpler account ownership | No | Yes | Recommended, not final-approved |
+| Grace period | Decide before setup | Off or on | Affects billing-failure UX and tests | No | Yes | Deferred |
+| Trials/offers | None initially | Trial, intro discount, offer codes | Simpler launch | No | Yes | Recommended, not final-approved |
+| Apple pricing | Near customer-price parity | Exact parity, platform-adjusted | Customer clarity vs margin | No | Yes | Needs approval |
+| Annual default | Annual selected as Best value | Monthly default, no default | Can improve annual adoption without hiding monthly | Yes for UI | No | Recommended, not final-approved |
+| Sign-in requirement | Required before purchase | Allow anonymous Apple purchase | Enables account linking | Yes | No | Recommended, not final-approved |
+| Stripe subscriber Apple override | No override initially | Allow forced Apple purchase | Avoids dual billing | Yes | No | Recommended, not final-approved |
+| `appAccountToken` | Supabase user UUID | Generated billing UUID | Strong ownership binding | Yes | No | Recommended, not final-approved |
+| Finish policy | Finish after backend accepted/already processed | Finish after local verification | Protects entitlement integrity | Yes | No | Recommended, not final-approved |
+| Sandbox entitlement behavior | Isolated from production Pro | Sandbox can grant production Pro | Prevents contamination | Yes | Yes for testing config | Recommended, not final-approved |
+| Deleted-account handling | Orphan provider row, no auto-link | Auto-link recreated account | Safer ownership | Yes | No | Needs approval |
+| Manual reassignment | Audited operator-only exception | Self-serve transfer | Reduces abuse risk | No | No | Needs approval |
+| Dual-provider messaging | Calm warning and support path | Hide one provider | Avoids surprise billing | Yes for UI | No | Recommended, not final-approved |
+| Analytics policy | Server-backed conversion truth, sanitized client funnel | Client conversion event as purchase | Avoids double counting | Yes | No | Recommended, not final-approved |
+| Paid Apps Agreement timing | Before 5G | Earlier admin-only work | Required for paid products | No | Yes | Needs approval/admin action |
+| Legal entity/developer name timing | Review before 5G | Defer to App Review | Avoids metadata surprise | No | Yes | Needs approval/admin action |
+
+Do not treat recommendations as final approvals. Use an explicit user approval checkpoint before 5B implementation and again before 5G App Store Connect setup.
+
+## 117. Architecture-readiness criteria
+
+Implementation-ready means:
+
+- No unresolved security blocker.
+- Product identifiers approved.
+- Account-linking policy approved.
+- Deleted-account policy approved.
+- Sandbox/production policy approved.
+- Migration strategy approved.
+- Rollback strategy approved.
+- Administrative timing approved.
+- Testing matrix complete enough for 5B-5H.
+- Implementation sequence agreed.
+
+Current result after 5A-3C2:
+
+- Technical architecture is sufficiently detailed to plan 5B.
+- Apple billing as a whole is not yet implementation-approved because final business decisions, legal copy, App Store Connect administration, product pricing, grace-period choice, and deleted-account policy still require explicit approval.
+- It is safe to start 5B only if the user approves the provider-neutral database foundation scope and confirms no App Store Connect or native purchase UI work should be bundled into it.
+
+## 118. Recommended next implementation checkpoint
+
+Recommended next checkpoint: `5B Provider-neutral database foundation`.
+
+Scope should include only:
+
+- Future billing schema migration.
+- Provider subscription and provider event ledger tables.
+- Service-role-only RLS and constraints.
+- Effective entitlement resolver.
+- Current Stripe backfill/dry-run tests.
+- Compatibility with existing `public.entitlements` reads.
+- Focused tests proving current Stripe users retain the same effective access.
+
+Scope should exclude:
+
+- Apple StoreKit plugin, Apple UI, App Store Connect, Apple secrets, Apple endpoints, paid products, StoreKit configuration, TestFlight build 2, and any production Apple billing behavior.
+
+## 119. Explicit non-actions taken in 5A-3C2
+
+This checkpoint did not:
+
+- Add runtime code, StoreKit configuration files, Swift code, TypeScript purchase code, UI, or analytics implementation.
+- Add dependencies, migrations, Supabase tables, Edge Functions, scheduled jobs, or deployments.
+- Modify Stripe checkout, Stripe portal, Stripe webhook behavior, Supabase Auth, or entitlement runtime behavior.
+- Accept Apple agreements, enter tax/banking information, create subscription groups/products/offers, configure Family Sharing, configure notifications, create App Store Server API keys, or change App Store Connect.
+- Change legal pages, pricing constants, app metadata, iOS version/build, native projects, Android, TestFlight, App Review, production deployment, or Cloudflare/Supabase configuration.
+- Upload build 2, create a PR, merge, force-push, or make unrelated changes.
