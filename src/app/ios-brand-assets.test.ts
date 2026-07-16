@@ -198,8 +198,8 @@ describe("iOS brand assets", () => {
     expect(docs).toContain("Additional defects or observations: none");
     expect(docs).toContain("none of the requested physical iPhone 14 QA items were left untested");
     expect(docs).toContain("Frame-by-frame screen recording is the recommended inspection method");
-    expect(docs).toContain("No TestFlight upload or App Store Connect upload has occurred");
-    expect(docs).toContain("No archive, IPA export, TestFlight upload, App Store action");
+    expect(docs).toContain("The first App Store Connect upload and internal TestFlight setup are recorded below");
+    expect(docs).toContain("At the time of Checkpoint 4H-6, no archive, IPA export, TestFlight upload, App Store action");
     expect(docs).toContain("Checkpoint 4H-7 created the first local Release archive");
     expect(docs).toContain("Raw archive signing classification: Apple Development signing");
     expect(docs).toContain("The raw archived app had `get-task-allow = true`");
@@ -210,6 +210,10 @@ describe("iOS brand assets", () => {
     expect(docs).toContain("Strict code-sign verification passed for the exported app");
     expect(docs).toContain("active `capacitor.config.json` had no `server` block");
     expect(docs).toContain("did not block the App Store export from re-signing the app correctly");
-    expect(docs).toContain("No IPA upload, TestFlight upload, App Store Connect action");
+    expect(docs).toContain("At the time of Checkpoint 4H-7A, no IPA upload, TestFlight upload, App Store Connect action");
+    expect(docs).toContain("Checkpoint 4H-8 uploaded the already-validated Can You Geo iOS build");
+    expect(docs).toContain("Upload result: `UPLOAD SUCCEEDED with no errors`");
+    expect(docs).toContain("Build status after compliance and group setup: `Ready to Test`");
+    expect(docs).toContain("Internal group: `Can You Geo Internal QA`");
   });
 });

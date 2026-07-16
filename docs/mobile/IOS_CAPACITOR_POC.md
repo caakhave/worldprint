@@ -137,7 +137,7 @@ The app-side/runtime foundations are now in place and covered by focused unit an
 - Any temporary diagnostic launch delay, breakpoint, direct bundle-resource probe, or red-background probe used to inspect the launch screen is local-only and must not be part of the committed application.
 - Physical-device visual approval of the new Capacitor splash was received before this checkpoint was committed.
 - Frame-by-frame screen recording is the recommended inspection method for the launch screen on physical devices.
-- No TestFlight upload or App Store Connect upload has occurred.
+- The first App Store Connect upload and internal TestFlight setup are recorded below in the release archive section.
 
 ## Physical iPhone 14 QA
 
@@ -151,7 +151,7 @@ Checkpoint 4H-6 physical iPhone 14 QA passed for Can You Geo `1.0.0 (1)`.
 - Authentication recovery: the established approved QA procedure passed. The recovery link opened the installed app, the intended reset/recovery route was reached, and no blank screen or redirect loop occurred. Do not record the QA email, password, callback URL, token, code, user id, or session values.
 - Additional defects or observations: none.
 - Not checked in this checkpoint: none of the requested physical iPhone 14 QA items were left untested.
-- No archive, IPA export, TestFlight upload, App Store action, version/build change, signing change, PR, merge, deployment, or Android change occurred.
+- At the time of Checkpoint 4H-6, no archive, IPA export, TestFlight upload, App Store action, version/build change, signing change, PR, merge, deployment, or Android change had occurred.
 
 ## Release Archive And App Store Export
 
@@ -168,13 +168,39 @@ Checkpoint 4H-7 created the first local Release archive on 2026-07-16 UTC for Ca
 - dSYM/symbol output was present in the Release archive/export.
 - The project-level `CODE_SIGN_IDENTITY = "iPhone Developer"` setting remained effective for the Release archive but did not block the App Store export from re-signing the app correctly. No source signing correction was required for this checkpoint.
 - The exported IPA was stored outside the repository under `/private/tmp/` and was not committed.
-- No IPA upload, TestFlight upload, App Store Connect action, version/build change, signing-setting change, certificate revocation, PR, merge, deployment, Android change, or unrelated change occurred.
+- At the time of Checkpoint 4H-7A, no IPA upload, TestFlight upload, App Store Connect action, version/build change, signing-setting change, certificate revocation, PR, merge, deployment, Android change, or unrelated change had occurred.
+
+## App Store Connect Upload And Internal TestFlight
+
+Checkpoint 4H-8 uploaded the already-validated Can You Geo iOS build to App Store Connect on 2026-07-16 UTC.
+
+- Uploaded version/build: `1.0.0 (1)`.
+- Bundle ID: `com.canyougeo.app`.
+- App Store Connect record: `Can You Geo`, Apple ID `6791248782`.
+- Upload method: Xcode `xcodebuild -exportArchive` from the validated `.xcarchive` using `method = app-store-connect`, `destination = upload`, automatic signing, Team ID `G5N5U6QFS8`, `uploadSymbols = true`, and `manageAppVersionAndBuildNumber = false`.
+- Upload result: `UPLOAD SUCCEEDED with no errors`.
+- Delivery UUID: `76cb94d0-f321-4eb1-9fce-53b6a1b68452`.
+- Uploaded date reported by Apple: 2026-07-15 at 6:40:58 PM Pacific time.
+- Upload warnings/errors: none reported by App Store Connect or Xcode's ContentDelivery log.
+- Initial Apple processing state after upload: `PROCESSING`.
+- Processing result: build `1.0.0 (1)` appeared under iOS TestFlight, then required export-compliance completion.
+- Export-compliance question answered: "What type of encryption algorithms does your app implement?"
+- Export-compliance classification: `None of the algorithms mentioned above`.
+- Export-compliance note: the app uses ordinary platform/browser HTTPS/TLS networking and does not implement proprietary encryption algorithms or independent standard crypto algorithms. Revisit this answer if app encryption behavior changes.
+- Build status after compliance and group setup: `Ready to Test`, expiring in 90 days.
+- Internal group: `Can You Geo Internal QA`.
+- Automatic distribution for the internal group: disabled before group creation.
+- Build group result: build `1.0.0 (1)` was added to `Can You Geo Internal QA`.
+- Test information entered in "What to Test": first native iOS TestFlight build validation for launch branding, sign-in/session persistence, portrait navigation, landscape gameplay, Mystery Map, Pattern Atlas, Order Atlas sample flow, Universal Links, password recovery, offline recovery, and background/foreground behavior. Purchases and subscription management are intentionally unavailable in this native preview.
+- Account-holder tester result: the eligible account-holder internal tester was added to the internal group and shown as `Invited`.
+- No external testers, public TestFlight link, Beta App Review submission, App Review submission, public release, pricing change, In-App Purchase/subscription configuration, version/build change, signing change, PR, merge, deployment, Android change, or unrelated change occurred.
+- Do not record Apple credentials, authentication tokens, private account information, tester email addresses, private invitation links, certificate material, provisioning-profile contents, IPA files, archives, upload options, or upload logs in the repository.
 
 Remaining release/configuration work:
 
 - Apple In-App Purchase.
-- TestFlight and App Store submission.
-- TestFlight upload and App Store Connect submission, only after explicit approval.
+- TestFlight installation and QA from the Apple-delivered build.
+- App Store submission, only after explicit approval.
 - Additional physical-device coverage beyond the iPhone 14 if desired before release.
 - iPad UI and metadata decision if universal iPad support is desired later.
 - Optional future push notifications.

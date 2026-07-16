@@ -330,8 +330,8 @@ Physical iPhone 14 validation after production AASA deployment confirmed:
 - password update and subsequent login with the new password passed
 
 Do not record the QA account email, password, callback URL, callback token, or user id. This verifies the development-signed
-physical-device Universal Link/auth path. TestFlight/App Store distribution remains pending until an archive is created,
-uploaded, and separately validated.
+physical-device Universal Link/auth path. The first App Store Connect/TestFlight upload is documented separately in
+`docs/mobile/IOS_CAPACITOR_POC.md`; TestFlight-installed Universal Link/auth QA remains a separate release validation step.
 
 Do not add `www.canyougeo.com`, `test.canyougeo.com`, localhost, custom schemes, `webcredentials`, `activitycontinuation`, push
 notifications, Sign in with Apple, iCloud, or Game Center without a separate approved checkpoint.
@@ -532,5 +532,6 @@ Checkpoint 4B can verify parser behavior, listener registration, cold/warm bridg
 Checkpoint 4D-1 can verify Android manifest structure and explicit package-targeted HTTPS intents before website verification.
 
 Checkpoint 4H-2 verified iOS entitlement structure and AASA route policy from source control. Checkpoint 4H-4 records the
-development-signed physical iPhone Universal Link and password-recovery callback validation. TestFlight/App Store distribution
-still requires a separate archive/upload/validation checkpoint.
+development-signed physical iPhone Universal Link and password-recovery callback validation. The first App Store
+Connect/TestFlight upload is documented in `docs/mobile/IOS_CAPACITOR_POC.md`; TestFlight-installed link validation remains
+separate from the development-signed physical-device checks above.

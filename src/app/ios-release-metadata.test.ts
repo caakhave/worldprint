@@ -77,7 +77,7 @@ describe("iOS release metadata", () => {
     expect(infoPlist).toContain("<true/>");
   });
 
-  it("records physical Universal Link and password-recovery validation without sensitive QA details", () => {
+  it("records physical Universal Link, password-recovery, and TestFlight upload validation without sensitive QA details", () => {
     const combinedDocs = `${iosDocs}\n${deepLinkDocs}`;
 
     expect(combinedDocs).toContain("Production AASA is live and verified");
@@ -87,7 +87,19 @@ describe("iOS release metadata", () => {
     expect(combinedDocs).toContain("password-recovery email callback");
     expect(combinedDocs).toContain("password update and subsequent login");
     expect(combinedDocs).toContain("Do not record the QA account email, password, callback URL, token, or user id");
-    expect(combinedDocs).toContain("TestFlight/App Store distribution remains pending");
+    expect(iosDocs).toContain("App Store Connect Upload And Internal TestFlight");
+    expect(iosDocs).toContain("Uploaded version/build: `1.0.0 (1)`");
+    expect(iosDocs).toContain("Bundle ID: `com.canyougeo.app`");
+    expect(iosDocs).toContain("App Store Connect record: `Can You Geo`, Apple ID `6791248782`");
+    expect(iosDocs).toContain("Upload result: `UPLOAD SUCCEEDED with no errors`");
+    expect(iosDocs).toContain("Delivery UUID: `76cb94d0-f321-4eb1-9fce-53b6a1b68452`");
+    expect(iosDocs).toContain("Export-compliance classification: `None of the algorithms mentioned above`");
+    expect(iosDocs).toContain("Build status after compliance and group setup: `Ready to Test`");
+    expect(iosDocs).toContain("Internal group: `Can You Geo Internal QA`");
+    expect(iosDocs).toContain("Automatic distribution for the internal group: disabled before group creation");
+    expect(iosDocs).toContain("account-holder internal tester was added to the internal group and shown as `Invited`");
+    expect(iosDocs).toContain("No external testers, public TestFlight link, Beta App Review submission, App Review submission, public release");
+    expect(combinedDocs).not.toContain("TestFlight/App Store distribution remains pending");
     expect(combinedDocs).not.toMatch(/[A-Z0-9._%+-]+@[A-Z][A-Z0-9.-]*\.[A-Z]{2,}/iu);
     expect(combinedDocs).not.toMatch(/access_token=|refresh_token=|token_hash=|code=/u);
 
