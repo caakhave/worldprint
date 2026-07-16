@@ -3867,3 +3867,101 @@ Current app/runtime behavior remains unchanged:
 Next checkpoint: `5C-1B Stripe webhook provider-neutral dual-write integration`, or another explicitly approved slice that
 wires the verified Stripe webhook to this processor while preserving the legacy replay ledger and legacy Stripe field
 updates during transition.
+
+---
+
+Checkpoint 5C-1B1 status: local Stripe webhook provider-neutral dual-write integration only. This checkpoint wires the
+existing verified Stripe webhook to the provider-neutral processor behind an explicit server-side flag. It does not enable
+the flag in staging or production, deploy an Edge Function, apply a remote migration, process a real Stripe event, add
+StoreKit, change Checkout or Portal behavior, query remote Supabase data, or alter app/native/browser billing UI.
+
+## 126. Stripe webhook transition wrapper and opt-in Edge integration
+
+Added migration:
+
+- `supabase/migrations/20260716150000_stripe_webhook_dual_write_transition.sql`
+
+Transition function:
+
+- `billing.process_stripe_webhook_transition_event(p_provider_environment text, p_provider_event_ref text, p_event_type text, p_event_subtype text, p_event_created_at timestamptz, p_user_id uuid, p_provider_customer_ref text, p_provider_subscription_ref text, p_provider_product_ref text, p_provider_status text, p_current_period_start timestamptz, p_current_period_end timestamptz, p_cancel_at_period_end boolean, p_payload_hash text, p_as_of timestamptz default now())`
+- Intended caller: `supabase/functions/stripe-webhook/index.ts` after Stripe signature verification, event duplicate check
+  against `public.stripe_webhook_events`, user resolution, configured-price validation, and SHA-256 hashing of the verified
+  raw request body.
+- The function calls `billing.process_stripe_subscription_event(...)` rather than duplicating provider-state logic.
+- On `processed` or `already_processed`, it updates only the legacy Stripe columns on `public.entitlements`:
+  `stripe_customer_id`, `stripe_subscription_id`, `stripe_price_id`, and `stripe_status`.
+- It does not update compatibility fields directly. `plan`, `status`, `cancel_at_period_end`, and `current_period_end`
+  continue to come from `billing.refresh_effective_entitlement_summary(...)`.
+- It does not write `public.stripe_webhook_events`; the existing webhook ledger remains owned by the Edge Function after
+  entitlement processing succeeds.
+
+Feature flag:
+
+```text
+STRIPE_PROVIDER_NEUTRAL_DUAL_WRITE_ENABLED=true
+STRIPE_PROVIDER_ENVIRONMENT=test|live
+```
+
+- Omitted, unset, `false`, or any value other than exact `true` keeps the webhook on the legacy direct
+  `public.entitlements` write path.
+- When enabled, the provider environment is required and must be exactly `test` or `live`; no Stripe key, webhook secret,
+  URL, or price-id inference is used.
+- Invalid enabled configuration returns a sanitized `503` from `stripe-webhook` before database mutation.
+- Checkout and Portal do not require these transition flags.
+
+Enabled webhook behavior:
+
+1. Verify the Stripe signature with `STRIPE_WEBHOOK_SECRET`.
+2. Check `public.stripe_webhook_events` for duplicate event ids.
+3. Compute a SHA-256 hex hash of the verified raw request body.
+4. Normalize only the existing supported event classes:
+   - `checkout.session.completed`
+   - `customer.subscription.created`
+   - `customer.subscription.updated`
+   - `customer.subscription.deleted`
+   - `invoice.payment_failed`
+   - `invoice.payment_succeeded`
+5. Call `billing.process_stripe_webhook_transition_event(...)`.
+6. Record `public.stripe_webhook_events` and send owner notification only after the transition succeeds.
+
+Failure policy:
+
+- Provider transition failures are not silently downgraded to the legacy writer.
+- `payload_conflict`, ownership/environment conflicts, product/user/subscription validation failures,
+  `summary_refresh_failed`, `legacy_field_update_failed`, RPC failures, and invalid RPC results prevent the legacy webhook
+  ledger from recording success and return the existing sanitized webhook `500` failure path unless the configuration
+  itself fails closed with `503`.
+- Required-step failures inside the SQL transition wrapper roll back provider-event writes, provider-subscription writes,
+  compatibility summary writes, and legacy Stripe field writes from that wrapper call.
+- `stale_event_ignored` is treated as an ignored webhook outcome and does not overwrite newer provider or legacy state.
+
+Security and privacy posture:
+
+- The transition wrapper lives in the private `billing` schema, is `SECURITY INVOKER`, has a locked
+  `pg_catalog, billing, public` search path, and grants execute only to `service_role`.
+- The Edge Function RPC adapter passes normalized ids and a payload hash only. It does not pass raw Stripe payloads,
+  signature headers, customer emails, billing addresses, card data, Supabase session tokens, or callback URLs.
+- No new analytics events, browser-readable data, native UI, trigger, scheduled job, StoreKit code, Google Play Billing
+  code, or dashboard configuration was added.
+
+Test coverage:
+
+- `supabase/tests/stripe_webhook_dual_write_transition.sql` covers:
+  - successful active Stripe transition with provider row, provider event, compatibility summary, and legacy Stripe fields;
+  - no legacy `public.stripe_webhook_events` mutation inside the SQL wrapper;
+  - `already_processed` recovery for a retry where provider state already committed but legacy Stripe fields need restoring;
+  - payload conflict rollback without legacy field success;
+  - Apple active provider preserving Pro after a Stripe payment failure;
+  - Stripe `test` provider rows affecting the sandbox resolver but not the production resolver;
+  - summary failure rollback with successful retry;
+  - service-role-only execution.
+- `supabase/tests/stripe_webhook_dual_write_transition.structure.test.ts` guards the SQL wrapper contract, delegation to the
+  existing processor, legacy-field-only update, rollback behavior, privilege posture, and absence of runtime/app changes.
+- `supabase/functions/_shared/stripeProviderTransition.test.ts` covers feature-flag parsing, payload hashing, timestamp and
+  subtype normalization, sanitized RPC adapter behavior, stale ignored success, and sanitized transition errors.
+- `supabase/functions/stripe-webhook/index.structure.test.ts` guards disabled-mode behavior, hash sequencing after signature
+  verification and duplicate detection, normalized RPC inputs, legacy ledger ordering, supported event coverage, and retry
+  failure behavior.
+
+Current runtime behavior remains off unless operators set the new flag and deploy the updated webhook after applying the
+matching migration to the target Supabase project.

@@ -19,6 +19,13 @@ import {
   type Env
 } from "../_shared/billing.ts";
 import { requestContentLengthTooLarge, STRIPE_WEBHOOK_MAX_BYTES } from "../_shared/security.ts";
+import {
+  processStripeProviderTransition,
+  sha256Hex,
+  stripeProviderEventSubtype,
+  stripeProviderTransitionIgnored,
+  stripeTimestampToIso
+} from "../_shared/stripeProviderTransition.ts";
 
 type SupabaseServiceClient = ReturnType<typeof serviceClient>;
 
@@ -42,6 +49,9 @@ Deno.serve(async (request) => {
 
   const { env, error: envError } = readEnv(true);
   if (!env || !env.stripeWebhookSecret) return json({ error: envError ?? "Webhook is not configured." }, 503, request);
+  if (env.stripeProviderNeutralDualWriteEnabled && env.stripeProviderNeutralConfigError) {
+    return json({ error: "Stripe provider-neutral dual-write is not configured." }, 503, request, env);
+  }
   if (requestContentLengthTooLarge(request.headers.get("content-length"), STRIPE_WEBHOOK_MAX_BYTES)) {
     return json({ error: "Webhook payload is too large." }, 413, request, env);
   }
@@ -64,7 +74,8 @@ Deno.serve(async (request) => {
   }
 
   try {
-    const outcome = await processStripeEvent({ event, env, stripe, supabase });
+    const payloadHash = env.stripeProviderNeutralDualWriteEnabled ? await sha256Hex(body) : null;
+    const outcome = await processStripeEvent({ event, env, stripe, supabase, payloadHash });
     await recordWebhookEvent(supabase, event, outcome);
     await notifyOwnerAfterWebhook(env, event, outcome);
     return json(
@@ -84,8 +95,9 @@ async function processStripeEvent(input: {
   env: Env;
   stripe: Stripe;
   supabase: SupabaseServiceClient;
+  payloadHash: string | null;
 }): Promise<WebhookOutcome> {
-  const { event, env, stripe, supabase } = input;
+  const { event, env, stripe, supabase, payloadHash } = input;
 
   if (event.type === "checkout.session.completed") {
     const session = event.data.object as Stripe.Checkout.Session;
@@ -99,15 +111,23 @@ async function processStripeEvent(input: {
     const userId = metadataUserId(session) ?? metadataUserId(subscription) ?? (await userIdFromCustomer(supabase, session.customer));
     if (!userId) return ignored("missing_user", { customerId: idValue(session.customer), subscriptionId });
 
-    await upsertBillingEntitlement(supabase, {
+    const write = await applyWebhookBillingUpdate({
+      event,
+      env,
+      supabase,
+      payloadHash,
       user_id: userId,
       stripe_customer_id: idValue(subscription.customer) ?? idValue(session.customer),
       stripe_subscription_id: subscription.id,
       stripe_price_id: proPriceId,
       stripe_status: subscription.status,
       cancel_at_period_end: subscription.cancel_at_period_end,
+      current_period_start: stripeTimestampToIso(subscription.current_period_start),
       current_period_end: periodEndToIso(subscription.current_period_end)
     });
+    if (write.ignoredReason) {
+      return ignored(write.ignoredReason, { userId, customerId: idValue(subscription.customer) ?? idValue(session.customer), subscriptionId });
+    }
     return processed({
       userId,
       customerId: idValue(subscription.customer) ?? idValue(session.customer),
@@ -135,15 +155,23 @@ async function processStripeEvent(input: {
     }
     const previous = await billingStatusForUser(supabase, userId);
 
-    await upsertBillingEntitlement(supabase, {
+    const write = await applyWebhookBillingUpdate({
+      event,
+      env,
+      supabase,
+      payloadHash,
       user_id: userId,
       stripe_customer_id: idValue(subscription.customer),
       stripe_subscription_id: subscription.id,
       stripe_price_id: proPriceId,
       stripe_status: subscription.status,
       cancel_at_period_end: subscription.cancel_at_period_end,
+      current_period_start: stripeTimestampToIso(subscription.current_period_start),
       current_period_end: periodEndToIso(subscription.current_period_end)
     });
+    if (write.ignoredReason) {
+      return ignored(write.ignoredReason, { userId, customerId: idValue(subscription.customer), subscriptionId: subscription.id });
+    }
     return processed({
       userId,
       customerId: idValue(subscription.customer),
@@ -172,15 +200,23 @@ async function processStripeEvent(input: {
       return ignored("stale_inactive_subscription", { userId, customerId: idValue(invoice.customer), subscriptionId });
     }
 
-    await upsertBillingEntitlement(supabase, {
+    const write = await applyWebhookBillingUpdate({
+      event,
+      env,
+      supabase,
+      payloadHash,
       user_id: userId,
       stripe_customer_id: idValue(subscription.customer) ?? idValue(invoice.customer),
       stripe_subscription_id: subscriptionId,
       stripe_price_id: proPriceId,
       stripe_status: "past_due",
       cancel_at_period_end: subscription.cancel_at_period_end,
+      current_period_start: stripeTimestampToIso(subscription.current_period_start),
       current_period_end: periodEndToIso(subscription.current_period_end)
     });
+    if (write.ignoredReason) {
+      return ignored(write.ignoredReason, { userId, customerId: idValue(subscription.customer) ?? idValue(invoice.customer), subscriptionId });
+    }
     return processed({
       userId,
       customerId: idValue(subscription.customer) ?? idValue(invoice.customer),
@@ -204,15 +240,23 @@ async function processStripeEvent(input: {
     if (!userId) return ignored("missing_user", { customerId: idValue(invoice.customer), subscriptionId });
     const previous = await billingStatusForUser(supabase, userId);
 
-    await upsertBillingEntitlement(supabase, {
+    const write = await applyWebhookBillingUpdate({
+      event,
+      env,
+      supabase,
+      payloadHash,
       user_id: userId,
       stripe_customer_id: idValue(subscription.customer) ?? idValue(invoice.customer),
       stripe_subscription_id: subscription.id,
       stripe_price_id: proPriceId,
       stripe_status: subscription.status,
       cancel_at_period_end: subscription.cancel_at_period_end,
+      current_period_start: stripeTimestampToIso(subscription.current_period_start),
       current_period_end: periodEndToIso(subscription.current_period_end)
     });
+    if (write.ignoredReason) {
+      return ignored(write.ignoredReason, { userId, customerId: idValue(subscription.customer) ?? idValue(invoice.customer), subscriptionId: subscription.id });
+    }
     return processed({
       userId,
       customerId: idValue(subscription.customer) ?? idValue(invoice.customer),
@@ -227,6 +271,62 @@ async function processStripeEvent(input: {
   }
 
   return ignored(event.type);
+}
+
+async function applyWebhookBillingUpdate(input: {
+  event: Stripe.Event;
+  env: Env;
+  supabase: SupabaseServiceClient;
+  payloadHash: string | null;
+  user_id: string;
+  stripe_customer_id: string | null;
+  stripe_subscription_id: string;
+  stripe_price_id: string;
+  stripe_status: string;
+  cancel_at_period_end: boolean | null;
+  current_period_start: string | null;
+  current_period_end: string | null;
+}): Promise<{ ignoredReason: string | null }> {
+  if (!input.env.stripeProviderNeutralDualWriteEnabled) {
+    await upsertBillingEntitlement(input.supabase, {
+      user_id: input.user_id,
+      stripe_customer_id: input.stripe_customer_id,
+      stripe_subscription_id: input.stripe_subscription_id,
+      stripe_price_id: input.stripe_price_id,
+      stripe_status: input.stripe_status,
+      cancel_at_period_end: input.cancel_at_period_end,
+      current_period_end: input.current_period_end
+    });
+    return { ignoredReason: null };
+  }
+
+  if (!input.env.stripeProviderEnvironment || input.env.stripeProviderNeutralConfigError || !input.payloadHash) {
+    throw new Error("Stripe provider-neutral dual-write is not configured.");
+  }
+
+  const transition = await processStripeProviderTransition(input.supabase, {
+    providerEnvironment: input.env.stripeProviderEnvironment,
+    providerEventRef: input.event.id,
+    eventType: input.event.type,
+    eventSubtype: stripeProviderEventSubtype({
+      priceId: input.stripe_price_id,
+      monthlyPriceId: input.env.stripeProMonthlyPriceId,
+      yearlyPriceId: input.env.stripeProYearlyPriceId,
+      legacyPriceId: input.env.stripeProPriceId
+    }),
+    eventCreatedAt: stripeTimestampToIso(input.event.created) ?? new Date().toISOString(),
+    userId: input.user_id,
+    providerCustomerRef: input.stripe_customer_id,
+    providerSubscriptionRef: input.stripe_subscription_id,
+    providerProductRef: input.stripe_price_id,
+    providerStatus: input.stripe_status,
+    currentPeriodStart: input.current_period_start,
+    currentPeriodEnd: input.current_period_end,
+    cancelAtPeriodEnd: Boolean(input.cancel_at_period_end),
+    payloadHash: input.payloadHash
+  });
+
+  return { ignoredReason: stripeProviderTransitionIgnored(transition) ? "stale_provider_event" : null };
 }
 
 async function userIdFromCustomer(
