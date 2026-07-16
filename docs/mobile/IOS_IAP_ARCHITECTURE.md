@@ -3346,3 +3346,148 @@ Remaining deferred work:
 - No remote Supabase migration has been applied.
 - No Apple/StoreKit, Google Play Billing, StoreKit product, App Store Server Notification, or Play Developer API
   implementation is included.
+
+---
+
+Checkpoint 5B-1D status: transactional entitlement-summary writer and synthetic backfill rehearsal. This checkpoint adds
+the private database writer needed by future provider event processors, plus local-only rollback fixtures. It does not
+deploy migrations, perform a real backfill, query production data, change Stripe webhooks, dual-write provider state from
+runtime code, add triggers, or add Apple/StoreKit or Google Play implementation.
+
+## 123. Transactional entitlement-summary writer status
+
+Added migration:
+
+- `supabase/migrations/20260716120000_provider_neutral_entitlement_summary_writer.sql`
+
+Writer function:
+
+- `billing.refresh_effective_entitlement_summary(p_user_id uuid, p_environment text, p_as_of timestamptz default now())`
+- Intended caller: trusted service-role code only, inside the caller's existing provider-event transaction.
+- Returns a safe compatibility summary:
+  - `user_id`
+  - `environment`
+  - `plan`
+  - `status`
+  - `cancel_at_period_end`
+  - `current_period_end`
+  - `computed_at`
+  - `updated_at`
+  - `management_provider`
+  - `multiple_active_providers`
+  - `requires_reconciliation`
+  - sanitized `decision_reason`
+  - `write_action`
+  - `applied`
+  - sanitized `error_code`
+
+Execution flow:
+
+1. Validate `p_user_id` and canonical resolver environment.
+2. Acquire a transaction-scoped, user-scoped advisory lock:
+   `pg_advisory_xact_lock(hashtextextended('billing.refresh_effective_entitlement_summary:' || p_user_id::text, 0))`.
+3. Confirm the user has a `public.profiles` row.
+4. Lock the existing `public.entitlements` row with `FOR UPDATE` when it exists.
+5. Call `billing.project_effective_entitlement_summary(...)`, which calls the provider-neutral resolver.
+6. Insert or update the app-facing compatibility row.
+7. Return the written safe summary.
+
+Security decision:
+
+- The writer is `SECURITY INVOKER`, not `SECURITY DEFINER`.
+- Rationale: current trusted billing Edge Functions already write `public.entitlements` using service-role credentials, and
+  this function is granted only to `service_role`. Keeping invoker security avoids creating a browser-callable privilege
+  escalator and preserves the current service-controlled write boundary.
+- Execute is revoked from `public`, `anon`, and `authenticated`; only `service_role` is granted execute.
+- The function uses a locked search path and no dynamic SQL.
+- The return value does not expose Stripe customer/subscription ids, Apple transaction/original transaction ids, Google
+  purchase tokens, provider event identifiers, payload hashes, emails, auth tokens, or raw provider payloads.
+
+Fields written:
+
+- The writer may insert/update only current app-facing compatibility fields:
+  - `plan`
+  - `status`
+  - `cancel_at_period_end`
+  - `current_period_end`
+  - `updated_at`
+- It preserves legacy Stripe fields during the migration:
+  - `stripe_customer_id`
+  - `stripe_subscription_id`
+  - `stripe_price_id`
+  - `stripe_status`
+- It does not add or write Apple references, Google Play references, provider-event data, profile data, email, auth state,
+  analytics, or history rows.
+
+Missing-row behavior:
+
+- Existing app code treats a missing entitlement row as Free.
+- The writer deterministically creates the minimum `public.entitlements` compatibility row when the user has a valid
+  `public.profiles` row.
+- Newly inserted rows do not invent Stripe-specific values; legacy Stripe columns remain null.
+- If the user/profile is missing, the writer returns `applied = false` and `error_code = 'user_not_found'` without writing.
+- Invalid environments return `applied = false` and `error_code = 'invalid_environment'` without writing.
+
+Concurrency strategy:
+
+- The transaction-scoped advisory lock is keyed by Supabase user UUID, so billing refreshes for different users do not
+  serialize globally.
+- The lock is acquired before resolver/projection execution and before writing `public.entitlements`.
+- Existing rows are also locked with `FOR UPDATE` before refresh.
+- Future Stripe, Apple, Google Play, restore, reconciliation, and support flows should mutate provider state and then call
+  this function in the same transaction.
+- The function does not commit independently, start an autonomous transaction, mark provider events processed, emit
+  analytics, or swallow projection/update failures.
+
+Local synthetic validation:
+
+- `supabase/tests/provider_neutral_entitlement_summary_writer.sql` runs a rollback-only fixture suite that covers:
+  - no-provider Free;
+  - missing `public.entitlements` row;
+  - Stripe active;
+  - Apple active;
+  - Google Play active;
+  - Stripe and Apple cancel-at-period-end while still active;
+  - Apple grace period;
+  - billing retry;
+  - expired, refunded, revoked, paused, pending, unknown, and stale/ambiguous states;
+  - Stripe + Apple coexistence;
+  - provider-specific failure not removing access from another valid provider;
+  - production/sandbox isolation;
+  - user_id-null provider records;
+  - invalid environment and missing-user classifications;
+  - repeated writer idempotency;
+  - service-role-only execution;
+  - rollback cleanup.
+
+Synthetic backfill rehearsal totals:
+
+- Total fixtures: 20.
+- Legacy rows mapped: 20.
+- Rows skipped as non-subscriptions: 1.
+- Rows requiring reconciliation: 10.
+- Provider rows inserted during rehearsal: 17.
+- Compatibility rows refreshed: 20.
+- Legacy access parity matched: 16.
+- Legacy access parity mismatched: 4 intentionally malformed/ambiguous Pro-shaped repair fixtures:
+  - missing subscription reference;
+  - missing period end;
+  - period-ended active row;
+  - stale/ambiguous trialing row.
+- Idempotent reruns passed: 20.
+- Stripe-specific field preservation passed: 20.
+- Transaction rollback and post-cleanup passed.
+
+Current app/runtime behavior remains unchanged:
+
+- Existing Stripe Checkout, Stripe Customer Portal, Stripe webhook, `public.stripe_webhook_events`, account entitlement
+  reads, native billing guardrails, analytics, React UI, Edge Functions, Capacitor config, Android, iOS version/build, and
+  StoreKit/Google Play code are unchanged.
+- No trigger on `billing.provider_subscriptions` was added. Future provider-event processors must explicitly invoke the
+  writer inside their own transaction.
+- `public.entitlements` changed only inside rolled-back local tests.
+- No remote Supabase migration was applied and no production data was read.
+
+Next recommended checkpoint: `5C-1 Stripe provider-neutral dual-write implementation plan`, or an explicitly approved
+slice that updates Stripe webhook processing to write provider records and invoke
+`billing.refresh_effective_entitlement_summary(...)` transactionally while preserving rollback to legacy Stripe writes.
