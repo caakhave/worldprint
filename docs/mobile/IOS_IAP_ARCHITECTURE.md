@@ -3675,3 +3675,195 @@ Current app/runtime behavior remains unchanged:
 Next recommended checkpoint: `5B-1F2 controlled staging legacy Stripe backfill dry-run/apply rehearsal`, or another
 explicitly approved operational checkpoint that first runs this function on staging in dry-run mode and stops for review
 before any real provider row insertion.
+
+---
+
+Checkpoint 5C-1A status: local transactional Stripe provider-event processor only. This checkpoint adds the private
+database operation needed by a future Stripe webhook migration, plus local synthetic fixture coverage. It does not modify
+the active Stripe webhook, deploy a migration remotely, process real Stripe events, query staging or production, update the
+legacy Stripe replay ledger, add triggers, add Edge Functions, add StoreKit, or change app/native/runtime behavior.
+
+## 125. Transactional Stripe provider-event processor implementation status
+
+Added migration:
+
+- `supabase/migrations/20260716140000_stripe_provider_event_processor.sql`
+
+Processor function:
+
+- `billing.process_stripe_subscription_event(p_provider_environment text, p_provider_event_ref text, p_event_type text, p_event_subtype text, p_event_created_at timestamptz, p_user_id uuid, p_provider_customer_ref text, p_provider_subscription_ref text, p_provider_product_ref text, p_provider_status text, p_current_period_start timestamptz, p_current_period_end timestamptz, p_cancel_at_period_end boolean, p_payload_hash text, p_product_allowed boolean default false, p_as_of timestamptz default now())`
+- Intended caller: a future trusted Stripe webhook Edge Function using the service role after Stripe signature verification,
+  payload parsing, user resolution, product allowlist checking, and safe payload-hash computation.
+- The processor accepts normalized values only. It does not accept raw Stripe event JSON, Checkout Session JSON, full
+  subscription payloads, payment-method data, customer email, billing address, card data, secrets, signature headers, user
+  session tokens, or callback URLs.
+- It returns a sanitized server-only result with classifications and booleans. It does not return user ids, Stripe customer
+  ids, Stripe subscription ids, Stripe price ids, provider row ids, payload hashes, emails, tokens, or raw SQL errors.
+
+Supported Stripe event classes mirror the current runtime webhook behavior:
+
+- `checkout.session.completed`
+- `customer.subscription.created`
+- `customer.subscription.updated`
+- `customer.subscription.deleted`
+- `invoice.payment_failed`
+- `invoice.payment_succeeded`
+
+Unsupported event types are recorded in `billing.provider_events` as ignored and return `unsupported_event_type`. No
+additional Stripe event classes were added in this checkpoint.
+
+Idempotency model:
+
+- Stripe provider events use the existing unique key on `(provider, environment, provider_event_ref)`.
+- The function obtains an event/environment transaction advisory lock before touching the provider event ledger.
+- Repeated identical events after successful processing return `already_processed`, do not duplicate provider rows, and
+  preserve the original provider-event `processed_at` timestamp.
+- The same event reference with a different payload hash returns `payload_conflict`, marks the provider-event row for manual
+  review, and does not mutate provider subscription state or public entitlement state.
+- The same event reference can exist independently in Stripe `test` and `live` environments because the environment is part
+  of the unique key.
+
+Ordering model:
+
+- The caller must provide the Stripe event occurrence timestamp. The processor uses that timestamp, not HTTP arrival order,
+  as the provider-state ordering input.
+- Existing provider rows compare incoming event time with `coalesce(last_event_at, last_verified_at, updated_at, created_at)`.
+- Older ordinary updates return `stale_event_ignored` and do not overwrite newer active, cancellation, deletion, payment
+  success, or payment failure state.
+- A newer payment success can restore Pro after a prior payment failure. A stale payment failure after a newer success is
+  ignored and cannot downgrade current access.
+
+Ownership and environment rules:
+
+- The caller must pass explicit Stripe environment `live` or `test`. Invalid values return `invalid_environment` before
+  ledger writes.
+- Stripe `live` provider rows feed the production resolver environment; Stripe `test` provider rows feed the sandbox
+  resolver environment.
+- A Stripe event cannot mutate a provider subscription row in the other Stripe environment. Such cases return
+  `environment_conflict`.
+- A Stripe subscription already owned by another Can You Geo user returns `ownership_conflict`, marks the event for
+  reconciliation, and does not mutate either user's provider row or public entitlement.
+- Customer references are supplemental context only; subscription-reference identity is required for mutation.
+
+Product allowlist boundary:
+
+- The future webhook remains responsible for environment-specific Stripe price allowlist checks.
+- The database function requires `p_product_allowed = true` and a normalized Stripe Price-like product reference before it
+  treats a product as eligible Pro. Missing, malformed, or unapproved product references return `product_not_allowed`.
+- No Stripe secret environment values or Apple product identifiers are hard-coded into the migration.
+
+Status normalization:
+
+| Stripe input | Provider-neutral status | Compatibility access consequence |
+| --- | --- | --- |
+| `active` | `active` when period end is future; otherwise reconciliation | Pro while the period is valid |
+| `trialing` | `active` when period end is future; otherwise reconciliation | Pro while the period is valid |
+| `active` / `trialing` with `cancel_at_period_end` | `cancelled_active_until_period_end` | Pro through the current period |
+| `past_due` or `invoice.payment_failed` | `billing_retry` | Stripe-only access becomes Free / `past_due` |
+| `invoice.payment_succeeded` with active/trialing status | `active` | Restores Pro when period is valid |
+| `incomplete` | `pending` | No Pro grant |
+| `canceled`, `unpaid`, `incomplete_expired`, deleted subscription event | `expired` | No Stripe Pro grant |
+| `paused` | `paused` | No Pro grant |
+| unknown status | no provider mutation; event requires reconciliation | No Pro grant |
+
+Compatibility-summary transaction boundary:
+
+1. Acquire the event/environment advisory lock.
+2. Insert or lock the `billing.provider_events` row.
+3. Return idempotently for already-processed matching events or classify payload conflicts.
+4. Validate user, subscription reference, product allowlist, ownership, environment, and status.
+5. Lock the Stripe subscription identity and insert/update `billing.provider_subscriptions`.
+6. Call `billing.refresh_effective_entitlement_summary(...)` inside the same transaction.
+7. Mark the provider event processed only after the provider mutation and compatibility refresh succeed.
+
+If the provider mutation or summary refresh fails, the provider-subscription write and `public.entitlements` refresh roll
+back, the event is not marked processed, and the function returns a sanitized retryable classification such as
+`summary_refresh_failed` or `failed`.
+
+Legacy Stripe field boundary:
+
+- This checkpoint intentionally does not update `public.entitlements.stripe_customer_id`,
+  `public.entitlements.stripe_subscription_id`, `public.entitlements.stripe_price_id`, or
+  `public.entitlements.stripe_status`.
+- Legacy Stripe-specific fields remain preserved by the compatibility writer.
+- The existing Stripe webhook remains responsible for legacy Stripe fields until Checkpoint 5C-1B coordinates the transition
+  safely with the provider-neutral processor.
+- `public.stripe_webhook_events` remains the active webhook replay ledger and is not modified by the new processor.
+
+Failure classifications and future webhook handling:
+
+| Result | Future webhook handling intent |
+| --- | --- |
+| `processed` | Safe HTTP 2xx after provider state and compatibility summary are committed. |
+| `already_processed` | Safe HTTP 2xx retry response; do not double-count analytics or notifications. |
+| `invalid_environment` | Safe rejection / operator alert; do not retry unchanged input. |
+| `unsupported_event_type` | Safe HTTP 2xx ignored result for unsupported Stripe event classes. |
+| `missing_user` | Reconciliation queue; do not mutate provider state or public entitlement. |
+| `missing_subscription_reference` | Reconciliation queue; do not invent identity from customer reference. |
+| `product_not_allowed` | Reconciliation/security review; do not grant Pro. |
+| `ownership_conflict` | Reconciliation/security review; do not reassign provider ownership. |
+| `environment_conflict` | Reconciliation/security review; do not mix Stripe test/live records. |
+| `stale_event_ignored` | Safe HTTP 2xx ignored result; a newer provider state already exists. |
+| `payload_conflict` | Manual review; same event id arrived with a different payload hash. |
+| `requires_reconciliation` | Manual reconciliation; unknown or unsupported normalized state. |
+| `summary_refresh_failed` | Retryable failure; provider mutation and compatibility refresh rolled back. |
+| `failed` | Retryable sanitized failure; inspect server logs without exposing provider payloads. |
+
+Security posture:
+
+- The function lives in the private `billing` schema.
+- It is `SECURITY INVOKER` with `set search_path = pg_catalog, billing, public`.
+- Execute is revoked from `public`, `anon`, and `authenticated`; only `service_role` is granted execute.
+- It uses schema-qualified references and no dynamic SQL.
+- It creates no public RPC, browser-readable view, trigger, scheduled job, Edge Function, analytics event, or native UI.
+
+Synthetic fixture coverage:
+
+- `supabase/tests/stripe_provider_event_processor.sql` runs rollback-only local fixtures for:
+  - active monthly subscription creation;
+  - active annual checkout creation;
+  - cancel-at-period-end update;
+  - payment failure;
+  - payment success after failure;
+  - subscription deletion;
+  - unsupported event type;
+  - unknown Stripe status;
+  - missing subscription reference;
+  - missing user;
+  - product-not-allowed;
+  - same-event idempotency;
+  - same event reference with different payload hash;
+  - retry after a successful commit;
+  - retry after a summary-refresh failure rolls back provider and compatibility writes;
+  - newer active followed by older active;
+  - newer cancellation followed by older active;
+  - newer deletion followed by older update;
+  - payment success followed by stale payment failure;
+  - ownership conflict;
+  - test/live environment conflict;
+  - same event id in test and live environments;
+  - Stripe plus Apple active coexistence;
+  - Stripe cancellation, deletion, payment failure, and uncertainty while Apple remains active;
+  - legacy Stripe field preservation;
+  - synthetic malformed staging shape with one clean provider row and one legacy entitlement missing a subscription reference;
+  - service-role-only execution;
+  - no `public.stripe_webhook_events` mutation.
+- `supabase/tests/stripe_provider_event_processor.structure.test.ts` guards the function contract, supported event list,
+  idempotency, payload conflict protection, advisory-lock strategy, ordering, ownership, environment separation, status
+  normalization, transactional summary refresh, legacy-field boundary, no legacy-ledger writes, privilege posture, no
+  sensitive payload inputs, and fixture coverage.
+
+Current app/runtime behavior remains unchanged:
+
+- Existing Stripe Checkout, Stripe Customer Portal, Stripe webhook, `public.stripe_webhook_events`, account entitlement
+  reads, native billing guardrails, analytics, React UI, Edge Functions, Capacitor config, Android, iOS version/build,
+  StoreKit, Google Play code, and app UI are unchanged.
+- No remote Supabase migration was applied by this checkpoint.
+- No staging or production data was read.
+- No real Stripe event was processed.
+- `public.entitlements`, `billing.provider_subscriptions`, and `billing.provider_events` changed only inside rolled-back
+  local tests.
+
+Next checkpoint: `5C-1B Stripe webhook provider-neutral dual-write integration`, or another explicitly approved slice that
+wires the verified Stripe webhook to this processor while preserving the legacy replay ledger and legacy Stripe field
+updates during transition.
