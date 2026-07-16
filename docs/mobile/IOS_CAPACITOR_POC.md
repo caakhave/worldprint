@@ -196,10 +196,29 @@ Checkpoint 4H-8 uploaded the already-validated Can You Geo iOS build to App Stor
 - No external testers, public TestFlight link, Beta App Review submission, App Review submission, public release, pricing change, In-App Purchase/subscription configuration, version/build change, signing change, PR, merge, deployment, Android change, or unrelated change occurred.
 - Do not record Apple credentials, authentication tokens, private account information, tester email addresses, private invitation links, certificate material, provisioning-profile contents, IPA files, archives, upload options, or upload logs in the repository.
 
+## TestFlight-Installed Physical iPhone 14 Smoke
+
+Checkpoint 4H-9 validated the Apple-processed TestFlight build on the physical iPhone 14. This was not an Xcode-installed Debug build.
+
+- Installation source: TestFlight.
+- TestFlight version/build: `1.0.0 (1)`.
+- Installation prerequisites: the previous Xcode development app was removed, the app was installed through TestFlight, TestFlight displayed version `1.0.0 (1)`, and the app launched without Xcode or a debugger attached.
+- Installation and branding: passed. The approved globe-only Home Screen icon appeared, the full globe plus `Can You Geo?` splash appeared for approximately one second, no Capacitor logo or spinner appeared, no white flash, clipping, or stretching appeared, and the app opened into the expected production Can You Geo shell.
+- Account and session: passed for sign-in, correct account/plan loading, session preservation after closing and reopening, and session preservation after backgrounding. Sign-out and sign-back-in were not checked.
+- Navigation and orientation: passed. Portrait homepage/navigation, Play hub access, rotation into landscape, rotation back to portrait, safe-area behavior, and rotation stability all passed.
+- Game smoke tests: Mystery Map passed, Pattern Atlas passed, and Order Atlas sample flow passed. Each game opened, at least one round could be played, landscape gameplay was usable, a result or solved state appeared correctly, and returning to the Play hub worked.
+- Native release boundaries: passed. Checkout and subscription-management actions were unavailable as designed, no Stripe checkout opened inside the native app, no development server or localhost page appeared, official external links opened through the intended browser behavior, and internal Can You Geo navigation stayed inside the app where intended.
+- Universal Links: passed. A normal non-sensitive `canyougeo.com` Universal Link opened the TestFlight app, routed correctly, and did not show a blank screen or redirect loop.
+- Authentication recovery: not checked in this TestFlight smoke. Do not infer recovery-link behavior for the TestFlight build until a fresh recovery message is tested.
+- Lifecycle and connectivity: passed. Cold relaunch, warm relaunch, background/foreground, app-switch return, offline behavior, recovery after reconnecting, and no-crash checks all passed.
+- Additional defects or observations: none.
+- No external testing, public TestFlight link, Beta App Review submission, App Review submission, public release, pricing change, In-App Purchase/subscription configuration, version/build change, signing change, PR, merge, deployment, Android change, or unrelated change occurred.
+- Do not record TestFlight invitation links, tester email addresses, account credentials, password-recovery URLs, tokens, one-time codes, user IDs, session values, screenshots, logs, IPA files, or archives in the repository.
+
 Remaining release/configuration work:
 
 - Apple In-App Purchase.
-- TestFlight installation and QA from the Apple-delivered build.
+- TestFlight-installed authentication-recovery QA with a fresh recovery message.
 - App Store submission, only after explicit approval.
 - Additional physical-device coverage beyond the iPhone 14 if desired before release.
 - iPad UI and metadata decision if universal iPad support is desired later.

@@ -77,7 +77,7 @@ describe("iOS release metadata", () => {
     expect(infoPlist).toContain("<true/>");
   });
 
-  it("records physical Universal Link, password-recovery, and TestFlight upload validation without sensitive QA details", () => {
+  it("records physical Universal Link, password-recovery, TestFlight upload, and TestFlight smoke validation without sensitive QA details", () => {
     const combinedDocs = `${iosDocs}\n${deepLinkDocs}`;
 
     expect(combinedDocs).toContain("Production AASA is live and verified");
@@ -99,6 +99,22 @@ describe("iOS release metadata", () => {
     expect(iosDocs).toContain("Automatic distribution for the internal group: disabled before group creation");
     expect(iosDocs).toContain("account-holder internal tester was added to the internal group and shown as `Invited`");
     expect(iosDocs).toContain("No external testers, public TestFlight link, Beta App Review submission, App Review submission, public release");
+    expect(iosDocs).toContain("TestFlight-Installed Physical iPhone 14 Smoke");
+    expect(iosDocs).toContain("Installation source: TestFlight");
+    expect(iosDocs).toContain("TestFlight version/build: `1.0.0 (1)`");
+    expect(iosDocs).toContain("This was not an Xcode-installed Debug build");
+    expect(iosDocs).toContain("Installation and branding: passed");
+    expect(iosDocs).toContain("Account and session: passed for sign-in");
+    expect(iosDocs).toContain("Sign-out and sign-back-in were not checked");
+    expect(iosDocs).toContain("Mystery Map passed, Pattern Atlas passed, and Order Atlas sample flow passed");
+    expect(iosDocs).toContain("Native release boundaries: passed");
+    expect(iosDocs).toContain("Universal Links: passed");
+    expect(iosDocs).toContain("Authentication recovery: not checked in this TestFlight smoke");
+    expect(iosDocs).toContain("Lifecycle and connectivity: passed");
+    expect(iosDocs).toContain("Additional defects or observations: none");
+    expect(iosDocs).toContain("TestFlight-installed authentication-recovery QA with a fresh recovery message");
+    expect(combinedDocs).toContain("TestFlight-installed non-sensitive Universal Link routing has");
+    expect(combinedDocs).toContain("TestFlight-installed authentication-recovery routing remains not checked");
     expect(combinedDocs).not.toContain("TestFlight/App Store distribution remains pending");
     expect(combinedDocs).not.toMatch(/[A-Z0-9._%+-]+@[A-Z][A-Z0-9.-]*\.[A-Z]{2,}/iu);
     expect(combinedDocs).not.toMatch(/access_token=|refresh_token=|token_hash=|code=/u);

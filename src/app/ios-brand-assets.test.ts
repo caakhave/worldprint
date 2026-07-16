@@ -215,5 +215,11 @@ describe("iOS brand assets", () => {
     expect(docs).toContain("Upload result: `UPLOAD SUCCEEDED with no errors`");
     expect(docs).toContain("Build status after compliance and group setup: `Ready to Test`");
     expect(docs).toContain("Internal group: `Can You Geo Internal QA`");
+    expect(docs).toContain("Checkpoint 4H-9 validated the Apple-processed TestFlight build on the physical iPhone 14");
+    expect(docs).toContain("Installation and branding: passed");
+    expect(docs).toContain("the full globe plus `Can You Geo?` splash appeared for approximately one second");
+    expect(docs).toContain("no Capacitor logo or spinner appeared");
+    expect(docs).toContain("no white flash, clipping, or stretching appeared");
+    expect(docs).toContain("This was not an Xcode-installed Debug build");
   });
 });
