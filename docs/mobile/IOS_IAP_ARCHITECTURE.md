@@ -3242,5 +3242,107 @@ Fixture coverage:
 - Synthetic legacy Stripe parity fixtures cover Free, active monthly Pro, active annual Pro, cancelling at period end, expired, payment failure/retry, and reactivated renewal outcomes without reading or copying production data.
 - `supabase/tests/provider_neutral_entitlement_resolver.structure.test.ts` guards the function contract, environment mapping, privilege posture, multi-provider OR semantics, and no-mutation boundary.
 
-Next recommended checkpoint: `5B-1C provider-neutral compatibility writer dry-run`, or another explicitly approved slice
-that proves Stripe backfill/dual-write parity before anything writes app-readable entitlement state.
+Next recommended checkpoint: `5B-1C provider-neutral compatibility projection and Stripe backfill dry-run`, or another
+explicitly approved slice that proves Stripe backfill/dual-write parity before anything writes app-readable entitlement
+state.
+
+---
+
+Checkpoint 5B-1C status: compatibility projection and Stripe backfill dry-run mapping only. This checkpoint adds private,
+side-effect-free database helpers and fixture coverage. It does not deploy migrations, update `public.entitlements`, insert
+provider subscription records, change Stripe webhook behavior, dual-write billing state, or add Apple/StoreKit or Google
+Play implementation.
+
+## 122. Entitlement compatibility projection status
+
+Added migration:
+
+- `supabase/migrations/20260716110000_provider_neutral_entitlement_compatibility_projection.sql`
+
+Compatibility projection:
+
+- `billing.project_effective_entitlement_summary(p_user_id uuid, p_environment text, p_as_of timestamptz default now())`
+- Calls `billing.resolve_effective_entitlement(...)` and projects the private provider-neutral decision into the current
+  app-facing `public.entitlements` semantics:
+  - `plan = 'pro'` only when the resolver grants Pro;
+  - `status = 'active'` for provider-neutral Pro grants, including cancel-at-period-end and grace-period grants;
+  - `status = 'past_due'` for billing-retry states without an active provider;
+  - `status = 'canceled'` for inactive provider states such as expired, refunded, revoked, paused, unknown, or incomplete;
+  - `status = 'free'` when no provider records exist.
+- The projection returns private operational fields needed by a future trusted writer:
+  - `management_provider`
+  - `multiple_active_providers`
+  - `requires_reconciliation`
+  - sanitized `decision_reason`
+- It intentionally does not return Stripe customer/subscription ids, Apple transaction/original transaction ids, Google
+  purchase tokens, provider event identifiers, payload hashes, emails, or raw provider payloads.
+
+Stripe dry-run mapper:
+
+- `billing.map_legacy_stripe_entitlement_candidate(...)`
+- Maps one legacy Stripe-shaped `public.entitlements` row to a normalized Stripe provider-subscription candidate without
+  inserting it.
+- Requires an explicit Stripe environment of `live` or `test`; invalid environments return a reconciliation-required
+  candidate and are not insertable.
+- Preserves Stripe identifiers as private provider candidate references only:
+  - `stripe_customer_id` -> `provider_customer_ref`
+  - `stripe_subscription_id` -> `provider_subscription_ref`
+  - `stripe_price_id` -> `provider_product_ref`
+- Does not fabricate missing provider identifiers, clear existing legacy Stripe values, or update any existing row.
+- Maps current Stripe behavior conservatively:
+  - active and trialing rows with valid future period ends become `active`;
+  - active/trialing rows with `cancel_at_period_end = true` become `cancelled_active_until_period_end`;
+  - `past_due` becomes `billing_retry`;
+  - `incomplete` becomes `pending`;
+  - `canceled`, `cancelled`, `deleted`, `incomplete_expired`, and `unpaid` become `expired`;
+  - `paused` becomes `paused`;
+  - unknown or inconsistent rows become `unknown_needs_reconciliation`.
+- Rows missing required subscription or product references are marked reconciliation-required and not insertable.
+- Missing period ends for active/trialing Stripe rows are reconciliation-required and do not grant Pro.
+
+Environment behavior:
+
+- The projection still uses canonical resolver environments:
+  - `production` evaluates Stripe `live`, Apple `production`, and Google Play `production`.
+  - `sandbox` evaluates Stripe `test`, Apple `sandbox`, and Google Play `test`.
+- The dry-run Stripe mapper accepts Stripe environments only:
+  - `live`
+  - `test`
+- Fixture coverage proves Stripe `test` candidates cannot affect the `production` projection.
+
+Security and side-effect posture:
+
+- Both helpers live in the private `billing` schema.
+- Both helpers are `SECURITY INVOKER` with a locked search path.
+- Execute is revoked from `public`, `anon`, and `authenticated`; only `service_role` is granted execute.
+- Neither helper mutates `public.entitlements`, `billing.provider_subscriptions`, `billing.provider_events`,
+  `public.stripe_webhook_events`, analytics state, or runtime app state.
+- Existing Stripe Checkout, Stripe Customer Portal, Stripe webhook, app entitlement reads, and native billing guardrails
+  remain unchanged.
+
+Fixture coverage:
+
+- `supabase/tests/provider_neutral_entitlement_compatibility_projection.sql` runs executable local database fixtures for:
+  - Free/no-provider rows;
+  - active monthly and annual Stripe rows;
+  - cancel-at-period-end rows;
+  - trialing rows;
+  - payment failure / `past_due`;
+  - `unpaid`, `incomplete`, `incomplete_expired`, `paused`, unknown status, missing subscription ref, and missing period
+    end;
+  - reactivated renewal;
+  - Stripe `test` vs `live` environment isolation;
+  - another active provider preserving Pro access while Stripe requires reconciliation;
+  - service-role-only execution;
+  - no writes from either helper unless a fixture explicitly inserts a returned candidate.
+- `supabase/tests/provider_neutral_entitlement_compatibility_projection.structure.test.ts` guards the migration contract,
+  projection output, explicit environment handling, safe status mapping, privilege posture, and no runtime app/vendor
+  behavior changes.
+
+Remaining deferred work:
+
+- A future trusted writer or backfill job may consume the dry-run mapper and projection, but no such writer exists yet.
+- No production Stripe data has been copied, backfilled, or reconciled.
+- No remote Supabase migration has been applied.
+- No Apple/StoreKit, Google Play Billing, StoreKit product, App Store Server Notification, or Play Developer API
+  implementation is included.
