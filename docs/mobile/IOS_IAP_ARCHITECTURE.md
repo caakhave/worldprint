@@ -3121,3 +3121,55 @@ This checkpoint did not:
 - Accept Apple agreements, enter tax/banking information, create subscription groups/products/offers, configure Family Sharing, configure notifications, create App Store Server API keys, or change App Store Connect.
 - Change legal pages, pricing constants, app metadata, iOS version/build, native projects, Android, TestFlight, App Review, production deployment, or Cloudflare/Supabase configuration.
 - Upload build 2, create a PR, merge, force-push, or make unrelated changes.
+
+---
+
+Checkpoint 5B-1A status: provider-neutral private billing schema only. This checkpoint adds the additive database
+foundation for future provider reconciliation. It does not deploy the migration, change runtime billing behavior, backfill
+Stripe, add an entitlement resolver, add Apple verification, or alter native purchase UI.
+
+## 120. Provider-neutral schema implementation status
+
+Added migration:
+
+- `supabase/migrations/20260716090000_provider_neutral_billing_schema.sql`
+
+Tables added:
+
+- `billing.provider_subscriptions`
+  - private normalized provider subscription state for Stripe, Apple, and future Google Play;
+  - provider/environment checks separate Stripe `test|live`, Apple `sandbox|production`, and Google Play `test|production`;
+  - provider/environment partial uniqueness for provider subscription references, Apple original transaction references, and latest transaction references;
+  - canonical subscription statuses from section 20;
+  - `user_id` and StoreKit `app_account_token` reference `public.profiles(id) on delete set null` so account deletion keeps audit rows without preserving a live profile relationship;
+  - no raw receipts, signed transactions, emails, session tokens, or analytics identifiers.
+- `billing.provider_events`
+  - private provider replay and reconciliation ledger;
+  - idempotency by unique `(provider, environment, provider_event_ref)`;
+  - provider occurrence, effective, received, attempted, and processed timestamps;
+  - processing/reconciliation state with bounded retry count;
+  - sanitized provider references plus `payload_hash` only, not raw payload storage.
+
+Security posture:
+
+- The `billing` schema is service-role-only.
+- `anon` and `authenticated` have no grants on `billing.provider_subscriptions` or `billing.provider_events`.
+- RLS is enabled and forced on both tables.
+- No browser-readable policies are created.
+- Future trusted Supabase Edge Functions or reviewed operator jobs are the only intended writers.
+
+Current app behavior remains unchanged:
+
+- `public.entitlements` remains the only app-facing effective entitlement summary.
+- Existing Stripe Checkout, Stripe Customer Portal, Stripe webhook, `public.stripe_webhook_events`, and native no-Stripe-purchase guardrails are unchanged.
+- No provider-neutral resolver, dry-run parity comparison, backfill, dual-write, StoreKit plugin, Apple verification endpoint, App Store Server Notification endpoint, or Google Play work is included.
+
+Focused tests:
+
+- `supabase/tests/provider_neutral_billing_schema.structure.test.ts` verifies the schema, provider/environment constraints,
+  uniqueness, event idempotency, deletion/retention posture, service-role-only access, raw-payload minimization, and that
+  current `public.entitlements` / Stripe webhook behavior is not altered by this migration.
+
+Next recommended checkpoint: `5B-1B provider-neutral resolver design and dry-run fixtures`, or the separately approved
+next slice of the 5B database foundation. Do not deploy or write to this schema until the resolver, Stripe backfill/dual-write,
+and rollback checks are implemented and validated.
