@@ -3488,6 +3488,190 @@ Current app/runtime behavior remains unchanged:
 - `public.entitlements` changed only inside rolled-back local tests.
 - No remote Supabase migration was applied and no production data was read.
 
-Next recommended checkpoint: `5C-1 Stripe provider-neutral dual-write implementation plan`, or an explicitly approved
-slice that updates Stripe webhook processing to write provider records and invoke
-`billing.refresh_effective_entitlement_summary(...)` transactionally while preserving rollback to legacy Stripe writes.
+Next recommended checkpoint: `5B-1F1 controlled legacy Stripe provider backfill runner`, or an explicitly approved
+slice that safely converts eligible legacy Stripe entitlement rows into private provider records before Stripe runtime
+dual-write begins.
+
+---
+
+Checkpoint 5B-1F1 status: controlled legacy Stripe provider backfill runner. This checkpoint adds a private operational
+database function and synthetic fixture coverage only. It does not deploy the migration remotely, run a staging or
+production backfill, update `public.entitlements`, insert provider events, change Stripe webhooks, add dual-write, add
+triggers, add Edge Functions, or add Apple/StoreKit or Google Play implementation.
+
+## 124. Controlled Stripe backfill runner implementation status
+
+Added migration:
+
+- `supabase/migrations/20260716130000_legacy_stripe_provider_backfill_runner.sql`
+
+Backfill function:
+
+- `billing.backfill_legacy_stripe_provider_subscriptions(p_provider_environment text, p_apply boolean default false, p_as_of timestamptz default now())`
+- Intended caller: trusted service-role operator code only, inside an explicit operator-controlled transaction.
+- The caller must pass an explicit Stripe provider environment:
+  - `live`
+  - `test`
+- The function does not infer the environment from Stripe id prefixes, hostname, project ref, Supabase project, or database
+  context.
+- Invalid environments return a sanitized failed aggregate without scanning or writing.
+
+Returned aggregate contract:
+
+- `provider_environment`
+- `dry_run`
+- `computed_at`
+- `total_rows_scanned`
+- `rows_with_subscription_reference`
+- `clean_candidates`
+- `inserted`
+- `updated`
+- `already_present`
+- `skipped_non_subscription`
+- `requires_reconciliation`
+- `parity_mismatch`
+- `ownership_conflict`
+- `environment_conflict`
+- `stale_source_skipped`
+- `failed`
+
+The result intentionally does not include user ids, Stripe customer ids, Stripe subscription ids, Stripe price ids,
+provider row ids, emails, raw SQL errors, provider payloads, auth tokens, session ids, or exact user-linked timestamps.
+
+Dry-run behavior:
+
+- `p_apply = false` scans legacy `public.entitlements` rows, calls
+  `billing.map_legacy_stripe_entitlement_candidate(...)`, classifies each row, and returns aggregate would-insert /
+  would-update / already-present / skip / reconciliation counts.
+- Dry run performs zero writes:
+  - no `billing.provider_subscriptions` insert/update;
+  - no `billing.provider_events` insert/update;
+  - no `public.entitlements` update;
+  - no `public.stripe_webhook_events` update;
+  - no compatibility-summary writer call.
+
+Apply behavior:
+
+- `p_apply = true` may insert or refresh only clean, unambiguous Stripe candidates in
+  `billing.provider_subscriptions`.
+- It skips rows that are missing a Stripe subscription reference, missing required product/period information, unknown or
+  unsupported, internally inconsistent, owned by another user, present in a conflicting Stripe environment, stale compared
+  with a newer provider-neutral record, or classified by the mapper as requiring reconciliation.
+- The staging-shaped `missing_subscription_ref` case is intentionally skipped and counted as reconciliation-required.
+- It never invents a provider subscription reference and never substitutes a Stripe customer reference for a missing
+  subscription reference.
+
+Idempotency and stale-source protection:
+
+- The runner relies on the existing provider/environment/subscription-reference uniqueness model for Stripe provider
+  records.
+- Repeated apply with unchanged source rows does not create duplicate provider subscriptions.
+- Existing identical rows are counted as `already_present`.
+- Existing older same-user rows may be refreshed from newer legacy source values for:
+  - `provider_customer_ref`
+  - `provider_product_ref`
+  - canonical `status`
+  - `auto_renews`
+  - `cancel_at_period_end`
+  - `current_period_end`
+  - `billing_retry_started_at`
+  - `expires_at`
+  - `paused_at`
+  - `last_verified_at`
+  - `last_event_at`
+  - `reconciliation_status`
+  - `updated_at`
+- Existing newer provider-neutral rows are not downgraded by older legacy snapshots and are counted as
+  `stale_source_skipped`.
+- The runner does not reassign a provider record to a different Can You Geo user.
+
+Parity gate:
+
+- For each clean apply candidate, the runner:
+  1. maps the legacy row;
+  2. captures the current side-effect-free compatibility projection;
+  3. inserts or updates the private Stripe provider record inside an exception-scoped subtransaction;
+  4. re-runs the side-effect-free compatibility projection;
+  5. compares access-relevant output with the current legacy entitlement expectation, while preserving an already-active
+     non-Stripe provider grant;
+  6. keeps the provider record only when parity passes.
+- Parity failures roll back the individual candidate write and return only the aggregate `parity_mismatch` count.
+- The runner does not call `billing.refresh_effective_entitlement_summary(...)` and does not update
+  `public.entitlements` to force parity.
+
+Locking and transaction model:
+
+- The runner acquires a transaction-scoped advisory lock keyed by Stripe provider environment:
+  `pg_advisory_xact_lock(hashtextextended('billing.backfill_legacy_stripe_provider_subscriptions:stripe:' || v_environment, 0))`.
+- This prevents concurrent backfill runs for the same Stripe environment while allowing unrelated environments/providers to
+  remain independent where practical.
+- Existing matching provider records are locked with `FOR UPDATE` before apply-mode refreshes.
+- The function does not commit independently; the caller may roll back the whole operation.
+
+Security posture:
+
+- The function lives in the private `billing` schema.
+- It is `SECURITY INVOKER` with a locked search path.
+- Execute is revoked from `public`, `anon`, and `authenticated`; only `service_role` is granted execute.
+- It uses schema-qualified references and no dynamic SQL.
+- It creates no browser-readable RPC, public view, trigger, scheduled job, or Edge Function.
+
+Synthetic fixture coverage:
+
+- `supabase/tests/legacy_stripe_provider_backfill_runner.sql` runs rollback-only local fixtures for:
+  - dry-run classification;
+  - clean active monthly and annual Stripe rows;
+  - cancel-at-period-end rows;
+  - valid expired rows;
+  - existing identical rows;
+  - existing older rows updated from a newer legacy source;
+  - existing newer rows not downgraded by a stale legacy source;
+  - missing subscription reference;
+  - missing active period end;
+  - ownership conflict;
+  - environment conflict;
+  - parity mismatch rollback;
+  - repeated apply idempotency;
+  - Stripe + Apple coexistence;
+  - expired Stripe + active Apple coexistence;
+  - reconciliation-required Stripe rows preserving Apple access;
+  - Stripe `test` vs `live` environment isolation;
+  - invalid environment rejection;
+  - no-write boundaries for `public.entitlements`, `billing.provider_events`, `public.stripe_webhook_events`,
+    `public.profiles`, and `auth.users`.
+- `supabase/tests/legacy_stripe_provider_backfill_runner.structure.test.ts` guards the function contract, privilege posture,
+  advisory-lock strategy, no compatibility-summary writer call, no provider-event insertion, no public entitlement writes,
+  and no app/native/runtime changes.
+
+Synthetic staging-shape result:
+
+- Fixture shape:
+  - 2 legacy entitlement rows;
+  - 1 clean active Stripe candidate;
+  - 1 row missing Stripe subscription reference.
+- Expected dry-run aggregate:
+  - total rows: 2;
+  - clean candidates: 1;
+  - reconciliation required: 1;
+  - writes: 0.
+- Expected apply result inside the rolled-back local transaction:
+  - inserted provider subscriptions: 1;
+  - skipped/reconciliation rows: 1;
+  - provider events: 0;
+  - public entitlement changes: 0;
+  - clean-row compatibility parity: passed;
+  - repeated apply: no duplicate insertion.
+
+Current app/runtime behavior remains unchanged:
+
+- Existing Stripe Checkout, Stripe Customer Portal, Stripe webhook, `public.stripe_webhook_events`, account entitlement
+  reads, native billing guardrails, analytics, React UI, Edge Functions, Capacitor config, Android, iOS version/build, and
+  StoreKit/Google Play code are unchanged.
+- No remote Supabase migration was applied by this checkpoint.
+- No staging or production backfill was run.
+- No provider events were inserted.
+- `public.entitlements` changed only inside rolled-back local tests.
+
+Next recommended checkpoint: `5B-1F2 controlled staging legacy Stripe backfill dry-run/apply rehearsal`, or another
+explicitly approved operational checkpoint that first runs this function on staging in dry-run mode and stops for review
+before any real provider row insertion.
