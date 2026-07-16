@@ -137,7 +137,7 @@ The app-side/runtime foundations are now in place and covered by focused unit an
 - Any temporary diagnostic launch delay, breakpoint, direct bundle-resource probe, or red-background probe used to inspect the launch screen is local-only and must not be part of the committed application.
 - Physical-device visual approval of the new Capacitor splash was received before this checkpoint was committed.
 - Frame-by-frame screen recording is the recommended inspection method for the launch screen on physical devices.
-- No archive or TestFlight upload has occurred.
+- No TestFlight upload or App Store Connect upload has occurred.
 
 ## Physical iPhone 14 QA
 
@@ -153,12 +153,28 @@ Checkpoint 4H-6 physical iPhone 14 QA passed for Can You Geo `1.0.0 (1)`.
 - Not checked in this checkpoint: none of the requested physical iPhone 14 QA items were left untested.
 - No archive, IPA export, TestFlight upload, App Store action, version/build change, signing change, PR, merge, deployment, or Android change occurred.
 
+## Release Archive And App Store Export
+
+Checkpoint 4H-7 created the first local Release archive on 2026-07-16 UTC for Can You Geo `1.0.0 (1)`. The archive used configuration `Release`, bundle ID `com.canyougeo.app`, Team ID `G5N5U6QFS8`, iPhone-only device family, portrait/landscape-left/landscape-right orientations, and `applinks:canyougeo.com`.
+
+- Raw archive result: `ARCHIVE SUCCEEDED`. The `.xcarchive` was stored outside the repository under `/private/tmp/` and was not committed.
+- Raw archive signing classification: Apple Development signing with an iOS Team Provisioning Profile. The raw archived app had `get-task-allow = true`, so the raw archive was not itself TestFlight/App Store distribution-signed.
+- App Store export result: `EXPORT SUCCEEDED` using Xcode `method = app-store-connect`, `destination = export`, automatic signing, Team ID `G5N5U6QFS8`, `uploadSymbols = true`, and `manageAppVersionAndBuildNumber = false`.
+- App Store export signing classification: the exported IPA was re-signed as Apple Distribution with an iOS Team Store Provisioning Profile for `com.canyougeo.app`.
+- Exported entitlements: `application-identifier = G5N5U6QFS8.com.canyougeo.app`, `com.apple.developer.team-identifier = G5N5U6QFS8`, `com.apple.developer.associated-domains = [applinks:canyougeo.com]`, `beta-reports-active = true`, and `get-task-allow = false`.
+- Strict code-sign verification passed for the exported app.
+- Exported bundle inspection passed: the approved AppIcon and Splash assets were present in `Assets.car`, `LaunchScreen.storyboardc` was present, `SplashScreenPlugin` was included, and the Splash Screen configuration remained `launchShowDuration = 1000`, `launchAutoHide = true`, `backgroundColor = #000211`, and `showSpinner = false`.
+- Static bundle inspection passed: the exported app included the bundled native static app, active `capacitor.config.json` had no `server` block, and no active localhost, live-reload, `127.0.0.1`, or `test.canyougeo.com` server dependency was present.
+- dSYM/symbol output was present in the Release archive/export.
+- The project-level `CODE_SIGN_IDENTITY = "iPhone Developer"` setting remained effective for the Release archive but did not block the App Store export from re-signing the app correctly. No source signing correction was required for this checkpoint.
+- The exported IPA was stored outside the repository under `/private/tmp/` and was not committed.
+- No IPA upload, TestFlight upload, App Store Connect action, version/build change, signing-setting change, certificate revocation, PR, merge, deployment, Android change, or unrelated change occurred.
+
 Remaining release/configuration work:
 
 - Apple In-App Purchase.
 - TestFlight and App Store submission.
-- App Store production signing and release provisioning review.
-- TestFlight archive/export/upload after remaining release QA passes.
+- TestFlight upload and App Store Connect submission, only after explicit approval.
 - Additional physical-device coverage beyond the iPhone 14 if desired before release.
 - iPad UI and metadata decision if universal iPad support is desired later.
 - Optional future push notifications.
