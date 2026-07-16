@@ -2153,3 +2153,621 @@ This checkpoint did not:
 - Change Stripe checkout, Stripe portal, Stripe webhook behavior, Supabase Auth, entitlement runtime behavior, gameplay, GTM, analytics, or marketing pixels.
 - Add analytics events or vendor-specific tracking.
 - Build, upload, archive, release, merge, deploy, or create a PR.
+
+## 72. 5A-3C1 scope, repository UX audit, and official references
+
+Status: design only. This checkpoint designs the future native Apple subscription UX, disclosures, and analytics taxonomy. It does not implement UI, StoreKit calls, analytics emissions, legal copy, products, offers, App Store Connect settings, or backend billing behavior.
+
+Existing repository behavior observed:
+
+- `/upgrade/` currently shows Free/Pro comparison, current web prices from `PRO_PRICE_OPTIONS`, Stripe checkout actions for browser builds, and a native "Mobile purchases unavailable" guard.
+- Account membership status currently comes from `public.entitlements` and the `membershipDisplay` helper.
+- Native builds intentionally block Stripe checkout and Stripe portal in `BillingActionsClient`.
+- Native builds currently disable live analytics providers through `analyticsConfigFromEnv`.
+- `/legal/`, `/terms/`, and `/privacy/` exist, but the billing/privacy copy is still Stripe-oriented and must be updated before Apple subscription launch.
+- `/support/` routes billing help to support and currently references Stripe management.
+- Current Pro benefits are Mystery Map Custom Atlas, Pattern Atlas Pattern Runs, Order Atlas Pro Play, complete Past Games archive, advanced stats, and future premium modes where supported.
+- The current web prices are `$3.99/month` and `$29.99/year`; these are not Apple price-point decisions.
+
+Official Apple references used for this UX design:
+
+- Auto-renewable subscriptions overview: `https://developer.apple.com/app-store/subscriptions/`
+- App Review Guidelines, in-app purchase and subscription requirements: `https://developer.apple.com/app-store/review/guidelines/#in-app-purchase`
+- Human Interface Guidelines, In-App Purchase: `https://developer.apple.com/design/human-interface-guidelines/in-app-purchase`
+- StoreKit localized display price: `https://developer.apple.com/documentation/storekit/product/displayprice`
+- StoreKit subscription period and renewal information: `https://developer.apple.com/documentation/storekit/product/subscriptioninfo`
+- StoreKit restore/sync: `https://developer.apple.com/documentation/storekit/appstore/sync()`
+- StoreKit subscription management: `https://developer.apple.com/documentation/storekit/appstore/showmanagesubscriptions(in:)`
+- App Store Connect subscription pricing: `https://developer.apple.com/help/app-store-connect/manage-subscriptions/set-a-price-for-an-auto-renewable-subscription`
+- App Store Connect Family Sharing: `https://developer.apple.com/help/app-store-connect/manage-subscriptions/set-up-family-sharing-for-auto-renewable-subscriptions`
+- App Store Connect billing grace period: `https://developer.apple.com/help/app-store-connect/manage-subscriptions/offer-a-grace-period-for-auto-renewable-subscriptions`
+- App Store Connect billing retry / involuntary churn guidance: `https://developer.apple.com/help/app-store-connect/manage-subscriptions/reduce-involuntary-subscriber-churn`
+- App Store Connect introductory offers and offer codes: `https://developer.apple.com/help/app-store-connect/manage-subscriptions/set-up-introductory-offers-for-auto-renewable-subscriptions`
+
+## 73. Native subscription UX principles
+
+Recommended future behavior:
+
+- Keep web and native billing boundaries clear: Stripe on web, Apple IAP in native iOS, no Stripe checkout or portal inside iOS.
+- Require a Can You Geo account before purchase so `appAccountToken` can bind the Apple transaction to the Supabase user.
+- Let StoreKit provide localized product names, prices, periods, and storefront-sensitive values.
+- Treat the backend entitlement refresh as the moment of durable success. Local StoreKit verification can show "confirming subscription," but not "Pro active."
+- Avoid purchase prompts during active gameplay. Upgrade prompts can appear in lobbies, result screens, account/status surfaces, and Pro gates.
+- Existing Pro access suppresses purchase CTAs until the entitlement resolver confirms the user is eligible to buy.
+- Restore Purchases is a support/recovery action, not a substitute for sign-in and not a way to restore Stripe purchases or passwords.
+- Manage Subscription opens Apple's native management surface for Apple-backed subscriptions only.
+- Dual-provider cases should be calm, explicit, and support-oriented, not accusatory.
+- Native subscription UI should be portrait-first. Gameplay may remain landscape, but purchase and account surfaces should avoid landscape-only purchase decisions.
+
+Existing behavior remains unchanged until implementation: native users currently see purchases unavailable.
+
+## 74. Upgrade and paywall entry points
+
+| Entry point | Future UI | Sign-in required before purchase? | Refresh entitlement first? | Load products immediately? | May initiate purchase? | Portrait/landscape guidance | Duplicate-subscription prevention |
+| --- | --- | --- | --- | --- | --- | --- | --- |
+| Native `/upgrade/` | Full paywall when eligible; Pro/status page when already entitled | Yes | Yes | Yes, after account status begins loading | Yes, if signed in, eligible, and products loaded | Portrait-first; usable on narrow phones | Suppress purchase if effective Pro or provider conflict exists. |
+| Account billing section | Compact status card plus management/restore actions | Yes for purchase; no for viewing signed-in status | Yes | Only when user taps upgrade or is eligible and account is loaded | Yes, through compact prompt or route to full paywall | Portrait account surface | Do not show Apple purchase as default for Stripe Pro or Apple Pro. |
+| Pro-locked game-mode prompt | Compact prompt; route to `/upgrade/` | Yes before purchase, but prompt can be visible signed out | Yes before showing buy button | No; defer until paywall | No direct purchase in gameplay | Avoid during active map/round; use lobby/result gates | Prompt says "See Pro options," not immediate buy. |
+| Past Games Pro gate | Compact prompt with archive benefit | Yes | Yes before buy | No; route to paywall | No direct purchase | Portrait/standard page ok | Existing Pro opens archive instead. |
+| Advanced Stats Pro gate | Compact prompt with stats benefit | Yes | Yes before buy | No; route to paywall | No direct purchase | Account/stats portrait | Existing Pro opens stats instead. |
+| Contextual prompt after free usage | Lightweight result/lobby prompt | Yes | Yes before buy | No; route to paywall | No direct purchase | Result screens only, not mid-round | Avoid repeated prompts in one session. |
+| Restore-purchase entry | Account and paywall secondary action | Yes | Yes | No product load required for restore, but StoreKit availability required | No purchase; restore/sync only | Account/paywall portrait | Restore cannot remove Stripe access. |
+
+Recommended default: full native paywall lives at `/upgrade/`; game/account prompts route there. Account can offer compact management and Restore Purchases.
+
+## 75. Native paywall information hierarchy
+
+Recommended paywall order:
+
+1. Heading: `Can You Geo Pro`.
+2. Short value line: full atlas and supported Pro modes across Mystery Map, Pattern Atlas, Order Atlas, Past Games, and advanced stats.
+3. Current account status: signed out, Free, Pro active, Stripe-managed Pro, Apple-managed Pro, dual provider, or unavailable.
+4. Product selector with two options: monthly and annual, using StoreKit localized price and period.
+5. Primary purchase button for selected product.
+6. Required auto-renewal disclosure near the purchase action.
+7. Restore Purchases secondary action.
+8. Terms of Use, Privacy Policy, and Support links.
+9. Short management note: subscriptions are managed through Apple after purchase.
+
+Annual presentation:
+
+- The annually billed total must be the dominant annual price, for example Apple-localized `"$29.99/year"` from StoreKit.
+- A monthly-equivalent or savings message may appear only as secondary copy, and only if calculated from StoreKit-loaded product prices for the same storefront/session.
+- Do not hard-code web prices or use Stripe price values for Apple display.
+
+The native paywall should avoid decorative complexity. The user must be able to understand product, duration, renewal, price, and cancellation path before tapping the purchase button.
+
+## 76. Pro-benefit copy model
+
+Recommended current benefit hierarchy:
+
+1. `Full atlas access where supported`: broad umbrella, but avoid "everything unlimited."
+2. `Mystery Map Custom Atlas`: currently supported Pro mode.
+3. `Pattern Atlas Pattern Runs`: currently supported Pro mode.
+4. `Order Atlas Pro Play`: currently supported repeatable Pro play.
+5. `Complete Past Games archive`: currently supported Pro benefit.
+6. `Advanced stats`: currently supported capability, with future richer stats copy kept modest.
+7. `Future premium modes as they launch`: secondary, clearly future-oriented.
+
+Avoid:
+
+- "Unlimited everything."
+- "All future games forever."
+- "All Order Atlas features" if a specific feature is not Pro-enabled.
+- Promising social/challenge history beyond what the app currently supports.
+
+Recommended paywall benefit copy:
+
+```text
+Pro unlocks Mystery Map Custom Atlas, Pattern Atlas Pattern Runs, repeatable Order Atlas Pro Play, the complete Past Games archive, and advanced stats where supported.
+```
+
+Coming-later copy should be visually secondary and phrased as roadmap, not purchase consideration.
+
+## 77. Monthly and annual selection
+
+Recommended selector:
+
+- Use two cards or a segmented-card group: Monthly and Annual.
+- Preselect annual as "Best value" because the current web plan already treats annual as featured and it rewards regular atlas play.
+- Keep Monthly equally visible and reachable; do not hide it, reduce contrast unfairly, or make Annual look mandatory.
+- The annual option may show "Best value" and a secondary savings message only if both Apple products loaded and the savings calculation uses StoreKit prices.
+
+Product loading rules:
+
+- Load both StoreKit products after account status is known and the user is eligible to purchase.
+- If one product loads and one is missing, show only the loaded product as purchasable and display a quiet "Other plan temporarily unavailable" note.
+- If both products are missing, disable purchase and show product-unavailable copy.
+- If StoreKit price or product data changes while the paywall is open, update display and announce the change if it affects the selected product.
+- If a product is unavailable in the current territory or pending App Store approval, hide or disable that product and route to support only if the user is blocked.
+
+Do not cache localized StoreKit product metadata in localStorage.
+
+## 78. Purchase-button states
+
+| State | Primary button label | Disabled? | Message intent |
+| --- | --- | --- | --- |
+| Products loading | `Loading Apple subscription options...` | Yes | Apple product details are loading. |
+| Monthly selected | `Subscribe monthly` plus localized price/period nearby | No | Purchase monthly Pro through Apple. |
+| Annual selected | `Subscribe annually` plus localized annual total nearby | No | Purchase annual Pro through Apple. |
+| Purchase in progress | `Opening Apple purchase...` | Yes | Prevent duplicate taps while StoreKit sheet opens. |
+| Pending approval | `Waiting for approval...` | Yes | Ask-to-Buy or pending StoreKit result; Pro not active yet. |
+| Backend verification | `Confirming subscription...` | Yes | Local StoreKit verified, server is accepting/recomputing. |
+| Entitlement refresh | `Refreshing Pro access...` | Yes | Server accepted purchase, app is reloading account state. |
+| Existing Pro subscriber | `Pro active` | Yes | No purchase CTA. Show management/restore options. |
+| Signed-out user | `Sign in to subscribe` or `Create account to subscribe` | No, navigates to auth | Purchase requires account. |
+| Store unavailable | `Apple subscriptions unavailable` | Yes | StoreKit unavailable; retry later. |
+| Product unavailable | `Plan unavailable` | Yes for missing product | Product not returned by StoreKit. |
+| Account-link conflict | `Subscription linked to another account` | Yes | Route to support; no local grant. |
+| Restore in progress | `Restoring purchases...` | Yes | Restore action active. |
+
+Never show `Purchase successful` until the backend entitlement refresh confirms Pro. Use `Subscription confirmed` or `Pro is active` only after effective entitlement is Pro.
+
+## 79. Signed-out behavior
+
+Signed-out native paywall:
+
+- Product information and Pro benefits may be visible.
+- Purchase buttons are replaced by sign-in/create-account actions.
+- Copy should explain: `Sign in or create a Can You Geo account before subscribing so Pro access can stay linked across this app, the website, and future devices.`
+- Do not imply the Apple ID and Can You Geo account are the same identity.
+- Preserve intended upgrade destination with the existing auth return pattern, including selected plan where practical.
+- If auth is canceled, return to the paywall in signed-out state with no StoreKit purchase started.
+- Do not call StoreKit before account creation, profile sync, and current entitlement refresh.
+
+If the user signs in and is already Pro, suppress purchase and show active status instead of continuing to Apple.
+
+## 80. Stripe-subscriber iOS behavior
+
+When effective Pro access comes from Stripe:
+
+- Headline: `Pro is active`.
+- Explanation intent: `Your Can You Geo Pro access is active. This subscription is managed on the Can You Geo website. Apple subscriptions are not needed for this account.`
+- Primary action: `View Pro features` or `Open account`.
+- Secondary action: `Restore Apple purchases`, because legitimate Apple history recovery can still exist.
+- Do not show Apple purchase as the recommended path.
+- Do not open Stripe Checkout or Stripe Portal inside iOS.
+- Do not expose Stripe customer IDs, subscription IDs, or price IDs.
+- Do not encourage dual billing.
+
+Recommended initial release: no "Subscribe with Apple anyway" override. If a user wants to switch providers, use support or a future guided migration flow that avoids overlap.
+
+## 81. Apple-subscriber behavior
+
+When Apple grants Pro:
+
+- Headline: `Pro is active`.
+- Explanation intent: `Your subscription is managed through Apple. You can manage or cancel it in your Apple subscription settings.`
+- Show renewal/expiration date only if verified by server and meaningful.
+- If auto-renew is off: `Your Pro access stays active until [date].`
+- If grace period: access remains active; prompt payment update through Apple.
+- If billing retry without active access: explain Apple is retrying payment and provide management action.
+- Primary action: `Manage Apple Subscription`.
+- Secondary action: `Restore Purchases` and `Contact support`.
+- Do not show Apple purchase again unless the resolver confirms expiration and no active provider exists.
+- Do not show Stripe Checkout as the route to manage Apple Pro.
+- Do not display transaction identifiers.
+
+Website behavior for Apple subscribers should later show Pro active and explain that management happens on the iPhone/App Store, without offering Stripe Checkout by default.
+
+## 82. Dual-provider behavior
+
+Dual-provider state means Apple and Stripe, or another future provider, both appear active for the same Can You Geo account.
+
+Recommended user-facing message intent:
+
+```text
+Pro is active, but this account appears to have more than one active subscription. You may be billed in more than one place. Manage each subscription where it was started, or contact support and we can help you review the account.
+```
+
+Rules:
+
+- Keep Pro active.
+- Do not automatically cancel Apple or Stripe.
+- Do not hide either management path.
+- Do not encourage another purchase.
+- Show Apple management for Apple and website-management guidance for Stripe.
+- Show support contact.
+- Record an operational duplicate-provider condition in server logs/metrics without exposing transaction IDs, customer IDs, user UUIDs, or email in analytics.
+
+Tone should be calm: "appears to have" and "we can help review" rather than blaming the user.
+
+## 83. Canonical status presentation
+
+| Canonical state | User headline | Short explanation | Pro active? | Primary action | Secondary action | Purchase visible? | Management available? | Support? |
+| --- | --- | --- | --- | --- | --- | --- | --- | --- |
+| `active` | `Pro is active` | Your subscription is active. | Yes | Open Pro features | Manage subscription | No | Yes | Optional |
+| `cancelled_active_until_period_end` | `Pro is active until [date]` | Renewal is off, but access continues through the paid period. | Yes | Manage subscription | Contact support | No | Yes | Optional |
+| `grace_period` | `Payment needs attention` | Apple could not renew, but Pro remains active for now. | Yes | Manage Apple Subscription | Refresh status | No | Yes | Optional |
+| `billing_retry` | `Payment is being retried` | Apple is trying to renew. Pro may be paused until payment is fixed. | Depends on resolver | Manage Apple Subscription | Refresh status | No until current | Yes | Optional |
+| `pending` | `Subscription pending` | Purchase approval or backend confirmation is not complete yet. | No durable grant yet | Refresh status | Contact support | No | Maybe | Yes if delayed |
+| `expired` | `Pro is inactive` | The subscription period ended. | No unless another provider active | See Pro options | Restore Purchases | Yes after refresh | If provider history exists | Optional |
+| `revoked` | `Pro access changed` | The purchase is no longer active. | No unless another provider active | See Pro options | Contact support | Yes after refresh | Maybe | Recommended |
+| `refunded` | `Pro access changed` | The refunded purchase no longer grants Pro. | No unless another provider active | See Pro options | Contact support | Yes after refresh | Maybe | Recommended |
+| `paused` | `Subscription paused` | Subscription access is paused by provider state. | No unless another provider active | Manage subscription | Refresh status | No until current | Yes | Optional |
+| `unknown_needs_reconciliation` | `Checking subscription` | We need a moment to verify the latest subscription state. | Preserve cached if safe | Refresh status | Contact support | No | Maybe | Yes if persistent |
+| `dual_provider_active` | `Pro is active in more than one place` | You may have more than one active subscription. | Yes | Review management options | Contact support | No | Yes, for each provider | Recommended |
+| `provider_unavailable_but_cached_entitlement_active` | `Pro is active; status update delayed` | Your last verified Pro access is available, but provider status could not refresh. | Yes for a bounded cache window | Retry refresh | Contact support | No | Maybe | Optional |
+
+Do not expose enum names in UI.
+
+## 84. Grace period and billing retry UX
+
+Grace period:
+
+- Access remains active.
+- Message intent: `Apple could not renew your subscription, but Pro access is still active during the grace period. Update your Apple payment information to keep Pro.`
+- Primary action: `Manage Apple Subscription`.
+- Secondary action: `Refresh status`.
+- Do not show Free downgrade messaging during verified grace access.
+
+Billing retry without grace access:
+
+- Pro may be inactive or paused depending on resolver state.
+- Message intent: `Apple is retrying the renewal. Update your Apple payment information, then refresh your account status.`
+- Primary action: `Manage Apple Subscription`.
+- Secondary action: `Refresh status` and support.
+- Avoid "expired forever" copy until Apple confirms expiration.
+
+After returning from Apple management, the app should refresh entitlement and show a neutral "Checking subscription..." state while reconciliation runs.
+
+## 85. Cancellation and expiration UX
+
+Cancellation:
+
+- If auto-renew is turned off but the paid period remains active, show `Pro active until [date]`.
+- Do not imply immediate loss of access.
+- Keep management visible.
+- Hide purchase options until the resolver confirms the subscription is expired.
+
+Expiration:
+
+- After verified expiration and no other provider remains active, show Free status and restore/subscribe options.
+- Upgrade prompts may reappear after a fresh resolver state is loaded.
+- If provider state is delayed, show "Checking subscription" rather than a buy button that might cause duplicate billing.
+
+Resubscribe and plan switch:
+
+- Resubscribe uses the same StoreKit product group once the resolver confirms eligibility.
+- Monthly/annual switch is handled through Apple subscription group behavior and verified renewal/preference state.
+- The app should not promise immediate effective-date behavior beyond what StoreKit and server state confirm.
+
+## 86. Refund and revocation UX
+
+User-facing behavior:
+
+- Do not accuse the user of fraud.
+- Use neutral copy: `This purchase no longer grants Pro access. If you think this is wrong, contact support.`
+- Refresh effective entitlement across all providers before removing Pro UI.
+- If Stripe or another provider remains active, Pro stays active and the refund/revocation appears only as management/support context.
+- Do not reveal provider event names, transaction IDs, refund reasons, revocation reasons, or internal fraud signals.
+- Offer support for questions.
+
+Stripe refund/dispute behavior should use the same tone if it later feeds the provider-neutral resolver.
+
+## 87. Restore Purchases UX
+
+Where it appears:
+
+- Native paywall: secondary action below purchase and disclosure text.
+- Account billing section: secondary action for signed-in users.
+- Support page/account help: future text can mention Restore Purchases only for Apple App Store purchases.
+
+Rules:
+
+- Require sign-in before restore so recovered Apple entitlements can be linked to a Can You Geo account.
+- `Restore Purchases` calls StoreKit sync/current entitlements and sends candidates to backend verification.
+- No Apple purchases found: `No Apple subscription was found for this Apple ID. If you subscribed on the website, sign in to the same Can You Geo account or contact support.`
+- Successful restore: show `Pro is active` only after backend entitlement refresh confirms Pro.
+- Backend pending: show `We found a subscription and are confirming access.`
+- Cross-account conflict: explain the subscription appears linked to another Can You Geo account; route to support.
+- Store unavailable/network failure: allow retry.
+- Already active entitlement: show no-op success such as `Pro is already active on this account.`
+- Existing Stripe subscriber restore: may find no Apple purchase; must not remove Stripe Pro.
+
+Restore Purchases does not restore passwords, Stripe subscriptions, deleted account data, or support tickets.
+
+## 88. Manage Subscription UX
+
+Apple-managed subscription:
+
+- Show `Manage Apple Subscription`.
+- Use StoreKit's Apple management surface when available.
+- If it fails to open, show a generic retry/support message and do not navigate to Stripe.
+- On return to the app, refresh entitlement and show "Checking subscription..." until resolved.
+
+Website-managed subscription:
+
+- Native iOS should not open Stripe Portal.
+- Show neutral guidance: `This subscription is managed on the Can You Geo website. Sign in at canyougeo.com/account in a browser to manage billing, or contact support.`
+- Do not embed checkout or portal inside the app.
+
+Dual-provider:
+
+- Show separate choices: `Manage Apple Subscription` and `Website billing help`.
+- Also show support contact.
+
+No active subscription:
+
+- Show Restore Purchases and Subscribe options only after entitlement state is current.
+
+## 89. Terms, privacy, and subscription disclosures
+
+Current URLs:
+
+- Terms route exists: `/terms/`
+- Privacy route exists: `/privacy/`
+- Combined legal route exists: `/legal/`
+- Support route exists: `/support/`
+
+Future requirement before Apple launch:
+
+- Update legal copy so it accurately describes Apple IAP, Apple subscription management, StoreKit purchase data, Apple refund/revocation handling, and the continued existence of Stripe web billing.
+- Keep distinct Terms of Use and Privacy Policy links on the paywall. `/terms/` and `/privacy/` can serve as the public URLs if their content is updated.
+- Consider anchors or page copy that make "Terms of Use" and "Privacy Policy" visibly distinct from the combined legal page.
+
+Required paywall disclosure intent:
+
+- Subscription automatically renews unless canceled according to Apple subscription settings.
+- Monthly and annual billing duration must be clear.
+- Renewal price must be shown using Apple-localized product data.
+- Cancellation/management happens through Apple for Apple subscriptions.
+- Terms of Use and Privacy Policy links must be visible before purchase.
+- Restore Purchases must be visible and understandable.
+
+EULA recommendation:
+
+- Use Apple's standard EULA for the initial release unless legal review requires a custom EULA.
+- If a custom EULA is chosen later, make sure the paywall and App Store metadata link to the correct terms.
+
+Do not invent refund guarantees or legal rights beyond the published Terms, Apple policies, and applicable law.
+
+## 90. Pricing decision framework
+
+Current web prices:
+
+- Monthly: `$3.99`
+- Annual: `$29.99`
+
+No App Store price point is selected in this checkpoint.
+
+Recommended philosophy: near customer-price parity with web, subject to final Apple price-point review.
+
+Reasoning:
+
+- Customer-facing parity is easier to explain than platform-specific pricing.
+- Apple storefront pricing is localized and may be tax-inclusive, so exact parity may not be possible in every territory.
+- Developer net proceeds are different from customer price because of Apple commission and any Small Business Program eligibility.
+- Annual discount should remain meaningful but not deceptive; compute any savings from Apple product prices in the current storefront.
+- If Apple price points force a small difference, explain simply through localized StoreKit prices and avoid comparing to Stripe checkout inside the app.
+
+Separate decisions still required:
+
+- Final Apple price points.
+- Whether to apply Apple's equalized territory pricing or manual territory adjustments.
+- Future price-increase communication and consent handling.
+- Support copy for web subscribers who notice platform price differences.
+
+## 91. Family Sharing decision
+
+Recommended initial release: Family Sharing disabled.
+
+UX reasons:
+
+- Can You Geo Pro is account-linked through Supabase and `appAccountToken`.
+- Family Sharing can create valid Apple access for multiple Apple family members who do not share the same Can You Geo account.
+- That introduces account ownership, support, and entitlement-linking complexity before launch.
+- Family members might expect separate Can You Geo accounts to inherit one Apple purchase, which the current entitlement model does not yet support.
+- Revocation/account switching would need additional policy and support tooling.
+
+If Family Sharing is enabled later:
+
+- Decide whether one Apple subscription can grant multiple Can You Geo accounts.
+- Add ownership type to provider subscriptions.
+- Add UI explaining family-shared access.
+- Add conflict handling for family members who already have Stripe or Apple Pro.
+- Re-test restore, revocation, and account deletion.
+
+Apple's current App Store Connect guidance should be rechecked immediately before configuration because enabling Family Sharing for an in-app purchase may be difficult or impossible to reverse.
+
+## 92. Introductory-offer decision
+
+Recommended initial release: no free trial, no introductory discounted period, no offer codes, and no promotional offers.
+
+Reasons:
+
+- Can You Geo already has guest samples and a Free account tier.
+- Offers add eligibility rules, disclosure complexity, testing burden, App Review surface area, and subscription-state edge cases.
+- Backend/server analytics must first be stable for ordinary purchase, renewal, restore, expiration, refund, and conflict flows.
+- Marketing value can be revisited after baseline Apple billing is reliable.
+
+If offers are introduced later, design must cover eligibility display, trial end disclosure, renewal price after offer, user reminders, offer-code redemption, server-side status mapping, and analytics separation between paid conversion and trial start.
+
+## 93. Provider-neutral client analytics
+
+Design only. Do not implement.
+
+Future client-side neutral events:
+
+| Event | Trigger | Safe properties |
+| --- | --- | --- |
+| `cgy_subscription_paywall_view` | Native paywall rendered | `provider`, `surface`, `signed_in`, `effective_plan`, `eligibility` |
+| `cgy_subscription_product_load_start` | StoreKit product load starts | `provider`, `surface` |
+| `cgy_subscription_product_load_result` | Product load succeeds/fails | `provider`, `surface`, `outcome`, `available_product_count`, `environment` |
+| `cgy_subscription_product_select` | User selects monthly/annual | `provider`, `billing_period`, `surface` |
+| `cgy_subscription_purchase_start` | User taps purchase | `provider`, `billing_period`, `surface`, `signed_in` |
+| `cgy_subscription_purchase_cancel` | StoreKit reports user cancellation | `provider`, `billing_period`, `surface` |
+| `cgy_subscription_purchase_pending` | StoreKit pending/approval result | `provider`, `billing_period`, `surface` |
+| `cgy_subscription_local_verified` | StoreKit locally verifies transaction | `provider`, `billing_period`, `environment` |
+| `cgy_subscription_backend_result` | Backend returns accepted/pending/conflict/failure | `provider`, `billing_period`, `outcome`, `environment` |
+| `cgy_subscription_entitlement_confirmed` | Client refresh sees Pro after accepted purchase | `provider`, `billing_period`, `surface` |
+| `cgy_subscription_purchase_failed` | Non-cancel purchase failure | `provider`, `billing_period`, `outcome`, `surface` |
+| `cgy_subscription_restore_start` | Restore tapped | `provider`, `surface` |
+| `cgy_subscription_restore_result` | Restore completed/no purchase/conflict/failed | `provider`, `outcome`, `surface` |
+| `cgy_subscription_manage_open` | Management opened | `provider`, `surface` |
+| `cgy_subscription_manage_failed` | Management failed to open | `provider`, `surface`, `outcome` |
+| `cgy_subscription_duplicate_provider_notice` | Dual-provider warning displayed | `surface`, `effective_plan` |
+| `cgy_subscription_paywall_suppressed` | Existing subscriber state suppresses buy UI | `provider`, `surface`, `effective_plan` |
+
+Safe property values:
+
+- provider category: `apple`, `stripe`, `multiple`, `none`
+- product tier category: `pro`
+- billing period: `monthly`, `annual`, `unknown`
+- normalized outcome: `success`, `cancelled`, `pending`, `failed`, `conflict`, `unavailable`
+- surface: `upgrade`, `account`, `pro_gate`, `result`, `support`
+- signed-in status
+- effective-plan category: `guest`, `free`, `pro`
+- environment classification: `sandbox`, `production`, `unknown` where safe
+
+Never send transaction IDs, original transaction IDs, app account tokens, signed transactions, receipts, Apple account information, Supabase user UUIDs, emails, provider customer IDs, provider subscription IDs, recovery links, or support free text.
+
+Native analytics still requires a later decision because current native builds disable live analytics providers.
+
+## 94. Server-backed conversion analytics
+
+Server-side conversion events should be emitted only after durable backend processing and idempotency:
+
+| Server event | Emit after | Double-count guard |
+| --- | --- | --- |
+| Purchase completed | Verified provider state stored and entitlement recompute succeeds | Provider event ledger key. |
+| Initial entitlement granted | Effective entitlement changes Free/Guest to Pro | Entitlement transition history. |
+| Renewal | Verified renewal extends provider subscription | Apple notification UUID or API reconciliation event key. |
+| Expiration | Effective entitlement changes Pro to Free because no provider remains active | Entitlement transition history. |
+| Refund | Refund/revocation processed and effective state recomputed | Provider event ledger key. |
+| Revocation | Revocation processed and effective state recomputed | Provider event ledger key. |
+| Restore entitlement granted | Restore confirms existing Apple subscription and Pro becomes active | Provider subscription/original transaction idempotency. |
+
+Client events can measure funnel behavior; server events own conversion truth. Do not map a client StoreKit success event as a purchase conversion until the backend confirms durable entitlement.
+
+## 95. Accessibility and localization
+
+Requirements:
+
+- Support Dynamic Type without clipping price, period, or disclosure text.
+- VoiceOver labels must include product name, localized price, period, selected state, and whether the option is recommended.
+- Announce loading, purchase progress, pending approval, backend verification, errors, and entitlement confirmation.
+- Maintain strong contrast in dark navy/cyan/lime styling.
+- Keep purchase controls within portrait safe areas and away from the home indicator.
+- Avoid initiating purchase from landscape gameplay. Route to portrait-friendly account/paywall surfaces.
+- Use StoreKit localized product strings and prices.
+- Support right-to-left layout and long localized currency/period strings.
+- Use locale-aware currency and date formatting.
+- Respect Reduced Motion; purchase state changes should not depend on animation.
+- Preserve keyboard/focus behavior for simulator, hardware keyboard, and accessibility users.
+- Use clear focus order: status, benefits, product selector, purchase button, disclosures, restore, links.
+
+The purchase button's disabled state should be communicated visually and semantically.
+
+## 96. Failure and recovery matrix
+
+| Failure | Message intent | Retry? | Support? | Pro access changes? | Navigation blocked? | Analytics? |
+| --- | --- | --- | --- | --- | --- | --- |
+| Store unavailable | Apple subscriptions cannot load right now. | Yes | Optional | No | No | Product-load failed. |
+| Product unavailable | This plan is unavailable in the current App Store storefront. | Refresh/retry later | Optional | No | No | Product-load failed. |
+| Offline | Connect to the internet to subscribe or restore. | Yes after reconnect | Optional | Existing cached access preserved per guardrails | Purchase blocked | Failure outcome. |
+| Purchase cancelled | Purchase was cancelled. | Yes | No | No | No | Cancel event. |
+| Purchase pending | Approval or processing is pending. | Refresh later | Optional | No durable grant yet | Purchase controls disabled for that transaction | Pending event. |
+| Transaction unverified | We could not verify this purchase. | Limited | Yes | No | No | Failure outcome, no raw error. |
+| Backend unavailable | We could not confirm Pro yet. | Yes with backoff | Optional | No new grant | No | Backend failed/pending. |
+| Backend verification pending | Subscription found; confirming access. | Refresh/retry | Yes if long delay | No durable grant yet | No | Pending outcome. |
+| Entitlement refresh failed | Purchase accepted, but account refresh failed. | Yes | Optional | Server may already grant; UI waits for refresh | No | Refresh failure. |
+| Account-link conflict | Subscription appears linked to another Can You Geo account. | No immediate purchase retry | Yes | No local grant | No | Conflict outcome. |
+| Restore failed | Purchases could not be restored right now. | Yes | Optional | No removal | No | Restore failed. |
+| Management unavailable | Apple subscription settings could not open. | Yes | Optional | No | No | Manage failed. |
+| Unknown reconciliation state | Checking latest subscription status. | Refresh/backoff | Yes if persistent | Preserve safe cached access only | Purchase blocked | Reconciliation pending. |
+
+Never expose raw Apple, Supabase, or network exception text to users.
+
+## 97. Support workflows
+
+| Support case | User guidance | Backend/operator need |
+| --- | --- | --- |
+| Stripe subscriber confused in iOS | Explain Pro is active and website-managed; no Apple purchase needed. | None unless status mismatch. |
+| Apple subscriber on website | Explain Pro is active and Apple-managed; use iPhone/App Store to manage. | Ensure provider summary is visible on web. |
+| Dual billing | Explain possible multiple active subscriptions and provide both management paths. | Provider reconciliation and support review. |
+| Restore conflict | Explain purchase appears linked to another Can You Geo account. | Ownership-conflict review; no unsafe transfer. |
+| Deleted account with active Apple subscription | Direct user to Apple subscription management and support. | Orphaned subscription review and manual policy. |
+| Refund/revocation question | Neutral access-change explanation. | Provider event lookup and entitlement history. |
+| Pending purchase | Explain confirmation may take time; retry refresh. | Check pending provider event and Apple status. |
+| Billing retry | Direct to Apple payment management. | Reconciliation if state remains stale. |
+| Family Sharing question | If disabled, explain Can You Geo Pro is not family-shared at launch. | None unless future policy changes. |
+| Wrong Can You Geo account | Ask user to sign into the expected account and contact support. | Audited reassignment only if later policy allows. |
+
+Do not design or expose an unsafe manual reassignment tool in the app. Manual reassignment remains an operator process requiring backend reconciliation and audit.
+
+## 98. App Review readiness
+
+Before App Review submission with Apple IAP:
+
+- Provide a reviewer account if sign-in is required to access the paywall.
+- Review notes should explain:
+  - web subscriptions coexist with Apple IAP;
+  - existing web subscribers can sign in and use Pro;
+  - native iOS purchases use Apple IAP;
+  - Stripe checkout and Stripe portal are unavailable inside iOS;
+  - StoreKit products are monthly and annual at the same service level;
+  - Restore Purchases is on the paywall and account billing surface;
+  - Manage Apple Subscription appears for Apple-backed Pro;
+  - Terms and Privacy links are on the paywall;
+  - account deletion is available through the existing account/support/legal flow or documented route.
+- Explain how the reviewer reaches the paywall: sign in, open `/upgrade/`, or open a Pro gate and follow the upgrade prompt.
+- Note any products temporarily unavailable or not yet approved.
+
+Do not create reviewer credentials or submit anything in this checkpoint.
+
+## 99. Future UI component plan
+
+Likely future React/application components:
+
+```text
+src/features/account/NativeApplePaywall.tsx
+src/features/account/NativeProductSelector.tsx
+src/features/account/NativePurchaseButton.tsx
+src/features/account/SubscriptionStatusCard.tsx
+src/features/account/BillingManagementActions.tsx
+src/features/account/RestorePurchasesButton.tsx
+src/features/account/BillingProviderNotice.tsx
+src/features/account/DualSubscriptionWarning.tsx
+src/features/account/BillingStatusMessage.tsx
+src/features/account/NativePurchaseCoordinator.tsx
+src/lib/billing/nativeSubscriptionAnalytics.ts
+src/lib/billing/nativeSubscriptionCopy.ts
+src/lib/billing/nativeSubscriptionStatus.ts
+```
+
+Likely test targets:
+
+```text
+src/features/account/NativeApplePaywall.test.tsx
+src/features/account/RestorePurchasesButton.test.tsx
+src/features/account/BillingManagementActions.test.tsx
+src/lib/billing/nativeSubscriptionCopy.test.ts
+src/lib/billing/nativeSubscriptionStatus.test.ts
+```
+
+Use existing account surface styles and notices where possible. Do not create placeholder files until the implementation checkpoint.
+
+## 100. Questions deferred to 5A-3C2
+
+- Final App Store price points and territory pricing.
+- Final App Store product metadata, display names, review screenshots, and subscription group configuration.
+- Whether Apple grace period is enabled at launch.
+- Exact final legal copy updates for Terms, Privacy, refunds, Apple management, and web/native billing coexistence.
+- Exact support policy for wrong-account purchases and deleted-account Apple subscriptions.
+- Whether native analytics will remain disabled, use a server-backed event endpoint, or use a consent-aware native analytics provider.
+- Exact UI copy after App Review/legal review.
+- Exact account deletion flow wording for Apple subscribers.
+- Whether future Family Sharing support is desirable after launch.
+- Whether introductory offers, trials, offer codes, or promotional offers are worth a later marketing checkpoint.
+
+## 101. Explicit non-actions taken in 5A-3C1
+
+This checkpoint did not:
+
+- Add React UI, Swift code, StoreKit code, native plugin code, or analytics implementation.
+- Add dependencies, migrations, Edge Functions, Supabase tables, or server verification behavior.
+- Modify Stripe checkout, Stripe portal, Stripe webhook, Supabase Auth, or entitlement runtime behavior.
+- Modify legal pages, support pages, pricing constants, app metadata, App Store Connect, Apple agreements, subscription products, offers, Family Sharing, or grace-period settings.
+- Change native projects, Android, version/build numbers, signing, TestFlight, App Review, or production deployment.
+- Run a build, upload a binary, create a PR, merge, force-push, or make unrelated changes.
