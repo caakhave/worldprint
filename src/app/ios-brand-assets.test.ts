@@ -4,6 +4,8 @@ import { join } from "node:path";
 import { describe, expect, it } from "vitest";
 
 const root = process.cwd();
+const capacitorConfigPath = join(root, "capacitor.config.ts");
+const packageJsonPath = join(root, "package.json");
 const sourceAppIconPath = join(root, "assets/mobile/ios/source/app-icon.png");
 const sourceLaunchPath = join(root, "assets/mobile/ios/source/launch-screen.png");
 const sourceLaunchPreparedPath = join(root, "assets/mobile/ios/source/launch-screen-2732.png");
@@ -24,6 +26,12 @@ const approvedHashes = {
   launchSource: "fee1b9c2ee67fb061839ca62b35f060e990e386a67c86f762dcfcae7a917835a",
   launchPrepared: "d8f6d6fbfae76753f157a17f0fabb5bb2a696a7cbeee981318c0b90fd49c451c"
 };
+
+function readPackageJson() {
+  return JSON.parse(readFileSync(packageJsonPath, "utf8")) as {
+    dependencies?: Record<string, string>;
+  };
+}
 
 type PngMetadata = {
   bitDepth: number;
@@ -85,6 +93,22 @@ function expectOpaqueRgbPng(path: string, width: number, height: number) {
 }
 
 describe("iOS brand assets", () => {
+  it("installs and configures the official Capacitor Splash Screen plugin", () => {
+    const packageJson = readPackageJson();
+    const splashScreenVersion = packageJson.dependencies?.["@capacitor/splash-screen"];
+    expect(splashScreenVersion).toBe("8.0.2");
+    expect(splashScreenVersion?.split(".")[0]).toBe("8");
+
+    const capacitorConfig = readFileSync(capacitorConfigPath, "utf8");
+    expect(capacitorConfig).toContain("SplashScreen");
+    expect(capacitorConfig).toContain('backgroundColor: "#000211"');
+    expect(capacitorConfig).toContain("launchAutoHide: true");
+    expect(capacitorConfig).toContain("launchShowDuration: 1000");
+    expect(capacitorConfig).toContain("showSpinner: false");
+    expect(capacitorConfig).not.toContain("setTimeout");
+    expect(capacitorConfig).not.toContain("Thread.sleep");
+  });
+
   it("uses the checked-in approved iOS source assets rather than the web favicon", () => {
     expect(sha256(sourceAppIconPath)).toBe(approvedHashes.appIcon);
     expect(sha256(sourceLaunchPath)).toBe(approvedHashes.launchSource);
@@ -129,24 +153,43 @@ describe("iOS brand assets", () => {
     }
   });
 
-  it("keeps the launch screen aspect-fit so the full wordmark is not cropped", () => {
+  it("keeps a conventional launch-screen hierarchy so Splash can render", () => {
     const storyboard = readFileSync(launchStoryboardPath, "utf8");
+    expect(storyboard).toContain('<view key="view" contentMode="scaleToFill" id="snD-IY-ifK">');
+    expect(storyboard).not.toContain("<imageView key=\"view\"");
     expect(storyboard).toContain('image="Splash"');
+    expect(storyboard).toContain('<imageView userInteractionEnabled="NO" contentMode="scaleAspectFit"');
+    expect(storyboard).toContain('translatesAutoresizingMaskIntoConstraints="NO"');
     expect(storyboard).toContain('contentMode="scaleAspectFit"');
     expect(storyboard).not.toContain('contentMode="scaleAspectFill"');
     expect(storyboard).toContain('red="0.0" green="0.0078431372549019607" blue="0.066666666666666666"');
+    expect(storyboard).toContain('firstAttribute="top" secondItem="snD-IY-ifK" secondAttribute="top"');
+    expect(storyboard).toContain('firstAttribute="leading" secondItem="snD-IY-ifK" secondAttribute="leading"');
+    expect(storyboard).toContain('firstAttribute="trailing" secondItem="fAa-oH-mn2" secondAttribute="trailing"');
+    expect(storyboard).toContain('firstAttribute="bottom" secondItem="fAa-oH-mn2" secondAttribute="bottom"');
+    expect(storyboard).not.toContain("safeArea");
     expect(storyboard).not.toMatch(/Capacitor/u);
   });
 
-  it("documents the approved assets without claiming physical visual QA has passed", () => {
+  it("documents the approved assets and scoped physical launch-branding pass", () => {
     const docs = readFileSync(iosDocsPath, "utf8");
     expect(docs).toContain("approved globe-only image is the iOS app icon");
     expect(docs).toContain("approved full globe-plus-wordmark image is the launch-screen artwork");
     expect(docs).toContain("`public/favicon.svg` source was incorrect and has been replaced");
     expect(docs).toContain("LaunchScreen.storyboard` uses `scaleAspectFit`");
-    expect(docs).toContain("Physical visual QA must be repeated after a clean reinstall");
+    expect(docs).toContain("root `UIView` with a child `UIImageView`");
+    expect(docs).toContain("official Capacitor Splash Screen plugin");
+    expect(docs).toContain("approximately one second");
+    expect(docs).toContain("No spinner is shown");
+    expect(docs).toContain("xcrun assetutil --info");
+    expect(docs).toContain("simulator visual validation remains blocked");
+    expect(docs).not.toContain("simulator held-launch validation confirmed");
+    expect(docs).not.toContain("Root cause: the launch storyboard used");
+    expect(docs).toContain("Checkpoint 4H-5C physical iPhone 14 visual check passed");
+    expect(docs).toContain("approved full globe plus `Can You Geo?` splash artwork appeared correctly");
+    expect(docs).toContain("Broader physical-device visual QA still required before the first archive");
     expect(docs).toContain("Frame-by-frame screen recording is the recommended inspection method");
     expect(docs).toContain("No archive or TestFlight upload has occurred");
-    expect(docs).not.toContain("Physical-device visual QA passed");
+    expect(docs).not.toContain("Home-screen icon appearance passed");
   });
 });

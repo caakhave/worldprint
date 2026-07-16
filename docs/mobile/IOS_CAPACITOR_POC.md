@@ -123,21 +123,27 @@ The app-side/runtime foundations are now in place and covered by focused unit an
 - Native launch destinations: `ios/App/App/Assets.xcassets/Splash.imageset/splash-2732x2732-2.png`, `ios/App/App/Assets.xcassets/Splash.imageset/splash-2732x2732-1.png`, and `ios/App/App/Assets.xcassets/Splash.imageset/splash-2732x2732.png`.
 - Icon validation: the AppIcon output is exactly the approved 1024 x 1024 globe-only RGB PNG with no alpha channel or transparent pixels. It does not add rounded corners, text, cropping, or favicon artwork.
 - Launch validation: each launch image output is exactly the approved 2732 x 2732 full-logo RGB PNG with no alpha channel. The globe and `Can You Geo?` wordmark remain present.
-- `LaunchScreen.storyboard` uses `scaleAspectFit` so the full square launch artwork remains visible in portrait and landscape. It uses a dark navy background derived from the approved artwork for any unused space.
-- The native launch screen may be visible only for a fraction of a second because the app starts quickly. Do not add an artificial splash delay for inspection.
+- Checkpoint 4H-5A physical-device frame-by-frame recording failed the launch-screen visual check: the app showed a brief dark/black launch frame with no visible approved artwork.
+- Checkpoint 4H-5B diagnosis: the built `Info.plist` registered `UILaunchStoryboardName = LaunchScreen`, the compiled app contained `Base.lproj/LaunchScreen.storyboardc`, and the compiled `Assets.car` contained opaque `Splash` renditions. The launch artwork PNGs were valid RGB images and were not blank, corrupt, transparent, or almost entirely dark.
+- The operating-system launch storyboard alone was not reliably visible on physical device; the compiled asset placement was not the problem. The root `UIImageView` hierarchy was corrected to a conventional root `UIView` with a child `UIImageView`, but that did not by itself produce visible branded launch artwork during observed startup.
+- `LaunchScreen.storyboard` uses `scaleAspectFit` and remains as the immediate static dark-navy launch transition. It uses a conventional root `UIView` with a child `UIImageView`; the root view owns the dark navy background, and the child image view uses `image = Splash`, `scaleAspectFit`, and edge constraints to the root view.
+- The official Capacitor Splash Screen plugin is installed and configured from `capacitor.config.ts` to show the approved full-logo `Splash` asset for approximately one second during startup. It uses background color `#000211`, hides automatically, and does not show a spinner.
+- No spinner is shown.
+- Checkpoint 4H-5C physical iPhone 14 visual check passed: the approved full globe plus `Can You Geo?` splash artwork appeared correctly, remained visible for approximately one second, and then the app continued into the application normally.
+- Compiled asset validation command: `xcrun assetutil --info /path/to/App.app/Assets.car | rg -n 'Name|RenditionName|Splash|splash' -C 3`.
+- Compiled storyboard validation checks that `LaunchScreen.storyboardc` is present and that the compiled nib strings resolve the `Splash` image name.
+- Do not add AppDelegate sleeps, debugger-only launch delays, or temporary storyboard probes for inspection. The only committed visible launch-branding duration is the official Capacitor Splash Screen plugin configuration.
+- Checkpoint 4H-5B simulator visual validation remains blocked: `simctl launch`, `simctl launch --wait-for-debugger`, LLDB breakpoint capture, and normal launch recording did not reliably expose the launch storyboard. A temporary red-background probe also captured black/gray/white transition frames, so no simulator visual pass is recorded yet.
+- Any temporary diagnostic launch delay, breakpoint, direct bundle-resource probe, or red-background probe used to inspect the launch screen is local-only and must not be part of the committed application.
+- Physical-device visual approval of the new Capacitor splash was received before this checkpoint was committed.
 - Frame-by-frame screen recording is the recommended inspection method for the launch screen on physical devices.
 - No archive or TestFlight upload has occurred.
 
-Physical-device visual QA still required before the first archive:
+Broader physical-device visual QA still required before the first archive:
 
-- Physical visual QA must be repeated after a clean reinstall because the prior installed development build used the wrong native branding assets.
 - Home-screen icon appearance
 - App Library icon appearance
-- Launch screen in portrait
-- Launch screen in landscape left
-- Launch screen in landscape right
-- No flash of Capacitor branding
-- No stretched or clipped logo
+- Landscape-left and landscape-right launch-branding behavior
 - Startup into the expected production app shell
 - Existing Universal Link and auth-recovery behavior remains intact
 
@@ -146,7 +152,7 @@ Remaining release/configuration work:
 - Apple In-App Purchase.
 - TestFlight and App Store submission.
 - App Store production signing and release provisioning review.
-- TestFlight archive/export/upload after physical-device visual QA passes.
+- TestFlight archive/export/upload after remaining release QA passes.
 - Broader physical-device testing beyond the iPhone 14 development launch and Universal Link/auth validation.
 - iPad UI and metadata decision if universal iPad support is desired later.
 - Optional future push notifications.
