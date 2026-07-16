@@ -1573,3 +1573,583 @@ This checkpoint did not:
 - Add migrations, database tables, RLS policies, Edge Functions, or backend endpoints.
 - Modify Stripe, Supabase, GTM, analytics behavior, game behavior, auth behavior, entitlement runtime behavior, native projects, or Android.
 - Accept Apple agreements, create Apple products, create App Store Server API keys, configure server notifications, upload a binary, increment version/build, create a PR, merge, or deploy.
+
+## 49. 5A-3B scope and implementation status
+
+This section extends the StoreKit design with the backend architecture for Apple purchase verification, App Store Server Notifications, entitlement recomputation, and reconciliation.
+
+Status: design only. None of the endpoints, migrations, secrets, schedulers, Apple dashboard settings, or entitlement mutations described below exist yet unless explicitly called out as existing repository behavior.
+
+The existing implemented billing surface remains:
+
+- Stripe checkout, portal, and webhook Edge Functions.
+- Browser/native app-side restrictions that keep Stripe web billing unavailable inside the native app.
+- `public.entitlements` as the compatibility table read by the current app.
+- Client-side StoreKit bridge and purchase state-machine scaffolding from 5A-3A, which still must not grant Pro without server acceptance.
+
+Official references used for this design:
+
+- Apple App Store Server API: `https://developer.apple.com/documentation/appstoreserverapi`
+- Apple App Store Server Notifications: `https://developer.apple.com/documentation/appstoreservernotifications`
+- Apple App Store Server Library: `https://developer.apple.com/documentation/appstoreserverapi/simplifying_your_implementation_by_using_the_app_store_server_library`
+- Apple notification response and retry behavior: `https://developer.apple.com/documentation/appstoreservernotifications/responding_to_app_store_server_notifications`
+- StoreKit `appAccountToken`: `https://developer.apple.com/documentation/storekit/product/purchaseoption/appaccounttoken(_:)`
+- Supabase Edge Functions and secrets guidance: `https://supabase.com/docs/guides/functions` and `https://supabase.com/docs/guides/functions/secrets`
+
+## 50. Apple backend component map
+
+Recommended future components:
+
+| Component | Future location | Auth model | Responsibility | Writes entitlements? |
+| --- | --- | --- | --- | --- |
+| Apple purchase verification endpoint | `supabase/functions/apple-purchase-verify/index.ts` | Supabase user JWT, `verify_jwt = true` | Accept the transaction identifier from a signed-in native user, verify it with Apple, enforce account ownership, persist provider state, recompute entitlement, and return an idempotent purchase decision. | Yes, only through shared server resolver. |
+| Apple server notification endpoint | `supabase/functions/apple-server-notifications/index.ts` | Apple-signed JWS payload, `verify_jwt = false` | Receive App Store Server Notification V2 payloads, verify signatures, record provider events, mutate provider subscription state, and trigger entitlement recompute. | Yes, only after verified notification processing. |
+| Apple reconciliation endpoint/job | `supabase/functions/apple-reconcile-subscriptions/index.ts` or a scheduled worker | Service-only scheduler/operator auth | Re-query App Store Server API for stale, conflicted, pending, or missed subscription state. | Yes, only through shared server resolver. |
+| Apple verifier adapter | Future narrow verifier module/service | Internal server-to-server credential | Create Apple API JWTs, call App Store Server API, verify Apple JWS transaction/renewal/notification payloads, and return normalized facts. | No direct database writes. |
+| Provider event ledger | Future database tables | Service role only | Store idempotency, processing state, attempts, normalized identifiers, and audit timestamps for Apple and later Stripe unification. | No direct entitlement decision by itself. |
+| Effective entitlement resolver | Future shared function/RPC | Service role only | Combine verified Stripe and Apple provider state into the current app-compatible `public.entitlements` row. | Yes. |
+
+The key boundary is that app code, StoreKit client code, and browser code never grant Pro directly. They can only request verification and then refresh the server-owned entitlement state.
+
+## 51. Purchase-verification endpoint contract
+
+Recommended endpoint:
+
+- Path: `/functions/v1/apple-purchase-verify`
+- JWT setting: `verify_jwt = true`
+- Method: `POST`
+- Caller: native app only, after StoreKit reports a purchased or restored transaction candidate.
+- CORS: allow only approved app origins needed by the Capacitor WebView and deployed site. This endpoint is not a public webhook.
+
+Recommended request body:
+
+```json
+{
+  "transactionId": "2000000000000000",
+  "clientProductId": "com.canyougeo.pro.monthly",
+  "clientEnvironment": "sandbox",
+  "clientCorrelationId": "optional-random-client-id"
+}
+```
+
+Only `transactionId` should be required. Client fields are advisory and must not be trusted for entitlement decisions.
+
+Do not accept or persist from the client:
+
+- entitlement status
+- active/expired flags
+- period end dates
+- price, currency, or proceeds
+- user email
+- Supabase user ID in the body
+- full signed transaction JWS unless a later implementation proves it is required
+- Apple receipt blobs
+- Stripe identifiers
+- analytics identifiers
+
+The server derives the user from the Supabase JWT. It verifies the transaction with Apple, reads the `appAccountToken` from the verified transaction payload, and requires it to match the authenticated Supabase user UUID that initiated the purchase.
+
+Recommended response shape:
+
+```json
+{
+  "status": "accepted",
+  "entitlementRefreshRecommended": true,
+  "clientMayFinishTransaction": true,
+  "retryAfterSeconds": null,
+  "reason": null
+}
+```
+
+Allowed response statuses:
+
+| Status | Meaning | Client may finish StoreKit transaction? | Client action |
+| --- | --- | --- | --- |
+| `accepted` | Verified, ownership matched, provider state stored, entitlement recomputed. | Yes | Finish transaction and refresh account entitlement. |
+| `already_processed` | Same transaction or original transaction was already accepted for the same user and environment. | Yes | Finish transaction and refresh account entitlement. |
+| `verification_pending` | Durable event was recorded, but current Apple state or entitlement recompute has not completed. | No | Retry later using backoff; show pending copy. |
+| `account_link_conflict` | Verified Apple transaction belongs to a different Can You Geo account or has an unexpected `appAccountToken`. | No | Show support-oriented copy; do not grant Pro locally. |
+| `product_not_allowed` | Verified product is not in the Can You Geo allowlist. | No | Stop purchase flow and report safe error. |
+| `environment_mismatch` | Transaction environment is not allowed for the current backend context. | No | Stop purchase flow; route to QA/operator investigation. |
+| `transaction_unverified` | Apple verification failed permanently. | No | Stop purchase flow; do not retry aggressively. |
+| `backend_temporarily_unavailable` | Apple API, verifier, or database work failed transiently. | No | Retry safely with backoff. |
+| `rejected` | Permanent policy rejection not covered above. | No | Stop purchase flow with generic support copy. |
+
+The endpoint must be idempotent for repeated calls with the same transaction. A user should be able to tap restore, relaunch, or retry without duplicate grants or duplicate analytics.
+
+## 52. Notification endpoint contract
+
+Recommended endpoint:
+
+- Path: `/functions/v1/apple-server-notifications`
+- JWT setting: `verify_jwt = false`
+- Method: `POST`
+- Caller: Apple App Store Server Notifications V2.
+- Browser CORS: unnecessary. It should not be treated as a browser API.
+
+Recommended request body:
+
+```json
+{
+  "signedPayload": "apple-jws-payload"
+}
+```
+
+Processing steps:
+
+1. Reject non-`POST` requests.
+2. Parse JSON with a strict body-size limit.
+3. Require a `signedPayload` string.
+4. Verify the App Store signed payload before trusting any field.
+5. Verify nested `signedTransactionInfo` and `signedRenewalInfo` JWS values when present.
+6. Validate bundle ID, environment, product allowlist, and, in production, the expected Apple app identifier when available.
+7. Record the provider event by `notificationUUID` and environment before mutating provider subscription state.
+8. Process only normalized facts, not raw payloads.
+9. Recompute effective entitlement in the same durable processing path.
+10. Return a response that matches Apple's retry semantics.
+
+Response policy:
+
+| Case | Response | Reason |
+| --- | --- | --- |
+| Duplicate valid notification already processed | `200` | Avoid retry storms. |
+| Valid notification processed successfully | `200` | Apple treats 200-206 as success. |
+| Valid notification recorded but intentionally ignored, such as `TEST` | `200` | Nothing should be retried. |
+| Valid signed but unknown notification type | `200` after recording `unknown_needs_review` | Preserve evidence without forcing repeated delivery. |
+| Invalid signature, malformed body, wrong bundle, or wrong permanent environment | `400` | Not retriable by our system. |
+| Valid Apple notification but transient database, verifier, or Apple API failure | `500` | Let Apple retry and let reconciliation recover. |
+
+Apple V2 retries failed notifications five times over roughly 1, 12, 24, 48, and 72 hours in production. Sandbox notifications do not provide the same retry safety, so sandbox testing must also exercise explicit reconciliation.
+
+## 53. Recommended Apple verification approach
+
+Use a hybrid architecture:
+
+- Supabase Edge Functions own endpoint intake, Supabase Auth enforcement, service-role database writes, CORS, idempotency, and entitlement recomputation.
+- A narrow Apple verifier adapter/service owns App Store Server API JWT creation, Apple API calls, and JWS/certificate verification using Apple's official App Store Server Library where practical.
+
+This is the recommended approach for the first production implementation because:
+
+- Supabase Edge Functions run on a Deno-compatible TypeScript runtime.
+- Apple's official server libraries are documented for Swift, Java, Python, and Node, not Deno.
+- Apple JWS validation, certificate-chain handling, and App Store Server API authentication are security-critical and should not be hand-rolled casually.
+- A full separate billing service would be heavier than Can You Geo needs right now.
+- A narrow verifier keeps the high-risk cryptography/API boundary small while leaving existing Supabase Edge Function patterns intact.
+
+The verifier must be stateless and internal. It should return only normalized, verified facts and reason codes, never raw signed payloads to app code or analytics. Edge Functions remain the only component allowed to mutate Supabase billing rows.
+
+If a future implementation spike proves Apple's official Node library runs reliably inside Supabase Edge Functions with the required crypto and certificate behavior, this design can collapse the verifier into a shared Edge helper without changing the external contracts.
+
+## 54. Account ownership verification
+
+StoreKit purchases must be linked to a Can You Geo user with Apple's `appAccountToken` purchase option. The native StoreKit layer should set the token to the authenticated Supabase user UUID at purchase time.
+
+Server ownership rules:
+
+| Scenario | Server behavior |
+| --- | --- |
+| New purchase, verified transaction has matching `appAccountToken` | Create or update Apple provider subscription for that user. |
+| Repeated verification for the same user, transaction, original transaction, and environment | Return `already_processed`; do not duplicate state. |
+| Restore on another device while signed into the same Can You Geo account | Accept and refresh entitlement. |
+| Restore or purchase while signed into a different Can You Geo account | Return `account_link_conflict`; do not transfer ownership automatically. |
+| Notification arrives before the client verifies purchase | If `appAccountToken` maps to an existing user and no conflicting owner exists, create the provider row; otherwise record unresolved and reconcile. |
+| Notification lacks usable `appAccountToken` but original transaction is already linked | Update the existing provider subscription. |
+| Notification lacks usable `appAccountToken` and no provider row exists | Record as unresolved; do not grant Pro. |
+| User deletes the Can You Geo account while Apple subscription remains active | Mark the provider subscription orphaned or ownerless; do not grant a recreated account automatically. |
+
+Manual reassignment must be rare and audited. It should require verified Apple transaction evidence, a clear reason, the old and new Can You Geo user IDs, operator identity, timestamp, and a support note. Never record Apple account credentials, full email secrets, device UDIDs, or raw signed payloads in support notes.
+
+## 55. Provider-subscription mutation authority
+
+Future Apple state should live in private service-owned provider tables, not directly in public app-readable rows.
+
+Recommended authority model:
+
+| Field family | Authoritative source | Notes |
+| --- | --- | --- |
+| User ownership | Verified `appAccountToken`, existing provider row, and audited support reassignment | App body claims never win. |
+| Product ID and subscription group | Verified Apple transaction and renewal info | Must match Can You Geo allowlist. |
+| Current active/expired/grace/billing-retry state | App Store Server API subscription status, supplemented by notifications | Reconciliation wins when notification order is ambiguous. |
+| Period end and grace period end | Verified Apple transaction/renewal payloads and subscription status | Older events cannot shorten a newer verified active period. |
+| Auto-renew state and cancel-at-period-end | Verified renewal info and related notifications | Cancelled auto-renew can still be active until period end. |
+| Refund/revocation | Verified transaction revocation fields and refund notifications | May apply retrospectively even if signed earlier than a renewal. |
+| Effective Can You Geo Pro entitlement | Shared entitlement resolver across Apple, Stripe, and manual future overrides | No provider writes directly to app-readable entitlement without recompute. |
+
+No browser or native client code should write subscription, entitlement, or provider ownership state.
+
+## 56. Notification type and state mapping
+
+Initial mapping for App Store Server Notification V2:
+
+| Apple notification | Subtype examples | Canonical provider state | Pro access decision |
+| --- | --- | --- | --- |
+| `SUBSCRIBED` | `INITIAL_BUY`, `RESUBSCRIBE` | `active` | Active after verification and ownership match. |
+| `DID_RENEW` | empty, `BILLING_RECOVERY` | `active` | Active; extend period from verified transaction/status. |
+| `DID_FAIL_TO_RENEW` | empty | `billing_retry` or still active until current `expiresDate` | Reconcile before removing access. |
+| `DID_FAIL_TO_RENEW` | `GRACE_PERIOD` | `grace_period` | Active until verified grace end if Apple grace period is enabled. |
+| `GRACE_PERIOD_EXPIRED` | empty | `expired` or `billing_retry` | Remove access only if no newer active provider exists. |
+| `EXPIRED` | `VOLUNTARY`, `BILLING_RETRY`, `PRICE_INCREASE`, `PRODUCT_NOT_FOR_SALE`, empty | `expired` | Remove Apple-derived access unless another provider is active. |
+| `DID_CHANGE_RENEWAL_STATUS` | `AUTO_RENEW_DISABLED` | `active_cancel_at_period_end` | Keep access through current period. |
+| `DID_CHANGE_RENEWAL_STATUS` | `AUTO_RENEW_ENABLED` | `active` | Keep access. |
+| `DID_CHANGE_RENEWAL_PREF` | `UPGRADE`, `DOWNGRADE`, empty | `active_product_change_pending` or `active` | Keep access; product changes after verified effective date. |
+| `PRICE_INCREASE` | `PENDING`, `ACCEPTED` | `active_price_consent_pending` or `active` | Keep access unless Apple later expires the subscription. |
+| `REFUND` | empty | `refunded` or `revoked` for affected transaction | Recompute access; may remove Apple-derived Pro. |
+| `REFUND_DECLINED` | empty | no access change | Record for audit only. |
+| `REFUND_REVERSED` | empty | `active_needs_reconciliation` | Reconcile current status before granting if stale. |
+| `RENEWAL_EXTENDED` | empty | `active_extended` | Extend period if verified. |
+| `RENEWAL_EXTENSION` | `SUMMARY`, `FAILURE` | operator/reconciliation event | No direct per-user access change unless transaction data is present. |
+| `TEST` | empty | test event | No entitlement change. |
+| `CONSUMPTION_REQUEST` | empty | refund/support information | No direct subscription access change for launch subscriptions. |
+| Unknown valid signed type | any | `unknown_needs_review` | Preserve current entitlement and enqueue reconciliation/operator review. |
+
+The resolver must always check whether another provider, such as Stripe, still grants Pro before downgrading the user's effective entitlement.
+
+## 57. Provider event ledger
+
+Add a provider-neutral event ledger before launching Apple billing. It can later replace or wrap the Stripe-specific `public.stripe_webhook_events` pattern.
+
+Recommended fields:
+
+- `id`
+- `provider`: `apple` or `stripe`
+- `environment`: `sandbox` or `production`
+- `provider_event_id`: Apple `notificationUUID`, Stripe event ID, or a synthetic purchase-verification idempotency key
+- `event_kind`
+- `event_subtype`
+- `processing_state`: `queued`, `processing`, `processed`, `ignored`, `error`, `dead_letter`, `needs_review`
+- `attempt_count`
+- `first_received_at`
+- `last_attempted_at`
+- `processed_at`
+- `signed_at` or provider event time
+- `effective_at`
+- `related_user_id`
+- `related_provider_subscription_id`
+- `original_transaction_id` or provider subscription reference, stored only in a private service table
+- `payload_hash`
+- `last_error_code`
+- `reconciliation_required`
+- `source_endpoint`
+
+Do not store raw App Store signed payloads by default. If incident response ever needs temporary payload retention, it should be encrypted, access-limited, short-lived, and governed by a separate retention decision. The normal ledger should store normalized fields and hashes only.
+
+Required uniqueness and indexes:
+
+- Unique `(provider, environment, provider_event_id)`.
+- Unique Apple purchase-verification synthetic event key per `(provider, environment, transaction_id)` when represented in the ledger.
+- Index by `(processing_state, last_attempted_at)`.
+- Index by `(provider, environment, original_transaction_id)`.
+- Index by `(related_user_id, provider, environment)`.
+
+RLS should be enabled and forced. No user-facing policies should expose this ledger. Service role should own all writes.
+
+## 58. Idempotency and concurrency
+
+Idempotency keys:
+
+| Flow | Idempotency key |
+| --- | --- |
+| Client purchase verification | `apple:purchase:{environment}:{transactionId}` |
+| App Store notification | `apple:notification:{environment}:{notificationUUID}` |
+| Subscription row | unique `(provider, environment, originalTransactionId)` |
+| Individual transaction fact | unique `(provider, environment, transactionId)` |
+| Stripe webhook compatibility | existing Stripe event ID, later mapped to `provider_event_id` |
+
+Concurrency rules:
+
+- Use database uniqueness as the primary duplicate guard.
+- Use a short transaction for ledger insert, provider row mutation, entitlement recompute, and event-state update.
+- Do not call Apple APIs while holding a database transaction open.
+- Use row locks or advisory locks keyed by provider/environment/original transaction when processing competing events for the same subscription.
+- Prefer `FOR UPDATE SKIP LOCKED` for future reconciliation queues.
+- Treat in-memory dedupe as a client/runtime optimization only; it is not a backend correctness mechanism.
+
+The purchase endpoint, notification endpoint, and reconciliation job must all be safe to race. The final entitlement must be computed from durable provider state, not from arrival order.
+
+## 59. Event ordering and stale-event rules
+
+Apple notifications and client verifications can arrive out of order. The backend should order by verified provider timestamps, not HTTP arrival time.
+
+Ordering inputs:
+
+- `signedDate`
+- `purchaseDate`
+- `expiresDate`
+- `renewalDate`
+- `gracePeriodExpiresDate`
+- `revocationDate`
+- `originalTransactionId`
+- current result from App Store Server API subscription status
+
+Rules:
+
+- A newer verified active renewal should prevent an older expiration from downgrading access.
+- An expiration can downgrade Apple-derived access only when no newer active, grace, or renewed status exists for the same original transaction.
+- A refund or revocation can apply retrospectively to its affected transaction even if an active renewal exists. The resolver must then determine whether another valid period/provider still grants Pro.
+- A billing-retry event should not immediately remove access if the current period has not ended or if Apple grace period is verified.
+- Production and sandbox events are never compared as a single timeline.
+- Unknown but valid signed events should not mutate access directly; record them and reconcile.
+- Null or missing values from older events must not overwrite known current provider facts unless the current App Store Server API response confirms the field should be cleared.
+
+## 60. App Store Server API usage
+
+Recommended API calls:
+
+| API | Use |
+| --- | --- |
+| Get Transaction Info | Verify a client-supplied transaction ID and read signed transaction facts. |
+| Get All Subscription Statuses | Determine current state for an original transaction/subscription group. |
+| Get Transaction History | Rebuild or audit a subscription timeline during reconciliation or support. |
+| Get Notification History | Recover missed notifications after an outage or webhook misconfiguration. |
+| Request Test Notification | Validate endpoint wiring after dashboard setup. |
+
+Environment routing:
+
+- If a verified payload identifies `Sandbox`, use sandbox API base URL.
+- If a verified payload identifies `Production`, use production API base URL.
+- For a client-supplied transaction ID with unknown environment, follow Apple's documented production-first pattern and fall back to sandbox only on the specific "transaction not found in production" condition.
+- Persist the environment returned by Apple, not the client hint.
+
+Rate-limit and outage handling:
+
+- Apply per-user and per-transaction request throttles on purchase verification.
+- Back off on Apple 429 and 5xx responses.
+- Return `backend_temporarily_unavailable` to the client when verification cannot safely finish.
+- Enqueue reconciliation instead of granting Pro from unverified client claims.
+
+## 61. Sandbox and production separation
+
+Sandbox and production Apple data must be fully separated.
+
+Rules:
+
+- Store environment on every Apple provider subscription and provider event.
+- Scope uniqueness by environment.
+- Never allow sandbox data to downgrade or overwrite production subscription state.
+- Never allow production web users to receive Pro from sandbox Apple purchases.
+- Use staging or an explicit internal TestFlight entitlement path for sandbox billing QA.
+- Do not mix local StoreKit configuration purchases with shared production entitlement state.
+
+TestFlight uses Apple's sandbox purchase environment even when the app binary points at production URLs. Before enabling TestFlight IAP QA, choose one of these safe strategies:
+
+1. Test IAP against the staging Supabase project and staging entitlement rows.
+2. Add a clearly isolated internal-only sandbox entitlement resolver that is not used by production web or App Store production builds.
+
+Do not silently grant production `public.entitlements` from sandbox Apple rows.
+
+## 62. Secrets inventory
+
+Future Apple billing secrets and configuration:
+
+| Name | Secret? | Expected storage | Notes |
+| --- | --- | --- | --- |
+| `APPLE_APP_STORE_ISSUER_ID` | Yes | Supabase project secrets or verifier secret store | App Store Server API JWT issuer. |
+| `APPLE_APP_STORE_KEY_ID` | Yes-ish | Supabase project secrets or verifier secret store | Identifier for the private key. |
+| `APPLE_APP_STORE_PRIVATE_KEY` | Yes | Secret store only | Never commit. Use escaped PEM or base64 secret format. |
+| `APPLE_BUNDLE_ID` | No | Environment/config | `com.canyougeo.app`. |
+| `APPLE_APP_ID` | No | Environment/config | Numeric App Store app identifier, when available. |
+| `APPLE_ALLOWED_PRODUCT_IDS` | No/low | Environment/config | Launch allowlist, for example monthly and annual Pro IDs. |
+| `APPLE_VERIFIER_INTERNAL_URL` | Maybe | Supabase secret/config | Only if using a separate verifier service. |
+| `APPLE_VERIFIER_INTERNAL_AUTH` | Yes | Secret store only | Shared internal auth for Edge-to-verifier calls. |
+| Apple root certificates | No | Code/package or trusted library | Public trust material, not app secrets. |
+
+Rotation guidance:
+
+- Support overlapping App Store Server API keys during rotation.
+- Log only key ID and reason codes, not private-key contents.
+- Keep staging and production secrets separate.
+- Do not store Apple Account credentials, two-factor codes, developer certificates, provisioning profiles, or signing private keys in Supabase secrets.
+
+## 63. Effective entitlement recomputation
+
+The entitlement resolver is the only future component that should write app-readable subscription state.
+
+Recommended recompute triggers:
+
+- Accepted Apple purchase verification.
+- Valid Apple notification that changes provider state.
+- Apple reconciliation result.
+- Stripe webhook event.
+- Support-owned manual recovery or reassignment.
+- Backfill or repair job.
+
+Resolver algorithm:
+
+1. Load all verified provider subscriptions for the user.
+2. Ignore sandbox Apple rows for production app entitlement unless an explicit internal QA mode is active.
+3. Treat Apple active, grace-period, and verified current-period cancel-at-period-end rows as Pro while valid.
+4. Treat Stripe active and trialing rows as Pro while valid.
+5. If any provider grants Pro, write `plan = 'pro'` and an active-compatible status to `public.entitlements`.
+6. If no provider grants Pro, write or preserve a Free-compatible entitlement.
+7. Preserve provider-specific management metadata so the account UI can tell the user where to manage the subscription.
+8. Record an entitlement history row in future private tables for audit.
+
+The resolver must not let one provider's cancellation remove another provider's active entitlement. For example, an Apple expiration must not downgrade a user who still has an active Stripe subscription.
+
+## 64. `public.entitlements` compatibility strategy
+
+Current app code reads `public.entitlements` and treats missing rows safely as Free. That compatibility must remain through the Apple launch.
+
+Recommended migration strategy:
+
+1. Keep `public.entitlements` as the app-readable compatibility projection.
+2. Add private provider-specific tables for Stripe and Apple facts.
+3. Add provider-neutral fields to the projection only when app UI needs them.
+4. Keep existing `plan` and `status` semantics stable for old web/native clients.
+5. Add management-provider metadata carefully, for example `management_provider = 'stripe' | 'apple' | 'multiple' | 'manual' | 'none'`, only when UI is ready.
+6. Do not expose Apple transaction IDs, original transaction IDs, notification UUIDs, or app account tokens in public rows.
+
+The current `public.entitlements` Stripe columns can remain during the transition. They should eventually become derived compatibility fields, not the source of truth.
+
+## 65. Server-backed analytics
+
+Apple billing analytics should be emitted only after server-side idempotency and entitlement recompute succeed.
+
+Future neutral events:
+
+| Server event | Trigger | Notes |
+| --- | --- | --- |
+| `cgy_subscription_verified` | Purchase verification accepted or already processed for the same user | Do not include transaction IDs, user IDs, email, or Apple account data. |
+| `cgy_entitlement_granted` | Resolver changes effective entitlement to Pro | Include provider category only: `apple`, `stripe`, or `multiple`. |
+| `cgy_subscription_renewed` | Verified renewal extends active Apple entitlement | Server-side only, one per provider event. |
+| `cgy_subscription_expired` | Effective entitlement changes from Pro to Free because no provider remains active | Do not emit if Stripe or another provider still grants Pro. |
+| `cgy_subscription_refunded` | Refund/revocation changes effective entitlement | Avoid Apple transaction identifiers. |
+| `cgy_subscription_restore_verified` | Restore path verifies an already owned Apple subscription | Idempotent and non-sensitive. |
+
+Do not send raw provider identifiers, signed payloads, app account tokens, transaction IDs, original transaction IDs, notification UUIDs, user IDs, emails, or support notes to GA4, GTM, Meta, TikTok, Reddit, or any client-visible analytics layer.
+
+No analytics code is implemented in this checkpoint.
+
+## 66. Operational observability
+
+Minimum metrics and operator views before launch:
+
+- Apple purchase verification requests by outcome.
+- Verification latency and Apple API latency.
+- Apple API 401/403/429/5xx counts.
+- Notification signature failures.
+- Notification processing failures.
+- Provider event backlog by state.
+- Dead-letter and needs-review counts.
+- Account ownership conflicts.
+- Unresolved notifications without `appAccountToken` or known owner.
+- Sandbox events reaching production entitlement paths.
+- Effective entitlement recompute failures.
+- Duplicate active provider count for the same user.
+- Reconciliation age for active subscriptions.
+
+Page immediately:
+
+- Apple verifier unavailable.
+- App Store Server API authentication failures.
+- Valid Apple notifications returning 5xx.
+- Entitlement recompute failures after verified payment events.
+- Large or growing event backlog.
+- Production sandbox-mixing guard firing.
+
+Review during normal operations:
+
+- Unknown valid signed notification types.
+- Ownership conflicts.
+- Repeated customer restore failures.
+- Refund/revocation cases.
+- Provider rows orphaned by account deletion.
+
+Logs should contain provider, environment, event kind, outcome, and stable non-reversible hashes where useful. Logs must not contain raw signed payloads, tokens, transaction IDs, original transaction IDs, emails, Apple account data, passwords, or recovery links.
+
+## 67. Reconciliation schedule
+
+Reconciliation is required because notifications can be missed, sandbox retries are limited, and client verification may be interrupted.
+
+Recommended schedules:
+
+| Cadence | Scope |
+| --- | --- |
+| Every 5-15 minutes | Pending purchase verifications, valid notifications that failed processing, and rows marked `needs_reconciliation`. |
+| Hourly | Active Apple subscriptions with period ends, grace ends, or billing-retry states near the current time. |
+| Daily | Active Apple subscriptions not recently checked, plus a small sample of stable subscriptions. |
+| On demand | Support-requested transaction audit, account conflict review, or post-incident notification replay. |
+
+Recommended reconciliation steps:
+
+1. Select a bounded batch using `FOR UPDATE SKIP LOCKED` or equivalent queue locking.
+2. Call Apple subscription status or transaction history outside the database transaction.
+3. Verify all returned signed payloads.
+4. Re-open a short transaction to update provider state, ledger state, and effective entitlement.
+5. Back off on rate limits and transient Apple failures.
+6. Dead-letter after repeated failures with a safe operator reason code.
+
+Use notification history after outages or webhook changes. Production notification history covers a longer period than sandbox, so sandbox testing should not rely on historical replay alone.
+
+## 68. Backend testing seams
+
+Do not add runtime tests for nonexistent backend code yet. When implementation begins, cover these seams:
+
+| Test layer | Required coverage |
+| --- | --- |
+| Apple verifier adapter | Valid/invalid JWS, wrong bundle, wrong environment, wrong product, expired cert, malformed payload, Apple API 404/429/5xx. |
+| Purchase endpoint | Missing JWT, wrong user token, valid purchase, duplicate purchase, account conflict, product not allowed, Apple outage, entitlement recompute failure. |
+| Notification endpoint | Valid notification, duplicate notification, invalid signature, wrong bundle, unknown type, stale event, refund, renewal, expiration, transient DB failure. |
+| Provider event ledger | Unique constraints, processing state transitions, retry/dead-letter behavior, service-only RLS. |
+| Entitlement resolver | Apple active, Apple expired, Stripe active, dual provider, one provider cancellation, sandbox isolation, missing rows resolving Free. |
+| Concurrency | Purchase and notification racing for same transaction, two notifications for same original transaction, reconciliation competing with webhook processing. |
+| Native integration | StoreKit client waits for accepted/already-processed before finish, pending behavior, restore behavior, account conflict copy. |
+
+Existing focused test families to keep running during implementation:
+
+- billing/account tests around Stripe checkout, portal, and entitlements
+- Supabase function structure/security tests
+- native billing-boundary tests that assert Stripe remains unavailable inside native
+- StoreKit bridge and purchase state-machine tests
+
+## 69. Future backend implementation file plan
+
+Likely future files, subject to a separate implementation checkpoint:
+
+```text
+supabase/functions/apple-purchase-verify/index.ts
+supabase/functions/apple-server-notifications/index.ts
+supabase/functions/apple-reconcile-subscriptions/index.ts
+supabase/functions/_shared/appleVerifierClient.ts
+supabase/functions/_shared/appleServerApi.ts
+supabase/functions/_shared/appleNotificationMapping.ts
+supabase/functions/_shared/providerEventLedger.ts
+supabase/functions/_shared/effectiveEntitlements.ts
+supabase/functions/_shared/appleBillingTypes.ts
+supabase/functions/_shared/appleBilling.test.ts
+supabase/functions/apple-purchase-verify/index.structure.test.ts
+supabase/functions/apple-server-notifications/index.structure.test.ts
+supabase/migrations/<timestamp>_provider_billing_foundation.sql
+docs/mobile/APPLE_BILLING_OPERATIONS.md
+```
+
+If the selected verifier is a separate service, add only a narrow verifier project after an approved checkpoint. It should expose no public customer API and should not own entitlement writes.
+
+Do not add any of these files in 5A-3B.
+
+## 70. Questions deferred to 5A-3C
+
+- Exact database DDL for provider subscriptions, provider events, entitlement history, constraints, indexes, and RLS.
+- Exact StoreKit product IDs after App Store Connect product creation.
+- Exact Apple verifier deployment target after a compatibility spike.
+- Exact Supabase function names and `supabase/config.toml` entries.
+- Exact Apple secret names and rotation runbook.
+- Whether TestFlight sandbox IAP uses staging Supabase or an explicit internal sandbox entitlement path.
+- Whether Apple grace period is enabled for launch.
+- Final account-conflict support copy.
+- Final subscription-management copy and link strategy for Apple subscribers.
+- Event retention duration for provider ledgers and any encrypted incident payload store.
+- Operator dashboard/reporting surface for conflicts, dead letters, and reconciliation.
+
+## 71. Explicit non-actions taken in 5A-3B
+
+This checkpoint did not:
+
+- Add migrations, database tables, RLS policies, constraints, functions, RPCs, or cron jobs.
+- Add Supabase Edge Functions or deploy existing functions.
+- Add Apple App Store Server API keys, secrets, products, agreements, notification URLs, or dashboard configuration.
+- Add a verifier service or Apple server library dependency.
+- Change StoreKit client runtime code, native projects, iOS signing, Android code, or Capacitor configuration.
+- Change Stripe checkout, Stripe portal, Stripe webhook behavior, Supabase Auth, entitlement runtime behavior, gameplay, GTM, analytics, or marketing pixels.
+- Add analytics events or vendor-specific tracking.
+- Build, upload, archive, release, merge, deploy, or create a PR.
