@@ -82,4 +82,15 @@ describe("stripe-webhook Edge Function structure", () => {
     expect(source).toContain("catch (error)");
     expect(source).toContain('return json({ error: "Webhook processing failed." }, 500, request, env)');
   });
+
+  it("uses the shared provider-transition adapter instead of a private-schema RPC fallback", () => {
+    const adapter = readFileSync(join(process.cwd(), "supabase/functions/_shared/stripeProviderTransition.ts"), "utf8");
+    expect(adapter).toContain('supabase.rpc("process_stripe_webhook_transition_event"');
+    expect(adapter).not.toMatch(/\.schema\(["']billing["']\)|billing\.process_stripe_webhook_transition_event/i);
+    const enabledPath = source.match(
+      /if \(!input\.env\.stripeProviderEnvironment \|\| input\.env\.stripeProviderNeutralConfigError \|\| !input\.payloadHash\)([\s\S]*?)return \{ ignoredReason: stripeProviderTransitionIgnored\(transition\) \? "stale_provider_event" : null \};/
+    )?.[1];
+    expect(enabledPath).toBeTruthy();
+    expect(enabledPath).not.toContain("upsertBillingEntitlement");
+  });
 });

@@ -3965,3 +3965,63 @@ Test coverage:
 
 Current runtime behavior remains off unless operators set the new flag and deploy the updated webhook after applying the
 matching migration to the target Supabase project.
+
+## 127. Stripe webhook service RPC bridge diagnosis
+
+Checkpoint 5C-1B2B1-F1 diagnosed the first controlled staging dual-write delivery failure. The staging feature flag had
+already been rolled back to `STRIPE_PROVIDER_NEUTRAL_DUAL_WRITE_ENABLED=false`; `STRIPE_PROVIDER_ENVIRONMENT` remained
+configured as `test`. The original metadata-only Stripe sandbox event remained failed or pending, no provider-neutral row
+was written, no legacy webhook row was written, and no access state changed.
+
+Root-cause classification: `rpc_schema_bridge_missing`.
+
+The deployed Edge Function used the Supabase service client with the default PostgREST schema and called:
+
+```ts
+supabase.rpc("process_stripe_webhook_transition_event", ...)
+```
+
+That unqualified RPC resolves through the exposed `public` schema. The implementation at that point existed only as
+`billing.process_stripe_webhook_transition_event(...)`, and the private `billing` schema was intentionally not exposed
+through the Data API. A staging no-write probe with a synthetic invalid provider environment confirmed:
+
+- the unqualified public RPC route could not resolve the billing-schema function;
+- selecting the `billing` PostgREST profile was rejected because the schema was not exposed;
+- provider subscriptions, provider events, entitlements, and legacy webhook events remained unchanged.
+
+Added migration:
+
+- `supabase/migrations/20260716160000_stripe_webhook_service_rpc_bridge.sql`
+
+Public transport bridge:
+
+- `public.process_stripe_webhook_transition_event(...)`
+- Same input and output contract as `billing.process_stripe_webhook_transition_event(...)`.
+- Delegates directly to `billing.process_stripe_webhook_transition_event(...)` in the same transaction.
+- Contains no provider billing logic, dynamic SQL, trigger, table, view, scheduled job, raw payload storage, analytics, or
+  browser-facing behavior.
+- Uses `SECURITY INVOKER`, a locked search path, and fully schema-qualified private function delegation.
+- Revokes `public`, `anon`, and `authenticated`; grants execute only to `service_role`.
+
+The public-schema function is only an RPC transport bridge for the trusted Edge Function. Provider billing data and
+business logic remain private in the `billing` schema, and browser roles cannot execute the bridge.
+
+Coverage added:
+
+- `supabase/tests/stripe_webhook_service_rpc_bridge.sql` exercises the public bridge with synthetic data for invalid
+  environment no-write behavior, service-role reachability, active metadata-equivalent event processing, duplicate-event
+  idempotency, summary-failure rollback, result privacy, and browser-role denial.
+- `supabase/tests/stripe_webhook_service_rpc_bridge.integration.test.ts` is an opt-in local PostgREST integration test.
+  With `CGY_RUN_LOCAL_SUPABASE_INTEGRATION=1` and local Supabase running, it calls the same unqualified
+  `supabase.rpc("process_stripe_webhook_transition_event", ...)` path used by the Edge Function and verifies that the
+  public bridge resolves without exposing the `billing` schema.
+- `supabase/tests/stripe_webhook_service_rpc_bridge.structure.test.ts` guards the migration contract and privilege posture.
+
+No remote migration was applied by this checkpoint. No webhook was deployed. Staging dual-write remained disabled. The
+original failed Stripe event was not replayed or manually resent. Because that original event may be retried by Stripe and
+because the flag is disabled, a future post-fix verification should create a new controlled metadata-only event after
+promoting the bridge to staging.
+
+Next checkpoint: promote the bridge migration to staging, deploy the already-updated `stripe-webhook` only if needed for
+the target environment, re-enable staging dual-write, and run one fresh controlled metadata-only Stripe sandbox event to
+verify provider-neutral and legacy ledgers end to end.

@@ -109,7 +109,7 @@ describe("Stripe provider-neutral transition helpers", () => {
     expect(stripeProviderTransitionIgnored({ ...processedRow, result: "stale_event_ignored", processed: false })).toBe(true);
   });
 
-  it("calls the transition RPC with normalized fields and accepts a single returned row", async () => {
+  it("calls the public service bridge RPC with normalized fields and accepts a single returned row", async () => {
     const calls: Array<{ functionName: string; args: Record<string, unknown> }> = [];
     const row = await processStripeProviderTransition(
       {
@@ -139,6 +139,7 @@ describe("Stripe provider-neutral transition helpers", () => {
     expect(row).toBe(processedRow);
     expect(calls).toHaveLength(1);
     expect(calls[0]?.functionName).toBe("process_stripe_webhook_transition_event");
+    expect(calls[0]?.functionName).not.toContain("billing.");
     expect(calls[0]?.args).toMatchObject({
       p_provider_environment: "live",
       p_provider_event_ref: "evt_123",
