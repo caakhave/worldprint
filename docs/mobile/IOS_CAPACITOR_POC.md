@@ -139,13 +139,19 @@ The app-side/runtime foundations are now in place and covered by focused unit an
 - Frame-by-frame screen recording is the recommended inspection method for the launch screen on physical devices.
 - No archive or TestFlight upload has occurred.
 
-Broader physical-device visual QA still required before the first archive:
+## Physical iPhone 14 QA
 
-- Home-screen icon appearance
-- App Library icon appearance
-- Landscape-left and landscape-right launch-branding behavior
-- Startup into the expected production app shell
-- Existing Universal Link and auth-recovery behavior remains intact
+Checkpoint 4H-6 physical iPhone 14 QA passed for Can You Geo `1.0.0 (1)`.
+
+- App icon: Home Screen showed the approved globe-only icon with no wordmark inside the icon. The icon was centered, sharp, unclipped, and had no white or transparent corners. The app label was correct. App Library/Search showed the same correct icon.
+- Launch branding: the previously confirmed full globe plus `Can You Geo?` splash result remained passed. The full-logo splash appeared correctly for approximately one second, showed no spinner, showed no Capacitor logo, and continued into the app normally. The launch screen also had no white flash, no clipping or stretching, and passed in portrait, landscape left, and landscape right.
+- Runtime and navigation: the expected Can You Geo production app shell opened with no local development URL, Capacitor placeholder, blank screen, or crash. The Play hub opened, at least one sample or preview game opened, gameplay remained usable in landscape, portrait navigation/account surfaces remained usable, nothing was hidden by the notch/status bar/home indicator, and no broken layout or unexpected scrolling appeared.
+- Lifecycle: cold relaunch, warm relaunch, background/foreground, and app-switch return all passed without a blank or frozen screen.
+- Universal Links: a normal non-sensitive `canyougeo.com` link opened the installed app, routed safely to the expected location, and did not show a blank screen or redirect loop.
+- Authentication recovery: the established approved QA procedure passed. The recovery link opened the installed app, the intended reset/recovery route was reached, and no blank screen or redirect loop occurred. Do not record the QA email, password, callback URL, token, code, user id, or session values.
+- Additional defects or observations: none.
+- Not checked in this checkpoint: none of the requested physical iPhone 14 QA items were left untested.
+- No archive, IPA export, TestFlight upload, App Store action, version/build change, signing change, PR, merge, deployment, or Android change occurred.
 
 Remaining release/configuration work:
 
@@ -153,7 +159,7 @@ Remaining release/configuration work:
 - TestFlight and App Store submission.
 - App Store production signing and release provisioning review.
 - TestFlight archive/export/upload after remaining release QA passes.
-- Broader physical-device testing beyond the iPhone 14 development launch and Universal Link/auth validation.
+- Additional physical-device coverage beyond the iPhone 14 if desired before release.
 - iPad UI and metadata decision if universal iPad support is desired later.
 - Optional future push notifications.
 - Optional future native sharing.

@@ -171,7 +171,7 @@ describe("iOS brand assets", () => {
     expect(storyboard).not.toMatch(/Capacitor/u);
   });
 
-  it("documents the approved assets and scoped physical launch-branding pass", () => {
+  it("documents the approved assets and physical iPhone QA pass", () => {
     const docs = readFileSync(iosDocsPath, "utf8");
     expect(docs).toContain("approved globe-only image is the iOS app icon");
     expect(docs).toContain("approved full globe-plus-wordmark image is the launch-screen artwork");
@@ -187,9 +187,18 @@ describe("iOS brand assets", () => {
     expect(docs).not.toContain("Root cause: the launch storyboard used");
     expect(docs).toContain("Checkpoint 4H-5C physical iPhone 14 visual check passed");
     expect(docs).toContain("approved full globe plus `Can You Geo?` splash artwork appeared correctly");
-    expect(docs).toContain("Broader physical-device visual QA still required before the first archive");
+    expect(docs).toContain("Checkpoint 4H-6 physical iPhone 14 QA passed for Can You Geo `1.0.0 (1)`");
+    expect(docs).toContain("Home Screen showed the approved globe-only icon with no wordmark inside the icon");
+    expect(docs).toContain("passed in portrait, landscape left, and landscape right");
+    expect(docs).toContain("The Play hub opened, at least one sample or preview game opened");
+    expect(docs).toContain("cold relaunch, warm relaunch, background/foreground, and app-switch return all passed");
+    expect(docs).toContain("a normal non-sensitive `canyougeo.com` link opened the installed app");
+    expect(docs).toContain("the intended reset/recovery route was reached");
+    expect(docs).toContain("Do not record the QA email, password, callback URL, token, code, user id, or session values");
+    expect(docs).toContain("Additional defects or observations: none");
+    expect(docs).toContain("none of the requested physical iPhone 14 QA items were left untested");
     expect(docs).toContain("Frame-by-frame screen recording is the recommended inspection method");
     expect(docs).toContain("No archive or TestFlight upload has occurred");
-    expect(docs).not.toContain("Home-screen icon appearance passed");
+    expect(docs).toContain("No archive, IPA export, TestFlight upload, App Store action");
   });
 });
