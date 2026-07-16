@@ -3173,3 +3173,74 @@ Focused tests:
 Next recommended checkpoint: `5B-1B provider-neutral resolver design and dry-run fixtures`, or the separately approved
 next slice of the 5B database foundation. Do not deploy or write to this schema until the resolver, Stripe backfill/dual-write,
 and rollback checks are implemented and validated.
+
+---
+
+Checkpoint 5B-1B status: side-effect-free provider-neutral entitlement resolver. This checkpoint adds the private
+computation function and local executable fixture coverage only. It does not deploy the migration, backfill Stripe,
+dual-write provider state, update `public.entitlements`, change Stripe runtime behavior, or add Apple/StoreKit
+implementation.
+
+## 121. Provider-neutral resolver implementation status
+
+Added migration:
+
+- `supabase/migrations/20260716100000_provider_neutral_entitlement_resolver.sql`
+
+Resolver function:
+
+- `billing.resolve_effective_entitlement(p_user_id uuid, p_environment text, p_as_of timestamptz default now())`
+- Returns one normalized decision row with:
+  - `effective_plan`
+  - `effective_access_status`
+  - `grants_pro`
+  - `active_provider_count`
+  - `active_providers`
+  - `management_provider`
+  - `multiple_active_providers`
+  - `effective_period_end`
+  - `cancel_at_period_end`
+  - `grace_period_end`
+  - `requires_reconciliation`
+  - `computed_at`
+  - sanitized `decision_reason`
+
+Implemented access rules:
+
+- `active` grants Pro only within a verified current period.
+- `cancelled_active_until_period_end` grants Pro until `current_period_end`.
+- `grace_period` grants Pro until `grace_period_ends_at` and surfaces reconciliation.
+- `pending`, `billing_retry`, `expired`, `revoked`, `refunded`, `paused`, and `unknown_needs_reconciliation` do not grant Pro by themselves.
+- Access intervals are start-inclusive and end-exclusive: `p_as_of >= current_period_start` when present and `p_as_of < current_period_end` or `p_as_of < grace_period_ends_at`.
+- Unknown or missing required timestamps produce a conservative Free result with reconciliation surfaced unless another provider independently grants Pro.
+
+Environment behavior:
+
+- Caller supplies a canonical resolver environment: `production` or `sandbox`.
+- `production` evaluates Stripe `live`, Apple `production`, and Google Play `production` rows.
+- `sandbox` evaluates Stripe `test`, Apple `sandbox`, and Google Play `test` rows.
+- Sandbox rows do not grant production Pro, and production rows are not compared with sandbox rows.
+
+Multiple-provider behavior:
+
+- Pro is granted if at least one environment-matching provider row independently grants Pro.
+- One provider expiring, retrying, refunding, revoking, or needing reconciliation does not remove access from another valid provider.
+- Multiple valid providers return `management_provider = 'multiple'` and `multiple_active_providers = true`.
+- Effective period end is the latest access-granting period end among active providers.
+
+Security and side-effect posture:
+
+- The function lives in the private `billing` schema.
+- `SECURITY INVOKER` is used with a locked search path.
+- Execute is revoked from `public`, `anon`, and `authenticated`; only `service_role` is granted execute.
+- The result does not expose Stripe customer/subscription ids, Apple transaction/original transaction ids, Google purchase tokens, provider event identifiers, payload hashes, emails, or raw payloads.
+- The resolver reads private provider rows only and does not mutate `public.entitlements`, `billing.provider_subscriptions`, `billing.provider_events`, analytics, or runtime application state.
+
+Fixture coverage:
+
+- `supabase/tests/provider_neutral_entitlement_resolver.sql` runs executable local database fixtures for no-record, single-provider, dual-provider, timestamp-boundary, environment-isolation, management-provider, reconciliation, ordering/history, deleted-account retention, execution-privilege, and side-effect checks.
+- Synthetic legacy Stripe parity fixtures cover Free, active monthly Pro, active annual Pro, cancelling at period end, expired, payment failure/retry, and reactivated renewal outcomes without reading or copying production data.
+- `supabase/tests/provider_neutral_entitlement_resolver.structure.test.ts` guards the function contract, environment mapping, privilege posture, multi-provider OR semantics, and no-mutation boundary.
+
+Next recommended checkpoint: `5B-1C provider-neutral compatibility writer dry-run`, or another explicitly approved slice
+that proves Stripe backfill/dual-write parity before anything writes app-readable entitlement state.
