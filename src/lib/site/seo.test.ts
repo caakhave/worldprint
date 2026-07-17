@@ -27,6 +27,7 @@ describe("site SEO helpers", () => {
     expect(indexedPaths).toContain("/play/pattern-atlas/");
     expect(indexedPaths).toContain("/play/order-atlas/");
     expect(indexedPaths).toContain("/sources/");
+    expect(indexedPaths).toContain("/account-deletion/");
     expect(indexedPaths).not.toContain("/internal/order-atlas-review/");
     expect(indexedPaths).not.toContain("/sign-in/");
     expect(indexedPaths).not.toContain("/account/");
