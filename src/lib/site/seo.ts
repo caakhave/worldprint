@@ -135,6 +135,14 @@ export const PUBLIC_INDEXED_ROUTES: PublicRouteMetadata[] = [
     priority: 0.42
   },
   {
+    path: "/account-deletion/",
+    title: "Account Deletion - Can You Geo?",
+    description:
+      "Request deletion of a Can You Geo account and associated personal data, with subscription and retention notes.",
+    changeFrequency: "yearly",
+    priority: 0.36
+  },
+  {
     path: "/legal/",
     title: "Terms, Privacy & Accessibility - Can You Geo?",
     description:

@@ -196,6 +196,9 @@ describe("AccountStatusClient", () => {
     expect(screen.getByRole("link", { name: "View saved stats" })).toHaveAttribute("href", "/account/stats#saved-stats");
     expect(screen.getByRole("link", { name: "Compare plans" })).toHaveAttribute("href", "/upgrade");
     expect(screen.getByRole("link", { name: "Email support" })).toHaveAttribute("href", CONTACT_LINKS.accountHelp.href);
+    expect(screen.getByRole("heading", { name: "Delete account" })).toBeVisible();
+    expect(screen.getByText(/Requesting deletion is separate from signing out or canceling a subscription/i)).toBeVisible();
+    expect(screen.getByRole("link", { name: "Delete account" })).toHaveAttribute("href", "/account-deletion");
     expect(screen.getByRole("button", { name: "Sign out" })).toBeVisible();
     expect(await screen.findByText("Updates are off. Account, billing, password reset, and security emails still work.")).toBeVisible();
     expect(screen.queryByText("Use this only if support asks for it.")).not.toBeInTheDocument();
@@ -303,6 +306,7 @@ describe("AccountStatusClient", () => {
     expect(screen.getByRole("link", { name: "Start Pro" })).toHaveAttribute("href", "/upgrade");
     expect(screen.getByRole("link", { name: "Continue free" })).toHaveAttribute("href", "/sign-up");
     expect(screen.queryByText("Player profile")).not.toBeInTheDocument();
+    expect(screen.queryByRole("link", { name: "Delete account" })).not.toBeInTheDocument();
     expect(screen.queryByText("Account sync ready")).not.toBeInTheDocument();
     expect(screen.queryByRole("link", { name: "View saved stats" })).not.toBeInTheDocument();
   });
@@ -319,6 +323,20 @@ describe("AccountStatusClient", () => {
     expect(screen.getByText(/mobile purchases are not available in this preview/i)).toBeVisible();
     expect(screen.getByRole("link", { name: "View plans" })).toHaveAttribute("href", "/upgrade");
     expect(screen.queryByRole("link", { name: "Start Pro" })).not.toBeInTheDocument();
+  });
+
+  it("keeps the account deletion entry as an internal route in native builds", () => {
+    vi.stubEnv("NEXT_PUBLIC_CGY_NATIVE_APP", "1");
+    getPlatformMock.mockReturnValue("android");
+
+    render(<AccountStatusClient />);
+
+    const deletionLink = screen.getByRole("link", { name: "Delete account" });
+    expect(deletionLink).toHaveAttribute("href", "/account-deletion");
+    expect(deletionLink.getAttribute("href")).not.toContain("player@example.com");
+    expect(deletionLink.getAttribute("href")).not.toContain("11111111-2222-4333-8444-555555555555");
+    expect(accountMock.state.signOut).not.toHaveBeenCalled();
+    expect(routerMock.push).not.toHaveBeenCalled();
   });
 });
 

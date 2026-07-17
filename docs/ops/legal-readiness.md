@@ -17,10 +17,11 @@ This document tracks the current Can You Geo public legal/support copy and the r
   - User responsibilities, acceptable use, no abuse, no account attacks, and no payment fraud.
   - Service changes and no uninterrupted-availability guarantee.
   - Privacy categories for Supabase Auth, profiles, entitlements, game runs, stats, Stripe billing state, Resend/Supabase transactional email, owner/admin notifications, Google Workspace support email, browser storage, analytics, and marketing opt-in.
-  - Data deletion and support requests through `support@canyougeo.com`.
+  - Data deletion and support requests through `/account-deletion/` and `support@canyougeo.com`.
   - Accessibility support and issue-reporting instructions.
 - `/support` now gives users a clear support destination and explains what to include for:
   - account/sign-in help
+  - account deletion requests through the dedicated public deletion page
   - billing help, including using the account billing portal when signed in
   - bug and accessibility reports
   - data/source issues
@@ -35,7 +36,7 @@ This document tracks the current Can You Geo public legal/support copy and the r
 - Confirm whether any pre-checkout, post-checkout, and renewal reminder language is required for the launch jurisdictions.
 - Confirm whether the game needs contest/sweepstakes language if public leaderboards, prizes, rankings, badges with value, or competitions are added later.
 - Confirm data retention periods and deletion workflow for Supabase Auth users, profiles, entitlements, runs, stats, Stripe records, Resend logs, Google Workspace support mail, and backups.
-- Use `docs/ops/user-data-requests.md` as the current operator SOP for access/export/correction/deletion requests, but keep retention timelines and legal exceptions under attorney review.
+- Use `docs/ops/user-data-requests.md` and `/account-deletion/` as the current request-based operator workflow for access/export/correction/deletion requests, but keep retention timelines, destructive execution, and legal exceptions under attorney review.
 - Confirm international transfer language, processor/subprocessor disclosures, and whether a Data Processing Addendum is needed.
 - Confirm accessibility statement language and any required accommodations workflow.
 - Confirm trademark/copyright ownership and third-party data/source/license disclosures.
@@ -66,6 +67,7 @@ This document tracks the current Can You Geo public legal/support copy and the r
 - Staging uses Stripe sandbox/test values only. Staging copy should not imply live charges on `test.canyougeo.com`.
 - Owner/admin billing notifications are operational alerts, not marketing.
 - Support requests should go to `support@canyougeo.com`.
+- Account deletion requests should start at `/account-deletion/` or `support@canyougeo.com`; this does not automatically delete accounts or cancel subscriptions.
 - General friendly feedback may go to `hello@canyougeo.com`.
 
 ## Reference Starting Points For Counsel/Ops

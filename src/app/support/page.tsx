@@ -38,6 +38,18 @@ export default function SupportPage() {
         </article>
 
         <article className="about-card map-texture-panel">
+          <p className="eyebrow">Privacy</p>
+          <h2>Account deletion.</h2>
+          <p>
+            You can request deletion of a Can You Geo account and associated personal data without reinstalling the app. Support may
+            need to verify ownership before any account data is removed.
+          </p>
+          <Link className="button-secondary" href="/account-deletion">
+            Request account deletion
+          </Link>
+        </article>
+
+        <article className="about-card map-texture-panel">
           <p className="eyebrow">Billing</p>
           <h2>Plan and payment help.</h2>
           <p>

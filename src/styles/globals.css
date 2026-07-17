@@ -9605,6 +9605,36 @@ button.pro-price-option:focus-visible {
   overflow-wrap: anywhere;
 }
 
+.account-deletion-copy-box,
+.account-deletion-confirmation {
+  border: 1px solid rgb(164 216 205 / 0.2);
+  border-radius: 8px;
+  padding: 0.9rem;
+  background:
+    linear-gradient(135deg, rgb(164 216 205 / 0.08), transparent 60%),
+    rgb(4 14 18 / 0.32);
+}
+
+.account-deletion-copy-box strong {
+  color: var(--parchment);
+  overflow-wrap: anywhere;
+}
+
+.account-deletion-confirmation {
+  display: grid;
+  gap: 0.75rem;
+}
+
+.account-deletion-confirmation summary {
+  color: var(--parchment);
+  cursor: pointer;
+  font-weight: 800;
+}
+
+.account-deletion-confirmation .button {
+  justify-self: start;
+}
+
 @media (max-width: 1100px) {
   .homepage-section-layout,
   .homepage-answer-layout {

@@ -25,6 +25,7 @@ export function LegalContent() {
         <nav className="legal-quick-links" aria-label="Legal sections">
           <Link href="/terms">Terms</Link>
           <Link href="/privacy">Privacy</Link>
+          <Link href="/account-deletion">Account deletion</Link>
           <Link href="/legal#accessibility-heading">Accessibility</Link>
           <Link href="/support">Support</Link>
         </nav>
@@ -211,13 +212,15 @@ export function LegalContent() {
             <p>
               We keep account, support, billing, and gameplay information as long as needed to provide the service, maintain records,
               resolve disputes, prevent abuse, or comply with legal obligations. You may request deletion or support with account data
-              by contacting <a href={CONTACT_LINKS.privacyLegalRequest.href}>{SUPPORT_EMAIL}</a>.
+              from the <Link href="/account-deletion">account deletion page</Link> or by contacting{" "}
+              <a href={CONTACT_LINKS.privacyLegalRequest.href}>{SUPPORT_EMAIL}</a>.
             </p>
 
             <h3>Your Choices</h3>
             <p>
               You can play sample content without signing in, sign out at any time, turn marketing updates on or off from your
-              account, and request access, correction, deletion, or support by contacting{" "}
+              account, and request access, correction, deletion, or support from the{" "}
+              <Link href="/account-deletion">account deletion page</Link> or by contacting{" "}
               <a href={CONTACT_LINKS.privacyLegalRequest.href}>{SUPPORT_EMAIL}</a>.
             </p>
 
@@ -277,7 +280,9 @@ export function LegalContent() {
             <p>
               Support, account help, privacy/legal requests, billing questions, bug reports, and data/source concerns can be sent to{" "}
               <a href={CONTACT_LINKS.accountHelp.href}>{SUPPORT_EMAIL}</a>. The <Link href="/support">support page</Link> explains
-              what to include and when to use your Support ID.
+              what to include and when to use your Support ID. The{" "}
+              <Link href="/account-deletion">account deletion page</Link> explains how to request deletion and how subscription
+              cancellation is handled separately.
             </p>
           </section>
         </article>
