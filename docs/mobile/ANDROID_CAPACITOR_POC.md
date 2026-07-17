@@ -24,6 +24,7 @@ This proof of concept packages the existing static-export Next.js app in a Capac
 - Target SDK: `36`
 - Android Gradle Plugin: `8.13.0`
 - Gradle: `8.14.3`
+- First internal release version code/name: `1` / `1.0.0`
 
 ## Architecture
 
@@ -73,6 +74,15 @@ adb shell monkey -p com.canyougeo.app -c android.intent.category.LAUNCHER 1
 ```
 
 The validated emulator for Checkpoint 5D-1A was `Medium_Phone_API_36.1` (`emulator-5554`, `sdk_gphone64_arm64`, Android API 36.1 Play Store image).
+
+Build a signed release AAB only after secure upload signing and a verified nonproduction backend are available:
+
+```bash
+cd android
+./gradlew clean bundleRelease
+```
+
+Before running the release task, supply `CGY_ANDROID_UPLOAD_STORE_FILE`, `CGY_ANDROID_UPLOAD_STORE_PASSWORD`, `CGY_ANDROID_UPLOAD_KEY_ALIAS`, and `CGY_ANDROID_UPLOAD_KEY_PASSWORD` through an ephemeral shell or password-manager assisted workflow that does not echo secrets. The source-controlled Gradle config reads only those environment variable names and fails release tasks when any are absent. The AAB output path is `android/app/build/outputs/bundle/release/app-release.aab`, and that artifact must not be committed or uploaded outside the intended Google Play internal-testing flow.
 
 ## Native Behavior
 

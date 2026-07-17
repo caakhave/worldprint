@@ -26,7 +26,7 @@ describe("Android release metadata", () => {
     expect(capacitorConfig).toContain('loggingBehavior: "none"');
   });
 
-  it("targets the approved Android SDK baseline without release signing", () => {
+  it("targets the approved Android SDK baseline and first internal release version", () => {
     const variables = readFileSync("android/variables.gradle", "utf8");
     const appBuild = readFileSync("android/app/build.gradle", "utf8");
 
@@ -34,8 +34,36 @@ describe("Android release metadata", () => {
     expect(variables).toContain("compileSdkVersion = 36");
     expect(variables).toContain("targetSdkVersion = 36");
     expect(appBuild).toContain('versionCode 1');
-    expect(appBuild).toContain('versionName "1.0"');
-    expect(appBuild).not.toContain("signingConfig signingConfigs.release");
+    expect(appBuild).toContain('versionName "1.0.0"');
+  });
+
+  it("keeps Android release signing isolated to upload-key environment variables", () => {
+    const appBuild = readFileSync("android/app/build.gradle", "utf8");
+    const androidGitignore = readFileSync("android/.gitignore", "utf8");
+
+    expect(appBuild).toContain("CGY_ANDROID_UPLOAD_STORE_FILE");
+    expect(appBuild).toContain("CGY_ANDROID_UPLOAD_STORE_PASSWORD");
+    expect(appBuild).toContain("CGY_ANDROID_UPLOAD_KEY_ALIAS");
+    expect(appBuild).toContain("CGY_ANDROID_UPLOAD_KEY_PASSWORD");
+    expect(appBuild).toContain("Release signing requires environment variables");
+    expect(appBuild).toContain("signingConfig signingConfigs.release");
+    expect(appBuild).not.toMatch(/debug\.keystore|\.android\/debug|storePassword\s+['"]/);
+    expect(appBuild).not.toContain("/Users/");
+    expect(appBuild).not.toContain("canyougeo-upload.jks");
+    expect(androidGitignore).toContain("*.jks");
+    expect(androidGitignore).toContain("*.keystore");
+    expect(androidGitignore).toContain("keystore.properties");
+    expect(androidGitignore).toContain("upload-keystore.properties");
+    expect(androidGitignore).toContain("signing.properties");
+  });
+
+  it("forces native web exports to keep billing and analytics disabled", () => {
+    const packageJson = readFileSync("package.json", "utf8");
+
+    expect(packageJson).toContain("NEXT_PUBLIC_CGY_NATIVE_APP=1");
+    expect(packageJson).toContain("NEXT_PUBLIC_CGY_NATIVE_HOSTED_ORIGIN=https://canyougeo.com");
+    expect(packageJson).toContain("NEXT_PUBLIC_BILLING_MODE=disabled");
+    expect(packageJson).toContain("NEXT_PUBLIC_ANALYTICS_ENABLED=false");
   });
 
   it("wires the Capacitor Splash Screen plugin into Android sync output", () => {

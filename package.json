@@ -7,7 +7,7 @@
   "scripts": {
     "dev": "next dev",
     "build": "next build",
-    "build:native": "NEXT_PUBLIC_CGY_NATIVE_APP=1 NEXT_PUBLIC_CGY_NATIVE_HOSTED_ORIGIN=https://canyougeo.com next build && node tools/mobile/normalizeNextNativeExport.mjs out",
+    "build:native": "NEXT_PUBLIC_CGY_NATIVE_APP=1 NEXT_PUBLIC_CGY_NATIVE_HOSTED_ORIGIN=https://canyougeo.com NEXT_PUBLIC_BILLING_MODE=disabled NEXT_PUBLIC_ANALYTICS_ENABLED=false next build && node tools/mobile/normalizeNextNativeExport.mjs out",
     "mobile:sync:android": "pnpm build:native && pnpm exec cap sync android",
     "mobile:open:android": "pnpm exec cap open android",
     "mobile:sync:ios": "pnpm build:native && pnpm exec cap sync ios",

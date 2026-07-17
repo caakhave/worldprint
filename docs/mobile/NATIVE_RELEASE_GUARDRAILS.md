@@ -62,6 +62,12 @@ Native builds do not start Stripe checkout, open Stripe customer portal, redirec
 
 Web builds preserve the existing Stripe checkout, portal, and checkout analytics behavior. StoreKit and Google Play Billing remain deferred.
 
+## Android Release Signing Boundary
+
+Android release signing is configured only for release variants and reads upload-key inputs from `CGY_ANDROID_UPLOAD_*` environment variables. Release Gradle tasks fail when signing inputs are missing; debug builds remain unchanged and must not be used for Play upload.
+
+The upload keystore, exported certificates, signing-property files, passwords, AAB/APK artifacts, tester lists, and Play Console evidence stay outside the repository. See `docs/mobile/ANDROID_INTERNAL_RELEASE.md` for the non-secret internal-testing release procedure.
+
 ## Analytics And Consent Boundary
 
 Native builds do not initialize GTM, GA4, Meta, TikTok, Reddit, marketing pixels, or the marketing-consent UI. Native app code still may call the neutral analytics helper, but the helper is disabled for native builds and must not deliver events to a live provider.
