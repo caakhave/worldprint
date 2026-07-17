@@ -126,6 +126,8 @@ describe("Stripe webhook provider-neutral transition migration", () => {
       "active transition result",
       "active transition preserves Stripe legacy fields",
       "transition does not write legacy webhook ledger",
+      "future-period payment success after failure",
+      "future-period recovery keeps legacy Stripe fields active",
       "already processed transition restores legacy fields",
       "payload conflict leaves Stripe legacy fields unchanged",
       "payload conflict is rolled back to the prior processed provider event",

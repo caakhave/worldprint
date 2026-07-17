@@ -281,14 +281,18 @@ declare
   r record;
   v_now timestamptz := '2026-07-16 12:00:00+00'::timestamptz;
   v_future timestamptz := '2026-08-16 12:00:00+00'::timestamptz;
+  v_future_period_start timestamptz := '2026-08-16 13:00:00+00'::timestamptz;
+  v_future_period_end timestamptz := '2026-09-16 13:00:00+00'::timestamptz;
   v_user uuid := '00000000-0000-0000-0000-000000055001'::uuid;
   v_apple_user uuid := '00000000-0000-0000-0000-000000055002'::uuid;
   v_test_user uuid := '00000000-0000-0000-0000-000000055003'::uuid;
+  v_future_start_user uuid := '00000000-0000-0000-0000-000000055004'::uuid;
   v_failure_user uuid := '00000000-0000-0000-0000-000000055501'::uuid;
 begin
   perform pg_temp.add_profile(v_user);
   perform pg_temp.add_profile(v_apple_user);
   perform pg_temp.add_profile(v_test_user);
+  perform pg_temp.add_profile(v_future_start_user);
   perform pg_temp.add_profile(v_failure_user);
 
   select * into strict r
@@ -337,6 +341,58 @@ begin
     'active transition writes processed provider event'
   );
   perform pg_temp.assert_eq_int((select count(*)::integer from public.stripe_webhook_events), 0, 'transition does not write legacy webhook ledger');
+
+  select * into strict r
+  from pg_temp.process_transition(
+    'future_period_failure',
+    'invoice.payment_failed',
+    v_future_start_user,
+    'sub_fixture_5c1b1_future_period',
+    'past_due',
+    v_now + interval '2 minutes',
+    v_future_period_end,
+    'live',
+    'monthly',
+    v_future_period_start,
+    false,
+    'price_fixture_5c1b1_future_period'
+  );
+  perform pg_temp.expect_transition_result(r.result, 'processed', 'future-period payment failure transition');
+  perform pg_temp.expect_entitlement(v_future_start_user, 'free', 'past_due', false, null, 'future-period payment failure removes Pro');
+  perform pg_temp.expect_legacy_fields(
+    v_future_start_user,
+    'cus_fixture_5c1b1_future_period_failure',
+    'sub_fixture_5c1b1_future_period',
+    'price_fixture_5c1b1_future_period',
+    'past_due',
+    'future-period failure records Stripe legacy fields'
+  );
+
+  select * into strict r
+  from pg_temp.process_transition(
+    'future_period_recovered',
+    'invoice.payment_succeeded',
+    v_future_start_user,
+    'sub_fixture_5c1b1_future_period',
+    'active',
+    v_now + interval '3 minutes',
+    v_future_period_end,
+    'live',
+    'monthly',
+    v_future_period_start,
+    false,
+    'price_fixture_5c1b1_future_period'
+  );
+  perform pg_temp.expect_transition_result(r.result, 'processed', 'future-period payment success after failure');
+  perform pg_temp.expect_entitlement(v_future_start_user, 'pro', 'active', false, v_future_period_end, 'future-period payment success restores Pro');
+  perform pg_temp.expect_legacy_fields(
+    v_future_start_user,
+    'cus_fixture_5c1b1_future_period_recovered',
+    'sub_fixture_5c1b1_future_period',
+    'price_fixture_5c1b1_future_period',
+    'active',
+    'future-period recovery keeps legacy Stripe fields active'
+  );
 
   update public.entitlements
   set stripe_customer_id = null,

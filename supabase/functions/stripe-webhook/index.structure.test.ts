@@ -77,6 +77,24 @@ describe("stripe-webhook Edge Function structure", () => {
     expect(compactSource).toContain("return ignored(event.type)");
   });
 
+  it("extracts invoice subscription IDs from legacy and current Stripe invoice shapes", () => {
+    expect(source).toContain("function invoiceSubscriptionId(invoice: Stripe.Invoice): string | null");
+    expect(source).toContain("supportedInvoice.subscription");
+    expect(source).toContain("supportedInvoice.parent?.subscription_details?.subscription");
+
+    const failedBlock = source.match(/if \(event\.type === "invoice\.payment_failed"\)([\s\S]*?)if \(event\.type === "invoice\.payment_succeeded"\)/)?.[1];
+    expect(failedBlock).toBeTruthy();
+    expect(failedBlock).toContain("const subscriptionId = invoiceSubscriptionId(invoice)");
+    expect(failedBlock).toContain('return ignored("missing_subscription"');
+    expect(failedBlock).not.toContain("idValue(invoice.subscription)");
+
+    const succeededBlock = source.match(/if \(event\.type === "invoice\.payment_succeeded"\)([\s\S]*?)return ignored\(event\.type\);/)?.[1];
+    expect(succeededBlock).toBeTruthy();
+    expect(succeededBlock).toContain("const subscriptionId = invoiceSubscriptionId(invoice)");
+    expect(succeededBlock).toContain('return ignored("missing_subscription"');
+    expect(succeededBlock).not.toContain("idValue(invoice.subscription)");
+  });
+
   it("treats stale provider events as ignored and provider transition failures as retryable webhook failures", () => {
     expect(source).toContain('return { ignoredReason: stripeProviderTransitionIgnored(transition) ? "stale_provider_event" : null }');
     expect(source).toContain("catch (error)");

@@ -3211,7 +3211,7 @@ Implemented access rules:
 - `cancelled_active_until_period_end` grants Pro until `current_period_end`.
 - `grace_period` grants Pro until `grace_period_ends_at` and surfaces reconciliation.
 - `pending`, `billing_retry`, `expired`, `revoked`, `refunded`, `paused`, and `unknown_needs_reconciliation` do not grant Pro by themselves.
-- Access intervals are start-inclusive and end-exclusive: `p_as_of >= current_period_start` when present and `p_as_of < current_period_end` or `p_as_of < grace_period_ends_at`.
+- Access for authoritative active/current provider rows is end-exclusive: `p_as_of < current_period_end` or `p_as_of < grace_period_ends_at`. A future `current_period_start` can occur with Stripe Test Clock payloads and must not downgrade active/current provider access by itself.
 - Unknown or missing required timestamps produce a conservative Free result with reconciliation surfaced unless another provider independently grants Pro.
 
 Environment behavior:
@@ -3756,11 +3756,11 @@ Status normalization:
 
 | Stripe input | Provider-neutral status | Compatibility access consequence |
 | --- | --- | --- |
-| `active` | `active` when period end is future; otherwise reconciliation | Pro while the period is valid |
-| `trialing` | `active` when period end is future; otherwise reconciliation | Pro while the period is valid |
+| `active` | `active` when period end is future; otherwise reconciliation | Pro while the authoritative provider state remains current |
+| `trialing` | `active` when period end is future; otherwise reconciliation | Pro while the authoritative provider state remains current |
 | `active` / `trialing` with `cancel_at_period_end` | `cancelled_active_until_period_end` | Pro through the current period |
 | `past_due` or `invoice.payment_failed` | `billing_retry` | Stripe-only access becomes Free / `past_due` |
-| `invoice.payment_succeeded` with active/trialing status | `active` | Restores Pro when period is valid |
+| `invoice.payment_succeeded` with active/trialing status | `active` | Restores Pro when the provider state is current and period end is valid |
 | `incomplete` | `pending` | No Pro grant |
 | `canceled`, `unpaid`, `incomplete_expired`, deleted subscription event | `expired` | No Stripe Pro grant |
 | `paused` | `paused` | No Pro grant |
