@@ -16,10 +16,13 @@ describe("SupportPage", () => {
     expect(screen.getAllByRole("link", { name: SUPPORT_EMAIL })[0]).toHaveAttribute("href", CONTACT_LINKS.accountHelp.href);
     expect(screen.getByRole("link", { name: HELLO_EMAIL })).toHaveAttribute("href", CONTACT_LINKS.generalFeedback.href);
     expect(screen.getByRole("heading", { name: "Account help." })).toBeVisible();
+    expect(screen.getByRole("heading", { name: "Account deletion." })).toBeVisible();
+    expect(screen.getByText(/request deletion of a Can You Geo account and associated personal data/i)).toBeVisible();
     expect(screen.getByRole("heading", { name: "Plan and payment help." })).toBeVisible();
     expect(screen.getByText(/Signed-in Pro members can use Account > Manage billing to update payment details or cancel through Stripe/i)).toBeVisible();
     expect(screen.getByText(/never send passwords or full payment card numbers/i)).toBeVisible();
     expect(screen.getByRole("link", { name: "Email account help" })).toHaveAttribute("href", CONTACT_LINKS.accountHelp.href);
+    expect(screen.getByRole("link", { name: "Request account deletion" })).toHaveAttribute("href", "/account-deletion");
     expect(screen.getByRole("link", { name: "Email billing help" })).toHaveAttribute("href", CONTACT_LINKS.billingHelp.href);
     expect(screen.getByRole("link", { name: "Report a bug" })).toHaveAttribute("href", CONTACT_LINKS.bugReport.href);
     expect(screen.getByText(/Include the game, date or round when available, country, rule, or indicator/i)).toBeVisible();

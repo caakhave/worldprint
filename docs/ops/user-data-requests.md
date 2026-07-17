@@ -4,7 +4,7 @@ Last updated: 2026-07-09
 
 This document is an operator playbook for Can You Geo access, export, correction, deletion, opt-out, and billing-data questions. It is operational guidance, not legal advice. Attorney review is still needed before relying on this procedure for a larger paid launch, regulated jurisdictions, formal retention promises, or automated privacy tooling.
 
-Do not promise export or deletion timelines beyond what approved public legal copy and counsel support. Until an in-app privacy portal exists, use `support@canyougeo.com` as the intake path.
+Do not promise export or deletion timelines beyond what approved public legal copy and counsel support. Use `/account-deletion/` and `support@canyougeo.com` as the account-deletion intake path; this is a request workflow, not automatic deletion.
 
 ## Operator Guardrails
 
@@ -170,11 +170,11 @@ Use this template in the private support ticket or internal operator note, not i
 - Pass: SOP exists, data surfaces are mapped, no live user data was touched, and unresolved legal/retention items are clearly marked.
 - Needs Action: unknown data surface, unclear deletion/export owner, or public copy promises something the operator cannot execute.
 - Blocker: public copy promises deletion/export behavior that cannot be performed, or app stores personal data in an undocumented or unreviewed location.
-- Deferred: automation, in-app privacy portal, formal export tooling, data retention automation, and counsel-approved legal language can come later.
+- Deferred: destructive self-service deletion, formal export tooling, data retention automation, and counsel-approved legal language can come later.
 
 ## Follow-Ups
 
 - Attorney review for retention periods, deletion exceptions, billing/accounting retention, international privacy requirements, and public legal copy.
 - Build a reviewed export/delete helper only after the manual SOP has been exercised safely.
 - Define retention periods for support mail, provider logs, webhook ledgers, challenge email ledgers, and backups.
-- Add an in-app privacy portal only after the manual process and legal requirements are clear.
+- Expand the `/account-deletion/` request surface into a fuller in-app privacy portal only after the manual process and legal requirements are clear.
