@@ -251,6 +251,9 @@ declare
   u_legacy_monthly uuid := '00000000-0000-0000-0000-000000050130';
   u_legacy_annual uuid := '00000000-0000-0000-0000-000000050131';
   u_legacy_reactivated uuid := '00000000-0000-0000-0000-000000050132';
+  u_future_active uuid := '00000000-0000-0000-0000-000000050133';
+  u_future_cancelling uuid := '00000000-0000-0000-0000-000000050134';
+  u_future_pending uuid := '00000000-0000-0000-0000-000000050135';
   r record;
   before_entitlements integer;
   before_subscriptions integer;
@@ -264,21 +267,24 @@ begin
       u_revoked_plus_active, u_refunded_plus_active, u_unknown_plus_active, u_both_expired,
       u_different_periods, u_both_cancelling, u_sandbox_only, u_prod_and_sandbox, u_history,
       u_revocation_history, u_missing_timestamp, u_null_owner, u_legacy_monthly, u_legacy_annual,
-      u_legacy_reactivated
+      u_legacy_reactivated, u_future_active, u_future_cancelling, u_future_pending
     ]::uuid[]) as user_id
   loop
     perform pg_temp.add_profile(r.user_id);
   end loop;
 
   perform pg_temp.add_subscription(u_stripe_active, 'stripe', 'live', 'active', v_now - interval '1 day', v_end, null, 'current', 'stripe_active');
+  perform pg_temp.add_subscription(u_future_active, 'stripe', 'live', 'active', v_now + interval '30 days', v_later_end, null, 'current', 'future_active');
   perform pg_temp.add_subscription(u_apple_active, 'apple', 'production', 'active', v_now - interval '1 day', v_end, null, 'current', 'apple_active');
   perform pg_temp.add_subscription(u_google_active, 'google_play', 'production', 'active', v_now - interval '1 day', v_end, null, 'current', 'google_active');
   perform pg_temp.add_subscription(u_cancel_valid, 'stripe', 'live', 'cancelled_active_until_period_end', v_now - interval '1 day', v_end, null, 'current', 'cancel_valid', true);
+  perform pg_temp.add_subscription(u_future_cancelling, 'stripe', 'live', 'cancelled_active_until_period_end', v_now + interval '30 days', v_later_end, null, 'current', 'future_cancel_valid', true);
   perform pg_temp.add_subscription(u_cancel_expired, 'stripe', 'live', 'cancelled_active_until_period_end', v_now - interval '40 days', v_now - interval '1 day', null, 'current', 'cancel_expired', true);
   perform pg_temp.add_subscription(u_grace_valid, 'apple', 'production', 'grace_period', v_now - interval '1 day', v_end, v_end + interval '7 days', 'current', 'grace_valid');
   perform pg_temp.add_subscription(u_grace_expired, 'apple', 'production', 'grace_period', v_now - interval '40 days', v_now - interval '10 days', v_now - interval '1 day', 'current', 'grace_expired');
   perform pg_temp.add_subscription(u_retry, 'apple', 'production', 'billing_retry', v_now - interval '1 day', v_end, null, 'current', 'retry');
   perform pg_temp.add_subscription(u_pending, 'apple', 'production', 'pending', v_now - interval '1 day', null, null, 'current', 'pending');
+  perform pg_temp.add_subscription(u_future_pending, 'stripe', 'live', 'pending', v_now + interval '30 days', v_later_end, null, 'current', 'future_pending');
   perform pg_temp.add_subscription(u_expired, 'stripe', 'live', 'expired', v_now - interval '40 days', v_now - interval '1 day', null, 'current', 'expired');
   perform pg_temp.add_subscription(u_refunded, 'apple', 'production', 'refunded', v_now - interval '40 days', v_now - interval '1 day', null, 'current', 'refunded');
   perform pg_temp.add_subscription(u_revoked, 'apple', 'production', 'revoked', v_now - interval '40 days', v_now - interval '1 day', null, 'current', 'revoked');
@@ -355,14 +361,17 @@ begin
 
   perform pg_temp.expect_resolution('no provider rows', u_free, 'production', v_now, false, 'free', 'free', 'none', 0, false);
   perform pg_temp.expect_resolution('stripe active only', u_stripe_active, 'production', v_now, true, 'pro', 'active', 'stripe', 1, false);
+  perform pg_temp.expect_resolution('future-start active provider still grants', u_future_active, 'production', v_now, true, 'pro', 'active', 'stripe', 1, false);
   perform pg_temp.expect_resolution('apple active only', u_apple_active, 'production', v_now, true, 'pro', 'active', 'apple', 1, false);
   perform pg_temp.expect_resolution('google active only', u_google_active, 'production', v_now, true, 'pro', 'active', 'google_play', 1, false);
   perform pg_temp.expect_resolution('cancelled but paid through', u_cancel_valid, 'production', v_now, true, 'pro', 'cancelled_active_until_period_end', 'stripe', 1, false);
+  perform pg_temp.expect_resolution('future-start cancelling provider still grants until period end', u_future_cancelling, 'production', v_now, true, 'pro', 'cancelled_active_until_period_end', 'stripe', 1, false);
   perform pg_temp.expect_resolution('cancelled after period', u_cancel_expired, 'production', v_now, false, 'free', 'unknown_needs_reconciliation', 'none', 0, true);
   perform pg_temp.expect_resolution('grace before end', u_grace_valid, 'production', v_now, true, 'pro', 'grace_period', 'apple', 1, true);
   perform pg_temp.expect_resolution('grace after end', u_grace_expired, 'production', v_now, false, 'free', 'unknown_needs_reconciliation', 'none', 0, true);
   perform pg_temp.expect_resolution('billing retry without grace', u_retry, 'production', v_now, false, 'free', 'unknown_needs_reconciliation', 'none', 0, true);
   perform pg_temp.expect_resolution('pending does not grant', u_pending, 'production', v_now, false, 'free', 'unknown_needs_reconciliation', 'none', 0, true);
+  perform pg_temp.expect_resolution('future pending does not grant', u_future_pending, 'production', v_now, false, 'free', 'unknown_needs_reconciliation', 'none', 0, true);
   perform pg_temp.expect_resolution('expired does not grant', u_expired, 'production', v_now, false, 'free', 'free', 'none', 0, false);
   perform pg_temp.expect_resolution('refunded does not grant', u_refunded, 'production', v_now, false, 'free', 'free', 'none', 0, false);
   perform pg_temp.expect_resolution('revoked does not grant', u_revoked, 'production', v_now, false, 'free', 'free', 'none', 0, false);
@@ -394,8 +403,8 @@ begin
   perform pg_temp.assert_true(r.grants_pro, 'period start is inclusive');
 
   select * into strict r from billing.resolve_effective_entitlement(u_stripe_active, 'production', v_before);
-  perform pg_temp.assert_false(r.grants_pro, 'before current period start does not grant');
-  perform pg_temp.assert_true(r.requires_reconciliation, 'before current period start requires reconciliation');
+  perform pg_temp.assert_true(r.grants_pro, 'future current period start alone does not deny active provider');
+  perform pg_temp.assert_false(r.requires_reconciliation, 'future current period start alone does not require reconciliation');
 
   perform pg_temp.expect_resolution('sandbox-only does not grant production', u_sandbox_only, 'production', v_now, false, 'free', 'free', 'none', 0, false);
   perform pg_temp.expect_resolution('sandbox-only grants sandbox', u_sandbox_only, 'sandbox', v_now, true, 'pro', 'active', 'multiple', 2, false);

@@ -353,9 +353,12 @@ declare
   v_later timestamptz := '2026-07-16 13:00:00+00'::timestamptz;
   v_future timestamptz := '2026-08-16 12:00:00+00'::timestamptz;
   v_far_future timestamptz := '2027-07-16 12:00:00+00'::timestamptz;
+  v_future_period_start timestamptz := '2026-08-16 13:00:00+00'::timestamptz;
+  v_future_period_end timestamptz := '2026-09-16 13:00:00+00'::timestamptz;
   v_user uuid := '00000000-0000-0000-0000-000000054001'::uuid;
   v_user_2 uuid := '00000000-0000-0000-0000-000000054002'::uuid;
   v_apple_user uuid := '00000000-0000-0000-0000-000000054003'::uuid;
+  v_future_start_user uuid := '00000000-0000-0000-0000-000000054010'::uuid;
   v_failure_user uuid := '00000000-0000-0000-0000-000000054501'::uuid;
   v_processed_at timestamptz;
   v_entitlement_updated_at timestamptz;
@@ -365,6 +368,7 @@ begin
   perform pg_temp.add_profile(v_user);
   perform pg_temp.add_profile(v_user_2);
   perform pg_temp.add_profile(v_apple_user);
+  perform pg_temp.add_profile(v_future_start_user);
   perform pg_temp.add_profile(v_failure_user);
 
   select * into strict r
@@ -422,6 +426,44 @@ begin
   from pg_temp.process_event('payment_recovered', 'invoice.payment_succeeded', v_user, 'sub_fixture_5c1a_active_monthly', 'active', v_later + interval '2 minutes', v_future);
   perform pg_temp.expect_result(r.result, 'processed', 'payment success after failure');
   perform pg_temp.expect_entitlement(v_user, 'pro', 'active', false, v_future, 'payment success restores Pro');
+
+  select * into strict r
+  from pg_temp.process_event(
+    'future_period_failure',
+    'invoice.payment_failed',
+    v_future_start_user,
+    'sub_fixture_5c1a_future_period',
+    'past_due',
+    v_later + interval '4 minutes',
+    v_future_period_end,
+    'live',
+    'monthly',
+    v_future_period_start,
+    false,
+    true,
+    'price_fixture_5c1a_future_period'
+  );
+  perform pg_temp.expect_result(r.result, 'processed', 'future-period payment failure');
+  perform pg_temp.expect_entitlement(v_future_start_user, 'free', 'past_due', false, null, 'future-period payment failure removes Pro');
+
+  select * into strict r
+  from pg_temp.process_event(
+    'future_period_recovered',
+    'invoice.payment_succeeded',
+    v_future_start_user,
+    'sub_fixture_5c1a_future_period',
+    'active',
+    v_later + interval '5 minutes',
+    v_future_period_end,
+    'live',
+    'monthly',
+    v_future_period_start,
+    false,
+    true,
+    'price_fixture_5c1a_future_period'
+  );
+  perform pg_temp.expect_result(r.result, 'processed', 'future-period payment success after failure');
+  perform pg_temp.expect_entitlement(v_future_start_user, 'pro', 'active', false, v_future_period_end, 'future-period payment success restores Pro');
 
   select * into strict r
   from pg_temp.process_event('deleted', 'customer.subscription.deleted', v_user, 'sub_fixture_5c1a_active_monthly', 'canceled', v_later + interval '3 minutes', v_future);

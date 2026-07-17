@@ -67,6 +67,8 @@ describe("provider-neutral entitlement resolver migration", () => {
     expect(source).toContain("cr.status = 'grace_period'");
     expect(source).toContain("(select as_of from requested) < cr.current_period_end");
     expect(source).toContain("(select as_of from requested) < cr.grace_period_ends_at");
+    expect(source).not.toContain("(select as_of from requested) >= cr.current_period_start");
+    expect(source).not.toContain("(select as_of from requested) < cr.current_period_start");
     expect(source).toContain("cr.status in ('pending', 'billing_retry', 'unknown_needs_reconciliation', 'grace_period')");
     expect(source).toContain("cr.status = 'revoked' and cr.revoked_at is null");
     expect(source).toContain("cr.status = 'refunded' and cr.refunded_at is null");

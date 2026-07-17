@@ -210,6 +210,8 @@ declare
   u_reactivated uuid := '00000000-0000-0000-0000-000000051013';
   u_sandbox_only uuid := '00000000-0000-0000-0000-000000051014';
   u_retry_plus_apple uuid := '00000000-0000-0000-0000-000000051015';
+  u_future_active uuid := '00000000-0000-0000-0000-000000051016';
+  u_future_pending uuid := '00000000-0000-0000-0000-000000051017';
   before_entitlements integer;
   before_subscriptions integer;
   before_events integer;
@@ -232,7 +234,9 @@ begin
       u_missing_period,
       u_reactivated,
       u_sandbox_only,
-      u_retry_plus_apple
+      u_retry_plus_apple,
+      u_future_active,
+      u_future_pending
     ]::uuid[]) as user_id
   loop
     perform pg_temp.add_profile(r.user_id);
@@ -291,6 +295,60 @@ begin
     'active',
     false,
     v_end,
+    'stripe',
+    false,
+    false
+  );
+
+  insert into billing.provider_subscriptions (
+    user_id,
+    provider,
+    environment,
+    product_tier,
+    provider_product_ref,
+    provider_customer_ref,
+    provider_subscription_ref,
+    status,
+    auto_renews,
+    cancel_at_period_end,
+    started_at,
+    current_period_start,
+    current_period_end,
+    last_verified_at,
+    last_event_at,
+    reconciliation_status,
+    created_at,
+    updated_at
+  )
+  values (
+    u_future_active,
+    'stripe',
+    'live',
+    'pro',
+    'price_future_active',
+    'cus_future_active',
+    'sub_future_active',
+    'active',
+    true,
+    false,
+    v_now + interval '30 days',
+    v_now + interval '30 days',
+    v_later_end,
+    v_observed,
+    v_observed,
+    'current',
+    v_observed,
+    v_observed
+  );
+  perform pg_temp.expect_projection(
+    'future-start active provider projects Pro',
+    u_future_active,
+    'production',
+    v_now,
+    'pro',
+    'active',
+    false,
+    v_later_end,
     'stripe',
     false,
     false
@@ -368,6 +426,60 @@ begin
     v_now,
     'free',
     'past_due',
+    false,
+    null,
+    'none',
+    false,
+    true
+  );
+
+  insert into billing.provider_subscriptions (
+    user_id,
+    provider,
+    environment,
+    product_tier,
+    provider_product_ref,
+    provider_customer_ref,
+    provider_subscription_ref,
+    status,
+    auto_renews,
+    cancel_at_period_end,
+    started_at,
+    current_period_start,
+    current_period_end,
+    last_verified_at,
+    last_event_at,
+    reconciliation_status,
+    created_at,
+    updated_at
+  )
+  values (
+    u_future_pending,
+    'stripe',
+    'live',
+    'pro',
+    'price_future_pending',
+    'cus_future_pending',
+    'sub_future_pending',
+    'pending',
+    false,
+    false,
+    v_now + interval '30 days',
+    v_now + interval '30 days',
+    v_later_end,
+    v_observed,
+    v_observed,
+    'current',
+    v_observed,
+    v_observed
+  );
+  perform pg_temp.expect_projection(
+    'future pending provider remains non-Pro',
+    u_future_pending,
+    'production',
+    v_now,
+    'free',
+    'canceled',
     false,
     null,
     'none',

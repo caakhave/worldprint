@@ -177,6 +177,7 @@ describe("Stripe provider event processor migration", () => {
       "cancel-at-period-end update",
       "payment failure",
       "payment success after failure",
+      "future-period payment success after failure",
       "subscription deletion",
       "unsupported event",
       "unknown Stripe status",

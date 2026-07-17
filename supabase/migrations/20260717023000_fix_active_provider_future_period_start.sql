@@ -1,9 +1,13 @@
--- Provider-neutral entitlement resolver.
+-- Provider-neutral entitlement resolver future-period-start fix.
 --
--- This migration adds a side-effect-free private resolver over
--- billing.provider_subscriptions. It intentionally does not write
--- public.entitlements, backfill Stripe, dual-write provider state, or change
--- existing Stripe webhook behavior.
+-- Staging had already applied the original resolver migration before Stripe
+-- Test Clock recovery exposed that active/current provider rows can carry a
+-- current_period_start ahead of the application wall clock. This forward
+-- migration redefines the resolver without downgrading an authoritative
+-- active/current provider solely because of that future period start.
+--
+-- It intentionally does not write public.entitlements, backfill Stripe,
+-- dual-write provider state, reconcile users, or change webhook replay state.
 
 create or replace function billing.resolve_effective_entitlement(
   p_user_id uuid,

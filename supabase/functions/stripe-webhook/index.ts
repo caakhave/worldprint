@@ -29,6 +29,16 @@ import {
 
 type SupabaseServiceClient = ReturnType<typeof serviceClient>;
 
+type StripeReference = string | { id?: string | null } | null | undefined;
+
+type InvoiceWithSupportedSubscriptionRefs = Stripe.Invoice & {
+  parent?: {
+    subscription_details?: {
+      subscription?: StripeReference;
+    } | null;
+  } | null;
+};
+
 type WebhookOutcome = {
   status: "processed" | "ignored";
   ignored?: string;
@@ -187,7 +197,7 @@ async function processStripeEvent(input: {
 
   if (event.type === "invoice.payment_failed") {
     const invoice = event.data.object as Stripe.Invoice;
-    const subscriptionId = idValue(invoice.subscription);
+    const subscriptionId = invoiceSubscriptionId(invoice);
     if (!subscriptionId) return ignored("missing_subscription", { customerId: idValue(invoice.customer) });
 
     const subscription = await subscriptionForInvoice(stripe, subscriptionId);
@@ -229,7 +239,7 @@ async function processStripeEvent(input: {
 
   if (event.type === "invoice.payment_succeeded") {
     const invoice = event.data.object as Stripe.Invoice;
-    const subscriptionId = idValue(invoice.subscription);
+    const subscriptionId = invoiceSubscriptionId(invoice);
     if (!subscriptionId) return ignored("missing_subscription", { customerId: idValue(invoice.customer) });
 
     const subscription = await subscriptionForInvoice(stripe, subscriptionId);
@@ -447,9 +457,20 @@ function ignored(reason: string, input: Omit<WebhookOutcome, "status" | "ignored
   return { status: "ignored", ignored: reason, ...input };
 }
 
-function idValue(value: string | { id?: string } | null): string | null {
-  if (typeof value === "string") return value;
-  return value?.id ?? null;
+function invoiceSubscriptionId(invoice: Stripe.Invoice): string | null {
+  const supportedInvoice = invoice as InvoiceWithSupportedSubscriptionRefs;
+  return idValue(supportedInvoice.subscription) ?? idValue(supportedInvoice.parent?.subscription_details?.subscription);
+}
+
+function idValue(value: StripeReference): string | null {
+  if (typeof value === "string") {
+    const trimmed = value.trim();
+    return trimmed ? trimmed : null;
+  }
+  const id = value?.id;
+  if (typeof id !== "string") return null;
+  const trimmed = id.trim();
+  return trimmed ? trimmed : null;
 }
 
 function safeErrorMessage(error: unknown): string {
