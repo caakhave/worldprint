@@ -109,10 +109,11 @@ export async function handleStripeWebhookEvent(
 
   if (event.type === "invoice.payment_failed") {
     const invoice = event.data.object;
+    const subscriptionId = invoiceSubscriptionId(invoice);
+    if (!subscriptionId) return { handled: false, action: "ignored" };
     const customerId = stringField(invoice.customer);
     const userId = metadataUserId(invoice) ?? (customerId ? await store.findUserIdByCustomerId(customerId) : null);
     if (!userId) return { handled: false, action: "missing_user" };
-    const subscriptionId = stringField(invoice.subscription);
     if (await isStaleInactiveEvent(store, userId, subscriptionId, "past_due")) return { handled: false, action: "ignored" };
     const update = {
       ...mapStripeStatusToEntitlement("past_due"),
@@ -132,7 +133,7 @@ export async function handleStripeWebhookEvent(
   if (event.type === "invoice.payment_succeeded") {
     const invoice = event.data.object;
     const customerId = stringField(invoice.customer);
-    const subscriptionId = stringField(invoice.subscription);
+    const subscriptionId = invoiceSubscriptionId(invoice);
     if (!subscriptionId) return { handled: false, action: "ignored" };
     const userId = metadataUserId(invoice) ?? (customerId ? await store.findUserIdByCustomerId(customerId) : null);
     if (!userId) return { handled: false, action: "missing_user" };
@@ -209,6 +210,11 @@ async function userIdFromCustomer(record: Record<string, unknown>, store: Billin
   return store.findUserIdByCustomerId(customerId);
 }
 
+export function invoiceSubscriptionId(invoice: Record<string, unknown>): string | null {
+  const nestedSubscription = objectField(objectField(invoice.parent)?.subscription_details)?.subscription;
+  return stripeReferenceId(invoice.subscription) ?? stripeReferenceId(nestedSubscription);
+}
+
 function subscriptionPriceId(subscription: Record<string, unknown>): string | null {
   const items = subscription.items;
   if (!items || typeof items !== "object") return null;
@@ -223,6 +229,15 @@ function subscriptionPriceId(subscription: Record<string, unknown>): string | nu
 
 function stringField(value: unknown): string | null {
   return typeof value === "string" && value.trim() ? value : null;
+}
+
+function objectField(value: unknown): Record<string, unknown> | null {
+  return value && typeof value === "object" && !Array.isArray(value) ? (value as Record<string, unknown>) : null;
+}
+
+function stripeReferenceId(value: unknown): string | null {
+  if (typeof value === "string") return stringField(value);
+  return stringField(objectField(value)?.id);
 }
 
 function numberField(value: unknown): number | null {

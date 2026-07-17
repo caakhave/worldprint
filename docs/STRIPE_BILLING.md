@@ -190,13 +190,28 @@ For a full local upgrade test:
 - Simulate payment success/recovery with `invoice.payment_succeeded` on the QA subscription. The webhook reconciles the subscription and writes active/trialing subscriptions back to Pro.
 - Resubscribe through Checkout. Subscription `active` or `trialing` writes `plan = 'pro'`.
 
-The webhook also ignores inactive events for an older subscription if the same user already has a newer active/trialing Stripe subscription recorded. Subscription create/update/delete events are reconciled against Stripe's current subscription record before the entitlement row is written whenever Stripe can be reached.
+The webhook also ignores inactive events for an older subscription if the same user already has a newer active/trialing Stripe subscription recorded. Subscription create/update/delete events are reconciled against Stripe's current subscription record before the entitlement row is written whenever Stripe can be reached. Invoice events support both `invoice.subscription` and `invoice.parent.subscription_details.subscription`; if neither supported reference exists, the event remains a missing-subscription no-op.
+
+For manual invoice-pay recovery, validate the paid invoice, `amount_remaining = 0`, a successful payment or charge, active subscription state, and absence of duplicate recovery payments. Do not require `attempt_count = 2`; Stripe can preserve `attempt_count = 1` for this recovery path.
+
+Staging lifecycle recovery reference:
+
+- Start from an active subscription under a Stripe Test Clock and confirm the initial invoice is paid before simulating renewal behavior.
+- Let Stripe create and finalize the renewal invoice; when automatic renewal fails, verify the subscription enters the expected retry/past-due path and that `next_payment_attempt` is populated while the invoice remains open.
+- Recovery should restore a successful subscription-level payment method and pay the same open renewal invoice exactly once. Validate recovery with `invoice.status = 'paid'`, `paid = true`, `amount_remaining = 0`, one successful payment/charge for that invoice, and active subscription state; do not rely on `attempt_count` increasing.
+- Current Stripe invoice event payloads can identify the subscription through `invoice.parent.subscription_details.subscription`; retain support for the legacy top-level `invoice.subscription` path.
+- Provider-neutral projection should grant Pro when the active/current provider subscription is valid. Do not deny solely because a Test Clock period has a `current_period_start` ahead of the app wall clock while the period end is still valid.
+- If legacy entitlement state needs repair after webhook recovery, use the supported exact entitlement reconciliation function for the target user only. Do not update provider subscription or entitlement rows manually.
+- Keep a clean control subscription separate from the lifecycle fixture so recovery-specific events and entitlement changes can be distinguished from unrelated Stripe state.
+- A live signed current-shape invoice event was not sent into staging for this recovery fix because there was no safe harness: `stripe trigger` would create unrelated Stripe objects, and Dashboard redelivery of prior events would be duplicate-skipped. Unit/structure tests and read-only forensic evidence cover the parser shape; add a signed webhook fixture harness before relying on live current-shape replay.
 
 Security hardening notes:
 
 - Replayed Stripe webhook event IDs are recorded in `stripe_webhook_events` and return duplicate no-ops.
 - Pro grants require a subscription price matching `STRIPE_PRO_MONTHLY_PRICE_ID`, `STRIPE_PRO_YEARLY_PRICE_ID`, or the legacy fallback `STRIPE_PRO_PRICE_ID`.
 - Active/trialing subscriptions with unconfigured prices are ignored and do not grant Pro.
+- Test Clock periods can be ahead of the app wall clock. Provider-neutral active/current subscription state with a valid future period end should not be downgraded solely because `current_period_start` is in the future.
+- During lifecycle recovery, do not repair unrelated malformed legacy entitlement rows unless they are the exact target record; classification mismatches should be captured separately from the recovery fix.
 
 ## Manual Pro Testing
 
