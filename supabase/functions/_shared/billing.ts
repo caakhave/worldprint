@@ -1,6 +1,7 @@
 import Stripe from "https://esm.sh/stripe@16.12.0?target=deno";
 import { createClient } from "https://esm.sh/@supabase/supabase-js@2.108.2";
 import { resolveBillingSiteOrigin } from "./returnUrls.ts";
+import { parseStripeProviderNeutralDualWriteConfig, type StripeProviderEnvironment } from "./stripeProviderTransition.ts";
 import {
   billingCorsHeaders,
   configuredProPriceIds,
@@ -35,6 +36,9 @@ export type Env = {
   ownerNotificationEmails: string | null;
   ownerNotificationFromEmail: string | null;
   resendApiKey: string | null;
+  stripeProviderNeutralDualWriteEnabled: boolean;
+  stripeProviderEnvironment: StripeProviderEnvironment | null;
+  stripeProviderNeutralConfigError: string | null;
 };
 
 export function corsHeadersFor(request: Request | null, env: Env | null = null): Record<string, string> {
@@ -62,6 +66,10 @@ export function json(body: unknown, status = 200, request: Request | null = null
 
 export function readEnv(requireWebhookSecret = false): { env: Env | null; error: string | null } {
   const rawSiteUrl = Deno.env.get("NEXT_PUBLIC_SITE_URL") ?? Deno.env.get("SITE_URL") ?? "";
+  const providerNeutralConfig = parseStripeProviderNeutralDualWriteConfig({
+    enabled: Deno.env.get("STRIPE_PROVIDER_NEUTRAL_DUAL_WRITE_ENABLED"),
+    environment: Deno.env.get("STRIPE_PROVIDER_ENVIRONMENT")
+  });
   const env = {
     supabaseUrl: Deno.env.get("SUPABASE_URL") ?? "",
     supabaseAnonKey: Deno.env.get("SUPABASE_ANON_KEY") ?? "",
@@ -75,7 +83,10 @@ export function readEnv(requireWebhookSecret = false): { env: Env | null; error:
     ownerNotificationsEnabled: Deno.env.get("OWNER_NOTIFICATIONS_ENABLED") === "true",
     ownerNotificationEmails: Deno.env.get("OWNER_NOTIFICATION_EMAILS") ?? null,
     ownerNotificationFromEmail: Deno.env.get("OWNER_NOTIFICATION_FROM_EMAIL") ?? null,
-    resendApiKey: Deno.env.get("RESEND_API_KEY") ?? null
+    resendApiKey: Deno.env.get("RESEND_API_KEY") ?? null,
+    stripeProviderNeutralDualWriteEnabled: providerNeutralConfig.enabled,
+    stripeProviderEnvironment: providerNeutralConfig.environment,
+    stripeProviderNeutralConfigError: providerNeutralConfig.error
   };
   const hasProPrice = configuredProPriceIds(env).size > 0;
   const missing = [

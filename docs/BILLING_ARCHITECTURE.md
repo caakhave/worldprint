@@ -69,6 +69,11 @@ Handled events:
 - `invoice.payment_failed`
 - `invoice.payment_succeeded`
 
+Invoice webhook handling accepts both the legacy top-level `invoice.subscription` reference and Stripe's current
+`invoice.parent.subscription_details.subscription` reference. If neither supported field is present, the event remains
+a safe missing-subscription no-op; the handler does not infer subscription identity from line items, metadata, customer
+ids, or descriptions.
+
 Status mapping:
 
 - `active` or `trialing` -> `plan = 'pro'`
@@ -77,6 +82,11 @@ Status mapping:
 - missing row -> app resolves to Free
 
 Canceled-at-period-end subscriptions remain Pro while Stripe reports the subscription as active/trialing. The account UI can show renewal canceled plus the period end when those fields exist.
+
+Provider-neutral entitlement projection treats an authoritative current provider row with active access status and a
+future `current_period_end` as the source of access truth. A Stripe Test Clock can produce a `current_period_start` that
+is ahead of the application wall clock; that future start is diagnostic context, not by itself a reason to downgrade an
+otherwise active/current provider subscription.
 
 ## User And Stripe Mapping
 
@@ -189,6 +199,7 @@ Use Stripe test mode only for staging and QA. Never use real card details in tes
 - Successful subscription Checkout: `4242 4242 4242 4242`, any future date, any three-digit CVC.
 - 3D Secure/authentication path if enabled in Dashboard: use Stripe's current 3D Secure test card from the Dashboard/docs and confirm Checkout returns cleanly.
 - Decline/failure path: use Stripe's current declined-payment test cards or Dashboard test tools, then confirm `invoice.payment_failed` maps the account back to Free/past_due.
+- Manual invoice recovery should be validated by the invoice being paid, `amount_remaining = 0`, a successful payment or charge, the subscription returning active, and no duplicate recovery payment. Do not require `attempt_count` to increment; manual invoice-pay recovery can validly leave it at `1`.
 
 ### Webhook Replay Checklist
 

@@ -145,6 +145,26 @@ Optional:
 STRIPE_PRO_PRICE_ID=price_<legacy_fallback>
 ```
 
+Provider-neutral Stripe webhook dual-write is off by default during the transition. Set these only after the provider-neutral
+billing migrations have been applied to that same Supabase project and the rollout has been explicitly approved:
+
+```text
+STRIPE_PROVIDER_NEUTRAL_DUAL_WRITE_ENABLED=true
+STRIPE_PROVIDER_ENVIRONMENT=test|live
+```
+
+Use `STRIPE_PROVIDER_ENVIRONMENT=test` only for Stripe sandbox webhooks targeting the staging Supabase project. Use
+`STRIPE_PROVIDER_ENVIRONMENT=live` only for Stripe live-mode webhooks targeting the production Supabase project. If the
+dual-write flag is enabled without one of those exact values, `stripe-webhook` fails closed with a sanitized `503` before
+mutating billing state. Checkout and Portal functions do not require these transition variables.
+
+Provider-neutral webhook RPC transport uses a narrow public-schema bridge,
+`public.process_stripe_webhook_transition_event(...)`, because Supabase PostgREST resolves unqualified
+`supabase.rpc(...)` calls through the exposed public schema. The bridge is execute-only for `service_role` and delegates
+to `billing.process_stripe_webhook_transition_event(...)`; provider records, billing logic, and private functions remain in
+the non-exposed `billing` schema. Browser roles must not be granted execute on the bridge or direct access to the billing
+schema.
+
 Billing CORS allows the production, www, test, strict Cloudflare Pages preview, and localhost browser origins without using a wildcard. Billing return URLs still come from `NEXT_PUBLIC_SITE_URL`; keep staging/test billing returns on `https://test.canyougeo.com` unless a preview return URL is intentionally configured and allowed.
 
 Hosted Supabase functions provide `SUPABASE_URL`, `SUPABASE_ANON_KEY`, and `SUPABASE_SERVICE_ROLE_KEY` through the platform. Do not print or commit those values.
