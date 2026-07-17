@@ -4,15 +4,19 @@ This proof of concept packages the existing static-export Next.js app in a Capac
 
 ## Project
 
-- Branch: `codex/capacitor-android-poc`
-- Base iOS POC commit: `0557585e83e5b790d82663e9d5886a621bf96912`
+- Current Android foundation branch: `codex/android-foundation`
+- Checkpoint 5D-1A base: `origin/staging` at `6aba4fb15a5891c5c37949cc55893a95c8dc8c22`
 - App name: `Can You Geo`
 - Android application ID: `com.canyougeo.app`
 - Android namespace: `com.canyougeo.app`
 - Capacitor core, CLI, Android, and iOS packages: `8.4.1`
 - Capacitor App plugin: `8.1.0`
+- Capacitor Splash Screen plugin: `8.0.2`
 - Native project: `android/`
 - Web directory: `out`
+- macOS: `26.5.2`
+- Node.js: `24.11.1`
+- pnpm: `11.0.9`
 - Android Studio: `2025.2.1`
 - JDK: `21.0.8`
 - Minimum SDK: `24`
@@ -56,6 +60,7 @@ cd android
 JAVA_HOME="/Applications/Android Studio.app/Contents/jbr/Contents/Home" \
 ANDROID_HOME="$HOME/Library/Android/sdk" \
 ANDROID_SDK_ROOT="$HOME/Library/Android/sdk" \
+GRADLE_USER_HOME="${TMPDIR:-/tmp}/cgy-gradle-home" \
 PATH="/Applications/Android Studio.app/Contents/jbr/Contents/Home/bin:$HOME/Library/Android/sdk/platform-tools:$HOME/Library/Android/sdk/emulator:$PATH" \
 ./gradlew assembleDebug
 ```
@@ -63,11 +68,11 @@ PATH="/Applications/Android Studio.app/Contents/jbr/Contents/Home/bin:$HOME/Libr
 Install and launch the debug APK on a booted emulator:
 
 ```bash
-adb install -r android/app/build/outputs/apk/debug/app-debug.apk
+adb install --no-streaming -r android/app/build/outputs/apk/debug/app-debug.apk
 adb shell monkey -p com.canyougeo.app -c android.intent.category.LAUNCHER 1
 ```
 
-The validated emulator for this POC was `Medium_Phone_API_36.1`.
+The validated emulator for Checkpoint 5D-1A was `Medium_Phone_API_36.1` (`emulator-5554`, `sdk_gphone64_arm64`, Android API 36.1 Play Store image).
 
 ## Native Behavior
 
@@ -79,6 +84,8 @@ The validated emulator for this POC was `Medium_Phone_API_36.1`.
 - Native offline handling uses `navigator.onLine`, browser connectivity events, and a short native-only HTTPS reachability probe when the Android WebView still reports online. It shows a small offline status, fails account actions quickly, preserves durable sessions, and retries sync after reconnect.
 - Android system Back is handled through Capacitor's official App plugin. Internal routes with usable WebView history call `window.history.back()`, while the root route minimizes the app instead of force-closing it.
 - Android status and navigation bars are handled as WebView system insets. Current shallow testing found content inset below the top status bar and above the bottom navigation/gesture area without obvious overlap.
+- Android native builds add a `cgy-native-android` class to the document root so the web shell applies a conservative top safe-area fallback on Android WebView. This avoids the header overlapping the status bar on API 36 while leaving iOS safe-area handling unchanged.
+- The Android launch theme must define `windowSplashScreenBackground`, `windowSplashScreenAnimatedIcon`, and `postSplashScreenTheme` for the AndroidX splash screen handoff. Without the post-splash theme, the native splash can remain over the WebView after wiring `@capacitor/splash-screen`.
 - Capacitor Android 8.4.1 can log `Error injecting safe area CSS: TypeError: Cannot read properties of null (reading 'style')` during startup from `com.getcapacitor.plugin.SystemBars.injectSafeAreaCSS`. The injected JavaScript touches `document.documentElement.style` before the WebView has created `document.documentElement`, so the null value is the document element, not a Can You Geo selector. This is an upstream timing warning from the default `SystemBars.insetsHandling = "css"` path on Android WebView 134.0.6998.135, which Capacitor uses to compensate for older WebView safe-area bugs. It is currently non-fatal: the app launches, WebView history/back behavior works, and visual insets remain correct. Retest this note when upgrading Capacitor Android or when Android WebView is 140 or newer; do not disable SystemBars inset handling just to silence the warning.
 - Portrait result moments use the existing inline correct/incorrect result content.
 - Landscape result moments use centered transient overlays for Mystery Map and Pattern Atlas.
@@ -87,12 +94,17 @@ The validated emulator for this POC was `Medium_Phone_API_36.1`.
 ## Validated Scope
 
 - Homepage launches in the Android emulator and renders Can You Geo branding.
-- `/play/` opens from the packaged app.
+- Native splash hands off to the WebView instead of remaining stuck over the app.
+- The top navigation renders below the Android status bar on API 36.1.
 - Mystery Map route renders and loads map/data assets from Capacitor `https://localhost/` packaged assets.
 - Pattern Atlas and Order Atlas routes render during shallow native QA.
-- Upgrade route shows the native billing-preview state and does not open Stripe checkout or an external browser.
+- Android App Link intents deliver supported Can You Geo routes to the running app, including `/play/pattern-atlas/`, `/play/order-atlas/`, `/upgrade/`, and `/sign-in/`.
+- Upgrade route shows the native billing-preview/offline state and does not open Stripe checkout or an external browser.
+- Sign In route renders the expected offline/native-disabled state on an emulator with no stable network.
+- Android Back returned from Sign In to the previous in-app route during shallow QA.
 - No website marketing-consent banner is visible in the native app.
-- No GTM, GA4, Meta, TikTok, or Reddit runtime markers were observed in shallow native runtime logs.
+- Logcat showed packaged Capacitor asset requests under `https://localhost/`; no Can You Geo app crash or `FATAL EXCEPTION` was observed in the final smoke-test snapshot.
+- The `Medium_Phone_API_36.1` emulator itself was unstable during Checkpoint 5D-1A: streamed APK install repeatedly broke PackageManager, `--no-streaming` install succeeded, and Pixel Launcher/System UI ANR dialogs appeared while the app remained renderable. Treat those as emulator-health findings, not app regressions, and re-run on a fresh API 36.1 AVD or physical Android device before Play internal testing.
 - Release guardrails are documented in `docs/mobile/NATIVE_RELEASE_GUARDRAILS.md`.
 
 ## Debug APK
