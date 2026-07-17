@@ -18,6 +18,7 @@ import {
 import { buildLocalPlayerStats } from "@/lib/persistence/playerStats";
 import { loadPersistedState } from "@/lib/persistence/storage";
 import { trackAnalyticsEvent } from "@/lib/site/analytics";
+import { isNativeAppBuild } from "@/lib/site/buildTarget";
 
 function trackUpgradeNavigation(itemId: string) {
   trackAnalyticsEvent("cgy_select_content", {
@@ -39,6 +40,7 @@ export function AccountStatusClient() {
   const [marketingStatus, setMarketingStatus] = useState("");
   const [marketingError, setMarketingError] = useState("");
   const [hasImportableLocalRuns, setHasImportableLocalRuns] = useState(false);
+  const nativeBuild = isNativeAppBuild();
 
   useEffect(() => {
     let cancelled = false;
@@ -151,14 +153,15 @@ export function AccountStatusClient() {
     return (
       <article className="surface account-card account-primary-card">
         <p className="eyebrow">Signed out</p>
-        <h2>Start Pro or continue free.</h2>
+        <h2>{nativeBuild ? "Compare plans or continue free." : "Start Pro or continue free."}</h2>
         <p>
-          Create a free account or sign in to save Daily progress where supported. Pro unlocks supported custom runs and the full
-          Mystery Map archive.
+          {nativeBuild
+            ? "Create a free account or sign in to save Daily progress where supported. Existing Pro access unlocks after sign-in; mobile purchases are not available in this preview."
+            : "Create a free account or sign in to save Daily progress where supported. Pro unlocks supported custom runs and the full Mystery Map archive."}
         </p>
         <div className="button-row">
           <Link className="button" href="/upgrade" onClick={() => trackUpgradeNavigation("account_status_signed_out_start_pro")}>
-            Start Pro
+            {nativeBuild ? "View plans" : "Start Pro"}
           </Link>
           <Link className="button-secondary" href="/sign-up">
             Continue free
@@ -171,7 +174,13 @@ export function AccountStatusClient() {
   const membershipLabel = entitlementLoading ? "Checking" : planLabel(entitlement.plan);
   const compactMembershipLabel = entitlementLoading ? "Account" : compactPlanLabel(entitlement.plan);
   const membership = membershipDisplay(entitlement, entitlementLoading);
-  const planActionLabel = entitlement.plan === "pro" ? "Manage plan" : "Compare plans";
+  const planActionLabel = nativeBuild
+    ? entitlement.plan === "pro"
+      ? "View membership"
+      : "View plans"
+    : entitlement.plan === "pro"
+      ? "Manage plan"
+      : "Compare plans";
   const updatesEnabled = marketingPreference?.marketing_opt_in === true;
 
   return (

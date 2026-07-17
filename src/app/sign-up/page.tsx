@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import Link from "next/link";
 import { SignUpClient } from "@/features/account/SignUpClient";
+import { isNativeAppBuild } from "@/lib/site/buildTarget";
 import { pageMetadata } from "@/lib/site/seo";
 
 export const metadata: Metadata = pageMetadata({
@@ -11,6 +12,8 @@ export const metadata: Metadata = pageMetadata({
 });
 
 export default function SignUpPage() {
+  const nativeBuild = isNativeAppBuild();
+
   return (
     <section className="account-page account-page-shell page-shell info-page-shell" aria-labelledby="sign-up-title">
       <div className="account-hero">
@@ -19,8 +22,9 @@ export default function SignUpPage() {
           Create Free, then choose Free or Pro.
         </h1>
         <p className="lead">
-          New accounts start free with no card needed. If you chose Pro first, confirm your email and we will return you to the
-          selected monthly or yearly plan.
+          {nativeBuild
+            ? "New accounts start free with no card needed. Existing Pro access unlocks after sign-in where supported."
+            : "New accounts start free with no card needed. If you chose Pro first, confirm your email and we will return you to the selected monthly or yearly plan."}
         </p>
       </div>
 
@@ -30,7 +34,11 @@ export default function SignUpPage() {
         <div className="surface account-card account-status-card" aria-label="Account choices">
           <p className="eyebrow">What you get</p>
           <h2>One account, two paths.</h2>
-          <p>Start with Free or continue into secure Stripe checkout for Can You Geo? Pro after your account exists.</p>
+          <p>
+            {nativeBuild
+              ? "Start with Free and compare Pro features. Mobile purchases are not available in this preview."
+              : "Start with Free or continue into secure Stripe checkout for Can You Geo? Pro after your account exists."}
+          </p>
           <ul className="account-checklist">
             <li>
               <strong>Free</strong>

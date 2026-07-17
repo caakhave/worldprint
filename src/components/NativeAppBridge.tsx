@@ -25,6 +25,7 @@ export function NativeAppBridge() {
   useEffect(() => {
     if (!isNativeAppBuild() || Capacitor.getPlatform() !== "android") return;
 
+    document.documentElement.classList.add("cgy-native-android");
     resetNativeNavigationHistory();
     installNativeNavigationHistoryTracker();
 
@@ -77,6 +78,7 @@ export function NativeAppBridge() {
 
     return () => {
       active = false;
+      document.documentElement.classList.remove("cgy-native-android");
       if (releaseTimer) window.clearTimeout(releaseTimer);
       if (listenerHandle) void listenerHandle.remove();
       uninstallNativeNavigationHistoryTracker();

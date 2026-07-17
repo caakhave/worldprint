@@ -34,6 +34,7 @@ export function AuthNavStatus() {
     );
   }
   if (!user) {
+    const plansLabel = nativeBuild ? "View plans" : "Start Pro";
     return (
       <div className="account-nav-signed-out-actions">
         <Link
@@ -42,11 +43,11 @@ export function AuthNavStatus() {
           onClick={() =>
             trackAnalyticsEvent("cgy_select_content", {
               content_type: "upgrade_cta",
-              item_id: "header_start_pro"
+              item_id: nativeBuild ? "header_view_plans_native_preview" : "header_start_pro"
             })
           }
         >
-          Start Pro
+          {plansLabel}
         </Link>
         <Link
           className="account-nav-control account-nav-control-signed-out"
