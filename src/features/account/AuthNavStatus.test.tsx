@@ -128,6 +128,20 @@ describe("AuthNavStatus", () => {
     ]);
   });
 
+  it("uses a neutral signed-out plans link in native builds", () => {
+    vi.stubEnv("NEXT_PUBLIC_CGY_NATIVE_APP", "1");
+    enableProductionAnalytics();
+
+    render(<AuthNavStatus />);
+
+    const plansLink = screen.getByRole("link", { name: "View plans" });
+    expect(plansLink).toHaveAttribute("href", "/upgrade");
+    expect(screen.queryByRole("link", { name: "Start Pro" })).not.toBeInTheDocument();
+
+    fireEvent.click(plansLink);
+    expect((window as typeof window & { dataLayer?: unknown[] }).dataLayer).toEqual([]);
+  });
+
   it("shows a compact Free account menu for signed-in players and redirects after sign-out", async () => {
     const user = userEvent.setup();
     accountMock.state.user = { id: "user_123", email: "player@example.com" };

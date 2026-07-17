@@ -20,11 +20,13 @@ Browser builds keep normal anchor behavior. Native Android and iOS builds interc
 - `https://www.instagram.com/canyougeo`
 - `https://www.facebook.com/canyougeo`
 
-The trusted destination is selected by application-defined social link ID, not by accepting arbitrary runtime URLs. The validator rejects malformed or oversized URLs, non-HTTPS schemes, credentials, localhost, IP-literal hosts, internal Can You Geo hosts, and untrusted HTTPS hosts.
+The trusted destination is selected by application-defined social link ID, not by accepting arbitrary runtime URLs. The validator rejects malformed or oversized URLs, non-HTTPS schemes, credentials, localhost, IP-literal hosts, internal Can You Geo hosts, untrusted HTTPS hosts, encoded-path lookalikes, fragments, and query parameters such as redirect-shaped values. Keep the official social URLs exact unless a later checkpoint deliberately expands the allowlist.
 
 Internal routes stay inside the Capacitor WebView. This includes hosted auth callbacks, challenge links, support/legal pages, game routes, account routes, and upgrade routes. Stripe checkout and Stripe customer portal are never routed through the Browser plugin in the native apps.
 
 External-open failures return sanitized reason codes and must not crash, blank, or navigate the WebView away from bundled content. Do not log complete incoming URLs, auth tokens, challenge codes, Stripe session identifiers, or other sensitive route values.
+
+Android Capacitor bridge logging is disabled with `android.loggingBehavior = "none"` so debug builds do not mirror native plugin call/result payloads into app logcat. Keep this disabled until a future release checkpoint proves that any logging re-enable cannot expose auth callback URLs, challenge codes, checkout URLs, session identifiers, or other sensitive route values.
 
 ## Safe Areas
 
@@ -56,7 +58,7 @@ When the device reconnects, the offline status is dismissed and the account/sess
 
 ## Billing Boundary
 
-Native builds do not start Stripe checkout, open Stripe customer portal, redirect to Stripe, or complete purchases. Free users see the existing mobile-purchases-unavailable state. Already entitled Pro users can still see and use their Pro entitlement when the app can read the account state.
+Native builds do not start Stripe checkout, open Stripe customer portal, redirect to Stripe, or complete purchases. Free users see the existing mobile-purchases-unavailable state. Android-native account and sign-in surfaces should use neutral plan-preview copy, not checkout/billing-setup copy or website-purchase steering. Already entitled Pro users can still see and use their Pro entitlement when the app can read the account state.
 
 Web builds preserve the existing Stripe checkout, portal, and checkout analytics behavior. StoreKit and Google Play Billing remain deferred.
 

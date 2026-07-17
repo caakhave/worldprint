@@ -19,6 +19,13 @@ describe("Android release metadata", () => {
     expect(mainActivity).toContain("package com.canyougeo.app;");
   });
 
+  it("keeps Android bridge logging disabled so native callback URLs stay out of app logs", () => {
+    const capacitorConfig = readFileSync("capacitor.config.ts", "utf8");
+
+    expect(capacitorConfig).toContain("android: {");
+    expect(capacitorConfig).toContain('loggingBehavior: "none"');
+  });
+
   it("targets the approved Android SDK baseline without release signing", () => {
     const variables = readFileSync("android/variables.gradle", "utf8");
     const appBuild = readFileSync("android/app/build.gradle", "utf8");

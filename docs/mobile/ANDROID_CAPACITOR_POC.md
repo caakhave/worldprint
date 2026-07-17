@@ -78,9 +78,11 @@ The validated emulator for Checkpoint 5D-1A was `Medium_Phone_API_36.1` (`emulat
 
 - Analytics and GTM are disabled for native builds through the shared build-target helper.
 - Marketing consent UI and consent events are suppressed in native builds.
+- Android Capacitor bridge logging is disabled with `android.loggingBehavior = "none"` so plugin call/result payloads, including deep-link callback URLs, are not mirrored into app logcat.
 - Stripe checkout and customer portal actions are unavailable in the native preview.
 - Existing Pro entitlements can still be read by the web app, but purchase and subscription management must be replaced before Play Store release.
 - Official social links open through Capacitor Browser after strict trusted-destination validation. Internal Can You Geo routes stay inside the WebView.
+- Trusted social URLs must remain exact. Query strings, fragments, encoded path lookalikes, and redirect-shaped parameters are rejected before Capacitor Browser opens.
 - Native offline handling uses `navigator.onLine`, browser connectivity events, and a short native-only HTTPS reachability probe when the Android WebView still reports online. It shows a small offline status, fails account actions quickly, preserves durable sessions, and retries sync after reconnect.
 - Android system Back is handled through Capacitor's official App plugin. Internal routes with usable WebView history call `window.history.back()`, while the root route minimizes the app instead of force-closing it.
 - Android status and navigation bars are handled as WebView system insets. Current shallow testing found content inset below the top status bar and above the bottom navigation/gesture area without obvious overlap.
@@ -99,9 +101,11 @@ The validated emulator for Checkpoint 5D-1A was `Medium_Phone_API_36.1` (`emulat
 - Mystery Map route renders and loads map/data assets from Capacitor `https://localhost/` packaged assets.
 - Pattern Atlas and Order Atlas routes render during shallow native QA.
 - Android App Link intents deliver supported Can You Geo routes to the running app, including `/play/pattern-atlas/`, `/play/order-atlas/`, `/upgrade/`, and `/sign-in/`.
+- Android App Link path coverage now includes `/account/stats/`, matching the JavaScript deep-link parser for saved-stats account links.
 - Upgrade route shows the native billing-preview/offline state and does not open Stripe checkout or an external browser.
+- Account, sign-in, and header account controls use native-safe plan-preview copy. They do not present Stripe checkout, Stripe portal, or website-purchase controls in Android native builds.
 - Sign In route renders the expected offline/native-disabled state on an emulator with no stable network.
-- Android Back returned from Sign In to the previous in-app route during shallow QA.
+- Android Back minimizes the app at root and does not force-close the process. Warm App Link history behavior is covered by focused component tests.
 - No website marketing-consent banner is visible in the native app.
 - Logcat showed packaged Capacitor asset requests under `https://localhost/`; no Can You Geo app crash or `FATAL EXCEPTION` was observed in the final smoke-test snapshot.
 - The `Medium_Phone_API_36.1` emulator itself was unstable during Checkpoint 5D-1A: streamed APK install repeatedly broke PackageManager, `--no-streaming` install succeeded, and Pixel Launcher/System UI ANR dialogs appeared while the app remained renderable. Treat those as emulator-health findings, not app regressions, and re-run on a fresh API 36.1 AVD or physical Android device before Play internal testing.
@@ -139,6 +143,7 @@ Remaining release/configuration work:
 
 - Google Play Billing.
 - Production Play signing and Play Console setup.
+- Controlled live native authentication validation against a safe staging or dedicated test path. Current auth callback, storage, password recovery, and email-confirmation behavior is covered synthetically and by parser/component tests; this checkpoint did not create production accounts or send production auth emails.
 - Final production App Link verification with the Play signing certificate; current production association metadata only covers the debug certificate used for emulator/local verification.
 - Production icon and splash assets.
 - Physical Android-device testing.
