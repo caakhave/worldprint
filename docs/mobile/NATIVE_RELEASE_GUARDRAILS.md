@@ -22,7 +22,7 @@ Browser builds keep normal anchor behavior. Native Android and iOS builds interc
 
 The trusted destination is selected by application-defined social link ID, not by accepting arbitrary runtime URLs. The validator rejects malformed or oversized URLs, non-HTTPS schemes, credentials, localhost, IP-literal hosts, internal Can You Geo hosts, untrusted HTTPS hosts, encoded-path lookalikes, fragments, and query parameters such as redirect-shaped values. Keep the official social URLs exact unless a later checkpoint deliberately expands the allowlist.
 
-Internal routes stay inside the Capacitor WebView. This includes hosted auth callbacks, challenge links, support/legal pages, game routes, account routes, and upgrade routes. Stripe checkout and Stripe customer portal are never routed through the Browser plugin in the native apps.
+Internal routes stay inside the Capacitor WebView. This includes hosted auth callbacks, challenge links, support/legal/account-deletion pages, game routes, account routes, and upgrade routes. Stripe checkout and Stripe customer portal are never routed through the Browser plugin in the native apps.
 
 External-open failures return sanitized reason codes and must not crash, blank, or navigate the WebView away from bundled content. Do not log complete incoming URLs, auth tokens, challenge codes, Stripe session identifiers, or other sensitive route values.
 

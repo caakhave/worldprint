@@ -54,6 +54,11 @@ describe("native external navigation", () => {
     expect(result.handled).toBe(false);
     expect(event.defaultPrevented).toBe(false);
     expect(browserOpenMock).not.toHaveBeenCalled();
+
+    const deletionRoute = dispatchAnchorClick("https://canyougeo.com/account-deletion/");
+    expect(deletionRoute.result.handled).toBe(false);
+    expect(deletionRoute.event.defaultPrevented).toBe(false);
+    expect(browserOpenMock).not.toHaveBeenCalled();
   });
 
   it("rejects credentialed, non-HTTPS, localhost, IP-literal, malformed, and oversized URLs", () => {

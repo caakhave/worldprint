@@ -31,12 +31,14 @@ describe("LegalPage", () => {
     expect(screen.getByText(/the complete Mystery Map Past Games archive/i)).toBeVisible();
     expect(screen.getByRole("link", { name: "Terms" })).toHaveAttribute("href", "/terms");
     expect(screen.getByRole("link", { name: "Privacy" })).toHaveAttribute("href", "/privacy");
+    expect(screen.getAllByRole("link", { name: "Account deletion" })[0]).toHaveAttribute("href", "/account-deletion");
     expect(screen.getByRole("link", { name: "Accessibility" })).toHaveAttribute("href", "/legal#accessibility-heading");
     expect(screen.getByRole("link", { name: "Support" })).toHaveAttribute("href", "/support");
     expect(screen.queryByText(/Practice Atlas/i)).not.toBeInTheDocument();
     expect(screen.getByText(/service providers that help operate authentication, secure application data storage/i)).toBeVisible();
     expect(screen.queryByText(/Resend and Supabase SMTP for transactional email and owner\/admin billing notifications/i)).not.toBeInTheDocument();
     expect(screen.getByText(/We do not sell personal information/i)).toBeVisible();
+    expect(screen.getAllByText(/account deletion page/i).length).toBeGreaterThanOrEqual(1);
     expect(screen.getByText(/advertising measurement, payments, hosting, and support/i)).toBeVisible();
     expect(screen.getByText(/without sending account emails, user IDs, passwords, auth tokens, payment details/i)).toBeVisible();
     expect(screen.getByText(/cookies, pixels, or similar technologies where enabled/i)).toBeVisible();

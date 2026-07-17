@@ -263,6 +263,19 @@ export function AccountStatusClient() {
         <a className="button-subtle" href={CONTACT_LINKS.accountHelp.href}>
           Email support
         </a>
+        <section className="account-preference-panel" aria-labelledby="account-deletion-entry-title">
+          <div>
+            <p className="eyebrow">Account deletion</p>
+            <h3 id="account-deletion-entry-title">Delete account</h3>
+            <p>
+              Requesting deletion is separate from signing out or canceling a subscription. Support will verify ownership before any
+              account data is removed.
+            </p>
+          </div>
+          <Link className="button-subtle" href="/account-deletion">
+            Delete account
+          </Link>
+        </section>
         <button className="button-subtle" type="button" onClick={() => setSupportIdVisible((visible) => !visible)}>
           {supportIdVisible ? "Hide support ID" : "Show support ID"}
         </button>
