@@ -36,7 +36,7 @@ export default function SignInPage() {
           <h2>{nativeBuild ? "Compare plans or continue free." : "Start Pro or continue free."}</h2>
           <p>
             {nativeBuild
-              ? "Your account identity comes first. Mobile purchases are not available in this preview."
+              ? "Your account identity comes first. Android purchases use Google Play after sign-in."
               : "Your account identity comes first. Checkout only starts after you are signed in."}
           </p>
           <ul className="account-checklist">

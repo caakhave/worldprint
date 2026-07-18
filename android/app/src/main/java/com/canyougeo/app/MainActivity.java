@@ -1,19 +1,13 @@
 package com.canyougeo.app;
 
+import android.os.Bundle;
+
 import com.getcapacitor.BridgeActivity;
 
 public class MainActivity extends BridgeActivity {
-    private final PlayBillingBootstrap playBillingBootstrap = new PlayBillingBootstrap();
-
     @Override
-    public void onStart() {
-        super.onStart();
-        playBillingBootstrap.start(this);
-    }
-
-    @Override
-    public void onStop() {
-        playBillingBootstrap.stop();
-        super.onStop();
+    public void onCreate(Bundle savedInstanceState) {
+        registerPlugin(GooglePlayBillingPlugin.class);
+        super.onCreate(savedInstanceState);
     }
 }

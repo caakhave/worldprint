@@ -1,7 +1,7 @@
 "use client";
 
 import Link from "next/link";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import {
   requestBillingActionUrl,
   NATIVE_CHECKOUT_UNAVAILABLE_MESSAGE,
@@ -17,6 +17,19 @@ import { signUpPathForReturn } from "@/lib/account/signInRedirect";
 import { publicBillingEnabled } from "@/lib/billing/publicBillingConfig";
 import { PRO_PRICE_OPTIONS, type ProBillingInterval } from "@/lib/billing/proPricing";
 import { isNativeAppBuild } from "@/lib/site/buildTarget";
+import {
+  addGooglePlayPurchaseUpdatedListener,
+  GOOGLE_PLAY_ANNUAL_BASE_PLAN_ID,
+  GOOGLE_PLAY_MONTHLY_BASE_PLAN_ID,
+  isAndroidGooglePlayBillingRuntime,
+  launchGooglePlayPurchase,
+  queryGooglePlayPlans,
+  restoreGooglePlayPurchases,
+  type GooglePlayBasePlanId,
+  type GooglePlayPlanDetails,
+  type GooglePlayPurchase
+} from "@/lib/mobile/googlePlayBilling";
+import { requestGooglePlayPurchaseContext, verifyGooglePlayPurchase } from "@/features/account/googlePlayPurchaseActions";
 import { trackAnalyticsEvent, trackCheckoutStarted, trackUpgradeIntent } from "@/lib/site/analytics";
 
 type BillingActionsClientProps = {
@@ -24,6 +37,7 @@ type BillingActionsClientProps = {
   context: "upgrade" | "account";
   selectedPlan?: ProBillingInterval | null;
   checkoutLabel?: string;
+  onVerified?: () => void;
 };
 
 function signUpPathForPlan(interval: ProBillingInterval) {
@@ -45,15 +59,70 @@ function trackUpgradeNavigation(itemId: string) {
   });
 }
 
-export function BillingActionsClient({ entitlement, context, selectedPlan = null, checkoutLabel }: BillingActionsClientProps) {
+const GOOGLE_PLAY_PURCHASED_STATE = 1;
+
+function basePlanIdForInterval(interval: ProBillingInterval): GooglePlayBasePlanId {
+  return interval === "yearly" ? GOOGLE_PLAY_ANNUAL_BASE_PLAN_ID : GOOGLE_PLAY_MONTHLY_BASE_PLAN_ID;
+}
+
+function intervalForBasePlanId(basePlanId: GooglePlayBasePlanId): ProBillingInterval {
+  return basePlanId === GOOGLE_PLAY_ANNUAL_BASE_PLAN_ID ? "yearly" : "monthly";
+}
+
+export function BillingActionsClient({ entitlement, context, selectedPlan = null, checkoutLabel, onVerified }: BillingActionsClientProps) {
   const { client, configured, loading, user } = useSupabaseAccount();
   const [pending, setPending] = useState<BillingPendingState | null>(null);
+  const [nativePending, setNativePending] = useState<GooglePlayBasePlanId | "restore" | null>(null);
+  const [nativePlans, setNativePlans] = useState<GooglePlayPlanDetails[]>([]);
+  const [nativePlansLoading, setNativePlansLoading] = useState(false);
+  const [nativeRuntimeAvailable, setNativeRuntimeAvailable] = useState(() => isNativeAppBuild() && isAndroidGooglePlayBillingRuntime());
   const [message, setMessage] = useState("");
   const signedIn = Boolean(user);
   const isPro = entitlement.plan === "pro";
   const hasStripeCustomer = Boolean(entitlement.row?.stripe_customer_id);
   const billingEnabled = configured && publicBillingEnabled();
   const nativeBuild = isNativeAppBuild();
+
+  useEffect(() => {
+    let mounted = true;
+    let removeListener: (() => void) | null = null;
+
+    async function loadNativeBilling() {
+      if (!nativeBuild || isPro || !signedIn) return;
+      const runtimeAvailable = isAndroidGooglePlayBillingRuntime();
+      if (!mounted) return;
+      setNativeRuntimeAvailable(runtimeAvailable);
+      if (!runtimeAvailable) return;
+
+      setNativePlansLoading(true);
+      try {
+        const [plans, handle] = await Promise.all([
+          queryGooglePlayPlans(),
+          addGooglePlayPurchaseUpdatedListener((purchases) => void verifyNativePurchases(purchases, null))
+        ]);
+        if (!mounted) {
+          await handle.remove();
+          return;
+        }
+        removeListener = () => void handle.remove();
+        setNativePlans(plans);
+        void restoreNativePurchases({ quiet: true });
+      } catch {
+        if (mounted) {
+          setMessage("Google Play purchases are not available right now.");
+        }
+      } finally {
+        if (mounted) setNativePlansLoading(false);
+      }
+    }
+
+    void loadNativeBilling();
+    return () => {
+      mounted = false;
+      removeListener?.();
+    };
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [client, isPro, nativeBuild, signedIn]);
 
   function trackUpgradeClick(interval: ProBillingInterval | undefined) {
     trackUpgradeIntent({
@@ -103,6 +172,61 @@ export function BillingActionsClient({ entitlement, context, selectedPlan = null
     window.location.assign(result.url);
   }
 
+  async function verifyNativePurchases(purchases: GooglePlayPurchase[], basePlanId: GooglePlayBasePlanId | null) {
+    const purchased = purchases.filter((purchase) => purchase.purchaseState === GOOGLE_PLAY_PURCHASED_STATE);
+    if (purchased.length === 0) return;
+    for (const purchase of purchased) {
+      const result = await verifyGooglePlayPurchase({
+        client,
+        signedIn,
+        purchase,
+        basePlanId
+      });
+      if (!result.ok) {
+        setMessage(result.message ?? "Google Play purchase could not be verified.");
+        return;
+      }
+    }
+    setMessage("Google Play purchase verified. Pro access will refresh shortly.");
+    onVerified?.();
+  }
+
+  async function startGooglePlayPurchase(basePlanId: GooglePlayBasePlanId) {
+    setNativePending(basePlanId);
+    setMessage("");
+    trackUpgradeClick(intervalForBasePlanId(basePlanId));
+    const contextResult = await requestGooglePlayPurchaseContext({ client, signedIn });
+    if (!contextResult.obfuscatedAccountId) {
+      setNativePending(null);
+      setMessage(contextResult.message ?? "Google Play purchases could not start.");
+      return;
+    }
+    try {
+      await launchGooglePlayPurchase({ basePlanId, obfuscatedAccountId: contextResult.obfuscatedAccountId });
+      setMessage("Complete the purchase in Google Play.");
+    } catch {
+      setMessage("Google Play purchase could not start. Try again in a minute.");
+    } finally {
+      setNativePending(null);
+    }
+  }
+
+  async function restoreNativePurchases(options: { quiet?: boolean } = {}) {
+    setNativePending("restore");
+    if (!options.quiet) setMessage("");
+    try {
+      const purchases = await restoreGooglePlayPurchases();
+      await verifyNativePurchases(purchases, null);
+      if (!options.quiet && purchases.length === 0) {
+        setMessage("No active Google Play purchases were found for this account.");
+      }
+    } catch {
+      if (!options.quiet) setMessage("Google Play purchases could not be restored right now.");
+    } finally {
+      setNativePending(null);
+    }
+  }
+
   if (nativeBuild) {
     if (isPro) {
       return (
@@ -128,10 +252,67 @@ export function BillingActionsClient({ entitlement, context, selectedPlan = null
       );
     }
 
+    if (!signedIn) {
+      return (
+        <div className="billing-actions" aria-label="Billing actions">
+          <Link className="button" href={signUpPathForReturn("/upgrade")} onClick={() => trackUpgradeNavigation(`${context}_start_pro_native_google_play`)}>
+            Start Pro
+          </Link>
+          <Link className="button-secondary" href="/sign-up">
+            Continue free
+          </Link>
+          <p className="account-env-note">Sign in before starting a Google Play purchase. Free play needs no card.</p>
+        </div>
+      );
+    }
+
+    if (nativeRuntimeAvailable) {
+      const visibleOptions = selectedPlan ? PRO_PRICE_OPTIONS.filter((option) => option.interval === selectedPlan) : PRO_PRICE_OPTIONS;
+      return (
+        <div className={selectedPlan ? "billing-actions billing-actions-focused" : "billing-actions"} aria-label="Billing actions">
+          <div className="checkout-option-buttons" aria-label="Choose Pro billing cadence">
+            {visibleOptions.map((option) => {
+              const basePlanId = basePlanIdForInterval(option.interval);
+              const nativePlan = nativePlans.find((plan) => plan.basePlanId === basePlanId);
+              const label = checkoutLabel ?? option.cta;
+              return (
+                <button
+                  className={option.featured ? "button" : "button-secondary"}
+                  type="button"
+                  key={option.interval}
+                  onClick={() => void startGooglePlayPurchase(basePlanId)}
+                  disabled={nativePending !== null || nativePlansLoading || !nativePlan}
+                >
+                  <span>{nativePending === basePlanId ? "Opening Google Play..." : label}</span>
+                  {nativePlan?.localizedPrice ? <span className="checkout-button-badge">{nativePlan.localizedPrice}</span> : null}
+                </button>
+              );
+            })}
+          </div>
+          <button className="button-secondary" type="button" onClick={() => void restoreNativePurchases()} disabled={nativePending !== null}>
+            {nativePending === "restore" ? "Checking Google Play..." : "Restore purchases"}
+          </button>
+          {context === "account" ? (
+            <Link className="button-secondary" href="/upgrade" onClick={() => trackUpgradeNavigation("account_compare_plans_native_google_play")}>
+              Compare plans
+            </Link>
+          ) : null}
+          {message ? (
+            <p className={message.includes("verified") ? "account-env-note" : "account-error"} role={message.includes("verified") ? "status" : "alert"}>
+              {message}
+            </p>
+          ) : null}
+          <p className="account-env-note">
+            Google Play manages Android purchases. Stripe checkout is unavailable in this Android build.
+          </p>
+        </div>
+      );
+    }
+
     return (
       <div className="billing-actions" aria-label="Billing actions">
         <button className="button" type="button" disabled>
-          Mobile purchases unavailable
+          Google Play unavailable
         </button>
         {context === "account" ? (
           <Link className="button-secondary" href="/upgrade" onClick={() => trackUpgradeNavigation("account_compare_plans_native_preview")}>

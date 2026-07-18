@@ -16,7 +16,7 @@ import { isNativeAppBuild } from "@/lib/site/buildTarget";
 
 export function UpgradeClient() {
   const [selectedPlan, setSelectedPlan] = useState<ProBillingInterval | null>(null);
-  const { configured, entitlement, loading, signedIn } = useEntitlement();
+  const { configured, entitlement, loading, refresh, signedIn } = useEntitlement();
   const isPro = entitlement.plan === "pro";
   const hasStripeCustomer = Boolean(entitlement.row?.stripe_customer_id);
   const nativeBuild = isNativeAppBuild();
@@ -31,7 +31,7 @@ export function UpgradeClient() {
   const statusTitle = isPro
     ? "Can You Geo? Pro"
     : nativeBuild
-      ? "Mobile purchase preview"
+      ? "Google Play purchases"
     : billingEnabled
       ? signedIn
         ? "Ready for secure checkout"
@@ -44,7 +44,7 @@ export function UpgradeClient() {
         : "Manage your membership from your account."
       : "Membership is active on this account."
     : nativeBuild
-      ? "Mobile purchases are not available in this preview. Free play remains available."
+      ? "Android purchases use Google Play. Stripe checkout is unavailable in this build."
     : billingEnabled
       ? signedIn
         ? "Pick monthly or yearly, then continue to secure checkout."
@@ -118,6 +118,7 @@ export function UpgradeClient() {
                 context="upgrade"
                 selectedPlan={selectedPlanOption.interval}
                 checkoutLabel="Continue to secure checkout"
+                onVerified={() => void refresh()}
               />
               <Link className="button-secondary" href="/account">
                 Continue free
@@ -186,7 +187,7 @@ export function UpgradeClient() {
             <strong>{statusTitle}</strong>
             <span>{statusDetail}</span>
           </div>
-          <BillingActionsClient entitlement={entitlement} context="upgrade" />
+          <BillingActionsClient entitlement={entitlement} context="upgrade" onVerified={() => void refresh()} />
         </div>
       </section>
 
@@ -249,7 +250,7 @@ export function UpgradeClient() {
               Growing game library over time
             </li>
           </ul>
-          <BillingActionsClient entitlement={entitlement} context="upgrade" />
+          <BillingActionsClient entitlement={entitlement} context="upgrade" onVerified={() => void refresh()} />
         </article>
 
         <article className="surface plan-card" data-featured="false">
@@ -290,13 +291,13 @@ export function UpgradeClient() {
         </article>
       </div>
 
-      <section className="surface account-card upgrade-note" aria-label={nativeBuild ? "Mobile purchase preview note" : "Secure checkout note"}>
+      <section className="surface account-card upgrade-note" aria-label={nativeBuild ? "Google Play purchase note" : "Secure checkout note"}>
         <ShieldCheck size={20} aria-hidden="true" />
         <div>
-          <h2>{nativeBuild ? "Mobile purchase preview." : "Secure checkout."}</h2>
+          <h2>{nativeBuild ? "Google Play purchases." : "Secure checkout."}</h2>
           {nativeBuild ? (
             <p>
-              Mobile purchases are not available in this preview. Existing Pro access still works for entitled accounts, and Free play remains available.
+              Android purchases use Google Play. Existing Pro access still works for entitled accounts, and Free play remains available.
             </p>
           ) : (
             <p>

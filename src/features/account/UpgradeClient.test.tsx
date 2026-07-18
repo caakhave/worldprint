@@ -40,6 +40,14 @@ const accountMock = vi.hoisted(() => ({
   }
 }));
 
+const googlePlayMock = vi.hoisted(() => ({
+  runtimeAvailable: false,
+  queryGooglePlayPlans: vi.fn().mockResolvedValue([]),
+  launchGooglePlayPurchase: vi.fn(),
+  restoreGooglePlayPurchases: vi.fn().mockResolvedValue([]),
+  addGooglePlayPurchaseUpdatedListener: vi.fn(async () => ({ remove: vi.fn() }))
+}));
+
 function billingClientMock(): BillingMockClient {
   const client: BillingMockClient = {
     auth: {
@@ -65,6 +73,20 @@ vi.mock("@/features/account/useSupabaseAccount", () => ({
   useSupabaseAccount: () => accountMock.state
 }));
 
+vi.mock("@/lib/mobile/googlePlayBilling", () => ({
+  GOOGLE_PLAY_PRODUCT_ID: "canyougeo_pro",
+  GOOGLE_PLAY_MONTHLY_BASE_PLAN_ID: "monthly",
+  GOOGLE_PLAY_ANNUAL_BASE_PLAN_ID: "annual",
+  isAndroidGooglePlayBillingRuntime: () => googlePlayMock.runtimeAvailable,
+  isGooglePlayBasePlanId: (value: unknown) => value === "monthly" || value === "annual",
+  queryGooglePlayPlans: googlePlayMock.queryGooglePlayPlans,
+  launchGooglePlayPurchase: googlePlayMock.launchGooglePlayPurchase,
+  restoreGooglePlayPurchases: googlePlayMock.restoreGooglePlayPurchases,
+  addGooglePlayPurchaseUpdatedListener: googlePlayMock.addGooglePlayPurchaseUpdatedListener,
+  validPurchaseTokenShape: (purchaseToken: string) => purchaseToken.length >= 10 && purchaseToken.length <= 4096 && !/\s/.test(purchaseToken),
+  filterSupportedPurchases: (purchases: Array<{ productId: string }>) => purchases.filter((purchase) => purchase.productId === "canyougeo_pro")
+}));
+
 describe("UpgradeClient", () => {
   beforeEach(() => {
     delete process.env.NEXT_PUBLIC_BILLING_MODE;
@@ -76,6 +98,7 @@ describe("UpgradeClient", () => {
     accountMock.state.configured = true;
     accountMock.state.loading = false;
     accountMock.state.user = null;
+    googlePlayMock.runtimeAvailable = false;
     window.history.pushState({}, "", "/upgrade");
   });
 
@@ -189,7 +212,7 @@ describe("UpgradeClient", () => {
     expect(screen.getAllByText("Best value").length).toBeGreaterThanOrEqual(1);
   });
 
-  it("shows a non-purchasable mobile preview state in native builds", () => {
+  it("keeps native purchase controls unavailable without the Android Play runtime", () => {
     vi.stubEnv("NEXT_PUBLIC_CGY_NATIVE_APP", "1");
     process.env.NEXT_PUBLIC_BILLING_MODE = "test";
     entitlementMock.state.signedIn = true;
@@ -198,10 +221,11 @@ describe("UpgradeClient", () => {
 
     render(<UpgradeClient />);
 
-    expect(screen.getByText("Mobile purchase preview")).toBeVisible();
+    expect(screen.getByText("Google Play purchases")).toBeVisible();
+    expect(screen.getAllByText(/Android purchases use Google Play/i).length).toBeGreaterThanOrEqual(1);
     expect(screen.getAllByText(/Mobile purchases are not available in this preview/i).length).toBeGreaterThanOrEqual(1);
-    expect(screen.getByRole("heading", { name: "Mobile purchase preview." })).toBeVisible();
-    expect(screen.getAllByRole("button", { name: "Mobile purchases unavailable" }).every((button) => button.hasAttribute("disabled"))).toBe(true);
+    expect(screen.getByRole("heading", { name: "Google Play purchases." })).toBeVisible();
+    expect(screen.getAllByRole("button", { name: "Google Play unavailable" }).every((button) => button.hasAttribute("disabled"))).toBe(true);
     expect(screen.queryByRole("button", { name: "Join monthly" })).not.toBeInTheDocument();
     expect(screen.queryByRole("button", { name: "Join yearly" })).not.toBeInTheDocument();
     expect(screen.queryByRole("button", { name: "Continue to secure checkout" })).not.toBeInTheDocument();

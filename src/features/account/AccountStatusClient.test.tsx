@@ -491,8 +491,8 @@ describe("AccountPlanNotesClient", () => {
 
     render(<AccountPlanNotesClient />);
 
-    expect(await screen.findByText("Mobile purchase preview")).toBeVisible();
-    expect(screen.getByText(/Mobile purchases are not available in this preview/i)).toBeVisible();
+    expect(await screen.findByText("Google Play purchases")).toBeVisible();
+    expect(screen.getByText(/Android purchases use Google Play/i)).toBeVisible();
     expect(screen.getByRole("link", { name: "View plans" })).toHaveAttribute("href", "/upgrade");
     expect(screen.queryByText(/checkout needs billing setup/i)).not.toBeInTheDocument();
   });
