@@ -31,11 +31,11 @@ function plistArrayForKey(source: string, key: string): string[] {
 }
 
 describe("iOS release metadata", () => {
-  it("sets the initial TestFlight marketing version and build number for Debug and Release", () => {
+  it("sets the StoreKit TestFlight marketing version and build number for Debug and Release", () => {
     for (const configuration of ["Debug", "Release"] as const) {
       const settings = appTargetBuildSettings(configuration);
       expect(settings).toContain("MARKETING_VERSION = 1.0.0;");
-      expect(settings).toContain("CURRENT_PROJECT_VERSION = 1;");
+      expect(settings).toContain("CURRENT_PROJECT_VERSION = 2;");
       expect(settings).not.toContain("MARKETING_VERSION = 1.0;");
     }
 

@@ -23,6 +23,11 @@ const accountMock = vi.hoisted(() => ({
   }
 }));
 
+const capacitorMock = vi.hoisted(() => ({
+  native: false,
+  platform: "android"
+}));
+
 const googlePlayMock = vi.hoisted(() => ({
   runtimeAvailable: false,
   listener: null as ((purchases: Array<{ productId: string; purchaseToken: string; purchaseState: number }>) => void) | null,
@@ -30,6 +35,26 @@ const googlePlayMock = vi.hoisted(() => ({
   queryGooglePlayPlans: vi.fn(),
   launchGooglePlayPurchase: vi.fn(),
   restoreGooglePlayPurchases: vi.fn()
+}));
+
+const appleStoreKitMock = vi.hoisted(() => ({
+  runtimeAvailable: false,
+  listener: null as ((event: { status: string; productId?: string }) => void) | null,
+  removeListener: vi.fn(),
+  queryAppleStoreKitProducts: vi.fn(),
+  purchaseAppleStoreKitProduct: vi.fn(),
+  restoreAppleStoreKitPurchases: vi.fn(),
+  syncUnfinishedAppleStoreKitTransactions: vi.fn(),
+  finishVerifiedAppleStoreKitTransactions: vi.fn(),
+  manageAppleStoreKitSubscription: vi.fn()
+}));
+
+vi.mock("@capacitor/core", () => ({
+  Capacitor: {
+    isNativePlatform: () => capacitorMock.native,
+    getPlatform: () => capacitorMock.platform
+  },
+  registerPlugin: vi.fn()
 }));
 
 vi.mock("@/features/account/useSupabaseAccount", () => ({
@@ -54,12 +79,32 @@ vi.mock("@/lib/mobile/googlePlayBilling", () => ({
     purchases.filter((purchase) => purchase.productId === "canyougeo_pro")
 }));
 
+vi.mock("@/lib/mobile/appleStoreKit", () => ({
+  APPLE_STOREKIT_MONTHLY_PRODUCT_ID: "com.canyougeo.pro.monthly",
+  APPLE_STOREKIT_ANNUAL_PRODUCT_ID: "com.canyougeo.pro.annual",
+  isIOSAppleStoreKitRuntime: () => appleStoreKitMock.runtimeAvailable,
+  isAppleStoreKitProductId: (value: unknown) => value === "com.canyougeo.pro.monthly" || value === "com.canyougeo.pro.annual",
+  appleStoreKitProductIdForInterval: (interval: "monthly" | "yearly") =>
+    interval === "yearly" ? "com.canyougeo.pro.annual" : "com.canyougeo.pro.monthly",
+  appleStoreKitIntervalForProductId: (productId: string) => (productId === "com.canyougeo.pro.annual" ? "yearly" : "monthly"),
+  queryAppleStoreKitProducts: appleStoreKitMock.queryAppleStoreKitProducts,
+  purchaseAppleStoreKitProduct: appleStoreKitMock.purchaseAppleStoreKitProduct,
+  restoreAppleStoreKitPurchases: appleStoreKitMock.restoreAppleStoreKitPurchases,
+  syncUnfinishedAppleStoreKitTransactions: appleStoreKitMock.syncUnfinishedAppleStoreKitTransactions,
+  finishVerifiedAppleStoreKitTransactions: appleStoreKitMock.finishVerifiedAppleStoreKitTransactions,
+  manageAppleStoreKitSubscription: appleStoreKitMock.manageAppleStoreKitSubscription,
+  addAppleStoreKitTransactionUpdatedListener: vi.fn(async (listener) => {
+    appleStoreKitMock.listener = listener;
+    return { remove: appleStoreKitMock.removeListener };
+  })
+}));
+
 const TEST_USER = { id: "11111111-2222-4333-8444-555555555555", email: "reader@example.com" };
 
 function billingClientMock(): BillingMockClient {
   const client: BillingMockClient = {
     auth: {
-      getSession: vi.fn().mockResolvedValue({ data: { session: { access_token: "billing-token" } }, error: null })
+      getSession: vi.fn().mockResolvedValue({ data: { session: { access_token: "billing-token", user: TEST_USER } }, error: null })
     },
     functions: {
       invoke: vi.fn().mockResolvedValue({ data: {}, error: null })
@@ -68,6 +113,14 @@ function billingClientMock(): BillingMockClient {
   };
   accountMock.state.client = client;
   return client;
+}
+
+function mockEntitlementRead(client: BillingMockClient, row: PlayerEntitlement["row"]) {
+  const maybeSingle = vi.fn().mockResolvedValue({ data: row, error: null });
+  const eq = vi.fn(() => ({ maybeSingle }));
+  const select = vi.fn(() => ({ eq }));
+  client.from.mockReturnValue({ select });
+  return { select, eq, maybeSingle };
 }
 
 function enableProductionAnalytics() {
@@ -85,6 +138,8 @@ describe("BillingActionsClient", () => {
     accountMock.state.configured = true;
     accountMock.state.loading = false;
     accountMock.state.user = null;
+    capacitorMock.native = false;
+    capacitorMock.platform = "android";
     googlePlayMock.runtimeAvailable = false;
     googlePlayMock.listener = null;
     googlePlayMock.removeListener.mockReset();
@@ -97,6 +152,24 @@ describe("BillingActionsClient", () => {
     googlePlayMock.launchGooglePlayPurchase.mockResolvedValue(undefined);
     googlePlayMock.restoreGooglePlayPurchases.mockReset();
     googlePlayMock.restoreGooglePlayPurchases.mockResolvedValue([]);
+    appleStoreKitMock.runtimeAvailable = false;
+    appleStoreKitMock.listener = null;
+    appleStoreKitMock.removeListener.mockReset();
+    appleStoreKitMock.queryAppleStoreKitProducts.mockReset();
+    appleStoreKitMock.queryAppleStoreKitProducts.mockResolvedValue([
+      { productId: "com.canyougeo.pro.monthly", interval: "monthly", displayPrice: "$3.99" },
+      { productId: "com.canyougeo.pro.annual", interval: "yearly", displayPrice: "$29.99" }
+    ]);
+    appleStoreKitMock.purchaseAppleStoreKitProduct.mockReset();
+    appleStoreKitMock.purchaseAppleStoreKitProduct.mockResolvedValue({ status: "canceled" });
+    appleStoreKitMock.restoreAppleStoreKitPurchases.mockReset();
+    appleStoreKitMock.restoreAppleStoreKitPurchases.mockResolvedValue({ status: "none", verifiedCount: 0 });
+    appleStoreKitMock.syncUnfinishedAppleStoreKitTransactions.mockReset();
+    appleStoreKitMock.syncUnfinishedAppleStoreKitTransactions.mockResolvedValue({ status: "none", verifiedCount: 0 });
+    appleStoreKitMock.finishVerifiedAppleStoreKitTransactions.mockReset();
+    appleStoreKitMock.finishVerifiedAppleStoreKitTransactions.mockResolvedValue({ finishedCount: 1 });
+    appleStoreKitMock.manageAppleStoreKitSubscription.mockReset();
+    appleStoreKitMock.manageAppleStoreKitSubscription.mockResolvedValue({ opened: true, status: "opened" });
   });
 
   afterEach(() => {
@@ -233,6 +306,7 @@ describe("BillingActionsClient", () => {
   it("uses Google Play context and launch for signed-in native Android purchases without Stripe checkout", async () => {
     vi.stubEnv("NEXT_PUBLIC_CGY_NATIVE_APP", "1");
     process.env.NEXT_PUBLIC_BILLING_MODE = "test";
+    capacitorMock.platform = "android";
     accountMock.state.user = TEST_USER;
     googlePlayMock.runtimeAvailable = true;
     const client = billingClientMock();
@@ -257,6 +331,59 @@ describe("BillingActionsClient", () => {
     });
     expect(client.functions.invoke).not.toHaveBeenCalledWith("stripe-checkout", expect.anything());
     expect(screen.queryByText(/Stripe handles checkout securely/i)).not.toBeInTheDocument();
+  });
+
+  it("uses Apple StoreKit for signed-in native iOS purchases and finishes only after entitlement refresh", async () => {
+    vi.stubEnv("NEXT_PUBLIC_CGY_NATIVE_APP", "1");
+    vi.stubEnv("NEXT_PUBLIC_SUPABASE_URL", "https://hsgpjtyysbremrokkoym.supabase.co");
+    vi.stubEnv("NEXT_PUBLIC_SUPABASE_ANON_KEY", "anon-public-test-key");
+    process.env.NEXT_PUBLIC_BILLING_MODE = "test";
+    capacitorMock.platform = "ios";
+    accountMock.state.user = TEST_USER;
+    appleStoreKitMock.runtimeAvailable = true;
+    appleStoreKitMock.purchaseAppleStoreKitProduct.mockResolvedValue({
+      status: "backendVerified",
+      verifiedCount: 1,
+      requiresEntitlementRefresh: true,
+      clientMayFinishTransaction: true
+    });
+    const client = billingClientMock();
+    mockEntitlementRead(client, {
+      user_id: TEST_USER.id,
+      plan: "pro",
+      status: "active",
+      stripe_customer_id: null,
+      stripe_subscription_id: null,
+      stripe_price_id: null,
+      stripe_status: null,
+      cancel_at_period_end: null,
+      current_period_end: "2026-07-29T00:00:00.000Z",
+      updated_at: "2026-07-18T00:00:00.000Z"
+    });
+
+    render(<BillingActionsClient entitlement={FREE_ENTITLEMENT} context="upgrade" />);
+
+    await waitFor(() => expect(screen.getByRole("button", { name: /Join monthly/i })).toBeEnabled());
+    fireEvent.click(screen.getByRole("button", { name: /Join monthly/i }));
+
+    await waitFor(() =>
+      expect(appleStoreKitMock.purchaseAppleStoreKitProduct).toHaveBeenCalledWith(
+        expect.objectContaining({
+          productId: "com.canyougeo.pro.monthly",
+          supabaseUrl: "https://hsgpjtyysbremrokkoym.supabase.co",
+          anonKey: "anon-public-test-key",
+          accessToken: "billing-token"
+        })
+      )
+    );
+    await waitFor(() => expect(appleStoreKitMock.finishVerifiedAppleStoreKitTransactions).toHaveBeenCalledTimes(1));
+    expect(client.functions.invoke).not.toHaveBeenCalledWith("stripe-checkout", expect.anything());
+    expect(client.functions.invoke).not.toHaveBeenCalledWith("stripe-portal", expect.anything());
+    expect(JSON.stringify(appleStoreKitMock.purchaseAppleStoreKitProduct.mock.results)).not.toMatch(
+      /signedTransaction|jws|transactionId|originalTransactionId|appAccountToken/i
+    );
+    expect(screen.getByText("Apple purchase verified. Pro access is active.")).toBeVisible();
+    expect(screen.getByText(/Apple manages iOS purchases\. Stripe checkout is unavailable in this iOS build\./i)).toBeVisible();
   });
 
   it("uses protected checkout functions and does not start checkout analytics until a URL is returned", async () => {
@@ -500,8 +627,9 @@ describe("BillingActionsClient", () => {
     render(<BillingActionsClient entitlement={stripePro} context="account" />);
 
     expect(screen.getByRole("button", { name: "Membership active" })).toBeDisabled();
-    expect(screen.getByText(/Subscription management is not available in this preview/i)).toBeVisible();
+    expect(screen.getByText(/Manage the subscription through the store or website where it was created/i)).toBeVisible();
     expect(screen.queryByRole("button", { name: "Manage billing" })).not.toBeInTheDocument();
+    expect(screen.queryByRole("button", { name: "Manage Apple subscription" })).not.toBeInTheDocument();
     expect(client.functions.invoke).not.toHaveBeenCalled();
   });
 

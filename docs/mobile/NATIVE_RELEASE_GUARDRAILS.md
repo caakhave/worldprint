@@ -64,7 +64,9 @@ Android internal build 3 adds the Google Play purchase foundation. It queries on
 
 The Play subscription catalog is fixed at `canyougeo_pro` with `monthly` and `annual` auto-renewing base plans. Secure backend purchase-token verification, Google Play Developer API access, and authenticated RTDN/Pub/Sub handling are mandatory before any purchase test. Browser/native code must never grant Pro locally.
 
-Web builds preserve the existing Stripe checkout, portal, and checkout analytics behavior. StoreKit purchase flows remain deferred.
+iOS build 2 adds the first-party StoreKit 2 client foundation. It loads only `com.canyougeo.pro.monthly` and `com.canyougeo.pro.annual`, starts purchases only after the Swift plugin obtains the authenticated backend app-account context, posts StoreKit signed transaction material from Swift directly to the staging Apple verification endpoint, refreshes the backend-authoritative entitlement row, and finishes transactions only after Pro is observed from Supabase. The JavaScript bridge must not expose signed JWS payloads, transaction IDs, original transaction IDs, app account tokens, receipt data, Apple account details, or provider payloads.
+
+Web builds preserve the existing Stripe checkout, portal, and checkout analytics behavior. Native iOS builds use Apple In-App Purchase only and must not route users to Stripe checkout or the Stripe customer portal.
 
 ## Analytics And Consent Boundary
 

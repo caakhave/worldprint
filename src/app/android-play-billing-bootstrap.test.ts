@@ -98,12 +98,15 @@ describe("Android Play Billing bootstrap", () => {
     expect(actions).toContain("if (nativeBuild) {");
     expect(actions).toContain("launchGooglePlayPurchase");
     expect(actions).toContain("restoreGooglePlayPurchases");
-    expect(actions).toContain("Google Play manages Android purchases. Stripe checkout is unavailable in this Android build.");
+    expect(actions).toContain("nativeStoreBillingBoundaryCopy(nativePlatform)");
     expect(helper).toContain("if (isNativeAppBuild()) {");
     expect(helper).toContain("nativeBillingUnavailableMessage(kind)");
     expect(googlePlayActions).toContain("google-play-purchase-context");
     expect(googlePlayActions).toContain("google-play-purchase-verify");
-    expect(upgrade).toContain("Android purchases use Google Play. Stripe checkout is unavailable in this build.");
+    expect(upgrade).toContain("nativeStoreBillingBoundaryCopy(nativePlatform)");
+    expect(read("src/lib/mobile/nativeStoreBillingPlatform.ts")).toContain(
+      "Google Play manages Android purchases. Stripe checkout is unavailable in this Android build."
+    );
   });
 
   it("does not introduce client-side Pro grants, token persistence, token logging, or bundled credentials", () => {

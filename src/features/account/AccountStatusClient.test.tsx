@@ -313,6 +313,7 @@ describe("AccountStatusClient", () => {
 
   it("uses native-safe signed-out plan copy without purchase steering", () => {
     vi.stubEnv("NEXT_PUBLIC_CGY_NATIVE_APP", "1");
+    getPlatformMock.mockReturnValue("android");
     accountMock.state.user = null;
     entitlementMock.state.signedIn = false;
 
@@ -320,7 +321,7 @@ describe("AccountStatusClient", () => {
 
     expect(screen.getByRole("heading", { name: "Compare plans or continue free." })).toBeVisible();
     expect(screen.getByText(/Existing Pro access unlocks after sign-in/i)).toBeVisible();
-    expect(screen.getByText(/mobile purchases are not available in this preview/i)).toBeVisible();
+    expect(screen.getByText(/Sign in before starting a Google Play purchase/i)).toBeVisible();
     expect(screen.getByRole("link", { name: "View plans" })).toHaveAttribute("href", "/upgrade");
     expect(screen.queryByRole("link", { name: "Start Pro" })).not.toBeInTheDocument();
   });
@@ -488,17 +489,19 @@ describe("AccountPlanNotesClient", () => {
 
   it("uses native-safe account plan actions without checkout setup copy", async () => {
     vi.stubEnv("NEXT_PUBLIC_CGY_NATIVE_APP", "1");
+    getPlatformMock.mockReturnValue("android");
 
     render(<AccountPlanNotesClient />);
 
     expect(await screen.findByText("Google Play purchases")).toBeVisible();
-    expect(screen.getByText(/Android purchases use Google Play/i)).toBeVisible();
+    expect(screen.getByText(/Google Play manages Android purchases/i)).toBeVisible();
     expect(screen.getByRole("link", { name: "View plans" })).toHaveAttribute("href", "/upgrade");
     expect(screen.queryByText(/checkout needs billing setup/i)).not.toBeInTheDocument();
   });
 
   it("uses native-safe signed-out plan actions from account notes", async () => {
     vi.stubEnv("NEXT_PUBLIC_CGY_NATIVE_APP", "1");
+    getPlatformMock.mockReturnValue("android");
     accountMock.state.user = null;
     entitlementMock.state.signedIn = false;
 

@@ -5,7 +5,6 @@ import { useEffect, useState } from "react";
 import {
   requestBillingActionUrl,
   NATIVE_CHECKOUT_UNAVAILABLE_MESSAGE,
-  NATIVE_PORTAL_UNAVAILABLE_MESSAGE,
   nativeBillingUnavailableMessage,
   type BillingActionKind,
   type BillingFunctionName,
@@ -18,6 +17,15 @@ import { publicBillingEnabled } from "@/lib/billing/publicBillingConfig";
 import { PRO_PRICE_OPTIONS, type ProBillingInterval } from "@/lib/billing/proPricing";
 import { isNativeAppBuild } from "@/lib/site/buildTarget";
 import {
+  addAppleStoreKitTransactionUpdatedListener,
+  appleStoreKitProductIdForInterval,
+  appleStoreKitIntervalForProductId,
+  isIOSAppleStoreKitRuntime,
+  queryAppleStoreKitProducts,
+  type AppleStoreKitProductDetails,
+  type AppleStoreKitProductId
+} from "@/lib/mobile/appleStoreKit";
+import {
   addGooglePlayPurchaseUpdatedListener,
   GOOGLE_PLAY_ANNUAL_BASE_PLAN_ID,
   GOOGLE_PLAY_MONTHLY_BASE_PLAN_ID,
@@ -29,6 +37,20 @@ import {
   type GooglePlayPlanDetails,
   type GooglePlayPurchase
 } from "@/lib/mobile/googlePlayBilling";
+import {
+  nativeStoreBillingBoundaryCopy,
+  nativeStoreBillingPlatform,
+  nativeStoreBillingSignInCopy,
+  nativeStoreBillingUnavailableLabel
+} from "@/lib/mobile/nativeStoreBillingPlatform";
+import {
+  finishAppleStoreKitAfterEntitlement,
+  openAppleStoreKitSubscriptionManagement,
+  restoreAppleStoreKitEntitlements,
+  startAppleStoreKitPurchase,
+  syncUnfinishedAppleStoreKitEntitlements,
+  type AppleStoreKitActionResult
+} from "@/features/account/appleStoreKitActions";
 import { requestGooglePlayPurchaseContext, verifyGooglePlayPurchase } from "@/features/account/googlePlayPurchaseActions";
 import { trackAnalyticsEvent, trackCheckoutStarted, trackUpgradeIntent } from "@/lib/site/analytics";
 
@@ -37,7 +59,7 @@ type BillingActionsClientProps = {
   context: "upgrade" | "account";
   selectedPlan?: ProBillingInterval | null;
   checkoutLabel?: string;
-  onVerified?: () => void;
+  onVerified?: () => void | Promise<void>;
 };
 
 function signUpPathForPlan(interval: ProBillingInterval) {
@@ -60,6 +82,14 @@ function trackUpgradeNavigation(itemId: string) {
 }
 
 const GOOGLE_PLAY_PURCHASED_STATE = 1;
+type NativeBillingRuntime = "google-play" | "apple" | "unavailable";
+type NativePendingState = GooglePlayBasePlanId | AppleStoreKitProductId | "restore" | "manage" | null;
+
+function detectNativeBillingRuntime(): NativeBillingRuntime {
+  if (isAndroidGooglePlayBillingRuntime()) return "google-play";
+  if (isIOSAppleStoreKitRuntime()) return "apple";
+  return "unavailable";
+}
 
 function basePlanIdForInterval(interval: ProBillingInterval): GooglePlayBasePlanId {
   return interval === "yearly" ? GOOGLE_PLAY_ANNUAL_BASE_PLAN_ID : GOOGLE_PLAY_MONTHLY_BASE_PLAN_ID;
@@ -72,44 +102,76 @@ function intervalForBasePlanId(basePlanId: GooglePlayBasePlanId): ProBillingInte
 export function BillingActionsClient({ entitlement, context, selectedPlan = null, checkoutLabel, onVerified }: BillingActionsClientProps) {
   const { client, configured, loading, user } = useSupabaseAccount();
   const [pending, setPending] = useState<BillingPendingState | null>(null);
-  const [nativePending, setNativePending] = useState<GooglePlayBasePlanId | "restore" | null>(null);
+  const [nativePending, setNativePending] = useState<NativePendingState>(null);
+  const [nativeRuntime, setNativeRuntime] = useState<NativeBillingRuntime>(() => detectNativeBillingRuntime());
   const [nativePlans, setNativePlans] = useState<GooglePlayPlanDetails[]>([]);
+  const [appleProducts, setAppleProducts] = useState<AppleStoreKitProductDetails[]>([]);
   const [nativePlansLoading, setNativePlansLoading] = useState(false);
-  const [nativeRuntimeAvailable, setNativeRuntimeAvailable] = useState(() => isNativeAppBuild() && isAndroidGooglePlayBillingRuntime());
+  const [applePurchaseInSession, setApplePurchaseInSession] = useState(false);
   const [message, setMessage] = useState("");
   const signedIn = Boolean(user);
   const isPro = entitlement.plan === "pro";
   const hasStripeCustomer = Boolean(entitlement.row?.stripe_customer_id);
   const billingEnabled = configured && publicBillingEnabled();
   const nativeBuild = isNativeAppBuild();
+  const nativePlatform =
+    nativeRuntime === "google-play" ? "android" : nativeRuntime === "apple" ? "ios" : nativeStoreBillingPlatform(nativeBuild);
 
   useEffect(() => {
     let mounted = true;
     let removeListener: (() => void) | null = null;
 
     async function loadNativeBilling() {
-      if (!nativeBuild || isPro || !signedIn) return;
-      const runtimeAvailable = isAndroidGooglePlayBillingRuntime();
+      if (!nativeBuild || isPro) return;
+      const runtime = detectNativeBillingRuntime();
       if (!mounted) return;
-      setNativeRuntimeAvailable(runtimeAvailable);
-      if (!runtimeAvailable) return;
+      setNativeRuntime(runtime);
+      if (runtime === "unavailable") return;
+
+      if (!signedIn) {
+        if (runtime === "apple") {
+          const handle = await addAppleStoreKitTransactionUpdatedListener(() => {
+            if (mounted) setMessage("Sign in to restore purchase.");
+          });
+          if (!mounted) {
+            await handle.remove();
+            return;
+          }
+          removeListener = () => void handle.remove();
+        }
+        return;
+      }
 
       setNativePlansLoading(true);
       try {
-        const [plans, handle] = await Promise.all([
-          queryGooglePlayPlans(),
-          addGooglePlayPurchaseUpdatedListener((purchases) => void verifyNativePurchases(purchases, null))
-        ]);
-        if (!mounted) {
-          await handle.remove();
-          return;
+        if (runtime === "google-play") {
+          const [plans, handle] = await Promise.all([
+            queryGooglePlayPlans(),
+            addGooglePlayPurchaseUpdatedListener((purchases) => void verifyNativePurchases(purchases, null))
+          ]);
+          if (!mounted) {
+            await handle.remove();
+            return;
+          }
+          removeListener = () => void handle.remove();
+          setNativePlans(plans);
+          void restoreNativePurchases({ quiet: true });
+        } else {
+          const [products, handle] = await Promise.all([
+            queryAppleStoreKitProducts(),
+            addAppleStoreKitTransactionUpdatedListener(() => void syncAppleStoreKitTransactions({ quiet: true }))
+          ]);
+          if (!mounted) {
+            await handle.remove();
+            return;
+          }
+          removeListener = () => void handle.remove();
+          setAppleProducts(products);
+          void syncAppleStoreKitTransactions({ quiet: true });
         }
-        removeListener = () => void handle.remove();
-        setNativePlans(plans);
-        void restoreNativePurchases({ quiet: true });
       } catch {
         if (mounted) {
-          setMessage("Google Play purchases are not available right now.");
+          setMessage(runtime === "apple" ? "Apple purchases are not available right now." : "Google Play purchases are not available right now.");
         }
       } finally {
         if (mounted) setNativePlansLoading(false);
@@ -188,7 +250,7 @@ export function BillingActionsClient({ entitlement, context, selectedPlan = null
       }
     }
     setMessage("Google Play purchase verified. Pro access will refresh shortly.");
-    onVerified?.();
+    await onVerified?.();
   }
 
   async function startGooglePlayPurchase(basePlanId: GooglePlayBasePlanId) {
@@ -227,6 +289,86 @@ export function BillingActionsClient({ entitlement, context, selectedPlan = null
     }
   }
 
+  async function completeAppleStoreKitVerification(result: AppleStoreKitActionResult, options: { quiet?: boolean } = {}) {
+    if (!result.ok || result.status !== "backendVerified") {
+      if (!options.quiet && result.message) setMessage(result.message);
+      return;
+    }
+    const finishResult = await finishAppleStoreKitAfterEntitlement({ client, userId: user?.id });
+    await onVerified?.();
+    if (finishResult.ok) {
+      setApplePurchaseInSession(true);
+    }
+    if (!options.quiet) {
+      setMessage(finishResult.message ?? result.message ?? "Apple purchase verified. Pro access will refresh shortly.");
+    }
+  }
+
+  async function startApplePurchase(productId: AppleStoreKitProductId) {
+    setNativePending(productId);
+    setMessage("");
+    trackUpgradeClick(appleStoreKitIntervalForProductId(productId));
+    try {
+      const result = await startAppleStoreKitPurchase({ client, signedIn, productId });
+      if (result.status === "backendVerified") {
+        await completeAppleStoreKitVerification(result);
+      } else {
+        setMessage(result.message ?? "Apple purchase could not be completed. Try again in a minute.");
+      }
+    } catch {
+      setMessage("Apple purchase could not start. Try again in a minute.");
+    } finally {
+      setNativePending(null);
+    }
+  }
+
+  async function restoreApplePurchases(options: { quiet?: boolean } = {}) {
+    setNativePending("restore");
+    if (!options.quiet) setMessage("");
+    try {
+      const result = await restoreAppleStoreKitEntitlements({ client, signedIn });
+      if (result.status === "backendVerified") {
+        await completeAppleStoreKitVerification(result, options);
+      } else if (!options.quiet && result.message) {
+        setMessage(result.message);
+      }
+    } catch {
+      if (!options.quiet) setMessage("Apple purchases could not be restored right now.");
+    } finally {
+      setNativePending(null);
+    }
+  }
+
+  async function syncAppleStoreKitTransactions(options: { quiet?: boolean } = {}) {
+    if (!signedIn) {
+      if (!options.quiet) setMessage("Sign in to restore purchase.");
+      return;
+    }
+    try {
+      const result = await syncUnfinishedAppleStoreKitEntitlements({ client, signedIn });
+      if (result.status === "backendVerified") {
+        await completeAppleStoreKitVerification(result, options);
+      } else if (!options.quiet && result.message) {
+        setMessage(result.message);
+      }
+    } catch {
+      if (!options.quiet) setMessage("Apple purchases could not be refreshed right now.");
+    }
+  }
+
+  async function openAppleSubscriptionManagement() {
+    setNativePending("manage");
+    setMessage("");
+    try {
+      const result = await openAppleStoreKitSubscriptionManagement();
+      if (!result.ok && result.message) setMessage(result.message);
+    } catch {
+      setMessage("Apple subscription management could not open right now.");
+    } finally {
+      setNativePending(null);
+    }
+  }
+
   if (nativeBuild) {
     if (isPro) {
       return (
@@ -245,9 +387,19 @@ export function BillingActionsClient({ entitlement, context, selectedPlan = null
               View plan
             </Link>
           ) : null}
+          {nativeRuntime === "apple" && applePurchaseInSession ? (
+            <button className="button-secondary" type="button" onClick={() => void openAppleSubscriptionManagement()} disabled={nativePending !== null}>
+              {nativePending === "manage" ? "Opening Apple..." : "Manage Apple subscription"}
+            </button>
+          ) : null}
           <p className="account-env-note">
-            {NATIVE_PORTAL_UNAVAILABLE_MESSAGE} Existing Pro access remains available on this account.
+            Existing Pro access remains available on this account. Manage the subscription through the store or website where it was created.
           </p>
+          {message ? (
+            <p className="account-error" role="alert">
+              {message}
+            </p>
+          ) : null}
         </div>
       );
     }
@@ -255,18 +407,23 @@ export function BillingActionsClient({ entitlement, context, selectedPlan = null
     if (!signedIn) {
       return (
         <div className="billing-actions" aria-label="Billing actions">
-          <Link className="button" href={signUpPathForReturn("/upgrade")} onClick={() => trackUpgradeNavigation(`${context}_start_pro_native_google_play`)}>
+          <Link className="button" href={signUpPathForReturn("/upgrade")} onClick={() => trackUpgradeNavigation(`${context}_start_pro_native_${nativePlatform}`)}>
             Start Pro
           </Link>
           <Link className="button-secondary" href="/sign-up">
             Continue free
           </Link>
-          <p className="account-env-note">Sign in before starting a Google Play purchase. Free play needs no card.</p>
+          <p className="account-env-note">{nativeStoreBillingSignInCopy(nativePlatform)}</p>
+          {message ? (
+            <p className="account-error" role="alert">
+              {message}
+            </p>
+          ) : null}
         </div>
       );
     }
 
-    if (nativeRuntimeAvailable) {
+    if (nativeRuntime === "google-play") {
       const visibleOptions = selectedPlan ? PRO_PRICE_OPTIONS.filter((option) => option.interval === selectedPlan) : PRO_PRICE_OPTIONS;
       return (
         <div className={selectedPlan ? "billing-actions billing-actions-focused" : "billing-actions"} aria-label="Billing actions">
@@ -303,7 +460,55 @@ export function BillingActionsClient({ entitlement, context, selectedPlan = null
             </p>
           ) : null}
           <p className="account-env-note">
-            Google Play manages Android purchases. Stripe checkout is unavailable in this Android build.
+            {nativeStoreBillingBoundaryCopy(nativePlatform)}
+          </p>
+        </div>
+      );
+    }
+
+    if (nativeRuntime === "apple") {
+      const visibleOptions = selectedPlan ? PRO_PRICE_OPTIONS.filter((option) => option.interval === selectedPlan) : PRO_PRICE_OPTIONS;
+      return (
+        <div className={selectedPlan ? "billing-actions billing-actions-focused" : "billing-actions"} aria-label="Billing actions">
+          <div className="checkout-option-buttons" aria-label="Choose Pro billing cadence">
+            {visibleOptions.map((option) => {
+              const productId = appleStoreKitProductIdForInterval(option.interval);
+              const appleProduct = appleProducts.find((product) => product.productId === productId);
+              const label = checkoutLabel ?? option.cta;
+              return (
+                <button
+                  className={option.featured ? "button" : "button-secondary"}
+                  type="button"
+                  key={option.interval}
+                  onClick={() => void startApplePurchase(productId)}
+                  disabled={nativePending !== null || nativePlansLoading || !appleProduct}
+                >
+                  <span>{nativePending === productId ? "Opening Apple..." : label}</span>
+                  {appleProduct?.displayPrice ? <span className="checkout-button-badge">{appleProduct.displayPrice}</span> : null}
+                </button>
+              );
+            })}
+          </div>
+          <button className="button-secondary" type="button" onClick={() => void restoreApplePurchases()} disabled={nativePending !== null}>
+            {nativePending === "restore" ? "Checking Apple..." : "Restore purchases"}
+          </button>
+          {applePurchaseInSession ? (
+            <button className="button-secondary" type="button" onClick={() => void openAppleSubscriptionManagement()} disabled={nativePending !== null}>
+              {nativePending === "manage" ? "Opening Apple..." : "Manage Apple subscription"}
+            </button>
+          ) : null}
+          {context === "account" ? (
+            <Link className="button-secondary" href="/upgrade" onClick={() => trackUpgradeNavigation("account_compare_plans_native_apple")}>
+              Compare plans
+            </Link>
+          ) : null}
+          {message ? (
+            <p className={message.includes("verified") || message.includes("active") ? "account-env-note" : "account-error"} role={message.includes("verified") || message.includes("active") ? "status" : "alert"}>
+              {message}
+            </p>
+          ) : null}
+          <p className="account-env-note">
+            {nativeStoreBillingBoundaryCopy(nativePlatform)}
           </p>
         </div>
       );
@@ -312,7 +517,7 @@ export function BillingActionsClient({ entitlement, context, selectedPlan = null
     return (
       <div className="billing-actions" aria-label="Billing actions">
         <button className="button" type="button" disabled>
-          Google Play unavailable
+          {nativeStoreBillingUnavailableLabel(nativePlatform)}
         </button>
         {context === "account" ? (
           <Link className="button-secondary" href="/upgrade" onClick={() => trackUpgradeNavigation("account_compare_plans_native_preview")}>
