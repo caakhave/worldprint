@@ -60,7 +60,11 @@ When the device reconnects, the offline status is dismissed and the account/sess
 
 Native builds do not start Stripe checkout, open Stripe customer portal, redirect to Stripe, or complete purchases. Free users see the existing mobile-purchases-unavailable state. Android-native account and sign-in surfaces should use neutral plan-preview copy, not checkout/billing-setup copy or website-purchase steering. Already entitled Pro users can still see and use their Pro entitlement when the app can read the account state.
 
-Web builds preserve the existing Stripe checkout, portal, and checkout analytics behavior. StoreKit and Google Play Billing remain deferred.
+Android internal build 2 adds the official Google Play Billing Library only as a catalog-unlock and runtime-capability bootstrap. It creates and closes a `BillingClient`, checks subscription support after setup succeeds, and lets the library contribute the `com.android.vending.BILLING` permission through manifest merge. It does not query products, display Play prices, launch a purchase sheet, acknowledge purchases, transmit purchase tokens, restore purchases, or grant Pro.
+
+The Play subscription catalog remains uncreated until Google Play processes the billing-capable artifact and exposes subscription creation. Secure backend purchase-token verification, Google Play Developer API access, and authenticated RTDN/Pub/Sub handling remain mandatory before any purchase test.
+
+Web builds preserve the existing Stripe checkout, portal, and checkout analytics behavior. StoreKit and Google Play purchase flows remain deferred.
 
 ## Analytics And Consent Boundary
 
