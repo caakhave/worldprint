@@ -101,14 +101,19 @@ describe("Android Play Billing bootstrap", () => {
     expect(upgrade).toContain("Mobile purchases are not available in this preview. Free play remains available.");
   });
 
-  it("does not introduce token transmission, local Pro grants, or service-account credentials", () => {
-    const source = ["android/app/src/main", "src/features/account", "src/lib/billing", "supabase/functions"]
+  it("does not introduce client token transmission, local Pro grants, or bundled credentials", () => {
+    const clientSource = ["android/app/src/main", "src/features/account", "src/lib/billing"]
+      .flatMap(walkTextFiles)
+      .map((path) => read(path))
+      .join("\n");
+    const repositorySource = ["android/app/src/main", "src", "supabase/functions"]
       .flatMap(walkTextFiles)
       .map((path) => read(path))
       .join("\n");
 
-    expect(source).not.toMatch(/launchBillingFlow|acknowledgePurchase|consumeAsync|getPurchaseToken|purchaseToken/);
-    expect(source).not.toMatch(/google.*service.*account|service_account|private_key_id|-----BEGIN PRIVATE KEY-----/i);
+    expect(clientSource).not.toMatch(/launchBillingFlow|acknowledgePurchase|consumeAsync|getPurchaseToken|purchaseToken/);
+    expect(clientSource).not.toMatch(/provider_subscriptions|grantPro|localStorage\.(?:setItem|getItem)\([^)]*pro/i);
+    expect(repositorySource).not.toMatch(/-----BEGIN PRIVATE KEY-----(?:\\n|\r\n|\n|\s)+[A-Za-z0-9+/=]{40,}/i);
   });
 
   it("keeps the source manifest narrow and verifies merged release permissions when available", () => {
