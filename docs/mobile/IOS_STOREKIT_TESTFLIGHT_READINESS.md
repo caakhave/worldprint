@@ -1,12 +1,13 @@
 # Can You Geo iOS StoreKit And TestFlight Readiness
 
-Checkpoint 5D-1E-PREP-IOS records the next safe iOS readiness step while Android upload-certificate activation remains pending. It is a documentation and audit checkpoint only.
+Checkpoint 5D-1E-PREP-IOS recorded the next safe iOS readiness step while Android upload-certificate activation was pending. Checkpoint 5D-1D-IOS-SERVER builds on that audit with the staging Apple App Store Server API and App Store Server Notifications V2 foundation.
 
 No App Store Connect product, purchase, TestFlight upload, production Supabase mutation, Stripe mutation, credential creation, or App Store submission occurs in this checkpoint.
 
 ## Current Protected State
 
 - Protected staging commit audited: `996223100d61627884d0aac3db1b3993ff034931`.
+- Protected staging merge commit for the Apple server-foundation branch: `843faad836adf11e41c68d181337fa4c1f661a96`.
 - Protected main commit observed during the audit: `16af035a53f001dd5d16625a28631951c9765479`.
 - iOS app name: `Can You Geo`.
 - Bundle ID: `com.canyougeo.app`.
@@ -77,23 +78,23 @@ Current staging has no StoreKit 2 runtime implementation. The existing native pu
 | Required StoreKit capability | Current status |
 | --- | --- |
 | StoreKit 2 product loading | Missing. |
-| Monthly and annual iOS product mapping | Not implemented. Recommended IDs exist in architecture docs but remain not final-approved. |
+| Monthly and annual iOS product mapping | Final-approved for server contracts: `com.canyougeo.pro.monthly` and `com.canyougeo.pro.annual`, both grant `pro`. StoreKit client product loading is still missing. |
 | Localized App Store price display | Missing. |
 | Purchase initiation | Missing. |
 | `Transaction.updates` listener | Missing. |
 | `Transaction.unfinished` handling | Missing. |
 | `Transaction.currentEntitlements` restore/resync | Missing. |
-| Transaction verification | Missing on iOS client; Apple server verification endpoint also missing. |
-| Secure backend submission | Missing for Apple. Google Play has its own endpoint and must not be reused for Apple payloads. |
+| Transaction verification | Missing on iOS client. Staging server foundation adds Apple signed-transaction and current-subscription verification before provider persistence. |
+| Secure backend submission | Staging foundation adds Apple-specific backend endpoints. Google Play has its own endpoint and must not be reused for Apple payloads. |
 | No client-side Pro grant | Passing. Browser/native code still reads authoritative entitlement state and does not write Pro locally. |
-| Idempotent provider persistence | Partly ready through provider-neutral schema/resolver; Apple-specific processor is missing. |
-| Account ownership binding | Schema supports `app_account_token`, but StoreKit `appAccountToken` flow is not implemented. |
-| Entitlement refresh after purchase/restore | Missing for Apple. |
-| Revocation, expiration, grace, retry handling | Representable in schema; missing Apple verifier/notification normalization. |
+| Idempotent provider persistence | Staging foundation adds Apple-specific service-role RPC processors over the existing provider-neutral schema. |
+| Account ownership binding | Staging foundation issues the signed-in Supabase UUID as StoreKit `appAccountToken` and binds each original transaction chain to exactly one account. StoreKit client wiring is still missing. |
+| Entitlement refresh after purchase/restore | Staging foundation refreshes provider-neutral entitlement projection only after verified Apple state is durable. |
+| Revocation, expiration, grace, retry handling | Staging foundation normalizes these Apple states for purchase verification, notifications, and reconciliation candidates. |
 | Native Manage Subscription navigation | Missing. |
 | Native Stripe suppression | Passing. iOS native builds do not open Stripe Checkout or the Stripe Customer Portal. |
 
-The iOS architecture document currently marks the product identifiers `com.canyougeo.pro.monthly` and `com.canyougeo.pro.annual` as recommended, not final-approved. Treat final product IDs, subscription group name, sign-in requirement, app account token policy, finish policy, sandbox entitlement behavior, deleted-account behavior, and pricing as manual gates before implementation.
+The product identifiers `com.canyougeo.pro.monthly` and `com.canyougeo.pro.annual`, subscription group name `Can You Geo Pro`, signed-in purchase requirement, Supabase-UUID `appAccountToken` policy, backend-before-finish policy, sandbox isolation, deleted-account no-reclaim policy, and target US prices are now final-approved for the server foundation. StoreKit client UI, App Store Connect product creation, offers, trials, promotional offers, win-back offers, and Family Sharing remain gated.
 
 ## Backend Apple Verification Readiness
 
@@ -107,23 +108,29 @@ Reusable foundation already in staging:
 
 Missing Apple backend components:
 
-- `apple-purchase-context` or equivalent authenticated endpoint for account binding, if final design keeps that split.
-- `apple-purchase-verify` authenticated endpoint for signed-in native purchase/restore candidates.
-- App Store Server API JWT creation and key storage in server-only Supabase secrets.
-- Apple signed transaction and signed renewal info verification.
-- Product and bundle allowlist enforcement for `com.canyougeo.app`.
-- Original transaction ownership binding and conflict handling.
-- App Store Server Notifications V2 endpoint with JWS signature verification.
-- Idempotent Apple provider-event processor.
-- Reconciliation runner for missed, stale, conflicted, pending, expired, refunded, revoked, grace-period, and billing-retry states.
-- Sanitized support/operations query for Apple provider state.
+- Deployment of `apple-purchase-context`, `apple-purchase-verify`, and `apple-app-store-notifications` to staging.
+- Staging Supabase secrets for `APPLE_APP_STORE_ISSUER_ID`, `APPLE_APP_STORE_KEY_ID`, `APPLE_APP_STORE_PRIVATE_KEY`, `APPLE_BUNDLE_ID`, `APPLE_APP_ID`, and `APPLE_ENVIRONMENT`.
+- App Store Connect notification URL configuration after the staging notification endpoint is deployed and verified.
+- Scheduled/operator reconciliation endpoint or worker that uses `billing.apple_subscription_reconciliation_candidates`.
+- StoreKit client code that calls the context endpoint, sends signed transaction material, waits for backend acceptance, and only then finishes transactions.
+- App Store Connect subscription products, base metadata, and sandbox product loading.
+- Sanitized support/operations query surfaces for Apple provider state.
+
+Staging Apple server foundation added by Checkpoint 5D-1D-IOS-SERVER:
+
+- `supabase/functions/apple-purchase-context`: JWT-protected endpoint returning the signed-in user's stable UUID `appAccountToken`, the approved bundle/app identifiers, environment, and product allowlist. It creates no provider subscription and grants no entitlement.
+- `supabase/functions/apple-purchase-verify`: JWT-protected endpoint that accepts StoreKit signed transaction material, verifies Apple signed data, re-queries App Store Server API current subscription state, enforces bundle/app/product/environment/appAccountToken allowlists, persists via a service-role RPC, and returns sanitized finish guidance.
+- `supabase/functions/apple-app-store-notifications`: App Store Server Notifications V2 endpoint with `verify_jwt = false`. It verifies `signedPayload` and nested signed transaction/renewal data before any mutation, records `TEST` notifications without subscription or entitlement writes, re-queries Apple current state for subscription notifications, and updates only already-bound original transaction chains.
+- `billing.apple_transaction_chains`: service-role-only private table for original transaction ownership, raw original transaction ID storage needed for future reconciliation, and deleted-account no-reclaim protection through a retained user UUID fingerprint.
+- `billing.process_apple_purchase_verification` and `billing.process_apple_server_notification_event`: service-only processors that write sanitized Apple provider events and provider subscriptions, fail closed on ownership conflicts, and refresh `public.entitlements` only after durable verified provider state.
+- `billing.apple_subscription_reconciliation_candidates`: read-only service-role reconciliation foundation for stale, conflicted, unknown, orphaned, missed, out-of-order, and entitlement-inconsistent Apple provider state.
 
 Manual credentials/configuration checklist for a later approved checkpoint:
 
 1. Confirm App Store Connect account role can manage In-App Purchases, API keys, users, agreements, and server notifications.
 2. Confirm Paid Apps Agreement, tax, and banking status before paid products.
-3. Approve final subscription group name and product identifiers.
-4. Create the Apple subscription group and products only after product IDs are approved.
+3. Create the Apple subscription group and products only after the protected server foundation is deployed and App Store Connect mutation is explicitly authorized.
+4. Use the approved product identifiers `com.canyougeo.pro.monthly` and `com.canyougeo.pro.annual`.
 5. Create exactly the required App Store Server API key only after the server secret destination is approved.
 6. Store Apple issuer ID, key ID, bundle ID, environment setting, and private key only as server-side Supabase Edge Function secrets.
 7. Configure App Store Server Notifications V2 only after the endpoint is deployed and can verify test notifications.
@@ -135,7 +142,7 @@ Build-number strategy:
 
 - The next TestFlight build that contains StoreKit/backend integration should increment `CURRENT_PROJECT_VERSION` from `1` to `2`, unless App Store Connect proves build 2 has already been used.
 - Keep `MARKETING_VERSION = 1.0.0` unless release notes, App Store metadata, or product policy require a marketing-version bump.
-- Do not archive or upload a new TestFlight build until StoreKit product IDs, Apple backend endpoints, staging secrets, and sandbox product loading are approved.
+- Do not archive or upload a new TestFlight build until Apple backend endpoints are deployed to staging, server-only Apple secrets are configured, StoreKit client code exists, App Store Connect products exist, and sandbox product loading is proven.
 
 Internal testing checklist:
 
@@ -219,10 +226,11 @@ Screenshot and metadata inventory:
 
 Release blockers:
 
-- Final iOS product IDs are not approved.
-- Subscription group name, pricing, territory availability, Family Sharing, grace period, offers/trials, and deleted-account handling are not final-approved.
-- Apple purchase verification endpoint is missing.
-- Apple server notification endpoint is missing.
+- Apple server foundation PR must be merged, then migration/functions must be deployed to staging.
+- Apple App Store Server API credentials have not been created or stored as staging Supabase secrets.
+- App Store Connect subscription group/products have not been created.
+- Family Sharing remains not approved.
+- Free trials, introductory offers, promotional offers, win-back offers, prepaid plans, and installments remain not approved.
 - App Store Server API credentials are not created or stored.
 - StoreKit 2 Capacitor plugin is missing.
 - Native iOS subscription UI is missing.
@@ -232,12 +240,12 @@ Release blockers:
 
 ## Next Safe Step
 
-The next protected implementation step is Apple server foundation before native StoreKit UI:
+After the protected Apple server foundation PR merges and deploys to staging, the next safe implementation step is StoreKit client foundation before purchase UI:
 
-1. Approve final iOS product identifiers and sandbox/production entitlement policy.
-2. Implement Apple server verification and notification endpoints against staging only, with no App Store Connect mutation unless separately authorized.
-3. Add StoreKit 2 plugin and local StoreKit configuration after backend contracts can safely reject invalid or unapproved transactions.
+1. Deploy the staging migration and Apple Edge Functions only after protected PR approval.
+2. Create/store Apple server credentials as staging Supabase secrets only after the secret destination is approved.
+3. Add StoreKit 2 plugin and local StoreKit configuration after backend contracts can reject invalid or unapproved transactions.
 4. Add native iOS subscription UI only after the plugin/backend contract is stable.
 5. Increment to the next iOS build number, archive, upload to TestFlight, and begin sandbox lifecycle validation only after those gates pass.
 
-Recommended next checkpoint: `5D-1D-IOS-SERVER` - implement Apple App Store Server API verification and App Store Server Notifications V2 foundation for staging, without creating App Store Connect products or initiating purchases until product IDs and administrative gates are approved.
+Recommended next checkpoint after protected merge and staging deploy: `5D-1D-IOS-CLIENT` - add the StoreKit 2 client bridge, local StoreKit configuration, and signed-in purchase/restore state machine that calls the staging Apple server foundation without granting Pro locally.
