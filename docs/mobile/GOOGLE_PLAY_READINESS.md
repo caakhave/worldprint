@@ -32,6 +32,36 @@ The approved `canyougeo_pro` subscription catalog remains uncreated until Play p
 artifact. Backend Google Play Developer API verification and authenticated RTDN/Pub/Sub handling are required before
 any purchase test.
 
+## RTDN Foundation
+
+Checkpoint 5D-1D-RTDN adds the staging-only backend path for Google Play Real-time Developer Notifications:
+
+```text
+Google Play -> Pub/Sub topic -> authenticated staging push subscription -> google-play-rtdn Edge Function
+```
+
+The Edge Function is deployed with Supabase `verify_jwt=false` only because Google Pub/Sub supplies a Google-signed OIDC
+JWT. The function verifies the Google JWT signature, issuer, exact audience, exact push service-account email, and
+`email_verified` claim before parsing a Pub/Sub envelope.
+
+Server-only configuration:
+
+- `GOOGLE_PLAY_RTDN_PUSH_SERVICE_ACCOUNT_EMAIL`
+- `GOOGLE_PLAY_RTDN_AUDIENCE`
+- `GOOGLE_PLAY_RTDN_TOPIC`
+- `GOOGLE_PLAY_RTDN_STAGING_SUBSCRIPTION`
+- existing Android Publisher and catalog secrets from the API checkpoint
+
+The RTDN handler records Pub/Sub message IDs for idempotency. Test notifications are durably recorded and never create
+provider subscriptions or entitlements. Subscription notifications call `purchases.subscriptionsv2.get` as the source of
+truth, but only token fingerprints are persisted. A Google notification by itself cannot bind a purchase token to a user
+and cannot grant Pro. Effective entitlement refresh runs only when the purchase-token fingerprint already matches an
+existing service-only Google Play provider subscription for exactly one user.
+
+The temporary staging push subscription must be disabled or deleted before public production purchases begin, after a
+production consumer has been deployed and verified. No closed/open/production rollout, purchase flow, acknowledgement,
+refund, revocation, catalog change, Stripe mutation, or production Supabase deployment is implied by this foundation.
+
 ## Sources Reviewed
 
 - `android/app/src/main/AndroidManifest.xml`
