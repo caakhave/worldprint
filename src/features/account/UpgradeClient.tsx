@@ -13,6 +13,11 @@ import { proBillingIntervalFromSearch, proPriceOptionForInterval, PRO_PRICE_OPTI
 import { CONTACT_LINKS } from "@/lib/contact";
 import { trackAnalyticsEvent } from "@/lib/site/analytics";
 import { isNativeAppBuild } from "@/lib/site/buildTarget";
+import {
+  nativeStoreBillingBoundaryCopy,
+  nativeStoreBillingLabel,
+  nativeStoreBillingPlatform
+} from "@/lib/mobile/nativeStoreBillingPlatform";
 
 export function UpgradeClient() {
   const [selectedPlan, setSelectedPlan] = useState<ProBillingInterval | null>(null);
@@ -20,6 +25,7 @@ export function UpgradeClient() {
   const isPro = entitlement.plan === "pro";
   const hasStripeCustomer = Boolean(entitlement.row?.stripe_customer_id);
   const nativeBuild = isNativeAppBuild();
+  const nativePlatform = nativeStoreBillingPlatform(nativeBuild);
   const billingEnabled = configured && publicBillingEnabled() && !nativeBuild;
   const selectedPlanOption = selectedPlan ? proPriceOptionForInterval(selectedPlan) : null;
   const showProIntentPanel = Boolean(billingEnabled && signedIn && !isPro && selectedPlanOption);
@@ -31,7 +37,7 @@ export function UpgradeClient() {
   const statusTitle = isPro
     ? "Can You Geo? Pro"
     : nativeBuild
-      ? "Google Play purchases"
+      ? nativeStoreBillingLabel(nativePlatform)
     : billingEnabled
       ? signedIn
         ? "Ready for secure checkout"
@@ -40,11 +46,11 @@ export function UpgradeClient() {
   const statusDetail = isPro
     ? hasStripeCustomer
       ? nativeBuild
-        ? "Existing Pro access stays active. Subscription management is not available in this preview."
+        ? "Existing Pro access stays active. Manage it through the store or website where it was created."
         : "Manage your membership from your account."
       : "Membership is active on this account."
     : nativeBuild
-      ? "Android purchases use Google Play. Stripe checkout is unavailable in this build."
+      ? nativeStoreBillingBoundaryCopy(nativePlatform)
     : billingEnabled
       ? signedIn
         ? "Pick monthly or yearly, then continue to secure checkout."
@@ -291,13 +297,13 @@ export function UpgradeClient() {
         </article>
       </div>
 
-      <section className="surface account-card upgrade-note" aria-label={nativeBuild ? "Google Play purchase note" : "Secure checkout note"}>
+      <section className="surface account-card upgrade-note" aria-label={nativeBuild ? `${nativeStoreBillingLabel(nativePlatform)} note` : "Secure checkout note"}>
         <ShieldCheck size={20} aria-hidden="true" />
         <div>
-          <h2>{nativeBuild ? "Google Play purchases." : "Secure checkout."}</h2>
+          <h2>{nativeBuild ? `${nativeStoreBillingLabel(nativePlatform)}.` : "Secure checkout."}</h2>
           {nativeBuild ? (
             <p>
-              Android purchases use Google Play. Existing Pro access still works for entitled accounts, and Free play remains available.
+              {nativeStoreBillingBoundaryCopy(nativePlatform)} Existing Pro access still works for entitled accounts, and Free play remains available.
             </p>
           ) : (
             <p>

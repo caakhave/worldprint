@@ -1,0 +1,60 @@
+{
+  "identifier": "com.canyougeo.storekit.local",
+  "version": {
+    "major": 4,
+    "minor": 0
+  },
+  "settings": {
+    "defaultStorefront": "USA",
+    "defaultLocalization": "en_US",
+    "timeRate": 60
+  },
+  "subscriptionGroups": [
+    {
+      "id": "canyougeo-pro",
+      "referenceName": "Can You Geo Pro",
+      "localizations": [
+        {
+          "locale": "en_US",
+          "displayName": "Can You Geo Pro"
+        }
+      ],
+      "subscriptions": [
+        {
+          "id": "com.canyougeo.pro.monthly",
+          "referenceName": "Can You Geo Pro Monthly",
+          "duration": "P1M",
+          "price": "3.99",
+          "familyShareable": false,
+          "localizations": [
+            {
+              "locale": "en_US",
+              "displayName": "Can You Geo Pro Monthly",
+              "description": "Monthly access to Can You Geo Pro."
+            }
+          ],
+          "introductoryOffers": [],
+          "promotionalOffers": []
+        },
+        {
+          "id": "com.canyougeo.pro.annual",
+          "referenceName": "Can You Geo Pro Annual",
+          "duration": "P1Y",
+          "price": "29.99",
+          "familyShareable": false,
+          "localizations": [
+            {
+              "locale": "en_US",
+              "displayName": "Can You Geo Pro Annual",
+              "description": "Annual access to Can You Geo Pro."
+            }
+          ],
+          "introductoryOffers": [],
+          "promotionalOffers": []
+        }
+      ]
+    }
+  ],
+  "products": [],
+  "nonRenewingSubscriptions": []
+}

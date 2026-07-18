@@ -19,6 +19,7 @@ import { buildLocalPlayerStats } from "@/lib/persistence/playerStats";
 import { loadPersistedState } from "@/lib/persistence/storage";
 import { trackAnalyticsEvent } from "@/lib/site/analytics";
 import { isNativeAppBuild } from "@/lib/site/buildTarget";
+import { nativeStoreBillingSignInCopy, nativeStoreBillingPlatform } from "@/lib/mobile/nativeStoreBillingPlatform";
 
 function trackUpgradeNavigation(itemId: string) {
   trackAnalyticsEvent("cgy_select_content", {
@@ -41,6 +42,7 @@ export function AccountStatusClient() {
   const [marketingError, setMarketingError] = useState("");
   const [hasImportableLocalRuns, setHasImportableLocalRuns] = useState(false);
   const nativeBuild = isNativeAppBuild();
+  const nativePlatform = nativeStoreBillingPlatform(nativeBuild);
 
   useEffect(() => {
     let cancelled = false;
@@ -156,7 +158,7 @@ export function AccountStatusClient() {
         <h2>{nativeBuild ? "Compare plans or continue free." : "Start Pro or continue free."}</h2>
         <p>
           {nativeBuild
-            ? "Create a free account or sign in to save Daily progress where supported. Existing Pro access unlocks after sign-in; mobile purchases are not available in this preview."
+            ? `Create a free account or sign in to save Daily progress where supported. Existing Pro access unlocks after sign-in. ${nativeStoreBillingSignInCopy(nativePlatform)}`
             : "Create a free account or sign in to save Daily progress where supported. Pro unlocks supported custom runs and the full Mystery Map archive."}
         </p>
         <div className="button-row">

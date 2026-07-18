@@ -40,6 +40,11 @@ const accountMock = vi.hoisted(() => ({
   }
 }));
 
+const capacitorMock = vi.hoisted(() => ({
+  native: false,
+  platform: "android"
+}));
+
 const googlePlayMock = vi.hoisted(() => ({
   runtimeAvailable: false,
   queryGooglePlayPlans: vi.fn().mockResolvedValue([]),
@@ -48,10 +53,21 @@ const googlePlayMock = vi.hoisted(() => ({
   addGooglePlayPurchaseUpdatedListener: vi.fn(async () => ({ remove: vi.fn() }))
 }));
 
+const appleStoreKitMock = vi.hoisted(() => ({
+  runtimeAvailable: false,
+  queryAppleStoreKitProducts: vi.fn().mockResolvedValue([]),
+  purchaseAppleStoreKitProduct: vi.fn(),
+  restoreAppleStoreKitPurchases: vi.fn().mockResolvedValue({ status: "none", verifiedCount: 0 }),
+  syncUnfinishedAppleStoreKitTransactions: vi.fn().mockResolvedValue({ status: "none", verifiedCount: 0 }),
+  finishVerifiedAppleStoreKitTransactions: vi.fn().mockResolvedValue({ finishedCount: 0 }),
+  manageAppleStoreKitSubscription: vi.fn(),
+  addAppleStoreKitTransactionUpdatedListener: vi.fn(async () => ({ remove: vi.fn() }))
+}));
+
 function billingClientMock(): BillingMockClient {
   const client: BillingMockClient = {
     auth: {
-      getSession: vi.fn().mockResolvedValue({ data: { session: { access_token: "billing-token" } }, error: null })
+      getSession: vi.fn().mockResolvedValue({ data: { session: { access_token: "billing-token", user: TEST_USER } }, error: null })
     },
     functions: {
       invoke: vi.fn().mockResolvedValue({ data: {}, error: null })
@@ -73,6 +89,14 @@ vi.mock("@/features/account/useSupabaseAccount", () => ({
   useSupabaseAccount: () => accountMock.state
 }));
 
+vi.mock("@capacitor/core", () => ({
+  Capacitor: {
+    isNativePlatform: () => capacitorMock.native,
+    getPlatform: () => capacitorMock.platform
+  },
+  registerPlugin: vi.fn()
+}));
+
 vi.mock("@/lib/mobile/googlePlayBilling", () => ({
   GOOGLE_PLAY_PRODUCT_ID: "canyougeo_pro",
   GOOGLE_PLAY_MONTHLY_BASE_PLAN_ID: "monthly",
@@ -87,6 +111,23 @@ vi.mock("@/lib/mobile/googlePlayBilling", () => ({
   filterSupportedPurchases: (purchases: Array<{ productId: string }>) => purchases.filter((purchase) => purchase.productId === "canyougeo_pro")
 }));
 
+vi.mock("@/lib/mobile/appleStoreKit", () => ({
+  APPLE_STOREKIT_MONTHLY_PRODUCT_ID: "com.canyougeo.pro.monthly",
+  APPLE_STOREKIT_ANNUAL_PRODUCT_ID: "com.canyougeo.pro.annual",
+  isIOSAppleStoreKitRuntime: () => appleStoreKitMock.runtimeAvailable,
+  isAppleStoreKitProductId: (value: unknown) => value === "com.canyougeo.pro.monthly" || value === "com.canyougeo.pro.annual",
+  appleStoreKitProductIdForInterval: (interval: "monthly" | "yearly") =>
+    interval === "yearly" ? "com.canyougeo.pro.annual" : "com.canyougeo.pro.monthly",
+  appleStoreKitIntervalForProductId: (productId: string) => (productId === "com.canyougeo.pro.annual" ? "yearly" : "monthly"),
+  queryAppleStoreKitProducts: appleStoreKitMock.queryAppleStoreKitProducts,
+  purchaseAppleStoreKitProduct: appleStoreKitMock.purchaseAppleStoreKitProduct,
+  restoreAppleStoreKitPurchases: appleStoreKitMock.restoreAppleStoreKitPurchases,
+  syncUnfinishedAppleStoreKitTransactions: appleStoreKitMock.syncUnfinishedAppleStoreKitTransactions,
+  finishVerifiedAppleStoreKitTransactions: appleStoreKitMock.finishVerifiedAppleStoreKitTransactions,
+  manageAppleStoreKitSubscription: appleStoreKitMock.manageAppleStoreKitSubscription,
+  addAppleStoreKitTransactionUpdatedListener: appleStoreKitMock.addAppleStoreKitTransactionUpdatedListener
+}));
+
 describe("UpgradeClient", () => {
   beforeEach(() => {
     delete process.env.NEXT_PUBLIC_BILLING_MODE;
@@ -98,7 +139,22 @@ describe("UpgradeClient", () => {
     accountMock.state.configured = true;
     accountMock.state.loading = false;
     accountMock.state.user = null;
+    capacitorMock.native = false;
+    capacitorMock.platform = "android";
     googlePlayMock.runtimeAvailable = false;
+    appleStoreKitMock.runtimeAvailable = false;
+    appleStoreKitMock.queryAppleStoreKitProducts.mockReset();
+    appleStoreKitMock.queryAppleStoreKitProducts.mockResolvedValue([
+      { productId: "com.canyougeo.pro.monthly", interval: "monthly", displayPrice: "$3.99" },
+      { productId: "com.canyougeo.pro.annual", interval: "yearly", displayPrice: "$29.99" }
+    ]);
+    appleStoreKitMock.purchaseAppleStoreKitProduct.mockReset();
+    appleStoreKitMock.restoreAppleStoreKitPurchases.mockReset();
+    appleStoreKitMock.restoreAppleStoreKitPurchases.mockResolvedValue({ status: "none", verifiedCount: 0 });
+    appleStoreKitMock.syncUnfinishedAppleStoreKitTransactions.mockReset();
+    appleStoreKitMock.syncUnfinishedAppleStoreKitTransactions.mockResolvedValue({ status: "none", verifiedCount: 0 });
+    appleStoreKitMock.finishVerifiedAppleStoreKitTransactions.mockReset();
+    appleStoreKitMock.manageAppleStoreKitSubscription.mockReset();
     window.history.pushState({}, "", "/upgrade");
   });
 
@@ -215,6 +271,7 @@ describe("UpgradeClient", () => {
   it("keeps native purchase controls unavailable without the Android Play runtime", () => {
     vi.stubEnv("NEXT_PUBLIC_CGY_NATIVE_APP", "1");
     process.env.NEXT_PUBLIC_BILLING_MODE = "test";
+    capacitorMock.platform = "android";
     entitlementMock.state.signedIn = true;
     accountMock.state.user = TEST_USER;
     const client = billingClientMock();
@@ -222,7 +279,7 @@ describe("UpgradeClient", () => {
     render(<UpgradeClient />);
 
     expect(screen.getByText("Google Play purchases")).toBeVisible();
-    expect(screen.getAllByText(/Android purchases use Google Play/i).length).toBeGreaterThanOrEqual(1);
+    expect(screen.getAllByText(/Google Play manages Android purchases/i).length).toBeGreaterThanOrEqual(1);
     expect(screen.getAllByText(/Mobile purchases are not available in this preview/i).length).toBeGreaterThanOrEqual(1);
     expect(screen.getByRole("heading", { name: "Google Play purchases." })).toBeVisible();
     expect(screen.getAllByRole("button", { name: "Google Play unavailable" }).every((button) => button.hasAttribute("disabled"))).toBe(true);
@@ -231,6 +288,31 @@ describe("UpgradeClient", () => {
     expect(screen.queryByRole("button", { name: "Continue to secure checkout" })).not.toBeInTheDocument();
     expect(screen.queryByText("Stripe handles payment details.")).not.toBeInTheDocument();
     expect(screen.queryByText(/buy on the website|purchase on the website/i)).not.toBeInTheDocument();
+    expect(client.functions.invoke).not.toHaveBeenCalled();
+  });
+
+  it("shows Apple StoreKit purchase copy and products in native iOS builds", async () => {
+    vi.stubEnv("NEXT_PUBLIC_CGY_NATIVE_APP", "1");
+    vi.stubEnv("NEXT_PUBLIC_SUPABASE_URL", "https://hsgpjtyysbremrokkoym.supabase.co");
+    vi.stubEnv("NEXT_PUBLIC_SUPABASE_ANON_KEY", "anon-public-test-key");
+    process.env.NEXT_PUBLIC_BILLING_MODE = "test";
+    capacitorMock.platform = "ios";
+    appleStoreKitMock.runtimeAvailable = true;
+    entitlementMock.state.signedIn = true;
+    accountMock.state.user = TEST_USER;
+    const client = billingClientMock();
+
+    render(<UpgradeClient />);
+
+    expect(screen.getByText("Apple purchases")).toBeVisible();
+    expect(screen.getByRole("heading", { name: "Apple purchases." })).toBeVisible();
+    expect(screen.getAllByText(/Apple manages iOS purchases\. Stripe checkout is unavailable in this iOS build\./i).length).toBeGreaterThanOrEqual(1);
+    await waitFor(() => expect(screen.getAllByRole("button", { name: /Join monthly/i }).every((button) => !button.hasAttribute("disabled"))).toBe(true));
+    expect(screen.getAllByRole("button", { name: /Join yearly/i }).every((button) => !button.hasAttribute("disabled"))).toBe(true);
+    expect(screen.getAllByText("$3.99").length).toBeGreaterThanOrEqual(1);
+    expect(screen.getAllByText("$29.99").length).toBeGreaterThanOrEqual(1);
+    expect(screen.queryByText(/Google Play purchases/i)).not.toBeInTheDocument();
+    expect(screen.queryByText("Stripe handles payment details.")).not.toBeInTheDocument();
     expect(client.functions.invoke).not.toHaveBeenCalled();
   });
 
@@ -367,7 +449,7 @@ describe("UpgradeClient", () => {
 
     expect(screen.getByRole("heading", { name: "You have the full atlas." })).toBeVisible();
     expect(screen.getByText(/Existing Pro access stays active/i)).toBeVisible();
-    expect(screen.getAllByText(/Subscription management is not available in this preview/i).length).toBeGreaterThanOrEqual(1);
+    expect(screen.getAllByText(/Manage it through the store or website where it was created/i).length).toBeGreaterThanOrEqual(1);
     expect(screen.queryByRole("button", { name: "Manage billing" })).not.toBeInTheDocument();
     expect(screen.queryByRole("button", { name: /Join monthly|Join yearly|Continue to secure checkout/i })).not.toBeInTheDocument();
     expect(client.functions.invoke).not.toHaveBeenCalled();

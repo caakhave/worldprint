@@ -7,6 +7,12 @@ import { publicBillingEnabled } from "@/lib/billing/publicBillingConfig";
 import { defaultPersistedState, loadPersistedState } from "@/lib/persistence/storage";
 import { trackAnalyticsEvent } from "@/lib/site/analytics";
 import { isNativeAppBuild } from "@/lib/site/buildTarget";
+import {
+  nativeStoreBillingBoundaryCopy,
+  nativeStoreBillingLabel,
+  nativeStoreBillingPlatform,
+  nativeStoreBillingSignInCopy
+} from "@/lib/mobile/nativeStoreBillingPlatform";
 
 function trackUpgradeNavigation(itemId: string) {
   trackAnalyticsEvent("cgy_select_content", {
@@ -19,6 +25,7 @@ export function AccountPlanNotesClient() {
   const { entitlement, loading, signedIn } = useEntitlement();
   const isPro = entitlement.plan === "pro";
   const nativeBuild = isNativeAppBuild();
+  const nativePlatform = nativeStoreBillingPlatform(nativeBuild);
   const billingEnabled = publicBillingEnabled() && !nativeBuild;
   const [localRecordCount, setLocalRecordCount] = useState(0);
 
@@ -43,7 +50,7 @@ export function AccountPlanNotesClient() {
       ? "Membership"
       : "Manage billing"
     : nativeBuild
-      ? "Google Play purchases"
+      ? nativeStoreBillingLabel(nativePlatform)
       : billingEnabled
         ? signedIn
           ? "Upgrade access"
@@ -51,10 +58,10 @@ export function AccountPlanNotesClient() {
         : "Billing setup";
   const billingCopy = isPro
     ? nativeBuild
-      ? "Existing Pro access remains available. Subscription management is not available in this preview."
+      ? "Existing Pro access remains available. Manage the subscription through the store or website where it was created."
       : "Plan controls and receipts."
     : nativeBuild
-      ? "Android purchases use Google Play. Stripe checkout is unavailable in this build."
+      ? nativeStoreBillingBoundaryCopy(nativePlatform)
     : billingEnabled
       ? "Mystery Map Custom Atlas, Pattern Atlas Pattern Runs, Past Games archive, advanced stats."
       : "Pro checkout needs billing setup in this environment. Free play still works while setup is unavailable.";
@@ -78,7 +85,7 @@ export function AccountPlanNotesClient() {
           <h2>Open the whole atlas.</h2>
           <p>
             {nativeBuild
-              ? "Sign in before starting a Google Play purchase. Already entitled Pro accounts unlock supported atlas features after sign-in."
+              ? `${nativeStoreBillingSignInCopy(nativePlatform)} Already entitled Pro accounts unlock supported atlas features after sign-in.`
               : "Mystery Map Custom Atlas, Pattern Atlas Pattern Runs, complete Past Games archive, advanced stats, and future premium surfaces."}
           </p>
           <Link className="button" href="/upgrade" onClick={() => trackUpgradeNavigation("account_notes_signed_out_start_pro")}>
