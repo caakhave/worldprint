@@ -36,7 +36,7 @@ export default function SignUpPage() {
           <h2>One account, two paths.</h2>
           <p>
             {nativeBuild
-              ? "Start with Free and compare Pro features. Mobile purchases are not available in this preview."
+              ? "Start with Free and compare Pro features. Android purchases use Google Play after sign-in."
               : "Start with Free or continue into secure Stripe checkout for Can You Geo? Pro after your account exists."}
           </p>
           <ul className="account-checklist">

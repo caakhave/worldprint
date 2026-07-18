@@ -54,6 +54,43 @@ export async function fetchSubscriptionPurchaseV2(input: {
   return json as GoogleSubscriptionPurchaseV2;
 }
 
+export async function acknowledgeSubscriptionPurchase(input: {
+  serviceAccountJson: string;
+  packageName: string;
+  subscriptionId: string;
+  purchaseToken: string;
+  obfuscatedAccountId?: string | null;
+  fetchImpl?: FetchLike;
+}): Promise<void> {
+  const fetchImpl = input.fetchImpl ?? fetch;
+  const credential = parseServiceAccountCredential(input.serviceAccountJson);
+  const accessToken = await serviceAccountAccessToken({ credential, fetchImpl });
+  const body = input.obfuscatedAccountId
+    ? {
+        externalAccountIds: {
+          obfuscatedAccountId: input.obfuscatedAccountId
+        }
+      }
+    : {};
+  const response = await fetchImpl(
+    `https://androidpublisher.googleapis.com/androidpublisher/v3/applications/${encodeURIComponent(input.packageName)}/purchases/subscriptions/${encodeURIComponent(
+      input.subscriptionId
+    )}/tokens/${encodeURIComponent(input.purchaseToken)}:acknowledge`,
+    {
+      method: "POST",
+      headers: {
+        authorization: `Bearer ${accessToken}`,
+        accept: "application/json",
+        "content-type": "application/json"
+      },
+      body: JSON.stringify(body)
+    }
+  );
+  if (!response.ok) {
+    throw new GooglePlayPublisherError(classifyAndroidPublisherStatus(response.status), isRetryableAndroidPublisherStatus(response.status), response.status);
+  }
+}
+
 function parseServiceAccountCredential(rawJson: string): ServiceAccountCredential {
   let parsed: unknown;
   try {

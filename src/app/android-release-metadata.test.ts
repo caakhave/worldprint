@@ -34,8 +34,8 @@ describe("Android release metadata", () => {
     expect(variables).toContain("compileSdkVersion = 36");
     expect(variables).toContain("targetSdkVersion = 36");
     expect(variables).toContain("playBillingVersion = '9.1.0'");
-    expect(appBuild).toContain('versionCode 2');
-    expect(appBuild).toContain('versionName "1.0.1"');
+    expect(appBuild).toContain('versionCode 3');
+    expect(appBuild).toContain('versionName "1.0.2"');
     expect(appBuild).not.toContain("signingConfig signingConfigs.release");
   });
 

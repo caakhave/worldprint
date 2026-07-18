@@ -58,13 +58,13 @@ When the device reconnects, the offline status is dismissed and the account/sess
 
 ## Billing Boundary
 
-Native builds do not start Stripe checkout, open Stripe customer portal, redirect to Stripe, or complete purchases. Free users see the existing mobile-purchases-unavailable state. Android-native account and sign-in surfaces should use neutral plan-preview copy, not checkout/billing-setup copy or website-purchase steering. Already entitled Pro users can still see and use their Pro entitlement when the app can read the account state.
+Native builds do not start Stripe checkout, open Stripe customer portal, redirect to Stripe, or complete purchases outside the approved store system. Android purchases must use Google Play Billing and backend verification. Android-native account and sign-in surfaces should use Google Play plan copy, not checkout/billing-setup copy or website-purchase steering. Already entitled Pro users can still see and use their Pro entitlement when the app can read the account state.
 
-Android internal build 2 adds the official Google Play Billing Library only as a catalog-unlock and runtime-capability bootstrap. It creates and closes a `BillingClient`, checks subscription support after setup succeeds, and lets the library contribute the `com.android.vending.BILLING` permission through manifest merge. It does not query products, display Play prices, launch a purchase sheet, acknowledge purchases, transmit purchase tokens, restore purchases, or grant Pro.
+Android internal build 3 adds the Google Play purchase foundation. It queries only `canyougeo_pro`, displays Play-localized prices for the `monthly` and `annual` base plans, launches `launchBillingFlow` only after the authenticated backend returns an opaque account binding, restores purchases, transmits purchase tokens only to the JWT-protected verification function, and acknowledges only after durable server processing.
 
-The Play subscription catalog remains uncreated until Google Play processes the billing-capable artifact and exposes subscription creation. Secure backend purchase-token verification, Google Play Developer API access, and authenticated RTDN/Pub/Sub handling remain mandatory before any purchase test.
+The Play subscription catalog is fixed at `canyougeo_pro` with `monthly` and `annual` auto-renewing base plans. Secure backend purchase-token verification, Google Play Developer API access, and authenticated RTDN/Pub/Sub handling are mandatory before any purchase test. Browser/native code must never grant Pro locally.
 
-Web builds preserve the existing Stripe checkout, portal, and checkout analytics behavior. StoreKit and Google Play purchase flows remain deferred.
+Web builds preserve the existing Stripe checkout, portal, and checkout analytics behavior. StoreKit purchase flows remain deferred.
 
 ## Analytics And Consent Boundary
 

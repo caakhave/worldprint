@@ -42,7 +42,7 @@ describe("SignInPage", () => {
     render(<SignInPage />);
 
     expect(screen.getByRole("heading", { name: "Compare plans or continue free." })).toBeVisible();
-    expect(screen.getByText(/Mobile purchases are not available in this preview/i)).toBeVisible();
+    expect(screen.getByText(/Android purchases use Google Play after sign-in/i)).toBeVisible();
     expect(screen.getByText(/Already entitled accounts unlock supported Pro atlas features/i)).toBeVisible();
     expect(screen.getByRole("link", { name: "View plans" })).toHaveAttribute("href", "/upgrade");
     expect(screen.queryByText(/checkout/i)).not.toBeInTheDocument();

@@ -35,7 +35,7 @@ describe("SignUpPage", () => {
     render(<SignUpPage />);
 
     expect(screen.getByText(/Existing Pro access unlocks after sign-in where supported/i)).toBeVisible();
-    expect(screen.getByText(/Mobile purchases are not available in this preview/i)).toBeVisible();
+    expect(screen.getByText(/Android purchases use Google Play after sign-in/i)).toBeVisible();
     expect(screen.getByRole("link", { name: "View Pro plans" })).toHaveAttribute("href", "/upgrade");
     expect(screen.queryByText(/checkout/i)).not.toBeInTheDocument();
     expect(screen.queryByText(/Stripe/i)).not.toBeInTheDocument();

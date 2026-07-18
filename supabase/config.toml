@@ -10,5 +10,11 @@ verify_jwt = false
 [functions.google-play-rtdn]
 verify_jwt = false
 
+[functions.google-play-purchase-context]
+verify_jwt = true
+
+[functions.google-play-purchase-verify]
+verify_jwt = true
+
 [functions.send-challenge-email]
 verify_jwt = true

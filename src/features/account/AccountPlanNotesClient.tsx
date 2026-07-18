@@ -43,7 +43,7 @@ export function AccountPlanNotesClient() {
       ? "Membership"
       : "Manage billing"
     : nativeBuild
-      ? "Mobile purchase preview"
+      ? "Google Play purchases"
       : billingEnabled
         ? signedIn
           ? "Upgrade access"
@@ -54,7 +54,7 @@ export function AccountPlanNotesClient() {
       ? "Existing Pro access remains available. Subscription management is not available in this preview."
       : "Plan controls and receipts."
     : nativeBuild
-      ? "Mobile purchases are not available in this preview. Free play and already entitled Pro access still work."
+      ? "Android purchases use Google Play. Stripe checkout is unavailable in this build."
     : billingEnabled
       ? "Mystery Map Custom Atlas, Pattern Atlas Pattern Runs, Past Games archive, advanced stats."
       : "Pro checkout needs billing setup in this environment. Free play still works while setup is unavailable.";
@@ -78,7 +78,7 @@ export function AccountPlanNotesClient() {
           <h2>Open the whole atlas.</h2>
           <p>
             {nativeBuild
-              ? "Mobile purchases are not available in this preview. Already entitled Pro accounts unlock supported atlas features after sign-in."
+              ? "Sign in before starting a Google Play purchase. Already entitled Pro accounts unlock supported atlas features after sign-in."
               : "Mystery Map Custom Atlas, Pattern Atlas Pattern Runs, complete Past Games archive, advanced stats, and future premium surfaces."}
           </p>
           <Link className="button" href="/upgrade" onClick={() => trackUpgradeNavigation("account_notes_signed_out_start_pro")}>

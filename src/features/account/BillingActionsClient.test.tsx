@@ -23,8 +23,35 @@ const accountMock = vi.hoisted(() => ({
   }
 }));
 
+const googlePlayMock = vi.hoisted(() => ({
+  runtimeAvailable: false,
+  listener: null as ((purchases: Array<{ productId: string; purchaseToken: string; purchaseState: number }>) => void) | null,
+  removeListener: vi.fn(),
+  queryGooglePlayPlans: vi.fn(),
+  launchGooglePlayPurchase: vi.fn(),
+  restoreGooglePlayPurchases: vi.fn()
+}));
+
 vi.mock("@/features/account/useSupabaseAccount", () => ({
   useSupabaseAccount: () => accountMock.state
+}));
+
+vi.mock("@/lib/mobile/googlePlayBilling", () => ({
+  GOOGLE_PLAY_PRODUCT_ID: "canyougeo_pro",
+  GOOGLE_PLAY_MONTHLY_BASE_PLAN_ID: "monthly",
+  GOOGLE_PLAY_ANNUAL_BASE_PLAN_ID: "annual",
+  isAndroidGooglePlayBillingRuntime: () => googlePlayMock.runtimeAvailable,
+  isGooglePlayBasePlanId: (value: unknown) => value === "monthly" || value === "annual",
+  queryGooglePlayPlans: googlePlayMock.queryGooglePlayPlans,
+  launchGooglePlayPurchase: googlePlayMock.launchGooglePlayPurchase,
+  restoreGooglePlayPurchases: googlePlayMock.restoreGooglePlayPurchases,
+  addGooglePlayPurchaseUpdatedListener: vi.fn(async (listener) => {
+    googlePlayMock.listener = listener;
+    return { remove: googlePlayMock.removeListener };
+  }),
+  validPurchaseTokenShape: (purchaseToken: string) => purchaseToken.length >= 10 && purchaseToken.length <= 4096 && !/\s/.test(purchaseToken),
+  filterSupportedPurchases: (purchases: Array<{ productId: string; purchaseToken: string }>) =>
+    purchases.filter((purchase) => purchase.productId === "canyougeo_pro")
 }));
 
 const TEST_USER = { id: "11111111-2222-4333-8444-555555555555", email: "reader@example.com" };
@@ -58,6 +85,18 @@ describe("BillingActionsClient", () => {
     accountMock.state.configured = true;
     accountMock.state.loading = false;
     accountMock.state.user = null;
+    googlePlayMock.runtimeAvailable = false;
+    googlePlayMock.listener = null;
+    googlePlayMock.removeListener.mockReset();
+    googlePlayMock.queryGooglePlayPlans.mockReset();
+    googlePlayMock.queryGooglePlayPlans.mockResolvedValue([
+      { productId: "canyougeo_pro", basePlanId: "monthly", localizedPrice: "$3.99" },
+      { productId: "canyougeo_pro", basePlanId: "annual", localizedPrice: "$29.99" }
+    ]);
+    googlePlayMock.launchGooglePlayPurchase.mockReset();
+    googlePlayMock.launchGooglePlayPurchase.mockResolvedValue(undefined);
+    googlePlayMock.restoreGooglePlayPurchases.mockReset();
+    googlePlayMock.restoreGooglePlayPurchases.mockResolvedValue([]);
   });
 
   afterEach(() => {
@@ -171,7 +210,7 @@ describe("BillingActionsClient", () => {
     expect(screen.getByRole("button", { name: "Join yearly" })).toBeEnabled();
   });
 
-  it("shows non-actionable mobile purchase preview copy in native builds", () => {
+  it("keeps native purchases unavailable when the Android Play runtime is absent", () => {
     vi.stubEnv("NEXT_PUBLIC_CGY_NATIVE_APP", "1");
     process.env.NEXT_PUBLIC_BILLING_MODE = "test";
     enableProductionAnalytics();
@@ -181,7 +220,7 @@ describe("BillingActionsClient", () => {
 
     render(<BillingActionsClient entitlement={FREE_ENTITLEMENT} context="upgrade" />);
 
-    expect(screen.getByRole("button", { name: "Mobile purchases unavailable" })).toBeDisabled();
+    expect(screen.getByRole("button", { name: "Google Play unavailable" })).toBeDisabled();
     expect(screen.getByText(/Mobile purchases are not available in this preview/i)).toBeVisible();
     expect(screen.queryByRole("button", { name: "Join monthly" })).not.toBeInTheDocument();
     expect(screen.queryByRole("button", { name: "Join yearly" })).not.toBeInTheDocument();
@@ -189,6 +228,35 @@ describe("BillingActionsClient", () => {
     expect(client.functions.invoke).not.toHaveBeenCalled();
     expect((window as typeof window & { dataLayer?: unknown[] }).dataLayer).toEqual([]);
     expect(window.location.href).toBe(startingHref);
+  });
+
+  it("uses Google Play context and launch for signed-in native Android purchases without Stripe checkout", async () => {
+    vi.stubEnv("NEXT_PUBLIC_CGY_NATIVE_APP", "1");
+    process.env.NEXT_PUBLIC_BILLING_MODE = "test";
+    accountMock.state.user = TEST_USER;
+    googlePlayMock.runtimeAvailable = true;
+    const client = billingClientMock();
+    client.functions.invoke.mockResolvedValue({
+      data: {
+        obfuscatedAccountId: "a".repeat(64),
+        productId: "canyougeo_pro",
+        allowedBasePlanIds: ["monthly", "annual"]
+      },
+      error: null
+    });
+
+    render(<BillingActionsClient entitlement={FREE_ENTITLEMENT} context="upgrade" />);
+
+    await waitFor(() => expect(screen.getByRole("button", { name: /Join monthly/i })).toBeEnabled());
+    fireEvent.click(screen.getByRole("button", { name: /Join monthly/i }));
+
+    await waitFor(() => expect(client.functions.invoke).toHaveBeenCalledWith("google-play-purchase-context", expect.any(Object)));
+    expect(googlePlayMock.launchGooglePlayPurchase).toHaveBeenCalledWith({
+      basePlanId: "monthly",
+      obfuscatedAccountId: "a".repeat(64)
+    });
+    expect(client.functions.invoke).not.toHaveBeenCalledWith("stripe-checkout", expect.anything());
+    expect(screen.queryByText(/Stripe handles checkout securely/i)).not.toBeInTheDocument();
   });
 
   it("uses protected checkout functions and does not start checkout analytics until a URL is returned", async () => {
@@ -302,11 +370,20 @@ describe("BillingActionsClient", () => {
     expect(client.from).not.toHaveBeenCalled();
   });
 
-  it("does not show focused checkout actions in native builds", () => {
+  it("uses a focused Google Play action in native Android builds", async () => {
     vi.stubEnv("NEXT_PUBLIC_CGY_NATIVE_APP", "1");
     process.env.NEXT_PUBLIC_BILLING_MODE = "test";
     accountMock.state.user = TEST_USER;
     const client = billingClientMock();
+    googlePlayMock.runtimeAvailable = true;
+    client.functions.invoke.mockResolvedValue({
+      data: {
+        obfuscatedAccountId: "b".repeat(64),
+        productId: "canyougeo_pro",
+        allowedBasePlanIds: ["monthly", "annual"]
+      },
+      error: null
+    });
 
     render(
       <BillingActionsClient
@@ -317,9 +394,14 @@ describe("BillingActionsClient", () => {
       />
     );
 
-    expect(screen.getByRole("button", { name: "Mobile purchases unavailable" })).toBeDisabled();
-    expect(screen.queryByRole("button", { name: "Continue to secure checkout" })).not.toBeInTheDocument();
-    expect(client.functions.invoke).not.toHaveBeenCalled();
+    await waitFor(() => expect(screen.getByRole("button", { name: /Continue to secure checkout/i })).toBeEnabled());
+    expect(screen.queryByRole("button", { name: "Join yearly" })).not.toBeInTheDocument();
+    fireEvent.click(screen.getByRole("button", { name: /Continue to secure checkout/i }));
+    await waitFor(() => expect(googlePlayMock.launchGooglePlayPurchase).toHaveBeenCalledWith({
+      basePlanId: "monthly",
+      obfuscatedAccountId: "b".repeat(64)
+    }));
+    expect(client.functions.invoke).not.toHaveBeenCalledWith("stripe-checkout", expect.anything());
   });
 
   it("uses a focused yearly checkout action when returning from Pro-first sign-in", async () => {

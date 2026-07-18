@@ -102,8 +102,8 @@ The validated emulator for Checkpoint 5D-1A was `Medium_Phone_API_36.1` (`emulat
 - Pattern Atlas and Order Atlas routes render during shallow native QA.
 - Android App Link intents deliver supported Can You Geo routes to the running app, including `/play/pattern-atlas/`, `/play/order-atlas/`, `/upgrade/`, and `/sign-in/`.
 - Android App Link path coverage now includes `/account/stats/`, matching the JavaScript deep-link parser for saved-stats account links.
-- Upgrade route shows the native billing-preview/offline state and does not open Stripe checkout or an external browser.
-- Account, sign-in, and header account controls use native-safe plan-preview copy. They do not present Stripe checkout, Stripe portal, or website-purchase controls in Android native builds.
+- Upgrade route shows Google Play purchase controls when Play Billing is available and does not open Stripe checkout or an external browser.
+- Account, sign-in, and header account controls use native-safe Google Play plan copy. They do not present Stripe checkout, Stripe portal, or website-purchase controls in Android native builds.
 - Sign In route renders the expected offline/native-disabled state on an emulator with no stable network.
 - Android Back minimizes the app at root and does not force-close the process. Warm App Link history behavior is covered by focused component tests.
 - No website marketing-consent banner is visible in the native app.

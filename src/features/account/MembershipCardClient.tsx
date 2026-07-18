@@ -8,7 +8,7 @@ import { archiveAccessLabel, practiceAccessLabel, statsAccessLabel } from "@/lib
 import { trackAnalyticsEvent } from "@/lib/site/analytics";
 
 export function MembershipCardClient() {
-  const { entitlement, loading, error, signedIn } = useEntitlement();
+  const { entitlement, loading, error, refresh, signedIn } = useEntitlement();
   const { capabilities } = entitlement;
   const membership = membershipDisplay(entitlement, loading);
   const heading = signedIn || loading ? membership.heading : "Sample Run";
@@ -66,7 +66,7 @@ export function MembershipCardClient() {
         <span>{capabilities.canCreateChallenges ? "Basic challenges" : "Challenge links later"}</span>
       </div>
       {error ? <p className="account-error">We could not refresh your membership details. You can keep playing.</p> : null}
-      <BillingActionsClient entitlement={entitlement} context="account" />
+      <BillingActionsClient entitlement={entitlement} context="account" onVerified={() => void refresh()} />
     </article>
   );
 }

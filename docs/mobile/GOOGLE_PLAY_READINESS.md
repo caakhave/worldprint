@@ -9,28 +9,27 @@ new bundle, change tracks, or start closed, open, or production rollout.
 
 - App name: Can You Geo
 - Package: `com.canyougeo.app`
-- Current Android release target: `versionCode 2`, `versionName 1.0.1`
+- Current Android release target: `versionCode 3`, `versionName 1.0.2`
 - Distribution state: internal testing only
-- Purchases in this Android build: unavailable; Google Play Billing is present only as a bootstrap dependency
+- Purchases in this Android build: Google Play Billing purchase UI is wired for internal license testing only
 - Native analytics and marketing pixels: suppressed
 - App model: Capacitor Android app bundling the static Next.js export
 
-This bootstrap release is allowed to rebuild and upload one signed Android App Bundle to internal testing with
-`versionCode 2` so Play Console can index the billing capability. It does not create products, offers, base plans,
-Play Developer API credentials, RTDN/Pub/Sub configuration, production Supabase changes, production Stripe changes,
-closed/open testing, or production rollout.
+This purchase-foundation release is allowed to rebuild and upload one signed Android App Bundle to internal testing with
+`versionCode 3` after the staging backend and protected PR gates pass. It does not change products, offers, base plans,
+production Supabase, production Stripe, closed/open testing, or production rollout.
 
-## Android Billing Bootstrap
+## Android Purchase Foundation
 
-Version 2 is a billing-capability bootstrap artifact. It adds the official Google Play Billing Library and lets the
-library contribute `com.android.vending.BILLING` in the merged release manifest. The native app still renders the
-existing mobile-purchases-unavailable UI, and no purchase path is reachable.
+Version 3 is the first Google Play purchase-foundation artifact. It uses the official Google Play Billing Library,
+queries only the approved `canyougeo_pro` subscription, filters to the `monthly` and `annual` auto-renewing base plans,
+and launches Google Play Billing only after the authenticated staging backend returns an opaque Play account binding.
 
-The app does not yet query Google Play subscription products, show Play-localized prices, call `launchBillingFlow`,
-acknowledge purchases, send purchase tokens to a server, restore purchases, or grant Pro from browser/native code.
-The approved `canyougeo_pro` subscription catalog remains uncreated until Play processes the billing-enabled internal
-artifact. Backend Google Play Developer API verification and authenticated RTDN/Pub/Sub handling are required before
-any purchase test.
+The Android client can send a Play purchase token to the JWT-protected staging verification function. The backend calls
+the Android Publisher API, validates the package, product, base plan, token chain, and opaque account binding, persists
+the result with service-role-only access, refreshes `public.entitlements`, and acknowledges only after durable
+processing. Browser/native code must never grant Pro locally, store tokens, log tokens, or use Stripe checkout on
+Android.
 
 ## RTDN Foundation
 
@@ -192,7 +191,7 @@ the app without credentials through guest/sample play.
 Console instructions:
 
 ```text
-Reviewers can test Can You Geo without signing in. Open the app, choose Play, then launch sample play in Mystery Map, Pattern Atlas, or Order Atlas. Account creation/sign-in is available from the account/sign-in surfaces for saved Daily progress and stats. Pro-only features require an entitled account, but purchases are not available in this Android build; the Upgrade screen shows mobile purchases as unavailable and does not open Stripe checkout or billing portal.
+Reviewers can test Can You Geo without signing in. Open the app, choose Play, then launch sample play in Mystery Map, Pattern Atlas, or Order Atlas. Account creation/sign-in is available from the account/sign-in surfaces for saved Daily progress and stats. Pro-only features require an entitled account or a Google Play license-test purchase. The Upgrade screen uses Google Play Billing on Android and does not open Stripe checkout or billing portal.
 ```
 
 If Google later requires review of Pro-only surfaces, create a dedicated
@@ -378,11 +377,12 @@ different build as store screenshots.
 
 Required before internal install validation:
 
-- Upload the signed `versionCode 2` billing-bootstrap AAB to internal testing.
+- Upload the signed `versionCode 3` purchase-foundation AAB to internal testing.
 - Wait for Play internal-test propagation.
 - Install through the official internal-testing opt-in route.
 - Validate launch, all three games, Android Back, sign-in UI, upgrade boundary,
-  no purchase sheet, no Stripe checkout, no crash, and permissions.
+  Play-localized subscription plans visible, no purchase sheet until explicitly tapped, no Stripe checkout, no crash,
+  and permissions.
 
 Required before closed testing:
 

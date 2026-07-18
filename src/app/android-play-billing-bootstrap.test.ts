@@ -65,43 +65,48 @@ describe("Android Play Billing bootstrap", () => {
     expect(dependencySurface).not.toMatch(/revenuecat|purchases-android|react-native-iap|stripe-android|braintree|paypal/);
   });
 
-  it("keeps the permanent app identity and version 2 metadata", () => {
+  it("keeps the permanent app identity and version 3 metadata", () => {
     const appBuild = read("android/app/build.gradle");
 
     expect(appBuild).toContain(`namespace = "${PACKAGE_NAME}"`);
     expect(appBuild).toContain(`applicationId "${PACKAGE_NAME}"`);
-    expect(appBuild).toContain("versionCode 2");
-    expect(appBuild).toContain('versionName "1.0.1"');
+    expect(appBuild).toContain("versionCode 3");
+    expect(appBuild).toContain('versionName "1.0.2"');
   });
 
-  it("adds only a BillingClient availability bootstrap and no purchase path", () => {
+  it("adds a first-party BillingClient bridge without local entitlement authority", () => {
     const mainActivity = read("android/app/src/main/java/com/canyougeo/app/MainActivity.java");
-    const bootstrap = read("android/app/src/main/java/com/canyougeo/app/PlayBillingBootstrap.java");
+    const plugin = read("android/app/src/main/java/com/canyougeo/app/GooglePlayBillingPlugin.java");
 
-    expect(mainActivity).toContain("playBillingBootstrap.start(this);");
-    expect(mainActivity).toContain("playBillingBootstrap.stop();");
-    expect(bootstrap).toContain("BillingClient.newBuilder");
-    expect(bootstrap).toContain("enableAutoServiceReconnection()");
-    expect(bootstrap).toContain("startConnection");
-    expect(bootstrap).toContain("endConnection");
-    expect(bootstrap).toContain("isFeatureSupported(BillingClient.FeatureType.SUBSCRIPTIONS)");
-    expect(bootstrap).not.toMatch(/queryProductDetailsAsync|launchBillingFlow|acknowledgePurchase|consumeAsync|getPurchaseToken|purchaseToken/);
-    expect(bootstrap).not.toMatch(/entitlement|provider_subscriptions|grantPro|plan\s*=\s*"pro"/i);
+    expect(mainActivity).toContain("registerPlugin(GooglePlayBillingPlugin.class);");
+    expect(plugin).toContain("BillingClient.newBuilder");
+    expect(plugin).toContain("enableAutoServiceReconnection()");
+    expect(plugin).toContain("queryProductDetailsAsync");
+    expect(plugin).toContain("launchBillingFlow");
+    expect(plugin).toContain("queryPurchasesAsync");
+    expect(plugin).toContain("setObfuscatedAccountId(obfuscatedAccountId)");
+    expect(plugin).toContain("notifyListeners(\"purchaseUpdated\"");
+    expect(plugin).not.toMatch(/acknowledgePurchase|consumeAsync|grantPro|plan\s*=\s*"pro"|provider_subscriptions|entitlements/i);
   });
 
-  it("keeps purchase UI and Stripe checkout disabled for native builds", () => {
+  it("keeps Stripe checkout disabled for native builds while using Google Play functions", () => {
     const actions = read("src/features/account/BillingActionsClient.tsx");
     const helper = read("src/features/account/billingActionHelpers.ts");
     const upgrade = read("src/features/account/UpgradeClient.tsx");
+    const googlePlayActions = read("src/features/account/googlePlayPurchaseActions.ts");
 
     expect(actions).toContain("if (nativeBuild) {");
-    expect(actions).toContain("Mobile purchases unavailable");
+    expect(actions).toContain("launchGooglePlayPurchase");
+    expect(actions).toContain("restoreGooglePlayPurchases");
+    expect(actions).toContain("Google Play manages Android purchases. Stripe checkout is unavailable in this Android build.");
     expect(helper).toContain("if (isNativeAppBuild()) {");
     expect(helper).toContain("nativeBillingUnavailableMessage(kind)");
-    expect(upgrade).toContain("Mobile purchases are not available in this preview. Free play remains available.");
+    expect(googlePlayActions).toContain("google-play-purchase-context");
+    expect(googlePlayActions).toContain("google-play-purchase-verify");
+    expect(upgrade).toContain("Android purchases use Google Play. Stripe checkout is unavailable in this build.");
   });
 
-  it("does not introduce client token transmission, local Pro grants, or bundled credentials", () => {
+  it("does not introduce client-side Pro grants, token persistence, token logging, or bundled credentials", () => {
     const clientSource = ["android/app/src/main", "src/features/account", "src/lib/billing"]
       .flatMap(walkTextFiles)
       .map((path) => read(path))
@@ -111,8 +116,9 @@ describe("Android Play Billing bootstrap", () => {
       .map((path) => read(path))
       .join("\n");
 
-    expect(clientSource).not.toMatch(/launchBillingFlow|acknowledgePurchase|consumeAsync|getPurchaseToken|purchaseToken/);
-    expect(clientSource).not.toMatch(/provider_subscriptions|grantPro|localStorage\.(?:setItem|getItem)\([^)]*pro/i);
+    expect(clientSource).not.toMatch(/acknowledgePurchase|consumeAsync|provider_subscriptions|grantPro|localStorage\.(?:setItem|getItem)\([^)]*pro/i);
+    expect(repositorySource).not.toMatch(/console\.(?:log|warn|error)\([^)]*purchaseToken|getPurchaseToken\(\)[\s\S]{0,120}console\./i);
+    expect(repositorySource).not.toMatch(/localStorage\.(?:setItem|getItem)\([^)]*purchaseToken|sessionStorage\.(?:setItem|getItem)\([^)]*purchaseToken/i);
     expect(repositorySource).not.toMatch(/-----BEGIN PRIVATE KEY-----(?:\\n|\r\n|\n|\s)+[A-Za-z0-9+/=]{40,}/i);
   });
 

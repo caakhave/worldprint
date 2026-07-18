@@ -66,6 +66,10 @@ export type GoogleSubscriptionPurchaseV2 = {
   subscriptionState?: string;
   linkedPurchaseToken?: string;
   acknowledgementState?: string;
+  externalAccountIdentifiers?: {
+    obfuscatedExternalAccountId?: string;
+    obfuscatedExternalProfileId?: string;
+  };
   testPurchase?: Record<string, unknown>;
   lineItems?: Array<{
     productId?: string;

@@ -45,11 +45,12 @@ describe("google-play-rtdn Edge Function structure", () => {
   });
 
   it("calls subscriptionsv2.get read-only and never purchase mutation APIs", () => {
-    expect(publisherSource).toContain("purchases/subscriptionsv2/tokens/");
-    expect(publisherSource).toContain("method: \"GET\"");
+    const fetchHelper = publisherSource.match(/export async function fetchSubscriptionPurchaseV2[\s\S]*?(?=\nexport async function acknowledgeSubscriptionPurchase)/)?.[0] ?? "";
+    expect(fetchHelper).toContain("purchases/subscriptionsv2/tokens/");
+    expect(fetchHelper).toContain("method: \"GET\"");
     expect(publisherSource).toContain("https://www.googleapis.com/auth/androidpublisher");
-    expect(publisherSource).not.toMatch(/\b(acknowledge|cancel|refund|revoke|defer)\b/i);
-    expect(source).not.toMatch(/launchBillingFlow|BillingClient|raw_purchase_token|acknowledgePurchase|cancelPurchase|refundPurchase|revokePurchase|deferPurchase/i);
+    expect(fetchHelper).not.toMatch(/\b(acknowledge|cancel|refund|revoke|defer)\b/i);
+    expect(source).not.toMatch(/launchBillingFlow|BillingClient|raw_purchase_token|acknowledgeSubscriptionPurchase|acknowledgePurchase|cancelPurchase|refundPurchase|revokePurchase|deferPurchase/i);
   });
 
   it("records only fingerprinted purchase and order references through the RPC adapter", () => {

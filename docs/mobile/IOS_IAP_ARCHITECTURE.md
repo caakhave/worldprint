@@ -43,7 +43,7 @@ The current effective entitlement rule is:
 - Signed-in user with `plan = 'pro'` and `status in ('active', 'trialing')` -> Pro.
 - Any missing, inactive, past-due, canceled, malformed, or non-Pro row -> Free.
 
-Native iOS and Android builds currently consume the same entitlement row so existing Stripe Pro subscribers can use Pro features in the app. Native builds intentionally cannot start Stripe checkout or open Stripe Customer Portal. StoreKit purchase flows remain deferred, and Android only includes a Google Play Billing bootstrap with no purchase path.
+Native iOS and Android builds currently consume the same entitlement row so existing Stripe Pro subscribers can use Pro features in the app. Native builds intentionally cannot start Stripe checkout or open Stripe Customer Portal. StoreKit purchase flows remain deferred, while Android uses the Google Play Billing foundation with backend token verification as the only Pro authority.
 
 ## 3. Current Stripe checkout flow
 
@@ -158,7 +158,7 @@ Native boundaries implemented today:
 - Marketing consent UI and consent event delivery are suppressed in native builds.
 - `requestBillingActionUrl()` returns a native unavailable message before reading the Supabase session or invoking a Supabase Function.
 - `BillingActionsClient` renders disabled native purchase UI and does not render checkout or portal actions.
-- `UpgradeClient` shows "Mobile purchase preview" and does not enable web checkout in native builds.
+- `UpgradeClient` shows Google Play purchase copy on Android and does not enable web checkout in native builds.
 - `AuthNavStatus` hides the Stripe Customer Portal action in native builds.
 - Native external navigation opens only trusted social links through Capacitor Browser; internal Can You Geo routes stay in the WebView.
 - Stripe checkout and Customer Portal are not opened through the native Browser plugin.
@@ -2160,7 +2160,7 @@ Status: design only. This checkpoint designs the future native Apple subscriptio
 
 Existing repository behavior observed:
 
-- `/upgrade/` currently shows Free/Pro comparison, current web prices from `PRO_PRICE_OPTIONS`, Stripe checkout actions for browser builds, and a native "Mobile purchases unavailable" guard.
+- `/upgrade/` currently shows Free/Pro comparison, current web prices from `PRO_PRICE_OPTIONS`, Stripe checkout actions for browser builds, and Google Play purchase controls for Android native builds.
 - Account membership status currently comes from `public.entitlements` and the `membershipDisplay` helper.
 - Native builds intentionally block Stripe checkout and Stripe portal in `BillingActionsClient`.
 - Native builds currently disable live analytics providers through `analyticsConfigFromEnv`.
