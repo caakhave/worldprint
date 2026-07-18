@@ -43,7 +43,7 @@ The current effective entitlement rule is:
 - Signed-in user with `plan = 'pro'` and `status in ('active', 'trialing')` -> Pro.
 - Any missing, inactive, past-due, canceled, malformed, or non-Pro row -> Free.
 
-Native iOS and Android builds currently consume the same entitlement row so existing Stripe Pro subscribers can use Pro features in the app. Native builds intentionally cannot start Stripe checkout or open Stripe Customer Portal. StoreKit and Google Play Billing remain deferred.
+Native iOS and Android builds currently consume the same entitlement row so existing Stripe Pro subscribers can use Pro features in the app. Native builds intentionally cannot start Stripe checkout or open Stripe Customer Portal. StoreKit purchase flows remain deferred, and Android only includes a Google Play Billing bootstrap with no purchase path.
 
 ## 3. Current Stripe checkout flow
 

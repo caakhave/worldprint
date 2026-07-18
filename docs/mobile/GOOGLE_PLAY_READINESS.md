@@ -9,15 +9,28 @@ new bundle, change tracks, or start closed, open, or production rollout.
 
 - App name: Can You Geo
 - Package: `com.canyougeo.app`
-- Current Android release: `versionCode 1`, `versionName 1.0`
+- Current Android release target: `versionCode 2`, `versionName 1.0.1`
 - Distribution state: internal testing only
-- Purchases in this Android build: unavailable
+- Purchases in this Android build: unavailable; Google Play Billing is present only as a bootstrap dependency
 - Native analytics and marketing pixels: suppressed
 - App model: Capacitor Android app bundling the static Next.js export
 
-No AAB rebuild, resigning, reupload, tester change, Play Billing work,
-production Supabase work, production Stripe work, or rollout is part of this
-checkpoint.
+This bootstrap release is allowed to rebuild and upload one signed Android App Bundle to internal testing with
+`versionCode 2` so Play Console can index the billing capability. It does not create products, offers, base plans,
+Play Developer API credentials, RTDN/Pub/Sub configuration, production Supabase changes, production Stripe changes,
+closed/open testing, or production rollout.
+
+## Android Billing Bootstrap
+
+Version 2 is a billing-capability bootstrap artifact. It adds the official Google Play Billing Library and lets the
+library contribute `com.android.vending.BILLING` in the merged release manifest. The native app still renders the
+existing mobile-purchases-unavailable UI, and no purchase path is reachable.
+
+The app does not yet query Google Play subscription products, show Play-localized prices, call `launchBillingFlow`,
+acknowledge purchases, send purchase tokens to a server, restore purchases, or grant Pro from browser/native code.
+The approved `canyougeo_pro` subscription catalog remains uncreated until Play processes the billing-enabled internal
+artifact. Backend Google Play Developer API verification and authenticated RTDN/Pub/Sub handling are required before
+any purchase test.
 
 ## Sources Reviewed
 
@@ -120,7 +133,7 @@ or temporary mobile purchase limitations in permanent public listing copy.
 | Designed for children | No | Privacy policy says the service is not directed to children under 13; account features collect email. | Yes |
 | Target age | Recommend 13-15, 16-17, 18+ | Educational but text/data-heavy, account-based, not designed for under-13 children. User/legal confirmation recommended. | Needs confirmation |
 | Ads | No | No ad SDKs found; native analytics/pixels suppressed. | Yes |
-| In-app purchases | No for current Android build | Play Billing absent; Stripe checkout/portal disabled in native. Change after Play Billing. | Yes for current build only |
+| In-app purchases | Billing capability is present in version 2, but purchases remain unavailable | Play Billing is added only to unlock catalog setup; no product catalog, purchase UI, or backend verification exists yet. | Yes for internal bootstrap only |
 | User-generated content | No public UGC. Limited private challenge note/email sharing exists. | No public feed, chat, profile posts, or moderation surface. If the questionnaire treats private challenge notes as UGC/messages, answer the narrower "limited user message" question truthfully. | Needs careful Console wording |
 | Social interaction | Limited sharing only | Challenge links and optional challenge email exist; no direct chat or public social network. | Yes |
 | Gambling simulation | No | No wagering, casino, prizes, or sweepstakes. | Yes |
@@ -198,9 +211,9 @@ marked No where the provider qualifies for the service-provider exception.
 | Profile/settings data | Display name derived from account, marketing preference fields | No if Supabase is service provider | Optional for sample play, required for accounts where profile exists | Account management, app functionality, developer communications preference | Retained | Yes | `/account-deletion/` and support request workflow | Marketing opt-in defaults to off unless explicitly opted in |
 | Game scores/history/stats/streaks | Yes for signed-in synced runs; local-only for guest/sample until account sync where supported | No if Supabase is service provider | Optional for sample play, required for saved stats | App functionality, personalization, analytics-like personal stats | Retained | Yes | `/account-deletion/` and support request workflow | Includes run summaries and round results |
 | Challenge data | Yes for challenge links/history and optional challenge email ledger | No if Supabase/Resend are service providers; user-initiated email reaches chosen recipient | Optional | App functionality, sharing, fraud/security/rate limiting, communications | Retained | Yes | Support request with retention caveats | Ledger stores hashes/domain/message length/status, not a marketing list |
-| Subscription/entitlement status | Yes, signed-in Android reads existing entitlement state from Supabase | No if Supabase is service provider | Optional for sample/free play, required for Pro access | App functionality, account management | Retained | Yes | Support/billing request with accounting/security caveats | Current Android cannot buy; web Stripe status may exist for previously entitled users |
+| Subscription/entitlement status | Yes, signed-in Android reads existing entitlement state from Supabase | No if Supabase is service provider | Optional for sample/free play, required for Pro access | App functionality, account management | Retained | Yes | Support/billing request with accounting/security caveats | Version 2 declares billing capability but cannot buy; web Stripe status may exist for previously entitled users |
 | User payment info/card data | No | No | Not applicable | Not applicable | Not applicable | Not applicable | Not applicable | Stripe handles web payments; current Android does not launch checkout |
-| Purchase history | Conservative answer: Yes if Play treats Pro entitlement/subscription state as purchase history | No if service-provider exception applies | Optional; required only for Pro entitlement display | App functionality, account management | Retained | Yes | Support/billing request with caveats | Revisit after Play Billing implementation |
+| Purchase history | Conservative answer: Yes if Play treats Pro entitlement/subscription state as purchase history | No if service-provider exception applies | Optional; required only for Pro entitlement display | App functionality, account management | Retained | Yes | Support/billing request with caveats | No Google Play purchase history is created by the bootstrap build; revisit after purchase testing is implemented |
 | Approximate location | Conservative answer: Yes if IP-derived approximate location in technical logs is treated as collected | No if hosting/Supabase are service providers | Automatic when network services are used | Security, fraud prevention, compliance, diagnostics | Retained in provider logs per provider settings | Yes | Support request/provider retention caveats | No GPS/precise location permission or gameplay location collection |
 | Precise location | No | No | Not applicable | Not applicable | Not applicable | Not applicable | Not applicable | No Android location permission |
 | App interactions | Native app has first-party gameplay interactions and local state; app-owned analytics delivery is suppressed in native | No | Required for gameplay; analytics collection disabled in native | App functionality; no native marketing analytics | Gameplay state retained locally and synced for signed-in users where supported | Yes when synced | Support request/local device clear | Do not mark native marketing analytics as active |
@@ -335,10 +348,11 @@ different build as store screenshots.
 
 Required before internal install validation:
 
+- Upload the signed `versionCode 2` billing-bootstrap AAB to internal testing.
 - Wait for Play internal-test propagation.
 - Install through the official internal-testing opt-in route.
 - Validate launch, all three games, Android Back, sign-in UI, upgrade boundary,
-  no Billing claim, no crash, and permissions.
+  no purchase sheet, no Stripe checkout, no crash, and permissions.
 
 Required before closed testing:
 
@@ -390,7 +404,7 @@ Optional post-launch improvements:
 
 - Any in-app purchase/subscription declaration after Play Billing is added.
 - Data safety purchase-history wording after Play Billing implementation.
-- Play Billing product/base-plan/subscription setup.
+- Play Billing product/base-plan/subscription setup until version 2 is processed and the Subscriptions page exposes creation controls.
 - Store screenshots from the Play-processed Android build.
 - Closed testing start.
 - Production-access application.
