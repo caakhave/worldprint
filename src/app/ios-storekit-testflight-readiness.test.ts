@@ -7,17 +7,20 @@ const readinessDoc = readFileSync(join(process.cwd(), "docs/mobile/IOS_STOREKIT_
 describe("iOS StoreKit and TestFlight readiness document", () => {
   it("records the audited protected staging state and iOS identity", () => {
     expect(readinessDoc).toContain("996223100d61627884d0aac3db1b3993ff034931");
+    expect(readinessDoc).toContain("843faad836adf11e41c68d181337fa4c1f661a96");
     expect(readinessDoc).toContain("com.canyougeo.app");
     expect(readinessDoc).toContain("G5N5U6QFS8");
     expect(readinessDoc).toContain("6791248782");
     expect(readinessDoc).toContain("1.0.0 (1)");
   });
 
-  it("keeps StoreKit implementation gated until product and backend decisions are approved", () => {
+  it("records the approved StoreKit product and server-policy decisions while keeping client/App Store work gated", () => {
     expect(readinessDoc).toContain("Current staging has no StoreKit 2 runtime implementation.");
-    expect(readinessDoc).toContain("recommended, not final-approved");
-    expect(readinessDoc).toContain("Final iOS product IDs are not approved.");
-    expect(readinessDoc).toContain("Apple purchase verification endpoint is missing.");
+    expect(readinessDoc).toContain("com.canyougeo.pro.monthly");
+    expect(readinessDoc).toContain("com.canyougeo.pro.annual");
+    expect(readinessDoc).toContain("subscription group name `Can You Geo Pro`");
+    expect(readinessDoc).toContain("Supabase-UUID `appAccountToken` policy");
+    expect(readinessDoc).toContain("Apple server foundation PR must be merged");
     expect(readinessDoc).toContain("StoreKit 2 Capacitor plugin is missing.");
   });
 
@@ -33,6 +36,6 @@ describe("iOS StoreKit and TestFlight readiness document", () => {
     expect(readinessDoc).toContain(
       "No App Store Connect product, purchase, TestFlight upload, production Supabase mutation, Stripe mutation, credential creation, or App Store submission occurs"
     );
-    expect(readinessDoc).not.toMatch(/BEGIN [A-Z ]*PRIVATE KEY|access_token=|refresh_token=|signedPayload|purchaseToken|transactionId|originalTransactionId/iu);
+    expect(readinessDoc).not.toMatch(/BEGIN [A-Z ]*PRIVATE KEY|access_token=|refresh_token=|eyJ[A-Za-z0-9_-]+\.[A-Za-z0-9_-]+\.[A-Za-z0-9_-]+|\b200000\d{10,}\b/iu);
   });
 });

@@ -1625,14 +1625,12 @@ Recommended request body:
 
 ```json
 {
-  "transactionId": "2000000000000000",
-  "clientProductId": "com.canyougeo.pro.monthly",
-  "clientEnvironment": "sandbox",
-  "clientCorrelationId": "optional-random-client-id"
+  "signedTransactionInfo": "apple-signed-transaction-jws",
+  "signedRenewalInfo": "optional-apple-signed-renewal-jws"
 }
 ```
 
-Only `transactionId` should be required. Client fields are advisory and must not be trusted for entitlement decisions.
+`signedTransactionInfo` is required. `signedRenewalInfo` is optional because the server re-queries App Store Server API current subscription status after validating the client-presented signed transaction. The client must not send entitlement claims, user ids, prices, or locally computed billing state.
 
 Do not accept or persist from the client:
 
@@ -1642,12 +1640,11 @@ Do not accept or persist from the client:
 - price, currency, or proceeds
 - user email
 - Supabase user ID in the body
-- full signed transaction JWS unless a later implementation proves it is required
 - Apple receipt blobs
 - Stripe identifiers
 - analytics identifiers
 
-The server derives the user from the Supabase JWT. It verifies the transaction with Apple, reads the `appAccountToken` from the verified transaction payload, and requires it to match the authenticated Supabase user UUID that initiated the purchase.
+The server derives the user from the Supabase JWT. It verifies the signed transaction material, re-queries Apple current subscription state by original transaction id using server-only credentials, reads the `appAccountToken` from the verified transaction payload, and requires it to match the authenticated Supabase user UUID that initiated the purchase.
 
 Recommended response shape:
 
@@ -3051,19 +3048,19 @@ Do not perform any checklist action in this checkpoint.
 | Decision | Recommended default | Alternatives | Consequence | Needed before implementation? | Needed before App Store Connect setup? | User approval status |
 | --- | --- | --- | --- | --- | --- | --- |
 | StoreKit approach | First-party StoreKit 2 Capacitor plugin | Third-party IAP plugin, RevenueCat | More control, more maintenance | Yes | No | Recommended, not final-approved |
-| Product IDs | `com.canyougeo.pro.monthly`, `com.canyougeo.pro.annual` | Different namespace | Stable backend/App Store contract | Yes | Yes | Recommended, not final-approved |
-| Subscription group name | `Can You Geo Pro` | Product-specific group names | One entitlement level and upgrade/downgrade path | No | Yes | Needs approval |
-| Family Sharing | Disabled initially | Enabled | Simpler account ownership | No | Yes | Recommended, not final-approved |
+| Product IDs | `com.canyougeo.pro.monthly`, `com.canyougeo.pro.annual` | Different namespace | Stable backend/App Store contract | Yes | Yes | Approved for 5D-1D-IOS-SERVER. |
+| Subscription group name | `Can You Geo Pro` | Product-specific group names | One entitlement level and upgrade/downgrade path | No | Yes | Approved for App Store Connect setup. |
+| Family Sharing | Disabled initially | Enabled | Simpler account ownership | No | Yes | Not approved. Keep disabled unless a later checkpoint changes this. |
 | Grace period | Decide before setup | Off or on | Affects billing-failure UX and tests | No | Yes | Deferred |
 | Trials/offers | None initially | Trial, intro discount, offer codes | Simpler launch | No | Yes | Recommended, not final-approved |
 | Apple pricing | Near customer-price parity | Exact parity, platform-adjusted | Customer clarity vs margin | No | Yes | Needs approval |
-| Annual default | Annual selected as Best value | Monthly default, no default | Can improve annual adoption without hiding monthly | Yes for UI | No | Recommended, not final-approved |
-| Sign-in requirement | Required before purchase | Allow anonymous Apple purchase | Enables account linking | Yes | No | Recommended, not final-approved |
-| Stripe subscriber Apple override | No override initially | Allow forced Apple purchase | Avoids dual billing | Yes | No | Recommended, not final-approved |
-| `appAccountToken` | Supabase user UUID | Generated billing UUID | Strong ownership binding | Yes | No | Recommended, not final-approved |
-| Finish policy | Finish after backend accepted/already processed | Finish after local verification | Protects entitlement integrity | Yes | No | Recommended, not final-approved |
-| Sandbox entitlement behavior | Isolated from production Pro | Sandbox can grant production Pro | Prevents contamination | Yes | Yes for testing config | Recommended, not final-approved |
-| Deleted-account handling | Orphan provider row, no auto-link | Auto-link recreated account | Safer ownership | Yes | No | Needs approval |
+| Annual default | Annual selected as Best value | Monthly default, no default | Can improve annual adoption without hiding monthly | Yes for UI | No | Still a client-UI decision. |
+| Sign-in requirement | Required before purchase | Allow anonymous Apple purchase | Enables account linking | Yes | No | Approved. |
+| Stripe subscriber Apple override | No override initially | Allow forced Apple purchase | Avoids dual billing | Yes | No | Approved for initial Apple implementation. |
+| `appAccountToken` | Supabase user UUID | Generated billing UUID | Strong ownership binding | Yes | No | Approved. |
+| Finish policy | Finish after backend accepted/already processed | Finish after local verification | Protects entitlement integrity | Yes | No | Approved. |
+| Sandbox entitlement behavior | Isolated from production Pro | Sandbox can grant production Pro | Prevents contamination | Yes | Yes for testing config | Approved. |
+| Deleted-account handling | Orphan provider row, no auto-link | Auto-link recreated account | Safer ownership | Yes | No | Approved: no silent reclaim. |
 | Manual reassignment | Audited operator-only exception | Self-serve transfer | Reduces abuse risk | No | No | Needs approval |
 | Dual-provider messaging | Calm warning and support path | Hide one provider | Avoids surprise billing | Yes for UI | No | Recommended, not final-approved |
 | Analytics policy | Server-backed conversion truth, sanitized client funnel | Client conversion event as purchase | Avoids double counting | Yes | No | Recommended, not final-approved |

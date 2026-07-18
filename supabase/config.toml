@@ -16,5 +16,14 @@ verify_jwt = true
 [functions.google-play-purchase-verify]
 verify_jwt = true
 
+[functions.apple-purchase-context]
+verify_jwt = true
+
+[functions.apple-purchase-verify]
+verify_jwt = true
+
+[functions.apple-app-store-notifications]
+verify_jwt = false
+
 [functions.send-challenge-email]
 verify_jwt = true
