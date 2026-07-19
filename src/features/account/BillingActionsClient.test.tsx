@@ -163,7 +163,7 @@ describe("BillingActionsClient", () => {
       requestedProductCount: 2,
       returnedProductCount: 2,
       missingProductIds: [],
-      storefrontCountryCode: "US",
+      storefrontCountryCode: "USA",
       products: [
         { productId: "com.canyougeo.pro.monthly", interval: "monthly", displayPrice: "$3.99" },
         { productId: "com.canyougeo.pro.annual", interval: "yearly", displayPrice: "$29.99" }
@@ -495,6 +495,49 @@ describe("BillingActionsClient", () => {
     expect(appleStoreKitMock.restoreAppleStoreKitPurchases).not.toHaveBeenCalled();
     expect(appleStoreKitMock.finishVerifiedAppleStoreKitTransactions).not.toHaveBeenCalled();
     expect(appleStoreKitMock.manageAppleStoreKitSubscription).not.toHaveBeenCalled();
+    expect(client.functions.invoke).not.toHaveBeenCalledWith("stripe-checkout", expect.anything());
+    expect(client.functions.invoke).not.toHaveBeenCalledWith("stripe-portal", expect.anything());
+  });
+
+  it("exits Apple StoreKit discovery on bounded timeout states and retries with one fresh request", async () => {
+    vi.stubEnv("NEXT_PUBLIC_CGY_NATIVE_APP", "1");
+    process.env.NEXT_PUBLIC_BILLING_MODE = "test";
+    capacitorMock.platform = "ios";
+    accountMock.state.user = TEST_USER;
+    appleStoreKitMock.runtimeAvailable = true;
+    appleStoreKitMock.queryAppleStoreKitCatalog.mockResolvedValueOnce({
+      status: "timeout",
+      timeoutPhase: "plugin_availability",
+      requestedProductCount: 2,
+      returnedProductCount: 0,
+      missingProductIds: ["com.canyougeo.pro.monthly", "com.canyougeo.pro.annual"],
+      products: []
+    });
+    const client = billingClientMock();
+
+    render(<BillingActionsClient entitlement={FREE_ENTITLEMENT} context="upgrade" />);
+
+    expect(await screen.findByText("Apple product discovery timed out while checking the native bridge.")).toBeVisible();
+    expect(screen.getByRole("button", { name: "Join monthly" })).toBeDisabled();
+    expect(screen.getByRole("button", { name: "Join yearly" })).toBeDisabled();
+    expect(screen.getByRole("button", { name: "Retry Apple purchase options" })).toBeEnabled();
+
+    appleStoreKitMock.queryAppleStoreKitCatalog.mockResolvedValueOnce({
+      status: "timeout",
+      timeoutPhase: "product_request",
+      requestedProductCount: 2,
+      returnedProductCount: 0,
+      missingProductIds: ["com.canyougeo.pro.monthly", "com.canyougeo.pro.annual"],
+      products: []
+    });
+    fireEvent.click(screen.getByRole("button", { name: "Retry Apple purchase options" }));
+    expect(await screen.findByText("Apple product discovery timed out while requesting subscription products.")).toBeVisible();
+    expect(appleStoreKitMock.queryAppleStoreKitCatalog).toHaveBeenNthCalledWith(1);
+    expect(appleStoreKitMock.queryAppleStoreKitCatalog).toHaveBeenNthCalledWith(2, { forceRefresh: true });
+    expect(appleStoreKitMock.queryAppleStoreKitCatalog).toHaveBeenCalledTimes(2);
+    expect(appleStoreKitMock.purchaseAppleStoreKitProduct).not.toHaveBeenCalled();
+    expect(appleStoreKitMock.restoreAppleStoreKitPurchases).not.toHaveBeenCalled();
+    expect(appleStoreKitMock.finishVerifiedAppleStoreKitTransactions).not.toHaveBeenCalled();
     expect(client.functions.invoke).not.toHaveBeenCalledWith("stripe-checkout", expect.anything());
     expect(client.functions.invoke).not.toHaveBeenCalledWith("stripe-portal", expect.anything());
   });

@@ -151,7 +151,7 @@ describe("UpgradeClient", () => {
       requestedProductCount: 2,
       returnedProductCount: 2,
       missingProductIds: [],
-      storefrontCountryCode: "US",
+      storefrontCountryCode: "USA",
       products: [
         { productId: "com.canyougeo.pro.monthly", interval: "monthly", displayPrice: "$3.99" },
         { productId: "com.canyougeo.pro.annual", interval: "yearly", displayPrice: "$29.99" }

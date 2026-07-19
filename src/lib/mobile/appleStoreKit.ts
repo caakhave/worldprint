@@ -51,12 +51,15 @@ export type AppleStoreKitCatalogStatus =
   | "zero_products"
   | "partial"
   | "plugin_unavailable"
+  | "timeout"
   | "network_error"
   | "storefront_unavailable"
   | "not_entitled"
   | "unsupported"
   | "system_error"
   | "unknown_error";
+
+export type AppleStoreKitTimeoutPhase = "plugin_availability" | "product_request";
 
 export type AppleStoreKitCatalogResult = {
   status: AppleStoreKitCatalogStatus;
@@ -65,6 +68,7 @@ export type AppleStoreKitCatalogResult = {
   missingProductIds: AppleStoreKitProductId[];
   products: AppleStoreKitProductDetails[];
   storefrontCountryCode?: string;
+  timeoutPhase?: AppleStoreKitTimeoutPhase;
 };
 
 type AppleStoreKitPlugin = {
@@ -75,6 +79,7 @@ type AppleStoreKitPlugin = {
     requestedProductCount?: number;
     returnedProductCount?: number;
     storefrontCountryCode?: string;
+    timeoutPhase?: AppleStoreKitTimeoutPhase;
     status: AppleStoreKitCatalogStatus | "unavailable" | "failed";
   }>;
   purchase: (input: AppleStoreKitAuthenticatedInput & { productId: AppleStoreKitProductId }) => Promise<AppleStoreKitOperationResult>;
@@ -95,8 +100,16 @@ export type AppleStoreKitAuthenticatedInput = {
 };
 
 const APPLE_STOREKIT_PRODUCT_IDS = [APPLE_STOREKIT_MONTHLY_PRODUCT_ID, APPLE_STOREKIT_ANNUAL_PRODUCT_ID] as const;
+const APPLE_STOREKIT_AVAILABILITY_TIMEOUT_MS = 5_000;
+const APPLE_STOREKIT_PRODUCT_REQUEST_TIMEOUT_MS = 10_000;
 
 let appleStoreKitPromise: Promise<AppleStoreKitPlugin> | null = null;
+let appleStoreKitCatalogCache: AppleStoreKitCatalogResult | null = null;
+let appleStoreKitCatalogInFlight: Promise<AppleStoreKitCatalogResult> | null = null;
+let appleStoreKitCatalogAttemptVersion = 0;
+let appleStoreKitNativeTransactionListenerHandle: PluginListenerHandle | null = null;
+let appleStoreKitNativeTransactionListenerPromise: Promise<PluginListenerHandle> | null = null;
+let appleStoreKitTransactionListeners = new Set<(event: AppleStoreKitTransactionEvent) => void>();
 
 function fallbackAppleStoreKitPlugin(): AppleStoreKitPlugin {
   return {
@@ -146,13 +159,14 @@ export function appleStoreKitIntervalForProductId(productId: AppleStoreKitProduc
   return productId === APPLE_STOREKIT_ANNUAL_PRODUCT_ID ? "yearly" : "monthly";
 }
 
-function emptyAppleStoreKitCatalog(status: AppleStoreKitCatalogStatus): AppleStoreKitCatalogResult {
+function emptyAppleStoreKitCatalog(status: AppleStoreKitCatalogStatus, timeoutPhase?: AppleStoreKitTimeoutPhase): AppleStoreKitCatalogResult {
   return {
     status,
     requestedProductCount: APPLE_STOREKIT_PRODUCT_IDS.length,
     returnedProductCount: 0,
     missingProductIds: [...APPLE_STOREKIT_PRODUCT_IDS],
-    products: []
+    products: [],
+    ...(timeoutPhase ? { timeoutPhase } : {})
   };
 }
 
@@ -162,6 +176,7 @@ function normalizeAppleStoreKitCatalogStatus(value: unknown): AppleStoreKitCatal
     case "zero_products":
     case "partial":
     case "plugin_unavailable":
+    case "timeout":
     case "network_error":
     case "storefront_unavailable":
     case "not_entitled":
@@ -230,24 +245,60 @@ function statusForProducts(status: AppleStoreKitCatalogStatus, products: AppleSt
 }
 
 function safeStorefrontCountryCode(value: unknown): string | undefined {
-  if (typeof value !== "string" || !/^[A-Z]{2}$/.test(value)) return undefined;
+  if (typeof value !== "string" || !/^[A-Z]{3}$/.test(value)) return undefined;
   return value;
 }
 
-export async function queryAppleStoreKitCatalog(): Promise<AppleStoreKitCatalogResult> {
+function timeoutAppleStoreKitCatalog(timeoutPhase: AppleStoreKitTimeoutPhase): AppleStoreKitCatalogResult {
+  return emptyAppleStoreKitCatalog("timeout", timeoutPhase);
+}
+
+function withAppleStoreKitTimeout<T>(promise: Promise<T>, timeoutMs: number, timeoutValue: T): Promise<T> {
+  let timeoutId: ReturnType<typeof setTimeout> | null = null;
+  const timeoutPromise = new Promise<T>((resolve) => {
+    timeoutId = setTimeout(() => resolve(timeoutValue), timeoutMs);
+  });
+  return Promise.race([promise, timeoutPromise]).finally(() => {
+    if (timeoutId) clearTimeout(timeoutId);
+  });
+}
+
+async function loadAppleStoreKitCatalogAttempt(): Promise<AppleStoreKitCatalogResult> {
   const plugin = await appleStoreKitPlugin();
   let availability: Awaited<ReturnType<AppleStoreKitPlugin["isAvailable"]>>;
   try {
-    availability = await plugin.isAvailable();
+    availability = await withAppleStoreKitTimeout(
+      plugin.isAvailable(),
+      APPLE_STOREKIT_AVAILABILITY_TIMEOUT_MS,
+      { available: false, platform: "ios", reason: "timeout" }
+    );
   } catch {
     return emptyAppleStoreKitCatalog("plugin_unavailable");
+  }
+  if (availability.reason === "timeout") {
+    return timeoutAppleStoreKitCatalog("plugin_availability");
   }
   if (!availability.available) {
     return emptyAppleStoreKitCatalog(statusForAvailability(availability.reason));
   }
 
   try {
-    const result = await plugin.loadProducts({ productIds: [...APPLE_STOREKIT_PRODUCT_IDS] });
+    const timeoutResult = {
+      status: "timeout" as const,
+      requestedProductCount: APPLE_STOREKIT_PRODUCT_IDS.length,
+      returnedProductCount: 0,
+      missingProductIds: [...APPLE_STOREKIT_PRODUCT_IDS],
+      products: [],
+      timeoutPhase: "product_request" as const
+    };
+    const result = await withAppleStoreKitTimeout(
+      plugin.loadProducts({ productIds: [...APPLE_STOREKIT_PRODUCT_IDS] }),
+      APPLE_STOREKIT_PRODUCT_REQUEST_TIMEOUT_MS,
+      timeoutResult
+    );
+    if (result.status === "timeout") {
+      return timeoutAppleStoreKitCatalog(result.timeoutPhase ?? "product_request");
+    }
     const products = sanitizeAppleStoreKitProducts(result.products);
     const status = statusForProducts(normalizeAppleStoreKitCatalogStatus(result.status), products);
     return {
@@ -267,6 +318,32 @@ export async function queryAppleStoreKitCatalog(): Promise<AppleStoreKitCatalogR
   } catch {
     return emptyAppleStoreKitCatalog("unknown_error");
   }
+}
+
+export async function queryAppleStoreKitCatalog(options: { forceRefresh?: boolean } = {}): Promise<AppleStoreKitCatalogResult> {
+  if (options.forceRefresh) {
+    appleStoreKitCatalogCache = null;
+    appleStoreKitCatalogInFlight = null;
+    appleStoreKitCatalogAttemptVersion += 1;
+  }
+  if (appleStoreKitCatalogCache) return appleStoreKitCatalogCache;
+  if (!appleStoreKitCatalogInFlight) {
+    const attemptVersion = appleStoreKitCatalogAttemptVersion + 1;
+    appleStoreKitCatalogAttemptVersion = attemptVersion;
+    appleStoreKitCatalogInFlight = loadAppleStoreKitCatalogAttempt()
+      .then((catalog) => {
+        if (attemptVersion === appleStoreKitCatalogAttemptVersion) {
+          appleStoreKitCatalogCache = catalog;
+        }
+        return catalog;
+      })
+      .finally(() => {
+        if (attemptVersion === appleStoreKitCatalogAttemptVersion) {
+          appleStoreKitCatalogInFlight = null;
+        }
+      });
+  }
+  return appleStoreKitCatalogInFlight;
 }
 
 export async function queryAppleStoreKitProducts(): Promise<AppleStoreKitProductDetails[]> {
@@ -304,10 +381,36 @@ export async function manageAppleStoreKitSubscription(): Promise<{ opened: boole
 export async function addAppleStoreKitTransactionUpdatedListener(
   listener: (event: AppleStoreKitTransactionEvent) => void
 ): Promise<PluginListenerHandle> {
+  appleStoreKitTransactionListeners.add(listener);
   const plugin = await appleStoreKitPlugin();
-  return plugin.addListener("transactionUpdated", listener);
+  appleStoreKitNativeTransactionListenerPromise ??= plugin.addListener("transactionUpdated", (event) => {
+    for (const registeredListener of appleStoreKitTransactionListeners) {
+      registeredListener(event);
+    }
+  });
+  appleStoreKitNativeTransactionListenerHandle = await appleStoreKitNativeTransactionListenerPromise;
+  let removed = false;
+  return {
+    remove: async () => {
+      if (removed) return;
+      removed = true;
+      appleStoreKitTransactionListeners.delete(listener);
+      if (appleStoreKitTransactionListeners.size === 0) {
+        const handle = appleStoreKitNativeTransactionListenerHandle;
+        appleStoreKitNativeTransactionListenerHandle = null;
+        appleStoreKitNativeTransactionListenerPromise = null;
+        await handle?.remove();
+      }
+    }
+  };
 }
 
 export function resetAppleStoreKitPluginForTests() {
   appleStoreKitPromise = null;
+  appleStoreKitCatalogCache = null;
+  appleStoreKitCatalogInFlight = null;
+  appleStoreKitCatalogAttemptVersion = 0;
+  appleStoreKitNativeTransactionListenerHandle = null;
+  appleStoreKitNativeTransactionListenerPromise = null;
+  appleStoreKitTransactionListeners = new Set();
 }

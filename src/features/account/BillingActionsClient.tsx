@@ -93,6 +93,8 @@ const APPLE_STOREKIT_CATALOG_PARTIAL_STATUS = "Only one Apple subscription plan 
 const APPLE_STOREKIT_CATALOG_PLUGIN_UNAVAILABLE_STATUS = "Apple purchase bridge is unavailable in this build.";
 const APPLE_STOREKIT_CATALOG_STOREFRONT_UNAVAILABLE_STATUS = "Apple purchases are unavailable for the current storefront.";
 const APPLE_STOREKIT_CATALOG_NETWORK_STATUS = "Apple purchases could not be loaded because of a network/system condition.";
+const APPLE_STOREKIT_AVAILABILITY_TIMEOUT_STATUS = "Apple product discovery timed out while checking the native bridge.";
+const APPLE_STOREKIT_PRODUCT_TIMEOUT_STATUS = "Apple product discovery timed out while requesting subscription products.";
 type NativeBillingRuntime = "google-play" | "apple" | "unavailable";
 type NativePendingState = GooglePlayBasePlanId | AppleStoreKitProductId | "restore" | "manage" | null;
 
@@ -120,6 +122,9 @@ function googlePlayCatalogStatus(plans: GooglePlayPlanDetails[]) {
 }
 
 function appleStoreKitCatalogStatus(result: AppleStoreKitCatalogResult) {
+  if (result.status === "timeout") {
+    return result.timeoutPhase === "plugin_availability" ? APPLE_STOREKIT_AVAILABILITY_TIMEOUT_STATUS : APPLE_STOREKIT_PRODUCT_TIMEOUT_STATUS;
+  }
   if (result.status === "plugin_unavailable" || result.status === "unsupported") return APPLE_STOREKIT_CATALOG_PLUGIN_UNAVAILABLE_STATUS;
   if (result.status === "storefront_unavailable") return APPLE_STOREKIT_CATALOG_STOREFRONT_UNAVAILABLE_STATUS;
   if (
@@ -381,7 +386,7 @@ export function BillingActionsClient({ entitlement, context, selectedPlan = null
     setNativeCatalogStatus(APPLE_STOREKIT_CATALOG_CHECKING_STATUS);
     setMessage(APPLE_STOREKIT_CATALOG_CHECKING_STATUS);
     try {
-      const catalogResult = await queryAppleStoreKitCatalog();
+      const catalogResult = await queryAppleStoreKitCatalog({ forceRefresh: true });
       setAppleProducts(catalogResult.products);
       const catalogStatus = appleStoreKitCatalogStatus(catalogResult);
       setNativeCatalogStatus(catalogStatus);
