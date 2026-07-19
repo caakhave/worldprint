@@ -41,6 +41,7 @@ const appleStoreKitMock = vi.hoisted(() => ({
   runtimeAvailable: false,
   listener: null as ((event: { status: string; productId?: string }) => void) | null,
   removeListener: vi.fn(),
+  queryAppleStoreKitCatalog: vi.fn(),
   queryAppleStoreKitProducts: vi.fn(),
   purchaseAppleStoreKitProduct: vi.fn(),
   restoreAppleStoreKitPurchases: vi.fn(),
@@ -87,6 +88,7 @@ vi.mock("@/lib/mobile/appleStoreKit", () => ({
   appleStoreKitProductIdForInterval: (interval: "monthly" | "yearly") =>
     interval === "yearly" ? "com.canyougeo.pro.annual" : "com.canyougeo.pro.monthly",
   appleStoreKitIntervalForProductId: (productId: string) => (productId === "com.canyougeo.pro.annual" ? "yearly" : "monthly"),
+  queryAppleStoreKitCatalog: appleStoreKitMock.queryAppleStoreKitCatalog,
   queryAppleStoreKitProducts: appleStoreKitMock.queryAppleStoreKitProducts,
   purchaseAppleStoreKitProduct: appleStoreKitMock.purchaseAppleStoreKitProduct,
   restoreAppleStoreKitPurchases: appleStoreKitMock.restoreAppleStoreKitPurchases,
@@ -155,6 +157,18 @@ describe("BillingActionsClient", () => {
     appleStoreKitMock.runtimeAvailable = false;
     appleStoreKitMock.listener = null;
     appleStoreKitMock.removeListener.mockReset();
+    appleStoreKitMock.queryAppleStoreKitCatalog.mockReset();
+    appleStoreKitMock.queryAppleStoreKitCatalog.mockResolvedValue({
+      status: "loaded",
+      requestedProductCount: 2,
+      returnedProductCount: 2,
+      missingProductIds: [],
+      storefrontCountryCode: "US",
+      products: [
+        { productId: "com.canyougeo.pro.monthly", interval: "monthly", displayPrice: "$3.99" },
+        { productId: "com.canyougeo.pro.annual", interval: "yearly", displayPrice: "$29.99" }
+      ]
+    });
     appleStoreKitMock.queryAppleStoreKitProducts.mockReset();
     appleStoreKitMock.queryAppleStoreKitProducts.mockResolvedValue([
       { productId: "com.canyougeo.pro.monthly", interval: "monthly", displayPrice: "$3.99" },
@@ -392,19 +406,26 @@ describe("BillingActionsClient", () => {
     expect(client.functions.invoke).not.toHaveBeenCalledWith("stripe-portal", expect.anything());
   });
 
-  it("shows a clear Apple StoreKit failure state when no approved products load", async () => {
+  it("shows a clear Apple StoreKit zero-products state when no approved products load", async () => {
     vi.stubEnv("NEXT_PUBLIC_CGY_NATIVE_APP", "1");
     process.env.NEXT_PUBLIC_BILLING_MODE = "test";
     capacitorMock.platform = "ios";
     accountMock.state.user = TEST_USER;
     appleStoreKitMock.runtimeAvailable = true;
-    appleStoreKitMock.queryAppleStoreKitProducts.mockResolvedValue([]);
+    appleStoreKitMock.queryAppleStoreKitCatalog.mockResolvedValue({
+      status: "zero_products",
+      requestedProductCount: 2,
+      returnedProductCount: 0,
+      missingProductIds: ["com.canyougeo.pro.monthly", "com.canyougeo.pro.annual"],
+      products: []
+    });
 
     render(<BillingActionsClient entitlement={FREE_ENTITLEMENT} context="upgrade" />);
 
-    expect(await screen.findByText("Apple purchases are not available right now.")).toBeVisible();
+    expect(await screen.findByText("Apple returned no Can You Geo subscription products.")).toBeVisible();
     expect(screen.getByRole("button", { name: "Join monthly" })).toBeDisabled();
     expect(screen.getByRole("button", { name: "Join yearly" })).toBeDisabled();
+    expect(screen.getByRole("button", { name: "Retry Apple purchase options" })).toBeEnabled();
     expect(appleStoreKitMock.purchaseAppleStoreKitProduct).not.toHaveBeenCalled();
   });
 
@@ -414,14 +435,68 @@ describe("BillingActionsClient", () => {
     capacitorMock.platform = "ios";
     accountMock.state.user = TEST_USER;
     appleStoreKitMock.runtimeAvailable = true;
-    appleStoreKitMock.queryAppleStoreKitProducts.mockResolvedValue([{ productId: "com.canyougeo.pro.annual", interval: "yearly", displayPrice: "$29.99" }]);
+    appleStoreKitMock.queryAppleStoreKitCatalog.mockResolvedValue({
+      status: "partial",
+      requestedProductCount: 2,
+      returnedProductCount: 1,
+      missingProductIds: ["com.canyougeo.pro.monthly"],
+      products: [{ productId: "com.canyougeo.pro.annual", interval: "yearly", displayPrice: "$29.99" }]
+    });
 
     render(<BillingActionsClient entitlement={FREE_ENTITLEMENT} context="upgrade" />);
 
-    expect(await screen.findByText("Some Apple purchases are not available right now.")).toBeVisible();
+    expect(await screen.findByText("Only one Apple subscription plan was returned.")).toBeVisible();
     expect(screen.getByRole("button", { name: "Join monthly" })).toBeDisabled();
     expect(screen.getByRole("button", { name: /Join yearly.*\$29\.99/i })).toBeEnabled();
     expect(appleStoreKitMock.purchaseAppleStoreKitProduct).not.toHaveBeenCalled();
+  });
+
+  it("distinguishes Apple bridge, storefront, and network discovery states without opening Stripe", async () => {
+    vi.stubEnv("NEXT_PUBLIC_CGY_NATIVE_APP", "1");
+    process.env.NEXT_PUBLIC_BILLING_MODE = "test";
+    capacitorMock.platform = "ios";
+    accountMock.state.user = TEST_USER;
+    appleStoreKitMock.runtimeAvailable = true;
+    appleStoreKitMock.queryAppleStoreKitCatalog.mockResolvedValueOnce({
+      status: "plugin_unavailable",
+      requestedProductCount: 2,
+      returnedProductCount: 0,
+      missingProductIds: ["com.canyougeo.pro.monthly", "com.canyougeo.pro.annual"],
+      products: []
+    });
+    const client = billingClientMock();
+
+    const { rerender } = render(<BillingActionsClient entitlement={FREE_ENTITLEMENT} context="upgrade" />);
+
+    expect(await screen.findByText("Apple purchase bridge is unavailable in this build.")).toBeVisible();
+    expect(screen.getByRole("button", { name: "Join monthly" })).toBeDisabled();
+    expect(client.functions.invoke).not.toHaveBeenCalledWith("stripe-checkout", expect.anything());
+
+    appleStoreKitMock.queryAppleStoreKitCatalog.mockResolvedValueOnce({
+      status: "storefront_unavailable",
+      requestedProductCount: 2,
+      returnedProductCount: 0,
+      missingProductIds: ["com.canyougeo.pro.monthly", "com.canyougeo.pro.annual"],
+      products: []
+    });
+    rerender(<BillingActionsClient entitlement={FREE_ENTITLEMENT} context="account" />);
+    fireEvent.click(screen.getByRole("button", { name: "Retry Apple purchase options" }));
+    expect(await screen.findByText("Apple purchases are unavailable for the current storefront.")).toBeVisible();
+
+    appleStoreKitMock.queryAppleStoreKitCatalog.mockResolvedValueOnce({
+      status: "network_error",
+      requestedProductCount: 2,
+      returnedProductCount: 0,
+      missingProductIds: ["com.canyougeo.pro.monthly", "com.canyougeo.pro.annual"],
+      products: []
+    });
+    fireEvent.click(screen.getByRole("button", { name: "Retry Apple purchase options" }));
+    expect(await screen.findByText("Apple purchases could not be loaded because of a network/system condition.")).toBeVisible();
+    expect(appleStoreKitMock.restoreAppleStoreKitPurchases).not.toHaveBeenCalled();
+    expect(appleStoreKitMock.finishVerifiedAppleStoreKitTransactions).not.toHaveBeenCalled();
+    expect(appleStoreKitMock.manageAppleStoreKitSubscription).not.toHaveBeenCalled();
+    expect(client.functions.invoke).not.toHaveBeenCalledWith("stripe-checkout", expect.anything());
+    expect(client.functions.invoke).not.toHaveBeenCalledWith("stripe-portal", expect.anything());
   });
 
   it("uses Google Play context and launch for signed-in native Android purchases without Stripe checkout", async () => {

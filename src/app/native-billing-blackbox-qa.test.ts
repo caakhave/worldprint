@@ -34,9 +34,13 @@ describe("native billing black-box QA drift guard", () => {
     expect(flows).toContain("Google Play purchase catalog ready.");
     expect(flows).toContain("Google Play purchases are not available right now.");
     expect(flows).toContain("Some Google Play plans are not available right now.");
-    expect(flows).toContain("Apple purchases are not available right now.");
     expect(flows).toContain("Apple purchase catalog ready.");
-    expect(flows).toContain("Some Apple purchases are not available right now.");
+    expect(flows).toContain("Apple returned no Can You Geo subscription products.");
+    expect(flows).toContain("Only one Apple subscription plan was returned.");
+    expect(flows).toContain("Apple purchase bridge is unavailable in this build.");
+    expect(flows).toContain("Apple purchases are unavailable for the current storefront.");
+    expect(flows).toContain("Apple purchases could not be loaded because of a network/system condition.");
+    expect(flows).toContain("Retry Apple purchase options");
     expect(flows).toContain("checkout.stripe.com");
     expect(flows).toContain("billing.stripe.com");
   });

@@ -7,6 +7,15 @@ private let appleMonthlyProductId = "com.canyougeo.pro.monthly"
 private let appleAnnualProductId = "com.canyougeo.pro.annual"
 private let appleAllowedProductIds: Set<String> = [appleMonthlyProductId, appleAnnualProductId]
 private let appleOrderedProductIds = [appleMonthlyProductId, appleAnnualProductId]
+private let appleCatalogLoadedStatus = "loaded"
+private let appleCatalogZeroProductsStatus = "zero_products"
+private let appleCatalogPartialStatus = "partial"
+private let appleCatalogUnsupportedStatus = "unsupported"
+private let appleCatalogNetworkErrorStatus = "network_error"
+private let appleCatalogStorefrontUnavailableStatus = "storefront_unavailable"
+private let appleCatalogNotEntitledStatus = "not_entitled"
+private let appleCatalogSystemErrorStatus = "system_error"
+private let appleCatalogUnknownErrorStatus = "unknown_error"
 
 @objc(AppleStoreKitPlugin)
 public class AppleStoreKitPlugin: CAPPlugin, CAPBridgedPlugin {
@@ -43,7 +52,12 @@ public class AppleStoreKitPlugin: CAPPlugin, CAPBridgedPlugin {
 
     @objc func loadProducts(_ call: CAPPluginCall) {
         guard #available(iOS 15.0, *) else {
-            call.resolve(["products": [], "missingProductIds": appleOrderedProductIds, "status": "unavailable"])
+            call.resolve(baseAppleProductCatalogDictionary(
+                products: [],
+                requestedProductIds: appleOrderedProductIds,
+                missingProductIds: appleOrderedProductIds,
+                status: appleCatalogUnsupportedStatus
+            ))
             return
         }
 
@@ -198,14 +212,76 @@ public class AppleStoreKitPlugin: CAPPlugin, CAPBridgedPlugin {
             }
             let loadedIds = Set(normalized.compactMap { $0["productId"] as? String })
             let missingIds = productIds.filter { !loadedIds.contains($0) }
-            return [
-                "products": normalized,
-                "missingProductIds": missingIds,
-                "status": missingIds.isEmpty ? "loaded" : "partial"
-            ]
+            let status = appleCatalogStatus(returnedCount: normalized.count, requestedCount: productIds.count, missingCount: missingIds.count)
+            return await appleProductCatalogDictionary(products: normalized, requestedProductIds: productIds, missingProductIds: missingIds, status: status)
         } catch {
-            return ["products": [], "missingProductIds": productIds, "status": "failed"]
+            return await appleProductCatalogDictionary(products: [], requestedProductIds: productIds, missingProductIds: productIds, status: appleCatalogStatus(for: error))
         }
+    }
+
+    private func appleCatalogStatus(returnedCount: Int, requestedCount: Int, missingCount: Int) -> String {
+        if returnedCount == 0 {
+            return appleCatalogZeroProductsStatus
+        }
+        if missingCount == 0 && returnedCount == requestedCount {
+            return appleCatalogLoadedStatus
+        }
+        return appleCatalogPartialStatus
+    }
+
+    @available(iOS 15.0, *)
+    private func appleCatalogStatus(for error: Error) -> String {
+        guard let storeKitError = error as? StoreKitError else {
+            return appleCatalogUnknownErrorStatus
+        }
+        switch storeKitError {
+        case .networkError:
+            return appleCatalogNetworkErrorStatus
+        case .notAvailableInStorefront:
+            return appleCatalogStorefrontUnavailableStatus
+        case .notEntitled:
+            return appleCatalogNotEntitledStatus
+        case .unsupported:
+            return appleCatalogUnsupportedStatus
+        case .systemError:
+            return appleCatalogSystemErrorStatus
+        case .unknown:
+            return appleCatalogUnknownErrorStatus
+        case .userCancelled:
+            return appleCatalogUnknownErrorStatus
+        @unknown default:
+            return appleCatalogUnknownErrorStatus
+        }
+    }
+
+    private func baseAppleProductCatalogDictionary(
+        products: [[String: Any]],
+        requestedProductIds: [String],
+        missingProductIds: [String],
+        status: String
+    ) -> [String: Any] {
+        let dictionary: [String: Any] = [
+            "products": products,
+            "missingProductIds": missingProductIds.filter { appleAllowedProductIds.contains($0) },
+            "requestedProductCount": requestedProductIds.count,
+            "returnedProductCount": products.count,
+            "status": status
+        ]
+        return dictionary
+    }
+
+    @available(iOS 15.0, *)
+    private func appleProductCatalogDictionary(
+        products: [[String: Any]],
+        requestedProductIds: [String],
+        missingProductIds: [String],
+        status: String
+    ) async -> [String: Any] {
+        var dictionary = baseAppleProductCatalogDictionary(products: products, requestedProductIds: requestedProductIds, missingProductIds: missingProductIds, status: status)
+        if let storefront = await Storefront.current {
+            dictionary["storefrontCountryCode"] = storefront.countryCode
+        }
+        return dictionary
     }
 
     @available(iOS 15.0, *)
