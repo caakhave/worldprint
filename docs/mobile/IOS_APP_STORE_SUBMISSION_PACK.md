@@ -2,7 +2,9 @@
 
 Checkpoint 5D-1H prepares App Store Connect submission metadata, review notes, privacy answers, and asset requirements for Can You Geo. This worksheet is documentation and asset planning only. It does not mutate App Store Connect, StoreKit products, Supabase, Stripe, app versions, archives, or uploads.
 
-Source baseline: protected staging commit `78f2ef34f8133cb4fc7e9dd5210276840a6db69c`.
+Original source baseline: protected staging commit `78f2ef34f8133cb4fc7e9dd5210276840a6db69c`.
+
+Synchronized staging baseline: `9dbf43d0966ce2b21b06799435106f735e218df3`, the protected merge commit for PR #44, `Add iOS privacy manifest audit`. The submission worksheet now assumes the merged app-level privacy manifest at `ios/App/App/PrivacyInfo.xcprivacy` and the companion audit at `docs/mobile/IOS_PRIVACY_MANIFEST_AUDIT.md`.
 
 Official Apple references checked on July 19, 2026:
 
@@ -26,7 +28,7 @@ Official Apple references checked on July 19, 2026:
 | App name | `Can You Geo` | Source display name in `ios/App/App/Info.plist`; 11 characters, within Apple's 2-30 character limit. |
 | Subtitle | `Geography map puzzles` | Proposed metadata; 21 characters, within Apple's 30 character limit. |
 | Bundle ID | `com.canyougeo.app` | Source `PRODUCT_BUNDLE_IDENTIFIER` in `ios/App/App.xcodeproj/project.pbxproj`; do not change after build upload. |
-| SKU | Manual App Store Connect field | Use the existing SKU if the app record already has one. If none exists yet, recommended value: `canyougeo-ios`. SKU is not user-facing and should not be changed after creation. |
+| SKU | Existing App Store Connect field | The App Store app record already exists. Read the current SKU from App Store Connect and copy it into the final submission worksheet; do not create, guess, or change the SKU. The current SKU is not recorded in this repository. |
 | Apple ID | `6791248782` | Already recorded in `docs/mobile/IOS_STOREKIT_TESTFLIGHT_READINESS.md`. |
 | Primary language | English (U.S.) | Matches current source copy and local StoreKit configuration localization `en_US`. |
 | Copyright | Manual legal field | Use the exact legal owner from the Apple Developer account seller record. Do not guess. Suggested format: `Copyright 2026 [Developer Legal Name]`. |
@@ -113,7 +115,7 @@ Can You Geo is a geography quiz and puzzle game. It has account creation, option
 | Guns/Weapons | None | No weapon content. |
 | Gambling | No | No wagering, casino mechanics, cash-out, or gambling product. |
 | Simulated Gambling | None | No casino simulation or simulated wagering. |
-| Contests | Infrequent | Challenge links and score-to-beat sharing are trivia-style personal challenge behavior. There are no prizes, sweepstakes, official rankings, or cash rewards. |
+| Contests | Infrequent | Daily trivia-style play, personal score goals, challenge links, and score-to-beat sharing fall under Apple's current contest definition even without prizes. There are no sweepstakes, official rankings, cash rewards, or wagering. |
 | Loot Boxes | No | No randomized paid item or loot box mechanic. |
 | Made for Kids category | No | Do not select Made for Kids unless the product and legal posture changes; that selection has continuing obligations. |
 | Override to higher age rating | Not planned | Use only if counsel or product policy chooses a higher rating than Apple's calculated result. |
@@ -124,34 +126,46 @@ Expected result: likely a low/global 4+ style rating under the current content p
 
 Apple requires privacy answers to cover the app and third-party partners whose code or services collect data. Do not claim that the app collects nothing: signed-in accounts, saved gameplay, subscription state, support requests, and deletion requests are transmitted to Can You Geo services. Do not claim payment-card collection: payment instruments are handled by Apple for iOS subscriptions and are not accessed by Can You Geo.
 
-| Data category | Collected by current native app? | Linked to user? | Used for tracking? | Purposes | Responsible service or system | Notes for App Store Connect |
-| --- | --- | --- | --- | --- | --- | --- |
-| Email Address | Yes, for signed-in accounts and support flows | Yes | No | App Functionality, Account Management, Developer Communications, Customer Support | Can You Geo, Supabase Auth, email/support provider | Required for auth and support. Marketing email is optional when enabled by user preference; native ad tracking remains disabled. |
-| User ID | Yes | Yes | No | App Functionality, Fraud Prevention/Security, Account Management | Can You Geo, Supabase | Includes Supabase user UUID and backend account identifiers. Apple `appAccountToken` uses the signed-in account UUID for subscription ownership binding. |
-| Gameplay Content | Yes for signed-in saved progress/stats; guest sample play may remain local-only | Yes when signed in | No | App Functionality | Can You Geo, Supabase | Includes guesses, runs, scores, streaks, challenge metadata, and stats. |
-| Purchase History | Yes for subscription status and entitlement records | Yes | No | App Functionality, Account Management, Fraud Prevention/Security | Can You Geo backend, Apple StoreKit/App Store Server API, Supabase | Includes provider subscription status, product ID, renewal/expiration state, and entitlement projection. Do not disclose payment-card collection. |
-| Customer Support | Yes when users contact support or request deletion | Yes if the user includes account/contact details | No | Customer Support, Account Management, Legal/Compliance | Can You Geo, support inbox/provider | Includes support emails, account-deletion requests, verification context, and operational follow-up. |
-| Other Diagnostic Data | Limited operational diagnostics may be collected | May be linked when tied to account/session/security events | No | App Functionality, Fraud Prevention/Security, Product Quality | Can You Geo, Supabase, Cloudflare/hosting, Apple tooling where applicable | Use the narrowest App Store Connect diagnostic categories that match actual configured logging. |
-| Product Interaction | Not for native marketing analytics in the current source | No current native collection | No | Not applicable unless analytics is enabled later | Current native app disables analytics/marketing pixels | If native analytics changes, update this row and App Store Connect before submission. |
-| Device ID | Not intentionally collected by Can You Geo native code | No | No | Not applicable | Platform/store services may have their own processor disclosures | Do not declare unless final dependency privacy report shows collection by an included SDK. |
-| Location | No precise or coarse location collection | No | No | Not applicable | None in app source | Geography gameplay uses world data and maps; it does not collect the user's location. Approximate IP-derived region may appear in hosting/security logs outside native APIs. |
-| Payment Info | No payment-card or bank details collected by Can You Geo | No | No | Not applicable | Apple handles iOS payment instruments | Purchase history/subscription state is collected; card details are not. |
-| Contacts | No | No | No | Not applicable | None | Challenge email sends use manually supplied recipient address for that send; the app does not read the device contacts database. |
-| Photos or Videos | No | No | No | Not applicable | None | Users may choose to send screenshots to support outside the app. |
-| Audio Data | No | No | No | Not applicable | None | No microphone capture. |
-| Health and Fitness | No | No | No | Not applicable | None | No HealthKit or fitness data. |
-| Sensitive Info | No intentional collection | No | No | Not applicable | None | Support instructions should continue to tell users not to send passwords, recovery codes, payment cards, or private tokens. |
-| Advertising Data | No native ads or ad tracking | No | No | Not applicable | None in native source | Web marketing measurement is separate and should remain disabled in native builds unless explicitly changed. |
+Use Apple's selectable purpose choices only in the App Store Connect purpose fields:
+
+- Third-Party Advertising
+- Developer's Advertising or Marketing
+- Analytics
+- Product Personalization
+- App Functionality
+- Other Purposes
+
+Use internal rationale only for reviewer notes, policy worksheets, and operator understanding. Internal rationale terms such as authentication, account management, customer support, fraud prevention/security, subscription verification, legal/compliance, and service reliability are not standalone App Store Connect purpose choices.
+
+| Data category | Collected by current native app? | Linked to user? | Used for tracking? | App Store Connect selectable purpose | Internal operational rationale | Responsible service or system | Notes for App Store Connect |
+| --- | --- | --- | --- | --- | --- | --- | --- |
+| Email Address | Yes, for signed-in accounts and support flows | Yes | No | App Functionality; Developer's Advertising or Marketing only for consented update/marketing email | Authentication, account management, customer support, legal/compliance, optional consented updates | Can You Geo, Supabase Auth, email/support provider | Matches merged `PrivacyInfo.xcprivacy`: `NSPrivacyCollectedDataTypePurposeAppFunctionality` and `NSPrivacyCollectedDataTypePurposeDeveloperAdvertising`. Keep the developer-marketing purpose because Can You Geo may send optional updates only to users who consent. |
+| User ID | Yes | Yes | No | App Functionality | Authentication, account ownership, subscription verification, customer support, fraud prevention/security | Can You Geo, Supabase | Includes Supabase user UUID and backend account identifiers. Apple `appAccountToken` uses the signed-in account UUID for subscription ownership binding. |
+| Gameplay Content | Yes for signed-in saved progress/stats; guest sample play may remain local-only | Yes when signed in | No | App Functionality | Saved progress, runs, scores, streaks, challenge state, account-linked gameplay continuity | Can You Geo, Supabase | Includes guesses, runs, scores, streaks, challenge metadata, and stats. |
+| Purchase History | Yes for subscription status and entitlement records | Yes | No | App Functionality | Subscription verification, entitlement restoration, billing support, fraud prevention/security | Can You Geo backend, Apple StoreKit/App Store Server API, Supabase | Includes provider subscription status, product ID, renewal/expiration state, and entitlement projection. Do not disclose payment-card collection. |
+| Customer Support | Yes when users contact support or request deletion | Yes if the user includes account/contact details | No | App Functionality | Customer support, account deletion, account management, legal/compliance, service reliability | Can You Geo, support inbox/provider | Includes support emails, account-deletion requests, verification context, and operational follow-up. |
+| Other Diagnostic Data | Limited operational diagnostics may be collected | May be linked when tied to account/session/security events | No | App Functionality | Service reliability, troubleshooting, security review, support investigation | Can You Geo, Supabase, Cloudflare/hosting, Apple tooling where applicable | Disclose only to the extent final Apple privacy reports and backend logging confirm collection. No native crash analytics or performance analytics SDK is bundled. |
+| Product Interaction | Not for native marketing analytics in the current source | No current native collection | No | Do not select Analytics while native analytics remains disabled | Not applicable unless native analytics is enabled later | Current native app disables analytics/marketing pixels | If native analytics changes, update `PrivacyInfo.xcprivacy`, `docs/mobile/IOS_PRIVACY_MANIFEST_AUDIT.md`, and App Store Connect before submission. |
+| Device ID | Not intentionally collected by Can You Geo native code | No | No | Do not select | Not applicable | Platform/store services may have their own processor disclosures | Do not declare unless final dependency privacy report shows collection by an included SDK. |
+| Location | No precise or coarse location collection | No | No | Do not select | Not applicable | None in app source | Geography gameplay uses world data and maps; it does not collect the user's location. Approximate IP-derived region may appear in hosting/security logs outside native APIs. |
+| Payment Info | No payment-card or bank details collected by Can You Geo | No | No | Do not select | Not applicable | Apple handles iOS payment instruments | Purchase history/subscription state is collected; card details are not. |
+| Contacts | No | No | No | Do not select | Not applicable | None | Challenge email sends use a manually supplied recipient address for that send; the app does not read the device contacts database. |
+| Photos or Videos | No | No | No | Do not select | Not applicable | None | Users may choose to send screenshots to support outside the app. |
+| Audio Data | No | No | No | Do not select | Not applicable | None | No microphone capture. |
+| Health and Fitness | No | No | No | Do not select | Not applicable | None | No HealthKit or fitness data. |
+| Sensitive Info | No intentional collection | No | No | Do not select | Not applicable | None | Support instructions should continue to tell users not to send passwords, recovery codes, payment cards, or private tokens. |
+| Advertising Data | No native ads or ad tracking | No | No | Do not select Third-Party Advertising or Analytics | Not applicable | None in native source | Web marketing measurement is separate and should remain disabled in native builds unless explicitly changed. |
 
 Required App Store Connect posture:
 
-- Account/contact information is linked to the user and used for app functionality, account management, support, and developer communications.
-- User identifiers are linked to the user and used for app functionality, account ownership, subscription verification, security, and support.
-- Purchase history/subscription state is linked to the user and used for app functionality, entitlement management, support, and fraud prevention/security.
-- Gameplay progress/stats are linked to signed-in users and used for app functionality.
-- Support/account-deletion communications are linked when the requester identifies an account and are used for customer support, account management, and legal/compliance.
-- Diagnostics should be disclosed only to the extent final Apple privacy reports and backend logging confirm collection.
-- Tracking should remain `No` for the native iOS app unless a future checkpoint enables cross-app/company tracking. No native advertising identifier use is present in the current source.
+- Email Address: linked to the user, not used for tracking, purpose `App Functionality`; add `Developer's Advertising or Marketing` only for consented update/marketing email.
+- User ID: linked to the user, not used for tracking, purpose `App Functionality`.
+- Gameplay Content: linked to signed-in users, not used for tracking, purpose `App Functionality`.
+- Purchase History: linked to the user, not used for tracking, purpose `App Functionality`.
+- Customer Support: linked when the requester identifies an account, not used for tracking, purpose `App Functionality`.
+- Other Diagnostic Data: linked where tied to account/session/security events, not used for tracking, purpose `App Functionality`.
+- Analytics: do not select while native analytics remains disabled.
+- Tracking: `No`.
 
 ## 5. App Review Information
 
