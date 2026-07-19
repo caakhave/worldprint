@@ -55,6 +55,7 @@ const googlePlayMock = vi.hoisted(() => ({
 
 const appleStoreKitMock = vi.hoisted(() => ({
   runtimeAvailable: false,
+  queryAppleStoreKitCatalog: vi.fn().mockResolvedValue({ status: "zero_products", requestedProductCount: 2, returnedProductCount: 0, missingProductIds: [], products: [] }),
   queryAppleStoreKitProducts: vi.fn().mockResolvedValue([]),
   purchaseAppleStoreKitProduct: vi.fn(),
   restoreAppleStoreKitPurchases: vi.fn().mockResolvedValue({ status: "none", verifiedCount: 0 }),
@@ -119,6 +120,7 @@ vi.mock("@/lib/mobile/appleStoreKit", () => ({
   appleStoreKitProductIdForInterval: (interval: "monthly" | "yearly") =>
     interval === "yearly" ? "com.canyougeo.pro.annual" : "com.canyougeo.pro.monthly",
   appleStoreKitIntervalForProductId: (productId: string) => (productId === "com.canyougeo.pro.annual" ? "yearly" : "monthly"),
+  queryAppleStoreKitCatalog: appleStoreKitMock.queryAppleStoreKitCatalog,
   queryAppleStoreKitProducts: appleStoreKitMock.queryAppleStoreKitProducts,
   purchaseAppleStoreKitProduct: appleStoreKitMock.purchaseAppleStoreKitProduct,
   restoreAppleStoreKitPurchases: appleStoreKitMock.restoreAppleStoreKitPurchases,
@@ -143,6 +145,18 @@ describe("UpgradeClient", () => {
     capacitorMock.platform = "android";
     googlePlayMock.runtimeAvailable = false;
     appleStoreKitMock.runtimeAvailable = false;
+    appleStoreKitMock.queryAppleStoreKitCatalog.mockReset();
+    appleStoreKitMock.queryAppleStoreKitCatalog.mockResolvedValue({
+      status: "loaded",
+      requestedProductCount: 2,
+      returnedProductCount: 2,
+      missingProductIds: [],
+      storefrontCountryCode: "US",
+      products: [
+        { productId: "com.canyougeo.pro.monthly", interval: "monthly", displayPrice: "$3.99" },
+        { productId: "com.canyougeo.pro.annual", interval: "yearly", displayPrice: "$29.99" }
+      ]
+    });
     appleStoreKitMock.queryAppleStoreKitProducts.mockReset();
     appleStoreKitMock.queryAppleStoreKitProducts.mockResolvedValue([
       { productId: "com.canyougeo.pro.monthly", interval: "monthly", displayPrice: "$3.99" },

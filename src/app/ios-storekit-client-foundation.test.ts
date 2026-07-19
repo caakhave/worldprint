@@ -31,6 +31,7 @@ describe("iOS StoreKit client foundation", () => {
     expect(xcodeProject).toContain("AppleStoreKitPlugin.swift in Sources");
     expect(xcodeProject).toContain("ViewController.swift in Sources");
     expect(swiftPlugin).toContain('public let jsName = "AppleStoreKit"');
+    expect(swiftPlugin).toContain('CAPPluginMethod(name: "isAvailable"');
     expect(swiftPlugin).toContain('CAPPluginMethod(name: "purchase"');
     expect(swiftPlugin).toContain('CAPPluginMethod(name: "restorePurchases"');
     expect(swiftPlugin).toContain('CAPPluginMethod(name: "syncUnfinished"');
@@ -40,6 +41,7 @@ describe("iOS StoreKit client foundation", () => {
 
   it("uses StoreKit 2 and the staging Apple endpoints without exposing raw transaction material to JavaScript", () => {
     expect(swiftPlugin).toContain("Product.products(for:");
+    expect(swiftPlugin).toContain("Storefront.current");
     expect(swiftPlugin).toContain("product.purchase(options: [.appAccountToken(appAccountToken)])");
     expect(swiftPlugin).toContain("Transaction.updates");
     expect(swiftPlugin).toContain("Transaction.unfinished");
@@ -53,12 +55,40 @@ describe("iOS StoreKit client foundation", () => {
     expect(appleActions).not.toMatch(/signedTransaction|signedRenewal|jwsRepresentation|transactionId|originalTransactionId|appAccountToken/u);
   });
 
-  it("keeps the iOS identity fixed while bumping only the build number to 3", () => {
+  it("preserves sanitized StoreKit discovery diagnostics without exposing raw errors", () => {
+    for (const status of [
+      "loaded",
+      "zero_products",
+      "partial",
+      "plugin_unavailable",
+      "network_error",
+      "storefront_unavailable",
+      "not_entitled",
+      "unsupported",
+      "system_error",
+      "unknown_error"
+    ]) {
+      expect(`${swiftPlugin}\n${appleAdapter}`).toContain(status);
+    }
+    expect(swiftPlugin).toContain("requestedProductCount");
+    expect(swiftPlugin).toContain("returnedProductCount");
+    expect(swiftPlugin).toContain("missingProductIds");
+    expect(swiftPlugin).toContain("case .networkError");
+    expect(swiftPlugin).toContain("case .notAvailableInStorefront");
+    expect(swiftPlugin).toContain("case .notEntitled");
+    expect(swiftPlugin).toContain("case .unsupported");
+    expect(swiftPlugin).toContain("case .systemError");
+    expect(appleAdapter).toContain("queryAppleStoreKitCatalog");
+    expect(appleAdapter).toContain("plugin.isAvailable()");
+    expect(appleAdapter).not.toMatch(/NSError|localizedDescription|debugDescription|underlyingError|file:\/\/|\/private\/tmp/u);
+  });
+
+  it("keeps the iOS identity fixed while bumping only the build number to 4", () => {
     expect(xcodeProject).toContain("PRODUCT_BUNDLE_IDENTIFIER = com.canyougeo.app;");
     expect(xcodeProject).toContain("DEVELOPMENT_TEAM = G5N5U6QFS8;");
     expect(xcodeProject).toContain("MARKETING_VERSION = 1.0.0;");
-    expect(xcodeProject).toContain("CURRENT_PROJECT_VERSION = 3;");
-    expect(xcodeProject).not.toContain("CURRENT_PROJECT_VERSION = 4;");
+    expect(xcodeProject).toContain("CURRENT_PROJECT_VERSION = 4;");
+    expect(xcodeProject).not.toContain("CURRENT_PROJECT_VERSION = 5;");
   });
 
   it("defines only the approved local StoreKit subscription products", () => {

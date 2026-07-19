@@ -21,7 +21,8 @@ import {
   appleStoreKitProductIdForInterval,
   appleStoreKitIntervalForProductId,
   isIOSAppleStoreKitRuntime,
-  queryAppleStoreKitProducts,
+  queryAppleStoreKitCatalog,
+  type AppleStoreKitCatalogResult,
   type AppleStoreKitProductDetails,
   type AppleStoreKitProductId
 } from "@/lib/mobile/appleStoreKit";
@@ -85,9 +86,13 @@ const GOOGLE_PLAY_PURCHASED_STATE = 1;
 const GOOGLE_PLAY_CATALOG_READY_STATUS = "Google Play purchase catalog ready.";
 const GOOGLE_PLAY_CATALOG_UNAVAILABLE_STATUS = "Google Play purchases are not available right now.";
 const GOOGLE_PLAY_CATALOG_PARTIAL_STATUS = "Some Google Play plans are not available right now.";
+const APPLE_STOREKIT_CATALOG_CHECKING_STATUS = "Checking Apple purchase options...";
 const APPLE_STOREKIT_CATALOG_READY_STATUS = "Apple purchase catalog ready.";
-const APPLE_STOREKIT_CATALOG_UNAVAILABLE_STATUS = "Apple purchases are not available right now.";
-const APPLE_STOREKIT_CATALOG_PARTIAL_STATUS = "Some Apple purchases are not available right now.";
+const APPLE_STOREKIT_CATALOG_ZERO_PRODUCTS_STATUS = "Apple returned no Can You Geo subscription products.";
+const APPLE_STOREKIT_CATALOG_PARTIAL_STATUS = "Only one Apple subscription plan was returned.";
+const APPLE_STOREKIT_CATALOG_PLUGIN_UNAVAILABLE_STATUS = "Apple purchase bridge is unavailable in this build.";
+const APPLE_STOREKIT_CATALOG_STOREFRONT_UNAVAILABLE_STATUS = "Apple purchases are unavailable for the current storefront.";
+const APPLE_STOREKIT_CATALOG_NETWORK_STATUS = "Apple purchases could not be loaded because of a network/system condition.";
 type NativeBillingRuntime = "google-play" | "apple" | "unavailable";
 type NativePendingState = GooglePlayBasePlanId | AppleStoreKitProductId | "restore" | "manage" | null;
 
@@ -114,13 +119,28 @@ function googlePlayCatalogStatus(plans: GooglePlayPlanDetails[]) {
   return GOOGLE_PLAY_CATALOG_PARTIAL_STATUS;
 }
 
-function appleStoreKitCatalogStatus(products: AppleStoreKitProductDetails[]) {
-  const availableProducts = new Set(products.map((product) => product.productId));
+function appleStoreKitCatalogStatus(result: AppleStoreKitCatalogResult) {
+  if (result.status === "plugin_unavailable" || result.status === "unsupported") return APPLE_STOREKIT_CATALOG_PLUGIN_UNAVAILABLE_STATUS;
+  if (result.status === "storefront_unavailable") return APPLE_STOREKIT_CATALOG_STOREFRONT_UNAVAILABLE_STATUS;
+  if (
+    result.status === "network_error" ||
+    result.status === "system_error" ||
+    result.status === "unknown_error" ||
+    result.status === "not_entitled"
+  ) {
+    return APPLE_STOREKIT_CATALOG_NETWORK_STATUS;
+  }
+  if (result.status === "zero_products") return APPLE_STOREKIT_CATALOG_ZERO_PRODUCTS_STATUS;
+  const availableProducts = new Set(result.products.map((product) => product.productId));
   const hasMonthly = availableProducts.has(appleStoreKitProductIdForInterval("monthly"));
   const hasYearly = availableProducts.has(appleStoreKitProductIdForInterval("yearly"));
   if (hasMonthly && hasYearly) return APPLE_STOREKIT_CATALOG_READY_STATUS;
-  if (!hasMonthly && !hasYearly) return APPLE_STOREKIT_CATALOG_UNAVAILABLE_STATUS;
+  if (!hasMonthly && !hasYearly) return APPLE_STOREKIT_CATALOG_ZERO_PRODUCTS_STATUS;
   return APPLE_STOREKIT_CATALOG_PARTIAL_STATUS;
+}
+
+function nativeAppleCatalogMessageIsStatus(message: string) {
+  return message === APPLE_STOREKIT_CATALOG_CHECKING_STATUS || message === APPLE_STOREKIT_CATALOG_READY_STATUS;
 }
 
 export function BillingActionsClient({ entitlement, context, selectedPlan = null, checkoutLabel, onVerified }: BillingActionsClientProps) {
@@ -186,24 +206,24 @@ export function BillingActionsClient({ entitlement, context, selectedPlan = null
           setMessage(catalogStatus === GOOGLE_PLAY_CATALOG_READY_STATUS ? "" : catalogStatus);
           void restoreNativePurchases({ quiet: true });
         } else {
-          const [products, handle] = await Promise.all([
-            queryAppleStoreKitProducts(),
-            addAppleStoreKitTransactionUpdatedListener(() => void syncAppleStoreKitTransactions({ quiet: true }))
-          ]);
+          setNativeCatalogStatus(APPLE_STOREKIT_CATALOG_CHECKING_STATUS);
+          setMessage(APPLE_STOREKIT_CATALOG_CHECKING_STATUS);
+          const catalogResult = await queryAppleStoreKitCatalog();
+          const handle = await addAppleStoreKitTransactionUpdatedListener(() => void syncAppleStoreKitTransactions({ quiet: true }));
           if (!mounted) {
             await handle.remove();
             return;
           }
           removeListener = () => void handle.remove();
-          setAppleProducts(products);
-          const catalogStatus = appleStoreKitCatalogStatus(products);
+          setAppleProducts(catalogResult.products);
+          const catalogStatus = appleStoreKitCatalogStatus(catalogResult);
           setNativeCatalogStatus(catalogStatus);
-          setMessage(catalogStatus === APPLE_STOREKIT_CATALOG_READY_STATUS ? "" : catalogStatus);
+          setMessage(catalogStatus);
           void syncAppleStoreKitTransactions({ quiet: true });
         }
       } catch {
         if (mounted) {
-          const catalogStatus = runtime === "apple" ? APPLE_STOREKIT_CATALOG_UNAVAILABLE_STATUS : GOOGLE_PLAY_CATALOG_UNAVAILABLE_STATUS;
+          const catalogStatus = runtime === "apple" ? APPLE_STOREKIT_CATALOG_NETWORK_STATUS : GOOGLE_PLAY_CATALOG_UNAVAILABLE_STATUS;
           setNativeCatalogStatus(catalogStatus);
           setMessage(catalogStatus);
         }
@@ -353,6 +373,25 @@ export function BillingActionsClient({ entitlement, context, selectedPlan = null
       setMessage("Apple purchase could not start. Try again in a minute.");
     } finally {
       setNativePending(null);
+    }
+  }
+
+  async function retryAppleStoreKitCatalog() {
+    setNativePlansLoading(true);
+    setNativeCatalogStatus(APPLE_STOREKIT_CATALOG_CHECKING_STATUS);
+    setMessage(APPLE_STOREKIT_CATALOG_CHECKING_STATUS);
+    try {
+      const catalogResult = await queryAppleStoreKitCatalog();
+      setAppleProducts(catalogResult.products);
+      const catalogStatus = appleStoreKitCatalogStatus(catalogResult);
+      setNativeCatalogStatus(catalogStatus);
+      setMessage(catalogStatus);
+    } catch {
+      setAppleProducts([]);
+      setNativeCatalogStatus(APPLE_STOREKIT_CATALOG_NETWORK_STATUS);
+      setMessage(APPLE_STOREKIT_CATALOG_NETWORK_STATUS);
+    } finally {
+      setNativePlansLoading(false);
     }
   }
 
@@ -531,6 +570,9 @@ export function BillingActionsClient({ entitlement, context, selectedPlan = null
           <button className="button-secondary" type="button" onClick={() => void restoreApplePurchases()} disabled={nativePending !== null}>
             {nativePending === "restore" ? "Checking Apple..." : "Restore purchases"}
           </button>
+          <button className="button-secondary" type="button" onClick={() => void retryAppleStoreKitCatalog()} disabled={nativePending !== null || nativePlansLoading}>
+            {nativePlansLoading ? "Checking Apple..." : "Retry Apple purchase options"}
+          </button>
           {applePurchaseInSession ? (
             <button className="button-secondary" type="button" onClick={() => void openAppleSubscriptionManagement()} disabled={nativePending !== null}>
               {nativePending === "manage" ? "Opening Apple..." : "Manage Apple subscription"}
@@ -547,7 +589,10 @@ export function BillingActionsClient({ entitlement, context, selectedPlan = null
             </p>
           ) : null}
           {message ? (
-            <p className={message.includes("verified") || message.includes("active") ? "account-env-note" : "account-error"} role={message.includes("verified") || message.includes("active") ? "status" : "alert"}>
+            <p
+              className={message.includes("verified") || message.includes("active") || nativeAppleCatalogMessageIsStatus(message) ? "account-env-note" : "account-error"}
+              role={message.includes("verified") || message.includes("active") || nativeAppleCatalogMessageIsStatus(message) ? "status" : "alert"}
+            >
               {message}
             </p>
           ) : null}

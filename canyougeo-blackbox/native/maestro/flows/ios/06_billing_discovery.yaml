@@ -75,31 +75,50 @@ tags:
     visible: "Restore purchases"
     timeout: 30000
 - extendedWaitUntil:
-    visible: 'Apple purchase catalog ready.|Apple purchases are not available right now.|Some Apple purchases are not available right now.'
+    visible: 'Apple purchase catalog ready.|Apple returned no Can You Geo subscription products.|Only one Apple subscription plan was returned.|Apple purchase bridge is unavailable in this build.|Apple purchases are unavailable for the current storefront.|Apple purchases could not be loaded because of a network/system condition.'
     timeout: 30000
 - runFlow:
     when:
       visible: "Apple purchase catalog ready."
     commands:
-      - assertNotVisible: "Apple purchases are not available right now."
-      - assertNotVisible: "Some Apple purchases are not available right now."
+      - assertNotVisible: "Apple returned no Can You Geo subscription products."
+      - assertNotVisible: "Only one Apple subscription plan was returned."
       - assertVisible: "Join monthly.*[0-9]"
       - assertVisible: "Join yearly.*[0-9]"
       - assertVisible: "Restore purchases"
 - runFlow:
     when:
-      visible: "Apple purchases are not available right now."
+      visible: "Apple returned no Can You Geo subscription products."
     commands:
-      - assertVisible: "Apple purchases are not available right now."
+      - assertVisible: "Apple returned no Can You Geo subscription products."
       - assertNotVisible: "Apple purchase catalog ready."
-      - assertNotVisible: "Some Apple purchases are not available right now."
+      - assertNotVisible: "Only one Apple subscription plan was returned."
 - runFlow:
     when:
-      visible: "Some Apple purchases are not available right now."
+      visible: "Only one Apple subscription plan was returned."
     commands:
-      - assertVisible: "Some Apple purchases are not available right now."
+      - assertVisible: "Only one Apple subscription plan was returned."
       - assertNotVisible: "Apple purchase catalog ready."
-      - assertNotVisible: "Apple purchases are not available right now."
+      - assertNotVisible: "Apple returned no Can You Geo subscription products."
+- runFlow:
+    when:
+      visible: "Apple purchase bridge is unavailable in this build."
+    commands:
+      - assertVisible: "Apple purchase bridge is unavailable in this build."
+      - assertNotVisible: "Apple purchase catalog ready."
+- runFlow:
+    when:
+      visible: "Apple purchases are unavailable for the current storefront."
+    commands:
+      - assertVisible: "Apple purchases are unavailable for the current storefront."
+      - assertNotVisible: "Apple purchase catalog ready."
+- runFlow:
+    when:
+      visible: "Apple purchases could not be loaded because of a network/system condition."
+    commands:
+      - assertVisible: "Apple purchases could not be loaded because of a network/system condition."
+      - assertNotVisible: "Apple purchase catalog ready."
+- assertVisible: "Retry Apple purchase options"
 - assertNotVisible: "Opening Apple..."
 - assertNotVisible: "Manage Apple subscription"
 - assertNotVisible: "Stripe handles checkout securely"
