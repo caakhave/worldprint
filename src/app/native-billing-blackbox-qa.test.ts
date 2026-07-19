@@ -40,6 +40,8 @@ describe("native billing black-box QA drift guard", () => {
     expect(flows).toContain("Apple purchase bridge is unavailable in this build.");
     expect(flows).toContain("Apple purchases are unavailable for the current storefront.");
     expect(flows).toContain("Apple purchases could not be loaded because of a network/system condition.");
+    expect(flows).toContain("Apple product discovery timed out while checking the native bridge.");
+    expect(flows).toContain("Apple product discovery timed out while requesting subscription products.");
     expect(flows).toContain("Retry Apple purchase options");
     expect(flows).toContain("checkout.stripe.com");
     expect(flows).toContain("billing.stripe.com");

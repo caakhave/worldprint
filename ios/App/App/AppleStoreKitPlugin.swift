@@ -213,9 +213,9 @@ public class AppleStoreKitPlugin: CAPPlugin, CAPBridgedPlugin {
             let loadedIds = Set(normalized.compactMap { $0["productId"] as? String })
             let missingIds = productIds.filter { !loadedIds.contains($0) }
             let status = appleCatalogStatus(returnedCount: normalized.count, requestedCount: productIds.count, missingCount: missingIds.count)
-            return await appleProductCatalogDictionary(products: normalized, requestedProductIds: productIds, missingProductIds: missingIds, status: status)
+            return baseAppleProductCatalogDictionary(products: normalized, requestedProductIds: productIds, missingProductIds: missingIds, status: status)
         } catch {
-            return await appleProductCatalogDictionary(products: [], requestedProductIds: productIds, missingProductIds: productIds, status: appleCatalogStatus(for: error))
+            return baseAppleProductCatalogDictionary(products: [], requestedProductIds: productIds, missingProductIds: productIds, status: appleCatalogStatus(for: error))
         }
     }
 
@@ -267,20 +267,6 @@ public class AppleStoreKitPlugin: CAPPlugin, CAPBridgedPlugin {
             "returnedProductCount": products.count,
             "status": status
         ]
-        return dictionary
-    }
-
-    @available(iOS 15.0, *)
-    private func appleProductCatalogDictionary(
-        products: [[String: Any]],
-        requestedProductIds: [String],
-        missingProductIds: [String],
-        status: String
-    ) async -> [String: Any] {
-        var dictionary = baseAppleProductCatalogDictionary(products: products, requestedProductIds: requestedProductIds, missingProductIds: missingProductIds, status: status)
-        if let storefront = await Storefront.current {
-            dictionary["storefrontCountryCode"] = storefront.countryCode
-        }
         return dictionary
     }
 

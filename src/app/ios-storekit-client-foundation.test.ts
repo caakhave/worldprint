@@ -41,7 +41,9 @@ describe("iOS StoreKit client foundation", () => {
 
   it("uses StoreKit 2 and the staging Apple endpoints without exposing raw transaction material to JavaScript", () => {
     expect(swiftPlugin).toContain("Product.products(for:");
-    expect(swiftPlugin).toContain("Storefront.current");
+    expect(swiftPlugin).not.toContain("Storefront.current");
+    expect(swiftPlugin).toContain("baseAppleProductCatalogDictionary(products: normalized");
+    expect(swiftPlugin).toContain("baseAppleProductCatalogDictionary(products: []");
     expect(swiftPlugin).toContain("product.purchase(options: [.appAccountToken(appAccountToken)])");
     expect(swiftPlugin).toContain("Transaction.updates");
     expect(swiftPlugin).toContain("Transaction.unfinished");
@@ -61,6 +63,7 @@ describe("iOS StoreKit client foundation", () => {
       "zero_products",
       "partial",
       "plugin_unavailable",
+      "timeout",
       "network_error",
       "storefront_unavailable",
       "not_entitled",
@@ -80,15 +83,21 @@ describe("iOS StoreKit client foundation", () => {
     expect(swiftPlugin).toContain("case .systemError");
     expect(appleAdapter).toContain("queryAppleStoreKitCatalog");
     expect(appleAdapter).toContain("plugin.isAvailable()");
+    expect(appleAdapter).toContain("APPLE_STOREKIT_AVAILABILITY_TIMEOUT_MS = 5_000");
+    expect(appleAdapter).toContain("APPLE_STOREKIT_PRODUCT_REQUEST_TIMEOUT_MS = 10_000");
+    expect(appleAdapter).toContain("plugin_availability");
+    expect(appleAdapter).toContain("product_request");
+    expect(appleAdapter).toContain("appleStoreKitCatalogInFlight");
+    expect(appleAdapter).toContain("appleStoreKitNativeTransactionListenerPromise");
     expect(appleAdapter).not.toMatch(/NSError|localizedDescription|debugDescription|underlyingError|file:\/\/|\/private\/tmp/u);
   });
 
-  it("keeps the iOS identity fixed while bumping only the build number to 4", () => {
+  it("keeps the iOS identity fixed while bumping only the build number to 5", () => {
     expect(xcodeProject).toContain("PRODUCT_BUNDLE_IDENTIFIER = com.canyougeo.app;");
     expect(xcodeProject).toContain("DEVELOPMENT_TEAM = G5N5U6QFS8;");
     expect(xcodeProject).toContain("MARKETING_VERSION = 1.0.0;");
-    expect(xcodeProject).toContain("CURRENT_PROJECT_VERSION = 4;");
-    expect(xcodeProject).not.toContain("CURRENT_PROJECT_VERSION = 5;");
+    expect(xcodeProject).toContain("CURRENT_PROJECT_VERSION = 5;");
+    expect(xcodeProject).not.toContain("CURRENT_PROJECT_VERSION = 6;");
   });
 
   it("defines only the approved local StoreKit subscription products", () => {
