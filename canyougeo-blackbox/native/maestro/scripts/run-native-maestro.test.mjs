@@ -7,9 +7,11 @@ import {
   maestroEnvironment,
   parseArgs,
   reportDirectory,
+  runNativeMaestro,
   sanitizeOutput,
   selectedApprovedCredentials,
   suiteNeedsCredentials,
+  suiteSequenceFor,
   validateOptions
 } from "./run-native-maestro.mjs";
 
@@ -38,6 +40,18 @@ describe("native Maestro runner options", () => {
       suite: "universal-link",
       device: "9DD07C47-7733-488F-9F1A-9D927ED9F6FB"
     });
+
+    expect(parseArgs(["--platform", "android", "--suite", "billing-discovery"])).toMatchObject({
+      platform: "android",
+      suite: "billing-discovery",
+      device: "emulator-5554"
+    });
+
+    expect(parseArgs(["--platform", "ios", "--suite", "release-with-universal-link"])).toMatchObject({
+      platform: "ios",
+      suite: "release-with-universal-link",
+      device: "9DD07C47-7733-488F-9F1A-9D927ED9F6FB"
+    });
   });
 
   it("rejects invalid platform and suite values", () => {
@@ -45,12 +59,14 @@ describe("native Maestro runner options", () => {
     expect(() => validateOptions({ platform: "android", suite: "checkout" })).toThrow("Invalid android suite");
   });
 
-  it("keeps auth as the only credential-bearing default suite", () => {
+  it("marks only credential-bearing or complete release suites as credential-bearing", () => {
     expect(suiteNeedsCredentials("smoke")).toBe(false);
     expect(suiteNeedsCredentials("interaction")).toBe(false);
     expect(suiteNeedsCredentials("guardrails")).toBe(false);
     expect(suiteNeedsCredentials("universal-link")).toBe(false);
     expect(suiteNeedsCredentials("auth")).toBe(true);
+    expect(suiteNeedsCredentials("billing-discovery")).toBe(true);
+    expect(suiteNeedsCredentials("release")).toBe(true);
     expect(suiteNeedsCredentials("all")).toBe(true);
   });
 });
@@ -106,17 +122,49 @@ describe("native Maestro runner command construction", () => {
     expect(flowFilesFor("ios", "auth").every((file) => file.includes("canyougeo-blackbox/native/maestro/flows/ios"))).toBe(true);
   });
 
-  it("registers separate native guardrail suites without folding them into all", () => {
+  it("registers complete release suites while keeping Universal Links separately gated on iOS", () => {
     expect(flowFilesFor("android", "guardrails").map((file) => path.basename(file))).toEqual([
       "06_guardrails_online.yaml",
       "07_guardrails_offline.yaml",
       "08_guardrails_reconnect.yaml"
     ]);
     expect(flowFilesFor("ios", "guardrails").map((file) => path.basename(file))).toEqual(["04_guardrails.yaml"]);
-    expect(flowFilesFor("android", "all").map((file) => path.basename(file))).not.toContain("06_guardrails_online.yaml");
-    expect(flowFilesFor("ios", "all").map((file) => path.basename(file))).not.toContain("04_guardrails.yaml");
+    expect(flowFilesFor("android", "release").map((file) => path.basename(file))).toEqual([
+      "01_smoke.yaml",
+      "02_interaction.yaml",
+      "03_back.yaml",
+      "04_app_links.yaml",
+      "05_auth_lifecycle.yaml",
+      "06_guardrails_online.yaml",
+      "07_guardrails_offline.yaml",
+      "08_guardrails_reconnect.yaml",
+      "09_billing_discovery.yaml"
+    ]);
+    expect(flowFilesFor("android", "all").map((file) => path.basename(file))).toEqual(flowFilesFor("android", "release").map((file) => path.basename(file)));
+    expect(flowFilesFor("ios", "release").map((file) => path.basename(file))).toEqual([
+      "01_smoke.yaml",
+      "02_interaction.yaml",
+      "03_auth_lifecycle.yaml",
+      "04_guardrails.yaml",
+      "06_billing_discovery.yaml"
+    ]);
     expect(flowFilesFor("ios", "universal-link").map((file) => path.basename(file))).toEqual(["05_universal_links.yaml"]);
     expect(flowFilesFor("ios", "all").map((file) => path.basename(file))).not.toContain("05_universal_links.yaml");
+    expect(flowFilesFor("ios", "release-with-universal-link").map((file) => path.basename(file))).toContain("05_universal_links.yaml");
+  });
+
+  it("sequences complete release suites so Android guardrails keep network restoration behavior", () => {
+    expect(suiteSequenceFor("android", "release")).toEqual(["smoke", "interaction", "back", "deep-link", "auth", "guardrails", "billing-discovery"]);
+    expect(suiteSequenceFor("android", "all")).toEqual(["smoke", "interaction", "back", "deep-link", "auth", "guardrails", "billing-discovery"]);
+    expect(suiteSequenceFor("ios", "release")).toEqual(["smoke", "interaction", "auth", "guardrails", "billing-discovery"]);
+    expect(suiteSequenceFor("ios", "release-with-universal-link")).toEqual([
+      "smoke",
+      "interaction",
+      "auth",
+      "guardrails",
+      "billing-discovery",
+      "universal-link"
+    ]);
   });
 
   it("keeps reports inside the ignored native report directory", () => {
@@ -150,6 +198,23 @@ describe("native Maestro runner command construction", () => {
     });
     const args = invocation.args.join(" ");
 
+    expect(args).not.toContain("--debug-output");
+    expect(args).not.toContain("--test-output-dir");
+    expect(invocation.debugDir).toBeNull();
+    expect(invocation.outputDir).toBeNull();
+  });
+
+  it("does not request screenshot or debug artifact directories for credential-bearing billing discovery flows", () => {
+    const reportDir = reportDirectory("android", "billing-discovery", new Date("2026-07-14T18:00:00Z"));
+    const invocation = buildMaestroInvocation({
+      platform: "android",
+      suite: "billing-discovery",
+      device: "emulator-5554",
+      reportDir
+    });
+    const args = invocation.args.join(" ");
+
+    expect(args).toContain("09_billing_discovery.yaml");
     expect(args).not.toContain("--debug-output");
     expect(args).not.toContain("--test-output-dir");
     expect(invocation.debugDir).toBeNull();
@@ -218,5 +283,23 @@ describe("native Maestro runner command construction", () => {
     expect(sanitizeOutput("input free@example.test then free-password", ["free@example.test", "free-password"])).toBe(
       "input [redacted] then [redacted]"
     );
+  });
+
+  it("dry-runs newly added billing and release suites without requiring installed apps or credentials", () => {
+    const commandRunner = () => {
+      throw new Error("dry-run should not execute subprocess preflight");
+    };
+
+    const androidBilling = runNativeMaestro({ platform: "android", suite: "billing-discovery", dryRun: true }, commandRunner);
+    expect(androidBilling.invocation.args.join(" ")).toContain("flows/android/09_billing_discovery.yaml");
+    expect(androidBilling.credentialsAvailable).toBe(false);
+
+    const androidRelease = runNativeMaestro({ platform: "android", suite: "release", dryRun: true }, commandRunner);
+    expect(androidRelease.suiteInvocations.map((invocation) => invocation.args.join(" ")).join("\n")).toContain("09_billing_discovery.yaml");
+    expect(androidRelease.suiteInvocations.map((invocation) => invocation.args.join(" ")).join("\n")).toContain("08_guardrails_reconnect.yaml");
+
+    const iosRelease = runNativeMaestro({ platform: "ios", suite: "release-with-universal-link", dryRun: true }, commandRunner);
+    expect(iosRelease.suiteInvocations.map((invocation) => invocation.args.join(" ")).join("\n")).toContain("06_billing_discovery.yaml");
+    expect(iosRelease.suiteInvocations.map((invocation) => invocation.args.join(" ")).join("\n")).toContain("05_universal_links.yaml");
   });
 });

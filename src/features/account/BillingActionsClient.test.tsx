@@ -303,6 +303,94 @@ describe("BillingActionsClient", () => {
     expect(window.location.href).toBe(startingHref);
   });
 
+  it("keeps signed-out native Android purchases behind sign-up without opening Play or Stripe", () => {
+    vi.stubEnv("NEXT_PUBLIC_CGY_NATIVE_APP", "1");
+    process.env.NEXT_PUBLIC_BILLING_MODE = "test";
+    googlePlayMock.runtimeAvailable = true;
+    const client = billingClientMock();
+
+    render(<BillingActionsClient entitlement={FREE_ENTITLEMENT} context="upgrade" />);
+
+    expect(screen.getByRole("link", { name: "Start Pro" })).toHaveAttribute("href", "/sign-up?next=%2Fupgrade");
+    expect(screen.getByText("Sign in before starting a Google Play purchase. Free play needs no card.")).toBeVisible();
+    expect(screen.queryByRole("button", { name: /Join monthly|Join yearly/i })).not.toBeInTheDocument();
+    expect(screen.queryByText(/Stripe handles checkout securely/i)).not.toBeInTheDocument();
+    expect(googlePlayMock.launchGooglePlayPurchase).not.toHaveBeenCalled();
+    expect(client.functions.invoke).not.toHaveBeenCalled();
+  });
+
+  it("renders signed-in Google Play plan discovery with localized prices without opening a purchase sheet", async () => {
+    vi.stubEnv("NEXT_PUBLIC_CGY_NATIVE_APP", "1");
+    process.env.NEXT_PUBLIC_BILLING_MODE = "test";
+    capacitorMock.platform = "android";
+    accountMock.state.user = TEST_USER;
+    googlePlayMock.runtimeAvailable = true;
+    const client = billingClientMock();
+
+    render(<BillingActionsClient entitlement={FREE_ENTITLEMENT} context="upgrade" />);
+
+    expect(await screen.findByRole("button", { name: /Join monthly.*\$3\.99/i })).toBeEnabled();
+    expect(screen.getByRole("button", { name: /Join yearly.*\$29\.99/i })).toBeEnabled();
+    expect(screen.getByRole("button", { name: "Restore purchases" })).toBeEnabled();
+    expect(screen.getByText(/Google Play manages Android purchases\. Stripe checkout is unavailable in this Android build\./i)).toBeVisible();
+    expect(screen.queryByText(/Stripe handles checkout securely/i)).not.toBeInTheDocument();
+    expect(googlePlayMock.launchGooglePlayPurchase).not.toHaveBeenCalled();
+    expect(client.functions.invoke).not.toHaveBeenCalledWith("stripe-checkout", expect.anything());
+    expect(client.functions.invoke).not.toHaveBeenCalledWith("stripe-portal", expect.anything());
+  });
+
+  it("shows a clear Google Play failure state when no approved plans load", async () => {
+    vi.stubEnv("NEXT_PUBLIC_CGY_NATIVE_APP", "1");
+    process.env.NEXT_PUBLIC_BILLING_MODE = "test";
+    accountMock.state.user = TEST_USER;
+    googlePlayMock.runtimeAvailable = true;
+    googlePlayMock.queryGooglePlayPlans.mockResolvedValue([]);
+
+    render(<BillingActionsClient entitlement={FREE_ENTITLEMENT} context="upgrade" />);
+
+    expect(await screen.findByText("Google Play purchases are not available right now.")).toBeVisible();
+    expect(screen.getByRole("button", { name: "Join monthly" })).toBeDisabled();
+    expect(screen.getByRole("button", { name: "Join yearly" })).toBeDisabled();
+    expect(googlePlayMock.launchGooglePlayPurchase).not.toHaveBeenCalled();
+  });
+
+  it("renders signed-in Apple StoreKit product discovery with localized prices without opening a purchase sheet", async () => {
+    vi.stubEnv("NEXT_PUBLIC_CGY_NATIVE_APP", "1");
+    process.env.NEXT_PUBLIC_BILLING_MODE = "test";
+    capacitorMock.platform = "ios";
+    accountMock.state.user = TEST_USER;
+    appleStoreKitMock.runtimeAvailable = true;
+    const client = billingClientMock();
+
+    render(<BillingActionsClient entitlement={FREE_ENTITLEMENT} context="upgrade" />);
+
+    expect(await screen.findByRole("button", { name: /Join monthly.*\$3\.99/i })).toBeEnabled();
+    expect(screen.getByRole("button", { name: /Join yearly.*\$29\.99/i })).toBeEnabled();
+    expect(screen.getByRole("button", { name: "Restore purchases" })).toBeEnabled();
+    expect(screen.getByText(/Apple manages iOS purchases\. Stripe checkout is unavailable in this iOS build\./i)).toBeVisible();
+    expect(screen.queryByText(/Stripe handles checkout securely/i)).not.toBeInTheDocument();
+    expect(appleStoreKitMock.purchaseAppleStoreKitProduct).not.toHaveBeenCalled();
+    expect(appleStoreKitMock.restoreAppleStoreKitPurchases).not.toHaveBeenCalled();
+    expect(client.functions.invoke).not.toHaveBeenCalledWith("stripe-checkout", expect.anything());
+    expect(client.functions.invoke).not.toHaveBeenCalledWith("stripe-portal", expect.anything());
+  });
+
+  it("shows a clear Apple StoreKit failure state when no approved products load", async () => {
+    vi.stubEnv("NEXT_PUBLIC_CGY_NATIVE_APP", "1");
+    process.env.NEXT_PUBLIC_BILLING_MODE = "test";
+    capacitorMock.platform = "ios";
+    accountMock.state.user = TEST_USER;
+    appleStoreKitMock.runtimeAvailable = true;
+    appleStoreKitMock.queryAppleStoreKitProducts.mockResolvedValue([]);
+
+    render(<BillingActionsClient entitlement={FREE_ENTITLEMENT} context="upgrade" />);
+
+    expect(await screen.findByText("Apple purchases are not available right now.")).toBeVisible();
+    expect(screen.getByRole("button", { name: "Join monthly" })).toBeDisabled();
+    expect(screen.getByRole("button", { name: "Join yearly" })).toBeDisabled();
+    expect(appleStoreKitMock.purchaseAppleStoreKitProduct).not.toHaveBeenCalled();
+  });
+
   it("uses Google Play context and launch for signed-in native Android purchases without Stripe checkout", async () => {
     vi.stubEnv("NEXT_PUBLIC_CGY_NATIVE_APP", "1");
     process.env.NEXT_PUBLIC_BILLING_MODE = "test";

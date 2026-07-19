@@ -99,6 +99,24 @@ function intervalForBasePlanId(basePlanId: GooglePlayBasePlanId): ProBillingInte
   return basePlanId === GOOGLE_PLAY_ANNUAL_BASE_PLAN_ID ? "yearly" : "monthly";
 }
 
+function googlePlayCatalogStatus(plans: GooglePlayPlanDetails[]) {
+  const availableBasePlans = new Set(plans.map((plan) => plan.basePlanId));
+  const hasMonthly = availableBasePlans.has(GOOGLE_PLAY_MONTHLY_BASE_PLAN_ID);
+  const hasAnnual = availableBasePlans.has(GOOGLE_PLAY_ANNUAL_BASE_PLAN_ID);
+  if (hasMonthly && hasAnnual) return "";
+  if (!hasMonthly && !hasAnnual) return "Google Play purchases are not available right now.";
+  return "Some Google Play plans are not available right now.";
+}
+
+function appleStoreKitCatalogStatus(products: AppleStoreKitProductDetails[]) {
+  const availableProducts = new Set(products.map((product) => product.productId));
+  const hasMonthly = availableProducts.has(appleStoreKitProductIdForInterval("monthly"));
+  const hasYearly = availableProducts.has(appleStoreKitProductIdForInterval("yearly"));
+  if (hasMonthly && hasYearly) return "";
+  if (!hasMonthly && !hasYearly) return "Apple purchases are not available right now.";
+  return "Some Apple purchases are not available right now.";
+}
+
 export function BillingActionsClient({ entitlement, context, selectedPlan = null, checkoutLabel, onVerified }: BillingActionsClientProps) {
   const { client, configured, loading, user } = useSupabaseAccount();
   const [pending, setPending] = useState<BillingPendingState | null>(null);
@@ -155,6 +173,7 @@ export function BillingActionsClient({ entitlement, context, selectedPlan = null
           }
           removeListener = () => void handle.remove();
           setNativePlans(plans);
+          setMessage(googlePlayCatalogStatus(plans));
           void restoreNativePurchases({ quiet: true });
         } else {
           const [products, handle] = await Promise.all([
@@ -167,6 +186,7 @@ export function BillingActionsClient({ entitlement, context, selectedPlan = null
           }
           removeListener = () => void handle.remove();
           setAppleProducts(products);
+          setMessage(appleStoreKitCatalogStatus(products));
           void syncAppleStoreKitTransactions({ quiet: true });
         }
       } catch {

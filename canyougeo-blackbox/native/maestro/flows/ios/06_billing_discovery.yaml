@@ -1,0 +1,115 @@
+appId: com.canyougeo.app
+name: iOS native StoreKit billing discovery
+tags:
+  - native
+  - billing
+  - ios
+---
+- launchApp:
+    clearState: true
+- extendedWaitUntil:
+    visible: "Can you read the world?"
+    timeout: 60000
+- runFlow:
+    when:
+      visible: "Account menu for .*"
+    commands:
+      - tapOn: "Account menu for .*"
+      - extendedWaitUntil:
+          visible: "View account"
+          timeout: 15000
+      - tapOn: "View account"
+      - extendedWaitUntil:
+          visible: "Your atlas is connected."
+          timeout: 30000
+      - scrollUntilVisible:
+          element: "Sign out"
+          direction: DOWN
+      - tapOn: "Sign out"
+      - extendedWaitUntil:
+          visible: "You're signed out."
+          timeout: 30000
+- openLink: "https://canyougeo.com/upgrade/"
+- extendedWaitUntil:
+    visible: "Apple purchases"
+    timeout: 60000
+- extendedWaitUntil:
+    visible: "Apple manages iOS purchases. Stripe checkout is unavailable in this iOS build."
+    timeout: 30000
+- extendedWaitUntil:
+    visible: "Sign in before starting an Apple purchase. Free play needs no card."
+    timeout: 30000
+- assertNotVisible: "Stripe handles checkout securely"
+- tapOn: "Start Pro"
+- extendedWaitUntil:
+    visible: "Create your Can You Geo? account."
+    timeout: 30000
+- openLink: "https://canyougeo.com/sign-in/"
+- extendedWaitUntil:
+    visible: "Sign in with email and password."
+    timeout: 30000
+- tapOn: "Email"
+- eraseText
+- inputText: ${MAESTRO_CGY_EMAIL}
+- tapOn: "Password"
+- eraseText
+- inputText: ${MAESTRO_CGY_PASSWORD}
+- hideKeyboard
+- tapOn:
+    text: "Sign in"
+    index: 2
+- extendedWaitUntil:
+    visible: "Your atlas is connected."
+    timeout: 45000
+- openLink: "https://canyougeo.com/upgrade/"
+- extendedWaitUntil:
+    visible: "Apple purchases"
+    timeout: 60000
+- extendedWaitUntil:
+    visible: "Join monthly"
+    timeout: 30000
+- extendedWaitUntil:
+    visible: "Join yearly"
+    timeout: 30000
+- extendedWaitUntil:
+    visible: "Restore purchases"
+    timeout: 30000
+- runFlow:
+    when:
+      visible: "Join monthly.*[0-9]"
+    commands:
+      - assertVisible: "Join monthly.*[0-9]"
+      - assertVisible: "Join yearly.*[0-9]"
+- runFlow:
+    when:
+      visible: "Apple purchases are not available right now."
+    commands:
+      - assertVisible: "Apple purchases are not available right now."
+- runFlow:
+    when:
+      visible: "Some Apple purchases are not available right now."
+    commands:
+      - assertVisible: "Some Apple purchases are not available right now."
+- assertNotVisible: "Opening Apple..."
+- assertNotVisible: "Manage Apple subscription"
+- assertNotVisible: "Stripe handles checkout securely"
+- assertNotVisible: "checkout.stripe.com"
+- assertNotVisible: "billing.stripe.com"
+- openLink: "https://canyougeo.com/account/"
+- extendedWaitUntil:
+    visible: "Your atlas is connected."
+    timeout: 45000
+- scrollUntilVisible:
+    element: "Apple manages iOS purchases. Stripe checkout is unavailable in this iOS build."
+    direction: DOWN
+    timeout: 45000
+- assertNotVisible: "Manage billing"
+- assertNotVisible: "Stripe handles checkout securely"
+- scrollUntilVisible:
+    element: "Sign out"
+    direction: DOWN
+    timeout: 45000
+- tapOn: "Sign out"
+- extendedWaitUntil:
+    visible: "You're signed out."
+    timeout: 30000
