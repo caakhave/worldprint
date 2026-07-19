@@ -74,22 +74,32 @@ tags:
 - extendedWaitUntil:
     visible: "Restore purchases"
     timeout: 30000
+- extendedWaitUntil:
+    visible: 'Apple purchase catalog ready.|Apple purchases are not available right now.|Some Apple purchases are not available right now.'
+    timeout: 30000
 - runFlow:
     when:
-      visible: "Join monthly.*[0-9]"
+      visible: "Apple purchase catalog ready."
     commands:
+      - assertNotVisible: "Apple purchases are not available right now."
+      - assertNotVisible: "Some Apple purchases are not available right now."
       - assertVisible: "Join monthly.*[0-9]"
       - assertVisible: "Join yearly.*[0-9]"
+      - assertVisible: "Restore purchases"
 - runFlow:
     when:
       visible: "Apple purchases are not available right now."
     commands:
       - assertVisible: "Apple purchases are not available right now."
+      - assertNotVisible: "Apple purchase catalog ready."
+      - assertNotVisible: "Some Apple purchases are not available right now."
 - runFlow:
     when:
       visible: "Some Apple purchases are not available right now."
     commands:
       - assertVisible: "Some Apple purchases are not available right now."
+      - assertNotVisible: "Apple purchase catalog ready."
+      - assertNotVisible: "Apple purchases are not available right now."
 - assertNotVisible: "Opening Apple..."
 - assertNotVisible: "Manage Apple subscription"
 - assertNotVisible: "Stripe handles checkout securely"

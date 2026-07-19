@@ -82,6 +82,12 @@ function trackUpgradeNavigation(itemId: string) {
 }
 
 const GOOGLE_PLAY_PURCHASED_STATE = 1;
+const GOOGLE_PLAY_CATALOG_READY_STATUS = "Google Play purchase catalog ready.";
+const GOOGLE_PLAY_CATALOG_UNAVAILABLE_STATUS = "Google Play purchases are not available right now.";
+const GOOGLE_PLAY_CATALOG_PARTIAL_STATUS = "Some Google Play plans are not available right now.";
+const APPLE_STOREKIT_CATALOG_READY_STATUS = "Apple purchase catalog ready.";
+const APPLE_STOREKIT_CATALOG_UNAVAILABLE_STATUS = "Apple purchases are not available right now.";
+const APPLE_STOREKIT_CATALOG_PARTIAL_STATUS = "Some Apple purchases are not available right now.";
 type NativeBillingRuntime = "google-play" | "apple" | "unavailable";
 type NativePendingState = GooglePlayBasePlanId | AppleStoreKitProductId | "restore" | "manage" | null;
 
@@ -103,18 +109,18 @@ function googlePlayCatalogStatus(plans: GooglePlayPlanDetails[]) {
   const availableBasePlans = new Set(plans.map((plan) => plan.basePlanId));
   const hasMonthly = availableBasePlans.has(GOOGLE_PLAY_MONTHLY_BASE_PLAN_ID);
   const hasAnnual = availableBasePlans.has(GOOGLE_PLAY_ANNUAL_BASE_PLAN_ID);
-  if (hasMonthly && hasAnnual) return "";
-  if (!hasMonthly && !hasAnnual) return "Google Play purchases are not available right now.";
-  return "Some Google Play plans are not available right now.";
+  if (hasMonthly && hasAnnual) return GOOGLE_PLAY_CATALOG_READY_STATUS;
+  if (!hasMonthly && !hasAnnual) return GOOGLE_PLAY_CATALOG_UNAVAILABLE_STATUS;
+  return GOOGLE_PLAY_CATALOG_PARTIAL_STATUS;
 }
 
 function appleStoreKitCatalogStatus(products: AppleStoreKitProductDetails[]) {
   const availableProducts = new Set(products.map((product) => product.productId));
   const hasMonthly = availableProducts.has(appleStoreKitProductIdForInterval("monthly"));
   const hasYearly = availableProducts.has(appleStoreKitProductIdForInterval("yearly"));
-  if (hasMonthly && hasYearly) return "";
-  if (!hasMonthly && !hasYearly) return "Apple purchases are not available right now.";
-  return "Some Apple purchases are not available right now.";
+  if (hasMonthly && hasYearly) return APPLE_STOREKIT_CATALOG_READY_STATUS;
+  if (!hasMonthly && !hasYearly) return APPLE_STOREKIT_CATALOG_UNAVAILABLE_STATUS;
+  return APPLE_STOREKIT_CATALOG_PARTIAL_STATUS;
 }
 
 export function BillingActionsClient({ entitlement, context, selectedPlan = null, checkoutLabel, onVerified }: BillingActionsClientProps) {
@@ -126,6 +132,7 @@ export function BillingActionsClient({ entitlement, context, selectedPlan = null
   const [appleProducts, setAppleProducts] = useState<AppleStoreKitProductDetails[]>([]);
   const [nativePlansLoading, setNativePlansLoading] = useState(false);
   const [applePurchaseInSession, setApplePurchaseInSession] = useState(false);
+  const [nativeCatalogStatus, setNativeCatalogStatus] = useState("");
   const [message, setMessage] = useState("");
   const signedIn = Boolean(user);
   const isPro = entitlement.plan === "pro";
@@ -144,6 +151,7 @@ export function BillingActionsClient({ entitlement, context, selectedPlan = null
       const runtime = detectNativeBillingRuntime();
       if (!mounted) return;
       setNativeRuntime(runtime);
+      setNativeCatalogStatus("");
       if (runtime === "unavailable") return;
 
       if (!signedIn) {
@@ -173,7 +181,9 @@ export function BillingActionsClient({ entitlement, context, selectedPlan = null
           }
           removeListener = () => void handle.remove();
           setNativePlans(plans);
-          setMessage(googlePlayCatalogStatus(plans));
+          const catalogStatus = googlePlayCatalogStatus(plans);
+          setNativeCatalogStatus(catalogStatus);
+          setMessage(catalogStatus === GOOGLE_PLAY_CATALOG_READY_STATUS ? "" : catalogStatus);
           void restoreNativePurchases({ quiet: true });
         } else {
           const [products, handle] = await Promise.all([
@@ -186,12 +196,16 @@ export function BillingActionsClient({ entitlement, context, selectedPlan = null
           }
           removeListener = () => void handle.remove();
           setAppleProducts(products);
-          setMessage(appleStoreKitCatalogStatus(products));
+          const catalogStatus = appleStoreKitCatalogStatus(products);
+          setNativeCatalogStatus(catalogStatus);
+          setMessage(catalogStatus === APPLE_STOREKIT_CATALOG_READY_STATUS ? "" : catalogStatus);
           void syncAppleStoreKitTransactions({ quiet: true });
         }
       } catch {
         if (mounted) {
-          setMessage(runtime === "apple" ? "Apple purchases are not available right now." : "Google Play purchases are not available right now.");
+          const catalogStatus = runtime === "apple" ? APPLE_STOREKIT_CATALOG_UNAVAILABLE_STATUS : GOOGLE_PLAY_CATALOG_UNAVAILABLE_STATUS;
+          setNativeCatalogStatus(catalogStatus);
+          setMessage(catalogStatus);
         }
       } finally {
         if (mounted) setNativePlansLoading(false);
@@ -474,6 +488,11 @@ export function BillingActionsClient({ entitlement, context, selectedPlan = null
               Compare plans
             </Link>
           ) : null}
+          {nativeCatalogStatus && nativeCatalogStatus !== message ? (
+            <p className="visually-hidden" role="status">
+              {nativeCatalogStatus}
+            </p>
+          ) : null}
           {message ? (
             <p className={message.includes("verified") ? "account-env-note" : "account-error"} role={message.includes("verified") ? "status" : "alert"}>
               {message}
@@ -521,6 +540,11 @@ export function BillingActionsClient({ entitlement, context, selectedPlan = null
             <Link className="button-secondary" href="/upgrade" onClick={() => trackUpgradeNavigation("account_compare_plans_native_apple")}>
               Compare plans
             </Link>
+          ) : null}
+          {nativeCatalogStatus && nativeCatalogStatus !== message ? (
+            <p className="visually-hidden" role="status">
+              {nativeCatalogStatus}
+            </p>
           ) : null}
           {message ? (
             <p className={message.includes("verified") || message.includes("active") ? "account-env-note" : "account-error"} role={message.includes("verified") || message.includes("active") ? "status" : "alert"}>

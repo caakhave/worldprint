@@ -329,6 +329,7 @@ describe("BillingActionsClient", () => {
 
     render(<BillingActionsClient entitlement={FREE_ENTITLEMENT} context="upgrade" />);
 
+    expect(await screen.findByText("Google Play purchase catalog ready.")).toBeInTheDocument();
     expect(await screen.findByRole("button", { name: /Join monthly.*\$3\.99/i })).toBeEnabled();
     expect(screen.getByRole("button", { name: /Join yearly.*\$29\.99/i })).toBeEnabled();
     expect(screen.getByRole("button", { name: "Restore purchases" })).toBeEnabled();
@@ -354,6 +355,21 @@ describe("BillingActionsClient", () => {
     expect(googlePlayMock.launchGooglePlayPurchase).not.toHaveBeenCalled();
   });
 
+  it("shows a clear Google Play partial-catalog state while keeping missing plans disabled", async () => {
+    vi.stubEnv("NEXT_PUBLIC_CGY_NATIVE_APP", "1");
+    process.env.NEXT_PUBLIC_BILLING_MODE = "test";
+    accountMock.state.user = TEST_USER;
+    googlePlayMock.runtimeAvailable = true;
+    googlePlayMock.queryGooglePlayPlans.mockResolvedValue([{ productId: "canyougeo_pro", basePlanId: "monthly", localizedPrice: "$3.99" }]);
+
+    render(<BillingActionsClient entitlement={FREE_ENTITLEMENT} context="upgrade" />);
+
+    expect(await screen.findByText("Some Google Play plans are not available right now.")).toBeVisible();
+    expect(screen.getByRole("button", { name: /Join monthly.*\$3\.99/i })).toBeEnabled();
+    expect(screen.getByRole("button", { name: "Join yearly" })).toBeDisabled();
+    expect(googlePlayMock.launchGooglePlayPurchase).not.toHaveBeenCalled();
+  });
+
   it("renders signed-in Apple StoreKit product discovery with localized prices without opening a purchase sheet", async () => {
     vi.stubEnv("NEXT_PUBLIC_CGY_NATIVE_APP", "1");
     process.env.NEXT_PUBLIC_BILLING_MODE = "test";
@@ -364,6 +380,7 @@ describe("BillingActionsClient", () => {
 
     render(<BillingActionsClient entitlement={FREE_ENTITLEMENT} context="upgrade" />);
 
+    expect(await screen.findByText("Apple purchase catalog ready.")).toBeInTheDocument();
     expect(await screen.findByRole("button", { name: /Join monthly.*\$3\.99/i })).toBeEnabled();
     expect(screen.getByRole("button", { name: /Join yearly.*\$29\.99/i })).toBeEnabled();
     expect(screen.getByRole("button", { name: "Restore purchases" })).toBeEnabled();
@@ -388,6 +405,22 @@ describe("BillingActionsClient", () => {
     expect(await screen.findByText("Apple purchases are not available right now.")).toBeVisible();
     expect(screen.getByRole("button", { name: "Join monthly" })).toBeDisabled();
     expect(screen.getByRole("button", { name: "Join yearly" })).toBeDisabled();
+    expect(appleStoreKitMock.purchaseAppleStoreKitProduct).not.toHaveBeenCalled();
+  });
+
+  it("shows a clear Apple StoreKit partial-catalog state while keeping missing products disabled", async () => {
+    vi.stubEnv("NEXT_PUBLIC_CGY_NATIVE_APP", "1");
+    process.env.NEXT_PUBLIC_BILLING_MODE = "test";
+    capacitorMock.platform = "ios";
+    accountMock.state.user = TEST_USER;
+    appleStoreKitMock.runtimeAvailable = true;
+    appleStoreKitMock.queryAppleStoreKitProducts.mockResolvedValue([{ productId: "com.canyougeo.pro.annual", interval: "yearly", displayPrice: "$29.99" }]);
+
+    render(<BillingActionsClient entitlement={FREE_ENTITLEMENT} context="upgrade" />);
+
+    expect(await screen.findByText("Some Apple purchases are not available right now.")).toBeVisible();
+    expect(screen.getByRole("button", { name: "Join monthly" })).toBeDisabled();
+    expect(screen.getByRole("button", { name: /Join yearly.*\$29\.99/i })).toBeEnabled();
     expect(appleStoreKitMock.purchaseAppleStoreKitProduct).not.toHaveBeenCalled();
   });
 

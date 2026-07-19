@@ -31,8 +31,12 @@ describe("native billing black-box QA drift guard", () => {
     expect(flows).toContain("Join monthly");
     expect(flows).toContain("Join yearly");
     expect(flows).toContain("Restore purchases");
+    expect(flows).toContain("Google Play purchase catalog ready.");
     expect(flows).toContain("Google Play purchases are not available right now.");
+    expect(flows).toContain("Some Google Play plans are not available right now.");
     expect(flows).toContain("Apple purchases are not available right now.");
+    expect(flows).toContain("Apple purchase catalog ready.");
+    expect(flows).toContain("Some Apple purchases are not available right now.");
     expect(flows).toContain("checkout.stripe.com");
     expect(flows).toContain("billing.stripe.com");
   });

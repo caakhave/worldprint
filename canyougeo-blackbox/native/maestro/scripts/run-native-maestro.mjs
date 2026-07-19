@@ -65,6 +65,7 @@ const ANDROID_GUARDRAIL_SEQUENCE = [
 ];
 
 const AUTH_SUITES = new Set(["auth", "billing-discovery", "release", "release-with-universal-link", "all"]);
+const CREDENTIAL_ENV_KEYS = ["CGY_FREE_EMAIL", "CGY_FREE_PASSWORD", "CGY_PRO_EMAIL", "CGY_PRO_PASSWORD", "MAESTRO_CGY_EMAIL", "MAESTRO_CGY_PASSWORD"];
 const ALLOWED_CREDENTIAL_PAIRS = [
   ["CGY_FREE_EMAIL", "CGY_FREE_PASSWORD"],
   ["CGY_PRO_EMAIL", "CGY_PRO_PASSWORD"]
@@ -176,13 +177,22 @@ export function reportDirectory(platform, suite, now = new Date(), reportsRoot =
   return dir;
 }
 
+function withoutCredentialEnvironment(baseEnv) {
+  const env = { ...baseEnv };
+  for (const key of CREDENTIAL_ENV_KEYS) {
+    delete env[key];
+  }
+  return env;
+}
+
 export function maestroEnvironment(baseEnv = process.env, credentialEnv = {}) {
+  const sanitizedBaseEnv = withoutCredentialEnvironment(baseEnv);
   const javaHome = baseEnv.JAVA_HOME || (existsSync("/opt/homebrew/opt/openjdk") ? "/opt/homebrew/opt/openjdk" : "/Applications/Android Studio.app/Contents/jbr/Contents/Home");
   const javaBin = path.join(javaHome, "bin");
   const androidHome = baseEnv.ANDROID_HOME || path.join(baseEnv.HOME ?? "", "Library/Android/sdk");
   const androidPath = [path.join(androidHome, "platform-tools"), path.join(androidHome, "emulator")].join(path.delimiter);
   return {
-    ...baseEnv,
+    ...sanitizedBaseEnv,
     ...credentialEnv,
     ANDROID_HOME: androidHome,
     ANDROID_SDK_ROOT: baseEnv.ANDROID_SDK_ROOT || androidHome,
@@ -241,21 +251,21 @@ function runCommand(command, args, options = {}) {
   return spawnSync(command, args, { encoding: "utf8", ...options });
 }
 
-function assertPreflight({ platform, device }, env) {
-  const maestroVersion = runCommand("maestro", ["--version"], { env });
+function assertPreflight({ platform, device }, env, commandRunner = runCommand) {
+  const maestroVersion = commandRunner("maestro", ["--version"], { env });
   if (maestroVersion.status !== 0) {
     throw new Error("Maestro CLI is not available. Install it with Homebrew before running native QA.");
   }
 
   if (platform === "android") {
-    const adb = runCommand("adb", ["-s", device, "shell", "pm", "path", APP_ID], { env });
+    const adb = commandRunner("adb", ["-s", device, "shell", "pm", "path", APP_ID], { env });
     if (adb.status !== 0 || !adb.stdout.includes("package:")) {
       throw new Error(`Android app ${APP_ID} is not installed on ${device}.`);
     }
     return;
   }
 
-  const simctl = runCommand("xcrun", ["simctl", "get_app_container", device, APP_ID, "app"], { env });
+  const simctl = commandRunner("xcrun", ["simctl", "get_app_container", device, APP_ID, "app"], { env });
   if (simctl.status !== 0) {
     throw new Error(`iOS app ${APP_ID} is not installed on simulator ${device}.`);
   }
@@ -304,7 +314,7 @@ function setAndroidDeviceNetwork(device, mode, env, commandRunner) {
   }
 }
 
-function androidGuardrailInvocations(options, reportDir) {
+export function androidGuardrailInvocations(options, reportDir) {
   return ANDROID_GUARDRAIL_SEQUENCE.map(({ label, flowFile }) =>
     buildMaestroInvocation({
       ...options,
@@ -344,7 +354,6 @@ function runAndroidGuardrails(options, reportDir, env, commandRunner) {
     }
 
     if (step.network === "online") {
-      setAndroidDeviceNetwork(options.device, "online", env, commandRunner);
       if (!shouldRunReconnect) return { status: offlineStatus, reportDir, invocation, credentialsAvailable: false };
     }
 
@@ -366,8 +375,7 @@ function runSequencedSuite(options, reportDir, env, credentials, commandRunner) 
     const stepReportDir = path.join(reportDir, suite);
     mkdirSync(stepReportDir, { recursive: true });
     if (options.platform === "android" && suite === "guardrails") {
-      const dryRunResult = runAndroidGuardrails({ ...options, suite }, stepReportDir, env, commandRunner);
-      suiteInvocations.push(...(dryRunResult.guardrailInvocations ?? [dryRunResult.invocation]));
+      suiteInvocations.push(...androidGuardrailInvocations({ ...options, suite }, stepReportDir));
       continue;
     }
     const invocation = buildMaestroInvocation({ ...options, suite, reportDir: stepReportDir });
@@ -384,7 +392,7 @@ function runSequencedSuite(options, reportDir, env, credentials, commandRunner) 
     };
   }
 
-  assertPreflight(options, env);
+  assertPreflight(options, env, commandRunner);
 
   for (const suite of sequence) {
     const stepReportDir = path.join(reportDir, suite);
@@ -395,8 +403,10 @@ function runSequencedSuite(options, reportDir, env, credentials, commandRunner) 
     }
 
     const invocation = buildMaestroInvocation({ ...options, suite, reportDir: stepReportDir });
-    const secrets = suiteNeedsCredentials(suite) ? credentials.secrets : [];
-    const status = runInvocation(invocation, env, secrets, commandRunner);
+    const needsStepCredentials = suiteNeedsCredentials(suite);
+    const stepEnv = needsStepCredentials ? maestroEnvironment(process.env, credentials.env) : env;
+    const secrets = needsStepCredentials ? credentials.secrets : [];
+    const status = runInvocation(invocation, stepEnv, secrets, commandRunner);
     if (status !== 0) {
       return { status, reportDir, invocation, suiteInvocations, credentialsAvailable: credentials.available };
     }
@@ -415,7 +425,7 @@ export function runNativeMaestro(rawOptions, commandRunner = runCommand) {
 
   const reportDir = reportDirectory(options.platform, options.suite);
   mkdirSync(reportDir, { recursive: true });
-  const env = maestroEnvironment(process.env, credentials.env);
+  const env = maestroEnvironment(process.env);
   if (suiteSequenceFor(options.platform, options.suite)) {
     return runSequencedSuite(options, reportDir, env, credentials, commandRunner);
   }
@@ -426,13 +436,14 @@ export function runNativeMaestro(rawOptions, commandRunner = runCommand) {
     return { status: 0, reportDir, invocation, credentialsAvailable: credentials.available };
   }
 
-  assertPreflight(options, env);
+  assertPreflight(options, env, commandRunner);
 
   if (options.platform === "android" && options.suite === "guardrails") {
     return runAndroidGuardrails(options, reportDir, env, commandRunner);
   }
 
-  const status = runInvocation(invocation, env, credentials.secrets, commandRunner);
+  const invocationEnv = needsCredentials ? maestroEnvironment(process.env, credentials.env) : env;
+  const status = runInvocation(invocation, invocationEnv, credentials.secrets, commandRunner);
   return {
     status,
     reportDir,

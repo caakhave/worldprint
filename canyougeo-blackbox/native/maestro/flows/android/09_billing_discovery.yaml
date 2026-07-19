@@ -74,22 +74,32 @@ tags:
 - extendedWaitUntil:
     visible: "Restore purchases"
     timeout: 30000
+- extendedWaitUntil:
+    visible: 'Google Play purchase catalog ready.|Google Play purchases are not available right now.|Some Google Play plans are not available right now.'
+    timeout: 30000
 - runFlow:
     when:
-      visible: "Join monthly.*[0-9]"
+      visible: "Google Play purchase catalog ready."
     commands:
+      - assertNotVisible: "Google Play purchases are not available right now."
+      - assertNotVisible: "Some Google Play plans are not available right now."
       - assertVisible: "Join monthly.*[0-9]"
       - assertVisible: "Join yearly.*[0-9]"
+      - assertVisible: "Restore purchases"
 - runFlow:
     when:
       visible: "Google Play purchases are not available right now."
     commands:
       - assertVisible: "Google Play purchases are not available right now."
+      - assertNotVisible: "Google Play purchase catalog ready."
+      - assertNotVisible: "Some Google Play plans are not available right now."
 - runFlow:
     when:
       visible: "Some Google Play plans are not available right now."
     commands:
       - assertVisible: "Some Google Play plans are not available right now."
+      - assertNotVisible: "Google Play purchase catalog ready."
+      - assertNotVisible: "Google Play purchases are not available right now."
 - assertNotVisible: "Complete the purchase in Google Play."
 - assertNotVisible: "Opening Google Play..."
 - assertNotVisible: "Stripe handles checkout securely"

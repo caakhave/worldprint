@@ -53,6 +53,10 @@ The Android complete release suite runs smoke, interaction, Back, App Links, aut
 
 The local iOS release suite runs smoke, interaction, auth persistence, guardrails, and StoreKit billing discovery. iOS Universal Links remain separately gated because production AASA deployment and device association caching can make simulator-only results misleading; use `pnpm qa:native:ios:release-with-universal-link` only after those prerequisites are satisfied. StoreKit product discovery from a local StoreKit configuration is simulator-safe, but real TestFlight/App Store Connect product discovery must still be confirmed on a physical device and cannot be claimed from this simulator-only baseline.
 
+## External Play Compliance Milestone
+
+The Android developer account has been verified. `com.canyougeo.app` was automatically registered to the verified Play developer account on July 18, 2026. This is external Google Play Console compliance state, not an automated app black-box assertion. No outside-Play distribution key is currently in scope.
+
 ## Native billing QA impact map
 
 Changes to these native billing bridge files require native black-box coverage updates in the same PR, or a short documented reason why black-box coverage does not need to change:
