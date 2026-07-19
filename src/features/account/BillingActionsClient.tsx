@@ -171,6 +171,22 @@ export function BillingActionsClient({ entitlement, context, selectedPlan = null
     let mounted = true;
     let removeListener: (() => void) | null = null;
 
+    function registerAppleStoreKitTransactionListener(listener: () => void) {
+      void addAppleStoreKitTransactionUpdatedListener(listener)
+        .then((handle) => {
+          if (!mounted) {
+            void handle.remove();
+            return;
+          }
+          if (removeListener) {
+            void handle.remove();
+            return;
+          }
+          removeListener = () => void handle.remove();
+        })
+        .catch(() => undefined);
+    }
+
     async function loadNativeBilling() {
       if (!nativeBuild || isPro) return;
       const runtime = detectNativeBillingRuntime();
@@ -181,14 +197,9 @@ export function BillingActionsClient({ entitlement, context, selectedPlan = null
 
       if (!signedIn) {
         if (runtime === "apple") {
-          const handle = await addAppleStoreKitTransactionUpdatedListener(() => {
+          registerAppleStoreKitTransactionListener(() => {
             if (mounted) setMessage("Sign in to restore purchase.");
           });
-          if (!mounted) {
-            await handle.remove();
-            return;
-          }
-          removeListener = () => void handle.remove();
         }
         return;
       }
@@ -214,16 +225,14 @@ export function BillingActionsClient({ entitlement, context, selectedPlan = null
           setNativeCatalogStatus(APPLE_STOREKIT_CATALOG_CHECKING_STATUS);
           setMessage(APPLE_STOREKIT_CATALOG_CHECKING_STATUS);
           const catalogResult = await queryAppleStoreKitCatalog();
-          const handle = await addAppleStoreKitTransactionUpdatedListener(() => void syncAppleStoreKitTransactions({ quiet: true }));
           if (!mounted) {
-            await handle.remove();
             return;
           }
-          removeListener = () => void handle.remove();
           setAppleProducts(catalogResult.products);
           const catalogStatus = appleStoreKitCatalogStatus(catalogResult);
           setNativeCatalogStatus(catalogStatus);
           setMessage(catalogStatus);
+          registerAppleStoreKitTransactionListener(() => void syncAppleStoreKitTransactions({ quiet: true }));
           void syncAppleStoreKitTransactions({ quiet: true });
         }
       } catch {

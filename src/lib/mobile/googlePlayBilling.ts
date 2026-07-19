@@ -1,6 +1,6 @@
 "use client";
 
-import { Capacitor, type PluginListenerHandle } from "@capacitor/core";
+import { Capacitor, registerPlugin, type PluginListenerHandle } from "@capacitor/core";
 
 export const GOOGLE_PLAY_PRODUCT_ID = "canyougeo_pro";
 export const GOOGLE_PLAY_MONTHLY_BASE_PLAN_ID = "monthly";
@@ -34,7 +34,7 @@ type GooglePlayBillingPlugin = {
   addListener: (eventName: "purchaseUpdated", listenerFunc: (event: { responseCode: number; purchases: GooglePlayPurchase[] }) => void) => Promise<PluginListenerHandle>;
 };
 
-let googlePlayBillingPromise: Promise<GooglePlayBillingPlugin> | null = null;
+let googlePlayBillingPluginInstance: GooglePlayBillingPlugin | null = null;
 
 function fallbackGooglePlayBillingPlugin(): GooglePlayBillingPlugin {
   return {
@@ -48,15 +48,18 @@ function fallbackGooglePlayBillingPlugin(): GooglePlayBillingPlugin {
   };
 }
 
-async function googlePlayBillingPlugin(): Promise<GooglePlayBillingPlugin> {
-  googlePlayBillingPromise ??= import("@capacitor/core")
-    .then((core) =>
-      typeof core.registerPlugin === "function"
-        ? core.registerPlugin<GooglePlayBillingPlugin>("GooglePlayBilling")
-        : fallbackGooglePlayBillingPlugin()
-    )
-    .catch(() => fallbackGooglePlayBillingPlugin());
-  return googlePlayBillingPromise;
+function googlePlayBillingPlugin(): GooglePlayBillingPlugin {
+  if (!googlePlayBillingPluginInstance) {
+    try {
+      googlePlayBillingPluginInstance =
+        typeof registerPlugin === "function"
+          ? registerPlugin<GooglePlayBillingPlugin>("GooglePlayBilling")
+          : fallbackGooglePlayBillingPlugin();
+    } catch {
+      googlePlayBillingPluginInstance = fallbackGooglePlayBillingPlugin();
+    }
+  }
+  return googlePlayBillingPluginInstance;
 }
 
 export function isAndroidGooglePlayBillingRuntime(): boolean {
@@ -72,7 +75,7 @@ export function isGooglePlayBasePlanId(value: unknown): value is GooglePlayBaseP
 }
 
 export async function queryGooglePlayPlans(): Promise<GooglePlayPlanDetails[]> {
-  const plugin = await googlePlayBillingPlugin();
+  const plugin = googlePlayBillingPlugin();
   const result = await plugin.queryProducts({ productId: GOOGLE_PLAY_PRODUCT_ID });
   return result.plans.filter((plan) => plan.productId === GOOGLE_PLAY_PRODUCT_ID && isGooglePlayBasePlanId(plan.basePlanId));
 }
@@ -81,7 +84,7 @@ export async function launchGooglePlayPurchase(input: {
   basePlanId: GooglePlayBasePlanId;
   obfuscatedAccountId: string;
 }): Promise<void> {
-  const plugin = await googlePlayBillingPlugin();
+  const plugin = googlePlayBillingPlugin();
   await plugin.launchPurchase({
     productId: GOOGLE_PLAY_PRODUCT_ID,
     basePlanId: input.basePlanId,
@@ -90,13 +93,13 @@ export async function launchGooglePlayPurchase(input: {
 }
 
 export async function restoreGooglePlayPurchases(): Promise<GooglePlayPurchase[]> {
-  const plugin = await googlePlayBillingPlugin();
+  const plugin = googlePlayBillingPlugin();
   const result = await plugin.restorePurchases();
   return filterSupportedPurchases(result.purchases);
 }
 
 export async function addGooglePlayPurchaseUpdatedListener(listener: (purchases: GooglePlayPurchase[]) => void): Promise<PluginListenerHandle> {
-  const plugin = await googlePlayBillingPlugin();
+  const plugin = googlePlayBillingPlugin();
   return plugin.addListener("purchaseUpdated", (event) => {
     listener(filterSupportedPurchases(event.purchases));
   });
@@ -108,4 +111,8 @@ export function filterSupportedPurchases(purchases: GooglePlayPurchase[]): Googl
 
 export function validPurchaseTokenShape(purchaseToken: string): boolean {
   return purchaseToken.length >= 10 && purchaseToken.length <= 4096 && !/\s/.test(purchaseToken);
+}
+
+export function resetGooglePlayBillingPluginForTests() {
+  googlePlayBillingPluginInstance = null;
 }

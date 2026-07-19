@@ -102,13 +102,15 @@ export type AppleStoreKitAuthenticatedInput = {
 const APPLE_STOREKIT_PRODUCT_IDS = [APPLE_STOREKIT_MONTHLY_PRODUCT_ID, APPLE_STOREKIT_ANNUAL_PRODUCT_ID] as const;
 const APPLE_STOREKIT_AVAILABILITY_TIMEOUT_MS = 5_000;
 const APPLE_STOREKIT_PRODUCT_REQUEST_TIMEOUT_MS = 10_000;
+const APPLE_STOREKIT_TRANSACTION_LISTENER_TIMEOUT_MS = 5_000;
 
-let appleStoreKitPromise: Promise<AppleStoreKitPlugin> | null = null;
+let appleStoreKitPluginInstance: AppleStoreKitPlugin | null = null;
 let appleStoreKitCatalogCache: AppleStoreKitCatalogResult | null = null;
 let appleStoreKitCatalogInFlight: Promise<AppleStoreKitCatalogResult> | null = null;
 let appleStoreKitCatalogAttemptVersion = 0;
 let appleStoreKitNativeTransactionListenerHandle: PluginListenerHandle | null = null;
-let appleStoreKitNativeTransactionListenerPromise: Promise<PluginListenerHandle> | null = null;
+let appleStoreKitNativeTransactionListenerInFlight: Promise<void> | null = null;
+let appleStoreKitNativeTransactionListenerAttemptVersion = 0;
 let appleStoreKitTransactionListeners = new Set<(event: AppleStoreKitTransactionEvent) => void>();
 
 function fallbackAppleStoreKitPlugin(): AppleStoreKitPlugin {
@@ -130,13 +132,18 @@ function fallbackAppleStoreKitPlugin(): AppleStoreKitPlugin {
   };
 }
 
-async function appleStoreKitPlugin(): Promise<AppleStoreKitPlugin> {
-  appleStoreKitPromise ??= Promise.resolve(
-    typeof registerPlugin === "function"
-      ? registerPlugin<AppleStoreKitPlugin>("AppleStoreKit")
-      : fallbackAppleStoreKitPlugin()
-  ).catch(() => fallbackAppleStoreKitPlugin());
-  return appleStoreKitPromise;
+function appleStoreKitPlugin(): AppleStoreKitPlugin {
+  if (!appleStoreKitPluginInstance) {
+    try {
+      appleStoreKitPluginInstance =
+        typeof registerPlugin === "function"
+          ? registerPlugin<AppleStoreKitPlugin>("AppleStoreKit")
+          : fallbackAppleStoreKitPlugin();
+    } catch {
+      appleStoreKitPluginInstance = fallbackAppleStoreKitPlugin();
+    }
+  }
+  return appleStoreKitPluginInstance;
 }
 
 export function isIOSAppleStoreKitRuntime(): boolean {
@@ -264,7 +271,7 @@ function withAppleStoreKitTimeout<T>(promise: Promise<T>, timeoutMs: number, tim
 }
 
 async function loadAppleStoreKitCatalogAttempt(): Promise<AppleStoreKitCatalogResult> {
-  const plugin = await appleStoreKitPlugin();
+  const plugin = appleStoreKitPlugin();
   let availability: Awaited<ReturnType<AppleStoreKitPlugin["isAvailable"]>>;
   try {
     availability = await withAppleStoreKitTimeout(
@@ -354,41 +361,103 @@ export async function queryAppleStoreKitProducts(): Promise<AppleStoreKitProduct
 export async function purchaseAppleStoreKitProduct(
   input: AppleStoreKitAuthenticatedInput & { productId: AppleStoreKitProductId }
 ): Promise<AppleStoreKitOperationResult> {
-  const plugin = await appleStoreKitPlugin();
+  const plugin = appleStoreKitPlugin();
   return plugin.purchase(input);
 }
 
 export async function restoreAppleStoreKitPurchases(input: AppleStoreKitAuthenticatedInput): Promise<AppleStoreKitOperationResult> {
-  const plugin = await appleStoreKitPlugin();
+  const plugin = appleStoreKitPlugin();
   return plugin.restorePurchases(input);
 }
 
 export async function syncUnfinishedAppleStoreKitTransactions(input: AppleStoreKitAuthenticatedInput): Promise<AppleStoreKitOperationResult> {
-  const plugin = await appleStoreKitPlugin();
+  const plugin = appleStoreKitPlugin();
   return plugin.syncUnfinished(input);
 }
 
 export async function finishVerifiedAppleStoreKitTransactions(): Promise<{ finishedCount: number }> {
-  const plugin = await appleStoreKitPlugin();
+  const plugin = appleStoreKitPlugin();
   return plugin.finishVerifiedTransactions();
 }
 
 export async function manageAppleStoreKitSubscription(): Promise<{ opened: boolean; status: "opened" | "unavailable" | "failed" }> {
-  const plugin = await appleStoreKitPlugin();
+  const plugin = appleStoreKitPlugin();
   return plugin.manageSubscription();
+}
+
+function dispatchAppleStoreKitTransactionEvent(event: AppleStoreKitTransactionEvent) {
+  for (const registeredListener of appleStoreKitTransactionListeners) {
+    registeredListener(event);
+  }
+}
+
+function ensureAppleStoreKitNativeTransactionListener() {
+  if (
+    appleStoreKitNativeTransactionListenerHandle ||
+    appleStoreKitNativeTransactionListenerInFlight ||
+    appleStoreKitTransactionListeners.size === 0
+  ) {
+    return;
+  }
+
+  const attemptVersion = appleStoreKitNativeTransactionListenerAttemptVersion + 1;
+  appleStoreKitNativeTransactionListenerAttemptVersion = attemptVersion;
+  let timeoutId: ReturnType<typeof setTimeout> | null = null;
+
+  try {
+    const nativeListenerPromise = appleStoreKitPlugin().addListener("transactionUpdated", dispatchAppleStoreKitTransactionEvent);
+
+    const timeoutPromise = new Promise<void>((resolve) => {
+      timeoutId = setTimeout(resolve, APPLE_STOREKIT_TRANSACTION_LISTENER_TIMEOUT_MS);
+    });
+
+    nativeListenerPromise
+      .then((handle) => {
+        if (timeoutId) {
+          clearTimeout(timeoutId);
+          timeoutId = null;
+        }
+        if (
+          attemptVersion !== appleStoreKitNativeTransactionListenerAttemptVersion ||
+          appleStoreKitNativeTransactionListenerHandle ||
+          appleStoreKitTransactionListeners.size === 0
+        ) {
+          void handle.remove();
+          return;
+        }
+        appleStoreKitNativeTransactionListenerHandle = handle;
+      })
+      .catch(() => {
+        if (attemptVersion === appleStoreKitNativeTransactionListenerAttemptVersion) {
+          appleStoreKitNativeTransactionListenerAttemptVersion += 1;
+        }
+      })
+      .finally(() => {
+        if (attemptVersion === appleStoreKitNativeTransactionListenerAttemptVersion && timeoutId) {
+          clearTimeout(timeoutId);
+          timeoutId = null;
+        }
+      });
+
+    appleStoreKitNativeTransactionListenerInFlight = Promise.race([
+      nativeListenerPromise.then(() => undefined, () => undefined),
+      timeoutPromise
+    ]).finally(() => {
+      if (attemptVersion === appleStoreKitNativeTransactionListenerAttemptVersion) {
+        appleStoreKitNativeTransactionListenerInFlight = null;
+      }
+    });
+  } catch {
+    appleStoreKitNativeTransactionListenerAttemptVersion += 1;
+    appleStoreKitNativeTransactionListenerInFlight = null;
+  }
 }
 
 export async function addAppleStoreKitTransactionUpdatedListener(
   listener: (event: AppleStoreKitTransactionEvent) => void
 ): Promise<PluginListenerHandle> {
   appleStoreKitTransactionListeners.add(listener);
-  const plugin = await appleStoreKitPlugin();
-  appleStoreKitNativeTransactionListenerPromise ??= plugin.addListener("transactionUpdated", (event) => {
-    for (const registeredListener of appleStoreKitTransactionListeners) {
-      registeredListener(event);
-    }
-  });
-  appleStoreKitNativeTransactionListenerHandle = await appleStoreKitNativeTransactionListenerPromise;
+  ensureAppleStoreKitNativeTransactionListener();
   let removed = false;
   return {
     remove: async () => {
@@ -398,7 +467,8 @@ export async function addAppleStoreKitTransactionUpdatedListener(
       if (appleStoreKitTransactionListeners.size === 0) {
         const handle = appleStoreKitNativeTransactionListenerHandle;
         appleStoreKitNativeTransactionListenerHandle = null;
-        appleStoreKitNativeTransactionListenerPromise = null;
+        appleStoreKitNativeTransactionListenerInFlight = null;
+        appleStoreKitNativeTransactionListenerAttemptVersion += 1;
         await handle?.remove();
       }
     }
@@ -406,11 +476,12 @@ export async function addAppleStoreKitTransactionUpdatedListener(
 }
 
 export function resetAppleStoreKitPluginForTests() {
-  appleStoreKitPromise = null;
+  appleStoreKitPluginInstance = null;
   appleStoreKitCatalogCache = null;
   appleStoreKitCatalogInFlight = null;
   appleStoreKitCatalogAttemptVersion = 0;
   appleStoreKitNativeTransactionListenerHandle = null;
-  appleStoreKitNativeTransactionListenerPromise = null;
+  appleStoreKitNativeTransactionListenerInFlight = null;
+  appleStoreKitNativeTransactionListenerAttemptVersion = 0;
   appleStoreKitTransactionListeners = new Set();
 }
