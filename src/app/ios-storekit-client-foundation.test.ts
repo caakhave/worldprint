@@ -88,16 +88,17 @@ describe("iOS StoreKit client foundation", () => {
     expect(appleAdapter).toContain("plugin_availability");
     expect(appleAdapter).toContain("product_request");
     expect(appleAdapter).toContain("appleStoreKitCatalogInFlight");
-    expect(appleAdapter).toContain("appleStoreKitNativeTransactionListenerPromise");
+    expect(appleAdapter).toContain("APPLE_STOREKIT_TRANSACTION_LISTENER_TIMEOUT_MS = 5_000");
+    expect(appleAdapter).toContain("appleStoreKitNativeTransactionListenerInFlight");
     expect(appleAdapter).not.toMatch(/NSError|localizedDescription|debugDescription|underlyingError|file:\/\/|\/private\/tmp/u);
   });
 
-  it("keeps the iOS identity fixed while bumping only the build number to 5", () => {
+  it("keeps the iOS identity fixed while bumping only the build number to 6", () => {
     expect(xcodeProject).toContain("PRODUCT_BUNDLE_IDENTIFIER = com.canyougeo.app;");
     expect(xcodeProject).toContain("DEVELOPMENT_TEAM = G5N5U6QFS8;");
     expect(xcodeProject).toContain("MARKETING_VERSION = 1.0.0;");
-    expect(xcodeProject).toContain("CURRENT_PROJECT_VERSION = 5;");
-    expect(xcodeProject).not.toContain("CURRENT_PROJECT_VERSION = 6;");
+    expect(xcodeProject).toContain("CURRENT_PROJECT_VERSION = 6;");
+    expect(xcodeProject).not.toContain("CURRENT_PROJECT_VERSION = 7;");
   });
 
   it("defines only the approved local StoreKit subscription products", () => {

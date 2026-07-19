@@ -24,7 +24,8 @@ const capacitorMock = vi.hoisted(() => ({
     finishVerifiedTransactions: vi.fn(),
     manageSubscription: vi.fn(),
     addListener: vi.fn()
-  }
+  },
+  registeredPlugin: null as Record<string, unknown> | null
 }));
 
 vi.mock("@capacitor/core", () => ({
@@ -32,7 +33,7 @@ vi.mock("@capacitor/core", () => ({
     isNativePlatform: () => capacitorMock.native,
     getPlatform: () => capacitorMock.platform
   },
-  registerPlugin: vi.fn(() => capacitorMock.plugin)
+  registerPlugin: vi.fn(() => capacitorMock.registeredPlugin ?? capacitorMock.plugin)
 }));
 
 let nativeTransactionListener: ((event: { status: string; productId?: string }) => void) | null = null;
@@ -44,6 +45,7 @@ describe("Apple StoreKit bridge adapter", () => {
     nativeTransactionListenerRemove = vi.fn();
     capacitorMock.native = false;
     capacitorMock.platform = "web";
+    capacitorMock.registeredPlugin = null;
     capacitorMock.plugin.loadProducts.mockReset();
     capacitorMock.plugin.isAvailable.mockReset();
     capacitorMock.plugin.isAvailable.mockResolvedValue({ available: true, platform: "ios" });
@@ -114,6 +116,26 @@ describe("Apple StoreKit bridge adapter", () => {
       { productId: APPLE_STOREKIT_ANNUAL_PRODUCT_ID, interval: "yearly", displayPrice: "$29.99" }
     ]);
     expect(JSON.stringify(catalog)).not.toMatch(/signedTransaction|jws|transactionId|originalTransactionId|appAccountToken|accessToken/i);
+  });
+
+  it("acquires the Capacitor StoreKit proxy synchronously without thenable assimilation", async () => {
+    let thenAccessCount = 0;
+    capacitorMock.registeredPlugin = new Proxy(capacitorMock.plugin, {
+      get(target, property, receiver) {
+        if (property === "then") {
+          thenAccessCount += 1;
+          throw new Error("Capacitor proxy then trap was accessed");
+        }
+        return Reflect.get(target, property, receiver);
+      }
+    });
+
+    const catalog = await queryAppleStoreKitCatalog({ forceRefresh: true });
+
+    expect(catalog.status).toBe("loaded");
+    expect(thenAccessCount).toBe(0);
+    expect(capacitorMock.plugin.isAvailable).toHaveBeenCalledTimes(1);
+    expect(capacitorMock.plugin.loadProducts).toHaveBeenCalledTimes(1);
   });
 
   it("keeps the legacy product helper as sanitized products only", async () => {
@@ -208,6 +230,7 @@ describe("Apple StoreKit bridge adapter", () => {
     capacitorMock.plugin.isAvailable.mockReturnValueOnce(new Promise(() => undefined));
 
     const catalogPromise = queryAppleStoreKitCatalog({ forceRefresh: true });
+    expect(capacitorMock.plugin.isAvailable).toHaveBeenCalledTimes(1);
     await vi.advanceTimersByTimeAsync(4_999);
     expect(capacitorMock.plugin.loadProducts).not.toHaveBeenCalled();
     await vi.advanceTimersByTimeAsync(1);
@@ -297,5 +320,31 @@ describe("Apple StoreKit bridge adapter", () => {
 
     await secondHandle.remove();
     expect(nativeTransactionListenerRemove).toHaveBeenCalledTimes(1);
+  });
+
+  it("returns JavaScript listener handles when native listener registration never resolves", async () => {
+    vi.useFakeTimers();
+    const firstListener = vi.fn();
+    const secondListener = vi.fn();
+    capacitorMock.plugin.addListener.mockReturnValue(new Promise(() => undefined));
+
+    const [firstHandle, secondHandle] = await Promise.all([
+      addAppleStoreKitTransactionUpdatedListener(firstListener),
+      addAppleStoreKitTransactionUpdatedListener(secondListener)
+    ]);
+
+    expect(capacitorMock.plugin.addListener).toHaveBeenCalledTimes(1);
+    expect(capacitorMock.plugin.purchase).not.toHaveBeenCalled();
+    expect(capacitorMock.plugin.restorePurchases).not.toHaveBeenCalled();
+    expect(capacitorMock.plugin.finishVerifiedTransactions).not.toHaveBeenCalled();
+
+    await vi.advanceTimersByTimeAsync(5_000);
+    const thirdHandle = await addAppleStoreKitTransactionUpdatedListener(vi.fn());
+    expect(capacitorMock.plugin.addListener).toHaveBeenCalledTimes(2);
+
+    await firstHandle.remove();
+    await secondHandle.remove();
+    await thirdHandle.remove();
+    expect(nativeTransactionListenerRemove).not.toHaveBeenCalled();
   });
 });

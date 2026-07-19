@@ -47,7 +47,8 @@ const appleStoreKitMock = vi.hoisted(() => ({
   restoreAppleStoreKitPurchases: vi.fn(),
   syncUnfinishedAppleStoreKitTransactions: vi.fn(),
   finishVerifiedAppleStoreKitTransactions: vi.fn(),
-  manageAppleStoreKitSubscription: vi.fn()
+  manageAppleStoreKitSubscription: vi.fn(),
+  addAppleStoreKitTransactionUpdatedListener: vi.fn()
 }));
 
 vi.mock("@capacitor/core", () => ({
@@ -95,10 +96,7 @@ vi.mock("@/lib/mobile/appleStoreKit", () => ({
   syncUnfinishedAppleStoreKitTransactions: appleStoreKitMock.syncUnfinishedAppleStoreKitTransactions,
   finishVerifiedAppleStoreKitTransactions: appleStoreKitMock.finishVerifiedAppleStoreKitTransactions,
   manageAppleStoreKitSubscription: appleStoreKitMock.manageAppleStoreKitSubscription,
-  addAppleStoreKitTransactionUpdatedListener: vi.fn(async (listener) => {
-    appleStoreKitMock.listener = listener;
-    return { remove: appleStoreKitMock.removeListener };
-  })
+  addAppleStoreKitTransactionUpdatedListener: appleStoreKitMock.addAppleStoreKitTransactionUpdatedListener
 }));
 
 const TEST_USER = { id: "11111111-2222-4333-8444-555555555555", email: "reader@example.com" };
@@ -184,6 +182,11 @@ describe("BillingActionsClient", () => {
     appleStoreKitMock.finishVerifiedAppleStoreKitTransactions.mockResolvedValue({ finishedCount: 1 });
     appleStoreKitMock.manageAppleStoreKitSubscription.mockReset();
     appleStoreKitMock.manageAppleStoreKitSubscription.mockResolvedValue({ opened: true, status: "opened" });
+    appleStoreKitMock.addAppleStoreKitTransactionUpdatedListener.mockReset();
+    appleStoreKitMock.addAppleStoreKitTransactionUpdatedListener.mockImplementation(async (listener) => {
+      appleStoreKitMock.listener = listener;
+      return { remove: appleStoreKitMock.removeListener };
+    });
   });
 
   afterEach(() => {
@@ -406,6 +409,29 @@ describe("BillingActionsClient", () => {
     expect(client.functions.invoke).not.toHaveBeenCalledWith("stripe-portal", expect.anything());
   });
 
+  it("renders an Apple StoreKit catalog when native transaction listener registration hangs", async () => {
+    vi.stubEnv("NEXT_PUBLIC_CGY_NATIVE_APP", "1");
+    process.env.NEXT_PUBLIC_BILLING_MODE = "test";
+    capacitorMock.platform = "ios";
+    accountMock.state.user = TEST_USER;
+    appleStoreKitMock.runtimeAvailable = true;
+    appleStoreKitMock.addAppleStoreKitTransactionUpdatedListener.mockReturnValue(new Promise(() => undefined));
+    const client = billingClientMock();
+
+    render(<BillingActionsClient entitlement={FREE_ENTITLEMENT} context="upgrade" />);
+
+    expect(await screen.findByText("Apple purchase catalog ready.")).toBeVisible();
+    expect(screen.getByRole("button", { name: /Join monthly.*\$3\.99/i })).toBeEnabled();
+    expect(screen.getByRole("button", { name: /Join yearly.*\$29\.99/i })).toBeEnabled();
+    expect(screen.getByRole("button", { name: "Restore purchases" })).toBeEnabled();
+    expect(appleStoreKitMock.addAppleStoreKitTransactionUpdatedListener).toHaveBeenCalledTimes(1);
+    expect(appleStoreKitMock.purchaseAppleStoreKitProduct).not.toHaveBeenCalled();
+    expect(appleStoreKitMock.restoreAppleStoreKitPurchases).not.toHaveBeenCalled();
+    expect(appleStoreKitMock.finishVerifiedAppleStoreKitTransactions).not.toHaveBeenCalled();
+    expect(client.functions.invoke).not.toHaveBeenCalledWith("stripe-checkout", expect.anything());
+    expect(client.functions.invoke).not.toHaveBeenCalledWith("stripe-portal", expect.anything());
+  });
+
   it("shows a clear Apple StoreKit zero-products state when no approved products load", async () => {
     vi.stubEnv("NEXT_PUBLIC_CGY_NATIVE_APP", "1");
     process.env.NEXT_PUBLIC_BILLING_MODE = "test";
@@ -427,6 +453,33 @@ describe("BillingActionsClient", () => {
     expect(screen.getByRole("button", { name: "Join yearly" })).toBeDisabled();
     expect(screen.getByRole("button", { name: "Retry Apple purchase options" })).toBeEnabled();
     expect(appleStoreKitMock.purchaseAppleStoreKitProduct).not.toHaveBeenCalled();
+  });
+
+  it("renders an Apple StoreKit zero-products catalog when native transaction listener registration hangs", async () => {
+    vi.stubEnv("NEXT_PUBLIC_CGY_NATIVE_APP", "1");
+    process.env.NEXT_PUBLIC_BILLING_MODE = "test";
+    capacitorMock.platform = "ios";
+    accountMock.state.user = TEST_USER;
+    appleStoreKitMock.runtimeAvailable = true;
+    appleStoreKitMock.addAppleStoreKitTransactionUpdatedListener.mockReturnValue(new Promise(() => undefined));
+    appleStoreKitMock.queryAppleStoreKitCatalog.mockResolvedValue({
+      status: "zero_products",
+      requestedProductCount: 2,
+      returnedProductCount: 0,
+      missingProductIds: ["com.canyougeo.pro.monthly", "com.canyougeo.pro.annual"],
+      products: []
+    });
+
+    render(<BillingActionsClient entitlement={FREE_ENTITLEMENT} context="upgrade" />);
+
+    expect(await screen.findByText("Apple returned no Can You Geo subscription products.")).toBeVisible();
+    expect(screen.getByRole("button", { name: "Join monthly" })).toBeDisabled();
+    expect(screen.getByRole("button", { name: "Join yearly" })).toBeDisabled();
+    expect(screen.getByRole("button", { name: "Retry Apple purchase options" })).toBeEnabled();
+    expect(appleStoreKitMock.addAppleStoreKitTransactionUpdatedListener).toHaveBeenCalledTimes(1);
+    expect(appleStoreKitMock.purchaseAppleStoreKitProduct).not.toHaveBeenCalled();
+    expect(appleStoreKitMock.restoreAppleStoreKitPurchases).not.toHaveBeenCalled();
+    expect(appleStoreKitMock.finishVerifiedAppleStoreKitTransactions).not.toHaveBeenCalled();
   });
 
   it("shows a clear Apple StoreKit partial-catalog state while keeping missing products disabled", async () => {
