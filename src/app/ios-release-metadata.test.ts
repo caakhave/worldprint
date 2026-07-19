@@ -35,14 +35,17 @@ describe("iOS release metadata", () => {
     for (const configuration of ["Debug", "Release"] as const) {
       const settings = appTargetBuildSettings(configuration);
       expect(settings).toContain("MARKETING_VERSION = 1.0.0;");
-      expect(settings).toContain("CURRENT_PROJECT_VERSION = 2;");
+      expect(settings).toContain("CURRENT_PROJECT_VERSION = 3;");
       expect(settings).not.toContain("MARKETING_VERSION = 1.0;");
+      expect(settings).not.toContain("CURRENT_PROJECT_VERSION = 2;");
     }
 
     expect(infoPlist).toContain("<key>CFBundleShortVersionString</key>");
     expect(infoPlist).toContain("<string>$(MARKETING_VERSION)</string>");
     expect(infoPlist).toContain("<key>CFBundleVersion</key>");
     expect(infoPlist).toContain("<string>$(CURRENT_PROJECT_VERSION)</string>");
+    expect(infoPlist).toMatch(/<key>ITSAppUsesNonExemptEncryption<\/key>\s*<false\/>/u);
+    expect(infoPlist).not.toMatch(/<key>ITSAppUsesNonExemptEncryption<\/key>\s*<string>false<\/string>/u);
   });
 
   it("preserves paid-team automatic signing, bundle id, and Universal Link entitlement", () => {

@@ -53,12 +53,12 @@ describe("iOS StoreKit client foundation", () => {
     expect(appleActions).not.toMatch(/signedTransaction|signedRenewal|jwsRepresentation|transactionId|originalTransactionId|appAccountToken/u);
   });
 
-  it("keeps the iOS identity fixed while bumping only the build number to 2", () => {
+  it("keeps the iOS identity fixed while bumping only the build number to 3", () => {
     expect(xcodeProject).toContain("PRODUCT_BUNDLE_IDENTIFIER = com.canyougeo.app;");
     expect(xcodeProject).toContain("DEVELOPMENT_TEAM = G5N5U6QFS8;");
     expect(xcodeProject).toContain("MARKETING_VERSION = 1.0.0;");
-    expect(xcodeProject).toContain("CURRENT_PROJECT_VERSION = 2;");
-    expect(xcodeProject).not.toContain("CURRENT_PROJECT_VERSION = 3;");
+    expect(xcodeProject).toContain("CURRENT_PROJECT_VERSION = 3;");
+    expect(xcodeProject).not.toContain("CURRENT_PROJECT_VERSION = 4;");
   });
 
   it("defines only the approved local StoreKit subscription products", () => {
