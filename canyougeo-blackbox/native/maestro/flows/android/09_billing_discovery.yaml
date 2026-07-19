@@ -1,0 +1,125 @@
+appId: com.canyougeo.app
+name: Android native Google Play billing discovery
+tags:
+  - native
+  - billing
+  - android
+---
+- launchApp:
+    clearState: true
+- extendedWaitUntil:
+    visible: "Can you read the world?"
+    timeout: 60000
+- runFlow:
+    when:
+      visible: "Account menu for .*"
+    commands:
+      - tapOn: "Account menu for .*"
+      - extendedWaitUntil:
+          visible: "View account"
+          timeout: 15000
+      - tapOn: "View account"
+      - extendedWaitUntil:
+          visible: "Your atlas is connected."
+          timeout: 30000
+      - scrollUntilVisible:
+          element: "Sign out"
+          direction: DOWN
+      - tapOn: "Sign out"
+      - extendedWaitUntil:
+          visible: "You're signed out."
+          timeout: 30000
+- openLink: "https://canyougeo.com/upgrade/"
+- extendedWaitUntil:
+    visible: "Google Play purchases"
+    timeout: 60000
+- extendedWaitUntil:
+    visible: "Google Play manages Android purchases. Stripe checkout is unavailable in this Android build."
+    timeout: 30000
+- extendedWaitUntil:
+    visible: "Sign in before starting a Google Play purchase. Free play needs no card."
+    timeout: 30000
+- assertNotVisible: "Stripe handles checkout securely"
+- tapOn: "Start Pro"
+- extendedWaitUntil:
+    visible: "Create your Can You Geo? account."
+    timeout: 30000
+- openLink: "https://canyougeo.com/sign-in/"
+- extendedWaitUntil:
+    visible: "Sign in with email and password."
+    timeout: 30000
+- tapOn: "Email"
+- eraseText
+- inputText: ${MAESTRO_CGY_EMAIL}
+- tapOn: "Password"
+- eraseText
+- inputText: ${MAESTRO_CGY_PASSWORD}
+- hideKeyboard
+- tapOn:
+    text: "Sign in"
+    index: 2
+- extendedWaitUntil:
+    visible: "Your atlas is connected."
+    timeout: 45000
+- openLink: "https://canyougeo.com/upgrade/"
+- extendedWaitUntil:
+    visible: "Google Play purchases"
+    timeout: 60000
+- extendedWaitUntil:
+    visible: "Join monthly"
+    timeout: 30000
+- extendedWaitUntil:
+    visible: "Join yearly"
+    timeout: 30000
+- extendedWaitUntil:
+    visible: "Restore purchases"
+    timeout: 30000
+- extendedWaitUntil:
+    visible: 'Google Play purchase catalog ready.|Google Play purchases are not available right now.|Some Google Play plans are not available right now.'
+    timeout: 30000
+- runFlow:
+    when:
+      visible: "Google Play purchase catalog ready."
+    commands:
+      - assertNotVisible: "Google Play purchases are not available right now."
+      - assertNotVisible: "Some Google Play plans are not available right now."
+      - assertVisible: "Join monthly.*[0-9]"
+      - assertVisible: "Join yearly.*[0-9]"
+      - assertVisible: "Restore purchases"
+- runFlow:
+    when:
+      visible: "Google Play purchases are not available right now."
+    commands:
+      - assertVisible: "Google Play purchases are not available right now."
+      - assertNotVisible: "Google Play purchase catalog ready."
+      - assertNotVisible: "Some Google Play plans are not available right now."
+- runFlow:
+    when:
+      visible: "Some Google Play plans are not available right now."
+    commands:
+      - assertVisible: "Some Google Play plans are not available right now."
+      - assertNotVisible: "Google Play purchase catalog ready."
+      - assertNotVisible: "Google Play purchases are not available right now."
+- assertNotVisible: "Complete the purchase in Google Play."
+- assertNotVisible: "Opening Google Play..."
+- assertNotVisible: "Stripe handles checkout securely"
+- assertNotVisible: "checkout.stripe.com"
+- assertNotVisible: "billing.stripe.com"
+- openLink: "https://canyougeo.com/account/"
+- extendedWaitUntil:
+    visible: "Your atlas is connected."
+    timeout: 45000
+- scrollUntilVisible:
+    element: "Google Play manages Android purchases. Stripe checkout is unavailable in this Android build."
+    direction: DOWN
+    timeout: 45000
+- assertNotVisible: "Manage billing"
+- assertNotVisible: "Stripe handles checkout securely"
+- scrollUntilVisible:
+    element: "Sign out"
+    direction: DOWN
+    timeout: 45000
+- tapOn: "Sign out"
+- extendedWaitUntil:
+    visible: "You're signed out."
+    timeout: 30000

@@ -11,7 +11,7 @@ export const REPORTS_ROOT = path.join(NATIVE_ROOT, "reports");
 export const DEFAULT_ANDROID_DEVICE = "emulator-5554";
 export const DEFAULT_IOS_DEVICE = "9DD07C47-7733-488F-9F1A-9D927ED9F6FB";
 
-export const SUITES = {
+const PLATFORM_FLOW_SUITES = {
   android: {
     smoke: ["flows/android/01_smoke.yaml"],
     interaction: ["flows/android/02_interaction.yaml"],
@@ -23,13 +23,7 @@ export const SUITES = {
       "flows/android/07_guardrails_offline.yaml",
       "flows/android/08_guardrails_reconnect.yaml"
     ],
-    all: [
-      "flows/android/01_smoke.yaml",
-      "flows/android/02_interaction.yaml",
-      "flows/android/03_back.yaml",
-      "flows/android/04_app_links.yaml",
-      "flows/android/05_auth_lifecycle.yaml"
-    ]
+    "billing-discovery": ["flows/android/09_billing_discovery.yaml"]
   },
   ios: {
     smoke: ["flows/ios/01_smoke.yaml"],
@@ -37,7 +31,30 @@ export const SUITES = {
     auth: ["flows/ios/03_auth_lifecycle.yaml"],
     guardrails: ["flows/ios/04_guardrails.yaml"],
     "universal-link": ["flows/ios/05_universal_links.yaml"],
-    all: ["flows/ios/01_smoke.yaml", "flows/ios/02_interaction.yaml", "flows/ios/03_auth_lifecycle.yaml"]
+    "billing-discovery": ["flows/ios/06_billing_discovery.yaml"]
+  }
+};
+
+const COMPLETE_RELEASE_SEQUENCE = {
+  android: ["smoke", "interaction", "back", "deep-link", "auth", "guardrails", "billing-discovery"],
+  ios: ["smoke", "interaction", "auth", "guardrails", "billing-discovery"]
+};
+
+function flowFilesForSequence(platform, sequence) {
+  return sequence.flatMap((suite) => PLATFORM_FLOW_SUITES[platform][suite]);
+}
+
+export const SUITES = {
+  android: {
+    ...PLATFORM_FLOW_SUITES.android,
+    release: flowFilesForSequence("android", COMPLETE_RELEASE_SEQUENCE.android),
+    all: flowFilesForSequence("android", COMPLETE_RELEASE_SEQUENCE.android)
+  },
+  ios: {
+    ...PLATFORM_FLOW_SUITES.ios,
+    release: flowFilesForSequence("ios", COMPLETE_RELEASE_SEQUENCE.ios),
+    "release-with-universal-link": flowFilesForSequence("ios", [...COMPLETE_RELEASE_SEQUENCE.ios, "universal-link"]),
+    all: flowFilesForSequence("ios", COMPLETE_RELEASE_SEQUENCE.ios)
   }
 };
 
@@ -47,11 +64,18 @@ const ANDROID_GUARDRAIL_SEQUENCE = [
   { label: "reconnect", flowFile: "flows/android/08_guardrails_reconnect.yaml", network: "online" }
 ];
 
-const AUTH_SUITES = new Set(["auth", "all"]);
+const AUTH_SUITES = new Set(["auth", "billing-discovery", "release", "release-with-universal-link", "all"]);
+const CREDENTIAL_ENV_KEYS = ["CGY_FREE_EMAIL", "CGY_FREE_PASSWORD", "CGY_PRO_EMAIL", "CGY_PRO_PASSWORD", "MAESTRO_CGY_EMAIL", "MAESTRO_CGY_PASSWORD"];
 const ALLOWED_CREDENTIAL_PAIRS = [
   ["CGY_FREE_EMAIL", "CGY_FREE_PASSWORD"],
   ["CGY_PRO_EMAIL", "CGY_PRO_PASSWORD"]
 ];
+
+export function suiteSequenceFor(platform, suite) {
+  if (suite === "release" || suite === "all") return COMPLETE_RELEASE_SEQUENCE[platform];
+  if (platform === "ios" && suite === "release-with-universal-link") return [...COMPLETE_RELEASE_SEQUENCE.ios, "universal-link"];
+  return null;
+}
 
 export function parseArgs(argv) {
   const options = {};
@@ -153,13 +177,22 @@ export function reportDirectory(platform, suite, now = new Date(), reportsRoot =
   return dir;
 }
 
+function withoutCredentialEnvironment(baseEnv) {
+  const env = { ...baseEnv };
+  for (const key of CREDENTIAL_ENV_KEYS) {
+    delete env[key];
+  }
+  return env;
+}
+
 export function maestroEnvironment(baseEnv = process.env, credentialEnv = {}) {
+  const sanitizedBaseEnv = withoutCredentialEnvironment(baseEnv);
   const javaHome = baseEnv.JAVA_HOME || (existsSync("/opt/homebrew/opt/openjdk") ? "/opt/homebrew/opt/openjdk" : "/Applications/Android Studio.app/Contents/jbr/Contents/Home");
   const javaBin = path.join(javaHome, "bin");
   const androidHome = baseEnv.ANDROID_HOME || path.join(baseEnv.HOME ?? "", "Library/Android/sdk");
   const androidPath = [path.join(androidHome, "platform-tools"), path.join(androidHome, "emulator")].join(path.delimiter);
   return {
-    ...baseEnv,
+    ...sanitizedBaseEnv,
     ...credentialEnv,
     ANDROID_HOME: androidHome,
     ANDROID_SDK_ROOT: baseEnv.ANDROID_SDK_ROOT || androidHome,
@@ -218,21 +251,21 @@ function runCommand(command, args, options = {}) {
   return spawnSync(command, args, { encoding: "utf8", ...options });
 }
 
-function assertPreflight({ platform, device }, env) {
-  const maestroVersion = runCommand("maestro", ["--version"], { env });
+function assertPreflight({ platform, device }, env, commandRunner = runCommand) {
+  const maestroVersion = commandRunner("maestro", ["--version"], { env });
   if (maestroVersion.status !== 0) {
     throw new Error("Maestro CLI is not available. Install it with Homebrew before running native QA.");
   }
 
   if (platform === "android") {
-    const adb = runCommand("adb", ["-s", device, "shell", "pm", "path", APP_ID], { env });
+    const adb = commandRunner("adb", ["-s", device, "shell", "pm", "path", APP_ID], { env });
     if (adb.status !== 0 || !adb.stdout.includes("package:")) {
       throw new Error(`Android app ${APP_ID} is not installed on ${device}.`);
     }
     return;
   }
 
-  const simctl = runCommand("xcrun", ["simctl", "get_app_container", device, APP_ID, "app"], { env });
+  const simctl = commandRunner("xcrun", ["simctl", "get_app_container", device, APP_ID, "app"], { env });
   if (simctl.status !== 0) {
     throw new Error(`iOS app ${APP_ID} is not installed on simulator ${device}.`);
   }
@@ -281,7 +314,7 @@ function setAndroidDeviceNetwork(device, mode, env, commandRunner) {
   }
 }
 
-function androidGuardrailInvocations(options, reportDir) {
+export function androidGuardrailInvocations(options, reportDir) {
   return ANDROID_GUARDRAIL_SEQUENCE.map(({ label, flowFile }) =>
     buildMaestroInvocation({
       ...options,
@@ -321,7 +354,6 @@ function runAndroidGuardrails(options, reportDir, env, commandRunner) {
     }
 
     if (step.network === "online") {
-      setAndroidDeviceNetwork(options.device, "online", env, commandRunner);
       if (!shouldRunReconnect) return { status: offlineStatus, reportDir, invocation, credentialsAvailable: false };
     }
 
@@ -332,20 +364,70 @@ function runAndroidGuardrails(options, reportDir, env, commandRunner) {
   return { status: offlineStatus, reportDir, invocation: invocations.at(-1), credentialsAvailable: false };
 }
 
+function runSequencedSuite(options, reportDir, env, credentials, commandRunner) {
+  const sequence = suiteSequenceFor(options.platform, options.suite);
+  if (!sequence) {
+    throw new Error(`No release sequence is configured for ${options.platform}:${options.suite}.`);
+  }
+
+  const suiteInvocations = [];
+  for (const suite of sequence) {
+    const stepReportDir = path.join(reportDir, suite);
+    mkdirSync(stepReportDir, { recursive: true });
+    if (options.platform === "android" && suite === "guardrails") {
+      suiteInvocations.push(...androidGuardrailInvocations({ ...options, suite }, stepReportDir));
+      continue;
+    }
+    const invocation = buildMaestroInvocation({ ...options, suite, reportDir: stepReportDir });
+    suiteInvocations.push(invocation);
+  }
+
+  if (options.dryRun) {
+    return {
+      status: 0,
+      reportDir,
+      invocation: suiteInvocations.at(-1),
+      suiteInvocations,
+      credentialsAvailable: credentials.available
+    };
+  }
+
+  assertPreflight(options, env, commandRunner);
+
+  for (const suite of sequence) {
+    const stepReportDir = path.join(reportDir, suite);
+    if (options.platform === "android" && suite === "guardrails") {
+      const result = runAndroidGuardrails({ ...options, suite }, stepReportDir, env, commandRunner);
+      if (result.status !== 0) return { ...result, reportDir, suiteInvocations, credentialsAvailable: credentials.available };
+      continue;
+    }
+
+    const invocation = buildMaestroInvocation({ ...options, suite, reportDir: stepReportDir });
+    const needsStepCredentials = suiteNeedsCredentials(suite);
+    const stepEnv = needsStepCredentials ? maestroEnvironment(process.env, credentials.env) : env;
+    const secrets = needsStepCredentials ? credentials.secrets : [];
+    const status = runInvocation(invocation, stepEnv, secrets, commandRunner);
+    if (status !== 0) {
+      return { status, reportDir, invocation, suiteInvocations, credentialsAvailable: credentials.available };
+    }
+  }
+
+  return { status: 0, reportDir, invocation: suiteInvocations.at(-1), suiteInvocations, credentialsAvailable: credentials.available };
+}
+
 export function runNativeMaestro(rawOptions, commandRunner = runCommand) {
   const options = validateOptions(rawOptions);
-  const credentials = suiteNeedsCredentials(options.suite) ? selectedApprovedCredentials() : { available: false, env: {}, secrets: [] };
-  if (suiteNeedsCredentials(options.suite) && !credentials.available) {
+  const needsCredentials = suiteNeedsCredentials(options.suite);
+  const credentials = needsCredentials && !options.dryRun ? selectedApprovedCredentials() : { available: false, env: {}, secrets: [] };
+  if (needsCredentials && !options.dryRun && !credentials.available) {
     throw new Error("Approved QA credentials are required for native auth flows.");
   }
 
   const reportDir = reportDirectory(options.platform, options.suite);
   mkdirSync(reportDir, { recursive: true });
-  const env = maestroEnvironment(process.env, credentials.env);
-  assertPreflight(options, env);
-
-  if (options.platform === "android" && options.suite === "guardrails") {
-    return runAndroidGuardrails(options, reportDir, env, commandRunner);
+  const env = maestroEnvironment(process.env);
+  if (suiteSequenceFor(options.platform, options.suite)) {
+    return runSequencedSuite(options, reportDir, env, credentials, commandRunner);
   }
 
   const invocation = buildMaestroInvocation({ ...options, reportDir });
@@ -354,7 +436,14 @@ export function runNativeMaestro(rawOptions, commandRunner = runCommand) {
     return { status: 0, reportDir, invocation, credentialsAvailable: credentials.available };
   }
 
-  const status = runInvocation(invocation, env, credentials.secrets, commandRunner);
+  assertPreflight(options, env, commandRunner);
+
+  if (options.platform === "android" && options.suite === "guardrails") {
+    return runAndroidGuardrails(options, reportDir, env, commandRunner);
+  }
+
+  const invocationEnv = needsCredentials ? maestroEnvironment(process.env, credentials.env) : env;
+  const status = runInvocation(invocation, invocationEnv, credentials.secrets, commandRunner);
   return {
     status,
     reportDir,
@@ -367,7 +456,7 @@ function main() {
   const options = parseArgs(process.argv.slice(2));
   const result = runNativeMaestro(options);
   console.log(`Native Maestro reports: ${path.relative(path.resolve("."), result.reportDir)}`);
-  if (options.suite === "auth") {
+  if (suiteNeedsCredentials(options.suite)) {
     console.log(`Approved QA credential pair available: ${result.credentialsAvailable ? "yes" : "no"}`);
   }
   process.exitCode = result.status;

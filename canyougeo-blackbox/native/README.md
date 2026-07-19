@@ -23,14 +23,21 @@ pnpm qa:native:android:back
 pnpm qa:native:android:deep-link
 pnpm qa:native:android:auth
 pnpm qa:native:android:guardrails
+pnpm qa:native:android:billing
+pnpm qa:native:android:release
 pnpm qa:native:ios:smoke
 pnpm qa:native:ios:interaction
 pnpm qa:native:ios:auth
 pnpm qa:native:ios:guardrails
+pnpm qa:native:ios:billing
+pnpm qa:native:ios:release
+pnpm qa:native:ios:release-with-universal-link
 pnpm qa:native:ios:universal-link
 ```
 
-The `android:all` and `ios:all` shortcuts run the platform's complete current native flow list. Use the narrower commands while diagnosing a regression.
+The Android complete release suite is `pnpm qa:native:android:release`. It runs smoke, interaction, Back, App Links, auth persistence, online/offline/reconnect guardrails, and Google Play billing discovery. `android:all` is a compatibility alias for that complete release suite.
+
+The iOS complete local release suite is `pnpm qa:native:ios:release`. It runs smoke, interaction, auth persistence, release guardrails, and StoreKit billing discovery. iOS Universal Links remain separately gated because Apple association files and device cache state can make simulator-only results stale; run `pnpm qa:native:ios:release-with-universal-link` only after the production AASA prerequisites in this document are satisfied. `ios:all` is a compatibility alias for the local release suite without Universal Links.
 
 ## Credential Safety
 
@@ -55,6 +62,7 @@ Current Android coverage:
 - tokenless auth callback route handling
 - sign-in session persistence across app stop/relaunch
 - native release guardrails for Browser-plugin social links, internal navigation, safe-area-visible controls, offline/reconnect behavior, billing boundaries, and consent absence
+- Google Play billing discovery for signed-out sign-up boundaries, signed-in Free monthly/annual controls, localized plan prices when Play returns them, clear unavailable catalog states, and native Stripe suppression without tapping purchase or restore
 
 Current iOS coverage:
 
@@ -63,6 +71,7 @@ Current iOS coverage:
 - Pattern Atlas WebView interaction
 - sign-in session persistence across app stop/relaunch
 - native release guardrails for Browser-plugin social links, internal navigation, safe-area-visible controls, billing boundaries, and consent absence
+- StoreKit billing discovery for signed-out sign-up boundaries, signed-in Free monthly/annual controls, localized product prices when StoreKit returns them, clear unavailable catalog states, and native Stripe suppression without tapping purchase, restore, transaction finish, or subscription management
 - prepared Universal Link intake for public, auth callback, challenge-without-code, and unsupported-route safety, pending live AASA deployment and app reinstall
 
 `pnpm qa:native:ios:universal-link` is not included in `ios:all` yet. Run it only after the production AASA file is live at `https://canyougeo.com/.well-known/apple-app-site-association`, the app has been reinstalled on the target device/simulator, and any CDN or iOS association cache delay has been handled.

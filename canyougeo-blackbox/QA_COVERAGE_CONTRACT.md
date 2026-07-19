@@ -66,6 +66,20 @@ Must add or update:
 
 Do not use Maestro Cloud for the baseline suite.
 
+## Native Store Billing Drift
+
+Any change to the native store billing bridge or purchase boundary must update native black-box coverage in the same PR, or add an explicit documented rationale that no black-box change is needed. The current impact files are:
+
+- `src/features/account/BillingActionsClient.tsx`
+- `src/features/account/appleStoreKitActions.ts`
+- `src/features/account/googlePlayPurchaseActions.ts`
+- `src/lib/mobile/appleStoreKit.ts`
+- `src/lib/mobile/googlePlayBilling.ts`
+- `ios/App/App/AppleStoreKitPlugin.swift`
+- `android/app/src/main/java/com/canyougeo/app/GooglePlayBillingPlugin.java`
+
+Baseline native billing QA remains non-mutating: it may verify labels, sign-in boundaries, localized product/plan discovery, safe unavailable states, and Stripe suppression, but it must not tap purchase, restore, transaction-finish, subscription-management, acknowledgement, refund, revoke, or cancellation actions.
+
 ## New `data-testid` Selector
 
 Prefer stable selectors for black-box tests when roles/text are insufficient, but do not couple the suite to implementation internals unnecessarily. Names should describe user-visible regions or actions, not component internals.

@@ -66,7 +66,7 @@ The Play subscription catalog is fixed at `canyougeo_pro` with `monthly` and `an
 
 iOS build 2 adds the first-party StoreKit 2 client foundation. It loads only `com.canyougeo.pro.monthly` and `com.canyougeo.pro.annual`, starts purchases only after the Swift plugin obtains the authenticated backend app-account context, posts StoreKit signed transaction material from Swift directly to the staging Apple verification endpoint, refreshes the backend-authoritative entitlement row, and finishes transactions only after Pro is observed from Supabase. The JavaScript bridge must not expose signed JWS payloads, transaction IDs, original transaction IDs, app account tokens, receipt data, Apple account details, or provider payloads.
 
-Web builds preserve the existing Stripe checkout, portal, and checkout analytics behavior. Native iOS builds use Apple In-App Purchase only and must not route users to Stripe checkout or the Stripe customer portal.
+Web builds preserve the existing Stripe checkout, portal, and checkout analytics behavior. Native Android builds use Google Play Billing only, and native iOS builds use Apple In-App Purchase only. Native builds must not route users to Stripe checkout or the Stripe customer portal.
 
 ## Analytics And Consent Boundary
 
@@ -81,11 +81,17 @@ Run the release-guardrail flows against installed local builds after a fresh nat
 ```bash
 pnpm qa:native:android:guardrails
 pnpm qa:native:ios:guardrails
+pnpm qa:native:android:billing
+pnpm qa:native:ios:billing
+pnpm qa:native:android:release
+pnpm qa:native:ios:release
 ```
 
 Android guardrails include a controlled emulator/device offline segment using `adb shell cmd connectivity airplane-mode enable` plus explicit Wi-Fi/data disable commands, then restore connectivity with `airplane-mode disable` and Wi-Fi/data enable before the reconnect flow. Package-scoped blocking was not reliable for WebView fetches because those requests may be attributed to provider processes. This must not alter host-machine networking.
 
 iOS guardrails cover the online Browser-plugin, internal navigation, safe-area-visible controls, billing, and consent absence paths. Isolated iOS simulator offline testing is optional until it can be exercised without unsafe system-wide network changes; offline behavior remains covered by focused component and hook tests.
+
+Native billing discovery is non-mutating. It may sign in with an approved local QA credential pair, observe monthly and annual store controls, read localized product or plan prices when the store runtime returns them, verify clear unavailable-catalog states, and confirm Stripe suppression. It must not tap purchase, restore, transaction finish, subscription management, Google Play acknowledgement, refund, revocation, cancellation, or any backend mutation path. Real TestFlight/App Store Connect and Play Internal testing product discovery still require physical-device or store-processed release validation before purchase lifecycle QA.
 
 Generated Maestro reports stay under ignored `canyougeo-blackbox/native/reports/`. Do not commit reports, screenshots, recordings, APKs, AABs, build output, simulator/emulator state, signing material, credentials, or `.env` files.
 
