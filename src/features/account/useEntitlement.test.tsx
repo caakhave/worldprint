@@ -1,6 +1,7 @@
 import { act, renderHook, waitFor } from "@testing-library/react";
 import { beforeEach, describe, expect, it, vi } from "vitest";
 import { notifyEntitlementChanged, ENTITLEMENT_CHANGED_EVENT } from "@/features/account/entitlementInvalidation";
+import { activateNativeAppleReviewEntitlement, clearNativeAppleReviewEntitlement } from "@/features/account/nativeAppleReviewEntitlement";
 import { useEntitlement } from "@/features/account/useEntitlement";
 import { NATIVE_ACCOUNT_SYNC_DEFERRED_MESSAGE } from "@/lib/mobile/nativeConnectivity";
 
@@ -20,6 +21,9 @@ const accountMock = vi.hoisted(() => ({
 }));
 
 const fetchRemoteEntitlementMock = vi.hoisted(() => vi.fn());
+const appleRuntimeMock = vi.hoisted(() => ({
+  ios: false
+}));
 
 vi.mock("@/features/account/useSupabaseAccount", () => ({
   useSupabaseAccount: () => accountMock.state
@@ -32,6 +36,10 @@ vi.mock("@/lib/account/entitlements", async (importOriginal) => {
     fetchRemoteEntitlement: fetchRemoteEntitlementMock
   };
 });
+
+vi.mock("@/lib/mobile/appleStoreKit", () => ({
+  isIOSAppleStoreKitRuntime: () => appleRuntimeMock.ios
+}));
 
 const proEntitlementRow = {
   user_id: "11111111-2222-4333-8444-555555555555",
@@ -54,6 +62,8 @@ describe("useEntitlement native connectivity behavior", () => {
       email: "player@example.com"
     };
     accountMock.state.nativeOffline = false;
+    appleRuntimeMock.ios = false;
+    clearNativeAppleReviewEntitlement();
     fetchRemoteEntitlementMock.mockReset();
     fetchRemoteEntitlementMock.mockResolvedValue({ data: null, error: null });
   });
@@ -135,5 +145,39 @@ describe("useEntitlement native connectivity behavior", () => {
     expect(fetchRemoteEntitlementMock).toHaveBeenCalledTimes(2);
     expect(dispatchSpy.mock.calls.filter(([event]) => event.type === ENTITLEMENT_CHANGED_EVENT)).toHaveLength(1);
     dispatchSpy.mockRestore();
+  });
+
+  it("overlays backend-verified Apple sandbox review Pro only in native iOS", async () => {
+    appleRuntimeMock.ios = true;
+    activateNativeAppleReviewEntitlement({
+      providerEnvironment: "sandbox",
+      plan: "pro",
+      status: "active",
+      currentPeriodEnd: "2099-01-01T00:00:00.000Z",
+      cancelAtPeriodEnd: false,
+      verifiedAt: "2026-07-20T00:00:00.000Z"
+    });
+
+    const { result } = renderHook(() => useEntitlement());
+
+    await waitFor(() => expect(result.current.loading).toBe(false));
+    expect(result.current.entitlement.plan).toBe("pro");
+    expect(result.current.entitlement.source).toBe("native-apple-review");
+  });
+
+  it("ignores Apple sandbox review state for web entitlement resolution", async () => {
+    activateNativeAppleReviewEntitlement({
+      providerEnvironment: "sandbox",
+      plan: "pro",
+      status: "active",
+      currentPeriodEnd: "2099-01-01T00:00:00.000Z",
+      cancelAtPeriodEnd: false,
+      verifiedAt: "2026-07-20T00:00:00.000Z"
+    });
+
+    const { result } = renderHook(() => useEntitlement());
+
+    await waitFor(() => expect(result.current.loading).toBe(false));
+    expect(result.current.entitlement.plan).toBe("free");
   });
 });

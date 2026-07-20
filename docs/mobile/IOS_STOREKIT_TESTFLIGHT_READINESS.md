@@ -109,7 +109,7 @@ Reusable foundation already in staging:
 Missing Apple backend components:
 
 - Deployment of `apple-purchase-context`, `apple-purchase-verify`, and `apple-app-store-notifications` to staging.
-- Staging Supabase secrets for `APPLE_APP_STORE_ISSUER_ID`, `APPLE_APP_STORE_KEY_ID`, `APPLE_APP_STORE_PRIVATE_KEY`, `APPLE_BUNDLE_ID`, `APPLE_APP_ID`, and `APPLE_ENVIRONMENT`.
+- Staging Supabase secrets for `APPLE_APP_STORE_ISSUER_ID`, `APPLE_APP_STORE_KEY_ID`, `APPLE_APP_STORE_PRIVATE_KEY`, `APPLE_BUNDLE_ID`, `APPLE_APP_ID`, `APPLE_ALLOWED_ENVIRONMENTS`, and `APPLE_DEPLOYMENT_MODE`. `APPLE_ENVIRONMENT` has been superseded by the dual-environment policy in `docs/mobile/APPLE_DUAL_ENVIRONMENT_ENTITLEMENTS.md`.
 - App Store Connect notification URL configuration after the staging notification endpoint is deployed and verified.
 - Scheduled/operator reconciliation endpoint or worker that uses `billing.apple_subscription_reconciliation_candidates`.
 - StoreKit client code that calls the context endpoint, sends signed transaction material, waits for backend acceptance, and only then finishes transactions.
@@ -118,11 +118,11 @@ Missing Apple backend components:
 
 Staging Apple server foundation added by Checkpoint 5D-1D-IOS-SERVER:
 
-- `supabase/functions/apple-purchase-context`: JWT-protected endpoint returning the signed-in user's stable UUID `appAccountToken`, the approved bundle/app identifiers, environment, and product allowlist. It creates no provider subscription and grants no entitlement.
-- `supabase/functions/apple-purchase-verify`: JWT-protected endpoint that accepts StoreKit signed transaction material, verifies Apple signed data, re-queries App Store Server API current subscription state, enforces bundle/app/product/environment/appAccountToken allowlists, persists via a service-role RPC, and returns sanitized finish guidance.
+- `supabase/functions/apple-purchase-context`: JWT-protected endpoint returning the signed-in user's stable UUID `appAccountToken`, the approved bundle/app identifiers, the dual-environment server mode, and product allowlist. It creates no provider subscription and grants no entitlement.
+- `supabase/functions/apple-purchase-verify`: JWT-protected endpoint that accepts StoreKit signed transaction material, verifies Apple signed data, derives the transaction environment from verified Apple payloads, re-queries the matching App Store Server API current subscription state, enforces bundle/app/product/environment/appAccountToken allowlists, persists via a service-role RPC, and returns sanitized finish guidance.
 - `supabase/functions/apple-app-store-notifications`: App Store Server Notifications V2 endpoint with `verify_jwt = false`. It verifies `signedPayload` and nested signed transaction/renewal data before any mutation, records `TEST` notifications without subscription or entitlement writes, re-queries Apple current state for subscription notifications, and updates only already-bound original transaction chains.
 - `billing.apple_transaction_chains`: service-role-only private table for original transaction ownership, raw original transaction ID storage needed for future reconciliation, and deleted-account no-reclaim protection through a retained user UUID fingerprint.
-- `billing.process_apple_purchase_verification` and `billing.process_apple_server_notification_event`: service-only processors that write sanitized Apple provider events and provider subscriptions, fail closed on ownership conflicts, and refresh `public.entitlements` only after durable verified provider state.
+- `billing.process_apple_purchase_verification` and `billing.process_apple_server_notification_event`: service-only processors that write sanitized Apple provider events and provider subscriptions, fail closed on ownership conflicts, and refresh the correct entitlement projection only after durable verified provider state. Production sandbox Apple state uses the isolated native review lane rather than the live `public.entitlements` row.
 - `billing.apple_subscription_reconciliation_candidates`: read-only service-role reconciliation foundation for stale, conflicted, unknown, orphaned, missed, out-of-order, and entitlement-inconsistent Apple provider state.
 
 Manual credentials/configuration checklist for a later approved checkpoint:
@@ -132,7 +132,7 @@ Manual credentials/configuration checklist for a later approved checkpoint:
 3. Create the Apple subscription group and products only after the protected server foundation is deployed and App Store Connect mutation is explicitly authorized.
 4. Use the approved product identifiers `com.canyougeo.pro.monthly` and `com.canyougeo.pro.annual`.
 5. Create exactly the required App Store Server API key only after the server secret destination is approved.
-6. Store Apple issuer ID, key ID, bundle ID, environment setting, and private key only as server-side Supabase Edge Function secrets.
+6. Store Apple issuer ID, key ID, bundle ID, allowed environments, deployment mode, and private key only as server-side Supabase Edge Function secrets.
 7. Configure App Store Server Notifications V2 only after the endpoint is deployed and can verify test notifications.
 8. Keep sandbox notifications and sandbox transactions isolated from production entitlement grants.
 

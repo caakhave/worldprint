@@ -53,6 +53,7 @@ import {
   syncUnfinishedAppleStoreKitEntitlements,
   type AppleStoreKitActionResult
 } from "@/features/account/appleStoreKitActions";
+import { activateNativeAppleReviewEntitlement, clearNativeAppleReviewEntitlement } from "@/features/account/nativeAppleReviewEntitlement";
 import { requestGooglePlayPurchaseContext, verifyGooglePlayPurchase } from "@/features/account/googlePlayPurchaseActions";
 import { trackAnalyticsEvent, trackCheckoutStarted, trackUpgradeIntent } from "@/lib/site/analytics";
 
@@ -430,7 +431,12 @@ export function BillingActionsClient({ entitlement, context, selectedPlan = null
       if (!options.quiet && result.message) showMessage(result.message, result.ok ? "status" : "error");
       return;
     }
-    const finishResult = await finishAppleStoreKitAfterEntitlement({ client, userId: user?.id });
+    activateNativeAppleReviewEntitlement(result.nativeReviewEntitlement);
+    const finishResult = await finishAppleStoreKitAfterEntitlement({
+      client,
+      userId: user?.id,
+      nativeReviewEntitlement: result.nativeReviewEntitlement
+    });
     if (finishResult.ok) {
       setApplePurchaseInSession(true);
       await notifyConfirmedEntitlementChanged();
@@ -487,6 +493,8 @@ export function BillingActionsClient({ entitlement, context, selectedPlan = null
       const result = await restoreAppleStoreKitEntitlements({ client, signedIn });
       if (result.status === "backendVerified") {
         await completeAppleStoreKitVerification(result, options);
+      } else if (result.status === "none") {
+        clearNativeAppleReviewEntitlement();
       } else if (!options.quiet && result.message) {
         showMessage(result.message, result.ok ? "status" : "error");
       }
@@ -506,6 +514,8 @@ export function BillingActionsClient({ entitlement, context, selectedPlan = null
       const result = await syncUnfinishedAppleStoreKitEntitlements({ client, signedIn });
       if (result.status === "backendVerified") {
         await completeAppleStoreKitVerification(result, options);
+      } else if (result.status === "none") {
+        clearNativeAppleReviewEntitlement();
       } else if (!options.quiet && result.message) {
         showMessage(result.message, result.ok ? "status" : "error");
       }
