@@ -1,6 +1,7 @@
 import { fireEvent, render, screen, waitFor } from "@testing-library/react";
 import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
 import { BillingActionsClient } from "@/features/account/BillingActionsClient";
+import { ENTITLEMENT_CHANGED_EVENT } from "@/features/account/entitlementInvalidation";
 import { FREE_ENTITLEMENT, PRO_ENTITLEMENT, type PlayerEntitlement } from "@/lib/account/entitlements";
 
 type BillingMockClient = {
@@ -625,6 +626,84 @@ describe("BillingActionsClient", () => {
     expect(screen.queryByText(/Stripe handles checkout securely/i)).not.toBeInTheDocument();
   });
 
+  it("emits one payload-free entitlement invalidation after Google Play verification confirms Pro", async () => {
+    vi.stubEnv("NEXT_PUBLIC_CGY_NATIVE_APP", "1");
+    process.env.NEXT_PUBLIC_BILLING_MODE = "test";
+    capacitorMock.platform = "android";
+    accountMock.state.user = TEST_USER;
+    googlePlayMock.runtimeAvailable = true;
+    const client = billingClientMock();
+    client.functions.invoke.mockImplementation(async (functionName: string) => {
+      if (functionName === "google-play-purchase-verify") return { data: { ok: true }, error: null };
+      return { data: {}, error: null };
+    });
+    mockEntitlementRead(client, {
+      user_id: TEST_USER.id,
+      plan: "pro",
+      status: "active",
+      stripe_customer_id: null,
+      stripe_subscription_id: null,
+      stripe_price_id: null,
+      stripe_status: null,
+      cancel_at_period_end: null,
+      current_period_end: "2026-07-29T00:00:00.000Z",
+      updated_at: "2026-07-20T00:00:00.000Z"
+    });
+    const dispatchSpy = vi.spyOn(window, "dispatchEvent");
+
+    render(<BillingActionsClient entitlement={FREE_ENTITLEMENT} context="upgrade" />);
+
+    await waitFor(() => expect(googlePlayMock.listener).toEqual(expect.any(Function)));
+    await googlePlayMock.listener?.([
+      {
+        productId: "canyougeo_pro",
+        purchaseToken: "google-play-token-for-unit-test",
+        purchaseState: 1
+      }
+    ]);
+
+    expect(await screen.findByText("Google Play purchase verified. Pro access is active.")).toBeVisible();
+    const entitlementEvents = dispatchSpy.mock.calls
+      .map(([event]) => event)
+      .filter((event) => event.type === ENTITLEMENT_CHANGED_EVENT);
+    expect(entitlementEvents).toHaveLength(1);
+    expect(entitlementEvents[0]).toBeInstanceOf(Event);
+    expect(entitlementEvents[0]).not.toBeInstanceOf(CustomEvent);
+    expect("detail" in entitlementEvents[0]).toBe(false);
+    expect(client.functions.invoke).not.toHaveBeenCalledWith("stripe-checkout", expect.anything());
+    dispatchSpy.mockRestore();
+  });
+
+  it("does not emit an entitlement invalidation when Google Play verification has no confirmed Pro refresh", async () => {
+    vi.stubEnv("NEXT_PUBLIC_CGY_NATIVE_APP", "1");
+    process.env.NEXT_PUBLIC_BILLING_MODE = "test";
+    capacitorMock.platform = "android";
+    accountMock.state.user = TEST_USER;
+    googlePlayMock.runtimeAvailable = true;
+    const client = billingClientMock();
+    client.functions.invoke.mockImplementation(async (functionName: string) => {
+      if (functionName === "google-play-purchase-verify") return { data: { ok: true }, error: null };
+      return { data: {}, error: null };
+    });
+    mockEntitlementRead(client, null);
+    const dispatchSpy = vi.spyOn(window, "dispatchEvent");
+
+    render(<BillingActionsClient entitlement={FREE_ENTITLEMENT} context="upgrade" />);
+
+    await waitFor(() => expect(googlePlayMock.listener).toEqual(expect.any(Function)));
+    await googlePlayMock.listener?.([
+      {
+        productId: "canyougeo_pro",
+        purchaseToken: "google-play-token-for-unit-test",
+        purchaseState: 1
+      }
+    ]);
+
+    expect(await screen.findByText("Google Play purchase verified. Pro access will refresh shortly.")).toBeVisible();
+    expect(dispatchSpy.mock.calls.filter(([event]) => event.type === ENTITLEMENT_CHANGED_EVENT)).toHaveLength(0);
+    dispatchSpy.mockRestore();
+  });
+
   it("uses Apple StoreKit for signed-in native iOS purchases and finishes only after entitlement refresh", async () => {
     vi.stubEnv("NEXT_PUBLIC_CGY_NATIVE_APP", "1");
     vi.stubEnv("NEXT_PUBLIC_SUPABASE_URL", "https://hsgpjtyysbremrokkoym.supabase.co");
@@ -653,6 +732,8 @@ describe("BillingActionsClient", () => {
       updated_at: "2026-07-18T00:00:00.000Z"
     });
 
+    const dispatchSpy = vi.spyOn(window, "dispatchEvent");
+
     render(<BillingActionsClient entitlement={FREE_ENTITLEMENT} context="upgrade" />);
 
     await waitFor(() => expect(screen.getByRole("button", { name: /Join monthly/i })).toBeEnabled());
@@ -674,8 +755,49 @@ describe("BillingActionsClient", () => {
     expect(JSON.stringify(appleStoreKitMock.purchaseAppleStoreKitProduct.mock.results)).not.toMatch(
       /signedTransaction|jws|transactionId|originalTransactionId|appAccountToken/i
     );
-    expect(screen.getByText("Apple purchase verified. Pro access is active.")).toBeVisible();
+    const successMessage = screen.getByText("Apple purchase verified. Pro access is active.");
+    expect(successMessage).toBeVisible();
+    expect(successMessage).toHaveClass("account-env-note");
+    expect(successMessage).toHaveAttribute("role", "status");
+    const entitlementEvents = dispatchSpy.mock.calls
+      .map(([event]) => event)
+      .filter((event) => event.type === ENTITLEMENT_CHANGED_EVENT);
+    expect(entitlementEvents).toHaveLength(1);
+    expect(entitlementEvents[0]).toBeInstanceOf(Event);
+    expect(entitlementEvents[0]).not.toBeInstanceOf(CustomEvent);
+    expect("detail" in entitlementEvents[0]).toBe(false);
     expect(screen.getByText(/Apple manages iOS purchases\. Stripe checkout is unavailable in this iOS build\./i)).toBeVisible();
+    dispatchSpy.mockRestore();
+  });
+
+  it("does not emit entitlement invalidation for Apple purchase cancellation or backend failure", async () => {
+    vi.stubEnv("NEXT_PUBLIC_CGY_NATIVE_APP", "1");
+    vi.stubEnv("NEXT_PUBLIC_SUPABASE_URL", "https://hsgpjtyysbremrokkoym.supabase.co");
+    vi.stubEnv("NEXT_PUBLIC_SUPABASE_ANON_KEY", "anon-public-test-key");
+    process.env.NEXT_PUBLIC_BILLING_MODE = "test";
+    capacitorMock.platform = "ios";
+    accountMock.state.user = TEST_USER;
+    appleStoreKitMock.runtimeAvailable = true;
+    const client = billingClientMock();
+    const dispatchSpy = vi.spyOn(window, "dispatchEvent");
+
+    const { rerender } = render(<BillingActionsClient entitlement={FREE_ENTITLEMENT} context="upgrade" />);
+
+    await waitFor(() => expect(screen.getByRole("button", { name: /Join monthly/i })).toBeEnabled());
+    fireEvent.click(screen.getByRole("button", { name: /Join monthly/i }));
+
+    expect(await screen.findByText("Purchase cancelled. No charge was made.")).toHaveAttribute("role", "status");
+    expect(appleStoreKitMock.finishVerifiedAppleStoreKitTransactions).not.toHaveBeenCalled();
+    expect(dispatchSpy.mock.calls.filter(([event]) => event.type === ENTITLEMENT_CHANGED_EVENT)).toHaveLength(0);
+
+    appleStoreKitMock.purchaseAppleStoreKitProduct.mockResolvedValueOnce({ status: "backendRejected" });
+    rerender(<BillingActionsClient entitlement={FREE_ENTITLEMENT} context="account" />);
+    fireEvent.click(screen.getByRole("button", { name: /Join monthly/i }));
+
+    expect(await screen.findByRole("alert")).toHaveTextContent("Apple purchase could not be verified. Try Restore purchases in a minute.");
+    expect(dispatchSpy.mock.calls.filter(([event]) => event.type === ENTITLEMENT_CHANGED_EVENT)).toHaveLength(0);
+    expect(client.functions.invoke).not.toHaveBeenCalledWith("stripe-checkout", expect.anything());
+    dispatchSpy.mockRestore();
   });
 
   it("uses protected checkout functions and does not start checkout analytics until a URL is returned", async () => {

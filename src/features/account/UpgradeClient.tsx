@@ -21,7 +21,7 @@ import {
 
 export function UpgradeClient() {
   const [selectedPlan, setSelectedPlan] = useState<ProBillingInterval | null>(null);
-  const { configured, entitlement, loading, refresh, signedIn } = useEntitlement();
+  const { configured, entitlement, loading, signedIn } = useEntitlement();
   const isPro = entitlement.plan === "pro";
   const hasStripeCustomer = Boolean(entitlement.row?.stripe_customer_id);
   const nativeBuild = isNativeAppBuild();
@@ -124,7 +124,6 @@ export function UpgradeClient() {
                 context="upgrade"
                 selectedPlan={selectedPlanOption.interval}
                 checkoutLabel="Continue to secure checkout"
-                onVerified={() => void refresh()}
               />
               <Link className="button-secondary" href="/account">
                 Continue free
@@ -193,7 +192,7 @@ export function UpgradeClient() {
             <strong>{statusTitle}</strong>
             <span>{statusDetail}</span>
           </div>
-          <BillingActionsClient entitlement={entitlement} context="upgrade" onVerified={() => void refresh()} />
+          <BillingActionsClient entitlement={entitlement} context="upgrade" />
         </div>
       </section>
 
@@ -256,7 +255,7 @@ export function UpgradeClient() {
               Growing game library over time
             </li>
           </ul>
-          <BillingActionsClient entitlement={entitlement} context="upgrade" onVerified={() => void refresh()} />
+          <BillingActionsClient entitlement={entitlement} context="upgrade" />
         </article>
 
         <article className="surface plan-card" data-featured="false">

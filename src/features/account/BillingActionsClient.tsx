@@ -10,8 +10,9 @@ import {
   type BillingFunctionName,
   type BillingPendingState
 } from "@/features/account/billingActionHelpers";
+import { notifyEntitlementChanged } from "@/features/account/entitlementInvalidation";
 import { useSupabaseAccount } from "@/features/account/useSupabaseAccount";
-import type { PlayerEntitlement } from "@/lib/account/entitlements";
+import { fetchRemoteEntitlement, resolvePlayerEntitlement, type PlayerEntitlement } from "@/lib/account/entitlements";
 import { signUpPathForReturn } from "@/lib/account/signInRedirect";
 import { publicBillingEnabled } from "@/lib/billing/publicBillingConfig";
 import { PRO_PRICE_OPTIONS, type ProBillingInterval } from "@/lib/billing/proPricing";
@@ -97,6 +98,7 @@ const APPLE_STOREKIT_AVAILABILITY_TIMEOUT_STATUS = "Apple product discovery time
 const APPLE_STOREKIT_PRODUCT_TIMEOUT_STATUS = "Apple product discovery timed out while requesting subscription products.";
 type NativeBillingRuntime = "google-play" | "apple" | "unavailable";
 type NativePendingState = GooglePlayBasePlanId | AppleStoreKitProductId | "restore" | "manage" | null;
+type BillingMessageTone = "status" | "success" | "error";
 
 function detectNativeBillingRuntime(): NativeBillingRuntime {
   if (isAndroidGooglePlayBillingRuntime()) return "google-play";
@@ -144,8 +146,22 @@ function appleStoreKitCatalogStatus(result: AppleStoreKitCatalogResult) {
   return APPLE_STOREKIT_CATALOG_PARTIAL_STATUS;
 }
 
-function nativeAppleCatalogMessageIsStatus(message: string) {
-  return message === APPLE_STOREKIT_CATALOG_CHECKING_STATUS || message === APPLE_STOREKIT_CATALOG_READY_STATUS;
+function googlePlayCatalogMessageTone(message: string): BillingMessageTone {
+  return message === GOOGLE_PLAY_CATALOG_READY_STATUS ? "status" : "error";
+}
+
+function appleStoreKitCatalogMessageTone(message: string): BillingMessageTone {
+  return message === APPLE_STOREKIT_CATALOG_CHECKING_STATUS || message === APPLE_STOREKIT_CATALOG_READY_STATUS
+    ? "status"
+    : "error";
+}
+
+function billingMessageClassName(tone: BillingMessageTone) {
+  return tone === "error" ? "account-error" : "account-env-note";
+}
+
+function billingMessageRole(tone: BillingMessageTone) {
+  return tone === "error" ? "alert" : "status";
 }
 
 export function BillingActionsClient({ entitlement, context, selectedPlan = null, checkoutLabel, onVerified }: BillingActionsClientProps) {
@@ -159,6 +175,7 @@ export function BillingActionsClient({ entitlement, context, selectedPlan = null
   const [applePurchaseInSession, setApplePurchaseInSession] = useState(false);
   const [nativeCatalogStatus, setNativeCatalogStatus] = useState("");
   const [message, setMessage] = useState("");
+  const [messageTone, setMessageTone] = useState<BillingMessageTone>("status");
   const signedIn = Boolean(user);
   const isPro = entitlement.plan === "pro";
   const hasStripeCustomer = Boolean(entitlement.row?.stripe_customer_id);
@@ -166,6 +183,30 @@ export function BillingActionsClient({ entitlement, context, selectedPlan = null
   const nativeBuild = isNativeAppBuild();
   const nativePlatform =
     nativeRuntime === "google-play" ? "android" : nativeRuntime === "apple" ? "ios" : nativeStoreBillingPlatform(nativeBuild);
+
+  function showMessage(text: string, tone: BillingMessageTone = "error") {
+    setMessage(text);
+    setMessageTone(tone);
+  }
+
+  function clearMessage() {
+    setMessage("");
+    setMessageTone("status");
+  }
+
+  async function notifyConfirmedEntitlementChanged() {
+    notifyEntitlementChanged();
+    await onVerified?.();
+  }
+
+  async function confirmRemoteProAndNotify() {
+    if (!client || !user) return false;
+    const result = await fetchRemoteEntitlement(client, user.id);
+    if (result.error) return false;
+    if (resolvePlayerEntitlement(result.data, true).plan !== "pro") return false;
+    await notifyConfirmedEntitlementChanged();
+    return true;
+  }
 
   useEffect(() => {
     let mounted = true;
@@ -198,7 +239,7 @@ export function BillingActionsClient({ entitlement, context, selectedPlan = null
       if (!signedIn) {
         if (runtime === "apple") {
           registerAppleStoreKitTransactionListener(() => {
-            if (mounted) setMessage("Sign in to restore purchase.");
+            if (mounted) showMessage("Sign in to restore purchase.");
           });
         }
         return;
@@ -219,11 +260,15 @@ export function BillingActionsClient({ entitlement, context, selectedPlan = null
           setNativePlans(plans);
           const catalogStatus = googlePlayCatalogStatus(plans);
           setNativeCatalogStatus(catalogStatus);
-          setMessage(catalogStatus === GOOGLE_PLAY_CATALOG_READY_STATUS ? "" : catalogStatus);
+          if (catalogStatus === GOOGLE_PLAY_CATALOG_READY_STATUS) {
+            clearMessage();
+          } else {
+            showMessage(catalogStatus, googlePlayCatalogMessageTone(catalogStatus));
+          }
           void restoreNativePurchases({ quiet: true });
         } else {
           setNativeCatalogStatus(APPLE_STOREKIT_CATALOG_CHECKING_STATUS);
-          setMessage(APPLE_STOREKIT_CATALOG_CHECKING_STATUS);
+          showMessage(APPLE_STOREKIT_CATALOG_CHECKING_STATUS, "status");
           const catalogResult = await queryAppleStoreKitCatalog();
           if (!mounted) {
             return;
@@ -231,7 +276,7 @@ export function BillingActionsClient({ entitlement, context, selectedPlan = null
           setAppleProducts(catalogResult.products);
           const catalogStatus = appleStoreKitCatalogStatus(catalogResult);
           setNativeCatalogStatus(catalogStatus);
-          setMessage(catalogStatus);
+          showMessage(catalogStatus, appleStoreKitCatalogMessageTone(catalogStatus));
           registerAppleStoreKitTransactionListener(() => void syncAppleStoreKitTransactions({ quiet: true }));
           void syncAppleStoreKitTransactions({ quiet: true });
         }
@@ -239,7 +284,7 @@ export function BillingActionsClient({ entitlement, context, selectedPlan = null
         if (mounted) {
           const catalogStatus = runtime === "apple" ? APPLE_STOREKIT_CATALOG_NETWORK_STATUS : GOOGLE_PLAY_CATALOG_UNAVAILABLE_STATUS;
           setNativeCatalogStatus(catalogStatus);
-          setMessage(catalogStatus);
+          showMessage(catalogStatus);
         }
       } finally {
         if (mounted) setNativePlansLoading(false);
@@ -271,12 +316,12 @@ export function BillingActionsClient({ entitlement, context, selectedPlan = null
     interval?: ProBillingInterval
   ) {
     if (nativeBuild) {
-      setMessage(nativeBillingUnavailableMessage(kind));
+      showMessage(nativeBillingUnavailableMessage(kind));
       return;
     }
 
     setPending(pendingState);
-    setMessage("");
+    clearMessage();
     if (kind === "checkout") {
       trackUpgradeClick(interval);
     }
@@ -289,7 +334,7 @@ export function BillingActionsClient({ entitlement, context, selectedPlan = null
     });
     setPending(null);
     if (result.message || !result.url) {
-      setMessage(result.message ?? (kind === "portal" ? "Billing management could not open. Please try again." : "Checkout could not start. Please try again."));
+      showMessage(result.message ?? (kind === "portal" ? "Billing management could not open. Please try again." : "Checkout could not start. Please try again."));
       return;
     }
     if (kind === "checkout") {
@@ -313,29 +358,34 @@ export function BillingActionsClient({ entitlement, context, selectedPlan = null
         basePlanId
       });
       if (!result.ok) {
-        setMessage(result.message ?? "Google Play purchase could not be verified.");
+        showMessage(result.message ?? "Google Play purchase could not be verified.");
         return;
       }
     }
-    setMessage("Google Play purchase verified. Pro access will refresh shortly.");
-    await onVerified?.();
+    const proConfirmed = await confirmRemoteProAndNotify();
+    showMessage(
+      proConfirmed
+        ? "Google Play purchase verified. Pro access is active."
+        : "Google Play purchase verified. Pro access will refresh shortly.",
+      proConfirmed ? "success" : "status"
+    );
   }
 
   async function startGooglePlayPurchase(basePlanId: GooglePlayBasePlanId) {
     setNativePending(basePlanId);
-    setMessage("");
+    clearMessage();
     trackUpgradeClick(intervalForBasePlanId(basePlanId));
     const contextResult = await requestGooglePlayPurchaseContext({ client, signedIn });
     if (!contextResult.obfuscatedAccountId) {
       setNativePending(null);
-      setMessage(contextResult.message ?? "Google Play purchases could not start.");
+      showMessage(contextResult.message ?? "Google Play purchases could not start.");
       return;
     }
     try {
       await launchGooglePlayPurchase({ basePlanId, obfuscatedAccountId: contextResult.obfuscatedAccountId });
-      setMessage("Complete the purchase in Google Play.");
+      showMessage("Complete the purchase in Google Play.", "status");
     } catch {
-      setMessage("Google Play purchase could not start. Try again in a minute.");
+      showMessage("Google Play purchase could not start. Try again in a minute.");
     } finally {
       setNativePending(null);
     }
@@ -343,15 +393,15 @@ export function BillingActionsClient({ entitlement, context, selectedPlan = null
 
   async function restoreNativePurchases(options: { quiet?: boolean } = {}) {
     setNativePending("restore");
-    if (!options.quiet) setMessage("");
+    if (!options.quiet) clearMessage();
     try {
       const purchases = await restoreGooglePlayPurchases();
       await verifyNativePurchases(purchases, null);
       if (!options.quiet && purchases.length === 0) {
-        setMessage("No active Google Play purchases were found for this account.");
+        showMessage("No active Google Play purchases were found for this account.", "status");
       }
     } catch {
-      if (!options.quiet) setMessage("Google Play purchases could not be restored right now.");
+      if (!options.quiet) showMessage("Google Play purchases could not be restored right now.");
     } finally {
       setNativePending(null);
     }
@@ -359,32 +409,35 @@ export function BillingActionsClient({ entitlement, context, selectedPlan = null
 
   async function completeAppleStoreKitVerification(result: AppleStoreKitActionResult, options: { quiet?: boolean } = {}) {
     if (!result.ok || result.status !== "backendVerified") {
-      if (!options.quiet && result.message) setMessage(result.message);
+      if (!options.quiet && result.message) showMessage(result.message, result.ok ? "status" : "error");
       return;
     }
     const finishResult = await finishAppleStoreKitAfterEntitlement({ client, userId: user?.id });
-    await onVerified?.();
     if (finishResult.ok) {
       setApplePurchaseInSession(true);
+      await notifyConfirmedEntitlementChanged();
     }
     if (!options.quiet) {
-      setMessage(finishResult.message ?? result.message ?? "Apple purchase verified. Pro access will refresh shortly.");
+      showMessage(
+        finishResult.message ?? result.message ?? "Apple purchase verified. Pro access will refresh shortly.",
+        finishResult.ok ? "success" : "status"
+      );
     }
   }
 
   async function startApplePurchase(productId: AppleStoreKitProductId) {
     setNativePending(productId);
-    setMessage("");
+    clearMessage();
     trackUpgradeClick(appleStoreKitIntervalForProductId(productId));
     try {
       const result = await startAppleStoreKitPurchase({ client, signedIn, productId });
       if (result.status === "backendVerified") {
         await completeAppleStoreKitVerification(result);
       } else {
-        setMessage(result.message ?? "Apple purchase could not be completed. Try again in a minute.");
+        showMessage(result.message ?? "Apple purchase could not be completed. Try again in a minute.", result.ok ? "status" : "error");
       }
     } catch {
-      setMessage("Apple purchase could not start. Try again in a minute.");
+      showMessage("Apple purchase could not start. Try again in a minute.");
     } finally {
       setNativePending(null);
     }
@@ -393,17 +446,17 @@ export function BillingActionsClient({ entitlement, context, selectedPlan = null
   async function retryAppleStoreKitCatalog() {
     setNativePlansLoading(true);
     setNativeCatalogStatus(APPLE_STOREKIT_CATALOG_CHECKING_STATUS);
-    setMessage(APPLE_STOREKIT_CATALOG_CHECKING_STATUS);
+    showMessage(APPLE_STOREKIT_CATALOG_CHECKING_STATUS, "status");
     try {
       const catalogResult = await queryAppleStoreKitCatalog({ forceRefresh: true });
       setAppleProducts(catalogResult.products);
       const catalogStatus = appleStoreKitCatalogStatus(catalogResult);
       setNativeCatalogStatus(catalogStatus);
-      setMessage(catalogStatus);
+      showMessage(catalogStatus, appleStoreKitCatalogMessageTone(catalogStatus));
     } catch {
       setAppleProducts([]);
       setNativeCatalogStatus(APPLE_STOREKIT_CATALOG_NETWORK_STATUS);
-      setMessage(APPLE_STOREKIT_CATALOG_NETWORK_STATUS);
+      showMessage(APPLE_STOREKIT_CATALOG_NETWORK_STATUS);
     } finally {
       setNativePlansLoading(false);
     }
@@ -411,16 +464,16 @@ export function BillingActionsClient({ entitlement, context, selectedPlan = null
 
   async function restoreApplePurchases(options: { quiet?: boolean } = {}) {
     setNativePending("restore");
-    if (!options.quiet) setMessage("");
+    if (!options.quiet) clearMessage();
     try {
       const result = await restoreAppleStoreKitEntitlements({ client, signedIn });
       if (result.status === "backendVerified") {
         await completeAppleStoreKitVerification(result, options);
       } else if (!options.quiet && result.message) {
-        setMessage(result.message);
+        showMessage(result.message, result.ok ? "status" : "error");
       }
     } catch {
-      if (!options.quiet) setMessage("Apple purchases could not be restored right now.");
+      if (!options.quiet) showMessage("Apple purchases could not be restored right now.");
     } finally {
       setNativePending(null);
     }
@@ -428,7 +481,7 @@ export function BillingActionsClient({ entitlement, context, selectedPlan = null
 
   async function syncAppleStoreKitTransactions(options: { quiet?: boolean } = {}) {
     if (!signedIn) {
-      if (!options.quiet) setMessage("Sign in to restore purchase.");
+      if (!options.quiet) showMessage("Sign in to restore purchase.");
       return;
     }
     try {
@@ -436,21 +489,21 @@ export function BillingActionsClient({ entitlement, context, selectedPlan = null
       if (result.status === "backendVerified") {
         await completeAppleStoreKitVerification(result, options);
       } else if (!options.quiet && result.message) {
-        setMessage(result.message);
+        showMessage(result.message, result.ok ? "status" : "error");
       }
     } catch {
-      if (!options.quiet) setMessage("Apple purchases could not be refreshed right now.");
+      if (!options.quiet) showMessage("Apple purchases could not be refreshed right now.");
     }
   }
 
   async function openAppleSubscriptionManagement() {
     setNativePending("manage");
-    setMessage("");
+    clearMessage();
     try {
       const result = await openAppleStoreKitSubscriptionManagement();
-      if (!result.ok && result.message) setMessage(result.message);
+      if (!result.ok && result.message) showMessage(result.message);
     } catch {
-      setMessage("Apple subscription management could not open right now.");
+      showMessage("Apple subscription management could not open right now.");
     } finally {
       setNativePending(null);
     }
@@ -483,7 +536,7 @@ export function BillingActionsClient({ entitlement, context, selectedPlan = null
             Existing Pro access remains available on this account. Manage the subscription through the store or website where it was created.
           </p>
           {message ? (
-            <p className="account-error" role="alert">
+            <p className={billingMessageClassName(messageTone)} role={billingMessageRole(messageTone)}>
               {message}
             </p>
           ) : null}
@@ -502,7 +555,7 @@ export function BillingActionsClient({ entitlement, context, selectedPlan = null
           </Link>
           <p className="account-env-note">{nativeStoreBillingSignInCopy(nativePlatform)}</p>
           {message ? (
-            <p className="account-error" role="alert">
+            <p className={billingMessageClassName(messageTone)} role={billingMessageRole(messageTone)}>
               {message}
             </p>
           ) : null}
@@ -547,7 +600,7 @@ export function BillingActionsClient({ entitlement, context, selectedPlan = null
             </p>
           ) : null}
           {message ? (
-            <p className={message.includes("verified") ? "account-env-note" : "account-error"} role={message.includes("verified") ? "status" : "alert"}>
+            <p className={billingMessageClassName(messageTone)} role={billingMessageRole(messageTone)}>
               {message}
             </p>
           ) : null}
@@ -603,10 +656,7 @@ export function BillingActionsClient({ entitlement, context, selectedPlan = null
             </p>
           ) : null}
           {message ? (
-            <p
-              className={message.includes("verified") || message.includes("active") || nativeAppleCatalogMessageIsStatus(message) ? "account-env-note" : "account-error"}
-              role={message.includes("verified") || message.includes("active") || nativeAppleCatalogMessageIsStatus(message) ? "status" : "alert"}
-            >
+            <p className={billingMessageClassName(messageTone)} role={billingMessageRole(messageTone)}>
               {message}
             </p>
           ) : null}
@@ -773,7 +823,7 @@ export function BillingActionsClient({ entitlement, context, selectedPlan = null
           </Link>
         ) : null}
         {message ? (
-          <p className="account-error" role="alert">
+          <p className={billingMessageClassName(messageTone)} role={billingMessageRole(messageTone)}>
             {message}
           </p>
         ) : null}
@@ -801,7 +851,7 @@ export function BillingActionsClient({ entitlement, context, selectedPlan = null
           ) : null}
         </button>
         {message ? (
-          <p className="account-error" role="alert">
+          <p className={billingMessageClassName(messageTone)} role={billingMessageRole(messageTone)}>
             {message}
           </p>
         ) : null}
@@ -839,7 +889,7 @@ export function BillingActionsClient({ entitlement, context, selectedPlan = null
         </Link>
       ) : null}
       {message ? (
-        <p className="account-error" role="alert">
+        <p className={billingMessageClassName(messageTone)} role={billingMessageRole(messageTone)}>
           {message}
         </p>
       ) : null}
