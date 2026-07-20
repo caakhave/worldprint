@@ -156,6 +156,105 @@ export type AppleNotificationTransitionRow = ApplePurchaseVerificationRow & {
   unsupported_ignored: boolean;
 };
 
+type AppleSubscriptionTransitionRpcArgsBase = {
+  p_provider_environment: AppleEnvironment;
+  p_provider_event_ref: string;
+  p_event_type: string;
+  p_event_subtype: string | null;
+  p_event_time: string;
+  p_payload_hash: string;
+  p_bundle_id: string;
+  p_app_apple_id: string;
+  p_product_id: AppleProductId | null;
+  p_provider_product_ref: string | null;
+  p_original_transaction_id_fingerprint: string | null;
+  p_original_transaction_id: string | null;
+  p_transaction_id_fingerprint: string | null;
+  p_app_account_token: string | null;
+  p_provider_status: AppleProviderSubscriptionStatus | null;
+  p_auto_renews: boolean | null;
+  p_start_time: string | null;
+  p_current_period_end: string | null;
+  p_grace_period_ends_at: string | null;
+  p_billing_retry_started_at: string | null;
+  p_expires_at: string | null;
+  p_revoked_at: string | null;
+  p_refunded_at: string | null;
+  p_test_purchase: boolean;
+  p_as_of: string;
+};
+
+export type AppleServerNotificationRpcArgs = AppleSubscriptionTransitionRpcArgsBase;
+
+export type ApplePurchaseVerificationRpcArgs = AppleSubscriptionTransitionRpcArgsBase & {
+  p_user_id: string;
+  p_user_ref_fingerprint: string;
+  p_product_id: AppleProductId;
+  p_provider_product_ref: string;
+  p_original_transaction_id_fingerprint: string;
+  p_original_transaction_id: string;
+  p_transaction_id_fingerprint: string;
+  p_provider_status: AppleProviderSubscriptionStatus;
+};
+
+export const APPLE_SERVER_NOTIFICATION_RPC_ARG_KEYS = [
+  "p_provider_environment",
+  "p_provider_event_ref",
+  "p_event_type",
+  "p_event_subtype",
+  "p_event_time",
+  "p_payload_hash",
+  "p_bundle_id",
+  "p_app_apple_id",
+  "p_product_id",
+  "p_provider_product_ref",
+  "p_original_transaction_id_fingerprint",
+  "p_original_transaction_id",
+  "p_transaction_id_fingerprint",
+  "p_app_account_token",
+  "p_provider_status",
+  "p_auto_renews",
+  "p_start_time",
+  "p_current_period_end",
+  "p_grace_period_ends_at",
+  "p_billing_retry_started_at",
+  "p_expires_at",
+  "p_revoked_at",
+  "p_refunded_at",
+  "p_test_purchase",
+  "p_as_of"
+] as const satisfies readonly (keyof AppleServerNotificationRpcArgs)[];
+
+export const APPLE_PURCHASE_VERIFICATION_RPC_ARG_KEYS = [
+  "p_provider_environment",
+  "p_user_id",
+  "p_user_ref_fingerprint",
+  "p_provider_event_ref",
+  "p_event_type",
+  "p_event_subtype",
+  "p_event_time",
+  "p_payload_hash",
+  "p_bundle_id",
+  "p_app_apple_id",
+  "p_product_id",
+  "p_provider_product_ref",
+  "p_original_transaction_id_fingerprint",
+  "p_original_transaction_id",
+  "p_transaction_id_fingerprint",
+  "p_app_account_token",
+  "p_provider_status",
+  "p_auto_renews",
+  "p_start_time",
+  "p_current_period_end",
+  "p_grace_period_ends_at",
+  "p_billing_retry_started_at",
+  "p_expires_at",
+  "p_revoked_at",
+  "p_refunded_at",
+  "p_test_purchase",
+  "p_as_of"
+] as const satisfies readonly (keyof ApplePurchaseVerificationRpcArgs)[];
+
 export class AppleAppStoreError extends Error {
   readonly result: string;
   readonly retryable: boolean;
@@ -587,7 +686,7 @@ export async function applePurchaseVerificationTransitionInput(input: {
   sourceEventRef: string;
   payloadHash: string;
   asOfIso: string;
-}): Promise<Record<string, unknown>> {
+}): Promise<ApplePurchaseVerificationRpcArgs> {
   if (input.normalized.appAccountToken !== input.userId) {
     throw new AppleAppStoreError("app_account_token_mismatch", false, 403);
   }
@@ -608,7 +707,7 @@ export async function appleNotificationTransitionInput(input: {
   notification: AppleNotificationDecodedPayload;
   payloadHash: string;
   asOfIso: string;
-}): Promise<Record<string, unknown>> {
+}): Promise<AppleServerNotificationRpcArgs> {
   const notificationType = requiredString(input.notification.notificationType);
   const notificationUuid = requiredString(input.notification.notificationUUID);
   if (!notificationType || !notificationUuid || !validAppleEventRef(notificationUuid)) {
@@ -644,10 +743,8 @@ export async function appleNotificationTransitionInput(input: {
     };
   }
   if (!input.normalized) throw new AppleAppStoreError("missing_normalized_subscription", true, 500);
-  return appleTransitionArgs({
+  return appleServerNotificationTransitionArgs({
     normalized: input.normalized,
-    userId: null,
-    userRefFingerprint: null,
     eventType: notificationType,
     eventSubtype: stringFromUnknown(input.notification.subtype),
     providerEventRef: `notification:${notificationUuid}`,
@@ -658,7 +755,7 @@ export async function appleNotificationTransitionInput(input: {
 
 export async function processApplePurchaseVerification(
   supabase: { rpc: (functionName: string, args: Record<string, unknown>) => Promise<{ data: unknown; error: unknown }> },
-  args: Record<string, unknown>
+  args: ApplePurchaseVerificationRpcArgs
 ): Promise<ApplePurchaseVerificationRow> {
   const { data, error } = await supabase.rpc("process_apple_purchase_verification", args);
   if (error) throw new AppleAppStoreError("rpc_failed", true, 500);
@@ -670,7 +767,7 @@ export async function processApplePurchaseVerification(
 
 export async function processAppleServerNotification(
   supabase: { rpc: (functionName: string, args: Record<string, unknown>) => Promise<{ data: unknown; error: unknown }> },
-  args: Record<string, unknown>
+  args: AppleServerNotificationRpcArgs
 ): Promise<AppleNotificationTransitionRow> {
   const { data, error } = await supabase.rpc("process_apple_server_notification_event", args);
   if (error) throw new AppleAppStoreError("rpc_failed", true, 500);
@@ -796,20 +893,16 @@ async function optionalAppleIdentifierFingerprint(value: unknown, prefix: string
   return text ? appleIdentifierFingerprint(text, prefix) : null;
 }
 
-function appleTransitionArgs(input: {
+function appleSubscriptionTransitionBaseArgs(input: {
   normalized: NormalizedAppleSubscription;
-  userId: string | null;
-  userRefFingerprint: string | null;
   eventType: string;
   eventSubtype: string | null;
   providerEventRef: string;
   payloadHash: string;
   asOfIso: string;
-}): Record<string, unknown> {
+}): AppleSubscriptionTransitionRpcArgsBase {
   return {
     p_provider_environment: input.normalized.providerEnvironment,
-    p_user_id: input.userId,
-    p_user_ref_fingerprint: input.userRefFingerprint,
     p_provider_event_ref: input.providerEventRef,
     p_event_type: input.eventType,
     p_event_subtype: input.eventSubtype,
@@ -835,6 +928,34 @@ function appleTransitionArgs(input: {
     p_test_purchase: input.normalized.testPurchase,
     p_as_of: input.asOfIso
   };
+}
+
+function appleTransitionArgs(input: {
+  normalized: NormalizedAppleSubscription;
+  userId: string;
+  userRefFingerprint: string;
+  eventType: string;
+  eventSubtype: string | null;
+  providerEventRef: string;
+  payloadHash: string;
+  asOfIso: string;
+}): ApplePurchaseVerificationRpcArgs {
+  return {
+    ...appleSubscriptionTransitionBaseArgs(input),
+    p_user_id: input.userId,
+    p_user_ref_fingerprint: input.userRefFingerprint
+  };
+}
+
+function appleServerNotificationTransitionArgs(input: {
+  normalized: NormalizedAppleSubscription;
+  eventType: string;
+  eventSubtype: string | null;
+  providerEventRef: string;
+  payloadHash: string;
+  asOfIso: string;
+}): AppleServerNotificationRpcArgs {
+  return appleSubscriptionTransitionBaseArgs(input);
 }
 
 function normalizePurchaseRow(data: unknown): ApplePurchaseVerificationRow | null {

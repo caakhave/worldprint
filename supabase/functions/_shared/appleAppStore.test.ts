@@ -3,9 +3,12 @@ import {
   APPLE_ANNUAL_PRODUCT_ID,
   APPLE_BUNDLE_ID,
   APPLE_MONTHLY_PRODUCT_ID,
+  APPLE_PURCHASE_VERIFICATION_RPC_ARG_KEYS,
+  APPLE_SERVER_NOTIFICATION_RPC_ARG_KEYS,
   AppleAppStoreError,
   appleAppAccountTokenForUser,
   appleIdentifierFingerprint,
+  appleNotificationTransitionInput,
   appleProductIds,
   applePurchaseVerificationTransitionInput,
   appleProviderProductRef,
@@ -142,6 +145,8 @@ describe("Apple App Store server helpers", () => {
     expect(args.p_provider_event_ref).not.toContain("2000000000000000");
     expect(args.p_provider_event_ref).not.toContain(USER_ID);
     expect(args.p_original_transaction_id_fingerprint).not.toContain("2000000000000000");
+    expect(sortedKeys(args)).toEqual(sortedKeys(APPLE_PURCHASE_VERIFICATION_RPC_ARG_KEYS));
+    expectNoUndefinedRpcArgs(args);
 
     const conflict = await normalizeAppleSubscription({
       transaction: transactionPayload({ productId: APPLE_MONTHLY_PRODUCT_ID, appAccountToken: "22222222-2222-4333-8444-555555555555" }),
@@ -159,6 +164,80 @@ describe("Apple App Store server helpers", () => {
         asOfIso: "2026-07-18T20:00:00.000Z"
       })
     ).rejects.toMatchObject({ result: "app_account_token_mismatch" });
+  });
+
+  it("builds exact TEST Apple server-notification RPC args without purchase-only user fields", async () => {
+    const signedDate = 1784404800000;
+    const args = await appleNotificationTransitionInput({
+      normalized: null,
+      notification: {
+        notificationType: "TEST",
+        notificationUUID: "aaaaaaaa-bbbb-4ccc-8ddd-eeeeeeeeeeee",
+        signedDate
+      },
+      payloadHash: "b".repeat(64),
+      asOfIso: "2026-07-18T20:00:00.000Z"
+    });
+
+    expect(sortedKeys(args)).toEqual(sortedKeys(APPLE_SERVER_NOTIFICATION_RPC_ARG_KEYS));
+    expect(args).not.toHaveProperty("p_user_id");
+    expect(args).not.toHaveProperty("p_user_ref_fingerprint");
+    expectNoUndefinedRpcArgs(args);
+    expect(args).toMatchObject({
+      p_provider_environment: "sandbox",
+      p_provider_event_ref: "notification:aaaaaaaa-bbbb-4ccc-8ddd-eeeeeeeeeeee",
+      p_event_type: "TEST",
+      p_event_subtype: null,
+      p_event_time: new Date(signedDate).toISOString(),
+      p_product_id: null,
+      p_provider_status: null,
+      p_test_purchase: true
+    });
+  });
+
+  it("builds exact EXPIRED VOLUNTARY Apple server-notification RPC args without purchase-only user fields", async () => {
+    const asOfIso = "2026-07-18T20:00:00.000Z";
+    const notificationSignedDate = 1784404900000;
+    const normalized = await normalizeAppleSubscription({
+      transaction: transactionPayload({ productId: APPLE_MONTHLY_PRODUCT_ID, appAccountToken: USER_ID }),
+      renewalInfo: renewalPayload({ autoRenewStatus: 0 }),
+      status: 2,
+      notificationType: "EXPIRED",
+      config,
+      asOfIso
+    });
+
+    expect(normalized.error).toBeNull();
+    const args = await appleNotificationTransitionInput({
+      normalized: normalized.normalized!,
+      notification: {
+        notificationType: "EXPIRED",
+        subtype: "VOLUNTARY",
+        notificationUUID: "bbbbbbbb-cccc-4ddd-8eee-ffffffffffff",
+        signedDate: notificationSignedDate
+      },
+      payloadHash: "c".repeat(64),
+      asOfIso
+    });
+
+    expect(sortedKeys(args)).toEqual(sortedKeys(APPLE_SERVER_NOTIFICATION_RPC_ARG_KEYS));
+    expect(args).not.toHaveProperty("p_user_id");
+    expect(args).not.toHaveProperty("p_user_ref_fingerprint");
+    expectNoUndefinedRpcArgs(args);
+    expect(args).toMatchObject({
+      p_provider_environment: "sandbox",
+      p_provider_event_ref: "notification:bbbbbbbb-cccc-4ddd-8eee-ffffffffffff",
+      p_event_type: "EXPIRED",
+      p_event_subtype: "VOLUNTARY",
+      p_event_time: new Date(1784404800000).toISOString(),
+      p_product_id: APPLE_MONTHLY_PRODUCT_ID,
+      p_provider_product_ref: "com.canyougeo.app:com.canyougeo.pro.monthly",
+      p_provider_status: "expired",
+      p_auto_renews: false,
+      p_current_period_end: null,
+      p_expires_at: new Date(1786996800000).toISOString(),
+      p_test_purchase: true
+    });
   });
 
   it("calls service-role-only RPC bridges and never places signed payloads or API credentials in RPC names", async () => {
@@ -193,6 +272,14 @@ describe("Apple App Store server helpers", () => {
     expect(JSON.stringify(calls)).not.toMatch(/signedPayload|signedTransactionInfo|private_key|access_token|APPLE_APP_STORE_PRIVATE_KEY/);
   });
 });
+
+function sortedKeys(value: object | readonly string[]) {
+  return (Array.isArray(value) ? [...value] : Object.keys(value)).sort();
+}
+
+function expectNoUndefinedRpcArgs(args: object) {
+  expect(Object.entries(args).filter(([, value]) => value === undefined)).toEqual([]);
+}
 
 function transactionPayload(input: { productId: string; appAccountToken: string }) {
   return {
