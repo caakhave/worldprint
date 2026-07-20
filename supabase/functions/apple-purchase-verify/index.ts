@@ -3,6 +3,7 @@ import { createClient } from "https://esm.sh/@supabase/supabase-js@2.108.2";
 import { billingCorsHeaders } from "../_shared/security.ts";
 import {
   AppleAppStoreError,
+  appleEnvironmentFromPayload,
   applePurchaseVerificationTransitionInput,
   fetchAppleSubscriptionStatuses,
   normalizeVerifiedAppleStatusResponse,
@@ -46,16 +47,20 @@ async function handleVerifyRequest(request: Request): Promise<Response> {
     signedRenewalInfo: parsed.body.signedRenewalInfo,
     config
   });
+  const transactionEnvironment = appleEnvironmentFromPayload(clientVerified.transaction.environment);
+  if (!transactionEnvironment) throw new AppleAppStoreError("environment_mismatch", false);
   const originalTransactionId = String(clientVerified.transaction.originalTransactionId ?? "");
   if (!originalTransactionId) throw new AppleAppStoreError("missing_original_transaction_id", false);
 
   const statusResponse = await fetchAppleSubscriptionStatuses({
     config,
+    environment: transactionEnvironment,
     originalTransactionId
   });
   const normalized = await normalizeVerifiedAppleStatusResponse({
     response: statusResponse,
     originalTransactionId,
+    expectedEnvironment: transactionEnvironment,
     config,
     asOfIso: new Date().toISOString()
   });
@@ -64,6 +69,7 @@ async function handleVerifyRequest(request: Request): Promise<Response> {
   const payloadHash = await sha256Hex(`${parsed.body.signedTransactionInfo}.${parsed.body.signedRenewalInfo ?? ""}`);
   const transitionArgs = await applePurchaseVerificationTransitionInput({
     normalized: normalized.normalized,
+    deploymentMode: config.deploymentMode,
     userId: user.id,
     sourceEventRef: `verify:${normalized.normalized.originalTransactionIdFingerprint}:${normalized.normalized.transactionIdFingerprint.slice(-16)}:${payloadHash.slice(0, 16)}`,
     payloadHash,
@@ -83,11 +89,31 @@ async function handleVerifyRequest(request: Request): Promise<Response> {
       ok: true,
       status: row.already_processed ? "already_verified" : "verified",
       entitlementRefreshRecommended: row.compatibility_refreshed,
+      entitlementScope: row.entitlement_scope,
+      nativeReviewEntitlement:
+        row.entitlement_scope === "native_review" && appleNativeReviewEntitlementGrantsPro(normalized.normalized)
+          ? {
+              providerEnvironment: "sandbox",
+              plan: "pro",
+              status: "active",
+              currentPeriodEnd: normalized.normalized.currentPeriodEnd,
+              cancelAtPeriodEnd: normalized.normalized.providerStatus === "cancelled_active_until_period_end",
+              verifiedAt: new Date().toISOString()
+            }
+          : null,
       clientMayFinishTransaction: row.processed || row.already_processed
     },
     200,
     request,
     config
+  );
+}
+
+function appleNativeReviewEntitlementGrantsPro(normalized: { providerStatus: string; currentPeriodEnd: string | null; gracePeriodEndsAt: string | null }): boolean {
+  return (
+    normalized.providerStatus === "active" ||
+    normalized.providerStatus === "cancelled_active_until_period_end" ||
+    normalized.providerStatus === "grace_period"
   );
 }
 

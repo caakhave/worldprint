@@ -9,7 +9,9 @@ import {
   resolvePlayerEntitlement,
   type PlayerEntitlement
 } from "@/lib/account/entitlements";
+import { isIOSAppleStoreKitRuntime } from "@/lib/mobile/appleStoreKit";
 import { NATIVE_ACCOUNT_SYNC_DEFERRED_MESSAGE } from "@/lib/mobile/nativeConnectivity";
+import { nativeAppleReviewEntitlement } from "@/features/account/nativeAppleReviewEntitlement";
 
 export type EntitlementState = {
   entitlement: PlayerEntitlement;
@@ -55,7 +57,7 @@ export function useEntitlement(): EntitlementState {
       setEntitlement(resolvePlayerEntitlement(null, true));
     } else {
       setError(null);
-      setEntitlement(resolvePlayerEntitlement(result.data, true));
+      setEntitlement(resolveRemoteOrNativeAppleReviewEntitlement(result.data));
     }
     setLoading(false);
   }, [account.client, account.loading, account.nativeOffline, account.user]);
@@ -83,4 +85,11 @@ export function useEntitlement(): EntitlementState {
     }),
     [account.configured, account.user, entitlement, error, loadEntitlement, loading]
   );
+}
+
+function resolveRemoteOrNativeAppleReviewEntitlement(row: Parameters<typeof resolvePlayerEntitlement>[0]): PlayerEntitlement {
+  const remoteEntitlement = resolvePlayerEntitlement(row, true);
+  if (remoteEntitlement.plan === "pro") return remoteEntitlement;
+  if (!isIOSAppleStoreKitRuntime()) return remoteEntitlement;
+  return nativeAppleReviewEntitlement() ?? remoteEntitlement;
 }

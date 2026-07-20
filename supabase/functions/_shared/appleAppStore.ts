@@ -12,6 +12,8 @@ export const APPLE_ROOT_CA_SHA256_FINGERPRINTS = [
 ] as const;
 
 export type AppleEnvironment = "sandbox" | "production";
+export type AppleDeploymentMode = "staging" | "production";
+export type AppleEntitlementScope = "live" | "native_review" | "none";
 
 export type AppleProductId = typeof APPLE_MONTHLY_PRODUCT_ID | typeof APPLE_ANNUAL_PRODUCT_ID;
 
@@ -34,12 +36,13 @@ export type AppleServerConfig = {
   privateKey: string;
   bundleId: string;
   appAppleId: string;
-  environment: AppleEnvironment;
+  allowedEnvironments: AppleEnvironment[];
+  deploymentMode: AppleDeploymentMode;
 };
 
 export type ApplePurchaseContextConfig = Pick<
   AppleServerConfig,
-  "supabaseUrl" | "supabaseAnonKey" | "bundleId" | "appAppleId" | "environment"
+  "supabaseUrl" | "supabaseAnonKey" | "bundleId" | "appAppleId" | "allowedEnvironments" | "deploymentMode"
 >;
 
 export type AppleTransactionDecodedPayload = {
@@ -148,6 +151,8 @@ export type ApplePurchaseVerificationRow = {
   already_processed: boolean;
   provider_subscription_changed: boolean;
   compatibility_refreshed: boolean;
+  native_review_entitlement_refreshed: boolean;
+  entitlement_scope: AppleEntitlementScope;
   reconciliation_required: boolean;
   retryable: boolean;
 };
@@ -158,6 +163,7 @@ export type AppleNotificationTransitionRow = ApplePurchaseVerificationRow & {
 
 type AppleSubscriptionTransitionRpcArgsBase = {
   p_provider_environment: AppleEnvironment;
+  p_deployment_mode: AppleDeploymentMode;
   p_provider_event_ref: string;
   p_event_type: string;
   p_event_subtype: string | null;
@@ -199,6 +205,7 @@ export type ApplePurchaseVerificationRpcArgs = AppleSubscriptionTransitionRpcArg
 
 export const APPLE_SERVER_NOTIFICATION_RPC_ARG_KEYS = [
   "p_provider_environment",
+  "p_deployment_mode",
   "p_provider_event_ref",
   "p_event_type",
   "p_event_subtype",
@@ -227,6 +234,7 @@ export const APPLE_SERVER_NOTIFICATION_RPC_ARG_KEYS = [
 
 export const APPLE_PURCHASE_VERIFICATION_RPC_ARG_KEYS = [
   "p_provider_environment",
+  "p_deployment_mode",
   "p_user_id",
   "p_user_ref_fingerprint",
   "p_provider_event_ref",
@@ -303,19 +311,22 @@ type DerNode = {
 };
 
 export function readApplePurchaseContextConfig(): { config: ApplePurchaseContextConfig | null; error: string | null; missing: string[] } {
+  const allowedEnvironments = parseAllowedAppleEnvironments(Deno.env.get("APPLE_ALLOWED_ENVIRONMENTS"));
   const config: ApplePurchaseContextConfig = {
     supabaseUrl: Deno.env.get("SUPABASE_URL") ?? "",
     supabaseAnonKey: Deno.env.get("SUPABASE_ANON_KEY") ?? "",
     bundleId: Deno.env.get("APPLE_BUNDLE_ID") ?? "",
     appAppleId: Deno.env.get("APPLE_APP_ID") ?? "",
-    environment: (Deno.env.get("APPLE_ENVIRONMENT") ?? "sandbox") as AppleEnvironment
+    allowedEnvironments,
+    deploymentMode: (Deno.env.get("APPLE_DEPLOYMENT_MODE") ?? "") as AppleDeploymentMode
   };
   const missing = [
     ["SUPABASE_URL", config.supabaseUrl],
     ["SUPABASE_ANON_KEY", config.supabaseAnonKey],
     ["APPLE_BUNDLE_ID", config.bundleId],
     ["APPLE_APP_ID", config.appAppleId],
-    ["APPLE_ENVIRONMENT", config.environment]
+    ["APPLE_ALLOWED_ENVIRONMENTS", allowedEnvironments.length ? "configured" : ""],
+    ["APPLE_DEPLOYMENT_MODE", config.deploymentMode]
   ]
     .filter(([, value]) => !value)
     .map(([name]) => name);
@@ -326,6 +337,7 @@ export function readApplePurchaseContextConfig(): { config: ApplePurchaseContext
 }
 
 export function readAppleServerConfig(): { config: AppleServerConfig | null; error: string | null; missing: string[] } {
+  const allowedEnvironments = parseAllowedAppleEnvironments(Deno.env.get("APPLE_ALLOWED_ENVIRONMENTS"));
   const config: AppleServerConfig = {
     supabaseUrl: Deno.env.get("SUPABASE_URL") ?? "",
     supabaseAnonKey: Deno.env.get("SUPABASE_ANON_KEY") ?? "",
@@ -335,7 +347,8 @@ export function readAppleServerConfig(): { config: AppleServerConfig | null; err
     privateKey: Deno.env.get("APPLE_APP_STORE_PRIVATE_KEY") ?? "",
     bundleId: Deno.env.get("APPLE_BUNDLE_ID") ?? "",
     appAppleId: Deno.env.get("APPLE_APP_ID") ?? "",
-    environment: (Deno.env.get("APPLE_ENVIRONMENT") ?? "sandbox") as AppleEnvironment
+    allowedEnvironments,
+    deploymentMode: (Deno.env.get("APPLE_DEPLOYMENT_MODE") ?? "") as AppleDeploymentMode
   };
   const missing = [
     ["SUPABASE_URL", config.supabaseUrl],
@@ -346,7 +359,8 @@ export function readAppleServerConfig(): { config: AppleServerConfig | null; err
     ["APPLE_APP_STORE_PRIVATE_KEY", config.privateKey],
     ["APPLE_BUNDLE_ID", config.bundleId],
     ["APPLE_APP_ID", config.appAppleId],
-    ["APPLE_ENVIRONMENT", config.environment]
+    ["APPLE_ALLOWED_ENVIRONMENTS", allowedEnvironments.length ? "configured" : ""],
+    ["APPLE_DEPLOYMENT_MODE", config.deploymentMode]
   ]
     .filter(([, value]) => !value)
     .map(([name]) => name);
@@ -405,7 +419,7 @@ export function parseApplePurchaseVerifyBody(input: {
 export async function verifyAppleSignedTransactionSet(input: {
   signedTransactionInfo: string;
   signedRenewalInfo?: string | null;
-  config: Pick<AppleServerConfig, "bundleId" | "appAppleId" | "environment">;
+  config: Pick<AppleServerConfig, "bundleId" | "appAppleId" | "allowedEnvironments">;
 }): Promise<VerifiedAppleSignedPayloads> {
   const transaction = await verifyAppleSignedJws<AppleTransactionDecodedPayload>(input.signedTransactionInfo);
   validateAppleTransactionPayload(transaction, input.config);
@@ -416,7 +430,7 @@ export async function verifyAppleSignedTransactionSet(input: {
 
 export async function verifyAppleNotificationPayload(input: {
   signedPayload: string;
-  config: Pick<AppleServerConfig, "bundleId" | "appAppleId" | "environment">;
+  config: Pick<AppleServerConfig, "bundleId" | "appAppleId" | "allowedEnvironments">;
 }): Promise<{
   notification: AppleNotificationDecodedPayload;
   transaction: AppleTransactionDecodedPayload | null;
@@ -444,7 +458,7 @@ export async function normalizeAppleSubscription(input: {
   renewalInfo: AppleRenewalInfoDecodedPayload | null;
   status: number | null;
   notificationType?: string | null;
-  config: Pick<AppleServerConfig, "bundleId" | "appAppleId" | "environment">;
+  config: Pick<AppleServerConfig, "bundleId" | "appAppleId" | "allowedEnvironments">;
   asOfIso: string;
 }): Promise<{ normalized: NormalizedAppleSubscription | null; error: string | null }> {
   const transactionId = requiredString(input.transaction.transactionId);
@@ -458,8 +472,8 @@ export async function normalizeAppleSubscription(input: {
   if (!originalTransactionId || !validAppleIdentifier(originalTransactionId)) return { normalized: null, error: "invalid_original_transaction_id" };
   if (!isAppleProductId(productId)) return { normalized: null, error: "unsupported_product" };
   if (bundleId !== input.config.bundleId) return { normalized: null, error: "bundle_mismatch" };
-  if (environment !== input.config.environment) return { normalized: null, error: "environment_mismatch" };
-  if (input.config.environment === "production" && appAppleId !== input.config.appAppleId) return { normalized: null, error: "app_id_mismatch" };
+  if (!environment || !appleEnvironmentAllowed(input.config, environment)) return { normalized: null, error: "environment_mismatch" };
+  if (environment === "production" && appAppleId !== input.config.appAppleId) return { normalized: null, error: "app_id_mismatch" };
   if (appAccountToken !== null && !isUuid(appAccountToken)) return { normalized: null, error: "invalid_app_account_token" };
 
   const signedDate = millisToIso(input.transaction.signedDate) ?? millisToIso(input.renewalInfo?.signedDate) ?? input.asOfIso;
@@ -606,14 +620,15 @@ export function providerStatusForAppleState(input: {
 export async function normalizeVerifiedAppleStatusResponse(input: {
   response: AppleStatusResponse;
   originalTransactionId: string;
-  config: Pick<AppleServerConfig, "bundleId" | "appAppleId" | "environment">;
+  expectedEnvironment: AppleEnvironment;
+  config: Pick<AppleServerConfig, "bundleId" | "appAppleId" | "allowedEnvironments">;
   asOfIso: string;
 }): Promise<{ normalized: NormalizedAppleSubscription | null; error: string | null }> {
-  if (appleEnvironmentFromPayload(input.response.environment) !== input.config.environment) {
+  if (appleEnvironmentFromPayload(input.response.environment) !== input.expectedEnvironment) {
     return { normalized: null, error: "status_environment_mismatch" };
   }
   if (requiredString(input.response.bundleId) !== input.config.bundleId) return { normalized: null, error: "status_bundle_mismatch" };
-  if (input.config.environment === "production" && stringFromUnknown(input.response.appAppleId) !== input.config.appAppleId) {
+  if (input.expectedEnvironment === "production" && stringFromUnknown(input.response.appAppleId) !== input.config.appAppleId) {
     return { normalized: null, error: "status_app_id_mismatch" };
   }
   const candidates: Array<{ transaction: AppleTransactionDecodedPayload; renewalInfo: AppleRenewalInfoDecodedPayload | null; status: number | null }> = [];
@@ -624,6 +639,7 @@ export async function normalizeVerifiedAppleStatusResponse(input: {
       if (!validJwsShape(signedTransactionInfo)) continue;
       const signedRenewalInfo = typeof item.signedRenewalInfo === "string" ? item.signedRenewalInfo : null;
       const verified = await verifyAppleSignedTransactionSet({ signedTransactionInfo, signedRenewalInfo, config: input.config });
+      if (appleEnvironmentFromPayload(verified.transaction.environment) !== input.expectedEnvironment) continue;
       candidates.push({
         transaction: verified.transaction,
         renewalInfo: verified.renewalInfo,
@@ -643,13 +659,14 @@ export async function normalizeVerifiedAppleStatusResponse(input: {
 }
 
 export async function fetchAppleSubscriptionStatuses(input: {
-  config: Pick<AppleServerConfig, "issuerId" | "keyId" | "privateKey" | "bundleId" | "environment">;
+  config: Pick<AppleServerConfig, "issuerId" | "keyId" | "privateKey" | "bundleId">;
+  environment: AppleEnvironment;
   originalTransactionId: string;
   fetchImpl?: FetchLike;
 }): Promise<AppleStatusResponse> {
   const fetchImpl = input.fetchImpl ?? fetch;
   const accessToken = await createAppleAppStoreApiJwt(input.config);
-  const baseUrl = input.config.environment === "production" ? "https://api.storekit.apple.com" : "https://api.storekit-sandbox.apple.com";
+  const baseUrl = input.environment === "production" ? "https://api.storekit.apple.com" : "https://api.storekit-sandbox.apple.com";
   const response = await fetchImpl(`${baseUrl}/inApps/v1/subscriptions/${encodeURIComponent(input.originalTransactionId)}`, {
     method: "GET",
     headers: {
@@ -682,6 +699,7 @@ export async function createAppleAppStoreApiJwt(input: Pick<AppleServerConfig, "
 
 export async function applePurchaseVerificationTransitionInput(input: {
   normalized: NormalizedAppleSubscription;
+  deploymentMode: AppleDeploymentMode;
   userId: string;
   sourceEventRef: string;
   payloadHash: string;
@@ -692,6 +710,7 @@ export async function applePurchaseVerificationTransitionInput(input: {
   }
   return appleTransitionArgs({
     normalized: input.normalized,
+    deploymentMode: input.deploymentMode,
     userId: input.userId,
     userRefFingerprint: await appleUserRefFingerprint(input.userId),
     eventType: "purchase_verification",
@@ -705,6 +724,7 @@ export async function applePurchaseVerificationTransitionInput(input: {
 export async function appleNotificationTransitionInput(input: {
   normalized: NormalizedAppleSubscription | null;
   notification: AppleNotificationDecodedPayload;
+  deploymentMode: AppleDeploymentMode;
   payloadHash: string;
   asOfIso: string;
 }): Promise<AppleServerNotificationRpcArgs> {
@@ -714,8 +734,11 @@ export async function appleNotificationTransitionInput(input: {
     throw new AppleAppStoreError("invalid_notification", false);
   }
   if (notificationType === "TEST") {
+    const environment = appleNotificationEnvironment(input.notification);
+    if (!environment) throw new AppleAppStoreError("missing_test_notification_environment", false);
     return {
-      p_provider_environment: "sandbox",
+      p_provider_environment: environment,
+      p_deployment_mode: input.deploymentMode,
       p_provider_event_ref: `notification:${notificationUuid}`,
       p_event_type: "TEST",
       p_event_subtype: null,
@@ -745,6 +768,7 @@ export async function appleNotificationTransitionInput(input: {
   if (!input.normalized) throw new AppleAppStoreError("missing_normalized_subscription", true, 500);
   return appleServerNotificationTransitionArgs({
     normalized: input.normalized,
+    deploymentMode: input.deploymentMode,
     eventType: notificationType,
     eventSubtype: stringFromUnknown(input.notification.subtype),
     providerEventRef: `notification:${notificationUuid}`,
@@ -821,20 +845,35 @@ export async function appleIdentifierFingerprint(value: string, prefix: string):
   return `${prefix}_${await sha256Hex(value)}`;
 }
 
-function validateAppleBaseConfig(config: Pick<AppleServerConfig, "bundleId" | "appAppleId" | "environment">): string | null {
+function validateAppleBaseConfig(
+  config: Pick<AppleServerConfig, "bundleId" | "appAppleId" | "allowedEnvironments" | "deploymentMode">
+): string | null {
   if (config.bundleId !== APPLE_BUNDLE_ID) return "Apple bundle ID is not configured for Can You Geo.";
   if (config.appAppleId !== APPLE_APP_ID) return "Apple app ID is not configured for Can You Geo.";
-  if (config.environment !== "sandbox" && config.environment !== "production") return "APPLE_ENVIRONMENT must be sandbox or production.";
+  if (!config.allowedEnvironments.length) return "APPLE_ALLOWED_ENVIRONMENTS must include sandbox or production.";
+  if (!config.allowedEnvironments.every((environment) => environment === "sandbox" || environment === "production")) {
+    return "APPLE_ALLOWED_ENVIRONMENTS must include only sandbox or production.";
+  }
+  if (new Set(config.allowedEnvironments).size !== config.allowedEnvironments.length) {
+    return "APPLE_ALLOWED_ENVIRONMENTS must not contain duplicates.";
+  }
+  if (config.deploymentMode !== "staging" && config.deploymentMode !== "production") {
+    return "APPLE_DEPLOYMENT_MODE must be staging or production.";
+  }
+  if (config.deploymentMode === "staging" && config.allowedEnvironments.some((environment) => environment !== "sandbox")) {
+    return "Staging Apple deployments may only allow sandbox transactions.";
+  }
   return null;
 }
 
 function validateAppleTransactionPayload(
   payload: AppleTransactionDecodedPayload,
-  config: Pick<AppleServerConfig, "bundleId" | "appAppleId" | "environment">
+  config: Pick<AppleServerConfig, "bundleId" | "appAppleId" | "allowedEnvironments">
 ): void {
+  const environment = appleEnvironmentFromPayload(payload.environment);
   if (payload.bundleId !== config.bundleId) throw new AppleAppStoreError("bundle_mismatch", false);
-  if (appleEnvironmentFromPayload(payload.environment) !== config.environment) throw new AppleAppStoreError("environment_mismatch", false);
-  if (config.environment === "production" && stringFromUnknown(payload.appAppleId) !== config.appAppleId) throw new AppleAppStoreError("app_id_mismatch", false);
+  if (!environment || !appleEnvironmentAllowed(config, environment)) throw new AppleAppStoreError("environment_mismatch", false);
+  if (environment === "production" && stringFromUnknown(payload.appAppleId) !== config.appAppleId) throw new AppleAppStoreError("app_id_mismatch", false);
   if (!isAppleProductId(payload.productId)) throw new AppleAppStoreError("unsupported_product", false);
   if (!requiredString(payload.originalTransactionId) || !requiredString(payload.transactionId)) {
     throw new AppleAppStoreError("missing_transaction_identity", false);
@@ -843,10 +882,12 @@ function validateAppleTransactionPayload(
 
 function validateAppleRenewalInfoPayload(
   payload: AppleRenewalInfoDecodedPayload,
-  config: Pick<AppleServerConfig, "bundleId" | "appAppleId" | "environment">,
+  config: Pick<AppleServerConfig, "bundleId" | "appAppleId" | "allowedEnvironments">,
   transaction: AppleTransactionDecodedPayload
 ): void {
-  if (appleEnvironmentFromPayload(payload.environment) !== config.environment) throw new AppleAppStoreError("renewal_environment_mismatch", false);
+  const transactionEnvironment = appleEnvironmentFromPayload(transaction.environment);
+  if (!transactionEnvironment || !appleEnvironmentAllowed(config, transactionEnvironment)) throw new AppleAppStoreError("environment_mismatch", false);
+  if (appleEnvironmentFromPayload(payload.environment) !== transactionEnvironment) throw new AppleAppStoreError("renewal_environment_mismatch", false);
   const renewalOriginal = requiredString(payload.originalTransactionId);
   if (renewalOriginal && renewalOriginal !== transaction.originalTransactionId) throw new AppleAppStoreError("renewal_original_transaction_mismatch", false);
   const productId = requiredString(payload.productId) || requiredString(payload.autoRenewProductId);
@@ -855,20 +896,20 @@ function validateAppleRenewalInfoPayload(
 
 function validateAppleNotificationPayload(
   payload: AppleNotificationDecodedPayload,
-  config: Pick<AppleServerConfig, "bundleId" | "appAppleId" | "environment">
+  config: Pick<AppleServerConfig, "bundleId" | "appAppleId" | "allowedEnvironments">
 ): void {
   const notificationType = requiredString(payload.notificationType);
   const notificationUuid = requiredString(payload.notificationUUID);
   if (!notificationType || !notificationUuid) throw new AppleAppStoreError("invalid_notification_payload", false);
   if (!APPLE_NOTIFICATION_TYPES.has(notificationType)) throw new AppleAppStoreError("unsupported_notification_type", false);
-  if (notificationType === "TEST") return;
   if (!payload.data || typeof payload.data !== "object" || Array.isArray(payload.data)) {
     throw new AppleAppStoreError("missing_notification_data", false);
   }
   const data = payload.data as AppleNotificationData;
   if (data.bundleId !== config.bundleId) throw new AppleAppStoreError("notification_bundle_mismatch", false);
-  if (appleEnvironmentFromPayload(data.environment) !== config.environment) throw new AppleAppStoreError("notification_environment_mismatch", false);
-  if (config.environment === "production" && stringFromUnknown(data.appAppleId) !== config.appAppleId) {
+  const environment = appleEnvironmentFromPayload(data.environment);
+  if (!environment || !appleEnvironmentAllowed(config, environment)) throw new AppleAppStoreError("notification_environment_mismatch", false);
+  if (environment === "production" && stringFromUnknown(data.appAppleId) !== config.appAppleId) {
     throw new AppleAppStoreError("notification_app_id_mismatch", false);
   }
 }
@@ -895,6 +936,7 @@ async function optionalAppleIdentifierFingerprint(value: unknown, prefix: string
 
 function appleSubscriptionTransitionBaseArgs(input: {
   normalized: NormalizedAppleSubscription;
+  deploymentMode: AppleDeploymentMode;
   eventType: string;
   eventSubtype: string | null;
   providerEventRef: string;
@@ -903,6 +945,7 @@ function appleSubscriptionTransitionBaseArgs(input: {
 }): AppleSubscriptionTransitionRpcArgsBase {
   return {
     p_provider_environment: input.normalized.providerEnvironment,
+    p_deployment_mode: input.deploymentMode,
     p_provider_event_ref: input.providerEventRef,
     p_event_type: input.eventType,
     p_event_subtype: input.eventSubtype,
@@ -932,6 +975,7 @@ function appleSubscriptionTransitionBaseArgs(input: {
 
 function appleTransitionArgs(input: {
   normalized: NormalizedAppleSubscription;
+  deploymentMode: AppleDeploymentMode;
   userId: string;
   userRefFingerprint: string;
   eventType: string;
@@ -949,6 +993,7 @@ function appleTransitionArgs(input: {
 
 function appleServerNotificationTransitionArgs(input: {
   normalized: NormalizedAppleSubscription;
+  deploymentMode: AppleDeploymentMode;
   eventType: string;
   eventSubtype: string | null;
   providerEventRef: string;
@@ -966,6 +1011,14 @@ function normalizePurchaseRow(data: unknown): ApplePurchaseVerificationRow | nul
   if (typeof candidate.provider_environment !== "string") return null;
   if (typeof candidate.event_type !== "string") return null;
   if (typeof candidate.processed !== "boolean") return null;
+  if (typeof candidate.native_review_entitlement_refreshed !== "boolean") return null;
+  if (
+    candidate.entitlement_scope !== "live" &&
+    candidate.entitlement_scope !== "native_review" &&
+    candidate.entitlement_scope !== "none"
+  ) {
+    return null;
+  }
   if (typeof candidate.retryable !== "boolean") return null;
   return candidate as ApplePurchaseVerificationRow;
 }
@@ -1013,7 +1066,28 @@ function isAppleProductId(value: unknown): value is AppleProductId {
   return value === APPLE_MONTHLY_PRODUCT_ID || value === APPLE_ANNUAL_PRODUCT_ID;
 }
 
-function appleEnvironmentFromPayload(value: unknown): AppleEnvironment | null {
+function parseAllowedAppleEnvironments(value: string | null | undefined): AppleEnvironment[] {
+  if (!value) return [];
+  return value
+    .split(",")
+    .map((entry) => entry.trim().toLowerCase())
+    .filter(Boolean)
+    .flatMap((entry) => (entry === "sandbox" || entry === "production" ? [entry] : [entry as AppleEnvironment]));
+}
+
+function appleEnvironmentAllowed(
+  config: Pick<AppleServerConfig, "allowedEnvironments">,
+  environment: AppleEnvironment
+): boolean {
+  return config.allowedEnvironments.includes(environment);
+}
+
+function appleNotificationEnvironment(notification: AppleNotificationDecodedPayload): AppleEnvironment | null {
+  if (!notification.data || typeof notification.data !== "object" || Array.isArray(notification.data)) return null;
+  return appleEnvironmentFromPayload((notification.data as AppleNotificationData).environment);
+}
+
+export function appleEnvironmentFromPayload(value: unknown): AppleEnvironment | null {
   if (value === "Sandbox" || value === "sandbox") return "sandbox";
   if (value === "Production" || value === "production") return "production";
   return null;

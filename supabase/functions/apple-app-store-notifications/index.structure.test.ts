@@ -11,6 +11,10 @@ describe("apple-app-store-notifications Edge Function structure", () => {
     expect(config).toContain("verify_jwt = false");
     expect(source).toContain("verifyAppleNotificationPayload");
     expect(source).toContain("fetchAppleSubscriptionStatuses");
+    expect(source).toContain("appleEnvironmentFromPayload(verified.transaction?.environment)");
+    expect(source).toContain("environment: notificationEnvironment");
+    expect(source).toContain("expectedEnvironment: notificationEnvironment");
+    expect(source).toContain("deploymentMode: config.deploymentMode");
     expect(source).toContain("processAppleServerNotification");
     expect(source.indexOf("const verified = await verifyAppleNotificationPayload")).toBeLessThan(
       source.indexOf("const row = await processAppleServerNotification")

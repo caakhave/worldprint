@@ -2,6 +2,7 @@
 import { createClient } from "https://esm.sh/@supabase/supabase-js@2.108.2";
 import {
   AppleAppStoreError,
+  appleEnvironmentFromPayload,
   appleNotificationTransitionInput,
   fetchAppleSubscriptionStatuses,
   normalizeVerifiedAppleStatusResponse,
@@ -27,16 +28,21 @@ Deno.serve(async (request) => {
     const verified = await verifyAppleNotificationPayload({ signedPayload, config });
 
     let normalized = null;
+    let notificationEnvironment = null;
     if (verified.notification.notificationType !== "TEST") {
+      notificationEnvironment = appleEnvironmentFromPayload(verified.transaction?.environment);
+      if (!notificationEnvironment) throw new AppleAppStoreError("environment_mismatch", false);
       const originalTransactionId = String(verified.transaction?.originalTransactionId ?? "");
       if (!originalTransactionId) throw new AppleAppStoreError("missing_original_transaction_id", false);
       const statusResponse = await fetchAppleSubscriptionStatuses({
         config,
+        environment: notificationEnvironment,
         originalTransactionId
       });
       const status = await normalizeVerifiedAppleStatusResponse({
         response: statusResponse,
         originalTransactionId,
+        expectedEnvironment: notificationEnvironment,
         config,
         asOfIso: new Date().toISOString()
       });
@@ -50,9 +56,10 @@ Deno.serve(async (request) => {
     const row = await processAppleServerNotification(
       supabase,
       await appleNotificationTransitionInput({
-        normalized,
-        notification: verified.notification,
-        payloadHash,
+      normalized,
+      notification: verified.notification,
+      deploymentMode: config.deploymentMode,
+      payloadHash,
         asOfIso: new Date().toISOString()
       })
     );

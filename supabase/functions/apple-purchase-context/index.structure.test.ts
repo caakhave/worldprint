@@ -11,7 +11,10 @@ describe("apple-purchase-context Edge Function structure", () => {
     expect(config).toContain("verify_jwt = true");
     expect(source).toContain("getSignedInUser(request, config)");
     expect(source).toContain("appleAppAccountTokenForUser(user.id)");
+    expect(source).toContain('serverMode: "dual_environment"');
+    expect(source).toContain("allowedEnvironments: config.allowedEnvironments");
     expect(source).toContain("allowedProductIds: appleProductIds()");
+    expect(source).not.toContain("environment: config.environment");
   });
 
   it("does not create provider subscriptions, grant entitlements, or expose credentials", () => {

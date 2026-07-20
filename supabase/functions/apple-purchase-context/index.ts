@@ -31,7 +31,8 @@ async function handleContextRequest(request: Request): Promise<Response> {
       appAccountToken: appleAppAccountTokenForUser(user.id),
       bundleId: config.bundleId,
       appAppleId: config.appAppleId,
-      environment: config.environment,
+      serverMode: "dual_environment",
+      allowedEnvironments: config.allowedEnvironments,
       allowedProductIds: appleProductIds()
     },
     200,
