@@ -2,6 +2,7 @@
 
 import { useCallback, useEffect, useMemo, useState } from "react";
 import { useSupabaseAccount } from "@/features/account/useSupabaseAccount";
+import { subscribeEntitlementChanged } from "@/features/account/entitlementInvalidation";
 import {
   GUEST_ENTITLEMENT,
   fetchRemoteEntitlement,
@@ -62,6 +63,14 @@ export function useEntitlement(): EntitlementState {
   useEffect(() => {
     void loadEntitlement();
   }, [loadEntitlement]);
+
+  useEffect(
+    () =>
+      subscribeEntitlementChanged(() => {
+        void loadEntitlement();
+      }),
+    [loadEntitlement]
+  );
 
   return useMemo(
     () => ({

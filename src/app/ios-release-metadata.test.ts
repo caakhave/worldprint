@@ -35,9 +35,9 @@ describe("iOS release metadata", () => {
     for (const configuration of ["Debug", "Release"] as const) {
       const settings = appTargetBuildSettings(configuration);
       expect(settings).toContain("MARKETING_VERSION = 1.0.0;");
-      expect(settings).toContain("CURRENT_PROJECT_VERSION = 6;");
+      expect(settings).toContain("CURRENT_PROJECT_VERSION = 7;");
       expect(settings).not.toContain("MARKETING_VERSION = 1.0;");
-      expect(settings).not.toContain("CURRENT_PROJECT_VERSION = 7;");
+      expect(settings).not.toContain("CURRENT_PROJECT_VERSION = 8;");
     }
 
     expect(infoPlist).toContain("<key>CFBundleShortVersionString</key>");

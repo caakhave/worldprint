@@ -1,5 +1,6 @@
-import { renderHook, waitFor } from "@testing-library/react";
+import { act, renderHook, waitFor } from "@testing-library/react";
 import { beforeEach, describe, expect, it, vi } from "vitest";
+import { notifyEntitlementChanged, ENTITLEMENT_CHANGED_EVENT } from "@/features/account/entitlementInvalidation";
 import { useEntitlement } from "@/features/account/useEntitlement";
 import { NATIVE_ACCOUNT_SYNC_DEFERRED_MESSAGE } from "@/lib/mobile/nativeConnectivity";
 
@@ -81,5 +82,58 @@ describe("useEntitlement native connectivity behavior", () => {
     await waitFor(() => expect(result.current.error).toBe(NATIVE_ACCOUNT_SYNC_DEFERRED_MESSAGE));
     expect(result.current.entitlement.plan).toBe("pro");
     expect(fetchRemoteEntitlementMock).toHaveBeenCalledTimes(1);
+  });
+
+  it("refreshes independently mounted consumers from one payload-free entitlement change notification", async () => {
+    fetchRemoteEntitlementMock.mockResolvedValue({ data: null, error: null });
+    const first = renderHook(() => useEntitlement());
+    const second = renderHook(() => useEntitlement());
+
+    await waitFor(() => expect(fetchRemoteEntitlementMock).toHaveBeenCalledTimes(2));
+    await waitFor(() => {
+      expect(first.result.current.entitlement.plan).toBe("free");
+      expect(second.result.current.entitlement.plan).toBe("free");
+    });
+
+    fetchRemoteEntitlementMock.mockResolvedValue({ data: proEntitlementRow, error: null });
+    const dispatchSpy = vi.spyOn(window, "dispatchEvent");
+
+    act(() => {
+      notifyEntitlementChanged();
+    });
+
+    await waitFor(() => {
+      expect(first.result.current.entitlement.plan).toBe("pro");
+      expect(second.result.current.entitlement.plan).toBe("pro");
+    });
+    expect(fetchRemoteEntitlementMock).toHaveBeenCalledTimes(4);
+
+    const entitlementEvents = dispatchSpy.mock.calls
+      .map(([event]) => event)
+      .filter((event) => event.type === ENTITLEMENT_CHANGED_EVENT);
+    expect(entitlementEvents).toHaveLength(1);
+    expect(entitlementEvents[0]).toBeInstanceOf(Event);
+    expect(entitlementEvents[0]).not.toBeInstanceOf(CustomEvent);
+    expect("detail" in entitlementEvents[0]).toBe(false);
+    dispatchSpy.mockRestore();
+  });
+
+  it("keeps access fail-safe when an entitlement-change refresh fails and does not recurse", async () => {
+    fetchRemoteEntitlementMock.mockResolvedValue({ data: null, error: null });
+    const { result } = renderHook(() => useEntitlement());
+
+    await waitFor(() => expect(result.current.entitlement.plan).toBe("free"));
+    fetchRemoteEntitlementMock.mockResolvedValue({ data: null, error: "network unavailable" });
+    const dispatchSpy = vi.spyOn(window, "dispatchEvent");
+
+    act(() => {
+      notifyEntitlementChanged();
+    });
+
+    await waitFor(() => expect(result.current.error).toBe("network unavailable"));
+    expect(result.current.entitlement.plan).toBe("free");
+    expect(fetchRemoteEntitlementMock).toHaveBeenCalledTimes(2);
+    expect(dispatchSpy.mock.calls.filter(([event]) => event.type === ENTITLEMENT_CHANGED_EVENT)).toHaveLength(1);
+    dispatchSpy.mockRestore();
   });
 });
