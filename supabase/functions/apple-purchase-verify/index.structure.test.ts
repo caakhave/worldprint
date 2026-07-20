@@ -25,4 +25,13 @@ describe("apple-purchase-verify Edge Function structure", () => {
     expect(source).not.toMatch(/json\([^)]*signedTransactionInfo|json\([^)]*originalTransactionId|json\([^)]*transactionId|json\([^)]*appAccountToken|json\([^)]*privateKey|json\([^)]*user\.id/is);
     expect(source).not.toMatch(/console\.(?:log|warn|error)\([^)]*signedTransactionInfo|console\.(?:log|warn|error)\([^)]*transactionId|console\.(?:log|warn|error)\([^)]*privateKey/is);
   });
+
+  it("separates StoreKit verification retry attempts without exposing raw Apple identifiers", () => {
+    const eventRefTemplate = source.match(/sourceEventRef:\s*`([^`]+)`/u)?.[1] ?? "";
+    expect(source).toContain("payloadHash.slice(0, 16)");
+    expect(eventRefTemplate).toContain("originalTransactionIdFingerprint");
+    expect(eventRefTemplate).toContain("transactionIdFingerprint.slice(-16)");
+    expect(eventRefTemplate).toContain("payloadHash.slice(0, 16)");
+    expect(eventRefTemplate).not.toMatch(/originalTransactionId\}|transactionId\}|signedTransactionInfo|signedRenewalInfo|user\.id|appAccountToken/u);
+  });
 });

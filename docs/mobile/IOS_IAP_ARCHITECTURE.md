@@ -490,6 +490,8 @@ Service-role-only replay and reconciliation ledger.
 | `provider_transaction_ref` | text null | Transaction id if known. |
 | `payload_hash` | text null | Hash of the raw payload/JWS for support dedupe without storing raw sensitive payloads in user-readable rows. |
 | `created_at` | timestamptz | Database default. |
+
+Operational note from sandbox recovery: Apple purchase verification event references must distinguish safe retry payloads for the same original transaction. StoreKit and App Store Server API may return a fresh signed payload for the same already-successful transaction before backend confirmation. `apple-purchase-verify` therefore derives its private provider event reference from the original-transaction fingerprint, a transaction-fingerprint suffix, and a short payload-hash suffix. This keeps raw Apple identifiers and signed payloads out of logs and public tables while avoiding a false `payload_conflict` that would otherwise leave the transaction unfinished and the app in Free state.
 | `updated_at` | timestamptz | Service-role update timestamp. |
 
 Required constraints and indexes:
