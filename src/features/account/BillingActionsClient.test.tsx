@@ -1,4 +1,4 @@
-import { fireEvent, render, screen, waitFor } from "@testing-library/react";
+import { fireEvent, render, screen, waitFor, within } from "@testing-library/react";
 import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
 import { BillingActionsClient } from "@/features/account/BillingActionsClient";
 import { ENTITLEMENT_CHANGED_EVENT } from "@/features/account/entitlementInvalidation";
@@ -130,6 +130,25 @@ function enableProductionAnalytics() {
   vi.stubEnv("NEXT_PUBLIC_SITE_URL", "https://canyougeo.com");
   vi.stubEnv("NEXT_PUBLIC_NO_INDEX", "false");
   (window as typeof window & { dataLayer?: unknown[] }).dataLayer = [];
+}
+
+const NATIVE_PRO_BENEFITS = [
+  "Mystery Map Custom Atlas",
+  "Pattern Atlas Pattern Runs and Order Atlas Pro Play",
+  "Full Past Games archive, advanced stats, and new geography challenges every month"
+];
+
+function expectNativeProBenefitsBeforeCheckout() {
+  const heading = screen.getByRole("heading", { name: "Can You Geo Pro includes" });
+  const summary = heading.closest(".native-pro-benefits-summary") as HTMLElement | null;
+  expect(summary).toBeTruthy();
+  expect(within(summary as HTMLElement).getByRole("list")).toBeVisible();
+  for (const benefit of NATIVE_PRO_BENEFITS) {
+    expect(within(summary as HTMLElement).getByText(benefit)).toBeVisible();
+  }
+
+  const checkoutOptions = screen.getByLabelText("Choose Pro billing cadence");
+  expect((summary as HTMLElement).compareDocumentPosition(checkoutOptions) & Node.DOCUMENT_POSITION_FOLLOWING).toBeTruthy();
 }
 
 describe("BillingActionsClient", () => {
@@ -348,6 +367,7 @@ describe("BillingActionsClient", () => {
     render(<BillingActionsClient entitlement={FREE_ENTITLEMENT} context="upgrade" />);
 
     expect(await screen.findByText("Google Play purchase catalog ready.")).toBeInTheDocument();
+    expectNativeProBenefitsBeforeCheckout();
     expect(await screen.findByRole("button", { name: /Join monthly.*\$3\.99/i })).toBeEnabled();
     expect(screen.getByRole("button", { name: /Join yearly.*\$29\.99/i })).toBeEnabled();
     expect(screen.getByRole("button", { name: "Restore purchases" })).toBeEnabled();
@@ -399,6 +419,7 @@ describe("BillingActionsClient", () => {
     render(<BillingActionsClient entitlement={FREE_ENTITLEMENT} context="upgrade" />);
 
     expect(await screen.findByText("Apple purchase catalog ready.")).toBeInTheDocument();
+    expectNativeProBenefitsBeforeCheckout();
     expect(await screen.findByRole("button", { name: /Join monthly.*\$3\.99/i })).toBeEnabled();
     expect(screen.getByRole("button", { name: /Join yearly.*\$29\.99/i })).toBeEnabled();
     expect(screen.getByRole("button", { name: "Restore purchases" })).toBeEnabled();
@@ -945,6 +966,34 @@ describe("BillingActionsClient", () => {
     expect(client.functions.invoke).not.toHaveBeenCalledWith("stripe-checkout", expect.anything());
   });
 
+  it("does not show the native Pro benefits summary for web Stripe checkout", () => {
+    process.env.NEXT_PUBLIC_BILLING_MODE = "test";
+    accountMock.state.user = TEST_USER;
+
+    render(<BillingActionsClient entitlement={FREE_ENTITLEMENT} context="upgrade" />);
+
+    expect(screen.queryByRole("heading", { name: "Can You Geo Pro includes" })).not.toBeInTheDocument();
+    expect(screen.getByRole("button", { name: "Join monthly" })).toBeEnabled();
+    expect(screen.getByRole("button", { name: "Join yearly" })).toBeEnabled();
+    expect(screen.getByText("Stripe handles checkout securely.")).toBeVisible();
+  });
+
+  it("does not show the native Pro benefits summary for native account context", async () => {
+    vi.stubEnv("NEXT_PUBLIC_CGY_NATIVE_APP", "1");
+    process.env.NEXT_PUBLIC_BILLING_MODE = "test";
+    capacitorMock.platform = "android";
+    accountMock.state.user = TEST_USER;
+    googlePlayMock.runtimeAvailable = true;
+
+    render(<BillingActionsClient entitlement={FREE_ENTITLEMENT} context="account" />);
+
+    expect(await screen.findByText("Google Play purchase catalog ready.")).toBeInTheDocument();
+    expect(screen.queryByRole("heading", { name: "Can You Geo Pro includes" })).not.toBeInTheDocument();
+    expect(screen.getByRole("button", { name: /Join monthly.*\$3\.99/i })).toBeEnabled();
+    expect(screen.getByRole("button", { name: /Join yearly.*\$29\.99/i })).toBeEnabled();
+    expect(screen.getByRole("button", { name: "Restore purchases" })).toBeEnabled();
+  });
+
   it("uses a focused yearly checkout action when returning from Pro-first sign-in", async () => {
     process.env.NEXT_PUBLIC_BILLING_MODE = "test";
     accountMock.state.user = TEST_USER;
@@ -1042,6 +1091,7 @@ describe("BillingActionsClient", () => {
 
     expect(screen.getByRole("button", { name: "Membership active" })).toBeDisabled();
     expect(screen.getByText(/Manage the subscription through the store or website where it was created/i)).toBeVisible();
+    expect(screen.queryByRole("heading", { name: "Can You Geo Pro includes" })).not.toBeInTheDocument();
     expect(screen.queryByRole("button", { name: "Manage billing" })).not.toBeInTheDocument();
     expect(screen.queryByRole("button", { name: "Manage Apple subscription" })).not.toBeInTheDocument();
     expect(client.functions.invoke).not.toHaveBeenCalled();

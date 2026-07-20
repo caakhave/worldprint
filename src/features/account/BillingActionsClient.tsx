@@ -96,6 +96,11 @@ const APPLE_STOREKIT_CATALOG_STOREFRONT_UNAVAILABLE_STATUS = "Apple purchases ar
 const APPLE_STOREKIT_CATALOG_NETWORK_STATUS = "Apple purchases could not be loaded because of a network/system condition.";
 const APPLE_STOREKIT_AVAILABILITY_TIMEOUT_STATUS = "Apple product discovery timed out while checking the native bridge.";
 const APPLE_STOREKIT_PRODUCT_TIMEOUT_STATUS = "Apple product discovery timed out while requesting subscription products.";
+const NATIVE_PRO_BENEFITS = [
+  "Mystery Map Custom Atlas",
+  "Pattern Atlas Pattern Runs and Order Atlas Pro Play",
+  "Full Past Games archive, advanced stats, and new geography challenges every month"
+];
 type NativeBillingRuntime = "google-play" | "apple" | "unavailable";
 type NativePendingState = GooglePlayBasePlanId | AppleStoreKitProductId | "restore" | "manage" | null;
 type BillingMessageTone = "status" | "success" | "error";
@@ -162,6 +167,19 @@ function billingMessageClassName(tone: BillingMessageTone) {
 
 function billingMessageRole(tone: BillingMessageTone) {
   return tone === "error" ? "alert" : "status";
+}
+
+function NativeProBenefitsSummary() {
+  return (
+    <section className="native-pro-benefits-summary">
+      <h3>Can You Geo Pro includes</h3>
+      <ul>
+        {NATIVE_PRO_BENEFITS.map((benefit) => (
+          <li key={benefit}>{benefit}</li>
+        ))}
+      </ul>
+    </section>
+  );
 }
 
 export function BillingActionsClient({ entitlement, context, selectedPlan = null, checkoutLabel, onVerified }: BillingActionsClientProps) {
@@ -567,6 +585,7 @@ export function BillingActionsClient({ entitlement, context, selectedPlan = null
       const visibleOptions = selectedPlan ? PRO_PRICE_OPTIONS.filter((option) => option.interval === selectedPlan) : PRO_PRICE_OPTIONS;
       return (
         <div className={selectedPlan ? "billing-actions billing-actions-focused" : "billing-actions"} aria-label="Billing actions">
+          {context === "upgrade" ? <NativeProBenefitsSummary /> : null}
           <div className="checkout-option-buttons" aria-label="Choose Pro billing cadence">
             {visibleOptions.map((option) => {
               const basePlanId = basePlanIdForInterval(option.interval);
@@ -615,6 +634,7 @@ export function BillingActionsClient({ entitlement, context, selectedPlan = null
       const visibleOptions = selectedPlan ? PRO_PRICE_OPTIONS.filter((option) => option.interval === selectedPlan) : PRO_PRICE_OPTIONS;
       return (
         <div className={selectedPlan ? "billing-actions billing-actions-focused" : "billing-actions"} aria-label="Billing actions">
+          {context === "upgrade" ? <NativeProBenefitsSummary /> : null}
           <div className="checkout-option-buttons" aria-label="Choose Pro billing cadence">
             {visibleOptions.map((option) => {
               const productId = appleStoreKitProductIdForInterval(option.interval);
