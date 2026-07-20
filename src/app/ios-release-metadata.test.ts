@@ -31,13 +31,13 @@ function plistArrayForKey(source: string, key: string): string[] {
 }
 
 describe("iOS release metadata", () => {
-  it("sets the StoreKit diagnostic TestFlight marketing version and build number for Debug and Release", () => {
+  it("sets the production TestFlight marketing version and build number for Debug and Release", () => {
     for (const configuration of ["Debug", "Release"] as const) {
       const settings = appTargetBuildSettings(configuration);
       expect(settings).toContain("MARKETING_VERSION = 1.0.0;");
-      expect(settings).toContain("CURRENT_PROJECT_VERSION = 7;");
+      expect(settings).toContain("CURRENT_PROJECT_VERSION = 8;");
       expect(settings).not.toContain("MARKETING_VERSION = 1.0;");
-      expect(settings).not.toContain("CURRENT_PROJECT_VERSION = 8;");
+      expect(settings).not.toContain("CURRENT_PROJECT_VERSION = 7;");
     }
 
     expect(infoPlist).toContain("<key>CFBundleShortVersionString</key>");
