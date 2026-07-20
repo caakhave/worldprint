@@ -65,7 +65,7 @@ async function handleVerifyRequest(request: Request): Promise<Response> {
   const transitionArgs = await applePurchaseVerificationTransitionInput({
     normalized: normalized.normalized,
     userId: user.id,
-    sourceEventRef: `verify:${normalized.normalized.originalTransactionIdFingerprint}:${normalized.normalized.transactionIdFingerprint.slice(-16)}`,
+    sourceEventRef: `verify:${normalized.normalized.originalTransactionIdFingerprint}:${normalized.normalized.transactionIdFingerprint.slice(-16)}:${payloadHash.slice(0, 16)}`,
     payloadHash,
     asOfIso: new Date().toISOString()
   });
