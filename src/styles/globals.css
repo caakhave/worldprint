@@ -8112,6 +8112,50 @@ dd {
   margin: 0;
 }
 
+.billing-actions .native-pro-benefits-summary {
+  grid-column: 1 / -1;
+  justify-self: stretch;
+}
+
+.native-pro-benefits-summary {
+  display: grid;
+  gap: 0.42rem;
+  width: 100%;
+  border: 1px solid rgb(164 216 205 / 0.26);
+  border-radius: 8px;
+  padding: 0.68rem 0.76rem;
+  background:
+    linear-gradient(145deg, rgb(104 183 170 / 0.1), transparent 58%),
+    rgb(4 42 47 / 0.38);
+}
+
+.native-pro-benefits-summary h3 {
+  margin: 0;
+  color: var(--parchment);
+  font-family: var(--font-mono);
+  font-size: 0.73rem;
+  font-weight: 900;
+  line-height: 1.2;
+  text-transform: uppercase;
+}
+
+.native-pro-benefits-summary ul {
+  display: grid;
+  gap: 0.26rem;
+  margin: 0;
+  padding-left: 1rem;
+}
+
+.native-pro-benefits-summary li {
+  color: rgb(242 234 220 / 0.82);
+  font-size: 0.82rem;
+  line-height: 1.28;
+}
+
+.native-pro-benefits-summary li::marker {
+  color: var(--signal-2);
+}
+
 .upgrade-shell {
   display: grid;
   gap: clamp(1rem, 3vw, 1.4rem);
