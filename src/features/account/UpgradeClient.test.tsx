@@ -320,6 +320,10 @@ describe("UpgradeClient", () => {
 
     expect(screen.getByText("Apple purchases")).toBeVisible();
     expect(screen.getByRole("heading", { name: "Apple purchases." })).toBeVisible();
+    expect(screen.getAllByRole("heading", { name: "Can You Geo Pro includes" }).length).toBeGreaterThanOrEqual(1);
+    expect(screen.getAllByText("Mystery Map Custom Atlas").length).toBeGreaterThanOrEqual(1);
+    expect(screen.getAllByText("Pattern Atlas Pattern Runs and Order Atlas Pro Play").length).toBeGreaterThanOrEqual(1);
+    expect(screen.getAllByText("Full Past Games archive, advanced stats, and new geography challenges every month").length).toBeGreaterThanOrEqual(1);
     expect(screen.getAllByText(/Apple manages iOS purchases\. Stripe checkout is unavailable in this iOS build\./i).length).toBeGreaterThanOrEqual(1);
     await waitFor(() => expect(screen.getAllByRole("button", { name: /Join monthly/i }).every((button) => !button.hasAttribute("disabled"))).toBe(true));
     expect(screen.getAllByRole("button", { name: /Join yearly/i }).every((button) => !button.hasAttribute("disabled"))).toBe(true);
