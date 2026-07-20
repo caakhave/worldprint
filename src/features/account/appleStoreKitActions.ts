@@ -2,6 +2,11 @@
 
 import { fetchRemoteEntitlement, resolvePlayerEntitlement } from "@/lib/account/entitlements";
 import {
+  activateNativeAppleReviewEntitlement,
+  nativeAppleReviewEntitlement,
+  type NativeAppleReviewEntitlementPayload
+} from "@/features/account/nativeAppleReviewEntitlement";
+import {
   finishVerifiedAppleStoreKitTransactions,
   manageAppleStoreKitSubscription,
   purchaseAppleStoreKitProduct,
@@ -29,6 +34,7 @@ export type AppleStoreKitActionResult = {
   status: AppleStoreKitOperationResult["status"] | "finished" | "entitlementPending";
   message: string | null;
   verifiedCount?: number;
+  nativeReviewEntitlement?: NativeAppleReviewEntitlementPayload | null;
 };
 
 export async function startAppleStoreKitPurchase(input: {
@@ -65,6 +71,7 @@ export async function syncUnfinishedAppleStoreKitEntitlements(input: {
 export async function finishAppleStoreKitAfterEntitlement(input: {
   client: CanYouGeoSupabaseClient | null;
   userId: string | null | undefined;
+  nativeReviewEntitlement?: NativeAppleReviewEntitlementPayload | null;
 }): Promise<{ ok: boolean; message: string | null; finishedCount: number }> {
   if (!input.client || !input.userId) {
     return { ok: false, message: "Sign in to restore purchase.", finishedCount: 0 };
@@ -74,7 +81,11 @@ export async function finishAppleStoreKitAfterEntitlement(input: {
     warnAppleStoreKitBillingDetail("Could not refresh Apple purchase entitlement.", entitlement.error);
     return { ok: false, message: "Apple purchase verified. Pro access is still refreshing.", finishedCount: 0 };
   }
-  if (resolvePlayerEntitlement(entitlement.data, true).plan !== "pro") {
+  if (
+    resolvePlayerEntitlement(entitlement.data, true).plan !== "pro" &&
+    !activateNativeAppleReviewEntitlement(input.nativeReviewEntitlement) &&
+    !nativeAppleReviewEntitlement()
+  ) {
     return { ok: false, message: "Apple purchase verified. Pro access is still refreshing.", finishedCount: 0 };
   }
   const finished = await finishVerifiedAppleStoreKitTransactions();
@@ -118,7 +129,8 @@ function appleStoreKitActionResult(result: AppleStoreKitOperationResult): AppleS
       ok: true,
       status: result.status,
       message: "Apple purchase verified. Pro access will refresh shortly.",
-      verifiedCount: result.verifiedCount
+      verifiedCount: result.verifiedCount,
+      nativeReviewEntitlement: result.nativeReviewEntitlement ?? null
     };
   }
   if (result.status === "none") {

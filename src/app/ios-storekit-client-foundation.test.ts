@@ -49,6 +49,7 @@ describe("iOS StoreKit client foundation", () => {
     expect(swiftPlugin).toContain("Transaction.unfinished");
     expect(swiftPlugin).toContain("Transaction.currentEntitlements");
     expect(swiftPlugin).toContain("verificationResult.jwsRepresentation");
+    expect(swiftPlugin).toContain("nativeReviewEntitlement = nativeReviewEntitlement ?? result.nativeReviewEntitlement");
     expect(swiftPlugin).toContain('"apple-purchase-context"');
     expect(swiftPlugin).toContain('"apple-purchase-verify"');
     expect(swiftPlugin).toContain("finishAll()");

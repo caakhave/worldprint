@@ -19,7 +19,7 @@ export type PlayerEntitlement = {
   plan: AccountPlan;
   status: EntitlementStatus;
   capabilities: EntitlementCapabilities;
-  source: "guest" | "default-free" | "supabase";
+  source: "guest" | "default-free" | "supabase" | "native-apple-review";
   row: EntitlementRow | null;
 };
 

@@ -11,8 +11,12 @@ describe("apple-purchase-verify Edge Function structure", () => {
     expect(config).toContain("verify_jwt = true");
     expect(source).toContain("getSignedInUser(request, config)");
     expect(source).toContain("verifyAppleSignedTransactionSet");
+    expect(source).toContain("appleEnvironmentFromPayload(clientVerified.transaction.environment)");
     expect(source).toContain("fetchAppleSubscriptionStatuses");
+    expect(source).toContain("environment: transactionEnvironment");
     expect(source).toContain("normalizeVerifiedAppleStatusResponse");
+    expect(source).toContain("expectedEnvironment: transactionEnvironment");
+    expect(source).toContain("deploymentMode: config.deploymentMode");
     expect(source).toContain("applePurchaseVerificationTransitionInput");
     expect(source).toContain("processApplePurchaseVerification");
     expect(source.indexOf("const statusResponse = await fetchAppleSubscriptionStatuses")).toBeLessThan(
@@ -22,6 +26,7 @@ describe("apple-purchase-verify Edge Function structure", () => {
 
   it("does not return signed payloads, transaction ids, account tokens, credentials, or user ids", () => {
     expect(source).toContain("clientMayFinishTransaction");
+    expect(source).toContain("nativeReviewEntitlement");
     expect(source).not.toMatch(/json\([^)]*signedTransactionInfo|json\([^)]*originalTransactionId|json\([^)]*transactionId|json\([^)]*appAccountToken|json\([^)]*privateKey|json\([^)]*user\.id/is);
     expect(source).not.toMatch(/console\.(?:log|warn|error)\([^)]*signedTransactionInfo|console\.(?:log|warn|error)\([^)]*transactionId|console\.(?:log|warn|error)\([^)]*privateKey/is);
   });

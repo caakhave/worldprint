@@ -38,6 +38,14 @@ export type AppleStoreKitOperationResult = {
   verifiedCount?: number;
   requiresEntitlementRefresh?: boolean;
   clientMayFinishTransaction?: boolean;
+  nativeReviewEntitlement?: {
+    providerEnvironment: "sandbox";
+    plan: "pro";
+    status: "active";
+    currentPeriodEnd: string | null;
+    cancelAtPeriodEnd: boolean | null;
+    verifiedAt: string;
+  } | null;
   message?: string;
 };
 

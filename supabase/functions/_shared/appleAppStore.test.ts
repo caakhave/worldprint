@@ -25,10 +25,10 @@ import {
 
 const USER_ID = "11111111-2222-4333-8444-555555555555";
 
-const config: Pick<AppleServerConfig, "bundleId" | "appAppleId" | "environment"> = {
+const config: Pick<AppleServerConfig, "bundleId" | "appAppleId" | "allowedEnvironments"> = {
   bundleId: APPLE_BUNDLE_ID,
   appAppleId: "6791248782",
-  environment: "sandbox"
+  allowedEnvironments: ["sandbox"]
 };
 
 const processedRow: ApplePurchaseVerificationRow = {
@@ -40,6 +40,8 @@ const processedRow: ApplePurchaseVerificationRow = {
   already_processed: false,
   provider_subscription_changed: true,
   compatibility_refreshed: true,
+  native_review_entitlement_refreshed: false,
+  entitlement_scope: "live",
   reconciliation_required: false,
   retryable: false
 };
@@ -127,6 +129,7 @@ describe("Apple App Store server helpers", () => {
     expect(normalized.error).toBeNull();
     const args = await applePurchaseVerificationTransitionInput({
       normalized: normalized.normalized!,
+      deploymentMode: "staging",
       userId: USER_ID,
       sourceEventRef: "verify:synthetic",
       payloadHash: "a".repeat(64),
@@ -135,6 +138,7 @@ describe("Apple App Store server helpers", () => {
 
     expect(args).toMatchObject({
       p_provider_environment: "sandbox",
+      p_deployment_mode: "staging",
       p_user_id: USER_ID,
       p_user_ref_fingerprint: expect.stringMatching(/^user_uuid_sha256_[a-f0-9]{64}$/),
       p_provider_product_ref: "com.canyougeo.app:com.canyougeo.pro.monthly",
@@ -158,6 +162,7 @@ describe("Apple App Store server helpers", () => {
     await expect(
       applePurchaseVerificationTransitionInput({
         normalized: conflict.normalized!,
+        deploymentMode: "staging",
         userId: USER_ID,
         sourceEventRef: "verify:synthetic",
         payloadHash: "a".repeat(64),
@@ -173,8 +178,14 @@ describe("Apple App Store server helpers", () => {
       notification: {
         notificationType: "TEST",
         notificationUUID: "aaaaaaaa-bbbb-4ccc-8ddd-eeeeeeeeeeee",
+        data: {
+          bundleId: APPLE_BUNDLE_ID,
+          appAppleId: "6791248782",
+          environment: "Sandbox"
+        },
         signedDate
       },
+      deploymentMode: "staging",
       payloadHash: "b".repeat(64),
       asOfIso: "2026-07-18T20:00:00.000Z"
     });
@@ -185,6 +196,7 @@ describe("Apple App Store server helpers", () => {
     expectNoUndefinedRpcArgs(args);
     expect(args).toMatchObject({
       p_provider_environment: "sandbox",
+      p_deployment_mode: "staging",
       p_provider_event_ref: "notification:aaaaaaaa-bbbb-4ccc-8ddd-eeeeeeeeeeee",
       p_event_type: "TEST",
       p_event_subtype: null,
@@ -216,6 +228,7 @@ describe("Apple App Store server helpers", () => {
         notificationUUID: "bbbbbbbb-cccc-4ddd-8eee-ffffffffffff",
         signedDate: notificationSignedDate
       },
+      deploymentMode: "staging",
       payloadHash: "c".repeat(64),
       asOfIso
     });
@@ -226,6 +239,7 @@ describe("Apple App Store server helpers", () => {
     expectNoUndefinedRpcArgs(args);
     expect(args).toMatchObject({
       p_provider_environment: "sandbox",
+      p_deployment_mode: "staging",
       p_provider_event_ref: "notification:bbbbbbbb-cccc-4ddd-8eee-ffffffffffff",
       p_event_type: "EXPIRED",
       p_event_subtype: "VOLUNTARY",

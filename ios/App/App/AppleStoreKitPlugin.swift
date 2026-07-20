@@ -357,12 +357,14 @@ public class AppleStoreKitPlugin: CAPPlugin, CAPBridgedPlugin {
     private func verifyOutstandingTransactions(config: AppleStoreKitAuthenticatedConfig) async -> AppleStoreKitNativeResult {
         var verifiedCount = 0
         var firstFailure: AppleStoreKitNativeResult?
+        var nativeReviewEntitlement: [String: Any]?
         var seenTransactionIds = Set<UInt64>()
 
         for await verificationResult in Transaction.unfinished {
             let result = await verifyTransactionResult(verificationResult, config: config, seenTransactionIds: &seenTransactionIds)
             if result.status == "backendVerified" {
                 verifiedCount += result.verifiedCount ?? 1
+                nativeReviewEntitlement = nativeReviewEntitlement ?? result.nativeReviewEntitlement
             } else if result.status != "none", firstFailure == nil {
                 firstFailure = result
             }
@@ -372,13 +374,20 @@ public class AppleStoreKitPlugin: CAPPlugin, CAPBridgedPlugin {
             let result = await verifyTransactionResult(verificationResult, config: config, seenTransactionIds: &seenTransactionIds)
             if result.status == "backendVerified" {
                 verifiedCount += result.verifiedCount ?? 1
+                nativeReviewEntitlement = nativeReviewEntitlement ?? result.nativeReviewEntitlement
             } else if result.status != "none", firstFailure == nil {
                 firstFailure = result
             }
         }
 
         if verifiedCount > 0 {
-            return AppleStoreKitNativeResult(status: "backendVerified", verifiedCount: verifiedCount, requiresEntitlementRefresh: true, clientMayFinishTransaction: true)
+            return AppleStoreKitNativeResult(
+                status: "backendVerified",
+                verifiedCount: verifiedCount,
+                requiresEntitlementRefresh: true,
+                clientMayFinishTransaction: true,
+                nativeReviewEntitlement: nativeReviewEntitlement
+            )
         }
         return firstFailure ?? AppleStoreKitNativeResult(status: "none", verifiedCount: 0)
     }
@@ -428,7 +437,13 @@ public class AppleStoreKitPlugin: CAPPlugin, CAPBridgedPlugin {
                 return AppleStoreKitNativeResult(status: "backendRejected")
             }
             await pendingTransactions.remember(transaction)
-            return AppleStoreKitNativeResult(status: "backendVerified", verifiedCount: 1, requiresEntitlementRefresh: true, clientMayFinishTransaction: true)
+            return AppleStoreKitNativeResult(
+                status: "backendVerified",
+                verifiedCount: 1,
+                requiresEntitlementRefresh: true,
+                clientMayFinishTransaction: true,
+                nativeReviewEntitlement: response.nativeReviewEntitlement?.dictionary
+            )
         } catch let error as AppleStoreKitSafeError {
             return AppleStoreKitNativeResult(status: error.status)
         } catch {
@@ -510,7 +525,8 @@ private struct ApplePurchaseContextResponse: Decodable {
     let appAccountToken: String
     let bundleId: String
     let appAppleId: String
-    let environment: String
+    let serverMode: String?
+    let allowedEnvironments: [String]?
     let allowedProductIds: [String]
 }
 
@@ -518,7 +534,30 @@ private struct AppleVerifyResponse: Decodable {
     let ok: Bool?
     let status: String?
     let entitlementRefreshRecommended: Bool?
+    let entitlementScope: String?
+    let nativeReviewEntitlement: AppleNativeReviewEntitlementResponse?
     let clientMayFinishTransaction: Bool?
+}
+
+private struct AppleNativeReviewEntitlementResponse: Decodable {
+    let providerEnvironment: String
+    let plan: String
+    let status: String
+    let currentPeriodEnd: String?
+    let cancelAtPeriodEnd: Bool?
+    let verifiedAt: String
+
+    var dictionary: [String: Any] {
+        var value: [String: Any] = [
+            "providerEnvironment": providerEnvironment,
+            "plan": plan,
+            "status": status,
+            "verifiedAt": verifiedAt
+        ]
+        value["currentPeriodEnd"] = currentPeriodEnd ?? NSNull()
+        value["cancelAtPeriodEnd"] = cancelAtPeriodEnd ?? NSNull()
+        return value
+    }
 }
 
 private struct AppleStoreKitSafeError: Error {
@@ -530,17 +569,20 @@ private struct AppleStoreKitNativeResult {
     let verifiedCount: Int?
     let requiresEntitlementRefresh: Bool
     let clientMayFinishTransaction: Bool
+    let nativeReviewEntitlement: [String: Any]?
 
     init(
         status: String,
         verifiedCount: Int? = nil,
         requiresEntitlementRefresh: Bool = false,
-        clientMayFinishTransaction: Bool = false
+        clientMayFinishTransaction: Bool = false,
+        nativeReviewEntitlement: [String: Any]? = nil
     ) {
         self.status = status
         self.verifiedCount = verifiedCount
         self.requiresEntitlementRefresh = requiresEntitlementRefresh
         self.clientMayFinishTransaction = clientMayFinishTransaction
+        self.nativeReviewEntitlement = nativeReviewEntitlement
     }
 
     var dictionary: [String: Any] {
@@ -551,6 +593,9 @@ private struct AppleStoreKitNativeResult {
         ]
         if let verifiedCount {
             value["verifiedCount"] = verifiedCount
+        }
+        if let nativeReviewEntitlement {
+            value["nativeReviewEntitlement"] = nativeReviewEntitlement
         }
         return value
     }

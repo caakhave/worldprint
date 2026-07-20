@@ -2,6 +2,7 @@ import { fireEvent, render, screen, waitFor, within } from "@testing-library/rea
 import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
 import { BillingActionsClient } from "@/features/account/BillingActionsClient";
 import { ENTITLEMENT_CHANGED_EVENT } from "@/features/account/entitlementInvalidation";
+import { clearNativeAppleReviewEntitlement } from "@/features/account/nativeAppleReviewEntitlement";
 import { FREE_ENTITLEMENT, PRO_ENTITLEMENT, type PlayerEntitlement } from "@/lib/account/entitlements";
 
 type BillingMockClient = {
@@ -155,6 +156,7 @@ describe("BillingActionsClient", () => {
   beforeEach(() => {
     delete process.env.NEXT_PUBLIC_BILLING_MODE;
     accountMock.state.client = null;
+    clearNativeAppleReviewEntitlement();
     accountMock.state.configured = true;
     accountMock.state.loading = false;
     accountMock.state.user = null;
@@ -789,6 +791,40 @@ describe("BillingActionsClient", () => {
     expect("detail" in entitlementEvents[0]).toBe(false);
     expect(screen.getByText(/Apple manages iOS purchases\. Stripe checkout is unavailable in this iOS build\./i)).toBeVisible();
     dispatchSpy.mockRestore();
+  });
+
+  it("finishes a production TestFlight sandbox purchase after backend-verified native review entitlement without public Pro", async () => {
+    vi.stubEnv("NEXT_PUBLIC_CGY_NATIVE_APP", "1");
+    vi.stubEnv("NEXT_PUBLIC_SUPABASE_URL", "https://jquebthneczqdxagagof.supabase.co");
+    vi.stubEnv("NEXT_PUBLIC_SUPABASE_ANON_KEY", "anon-public-test-key");
+    process.env.NEXT_PUBLIC_BILLING_MODE = "test";
+    capacitorMock.platform = "ios";
+    accountMock.state.user = TEST_USER;
+    appleStoreKitMock.runtimeAvailable = true;
+    appleStoreKitMock.purchaseAppleStoreKitProduct.mockResolvedValue({
+      status: "backendVerified",
+      verifiedCount: 1,
+      requiresEntitlementRefresh: true,
+      clientMayFinishTransaction: true,
+      nativeReviewEntitlement: {
+        providerEnvironment: "sandbox",
+        plan: "pro",
+        status: "active",
+        currentPeriodEnd: "2026-07-29T00:00:00.000Z",
+        cancelAtPeriodEnd: false,
+        verifiedAt: "2026-07-20T00:00:00.000Z"
+      }
+    });
+    const client = billingClientMock();
+    mockEntitlementRead(client, null);
+
+    render(<BillingActionsClient entitlement={FREE_ENTITLEMENT} context="upgrade" />);
+
+    await waitFor(() => expect(screen.getByRole("button", { name: /Join monthly/i })).toBeEnabled());
+    fireEvent.click(screen.getByRole("button", { name: /Join monthly/i }));
+
+    await waitFor(() => expect(appleStoreKitMock.finishVerifiedAppleStoreKitTransactions).toHaveBeenCalledTimes(1));
+    expect(screen.getByText("Apple purchase verified. Pro access is active.")).toBeVisible();
   });
 
   it("does not emit entitlement invalidation for Apple purchase cancellation or backend failure", async () => {
