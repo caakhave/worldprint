@@ -1,5 +1,5 @@
 import { render, screen } from "@testing-library/react";
-import { describe, expect, it, vi } from "vitest";
+import { afterEach, describe, expect, it, vi } from "vitest";
 import SignUpPage from "@/app/sign-up/page";
 
 vi.mock("@/features/account/SignUpClient", () => ({
@@ -7,6 +7,10 @@ vi.mock("@/features/account/SignUpClient", () => ({
 }));
 
 describe("SignUpPage", () => {
+  afterEach(() => {
+    vi.unstubAllEnvs();
+  });
+
   it("frames new accounts as Free first with Pro available after account creation", () => {
     render(<SignUpPage />);
 
@@ -23,5 +27,17 @@ describe("SignUpPage", () => {
     expect(screen.getByRole("link", { name: "View Pro plans" })).toHaveAttribute("href", "/upgrade");
     expect(screen.getByRole("link", { name: "Sign in" })).toHaveAttribute("href", "/sign-in");
     expect(screen.getByTestId("sign-up-client")).toBeInTheDocument();
+  });
+
+  it("uses native-safe plan copy without checkout language", () => {
+    vi.stubEnv("NEXT_PUBLIC_CGY_NATIVE_APP", "1");
+
+    render(<SignUpPage />);
+
+    expect(screen.getByText(/Existing Pro access unlocks after sign-in where supported/i)).toBeVisible();
+    expect(screen.getByText(/Android purchases use Google Play after sign-in/i)).toBeVisible();
+    expect(screen.getByRole("link", { name: "View Pro plans" })).toHaveAttribute("href", "/upgrade");
+    expect(screen.queryByText(/checkout/i)).not.toBeInTheDocument();
+    expect(screen.queryByText(/Stripe/i)).not.toBeInTheDocument();
   });
 });

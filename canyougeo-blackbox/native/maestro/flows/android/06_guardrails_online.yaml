@@ -36,11 +36,15 @@ tags:
     timeout: 30000
 - openLink: "https://canyougeo.com/upgrade/"
 - extendedWaitUntil:
-    visible: "Mobile purchase preview"
+    visible: "Google Play purchases"
     timeout: 30000
 - extendedWaitUntil:
-    visible: "Mobile purchases unavailable"
+    visible: "Google Play manages Android purchases. Stripe checkout is unavailable in this Android build."
     timeout: 15000
-- assertNotVisible: "Join monthly"
-- assertNotVisible: "Join yearly"
+- extendedWaitUntil:
+    visible: "Sign in before starting a Google Play purchase. Free play needs no card."
+    timeout: 15000
+- assertNotVisible: "Stripe handles checkout securely"
+- assertNotVisible: "checkout.stripe.com"
+- assertNotVisible: "billing.stripe.com"
 - assertNotVisible: "Cookie settings"

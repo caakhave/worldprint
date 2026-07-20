@@ -1,5 +1,5 @@
 import { render, screen } from "@testing-library/react";
-import { describe, expect, it, vi } from "vitest";
+import { afterEach, describe, expect, it, vi } from "vitest";
 import SignInPage from "@/app/sign-in/page";
 
 vi.mock("@/features/account/SignInClient", () => ({
@@ -7,6 +7,10 @@ vi.mock("@/features/account/SignInClient", () => ({
 }));
 
 describe("SignInPage", () => {
+  afterEach(() => {
+    vi.unstubAllEnvs();
+  });
+
   it("frames password auth as create-or-return account flow", () => {
     render(<SignInPage />);
 
@@ -30,5 +34,19 @@ describe("SignInPage", () => {
     expect(screen.queryByRole("link", { name: "View Free and Pro" })).not.toBeInTheDocument();
     expect(screen.queryByText("No password to manage. Sign-in links can be requested about once per minute.")).not.toBeInTheDocument();
     expect(screen.getByTestId("sign-in-client")).toBeInTheDocument();
+  });
+
+  it("uses native-safe account choice copy without checkout language", () => {
+    vi.stubEnv("NEXT_PUBLIC_CGY_NATIVE_APP", "1");
+
+    render(<SignInPage />);
+
+    expect(screen.getByRole("heading", { name: "Compare plans or continue free." })).toBeVisible();
+    expect(screen.getByText(/Android purchases use Google Play after sign-in/i)).toBeVisible();
+    expect(screen.getByText(/Already entitled accounts unlock supported Pro atlas features/i)).toBeVisible();
+    expect(screen.getByRole("link", { name: "View plans" })).toHaveAttribute("href", "/upgrade");
+    expect(screen.queryByText(/checkout/i)).not.toBeInTheDocument();
+    expect(screen.queryByText(/Stripe/i)).not.toBeInTheDocument();
+    expect(screen.queryByRole("link", { name: "Start Pro" })).not.toBeInTheDocument();
   });
 });

@@ -167,8 +167,6 @@ export function handleNativeExternalAnchorClick(
 
 function normalizeTrustedUrl(rawUrl: string): string {
   const parsed = new URL(rawUrl);
-  parsed.hash = "";
-  parsed.search = "";
   parsed.pathname = parsed.pathname.replace(/\/+$/u, "");
   return parsed.href;
 }

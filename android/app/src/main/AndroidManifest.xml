@@ -176,6 +176,13 @@
                 <data android:scheme="https" android:host="canyougeo.com" android:path="/account/" />
             </intent-filter>
 
+            <intent-filter android:autoVerify="true">
+                <action android:name="android.intent.action.VIEW" />
+                <category android:name="android.intent.category.DEFAULT" />
+                <category android:name="android.intent.category.BROWSABLE" />
+                <data android:scheme="https" android:host="canyougeo.com" android:path="/account/stats/" />
+            </intent-filter>
+
         </activity>
 
         <provider

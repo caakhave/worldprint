@@ -13,6 +13,7 @@ import {
 } from "@/lib/account/signInRedirect";
 import { isNativeAppCurrentlyOfflineAsync, NATIVE_NETWORK_ACTION_UNAVAILABLE_MESSAGE } from "@/lib/mobile/nativeConnectivity";
 import { trackAnalyticsEvent } from "@/lib/site/analytics";
+import { isNativeAppBuild } from "@/lib/site/buildTarget";
 
 const GENERIC_SIGN_IN_ERROR = "We could not sign you in. Check your email and password.";
 const EMAIL_NOT_CONFIRMED_ERROR = "Check your email to confirm this account, then sign in with your password.";
@@ -65,6 +66,7 @@ export function SignInClient() {
   const [error, setError] = useState<string>("");
   const [submitting, setSubmitting] = useState(false);
   const [signOutError, setSignOutError] = useState("");
+  const nativeBuild = isNativeAppBuild();
 
   useEffect(() => {
     setNextValue(nextSearchValue());
@@ -233,7 +235,11 @@ export function SignInClient() {
         <Link href={signUpHref}>Create account</Link>
         <Link href="/forgot-password">Forgot password?</Link>
       </div>
-      <p className="account-env-note">Free needs no card. Pro monthly or yearly checkout starts only after you are signed in.</p>
+      <p className="account-env-note">
+        {nativeBuild
+          ? "Free accounts need no card. Existing Pro access unlocks after sign-in where supported; mobile purchases are not available in this preview."
+          : "Free needs no card. Pro monthly or yearly checkout starts only after you are signed in."}
+      </p>
       {error ? (
         <p className="account-error" role="alert">
           {error}

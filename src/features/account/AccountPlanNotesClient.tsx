@@ -6,6 +6,13 @@ import { useEntitlement } from "@/features/account/useEntitlement";
 import { publicBillingEnabled } from "@/lib/billing/publicBillingConfig";
 import { defaultPersistedState, loadPersistedState } from "@/lib/persistence/storage";
 import { trackAnalyticsEvent } from "@/lib/site/analytics";
+import { isNativeAppBuild } from "@/lib/site/buildTarget";
+import {
+  nativeStoreBillingBoundaryCopy,
+  nativeStoreBillingLabel,
+  nativeStoreBillingPlatform,
+  nativeStoreBillingSignInCopy
+} from "@/lib/mobile/nativeStoreBillingPlatform";
 
 function trackUpgradeNavigation(itemId: string) {
   trackAnalyticsEvent("cgy_select_content", {
@@ -17,7 +24,9 @@ function trackUpgradeNavigation(itemId: string) {
 export function AccountPlanNotesClient() {
   const { entitlement, loading, signedIn } = useEntitlement();
   const isPro = entitlement.plan === "pro";
-  const billingEnabled = publicBillingEnabled();
+  const nativeBuild = isNativeAppBuild();
+  const nativePlatform = nativeStoreBillingPlatform(nativeBuild);
+  const billingEnabled = publicBillingEnabled() && !nativeBuild;
   const [localRecordCount, setLocalRecordCount] = useState(0);
 
   useEffect(() => {
@@ -36,13 +45,37 @@ export function AccountPlanNotesClient() {
     );
   }
 
-  const billingTitle = isPro ? "Manage billing" : billingEnabled ? (signedIn ? "Upgrade access" : "Compare plans") : "Billing setup";
+  const billingTitle = isPro
+    ? nativeBuild
+      ? "Membership"
+      : "Manage billing"
+    : nativeBuild
+      ? nativeStoreBillingLabel(nativePlatform)
+      : billingEnabled
+        ? signedIn
+          ? "Upgrade access"
+          : "Compare plans"
+        : "Billing setup";
   const billingCopy = isPro
-    ? "Plan controls and receipts."
+    ? nativeBuild
+      ? "Existing Pro access remains available. Manage the subscription through the store or website where it was created."
+      : "Plan controls and receipts."
+    : nativeBuild
+      ? nativeStoreBillingBoundaryCopy(nativePlatform)
     : billingEnabled
       ? "Mystery Map Custom Atlas, Pattern Atlas Pattern Runs, Past Games archive, advanced stats."
       : "Pro checkout needs billing setup in this environment. Free play still works while setup is unavailable.";
-  const billingAction = isPro ? "Manage billing" : billingEnabled ? (signedIn ? "Upgrade to Pro" : "View plans") : "View Pro plans";
+  const billingAction = isPro
+    ? nativeBuild
+      ? "View membership"
+      : "Manage billing"
+    : nativeBuild
+      ? "View plans"
+      : billingEnabled
+        ? signedIn
+          ? "Upgrade to Pro"
+          : "View plans"
+        : "View Pro plans";
 
   if (!signedIn) {
     return (
@@ -50,9 +83,13 @@ export function AccountPlanNotesClient() {
         <article className="surface account-card account-action-card">
           <p className="eyebrow">Can You Geo? Pro</p>
           <h2>Open the whole atlas.</h2>
-          <p>Mystery Map Custom Atlas, Pattern Atlas Pattern Runs, complete Past Games archive, advanced stats, and future premium surfaces.</p>
+          <p>
+            {nativeBuild
+              ? `${nativeStoreBillingSignInCopy(nativePlatform)} Already entitled Pro accounts unlock supported atlas features after sign-in.`
+              : "Mystery Map Custom Atlas, Pattern Atlas Pattern Runs, complete Past Games archive, advanced stats, and future premium surfaces."}
+          </p>
           <Link className="button" href="/upgrade" onClick={() => trackUpgradeNavigation("account_notes_signed_out_start_pro")}>
-            Start Pro
+            {nativeBuild ? "View plans" : "Start Pro"}
           </Link>
         </article>
 

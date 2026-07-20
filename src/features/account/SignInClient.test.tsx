@@ -100,6 +100,16 @@ describe("SignInClient", () => {
     expect(screen.queryByText("We'll email a secure link.")).not.toBeInTheDocument();
   });
 
+  it("uses native-safe plan copy without checkout language in Android builds", () => {
+    vi.stubEnv("NEXT_PUBLIC_CGY_NATIVE_APP", "1");
+
+    render(<SignInClient />);
+
+    expect(screen.getByText(/Existing Pro access unlocks after sign-in where supported/i)).toBeVisible();
+    expect(screen.getByText(/mobile purchases are not available in this preview/i)).toBeVisible();
+    expect(screen.queryByText(/checkout/i)).not.toBeInTheDocument();
+  });
+
   it("routes preview fallback players to the game library", () => {
     accountMock.state.configured = false;
 

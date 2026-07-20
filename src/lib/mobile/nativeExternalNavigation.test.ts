@@ -38,6 +38,13 @@ describe("native external navigation", () => {
     expect(browserOpenMock).toHaveBeenCalledWith({ url: "https://www.instagram.com/canyougeo" });
   });
 
+  it("accepts trusted destinations with canonicalized host casing", () => {
+    expect(validateTrustedExternalUrl("tiktok", "https://WWW.TIKTOK.COM/@canyougeo")).toEqual({
+      ok: true,
+      url: "https://www.tiktok.com/@canyougeo"
+    });
+  });
+
   it("does not treat internal Can You Geo URLs as external destinations", () => {
     expect(validateTrustedExternalUrl("tiktok", "https://canyougeo.com/play/")).toEqual({
       ok: false,
@@ -83,6 +90,18 @@ describe("native external navigation", () => {
 
   it("rejects arbitrary valid HTTPS URLs that are not trusted destinations", () => {
     expect(validateTrustedExternalUrl("tiktok", "https://example.com/")).toEqual({ ok: false, reason: "untrusted-url" });
+    expect(validateTrustedExternalUrl("tiktok", "https://www.tiktok.com/@canyougeo?redirect=https%3A%2F%2Fevil.example")).toEqual({
+      ok: false,
+      reason: "untrusted-url"
+    });
+    expect(validateTrustedExternalUrl("instagram", "https://www.instagram.com/canyougeo#https://evil.example")).toEqual({
+      ok: false,
+      reason: "untrusted-url"
+    });
+    expect(validateTrustedExternalUrl("tiktok", "https://www.tiktok.com/%40canyougeo")).toEqual({
+      ok: false,
+      reason: "untrusted-url"
+    });
   });
 
   it("blocks untrusted native external anchors before they can navigate the WebView", () => {

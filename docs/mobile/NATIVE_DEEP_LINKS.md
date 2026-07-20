@@ -245,6 +245,7 @@ Current manifest path claims:
 - exact `/auth/callback/`
 - exact `/reset-password/`
 - exact `/account/`
+- exact `/account/stats/`
 
 The `/play/` prefix intentionally covers current game routes and dated Mystery Map URLs. The JavaScript parser remains the final
 navigation authority: it still rejects malformed dates, unknown `/play/*` paths, unsafe query parameters, unsafe auth callbacks,

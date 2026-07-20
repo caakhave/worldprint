@@ -37,6 +37,7 @@ describe("NativeAppBridge", () => {
   let historyBack: ReturnType<typeof vi.spyOn>;
 
   beforeEach(() => {
+    document.documentElement.classList.remove("cgy-native-android");
     capacitorMocks.platform = "web";
     backButtonListener = undefined;
     removeListener = vi.fn().mockResolvedValue(undefined);
@@ -54,6 +55,7 @@ describe("NativeAppBridge", () => {
   });
 
   afterEach(() => {
+    document.documentElement.classList.remove("cgy-native-android");
     historyBack.mockRestore();
     uninstallNativeNavigationHistoryTracker();
     resetNativeNavigationHistory();
@@ -77,6 +79,7 @@ describe("NativeAppBridge", () => {
     await Promise.resolve();
 
     expect(capacitorMocks.addListener).not.toHaveBeenCalled();
+    expect(document.documentElement.classList.contains("cgy-native-android")).toBe(false);
   });
 
   it("registers exactly one native Back listener for native Android builds", async () => {
@@ -87,6 +90,7 @@ describe("NativeAppBridge", () => {
 
     await waitFor(() => expect(capacitorMocks.addListener).toHaveBeenCalledTimes(1));
     expect(capacitorMocks.addListener).toHaveBeenCalledWith("backButton", expect.any(Function));
+    expect(document.documentElement.classList.contains("cgy-native-android")).toBe(true);
   });
 
   it("navigates through WebView history when Android reports usable Back history", async () => {
@@ -171,6 +175,7 @@ describe("NativeAppBridge", () => {
     unmount();
 
     expect(removeListener).toHaveBeenCalledTimes(1);
+    expect(document.documentElement.classList.contains("cgy-native-android")).toBe(false);
   });
 
   it("does not create duplicate active listeners on rerender", async () => {

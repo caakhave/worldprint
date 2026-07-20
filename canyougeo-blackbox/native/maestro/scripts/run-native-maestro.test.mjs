@@ -1,17 +1,93 @@
 import path from "node:path";
-import { describe, expect, it } from "vitest";
+import { afterEach, describe, expect, it, vi } from "vitest";
 import {
+  androidGuardrailInvocations,
   androidDeviceNetworkShellCommands,
   buildMaestroInvocation,
   flowFilesFor,
   maestroEnvironment,
   parseArgs,
   reportDirectory,
+  runNativeMaestro,
   sanitizeOutput,
   selectedApprovedCredentials,
   suiteNeedsCredentials,
+  suiteSequenceFor,
   validateOptions
 } from "./run-native-maestro.mjs";
+
+const PROCESS_CREDENTIAL_KEYS = ["CGY_FREE_EMAIL", "CGY_FREE_PASSWORD", "CGY_PRO_EMAIL", "CGY_PRO_PASSWORD", "MAESTRO_CGY_EMAIL", "MAESTRO_CGY_PASSWORD"];
+
+function withProcessCredentials(callback) {
+  const previousValues = Object.fromEntries(PROCESS_CREDENTIAL_KEYS.map((key) => [key, process.env[key]]));
+  for (const key of PROCESS_CREDENTIAL_KEYS) {
+    delete process.env[key];
+  }
+  process.env.CGY_FREE_EMAIL = "free@example.test";
+  process.env.CGY_FREE_PASSWORD = "free-password";
+  try {
+    return callback();
+  } finally {
+    for (const key of PROCESS_CREDENTIAL_KEYS) {
+      if (previousValues[key] === undefined) {
+        delete process.env[key];
+      } else {
+        process.env[key] = previousValues[key];
+      }
+    }
+  }
+}
+
+function createAndroidCommandRunner(options = {}) {
+  const calls = [];
+  const commandRunner = (command, args, runnerOptions = {}) => {
+    calls.push({ command, args, env: runnerOptions.env ?? {} });
+    if (command === "maestro" && args.includes("--version")) {
+      return { status: 0, stdout: "2.6.1\n", stderr: "" };
+    }
+    if (command === "adb" && args.includes("pm") && args.includes("path")) {
+      return { status: 0, stdout: "package:/data/app/com.canyougeo.app/base.apk\n", stderr: "" };
+    }
+    if (command === "adb") {
+      return { status: 0, stdout: "", stderr: "" };
+    }
+    if (command === "maestro" && args.includes("test")) {
+      const commandText = args.join(" ");
+      const status = options.failFlow && commandText.includes(options.failFlow) ? 7 : 0;
+      const stdout = runnerOptions.env?.MAESTRO_CGY_EMAIL ? "free@example.test should be redacted\n" : "non-secret stdout\n";
+      const stderr = runnerOptions.env?.MAESTRO_CGY_PASSWORD ? "free-password should be redacted\n" : "non-secret stderr\n";
+      return {
+        status,
+        stdout,
+        stderr
+      };
+    }
+    return { status: 0, stdout: "", stderr: "" };
+  };
+  return { calls, commandRunner };
+}
+
+function maestroTestCalls(calls) {
+  return calls.filter((call) => call.command === "maestro" && call.args.includes("test"));
+}
+
+function suiteNameFor(call) {
+  return call.args[call.args.indexOf("--test-suite-name") + 1];
+}
+
+function flowNamesFor(call) {
+  return call.args.filter((arg) => arg.endsWith(".yaml")).map((file) => path.basename(file));
+}
+
+function shellNetworkCommands(calls) {
+  return calls
+    .filter((call) => call.command === "adb" && call.args.includes("shell") && !call.args.includes("pm"))
+    .map((call) => call.args.slice(call.args.indexOf("shell") + 1).join(" "));
+}
+
+afterEach(() => {
+  vi.restoreAllMocks();
+});
 
 describe("native Maestro runner options", () => {
   it("validates supported platforms and suites", () => {
@@ -38,6 +114,18 @@ describe("native Maestro runner options", () => {
       suite: "universal-link",
       device: "9DD07C47-7733-488F-9F1A-9D927ED9F6FB"
     });
+
+    expect(parseArgs(["--platform", "android", "--suite", "billing-discovery"])).toMatchObject({
+      platform: "android",
+      suite: "billing-discovery",
+      device: "emulator-5554"
+    });
+
+    expect(parseArgs(["--platform", "ios", "--suite", "release-with-universal-link"])).toMatchObject({
+      platform: "ios",
+      suite: "release-with-universal-link",
+      device: "9DD07C47-7733-488F-9F1A-9D927ED9F6FB"
+    });
   });
 
   it("rejects invalid platform and suite values", () => {
@@ -45,12 +133,14 @@ describe("native Maestro runner options", () => {
     expect(() => validateOptions({ platform: "android", suite: "checkout" })).toThrow("Invalid android suite");
   });
 
-  it("keeps auth as the only credential-bearing default suite", () => {
+  it("marks only credential-bearing or complete release suites as credential-bearing", () => {
     expect(suiteNeedsCredentials("smoke")).toBe(false);
     expect(suiteNeedsCredentials("interaction")).toBe(false);
     expect(suiteNeedsCredentials("guardrails")).toBe(false);
     expect(suiteNeedsCredentials("universal-link")).toBe(false);
     expect(suiteNeedsCredentials("auth")).toBe(true);
+    expect(suiteNeedsCredentials("billing-discovery")).toBe(true);
+    expect(suiteNeedsCredentials("release")).toBe(true);
     expect(suiteNeedsCredentials("all")).toBe(true);
   });
 });
@@ -106,17 +196,49 @@ describe("native Maestro runner command construction", () => {
     expect(flowFilesFor("ios", "auth").every((file) => file.includes("canyougeo-blackbox/native/maestro/flows/ios"))).toBe(true);
   });
 
-  it("registers separate native guardrail suites without folding them into all", () => {
+  it("registers complete release suites while keeping Universal Links separately gated on iOS", () => {
     expect(flowFilesFor("android", "guardrails").map((file) => path.basename(file))).toEqual([
       "06_guardrails_online.yaml",
       "07_guardrails_offline.yaml",
       "08_guardrails_reconnect.yaml"
     ]);
     expect(flowFilesFor("ios", "guardrails").map((file) => path.basename(file))).toEqual(["04_guardrails.yaml"]);
-    expect(flowFilesFor("android", "all").map((file) => path.basename(file))).not.toContain("06_guardrails_online.yaml");
-    expect(flowFilesFor("ios", "all").map((file) => path.basename(file))).not.toContain("04_guardrails.yaml");
+    expect(flowFilesFor("android", "release").map((file) => path.basename(file))).toEqual([
+      "01_smoke.yaml",
+      "02_interaction.yaml",
+      "03_back.yaml",
+      "04_app_links.yaml",
+      "05_auth_lifecycle.yaml",
+      "06_guardrails_online.yaml",
+      "07_guardrails_offline.yaml",
+      "08_guardrails_reconnect.yaml",
+      "09_billing_discovery.yaml"
+    ]);
+    expect(flowFilesFor("android", "all").map((file) => path.basename(file))).toEqual(flowFilesFor("android", "release").map((file) => path.basename(file)));
+    expect(flowFilesFor("ios", "release").map((file) => path.basename(file))).toEqual([
+      "01_smoke.yaml",
+      "02_interaction.yaml",
+      "03_auth_lifecycle.yaml",
+      "04_guardrails.yaml",
+      "06_billing_discovery.yaml"
+    ]);
     expect(flowFilesFor("ios", "universal-link").map((file) => path.basename(file))).toEqual(["05_universal_links.yaml"]);
     expect(flowFilesFor("ios", "all").map((file) => path.basename(file))).not.toContain("05_universal_links.yaml");
+    expect(flowFilesFor("ios", "release-with-universal-link").map((file) => path.basename(file))).toContain("05_universal_links.yaml");
+  });
+
+  it("sequences complete release suites so Android guardrails keep network restoration behavior", () => {
+    expect(suiteSequenceFor("android", "release")).toEqual(["smoke", "interaction", "back", "deep-link", "auth", "guardrails", "billing-discovery"]);
+    expect(suiteSequenceFor("android", "all")).toEqual(["smoke", "interaction", "back", "deep-link", "auth", "guardrails", "billing-discovery"]);
+    expect(suiteSequenceFor("ios", "release")).toEqual(["smoke", "interaction", "auth", "guardrails", "billing-discovery"]);
+    expect(suiteSequenceFor("ios", "release-with-universal-link")).toEqual([
+      "smoke",
+      "interaction",
+      "auth",
+      "guardrails",
+      "billing-discovery",
+      "universal-link"
+    ]);
   });
 
   it("keeps reports inside the ignored native report directory", () => {
@@ -150,6 +272,23 @@ describe("native Maestro runner command construction", () => {
     });
     const args = invocation.args.join(" ");
 
+    expect(args).not.toContain("--debug-output");
+    expect(args).not.toContain("--test-output-dir");
+    expect(invocation.debugDir).toBeNull();
+    expect(invocation.outputDir).toBeNull();
+  });
+
+  it("does not request screenshot or debug artifact directories for credential-bearing billing discovery flows", () => {
+    const reportDir = reportDirectory("android", "billing-discovery", new Date("2026-07-14T18:00:00Z"));
+    const invocation = buildMaestroInvocation({
+      platform: "android",
+      suite: "billing-discovery",
+      device: "emulator-5554",
+      reportDir
+    });
+    const args = invocation.args.join(" ");
+
+    expect(args).toContain("09_billing_discovery.yaml");
     expect(args).not.toContain("--debug-output");
     expect(args).not.toContain("--test-output-dir");
     expect(invocation.debugDir).toBeNull();
@@ -210,6 +349,8 @@ describe("native Maestro runner command construction", () => {
 
     expect(env.MAESTRO_CGY_EMAIL).toBe("free@example.test");
     expect(env.MAESTRO_CGY_PASSWORD).toBe("free-password");
+    expect(env.CGY_FREE_EMAIL).toBeUndefined();
+    expect(env.CGY_FREE_PASSWORD).toBeUndefined();
     expect(env.PATH).toContain("platform-tools");
     expect(env.MAESTRO_CLI_NO_ANALYTICS).toBe("1");
   });
@@ -219,4 +360,121 @@ describe("native Maestro runner command construction", () => {
       "input [redacted] then [redacted]"
     );
   });
+
+  it("dry-runs newly added billing and release suites without requiring installed apps or credentials", () => {
+    const commandRunner = () => {
+      throw new Error("dry-run should not execute subprocess preflight");
+    };
+
+    const androidBilling = runNativeMaestro({ platform: "android", suite: "billing-discovery", dryRun: true }, commandRunner);
+    expect(androidBilling.invocation.args.join(" ")).toContain("flows/android/09_billing_discovery.yaml");
+    expect(androidBilling.credentialsAvailable).toBe(false);
+
+    const androidRelease = runNativeMaestro({ platform: "android", suite: "release", dryRun: true }, commandRunner);
+    expect(androidRelease.suiteInvocations.map((invocation) => invocation.args.join(" ")).join("\n")).toContain("09_billing_discovery.yaml");
+    expect(androidRelease.suiteInvocations.map((invocation) => invocation.args.join(" ")).join("\n")).toContain("08_guardrails_reconnect.yaml");
+
+    const iosRelease = runNativeMaestro({ platform: "ios", suite: "release-with-universal-link", dryRun: true }, commandRunner);
+    expect(iosRelease.suiteInvocations.map((invocation) => invocation.args.join(" ")).join("\n")).toContain("06_billing_discovery.yaml");
+    expect(iosRelease.suiteInvocations.map((invocation) => invocation.args.join(" ")).join("\n")).toContain("05_universal_links.yaml");
+  });
+
+  it("plans Android release guardrail invocations without running Maestro or mutating networking", () => {
+    const reportDir = reportDirectory("android", "release", new Date("2026-07-14T18:00:00Z"));
+    const invocations = androidGuardrailInvocations({ platform: "android", suite: "guardrails", device: "emulator-5554" }, reportDir);
+
+    expect(invocations.map((invocation) => flowNamesFor(invocation).at(-1))).toEqual([
+      "06_guardrails_online.yaml",
+      "07_guardrails_offline.yaml",
+      "08_guardrails_reconnect.yaml"
+    ]);
+    expect(invocations.every((invocation) => invocation.command === "maestro")).toBe(true);
+    expect(invocations.every((invocation) => invocation.args.includes("--debug-output"))).toBe(true);
+  });
+
+  it("runs Android release guardrails once after preflight and avoids duplicate network restoration", () =>
+    withProcessCredentials(() => {
+      const stdout = vi.spyOn(process.stdout, "write").mockImplementation(() => true);
+      const stderr = vi.spyOn(process.stderr, "write").mockImplementation(() => true);
+      const { calls, commandRunner } = createAndroidCommandRunner();
+
+      const result = runNativeMaestro({ platform: "android", suite: "release" }, commandRunner);
+
+      expect(result.status).toBe(0);
+      expect(calls[0]).toMatchObject({ command: "maestro", args: ["--version"] });
+      expect(calls[1].command).toBe("adb");
+      expect(calls[1].args).toEqual(["-s", "emulator-5554", "shell", "pm", "path", "com.canyougeo.app"]);
+      expect(shellNetworkCommands(calls)).toEqual([
+        "cmd connectivity airplane-mode enable",
+        "svc wifi disable",
+        "svc data disable",
+        "cmd connectivity airplane-mode disable",
+        "svc wifi enable",
+        "svc data enable"
+      ]);
+
+      const flowCounts = maestroTestCalls(calls)
+        .flatMap(flowNamesFor)
+        .reduce((counts, flowName) => counts.set(flowName, (counts.get(flowName) ?? 0) + 1), new Map());
+      expect(flowCounts.get("06_guardrails_online.yaml")).toBe(1);
+      expect(flowCounts.get("07_guardrails_offline.yaml")).toBe(1);
+      expect(flowCounts.get("08_guardrails_reconnect.yaml")).toBe(1);
+      expect(flowCounts.get("09_billing_discovery.yaml")).toBe(1);
+
+      const allOutput = `${stdout.mock.calls.flat().join("")}\n${stderr.mock.calls.flat().join("")}`;
+      expect(allOutput).not.toContain("free@example.test");
+      expect(allOutput).not.toContain("free-password");
+      expect(allOutput).toContain("[redacted]");
+    }));
+
+  it("stops Android release execution after a failing guardrail step while restoring networking once", () =>
+    withProcessCredentials(() => {
+      vi.spyOn(process.stdout, "write").mockImplementation(() => true);
+      vi.spyOn(process.stderr, "write").mockImplementation(() => true);
+      const { calls, commandRunner } = createAndroidCommandRunner({ failFlow: "07_guardrails_offline.yaml" });
+
+      const result = runNativeMaestro({ platform: "android", suite: "release" }, commandRunner);
+
+      expect(result.status).toBe(7);
+      expect(calls[0]).toMatchObject({ command: "maestro", args: ["--version"] });
+      expect(maestroTestCalls(calls).flatMap(flowNamesFor)).toContain("06_guardrails_online.yaml");
+      expect(maestroTestCalls(calls).flatMap(flowNamesFor)).toContain("07_guardrails_offline.yaml");
+      expect(maestroTestCalls(calls).flatMap(flowNamesFor)).not.toContain("08_guardrails_reconnect.yaml");
+      expect(maestroTestCalls(calls).flatMap(flowNamesFor)).not.toContain("09_billing_discovery.yaml");
+      expect(shellNetworkCommands(calls)).toEqual([
+        "cmd connectivity airplane-mode enable",
+        "svc wifi disable",
+        "svc data disable",
+        "cmd connectivity airplane-mode disable",
+        "svc wifi enable",
+        "svc data enable"
+      ]);
+    }));
+
+  it("sends credentials only to auth and billing steps inside Android release suites", () =>
+    withProcessCredentials(() => {
+      vi.spyOn(process.stdout, "write").mockImplementation(() => true);
+      vi.spyOn(process.stderr, "write").mockImplementation(() => true);
+      const { calls, commandRunner } = createAndroidCommandRunner();
+
+      runNativeMaestro({ platform: "android", suite: "release" }, commandRunner);
+
+      for (const call of maestroTestCalls(calls)) {
+        const suiteName = suiteNameFor(call);
+        const expectsCredentials = suiteName.endsWith("-auth") || suiteName.endsWith("-billing-discovery");
+        expect(call.env.CGY_FREE_EMAIL).toBeUndefined();
+        expect(call.env.CGY_FREE_PASSWORD).toBeUndefined();
+        expect(call.env.CGY_PRO_EMAIL).toBeUndefined();
+        expect(call.env.CGY_PRO_PASSWORD).toBeUndefined();
+        expect(Boolean(call.env.MAESTRO_CGY_EMAIL)).toBe(expectsCredentials);
+        expect(Boolean(call.env.MAESTRO_CGY_PASSWORD)).toBe(expectsCredentials);
+        expect(call.args.includes("--debug-output")).toBe(!expectsCredentials);
+        expect(call.args.includes("--test-output-dir")).toBe(!expectsCredentials);
+      }
+
+      const suitesWithCredentials = maestroTestCalls(calls)
+        .filter((call) => call.env.MAESTRO_CGY_EMAIL)
+        .map(suiteNameFor);
+      expect(suitesWithCredentials).toEqual(["cgy-native-android-auth", "cgy-native-android-billing-discovery"]);
+    }));
 });

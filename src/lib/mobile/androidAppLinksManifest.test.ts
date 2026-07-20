@@ -32,7 +32,8 @@ const EXPECTED_EXACT_PATHS = new Set([
   "/forgot-password/",
   "/auth/callback/",
   "/reset-password/",
-  "/account/"
+  "/account/",
+  "/account/stats/"
 ]);
 const EXPECTED_PREFIX_PATHS = new Set(["/play/"]);
 

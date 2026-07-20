@@ -1,22 +1,59 @@
 "use client";
 
 import Link from "next/link";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import {
   requestBillingActionUrl,
   NATIVE_CHECKOUT_UNAVAILABLE_MESSAGE,
-  NATIVE_PORTAL_UNAVAILABLE_MESSAGE,
   nativeBillingUnavailableMessage,
   type BillingActionKind,
   type BillingFunctionName,
   type BillingPendingState
 } from "@/features/account/billingActionHelpers";
+import { notifyEntitlementChanged } from "@/features/account/entitlementInvalidation";
 import { useSupabaseAccount } from "@/features/account/useSupabaseAccount";
-import type { PlayerEntitlement } from "@/lib/account/entitlements";
+import { fetchRemoteEntitlement, resolvePlayerEntitlement, type PlayerEntitlement } from "@/lib/account/entitlements";
 import { signUpPathForReturn } from "@/lib/account/signInRedirect";
 import { publicBillingEnabled } from "@/lib/billing/publicBillingConfig";
 import { PRO_PRICE_OPTIONS, type ProBillingInterval } from "@/lib/billing/proPricing";
 import { isNativeAppBuild } from "@/lib/site/buildTarget";
+import {
+  addAppleStoreKitTransactionUpdatedListener,
+  appleStoreKitProductIdForInterval,
+  appleStoreKitIntervalForProductId,
+  isIOSAppleStoreKitRuntime,
+  queryAppleStoreKitCatalog,
+  type AppleStoreKitCatalogResult,
+  type AppleStoreKitProductDetails,
+  type AppleStoreKitProductId
+} from "@/lib/mobile/appleStoreKit";
+import {
+  addGooglePlayPurchaseUpdatedListener,
+  GOOGLE_PLAY_ANNUAL_BASE_PLAN_ID,
+  GOOGLE_PLAY_MONTHLY_BASE_PLAN_ID,
+  isAndroidGooglePlayBillingRuntime,
+  launchGooglePlayPurchase,
+  queryGooglePlayPlans,
+  restoreGooglePlayPurchases,
+  type GooglePlayBasePlanId,
+  type GooglePlayPlanDetails,
+  type GooglePlayPurchase
+} from "@/lib/mobile/googlePlayBilling";
+import {
+  nativeStoreBillingBoundaryCopy,
+  nativeStoreBillingPlatform,
+  nativeStoreBillingSignInCopy,
+  nativeStoreBillingUnavailableLabel
+} from "@/lib/mobile/nativeStoreBillingPlatform";
+import {
+  finishAppleStoreKitAfterEntitlement,
+  openAppleStoreKitSubscriptionManagement,
+  restoreAppleStoreKitEntitlements,
+  startAppleStoreKitPurchase,
+  syncUnfinishedAppleStoreKitEntitlements,
+  type AppleStoreKitActionResult
+} from "@/features/account/appleStoreKitActions";
+import { requestGooglePlayPurchaseContext, verifyGooglePlayPurchase } from "@/features/account/googlePlayPurchaseActions";
 import { trackAnalyticsEvent, trackCheckoutStarted, trackUpgradeIntent } from "@/lib/site/analytics";
 
 type BillingActionsClientProps = {
@@ -24,6 +61,7 @@ type BillingActionsClientProps = {
   context: "upgrade" | "account";
   selectedPlan?: ProBillingInterval | null;
   checkoutLabel?: string;
+  onVerified?: () => void | Promise<void>;
 };
 
 function signUpPathForPlan(interval: ProBillingInterval) {
@@ -45,15 +83,221 @@ function trackUpgradeNavigation(itemId: string) {
   });
 }
 
-export function BillingActionsClient({ entitlement, context, selectedPlan = null, checkoutLabel }: BillingActionsClientProps) {
+const GOOGLE_PLAY_PURCHASED_STATE = 1;
+const GOOGLE_PLAY_CATALOG_READY_STATUS = "Google Play purchase catalog ready.";
+const GOOGLE_PLAY_CATALOG_UNAVAILABLE_STATUS = "Google Play purchases are not available right now.";
+const GOOGLE_PLAY_CATALOG_PARTIAL_STATUS = "Some Google Play plans are not available right now.";
+const APPLE_STOREKIT_CATALOG_CHECKING_STATUS = "Checking Apple purchase options...";
+const APPLE_STOREKIT_CATALOG_READY_STATUS = "Apple purchase catalog ready.";
+const APPLE_STOREKIT_CATALOG_ZERO_PRODUCTS_STATUS = "Apple returned no Can You Geo subscription products.";
+const APPLE_STOREKIT_CATALOG_PARTIAL_STATUS = "Only one Apple subscription plan was returned.";
+const APPLE_STOREKIT_CATALOG_PLUGIN_UNAVAILABLE_STATUS = "Apple purchase bridge is unavailable in this build.";
+const APPLE_STOREKIT_CATALOG_STOREFRONT_UNAVAILABLE_STATUS = "Apple purchases are unavailable for the current storefront.";
+const APPLE_STOREKIT_CATALOG_NETWORK_STATUS = "Apple purchases could not be loaded because of a network/system condition.";
+const APPLE_STOREKIT_AVAILABILITY_TIMEOUT_STATUS = "Apple product discovery timed out while checking the native bridge.";
+const APPLE_STOREKIT_PRODUCT_TIMEOUT_STATUS = "Apple product discovery timed out while requesting subscription products.";
+type NativeBillingRuntime = "google-play" | "apple" | "unavailable";
+type NativePendingState = GooglePlayBasePlanId | AppleStoreKitProductId | "restore" | "manage" | null;
+type BillingMessageTone = "status" | "success" | "error";
+
+function detectNativeBillingRuntime(): NativeBillingRuntime {
+  if (isAndroidGooglePlayBillingRuntime()) return "google-play";
+  if (isIOSAppleStoreKitRuntime()) return "apple";
+  return "unavailable";
+}
+
+function basePlanIdForInterval(interval: ProBillingInterval): GooglePlayBasePlanId {
+  return interval === "yearly" ? GOOGLE_PLAY_ANNUAL_BASE_PLAN_ID : GOOGLE_PLAY_MONTHLY_BASE_PLAN_ID;
+}
+
+function intervalForBasePlanId(basePlanId: GooglePlayBasePlanId): ProBillingInterval {
+  return basePlanId === GOOGLE_PLAY_ANNUAL_BASE_PLAN_ID ? "yearly" : "monthly";
+}
+
+function googlePlayCatalogStatus(plans: GooglePlayPlanDetails[]) {
+  const availableBasePlans = new Set(plans.map((plan) => plan.basePlanId));
+  const hasMonthly = availableBasePlans.has(GOOGLE_PLAY_MONTHLY_BASE_PLAN_ID);
+  const hasAnnual = availableBasePlans.has(GOOGLE_PLAY_ANNUAL_BASE_PLAN_ID);
+  if (hasMonthly && hasAnnual) return GOOGLE_PLAY_CATALOG_READY_STATUS;
+  if (!hasMonthly && !hasAnnual) return GOOGLE_PLAY_CATALOG_UNAVAILABLE_STATUS;
+  return GOOGLE_PLAY_CATALOG_PARTIAL_STATUS;
+}
+
+function appleStoreKitCatalogStatus(result: AppleStoreKitCatalogResult) {
+  if (result.status === "timeout") {
+    return result.timeoutPhase === "plugin_availability" ? APPLE_STOREKIT_AVAILABILITY_TIMEOUT_STATUS : APPLE_STOREKIT_PRODUCT_TIMEOUT_STATUS;
+  }
+  if (result.status === "plugin_unavailable" || result.status === "unsupported") return APPLE_STOREKIT_CATALOG_PLUGIN_UNAVAILABLE_STATUS;
+  if (result.status === "storefront_unavailable") return APPLE_STOREKIT_CATALOG_STOREFRONT_UNAVAILABLE_STATUS;
+  if (
+    result.status === "network_error" ||
+    result.status === "system_error" ||
+    result.status === "unknown_error" ||
+    result.status === "not_entitled"
+  ) {
+    return APPLE_STOREKIT_CATALOG_NETWORK_STATUS;
+  }
+  if (result.status === "zero_products") return APPLE_STOREKIT_CATALOG_ZERO_PRODUCTS_STATUS;
+  const availableProducts = new Set(result.products.map((product) => product.productId));
+  const hasMonthly = availableProducts.has(appleStoreKitProductIdForInterval("monthly"));
+  const hasYearly = availableProducts.has(appleStoreKitProductIdForInterval("yearly"));
+  if (hasMonthly && hasYearly) return APPLE_STOREKIT_CATALOG_READY_STATUS;
+  if (!hasMonthly && !hasYearly) return APPLE_STOREKIT_CATALOG_ZERO_PRODUCTS_STATUS;
+  return APPLE_STOREKIT_CATALOG_PARTIAL_STATUS;
+}
+
+function googlePlayCatalogMessageTone(message: string): BillingMessageTone {
+  return message === GOOGLE_PLAY_CATALOG_READY_STATUS ? "status" : "error";
+}
+
+function appleStoreKitCatalogMessageTone(message: string): BillingMessageTone {
+  return message === APPLE_STOREKIT_CATALOG_CHECKING_STATUS || message === APPLE_STOREKIT_CATALOG_READY_STATUS
+    ? "status"
+    : "error";
+}
+
+function billingMessageClassName(tone: BillingMessageTone) {
+  return tone === "error" ? "account-error" : "account-env-note";
+}
+
+function billingMessageRole(tone: BillingMessageTone) {
+  return tone === "error" ? "alert" : "status";
+}
+
+export function BillingActionsClient({ entitlement, context, selectedPlan = null, checkoutLabel, onVerified }: BillingActionsClientProps) {
   const { client, configured, loading, user } = useSupabaseAccount();
   const [pending, setPending] = useState<BillingPendingState | null>(null);
+  const [nativePending, setNativePending] = useState<NativePendingState>(null);
+  const [nativeRuntime, setNativeRuntime] = useState<NativeBillingRuntime>(() => detectNativeBillingRuntime());
+  const [nativePlans, setNativePlans] = useState<GooglePlayPlanDetails[]>([]);
+  const [appleProducts, setAppleProducts] = useState<AppleStoreKitProductDetails[]>([]);
+  const [nativePlansLoading, setNativePlansLoading] = useState(false);
+  const [applePurchaseInSession, setApplePurchaseInSession] = useState(false);
+  const [nativeCatalogStatus, setNativeCatalogStatus] = useState("");
   const [message, setMessage] = useState("");
+  const [messageTone, setMessageTone] = useState<BillingMessageTone>("status");
   const signedIn = Boolean(user);
   const isPro = entitlement.plan === "pro";
   const hasStripeCustomer = Boolean(entitlement.row?.stripe_customer_id);
   const billingEnabled = configured && publicBillingEnabled();
   const nativeBuild = isNativeAppBuild();
+  const nativePlatform =
+    nativeRuntime === "google-play" ? "android" : nativeRuntime === "apple" ? "ios" : nativeStoreBillingPlatform(nativeBuild);
+
+  function showMessage(text: string, tone: BillingMessageTone = "error") {
+    setMessage(text);
+    setMessageTone(tone);
+  }
+
+  function clearMessage() {
+    setMessage("");
+    setMessageTone("status");
+  }
+
+  async function notifyConfirmedEntitlementChanged() {
+    notifyEntitlementChanged();
+    await onVerified?.();
+  }
+
+  async function confirmRemoteProAndNotify() {
+    if (!client || !user) return false;
+    const result = await fetchRemoteEntitlement(client, user.id);
+    if (result.error) return false;
+    if (resolvePlayerEntitlement(result.data, true).plan !== "pro") return false;
+    await notifyConfirmedEntitlementChanged();
+    return true;
+  }
+
+  useEffect(() => {
+    let mounted = true;
+    let removeListener: (() => void) | null = null;
+
+    function registerAppleStoreKitTransactionListener(listener: () => void) {
+      void addAppleStoreKitTransactionUpdatedListener(listener)
+        .then((handle) => {
+          if (!mounted) {
+            void handle.remove();
+            return;
+          }
+          if (removeListener) {
+            void handle.remove();
+            return;
+          }
+          removeListener = () => void handle.remove();
+        })
+        .catch(() => undefined);
+    }
+
+    async function loadNativeBilling() {
+      if (!nativeBuild || isPro) return;
+      const runtime = detectNativeBillingRuntime();
+      if (!mounted) return;
+      setNativeRuntime(runtime);
+      setNativeCatalogStatus("");
+      if (runtime === "unavailable") return;
+
+      if (!signedIn) {
+        if (runtime === "apple") {
+          registerAppleStoreKitTransactionListener(() => {
+            if (mounted) showMessage("Sign in to restore purchase.");
+          });
+        }
+        return;
+      }
+
+      setNativePlansLoading(true);
+      try {
+        if (runtime === "google-play") {
+          const [plans, handle] = await Promise.all([
+            queryGooglePlayPlans(),
+            addGooglePlayPurchaseUpdatedListener((purchases) => void verifyNativePurchases(purchases, null))
+          ]);
+          if (!mounted) {
+            await handle.remove();
+            return;
+          }
+          removeListener = () => void handle.remove();
+          setNativePlans(plans);
+          const catalogStatus = googlePlayCatalogStatus(plans);
+          setNativeCatalogStatus(catalogStatus);
+          if (catalogStatus === GOOGLE_PLAY_CATALOG_READY_STATUS) {
+            clearMessage();
+          } else {
+            showMessage(catalogStatus, googlePlayCatalogMessageTone(catalogStatus));
+          }
+          void restoreNativePurchases({ quiet: true });
+        } else {
+          setNativeCatalogStatus(APPLE_STOREKIT_CATALOG_CHECKING_STATUS);
+          showMessage(APPLE_STOREKIT_CATALOG_CHECKING_STATUS, "status");
+          const catalogResult = await queryAppleStoreKitCatalog();
+          if (!mounted) {
+            return;
+          }
+          setAppleProducts(catalogResult.products);
+          const catalogStatus = appleStoreKitCatalogStatus(catalogResult);
+          setNativeCatalogStatus(catalogStatus);
+          showMessage(catalogStatus, appleStoreKitCatalogMessageTone(catalogStatus));
+          registerAppleStoreKitTransactionListener(() => void syncAppleStoreKitTransactions({ quiet: true }));
+          void syncAppleStoreKitTransactions({ quiet: true });
+        }
+      } catch {
+        if (mounted) {
+          const catalogStatus = runtime === "apple" ? APPLE_STOREKIT_CATALOG_NETWORK_STATUS : GOOGLE_PLAY_CATALOG_UNAVAILABLE_STATUS;
+          setNativeCatalogStatus(catalogStatus);
+          showMessage(catalogStatus);
+        }
+      } finally {
+        if (mounted) setNativePlansLoading(false);
+      }
+    }
+
+    void loadNativeBilling();
+    return () => {
+      mounted = false;
+      removeListener?.();
+    };
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [client, isPro, nativeBuild, signedIn]);
 
   function trackUpgradeClick(interval: ProBillingInterval | undefined) {
     trackUpgradeIntent({
@@ -72,12 +316,12 @@ export function BillingActionsClient({ entitlement, context, selectedPlan = null
     interval?: ProBillingInterval
   ) {
     if (nativeBuild) {
-      setMessage(nativeBillingUnavailableMessage(kind));
+      showMessage(nativeBillingUnavailableMessage(kind));
       return;
     }
 
     setPending(pendingState);
-    setMessage("");
+    clearMessage();
     if (kind === "checkout") {
       trackUpgradeClick(interval);
     }
@@ -90,7 +334,7 @@ export function BillingActionsClient({ entitlement, context, selectedPlan = null
     });
     setPending(null);
     if (result.message || !result.url) {
-      setMessage(result.message ?? (kind === "portal" ? "Billing management could not open. Please try again." : "Checkout could not start. Please try again."));
+      showMessage(result.message ?? (kind === "portal" ? "Billing management could not open. Please try again." : "Checkout could not start. Please try again."));
       return;
     }
     if (kind === "checkout") {
@@ -101,6 +345,168 @@ export function BillingActionsClient({ entitlement, context, selectedPlan = null
       });
     }
     window.location.assign(result.url);
+  }
+
+  async function verifyNativePurchases(purchases: GooglePlayPurchase[], basePlanId: GooglePlayBasePlanId | null) {
+    const purchased = purchases.filter((purchase) => purchase.purchaseState === GOOGLE_PLAY_PURCHASED_STATE);
+    if (purchased.length === 0) return;
+    for (const purchase of purchased) {
+      const result = await verifyGooglePlayPurchase({
+        client,
+        signedIn,
+        purchase,
+        basePlanId
+      });
+      if (!result.ok) {
+        showMessage(result.message ?? "Google Play purchase could not be verified.");
+        return;
+      }
+    }
+    const proConfirmed = await confirmRemoteProAndNotify();
+    showMessage(
+      proConfirmed
+        ? "Google Play purchase verified. Pro access is active."
+        : "Google Play purchase verified. Pro access will refresh shortly.",
+      proConfirmed ? "success" : "status"
+    );
+  }
+
+  async function startGooglePlayPurchase(basePlanId: GooglePlayBasePlanId) {
+    setNativePending(basePlanId);
+    clearMessage();
+    trackUpgradeClick(intervalForBasePlanId(basePlanId));
+    const contextResult = await requestGooglePlayPurchaseContext({ client, signedIn });
+    if (!contextResult.obfuscatedAccountId) {
+      setNativePending(null);
+      showMessage(contextResult.message ?? "Google Play purchases could not start.");
+      return;
+    }
+    try {
+      await launchGooglePlayPurchase({ basePlanId, obfuscatedAccountId: contextResult.obfuscatedAccountId });
+      showMessage("Complete the purchase in Google Play.", "status");
+    } catch {
+      showMessage("Google Play purchase could not start. Try again in a minute.");
+    } finally {
+      setNativePending(null);
+    }
+  }
+
+  async function restoreNativePurchases(options: { quiet?: boolean } = {}) {
+    setNativePending("restore");
+    if (!options.quiet) clearMessage();
+    try {
+      const purchases = await restoreGooglePlayPurchases();
+      await verifyNativePurchases(purchases, null);
+      if (!options.quiet && purchases.length === 0) {
+        showMessage("No active Google Play purchases were found for this account.", "status");
+      }
+    } catch {
+      if (!options.quiet) showMessage("Google Play purchases could not be restored right now.");
+    } finally {
+      setNativePending(null);
+    }
+  }
+
+  async function completeAppleStoreKitVerification(result: AppleStoreKitActionResult, options: { quiet?: boolean } = {}) {
+    if (!result.ok || result.status !== "backendVerified") {
+      if (!options.quiet && result.message) showMessage(result.message, result.ok ? "status" : "error");
+      return;
+    }
+    const finishResult = await finishAppleStoreKitAfterEntitlement({ client, userId: user?.id });
+    if (finishResult.ok) {
+      setApplePurchaseInSession(true);
+      await notifyConfirmedEntitlementChanged();
+    }
+    if (!options.quiet) {
+      showMessage(
+        finishResult.message ?? result.message ?? "Apple purchase verified. Pro access will refresh shortly.",
+        finishResult.ok ? "success" : "status"
+      );
+    }
+  }
+
+  async function startApplePurchase(productId: AppleStoreKitProductId) {
+    setNativePending(productId);
+    clearMessage();
+    trackUpgradeClick(appleStoreKitIntervalForProductId(productId));
+    try {
+      const result = await startAppleStoreKitPurchase({ client, signedIn, productId });
+      if (result.status === "backendVerified") {
+        await completeAppleStoreKitVerification(result);
+      } else {
+        showMessage(result.message ?? "Apple purchase could not be completed. Try again in a minute.", result.ok ? "status" : "error");
+      }
+    } catch {
+      showMessage("Apple purchase could not start. Try again in a minute.");
+    } finally {
+      setNativePending(null);
+    }
+  }
+
+  async function retryAppleStoreKitCatalog() {
+    setNativePlansLoading(true);
+    setNativeCatalogStatus(APPLE_STOREKIT_CATALOG_CHECKING_STATUS);
+    showMessage(APPLE_STOREKIT_CATALOG_CHECKING_STATUS, "status");
+    try {
+      const catalogResult = await queryAppleStoreKitCatalog({ forceRefresh: true });
+      setAppleProducts(catalogResult.products);
+      const catalogStatus = appleStoreKitCatalogStatus(catalogResult);
+      setNativeCatalogStatus(catalogStatus);
+      showMessage(catalogStatus, appleStoreKitCatalogMessageTone(catalogStatus));
+    } catch {
+      setAppleProducts([]);
+      setNativeCatalogStatus(APPLE_STOREKIT_CATALOG_NETWORK_STATUS);
+      showMessage(APPLE_STOREKIT_CATALOG_NETWORK_STATUS);
+    } finally {
+      setNativePlansLoading(false);
+    }
+  }
+
+  async function restoreApplePurchases(options: { quiet?: boolean } = {}) {
+    setNativePending("restore");
+    if (!options.quiet) clearMessage();
+    try {
+      const result = await restoreAppleStoreKitEntitlements({ client, signedIn });
+      if (result.status === "backendVerified") {
+        await completeAppleStoreKitVerification(result, options);
+      } else if (!options.quiet && result.message) {
+        showMessage(result.message, result.ok ? "status" : "error");
+      }
+    } catch {
+      if (!options.quiet) showMessage("Apple purchases could not be restored right now.");
+    } finally {
+      setNativePending(null);
+    }
+  }
+
+  async function syncAppleStoreKitTransactions(options: { quiet?: boolean } = {}) {
+    if (!signedIn) {
+      if (!options.quiet) showMessage("Sign in to restore purchase.");
+      return;
+    }
+    try {
+      const result = await syncUnfinishedAppleStoreKitEntitlements({ client, signedIn });
+      if (result.status === "backendVerified") {
+        await completeAppleStoreKitVerification(result, options);
+      } else if (!options.quiet && result.message) {
+        showMessage(result.message, result.ok ? "status" : "error");
+      }
+    } catch {
+      if (!options.quiet) showMessage("Apple purchases could not be refreshed right now.");
+    }
+  }
+
+  async function openAppleSubscriptionManagement() {
+    setNativePending("manage");
+    clearMessage();
+    try {
+      const result = await openAppleStoreKitSubscriptionManagement();
+      if (!result.ok && result.message) showMessage(result.message);
+    } catch {
+      showMessage("Apple subscription management could not open right now.");
+    } finally {
+      setNativePending(null);
+    }
   }
 
   if (nativeBuild) {
@@ -121,8 +527,141 @@ export function BillingActionsClient({ entitlement, context, selectedPlan = null
               View plan
             </Link>
           ) : null}
+          {nativeRuntime === "apple" && applePurchaseInSession ? (
+            <button className="button-secondary" type="button" onClick={() => void openAppleSubscriptionManagement()} disabled={nativePending !== null}>
+              {nativePending === "manage" ? "Opening Apple..." : "Manage Apple subscription"}
+            </button>
+          ) : null}
           <p className="account-env-note">
-            {NATIVE_PORTAL_UNAVAILABLE_MESSAGE} Existing Pro access remains available on this account.
+            Existing Pro access remains available on this account. Manage the subscription through the store or website where it was created.
+          </p>
+          {message ? (
+            <p className={billingMessageClassName(messageTone)} role={billingMessageRole(messageTone)}>
+              {message}
+            </p>
+          ) : null}
+        </div>
+      );
+    }
+
+    if (!signedIn) {
+      return (
+        <div className="billing-actions" aria-label="Billing actions">
+          <Link className="button" href={signUpPathForReturn("/upgrade")} onClick={() => trackUpgradeNavigation(`${context}_start_pro_native_${nativePlatform}`)}>
+            Start Pro
+          </Link>
+          <Link className="button-secondary" href="/sign-up">
+            Continue free
+          </Link>
+          <p className="account-env-note">{nativeStoreBillingSignInCopy(nativePlatform)}</p>
+          {message ? (
+            <p className={billingMessageClassName(messageTone)} role={billingMessageRole(messageTone)}>
+              {message}
+            </p>
+          ) : null}
+        </div>
+      );
+    }
+
+    if (nativeRuntime === "google-play") {
+      const visibleOptions = selectedPlan ? PRO_PRICE_OPTIONS.filter((option) => option.interval === selectedPlan) : PRO_PRICE_OPTIONS;
+      return (
+        <div className={selectedPlan ? "billing-actions billing-actions-focused" : "billing-actions"} aria-label="Billing actions">
+          <div className="checkout-option-buttons" aria-label="Choose Pro billing cadence">
+            {visibleOptions.map((option) => {
+              const basePlanId = basePlanIdForInterval(option.interval);
+              const nativePlan = nativePlans.find((plan) => plan.basePlanId === basePlanId);
+              const label = checkoutLabel ?? option.cta;
+              return (
+                <button
+                  className={option.featured ? "button" : "button-secondary"}
+                  type="button"
+                  key={option.interval}
+                  onClick={() => void startGooglePlayPurchase(basePlanId)}
+                  disabled={nativePending !== null || nativePlansLoading || !nativePlan}
+                >
+                  <span>{nativePending === basePlanId ? "Opening Google Play..." : label}</span>
+                  {nativePlan?.localizedPrice ? <span className="checkout-button-badge">{nativePlan.localizedPrice}</span> : null}
+                </button>
+              );
+            })}
+          </div>
+          <button className="button-secondary" type="button" onClick={() => void restoreNativePurchases()} disabled={nativePending !== null}>
+            {nativePending === "restore" ? "Checking Google Play..." : "Restore purchases"}
+          </button>
+          {context === "account" ? (
+            <Link className="button-secondary" href="/upgrade" onClick={() => trackUpgradeNavigation("account_compare_plans_native_google_play")}>
+              Compare plans
+            </Link>
+          ) : null}
+          {nativeCatalogStatus && nativeCatalogStatus !== message ? (
+            <p className="visually-hidden" role="status">
+              {nativeCatalogStatus}
+            </p>
+          ) : null}
+          {message ? (
+            <p className={billingMessageClassName(messageTone)} role={billingMessageRole(messageTone)}>
+              {message}
+            </p>
+          ) : null}
+          <p className="account-env-note">
+            {nativeStoreBillingBoundaryCopy(nativePlatform)}
+          </p>
+        </div>
+      );
+    }
+
+    if (nativeRuntime === "apple") {
+      const visibleOptions = selectedPlan ? PRO_PRICE_OPTIONS.filter((option) => option.interval === selectedPlan) : PRO_PRICE_OPTIONS;
+      return (
+        <div className={selectedPlan ? "billing-actions billing-actions-focused" : "billing-actions"} aria-label="Billing actions">
+          <div className="checkout-option-buttons" aria-label="Choose Pro billing cadence">
+            {visibleOptions.map((option) => {
+              const productId = appleStoreKitProductIdForInterval(option.interval);
+              const appleProduct = appleProducts.find((product) => product.productId === productId);
+              const label = checkoutLabel ?? option.cta;
+              return (
+                <button
+                  className={option.featured ? "button" : "button-secondary"}
+                  type="button"
+                  key={option.interval}
+                  onClick={() => void startApplePurchase(productId)}
+                  disabled={nativePending !== null || nativePlansLoading || !appleProduct}
+                >
+                  <span>{nativePending === productId ? "Opening Apple..." : label}</span>
+                  {appleProduct?.displayPrice ? <span className="checkout-button-badge">{appleProduct.displayPrice}</span> : null}
+                </button>
+              );
+            })}
+          </div>
+          <button className="button-secondary" type="button" onClick={() => void restoreApplePurchases()} disabled={nativePending !== null}>
+            {nativePending === "restore" ? "Checking Apple..." : "Restore purchases"}
+          </button>
+          <button className="button-secondary" type="button" onClick={() => void retryAppleStoreKitCatalog()} disabled={nativePending !== null || nativePlansLoading}>
+            {nativePlansLoading ? "Checking Apple..." : "Retry Apple purchase options"}
+          </button>
+          {applePurchaseInSession ? (
+            <button className="button-secondary" type="button" onClick={() => void openAppleSubscriptionManagement()} disabled={nativePending !== null}>
+              {nativePending === "manage" ? "Opening Apple..." : "Manage Apple subscription"}
+            </button>
+          ) : null}
+          {context === "account" ? (
+            <Link className="button-secondary" href="/upgrade" onClick={() => trackUpgradeNavigation("account_compare_plans_native_apple")}>
+              Compare plans
+            </Link>
+          ) : null}
+          {nativeCatalogStatus && nativeCatalogStatus !== message ? (
+            <p className="visually-hidden" role="status">
+              {nativeCatalogStatus}
+            </p>
+          ) : null}
+          {message ? (
+            <p className={billingMessageClassName(messageTone)} role={billingMessageRole(messageTone)}>
+              {message}
+            </p>
+          ) : null}
+          <p className="account-env-note">
+            {nativeStoreBillingBoundaryCopy(nativePlatform)}
           </p>
         </div>
       );
@@ -131,7 +670,7 @@ export function BillingActionsClient({ entitlement, context, selectedPlan = null
     return (
       <div className="billing-actions" aria-label="Billing actions">
         <button className="button" type="button" disabled>
-          Mobile purchases unavailable
+          {nativeStoreBillingUnavailableLabel(nativePlatform)}
         </button>
         {context === "account" ? (
           <Link className="button-secondary" href="/upgrade" onClick={() => trackUpgradeNavigation("account_compare_plans_native_preview")}>
@@ -284,7 +823,7 @@ export function BillingActionsClient({ entitlement, context, selectedPlan = null
           </Link>
         ) : null}
         {message ? (
-          <p className="account-error" role="alert">
+          <p className={billingMessageClassName(messageTone)} role={billingMessageRole(messageTone)}>
             {message}
           </p>
         ) : null}
@@ -312,7 +851,7 @@ export function BillingActionsClient({ entitlement, context, selectedPlan = null
           ) : null}
         </button>
         {message ? (
-          <p className="account-error" role="alert">
+          <p className={billingMessageClassName(messageTone)} role={billingMessageRole(messageTone)}>
             {message}
           </p>
         ) : null}
@@ -350,7 +889,7 @@ export function BillingActionsClient({ entitlement, context, selectedPlan = null
         </Link>
       ) : null}
       {message ? (
-        <p className="account-error" role="alert">
+        <p className={billingMessageClassName(messageTone)} role={billingMessageRole(messageTone)}>
           {message}
         </p>
       ) : null}

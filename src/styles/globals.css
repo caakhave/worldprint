@@ -11885,6 +11885,10 @@ button.pro-price-option:focus-visible {
   --cgy-safe-area-left: env(safe-area-inset-left, 0px);
 }
 
+.cgy-native-app.cgy-native-android {
+  --cgy-safe-area-top: max(env(safe-area-inset-top, 0px), 2.25rem);
+}
+
 .cgy-native-app body {
   min-height: 100dvh;
   overflow-x: hidden;

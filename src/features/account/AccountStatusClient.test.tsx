@@ -311,6 +311,21 @@ describe("AccountStatusClient", () => {
     expect(screen.queryByRole("link", { name: "View saved stats" })).not.toBeInTheDocument();
   });
 
+  it("uses native-safe signed-out plan copy without purchase steering", () => {
+    vi.stubEnv("NEXT_PUBLIC_CGY_NATIVE_APP", "1");
+    getPlatformMock.mockReturnValue("android");
+    accountMock.state.user = null;
+    entitlementMock.state.signedIn = false;
+
+    render(<AccountStatusClient />);
+
+    expect(screen.getByRole("heading", { name: "Compare plans or continue free." })).toBeVisible();
+    expect(screen.getByText(/Existing Pro access unlocks after sign-in/i)).toBeVisible();
+    expect(screen.getByText(/Sign in before starting a Google Play purchase/i)).toBeVisible();
+    expect(screen.getByRole("link", { name: "View plans" })).toHaveAttribute("href", "/upgrade");
+    expect(screen.queryByRole("link", { name: "Start Pro" })).not.toBeInTheDocument();
+  });
+
   it("keeps the account deletion entry as an internal route in native builds", () => {
     vi.stubEnv("NEXT_PUBLIC_CGY_NATIVE_APP", "1");
     getPlatformMock.mockReturnValue("android");
@@ -328,12 +343,17 @@ describe("AccountStatusClient", () => {
 
 describe("AccountHeroClient", () => {
   beforeEach(() => {
+    vi.stubEnv("NEXT_PUBLIC_CGY_NATIVE_APP", "0");
     accountMock.state.user = {
       id: "11111111-2222-4333-8444-555555555555",
       email: "player@example.com"
     };
     accountMock.state.loading = false;
     entitlementMock.state.signedIn = true;
+  });
+
+  afterEach(() => {
+    vi.unstubAllEnvs();
   });
 
   it("uses connected account copy after sign-in", () => {
@@ -357,6 +377,19 @@ describe("AccountHeroClient", () => {
     expect(screen.getByText(/Choose Can You Geo\? Pro for supported custom runs and archives/i)).toBeVisible();
     expect(screen.getByRole("link", { name: "Start Pro" })).toHaveAttribute("href", "/upgrade");
     expect(screen.getByRole("link", { name: "Continue free" })).toHaveAttribute("href", "/sign-up");
+  });
+
+  it("uses native-safe signed-out hero copy", () => {
+    vi.stubEnv("NEXT_PUBLIC_CGY_NATIVE_APP", "1");
+    accountMock.state.user = null;
+
+    render(<AccountHeroClient />);
+
+    expect(screen.getByRole("heading", { name: "Compare plans or continue free." })).toBeVisible();
+    expect(screen.getAllByText(/Existing Pro access unlocks after sign-in/i).length).toBeGreaterThanOrEqual(1);
+    expect(screen.getByText(/mobile purchases are not available in this preview/i)).toBeVisible();
+    expect(screen.getByRole("link", { name: "View plans" })).toHaveAttribute("href", "/upgrade");
+    expect(screen.queryByRole("link", { name: "Start Pro" })).not.toBeInTheDocument();
   });
 
   it("does not flash signed-out upsell copy while account state is loading", () => {
@@ -397,6 +430,7 @@ describe("MembershipCardClient", () => {
 
 describe("AccountPlanNotesClient", () => {
   beforeEach(() => {
+    vi.stubEnv("NEXT_PUBLIC_CGY_NATIVE_APP", "0");
     delete process.env.NEXT_PUBLIC_BILLING_MODE;
     accountMock.state.user = {
       id: "11111111-2222-4333-8444-555555555555",
@@ -407,6 +441,10 @@ describe("AccountPlanNotesClient", () => {
     entitlementMock.state.loading = false;
     entitlementMock.state.entitlement.plan = "free";
     entitlementMock.state.entitlement.status = "free";
+  });
+
+  afterEach(() => {
+    vi.unstubAllEnvs();
   });
 
   it("renders account actions without generic onboarding cards", async () => {
@@ -447,5 +485,31 @@ describe("AccountPlanNotesClient", () => {
     expect(screen.getByRole("link", { name: "Explore games" })).toHaveAttribute("href", "/play");
     expect(screen.getByRole("link", { name: "Start Pro" })).toHaveAttribute("href", "/upgrade");
     expect(screen.getByRole("link", { name: "Sign in free" })).toHaveAttribute("href", "/sign-in");
+  });
+
+  it("uses native-safe account plan actions without checkout setup copy", async () => {
+    vi.stubEnv("NEXT_PUBLIC_CGY_NATIVE_APP", "1");
+    getPlatformMock.mockReturnValue("android");
+
+    render(<AccountPlanNotesClient />);
+
+    expect(await screen.findByText("Google Play purchases")).toBeVisible();
+    expect(screen.getByText(/Google Play manages Android purchases/i)).toBeVisible();
+    expect(screen.getByRole("link", { name: "View plans" })).toHaveAttribute("href", "/upgrade");
+    expect(screen.queryByText(/checkout needs billing setup/i)).not.toBeInTheDocument();
+  });
+
+  it("uses native-safe signed-out plan actions from account notes", async () => {
+    vi.stubEnv("NEXT_PUBLIC_CGY_NATIVE_APP", "1");
+    getPlatformMock.mockReturnValue("android");
+    accountMock.state.user = null;
+    entitlementMock.state.signedIn = false;
+
+    render(<AccountPlanNotesClient />);
+
+    expect(await screen.findByRole("heading", { name: "Open the whole atlas." })).toBeVisible();
+    expect(screen.getByText(/Already entitled Pro accounts unlock supported atlas features after sign-in/i)).toBeVisible();
+    expect(screen.getByRole("link", { name: "View plans" })).toHaveAttribute("href", "/upgrade");
+    expect(screen.queryByRole("link", { name: "Start Pro" })).not.toBeInTheDocument();
   });
 });

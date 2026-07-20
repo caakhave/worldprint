@@ -47,15 +47,17 @@ tags:
 - extendedWaitUntil:
     visible: "Follow Can You Geo"
     timeout: 30000
-- tapOn: "Start Pro"
-- scrollUntilVisible:
-    element: "Mobile purchase preview"
-    direction: DOWN
-    speed: 60
+- openLink: "https://canyougeo.com/upgrade/"
+- extendedWaitUntil:
+    visible: "Apple purchases"
     timeout: 30000
 - extendedWaitUntil:
-    visible: "Mobile purchases unavailable"
+    visible: "Apple manages iOS purchases. Stripe checkout is unavailable in this iOS build."
     timeout: 15000
-- assertNotVisible: "Join monthly"
-- assertNotVisible: "Join yearly"
+- extendedWaitUntil:
+    visible: "Sign in before starting an Apple purchase. Free play needs no card."
+    timeout: 15000
+- assertNotVisible: "Stripe handles checkout securely"
+- assertNotVisible: "checkout.stripe.com"
+- assertNotVisible: "billing.stripe.com"
 - assertNotVisible: "Cookie settings"
