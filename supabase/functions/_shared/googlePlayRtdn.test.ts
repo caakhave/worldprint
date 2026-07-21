@@ -23,7 +23,7 @@ const config: GooglePlayRtdnConfig = {
   pushServiceAccountEmail: "cgy-rtdn-push@can-you-geo-play-billing.iam.gserviceaccount.com",
   audience: "https://hsgpjtyysbremrokkoym.supabase.co/functions/v1/google-play-rtdn",
   topic: "projects/can-you-geo-play-billing/topics/cgy-google-play-rtdn",
-  stagingSubscription: "cgy-google-play-rtdn-staging-push",
+  subscription: "cgy-google-play-rtdn-staging-push",
   environment: "test"
 };
 
@@ -99,6 +99,11 @@ describe("Google Play RTDN shared helpers", () => {
       subscription: "projects/can-you-geo-play-billing/subscriptions/other"
     });
     expect(parsePubSubEnvelope(wrongSubscription, config)).toMatchObject({ envelope: null, error: "wrong_subscription" });
+  });
+
+  it("accepts a fully qualified Pub/Sub subscription resource path", () => {
+    const fullSubscription = "projects/can-you-geo-play-billing/subscriptions/cgy-google-play-rtdn-staging-push";
+    expect(expectedSubscriptionName({ ...config, subscription: fullSubscription })).toBe(fullSubscription);
   });
 
   it("parses test notifications without creating subscription inputs", () => {

@@ -3,6 +3,7 @@ import { join } from "node:path";
 import { describe, expect, it } from "vitest";
 
 const source = readFileSync(join(process.cwd(), "supabase/functions/google-play-rtdn/index.ts"), "utf8");
+const sharedSource = readFileSync(join(process.cwd(), "supabase/functions/_shared/googlePlayRtdn.ts"), "utf8");
 const oidcSource = readFileSync(join(process.cwd(), "supabase/functions/_shared/googlePlayOidc.ts"), "utf8");
 const publisherSource = readFileSync(join(process.cwd(), "supabase/functions/_shared/googlePlayPublisher.ts"), "utf8");
 const processorSource = readFileSync(join(process.cwd(), "supabase/functions/_shared/googlePlayRtdnProcessor.ts"), "utf8");
@@ -19,6 +20,15 @@ describe("google-play-rtdn Edge Function structure", () => {
     expect(source).toContain("audience: config.audience");
     expect(compactSource.indexOf("verifyGooglePubSubOidc")).toBeLessThan(compactSource.indexOf("parsePubSubEnvelope"));
     expect(source).not.toMatch(/getUser|supabase\.auth|SUPABASE_ANON_KEY|optionsResponse|Access-Control-Allow-Origin/i);
+  });
+
+  it("uses an environment-neutral Pub/Sub subscription secret with a legacy staging fallback", () => {
+    const neutralIndex = sharedSource.indexOf("GOOGLE_PLAY_RTDN_SUBSCRIPTION");
+    const legacyIndex = sharedSource.indexOf("GOOGLE_PLAY_RTDN_STAGING_SUBSCRIPTION");
+    expect(neutralIndex).toBeGreaterThan(0);
+    expect(legacyIndex).toBeGreaterThan(neutralIndex);
+    expect(sharedSource).toContain('["GOOGLE_PLAY_RTDN_SUBSCRIPTION", config.subscription]');
+    expect(sharedSource).toContain('Deno.env.get("GOOGLE_PLAY_RTDN_SUBSCRIPTION") ?? Deno.env.get("GOOGLE_PLAY_RTDN_STAGING_SUBSCRIPTION")');
   });
 
   it("uses a maintained Deno-compatible JWT/OIDC verifier and Google JWKS with strict claims", () => {
