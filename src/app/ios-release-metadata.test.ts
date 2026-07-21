@@ -35,7 +35,7 @@ describe("iOS release metadata", () => {
     for (const configuration of ["Debug", "Release"] as const) {
       const settings = appTargetBuildSettings(configuration);
       expect(settings).toContain("MARKETING_VERSION = 1.0.0;");
-      expect(settings).toContain("CURRENT_PROJECT_VERSION = 8;");
+      expect(settings).toContain("CURRENT_PROJECT_VERSION = 9;");
       expect(settings).not.toContain("MARKETING_VERSION = 1.0;");
       expect(settings).not.toContain("CURRENT_PROJECT_VERSION = 7;");
     }
