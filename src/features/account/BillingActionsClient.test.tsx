@@ -827,6 +827,49 @@ describe("BillingActionsClient", () => {
     expect(screen.getByText("Apple purchase verified. Pro access is active.")).toBeVisible();
   });
 
+  it("rehydrates production TestFlight sandbox Pro from an idempotent Apple Restore response", async () => {
+    vi.stubEnv("NEXT_PUBLIC_CGY_NATIVE_APP", "1");
+    vi.stubEnv("NEXT_PUBLIC_SUPABASE_URL", "https://jquebthneczqdxagagof.supabase.co");
+    vi.stubEnv("NEXT_PUBLIC_SUPABASE_ANON_KEY", "anon-public-test-key");
+    process.env.NEXT_PUBLIC_BILLING_MODE = "test";
+    capacitorMock.platform = "ios";
+    accountMock.state.user = TEST_USER;
+    appleStoreKitMock.runtimeAvailable = true;
+    appleStoreKitMock.restoreAppleStoreKitPurchases.mockResolvedValue({
+      status: "backendVerified",
+      verifiedCount: 1,
+      requiresEntitlementRefresh: true,
+      clientMayFinishTransaction: true,
+      nativeReviewEntitlement: {
+        providerEnvironment: "sandbox",
+        plan: "pro",
+        status: "active",
+        currentPeriodEnd: "2026-07-29T00:00:00.000Z",
+        cancelAtPeriodEnd: false,
+        verifiedAt: "2026-07-20T00:00:00.000Z"
+      }
+    });
+    const client = billingClientMock();
+    mockEntitlementRead(client, null);
+    clearNativeAppleReviewEntitlement();
+    const dispatchSpy = vi.spyOn(window, "dispatchEvent");
+
+    render(<BillingActionsClient entitlement={FREE_ENTITLEMENT} context="upgrade" />);
+
+    await waitFor(() => expect(screen.getByRole("button", { name: "Restore purchases" })).toBeEnabled());
+    fireEvent.click(screen.getByRole("button", { name: "Restore purchases" }));
+
+    await waitFor(() => expect(appleStoreKitMock.restoreAppleStoreKitPurchases).toHaveBeenCalledTimes(1));
+    await waitFor(() => expect(appleStoreKitMock.finishVerifiedAppleStoreKitTransactions).toHaveBeenCalledTimes(1));
+    expect(screen.getByText("Apple purchase verified. Pro access is active.")).toBeVisible();
+    const entitlementEvents = dispatchSpy.mock.calls
+      .map(([event]) => event)
+      .filter((event) => event.type === ENTITLEMENT_CHANGED_EVENT);
+    expect(entitlementEvents).toHaveLength(1);
+    expect(client.functions.invoke).not.toHaveBeenCalledWith("stripe-checkout", expect.anything());
+    dispatchSpy.mockRestore();
+  });
+
   it("does not emit entitlement invalidation for Apple purchase cancellation or backend failure", async () => {
     vi.stubEnv("NEXT_PUBLIC_CGY_NATIVE_APP", "1");
     vi.stubEnv("NEXT_PUBLIC_SUPABASE_URL", "https://hsgpjtyysbremrokkoym.supabase.co");
