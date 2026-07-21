@@ -29,8 +29,10 @@ export function activateNativeAppleReviewEntitlement(payload: NativeAppleReviewE
   return true;
 }
 
-export function clearNativeAppleReviewEntitlement() {
+export function clearNativeAppleReviewEntitlement(): boolean {
+  const hadActiveEntitlement = Boolean(activeNativeAppleReviewEntitlement);
   activeNativeAppleReviewEntitlement = null;
+  return hadActiveEntitlement;
 }
 
 export function nativeAppleReviewEntitlement(): PlayerEntitlement | null {
