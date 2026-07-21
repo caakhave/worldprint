@@ -15,7 +15,7 @@ export type GooglePlayRtdnConfig = {
   pushServiceAccountEmail: string;
   audience: string;
   topic: string;
-  stagingSubscription: string;
+  subscription: string;
   environment: GooglePlayRtdnEnvironment;
 };
 
@@ -113,6 +113,8 @@ export type ProviderSubscriptionStatus =
   | "unknown_needs_reconciliation";
 
 export function readGooglePlayRtdnConfig(): { config: GooglePlayRtdnConfig | null; error: string | null; missing: string[] } {
+  const configuredSubscription =
+    Deno.env.get("GOOGLE_PLAY_RTDN_SUBSCRIPTION") ?? Deno.env.get("GOOGLE_PLAY_RTDN_STAGING_SUBSCRIPTION") ?? "";
   const config: GooglePlayRtdnConfig = {
     supabaseUrl: Deno.env.get("SUPABASE_URL") ?? "",
     supabaseServiceRoleKey: Deno.env.get("SUPABASE_SERVICE_ROLE_KEY") ?? "",
@@ -124,7 +126,7 @@ export function readGooglePlayRtdnConfig(): { config: GooglePlayRtdnConfig | nul
     pushServiceAccountEmail: Deno.env.get("GOOGLE_PLAY_RTDN_PUSH_SERVICE_ACCOUNT_EMAIL") ?? "",
     audience: Deno.env.get("GOOGLE_PLAY_RTDN_AUDIENCE") ?? "",
     topic: Deno.env.get("GOOGLE_PLAY_RTDN_TOPIC") ?? "",
-    stagingSubscription: Deno.env.get("GOOGLE_PLAY_RTDN_STAGING_SUBSCRIPTION") ?? "",
+    subscription: configuredSubscription,
     environment: (Deno.env.get("GOOGLE_PLAY_PROVIDER_ENVIRONMENT") ?? "test") as GooglePlayRtdnEnvironment
   };
 
@@ -139,7 +141,7 @@ export function readGooglePlayRtdnConfig(): { config: GooglePlayRtdnConfig | nul
     ["GOOGLE_PLAY_RTDN_PUSH_SERVICE_ACCOUNT_EMAIL", config.pushServiceAccountEmail],
     ["GOOGLE_PLAY_RTDN_AUDIENCE", config.audience],
     ["GOOGLE_PLAY_RTDN_TOPIC", config.topic],
-    ["GOOGLE_PLAY_RTDN_STAGING_SUBSCRIPTION", config.stagingSubscription]
+    ["GOOGLE_PLAY_RTDN_SUBSCRIPTION", config.subscription]
   ]
     .filter(([, value]) => !value)
     .map(([name]) => name);
@@ -202,16 +204,16 @@ export function validateGoogleOidcClaims(input: {
   return { ok: true };
 }
 
-export function expectedSubscriptionName(config: Pick<GooglePlayRtdnConfig, "topic" | "stagingSubscription">): string {
-  if (config.stagingSubscription.startsWith("projects/")) return config.stagingSubscription;
+export function expectedSubscriptionName(config: Pick<GooglePlayRtdnConfig, "topic" | "subscription">): string {
+  if (config.subscription.startsWith("projects/")) return config.subscription;
   const match = config.topic.match(/^projects\/([^/]+)\/topics\/[^/]+$/);
   const project = match?.[1] ?? "";
-  return `projects/${project}/subscriptions/${config.stagingSubscription}`;
+  return `projects/${project}/subscriptions/${config.subscription}`;
 }
 
 export function parsePubSubEnvelope(
   bodyText: string,
-  config: Pick<GooglePlayRtdnConfig, "topic" | "stagingSubscription">
+  config: Pick<GooglePlayRtdnConfig, "topic" | "subscription">
 ): { envelope: PubSubEnvelope | null; error: string | null } {
   let parsed: unknown;
   try {
