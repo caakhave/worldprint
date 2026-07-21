@@ -19,8 +19,9 @@ describe("SupportPage", () => {
     expect(screen.getByRole("heading", { name: "Account deletion." })).toBeVisible();
     expect(screen.getByText(/request deletion of a Can You Geo account and associated personal data/i)).toBeVisible();
     expect(screen.getByRole("heading", { name: "Plan and payment help." })).toBeVisible();
-    expect(screen.getByText(/Signed-in Pro members can use Account > Manage billing to update payment details or cancel through Stripe/i)).toBeVisible();
-    expect(screen.getByText(/never send passwords or full payment card numbers/i)).toBeVisible();
+    expect(screen.getByText(/Website Pro members can use Account > Manage billing when available/i)).toBeVisible();
+    expect(screen.getByText(/Apple App Store and Google Play subscriptions should be managed from the applicable app-store subscription settings/i)).toBeVisible();
+    expect(screen.getByText(/never send passwords, complete payment-card details, purchase tokens, or private store receipts/i)).toBeVisible();
     expect(screen.getByRole("link", { name: "Email account help" })).toHaveAttribute("href", CONTACT_LINKS.accountHelp.href);
     expect(screen.getByRole("link", { name: "Request account deletion" })).toHaveAttribute("href", "/account-deletion");
     expect(screen.getByRole("link", { name: "Email billing help" })).toHaveAttribute("href", CONTACT_LINKS.billingHelp.href);
@@ -28,7 +29,7 @@ describe("SupportPage", () => {
     expect(screen.getByText(/Include the game, date or round when available, country, rule, or indicator/i)).toBeVisible();
     expect(screen.getByRole("link", { name: "Data/source issue" })).toHaveAttribute("href", CONTACT_LINKS.dataSourceIssue.href);
     expect(screen.getByRole("heading", { name: "Use it only if support asks." })).toBeVisible();
-    expect(screen.getByText(/Do not send passwords, full card details, or private Stripe card information by email/i)).toBeVisible();
+    expect(screen.getByText(/Do not send passwords, complete payment-card details, private store receipts, purchase tokens/i)).toBeVisible();
     expect(screen.getByRole("heading", { name: "Follow Can You Geo" })).toBeVisible();
     expect(screen.getByText("For updates, new games, and daily geography challenges.")).toBeVisible();
     for (const social of OFFICIAL_SOCIAL_LINKS) {

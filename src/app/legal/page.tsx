@@ -61,16 +61,17 @@ export function LegalContent() {
 
             <h3>Billing, Renewal, and Cancellation</h3>
             <p>
-              Pro is offered as monthly or yearly auto-renewing subscription access. Pricing, renewal interval, and material purchase
-              terms are shown before checkout. Payment processing, subscription renewal, and billing management are handled by Stripe.
-              Can You Geo does not store full payment card numbers.
+              Pro may be purchased through the Can You Geo website, the Apple App Store, or Google Play when that purchase option is
+              available on your platform. Website billing may be handled through Stripe. Native mobile subscriptions are processed by
+              the applicable app store. Pricing, renewal interval, provider terms, and material purchase terms are shown before
+              checkout. Can You Geo does not receive or store complete payment-card details.
             </p>
             <p>
-              You can manage or cancel a Stripe-backed Pro subscription from the account billing portal. If you cancel a renewing Pro
-              membership at the end of the current paid period, Pro access generally remains active until that period ends. Refunds,
-              credits, taxes, payment failures, and billing disputes may be handled through Stripe and support according to the
-              checkout terms shown at purchase. If something looks wrong, contact support so we can review the account and billing
-              state.
+              Renewal, cancellation, refunds, taxes, payment failures, and billing disputes may be governed by the purchase provider
+              and its policies. Manage website subscriptions from the account billing portal when available. Manage Apple App Store or
+              Google Play subscriptions from the applicable app-store subscription settings. If you cancel a renewing Pro membership
+              at the end of the current paid period, Pro access generally remains active until that period ends. If something looks
+              wrong, contact support so we can review the account and subscription state.
             </p>
 
             <h3>Fair Play and Acceptable Use</h3>
@@ -146,8 +147,9 @@ export function LegalContent() {
               <li>Marketing preference information, such as opt-in status, opt-in time, opt-in source, and opt-out time.</li>
               <li>Gameplay information, such as scores, streaks, guesses, completed runs, challenge activity, and saved stats.</li>
               <li>
-                Billing and subscription state, such as Stripe customer ID, subscription ID, price ID, subscription status, renewal
-                period, and cancellation-at-period-end status.
+                Billing and subscription information where applicable, such as billing provider, product or base-plan identifier,
+                transaction, purchase, or subscription identifier, purchase token, subscription status, renewal and cancellation state,
+                entitlement state, and provider event or verification metadata.
               </li>
               <li>
                 Transactional email records and delivery metadata for account and security emails, challenge emails, owner/admin
@@ -188,6 +190,11 @@ export function LegalContent() {
               We do not sell personal information. We may disclose information if required by law or to protect rights, safety, and
               security. We may also share limited information with service providers that help operate authentication, secure
               application data storage, email delivery, analytics, advertising measurement, payments, hosting, and support.
+            </p>
+            <p>
+              Apple, Google Play, or Stripe processes payment credentials for purchases made through those providers. Can You Geo
+              receives only the information needed to verify purchases, provide Pro access, support users, prevent fraud, and maintain
+              required records.
             </p>
 
             <h3>Owner and Admin Notifications</h3>
