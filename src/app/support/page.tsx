@@ -53,9 +53,10 @@ export default function SupportPage() {
           <p className="eyebrow">Billing</p>
           <h2>Plan and payment help.</h2>
           <p>
-            Signed-in Pro members can use Account &gt; Manage billing to update payment details or cancel through Stripe. If a
-            membership is canceled at period end, Pro access should remain until that paid period ends. Email support for billing
-            issues, but never send passwords or full payment card numbers.
+            Website Pro members can use Account &gt; Manage billing when available to update payment details or cancel a Stripe-backed
+            subscription. Apple App Store and Google Play subscriptions should be managed from the applicable app-store subscription
+            settings. If a membership is canceled at period end, Pro access should remain until that paid period ends. Email support
+            for billing issues, but never send passwords, complete payment-card details, purchase tokens, or private store receipts.
           </p>
           <a className="button-secondary" href={CONTACT_LINKS.billingHelp.href}>
             Email billing help
@@ -101,8 +102,8 @@ export default function SupportPage() {
           <p className="eyebrow">Support ID</p>
           <h2>Use it only if support asks.</h2>
           <p>
-            Your account page can show a Support ID for account-specific troubleshooting. Do not send passwords, full card details, or
-            private Stripe card information by email.
+            Your account page can show a Support ID for account-specific troubleshooting. Do not send passwords, complete payment-card
+            details, private store receipts, purchase tokens, or screenshots with private billing information by email.
           </p>
         </div>
         <div className="button-row">

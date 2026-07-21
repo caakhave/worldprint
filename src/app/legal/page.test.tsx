@@ -18,13 +18,16 @@ describe("LegalPage", () => {
     expect(screen.getByRole("heading", { name: "Accessibility" })).toBeVisible();
     expect(screen.getByRole("heading", { name: "Support" })).toBeVisible();
     expect(screen.queryByText(/Live billing is not enabled until we explicitly launch paid checkout/i)).not.toBeInTheDocument();
-    expect(screen.getByText(/Pro is offered as monthly or yearly auto-renewing subscription access/i)).toBeVisible();
-    expect(screen.getByText(/You can manage or cancel a Stripe-backed Pro subscription from the account billing portal/i)).toBeVisible();
+    expect(screen.getByText(/Pro may be purchased through the Can You Geo website, the Apple App Store, or Google Play/i)).toBeVisible();
+    expect(screen.getByText(/Website billing may be handled through Stripe/i)).toBeVisible();
+    expect(screen.getByText(/Native mobile subscriptions are processed by the applicable app store/i)).toBeVisible();
+    expect(screen.getByText(/Manage Apple App Store or Google Play subscriptions from the applicable app-store subscription settings/i)).toBeVisible();
     expect(screen.getByText(/If you cancel a renewing Pro membership at the end of the current paid period/i)).toBeVisible();
     expect(screen.getByText(/They are not a public official leaderboard, competition, sweepstakes, or prize system/i)).toBeVisible();
     expect(screen.getByText(/Password credentials are handled by a secure authentication provider/i)).toBeVisible();
     expect(screen.queryByText(/Supabase/i)).not.toBeInTheDocument();
-    expect(screen.getByText(/Billing and subscription state, such as Stripe customer ID/i)).toBeVisible();
+    expect(screen.getByText(/Billing and subscription information where applicable, such as billing provider/i)).toBeVisible();
+    expect(screen.getByText(/transaction, purchase, or subscription identifier, purchase token, subscription status/i)).toBeVisible();
     expect(screen.getByText(/Challenge email ledger entries, including hashed recipient emails/i)).toBeVisible();
     expect(screen.getByText(/Advertising and measurement information when enabled/i)).toBeVisible();
     expect(screen.getByText(/Mystery Map Custom Atlas, Pattern Atlas Pattern Runs/i)).toBeVisible();
@@ -38,6 +41,8 @@ describe("LegalPage", () => {
     expect(screen.getByText(/service providers that help operate authentication, secure application data storage/i)).toBeVisible();
     expect(screen.queryByText(/Resend and Supabase SMTP for transactional email and owner\/admin billing notifications/i)).not.toBeInTheDocument();
     expect(screen.getByText(/We do not sell personal information/i)).toBeVisible();
+    expect(screen.getByText(/Apple, Google Play, or Stripe processes payment credentials/i)).toBeVisible();
+    expect(screen.getByText(/verify purchases, provide Pro access, support users, prevent fraud/i)).toBeVisible();
     expect(screen.getAllByText(/account deletion page/i).length).toBeGreaterThanOrEqual(1);
     expect(screen.getByText(/advertising measurement, payments, hosting, and support/i)).toBeVisible();
     expect(screen.getByText(/without sending account emails, user IDs, passwords, auth tokens, payment details/i)).toBeVisible();
