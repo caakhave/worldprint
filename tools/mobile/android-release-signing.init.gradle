@@ -1,0 +1,34 @@
+allprojects { project ->
+  project.plugins.withId("com.android.application") {
+    def requiredEnv = [
+      "CGY_ANDROID_UPLOAD_STORE_FILE",
+      "CGY_ANDROID_UPLOAD_STORE_PASSWORD",
+      "CGY_ANDROID_UPLOAD_KEY_ALIAS",
+      "CGY_ANDROID_UPLOAD_KEY_PASSWORD"
+    ]
+    def missingEnv = requiredEnv.findAll { key ->
+      def value = System.getenv(key)
+      value == null || value.trim().isEmpty()
+    }
+
+    if (!missingEnv.isEmpty()) {
+      throw new GradleException("Missing Android release signing environment variables: ${missingEnv.join(', ')}")
+    }
+
+    project.android {
+      signingConfigs {
+        cgyUpload {
+          storeFile project.file(System.getenv("CGY_ANDROID_UPLOAD_STORE_FILE"))
+          storePassword System.getenv("CGY_ANDROID_UPLOAD_STORE_PASSWORD")
+          keyAlias System.getenv("CGY_ANDROID_UPLOAD_KEY_ALIAS")
+          keyPassword System.getenv("CGY_ANDROID_UPLOAD_KEY_PASSWORD")
+        }
+      }
+      buildTypes {
+        release {
+          signingConfig signingConfigs.cgyUpload
+        }
+      }
+    }
+  }
+}

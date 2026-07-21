@@ -14,6 +14,8 @@ describe("native export build wiring", () => {
     const packageJson = JSON.parse(await readFile(path.resolve("package.json"), "utf8"));
 
     expect(packageJson.scripts.build).toBe("next build");
+    expect(packageJson.scripts["build:native"]).toContain("NEXT_PUBLIC_SITE_URL=https://canyougeo.com");
+    expect(packageJson.scripts["build:native"]).toContain("NEXT_PUBLIC_CGY_NATIVE_HOSTED_ORIGIN=https://canyougeo.com");
     expect(packageJson.scripts["build:native"]).toContain("normalizeNextNativeExport.mjs out");
   });
 });

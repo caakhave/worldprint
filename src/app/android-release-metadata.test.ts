@@ -26,9 +26,10 @@ describe("Android release metadata", () => {
     expect(capacitorConfig).toContain('loggingBehavior: "none"');
   });
 
-  it("targets the approved Android SDK baseline without release signing", () => {
+  it("targets the approved Android SDK baseline without app-embedded release signing", () => {
     const variables = readFileSync("android/variables.gradle", "utf8");
     const appBuild = readFileSync("android/app/build.gradle", "utf8");
+    const releaseSigningInit = readFileSync("tools/mobile/android-release-signing.init.gradle", "utf8");
 
     expect(variables).toContain("minSdkVersion = 24");
     expect(variables).toContain("compileSdkVersion = 36");
@@ -37,6 +38,11 @@ describe("Android release metadata", () => {
     expect(appBuild).toContain('versionCode 3');
     expect(appBuild).toContain('versionName "1.0.2"');
     expect(appBuild).not.toContain("signingConfig signingConfigs.release");
+    expect(releaseSigningInit).toContain("CGY_ANDROID_UPLOAD_STORE_FILE");
+    expect(releaseSigningInit).toContain("CGY_ANDROID_UPLOAD_STORE_PASSWORD");
+    expect(releaseSigningInit).toContain("CGY_ANDROID_UPLOAD_KEY_ALIAS");
+    expect(releaseSigningInit).toContain("CGY_ANDROID_UPLOAD_KEY_PASSWORD");
+    expect(releaseSigningInit).not.toMatch(/canyougeo-upload-v[0-9]|\\.jks|password\\s*=\\s*['"][^'"]+['"]/i);
   });
 
   it("wires the Capacitor Splash Screen plugin into Android sync output", () => {

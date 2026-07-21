@@ -75,7 +75,7 @@ const nativeReviewEntitlement = {
   providerEnvironment: "sandbox" as const,
   plan: "pro" as const,
   status: "active" as const,
-  currentPeriodEnd: "2026-07-21T03:45:00.000Z",
+  currentPeriodEnd: "2126-07-21T03:45:00.000Z",
   cancelAtPeriodEnd: false,
   verifiedAt: "2026-07-21T01:45:00.000Z"
 };
