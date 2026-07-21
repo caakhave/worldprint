@@ -9,7 +9,7 @@ new bundle, change tracks, or start closed, open, or production rollout.
 
 - App name: Can You Geo
 - Package: `com.canyougeo.app`
-- Current Android release target: `versionCode 3`, `versionName 1.0.2`
+- Current Android release target: `versionCode 4`, `versionName 1.0.2`
 - Distribution state: internal testing only
 - Purchases in this Android build: Google Play Billing purchase and restore UI is wired for controlled internal license testing only
 - Native analytics and marketing pixels: suppressed
@@ -384,7 +384,7 @@ different build as store screenshots.
 
 Required before internal install validation:
 
-- Upload the signed `versionCode 3` purchase-foundation AAB to internal testing.
+- Upload the signed `versionCode 4` production-configured purchase-foundation AAB to internal testing after the v3 upload-certificate reset is active.
 - Wait for Play internal-test propagation.
 - Install through the official internal-testing opt-in route.
 - Validate launch, all three games, Android Back, sign-in UI, upgrade boundary,
