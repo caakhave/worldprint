@@ -14,6 +14,7 @@ import { NativeExternalNavigationGuard } from "@/components/NativeExternalNaviga
 import { PrimaryNav } from "@/components/PrimaryNav";
 import { SocialLinks } from "@/components/SocialLinks";
 import { AuthNavStatus } from "@/features/account/AuthNavStatus";
+import { NativeAppleEntitlementBootstrap } from "@/features/account/NativeAppleEntitlementBootstrap";
 import { BRAND_NAME } from "@/lib/brand";
 import { isNativeAppBuild } from "@/lib/site/buildTarget";
 import { publicSiteOrigin, robotsForSite, shouldNoIndexSite } from "@/lib/site/origin";
@@ -132,6 +133,7 @@ export default function RootLayout({ children }: Readonly<{ children: React.Reac
         <NativeConnectivityStatus />
         <NativeDeepLinkBridge />
         <NativeExternalNavigationGuard />
+        <NativeAppleEntitlementBootstrap />
         <a className="skip-link" href="#main">
           Skip to content
         </a>
