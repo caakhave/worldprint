@@ -36,10 +36,12 @@ Android.
 
 ## RTDN Foundation
 
-Checkpoint 5D-1D-RTDN adds the staging-only backend path for Google Play Real-time Developer Notifications:
+Checkpoint 5D-1D-RTDN added the staging backend path for Google Play Real-time Developer Notifications,
+and Checkpoint 5D-1W3F normalizes the subscription configuration so the same
+function source can be deployed safely to staging or production:
 
 ```text
-Google Play -> Pub/Sub topic -> authenticated staging push subscription -> google-play-rtdn Edge Function
+Google Play -> Pub/Sub topic -> authenticated environment-specific push subscription -> google-play-rtdn Edge Function
 ```
 
 The Edge Function is deployed with Supabase `verify_jwt=false` only because Google Pub/Sub supplies a Google-signed OIDC
@@ -51,8 +53,14 @@ Server-only configuration:
 - `GOOGLE_PLAY_RTDN_PUSH_SERVICE_ACCOUNT_EMAIL`
 - `GOOGLE_PLAY_RTDN_AUDIENCE`
 - `GOOGLE_PLAY_RTDN_TOPIC`
-- `GOOGLE_PLAY_RTDN_STAGING_SUBSCRIPTION`
+- `GOOGLE_PLAY_RTDN_SUBSCRIPTION`
 - existing Android Publisher and catalog secrets from the API checkpoint
+
+`GOOGLE_PLAY_RTDN_SUBSCRIPTION` is the current environment's Pub/Sub push
+subscription name or full resource path. Existing staging deployments may still
+define the legacy `GOOGLE_PLAY_RTDN_STAGING_SUBSCRIPTION`; the runtime accepts
+that name only as a transition fallback when the neutral secret is absent.
+Production must use the neutral secret.
 
 The RTDN handler records Pub/Sub message IDs for idempotency. Test notifications are durably recorded and never create
 provider subscriptions or entitlements. Subscription notifications call `purchases.subscriptionsv2.get` as the source of
@@ -60,11 +68,104 @@ truth, but only token fingerprints are persisted. A Google notification by itsel
 and cannot grant Pro. Effective entitlement refresh runs only when the purchase-token fingerprint already matches an
 existing service-only Google Play provider subscription for exactly one user.
 
-The temporary staging push subscription must be disabled or deleted before
-public production purchases begin, after a production consumer has been
-deployed and verified. No closed/open/production rollout, purchase flow,
-acknowledgement, refund, revocation, catalog change, Stripe mutation, or
-production Supabase deployment is implied by this foundation.
+Known RTDN resources from the staging evidence:
+
+- Google Cloud project: `can-you-geo-play-billing`
+- Google Play RTDN topic: `projects/can-you-geo-play-billing/topics/cgy-google-play-rtdn`
+- Staging push subscription: `projects/can-you-geo-play-billing/subscriptions/cgy-google-play-rtdn-staging-push`
+- Staging push URL: `https://hsgpjtyysbremrokkoym.supabase.co/functions/v1/google-play-rtdn`
+- Staging OIDC audience: `https://hsgpjtyysbremrokkoym.supabase.co/functions/v1/google-play-rtdn`
+- Push OIDC service account: `cgy-rtdn-push@can-you-geo-play-billing.iam.gserviceaccount.com`
+- Recommended production push subscription: `projects/can-you-geo-play-billing/subscriptions/cgy-google-play-rtdn-production-push`
+- Production push URL: `https://jquebthneczqdxagagof.supabase.co/functions/v1/google-play-rtdn`
+- Production OIDC audience: `https://jquebthneczqdxagagof.supabase.co/functions/v1/google-play-rtdn`
+
+The staging subscription must not be edited as part of production subscription
+creation. Because Pub/Sub delivers every topic message to every active
+subscription, decide separately before public production purchases whether to
+disable/delete the staging push subscription or intentionally keep it only for a
+controlled parallel staging observer. Do not make that decision implicitly while
+creating the production subscription.
+
+### Production RTDN Console Runbook
+
+Use this runbook only after the v3 upload-certificate reset and Android release
+plan are otherwise ready. It is a manual Google Cloud Console procedure because
+the Android Publisher service-account credential intentionally lacks Pub/Sub
+administration permissions.
+
+1. Open Google Cloud Console and select project `can-you-geo-play-billing`.
+2. Navigate to Pub/Sub -> Topics and inspect `cgy-google-play-rtdn`.
+3. Confirm the full topic resource is `projects/can-you-geo-play-billing/topics/cgy-google-play-rtdn`.
+4. Leave existing subscription `cgy-google-play-rtdn-staging-push` unchanged.
+5. Confirm `google-play-developer-notifications@system.gserviceaccount.com` has Pub/Sub Publisher on the topic.
+6. Confirm the Pub/Sub service agent `service-277427216726@gcp-sa-pubsub.iam.gserviceaccount.com` has Service Account Token Creator on `cgy-rtdn-push@can-you-geo-play-billing.iam.gserviceaccount.com`.
+7. Create a push subscription named `cgy-google-play-rtdn-production-push` on the same topic.
+8. Set the push endpoint to `https://jquebthneczqdxagagof.supabase.co/functions/v1/google-play-rtdn`.
+9. Enable authenticated push using service account `cgy-rtdn-push@can-you-geo-play-billing.iam.gserviceaccount.com`.
+10. Set the OIDC audience to `https://jquebthneczqdxagagof.supabase.co/functions/v1/google-play-rtdn`.
+11. Keep payload unwrapping disabled.
+12. Use the default 10-second acknowledgement deadline unless a future load test justifies changing it.
+13. Match the staging retry policy: exponential backoff, minimum 10 seconds, maximum 600 seconds.
+14. Match the staging retention and expiration settings where available: 7-day message retention and 31-day inactive expiration.
+15. Collect non-secret evidence: topic details, IAM principal/role screenshots, production subscription details, push endpoint, OIDC service account, OIDC audience, retry settings, and retention/expiration settings.
+
+Narrow permissions for the operator creating the subscription:
+
+- Pub/Sub subscription creation permission on project `can-you-geo-play-billing`.
+- `pubsub.topics.attachSubscription` on topic `projects/can-you-geo-play-billing/topics/cgy-google-play-rtdn`.
+- Service Account User or equivalent `iam.serviceAccounts.actAs` on `cgy-rtdn-push@can-you-geo-play-billing.iam.gserviceaccount.com`.
+
+Do not grant Owner or Editor to complete this setup.
+
+### Production RTDN Deployment Plan
+
+Do not execute these production steps until the production Pub/Sub subscription
+has been created and verified.
+
+Production function settings:
+
+- `google-play-purchase-context`: Supabase JWT required.
+- `google-play-purchase-verify`: Supabase JWT required.
+- `google-play-rtdn`: Supabase `verify_jwt=false`, with Google Pub/Sub OIDC verified inside the function.
+
+Production Google Play server-only secrets:
+
+- `GOOGLE_PLAY_SERVICE_ACCOUNT_JSON`
+- `GOOGLE_PLAY_PACKAGE_NAME` = `com.canyougeo.app`
+- `GOOGLE_PLAY_SUBSCRIPTION_PRODUCT_ID` = `canyougeo_pro`
+- `GOOGLE_PLAY_MONTHLY_BASE_PLAN_ID` = `monthly`
+- `GOOGLE_PLAY_ANNUAL_BASE_PLAN_ID` = `annual`
+- `GOOGLE_PLAY_ACCOUNT_BINDING_SECRET`
+- `GOOGLE_PLAY_PROVIDER_ENVIRONMENT` = `production`
+- `GOOGLE_PLAY_RTDN_PUSH_SERVICE_ACCOUNT_EMAIL` = `cgy-rtdn-push@can-you-geo-play-billing.iam.gserviceaccount.com`
+- `GOOGLE_PLAY_RTDN_AUDIENCE` = `https://jquebthneczqdxagagof.supabase.co/functions/v1/google-play-rtdn`
+- `GOOGLE_PLAY_RTDN_TOPIC` = `projects/can-you-geo-play-billing/topics/cgy-google-play-rtdn`
+- `GOOGLE_PLAY_RTDN_SUBSCRIPTION` = `cgy-google-play-rtdn-production-push` or the full production subscription resource path
+
+Use only local protected secret sources outside Git. One safe pattern is to
+assemble a temporary env file in `mktemp`, run `supabase secrets set
+--project-ref jquebthneczqdxagagof --env-file <temporary-file>`, and then
+delete the temporary file.
+
+Deploy only the Google Play functions from the approved production source:
+
+```bash
+supabase functions deploy google-play-purchase-context --project-ref jquebthneczqdxagagof
+supabase functions deploy google-play-purchase-verify --project-ref jquebthneczqdxagagof
+supabase functions deploy google-play-rtdn --project-ref jquebthneczqdxagagof --no-verify-jwt
+```
+
+Post-deploy validation should confirm:
+
+- production `google-play-rtdn` rejects unauthenticated direct POSTs with `401`;
+- an official Play Console test message or one synthetic Pub/Sub topic message reaches exactly the production push subscription;
+- a test notification creates exactly one safe provider event and no provider subscription, transaction chain, reconciliation candidate, Apple entitlement, Stripe entitlement, or public entitlement change;
+- a repeated delivery of the same Pub/Sub message is idempotent before any production purchase testing begins.
+
+No closed/open/production rollout, purchase flow, acknowledgement, refund,
+revocation, catalog change, Stripe mutation, Apple mutation, or production
+purchase validation is implied by this runbook.
 
 ## Sources Reviewed
 
