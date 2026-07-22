@@ -1,8 +1,10 @@
 from __future__ import annotations
 
+import json
 import os
 import re
 import time
+from datetime import UTC, datetime
 from pathlib import Path
 from typing import Any
 
@@ -36,6 +38,10 @@ MARKETING_CONSENT_DENIED_INIT_SCRIPT = """
 
 load_dotenv(ROOT / ".env")
 load_dotenv(ROOT / ".env.local", override=True)
+
+
+def _utc_now() -> str:
+    return datetime.now(UTC).replace(microsecond=0).isoformat().replace("+00:00", "Z")
 
 
 @pytest.fixture(scope="session")
@@ -163,3 +169,33 @@ def screenshot_on_failure(request: pytest.FixtureRequest):
         except Exception:
             # Do not mask the original failure with artifact-capture errors.
             pass
+
+
+def pytest_sessionfinish(session: pytest.Session, exitstatus: int) -> None:
+    metadata_path = os.getenv("CGY_BLACKBOX_METADATA_PATH")
+    if not metadata_path:
+        return
+
+    reporter = session.config.pluginmanager.get_plugin("terminalreporter")
+    stats: dict[str, int] = {}
+    if reporter is not None:
+        for name in ("passed", "failed", "error", "skipped", "xfailed", "xpassed"):
+            reports = getattr(reporter, "stats", {}).get(name, [])
+            if reports:
+                stats[name] = len(reports)
+
+    payload = {
+        "suite": os.getenv("CGY_BLACKBOX_SUITE") or "unknown",
+        "target": os.getenv("CGY_BLACKBOX_TARGET") or os.getenv("CGY_TARGET") or "unknown",
+        "base_url": os.getenv("CGY_BLACKBOX_BASE_URL") or "unknown",
+        "git_sha": os.getenv("CGY_BLACKBOX_GIT_SHA") or "unknown",
+        "start_utc": os.getenv("CGY_BLACKBOX_START_UTC") or "unknown",
+        "end_utc": _utc_now(),
+        "exitstatus": exitstatus,
+        "report_path": os.getenv("CGY_BLACKBOX_REPORT_PATH") or "unknown",
+        "counts": stats,
+    }
+
+    path = Path(metadata_path)
+    path.parent.mkdir(parents=True, exist_ok=True)
+    path.write_text(json.dumps(payload, indent=2, sort_keys=True) + "\n", encoding="utf-8")
