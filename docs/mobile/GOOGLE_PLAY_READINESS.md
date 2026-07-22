@@ -9,11 +9,16 @@ new bundle, change tracks, or start closed, open, or production rollout.
 
 - App name: Can You Geo
 - Package: `com.canyougeo.app`
-- Current Android release target: `versionCode 3`, `versionName 1.0.2`
+- Current protected Android source: `versionCode 4`, `versionName 1.0.2`
 - Distribution state: internal testing only
 - Purchases in this Android build: Google Play Billing purchase and restore UI is wired for controlled internal license testing only
 - Native analytics and marketing pixels: suppressed
 - App model: Capacitor Android app bundling the static Next.js export
+
+The current deployment/runtime closeout is recorded in
+[Deployment Runtime Parity Audit 2026-07-22](../ops/DEPLOYMENT_RUNTIME_PARITY_AUDIT_2026-07-22.md).
+The submitted code 4 AAB provenance is recorded in
+[Android Play code 4 provenance](./ANDROID_PLAY_CODE4_PROVENANCE.md).
 
 This integrated mobile billing release keeps the production-approved
 provider-neutral billing and account-deletion surfaces from `main` while
@@ -68,47 +73,39 @@ truth, but only token fingerprints are persisted. A Google notification by itsel
 and cannot grant Pro. Effective entitlement refresh runs only when the purchase-token fingerprint already matches an
 existing service-only Google Play provider subscription for exactly one user.
 
-Known RTDN resources from the staging evidence:
+Current RTDN resources from the deployment/runtime parity audit:
 
 - Google Cloud project: `can-you-geo-play-billing`
 - Google Play RTDN topic: `projects/can-you-geo-play-billing/topics/cgy-google-play-rtdn`
-- Staging push subscription: `projects/can-you-geo-play-billing/subscriptions/cgy-google-play-rtdn-staging-push`
-- Staging push URL: `https://hsgpjtyysbremrokkoym.supabase.co/functions/v1/google-play-rtdn`
-- Staging OIDC audience: `https://hsgpjtyysbremrokkoym.supabase.co/functions/v1/google-play-rtdn`
-- Push OIDC service account: `cgy-rtdn-push@can-you-geo-play-billing.iam.gserviceaccount.com`
-- Recommended production push subscription: `projects/can-you-geo-play-billing/subscriptions/cgy-google-play-rtdn-production-push`
+- Production push subscription: `projects/can-you-geo-play-billing/subscriptions/cgy-google-play-rtdn-production-push`
 - Production push URL: `https://jquebthneczqdxagagof.supabase.co/functions/v1/google-play-rtdn`
 - Production OIDC audience: `https://jquebthneczqdxagagof.supabase.co/functions/v1/google-play-rtdn`
+- Push OIDC service account: `cgy-rtdn-push@can-you-geo-play-billing.iam.gserviceaccount.com`
+- Deleted staging push subscription: `projects/can-you-geo-play-billing/subscriptions/cgy-google-play-rtdn-staging-push`
+- Staging function URL retained for direct function QA only: `https://hsgpjtyysbremrokkoym.supabase.co/functions/v1/google-play-rtdn`
 
-The staging subscription must not be edited as part of production subscription
-creation. Because Pub/Sub delivers every topic message to every active
-subscription, decide separately before public production purchases whether to
-disable/delete the staging push subscription or intentionally keep it only for a
-controlled parallel staging observer. Do not make that decision implicitly while
-creating the production subscription.
+The staging subscription was deleted during the RTDN topology cleanup, with
+Cloud Audit Log confirmation recorded in the deployment/runtime parity audit.
+The staging Supabase RTDN function remains deployed and source-aligned, but no
+active Pub/Sub subscription delivers topic messages to it.
 
-### Production RTDN Console Runbook
+### Production RTDN Audit Runbook
 
-Use this runbook only after the v3 upload-certificate reset and Android release
-plan are otherwise ready. It is a manual Google Cloud Console procedure because
-the Android Publisher service-account credential intentionally lacks Pub/Sub
-administration permissions.
+Use this read-only runbook when validating the current RTDN topology. It is not
+approval to create, delete, or modify Pub/Sub resources.
 
 1. Open Google Cloud Console and select project `can-you-geo-play-billing`.
 2. Navigate to Pub/Sub -> Topics and inspect `cgy-google-play-rtdn`.
 3. Confirm the full topic resource is `projects/can-you-geo-play-billing/topics/cgy-google-play-rtdn`.
-4. Leave existing subscription `cgy-google-play-rtdn-staging-push` unchanged.
-5. Confirm `google-play-developer-notifications@system.gserviceaccount.com` has Pub/Sub Publisher on the topic.
-6. Confirm the Pub/Sub service agent `service-277427216726@gcp-sa-pubsub.iam.gserviceaccount.com` has Service Account Token Creator on `cgy-rtdn-push@can-you-geo-play-billing.iam.gserviceaccount.com`.
-7. Create a push subscription named `cgy-google-play-rtdn-production-push` on the same topic.
-8. Set the push endpoint to `https://jquebthneczqdxagagof.supabase.co/functions/v1/google-play-rtdn`.
-9. Enable authenticated push using service account `cgy-rtdn-push@can-you-geo-play-billing.iam.gserviceaccount.com`.
-10. Set the OIDC audience to `https://jquebthneczqdxagagof.supabase.co/functions/v1/google-play-rtdn`.
-11. Keep payload unwrapping disabled.
-12. Use the default 10-second acknowledgement deadline unless a future load test justifies changing it.
-13. Match the staging retry policy: exponential backoff, minimum 10 seconds, maximum 600 seconds.
-14. Match the staging retention and expiration settings where available: 7-day message retention and 31-day inactive expiration.
-15. Collect non-secret evidence: topic details, IAM principal/role screenshots, production subscription details, push endpoint, OIDC service account, OIDC audience, retry settings, and retention/expiration settings.
+4. Confirm `google-play-developer-notifications@system.gserviceaccount.com` has Pub/Sub Publisher on the topic.
+5. Confirm the Pub/Sub service agent `service-277427216726@gcp-sa-pubsub.iam.gserviceaccount.com` has Service Account Token Creator on `cgy-rtdn-push@can-you-geo-play-billing.iam.gserviceaccount.com`.
+6. Confirm the only active push subscription on the topic is `cgy-google-play-rtdn-production-push`.
+7. Confirm the production push endpoint is `https://jquebthneczqdxagagof.supabase.co/functions/v1/google-play-rtdn`.
+8. Confirm authenticated push uses service account `cgy-rtdn-push@can-you-geo-play-billing.iam.gserviceaccount.com`.
+9. Confirm the OIDC audience is `https://jquebthneczqdxagagof.supabase.co/functions/v1/google-play-rtdn`.
+10. Confirm payload unwrapping remains disabled.
+11. Confirm the deleted staging subscription is absent from the topic inventory.
+12. Collect non-secret evidence: topic details, IAM principal/role screenshots, production subscription details, push endpoint, OIDC service account, OIDC audience, retry settings, retention/expiration settings, and the absence of the staging subscription.
 
 Narrow permissions for the operator creating the subscription:
 
@@ -118,10 +115,11 @@ Narrow permissions for the operator creating the subscription:
 
 Do not grant Owner or Editor to complete this setup.
 
-### Production RTDN Deployment Plan
+### Production RTDN Deployment State
 
-Do not execute these production steps until the production Pub/Sub subscription
-has been created and verified.
+The production Google Play functions, secrets, and production push subscription
+have been configured and source-aligned. Future source changes must still be
+promoted and deployed through a separately approved checkpoint.
 
 Production function settings:
 
@@ -143,12 +141,12 @@ Production Google Play server-only secrets:
 - `GOOGLE_PLAY_RTDN_TOPIC` = `projects/can-you-geo-play-billing/topics/cgy-google-play-rtdn`
 - `GOOGLE_PLAY_RTDN_SUBSCRIPTION` = `cgy-google-play-rtdn-production-push` or the full production subscription resource path
 
-Use only local protected secret sources outside Git. One safe pattern is to
-assemble a temporary env file in `mktemp`, run `supabase secrets set
---project-ref jquebthneczqdxagagof --env-file <temporary-file>`, and then
-delete the temporary file.
+Use only local protected secret sources outside Git if a later checkpoint
+authorizes secret changes. Do not set, remove, rotate, or print secrets during
+read-only audits.
 
-Deploy only the Google Play functions from the approved production source:
+Deploy only the Google Play functions from approved production source when a
+future checkpoint authorizes deployment:
 
 ```bash
 supabase functions deploy google-play-purchase-context --project-ref jquebthneczqdxagagof
@@ -159,7 +157,7 @@ supabase functions deploy google-play-rtdn --project-ref jquebthneczqdxagagof --
 Post-deploy validation should confirm:
 
 - production `google-play-rtdn` rejects unauthenticated direct POSTs with `401`;
-- an official Play Console test message or one synthetic Pub/Sub topic message reaches exactly the production push subscription;
+- an official Play Console test message or one synthetic Pub/Sub topic message reaches exactly the production push subscription only when explicitly authorized;
 - a test notification creates exactly one safe provider event and no provider subscription, transaction chain, reconciliation candidate, Apple entitlement, Stripe entitlement, or public entitlement change;
 - a repeated delivery of the same Pub/Sub message is idempotent before any production purchase testing begins.
 
@@ -483,14 +481,12 @@ different build as store screenshots.
 
 ## Remaining Work Classification
 
-Required before internal install validation:
+Current Android source and artifact provenance:
 
-- Upload the signed `versionCode 3` purchase-foundation AAB to internal testing.
-- Wait for Play internal-test propagation.
-- Install through the official internal-testing opt-in route.
-- Validate launch, all three games, Android Back, sign-in UI, upgrade boundary,
-  Play-localized subscription plans visible, no purchase sheet until explicitly
-  tapped, no Stripe checkout, no crash, and permissions.
+- Protected source declares `versionCode 4` and `versionName 1.0.2`.
+- The submitted code 4 AAB provenance is reconciled in
+  [Android Play code 4 provenance](./ANDROID_PLAY_CODE4_PROVENANCE.md).
+- No new AAB was rebuilt or uploaded during the source reconciliation.
 
 Required before closed testing:
 
@@ -500,6 +496,8 @@ Required before closed testing:
 - Deploy and verify the account deletion path/web resource for Play declarations.
 - Complete physical-device QA.
 - Keep package ID and existing upload key unchanged.
+- Prepare the closed-testing release and tester enrollment through an approved
+  Play Console checkpoint.
 
 Required before production-access application:
 
@@ -513,8 +511,8 @@ Required before public production release:
 - Validate Google Play purchases, restoration, cancellation, and entitlement
   synchronization through the full license-test matrix.
 - Update Android App Links for the Play App Signing certificate.
-- Promote and verify the approved mobile billing schema/functions in production
-  through the protected release workflow.
+- Keep the production Google Play billing functions and RTDN topology aligned
+  with protected source through the protected release workflow.
 - Complete final store listing, policy, Data safety, and review approval.
 
 Optional post-launch improvements:
@@ -541,13 +539,13 @@ Optional post-launch improvements:
 
 ## Fields Blocked By Billing Or Further QA
 
-- Public in-app purchase/subscription declaration until controlled internal
-  billing validation is complete and production release is approved.
+- Public in-app purchase/subscription declaration until controlled billing
+  validation is complete and production release is approved.
 - Final Data safety purchase-history wording until production billing
   availability is approved.
-- Public Play Billing rollout until the version 3 internal-test build,
-  backend verification, RTDN, entitlement synchronization, and tester safety
-  checks are accepted for production.
+- Public Play Billing rollout until backend verification, RTDN, entitlement
+  synchronization, closed testing, and tester safety checks are accepted for
+  production.
 - Store screenshots from the Play-processed Android build.
 - Closed testing start.
 - Production-access application.
