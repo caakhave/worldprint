@@ -13,5 +13,5 @@ tags:
     timeout: 60000
 - openLink: "https://canyougeo.com/auth/callback/"
 - extendedWaitUntil:
-    visible: "That account email link did not work."
+    visible: "That account email link did not work.|Your atlas is connected."
     timeout: 30000

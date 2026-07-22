@@ -50,7 +50,7 @@ function walkFiles(root, predicate) {
 }
 
 function timestampFor(run) {
-  return Date.parse(run.end_utc ?? run.start_utc ?? "") || 0;
+  return Date.parse(run.end_utc ?? run.endUtc ?? run.start_utc ?? run.startUtc ?? "") || 0;
 }
 
 export function discoverBrowserRuns({ reportsRoot = BROWSER_REPORTS_ROOT, outputDir = BROWSER_REPORTS_ROOT } = {}) {
@@ -116,6 +116,7 @@ export function discoverNativeRuns({ nativeReportsRoot = NATIVE_REPORTS_ROOT, ou
         metadataPath
       };
     })
+    .filter((run) => run.gitSha !== "test-git-sha")
     .sort((a, b) => timestampFor(b) - timestampFor(a));
 }
 
@@ -155,11 +156,12 @@ function nativeSummaryRow(label, run) {
 
 export function buildReportIndexHtml({ browserRuns, nativeRuns, generatedAt = new Date().toISOString() }) {
   const latestBrowserStaging = latestRun(browserRuns, (run) => run.target === "test" || run.suite === "staging_full");
-  const latestBrowserProduction = latestRun(browserRuns, (run) => run.target === "apex" || run.suite === "production_safe");
+  const latestBrowserProduction = latestRun(browserRuns, (run) => run.suite === "production_safe");
+  const latestBrowserProductionSmoke = latestRun(browserRuns, (run) => run.suite === "prod_smoke");
   const latestAndroidRelease = latestRun(nativeRuns, (run) => run.platform === "android" && run.suite === "release");
   const latestIosRelease = latestRun(nativeRuns, (run) => run.platform === "ios" && run.suite === "release");
-  const latestIosUniversal = latestRun(nativeRuns, (run) => run.platform === "ios" && (run.suite === "universal-link" || run.suite === "release-with-universal-link"));
-  const latestRuns = [latestBrowserStaging, latestBrowserProduction, latestAndroidRelease, latestIosRelease, latestIosUniversal].filter(Boolean);
+  const latestIosUniversal = latestRun(nativeRuns, (run) => run.platform === "ios" && run.suite === "universal-link");
+  const latestRuns = [latestBrowserStaging, latestBrowserProduction, latestBrowserProductionSmoke, latestAndroidRelease, latestIosRelease, latestIosUniversal].filter(Boolean);
   const warnings = [...gitShaWarnings(latestRuns), ...versionWarnings(latestRuns)];
 
   return `<!doctype html>
@@ -191,7 +193,8 @@ export function buildReportIndexHtml({ browserRuns, nativeRuns, generatedAt = ne
     <thead><tr><th>Run</th><th>Status</th><th>Suite</th><th>Target</th><th>Git SHA</th><th>End UTC</th><th>Counts</th><th>Report</th></tr></thead>
     <tbody>
       ${browserSummaryRow("Latest staging", latestBrowserStaging)}
-      ${browserSummaryRow("Latest production", latestBrowserProduction)}
+      ${browserSummaryRow("Latest production safe", latestBrowserProduction)}
+      ${browserSummaryRow("Latest production smoke", latestBrowserProductionSmoke)}
     </tbody>
   </table>
   <h2>Native QA</h2>

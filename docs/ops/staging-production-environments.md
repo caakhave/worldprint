@@ -271,8 +271,11 @@ Android:
 
 - Package: `com.canyougeo.app`.
 - Protected source declares `versionCode` 4 and `versionName` 1.0.2.
-- The submitted code 4 AAB provenance is recorded in [Android Play code 4 provenance](../mobile/ANDROID_PLAY_CODE4_PROVENANCE.md).
+- The audited local code 4 AAB provenance is recorded in [Android Play code 4 provenance](../mobile/ANDROID_PLAY_CODE4_PROVENANCE.md).
 - Existing Play internal-testing release observed during the audit: `1.0.1-internal.2`.
+- Play app-bundle library evidence currently shows only code 1 and code 2; code
+  4 is not yet accepted into Google Play and remains blocked pending
+  reset-certificate activation at `2026-07-23T16:11:28Z`.
 - Android closed-testing release/tester enrollment has not started.
 - Google production access remains locked until Google Play closed-testing requirements are completed.
 - Annual Google Play base-plan grace period persists as 14 days in Play Console.

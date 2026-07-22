@@ -134,6 +134,13 @@ GitHub source now correctly declares Android `versionCode` 4 and `versionName` 1
 Existing Play Console state recorded by the audit:
 
 - Existing internal-testing release shown in Play Console: `1.0.1-internal.2`.
+- Play app-bundle library evidence after this audit shows only `versionCode` 1 /
+  `versionName` 1.0 and `versionCode` 2 / `versionName` 1.0.1.
+- The `1.0.2` code-4 artifact is an audited local release artifact and intended
+  closed-testing artifact. It is not yet accepted into the Google Play bundle
+  library, Internal testing, or Closed testing.
+- The 2026-07-22 manual upload attempt was blocked pending replacement
+  upload-certificate activation at `2026-07-23T16:11:28Z`.
 - Closed-testing track has not been rolled out.
 - Closed-testing tester list/service setup remains pending.
 - Production access remains unavailable until Google Play closed-testing requirements are completed.
@@ -232,7 +239,9 @@ The historical RTDN test events remain intact. No real Google Play provider subs
 ## Resolved Discrepancies
 
 - Main/staging branch history was normalized while preserving identical source trees.
-- Android protected source now records the already-submitted code 4 artifact metadata.
+- Android protected source now records the audited local code-4 artifact metadata.
+- Google Play evidence now distinguishes code 4 from Play-accepted bundles; the
+  Play app-bundle library currently contains only code 1 and code 2.
 - Staging Supabase function source parity was restored.
 - Production Supabase function source parity was restored for `send-challenge-email`, `stripe-checkout`, and `stripe-portal`.
 - Production and staging `google-play-rtdn` functions are source-aligned with `verify_jwt=false`.

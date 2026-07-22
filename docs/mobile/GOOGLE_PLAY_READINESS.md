@@ -10,14 +10,16 @@ new bundle, change tracks, or start closed, open, or production rollout.
 - App name: Can You Geo
 - Package: `com.canyougeo.app`
 - Current protected Android source: `versionCode 4`, `versionName 1.0.2`
-- Distribution state: internal testing only
+- Distribution state: internal testing only; current Play-delivered build remains `1.0.1` versionCode `2`
+- Intended closed-testing artifact: audited local `1.0.2` versionCode `4` AAB, not yet accepted into the Google Play bundle library
+- Code-4 upload gate: blocked pending reset-certificate activation at `2026-07-23T16:11:28Z`
 - Purchases in this Android build: Google Play Billing purchase and restore UI is wired for controlled internal license testing only
 - Native analytics and marketing pixels: suppressed
 - App model: Capacitor Android app bundling the static Next.js export
 
 The current deployment/runtime closeout is recorded in
 [Deployment Runtime Parity Audit 2026-07-22](../ops/DEPLOYMENT_RUNTIME_PARITY_AUDIT_2026-07-22.md).
-The submitted code 4 AAB provenance is recorded in
+The audited local code-4 AAB provenance is recorded in
 [Android Play code 4 provenance](./ANDROID_PLAY_CODE4_PROVENANCE.md).
 
 This integrated mobile billing release keeps the production-approved
@@ -484,12 +486,25 @@ different build as store screenshots.
 Current Android source and artifact provenance:
 
 - Protected source declares `versionCode 4` and `versionName 1.0.2`.
-- The submitted code 4 AAB provenance is reconciled in
+- The audited local code-4 AAB provenance is reconciled in
   [Android Play code 4 provenance](./ANDROID_PLAY_CODE4_PROVENANCE.md).
 - No new AAB was rebuilt or uploaded during the source reconciliation.
+- Play Console bundle-library evidence currently shows only `versionCode` 1 /
+  `versionName` 1.0 and `versionCode` 2 / `versionName` 1.0.1.
+- Code 4 is the intended closed-testing artifact, but it has not been accepted
+  into Google Play and is not available through Internal testing or Closed
+  testing.
+- The 2026-07-22 manual upload attempt was blocked only by the replacement
+  upload-certificate activation gate; Google's displayed retry time is
+  `2026-07-23T16:11:28Z`.
+- The draft closed-testing setup records 25 tester accounts and all 177
+  available countries/regions, but those changes have not been sent to Google
+  because the code-4 release bundle is still blocked.
 
 Required before closed testing:
 
+- Retry the code-4 upload manually after reset-certificate activation.
+- Confirm Google Play accepts versionCode 4 into the bundle library.
 - Complete app content drafts accurately.
 - Add/capture real Android phone screenshots and feature graphic.
 - Confirm target age selection.

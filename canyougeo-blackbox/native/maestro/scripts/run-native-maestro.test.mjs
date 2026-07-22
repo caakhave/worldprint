@@ -469,6 +469,15 @@ describe("installed native app source identity and preflight", () => {
     expect(metadata.version_match).toBe(true);
   });
 
+  it("reports native credential availability during preflight-only release checks", () =>
+    withProcessCredentials(() => {
+      const { commandRunner } = createCommandRunner();
+      const result = runNativeMaestro({ platform: "android", suite: "release", preflightOnly: true }, commandRunner);
+
+      expect(result.status).toBe(0);
+      expect(result.credentialsAvailable).toBe(true);
+    }));
+
   it("runs iOS preflight-only from simctl and installed Info.plist metadata", () => {
     const { calls, commandRunner } = createCommandRunner();
     const result = runNativeMaestro({ platform: "ios", suite: "release", preflightOnly: true }, commandRunner);
@@ -645,7 +654,7 @@ describe("native Maestro runner release execution", () => {
     process.env.CGY_FREE_PASSWORD = "legacy-password";
     try {
       const { calls, commandRunner } = createCommandRunner();
-      const result = runNativeMaestro({ platform: "android", suite: "auth" }, commandRunner);
+      const result = runNativeMaestro({ platform: "android", suite: "auth", credentialFilePaths: [] }, commandRunner);
       const metadata = readMetadata(result);
 
       expect(result.status).toBe(1);
