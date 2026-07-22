@@ -23,6 +23,10 @@ def test_root_package_blackbox_scripts_use_safe_runner():
     assert scripts["qa:blackbox:www"].endswith("--target www --suite production_safe --report reports/www.html")
     assert "qa:native:android:release" in scripts
     assert "qa:native:ios:release" in scripts
+    assert scripts["qa:native:android:preflight"].endswith("--platform android --suite release --preflight-only")
+    assert scripts["qa:native:ios:preflight"].endswith("--platform ios --suite release --preflight-only")
+    assert scripts["qa:drift"] == "node canyougeo-blackbox/tools/check_qa_drift.mjs"
+    assert scripts["qa:report"] == "node canyougeo-blackbox/tools/build_qa_report_index.mjs"
 
 
 @pytest.mark.production_safe
