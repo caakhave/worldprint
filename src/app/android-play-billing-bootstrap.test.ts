@@ -65,12 +65,12 @@ describe("Android Play Billing bootstrap", () => {
     expect(dependencySurface).not.toMatch(/revenuecat|purchases-android|react-native-iap|stripe-android|braintree|paypal/);
   });
 
-  it("keeps the permanent app identity and version 3 metadata", () => {
+  it("keeps the permanent app identity and version 4 metadata", () => {
     const appBuild = read("android/app/build.gradle");
 
     expect(appBuild).toContain(`namespace = "${PACKAGE_NAME}"`);
     expect(appBuild).toContain(`applicationId "${PACKAGE_NAME}"`);
-    expect(appBuild).toContain("versionCode 3");
+    expect(appBuild).toContain("versionCode 4");
     expect(appBuild).toContain('versionName "1.0.2"');
   });
 
