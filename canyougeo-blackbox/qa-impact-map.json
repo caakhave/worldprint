@@ -1,0 +1,171 @@
+{
+  "schema_version": 1,
+  "rules": [
+    {
+      "id": "public-route-seo",
+      "title": "Public route and SEO changes",
+      "waiveable": true,
+      "impact": [
+        "src/app/**/page.tsx",
+        "src/app/sitemap.ts",
+        "src/app/robots.ts",
+        "src/lib/site/seo.ts",
+        "next.config.*"
+      ],
+      "requires": [
+        "canyougeo-blackbox/utils/route_policy.py",
+        "canyougeo-blackbox/tests/test_routes.py",
+        "canyougeo-blackbox/tests/test_indexing.py",
+        "canyougeo-blackbox/tests/test_production_smoke.py",
+        "canyougeo-blackbox/pages/**"
+      ]
+    },
+    {
+      "id": "challenge-email",
+      "title": "Challenge and email changes",
+      "waiveable": true,
+      "impact": [
+        "src/app/challenge/**",
+        "supabase/functions/send-challenge-email/**",
+        "supabase/functions/_shared/challengeInvites.ts"
+      ],
+      "requires": [
+        "canyougeo-blackbox/tests/test_challenge_smoke.py",
+        "src/**/*challenge*.test.*",
+        "src/**/*email*.test.*",
+        "docs/**"
+      ]
+    },
+    {
+      "id": "account-billing-deletion",
+      "title": "Account, billing, and account-deletion changes",
+      "waiveable": true,
+      "impact": [
+        "src/app/account/**",
+        "src/app/account-deletion/**",
+        "src/app/legal/**",
+        "src/app/privacy/**",
+        "src/app/support/**",
+        "src/app/terms/**",
+        "src/app/upgrade/**",
+        "src/features/account/**",
+        "supabase/functions/stripe-*/**"
+      ],
+      "requires": [
+        "canyougeo-blackbox/tests/test_public_billing_and_policy.py",
+        "canyougeo-blackbox/native/maestro/flows/**/0*_billing_discovery.yaml",
+        "canyougeo-blackbox/native/maestro/scripts/run-native-maestro.test.mjs",
+        "src/**/*billing*.test.*",
+        "src/**/*account*.test.*",
+        "docs/**"
+      ]
+    },
+    {
+      "id": "native-auth-session",
+      "title": "Native authentication and session changes",
+      "waiveable": true,
+      "impact": [
+        "src/features/account/SignInClient.tsx",
+        "src/features/account/SignUpClient.tsx",
+        "src/features/account/AuthCallbackClient.tsx",
+        "src/lib/supabase/nativeAuthStorage.ts",
+        "src/lib/supabase/client.ts",
+        "src/lib/mobile/nativeConnectivity.ts",
+        "ios/App/App/*Secure*",
+        "android/app/src/main/java/com/canyougeo/app/*Secure*"
+      ],
+      "requires": [
+        "canyougeo-blackbox/native/maestro/flows/**/0*_auth_lifecycle.yaml",
+        "canyougeo-blackbox/native/maestro/scripts/run-native-maestro.test.mjs",
+        "src/**/*auth*.test.*",
+        "src/**/*supabase*.test.*",
+        "docs/**"
+      ]
+    },
+    {
+      "id": "native-link-routing",
+      "title": "Native link and routing changes",
+      "waiveable": true,
+      "impact": [
+        "android/app/src/main/AndroidManifest.xml",
+        "ios/App/App.entitlements",
+        "src/app/.well-known/**",
+        "src/components/NativeDeepLinkBridge.tsx",
+        "src/lib/mobile/nativeDeepLink.ts",
+        "capacitor.config.*"
+      ],
+      "requires": [
+        "canyougeo-blackbox/tests/test_association_documents.py",
+        "canyougeo-blackbox/native/maestro/flows/android/04_app_links.yaml",
+        "canyougeo-blackbox/native/maestro/flows/ios/05_universal_links.yaml",
+        "src/app/android-assetlinks.test.ts",
+        "src/app/apple-app-site-association.test.ts",
+        "docs/mobile/**"
+      ]
+    },
+    {
+      "id": "native-store-billing",
+      "title": "Native store billing changes",
+      "waiveable": true,
+      "impact": [
+        "src/features/account/BillingActionsClient.tsx",
+        "src/features/account/appleStoreKitActions.ts",
+        "src/features/account/googlePlayPurchaseActions.ts",
+        "src/lib/mobile/appleStoreKit.ts",
+        "src/lib/mobile/googlePlayBilling.ts",
+        "ios/App/App/AppleStoreKitPlugin.swift",
+        "android/app/src/main/java/com/canyougeo/app/GooglePlayBillingPlugin.java",
+        "supabase/functions/apple-purchase-*/**",
+        "supabase/functions/google-play-purchase-*/**"
+      ],
+      "requires": [
+        "canyougeo-blackbox/native/maestro/flows/android/09_billing_discovery.yaml",
+        "canyougeo-blackbox/native/maestro/flows/ios/06_billing_discovery.yaml",
+        "canyougeo-blackbox/native/maestro/scripts/run-native-maestro.test.mjs",
+        "src/**/*billing*.test.*",
+        "src/**/*storekit*.test.*",
+        "docs/qa/MOBILE_RELEASE_QA_MATRIX.md"
+      ]
+    },
+    {
+      "id": "native-shell-system-ui",
+      "title": "Native shell and system UI changes",
+      "waiveable": true,
+      "impact": [
+        "src/components/NativeAppBridge.tsx",
+        "src/components/NativeConnectivityStatus.tsx",
+        "src/app/globals.css",
+        "ios/App/App/ViewController.swift",
+        "android/app/src/main/java/com/canyougeo/app/MainActivity.java",
+        "android/app/src/main/res/values*/styles.xml",
+        "android/app/src/main/res/drawable*/splash*"
+      ],
+      "requires": [
+        "canyougeo-blackbox/native/maestro/flows/**/01_smoke.yaml",
+        "canyougeo-blackbox/native/maestro/flows/**/0*_guardrails*.yaml",
+        "canyougeo-blackbox/native/maestro/scripts/run-native-maestro.test.mjs",
+        "src/**/*Native*.test.*",
+        "docs/mobile/**"
+      ]
+    },
+    {
+      "id": "store-identity-release-metadata",
+      "title": "Store identity and release metadata changes",
+      "waiveable": false,
+      "impact": [
+        "android/app/build.gradle",
+        "ios/App/App.xcodeproj/project.pbxproj",
+        "ios/App/App/Info.plist",
+        "ios/App/App/PrivacyInfo.xcprivacy",
+        "ios/App/App.entitlements",
+        "android/app/src/main/AndroidManifest.xml"
+      ],
+      "requires": [
+        "src/app/android-release-metadata.test.ts",
+        "src/app/ios-release-metadata.test.ts",
+        "docs/mobile/**",
+        "docs/qa/MOBILE_RELEASE_QA_MATRIX.md"
+      ]
+    }
+  ]
+}
