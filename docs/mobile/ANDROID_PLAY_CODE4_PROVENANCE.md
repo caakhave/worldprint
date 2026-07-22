@@ -11,7 +11,7 @@ Last updated: 2026-07-22
 - AAB SHA-256: `a7fdcf07f2604d8d27ddd566f49dc7aa22d05cf5fc40b27e283066ca582d12bc`
 - Signing certificate SHA-256: `7E:32:86:C0:69:2D:8C:DE:98:CC:20:05:93:79:7B:3C:6A:DD:D6:F9:4F:D7:94:4C:A6:E5:4E:26:3B:C4:4E:0E`
 - Original recorded source HEAD: `16d7ed41`
-- Reconciliation commit SHA: `pending`
+- Reconciliation commit SHA: `461ccce414a897389cbb7385e22bdb86ed64f020`
 - Google Play track/status: not asserted by this repository receipt; verify current state in Google Play Console.
 
 ## Reconciliation Note
