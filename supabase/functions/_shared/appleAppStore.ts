@@ -1010,7 +1010,11 @@ function normalizePurchaseRow(data: unknown): ApplePurchaseVerificationRow | nul
   if (typeof candidate.result !== "string") return null;
   if (typeof candidate.provider_environment !== "string") return null;
   if (typeof candidate.event_type !== "string") return null;
+  if (candidate.event_subtype !== null && typeof candidate.event_subtype !== "string") return null;
   if (typeof candidate.processed !== "boolean") return null;
+  if (typeof candidate.already_processed !== "boolean") return null;
+  if (typeof candidate.provider_subscription_changed !== "boolean") return null;
+  if (typeof candidate.compatibility_refreshed !== "boolean") return null;
   if (typeof candidate.native_review_entitlement_refreshed !== "boolean") return null;
   if (
     candidate.entitlement_scope !== "live" &&
@@ -1019,6 +1023,7 @@ function normalizePurchaseRow(data: unknown): ApplePurchaseVerificationRow | nul
   ) {
     return null;
   }
+  if (typeof candidate.reconciliation_required !== "boolean") return null;
   if (typeof candidate.retryable !== "boolean") return null;
   return candidate as ApplePurchaseVerificationRow;
 }

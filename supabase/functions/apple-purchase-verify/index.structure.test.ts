@@ -19,9 +19,11 @@ describe("apple-purchase-verify Edge Function structure", () => {
     expect(source).toContain("deploymentMode: config.deploymentMode");
     expect(source).toContain("applePurchaseVerificationTransitionInput");
     expect(source).toContain("processApplePurchaseVerification");
+    expect(source).toContain("applePurchaseVerificationDisposition(row)");
     expect(source.indexOf("const statusResponse = await fetchAppleSubscriptionStatuses")).toBeLessThan(
       source.indexOf("const row = await processApplePurchaseVerification")
     );
+    expect(source.indexOf("const disposition = applePurchaseVerificationDisposition(row)")).toBeLessThan(source.indexOf("ok: true"));
   });
 
   it("does not return signed payloads, transaction ids, account tokens, credentials, or user ids", () => {
@@ -29,6 +31,15 @@ describe("apple-purchase-verify Edge Function structure", () => {
     expect(source).toContain("nativeReviewEntitlement");
     expect(source).not.toMatch(/json\([^)]*signedTransactionInfo|json\([^)]*originalTransactionId|json\([^)]*transactionId|json\([^)]*appAccountToken|json\([^)]*privateKey|json\([^)]*user\.id/is);
     expect(source).not.toMatch(/console\.(?:log|warn|error)\([^)]*signedTransactionInfo|console\.(?:log|warn|error)\([^)]*transactionId|console\.(?:log|warn|error)\([^)]*privateKey/is);
+  });
+
+  it("prevents reconciliation-required rows from reaching success or native-review entitlement responses", () => {
+    expect(source).toContain("if (!disposition.accepted)");
+    expect(source).toContain("disposition.httpStatus");
+    expect(source).not.toContain("if (!row.processed && !row.already_processed)");
+    expect(source).not.toContain("clientMayFinishTransaction: row.processed || row.already_processed");
+    expect(source).toContain("row.native_review_entitlement_refreshed");
+    expect(source.indexOf("if (!disposition.accepted)")).toBeLessThan(source.indexOf("nativeReviewEntitlement:"));
   });
 
   it("separates StoreKit verification retry attempts without exposing raw Apple identifiers", () => {
