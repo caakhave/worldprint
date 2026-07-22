@@ -243,6 +243,7 @@ Common commands:
 
 ```bash
 pnpm qa:blackbox:test
+pnpm qa:blackbox:prod
 pnpm qa:blackbox:smoke
 pnpm qa:blackbox:mobile
 pnpm qa:blackbox:operator
@@ -252,7 +253,7 @@ Auth smoke from the suite folder:
 
 ```bash
 cd canyougeo-blackbox
-CGY_TARGET=test ./.venv/bin/python -m pytest -m auth --html=reports/auth.html --self-contained-html
+./.venv/bin/python tools/run_suite.py --target test --suite auth --report reports/auth.html
 ```
 
 Export the external suite:

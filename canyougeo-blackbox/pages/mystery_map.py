@@ -2,7 +2,7 @@ from __future__ import annotations
 
 import re
 
-from playwright.sync_api import expect
+from playwright.sync_api import TimeoutError as PlaywrightTimeoutError, expect
 
 from pages.base import BasePage
 from utils.assertions import assert_no_horizontal_overflow
@@ -43,3 +43,17 @@ class MysteryMapPage(BasePage):
         country.click()
         expect(self.page.get_by_test_id("country-evidence-panel")).to_contain_text("Canada")
         expect(self.page.get_by_test_id("country-evidence-panel")).not_to_contain_text("Pick a country")
+
+    def solve_current_round_by_trying_visible_choices(self) -> None:
+        reveal = self.page.get_by_label("Reveal details")
+        for _ in range(6):
+            choice = self.page.get_by_test_id("indicator-answer-panel").locator(".choice-button:not([disabled])").first
+            expect(choice).to_be_visible()
+            choice.click()
+            try:
+                reveal.wait_for(state="visible", timeout=3_000)
+                expect(reveal.get_by_role("button", name=re.compile("Next map|Open results now", re.I))).to_be_visible()
+                return
+            except PlaywrightTimeoutError:
+                continue
+        raise AssertionError("Mystery Map did not reach the round reveal after trying visible choices.")

@@ -25,8 +25,13 @@ Use this checklist for private staging QA on `https://test.canyougeo.com`. It is
   canyougeo-blackbox/reports/test.html
   ```
 
-- Expected current result when Free and Pro auth env vars are present: `47 passed, 1 skipped`.
-- Expected skip: the live challenge email test, because live email is disabled by default.
+- Non-secret run metadata:
+
+  ```text
+  canyougeo-blackbox/reports/test.metadata.json
+  ```
+
+- Expected skip pattern: live email, signup analytics, checkout-open, and production-auth tests are not part of the normal staging command unless explicitly enabled in a separate approved run.
 - Smoke run from the repo root:
 
   ```bash
@@ -43,7 +48,7 @@ Use this checklist for private staging QA on `https://test.canyougeo.com`. It is
 
   ```bash
   cd canyougeo-blackbox
-  CGY_TARGET=test ./.venv/bin/python -m pytest -m auth --html=reports/auth.html --self-contained-html
+  ./.venv/bin/python tools/run_suite.py --target test --suite auth --report reports/auth.html
   ```
 
 - Export the QA suite after a clean run:
@@ -147,4 +152,3 @@ Use this checklist for private staging QA on `https://test.canyougeo.com`. It is
 - QA export zip is regenerated with `pnpm qa:blackbox:export`.
 - No secrets, `.env`, reports, screenshots, zips, caches, browser artifacts, virtualenvs, or unrelated files are staged.
 - `atd/` remains untouched and untracked.
-

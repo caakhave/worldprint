@@ -4,8 +4,10 @@ import pytest
 
 from utils.assertions import fetch_route
 from utils.host_policy import policy_for_base_url, response_has_noindex, robots_disallows_all, sitemap_has_public_routes
+from utils.route_policy import INDEXED_PUBLIC_ROUTES, NOINDEX_ROUTE_PREFIXES
 
 
+@pytest.mark.production_safe
 def test_robots_disallows_all_ignores_route_specific_private_paths():
     robots = """
     User-Agent: *
@@ -18,6 +20,7 @@ def test_robots_disallows_all_ignores_route_specific_private_paths():
     assert not robots_disallows_all(robots)
 
 
+@pytest.mark.production_safe
 def test_robots_disallows_all_detects_exact_root_disallow():
     robots = """
     User-Agent: *
@@ -29,6 +32,7 @@ def test_robots_disallows_all_detects_exact_root_disallow():
 
 @pytest.mark.indexing
 @pytest.mark.smoke
+@pytest.mark.production_safe
 def test_host_indexing_policy(target_base_url: str):
     policy = policy_for_base_url(target_base_url)
     if policy.kind == "local":
@@ -55,7 +59,27 @@ def test_host_indexing_policy(target_base_url: str):
 
 
 @pytest.mark.indexing
+@pytest.mark.production_safe
 def test_internal_review_route_absent_from_sitemap(target_base_url: str):
     sitemap = fetch_route(target_base_url, "/sitemap.xml", follow_redirects=True)
     assert sitemap.status_code == 200
     assert "/internal/order-atlas-review" not in sitemap.text
+
+
+@pytest.mark.indexing
+@pytest.mark.production_safe
+def test_sitemap_matches_public_indexable_route_policy(target_base_url: str):
+    policy = policy_for_base_url(target_base_url)
+    if policy.should_be_private:
+        pytest.skip("Private QA hosts may noindex or suppress sitemap indexing.")
+
+    sitemap = fetch_route(target_base_url, "/sitemap.xml", follow_redirects=True)
+    assert sitemap.status_code == 200
+    for path in INDEXED_PUBLIC_ROUTES:
+        assert f"https://canyougeo.com{path}" in sitemap.text
+
+    for prefix in NOINDEX_ROUTE_PREFIXES:
+        assert f"https://canyougeo.com{prefix}" not in sitemap.text
+    assert "https://test.canyougeo.com" not in sitemap.text
+    assert "localhost" not in sitemap.text
+    assert ".pages.dev" not in sitemap.text

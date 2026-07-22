@@ -10,6 +10,7 @@ from utils.assertions import assert_route_status, normalize_url
 
 
 @pytest.mark.smoke
+@pytest.mark.production_safe
 def test_mystery_map_challenge_route_handles_missing_code(desktop_page, target_base_url: str):
     assert_route_status(target_base_url, "/challenge/mystery-map/")
     desktop_page.goto(normalize_url(target_base_url, "/challenge/mystery-map/"), wait_until="domcontentloaded")
@@ -17,9 +18,19 @@ def test_mystery_map_challenge_route_handles_missing_code(desktop_page, target_b
     expect(desktop_page.get_by_text(re.compile("unavailable|link|Mystery Map", re.I)).first).to_be_visible()
 
 
+@pytest.mark.production_safe
 def test_legacy_worldprint_challenge_route_is_not_a_server_error(target_base_url: str):
     response = assert_route_status(target_base_url, "/challenge/worldprint/")
     assert response.status_code < 500
+
+
+@pytest.mark.production_safe
+def test_mystery_map_challenge_missing_code_is_spoiler_safe(desktop_page, target_base_url: str):
+    desktop_page.goto(normalize_url(target_base_url, "/challenge/mystery-map/"), wait_until="domcontentloaded")
+    body = desktop_page.locator("body").inner_text()
+
+    assert re.search(r"Challenge", body, flags=re.I)
+    assert not re.search(r"correct answer|hidden indicator|source label|answerCountries|correctIndicatorId", body, flags=re.I)
 
 
 @pytest.mark.email_live

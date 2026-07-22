@@ -4,6 +4,23 @@ External pytest + Playwright smoke tests for deployed Can You Geo hosts.
 
 This suite is intentionally separate from the app's internal Vitest and TypeScript Playwright tests. It treats the site as a black box and targets stable public routes, roles, text, and a small set of `data-testid` selectors exposed for QA.
 
+## Principal Operator Commands
+
+Run these from the repository root:
+
+```bash
+pnpm qa:blackbox:test
+pnpm qa:blackbox:prod
+pnpm qa:native:android:release
+pnpm qa:native:ios:release
+```
+
+`pnpm qa:blackbox:test` runs the complete staging browser suite against `https://test.canyougeo.com` and writes `canyougeo-blackbox/reports/test.html`.
+
+`pnpm qa:blackbox:prod` runs the complete production-safe browser suite against `https://canyougeo.com` and writes `canyougeo-blackbox/reports/prod.html`.
+
+The two native commands run the separate Maestro release guardrails for installed Android and iOS builds. Native device automation, store purchase lifecycle checks, and installed-build/version preflights do not live in this browser suite.
+
 ## Coverage And Staging Checklist
 
 - Coverage contract: [QA_COVERAGE_CONTRACT.md](QA_COVERAGE_CONTRACT.md)
@@ -63,37 +80,35 @@ Precedence is:
 
 ## Common Commands
 
-Full private-QA run:
+The root package scripts use `tools/run_suite.py`, which accepts only approved targets and suite names, applies the safe marker expression, writes a self-contained HTML report, and writes a non-secret ignored metadata sidecar next to the report.
+
+Complete staging browser QA:
 
 ```bash
-CGY_TARGET=test ./.venv/bin/python -m pytest --html=reports/test.html --self-contained-html
+pnpm qa:blackbox:test
 ```
 
-Normal QA loop:
+Complete production-safe browser QA:
 
 ```bash
-CGY_TARGET=test ./.venv/bin/python -m pytest -m smoke --html=reports/smoke.html --self-contained-html
-CGY_TARGET=test ./.venv/bin/python -m pytest -m mobile --html=reports/mobile.html --self-contained-html
-./.venv/bin/python tools/export_suite.py
+pnpm qa:blackbox:prod
+```
+
+Normal staging QA loop:
+
+```bash
+pnpm qa:blackbox:smoke
+pnpm qa:blackbox:mobile
+pnpm qa:blackbox:export
 ```
 
 Localhost:
 
 ```bash
-CGY_TARGET=local ./.venv/bin/python -m pytest --html=reports/local.html --self-contained-html
+pnpm qa:blackbox:local
 ```
 
-Production after launch:
-
-```bash
-CGY_TARGET=apex ./.venv/bin/python -m pytest -m prod_smoke --html=reports/prod-smoke.html --self-contained-html
-CGY_TARGET=apex ./.venv/bin/python -m pytest --html=reports/apex.html --self-contained-html
-CGY_TARGET=www ./.venv/bin/python -m pytest --html=reports/www.html --self-contained-html
-```
-
-The `prod_smoke` marker is no-secret and production-safe. It checks public route availability, core launch copy, robots/sitemap production posture, public HTML for staging/secret markers, and the deployed security-header/CSP baseline.
-
-There is no separate `CGY_TARGET=prod` target. From the repo root, production smoke uses:
+Production host checks:
 
 ```bash
 pnpm qa:blackbox:prod-smoke
@@ -101,14 +116,26 @@ pnpm qa:blackbox:apex
 pnpm qa:blackbox:www
 ```
 
+`prod_smoke` is the small production launch smoke. `qa:blackbox:prod`, `apex`, and `www` run the larger `production_safe` suite. Production-safe means no email, no account creation, no checkout or portal session, no payment, no purchase, no Restore, no entitlement mutation, and no authenticated QA credentials.
+
+To run the same harness directly from this folder:
+
+```bash
+./.venv/bin/python tools/run_suite.py --target test --suite staging_full --report reports/test.html
+./.venv/bin/python tools/run_suite.py --target apex --suite production_safe --report reports/prod.html
+./.venv/bin/python tools/run_suite.py --target apex --suite prod_smoke --report reports/prod-smoke.html
+./.venv/bin/python tools/run_suite.py --target test --suite mobile --report reports/mobile.html
+```
+
 Root package shortcuts are also available from the app repo root:
 
 ```bash
 pnpm qa:blackbox:operator
+pnpm qa:blackbox:test
+pnpm qa:blackbox:prod
 pnpm qa:blackbox:prod-smoke
 pnpm qa:blackbox:smoke
 pnpm qa:blackbox:mobile
-pnpm qa:blackbox:test
 pnpm qa:blackbox:export
 ```
 
@@ -162,7 +189,8 @@ Authenticated tests are marked `auth` and skip unless the matching env vars are 
 Create an uncommitted local `.env` from `.env.example`, fill only the private QA account credentials you want to test, then run:
 
 ```bash
-CGY_TARGET=test ./.venv/bin/python -m pytest -m auth --html=reports/auth.html --self-contained-html
+cd canyougeo-blackbox
+./.venv/bin/python tools/run_suite.py --target test --suite auth --report reports/auth.html
 ```
 
 The auth smoke signs in as the Free and Pro test accounts, checks `/account/`, `/upgrade/`, and one game page, confirms it did not navigate to Stripe checkout, then signs out before the next account. If any credential pair is missing, that plan's auth case skips.
@@ -170,6 +198,22 @@ The auth smoke signs in as the Free and Pro test accounts, checks `/account/`, `
 If auth fails, first verify the same credentials manually at `https://test.canyougeo.com/sign-in/`. If `/account/` still says signed out in a normal browser, fix the credentials, account setup, or password-auth state in the test Supabase project before rerunning pytest. If manual login works but pytest fails, inspect `pages/auth.py` and rerun the auth marker with a headed browser so you can see where the helper stopped waiting for the signed-in state.
 
 Live challenge-email tests are marked `email_live` and are skipped unless explicitly enabled by setting `CGY_RUN_EMAIL_LIVE=1`. The default challenge tests do not send email.
+
+Optional production-auth checks are separate from production-safe checks and require production-only credential variables:
+
+- `CGY_PROD_FREE_EMAIL`
+- `CGY_PROD_FREE_PASSWORD`
+- `CGY_PROD_PRO_EMAIL`
+- `CGY_PROD_PRO_PASSWORD`
+
+Run them only when a production account smoke is explicitly approved:
+
+```bash
+cd canyougeo-blackbox
+./.venv/bin/python tools/run_suite.py --target apex --suite production_auth --report reports/prod-auth.html
+```
+
+Production auth never falls back to `CGY_FREE_*` or `CGY_PRO_*` staging credentials.
 
 Checkout-open smoke is marked `checkout_smoke` and is also skipped unless explicitly enabled. It uses a signed-in Free test account, clicks one Pro checkout CTA, asserts that Stripe Checkout opens, checks the neutral app-side analytics events, and stops immediately. It never fills card details and never completes a purchase.
 
@@ -225,7 +269,18 @@ Do not run live payment-completion flows from this suite.
 
 ## Reports
 
-HTML reports are written wherever `--html` points, usually under `reports/`. Screenshots for failed Playwright tests are saved under `reports/screenshots/`.
+HTML reports are written under `reports/`. Each root command uses a stable path:
+
+- `reports/test.html`
+- `reports/prod.html`
+- `reports/prod-smoke.html`
+- `reports/mobile.html`
+- `reports/auth.html`
+- `reports/prod-auth.html`
+
+The runner also writes an ignored `*.metadata.json` sidecar containing only suite name, target, resolved base URL, Git SHA, UTC start/end, exit status, report path, and pass/fail/skip counts. It does not record credentials, cookies, auth headers, storage state, user IDs, or emails.
+
+Screenshots for failed Playwright tests are saved under `reports/screenshots/`.
 
 Generated reports and screenshots are ignored by git.
 

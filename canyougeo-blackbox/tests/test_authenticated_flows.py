@@ -8,33 +8,21 @@ from playwright.sync_api import Page, TimeoutError as PlaywrightTimeoutError, ex
 
 from pages.auth import AuthPage, expect_signed_in_account
 from utils.assertions import normalize_url
+from utils.host_policy import policy_for_base_url
 
 
-def _has_plan_credentials(plan: str) -> bool:
+PLAN_PARAMS = ["free", "pro"]
+
+
+def _credential_env_prefix(plan: str, target_base_url: str) -> str:
     prefix = f"CGY_{plan.upper()}"
-    return bool(os.getenv(f"{prefix}_EMAIL") and os.getenv(f"{prefix}_PASSWORD"))
+    if policy_for_base_url(target_base_url).kind == "production":
+        return f"CGY_PROD_{plan.upper()}"
+    return prefix
 
 
-PLAN_PARAMS = [
-    pytest.param(
-        "free",
-        marks=pytest.mark.skipif(
-            not _has_plan_credentials("free"),
-            reason="CGY_FREE_EMAIL and CGY_FREE_PASSWORD are required for this auth test.",
-        ),
-    ),
-    pytest.param(
-        "pro",
-        marks=pytest.mark.skipif(
-            not _has_plan_credentials("pro"),
-            reason="CGY_PRO_EMAIL and CGY_PRO_PASSWORD are required for this auth test.",
-        ),
-    ),
-]
-
-
-def _credential_pair(plan: str) -> tuple[str, str]:
-    prefix = f"CGY_{plan.upper()}"
+def _credential_pair(plan: str, target_base_url: str) -> tuple[str, str]:
+    prefix = _credential_env_prefix(plan, target_base_url)
     email = os.getenv(f"{prefix}_EMAIL")
     password = os.getenv(f"{prefix}_PASSWORD")
     if not email or not password:
@@ -115,7 +103,7 @@ def _expect_game_page(page: Page, plan: str) -> None:
 @pytest.mark.auth
 @pytest.mark.parametrize("plan", PLAN_PARAMS)
 def test_authenticated_account_and_game_smoke(desktop_page, target_base_url: str, plan: str):
-    email, password = _credential_pair(plan)
+    email, password = _credential_pair(plan, target_base_url)
     auth = AuthPage(desktop_page, target_base_url)
     auth.sign_in(email, password)
 

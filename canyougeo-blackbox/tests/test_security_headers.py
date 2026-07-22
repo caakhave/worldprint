@@ -9,6 +9,7 @@ from utils.host_policy import policy_for_base_url
 @pytest.mark.security
 @pytest.mark.smoke
 @pytest.mark.prod_smoke
+@pytest.mark.production_safe
 def test_basic_security_headers(target_base_url: str):
     policy = policy_for_base_url(target_base_url)
     if not policy.enforce_security_headers:
