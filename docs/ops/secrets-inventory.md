@@ -86,6 +86,12 @@ No Stripe publishable-key dependency was found in the current browser checkout f
 | `CGY_FREE_PASSWORD` | Yes | Optional auth QA account | Do not commit. |
 | `CGY_PRO_EMAIL` | Sensitive | Optional auth QA account | Do not commit. |
 | `CGY_PRO_PASSWORD` | Yes | Optional auth QA account | Do not commit. |
+| `CGY_NATIVE_FREE_EMAIL` | Sensitive | Optional native Free QA account | Native Maestro only; does not fall back to browser variables. |
+| `CGY_NATIVE_FREE_PASSWORD` | Yes | Optional native Free QA account | Do not commit. |
+| `CGY_NATIVE_PRO_EMAIL` | Sensitive | Optional native Pro QA account | Native Maestro only; do not commit. |
+| `CGY_NATIVE_PRO_PASSWORD` | Yes | Optional native Pro QA account | Do not commit. |
+| `CGY_ANDROID_DEVICE` | No | Optional Android native QA device selector | Safe device identifier only. |
+| `CGY_IOS_SIMULATOR_UDID` | No | Optional iOS native QA simulator selector | Local simulator identifier only. |
 | `CGY_CF_ACCESS_CLIENT_ID` | Sensitive | Cloudflare Access service token for staging tests | Test target only. |
 | `CGY_CF_ACCESS_CLIENT_SECRET` | Yes | Cloudflare Access service token for staging tests | Never use for production target runs. |
 | `CF_ACCESS_CLIENT_ID` | Sensitive | Fallback Access client id | Prefer `CGY_` names for suite-local clarity. |

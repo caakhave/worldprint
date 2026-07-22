@@ -13,13 +13,16 @@ pnpm qa:blackbox:test
 pnpm qa:blackbox:prod
 pnpm qa:native:android:release
 pnpm qa:native:ios:release
+pnpm qa:report
 ```
 
 `pnpm qa:blackbox:test` runs the complete staging browser suite against `https://test.canyougeo.com` and writes `canyougeo-blackbox/reports/test.html`.
 
 `pnpm qa:blackbox:prod` runs the complete production-safe browser suite against `https://canyougeo.com` and writes `canyougeo-blackbox/reports/prod.html`.
 
-The two native commands run the separate Maestro release guardrails for installed Android and iOS builds. Native device automation, store purchase lifecycle checks, and installed-build/version preflights do not live in this browser suite.
+The two native commands run the separate Maestro release guardrails for installed Android and iOS builds. Native release commands now fail before Maestro when the installed app ID or version/build does not match protected source.
+
+`pnpm qa:report` writes a local ignored index at `canyougeo-blackbox/reports/index.html` that summarizes and links the latest browser and native QA metadata. It is local evidence, not a hosted dashboard.
 
 ## Coverage And Staging Checklist
 
@@ -143,6 +146,7 @@ Native Capacitor black-box shortcuts are available after installing and syncing 
 
 ```bash
 pnpm qa:native:android:smoke
+pnpm qa:native:android:preflight
 pnpm qa:native:android:interaction
 pnpm qa:native:android:back
 pnpm qa:native:android:deep-link
@@ -150,6 +154,7 @@ pnpm qa:native:android:auth
 pnpm qa:native:android:guardrails
 pnpm qa:native:android:billing
 pnpm qa:native:android:release
+pnpm qa:native:ios:preflight
 pnpm qa:native:ios:smoke
 pnpm qa:native:ios:interaction
 pnpm qa:native:ios:auth
@@ -158,9 +163,18 @@ pnpm qa:native:ios:billing
 pnpm qa:native:ios:release
 pnpm qa:native:ios:release-with-universal-link
 pnpm qa:native:ios:universal-link
+pnpm qa:drift
+pnpm qa:report
 ```
 
-Native auth and billing discovery flows reuse `CGY_FREE_EMAIL`/`CGY_FREE_PASSWORD` or `CGY_PRO_EMAIL`/`CGY_PRO_PASSWORD` from local env files or the shell. They are device-level Maestro flows, not Playwright tests, and they do not use Maestro Cloud. Billing discovery verifies native store labels, product/plan discovery, safe unavailable states, and Stripe suppression without tapping purchase or restore.
+Native auth and billing discovery flows use only `CGY_NATIVE_FREE_EMAIL`/`CGY_NATIVE_FREE_PASSWORD` or `CGY_NATIVE_PRO_EMAIL`/`CGY_NATIVE_PRO_PASSWORD` from local env files or the shell. They never fall back to browser staging credentials or production browser credentials. They are device-level Maestro flows, not Playwright tests, and they do not use Maestro Cloud. Billing discovery verifies native store labels, product/plan discovery, safe unavailable states, and Stripe suppression without tapping purchase or restore.
+
+Native device selection is explicit and machine-neutral:
+
+- Android: `--device`, `CGY_ANDROID_DEVICE`, `ANDROID_SERIAL`, exactly one connected `adb devices` entry, then connected `emulator-5554` only as a safe preference when multiple devices exist.
+- iOS: `--device`, `CGY_IOS_SIMULATOR_UDID`, then exactly one booted simulator from `xcrun simctl`.
+
+Credential-bearing native suites suppress Maestro screenshot/debug artifact directories. Universal Links remain separately gated through `pnpm qa:native:ios:universal-link` or `pnpm qa:native:ios:release-with-universal-link` because association-file propagation and app reinstall/cache state matter.
 
 ## Cloudflare Access For Staging
 

@@ -52,8 +52,12 @@ def main() -> int:
     print_command("pnpm qa:blackbox:smoke")
     print_command("pnpm qa:blackbox:mobile")
     print_command("pnpm qa:blackbox:export")
+    print_command("pnpm qa:native:android:preflight")
     print_command("pnpm qa:native:android:release")
+    print_command("pnpm qa:native:ios:preflight")
     print_command("pnpm qa:native:ios:release")
+    print_command("pnpm qa:drift")
+    print_command("pnpm qa:report")
 
     print_section("Suite Commands")
     print_command("./.venv/bin/python tools/run_suite.py --target test --suite staging_full --report reports/test.html")
@@ -75,7 +79,9 @@ def main() -> int:
     print("  reports/prod-auth.html")
     print("  reports/prod-smoke.html")
     print("  reports/*.metadata.json")
+    print("  reports/index.html")
     print("  reports/screenshots/")
+    print("  native/reports/**/run-metadata.json")
 
     print_section("Operator Docs")
     print("  QA_COVERAGE_CONTRACT.md")
@@ -89,6 +95,10 @@ def main() -> int:
     print("  Do not set CGY_RUN_EMAIL_LIVE=1 during normal staging QA.")
     print("  Production-safe QA excludes auth, checkout, signup, email, purchase, Restore, and entitlement-changing tests.")
     print("  Optional production-auth QA requires CGY_PROD_* credentials and never falls back to staging credentials.")
+    print("  Native auth and billing QA requires CGY_NATIVE_* credentials and never falls back to browser credentials.")
+    print("  Native release commands fail before Maestro if installed app identity or version/build is stale.")
+    print("  qa:report builds a local ignored index; it is evidence, not a hosted dashboard.")
+    print("  Store lifecycle purchase and Restore testing remains outside the default suites.")
     print("  Do not run live payments from the black-box suite.")
     print("  Generated reports, screenshots, caches, and export zips should remain ignored.")
 
