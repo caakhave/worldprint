@@ -1,18 +1,20 @@
 # Can You Geo Staging And Production Environments
 
-Last updated: 2026-07-09
+Last updated: 2026-07-22
 
 This is the source of truth for the current Can You Geo environment split. It exists to keep frontend, Supabase, email, billing, and QA work from accidentally crossing staging and production.
 
 Do not commit local env files, dashboard exports, service-role keys, Stripe secrets, Resend keys, Supabase access tokens, screenshots, reports, caches, or scratch folders. `atd/` is unrelated local scratch and must stay untouched.
+
+The current deployment/runtime closeout is recorded in [Deployment Runtime Parity Audit 2026-07-22](./DEPLOYMENT_RUNTIME_PARITY_AUDIT_2026-07-22.md). That audit closed as `PASS WITH OPERATIONAL PENDING ITEMS`: protected `main` and `staging` source trees match, deployed Supabase Edge Functions are source-aligned in both environments, store-review work remains pending, Android closed testing has not started, and Google Play RTDN topic delivery is production-only.
 
 ## Environment Map
 
 | Environment | Frontend | Branch | Supabase project | Purpose |
 | --- | --- | --- | --- | --- |
 | Local | `http://localhost:3000` or `http://localhost:3001` | local checkout | Operator-selected local env | Development and local QA only |
-| Staging/test | `https://test.canyougeo.com` | `staging` | `hsgpjtyysbremrokkoym` | Private QA, staging auth, staging challenge email, Stripe sandbox QA |
-| Production | `https://canyougeo.com` and `https://www.canyougeo.com` | `main` | `jquebthneczqdxagagof` | Live public site, production auth, production billing, production challenge email |
+| Staging/test | `https://test.canyougeo.com` | `staging` | `hsgpjtyysbremrokkoym` | Private QA, staging auth, staging challenge email, staging billing/runtime validation, noindex |
+| Production | `https://canyougeo.com` and `https://www.canyougeo.com` | `main` | `jquebthneczqdxagagof` | Live public site, production auth, production billing, production challenge email, production indexing |
 
 Cloudflare Pages is branch-separated:
 
@@ -135,14 +137,26 @@ Use `docs/ops/email-templates.md` as the visible template source.
 
 ## Edge Functions
 
-Current functions:
+Current deployed function inventory from the 2026-07-22 audit:
 
-| Function | JWT boundary | Purpose |
-| --- | --- | --- |
-| `send-challenge-email` | JWT required | Sends spoiler-free Mystery Map challenge invites and writes the challenge email ledger |
-| `stripe-checkout` | JWT required | Creates Stripe Checkout sessions |
-| `stripe-portal` | JWT required | Creates Stripe Customer Portal sessions |
-| `stripe-webhook` | JWT disabled | Receives Stripe webhooks and verifies Stripe signatures internally |
+| Function | Gateway JWT | Production version | Staging version | Purpose |
+| --- | --- | ---: | ---: | --- |
+| `send-challenge-email` | Required | 14 | 13 | Sends spoiler-free Mystery Map challenge invites and writes the challenge email ledger |
+| `stripe-checkout` | Required | 43 | 12 | Creates Stripe Checkout sessions |
+| `stripe-portal` | Required | 38 | 12 | Creates Stripe Customer Portal sessions |
+| `stripe-webhook` | Disabled | 40 | 13 | Receives Stripe webhooks and verifies Stripe signatures internally |
+| `apple-purchase-context` | Required | 2 | 4 | Returns signed-in Apple purchase context without granting entitlement |
+| `apple-purchase-verify` | Required | 2 | 5 | Verifies Apple signed transaction state before provider persistence |
+| `apple-app-store-notifications` | Disabled | 2 | 6 | Receives App Store Server Notifications V2 and verifies signed payloads internally |
+| `google-play-purchase-context` | Required | 1 | 5 | Returns signed-in Google Play purchase context without granting entitlement |
+| `google-play-purchase-verify` | Required | 1 | 5 | Verifies Google Play purchase tokens before provider persistence |
+| `google-play-rtdn` | Disabled | 1 | 6 | Receives Google Play RTDN through Pub/Sub authenticated push and verifies Google OIDC internally |
+
+Protected source parity and deployed function parity are separate checks:
+
+- Source parity: protected `origin/main` and `origin/staging` have identical source trees.
+- Deployed function parity: each deployed function above was compared against its protected source, including transitive imports from `supabase/functions/_shared/`.
+- `stripe-webhook`, `apple-app-store-notifications`, and `google-play-rtdn` intentionally have Supabase gateway JWT disabled because provider signatures or Google Pub/Sub OIDC are verified inside the function.
 
 Deploy rules:
 
@@ -167,6 +181,27 @@ supabase functions deploy stripe-webhook --project-ref <target-ref> --no-verify-
 ```
 
 Always pass the project ref explicitly. Do not rely on `supabase/.temp`, linked project state, or the macOS Keychain-stored Supabase CLI credential. If a local gitignored env file provides `SUPABASE_ACCESS_TOKEN`, load it without printing it.
+
+## Google Play RTDN Delivery
+
+Final active Google Play RTDN path:
+
+```text
+Google Play
+-> projects/can-you-geo-play-billing/topics/cgy-google-play-rtdn
+-> projects/can-you-geo-play-billing/subscriptions/cgy-google-play-rtdn-production-push
+-> https://jquebthneczqdxagagof.supabase.co/functions/v1/google-play-rtdn
+```
+
+Authenticated push service account:
+
+```text
+cgy-rtdn-push@can-you-geo-play-billing.iam.gserviceaccount.com
+```
+
+The former staging push subscription `projects/can-you-geo-play-billing/subscriptions/cgy-google-play-rtdn-staging-push` was deleted. Cloud Audit Log confirmation is recorded in the 2026-07-22 audit with method `google.pubsub.v1.Subscriber.DeleteSubscription`, principal `caakhave@gmail.com`, and the exact staging subscription resource.
+
+The staging `google-play-rtdn` Edge Function remains deployed and source-aligned, but no active Pub/Sub subscription delivers topic messages to staging. Do not recreate a staging RTDN subscription without a separate approved checkpoint.
 
 ## Challenge Email
 
@@ -223,6 +258,25 @@ Required Stripe Edge Function secret names when configuring an environment:
 - `NEXT_PUBLIC_SITE_URL`
 - optional owner notification variables documented in billing docs
 
+## Mobile Store Billing Status
+
+iOS:
+
+- App Store Connect app: Can You Geo, Apple ID `6791248782`, bundle ID `com.canyougeo.app`.
+- Selected App Review build: `1.0.0 (9)`.
+- App, monthly subscription, and annual subscription are Waiting for Review.
+- Production and sandbox App Store Server Notifications V2 both point to the production Apple notification endpoint.
+
+Android:
+
+- Package: `com.canyougeo.app`.
+- Protected source declares `versionCode` 4 and `versionName` 1.0.2.
+- The submitted code 4 AAB provenance is recorded in [Android Play code 4 provenance](../mobile/ANDROID_PLAY_CODE4_PROVENANCE.md).
+- Existing Play internal-testing release observed during the audit: `1.0.1-internal.2`.
+- Android closed-testing release/tester enrollment has not started.
+- Google production access remains locked until Google Play closed-testing requirements are completed.
+- Annual Google Play base-plan grace period persists as 14 days in Play Console.
+
 ## Database And Migrations
 
 Apply migrations separately per Supabase project using an explicit database URL for the
@@ -239,7 +293,7 @@ This direct script form is recommended for humans because the staging project re
 
 If validation reaches the remote host but fails with `FATAL: password authentication failed`, the likely cause is the wrong DB password, a recently rotated password that has not propagated yet, or a pasted URL with an incorrectly encoded password. Wait a few minutes after resetting the password, avoid rapid retries, and prefer `--project-ref hsgpjtyysbremrokkoym --prompt-password` so the runner performs URL encoding. If needed, use a long alphanumeric-only staging DB password to avoid URL-encoding edge cases.
 
-Current status: staging validation execution remains pending as of July 10, 2026. The first runner attempt reached the staging host, but database password authentication failed before the SQL checks could run. A later retry did not complete because the operator password entry path did not accept the credential string cleanly. No RLS/security finding was produced. Verify the staging project ref and database password in Supabase Dashboard before retrying. If the local prompt path remains unreliable, run the read-only SQL in `supabase/tests/rls_security_checks.sql` from the staging Supabase SQL Editor for project `hsgpjtyysbremrokkoym`; the first `security_findings` result set should return zero rows.
+Current status as of the 2026-07-22 deployment/runtime audit: production and staging migration history both match all 21 repository migrations in order. No missing, unexpected, duplicate, or out-of-order migration was found. Rerun the wrapper below for future targeted RLS/security validation when a checkpoint requires it.
 
 For broader staging owner review:
 
@@ -256,6 +310,11 @@ Expected tables include:
 - `round_results`
 - `user_stats`
 - `entitlements`
+- `billing.provider_events`
+- `billing.provider_subscriptions`
+- `billing.google_play_purchase_tokens`
+- `billing.apple_transaction_chains`
+- `billing.apple_native_sandbox_entitlements`
 - `stripe_webhook_events`
 - `challenge_email_sends`
 
@@ -332,6 +391,8 @@ Staging:
 - Run auth smoke with staging QA users.
 - Send a staging challenge email and confirm the ledger row lands in staging.
 - Run Stripe billing smoke only with Stripe sandbox/test cards and confirm webhook entitlement writes land in staging.
+- Confirm staging mobile billing tests do not contact production Supabase, Stripe, Apple, or Google endpoints unless explicitly authorized.
+- Confirm `google-play-rtdn` rejects direct unauthenticated probes and that no Pub/Sub subscription delivers production topic messages to staging.
 
 Production:
 
@@ -340,6 +401,8 @@ Production:
 - Verify sign-up confirmation and password reset links point to production domains.
 - Verify challenge email links point to production domains.
 - Verify Stripe live checkout only during approved billing windows.
+- Verify App Store and Google Play review/release status after store approval.
+- Verify production-only Google Play RTDN delivery only when a new Google Play notification test is explicitly authorized.
 
 ## Rollback
 
@@ -371,3 +434,6 @@ Dashboard config rollback:
 - Keep black-box test configs clearly split for staging and production smoke.
 - Avoid relying on `supabase/.temp` for any environment decision.
 - Maintain separate Auth/SMTP template verification notes for staging and production.
+- Track Apple App Review and subscription review until approved.
+- Do not begin Android closed testing until tester enrollment/service setup is finalized.
+- Keep Google Play annual grace period documented as 14 days unless Play Console is deliberately changed in a later approved checkpoint.

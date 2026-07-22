@@ -1,6 +1,6 @@
 # Can You Geo Security And Access Inventory
 
-Last updated: 2026-07-09
+Last updated: 2026-07-22
 
 This inventory maps the operational systems that matter for Can You Geo. It intentionally lists secret names and access surfaces, not secret values.
 
@@ -59,9 +59,9 @@ The following must never be exposed in browser code, committed files, screenshot
 - GitHub hardening posture is documented in `docs/ops/github-hardening.md`. Current rulesets protect `main` and `staging` from deletion and non-fast-forward updates, and `main` now requires the stable lightweight CI checks.
 - GitHub secret scanning, push protection, Dependabot alerts, and Dependabot security updates are enabled.
 - Lightweight GitHub Actions CI now exists for `pnpm test`, `pnpm lint`, `pnpm typecheck`, and `pnpm build` on pushes and pull requests for `main` and `staging`.
-- Supabase function JWT posture is explicit in `supabase/config.toml`:
-  - `send-challenge-email`, `stripe-checkout`, and `stripe-portal` require JWT.
-  - `stripe-webhook` disables JWT and verifies Stripe signatures internally.
+- Supabase function JWT posture is explicit in `supabase/config.toml` and the 2026-07-22 deployment/runtime parity audit:
+  - `send-challenge-email`, `stripe-checkout`, `stripe-portal`, `apple-purchase-context`, `apple-purchase-verify`, `google-play-purchase-context`, and `google-play-purchase-verify` require JWT.
+  - `stripe-webhook`, `apple-app-store-notifications`, and `google-play-rtdn` disable Supabase gateway JWT and verify provider signatures or Google Pub/Sub OIDC internally.
 - Stripe checkout and portal are server-side Edge Function flows; no Stripe secret key is used in browser code.
 - Stripe webhook processing records event IDs in `stripe_webhook_events` and validates configured price IDs before granting Pro.
 - Challenge email sends require a signed-in user, service-side rate-limit ledger, and spoiler-safe invite payload.
@@ -78,7 +78,7 @@ The following must never be exposed in browser code, committed files, screenshot
 - GitHub protection is implemented through repository rulesets rather than classic branch protection. Required status checks are enabled on `Protect main` only; `Protect staging` remains protected from destructive branch operations without required checks.
 - GitHub non-provider secret scanning patterns and secret validity checks remain disabled as optional follow-up settings.
 - `supabase/.temp` is intentionally ignored but has been linked to production in the past; Supabase CLI commands must keep using explicit environment targeting. Edge Function deploys use `--project-ref`; staging SQL validation uses the safe `--db-url` runner.
-- Staging Supabase RLS/security validation execution is pending as of July 10, 2026. The safe runner reached the staging database host on the earlier attempt, but Postgres returned `FATAL: password authentication failed` before SQL validation could run. A later retry did not complete because the operator password entry path did not accept the credential string cleanly. Neither attempt produced an RLS/security finding. Verify the staging project ref and `postgres` database password in Supabase Dashboard, wait after password rotation before retrying, avoid rapid retries, or run the read-only validation SQL from the staging Supabase SQL Editor.
+- The 2026-07-22 deployment/runtime parity audit confirmed production and staging migration histories match all 21 repository migrations in order. Future RLS/security validation should still use the safe runner or reviewed SQL Editor workflow when a checkpoint requires a fresh policy readback.
 - Client-submitted game stats are protected by user-scoped RLS, but they are not suitable for prize, sweepstakes, or official competitive guarantees.
 - Some `dangerouslySetInnerHTML` usage exists for static structured data. Keep it static and never feed it user-provided HTML.
 

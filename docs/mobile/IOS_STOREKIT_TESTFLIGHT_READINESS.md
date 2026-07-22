@@ -1,10 +1,12 @@
 # Can You Geo iOS StoreKit And TestFlight Readiness
 
+Status note, 2026-07-22: this document is a historical readiness worksheet for Checkpoint 5D-1E-PREP-IOS and the early Apple server-foundation path. Current App Store review provenance, selected build, deployed Apple backend parity, and subscription review status are summarized in [Deployment Runtime Parity Audit 2026-07-22](../ops/DEPLOYMENT_RUNTIME_PARITY_AUDIT_2026-07-22.md). Later checkpoints implemented StoreKit client/server paths and selected App Review build `1.0.0 (9)`; do not read the historical "current" fields below as the latest production state.
+
 Checkpoint 5D-1E-PREP-IOS recorded the next safe iOS readiness step while Android upload-certificate activation was pending. Checkpoint 5D-1D-IOS-SERVER builds on that audit with the staging Apple App Store Server API and App Store Server Notifications V2 foundation.
 
 No App Store Connect product, purchase, TestFlight upload, production Supabase mutation, Stripe mutation, credential creation, or App Store submission occurs in this checkpoint.
 
-## Current Protected State
+## Historical Protected State At This Checkpoint
 
 - Protected staging commit audited: `996223100d61627884d0aac3db1b3993ff034931`.
 - Protected staging merge commit for the Apple server-foundation branch: `843faad836adf11e41c68d181337fa4c1f661a96`.
@@ -13,7 +15,7 @@ No App Store Connect product, purchase, TestFlight upload, production Supabase m
 - Bundle ID: `com.canyougeo.app`.
 - Apple Team ID: `G5N5U6QFS8`.
 - App Store Connect Apple ID: `6791248782`.
-- Current iOS marketing version/build in source: `1.0.0 (1)`.
+- Historical iOS marketing version/build in source at this checkpoint: `1.0.0 (1)`.
 - Signing style: Xcode-managed Automatic signing for Debug and Release.
 - Associated Domains entitlement: `applinks:canyougeo.com`.
 - Target devices: iPhone-only for the first TestFlight path.
@@ -73,9 +75,9 @@ Do not mutate production just to pass Universal Link testing. If an AASA change 
 
 ## StoreKit Implementation Audit
 
-Current staging has no StoreKit 2 runtime implementation. The existing native purchase implementation is Android-only Google Play Billing.
+Historical audit state at this checkpoint: staging had no StoreKit 2 runtime implementation. That finding was superseded by later StoreKit client/server checkpoints and the current selected App Review build recorded in the 2026-07-22 deployment/runtime audit.
 
-| Required StoreKit capability | Current status |
+| Required StoreKit capability | Historical status at this checkpoint |
 | --- | --- |
 | StoreKit 2 product loading | Missing. |
 | Monthly and annual iOS product mapping | Final-approved for server contracts: `com.canyougeo.pro.monthly` and `com.canyougeo.pro.annual`, both grant `pro`. StoreKit client product loading is still missing. |
@@ -106,7 +108,7 @@ Reusable foundation already in staging:
 - Effective entitlement projection keeps browser/native clients reading `public.entitlements` rather than provider rows.
 - Stripe and Google Play work demonstrate the desired pattern: authenticated purchase context, server-side provider verification, service-only mutation, replay/idempotency ledger, no raw provider payloads in user-readable rows, and no client-side Pro grant.
 
-Missing Apple backend components:
+Historical Apple backend components still missing at this checkpoint:
 
 - Deployment of `apple-purchase-context`, `apple-purchase-verify`, and `apple-app-store-notifications` to staging.
 - Staging Supabase secrets for `APPLE_APP_STORE_ISSUER_ID`, `APPLE_APP_STORE_KEY_ID`, `APPLE_APP_STORE_PRIVATE_KEY`, `APPLE_BUNDLE_ID`, `APPLE_APP_ID`, `APPLE_ALLOWED_ENVIRONMENTS`, and `APPLE_DEPLOYMENT_MODE`. `APPLE_ENVIRONMENT` has been superseded by the dual-environment policy in `docs/mobile/APPLE_DUAL_ENVIRONMENT_ENTITLEMENTS.md`.
@@ -125,7 +127,7 @@ Staging Apple server foundation added by Checkpoint 5D-1D-IOS-SERVER:
 - `billing.process_apple_purchase_verification` and `billing.process_apple_server_notification_event`: service-only processors that write sanitized Apple provider events and provider subscriptions, fail closed on ownership conflicts, and refresh the correct entitlement projection only after durable verified provider state. Production sandbox Apple state uses the isolated native review lane rather than the live `public.entitlements` row.
 - `billing.apple_subscription_reconciliation_candidates`: read-only service-role reconciliation foundation for stale, conflicted, unknown, orphaned, missed, out-of-order, and entitlement-inconsistent Apple provider state.
 
-Manual credentials/configuration checklist for a later approved checkpoint:
+Historical credentials/configuration checklist for a later approved checkpoint:
 
 1. Confirm App Store Connect account role can manage In-App Purchases, API keys, users, agreements, and server notifications.
 2. Confirm Paid Apps Agreement, tax, and banking status before paid products.
@@ -224,7 +226,7 @@ Screenshot and metadata inventory:
 - Terms URL: `/terms/`.
 - Account deletion URL: `/account-deletion/`.
 
-Release blockers:
+Historical release blockers at this checkpoint:
 
 - Apple server foundation PR must be merged, then migration/functions must be deployed to staging.
 - Apple App Store Server API credentials have not been created or stored as staging Supabase secrets.
@@ -238,9 +240,9 @@ Release blockers:
 - Sandbox product loading has not been proven.
 - No purchase, restore, renewal, refund/revoke, or reconciliation QA has been run.
 
-## Next Safe Step
+## Historical Next Safe Step
 
-After the protected Apple server foundation PR merges and deploys to staging, the next safe implementation step is StoreKit client foundation before purchase UI:
+At this historical checkpoint, after the protected Apple server foundation PR merged and deployed to staging, the next safe implementation step was StoreKit client foundation before purchase UI:
 
 1. Deploy the staging migration and Apple Edge Functions only after protected PR approval.
 2. Create/store Apple server credentials as staging Supabase secrets only after the secret destination is approved.
@@ -248,4 +250,4 @@ After the protected Apple server foundation PR merges and deploys to staging, th
 4. Add native iOS subscription UI only after the plugin/backend contract is stable.
 5. Increment to the next iOS build number, archive, upload to TestFlight, and begin sandbox lifecycle validation only after those gates pass.
 
-Recommended next checkpoint after protected merge and staging deploy: `5D-1D-IOS-CLIENT` - add the StoreKit 2 client bridge, local StoreKit configuration, and signed-in purchase/restore state machine that calls the staging Apple server foundation without granting Pro locally.
+Historical recommended next checkpoint after protected merge and staging deploy: `5D-1D-IOS-CLIENT` - add the StoreKit 2 client bridge, local StoreKit configuration, and signed-in purchase/restore state machine that calls the staging Apple server foundation without granting Pro locally.
