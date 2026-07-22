@@ -24,12 +24,14 @@ def require_production_target(target_base_url: str) -> None:
 
 
 @pytest.mark.prod_smoke
+@pytest.mark.production_safe
 @pytest.mark.parametrize("path", PRODUCTION_SMOKE_ROUTES)
 def test_production_smoke_routes_return_success(target_base_url: str, path: str):
     assert_route_status(target_base_url, path)
 
 
 @pytest.mark.prod_smoke
+@pytest.mark.production_safe
 def test_production_smoke_core_public_copy_loads(target_base_url: str):
     home = assert_route_status(target_base_url, "/").text
     play = assert_route_status(target_base_url, "/play/").text
@@ -46,6 +48,7 @@ def test_production_smoke_core_public_copy_loads(target_base_url: str):
 
 
 @pytest.mark.prod_smoke
+@pytest.mark.production_safe
 def test_production_smoke_indexing_files_are_public(target_base_url: str):
     require_production_target(target_base_url)
 
@@ -62,6 +65,7 @@ def test_production_smoke_indexing_files_are_public(target_base_url: str):
 
 
 @pytest.mark.prod_smoke
+@pytest.mark.production_safe
 def test_production_smoke_public_html_does_not_expose_staging_or_secret_markers(target_base_url: str):
     require_production_target(target_base_url)
 

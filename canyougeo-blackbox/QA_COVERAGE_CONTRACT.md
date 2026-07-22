@@ -2,14 +2,29 @@
 
 This external suite is a maintained QA artifact. Every meaningful Can You Geo site change should update the black-box suite when the change affects public behavior, public routes, account flows, gameplay entry points, SEO/indexing, security headers, or share/email surfaces.
 
+## Stable Browser Entry Points
+
+The operator-facing browser commands are:
+
+- `pnpm qa:blackbox:test`: complete staging browser suite against `https://test.canyougeo.com`, excluding explicitly opt-in live/mutating tests.
+- `pnpm qa:blackbox:prod`: complete production-safe browser suite against `https://canyougeo.com`.
+- `pnpm qa:blackbox:prod-smoke`: minimal production launch smoke.
+- `pnpm qa:blackbox:mobile`: mobile viewport browser checks against staging.
+
+`production_safe` tests must not create accounts, send email, open Checkout or Portal sessions, initiate payment, initiate native purchase, tap Restore, use QA credentials, mutate entitlements, or rely on private browser storage. Public routes, public gameplay samples, responsive layout, indexing, security headers, canonical hosts, association documents, challenge safety, and legal/support/account-deletion copy are appropriate for this marker.
+
+Optional authenticated checks use `auth`. Production authenticated checks must be run through `production_auth` and `CGY_PROD_*` credentials only. `checkout_smoke`, `signup_analytics`, and `email_live` are opt-in live categories and are excluded from the stable root commands.
+
 ## New Public Route
 
 Must update:
 
 - `tests/test_routes.py`
+- `utils/route_policy.py`
 - indexing expectations if the route should or should not be indexable
 - mobile layout smoke if the route is user-facing
 - page-object coverage when the route has interactive behavior
+- association-document expectations when the route should be handled by AASA or Android App Links
 
 ## New Game
 
@@ -22,6 +37,7 @@ Must add:
 - mobile board or primary-interaction visibility test
 - result/completion smoke
 - copy safety checks for signed-out users
+- production-safe marker coverage when the sample flow has no mutation and stays local
 
 ## New Auth, Account, Or Billing Behavior
 
@@ -37,12 +53,16 @@ Must add or update:
 
 Never test live payments by default.
 
+Native Apple StoreKit and Google Play Billing labels, product discovery, Restore controls, and Stripe suppression belong in native Maestro release guardrails. Browser QA may assert that the ordinary public web upgrade page does not show native purchase controls and does not navigate to Stripe unless an explicit checkout-open smoke is enabled.
+
 ## New SEO, Indexing, Or Security Policy
 
 Must update:
 
 - indexing policy tests
 - robots and sitemap checks
+- canonical host checks
+- AASA and `assetlinks.json` checks where applicable
 - security header expectations
 - host policy notes when a host changes launch/private status
 
@@ -53,6 +73,8 @@ Must update:
 - non-live route and copy smoke
 - spoiler-safety assertions where applicable
 - live email coverage only behind the `email_live` marker and explicit env opt-in
+
+Challenge routes must not expose answer countries, hidden indicators, source labels, challenge-code internals, tokens, or user identifiers before play. Email UI should not be exercised by default.
 
 ## New Native App Routing Or WebView Behavior
 
@@ -89,6 +111,7 @@ Prefer stable selectors for black-box tests when roles/text are insufficient, bu
 A feature is not QA-complete until:
 
 - internal app tests pass
-- black-box smoke passes against `CGY_TARGET=test`
+- black-box staging QA passes with `pnpm qa:blackbox:test` when Cloudflare Access credentials are available
+- production-safe QA passes with `pnpm qa:blackbox:prod` before or after production promotion, as appropriate for the checkpoint
 - relevant black-box coverage has been added or intentionally documented as not needed
 - the export zip can be regenerated with `python tools/export_suite.py`

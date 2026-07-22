@@ -13,6 +13,7 @@ SOCIAL_LINKS = {
 
 
 @pytest.mark.smoke
+@pytest.mark.production_safe
 def test_footer_social_links_are_public(desktop_page, target_base_url: str):
     desktop_page.goto(normalize_url(target_base_url, "/"), wait_until="domcontentloaded")
     footer = desktop_page.locator("footer")
@@ -26,6 +27,7 @@ def test_footer_social_links_are_public(desktop_page, target_base_url: str):
 
 
 @pytest.mark.smoke
+@pytest.mark.production_safe
 def test_support_page_social_links_are_public(desktop_page, target_base_url: str):
     desktop_page.goto(normalize_url(target_base_url, "/support/"), wait_until="domcontentloaded")
     main = desktop_page.locator("main")

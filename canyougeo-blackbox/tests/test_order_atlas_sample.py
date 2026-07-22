@@ -9,6 +9,7 @@ from pages.order_atlas import OrderAtlasPage
 
 
 @pytest.mark.smoke
+@pytest.mark.production_safe
 def test_order_atlas_signed_out_sample_reaches_results(desktop_page, target_base_url: str):
     order = OrderAtlasPage(desktop_page, target_base_url)
     order.start_signed_out_sample()
