@@ -37,6 +37,9 @@ describe("deployment runtime parity audit documentation", () => {
     expect(audit).toContain("Version code | `4`");
     expect(audit).toContain("a7fdcf07f2604d8d27ddd566f49dc7aa22d05cf5fc40b27e283066ca582d12bc");
     expect(audit).toContain("7E:32:86:C0:69:2D:8C:DE:98:CC:20:05:93:79:7B:3C:6A:DD:D6:F9:4F:D7:94:4C:A6:E5:4E:26:3B:C4:4E:0E");
+    expect(audit).toContain("audited local release artifact and intended");
+    expect(audit).toContain("not yet accepted into the Google Play bundle");
+    expect(audit).toContain("2026-07-23T16:11:28Z");
     expect(audit).toContain("Annual Google Play grace period remains 14 days as the persisted observed state");
     expect(audit).toContain("Android closed-testing release/tester enrollment has not started");
   });
@@ -70,6 +73,8 @@ describe("deployment runtime parity audit documentation", () => {
 
   it("updates Google Play readiness for code 4 and the retired staging RTDN subscription", () => {
     expect(googlePlay).toContain("Current protected Android source: `versionCode 4`, `versionName 1.0.2`");
+    expect(googlePlay).toContain("audited local `1.0.2` versionCode `4` AAB");
+    expect(googlePlay).toContain("not yet accepted into the Google Play bundle library");
     expect(googlePlay).toContain("The staging subscription was deleted during the RTDN topology cleanup");
     expect(googlePlay).toContain("cgy-google-play-rtdn-production-push");
     expect(googlePlay).not.toContain("Current Android release target: `versionCode 3`");

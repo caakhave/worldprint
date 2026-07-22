@@ -58,6 +58,28 @@ describe("QA report index builder", () => {
     ]);
   });
 
+  it("sorts discovered browser runs by latest completed timestamp", () => {
+    const { browser } = tempReportsRoot();
+    writeJson(path.join(browser, "older.metadata.json"), {
+      suite: "prod_smoke",
+      target: "apex",
+      git_sha: "sha-a",
+      end_utc: "2026-07-22T10:00:00Z",
+      exitstatus: 0,
+      counts: { passed: 1 }
+    });
+    writeJson(path.join(browser, "newer.metadata.json"), {
+      suite: "production_safe",
+      target: "apex",
+      git_sha: "sha-a",
+      end_utc: "2026-07-22T11:00:00Z",
+      exitstatus: 0,
+      counts: { passed: 1 }
+    });
+
+    expect(discoverBrowserRuns({ reportsRoot: browser, outputDir: browser }).map((run) => run.suite)).toEqual(["production_safe", "prod_smoke"]);
+  });
+
   it("discovers native metadata and safe diagnostics", () => {
     const { browser, native } = tempReportsRoot();
     const runRoot = path.join(native, "android-release-20260722T100000Z");
@@ -92,6 +114,50 @@ describe("QA report index builder", () => {
     ]);
   });
 
+  it("ignores native metadata written by runner unit-test fixtures", () => {
+    const { browser, native } = tempReportsRoot();
+    writeJson(path.join(native, "android-release-fixture", "run-metadata.json"), {
+      platform: "android",
+      suite: "release",
+      git_sha: "test-git-sha",
+      start_utc: "2026-07-22T10:00:00Z",
+      end_utc: "2026-07-22T10:00:01Z",
+      status: "passed"
+    });
+    writeJson(path.join(native, "android-release-real", "run-metadata.json"), {
+      platform: "android",
+      suite: "release",
+      git_sha: "real-sha",
+      start_utc: "2026-07-22T10:01:00Z",
+      end_utc: "2026-07-22T10:01:01Z",
+      status: "failed"
+    });
+
+    expect(discoverNativeRuns({ nativeReportsRoot: native, outputDir: browser })).toEqual([
+      expect.objectContaining({ gitSha: "real-sha", status: "failed" })
+    ]);
+  });
+
+  it("sorts discovered native runs by latest completed timestamp", () => {
+    const { browser, native } = tempReportsRoot();
+    writeJson(path.join(native, "android-release-older", "run-metadata.json"), {
+      platform: "android",
+      suite: "release",
+      git_sha: "sha-a",
+      end_utc: "2026-07-22T10:00:00Z",
+      status: "passed"
+    });
+    writeJson(path.join(native, "android-release-newer", "run-metadata.json"), {
+      platform: "android",
+      suite: "release",
+      git_sha: "sha-a",
+      end_utc: "2026-07-22T11:00:00Z",
+      status: "failed"
+    });
+
+    expect(discoverNativeRuns({ nativeReportsRoot: native, outputDir: browser }).map((run) => run.status)).toEqual(["failed", "passed"]);
+  });
+
   it("selects the latest matching run", () => {
     const runs = [
       { target: "apex", endUtc: "2026-07-22T10:00:00Z" },
@@ -105,6 +171,8 @@ describe("QA report index builder", () => {
     const html = buildReportIndexHtml({ browserRuns: [], nativeRuns: [], generatedAt: "2026-07-22T10:00:00Z" });
 
     expect(html).toContain("Latest staging");
+    expect(html).toContain("Latest production safe");
+    expect(html).toContain("Latest production smoke");
     expect(html).toContain("not run");
     expect(html).toContain("Mobile release QA matrix");
   });
@@ -135,6 +203,38 @@ describe("QA report index builder", () => {
 
     expect(html).toContain("blocked_preflight");
     expect(html).toContain("does not match expected source metadata");
+  });
+
+  it("summarizes the actual iOS Universal Link suite instead of a later dry-run wrapper", () => {
+    const html = buildReportIndexHtml({
+      browserRuns: [],
+      nativeRuns: [
+        {
+          kind: "native",
+          platform: "ios",
+          suite: "release-with-universal-link",
+          appId: "com.canyougeo.app",
+          gitSha: "sha-a",
+          endUtc: "2026-07-22T12:00:00Z",
+          status: "dry_run",
+          flowCount: 6
+        },
+        {
+          kind: "native",
+          platform: "ios",
+          suite: "universal-link",
+          appId: "com.canyougeo.app",
+          gitSha: "sha-a",
+          endUtc: "2026-07-22T11:00:00Z",
+          status: "passed",
+          flowCount: 1
+        }
+      ],
+      generatedAt: "2026-07-22T12:01:00Z"
+    });
+
+    expect(html).toContain("<td>passed</td><td>ios</td><td>universal-link</td>");
+    expect(html).not.toContain("<td>dry_run</td><td>ios</td><td>release-with-universal-link</td>");
   });
 
   it("renders Git-SHA mismatch warnings across latest runs", () => {

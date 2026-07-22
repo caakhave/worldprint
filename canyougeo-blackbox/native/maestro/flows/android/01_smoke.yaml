@@ -56,5 +56,5 @@ tags:
     timeout: 15000
 - openLink: "https://canyougeo.com/account/"
 - extendedWaitUntil:
-    visible: "Start Pro or continue free."
+    visible: "Compare plans or continue free."
     timeout: 20000

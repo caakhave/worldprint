@@ -16,7 +16,7 @@ tags:
     timeout: 60000
 - openLink: "https://canyougeo.com/auth/callback/"
 - extendedWaitUntil:
-    visible: "That account email link did not work."
+    visible: "That account email link did not work.|Your atlas is connected."
     timeout: 30000
 - tapOn: "Can You Geo? home"
 - extendedWaitUntil:
@@ -24,7 +24,7 @@ tags:
     timeout: 30000
 - openLink: "https://canyougeo.com/challenge/mystery-map/"
 - extendedWaitUntil:
-    visible: "Can you read the world?"
+    visible: "This challenge link is missing its code."
     timeout: 30000
 - openLink: "https://canyougeo.com/internal/order-atlas-review/"
 - launchApp

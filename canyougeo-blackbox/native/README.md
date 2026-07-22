@@ -50,6 +50,8 @@ pnpm qa:native:android:preflight
 pnpm qa:native:ios:preflight
 ```
 
+For credential-bearing suites such as `release`, preflight-only output also reports whether an approved `CGY_NATIVE_*` credential pair is available locally. It never prints the credential values.
+
 ## Credential Safety
 
 Auth persistence flows require an approved local QA credential pair:
@@ -85,9 +87,9 @@ Current iOS coverage:
 - sign-in session persistence across app stop/relaunch
 - native release guardrails for Browser-plugin social links, internal navigation, safe-area-visible controls, billing boundaries, and consent absence
 - StoreKit billing discovery for signed-out sign-up boundaries, signed-in Free monthly/annual controls, localized product prices when StoreKit returns them, clear unavailable catalog states, and native Stripe suppression without tapping purchase, restore, transaction finish, or subscription management
-- prepared Universal Link intake for public, auth callback, challenge-without-code, and unsupported-route safety, pending live AASA deployment and app reinstall
+- Universal Link intake for public routes, tokenless auth callbacks, challenge-without-code safety, and unsupported-route safety after live AASA deployment and app reinstall
 
-`pnpm qa:native:ios:universal-link` is not included in `ios:all` yet. Run it only after the production AASA file is live at `https://canyougeo.com/.well-known/apple-app-site-association`, the app has been reinstalled on the target device/simulator, and any CDN or iOS association cache delay has been handled.
+`pnpm qa:native:ios:universal-link` is not included in `ios:all` yet. Run it only after the production AASA file is live at `https://canyougeo.com/.well-known/apple-app-site-association`, the app has been reinstalled on the target device/simulator, and any CDN or iOS association cache delay has been handled. The auth callback check accepts either the invalid-link copy for a signed-out session or the connected-account copy for an already signed-in session; challenge-without-code checks assert the spoiler-safe missing-code message.
 
 Android guardrails temporarily enable airplane mode and disable Wi-Fi/data on the target emulator/device through `adb`, then disable airplane mode and re-enable Wi-Fi/data before the reconnect flow. They must not alter host-machine networking.
 
