@@ -45,8 +45,8 @@ tags:
 - inputText: ${MAESTRO_CGY_PASSWORD}
 - hideKeyboard
 - tapOn:
-    text: "Sign in"
-    index: 2
+    text: "^Sign in$"
+    index: 1
 - extendedWaitUntil:
     visible: "Your atlas is connected."
     timeout: 45000

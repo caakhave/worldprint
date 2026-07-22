@@ -132,7 +132,8 @@ export function validateOptions(options) {
     suite,
     device: options.device ?? null,
     dryRun: options.dryRun === true,
-    preflightOnly: options.preflightOnly === true
+    preflightOnly: options.preflightOnly === true,
+    credentialFilePaths: Array.isArray(options.credentialFilePaths) ? options.credentialFilePaths : undefined
   };
 }
 
@@ -720,6 +721,7 @@ function resultWithMetadata({
   credentialBearing,
   debugOutputPath,
   testOutputPath,
+  credentialsAvailable = false,
   commandRunner
 }) {
   const metadata = buildRunMetadata({
@@ -740,7 +742,20 @@ function resultWithMetadata({
     testOutputPath
   });
   const metadataPath = writeRunMetadata(reportDir, metadata);
-  return { status: exitCode, reportDir, metadataPath, metadata, credentialsAvailable: false };
+  return { status: exitCode, reportDir, metadataPath, metadata, credentialsAvailable };
+}
+
+function approvedCredentialsForOptions(options) {
+  return selectedApprovedCredentials(process.env, readApprovedCredentialFiles(options.credentialFilePaths));
+}
+
+function credentialAvailabilityForReport(needsCredentials, options) {
+  if (!needsCredentials) return false;
+  try {
+    return approvedCredentialsForOptions(options).available;
+  } catch {
+    return false;
+  }
 }
 
 export function runNativeMaestro(rawOptions, commandRunner = runCommand) {
@@ -750,6 +765,7 @@ export function runNativeMaestro(rawOptions, commandRunner = runCommand) {
   mkdirSync(reportDir, { recursive: true });
   const flowFiles = flowFilesForMetadata(options.platform, options.suite);
   const credentialBearing = suiteNeedsCredentials(options.suite);
+  const credentialsAvailableForReport = credentialAvailabilityForReport(credentialBearing, options);
   const expected = expectedSourceIdentity(options.platform);
   const baseEnv = maestroEnvironment(process.env);
 
@@ -771,6 +787,7 @@ export function runNativeMaestro(rawOptions, commandRunner = runCommand) {
       credentialBearing,
       debugOutputPath: null,
       testOutputPath: null,
+      credentialsAvailable: credentialsAvailableForReport,
       commandRunner
     });
     return { ...result, invocation: invocations.at(-1), suiteInvocations: suiteSequenceFor(options.platform, options.suite) ? invocations : undefined };
@@ -798,6 +815,7 @@ export function runNativeMaestro(rawOptions, commandRunner = runCommand) {
         status: "blocked_preflight",
         flowFiles,
         credentialBearing,
+        credentialsAvailable: credentialsAvailableForReport,
         commandRunner
       });
     }
@@ -816,6 +834,7 @@ export function runNativeMaestro(rawOptions, commandRunner = runCommand) {
       status: "blocked_preflight",
       flowFiles,
       credentialBearing,
+      credentialsAvailable: credentialsAvailableForReport,
       commandRunner
     });
   }
@@ -834,12 +853,13 @@ export function runNativeMaestro(rawOptions, commandRunner = runCommand) {
       status: "passed",
       flowFiles,
       credentialBearing,
+      credentialsAvailable: credentialsAvailableForReport,
       commandRunner
     });
   }
 
   const needsCredentials = suiteNeedsCredentials(options.suite);
-  const credentials = needsCredentials ? selectedApprovedCredentials() : { available: false, env: {}, secrets: [] };
+  const credentials = needsCredentials ? approvedCredentialsForOptions(options) : { available: false, env: {}, secrets: [] };
   if (needsCredentials && !credentials.available) {
     const message = credentials.legacyCredentialKeysPresent
       ? "Native QA credentials must use CGY_NATIVE_* variables; legacy browser credential variables are ignored."
