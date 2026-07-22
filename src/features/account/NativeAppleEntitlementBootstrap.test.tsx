@@ -204,6 +204,23 @@ describe("NativeAppleEntitlementBootstrap", () => {
     expect(dispatchSpy).toHaveBeenCalledWith(expect.objectContaining({ type: ENTITLEMENT_CHANGED_EVENT }));
   });
 
+  it("does not finish or notify when cold-start StoreKit sync reports accountConflict", async () => {
+    appleRuntimeMock.ios = true;
+    appleActionsMock.syncUnfinishedAppleStoreKitEntitlements.mockResolvedValue({
+      ok: false,
+      status: "accountConflict",
+      message: "This Apple subscription is linked to another Can You Geo account. Contact support.",
+      verifiedCount: 0
+    });
+    const dispatchSpy = vi.spyOn(window, "dispatchEvent");
+
+    render(<NativeAppleEntitlementBootstrap />);
+
+    await waitFor(() => expect(appleActionsMock.syncUnfinishedAppleStoreKitEntitlements).toHaveBeenCalledTimes(1));
+    expect(appleActionsMock.finishAppleStoreKitAfterEntitlement).not.toHaveBeenCalled();
+    expect(dispatchSpy).not.toHaveBeenCalledWith(expect.objectContaining({ type: ENTITLEMENT_CHANGED_EVENT }));
+  });
+
   it("clears stale in-memory native review Pro when StoreKit reports no current entitlement", async () => {
     appleRuntimeMock.ios = true;
     expect(activateNativeAppleReviewEntitlement(nativeReviewEntitlement)).toBe(true);

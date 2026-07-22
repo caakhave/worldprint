@@ -900,6 +900,35 @@ describe("BillingActionsClient", () => {
     dispatchSpy.mockRestore();
   });
 
+  it("keeps Apple ownership conflicts as errors without finishing or activating Pro", async () => {
+    vi.stubEnv("NEXT_PUBLIC_CGY_NATIVE_APP", "1");
+    vi.stubEnv("NEXT_PUBLIC_SUPABASE_URL", "https://jquebthneczqdxagagof.supabase.co");
+    vi.stubEnv("NEXT_PUBLIC_SUPABASE_ANON_KEY", "anon-public-test-key");
+    process.env.NEXT_PUBLIC_BILLING_MODE = "test";
+    capacitorMock.platform = "ios";
+    accountMock.state.user = TEST_USER;
+    appleStoreKitMock.runtimeAvailable = true;
+    const client = billingClientMock();
+    appleStoreKitMock.purchaseAppleStoreKitProduct.mockResolvedValueOnce({
+      status: "accountConflict",
+      clientMayFinishTransaction: false
+    });
+    const dispatchSpy = vi.spyOn(window, "dispatchEvent");
+
+    render(<BillingActionsClient entitlement={FREE_ENTITLEMENT} context="upgrade" />);
+
+    await waitFor(() => expect(screen.getByRole("button", { name: /Join monthly/i })).toBeEnabled());
+    fireEvent.click(screen.getByRole("button", { name: /Join monthly/i }));
+
+    const alert = await screen.findByRole("alert");
+    expect(alert).toHaveTextContent("This Apple subscription is linked to another Can You Geo account. Contact support.");
+    expect(screen.queryByText(/Apple purchase verified|Pro access is active/i)).not.toBeInTheDocument();
+    expect(appleStoreKitMock.finishVerifiedAppleStoreKitTransactions).not.toHaveBeenCalled();
+    expect(client.functions.invoke).not.toHaveBeenCalledWith("stripe-checkout", expect.anything());
+    expect(dispatchSpy.mock.calls.filter(([event]) => event.type === ENTITLEMENT_CHANGED_EVENT)).toHaveLength(0);
+    dispatchSpy.mockRestore();
+  });
+
   it("uses protected checkout functions and does not start checkout analytics until a URL is returned", async () => {
     process.env.NEXT_PUBLIC_BILLING_MODE = "test";
     enableProductionAnalytics();

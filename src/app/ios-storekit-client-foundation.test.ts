@@ -58,6 +58,14 @@ describe("iOS StoreKit client foundation", () => {
     expect(appleActions).not.toMatch(/signedTransaction|signedRenewal|jwsRepresentation|transactionId|originalTransactionId|appAccountToken/u);
   });
 
+  it("maps Apple verification ownership conflicts to a non-finishing accountConflict result", () => {
+    expect(swiftPlugin).toContain("statusForFunctionFailure(httpResponse.statusCode)");
+    expect(swiftPlugin).toContain("if statusCode == 403 || statusCode == 409");
+    expect(swiftPlugin).toContain('return "accountConflict"');
+    expect(swiftPlugin).toContain("guard response.ok == true, response.clientMayFinishTransaction != false else");
+    expect(swiftPlugin.indexOf("guard response.ok == true")).toBeLessThan(swiftPlugin.indexOf("await pendingTransactions.remember(transaction)"));
+  });
+
   it("preserves sanitized StoreKit discovery diagnostics without exposing raw errors", () => {
     for (const status of [
       "loaded",
