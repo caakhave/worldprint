@@ -6,6 +6,9 @@ from utils.cloudflare_access import cloudflare_access_headers, looks_like_cloudf
 from utils.targets import resolve_base_url
 
 
+pytestmark = pytest.mark.production_safe
+
+
 def test_default_target_resolves_to_test_host():
     assert resolve_base_url(env={}) == "https://test.canyougeo.com"
 

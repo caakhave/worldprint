@@ -11,6 +11,7 @@ from utils.assertions import assert_no_horizontal_overflow
 
 
 @pytest.mark.smoke
+@pytest.mark.production_safe
 def test_homepage_hero_loads(desktop_page, target_base_url: str):
     home = HomePage(desktop_page, target_base_url)
     home.goto()
@@ -22,6 +23,7 @@ def test_homepage_hero_loads(desktop_page, target_base_url: str):
 
 
 @pytest.mark.smoke
+@pytest.mark.production_safe
 def test_play_hub_shows_three_games_and_routes(desktop_page, target_base_url: str):
     hub = PlayHubPage(desktop_page, target_base_url)
     hub.goto()

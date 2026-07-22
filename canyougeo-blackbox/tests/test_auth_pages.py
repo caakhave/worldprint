@@ -10,6 +10,7 @@ from utils.assertions import normalize_url
 
 
 @pytest.mark.smoke
+@pytest.mark.production_safe
 def test_sign_in_page_loads(desktop_page, target_base_url: str):
     desktop_page.goto(normalize_url(target_base_url, "/sign-in/"), wait_until="domcontentloaded")
     expect_sign_in_form(desktop_page)
@@ -17,6 +18,7 @@ def test_sign_in_page_loads(desktop_page, target_base_url: str):
 
 
 @pytest.mark.smoke
+@pytest.mark.production_safe
 def test_sign_up_page_loads(desktop_page, target_base_url: str):
     desktop_page.goto(normalize_url(target_base_url, "/sign-up/"), wait_until="domcontentloaded")
     expect_sign_up_form(desktop_page)
@@ -24,6 +26,7 @@ def test_sign_up_page_loads(desktop_page, target_base_url: str):
 
 
 @pytest.mark.smoke
+@pytest.mark.production_safe
 def test_reset_password_page_loads(desktop_page, target_base_url: str):
     desktop_page.goto(normalize_url(target_base_url, "/reset-password/"), wait_until="domcontentloaded")
     expect(desktop_page.get_by_text(re.compile("New password", re.I)).first).to_be_visible()
