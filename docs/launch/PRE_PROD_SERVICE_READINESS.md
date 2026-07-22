@@ -78,6 +78,8 @@ Variable names only are listed here. Never paste actual secrets into docs, ticke
 | Analytics | `NEXT_PUBLIC_GA_MEASUREMENT_ID` | Optional | Prefer GTM-only if GA is already inside GTM to avoid double counting. |
 | Black-box QA | `CGY_TARGET` | Optional | External QA suite target selector such as `test`. |
 | Black-box QA | `CGY_FREE_EMAIL`, `CGY_FREE_PASSWORD`, `CGY_PRO_EMAIL`, `CGY_PRO_PASSWORD` | Optional | Required only for local authenticated black-box tests; never commit. |
+| Native QA | `CGY_NATIVE_FREE_EMAIL`, `CGY_NATIVE_FREE_PASSWORD`, `CGY_NATIVE_PRO_EMAIL`, `CGY_NATIVE_PRO_PASSWORD` | Optional | Required only for credential-bearing native Maestro suites; never commit. |
+| Native QA | `CGY_ANDROID_DEVICE`, `CGY_IOS_SIMULATOR_UDID` | Optional | Local device selection only. |
 | Black-box QA | `CGY_RUN_EMAIL_LIVE` | Optional | Must remain unset/false for normal QA. |
 
 ### Staging/test host
@@ -327,5 +329,6 @@ Do not enable `CGY_RUN_EMAIL_LIVE=1` during normal staging QA. Live challenge em
 
 - Keep black-box QA credentials in an uncommitted local `.env`.
 - Include `CGY_FREE_EMAIL`, `CGY_FREE_PASSWORD`, `CGY_PRO_EMAIL`, and `CGY_PRO_PASSWORD` only locally.
+- Include native Maestro credentials as `CGY_NATIVE_FREE_EMAIL`, `CGY_NATIVE_FREE_PASSWORD`, `CGY_NATIVE_PRO_EMAIL`, and `CGY_NATIVE_PRO_PASSWORD` only locally. Native suites do not fall back to browser credential names.
 - Keep `CGY_RUN_EMAIL_LIVE` unset unless a live email test is explicitly requested.
-- Do not commit reports, screenshots, zips, caches, virtualenvs, or `.env` files.
+- Do not commit reports, native `run-metadata.json`, screenshots, zips, caches, virtualenvs, or `.env` files.

@@ -79,6 +79,8 @@ Website builds preserve the existing consent-gated GTM/GA4 setup and the neutral
 Run the release-guardrail flows against installed local builds after a fresh native sync:
 
 ```bash
+pnpm qa:native:android:preflight
+pnpm qa:native:ios:preflight
 pnpm qa:native:android:guardrails
 pnpm qa:native:ios:guardrails
 pnpm qa:native:android:billing
@@ -93,7 +95,7 @@ iOS guardrails cover the online Browser-plugin, internal navigation, safe-area-v
 
 Native billing discovery is non-mutating. It may sign in with an approved local QA credential pair, observe monthly and annual store controls, read localized product or plan prices when the store runtime returns them, verify clear unavailable-catalog states, and confirm Stripe suppression. It must not tap purchase, restore, transaction finish, subscription management, Google Play acknowledgement, refund, revocation, cancellation, or any backend mutation path. Real TestFlight/App Store Connect and Play Internal testing product discovery still require physical-device or store-processed release validation before purchase lifecycle QA.
 
-Generated Maestro reports stay under ignored `canyougeo-blackbox/native/reports/`. Do not commit reports, screenshots, recordings, APKs, AABs, build output, simulator/emulator state, signing material, credentials, or `.env` files.
+Native credential-bearing flows use only `CGY_NATIVE_*` variables and suppress screenshot/debug artifact directories. Generated Maestro reports and `run-metadata.json` files stay under ignored `canyougeo-blackbox/native/reports/`. Do not commit reports, screenshots, recordings, APKs, AABs, build output, simulator/emulator state, signing material, credentials, or `.env` files.
 
 ## Troubleshooting
 

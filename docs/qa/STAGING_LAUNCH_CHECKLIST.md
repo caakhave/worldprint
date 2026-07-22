@@ -57,8 +57,23 @@ Use this checklist for private staging QA on `https://test.canyougeo.com`. It is
   pnpm qa:blackbox:export
   ```
 
+- Native installed-app preflight and release QA, when local installed builds and native credentials are available:
+
+  ```bash
+  pnpm qa:native:android:preflight
+  pnpm qa:native:android:release
+  pnpm qa:native:ios:preflight
+  pnpm qa:native:ios:release
+  ```
+
+- Combined local report index:
+
+  ```bash
+  pnpm qa:report
+  ```
+
 - Do not set `CGY_RUN_EMAIL_LIVE=1` during normal staging QA.
-- Generated reports and export zips must remain ignored and unstaged.
+- Generated reports, native `run-metadata.json`, report indexes, and export zips must remain ignored and unstaged.
 
 ## Manual Anonymous User QA
 

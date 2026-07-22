@@ -10,13 +10,14 @@ Native black-box QA uses local Maestro CLI flows against installed Capacitor iOS
 - iOS debug app installed on the target simulator for iOS flows.
 - No Maestro Cloud account, upload, or API key.
 
-The default Android device is `emulator-5554`. The default iOS simulator UDID is `9DD07C47-7733-488F-9F1A-9D927ED9F6FB`. Pass `--device` to `canyougeo-blackbox/native/maestro/scripts/run-native-maestro.mjs` when using a different target.
+Android device resolution order is explicit `--device`, `CGY_ANDROID_DEVICE`, `ANDROID_SERIAL`, exactly one connected `adb devices` entry, then connected `emulator-5554` only when multiple Android devices are present and no explicit device was supplied. iOS simulator resolution order is explicit `--device`, `CGY_IOS_SIMULATOR_UDID`, then exactly one booted simulator from `xcrun simctl list devices booted`. If zero or multiple eligible devices remain, the runner fails before Maestro and lists only safe device identifiers. No machine-specific simulator UDID is committed.
 
 ## Commands
 
 From the repository root:
 
 ```bash
+pnpm qa:native:android:preflight
 pnpm qa:native:android:smoke
 pnpm qa:native:android:interaction
 pnpm qa:native:android:back
@@ -25,6 +26,7 @@ pnpm qa:native:android:auth
 pnpm qa:native:android:guardrails
 pnpm qa:native:android:billing
 pnpm qa:native:android:release
+pnpm qa:native:ios:preflight
 pnpm qa:native:ios:smoke
 pnpm qa:native:ios:interaction
 pnpm qa:native:ios:auth
@@ -39,14 +41,25 @@ The Android complete release suite is `pnpm qa:native:android:release`. It runs 
 
 The iOS complete local release suite is `pnpm qa:native:ios:release`. It runs smoke, interaction, auth persistence, release guardrails, and StoreKit billing discovery. iOS Universal Links remain separately gated because Apple association files and device cache state can make simulator-only results stale; run `pnpm qa:native:ios:release-with-universal-link` only after the production AASA prerequisites in this document are satisfied. `ios:all` is a compatibility alias for the local release suite without Universal Links.
 
+Before every non-dry-run suite, the runner reads installed app metadata and compares it with protected source metadata. Android expected values come from `android/app/build.gradle`; iOS expected values come from `ios/App/App.xcodeproj/project.pbxproj`. The runner fails before Maestro if package/bundle ID, version, or build/versionCode is stale. This proves installed identity and version/build only; it does not claim cryptographic equivalence to a store-submitted artifact.
+
+Preflight-only commands run that installed-app check without Maestro flows:
+
+```bash
+pnpm qa:native:android:preflight
+pnpm qa:native:ios:preflight
+```
+
 ## Credential Safety
 
 Auth persistence flows require an approved local QA credential pair:
 
-- `CGY_FREE_EMAIL` and `CGY_FREE_PASSWORD`
-- or `CGY_PRO_EMAIL` and `CGY_PRO_PASSWORD`
+- `CGY_NATIVE_FREE_EMAIL` and `CGY_NATIVE_FREE_PASSWORD`
+- or `CGY_NATIVE_PRO_EMAIL` and `CGY_NATIVE_PRO_PASSWORD`
 
-Values may come from the shell, `canyougeo-blackbox/.env.local`, or `canyougeo-blackbox/.env`. The runner chooses the Free pair first and then Pro. It injects only `MAESTRO_CGY_EMAIL` and `MAESTRO_CGY_PASSWORD` into Maestro's subprocess environment.
+Values may come from the shell, `canyougeo-blackbox/.env.local`, or `canyougeo-blackbox/.env`. The runner chooses the native Free pair first and then native Pro. It injects only `MAESTRO_CGY_EMAIL` and `MAESTRO_CGY_PASSWORD` into Maestro's subprocess environment.
+
+The native runner deliberately ignores browser credentials such as `CGY_FREE_*`, `CGY_PRO_*`, and `CGY_PROD_*`. If ignored local `.env` files still use the legacy variables, rename them locally before running credential-bearing native suites.
 
 Credential values must never be committed, printed, passed as CLI arguments, added to YAML, or uploaded. The runner sanitizes captured stdout/stderr and does not request Maestro screenshot/debug artifact directories for credential-bearing suites.
 
@@ -87,6 +100,8 @@ canyougeo-blackbox/native/reports/
 ```
 
 Credential-bearing suites create the ignored report directory but intentionally do not request screenshot/debug output paths. Do not commit generated reports, screenshots, videos, traces, emulator/simulator state, APKs, AABs, build output, `local.properties`, keystores, or logs.
+
+Every native runner invocation writes an ignored `run-metadata.json` file under its timestamped report directory. The metadata includes platform, suite, safe device identifier, app ID, installed and expected version/build, Git SHA, status, flow inventory, and safe artifact links when generated. It is written even for dry-runs, missing tools, missing apps, and blocked version preflights.
 
 ## Android App Link Flow
 

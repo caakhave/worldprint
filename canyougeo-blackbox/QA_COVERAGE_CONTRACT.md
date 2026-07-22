@@ -4,6 +4,14 @@ This external suite is a maintained QA artifact. Every meaningful Can You Geo si
 
 ## Stable Browser Entry Points
 
+The stable operator workflow is:
+
+1. `pnpm qa:blackbox:test`
+2. `pnpm qa:blackbox:prod`
+3. `pnpm qa:native:android:release`
+4. `pnpm qa:native:ios:release`
+5. `pnpm qa:report`
+
 The operator-facing browser commands are:
 
 - `pnpm qa:blackbox:test`: complete staging browser suite against `https://test.canyougeo.com`, excluding explicitly opt-in live/mutating tests.
@@ -14,6 +22,10 @@ The operator-facing browser commands are:
 `production_safe` tests must not create accounts, send email, open Checkout or Portal sessions, initiate payment, initiate native purchase, tap Restore, use QA credentials, mutate entitlements, or rely on private browser storage. Public routes, public gameplay samples, responsive layout, indexing, security headers, canonical hosts, association documents, challenge safety, and legal/support/account-deletion copy are appropriate for this marker.
 
 Optional authenticated checks use `auth`. Production authenticated checks must be run through `production_auth` and `CGY_PROD_*` credentials only. `checkout_smoke`, `signup_analytics`, and `email_live` are opt-in live categories and are excluded from the stable root commands.
+
+Native QA commands use installed Capacitor apps and Maestro. Native release commands fail before Maestro if installed package/bundle ID, version, or build/versionCode differs from protected source. Credential-bearing native suites use only `CGY_NATIVE_*` variables and suppress screenshot/debug artifact directories.
+
+`pnpm qa:report` generates `canyougeo-blackbox/reports/index.html`, an ignored local HTML index that summarizes the latest browser metadata and native `run-metadata.json` files. It must not be treated as a hosted dashboard.
 
 ## New Public Route
 
@@ -102,6 +114,30 @@ Any change to the native store billing bridge or purchase boundary must update n
 
 Baseline native billing QA remains non-mutating: it may verify labels, sign-in boundaries, localized product/plan discovery, safe unavailable states, and Stripe suppression, but it must not tap purchase, restore, transaction-finish, subscription-management, acknowledgement, refund, revoke, or cancellation actions.
 
+## Automated QA-Impact Drift Gate
+
+`pnpm qa:drift` enforces the maintained impact map in `qa-impact-map.json`. CI runs the gate inside the existing required `test` job on pull requests before `pnpm test`.
+
+The impact categories are:
+
+- public route and SEO changes
+- challenge and email changes
+- account, billing, and account-deletion changes
+- native authentication and session changes
+- native link and routing changes
+- native store billing changes
+- native shell and system UI changes
+- store identity and release metadata changes
+
+Mapped application changes must include companion browser, native, internal-test, or documentation coverage listed in the impact map. Waivable categories may use this exact PR-body section:
+
+```text
+QA impact decision:
+No additional black-box change required because <specific explanation>.
+```
+
+The reason must be substantive. Placeholders such as `none`, `n/a`, `not needed`, or `no impact` are rejected. Store identity/release metadata changes, package/bundle identity changes, version/build metadata changes, association-file identity changes, and removal of existing QA coverage cannot be waived.
+
 ## New `data-testid` Selector
 
 Prefer stable selectors for black-box tests when roles/text are insufficient, but do not couple the suite to implementation internals unnecessarily. Names should describe user-visible regions or actions, not component internals.
@@ -114,4 +150,6 @@ A feature is not QA-complete until:
 - black-box staging QA passes with `pnpm qa:blackbox:test` when Cloudflare Access credentials are available
 - production-safe QA passes with `pnpm qa:blackbox:prod` before or after production promotion, as appropriate for the checkpoint
 - relevant black-box coverage has been added or intentionally documented as not needed
+- the QA-impact drift gate passes or records an allowed substantive waiver
+- native report metadata and the combined report index can be regenerated when native suites run
 - the export zip can be regenerated with `python tools/export_suite.py`
