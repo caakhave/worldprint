@@ -5,6 +5,13 @@ import { describe, expect, it } from "vitest";
 const readinessDoc = readFileSync(join(process.cwd(), "docs/mobile/IOS_STOREKIT_TESTFLIGHT_READINESS.md"), "utf8");
 
 describe("iOS StoreKit and TestFlight readiness document", () => {
+  it("marks the early readiness worksheet as historical and links the current audit", () => {
+    expect(readinessDoc).toContain("Status note, 2026-07-22");
+    expect(readinessDoc).toContain("Deployment Runtime Parity Audit 2026-07-22");
+    expect(readinessDoc).toContain("selected App Review build `1.0.0 (9)`");
+    expect(readinessDoc).toContain("do not read the historical \"current\" fields below as the latest production state");
+  });
+
   it("records the audited protected staging state and iOS identity", () => {
     expect(readinessDoc).toContain("996223100d61627884d0aac3db1b3993ff034931");
     expect(readinessDoc).toContain("843faad836adf11e41c68d181337fa4c1f661a96");
@@ -15,7 +22,7 @@ describe("iOS StoreKit and TestFlight readiness document", () => {
   });
 
   it("records the approved StoreKit product and server-policy decisions while keeping client/App Store work gated", () => {
-    expect(readinessDoc).toContain("Current staging has no StoreKit 2 runtime implementation.");
+    expect(readinessDoc).toContain("Historical audit state at this checkpoint: staging had no StoreKit 2 runtime implementation.");
     expect(readinessDoc).toContain("com.canyougeo.pro.monthly");
     expect(readinessDoc).toContain("com.canyougeo.pro.annual");
     expect(readinessDoc).toContain("subscription group name `Can You Geo Pro`");
