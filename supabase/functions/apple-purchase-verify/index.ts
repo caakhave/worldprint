@@ -15,6 +15,7 @@ import {
   verifyAppleSignedTransactionSet,
   type AppleServerConfig
 } from "../_shared/appleAppStore.ts";
+import { applePurchaseVerificationDisposition } from "../_shared/applePurchaseVerificationDisposition.ts";
 
 Deno.serve(async (request) => {
   try {
@@ -80,8 +81,17 @@ async function handleVerifyRequest(request: Request): Promise<Response> {
     auth: { persistSession: false }
   });
   const row = await processApplePurchaseVerification(supabase, transitionArgs);
-  if (!row.processed && !row.already_processed) {
-    return json({ error: "Apple purchase could not be verified." }, row.retryable ? 503 : 409, request, config);
+  const disposition = applePurchaseVerificationDisposition(row);
+  if (!disposition.accepted) {
+    return json(
+      {
+        error: disposition.error,
+        code: disposition.code
+      },
+      disposition.httpStatus,
+      request,
+      config
+    );
   }
 
   return json(
@@ -91,7 +101,9 @@ async function handleVerifyRequest(request: Request): Promise<Response> {
       entitlementRefreshRecommended: row.compatibility_refreshed,
       entitlementScope: row.entitlement_scope,
       nativeReviewEntitlement:
-        row.entitlement_scope === "native_review" && appleNativeReviewEntitlementGrantsPro(normalized.normalized)
+        row.entitlement_scope === "native_review" &&
+        row.native_review_entitlement_refreshed &&
+        appleNativeReviewEntitlementGrantsPro(normalized.normalized)
           ? {
               providerEnvironment: "sandbox",
               plan: "pro",
@@ -101,7 +113,7 @@ async function handleVerifyRequest(request: Request): Promise<Response> {
               verifiedAt: new Date().toISOString()
             }
           : null,
-      clientMayFinishTransaction: row.processed || row.already_processed
+      clientMayFinishTransaction: disposition.clientMayFinishTransaction
     },
     200,
     request,
