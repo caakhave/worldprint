@@ -122,8 +122,7 @@ async function handleVerifyRequest(request: Request, diagnosticContext: GooglePl
         serviceAccountJson: config.serviceAccountJson,
         packageName: config.packageName,
         subscriptionId: config.subscriptionProductId,
-        purchaseToken: parsed.body.purchaseToken,
-        obfuscatedAccountId
+        purchaseToken: parsed.body.purchaseToken
       })
     );
     await withGooglePlayVerifyStage("purchase_acknowledgement", () =>
