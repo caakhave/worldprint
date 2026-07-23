@@ -1,9 +1,10 @@
 /* eslint-disable */
 import { createClient } from "https://esm.sh/@supabase/supabase-js@2.108.2";
 import { billingCorsHeaders } from "../_shared/security.ts";
-import { acknowledgeSubscriptionPurchase, fetchSubscriptionPurchaseV2, GooglePlayPublisherError } from "../_shared/googlePlayPublisher.ts";
+import { acknowledgeSubscriptionPurchase, fetchSubscriptionPurchaseV2 } from "../_shared/googlePlayPublisher.ts";
 import {
   GooglePlayPurchaseError,
+  googlePlayPurchaseStageForVerificationRow,
   googlePlayObfuscatedAccountId,
   parseGooglePlayVerifyBody,
   processGooglePlayPurchaseVerification,
@@ -12,80 +13,126 @@ import {
   verifiedPurchaseTransitionInput,
   type GooglePlayPurchaseConfig
 } from "../_shared/googlePlayPurchase.ts";
+import {
+  buildGooglePlayVerifyDiagnostic,
+  googlePlayVerifyClientError,
+  withGooglePlayVerifyStage,
+  type GooglePlayVerifyDiagnostic,
+  type GooglePlayVerifyDiagnosticContext
+} from "../_shared/googlePlayVerifyDiagnostics.ts";
 
 Deno.serve(async (request) => {
+  const diagnosticContext: GooglePlayVerifyDiagnosticContext = {};
   try {
-    return await handleVerifyRequest(request);
+    return await handleVerifyRequest(request, diagnosticContext);
   } catch (error) {
-    const status = error instanceof GooglePlayPurchaseError ? error.status : error instanceof GooglePlayPublisherError && !error.retryable ? 400 : 500;
-    const safeResult = error instanceof GooglePlayPurchaseError || error instanceof GooglePlayPublisherError ? error.result : "unexpected_error";
-    console.error(`[google-play-purchase] verification failed: ${safeResult}`);
-    return json({ error: status >= 500 ? "Google Play purchase verification is unavailable." : "Google Play purchase could not be verified." }, status, request);
+    const diagnostic = buildGooglePlayVerifyDiagnostic(error, diagnosticContext);
+    logVerificationFailure(diagnostic);
+    return json(googlePlayVerifyClientError(diagnostic), diagnostic.status, request);
   }
 });
 
-async function handleVerifyRequest(request: Request): Promise<Response> {
+async function handleVerifyRequest(request: Request, diagnosticContext: GooglePlayVerifyDiagnosticContext): Promise<Response> {
   if (request.method === "OPTIONS") return optionsResponse(request);
-  if (request.method !== "POST") return json({ error: "Method not allowed." }, 405, request);
+  if (request.method !== "POST") return json({ error: "Method not allowed.", code: "method_not_allowed", retryable: false }, 405, request);
 
   const { config, error } = readGooglePlayPurchaseConfig();
-  if (!config) return json({ error: error ?? "Google Play purchases are not configured." }, 503, request);
-
-  const { user, error: userError } = await getSignedInUser(request, config);
-  if (!user) return json({ error: userError ?? "Sign in before upgrading." }, 401, request, config);
-
-  const bodyText = await request.text();
-  if (new TextEncoder().encode(bodyText).byteLength > 8192) {
-    return json({ error: "Google Play purchase request is too large." }, 413, request, config);
+  if (!config) {
+    return json(
+      {
+        error: error ?? "Google Play purchases are not configured.",
+        code: "google_play_configuration_error",
+        retryable: true
+      },
+      503,
+      request
+    );
   }
-  const parsed = await parseGooglePlayVerifyBody({
-    contentType: request.headers.get("content-type"),
-    bodyText,
-    config
-  });
-  if (!parsed.body) return json({ error: "Google Play purchase request is invalid." }, 400, request, config);
+  diagnosticContext.providerEnvironment = config.environment;
 
-  const obfuscatedAccountId = await googlePlayObfuscatedAccountId({
-    userId: user.id,
-    accountBindingSecret: config.accountBindingSecret
-  });
-  const purchase = await fetchSubscriptionPurchaseV2({
-    serviceAccountJson: config.serviceAccountJson,
-    packageName: config.packageName,
-    purchaseToken: parsed.body.purchaseToken
-  });
-  const transition = await verifiedPurchaseTransitionInput({
-    purchaseToken: parsed.body.purchaseToken,
-    purchase,
-    userId: user.id,
-    config,
-    expectedBasePlanId: parsed.body.basePlanId,
-    expectedObfuscatedAccountId: obfuscatedAccountId,
-    asOfIso: new Date().toISOString()
-  });
-  if (!transition) throw new GooglePlayPurchaseError("invalid_transition", true, 500);
+  const { user, error: userError } = await withGooglePlayVerifyStage("supabase_user_authentication", () => getSignedInUser(request, config));
+  if (!user) return json({ error: userError ?? "Sign in before upgrading.", code: "authentication_required", retryable: false }, 401, request, config);
+
+  const bodyText = await withGooglePlayVerifyStage("request_parsing", () => request.text());
+  if (new TextEncoder().encode(bodyText).byteLength > 8192) {
+    return json({ error: "Google Play purchase request is too large.", code: "invalid_request", retryable: false }, 413, request, config);
+  }
+  const parsed = await withGooglePlayVerifyStage("request_parsing", () =>
+    parseGooglePlayVerifyBody({
+      contentType: request.headers.get("content-type"),
+      bodyText,
+      config
+    })
+  );
+  if (!parsed.body) {
+    return json({ error: "Google Play purchase request is invalid.", code: parsed.error ?? "invalid_request", retryable: false }, 400, request, config);
+  }
+  diagnosticContext.productId = parsed.body.productId;
+  diagnosticContext.basePlanId = parsed.body.basePlanId;
+
+  const obfuscatedAccountId = await withGooglePlayVerifyStage("ownership_binding", () =>
+    googlePlayObfuscatedAccountId({
+      userId: user.id,
+      accountBindingSecret: config.accountBindingSecret
+    })
+  );
+  const purchase = await withGooglePlayVerifyStage("subscriptionsv2_get", () =>
+    fetchSubscriptionPurchaseV2({
+      serviceAccountJson: config.serviceAccountJson,
+      packageName: config.packageName,
+      purchaseToken: parsed.body.purchaseToken
+    })
+  );
+  diagnosticContext.purchaseStatePresent = typeof purchase.subscriptionState === "string";
+  diagnosticContext.acknowledgementStatePresent = typeof purchase.acknowledgementState === "string";
+  const transition = await withGooglePlayVerifyStage("google_response_parsing_state_validation", () =>
+    verifiedPurchaseTransitionInput({
+      purchaseToken: parsed.body.purchaseToken,
+      purchase,
+      userId: user.id,
+      config,
+      expectedBasePlanId: parsed.body.basePlanId,
+      expectedObfuscatedAccountId: obfuscatedAccountId,
+      asOfIso: new Date().toISOString()
+    })
+  );
+  if (!transition) throw new GooglePlayPurchaseError("invalid_transition", true, 500, { stage: "google_response_parsing_state_validation" });
 
   const supabase = createClient(config.supabaseUrl, config.supabaseServiceRoleKey, {
     auth: { persistSession: false }
   });
-  const row = await processGooglePlayPurchaseVerification(supabase, transition.transitionArgs);
+  const row = await withGooglePlayVerifyStage("provider_subscription_persistence", () =>
+    processGooglePlayPurchaseVerification(supabase, transition.transitionArgs)
+  );
   if (!row.processed && !row.already_processed) {
-    return json({ error: "Google Play purchase could not be verified." }, row.retryable ? 503 : 409, request, config);
+    const diagnostic = buildGooglePlayVerifyDiagnostic(
+      new GooglePlayPurchaseError(row.result, row.retryable, row.retryable ? 503 : 409, {
+        stage: googlePlayPurchaseStageForVerificationRow(row),
+        rpcRow: row
+      }),
+      diagnosticContext
+    );
+    logVerificationFailure(diagnostic);
+    return json(googlePlayVerifyClientError(diagnostic), diagnostic.status, request, config);
   }
 
   if (row.acknowledgement_required) {
-    await acknowledgeSubscriptionPurchase({
-      serviceAccountJson: config.serviceAccountJson,
-      packageName: config.packageName,
-      subscriptionId: config.subscriptionProductId,
-      purchaseToken: parsed.body.purchaseToken,
-      obfuscatedAccountId
-    });
-    await recordGooglePlayPurchaseAcknowledgement(supabase, {
-      providerEnvironment: config.environment,
-      purchaseTokenFingerprint: transition.tokenFingerprint,
-      acknowledgedAt: new Date().toISOString()
-    });
+    await withGooglePlayVerifyStage("purchase_acknowledgement", () =>
+      acknowledgeSubscriptionPurchase({
+        serviceAccountJson: config.serviceAccountJson,
+        packageName: config.packageName,
+        subscriptionId: config.subscriptionProductId,
+        purchaseToken: parsed.body.purchaseToken,
+        obfuscatedAccountId
+      })
+    );
+    await withGooglePlayVerifyStage("purchase_acknowledgement", () =>
+      recordGooglePlayPurchaseAcknowledgement(supabase, {
+        providerEnvironment: config.environment,
+        purchaseTokenFingerprint: transition.tokenFingerprint,
+        acknowledgedAt: new Date().toISOString()
+      })
+    );
   }
 
   return json({ ok: true, status: row.already_processed ? "already_verified" : "verified" }, 200, request, config);
@@ -101,6 +148,10 @@ async function getSignedInUser(request: Request, config: GooglePlayPurchaseConfi
   const { data, error } = await supabase.auth.getUser(accessToken);
   if (error || !data.user) return { user: null, error: "Sign in before upgrading." };
   return { user: data.user, error: null };
+}
+
+function logVerificationFailure(diagnostic: GooglePlayVerifyDiagnostic) {
+  console.error(`[google-play-purchase] verification failed ${JSON.stringify(diagnostic)}`);
 }
 
 function optionsResponse(request: Request): Response {
