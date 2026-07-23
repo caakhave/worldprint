@@ -358,6 +358,14 @@ function googlePlayPurchaseStageForResult(result: string): GooglePlayPurchaseSta
     return "google_response_parsing_state_validation";
   }
   if (result === "summary_refresh_failed" || result === "entitlement_persistence_failed") return "entitlement_persistence";
+  if (
+    result === "provider_subscription_write_failed" ||
+    result === "purchase_token_persistence_failed" ||
+    result === "linked_subscription_supersede_failed" ||
+    result === "provider_subscription_persistence_failed"
+  ) {
+    return "provider_subscription_persistence";
+  }
   if (result.includes("acknowledgement")) return "purchase_acknowledgement";
   return "provider_subscription_persistence";
 }
