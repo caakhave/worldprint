@@ -8,6 +8,10 @@ const persistenceDetailMigration = readFileSync(
   join(process.cwd(), "supabase/migrations/20260723200000_google_play_purchase_persistence_error_detail.sql"),
   "utf8"
 );
+const tokenUpsertFixMigration = readFileSync(
+  join(process.cwd(), "supabase/migrations/20260723210000_google_play_purchase_token_upsert_conflict_target.sql"),
+  "utf8"
+);
 const compact = source.replace(/--.*$/gm, "").replace(/\s+/g, " ");
 
 describe("Google Play purchase verification migration", () => {
@@ -55,5 +59,39 @@ describe("Google Play purchase verification migration", () => {
     expect(persistenceDetailMigration).toContain("last_error_code = v_last_error_code");
     expect(persistenceDetailMigration).toContain("v_last_error_code := v_result || '':sqlstate:''");
     expect(persistenceDetailMigration).not.toMatch(/SQLERRM|PG_EXCEPTION_DETAIL|p_purchase_token\s*\|\||v_purchase_token\s*\|\|/i);
+  });
+
+  it("documents and fixes the old token upsert conflict-target ambiguity", () => {
+    expect(source).toContain("provider_environment text");
+    expect(source).toContain("on conflict (provider_environment, purchase_token_fingerprint) do update");
+    expect(tokenUpsertFixMigration).toContain("SQLSTATE 42702");
+    expect(tokenUpsertFixMigration).toContain("add constraint google_play_purchase_tokens_fingerprint_uidx");
+    expect(tokenUpsertFixMigration).toContain("unique using index google_play_purchase_tokens_fingerprint_uidx");
+    expect(tokenUpsertFixMigration).toContain(
+      "on conflict on constraint google_play_purchase_tokens_fingerprint_uidx do update"
+    );
+    expect(tokenUpsertFixMigration).toContain(
+      "'on conflict (provider_environment, purchase_token_fingerprint) do update',\n    'on conflict on constraint google_play_purchase_tokens_fingerprint_uidx do update'"
+    );
+  });
+
+  it("preserves retry, ownership isolation, entitlement, and acknowledgement ordering", () => {
+    const tokenInsertIndex = source.indexOf("insert into billing.google_play_purchase_tokens");
+
+    expect(tokenUpsertFixMigration).toContain("purchase_token_persistence_failed");
+    expect(source.indexOf("ownership_conflict")).toBeLessThan(tokenInsertIndex);
+    expect(source.indexOf("linked_token_ownership_conflict")).toBeLessThan(tokenInsertIndex);
+    expect(tokenInsertIndex).toBeLessThan(source.indexOf("billing.refresh_effective_entitlement_summary"));
+    expect(source.indexOf("v_ack_required")).toBeLessThan(source.indexOf("return query"));
+    expect(source).toContain("provider_subscription_changed");
+    expect(source).toContain("compatibility_refreshed");
+    expect(source).toContain("already_processed");
+  });
+
+  it("keeps the token persistence fix free of sensitive logging or client-visible grants", () => {
+    expect(tokenUpsertFixMigration).not.toMatch(/SQLERRM|PG_EXCEPTION_DETAIL|raise notice|raise log/i);
+    expect(tokenUpsertFixMigration).not.toMatch(/p_purchase_token\s*\|\||v_purchase_token\s*\|\|/i);
+    expect(tokenUpsertFixMigration).not.toMatch(/grant\s+(select|insert|update|delete|all)[^;]+google_play_purchase_tokens\s+to\s+(anon|authenticated)/i);
+    expect(tokenUpsertFixMigration).not.toContain("public.entitlements");
   });
 });
