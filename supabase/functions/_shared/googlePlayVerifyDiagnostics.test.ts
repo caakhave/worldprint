@@ -122,6 +122,19 @@ describe("Google Play purchase verification diagnostics", () => {
         compatibility_refreshed: false
       }
     });
+
+    expect(buildGooglePlayVerifyDiagnostic(new GooglePlayPurchaseError("provider_subscription_write_failed", true, 500))).toMatchObject({
+      stage: "provider_subscription_persistence",
+      result: "provider_subscription_write_failed"
+    });
+    expect(buildGooglePlayVerifyDiagnostic(new GooglePlayPurchaseError("purchase_token_persistence_failed", true, 500))).toMatchObject({
+      stage: "provider_subscription_persistence",
+      result: "purchase_token_persistence_failed"
+    });
+    expect(buildGooglePlayVerifyDiagnostic(new GooglePlayPurchaseError("linked_subscription_supersede_failed", true, 500))).toMatchObject({
+      stage: "provider_subscription_persistence",
+      result: "linked_subscription_supersede_failed"
+    });
   });
 
   it("classifies entitlement and acknowledgement persistence failures", () => {

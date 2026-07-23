@@ -192,6 +192,15 @@ describe("Google Play purchase helpers", () => {
 
     expect(googlePlayPurchaseStageForVerificationRow(providerFailure)).toBe("provider_subscription_persistence");
     expect(googlePlayPurchaseStageForVerificationRow(entitlementFailure)).toBe("entitlement_persistence");
+    expect(
+      new GooglePlayPurchaseError("provider_subscription_write_failed", true, 500).stage
+    ).toBe("provider_subscription_persistence");
+    expect(
+      new GooglePlayPurchaseError("purchase_token_persistence_failed", true, 500).stage
+    ).toBe("provider_subscription_persistence");
+    expect(
+      new GooglePlayPurchaseError("linked_subscription_supersede_failed", true, 500).stage
+    ).toBe("provider_subscription_persistence");
 
     await expect(
       processGooglePlayPurchaseVerification(
