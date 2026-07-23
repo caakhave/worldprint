@@ -33,6 +33,11 @@ Latest local 6B-3 native baseline notes:
 - The iOS `/auth/callback/` native assertion now accepts both safe outcomes: an invalid-link message for a signed-out session or the connected-account state for an already signed-in session.
 - Native Challenge link assertions now verify the spoiler-safe missing-code copy instead of expecting the home hero.
 
+Latest Google Play verification diagnostics QA-impact decision:
+
+QA impact decision:
+No additional black-box change required because the Google Play verification diagnostics change is limited to production backend purchase-verification diagnostics, sanitized error reporting, and SQL failure classification. Native billing behavior is unchanged: Android purchase UI, Google BillingClient invocation behavior, product selection, purchase/Restore request shape, native navigation, native billing discovery behavior, and iOS billing behavior are not changed. Focused Google Play verification tests cover successful verification, Google API failures, malformed service-account configuration, response mismatches, ownership conflicts, database/RPC failures, acknowledgement failures, idempotent retry, and log/response redaction. The real Play-distributed purchase and Restore path will be manually validated once after the staging and production database/function deployment sequence. Existing native QA coverage is not removed or weakened.
+
 | Stage | Platform | Artifact or Source Identity | Command or Manual Procedure | Required Evidence | Credentials Needed | Mutates State | Purchase/Restore Allowed | Physical Device Required | Completion Status / Related Issue |
 | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- |
 | Source/unit validation | Web, Android, iOS shared source | Protected Git source | `env -u NEXT_PUBLIC_SITE_URL -u CF_PAGES_URL pnpm test`, `pnpm lint`, `pnpm typecheck`, `pnpm build`, `pnpm build:native` | CI logs and local command results | No | No | No | No | Required every release PR |
