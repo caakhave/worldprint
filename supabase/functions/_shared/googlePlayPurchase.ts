@@ -40,17 +40,42 @@ export type GooglePlayAcknowledgementRow = {
   retryable: boolean;
 };
 
+type GooglePlayPurchaseStage =
+  | "request_parsing"
+  | "supabase_user_authentication"
+  | "google_response_parsing_state_validation"
+  | "product_base_plan_mapping"
+  | "ownership_binding"
+  | "provider_subscription_persistence"
+  | "entitlement_persistence"
+  | "purchase_acknowledgement";
+
 export class GooglePlayPurchaseError extends Error {
   readonly result: string;
   readonly retryable: boolean;
   readonly status: number;
+  readonly stage: GooglePlayPurchaseStage;
+  readonly supabaseError: unknown;
+  readonly rpcRow: Partial<GooglePlayPurchaseVerificationRow | GooglePlayAcknowledgementRow> | null;
 
-  constructor(result: string, retryable: boolean, status = 400) {
+  constructor(
+    result: string,
+    retryable: boolean,
+    status = 400,
+    options: {
+      stage?: GooglePlayPurchaseStage;
+      supabaseError?: unknown;
+      rpcRow?: Partial<GooglePlayPurchaseVerificationRow | GooglePlayAcknowledgementRow> | null;
+    } = {}
+  ) {
     super(`Google Play purchase verification failed: ${result}`);
     this.name = "GooglePlayPurchaseError";
     this.result = result;
     this.retryable = retryable;
     this.status = status;
+    this.stage = options.stage ?? googlePlayPurchaseStageForResult(result);
+    this.supabaseError = options.supabaseError ?? null;
+    this.rpcRow = options.rpcRow ?? null;
   }
 }
 
@@ -158,7 +183,7 @@ export async function verifiedPurchaseTransitionInput(input: {
 } | null> {
   const externalAccountId = externalAccountIdFromPurchase(input.purchase);
   if (externalAccountId !== input.expectedObfuscatedAccountId) {
-    throw new GooglePlayPurchaseError("account_binding_mismatch", false, 403);
+    throw new GooglePlayPurchaseError("account_binding_mismatch", false, 403, { stage: "ownership_binding" });
   }
   const normalized = await normalizeGoogleSubscriptionPurchase({
     purchase: input.purchase,
@@ -166,10 +191,12 @@ export async function verifiedPurchaseTransitionInput(input: {
     asOfIso: input.asOfIso
   });
   if (!normalized.normalized) {
-    throw new GooglePlayPurchaseError(normalized.error ?? "invalid_subscription_state", false, 409);
+    throw new GooglePlayPurchaseError(normalized.error ?? "invalid_subscription_state", false, 409, {
+      stage: normalized.error === "unexpected_product_or_base_plan" ? "product_base_plan_mapping" : "google_response_parsing_state_validation"
+    });
   }
   if (input.expectedBasePlanId !== null && normalized.normalized.basePlanId !== input.expectedBasePlanId) {
-    throw new GooglePlayPurchaseError("base_plan_mismatch", false, 409);
+    throw new GooglePlayPurchaseError("base_plan_mismatch", false, 409, { stage: "product_base_plan_mapping" });
   }
   const tokenFingerprint = await purchaseTokenFingerprint(input.purchaseToken);
   const linkedFingerprint = input.purchase.linkedPurchaseToken ? await purchaseTokenFingerprint(input.purchase.linkedPurchaseToken) : null;
@@ -217,11 +244,14 @@ export async function processGooglePlayPurchaseVerification(
   args: Record<string, unknown>
 ): Promise<GooglePlayPurchaseVerificationRow> {
   const { data, error } = await supabase.rpc("process_google_play_purchase_verification", args);
-  if (error) throw new GooglePlayPurchaseError("rpc_failed", true, 500);
+  if (error) throw new GooglePlayPurchaseError("rpc_failed", true, 500, { stage: "provider_subscription_persistence", supabaseError: error });
   const row = normalizeVerificationRow(data);
-  if (!row) throw new GooglePlayPurchaseError("invalid_rpc_result", true, 500);
+  if (!row) throw new GooglePlayPurchaseError("invalid_rpc_result", true, 500, { stage: "provider_subscription_persistence" });
   if (row.retryable && !row.processed && !row.already_processed) {
-    throw new GooglePlayPurchaseError(row.result || "verification_failed", true, 500);
+    throw new GooglePlayPurchaseError(row.result || "verification_failed", true, 500, {
+      stage: googlePlayPurchaseStageForVerificationRow(row),
+      rpcRow: sanitizedVerificationRow(row)
+    });
   }
   return row;
 }
@@ -235,10 +265,25 @@ export async function recordGooglePlayPurchaseAcknowledgement(
     p_purchase_token_fingerprint: input.purchaseTokenFingerprint,
     p_acknowledged_at: input.acknowledgedAt
   });
-  if (error) throw new GooglePlayPurchaseError("acknowledgement_record_failed", true, 500);
+  if (error) {
+    throw new GooglePlayPurchaseError("acknowledgement_record_failed", true, 500, {
+      stage: "purchase_acknowledgement",
+      supabaseError: error
+    });
+  }
   const row = normalizeAcknowledgementRow(data);
-  if (!row) throw new GooglePlayPurchaseError("invalid_acknowledgement_result", true, 500);
-  if (row.retryable && !row.acknowledged) throw new GooglePlayPurchaseError(row.result || "acknowledgement_record_failed", true, 500);
+  if (!row) throw new GooglePlayPurchaseError("invalid_acknowledgement_result", true, 500, { stage: "purchase_acknowledgement" });
+  if (row.retryable && !row.acknowledged) {
+    throw new GooglePlayPurchaseError(row.result || "acknowledgement_record_failed", true, 500, {
+      stage: "purchase_acknowledgement",
+      rpcRow: {
+        result: row.result,
+        provider_environment: row.provider_environment,
+        acknowledged: row.acknowledged,
+        retryable: row.retryable
+      }
+    });
+  }
   return row;
 }
 
@@ -283,4 +328,52 @@ function normalizeAcknowledgementRow(data: unknown): GooglePlayAcknowledgementRo
   if (typeof candidate.acknowledged !== "boolean") return null;
   if (typeof candidate.retryable !== "boolean") return null;
   return candidate as GooglePlayAcknowledgementRow;
+}
+
+export function googlePlayPurchaseStageForVerificationRow(row: Pick<
+  GooglePlayPurchaseVerificationRow,
+  "result" | "provider_subscription_changed" | "compatibility_refreshed"
+>): GooglePlayPurchaseStage {
+  if (row.result === "summary_refresh_failed" || row.result === "entitlement_persistence_failed") return "entitlement_persistence";
+  if (row.provider_subscription_changed && !row.compatibility_refreshed) return "entitlement_persistence";
+  return "provider_subscription_persistence";
+}
+
+function googlePlayPurchaseStageForResult(result: string): GooglePlayPurchaseStage {
+  if (
+    result === "invalid_content_type" ||
+    result === "invalid_json" ||
+    result === "invalid_request" ||
+    result === "invalid_purchase_token" ||
+    result === "invalid_product" ||
+    result === "invalid_base_plan"
+  ) {
+    return "request_parsing";
+  }
+  if (result === "account_binding_mismatch" || result === "ownership_conflict" || result === "linked_token_ownership_conflict") {
+    return "ownership_binding";
+  }
+  if (result === "base_plan_mismatch" || result === "unexpected_product_or_base_plan") return "product_base_plan_mapping";
+  if (result === "invalid_subscription_state" || result === "unknown_subscription_state" || result === "missing_period_end") {
+    return "google_response_parsing_state_validation";
+  }
+  if (result === "summary_refresh_failed" || result === "entitlement_persistence_failed") return "entitlement_persistence";
+  if (result.includes("acknowledgement")) return "purchase_acknowledgement";
+  return "provider_subscription_persistence";
+}
+
+function sanitizedVerificationRow(row: GooglePlayPurchaseVerificationRow): Partial<GooglePlayPurchaseVerificationRow> {
+  return {
+    result: row.result,
+    provider_environment: row.provider_environment,
+    event_type: row.event_type,
+    event_subtype: row.event_subtype,
+    processed: row.processed,
+    already_processed: row.already_processed,
+    provider_subscription_changed: row.provider_subscription_changed,
+    compatibility_refreshed: row.compatibility_refreshed,
+    acknowledgement_required: row.acknowledgement_required,
+    reconciliation_required: row.reconciliation_required,
+    retryable: row.retryable
+  };
 }
