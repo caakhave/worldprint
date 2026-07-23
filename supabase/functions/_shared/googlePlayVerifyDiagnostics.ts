@@ -192,6 +192,14 @@ function stageForResult(result: string): GooglePlayVerifyStage {
   if (result === "unexpected_product_or_base_plan" || result === "base_plan_mismatch") return "product_base_plan_mapping";
   if (result === "account_binding_mismatch" || result === "ownership_conflict" || result === "linked_token_ownership_conflict") return "ownership_binding";
   if (result === "summary_refresh_failed" || result === "entitlement_persistence_failed") return "entitlement_persistence";
+  if (
+    result === "provider_subscription_write_failed" ||
+    result === "purchase_token_persistence_failed" ||
+    result === "linked_subscription_supersede_failed" ||
+    result === "provider_subscription_persistence_failed"
+  ) {
+    return "provider_subscription_persistence";
+  }
   if (result.includes("acknowledgement")) return "purchase_acknowledgement";
   return "provider_subscription_persistence";
 }
