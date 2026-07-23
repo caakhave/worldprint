@@ -23,6 +23,17 @@ describe("google-play-purchase-verify Edge Function structure", () => {
     );
   });
 
+  it("acknowledges only after durable verification without resending account identifiers", () => {
+    const acknowledgementCall = source.match(/acknowledgeSubscriptionPurchase\(\{[\s\S]*?\n      \}\)/)?.[0] ?? "";
+
+    expect(acknowledgementCall).toContain("serviceAccountJson");
+    expect(acknowledgementCall).toContain("packageName");
+    expect(acknowledgementCall).toContain("subscriptionId");
+    expect(acknowledgementCall).toContain("purchaseToken");
+    expect(acknowledgementCall).not.toContain("obfuscatedAccountId");
+    expect(source.indexOf("processGooglePlayPurchaseVerification")).toBeLessThan(source.indexOf(acknowledgementCall));
+  });
+
   it("does not return tokens, Google API payloads, service credentials, or user ids", () => {
     expect(source).toContain('return json({ ok: true, status: row.already_processed ? "already_verified" : "verified" }');
     expect(source).not.toMatch(/json\([^)]*purchaseToken|json\([^)]*serviceAccountJson|json\([^)]*private_key|json\([^)]*user\.id/i);

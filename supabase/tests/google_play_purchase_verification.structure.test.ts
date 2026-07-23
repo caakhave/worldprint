@@ -12,6 +12,11 @@ const tokenUpsertFixMigration = readFileSync(
   join(process.cwd(), "supabase/migrations/20260723210000_google_play_purchase_token_upsert_conflict_target.sql"),
   "utf8"
 );
+const idempotentOwnerAckMigration = readFileSync(
+  join(process.cwd(), "supabase/migrations/20260723220000_google_play_purchase_idempotent_owner_ack.sql"),
+  "utf8"
+);
+const executableFixture = readFileSync(join(process.cwd(), "supabase/tests/google_play_purchase_verification.sql"), "utf8");
 const compact = source.replace(/--.*$/gm, "").replace(/\s+/g, " ");
 
 describe("Google Play purchase verification migration", () => {
@@ -93,5 +98,38 @@ describe("Google Play purchase verification migration", () => {
     expect(tokenUpsertFixMigration).not.toMatch(/p_purchase_token\s*\|\||v_purchase_token\s*\|\|/i);
     expect(tokenUpsertFixMigration).not.toMatch(/grant\s+(select|insert|update|delete|all)[^;]+google_play_purchase_tokens\s+to\s+(anon|authenticated)/i);
     expect(tokenUpsertFixMigration).not.toContain("public.entitlements");
+  });
+
+  it("allows processed Google Play events to retry acknowledgement while preserving owner isolation", () => {
+    expect(idempotentOwnerAckMigration).toContain("v_event.related_user_id is distinct from v_user_id");
+    expect(idempotentOwnerAckMigration).toContain("gt.user_id is distinct from v_user_id");
+    expect(idempotentOwnerAckMigration).toContain("gt.acknowledgement_state = 'ACKNOWLEDGEMENT_STATE_PENDING'");
+    expect(idempotentOwnerAckMigration).toContain("v_acknowledgement_state = 'ACKNOWLEDGEMENT_STATE_PENDING'");
+    expect(idempotentOwnerAckMigration).toContain("v_ack_required := coalesce(v_ack_required, false)");
+    expect(idempotentOwnerAckMigration).toContain("on conflict on constraint google_play_purchase_tokens_fingerprint_uidx do update");
+    expect(idempotentOwnerAckMigration).toContain("purchase_token_persistence_failed");
+    expect(idempotentOwnerAckMigration).toContain("billing.record_google_play_purchase_acknowledgement(text, text, timestamptz)");
+    expect(idempotentOwnerAckMigration).toContain("update billing.google_play_purchase_tokens as gt");
+    expect(idempotentOwnerAckMigration).toContain("gt.provider_environment = v_environment");
+    expect(idempotentOwnerAckMigration).toContain("gt.purchase_token_fingerprint = v_token_ref");
+    expect(idempotentOwnerAckMigration).not.toMatch(/SQLERRM|PG_EXCEPTION_DETAIL|raise notice|raise log/i);
+    expect(idempotentOwnerAckMigration).not.toMatch(/p_purchase_token\s*\|\||v_purchase_token\s*\|\|/i);
+  });
+
+  it("includes an executable rollback-protected RPC integration fixture", () => {
+    expect(executableFixture.trimStart()).toMatch(/^\\set ON_ERROR_STOP on/);
+    expect(executableFixture).toMatch(/\bbegin;/i);
+    expect(executableFixture.trimEnd()).toMatch(/rollback;$/i);
+    expect(executableFixture).toContain("public.process_google_play_purchase_verification");
+    expect(executableFixture).toContain("billing.provider_subscriptions");
+    expect(executableFixture).toContain("billing.google_play_purchase_tokens");
+    expect(executableFixture).toContain("public.entitlements");
+    expect(executableFixture).toContain("billing.provider_events");
+    expect(executableFixture).toContain("public.record_google_play_purchase_acknowledgement");
+    expect(executableFixture).toContain("'already_processed'");
+    expect(executableFixture).toContain("'ownership_conflict'");
+    expect(executableFixture).toContain("synthetic-google-play-token-not-real");
+    expect(executableFixture).not.toContain("ya29.");
+    expect(executableFixture).not.toMatch(/Authorization|Bearer|service_account|private_key|gmail\.com/i);
   });
 });

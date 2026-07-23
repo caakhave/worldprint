@@ -86,19 +86,11 @@ export async function acknowledgeSubscriptionPurchase(input: {
   packageName: string;
   subscriptionId: string;
   purchaseToken: string;
-  obfuscatedAccountId?: string | null;
   fetchImpl?: FetchLike;
 }): Promise<void> {
   const fetchImpl = input.fetchImpl ?? fetch;
   const credential = parseServiceAccountCredential(input.serviceAccountJson);
   const accessToken = await serviceAccountAccessToken({ credential, fetchImpl });
-  const body = input.obfuscatedAccountId
-    ? {
-        externalAccountIds: {
-          obfuscatedAccountId: input.obfuscatedAccountId
-        }
-      }
-    : {};
   const response = await fetchImpl(
     `https://androidpublisher.googleapis.com/androidpublisher/v3/applications/${encodeURIComponent(input.packageName)}/purchases/subscriptions/${encodeURIComponent(
       input.subscriptionId
@@ -110,7 +102,7 @@ export async function acknowledgeSubscriptionPurchase(input: {
         accept: "application/json",
         "content-type": "application/json"
       },
-      body: JSON.stringify(body)
+      body: "{}"
     }
   );
   if (!response.ok) {
