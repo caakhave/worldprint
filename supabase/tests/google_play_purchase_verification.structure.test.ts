@@ -16,7 +16,15 @@ const idempotentOwnerAckMigration = readFileSync(
   join(process.cwd(), "supabase/migrations/20260723220000_google_play_purchase_idempotent_owner_ack.sql"),
   "utf8"
 );
+const reconciliationFollowupsMigration = readFileSync(
+  join(process.cwd(), "supabase/migrations/20260723230000_google_play_reconciliation_followups.sql"),
+  "utf8"
+);
 const executableFixture = readFileSync(join(process.cwd(), "supabase/tests/google_play_purchase_verification.sql"), "utf8");
+const reconciliationFollowupsFixture = readFileSync(
+  join(process.cwd(), "supabase/tests/google_play_reconciliation_followups.sql"),
+  "utf8"
+);
 const compact = source.replace(/--.*$/gm, "").replace(/\s+/g, " ");
 
 describe("Google Play purchase verification migration", () => {
@@ -116,6 +124,42 @@ describe("Google Play purchase verification migration", () => {
     expect(idempotentOwnerAckMigration).not.toMatch(/p_purchase_token\s*\|\||v_purchase_token\s*\|\|/i);
   });
 
+  it("repairs RTDN-first Google Play events only after verified token ownership exists", () => {
+    expect(reconciliationFollowupsMigration).toContain(
+      "create or replace function billing.repair_google_play_unbound_rtdn_after_purchase_verification"
+    );
+    expect(reconciliationFollowupsMigration).toContain("p_purchase_token_fingerprint text");
+    expect(reconciliationFollowupsMigration).toContain("pe.last_error_code = 'unbound_purchase_token'");
+    expect(reconciliationFollowupsMigration).toContain("pe.provider_subscription_id is null");
+    expect(reconciliationFollowupsMigration).toContain("gt.purchase_token_fingerprint = pe.provider_subscription_ref");
+    expect(reconciliationFollowupsMigration).toContain("ps.provider_subscription_ref = gt.purchase_token_fingerprint");
+    expect(reconciliationFollowupsMigration).toContain("processing_status = 'processed'");
+    expect(reconciliationFollowupsMigration).toContain("reconciliation_required = false");
+    expect(reconciliationFollowupsMigration).not.toMatch(/update\s+public\.entitlements|record_google_play_purchase_acknowledgement/i);
+    expect(reconciliationFollowupsMigration).not.toMatch(/SQLERRM|PG_EXCEPTION_DETAIL|raise notice|raise log/i);
+    expect(reconciliationFollowupsMigration).not.toMatch(/p_purchase_token\s*\|\||v_purchase_token\s*\|\|/i);
+  });
+
+  it("adds a bounded service-role reconciliation helper for historical unbound RTDN rows", () => {
+    expect(reconciliationFollowupsMigration).toContain(
+      "create or replace function billing.reconcile_google_play_unbound_rtdn_events"
+    );
+    expect(reconciliationFollowupsMigration).toContain("v_limit integer := greatest(0, least(coalesce(p_limit, 100), 1000))");
+    expect(reconciliationFollowupsMigration).toContain("grant execute on function billing.reconcile_google_play_unbound_rtdn_events");
+    expect(reconciliationFollowupsMigration).toContain("to service_role");
+    expect(reconciliationFollowupsMigration).toContain("revoke all on function billing.reconcile_google_play_unbound_rtdn_events");
+    expect(reconciliationFollowupsMigration).not.toMatch(/grant execute on function billing\.reconcile_google_play_unbound_rtdn_events[^;]+authenticated/i);
+  });
+
+  it("calls Google Play RTDN repair from successful and idempotent purchase verification", () => {
+    expect(reconciliationFollowupsMigration).toContain("repair_google_play_unbound_rtdn_after_purchase_verification");
+    expect(reconciliationFollowupsMigration).toContain("if not coalesce(v_event.reconciliation_required, false) then");
+    expect(reconciliationFollowupsMigration).toContain("if v_status <> ''unknown_needs_reconciliation'' then");
+    expect(reconciliationFollowupsMigration).toContain("on conflict on constraint google_play_purchase_tokens_fingerprint_uidx do update");
+    expect(reconciliationFollowupsMigration).toContain("gt.user_id is distinct from v_user_id");
+    expect(reconciliationFollowupsMigration).toContain("purchase_token_persistence_failed");
+  });
+
   it("includes an executable rollback-protected RPC integration fixture", () => {
     expect(executableFixture.trimStart()).toMatch(/^\\set ON_ERROR_STOP on/);
     expect(executableFixture).toMatch(/\bbegin;/i);
@@ -131,5 +175,21 @@ describe("Google Play purchase verification migration", () => {
     expect(executableFixture).toContain("synthetic-google-play-token-not-real");
     expect(executableFixture).not.toContain("ya29.");
     expect(executableFixture).not.toMatch(/Authorization|Bearer|service_account|private_key|gmail\.com/i);
+  });
+
+  it("includes executable rollback-protected Google Play reconciliation follow-up coverage", () => {
+    expect(reconciliationFollowupsFixture.trimStart()).toMatch(/^\\set ON_ERROR_STOP on/);
+    expect(reconciliationFollowupsFixture).toMatch(/\bbegin;/i);
+    expect(reconciliationFollowupsFixture.trimEnd()).toMatch(/rollback;$/i);
+    expect(reconciliationFollowupsFixture).toContain("public.process_google_play_rtdn_event");
+    expect(reconciliationFollowupsFixture).toContain("public.process_google_play_purchase_verification");
+    expect(reconciliationFollowupsFixture).toContain("billing.reconcile_google_play_unbound_rtdn_events");
+    expect(reconciliationFollowupsFixture).toContain("'unbound_purchase_token'");
+    expect(reconciliationFollowupsFixture).toContain("'already_processed'");
+    expect(reconciliationFollowupsFixture).toContain("ACKNOWLEDGEMENT_STATE_PENDING");
+    expect(reconciliationFollowupsFixture).toContain("expired pending token is not actionable for acknowledgement retry");
+    expect(reconciliationFollowupsFixture).toContain("synthetic-google-play-rtdn-first-token-not-real");
+    expect(reconciliationFollowupsFixture).not.toContain("ya29.");
+    expect(reconciliationFollowupsFixture).not.toMatch(/Authorization|Bearer|service_account|private_key|gmail\.com/i);
   });
 });
