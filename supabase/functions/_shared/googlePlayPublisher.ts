@@ -9,17 +9,39 @@ type ServiceAccountCredential = {
 
 type FetchLike = typeof fetch;
 
+type GooglePlayPublisherStage =
+  | "service_account_secret_loading"
+  | "google_oauth_access_token"
+  | "subscriptionsv2_get"
+  | "google_response_parsing_state_validation"
+  | "purchase_acknowledgement";
+
+type GoogleApiError = {
+  code?: number;
+  status?: string;
+  message?: string;
+};
+
 export class GooglePlayPublisherError extends Error {
   readonly result: string;
   readonly retryable: boolean;
   readonly status: number | null;
+  readonly stage: GooglePlayPublisherStage;
+  readonly googleApiError: GoogleApiError | null;
 
-  constructor(result: string, retryable: boolean, status: number | null = null) {
+  constructor(
+    result: string,
+    retryable: boolean,
+    status: number | null = null,
+    options: { stage?: GooglePlayPublisherStage; googleApiError?: GoogleApiError | null } = {}
+  ) {
     super(`Google Play Publisher read failed: ${result}`);
     this.name = "GooglePlayPublisherError";
     this.result = result;
     this.retryable = retryable;
     this.status = status;
+    this.stage = options.stage ?? "subscriptionsv2_get";
+    this.googleApiError = options.googleApiError ?? null;
   }
 }
 
@@ -45,11 +67,16 @@ export async function fetchSubscriptionPurchaseV2(input: {
     }
   );
   if (!response.ok) {
-    throw new GooglePlayPublisherError(classifyAndroidPublisherStatus(response.status), isRetryableAndroidPublisherStatus(response.status), response.status);
+    throw new GooglePlayPublisherError(classifyAndroidPublisherStatus(response.status), isRetryableAndroidPublisherStatus(response.status), response.status, {
+      stage: "subscriptionsv2_get",
+      googleApiError: await readGoogleApiError(response)
+    });
   }
   const json = await response.json();
   if (!json || typeof json !== "object" || Array.isArray(json)) {
-    throw new GooglePlayPublisherError("invalid_subscription_response", true, response.status);
+    throw new GooglePlayPublisherError("invalid_subscription_response", true, response.status, {
+      stage: "google_response_parsing_state_validation"
+    });
   }
   return json as GoogleSubscriptionPurchaseV2;
 }
@@ -87,7 +114,10 @@ export async function acknowledgeSubscriptionPurchase(input: {
     }
   );
   if (!response.ok) {
-    throw new GooglePlayPublisherError(classifyAndroidPublisherStatus(response.status), isRetryableAndroidPublisherStatus(response.status), response.status);
+    throw new GooglePlayPublisherError(classifyAndroidPublisherStatus(response.status), isRetryableAndroidPublisherStatus(response.status), response.status, {
+      stage: "purchase_acknowledgement",
+      googleApiError: await readGoogleApiError(response)
+    });
   }
 }
 
@@ -96,14 +126,14 @@ function parseServiceAccountCredential(rawJson: string): ServiceAccountCredentia
   try {
     parsed = JSON.parse(rawJson);
   } catch {
-    throw new GooglePlayPublisherError("invalid_service_account_json", false);
+    throw new GooglePlayPublisherError("invalid_service_account_json", false, null, { stage: "service_account_secret_loading" });
   }
   if (!parsed || typeof parsed !== "object" || Array.isArray(parsed)) {
-    throw new GooglePlayPublisherError("invalid_service_account_json", false);
+    throw new GooglePlayPublisherError("invalid_service_account_json", false, null, { stage: "service_account_secret_loading" });
   }
   const credential = parsed as ServiceAccountCredential;
   if (credential.type !== "service_account" || !credential.client_email || !credential.private_key) {
-    throw new GooglePlayPublisherError("invalid_service_account_json", false);
+    throw new GooglePlayPublisherError("invalid_service_account_json", false, null, { stage: "service_account_secret_loading" });
   }
   return credential;
 }
@@ -118,7 +148,12 @@ async function serviceAccountAccessToken(input: { credential: ServiceAccountCred
     exp: now + 3600
   };
   const assertion = `${base64UrlJson({ alg: "RS256", typ: "JWT" })}.${base64UrlJson(claim)}`;
-  const signature = await signRs256(assertion, input.credential.private_key ?? "");
+  let signature: Uint8Array;
+  try {
+    signature = await signRs256(assertion, input.credential.private_key ?? "");
+  } catch {
+    throw new GooglePlayPublisherError("invalid_service_account_json", false, null, { stage: "service_account_secret_loading" });
+  }
   const response = await input.fetchImpl("https://oauth2.googleapis.com/token", {
     method: "POST",
     headers: { "content-type": "application/x-www-form-urlencoded" },
@@ -129,9 +164,27 @@ async function serviceAccountAccessToken(input: { credential: ServiceAccountCred
   });
   const json = await response.json().catch(() => null);
   if (!response.ok || !json || typeof json !== "object" || typeof (json as Record<string, unknown>).access_token !== "string") {
-    throw new GooglePlayPublisherError("token_exchange_failed", isRetryableAndroidPublisherStatus(response.status), response.status);
+    throw new GooglePlayPublisherError("token_exchange_failed", isRetryableAndroidPublisherStatus(response.status), response.status, {
+      stage: "google_oauth_access_token",
+      googleApiError: googleApiErrorFromJson(json)
+    });
   }
   return (json as Record<string, string>).access_token;
+}
+
+async function readGoogleApiError(response: Response): Promise<GoogleApiError | null> {
+  return googleApiErrorFromJson(await response.json().catch(() => null));
+}
+
+function googleApiErrorFromJson(json: unknown): GoogleApiError | null {
+  if (!json || typeof json !== "object" || Array.isArray(json)) return null;
+  const maybeError = (json as Record<string, unknown>).error;
+  const source = maybeError && typeof maybeError === "object" && !Array.isArray(maybeError) ? (maybeError as Record<string, unknown>) : (json as Record<string, unknown>);
+  const apiError: GoogleApiError = {};
+  if (typeof source.code === "number") apiError.code = source.code;
+  if (typeof source.status === "string") apiError.status = source.status;
+  if (typeof source.message === "string") apiError.message = source.message;
+  return Object.keys(apiError).length ? apiError : null;
 }
 
 async function signRs256(payload: string, privateKeyPem: string): Promise<Uint8Array> {
@@ -165,6 +218,7 @@ function base64UrlBytes(value: Uint8Array): string {
 
 function classifyAndroidPublisherStatus(status: number): string {
   if (status === 400) return "invalid_purchase_request";
+  if (status === 401) return "publisher_unauthenticated";
   if (status === 403) return "publisher_permission_denied";
   if (status === 404) return "purchase_not_found";
   if (status === 409) return "publisher_concurrent_update";

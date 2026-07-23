@@ -1,6 +1,8 @@
 import { describe, expect, it } from "vitest";
 import {
+  GooglePlayPurchaseError,
   googlePlayObfuscatedAccountId,
+  googlePlayPurchaseStageForVerificationRow,
   parseGooglePlayVerifyBody,
   processGooglePlayPurchaseVerification,
   recordGooglePlayPurchaseAcknowledgement,
@@ -150,6 +152,93 @@ describe("Google Play purchase helpers", () => {
       )
     ).resolves.toMatchObject({ acknowledged: true });
     expect(calls[1]?.functionName).toBe("record_google_play_purchase_acknowledgement");
+  });
+
+  it("treats duplicate restore/idempotent verification rows as terminal success", async () => {
+    const alreadyProcessedRow: GooglePlayPurchaseVerificationRow = {
+      ...processedRow,
+      result: "already_processed",
+      processed: false,
+      already_processed: true,
+      provider_subscription_changed: false,
+      compatibility_refreshed: false,
+      acknowledgement_required: false
+    };
+
+    await expect(
+      processGooglePlayPurchaseVerification(
+        {
+          rpc: async () => ({ data: [alreadyProcessedRow], error: null })
+        },
+        { p_purchase_token_fingerprint: "sha256_" + "a".repeat(64), p_purchase_token: "opaque-token-not-real" }
+      )
+    ).resolves.toBe(alreadyProcessedRow);
+  });
+
+  it("maps retryable SQL failure rows to the earliest sanitized persistence stage", async () => {
+    const providerFailure: GooglePlayPurchaseVerificationRow = {
+      ...processedRow,
+      result: "provider_subscription_persistence_failed",
+      processed: false,
+      provider_subscription_changed: false,
+      compatibility_refreshed: false,
+      retryable: true
+    };
+    const entitlementFailure: GooglePlayPurchaseVerificationRow = {
+      ...providerFailure,
+      result: "entitlement_persistence_failed",
+      provider_subscription_changed: true
+    };
+
+    expect(googlePlayPurchaseStageForVerificationRow(providerFailure)).toBe("provider_subscription_persistence");
+    expect(googlePlayPurchaseStageForVerificationRow(entitlementFailure)).toBe("entitlement_persistence");
+
+    await expect(
+      processGooglePlayPurchaseVerification(
+        {
+          rpc: async () => ({ data: [providerFailure], error: null })
+        },
+        { p_purchase_token_fingerprint: "sha256_" + "a".repeat(64), p_purchase_token: "opaque-token-not-real" }
+      )
+    ).rejects.toMatchObject({
+      result: "provider_subscription_persistence_failed",
+      stage: "provider_subscription_persistence",
+      rpcRow: {
+        provider_subscription_changed: false
+      }
+    });
+  });
+
+  it("preserves Supabase RPC and acknowledgement failure details on structured errors", async () => {
+    await expect(
+      processGooglePlayPurchaseVerification(
+        {
+          rpc: async () => ({ data: null, error: { code: "42883", message: "function process_google_play_purchase_verification does not exist" } })
+        },
+        { p_purchase_token_fingerprint: "sha256_" + "a".repeat(64), p_purchase_token: "opaque-token-not-real" }
+      )
+    ).rejects.toMatchObject({
+      result: "rpc_failed",
+      stage: "provider_subscription_persistence",
+      supabaseError: { code: "42883" }
+    } satisfies Partial<GooglePlayPurchaseError>);
+
+    await expect(
+      recordGooglePlayPurchaseAcknowledgement(
+        {
+          rpc: async () => ({ data: null, error: { code: "42501", message: "permission denied" } })
+        },
+        {
+          providerEnvironment: "production",
+          purchaseTokenFingerprint: "sha256_" + "a".repeat(64),
+          acknowledgedAt: "2026-07-18T16:05:00.000Z"
+        }
+      )
+    ).rejects.toMatchObject({
+      result: "acknowledgement_record_failed",
+      stage: "purchase_acknowledgement",
+      supabaseError: { code: "42501" }
+    } satisfies Partial<GooglePlayPurchaseError>);
   });
 });
 
